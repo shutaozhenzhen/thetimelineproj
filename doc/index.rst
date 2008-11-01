@@ -1,16 +1,11 @@
-The Timeline Project's documentation!
-=====================================
+The Timeline Project Documentation
+==================================
 
-Contents:
+These pages contain all the documentation for The Timeline Project.
 
 .. toctree::
     :maxdepth: 3
 
-    user
-    developer
-
-.. Indices and tables
-   ==================
-   * :ref:`genindex`
-   * :ref:`modindex`
-   * :ref:`search`
+    about
+    manual
+    dev_index

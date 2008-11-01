@@ -1,5 +1,5 @@
 How-to's
 ========
 
-Compile documentation
+Compile Documentation
 ---------------------
