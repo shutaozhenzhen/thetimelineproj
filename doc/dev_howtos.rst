@@ -1,11 +1,12 @@
-How-to's
-========
+Howto's
+=======
+
+.. _howto-doc-html:
 
 Generate the documentation in HTML format
 -----------------------------------------
 
-`Sphinx <http://sphinx.pocoo.org>`_ is used to generate the documentation in
-HTML format. Make sure that it is installed before proceeding.
+Make sure that you have :ref:`Sphinx <tools>` installed.
 
 The root directory for all the documentation is "doc" and there you will find a
 *Makefile* with instructions how to generate the documentation in various
