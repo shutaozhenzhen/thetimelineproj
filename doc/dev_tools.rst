@@ -7,7 +7,7 @@ Tools
   HTML format. See :ref:`howto <howto-doc-html>`.
 
 * `DIA <http://live.gnome.org/Dia>`_ is used to draw UML diagrams
-  (\*.dia files).
+  (\*.dia files) and generate png files for the documentation.
 
 * `Inkscape <http://www.inkscape.org/>`_ is used to draw other diagrams (\*.svg
-  files).
+  files) and generate png files for the documentation.

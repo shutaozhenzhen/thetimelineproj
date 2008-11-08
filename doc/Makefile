@@ -1,17 +1,21 @@
 # Makefile for Sphinx documentation
-#
 
 # You can set these variables from the command line.
-SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
-PAPER         =
+SPHINXOPTS      =
+SPHINXBUILD     = sphinx-build
+PAPER           =
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
-.PHONY: help clean html htmlw web pickle htmlhelp latex changes linkcheck
+# Commands for exporting images to png format (dash is used in the beginning to
+# avoid errors if Dia or Inkscape are not installed)
+DIA_EXPORT      = -dia -t png
+INKSCAPE_EXPORT = -inkscape --export-dpi 100 -D -e
+
+.PHONY: help clean images html htmlw web pickle htmlhelp latex changes linkcheck
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
@@ -25,14 +29,24 @@ help:
 
 clean:
 	-rm -rf _build/*
+	-rm _images/uml_overview.png
+	-rm _images/arch_overview.png
 
-html:
+images: _images/uml_overview.png _images/arch_overview.png
+
+_images/uml_overview.png: _images/uml_overview.dia
+	${DIA_EXPORT} $<
+
+_images/arch_overview.png: _images/arch_overview.svg
+	${INKSCAPE_EXPORT} $@ $<
+
+html: images
 	mkdir -p _build/html _build/doctrees
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) _build/html
 	@echo
 	@echo "Build finished. The HTML pages are in _build/html."
 
-htmlw:
+htmlw: images
 	mkdir _build\html _build\doctrees
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) _build/html
 	@echo

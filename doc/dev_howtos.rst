@@ -6,7 +6,7 @@ Howto's
 Generate the documentation in HTML format
 -----------------------------------------
 
-Make sure that you have :ref:`Sphinx <tools>` installed.
+Make sure that you have all required :ref:`tools <tools>` installed.
 
 The root directory for all the documentation is "doc" and there you will find a
 *Makefile* with instructions how to generate the documentation in various
