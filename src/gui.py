@@ -1,7 +1,7 @@
 """
 GUI components.
 
-The GUI components are mainly for interacting with the used and should not
+The GUI components are mainly for interacting with the user and should not
 contain much logic. For example, the `drawing' module is responsible for
 drawing the timeline, but the `DrawingArea' class in this module provides the
 GUI component on which it will draw.
@@ -120,7 +120,7 @@ class DrawingArea(wx.Window):
         """
         Called at the application start, after resizing, or when the window
         becomes active.
-        
+
         Here we just draw the background buffer onto the screen.
         """
         # Defining a dc is crucial. Even if it is not used.
@@ -130,6 +130,7 @@ class DrawingArea(wx.Window):
         if self.bgbuf:
             dc.DrawBitmap(self.bgbuf, 0, 0, True)
         dc.EndDrawing()
+        logging.debug("Paint event ends")
 
     def _on_mouse_wheel(self, evt):
         """Zooms the timeline when the mouse wheel is scrolled."""
