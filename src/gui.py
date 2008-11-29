@@ -130,7 +130,6 @@ class DrawingArea(wx.Window):
         if self.bgbuf:
             dc.DrawBitmap(self.bgbuf, 0, 0, True)
         dc.EndDrawing()
-        logging.debug("Paint event ends")
 
     def _on_mouse_wheel(self, evt):
         """Zooms the timeline when the mouse wheel is scrolled."""
