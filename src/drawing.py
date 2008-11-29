@@ -2,7 +2,7 @@
 Contains algorithms for drawing a timeline.
 """
 
-
+import logging
 from datetime import timedelta
 
 import wx
@@ -18,6 +18,9 @@ class DrawingAlgorithm(object):
         dc - used to do the actual drawing
         time_period - what period should of the timeline should be visible
         events - events inside time_period that should be drawn
+
+        When the dc is temporarily stored in a class variable such as self.dc,
+        this class variable must be deleted before the draw method ends.
         """
         pass
 
@@ -25,6 +28,7 @@ class DrawingAlgorithm(object):
 class SimpleDrawingAlgorithm(DrawingAlgorithm):
 
     def draw(self, dc, time_period, events):
+        logging.debug("Draw in SimpleDrawingAlgorithm")
         self.dc = dc
         self.time_period = time_period
         self.events = events
@@ -32,6 +36,8 @@ class SimpleDrawingAlgorithm(DrawingAlgorithm):
         self._draw_bg()
         self._calc_event_positions()
         self._draw_events()
+        del self.dc
+        del self.metrics
 
     def _draw_bg(self):
         self.dc.SetPen(wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID))
@@ -44,6 +50,7 @@ class SimpleDrawingAlgorithm(DrawingAlgorithm):
         self.dc.DrawText(str(self.time_period.end_time), self.metrics.width - tw - 5, self.metrics.half_height() - 15)
 
     def _calc_event_positions(self):
+        logging.debug("_calc_event_positions")
         self.eventspos = {}
         for event in self.events:
             start_time = event.time_period.start_time
@@ -55,6 +62,7 @@ class SimpleDrawingAlgorithm(DrawingAlgorithm):
             self.eventspos[event] = (self.metrics.get_x(start_time), y)
 
     def _draw_events(self):
+        logging.debug("_draw_events")
         self.dc.SetFont(wx.Font(8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
                    wx.FONTWEIGHT_NORMAL))
         for (event, pos) in self.eventspos.iteritems():
