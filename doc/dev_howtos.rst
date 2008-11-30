@@ -30,3 +30,15 @@ then use one of the logging functions like this::
     logging.debug("")
 
 For more information on logging, read http://www.python.org/doc/2.5.2/lib/module-logging.html.
+
+Handle EOL characters in files
+------------------------------
+
+For all new text files added to the SVN repository, the following command
+should be issued to ensure that that native EOL style is used when the file is
+checked out::
+
+    svn propset svn:eol-style native [new_file]
+
+This will greatly simplify working on different platforms which uses different
+EOL styles.
