@@ -176,7 +176,7 @@ def setup_drawing_algorithm(drawing_algorithm):
     if _drawing_algorithms.has_key(drawing_algorithm):
         _drawing_algorithm = drawing_algorithm
     else:
-        logging.info("Invalid algorithmn name=%s. Using 'SimpleDrawingAlgorithm' instead", drawing_algorithm)
+        logging.info("Invalid algorithm name=%s. Using 'SimpleDrawingAlgorithm' instead", drawing_algorithm)
         _drawing_algorithm = 'SimpleDrawingAlgorithm'
 
 
