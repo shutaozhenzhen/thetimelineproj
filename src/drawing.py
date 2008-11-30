@@ -25,118 +25,6 @@ class DrawingAlgorithm(object):
         pass
 
 
-class SimpleDrawingAlgorithm(DrawingAlgorithm):
-
-    def draw(self, dc, time_period, events):
-        logging.debug("Draw in SimpleDrawingAlgorithm")
-        self.dc = dc
-        self.time_period = time_period
-        self.events = events
-        self.metrics = Metrics(dc, time_period)
-        self._draw_bg()
-        self._calc_event_positions()
-        self._draw_events()
-        del self.dc
-        del self.metrics
-
-    def _draw_bg(self):
-        self.dc.SetPen(wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID))
-        self.dc.DrawLine(0, self.metrics.half_height(),
-                         self.metrics.width, self.metrics.half_height())
-        self.dc.SetFont(wx.Font(8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
-                                wx.FONTWEIGHT_NORMAL))
-        (tw, th) = self.dc.GetTextExtent(str(self.time_period.end_time))
-        self.dc.DrawText(str(self.time_period.start_time), 5, self.metrics.half_height() - 15)
-        self.dc.DrawText(str(self.time_period.end_time), self.metrics.width - tw - 5, self.metrics.half_height() - 15)
-
-    def _calc_event_positions(self):
-        logging.debug("_calc_event_positions")
-        self.eventspos = {}
-        for event in self.events:
-            start_time = event.time_period.start_time
-            y = self.metrics.half_height()
-            if event.is_period():
-                y += 20
-            else:
-                y -= 20
-            self.eventspos[event] = (self.metrics.get_x(start_time), y)
-
-    def _draw_events(self):
-        logging.debug("_draw_events")
-        self.dc.SetFont(wx.Font(8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
-                   wx.FONTWEIGHT_NORMAL))
-        for (event, pos) in self.eventspos.iteritems():
-            (x, y) = pos
-            (tw, th) = self.dc.GetTextExtent(event.text)
-            self.dc.SetBrush(wx.Brush(wx.Color(200, 200, 0), wx.SOLID))
-            if event.is_period():
-                width = (self.metrics.get_x(event.time_period.end_time) - x)
-            else:
-                y -= th
-                self.dc.SetPen(wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID))
-                self.dc.DrawLine(x, self.metrics.half_height(), x, y)
-                width = tw
-                x -= tw / 2
-            self.dc.DrawRectangle(x, y, width, th)
-            self.dc.DrawText(event.text, x, y)
-
-
-class SimpleDrawingAlgorithm2(DrawingAlgorithm):
-
-    def draw(self, dc, time_period, events):
-        logging.debug("Draw in SimpleDrawingAlgorithm2")
-        self.dc = dc
-        self.time_period = time_period
-        self.events = events
-        self.metrics = Metrics(dc, time_period)
-        self._draw_bg()
-        self._calc_event_positions()
-        self._draw_events()
-        del self.dc
-        del self.metrics
-
-    def _draw_bg(self):
-        self.dc.SetPen(wx.Pen(wx.Color(255, 0, 0), 1, wx.SOLID))
-        self.dc.DrawLine(0, self.metrics.half_height(),
-                         self.metrics.width, self.metrics.half_height())
-        self.dc.SetFont(wx.Font(8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
-                                wx.FONTWEIGHT_NORMAL))
-        (tw, th) = self.dc.GetTextExtent(str(self.time_period.end_time))
-        self.dc.DrawText(str(self.time_period.start_time), 5, self.metrics.half_height() - 15)
-        self.dc.DrawText(str(self.time_period.end_time), self.metrics.width - tw - 5, self.metrics.half_height() - 15)
-
-    def _calc_event_positions(self):
-        logging.debug("_calc_event_positions")
-        self.eventspos = {}
-        for event in self.events:
-            start_time = event.time_period.start_time
-            y = self.metrics.half_height()
-            if event.is_period():
-                y += 20
-            else:
-                y -= 20
-            self.eventspos[event] = (self.metrics.get_x(start_time), y)
-
-    def _draw_events(self):
-        logging.debug("_draw_events")
-        self.dc.SetFont(wx.Font(8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
-                   wx.FONTWEIGHT_NORMAL))
-        for (event, pos) in self.eventspos.iteritems():
-            (x, y) = pos
-            (tw, th) = self.dc.GetTextExtent(event.text)
-            self.dc.SetBrush(wx.Brush(wx.Color(200, 200, 200), wx.SOLID))
-            if event.is_period():
-                width = (self.metrics.get_x(event.time_period.end_time) - x)
-            else:
-                y -= th
-                self.dc.SetPen(wx.Pen(wx.Color(200, 0, 0), 1, wx.SOLID))
-                self.dc.DrawLine(x, self.metrics.half_height(), x, y)
-                width = tw
-                x -= tw / 2
-            self.dc.DrawRectangle(x, y, width, th)
-            self.dc.DrawText(event.text, x, y)
-
-
 class Metrics(object):
     """Helper class that can calculate coordinates."""
 
@@ -173,21 +61,18 @@ class Metrics(object):
 
 def setup_drawing_algorithm(drawing_algorithm):
     global _drawing_algorithm
-    if _drawing_algorithms.has_key(drawing_algorithm):
-        _drawing_algorithm = drawing_algorithm
-    else:
-        logging.info("Invalid algorithm name=%s. Using 'SimpleDrawingAlgorithm' instead", drawing_algorithm)
-        _drawing_algorithm = 'SimpleDrawingAlgorithm'
+    _drawing_algorithm = drawing_algorithm
+
+
+from drawing_simple1 import SimpleDrawingAlgorithm1
+from drawing_simple2 import SimpleDrawingAlgorithm2
 
 
 def get_algorithm():
     """Factory method."""
-    return _drawing_algorithms[_drawing_algorithm]
+    return _drawing_algorithms.get(_drawing_algorithm, SimpleDrawingAlgorithm1)()
+    
 
-
-_drawing_algorithm  = 'SimpleDrawingAlgorithm'
-_drawing_algorithms = {'SimpleDrawingAlgorithm' : SimpleDrawingAlgorithm(),
-                       'SimpleDrawingAlgorithm2': SimpleDrawingAlgorithm2()}
-
-
-
+_drawing_algorithm  = None
+_drawing_algorithms = {'simple1': SimpleDrawingAlgorithm1,
+                       'simple2': SimpleDrawingAlgorithm2}

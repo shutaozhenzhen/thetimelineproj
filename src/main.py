@@ -21,7 +21,7 @@ def parse_options():
                   help="specify log level (0 to log everything)")
     op.add_option("-f", "--log-file", default=None,
                   help="specify a file to send log messages to")
-    op.add_option("-a", "--drawing-algorithm", default=0,
+    op.add_option("-a", "--drawing-algorithm", default="simple1",
                   help="specify a drawing algorithm")
     # We skip first command line argument since it is the name of the program
     return op.parse_args(argv[1:])
