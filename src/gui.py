@@ -12,7 +12,7 @@ import logging
 
 import wx
 
-import data
+import data_factory
 import drawing
 
 
@@ -40,7 +40,7 @@ class MainFrame(wx.Frame):
         if self.timeline:
             # TODO: Ask if save first or cancel
             pass
-        self.timeline = data.get_timeline(input_files)
+        self.timeline = data_factory.get_timeline(input_files)
         if self.timeline:
             self.main_panel.drawing_area.set_timeline(self.timeline)
 
