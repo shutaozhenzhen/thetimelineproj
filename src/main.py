@@ -15,6 +15,7 @@ import wx
 from gui import MainFrame
 import drawing
 
+
 def parse_options():
     op = OptionParser(usage="%prog [options] [filename]", version="%prog 0.1")
     op.add_option("-l", "--log-level", type="int", default=logging.ERROR,

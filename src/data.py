@@ -11,27 +11,16 @@ from datetime import datetime as dt
 class Timeline(object):
     """Base class that represent the interface for a timeline."""
 
-    def get_events(self, start_time, end_time):
-        """Return all events visible within the time period."""
-        pass
-
-    def preferred_period(self):
-        """Return the preferred period to display of this timeline."""
-        pass
-
-
-class DummyTimeline(Timeline):
-    """Timeline with dummy data for testing purposes."""
-
-    def __init__(self):
-        self.events = [
-            Event(dt(2008, 11, 22), dt(2008, 11, 22), "Foo"),
-            Event(dt(2008, 11, 19), dt(2008, 11, 19), "Bar"),
-            Event(dt(2008, 11, 5), dt(2008, 11, 15), "Foobar"),
-        ]
+    #def get_events(self, start_time, end_time):
+    #    """Return all events visible within the time period."""
+    #    pass
 
     def get_events(self, time_period):
         return [e for e in self.events if e.inside_period(time_period)]
+
+    #def preferred_period(self):
+    #    """Return the preferred period to display of this timeline."""
+    #    pass
 
     def preferred_period(self):
         return TimePeriod(dt(2008, 11, 1), dt(2008, 11, 30))
@@ -75,16 +64,3 @@ class TimePeriod(object):
 
     def delta(self):
         return self.end_time - self.start_time
-
-
-def get_timeline(input_files):
-    """
-    Timeline factory method.
-
-    Return a specific timeline depending on the input_files.
-    """
-    if len(input_files) == 1 and input_files[0] == "dummy":
-        return DummyTimeline()
-    else:
-        logging.warning("Unable to open timeline for %s, unknown format", input_files)
-        return None
