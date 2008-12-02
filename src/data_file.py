@@ -8,6 +8,7 @@ import logging
 from datetime import datetime as dt
 
 from data import Timeline
+from data import TimePeriod
 from data import Event
 
 
@@ -60,3 +61,9 @@ class FileTimeline(Timeline):
             self.events.append(event)
         except Exception, e:
             logging.fatal('Error', exc_info=e)
+
+    def get_events(self, time_period):
+        return [e for e in self.events if e.inside_period(time_period)]
+
+    def preferred_period(self):
+        return TimePeriod(dt(2008, 11, 1), dt(2008, 11, 30))

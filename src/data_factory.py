@@ -24,6 +24,3 @@ def get_timeline(input_files):
     else:
         logging.warning("Unable to open timeline for %s, unknown format", input_files)
         return None
-
-
-
