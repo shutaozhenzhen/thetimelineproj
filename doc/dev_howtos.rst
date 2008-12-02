@@ -40,5 +40,22 @@ checked out::
 
     svn propset svn:eol-style native [new_file]
 
-This will greatly simplify working on different platforms which uses different
-EOL styles.
+This will greatly simplify working on different platforms that uses different
+EOL styles (LF on Linux, CRLF on Windows).
+
+To simplify this, one could use so called automatic properties. This is
+configured in the Subversion client. On Unix machines the path to the
+configuration file is ``~/.subversion/config``, and on Windows
+``%APPDATA%\Subversion\config``. Automatic properties is configured as
+follows::
+
+    [miscellany]
+    enable-auto-props = yes
+
+    [auto-props]
+    README = svn:eol-style=native
+    Makefile = svn:eol-style=native
+    *.py = svn:eol-style=native
+    *.rst = svn:eol-style=native
+
+Add one line for each type of file that you might create.
