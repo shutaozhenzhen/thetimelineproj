@@ -11,19 +11,13 @@ from datetime import datetime as dt
 class Timeline(object):
     """Base class that represent the interface for a timeline."""
 
-    #def get_events(self, start_time, end_time):
-    #    """Return all events visible within the time period."""
-    #    pass
-
-    def get_events(self, time_period):
-        return [e for e in self.events if e.inside_period(time_period)]
-
-    #def preferred_period(self):
-    #    """Return the preferred period to display of this timeline."""
-    #    pass
+    def get_events(self, start_time, end_time):
+        """Return all events visible within the time period."""
+        pass
 
     def preferred_period(self):
-        return TimePeriod(dt(2008, 11, 1), dt(2008, 11, 30))
+        """Return the preferred period to display of this timeline."""
+        pass
 
 
 class Event(object):
