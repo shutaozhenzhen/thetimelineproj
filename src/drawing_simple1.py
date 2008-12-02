@@ -3,7 +3,6 @@ Contains algorithms for drawing a timeline.
 """
 
 import logging
-from datetime import timedelta
 
 import wx
 
@@ -64,5 +63,3 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
                 x -= tw / 2
             self.dc.DrawRectangle(x, y, width, th)
             self.dc.DrawText(event.text, x, y)
-
-
