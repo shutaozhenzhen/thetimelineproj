@@ -20,10 +20,12 @@ class FileTimeline(Timeline):
         self.events = []
         f = open(data_source)
         try:
-            for line in f:
-                self._create_and_add_event(line.strip())
-        except Exception, e:
-            logging.fatal('Error when reading file ' + data_source, exc_info=e)
+            try:
+                for line in f:
+                    self._create_and_add_event(line.strip())
+            except Exception, e:
+                logging.fatal('Error when reading file ' + data_source,
+                              exc_info=e)
         finally:
             f.close()
 
