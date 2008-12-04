@@ -32,6 +32,9 @@ class Event(object):
     def is_period(self):
         return self.time_period.is_period()
 
+    def mean_time(self):
+        return self.time_period.start_time + self.time_period.delta() / 2
+
 
 class TimePeriod(object):
 

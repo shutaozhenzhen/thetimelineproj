@@ -29,7 +29,6 @@ class Metrics(object):
     """Helper class that can calculate coordinates."""
 
     def __init__(self, dc, time_period):
-        self.dc = dc
         self.width, self.height = dc.GetSizeTuple()
         self.time_period = time_period
 
