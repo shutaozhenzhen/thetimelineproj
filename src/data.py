@@ -33,7 +33,7 @@ class Event(object):
         return self.time_period.is_period()
 
     def mean_time(self):
-        return self.time_period.start_time + self.time_period.delta() / 2
+        return self.time_period.mean_time()
 
 
 class TimePeriod(object):
@@ -48,11 +48,14 @@ class TimePeriod(object):
         return time >= self.start_time and time <= self.end_time
 
     def overlap(self, time_period):
-        return time_period.inside(self.start_time) or \
-               time_period.inside(self.end_time)
+        return not (time_period.end_time < self.start_time and \
+                    time_period.start_time > self.end_time)
 
     def is_period(self):
         return self.start_time != self.end_time
+
+    def mean_time(self):
+        return self.start_time + self.delta() / 2
 
     def zoom(self, times):
         delta = times * self.delta() / 10
