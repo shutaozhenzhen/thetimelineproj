@@ -12,8 +12,11 @@ import logging
 
 import wx
 
+from data import Event
 import data_factory
 import drawing
+
+ID_NEW_EVENT   = 1
 
 
 class MainFrame(wx.Frame):
@@ -25,28 +28,63 @@ class MainFrame(wx.Frame):
     Holds an instance of a timeline that is currently being displayed.
     """
 
+
     def __init__(self):
         wx.Frame.__init__(self, None, -1, "The Timeline Project",
                           wx.Point(0, 0), wx.Size(600, 400),
                           style=wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE)
         # Build GUI
         self.main_panel = MainPanel(self)
+        # Create a menubar at the top of the user frame
+        menuBar = wx.MenuBar()
+        # Create a menu ...
+        file_menu = wx.Menu()
+        edit_menu = wx.Menu()
+        file_menu.Append(wx.ID_EXIT, "E&xit\tAlt-F4", "Exit the program")
+        edit_menu.Append(ID_NEW_EVENT, "&New Event", "Add a new event")
+        # bind the menu event to an event handler, share QuitBtn event
+        self.Bind(wx.EVT_MENU, self._on_exit, id=wx.ID_EXIT)
+        self.Bind(wx.EVT_MENU, self._on_new_event, id=ID_NEW_EVENT)
+        # put the menu on the menubar
+        menuBar.Append(file_menu, "&File")
+        menuBar.Append(edit_menu, "&Edit")
+        self.SetMenuBar(menuBar)
+        # create a status bar at the bottom of the frame
+        self.CreateStatusBar()
         # Connect events
         wx.EVT_CLOSE(self, self._on_close)
         # Initialize data members
         self.timeline = None
+        self.input_files = None
+
+    def refresh_timeline(self):
+        self.timeline = data_factory.get_timeline(self.input_files)
+        if self.timeline:
+            self.main_panel.drawing_area.set_timeline(self.timeline)
 
     def open_timeline(self, input_files):
         if self.timeline:
             # TODO: Ask if save first or cancel
             pass
-        self.timeline = data_factory.get_timeline(input_files)
-        if self.timeline:
-            self.main_panel.drawing_area.set_timeline(self.timeline)
+        self.input_files = input_files
+        self.refresh_timeline()
 
     def _on_close(self, event):
         logging.debug("Close event MainFrame")
         self.Destroy()
+
+    def _on_exit(self, evt):
+        """Event handler for the Exit menu item"""
+        logging.debug("Exit event MainFrame")
+        self.Close()
+
+    def _on_new_event(self, evt):
+        """Event handler for the New Event menu item"""
+        logging.debug("New Event event MainFrame")
+        dlg = NewEventDlg(None, -1, 'Create a new Event', self.timeline)
+        dlg.ShowModal()
+        dlg.Destroy()
+        self.refresh_timeline()
 
 
 class MainPanel(wx.Panel):
@@ -159,3 +197,45 @@ class DrawingArea(wx.Window):
         except Exception, e:
             self.bgbuf = None
             logging.fatal('Error in drawing', exc_info=e)
+
+
+class NewEventDlg(wx.Dialog):
+
+    _event_start_time = None
+    _event_end_time = None
+    _event_name = None
+    _timeline = None
+
+    def __init__(self, parent, id, title, timeline):
+        self._timeline = timeline
+        wx.Dialog.__init__(self, parent, id, title, size=(250, 180))
+        panel = wx.Panel(self, -1)
+        vbox = wx.BoxSizer(wx.VERTICAL)
+        wx.StaticBox(panel, -1, 'Event Properties', (5, 5), (230, 100))
+        wx.StaticText(panel, -1, "Start:", (15,28), style=wx.ALIGN_LEFT)
+        wx.StaticText(panel, -1, "End:"  , (15,53), style=wx.ALIGN_LEFT)
+        wx.StaticText(panel, -1, "Name:" , (15,78), style=wx.ALIGN_LEFT)
+        self._event_start_time = wx.TextCtrl(panel, -1, '', (50, 25))
+        self._event_end_time = wx.TextCtrl(panel, -1, '', (50, 50))
+        self._event_name = wx.TextCtrl(panel, -1, '', (50, 75), (175,20))
+        hbox = wx.BoxSizer(wx.HORIZONTAL)
+        ok_button = wx.Button(self, -1, 'Ok', size=(50, 25))
+        wx.EVT_BUTTON(self, ok_button.GetId(), self._on_ok)
+        close_button = wx.Button(self, -1, 'Close', size=(50, 25))
+        wx.EVT_BUTTON(self, close_button.GetId(), self._on_close)
+        hbox.Add(ok_button, 1)
+        hbox.Add(close_button, 1, wx.LEFT, 5)
+        vbox.Add(panel)
+        vbox.Add(hbox, 1, wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM, 10)
+        self.SetDefaultItem(ok_button)
+        self.SetSizer(vbox)
+
+    def _on_close(self,e):
+        self.Close()
+
+    def _on_ok(self,e):
+        event = Event(self._event_start_time.GetValue(),
+                      self._event_end_time.GetValue(),
+                      self._event_name.GetValue())
+        self._timeline.new_event(event)
+        pass

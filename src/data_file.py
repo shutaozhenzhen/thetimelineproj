@@ -15,8 +15,12 @@ from data import Event
 class FileTimeline(Timeline):
     """Timeline with file storage."""
 
+    _data_source = None
+
     def __init__(self, data_source):
         """Load events from data in the given file, data_source."""
+        logging.debug('FileTimeline creation')
+        self._data_source = data_source
         self.events = []
         f = open(data_source)
         try:
@@ -55,10 +59,10 @@ class FileTimeline(Timeline):
                 return
             # The first and second arguments contains the year, month and day
             # values separated with commas
-            arg1 = args[0].split(',')
-            arg2 = args[1].split(',')
-            start_time = dt(eval(arg1[0]),eval(arg1[1]),eval(arg1[2]))
-            end_time   = dt(eval(arg2[0]),eval(arg2[1]),eval(arg2[2]))
+            arg1 = args[0].split('-')
+            arg2 = args[1].split('-')
+            start_time = dt(int(arg1[0]),int(arg1[1]),int(arg1[2]))
+            end_time   = dt(int(arg2[0]),int(arg2[1]),int(arg2[2]))
             event      = Event(start_time,end_time, args[2])
             self.events.append(event)
         except Exception, e:
@@ -69,3 +73,17 @@ class FileTimeline(Timeline):
 
     def preferred_period(self):
         return TimePeriod(dt(2008, 11, 1), dt(2008, 11, 30))
+
+    def new_event(self, event):
+        """Add a new event to the Timeline"""
+        logging.debug("new_event called")
+        f = open(self._data_source, 'a')
+        try:
+            try:
+                line = event.start_time + ";" +event.end_time + ";" + event.text + "\n"
+                f.writelines(line)
+            except Exception, e:
+                logging.fatal('Error when adding record to file ' + self._data_source,
+                              exc_info=e)
+        finally:
+            f.close()
