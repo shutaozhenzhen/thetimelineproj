@@ -19,10 +19,15 @@ class Timeline(object):
         """Return the preferred period to display of this timeline."""
         pass
 
+    def new_event(self, event):
+        """Add a new event to the Timeline"""
+        pass
 
 class Event(object):
 
     def __init__(self, start_time, end_time, text):
+        self.start_time = start_time
+        self.end_time = end_time
         self.time_period = TimePeriod(start_time, end_time)
         self.text = text
 
