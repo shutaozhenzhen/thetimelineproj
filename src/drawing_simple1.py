@@ -4,6 +4,7 @@ Implements a prototype algorithm for drawing a timeline.
 
 
 import logging
+import calendar
 from datetime import timedelta
 from datetime import datetime
 
@@ -25,11 +26,11 @@ STRIP_YEAR = 1
 STRIP_MONTH = 2
 STRIP_DAY = 3
 STRIP_HOUR = 4
-STRIP_MINUTE = 4
+STRIP_MINUTE = 5
 
 STRIP_HEADER = {
     STRIP_YEAR: "",
-    STRIP_MONTH: "%B",
+    STRIP_MONTH: "%Y",
     STRIP_DAY: "%B %Y",
     STRIP_HOUR: "%d %B %Y",
     STRIP_MINUTE: "%d %B %Y %H",
@@ -41,6 +42,22 @@ STRIP_LABEL = {
     STRIP_DAY: "%d",
     STRIP_HOUR: "%H",
     STRIP_MINUTE: "%M",
+}
+
+STRIP_INC_FUNC = {
+    STRIP_YEAR: (lambda x: x.replace(year=x.year+1)),
+    STRIP_MONTH: (lambda x: x + timedelta(calendar.monthrange(x.year, x.month)[1])),
+    STRIP_DAY: (lambda x: x + timedelta(1)),
+    STRIP_HOUR: (lambda x: x + timedelta(0, 60*60)),
+    STRIP_MINUTE: (lambda x: x + timedelta(0, 60)),
+}
+
+STRIP_START_FUNC = {
+    STRIP_YEAR: (lambda x: datetime(x.year, 1, 1)),
+    STRIP_MONTH: (lambda x: datetime(x.year, x.month, 1)),
+    STRIP_DAY: (lambda x: datetime(x.year, x.month, x.day)),
+    STRIP_HOUR: (lambda x: datetime(x.year, x.month, x.day, x.hour)),
+    STRIP_MINUTE: (lambda x: datetime(x.year, x.month, x.day, x.hour, x.minute)),
 }
 
 
@@ -130,20 +147,21 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         # START calc strip level
         if self.time_period.delta() > timedelta(365*2):
             self.strip_level = STRIP_YEAR
-        if self.time_period.delta() > timedelta(60):
+        elif self.time_period.delta() > timedelta(60):
             self.strip_level = STRIP_MONTH
-        if self.time_period.delta() > timedelta(1):
+        elif self.time_period.delta() > timedelta(2):
             self.strip_level = STRIP_DAY
-        if self.time_period.delta() > timedelta(1):
+        elif self.time_period.delta() > timedelta(0, 2):
             self.strip_level = STRIP_HOUR
-        if self.time_period.delta() > timedelta(1):
+        else:
             self.strip_level = STRIP_MINUTE
-        self.strip_level = STRIP_DAY
+        logging.debug("Choosen strip = %s", self.strip_level)
         # END calc strip level
-        start = datetime(t.year, t.month, t.day)
-        strip = timedelta(1)
+        start = STRIP_START_FUNC[self.strip_level](t)
+        strip = STRIP_INC_FUNC[self.strip_level]
         while start < self.time_period.end_time:
-            next = start + strip
+            logging.debug("Strip loop, start = %s", start)
+            next = strip(start)
             self.strips.append((TimePeriod(start, next),
                                 self._strip_label(start), False))
             start = next
