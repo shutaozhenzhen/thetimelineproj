@@ -30,9 +30,11 @@ class Metrics(object):
 
     def __init__(self, dc, time_period):
         self.width, self.height = dc.GetSizeTuple()
+        self.half_width = self.width / 2
+        self.half_height = self.height / 2
         self.time_period = time_period
 
-    def get_x(self, time):
+    def calc_x(self, time):
         # This is really ugly, but it works relatively well. If the / operator
         # were defined for timedelta this method could be written much simpler.
         pixperiod = self.time_period.delta() / self.width
@@ -51,24 +53,18 @@ class Metrics(object):
                 tempdelta -= pixperiod
         return x
 
-    def get_width(self, time_period):
-        return self.get_x(time_period.end_time) - self.get_x(time_period.start_time)
-
-    def half_width(self):
-        return self.width / 2
-
-    def half_height(self):
-        return self.height / 2
+    def calc_width(self, time_period):
+        return (self.calc_x(time_period.end_time) -
+                self.calc_x(time_period.start_time))
 
 
 def get_default_font(size, bold=False):
-    foo = wx.FONTWEIGHT_NORMAL
     if bold:
-        foo = wx.FONTWEIGHT_BOLD
-    return wx.Font(size,
-                   wx.FONTFAMILY_DEFAULT,
-                   wx.FONTSTYLE_NORMAL,
-                   foo)
+        weight = wx.FONTWEIGHT_BOLD
+    else:
+        weight = wx.FONTWEIGHT_NORMAL
+    return wx.Font(size, wx.FONTFAMILY_DEFAULT,
+                   wx.FONTSTYLE_NORMAL, weight)
 
 
 def setup_drawing_algorithm(drawing_algorithm):

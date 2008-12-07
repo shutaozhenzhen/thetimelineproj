@@ -15,6 +15,7 @@ from drawing import Metrics
 from data import TimePeriod
 
 
+# Parameters that configure whitespace kinda
 INNER_PADDING = 3
 OUTER_PADDING = 5
 THRESHOLD_PIX = 20
@@ -46,7 +47,11 @@ STRIP_LABEL = {
 class SimpleDrawingAlgorithm1(DrawingAlgorithm):
 
     def __init__(self):
+        self.header_font = drawing.get_default_font(9, True)
         self.event_font = drawing.get_default_font(8)
+        self.solid_pen = wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID)
+        self.dashed_pen = wx.Pen(wx.Color(200, 200, 200), 1, wx.LONG_DASH)
+        self.solid_brush = wx.Brush(wx.Color(0, 0, 0), wx.SOLID)
 
     def draw(self, dc, time_period, events):
         # Store data so we can use it in other functions
@@ -66,52 +71,52 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         """
         Calculate rectangles for all events.
         
-        The rectangles define the areas in which the events can draw themselves.
+        The rectangles define the areas in which the events can draw
+        themselves.
         """
         self.rects = [] # List of tuples (event, rect)
         self.dc.SetFont(self.event_font)
         for event in events:
-            (tw, th) = self.dc.GetTextExtent(event.text)
-            ew = self.metrics.get_width(event.time_period)
-            logging.debug("th = %s", th)
+            tw, th = self.dc.GetTextExtent(event.text)
+            ew = self.metrics.calc_width(event.time_period)
             if ew > THRESHOLD_PIX:
                 # Tread as period
                 rw = ew + 2 * OUTER_PADDING
                 rh = th + 2 * INNER_PADDING + 2 * OUTER_PADDING
-                rx = self.metrics.get_x(event.mean_time()) - rw / 2
-                ry = self.metrics.half_height() + OUTER_PADDING + FOO
+                rx = self.metrics.calc_x(event.mean_time()) - rw / 2
+                ry = self.metrics.half_height + OUTER_PADDING + FOO
                 movedir = 1
             else:
                 # Tread as event
                 rw = tw + 2 * INNER_PADDING + 2 * OUTER_PADDING
                 rh = th + 2 * INNER_PADDING + 2 * OUTER_PADDING
-                rx = self.metrics.get_x(event.mean_time()) - rw / 2
-                ry = self.metrics.half_height() - rh - OUTER_PADDING - FOO
+                rx = self.metrics.calc_x(event.mean_time()) - rw / 2
+                ry = self.metrics.half_height - rh - OUTER_PADDING - FOO
                 movedir = -1
             rect = wx.Rect(rx, ry, rw, rh)
-            self._prevent_overlap(self.rects, rect, movedir)
+            self._prevent_overlap(rect, movedir)
             self.rects.append((event, rect))
         # Remove outer padding
         for (event, rect) in self.rects:
             rect.Deflate(OUTER_PADDING, OUTER_PADDING)
 
-    def _prevent_overlap(self, rects, rect, movedir):
+    def _prevent_overlap(self, rect, movedir):
         """
-        Prevent rect from overlapping with any rect by moving it up or down.
+        Prevent rect from overlapping with any rectangle by moving it.
         """
         while True:
-            h = self._intersection_height(rects, rect)
+            h = self._intersection_height(rect)
             if h > 0:
                 rect.Y += movedir * h
             else:
                 break
 
-    def _intersection_height(self, rects, rect):
+    def _intersection_height(self, rect):
         """
-        Calculate height of first intersection.
+        Calculate height of first intersection with rectangle.
         """
-        for (event, r) in rects:
-            r_copy = wx.Rect(*r)
+        for (event, r) in self.rects:
+            r_copy = wx.Rect(*r) # Because `Intersect` modifies rect
             intersection = r_copy.Intersect(rect)
             if not intersection.IsEmpty():
                 return intersection.Height
@@ -120,7 +125,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
     def _calc_strips(self):
         """
         """
-        self.strips = []
+        self.strips = [] # List of tuples (time_period, label, major)
         t = self.time_period.start_time
         # START calc strip level
         if self.time_period.delta() > timedelta(365*2):
@@ -139,7 +144,8 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         strip = timedelta(1)
         while start < self.time_period.end_time:
             next = start + strip
-            self.strips.append((TimePeriod(start, next), self._strip_label(start)))
+            self.strips.append((TimePeriod(start, next),
+                                self._strip_label(start), False))
             start = next
 
     def _strip_header(self, time_period):
@@ -154,36 +160,39 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
 
     def _draw_bg(self):
         # Main divider line
-        self.dc.DrawLine(0, self.metrics.half_height(),
-                         self.metrics.width, self.metrics.half_height())
+        self.dc.DrawLine(0, self.metrics.half_height,
+                         self.metrics.width, self.metrics.half_height)
         # Dividing lines
-        self.dc.SetFont(drawing.get_default_font(8))
-        for (p, label) in self.strips:
-            x2 = self.metrics.get_x(p.end_time)
-            self.dc.SetPen(wx.Pen(wx.Color(200, 200, 200), 1, wx.LONG_DASH))
+        self.dc.SetFont(self.event_font)
+        for (p, label, major) in self.strips:
+            x2 = self.metrics.calc_x(p.end_time)
+            if major:
+                self.dc.SetPen(self.solid_pen)
+            else:
+                self.dc.SetPen(self.dashed_pen)
             self.dc.DrawLine(x2, 0, x2, self.metrics.height)
             (tw, th) = self.dc.GetTextExtent(label)
-            middle = self.metrics.get_x(p.mean_time())
-            middley = self.metrics.half_height()
+            middle = self.metrics.calc_x(p.mean_time())
+            middley = self.metrics.half_height
             self.dc.DrawText(label, middle - tw / 2, middley - th)
         # Lines to all events
-        self.dc.SetPen(wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID))
-        self.dc.SetBrush(wx.Brush(wx.Color(0, 0, 0), wx.SOLID))
+        self.dc.SetPen(self.solid_pen)
+        self.dc.SetBrush(self.solid_brush)
         for (event, rect) in self.rects:
-            if rect.Y < self.metrics.half_height():
+            if rect.Y < self.metrics.half_height:
                 x = rect.X + rect.Width / 2
                 y = rect.Y + rect.Height / 2
-                self.dc.DrawLine(x, y, x, self.metrics.half_height())
-                self.dc.DrawCircle(x, self.metrics.half_height(), 2)
-        self.dc.SetFont(drawing.get_default_font(9, True))
+                self.dc.DrawLine(x, y, x, self.metrics.half_height)
+                self.dc.DrawCircle(x, self.metrics.half_height, 2)
+        self.dc.SetFont(self.header_font)
         # Label
         strm = self._strip_header(self.time_period)
         (tw, th) = self.dc.GetTextExtent(strm)
-        self.dc.DrawText(strm, self.metrics.half_width() - tw / 2, INNER_PADDING)
+        self.dc.DrawText(strm, self.metrics.half_width - tw / 2, INNER_PADDING)
 
     def _draw_events(self):
         self.dc.SetFont(self.event_font)
-        self.dc.SetPen(wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID))
+        self.dc.SetPen(self.solid_pen)
         for (event, rect) in self.rects:
             # Ensure that we can't draw outside rectangle
             self.dc.DestroyClippingRegion()
