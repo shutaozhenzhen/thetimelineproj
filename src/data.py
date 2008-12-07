@@ -23,11 +23,12 @@ class Timeline(object):
         """Add a new event to the Timeline"""
         pass
 
+
 class Event(object):
+    """Represents one event on a timeline"""
 
     def __init__(self, start_time, end_time, text):
-        self.start_time = start_time
-        self.end_time = end_time
+        """start_time and end_time shall be of the type datetime"""
         self.time_period = TimePeriod(start_time, end_time)
         self.text = text
 
