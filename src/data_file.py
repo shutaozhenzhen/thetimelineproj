@@ -80,7 +80,13 @@ class FileTimeline(Timeline):
         f = open(self._data_source, 'a')
         try:
             try:
-                line = event.start_time + ";" +event.end_time + ";" + event.text + "\n"
+                line = "%s-%s-%s;%s-%s-%s;%s\n" % (event.time_period.start_time.year,
+                       event.time_period.start_time.month,
+                       event.time_period.start_time.day,
+                       event.time_period.end_time.year,
+                       event.time_period.end_time.month,
+                       event.time_period.end_time.day,
+                       event.text)
                 f.writelines(line)
             except Exception, e:
                 logging.fatal('Error when adding record to file ' + self._data_source,

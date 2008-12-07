@@ -10,6 +10,7 @@ GUI component on which it will draw.
 
 import logging
 
+from datetime import datetime as dt
 import wx
 
 from data import Event
@@ -200,24 +201,28 @@ class DrawingArea(wx.Window):
 
 
 class NewEventDlg(wx.Dialog):
+    """This dialog is used for registering new events"""
 
-    _event_start_time = None
-    _event_end_time = None
-    _event_name = None
+    _textctrl_start_time = None
+    _textctrl_end_time = None
+    _textctrl_name = None
     _timeline = None
+    _cb = None
 
     def __init__(self, parent, id, title, timeline):
         self._timeline = timeline
-        wx.Dialog.__init__(self, parent, id, title, size=(250, 180))
+        wx.Dialog.__init__(self, parent, id, title, size=(250, 220))
         panel = wx.Panel(self, -1)
         vbox = wx.BoxSizer(wx.VERTICAL)
-        wx.StaticBox(panel, -1, 'Event Properties', (5, 5), (230, 100))
-        wx.StaticText(panel, -1, "Start:", (15,28), style=wx.ALIGN_LEFT)
-        wx.StaticText(panel, -1, "End:"  , (15,53), style=wx.ALIGN_LEFT)
-        wx.StaticText(panel, -1, "Name:" , (15,78), style=wx.ALIGN_LEFT)
-        self._event_start_time = wx.TextCtrl(panel, -1, '', (50, 25))
-        self._event_end_time = wx.TextCtrl(panel, -1, '', (50, 50))
-        self._event_name = wx.TextCtrl(panel, -1, '', (50, 75), (175,20))
+        wx.StaticBox(panel, -1, 'Event Properties', (5, 5), (230, 140))
+        wx.StaticText(panel, -1, "Start:", (15,32), style=wx.ALIGN_LEFT)
+        wx.StaticText(panel, -1, "End:"  , (15,62), style=wx.ALIGN_LEFT)
+        wx.StaticText(panel, -1, "Name:" , (15,92), style=wx.ALIGN_LEFT)
+        self._cb = wx.CheckBox  (panel, -1, 'Close on OK', (15, 120 ))
+        self._cb.SetValue(True)
+        self._textctrl_start_time = wx.TextCtrl(panel, -1, '', (50, 30))
+        self._textctrl_end_time = wx.TextCtrl(panel, -1, '', (50, 60))
+        self._textctrl_name = wx.TextCtrl(panel, -1, '', (50, 90), (175,20))
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         ok_button = wx.Button(self, -1, 'Ok', size=(50, 25))
         wx.EVT_BUTTON(self, ok_button.GetId(), self._on_ok)
@@ -229,13 +234,52 @@ class NewEventDlg(wx.Dialog):
         vbox.Add(hbox, 1, wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM, 10)
         self.SetDefaultItem(ok_button)
         self.SetSizer(vbox)
+        self._textctrl_start_time.SetFocus()
 
     def _on_close(self,e):
         self.Close()
 
     def _on_ok(self,e):
-        event = Event(self._event_start_time.GetValue(),
-                      self._event_end_time.GetValue(),
-                      self._event_name.GetValue())
+        start = self._textctrl_start_time.GetValue().strip().split('-')
+        end   = self._textctrl_end_time.GetValue().strip().split('-')
+        name  = self._textctrl_name.GetValue().strip()
+
+        if len(start) != 3:
+            display_error_message('Date format must be "year-month-day"')
+            set_focus_on_textctrl(self._textctrl_start_time)
+            return
+
+        if len(end) != 3:
+            display_error_message('Date format must be "year-month-day"')
+            set_focus_on_textctrl(self._textctrl_end_time)
+            return
+
+        if len(name) == 0:
+            display_error_message("Name: Can't be empty")
+            set_focus_on_textctrl(self._textctrl_name)
+            return
+
+        start_time = dt(int(start[0]),int(start[1]),int(start[2]))
+        end_time   = dt(int(end[0]),int(end[1]),int(end[2]))
+
+        if start_time > end_time:
+            display_error_message("End must be > Start")
+            set_focus_on_textctrl(self._textctrl_start_time)
+            return
+
+        event = Event(start_time,end_time, name)
+
         self._timeline.new_event(event)
-        pass
+
+        if self._cb.GetValue():
+            self.Close()
+
+
+def set_focus_on_textctrl(control):
+    control.SetFocus()
+    control.SelectAll()
+
+def display_error_message(message):
+    """Display an error message in a modal dialog box"""
+    dial = wx.MessageDialog(None, message, 'Error', wx.OK | wx.ICON_ERROR)
+    dial.ShowModal()
