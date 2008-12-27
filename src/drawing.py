@@ -15,9 +15,9 @@ class DrawingAlgorithm(object):
         """
         This is the interface.
 
-        dc - used to do the actual drawing
-        time_period - what period should of the timeline should be visible
-        events - events inside time_period that should be drawn
+        - dc: used to do the actual drawing
+        - time_period: what period should of the timeline should be visible
+        - events: events inside time_period that should be drawn
 
         When the dc is temporarily stored in a class variable such as self.dc,
         this class variable must be deleted before the draw method ends.
@@ -35,6 +35,7 @@ class Metrics(object):
         self.time_period = time_period
 
     def calc_x(self, time):
+        """Calculate the x position for the given time."""
         # This is really ugly, but it works relatively well. If the / operator
         # were defined for timedelta this method could be written much simpler.
         pixperiod = self.time_period.delta() / self.width
@@ -54,6 +55,7 @@ class Metrics(object):
         return x
 
     def calc_width(self, time_period):
+        """Calculate the with in pixels for the given time_period."""
         return (self.calc_x(time_period.end_time) -
                 self.calc_x(time_period.start_time))
 
