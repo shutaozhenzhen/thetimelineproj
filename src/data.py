@@ -25,7 +25,7 @@ class Timeline(object):
 
 
 class Event(object):
-    """Represents one event on a timeline"""
+    """Represents one event on a timeline."""
 
     def __init__(self, start_time, end_time, text):
         """start_time and end_time shall be of the type datetime"""
@@ -43,6 +43,8 @@ class Event(object):
 
 
 class TimePeriod(object):
+    """
+    """
 
     def __init__(self, start_time, end_time):
         self.start_time = start_time
