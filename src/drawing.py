@@ -7,6 +7,8 @@ from datetime import timedelta
 
 import wx
 
+from data import div_timedeltas
+
 
 class DrawingAlgorithm(object):
     """Base class for timeline drawing algorithms."""
@@ -36,23 +38,9 @@ class Metrics(object):
 
     def calc_x(self, time):
         """Calculate the x position for the given time."""
-        # This is really ugly, but it works relatively well. If the / operator
-        # were defined for timedelta this method could be written much simpler.
-        pixperiod = self.time_period.delta() / self.width
-        deltatotime = time - self.time_period.start_time
-        tempdelta = timedelta()
-        x = 0
-        if tempdelta < deltatotime:
-            # positive
-            while tempdelta <= deltatotime:
-                x += 1
-                tempdelta += pixperiod
-        else:
-            # negative
-            while tempdelta >= deltatotime:
-                x -= 1
-                tempdelta -= pixperiod
-        return x
+        delta1 = div_timedeltas(time - self.time_period.start_time,
+                                self.time_period.delta())
+        return self.width * delta1
 
     def calc_width(self, time_period):
         """Calculate the with in pixels for the given time_period."""

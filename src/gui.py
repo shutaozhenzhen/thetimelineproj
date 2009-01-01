@@ -32,7 +32,7 @@ class MainFrame(wx.Frame):
 
     def __init__(self):
         wx.Frame.__init__(self, None, -1, "The Timeline Project",
-                          wx.Point(0, 0), wx.Size(600, 400),
+                          wx.Point(0, 0), wx.Size(900, 400),
                           style=wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE)
         # Build GUI
         self.main_panel = MainPanel(self)
@@ -125,16 +125,20 @@ class DrawingArea(wx.Window):
         self.SetBackgroundColour(wx.WHITE)
         self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
         self.SetCursor(wx.CROSS_CURSOR)
+        self.SetFocus()
         # Connect events
         wx.EVT_SIZE(self, self._on_size)
         wx.EVT_PAINT(self, self._on_paint)
         wx.EVT_MOUSEWHEEL(self, self._on_mouse_wheel)
+        wx.EVT_KEY_DOWN(self, self._on_key_down)
+        wx.EVT_KEY_UP(self, self._on_key_up)
         # Initialize data members
         self.bgbuf = None
         self.timeline = None
         self.time_period = None
         self.current_events = None
         self.drawing_algorithm = drawing.get_algorithm()
+        self.ctrl_down = False
         logging.debug("Init done in DrawingArea")
 
     def set_timeline(self, timeline):
@@ -172,12 +176,26 @@ class DrawingArea(wx.Window):
 
     def _on_mouse_wheel(self, evt):
         """Zooms the timeline when the mouse wheel is scrolled."""
-        if (evt.m_wheelRotation < 0):
-            self.time_period.zoom(-1)
+        if self.ctrl_down:
+            if (evt.m_wheelRotation < 0):
+                self.time_period.zoom(-1)
+            else:
+                self.time_period.zoom(1)
         else:
-            self.time_period.zoom(1)
+            if (evt.m_wheelRotation < 0):
+                self.time_period.move(1)
+            else:
+                self.time_period.move(-1)
         self.current_events = self.timeline.get_events(self.time_period)
         self._draw_timeline()
+
+    def _on_key_down(self, evt):
+        if evt.GetKeyCode() == wx.WXK_CONTROL:
+            self.ctrl_down = True
+
+    def _on_key_up(self, evt):
+        if evt.GetKeyCode() == wx.WXK_CONTROL:
+            self.ctrl_down = False
 
     def _draw_timeline(self):
         """
