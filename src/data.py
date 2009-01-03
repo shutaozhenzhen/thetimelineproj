@@ -9,6 +9,11 @@ from datetime import datetime as dt
 from datetime import timedelta
 
 
+# To save computation power (used by `div_timedeltas`)
+US_PER_SEC = 1000000 
+US_PER_DAY = 24 * 60 * 60 * US_PER_SEC
+
+
 class Timeline(object):
     """Base class that represent the interface for a timeline."""
 
@@ -104,11 +109,9 @@ def div_timedeltas(td1, td2):
     # Since Python can handle infinitely large numbers, this solution works. It
     # might however not be optimal. If you are clever, you should be able to
     # treat the different parts individually. But this is simple.
-    us_per_sec = 1000000 
-    us_per_day = 24 * 60 * 60 * us_per_sec
-    total_us1 = (td1.days * us_per_day + td1.seconds * us_per_sec +
+    total_us1 = (td1.days * US_PER_DAY + td1.seconds * US_PER_SEC +
                  td1.microseconds)
-    total_us2 = (td2.days * us_per_day + td2.seconds * us_per_sec +
+    total_us2 = (td2.days * US_PER_DAY + td2.seconds * US_PER_SEC +
                  td2.microseconds)
     # Make sure that the result is a floating point number
     return total_us1 / float(total_us2)
