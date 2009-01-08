@@ -170,7 +170,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         self.black_dashed_pen.SetCap(wx.CAP_BUTT)
         self.grey_solid_pen = wx.Pen(wx.Color(200, 200, 200), 1, wx.SOLID)
         self.black_solid_brush = wx.Brush(wx.Color(0, 0, 0), wx.SOLID)
-        self.grey_solid_brush = wx.Brush(wx.Color(200, 200, 200), wx.SOLID)
+        self.lightgrey_solid_brush = wx.Brush(wx.Color(230, 230, 230), wx.SOLID)
         # Init the list of strips in the order larger to smaller
         self.strips = []
         self.strips.append(StripDecade())
@@ -305,8 +305,10 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         start, end = period_selection
         start_x = self.metrics.calc_x(start)
         end_x = self.metrics.calc_x(end)
-        self.dc.SetBrush(self.grey_solid_brush)
-        self.dc.DrawRectangle(start_x, 0, end_x - start_x + 1, self.metrics.height)
+        self.dc.SetBrush(self.lightgrey_solid_brush)
+        self.dc.SetPen(wx.TRANSPARENT_PEN)
+        self.dc.DrawRectangle(start_x, 0,
+                              end_x - start_x + 1, self.metrics.height)
 
     def __draw_bg(self):
         """
