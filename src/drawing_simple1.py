@@ -210,13 +210,13 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         major_strip, minor_strip = self.__choose_strip()
         start, end = period_selection
         new_start = minor_strip.start(start)
-        new_end = minor_strip.start(end).increment()
+        new_end = minor_strip.increment(minor_strip.start(end))
         return (new_start, new_end)
 
     def __calc_rects(self, events):
         """
         Calculate rectangles for all events.
-        
+
         The rectangles define the areas in which the events can draw
         themselves.
 
@@ -306,7 +306,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         start_x = self.metrics.calc_x(start)
         end_x = self.metrics.calc_x(end)
         self.dc.SetBrush(self.grey_solid_brush)
-        self.dc.DrawRectangle(start_x, 0, end_x, self.metrics.height)
+        self.dc.DrawRectangle(start_x, 0, end_x - start_x + 1, self.metrics.height)
 
     def __draw_bg(self):
         """

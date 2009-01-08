@@ -114,6 +114,7 @@ class FileTimeline(Timeline):
                        event.time_period.end_time.second,
                        event.text)
                 f.writelines(line)
+                self.events.append(event)
             except Exception, e:
                 logging.fatal('Error when adding record to file ' + self._data_source,
                               exc_info=e)
