@@ -119,6 +119,7 @@ class DrawingArea(wx.Window):
     """
 
     _marked_time = 0  # A time is marked when the left mouse button is pressed
+    _mark_selection = False # Processing flag indicatingongoing selection
 
     def __init__(self, parent):
         wx.Window.__init__(self, parent, style=wx.NO_BORDER)
@@ -131,6 +132,7 @@ class DrawingArea(wx.Window):
         wx.EVT_SIZE(self, self._on_size)
         wx.EVT_PAINT(self, self._on_paint)
         wx.EVT_LEFT_DOWN(self, self._on_left_down_event)
+        wx.EVT_LEFT_UP(self, self._on_left_up_event)
         wx.EVT_MOTION(self, self._on_motion_event)
         wx.EVT_MOUSEWHEEL(self, self._on_mouse_wheel)
         wx.EVT_LEFT_DCLICK(self, self._on_left_dclick)
@@ -141,7 +143,6 @@ class DrawingArea(wx.Window):
         self.bgbuf = None
         self.timeline = None
         self.time_period = None
-        self.current_events = None
         self.drawing_algorithm = drawing.get_algorithm()
         self.ctrl_down = False
         logging.debug("Init done in DrawingArea")
@@ -149,7 +150,6 @@ class DrawingArea(wx.Window):
     def set_timeline(self, timeline):
         self.timeline = timeline
         self.time_period = timeline.preferred_period()
-        self.current_events = self.timeline.get_events(self.time_period)
         self._draw_timeline()
 
     def _on_size(self, event):
@@ -191,7 +191,6 @@ class DrawingArea(wx.Window):
                 self.time_period.move(1)
             else:
                 self.time_period.move(-1)
-        self.current_events = self.timeline.get_events(self.time_period)
         self._draw_timeline()
 
     def _on_left_down_event(self, evt):
@@ -200,18 +199,47 @@ class DrawingArea(wx.Window):
         evt.Skip()
         logging.debug("Marked time " + self._marked_time.isoformat('-'))
 
+    def _on_left_up_event(self, evt):
+        """The left mouse button has been released."""
+        if self._mark_selection:
+            self._mark_selection = False
+            period_selection = self.__get_period_selection(evt.m_x)
+            start, end = period_selection
+            create_new_event(self.timeline, start.isoformat('-'),
+                             end.isoformat('-'))
+            self._draw_timeline()
+
     def _on_motion_event(self, evt):
         """The mouse has been moved."""
         if not evt.Dragging:
             return
         if not evt.m_leftDown:
             return
-        current_time = self.drawing_algorithm.metrics.get_time(evt.m_x)
-        delta = current_time - self._marked_time
-        self.time_period.start_time -= delta
-        self.time_period.end_time   -= delta
-        self.current_events = self.timeline.get_events(self.time_period)
-        self._draw_timeline()
+        if evt.m_controlDown:
+            self.__mark_selected_minor_strips(evt.m_x)
+        else:
+            self.__scoll_timeline(evt.m_x)
+
+    def __scoll_timeline(self, current_x):
+            current_time = self.drawing_algorithm.metrics.get_time(current_x)
+            delta = current_time - self._marked_time
+            self.time_period.start_time -= delta
+            self.time_period.end_time   -= delta
+            self._draw_timeline()
+
+    def __mark_selected_minor_strips(self, current_x):
+        self._mark_selection = True
+        period_selection = self.__get_period_selection(current_x)
+        self._draw_timeline(period_selection)
+
+    def __get_period_selection(self, current_x):
+        """Return a tuple containing the start and end time of a selection"""
+        start = self._marked_time
+        end   = self.drawing_algorithm.metrics.get_time(current_x)
+        if start > end:
+            start, end = end, start
+        period_selection = self.drawing_algorithm.snap_selection((start,end))
+        return period_selection
 
     def _on_left_dclick(self, evt):
         """The left mouse button has been doubleclicked"""
@@ -230,7 +258,7 @@ class DrawingArea(wx.Window):
         if evt.GetKeyCode() == wx.WXK_CONTROL:
             self.ctrl_down = False
 
-    def _draw_timeline(self):
+    def _draw_timeline(self, period_selection=None):
         """
         Draws the timeline onto the background buffer.
         """
@@ -242,8 +270,10 @@ class DrawingArea(wx.Window):
             memdc.SetBackground(wx.Brush(wx.WHITE, wx.SOLID))
             memdc.Clear()
             if self.timeline:
+                current_events = self.timeline.get_events(self.time_period)
                 self.drawing_algorithm.draw(memdc, self.time_period,
-                                            self.current_events)
+                                            current_events,
+                                            period_selection)
             memdc.EndDrawing()
             self.Refresh()
         except Exception, e:
