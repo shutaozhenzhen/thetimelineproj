@@ -82,9 +82,7 @@ class MainFrame(wx.Frame):
     def _on_new_event(self, evt):
         """Event handler for the New Event menu item"""
         logging.debug("New Event event MainFrame")
-        dlg = NewEventDlg(None, -1, 'Create a new Event', self.timeline)
-        dlg.ShowModal()
-        dlg.Destroy()
+        create_new_event(self.timeline)
         self.refresh_timeline()
 
 
@@ -105,7 +103,8 @@ class MainPanel(wx.Panel):
         self.globalSizer.Add(self.drawing_area, flag=wx.GROW, proportion=2)
         self.globalSizer.SetSizeHints(self)
         self.SetSizer(self.globalSizer)
-
+        # Initialize data members
+        self.frame = parent
 
 class DrawingArea(wx.Window):
     """
@@ -134,9 +133,11 @@ class DrawingArea(wx.Window):
         wx.EVT_LEFT_DOWN(self, self._on_left_down_event)
         wx.EVT_MOTION(self, self._on_motion_event)
         wx.EVT_MOUSEWHEEL(self, self._on_mouse_wheel)
+        wx.EVT_LEFT_DCLICK(self, self._on_left_dclick)
         wx.EVT_KEY_DOWN(self, self._on_key_down)
         wx.EVT_KEY_UP(self, self._on_key_up)
         # Initialize data members
+        self.panel = parent
         self.bgbuf = None
         self.timeline = None
         self.time_period = None
@@ -214,6 +215,15 @@ class DrawingArea(wx.Window):
         self.current_events = self.timeline.get_events(self.time_period)
         self._draw_timeline()
 
+    def _on_left_dclick(self, evt):
+        """The left mouse button has been doubleclicked"""
+        logging.debug("Left doubleclick")
+        create_new_event(self.timeline,
+                         self._marked_time.isoformat('-'),
+                         self._marked_time.isoformat('-'))
+
+        self.panel.frame.refresh_timeline()
+
     def _on_key_down(self, evt):
         if evt.GetKeyCode() == wx.WXK_CONTROL:
             self.ctrl_down = True
@@ -252,7 +262,7 @@ class NewEventDlg(wx.Dialog):
     _timeline = None
     _cb = None
 
-    def __init__(self, parent, id, title, timeline):
+    def __init__(self, parent, id, title, timeline, start=None, end=None):
         self._timeline = timeline
         wx.Dialog.__init__(self, parent, id, title, size=(250, 220))
         panel = wx.Panel(self, -1)
@@ -263,9 +273,18 @@ class NewEventDlg(wx.Dialog):
         wx.StaticText(panel, -1, "Name:" , (15,92), style=wx.ALIGN_LEFT)
         self._cb = wx.CheckBox  (panel, -1, 'Close on OK', (15, 120 ))
         self._cb.SetValue(True)
-        self._textctrl_start_time = wx.TextCtrl(panel, -1, '', (50, 30))
-        self._textctrl_end_time = wx.TextCtrl(panel, -1, '', (50, 60))
-        self._textctrl_name = wx.TextCtrl(panel, -1, '', (50, 90), (175,20))
+        if start == None:
+            start = ''
+        else:
+            start = start.split('.')[0]
+        self._textctrl_start_time = wx.TextCtrl(panel, -1, start, (50, 30),
+                                                (175,20))
+        if end == None:
+            end = ''
+        else:
+            end = end.split('.')[0]
+        self._textctrl_end_time = wx.TextCtrl(panel, -1, end, (50, 60), (175,20))
+        self._textctrl_name     = wx.TextCtrl(panel, -1, '', (50, 90), (175,20))
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         ok_button = wx.Button(self, -1, 'Ok', size=(50, 25))
         wx.EVT_BUTTON(self, ok_button.GetId(), self._on_ok)
@@ -277,33 +296,40 @@ class NewEventDlg(wx.Dialog):
         vbox.Add(hbox, 1, wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM, 10)
         self.SetDefaultItem(ok_button)
         self.SetSizer(vbox)
-        self._textctrl_start_time.SetFocus()
+        if start == '':
+            self._textctrl_start_time.SetFocus()
+        elif end == '':
+            self._textctrl_end_time.SetFocus()
+        else:
+            self._textctrl_name.SetFocus()
+
 
     def _on_close(self,e):
         self.Close()
 
     def _on_ok(self,e):
-        start = self._textctrl_start_time.GetValue().strip().split('-')
-        end   = self._textctrl_end_time.GetValue().strip().split('-')
-        name  = self._textctrl_name.GetValue().strip()
-
-        if len(start) != 3:
-            display_error_message('Date format must be "year-month-day"')
+        try:
+            start_time = todt(self._textctrl_start_time.GetValue())
+        except:
+            display_error_message('Date format must be "year-month-day"' +
+                                  ' or "year-month-day-hour:minue:second"')
             set_focus_on_textctrl(self._textctrl_start_time)
             return
 
-        if len(end) != 3:
-            display_error_message('Date format must be "year-month-day"')
+        try:
+            end_time = todt(self._textctrl_end_time.GetValue())
+        except:
+            display_error_message('Date format must be "year-month-day"' +
+                                  ' or "year-month-day-hour:minue:second"')
             set_focus_on_textctrl(self._textctrl_end_time)
             return
+
+        name  = self._textctrl_name.GetValue().strip()
 
         if len(name) == 0:
             display_error_message("Name: Can't be empty")
             set_focus_on_textctrl(self._textctrl_name)
             return
-
-        start_time = dt(int(start[0]),int(start[1]),int(start[2]))
-        end_time   = dt(int(end[0]),int(end[1]),int(end[2]))
 
         if start_time > end_time:
             display_error_message("End must be > Start")
@@ -317,6 +343,31 @@ class NewEventDlg(wx.Dialog):
         if self._cb.GetValue():
             self.Close()
 
+
+def todt(datetime_string):
+    """Convert a string to a datetime object"""
+    args = datetime_string.strip().split('-')
+    # Date only
+    if len(args) == 3:
+        return dt(int(args[0]),int(args[1]),int(args[2]))
+    # Date and time
+    elif len(args) == 4:
+        time = args[3].split(':')
+        if len(time) != 3:
+            raise Excepetion("Unknown datetime format='%s'" % datetime_string)
+        return dt(int(args[0]),int(args[1]),int(args[2]),
+                  int(time[0]),int(time[1]),int(time[2]))
+    # Unknown format
+    else:
+        raise Excepetion("Unknown datetime format='%s'" % datetime_string)
+
+def create_new_event(timeline, start=None, end=None):
+    """Create a new event"""
+    if start == None:
+        start = ''
+    dlg = NewEventDlg(None, -1, 'Create a new Event', timeline, start, end)
+    dlg.ShowModal()
+    dlg.Destroy()
 
 def set_focus_on_textctrl(control):
     control.SetFocus()

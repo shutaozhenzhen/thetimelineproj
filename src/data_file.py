@@ -46,7 +46,9 @@ class FileTimeline(Timeline):
         all separated with commas. The third argument is a text string which
         is the name of the event.
         One row can look like this:
-            2008,11,5  ; 2008, 11, 15 ; Foobar bar
+            2008-11-5  ; 2008-11-15 ; Foobar bar
+        or
+            2008-11-5-10:12:37  ; 2008-11-15-11:23:42 ; Foobar bar
         """
         if len(line) == 0:
             return
@@ -61,8 +63,26 @@ class FileTimeline(Timeline):
             # values separated with commas
             arg1 = args[0].split('-')
             arg2 = args[1].split('-')
-            start_time = dt(int(arg1[0]),int(arg1[1]),int(arg1[2]))
-            end_time   = dt(int(arg2[0]),int(arg2[1]),int(arg2[2]))
+
+            if len(arg1) > 3:
+                arg11 = arg1[3].split(':')
+                if (len(arg11) > 2):
+                    start_time = dt(int(arg1[0]),int(arg1[1]),int(arg1[2]),
+                                    int(arg11[0]),int(arg11[1]),int(arg11[2]))
+                else:
+                    start_time = dt(int(arg1[0]),int(arg1[1]),int(arg1[2]))
+            else:
+                start_time = dt(int(arg1[0]),int(arg1[1]),int(arg1[2]))
+
+            if len(arg2) > 3:
+                arg22 = arg2[3].split(':')
+                if (len(arg22) > 2):
+                    end_time   = dt(int(arg2[0]),int(arg2[1]),int(arg2[2]),int(arg22[0]),int(arg22[1]),int(arg22[2]))
+                else:
+                    end_time   = dt(int(arg2[0]),int(arg2[1]),int(arg2[2]))
+            else:
+                end_time   = dt(int(arg2[0]),int(arg2[1]),int(arg2[2]))
+
             event      = Event(start_time,end_time, args[2])
             self.events.append(event)
         except Exception, e:
@@ -80,12 +100,18 @@ class FileTimeline(Timeline):
         f = open(self._data_source, 'a')
         try:
             try:
-                line = "%s-%s-%s;%s-%s-%s;%s\n" % (event.time_period.start_time.year,
+                line = "%s-%s-%s-%s:%s:%s;%s-%s-%s-%s:%s:%s;%s\n" % (event.time_period.start_time.year,
                        event.time_period.start_time.month,
                        event.time_period.start_time.day,
+                       event.time_period.start_time.hour,
+                       event.time_period.start_time.minute,
+                       event.time_period.start_time.second,
                        event.time_period.end_time.year,
                        event.time_period.end_time.month,
                        event.time_period.end_time.day,
+                       event.time_period.end_time.hour,
+                       event.time_period.end_time.minute,
+                       event.time_period.end_time.second,
                        event.text)
                 f.writelines(line)
             except Exception, e:
