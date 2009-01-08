@@ -19,15 +19,17 @@ from drawing import Metrics
 from data import TimePeriod
 
 
-OUTER_PADDING = 5      # Space between event boxes
-INNER_PADDING = 3      # Space inside event box to text
-THRESHOLD_PIX = 20     # Periods smaller than this are considered events
-BASELINE_PADDING = 15  # Extra space to move events away from baseline
+OUTER_PADDING = 5      # Space between event boxes (pixels)
+INNER_PADDING = 3      # Space inside event box to text (pixels)
+BASELINE_PADDING = 15  # Extra space to move events away from baseline (pixels)
+PERIOD_THRESHOLD = 20  # Periods smaller than this are drawn as events (pixels)
 
 
 class Strip(object):
     """
-    Represent a strip (month or day for example).
+    An interface for strips (month or day for example).
+
+    The different strips are implemented in subclasses below.
 
     The timeline is divided in major and minor strips. The minor strip might
     for example be days, and the major strip month. Major strips are divided
@@ -37,8 +39,8 @@ class Strip(object):
 
     def use_as_minor(self, time_period):
         """
-        Return if this strip should be used as minor strip for the given time
-        period.
+        Return True if this strip should be used as minor strip for the given
+        time period, otherwise False.
 
         The strip before this one in `strips` will then be used as major.
 
@@ -160,11 +162,11 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
     def __init__(self):
         # Fonts and pens we use when drawing
         self.header_font = drawing.get_default_font(12, True)
-        self.event_font = drawing.get_default_font(8)
-        self.solid_pen = wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID)
-        self.dashed_pen = wx.Pen(wx.Color(200, 200, 200), 1, wx.LONG_DASH)
-        self.solid_pen2 = wx.Pen(wx.Color(200, 200, 200), 1, wx.SOLID)
-        self.solid_brush = wx.Brush(wx.Color(0, 0, 0), wx.SOLID)
+        self.small_text_font = drawing.get_default_font(8)
+        self.black_solid_pen = wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID)
+        self.black_dashed_pen = wx.Pen(wx.Color(200, 200, 200), 1, wx.LONG_DASH)
+        self.grey_solid_pen = wx.Pen(wx.Color(200, 200, 200), 1, wx.SOLID)
+        self.black_solid_brush = wx.Brush(wx.Color(0, 0, 0), wx.SOLID)
         # Init the list of strips in the order larger to smaller
         self.strips = []
         self.strips.append(StripDecade())
@@ -204,12 +206,15 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         
         The rectangles define the areas in which the events can draw
         themselves.
+
+        During the calculations, the outer padding is part of the rectangles to
+        make the calculations easier. Outer padding is removed in the end.
         """
-        self.dc.SetFont(self.event_font)
+        self.dc.SetFont(self.small_text_font)
         for event in events:
             tw, th = self.dc.GetTextExtent(event.text)
             ew = self.metrics.calc_width(event.time_period)
-            if ew > THRESHOLD_PIX:
+            if ew > PERIOD_THRESHOLD:
                 # Treat as period (periods are placed below the baseline, with
                 # indicates length of period)
                 rw = ew + 2 * OUTER_PADDING
@@ -290,8 +295,8 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         """
         major_strip, minor_strip = self.__choose_strip()
         # Minor strips
-        self.dc.SetFont(self.event_font)
-        self.dc.SetPen(self.dashed_pen)
+        self.dc.SetFont(self.small_text_font)
+        self.dc.SetPen(self.black_dashed_pen)
         for tp in self.minor_strip_data:
             # Divider line
             x = self.metrics.calc_x(tp.end_time)
@@ -304,7 +309,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
             self.dc.DrawText(label, middle - tw / 2, middley - th)
         # Major strips
         self.dc.SetFont(self.header_font)
-        self.dc.SetPen(self.solid_pen2)
+        self.dc.SetPen(self.grey_solid_pen)
         for tp in self.major_strip_data:
             # Divider line
             x = self.metrics.calc_x(tp.end_time)
@@ -328,11 +333,11 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
                     x = left + INNER_PADDING
             self.dc.DrawText(label, x, INNER_PADDING)
         # Main divider line
-        self.dc.SetPen(self.solid_pen)
+        self.dc.SetPen(self.black_solid_pen)
         self.dc.DrawLine(0, self.metrics.half_height,
                          self.metrics.width, self.metrics.half_height)
         # Lines to all events
-        self.dc.SetBrush(self.solid_brush)
+        self.dc.SetBrush(self.black_solid_brush)
         for (event, rect) in self.event_data:
             if rect.Y < self.metrics.half_height:
                 x = rect.X + rect.Width / 2
@@ -342,8 +347,8 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
 
     def __draw_events(self):
         """Draw all event boxes and the text inside them."""
-        self.dc.SetFont(self.event_font)
-        self.dc.SetPen(self.solid_pen)
+        self.dc.SetFont(self.small_text_font)
+        self.dc.SetPen(self.black_solid_pen)
         for (event, rect) in self.event_data:
             # Ensure that we can't draw outside rectangle
             self.dc.DestroyClippingRegion()
