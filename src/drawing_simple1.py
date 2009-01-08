@@ -232,7 +232,8 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
                 # indicates length of period)
                 rw = ew + 2 * OUTER_PADDING
                 rh = th + 2 * INNER_PADDING + 2 * OUTER_PADDING
-                rx = self.metrics.calc_x(event.mean_time()) - rw / 2
+                rx = (self.metrics.calc_x(event.time_period.start_time) -
+                      OUTER_PADDING)
                 ry = self.metrics.half_height + BASELINE_PADDING
                 movedir = 1
             else:

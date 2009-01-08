@@ -50,12 +50,13 @@ class Metrics(object):
         """Calculate the x position for the given time."""
         delta1 = div_timedeltas(time - self.time_period.start_time,
                                 self.time_period.delta())
-        return self.width * delta1
+        float_res = self.width * delta1
+        return int(round(float_res))
 
     def calc_width(self, time_period):
         """Calculate the with in pixels for the given time_period."""
         return (self.calc_x(time_period.end_time) -
-                self.calc_x(time_period.start_time))
+                self.calc_x(time_period.start_time)) + 1
 
     def get_time(self, x):
         """Calculate the time at pixel `x`."""
