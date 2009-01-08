@@ -65,7 +65,7 @@ class TimePeriod(object):
         return time >= self.start_time and time <= self.end_time
 
     def overlap(self, time_period):
-        return not (time_period.end_time < self.start_time and \
+        return not (time_period.end_time < self.start_time or
                     time_period.start_time > self.end_time)
 
     def is_period(self):
