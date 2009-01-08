@@ -96,6 +96,18 @@ class TimePeriod(object):
         return self.end_time - self.start_time
 
 
+def delta_to_microseconds(delta):
+    """Convert a timedelta into microseconds."""
+    return (delta.days * US_PER_DAY +
+            delta.seconds * US_PER_SEC +
+            delta.microseconds)
+
+
+def microseconds_to_delta(microsecs):
+    """Convert microseconds into a timedelta."""
+    return timedelta(microseconds=microsecs)
+
+
 def mult_timedelta(td, num):
     """Calculate a new timedelta that is `num` times larger than `td`."""
     days = td.days * num
@@ -109,9 +121,7 @@ def div_timedeltas(td1, td2):
     # Since Python can handle infinitely large numbers, this solution works. It
     # might however not be optimal. If you are clever, you should be able to
     # treat the different parts individually. But this is simple.
-    total_us1 = (td1.days * US_PER_DAY + td1.seconds * US_PER_SEC +
-                 td1.microseconds)
-    total_us2 = (td2.days * US_PER_DAY + td2.seconds * US_PER_SEC +
-                 td2.microseconds)
+    total_us1 = delta_to_microseconds(td1)
+    total_us2 = delta_to_microseconds(td2)
     # Make sure that the result is a floating point number
     return total_us1 / float(total_us2)
