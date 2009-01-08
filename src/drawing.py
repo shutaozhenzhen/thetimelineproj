@@ -47,6 +47,22 @@ class Metrics(object):
         return (self.calc_x(time_period.end_time) -
                 self.calc_x(time_period.start_time))
 
+    def delta_to_microseconds(self, delta):
+        """Convert a timedelta into microseconds"""
+        return (delta.microseconds +
+                delta.seconds * 1000000 +
+                delta.days * 24 * 3600 * 1000000)
+
+    def microseconds_to_delta(self, microsecs):
+        """Convert miceoseconds into a timedelta"""
+        return timedelta(microseconds = microsecs)
+
+    def get_time(self, x, time_period):
+        """Return the time at pixel x position of the time_period"""
+        microsecs = self.delta_to_microseconds(self.time_period.delta())
+        microsecs = microsecs * float(x) / self.width
+        return time_period.start_time + self.microseconds_to_delta(microsecs)
+
 
 def get_default_font(size, bold=False):
     if bold:
@@ -69,7 +85,7 @@ from drawing_simple2 import SimpleDrawingAlgorithm2
 def get_algorithm():
     """Factory method."""
     return _drawing_algorithms.get(_drawing_algorithm, SimpleDrawingAlgorithm1)()
-    
+
 
 _drawing_algorithm  = None
 _drawing_algorithms = {'simple1': SimpleDrawingAlgorithm1,

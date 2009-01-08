@@ -119,6 +119,8 @@ class DrawingArea(wx.Window):
     sure that the timeline is redrawn whenever it is needed.
     """
 
+    _marked_time = 0  # A time is marked when the left mouse button is pressed
+
     def __init__(self, parent):
         wx.Window.__init__(self, parent, style=wx.NO_BORDER)
         # Definitions of colors and styles etc.
@@ -129,6 +131,8 @@ class DrawingArea(wx.Window):
         # Connect events
         wx.EVT_SIZE(self, self._on_size)
         wx.EVT_PAINT(self, self._on_paint)
+        wx.EVT_LEFT_DOWN(self, self._on_left_down_event)
+        wx.EVT_MOTION(self, self._on_motion_event)
         wx.EVT_MOUSEWHEEL(self, self._on_mouse_wheel)
         wx.EVT_KEY_DOWN(self, self._on_key_down)
         wx.EVT_KEY_UP(self, self._on_key_up)
@@ -186,6 +190,27 @@ class DrawingArea(wx.Window):
                 self.time_period.move(1)
             else:
                 self.time_period.move(-1)
+        self.current_events = self.timeline.get_events(self.time_period)
+        self._draw_timeline()
+
+    def _on_left_down_event(self, evt):
+        """The left mouse button has been pressed."""
+        self._marked_time = self.drawing_algorithm.metrics.get_time(evt.m_x,
+                                                               self.time_period)
+        evt.Skip()
+        logging.debug("Marked time " + self._marked_time.isoformat('-'))
+
+    def _on_motion_event(self, evt):
+        """The mouse has been moved."""
+        if not evt.Dragging:
+            return
+        if not evt.m_leftDown:
+            return
+        current_time = self.drawing_algorithm.metrics.get_time(evt.m_x,
+                                                               self.time_period)
+        delta = current_time - self._marked_time
+        self.time_period.start_time -= delta
+        self.time_period.end_time   -= delta
         self.current_events = self.timeline.get_events(self.time_period)
         self._draw_timeline()
 
