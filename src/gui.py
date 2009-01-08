@@ -136,15 +136,12 @@ class DrawingArea(wx.Window):
         wx.EVT_MOTION(self, self._on_motion_event)
         wx.EVT_MOUSEWHEEL(self, self._on_mouse_wheel)
         wx.EVT_LEFT_DCLICK(self, self._on_left_dclick)
-        wx.EVT_KEY_DOWN(self, self._on_key_down)
-        wx.EVT_KEY_UP(self, self._on_key_up)
         # Initialize data members
         self.panel = parent
         self.bgbuf = None
         self.timeline = None
         self.time_period = None
         self.drawing_algorithm = drawing.get_algorithm()
-        self.ctrl_down = False
         logging.debug("Init done in DrawingArea")
 
     def set_timeline(self, timeline):
@@ -181,7 +178,7 @@ class DrawingArea(wx.Window):
 
     def _on_mouse_wheel(self, evt):
         """Zooms the timeline when the mouse wheel is scrolled."""
-        if self.ctrl_down:
+        if evt.ControlDown():
             if (evt.m_wheelRotation < 0):
                 self.time_period.zoom(-1)
             else:
@@ -214,7 +211,6 @@ class DrawingArea(wx.Window):
         create_new_event(self.timeline, start.isoformat('-'),
                          end.isoformat('-'))
         self._draw_timeline()
-        self.ctrl_down = False
 
     def _on_motion_event(self, evt):
         """The mouse has been moved."""
@@ -255,15 +251,6 @@ class DrawingArea(wx.Window):
                          self._marked_time.isoformat('-'),
                          self._marked_time.isoformat('-'))
         self._draw_timeline()
-        self.ctrl_down = False
-
-    def _on_key_down(self, evt):
-        if evt.GetKeyCode() == wx.WXK_CONTROL:
-            self.ctrl_down = True
-
-    def _on_key_up(self, evt):
-        if evt.GetKeyCode() == wx.WXK_CONTROL:
-            self.ctrl_down = False
 
     def _draw_timeline(self, period_selection=None):
         """
