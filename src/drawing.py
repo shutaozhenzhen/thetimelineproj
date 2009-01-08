@@ -15,18 +15,26 @@ from data import delta_to_microseconds
 class DrawingAlgorithm(object):
     """Base class for timeline drawing algorithms."""
 
-    def draw(self, dc, time_period, events):
+    def draw(self, dc, time_period, events, period_selection=None):
         """
         This is the interface.
 
         - dc: used to do the actual drawing
         - time_period: what period should of the timeline should be visible
         - events: events inside time_period that should be drawn
+        - period_selection: tuple with start and end time indication selection
 
         When the dc is temporarily stored in a class variable such as self.dc,
         this class variable must be deleted before the draw method ends.
         """
         pass
+
+    def snap_selection(self, period_selection):
+        """
+        Return a tuple where the selection has been stretched to fit to minor
+        strip.
+        """
+        return period_selection
 
 
 class Metrics(object):

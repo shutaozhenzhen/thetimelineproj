@@ -164,11 +164,13 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         self.header_font = drawing.get_default_font(12, True)
         self.small_text_font = drawing.get_default_font(8)
         self.black_solid_pen = wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID)
+        self.red_solid_pen = wx.Pen(wx.Color(200, 0, 0), 1, wx.SOLID)
         self.black_dashed_pen = wx.Pen(wx.Color(200, 200, 200), 1, wx.USER_DASH)
         self.black_dashed_pen.SetDashes([2, 2])
         self.black_dashed_pen.SetCap(wx.CAP_BUTT)
         self.grey_solid_pen = wx.Pen(wx.Color(200, 200, 200), 1, wx.SOLID)
         self.black_solid_brush = wx.Brush(wx.Color(0, 0, 0), wx.SOLID)
+        self.grey_solid_brush = wx.Brush(wx.Color(200, 200, 200), wx.SOLID)
         # Init the list of strips in the order larger to smaller
         self.strips = []
         self.strips.append(StripDecade())
@@ -177,7 +179,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         self.strips.append(StripDay())
         self.strips.append(StripHour())
 
-    def draw(self, dc, time_period, events):
+    def draw(self, dc, time_period, events, period_selection=None):
         """
         Implement the drawing interface.
 
@@ -197,10 +199,19 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         self.__calc_rects(events)
         self.__calc_strips()
         # Perform the actual drawing
+        if period_selection:
+            self.__draw_period_selection(period_selection)
         self.__draw_bg()
         self.__draw_events()
         # Make sure to delete this one
         del self.dc
+
+    def snap_selection(self, period_selection):
+        major_strip, minor_strip = self.__choose_strip()
+        start, end = period_selection
+        new_start = minor_strip.start(start)
+        new_end = minor_strip.start(end).increment()
+        return (new_start, new_end)
 
     def __calc_rects(self, events):
         """
@@ -289,6 +300,13 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         # Zoom level is high, resort to last one
         return (self.strips[-2], self.strips[-1])
 
+    def __draw_period_selection(self, period_selection):
+        start, end = period_selection
+        start_x = self.metrics.calc_x(start)
+        end_x = self.metrics.calc_x(end)
+        self.dc.SetBrush(self.grey_solid_brush)
+        self.dc.DrawRectangle(start_x, 0, end_x, self.metrics.height)
+
     def __draw_bg(self):
         """
         Draw major and minor strips, lines to all event boxes and baseline.
@@ -328,7 +346,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
                 right = self.metrics.calc_x(tp.end_time)
                 if x + tw + INNER_PADDING > right:
                     x = right - tw - INNER_PADDING
-            elif x + tw / 2 + INNER_PADDING > self.metrics.width:
+            elif x + tw + INNER_PADDING > self.metrics.width:
                 x = self.metrics.width - tw - INNER_PADDING
                 left = self.metrics.calc_x(tp.start_time)
                 if x < left:
@@ -346,6 +364,12 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
                 y = rect.Y + rect.Height / 2
                 self.dc.DrawLine(x, y, x, self.metrics.half_height)
                 self.dc.DrawCircle(x, self.metrics.half_height, 2)
+        # Now line
+        now_time = datetime.now()
+        if self.time_period.inside(now_time):
+            self.dc.SetPen(self.red_solid_pen)
+            x = self.metrics.calc_x(now_time)
+            self.dc.DrawLine(x, 0, x, self.metrics.height)
 
     def __draw_events(self):
         """Draw all event boxes and the text inside them."""
