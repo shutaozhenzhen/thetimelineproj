@@ -196,8 +196,7 @@ class DrawingArea(wx.Window):
 
     def _on_left_down_event(self, evt):
         """The left mouse button has been pressed."""
-        self._marked_time = self.drawing_algorithm.metrics.get_time(evt.m_x,
-                                                               self.time_period)
+        self._marked_time = self.drawing_algorithm.metrics.get_time(evt.m_x)
         evt.Skip()
         logging.debug("Marked time " + self._marked_time.isoformat('-'))
 
@@ -207,8 +206,7 @@ class DrawingArea(wx.Window):
             return
         if not evt.m_leftDown:
             return
-        current_time = self.drawing_algorithm.metrics.get_time(evt.m_x,
-                                                               self.time_period)
+        current_time = self.drawing_algorithm.metrics.get_time(evt.m_x)
         delta = current_time - self._marked_time
         self.time_period.start_time -= delta
         self.time_period.end_time   -= delta
