@@ -195,19 +195,26 @@ class DrawingArea(wx.Window):
 
     def _on_left_down_event(self, evt):
         """The left mouse button has been pressed."""
-        self._marked_time = self.drawing_algorithm.metrics.get_time(evt.m_x)
-        evt.Skip()
+        self.__set_new_marked_time(evt.m_x)
+        evt.Skip()  # Needed to select the drawinf area control
+
+    def __set_new_marked_time(self, current_x):
+        self._marked_time = self.drawing_algorithm.metrics.get_time(current_x)
         logging.debug("Marked time " + self._marked_time.isoformat('-'))
 
     def _on_left_up_event(self, evt):
         """The left mouse button has been released."""
         if self._mark_selection:
-            self._mark_selection = False
-            period_selection = self.__get_period_selection(evt.m_x)
-            start, end = period_selection
-            create_new_event(self.timeline, start.isoformat('-'),
-                             end.isoformat('-'))
-            self._draw_timeline()
+            self.__end_selection_and_create_event(evt.m_x)
+
+    def __end_selection_and_create_event(self, current_x):
+        self._mark_selection = False
+        period_selection = self.__get_period_selection(current_x)
+        start, end = period_selection
+        create_new_event(self.timeline, start.isoformat('-'),
+                         end.isoformat('-'))
+        self._draw_timeline()
+        self.ctrl_down = False
 
     def _on_motion_event(self, evt):
         """The mouse has been moved."""
@@ -247,8 +254,8 @@ class DrawingArea(wx.Window):
         create_new_event(self.timeline,
                          self._marked_time.isoformat('-'),
                          self._marked_time.isoformat('-'))
-
-        self.panel.frame.refresh_timeline()
+        self._draw_timeline()
+        self.ctrl_down = False
 
     def _on_key_down(self, evt):
         if evt.GetKeyCode() == wx.WXK_CONTROL:
@@ -330,7 +337,6 @@ class NewEventDlg(wx.Dialog):
             self._textctrl_end_time.SetFocus()
         else:
             self._textctrl_name.SetFocus()
-
 
     def _on_close(self,e):
         self.Close()
