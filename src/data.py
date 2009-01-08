@@ -9,7 +9,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 
 
-# To save computation power (used by `div_timedeltas`)
+# To save computation power (used by `delta_to_microseconds`)
 US_PER_SEC = 1000000 
 US_PER_DAY = 24 * 60 * 60 * US_PER_SEC
 
