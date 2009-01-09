@@ -36,6 +36,10 @@ class DrawingAlgorithm(object):
         """
         return period_selection
 
+    def event_at(self, x, y):
+        """Return the event at (x, y) or None if no event there."""
+        return None
+
 
 class Metrics(object):
     """Helper class that can calculate coordinates."""
