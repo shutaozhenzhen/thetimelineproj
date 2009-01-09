@@ -213,6 +213,12 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         new_end = minor_strip.increment(minor_strip.start(end))
         return (new_start, new_end)
 
+    def event_at(self, x, y):
+        for (event, rect) in self.event_data:
+            if rect.Contains(x, y):
+                return event
+        return None
+
     def __calc_rects(self, events):
         """
         Calculate rectangles for all events.
@@ -247,9 +253,16 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
             rect = wx.Rect(rx, ry, rw, rh)
             self.__prevent_overlap(rect, movedir)
             self.event_data.append((event, rect))
-        # Remove outer padding
         for (event, rect) in self.event_data:
+            # Remove outer padding
             rect.Deflate(OUTER_PADDING, OUTER_PADDING)
+            # Make sure rectangle are not far outside the screen
+            if rect.X < -1:
+                move = -rect.X - 1
+                rect.X += move
+                rect.Width -= move
+            if rect.Width > self.metrics.width:
+                rect.Width = self.metrics.width + 2
 
     def __prevent_overlap(self, rect, movedir):
         """
@@ -267,9 +280,10 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         Calculate height of first intersection with rectangle.
         """
         for (event, r) in self.event_data:
-            r_copy = wx.Rect(*r) # Because `Intersect` modifies rect
-            intersection = r_copy.Intersect(rect)
-            if not intersection.IsEmpty():
+            if rect.Intersects(r):
+                # Calculate height of intersection only if there is any
+                r_copy = wx.Rect(*r) # Because `Intersect` modifies rect
+                intersection = r_copy.Intersect(rect)
                 return intersection.Height
         return 0
 
@@ -363,7 +377,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         self.dc.SetBrush(self.black_solid_brush)
         for (event, rect) in self.event_data:
             if rect.Y < self.metrics.half_height:
-                x = rect.X + rect.Width / 2
+                x = self.metrics.calc_x(event.mean_time())
                 y = rect.Y + rect.Height / 2
                 self.dc.DrawLine(x, y, x, self.metrics.half_height)
                 self.dc.DrawCircle(x, self.metrics.half_height, 2)
