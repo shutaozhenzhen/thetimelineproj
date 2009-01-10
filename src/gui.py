@@ -178,24 +178,34 @@ class DrawingArea(wx.Window):
         dc.EndDrawing()
 
     def _on_key_down(self, evt):
+        """A key has been pressed"""
         keycode = evt.GetKeyCode()
         if keycode == wx.WXK_DELETE:
-            ret  = wx.MessageBox('Are you sure to delete?', 'Question',
-                                 wx.YES_NO | wx.CENTRE | wx.NO_DEFAULT, self)
-            if ret == wx.YES:
-                self.timeline.delete_selected_events()
-                self._draw_timeline()
+            self.__delete_selected_events()
+        # Continue processing of the event
         evt.Skip()
 
+    def __delete_selected_events(self):
+        """After ack from the user, delete all selected events"""
+        ok_to_delete  = wx.MessageBox('Are you sure to delete?', 'Question',
+                              wx.YES_NO | wx.CENTRE | wx.NO_DEFAULT, self) == wx.YES
+        if ok_to_delete:
+            self.timeline.delete_selected_events()
+            self._draw_timeline()
+
     def _on_mouse_wheel(self, evt):
-        """Zooms the timeline when the mouse wheel is scrolled."""
-        if evt.ControlDown():
-            if (evt.m_wheelRotation < 0):
+        """Mouse wheel is rotated"""
+        self.__zoom_or_scroll_timeline(evt.ControlDown(), evt.m_wheelRotation)
+
+    def __zoom_or_scroll_timeline(self, zoom=True, wheel_rotation=0):
+        """Zooms or scrolls the timeline when the mouse wheel is rotated."""
+        if zoom:
+            if (wheel_rotation < 0):
                 self.time_period.zoom(-1)
             else:
                 self.time_period.zoom(1)
         else:
-            if (evt.m_wheelRotation < 0):
+            if (wheel_rotation < 0):
                 self.time_period.move(1)
             else:
                 self.time_period.move(-1)
@@ -205,7 +215,8 @@ class DrawingArea(wx.Window):
         """The left mouse button has been pressed."""
         self.__set_new_marked_time(evt.m_x)
         self.__select_event(evt)
-        evt.Skip()  # Needed to select the control
+        # Continue processing of the event
+        evt.Skip()
 
     def __set_new_marked_time(self, current_x):
         self._marked_time = self.drawing_algorithm.metrics.get_time(current_x)
@@ -247,11 +258,11 @@ class DrawingArea(wx.Window):
             self.__scoll_timeline(evt.m_x)
 
     def __scoll_timeline(self, current_x):
-            current_time = self.drawing_algorithm.metrics.get_time(current_x)
-            delta = current_time - self._marked_time
-            self.time_period.start_time -= delta
-            self.time_period.end_time   -= delta
-            self._draw_timeline()
+        current_time = self.drawing_algorithm.metrics.get_time(current_x)
+        delta = current_time - self._marked_time
+        self.time_period.start_time -= delta
+        self.time_period.end_time   -= delta
+        self._draw_timeline()
 
     def __mark_selected_minor_strips(self, current_x):
         self._mark_selection = True
@@ -290,9 +301,7 @@ class DrawingArea(wx.Window):
         dlg.Destroy()
 
     def _draw_timeline(self, period_selection=None):
-        """
-        Draws the timeline onto the background buffer.
-        """
+        """Draws the timeline onto the background buffer."""
         memdc = wx.MemoryDC()
         memdc.SelectObject(self.bgbuf)
         try:
