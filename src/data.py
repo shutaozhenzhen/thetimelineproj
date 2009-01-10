@@ -10,7 +10,7 @@ from datetime import timedelta
 
 
 # To save computation power (used by `delta_to_microseconds`)
-US_PER_SEC = 1000000 
+US_PER_SEC = 1000000
 US_PER_DAY = 24 * 60 * 60 * US_PER_SEC
 
 
@@ -29,12 +29,29 @@ class Timeline(object):
         """Add a new event to the Timeline"""
         pass
 
+    def save_events(self):
+        """Save all events on the Timeline"""
+        pass
+
+    def delete_selected_events(self):
+        """Delete all events that are selected"""
+        pass
+
+    def reset_selection(self):
+        """Reset any selection on the Timeline"""
+        pass
 
 class Event(object):
     """Represents one event on a timeline."""
 
+    selected = False
+
     def __init__(self, start_time, end_time, text):
         """start_time and end_time shall be of the type datetime"""
+        self.update(start_time, end_time, text)
+
+    def update(self, start_time, end_time, text):
+        """Update event attributes"""
         self.time_period = TimePeriod(start_time, end_time)
         self.text = text
 

@@ -163,6 +163,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         # Fonts and pens we use when drawing
         self.header_font = drawing.get_default_font(12, True)
         self.small_text_font = drawing.get_default_font(8)
+        self.red_solid_pen = wx.Pen(wx.Color(255,0, 0), 1, wx.SOLID)
         self.black_solid_pen = wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID)
         self.red_solid_pen = wx.Pen(wx.Color(200, 0, 0), 1, wx.SOLID)
         self.black_dashed_pen = wx.Pen(wx.Color(200, 200, 200), 1, wx.USER_DASH)
@@ -215,7 +216,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
 
     def event_at(self, x, y):
         for (event, rect) in self.event_data:
-            if rect.Contains(x, y):
+            if rect.Contains(wx.Point(x, y)):
                 return event
         return None
 
@@ -391,12 +392,19 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
     def __draw_events(self):
         """Draw all event boxes and the text inside them."""
         self.dc.SetFont(self.small_text_font)
-        self.dc.SetPen(self.black_solid_pen)
         for (event, rect) in self.event_data:
             # Ensure that we can't draw outside rectangle
             self.dc.DestroyClippingRegion()
             self.dc.SetClippingRect(rect)
-            self.dc.SetBrush(wx.Brush(wx.Color(200, 200, 0), wx.SOLID))
+            if event.selected:
+                self.dc.SetBrush(wx.Brush(wx.Color(0, 0, 200), wx.SOLID))
+                self.dc.SetPen(self.red_solid_pen)
+                self.dc.SetTextForeground(wx.NamedColour('red'))
+            else:
+                self.dc.SetBrush(wx.Brush(wx.Color(200, 200, 0), wx.SOLID))
+                self.dc.SetPen(self.black_solid_pen)
+                self.dc.SetTextForeground(wx.NamedColour('black'))
+
             self.dc.DrawRectangleRect(rect)
             self.dc.DrawText(event.text,
                              rect.X + INNER_PADDING,
