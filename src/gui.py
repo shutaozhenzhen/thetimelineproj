@@ -213,12 +213,13 @@ class DrawingArea(wx.Window):
 
     def __select_event(self, evt):
         event = self.drawing_algorithm.event_at(evt.m_x, evt.m_y)
-        # unselect all ?
-        if not evt.m_controlDown:
+        if event == None:
             self.timeline.reset_selection()
-        # An event is clicked
-        if event != None:
-            event.selected = not event.selected
+        else:
+            selected = event.selected
+            if not evt.m_controlDown:
+                self.timeline.reset_selection()
+            event.selected = not selected
         self._draw_timeline()
 
     def _on_left_up_event(self, evt):

@@ -92,8 +92,8 @@ class FileTimeline(Timeline):
         return [e for e in self.events if e.inside_period(time_period)]
 
     def reset_selection(self):
-        self.events = [e for e in self.events if not e.selected]
-        self.save_events()
+        for e in self.events:
+            e.selected = False
 
     def preferred_period(self):
         return TimePeriod(dt(2008, 11, 1), dt(2008, 11, 30))
