@@ -136,6 +136,7 @@ class DrawingArea(wx.Window):
         wx.EVT_MOTION(self, self._on_motion_event)
         wx.EVT_MOUSEWHEEL(self, self._on_mouse_wheel)
         wx.EVT_LEFT_DCLICK(self, self._on_left_dclick)
+        wx.EVT_KEY_DOWN(self,self._on_key_down)
         # Initialize data members
         self.panel = parent
         self.bgbuf = None
@@ -176,6 +177,16 @@ class DrawingArea(wx.Window):
             dc.DrawBitmap(self.bgbuf, 0, 0, True)
         dc.EndDrawing()
 
+    def _on_key_down(self, evt):
+        keycode = evt.GetKeyCode()
+        if keycode == wx.WXK_DELETE:
+            ret  = wx.MessageBox('Are you sure to delete?', 'Question',
+                                 wx.YES_NO | wx.CENTRE | wx.NO_DEFAULT, self)
+            if ret == wx.YES:
+                self.timeline.delete_selected_events()
+                self._draw_timeline()
+        evt.Skip()
+
     def _on_mouse_wheel(self, evt):
         """Zooms the timeline when the mouse wheel is scrolled."""
         if evt.ControlDown():
@@ -193,11 +204,22 @@ class DrawingArea(wx.Window):
     def _on_left_down_event(self, evt):
         """The left mouse button has been pressed."""
         self.__set_new_marked_time(evt.m_x)
-        evt.Skip()  # Needed to select the drawinf area control
+        self.__select_event(evt)
+        evt.Skip()  # Needed to select the control
 
     def __set_new_marked_time(self, current_x):
         self._marked_time = self.drawing_algorithm.metrics.get_time(current_x)
         logging.debug("Marked time " + self._marked_time.isoformat('-'))
+
+    def __select_event(self, evt):
+        event = self.drawing_algorithm.event_at(evt.m_x, evt.m_y)
+        # unselect all ?
+        if not evt.m_controlDown:
+            self.timeline.reset_selection()
+        # An event is clicked
+        if event != None:
+            event.selected = not event.selected
+        self._draw_timeline()
 
     def _on_left_up_event(self, evt):
         """The left mouse button has been released."""
@@ -247,10 +269,24 @@ class DrawingArea(wx.Window):
     def _on_left_dclick(self, evt):
         """The left mouse button has been doubleclicked"""
         logging.debug("Left doubleclick")
+        event = self.drawing_algorithm.event_at(evt.m_x, evt.m_y)
+        if event == None:
+            self.__create_new_event()
+        else:
+            self.__edit_event(event)
+        self._draw_timeline()
+
+    def __create_new_event(self):
+        """Open a dialog for creating a new event at the marked time"""
         create_new_event(self.timeline,
                          self._marked_time.isoformat('-'),
                          self._marked_time.isoformat('-'))
-        self._draw_timeline()
+
+    def __edit_event(self, event):
+        """Open a dialog for updating properties of a marked event"""
+        dlg = EventDlg(None, -1, 'Edit Event', self.timeline, event=event)
+        dlg.ShowModal()
+        dlg.Destroy()
 
     def _draw_timeline(self, period_selection=None):
         """
@@ -275,16 +311,17 @@ class DrawingArea(wx.Window):
             logging.fatal('Error in drawing', exc_info=e)
 
 
-class NewEventDlg(wx.Dialog):
-    """This dialog is used for registering new events"""
-
+class EventDlg(wx.Dialog):
+    """This dialog is used for creating and updating events"""
     _textctrl_start_time = None
     _textctrl_end_time = None
     _textctrl_name = None
     _timeline = None
-    _cb = None
+    _cb_close_on_ok = None
+    _editMode = False
+    _event = None
 
-    def __init__(self, parent, id, title, timeline, start=None, end=None):
+    def __init__(self, parent, id, title, timeline, start=None, end=None, event=None):
         self._timeline = timeline
         wx.Dialog.__init__(self, parent, id, title, size=(250, 220))
         panel = wx.Panel(self, -1)
@@ -293,20 +330,28 @@ class NewEventDlg(wx.Dialog):
         wx.StaticText(panel, -1, "Start:", (15,32), style=wx.ALIGN_LEFT)
         wx.StaticText(panel, -1, "End:"  , (15,62), style=wx.ALIGN_LEFT)
         wx.StaticText(panel, -1, "Name:" , (15,92), style=wx.ALIGN_LEFT)
-        self._cb = wx.CheckBox  (panel, -1, 'Close on OK', (15, 120 ))
-        self._cb.SetValue(True)
-        if start == None:
-            start = ''
+        self._cb_close_on_ok = wx.CheckBox  (panel, -1, 'Close on OK', (15, 120 ))
+        self._cb_close_on_ok.SetValue(True)
+        if event != None:
+            start = event.time_period.start_time.isoformat('-')
+            end = event.time_period.end_time.isoformat('-')
+            name = event.text
+            self._updatemode = True
+            self._event = event
         else:
+            self._updatemode = False
+            name = ''
+        if start != None:
             start = start.split('.')[0]
-        self._textctrl_start_time = wx.TextCtrl(panel, -1, start, (50, 30),
-                                                (175,20))
-        if end == None:
-            end = ''
         else:
+            start = ''
+        if end != None:
             end = end.split('.')[0]
+        else:
+            start = ''
+        self._textctrl_start_time = wx.TextCtrl(panel, -1, start, (50, 30),(175,20))
         self._textctrl_end_time = wx.TextCtrl(panel, -1, end, (50, 60), (175,20))
-        self._textctrl_name     = wx.TextCtrl(panel, -1, '', (50, 90), (175,20))
+        self._textctrl_name     = wx.TextCtrl(panel, -1, name, (50, 90), (175,20))
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         ok_button = wx.Button(self, -1, 'Ok', size=(50, 25))
         wx.EVT_BUTTON(self, ok_button.GetId(), self._on_ok)
@@ -330,40 +375,60 @@ class NewEventDlg(wx.Dialog):
 
     def _on_ok(self,e):
         try:
+            start_time = self.__validate_start_time()
+            end_time   = self.__validate_end_time()
+            name       = self.__validate_name()
+            if start_time > end_time:
+                display_error_message("End must be > Start")
+                set_focus_on_textctrl(self._textctrl_start_time)
+                return
+            if self._updatemode:
+                self._event.update(start_time, end_time, name)
+                self._timeline.save_events()
+            else:
+                event = Event(start_time, end_time, name)
+                self._timeline.new_event(event)
+            if self._cb_close_on_ok.GetValue():
+                self.Close()
+        except:
+            pass
+
+    def __validate_start_time(self):
+        """Validate start time value from textbox"""
+        try:
             start_time = todt(self._textctrl_start_time.GetValue())
         except:
-            display_error_message('Date format must be "year-month-day"' +
-                                  ' or "year-month-day-hour:minue:second"')
+            self.__display_dateformat_error()
             set_focus_on_textctrl(self._textctrl_start_time)
-            return
+            raise
+        return start_time
 
+    def __validate_end_time(self):
+        """Validate end time value from textbox"""
         try:
             end_time = todt(self._textctrl_end_time.GetValue())
         except:
-            display_error_message('Date format must be "year-month-day"' +
-                                  ' or "year-month-day-hour:minue:second"')
+            self.__display_dateformat_error()
             set_focus_on_textctrl(self._textctrl_end_time)
-            return
+            raise
+        return end_time
 
-        name  = self._textctrl_name.GetValue().strip()
-
-        if len(name) == 0:
+    def __validate_name(self):
+        """Validate the name value from textbox"""
+        try:
+            name = self._textctrl_name.GetValue().strip()
+            if len(name) == 0:
+                raise
+        except:
             display_error_message("Name: Can't be empty")
             set_focus_on_textctrl(self._textctrl_name)
-            return
+            raise
+        return name
 
-        if start_time > end_time:
-            display_error_message("End must be > Start")
-            set_focus_on_textctrl(self._textctrl_start_time)
-            return
-
-        event = Event(start_time,end_time, name)
-
-        self._timeline.new_event(event)
-
-        if self._cb.GetValue():
-            self.Close()
-
+    def __display_dateformat_error(self):
+        """Display datetime fromat error message"""
+        display_error_message('Date format must be "year-month-day"' +
+                                ' or "year-month-day-hour:minue:second"')
 
 def todt(datetime_string):
     """Convert a string to a datetime object"""
@@ -384,9 +449,7 @@ def todt(datetime_string):
 
 def create_new_event(timeline, start=None, end=None):
     """Create a new event"""
-    if start == None:
-        start = ''
-    dlg = NewEventDlg(None, -1, 'Create a new Event', timeline, start, end)
+    dlg = EventDlg(None, -1, 'Create a new Event', timeline, start, end)
     dlg.ShowModal()
     dlg.Destroy()
 

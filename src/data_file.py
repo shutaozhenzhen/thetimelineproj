@@ -91,30 +91,45 @@ class FileTimeline(Timeline):
     def get_events(self, time_period):
         return [e for e in self.events if e.inside_period(time_period)]
 
+    def reset_selection(self):
+        self.events = [e for e in self.events if not e.selected]
+        self.save_events()
+
     def preferred_period(self):
         return TimePeriod(dt(2008, 11, 1), dt(2008, 11, 30))
 
     def new_event(self, event):
         """Add a new event to the Timeline"""
         logging.debug("new_event called")
-        f = open(self._data_source, 'a')
+        self.events.append(event)
+        self.save_events()
+
+    def delete_selected_events(self):
+        """Delete all selected events"""
+        self.events = [e for e in self.events if not e.selected]
+        self.save_events()
+
+    def save_events(self):
+        """Save all events to file"""
+        logging.debug("save_events called")
+        f = open(self._data_source, 'w')
         try:
             try:
-                line = "%s-%s-%s-%s:%s:%s;%s-%s-%s-%s:%s:%s;%s\n" % (event.time_period.start_time.year,
-                       event.time_period.start_time.month,
-                       event.time_period.start_time.day,
-                       event.time_period.start_time.hour,
-                       event.time_period.start_time.minute,
-                       event.time_period.start_time.second,
-                       event.time_period.end_time.year,
-                       event.time_period.end_time.month,
-                       event.time_period.end_time.day,
-                       event.time_period.end_time.hour,
-                       event.time_period.end_time.minute,
-                       event.time_period.end_time.second,
-                       event.text)
-                f.writelines(line)
-                self.events.append(event)
+                for event in self.events:
+                    line = "%s-%s-%s-%s:%s:%s;%s-%s-%s-%s:%s:%s;%s\n" % (event.time_period.start_time.year,
+                           event.time_period.start_time.month,
+                           event.time_period.start_time.day,
+                           event.time_period.start_time.hour,
+                           event.time_period.start_time.minute,
+                           event.time_period.start_time.second,
+                           event.time_period.end_time.year,
+                           event.time_period.end_time.month,
+                           event.time_period.end_time.day,
+                           event.time_period.end_time.hour,
+                           event.time_period.end_time.minute,
+                           event.time_period.end_time.second,
+                           event.text)
+                    f.writelines(line)
             except Exception, e:
                 logging.fatal('Error when adding record to file ' + self._data_source,
                               exc_info=e)
