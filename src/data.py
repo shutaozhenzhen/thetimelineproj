@@ -3,9 +3,6 @@ Custom data types.
 """
 
 
-import logging
-
-from datetime import datetime as dt
 from datetime import timedelta
 
 
@@ -15,9 +12,14 @@ US_PER_DAY = 24 * 60 * 60 * US_PER_SEC
 
 
 class Timeline(object):
-    """Base class that represent the interface for a timeline."""
+    """
+    Base class that represents the interface for a timeline.
+    
+    A possible implementation could be for a timeline stored in a flat file or
+    SQL database.
+    """
 
-    def get_events(self, start_time, end_time):
+    def get_events(self, time_period):
         """Return all events visible within the time period."""
         pass
 
@@ -26,34 +28,34 @@ class Timeline(object):
         pass
 
     def new_event(self, event):
-        """Add a new event to the Timeline"""
-        pass
-
-    def save_events(self):
-        """Save all events on the Timeline"""
+        """Add a new event to the timeline."""
         pass
 
     def delete_selected_events(self):
-        """Delete all events that are selected"""
+        """Delete all events that are selected."""
         pass
 
     def reset_selection(self):
-        """Reset any selection on the Timeline"""
+        """Reset any selection on the timeline."""
         pass
 
+
 class Event(object):
-    """Represents one event on a timeline."""
+    """Represents an event on a timeline."""
 
-    selected = False
+    def __init__(self, start_time, end_time, text, category=None):
+        """
+        Create an event.
+        
+        `start_time` and `end_time` should be of the type datetime.
+        """
+        self.selected = False
+        self.update(start_time, end_time, text, category)
 
-    def __init__(self, start_time, end_time, text):
-        """start_time and end_time shall be of the type datetime"""
-        self.update(start_time, end_time, text)
-
-    def update(self, start_time, end_time, text):
-        """Update event attributes"""
+    def update(self, start_time, end_time, text, category=None):
         self.time_period = TimePeriod(start_time, end_time)
         self.text = text
+        self.category = category
 
     def inside_period(self, time_period):
         return self.time_period.overlap(time_period)
@@ -63,6 +65,20 @@ class Event(object):
 
     def mean_time(self):
         return self.time_period.mean_time()
+
+
+class Category(object):
+    """Represent a category that an event belongs to."""
+
+    def __init__(self, name, color):
+        """
+        Create a category with the given name and color.
+
+        name = string
+        color = (r, g, b)
+        """
+        self.name = name
+        self.color = color
 
 
 class TimePeriod(object):
