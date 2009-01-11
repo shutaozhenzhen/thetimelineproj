@@ -370,43 +370,24 @@ class DrawingArea(wx.Window):
 
 class EventEditor(wx.Dialog):
     """This dialog is used for creating and updating events"""
-    #_textctrl_start_time = None
-    #_textctrl_end_time = None
-    #_textctrl_name = None
-    #_timeline = None
-    #_cb_close_on_ok = None
-    #_editMode = False
-    #_event = None
 
-    def __static_text(self, parent, text, index):
+    def __button(self, parent, default, evt_handler, id, container):
         """Convenience method for creating a control"""
-        wx.StaticText(parent, -1, text, (self.TXT_X, 2 + index * self.TXT_DY),
-                      style=wx.ALIGN_LEFT)
-
-    def __static_box(self, parent, text, index):
-        """Convenience method for creating a control"""
-        wx.StaticBox(parent, -1, text, (5, 5), (230, index * self.TXT_DY))
-
-    def __check_box(self, parent, text, index):
-        """Convenience method for creating a control"""
-        return wx.CheckBox(parent, -1, text, (self.TXT_X, index * self.TXT_DY ))
-
-    def __text_control(self, parent, text, index):
-        """Convenience method for creating a control"""
-        return wx.TextCtrl(parent, -1, text, (self.CTRL_X, index * self.CTRL_DY),
-                          (self.CTRL_W, self.CTRL_H))
-
-    def __choice_control(self, parent, index):
-        """Convenience method for creating a control"""
-        return wx.Choice(parent, -1, (self.CTRL_X, index * self.CTRL_DY),
-                           (self.CTRL_W,self.CTRL_H))
-    def __button(self, parent, text, default, evt_handler):
-        """Convenience method for creating a control"""
-        cb =  wx.Button(parent, -1, text, size=(50, 25))
-        wx.EVT_BUTTON(parent, cb.GetId(), evt_handler)
+        btn = wx.Button(self, id)
+        wx.EVT_BUTTON(parent, btn.GetId(), evt_handler)
         if default:
-            self.SetDefaultItem(cb)
-        return cb
+            self.SetDefaultItem(btn)
+        container.Add(btn, 0)
+
+    def __row_box(self, text, value, container, ctrl=None):
+        t = wx.StaticText(self, -1, text , size=(self.TXT_W ,-1))
+        if ctrl == None:
+            ctrl = wx.TextCtrl(self, -1, value, size=(self.CTRL_W,-1))
+        row_box = wx.BoxSizer(wx.HORIZONTAL)
+        row_box.Add(t, 0, wx.ALIGN_CENTER_VERTICAL)
+        row_box.Add(ctrl, 1, wx.ALIGN_CENTER_VERTICAL)
+        container.Add(row_box, 0, wx.TOP|wx.LEFT, self.CTRL_BORDER)
+        return ctrl
 
     def __time_text(self, time):
         if time != None:
@@ -416,23 +397,24 @@ class EventEditor(wx.Dialog):
         return text
 
     def __init__(self, parent, id, title, timeline, start=None, end=None, event=None):
-        wx.Dialog.__init__(self, parent, id, title, size=(250, 240))
+        wx.Dialog.__init__(self, parent, id, title)
         # Constants
-        self.TXT_X   = 15
-        self.TXT_DY  = 26
-        self.CTRL_X  = 65
-        self.CTRL_H  = 20
+        self.TXT_W   = 60
         self.CTRL_W  = 160
-        self.CTRL_DY = 26
+        self.CTRL_BORDER = 4
         # Instance variables
         self._timeline = timeline
         self._event    = event
+        # gui
+        self.__create_gui(start, end)
+
+    def __create_gui(self, start=None, end=None):
         # Input data
-        if event != None:
-            start    = event.time_period.start_time.isoformat('-')
-            end      = event.time_period.end_time.isoformat('-')
-            name     = event.text
-            category = event.category
+        if self._event != None:
+            start    = self._event.time_period.start_time.isoformat('-')
+            end      = self._event.time_period.end_time.isoformat('-')
+            name     = self._event.text
+            category = self._event.category
             self._updatemode = True
         else:
             self._updatemode = False
@@ -440,36 +422,34 @@ class EventEditor(wx.Dialog):
             category = None
         start = self.__time_text(start)
         end   = self.__time_text(end  )
-        # Controls
-        panel = wx.Panel(self, -1)
-        self.__static_text(panel, "Start:"   , 1)
-        self.__static_text(panel, "End:"     , 2)
-        self.__static_text(panel, "Name:"    , 3)
-        self.__static_text(panel, "Category:", 4)
-        self._cb_close_on_ok = self.__check_box(panel, "Close on OK", 5)
+        # Controls within the groupbox
+        box    = wx.StaticBox(self, -1, "Event Properties")
+        groupbox = wx.StaticBoxSizer(box, wx.VERTICAL)
+        self._textctrl_start_time = self.__row_box("Start:", start, groupbox)
+        self._textctrl_end_time   = self.__row_box("End:"  , end  , groupbox)
+        self._textctrl_name       = self.__row_box("Name:" , name , groupbox)
+        self._category_choice     = self.__row_box("Category:" , None , groupbox,
+                                     wx.Choice(self, -1, size=(self.CTRL_W, -1)))
+        # The checkbox
+        self._cb_close_on_ok = wx.CheckBox(self, -1, "Close on OK")
+        # Dialog buttons
+        button_box = wx.BoxSizer(wx.HORIZONTAL)
+        self.__button(self, True , self._on_ok   , wx.ID_OK   , button_box)
+        self.__button(self, False, self._on_close, wx.ID_CLOSE, button_box)
+        # Control data
         self._cb_close_on_ok.SetValue(True)
-        self.__static_box (panel, "Event Properties", 6)
-        self._textctrl_start_time = self.__text_control(panel, start, 1)
-        self._textctrl_end_time   = self.__text_control(panel, end  , 2)
-        self._textctrl_name       = self.__text_control(panel, name , 3)
-        self._category_choice     = self.__choice_control(panel, 4)
         count = 0
-        for cat in timeline.get_categories():
+        for cat in self._timeline.get_categories():
             self._category_choice.Append(cat.name, cat)
             if cat == category:
                 self._category_choice.SetSelection(count)
             count += 1
-        # Dialog buttons
-        ok_button    = self.__button(self, "Ok"   , True , self._on_ok   )
-        close_button = self.__button(self, "Close", False, self._on_close)
         # Add controls and buttons do the dialog
-        hbox         = wx.BoxSizer(wx.HORIZONTAL)
-        hbox.Add(ok_button   , 1)
-        hbox.Add(close_button, 1, wx.LEFT, 5)
-        vbox = wx.BoxSizer(wx.VERTICAL)
-        vbox.Add(panel)
-        vbox.Add(hbox, 1, wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM, 10)
-        self.SetSizer(vbox)
+        border = wx.BoxSizer(wx.VERTICAL)
+        border.Add(groupbox            , 1, wx.EXPAND|wx.ALL, 4)
+        border.Add(self._cb_close_on_ok, 0, wx.EXPAND|wx.ALL, 4)
+        border.Add(button_box          , 0, wx.ALIGN_CENTER )
+        self.SetSizerAndFit(border)
         # Decide focus control
         self._textctrl_start_time.SetFocus()
         for ctrl in [self._textctrl_start_time, self._textctrl_end_time,
@@ -479,6 +459,7 @@ class EventEditor(wx.Dialog):
                 break
 
     def _on_close(self,e):
+        self._event.selected = False
         self.Close()
 
     def _on_ok(self,e):
@@ -487,8 +468,11 @@ class EventEditor(wx.Dialog):
             start_time = self.__validate_start_time()
             end_time   = self.__validate_end_time()
             name       = self.__validate_name()
-            category   = self._category_choice.GetClientData(
-                                          self._category_choice.GetSelection())
+            selection  = self._category_choice.GetSelection()
+            if selection >= 0:
+                category = self._category_choice.GetClientData(selection)
+            else:
+                category = None
             if start_time > end_time:
                 display_error_message("End must be > Start")
                 set_focus_on_textctrl(self._textctrl_start_time)
@@ -497,10 +481,11 @@ class EventEditor(wx.Dialog):
                 self._event.update(start_time, end_time, name, category)
                 self._timeline.event_edited(self._event)
             else:
-                event = Event(start_time, end_time, name, category)
-                self._timeline.add_event(event)
+                self._event = Event(start_time, end_time, name, category)
+                self._timeline.add_event(self._event)
             if self._cb_close_on_ok.GetValue():
                 self.Close()
+            self._event.selected = False
         except:
             pass
 
