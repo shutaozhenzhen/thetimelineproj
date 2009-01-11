@@ -554,7 +554,7 @@ class CategoriesEditor(wx.Dialog):
 
     def __create_gui(self):
         # The list box
-        self.lst_categories = wx.ListBox(self, size=(300, 180),
+        self.lst_categories = wx.ListBox(self, size=(200, 180),
                                          style=wx.LB_SINGLE|wx.LB_SORT)
         self.Bind(wx.EVT_LISTBOX_DCLICK, self.__lst_categories_dclick,
                   self.lst_categories)
@@ -582,14 +582,14 @@ class CategoriesEditor(wx.Dialog):
 
     def __lst_categories_dclick(self, e):
         selection = e.GetSelection()
-        dialog = CategoryEditor(self, e.GetClientData())
+        dialog = CategoryEditor(self, self.timeline, e.GetClientData())
         if dialog.ShowModal() == wx.ID_OK:
             self.lst_categories.SetString(selection, dialog.category.name)
             self.timeline.category_edited(dialog.category)
         dialog.Destroy()
 
     def __btn_add_click(self, e):
-        dialog = CategoryEditor(self, None)
+        dialog = CategoryEditor(self, self.timeline, None)
         if dialog.ShowModal() == wx.ID_OK:
             self.__add_category_to_list(dialog.category)
             self.timeline.add_category(dialog.category)
@@ -609,8 +609,9 @@ class CategoriesEditor(wx.Dialog):
 class CategoryEditor(wx.Dialog):
     """This dialog is used for editing a category."""
 
-    def __init__(self, parent, category):
+    def __init__(self, parent, timeline, category):
         wx.Dialog.__init__(self, parent, title="Edit Category")
+        self.timeline = timeline
         self.category = category
         self.__create_gui()
         if not self.category:
@@ -648,10 +649,20 @@ class CategoryEditor(wx.Dialog):
         vbox.Add(button_box, flag=wx.ALL|wx.EXPAND, border=BORDER)
         self.SetSizerAndFit(vbox)
 
+    def __verify_name(self):
+        for cat in self.timeline.get_categories():
+            if cat != self.category and cat.name == self.txt_name.GetValue():
+                return False
+        return True
+
     def __btn_ok_click(self, e):
-        self.category.name = self.txt_name.GetValue()
-        self.category.color = self.colorpicker.GetColour()
-        self.EndModal(wx.ID_OK)
+        name = self.txt_name.GetValue()
+        if self.__verify_name():
+            self.category.name = name
+            self.category.color = self.colorpicker.GetColour()
+            self.EndModal(wx.ID_OK)
+        else:
+            display_error_message("Category name '%s' already in use." % name)
 
 
 def todt(datetime_string):
