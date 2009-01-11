@@ -12,12 +12,17 @@ import logging
 
 from datetime import datetime as dt
 import wx
+import wx.lib.colourselect as colourselect
 
 from data import Event
+from data import Category
 import data_factory
 import drawing
 
-ID_NEW_EVENT   = 1
+
+ID_NEW_EVENT = 1
+ID_CATEGORIES = 2
+BORDER = 5
 
 
 class MainFrame(wx.Frame):
@@ -28,7 +33,6 @@ class MainFrame(wx.Frame):
 
     Holds an instance of a timeline that is currently being displayed.
     """
-
 
     def __init__(self):
         wx.Frame.__init__(self, None, -1, "The Timeline Project",
@@ -43,9 +47,11 @@ class MainFrame(wx.Frame):
         edit_menu = wx.Menu()
         file_menu.Append(wx.ID_EXIT, "E&xit\tAlt-F4", "Exit the program")
         edit_menu.Append(ID_NEW_EVENT, "&New Event", "Add a new event")
+        edit_menu.Append(ID_CATEGORIES, "Categories", "Edit categories")
         # bind the menu event to an event handler, share QuitBtn event
         self.Bind(wx.EVT_MENU, self._on_exit, id=wx.ID_EXIT)
         self.Bind(wx.EVT_MENU, self._on_new_event, id=ID_NEW_EVENT)
+        self.Bind(wx.EVT_MENU, self._on_categories, id=ID_CATEGORIES)
         # put the menu on the menubar
         menuBar.Append(file_menu, "&File")
         menuBar.Append(edit_menu, "&Edit")
@@ -85,6 +91,11 @@ class MainFrame(wx.Frame):
         create_new_event(self.timeline)
         self.refresh_timeline()
 
+    def _on_categories(self, evt):
+        dialog = CategoriesEditor(self, self.timeline)
+        dialog.ShowModal()
+        dialog.Destroy()
+
 
 class MainPanel(wx.Panel):
     """
@@ -105,6 +116,7 @@ class MainPanel(wx.Panel):
         self.SetSizer(self.globalSizer)
         # Initialize data members
         self.frame = parent
+
 
 class DrawingArea(wx.Window):
     """
@@ -358,7 +370,7 @@ class EventDlg(wx.Dialog):
         if end != None:
             end = end.split('.')[0]
         else:
-            start = ''
+            end = ''
         self._textctrl_start_time = wx.TextCtrl(panel, -1, start, (50, 30),(175,20))
         self._textctrl_end_time = wx.TextCtrl(panel, -1, end, (50, 60), (175,20))
         self._textctrl_name     = wx.TextCtrl(panel, -1, name, (50, 90), (175,20))
@@ -394,10 +406,10 @@ class EventDlg(wx.Dialog):
                 return
             if self._updatemode:
                 self._event.update(start_time, end_time, name)
-                self._timeline.save_events()
+                self._timeline.event_edited(self._event)
             else:
                 event = Event(start_time, end_time, name)
-                self._timeline.new_event(event)
+                self._timeline.add_event(event)
             if self._cb_close_on_ok.GetValue():
                 self.Close()
         except:
@@ -439,6 +451,119 @@ class EventDlg(wx.Dialog):
         """Display datetime fromat error message"""
         display_error_message('Date format must be "year-month-day"' +
                                 ' or "year-month-day-hour:minue:second"')
+
+
+class CategoriesEditor(wx.Dialog):
+    """This dialog is used for editing categories of a timeline."""
+
+    def __init__(self, parent, timeline):
+        wx.Dialog.__init__(self, parent, title="Edit Categories")
+        self.timeline = timeline
+        self.__create_gui()
+        for category in self.timeline.get_categories():
+            self.__add_category_to_list(category)
+
+    def __create_gui(self):
+        # The list box
+        self.lst_categories = wx.ListBox(self, size=(300, 180),
+                                         style=wx.LB_SINGLE|wx.LB_SORT)
+        self.Bind(wx.EVT_LISTBOX_DCLICK, self.__lst_categories_dclick,
+                  self.lst_categories)
+        # The Add button
+        btn_add = wx.Button(self, wx.ID_ADD)
+        self.Bind(wx.EVT_BUTTON, self.__btn_add_click, btn_add)
+        # The Delete button
+        btn_del = wx.Button(self, wx.ID_DELETE)
+        self.Bind(wx.EVT_BUTTON, self.__btn_del_click, btn_del)
+        # The OK button
+        btn_ok = wx.Button(self, wx.ID_OK)
+        # Setup layout
+        vbox = wx.BoxSizer(wx.VERTICAL)
+        vbox.Add(self.lst_categories, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        button_box = wx.BoxSizer(wx.HORIZONTAL)
+        button_box.Add(btn_add, flag=wx.RIGHT, border=BORDER)
+        button_box.Add(btn_del, flag=wx.RIGHT, border=BORDER)
+        button_box.AddStretchSpacer()
+        button_box.Add(btn_ok, flag=wx.LEFT, border=BORDER)
+        vbox.Add(button_box, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        self.SetSizerAndFit(vbox)
+
+    def __add_category_to_list(self, category):
+        self.lst_categories.Append(category.name, category)
+
+    def __lst_categories_dclick(self, e):
+        selection = e.GetSelection()
+        dialog = CategoryEditor(self, e.GetClientData())
+        if dialog.ShowModal() == wx.ID_OK:
+            self.lst_categories.SetString(selection, dialog.category.name)
+            self.timeline.category_edited(dialog.category)
+        dialog.Destroy()
+
+    def __btn_add_click(self, e):
+        dialog = CategoryEditor(self, None)
+        if dialog.ShowModal() == wx.ID_OK:
+            self.__add_category_to_list(dialog.category)
+            self.timeline.add_category(dialog.category)
+        dialog.Destroy()
+
+    def __btn_del_click(self, e):
+        selection = self.lst_categories.GetSelection()
+        if selection != wx.NOT_FOUND:
+            ok_to_delete = wx.MessageBox('Are you sure to delete?', 'Question',
+                              wx.YES_NO | wx.CENTRE | wx.NO_DEFAULT, self) == wx.YES
+            if ok_to_delete:
+                cat = self.lst_categories.GetClientData(selection)
+                self.timeline.delete_category(cat)
+                self.lst_categories.Delete(selection)
+
+
+class CategoryEditor(wx.Dialog):
+    """This dialog is used for editing a category."""
+
+    def __init__(self, parent, category):
+        wx.Dialog.__init__(self, parent, title="Edit Category")
+        self.category = category
+        self.__create_gui()
+        if not self.category:
+            self.category = Category("", (0, 0, 0))
+        self.txt_name.SetValue(self.category.name)
+        self.colorpicker.SetColour(self.category.color)
+
+    def __create_gui(self):
+        # The name text box
+        self.txt_name = wx.TextCtrl(self, size=(150, -1))
+        set_focus_on_textctrl(self.txt_name)
+        # The color chooser
+        self.colorpicker = colourselect.ColourSelect(self)
+        # The OK button
+        btn_ok = wx.Button(self, wx.ID_OK)
+        self.Bind(wx.EVT_BUTTON, self.__btn_ok_click, btn_ok)
+        # The Cancel button
+        btn_cancel = wx.Button(self, wx.ID_CANCEL)
+        # Setup layout
+        vbox = wx.BoxSizer(wx.VERTICAL)
+        field_box = wx.BoxSizer(wx.HORIZONTAL)
+        field_box.Add(wx.StaticText(self, label="Name:", size=(60, -1)),
+                      flag=wx.ALIGN_CENTER_VERTICAL)
+        field_box.Add(self.txt_name, proportion=1)
+        vbox.Add(field_box, flag=wx.EXPAND|wx.ALL, border=BORDER)
+        field_box = wx.BoxSizer(wx.HORIZONTAL)
+        field_box.Add(wx.StaticText(self, label="Color:", size=(60, -1)),
+                      flag=wx.ALIGN_CENTER_VERTICAL)
+        field_box.Add(self.colorpicker)
+        vbox.Add(field_box, flag=wx.EXPAND|wx.LEFT|wx.RIGHT|wx.BOTTOM, border=BORDER)
+        button_box = wx.BoxSizer(wx.HORIZONTAL)
+        button_box.AddStretchSpacer()
+        button_box.Add(btn_ok, flag=wx.LEFT, border=BORDER)
+        button_box.Add(btn_cancel, flag=wx.LEFT, border=BORDER)
+        vbox.Add(button_box, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        self.SetSizerAndFit(vbox)
+
+    def __btn_ok_click(self, e):
+        self.category.name = self.txt_name.GetValue()
+        self.category.color = self.colorpicker.GetColour()
+        self.EndModal(wx.ID_OK)
+
 
 def todt(datetime_string):
     """Convert a string to a datetime object"""

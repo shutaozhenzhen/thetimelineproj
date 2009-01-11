@@ -165,7 +165,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         self.small_text_font = drawing.get_default_font(8)
         self.red_solid_pen = wx.Pen(wx.Color(255,0, 0), 1, wx.SOLID)
         self.black_solid_pen = wx.Pen(wx.Color(0, 0, 0), 1, wx.SOLID)
-        self.red_solid_pen = wx.Pen(wx.Color(200, 0, 0), 1, wx.SOLID)
+        self.darkred_solid_pen = wx.Pen(wx.Color(200, 0, 0), 1, wx.SOLID)
         self.black_dashed_pen = wx.Pen(wx.Color(200, 200, 200), 1, wx.USER_DASH)
         self.black_dashed_pen.SetDashes([2, 2])
         self.black_dashed_pen.SetCap(wx.CAP_BUTT)
@@ -385,27 +385,38 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
         # Now line
         now_time = datetime.now()
         if self.time_period.inside(now_time):
-            self.dc.SetPen(self.red_solid_pen)
+            self.dc.SetPen(self.darkred_solid_pen)
             x = self.metrics.calc_x(now_time)
             self.dc.DrawLine(x, 0, x, self.metrics.height)
 
     def __draw_events(self):
         """Draw all event boxes and the text inside them."""
         self.dc.SetFont(self.small_text_font)
+        self.dc.SetTextForeground((0, 0, 0))
         for (event, rect) in self.event_data:
             # Ensure that we can't draw outside rectangle
             self.dc.DestroyClippingRegion()
             self.dc.SetClippingRect(rect)
-            if event.selected:
-                self.dc.SetBrush(wx.Brush(wx.Color(0, 0, 200), wx.SOLID))
-                self.dc.SetPen(self.red_solid_pen)
-                self.dc.SetTextForeground(wx.NamedColour('red'))
-            else:
-                self.dc.SetBrush(wx.Brush(wx.Color(200, 200, 0), wx.SOLID))
-                self.dc.SetPen(self.black_solid_pen)
-                self.dc.SetTextForeground(wx.NamedColour('black'))
-
+            # Draw the box
+            base_color = (173, 216, 230)
+            if event.category:
+                base_color = event.category.color
+            border_color = self.__darken_color(base_color)
+            self.dc.SetBrush(wx.Brush(base_color, wx.SOLID))
+            self.dc.SetPen(wx.Pen(border_color, 1, wx.SOLID))
             self.dc.DrawRectangleRect(rect)
+            if event.selected:
+                self.dc.SetBrush(wx.Brush(border_color, wx.BDIAGONAL_HATCH))
+                self.dc.SetPen(wx.TRANSPARENT_PEN)
+                self.dc.DrawRectangleRect(rect)
+            # Draw the text
             self.dc.DrawText(event.text,
                              rect.X + INNER_PADDING,
                              rect.Y + INNER_PADDING)
+
+    def __darken_color(self, color, factor=0.7):
+        r, g, b = color
+        new_r = int(r * factor)
+        new_g = int(g * factor)
+        new_b = int(b * factor)
+        return (new_r, new_g, new_b)
