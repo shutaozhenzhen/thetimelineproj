@@ -176,11 +176,13 @@ class DrawingArea(wx.Window):
         self.time_period = None
         self.drawing_algorithm = drawing.get_algorithm()
         logging.debug("Init done in DrawingArea")
+        self.Disable()
 
     def set_timeline(self, timeline):
         self.timeline = timeline
         self.time_period = timeline.preferred_period()
         self.draw_timeline()
+        self.Enable()
 
     def _on_size(self, event):
         """
