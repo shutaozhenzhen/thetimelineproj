@@ -9,6 +9,7 @@ application.
 from sys import argv
 from optparse import OptionParser
 import logging
+from logging import info as loginfo
 
 import wx
 
@@ -53,7 +54,9 @@ def main():
     main_frame = MainFrame()
     main_frame.Show()
     # Must be called after Show() because window size is not set before that
-    main_frame.open_timeline(input_files)
+    loginfo("Input files = %s" % input_files)
+    for input_file in input_files:
+        main_frame.open_timeline(input_file)
     app.MainLoop()
 
 

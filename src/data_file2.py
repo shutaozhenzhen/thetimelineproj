@@ -1,5 +1,7 @@
 """
-Implementation of a timeline that has a file storage.
+Implementation of timeline with file storage.
+
+The class `FileTimeline2` implements the timeline interface.
 """
 
 
@@ -26,12 +28,13 @@ class ParseException(Exception):
 
 class FileTimeline2(Timeline):
     """
-    Timeline with file storage.
+    Implements the timeline interface.
 
     The comments in `Timeline` describes what the public methods should do.
     """
 
     def __init__(self, file_path):
+        """Create a new timeline from a file."""
         self.file_path = file_path
         self.categories = []
         self.events = []
@@ -42,10 +45,12 @@ class FileTimeline2(Timeline):
         Raise IOError if file can not be opened for reading. This should be
         handled by caller.
         """
-        f = None
         if not os.path.exists(self.file_path):
-            loginfo("File did not exist '%s'" % self.file_path)
+            loginfo("File '%s' did not exist" % self.file_path)
+            # Nothing can be loaded
             return
+        loginfo("Opening file '%s'" % self.file_path)
+        f = None
         try:
             f = codecs.open(self.file_path, "r", ENCODING)
             for line in f:
@@ -74,18 +79,19 @@ class FileTimeline2(Timeline):
                 if event.category:
                     f.write(";%s" % self.__quote(event.category.name))
                 f.write("\n")
-            f.close()
         finally:
             if f:
                 f.close()
 
     def __process_line(self, line):
         loginfo("Processing line '%s'" % line)
+        # Map prefixes to functions that handle the rest of that line
         prefixes = (
             ("CATEGORY:", self.__process_category),
             ("EVENT:", self.__process_event),
             ("#", self.__process_comment),
-            ("", self.__process_unknown)
+            # Catch all
+            ("", self.__process_unknown),
         )
         for (prefix, processing_func) in prefixes:
             if line.startswith(prefix):
@@ -93,14 +99,21 @@ class FileTimeline2(Timeline):
                 return
 
     def __split_on_delim(self, text):
-        """The delimiter is ; but only of not proceeded by backslash."""
+        """
+        The delimiter is ; but only of not proceeded by backslash.
+
+        Examples:
+
+            'foo;bar' -> ['foo', 'bar']
+            'foo\;bar;barfoo -> ['foo\;bar', 'barfoo']
+        """
         return re.split(r"(?<!\\);", text)
 
     def __dequote(self, text):
         return text.replace(r"\;", ";")
 
     def __quote(self, text):
-        return text.replace(r";", "\;")
+        return text.replace(r";", r"\;")
 
     def __process_category(self, category_text):
         """Expected format 'name;color'."""
@@ -112,7 +125,7 @@ class FileTimeline2(Timeline):
             color = self.__parse_color(split[1])
             self.categories.append(Category(name, color))
         except Exception, e:
-            logerror("Unable to parse category (%s): %s" % (e, category_text),
+            logerror("Unable to parse category from '%s'" % category_text,
                      exc_info=e)
 
     def __process_event(self, event_text):
@@ -130,7 +143,7 @@ class FileTimeline2(Timeline):
             category = self.__get_category(cat_name)
             self.events.append(Event(start_time, end_time, text, category))
         except Exception, e:
-            logerror("Unable to parse event (%s): %s" % (e, event_text),
+            logerror("Unable to parse event from '%s'" % event_text,
                      exc_info=e)
 
     def __process_comment(self, comment):
@@ -140,12 +153,6 @@ class FileTimeline2(Timeline):
         # Ignore empty lines
         if line:
             logerror("Skipping unknown line: '%s'" % line)
-
-    def __get_category(self, name):
-        for cat in self.categories:
-            if cat.name == name:
-                return cat
-        return None
 
     def __parse_color(self, color_string):
         """
@@ -182,6 +189,12 @@ class FileTimeline2(Timeline):
         else:
             raise ParseException("Time not on correct format")
 
+    def __get_category(self, name):
+        for cat in self.categories:
+            if cat.name == name:
+                return cat
+        return None
+
     def get_events(self, time_period):
         return [e for e in self.events if e.inside_period(time_period)]
 
@@ -210,6 +223,9 @@ class FileTimeline2(Timeline):
     def delete_category(self, category):
         if category in self.categories:
             self.categories.remove(category)
+        for event in self.events:
+            if event.category == category:
+                event.category = None
         self.__save_data()
 
     def preferred_period(self):
