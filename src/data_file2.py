@@ -27,11 +27,13 @@ class ParseException(Exception):
 class FileTimeline2(Timeline):
     """
     Timeline with file storage.
+
+    The comments in `Timeline` describes what the public methods should do.
     """
 
     def __init__(self, file_path):
         self.file_path = file_path
-        self.categories = {} # Maps a name to a Category object
+        self.categories = []
         self.events = []
         self.__load_data()
 
@@ -60,7 +62,7 @@ class FileTimeline2(Timeline):
         f = None
         try:
             f = codecs.open(self.file_path, "w", ENCODING)
-            for cat in self.categories.items():
+            for cat in self.categories:
                 r, g, b = cat.color
                 f.write("CATEGORY:%s;%s,%s,%s\n" % (
                     self.__quote(cat.name), r, g, b))
@@ -108,9 +110,10 @@ class FileTimeline2(Timeline):
                 raise ParseException("Unexpected number of components")
             name = self.__dequote(split[0])
             color = self.__parse_color(split[1])
-            self.categories[name] = Category(name, (r, g, b))
+            self.categories.append(Category(name, color))
         except Exception, e:
-            logerror("Unable to parse category (%s): %s" % (e, category_text))
+            logerror("Unable to parse category (%s): %s" % (e, category_text),
+                     exc_info=e)
 
     def __process_event(self, event_text):
         """Expected format 'start_time;end_time;text[;category]'."""
@@ -121,13 +124,14 @@ class FileTimeline2(Timeline):
             start_time = self.__parse_time(split[0])
             end_time = self.__parse_time(split[1])
             text = self.__dequote(split[2])
-            category_text = None
+            cat_name = None
             if len(split) == 4:
-                category_text = self.__dequote(split[3])
-            category = self.categories.get(category_text, None)
+                cat_name = self.__dequote(split[3])
+            category = self.__get_category(cat_name)
             self.events.append(Event(start_time, end_time, text, category))
         except Exception, e:
-            logerror("Unable to parse event (%s): %s" % (e, event_text))
+            logerror("Unable to parse event (%s): %s" % (e, event_text),
+                     exc_info=e)
 
     def __process_comment(self, comment):
         pass
@@ -136,6 +140,12 @@ class FileTimeline2(Timeline):
         # Ignore empty lines
         if line:
             logerror("Skipping unknown line: '%s'" % line)
+
+    def __get_category(self, name):
+        for cat in self.categories:
+            if cat.name == name:
+                return cat
+        return None
 
     def __parse_color(self, color_string):
         """
@@ -148,7 +158,7 @@ class FileTimeline2(Timeline):
                 raise ParseException("Color number not in range [0, 255]")
         match = re.search(r"^(\d+),(\d+),(\d+)$", color_string)
         if match:
-            r, g, b = int(match(1)), int(match(2)), int(match(3))
+            r, g, b = int(match.group(1)), int(match.group(2)), int(match.group(3))
             verify_255_number(r)
             verify_255_number(g)
             verify_255_number(b)
@@ -175,16 +185,35 @@ class FileTimeline2(Timeline):
     def get_events(self, time_period):
         return [e for e in self.events if e.inside_period(time_period)]
 
-    def preferred_period(self):
-        return TimePeriod(datetime(2008, 11, 1), datetime(2008, 11, 30))
-
-    def new_event(self, event):
+    def add_event(self, event):
         self.events.append(event)
+        self.__save_data()
+
+    def event_edited(self, event):
         self.__save_data()
 
     def delete_selected_events(self):
         self.events = [e for e in self.events if not e.selected]
         self.__save_data()
+
+    def get_categories(self):
+        # Make sure the original list can't be modified
+        return tuple(self.categories)
+
+    def add_category(self, category):
+        self.categories.append(category)
+        self.__save_data()
+
+    def category_edited(self, category):
+        self.__save_data()
+
+    def delete_category(self, category):
+        if category in self.categories:
+            self.categories.remove(category)
+        self.__save_data()
+
+    def preferred_period(self):
+        return TimePeriod(datetime(2008, 11, 1), datetime(2008, 11, 30))
 
     def reset_selection(self):
         for e in self.events:

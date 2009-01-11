@@ -14,25 +14,47 @@ US_PER_DAY = 24 * 60 * 60 * US_PER_SEC
 class Timeline(object):
     """
     Base class that represents the interface for a timeline.
-    
+
     A possible implementation could be for a timeline stored in a flat file or
-    SQL database.
+    in a SQL database.
+
+    All methods that modify the timeline should automatically save it.
     """
 
     def get_events(self, time_period):
         """Return all events visible within the time period."""
         pass
 
-    def preferred_period(self):
-        """Return the preferred period to display of this timeline."""
+    def add_event(self, event):
+        """Add `event` to the timeline."""
         pass
 
-    def new_event(self, event):
-        """Add a new event to the timeline."""
+    def event_edited(self, event):
+        """Notify that `event` has been modified so that it can be saved."""
         pass
 
     def delete_selected_events(self):
         """Delete all events that are selected."""
+        pass
+
+    def get_categories(self):
+        """Return all available categories."""
+        pass
+
+    def add_category(self, category):
+        """Add `category` to the timeline."""
+        pass
+
+    def category_edited(self, category):
+        """Notify that `category` has been modified so that it can be saved."""
+        pass
+
+    def delete_category(self, category):
+        """Delete `category` and remove it from all events."""
+        pass
+
+    def preferred_period(self):
+        """Return the preferred period to display of this timeline."""
         pass
 
     def reset_selection(self):

@@ -98,9 +98,9 @@ class FileTimeline(Timeline):
     def preferred_period(self):
         return TimePeriod(dt(2008, 11, 1), dt(2008, 11, 30))
 
-    def new_event(self, event):
+    def add_event(self, event):
         """Add a new event to the Timeline"""
-        logging.debug("new_event called")
+        logging.debug("add_event called")
         self.events.append(event)
         self.save_events()
 
