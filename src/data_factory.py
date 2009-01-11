@@ -3,27 +3,25 @@ Custom data types.
 """
 
 
-import logging
-
-from datetime import datetime as dt
+from logging import warning as logwarning
 
 from data_file import FileTimeline
 from data_file2 import FileTimeline2
 from data_dummy import DummyTimeline
 
 
-def get_timeline(input_files):
+def get_timeline(input_file):
     """
     Timeline factory method.
 
-    Return a specific timeline depending on the input_files.
+    Return a specific timeline depending on the input_file.
     """
-    if len(input_files) == 1 and input_files[0] == "dummy":
+    if input_file == "dummy":
         return DummyTimeline()
-    elif len(input_files) == 1:
-        if input_files[0].endswith(".timeline2"):
-            return FileTimeline2(input_files[0])
-        return FileTimeline(input_files[0])
+    elif input_file.endswith(".timeline2"):
+        return FileTimeline2(input_file)
+    elif input_file.endswith(".timeline"):
+        return FileTimeline(input_file)
     else:
-        logging.warning("Unable to open timeline for %s, unknown format", input_files)
+        logwarning("Unable to open timeline '%s', unknown format", input_file)
         return None

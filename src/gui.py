@@ -34,47 +34,66 @@ class MainFrame(wx.Frame):
     Holds an instance of a timeline that is currently being displayed.
     """
 
+    WILDCARD = "Timeline v2 (*.timeline2)|*.timeline2|" + \
+               "Timeline v1 (*.timeline)|*.timeline|"
+
     def __init__(self):
         wx.Frame.__init__(self, None, -1, "The Timeline Project",
                           wx.Point(0, 0), wx.Size(900, 400),
                           style=wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE)
-        # Build GUI
-        self.main_panel = MainPanel(self)
-        # Create a menubar at the top of the user frame
-        menuBar = wx.MenuBar()
-        # Create a menu ...
-        file_menu = wx.Menu()
-        edit_menu = wx.Menu()
-        file_menu.Append(wx.ID_EXIT, "E&xit\tAlt-F4", "Exit the program")
-        edit_menu.Append(ID_NEW_EVENT, "&New Event", "Add a new event")
-        edit_menu.Append(ID_CATEGORIES, "Categories", "Edit categories")
-        # bind the menu event to an event handler, share QuitBtn event
-        self.Bind(wx.EVT_MENU, self._on_exit, id=wx.ID_EXIT)
-        self.Bind(wx.EVT_MENU, self._on_new_event, id=ID_NEW_EVENT)
-        self.Bind(wx.EVT_MENU, self._on_categories, id=ID_CATEGORIES)
-        # put the menu on the menubar
-        menuBar.Append(file_menu, "&File")
-        menuBar.Append(edit_menu, "&Edit")
-        self.SetMenuBar(menuBar)
-        # create a status bar at the bottom of the frame
-        self.CreateStatusBar()
-        # Connect events
-        wx.EVT_CLOSE(self, self._on_close)
-        # Initialize data members
+        self.__create_gui()
         self.timeline = None
-        self.input_files = None
 
-    def refresh_timeline(self):
-        self.timeline = data_factory.get_timeline(self.input_files)
+    def __create_gui(self):
+        self.main_panel = MainPanel(self)
+        # Menu bar
+        menuBar = wx.MenuBar()
+        self.SetMenuBar(menuBar)
+        # File menu
+        file_menu = wx.Menu()
+        menuBar.Append(file_menu, "&File")
+        file_menu.Append(wx.ID_NEW, "New", "Create a new timeline")
+        self.Bind(wx.EVT_MENU, self._on_new, id=wx.ID_NEW)
+        file_menu.Append(wx.ID_OPEN, "Open", "Open an existing timeline")
+        self.Bind(wx.EVT_MENU, self._on_open, id=wx.ID_OPEN)
+        file_menu.AppendSeparator()
+        file_menu.Append(wx.ID_EXIT, "E&xit\tAlt-F4", "Exit the program")
+        self.Bind(wx.EVT_MENU, self._on_exit, id=wx.ID_EXIT)
+        # Edit menu
+        timeline_menu = wx.Menu()
+        menuBar.Append(timeline_menu, "&Timeline")
+        timeline_menu.Append(ID_NEW_EVENT, "&Add Event", "Add a new event")
+        self.Bind(wx.EVT_MENU, self._on_new_event, id=ID_NEW_EVENT)
+        timeline_menu.Append(ID_CATEGORIES, "Edit &Categories", "Edit categories")
+        self.Bind(wx.EVT_MENU, self._on_categories, id=ID_CATEGORIES)
+        # Status bar
+        self.CreateStatusBar()
+        # Window events
+        wx.EVT_CLOSE(self, self._on_close)
+
+    def open_timeline(self, input_file=None):
+        self.timeline = data_factory.get_timeline(input_file)
         if self.timeline:
             self.main_panel.drawing_area.set_timeline(self.timeline)
 
-    def open_timeline(self, input_files):
-        if self.timeline:
-            # TODO: Ask if save first or cancel
-            pass
-        self.input_files = input_files
-        self.refresh_timeline()
+    def _on_new(self, event):
+        dialog = wx.FileDialog(self, message="Create Timeline",
+           wildcard=MainFrame.WILDCARD,
+           style=wx.FD_SAVE)
+        if dialog.ShowModal() == wx.ID_OK:
+            path = dialog.GetPath()
+            if not path.endswith("timeline2"):
+                path += ".timeline2"
+            self.open_timeline(path)
+        dialog.Destroy()
+
+    def _on_open(self, event):
+        dialog = wx.FileDialog(self, message="Open Timeline",
+           wildcard=MainFrame.WILDCARD,
+           style=wx.FD_OPEN)
+        if dialog.ShowModal() == wx.ID_OK:
+            self.open_timeline(dialog.GetPath())
+        dialog.Destroy()
 
     def _on_close(self, event):
         logging.debug("Close event MainFrame")
@@ -89,11 +108,12 @@ class MainFrame(wx.Frame):
         """Event handler for the New Event menu item"""
         logging.debug("New Event event MainFrame")
         create_new_event(self.timeline)
-        self.refresh_timeline()
+        self.main_panel.drawing_area.draw_timeline()
 
     def _on_categories(self, evt):
         dialog = CategoriesEditor(self, self.timeline)
-        dialog.ShowModal()
+        if dialog.ShowModal() == wx.ID_OK:
+            self.main_panel.drawing_area.draw_timeline()
         dialog.Destroy()
 
 
@@ -160,7 +180,7 @@ class DrawingArea(wx.Window):
     def set_timeline(self, timeline):
         self.timeline = timeline
         self.time_period = timeline.preferred_period()
-        self._draw_timeline()
+        self.draw_timeline()
 
     def _on_size(self, event):
         """
@@ -172,7 +192,7 @@ class DrawingArea(wx.Window):
         logging.debug("Resize event in DrawingArea: %s", self.GetSizeTuple())
         width, height = self.GetSizeTuple()
         self.bgbuf = wx.EmptyBitmap(width, height)
-        self._draw_timeline()
+        self.draw_timeline()
 
     def _on_paint(self, event):
         """
@@ -203,7 +223,7 @@ class DrawingArea(wx.Window):
                               wx.YES_NO | wx.CENTRE | wx.NO_DEFAULT, self) == wx.YES
         if ok_to_delete:
             self.timeline.delete_selected_events()
-            self._draw_timeline()
+            self.draw_timeline()
 
     def _on_mouse_wheel(self, evt):
         """Mouse wheel is rotated"""
@@ -221,7 +241,7 @@ class DrawingArea(wx.Window):
                 self.time_period.move(1)
             else:
                 self.time_period.move(-1)
-        self._draw_timeline()
+        self.draw_timeline()
 
     def _on_left_down_event(self, evt):
         """The left mouse button has been pressed."""
@@ -243,7 +263,7 @@ class DrawingArea(wx.Window):
             if not evt.m_controlDown:
                 self.timeline.reset_selection()
             event.selected = not selected
-        self._draw_timeline()
+        self.draw_timeline()
 
     def _on_left_up_event(self, evt):
         """The left mouse button has been released."""
@@ -256,7 +276,7 @@ class DrawingArea(wx.Window):
         start, end = period_selection
         create_new_event(self.timeline, start.isoformat('-'),
                          end.isoformat('-'))
-        self._draw_timeline()
+        self.draw_timeline()
 
     def _on_motion_event(self, evt):
         """The mouse has been moved."""
@@ -274,12 +294,12 @@ class DrawingArea(wx.Window):
         delta = current_time - self._marked_time
         self.time_period.start_time -= delta
         self.time_period.end_time   -= delta
-        self._draw_timeline()
+        self.draw_timeline()
 
     def __mark_selected_minor_strips(self, current_x):
         self._mark_selection = True
         period_selection = self.__get_period_selection(current_x)
-        self._draw_timeline(period_selection)
+        self.draw_timeline(period_selection)
 
     def __get_period_selection(self, current_x):
         """Return a tuple containing the start and end time of a selection"""
@@ -298,7 +318,7 @@ class DrawingArea(wx.Window):
             self.__create_new_event()
         else:
             self.__edit_event(event)
-        self._draw_timeline()
+        self.draw_timeline()
 
     def __create_new_event(self):
         """Open a dialog for creating a new event at the marked time"""
@@ -312,7 +332,7 @@ class DrawingArea(wx.Window):
         dlg.ShowModal()
         dlg.Destroy()
 
-    def _draw_timeline(self, period_selection=None):
+    def draw_timeline(self, period_selection=None):
         """Draws the timeline onto the background buffer."""
         memdc = wx.MemoryDC()
         memdc.SelectObject(self.bgbuf)

@@ -398,7 +398,7 @@ class SimpleDrawingAlgorithm1(DrawingAlgorithm):
             self.dc.DestroyClippingRegion()
             self.dc.SetClippingRect(rect)
             # Draw the box
-            base_color = (173, 216, 230)
+            base_color = (200, 200, 200)
             if event.category:
                 base_color = event.category.color
             border_color = self.__darken_color(base_color)
