@@ -10,6 +10,7 @@ GUI component on which it will draw.
 
 import logging
 
+import os.path
 from datetime import datetime as dt
 import wx
 import wx.lib.colourselect as colourselect
@@ -34,15 +35,18 @@ class MainFrame(wx.Frame):
     Holds an instance of a timeline that is currently being displayed.
     """
 
-    WILDCARD = "Timeline v2 (*.timeline2)|*.timeline2|" + \
-               "Timeline v1 (*.timeline)|*.timeline|"
-
     def __init__(self):
-        wx.Frame.__init__(self, None, -1, "The Timeline Project",
-                          wx.Point(0, 0), wx.Size(900, 400),
-                          style=wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE)
+        wx.Frame.__init__(self, None, size=(900, 400),
+                          style=wx.DEFAULT_FRAME_STYLE|wx.MAXIMIZE)
         self.__create_gui()
         self.timeline = None
+        self.title_base = "The Timeline Project"
+        self.SetTitle(self.title_base)
+        self.extensions = [".timeline", ".timeline2"]
+        self.default_extension = self.extensions[1]
+        self.wildcard = "Timeline file (%s)|%s" % (
+            ", ".join(["*" + e for e in self.extensions]),
+            ";".join(["*" + e for e in self.extensions]))
 
     def __create_gui(self):
         self.main_panel = MainPanel(self)
@@ -71,26 +75,36 @@ class MainFrame(wx.Frame):
         # Window events
         wx.EVT_CLOSE(self, self._on_close)
 
-    def open_timeline(self, input_file=None):
-        self.timeline = data_factory.get_timeline(input_file)
-        if self.timeline:
+    def open_timeline(self, input_file):
+        try:
+            self.timeline = data_factory.get_timeline(input_file)
+        except Exception, e:
+            wx.MessageBox("Unable to open timeline '%s'.\n\n%s" % (input_file, e), "Error", wx.OK|wx.ICON_ERROR, self)
+        else:
+            self.SetTitle("%s (%s)" % (self.title_base, input_file))
             self.main_panel.drawing_area.set_timeline(self.timeline)
 
     def _on_new(self, event):
         dialog = wx.FileDialog(self, message="Create Timeline",
-           wildcard=MainFrame.WILDCARD,
-           style=wx.FD_SAVE)
+                               wildcard=self.wildcard, style=wx.FD_SAVE)
         if dialog.ShowModal() == wx.ID_OK:
             path = dialog.GetPath()
-            if not path.endswith("timeline2"):
-                path += ".timeline2"
+            # If no extension, add default
+            has_valid_extension = False
+            for extension in self.extensions:
+                if path.endswith(extension):
+                    has_valid_extension = True
+                    break
+            if not has_valid_extension:
+                path += self.default_extension
+            if os.path.exists(path):
+                wx.MessageBox("The specified timeline already exists.\n\nOpening instead of creating new.", "Information", wx.OK|wx.ICON_INFORMATION, self)
             self.open_timeline(path)
         dialog.Destroy()
 
     def _on_open(self, event):
         dialog = wx.FileDialog(self, message="Open Timeline",
-           wildcard=MainFrame.WILDCARD,
-           style=wx.FD_OPEN)
+                               wildcard=self.wildcard, style=wx.FD_OPEN)
         if dialog.ShowModal() == wx.ID_OK:
             self.open_timeline(dialog.GetPath())
         dialog.Destroy()

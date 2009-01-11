@@ -23,5 +23,4 @@ def get_timeline(input_file):
     elif input_file.endswith(".timeline"):
         return FileTimeline(input_file)
     else:
-        logwarning("Unable to open timeline '%s', unknown format", input_file)
-        return None
+        raise Exception("Unknown format")
