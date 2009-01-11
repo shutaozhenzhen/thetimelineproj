@@ -46,9 +46,8 @@ class FileTimeline2(Timeline):
         handled by caller.
         """
         if not os.path.exists(self.file_path):
-            loginfo("File '%s' did not exist" % self.file_path)
-            # Nothing can be loaded
-            return
+            loginfo("Creating file '%s'" % self.file_path)
+            self.__save_data()
         loginfo("Opening file '%s'" % self.file_path)
         f = None
         try:
@@ -67,6 +66,8 @@ class FileTimeline2(Timeline):
         f = None
         try:
             f = codecs.open(self.file_path, "w", ENCODING)
+            f.write("# Written by 'FileTimeline2' on %s\n" % (
+                    datetime.now()))
             for cat in self.categories:
                 r, g, b = cat.color
                 f.write("CATEGORY:%s;%s,%s,%s\n" % (
