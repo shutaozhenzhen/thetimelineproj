@@ -373,26 +373,23 @@ class DrawingArea(wx.Window):
 class EventEditor(wx.Dialog):
     """This dialog is used for creating and updating events"""
 
-    def __button(self, parent, evt_handler, id, container):
-        """Convenience method for creating a button control"""
-        btn = wx.Button(self, id)
-        wx.EVT_BUTTON(parent, btn.GetId(), evt_handler)
-        if id == wx.ID_CLOSE:
-            container.SetCancelButton(btn)
-            self.SetEscapeId(id)
-        else:
-            container.SetAffirmativeButton(btn)
-            self.SetDefaultItem(btn)
-
-    def __row_box(self, text, value, container, ctrl=None):
-        t = wx.StaticText(self, -1, text , size=(self.TXT_W ,-1))
-        if ctrl == None:
-            ctrl = wx.TextCtrl(self, -1, value, size=(self.CTRL_W,-1))
-        row_box = wx.BoxSizer(wx.HORIZONTAL)
-        row_box.Add(t, 0, wx.ALIGN_CENTER_VERTICAL)
-        row_box.Add(ctrl, 1, wx.ALIGN_CENTER_VERTICAL)
-        container.Add(row_box, 0, wx.TOP|wx.LEFT, self.CTRL_BORDER)
-        return ctrl
+    def __buttons(self):
+        """Convenience method for creating a button controls"""
+        button_box = wx.StdDialogButtonSizer()
+        btn_ok    = wx.Button(self, wx.ID_OK    )
+        btn_close = wx.Button(self, wx.ID_CANCEL)
+        btn_ok.SetDefault()
+        button_box.SetCancelButton(btn_close)
+        button_box.SetAffirmativeButton(btn_ok)
+        #button_box.AddButton(btn_close)
+        #button_box.AddButton(btn_ok)
+        button_box.Realize()
+        wx.EVT_BUTTON(self, btn_ok.GetId()   , self._on_ok)
+        wx.EVT_BUTTON(self, btn_close.GetId(), self._on_close)
+        self.SetEscapeId(btn_close.GetId())
+        self.SetDefaultItem(btn_ok)
+        self.SetAffirmativeId(btn_ok.GetId())
+        return button_box
 
     def __time_text(self, time):
         if time != None:
@@ -428,20 +425,23 @@ class EventEditor(wx.Dialog):
         start = self.__time_text(start)
         end   = self.__time_text(end  )
         # Controls within the groupbox
+        grid = wx.FlexGridSizer(4, 2, vgap=4, hgap=4)
+        self._textctrl_start_time = wx.TextCtrl(self, -1, start, size=(self.CTRL_W, -1))
+        self._textctrl_end_time   = wx.TextCtrl(self, -1, end  , size=(self.CTRL_W, -1))
+        self._textctrl_name       = wx.TextCtrl(self, -1, name , size=(self.CTRL_W, -1))
+        self._category_choice     = wx.Choice  (self, -1,        size=(self.CTRL_W, -1))
+        grid.AddMany([
+         (wx.StaticText(self, -1, "Start:"   )), (self._textctrl_start_time),
+         (wx.StaticText(self, -1, "End:"     )), (self._textctrl_end_time  ),
+         (wx.StaticText(self, -1, "Name:"    )), (self._textctrl_name      ),
+         (wx.StaticText(self, -1, "Category:")), (self._category_choice    ),
+        ])
+        # The Group box
         box    = wx.StaticBox(self, -1, "Event Properties")
         groupbox = wx.StaticBoxSizer(box, wx.VERTICAL)
-        self._textctrl_start_time = self.__row_box("Start:", start, groupbox)
-        self._textctrl_end_time   = self.__row_box("End:"  , end  , groupbox)
-        self._textctrl_name       = self.__row_box("Name:" , name , groupbox)
-        self._category_choice     = self.__row_box("Category:" , None , groupbox,
-                                     wx.Choice(self, -1, size=(self.CTRL_W, -1)))
+        groupbox.Add(grid, 0, wx.TOP|wx.LEFT, self.CTRL_BORDER)
         # The checkbox
         self._cb_close_on_ok = wx.CheckBox(self, -1, "Close on OK")
-        # Dialog buttons
-        button_box = wx.StdDialogButtonSizer()
-        self.__button(self, self._on_ok   , wx.ID_OK   , button_box)
-        self.__button(self, self._on_close, wx.ID_CLOSE, button_box)
-        button_box.Realize()
         # Control data
         self._cb_close_on_ok.SetValue(True)
         count = 0
@@ -454,7 +454,7 @@ class EventEditor(wx.Dialog):
         border = wx.BoxSizer(wx.VERTICAL)
         border.Add(groupbox            , 1, wx.EXPAND|wx.ALL, 4)
         border.Add(self._cb_close_on_ok, 0, wx.EXPAND|wx.ALL, 4)
-        border.Add(button_box          , 0 , wx.EXPAND|wx.ALL)
+        border.Add(self.__buttons()         , 0, wx.EXPAND|wx.ALL)
         self.SetSizerAndFit(border)
         # Decide focus control
         self._textctrl_start_time.SetFocus()
