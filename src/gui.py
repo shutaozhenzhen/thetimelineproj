@@ -194,7 +194,7 @@ class DrawingArea(wx.Window):
 
     def set_timeline(self, timeline):
         self.timeline = timeline
-        self.time_period = timeline.preferred_period()
+        self.time_period = timeline.get_preferred_period()
         self.draw_timeline()
         self.Enable()
 
@@ -257,6 +257,7 @@ class DrawingArea(wx.Window):
                 self.time_period.move(1)
             else:
                 self.time_period.move(-1)
+        self.timeline.set_preferred_period(self.time_period)
         self.draw_timeline()
 
     def _on_left_down_event(self, evt):
@@ -310,6 +311,7 @@ class DrawingArea(wx.Window):
         delta = current_time - self._marked_time
         self.time_period.start_time -= delta
         self.time_period.end_time   -= delta
+        self.timeline.set_preferred_period(self.time_period)
         self.draw_timeline()
 
     def __mark_selected_minor_strips(self, current_x):

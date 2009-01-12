@@ -25,5 +25,5 @@ class DummyTimeline(Timeline):
     def get_events(self, time_period):
         return [e for e in self.events if e.inside_period(time_period)]
 
-    def preferred_period(self):
+    def get_preferred_period(self):
         return TimePeriod(dt(2008, 11, 1), dt(2008, 11, 30))

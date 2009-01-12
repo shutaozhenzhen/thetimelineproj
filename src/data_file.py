@@ -95,7 +95,7 @@ class FileTimeline(Timeline):
         for e in self.events:
             e.selected = False
 
-    def preferred_period(self):
+    def get_preferred_period(self):
         return TimePeriod(dt(2008, 11, 1), dt(2008, 11, 30))
 
     def add_event(self, event):
