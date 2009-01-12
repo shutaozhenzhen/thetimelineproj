@@ -373,13 +373,16 @@ class DrawingArea(wx.Window):
 class EventEditor(wx.Dialog):
     """This dialog is used for creating and updating events"""
 
-    def __button(self, parent, default, evt_handler, id, container):
-        """Convenience method for creating a control"""
+    def __button(self, parent, evt_handler, id, container):
+        """Convenience method for creating a button control"""
         btn = wx.Button(self, id)
         wx.EVT_BUTTON(parent, btn.GetId(), evt_handler)
-        if default:
+        if id == wx.ID_CLOSE:
+            container.SetCancelButton(btn)
+            self.SetEscapeId(id)
+        else:
+            container.SetAffirmativeButton(btn)
             self.SetDefaultItem(btn)
-        container.Add(btn, 0)
 
     def __row_box(self, text, value, container, ctrl=None):
         t = wx.StaticText(self, -1, text , size=(self.TXT_W ,-1))
@@ -435,9 +438,10 @@ class EventEditor(wx.Dialog):
         # The checkbox
         self._cb_close_on_ok = wx.CheckBox(self, -1, "Close on OK")
         # Dialog buttons
-        button_box = wx.BoxSizer(wx.HORIZONTAL)
-        self.__button(self, True , self._on_ok   , wx.ID_OK   , button_box)
-        self.__button(self, False, self._on_close, wx.ID_CLOSE, button_box)
+        button_box = wx.StdDialogButtonSizer()
+        self.__button(self, self._on_ok   , wx.ID_OK   , button_box)
+        self.__button(self, self._on_close, wx.ID_CLOSE, button_box)
+        button_box.Realize()
         # Control data
         self._cb_close_on_ok.SetValue(True)
         count = 0
@@ -450,7 +454,7 @@ class EventEditor(wx.Dialog):
         border = wx.BoxSizer(wx.VERTICAL)
         border.Add(groupbox            , 1, wx.EXPAND|wx.ALL, 4)
         border.Add(self._cb_close_on_ok, 0, wx.EXPAND|wx.ALL, 4)
-        border.Add(button_box          , 0, wx.ALIGN_CENTER )
+        border.Add(button_box          , 0 , wx.EXPAND|wx.ALL)
         self.SetSizerAndFit(border)
         # Decide focus control
         self._textctrl_start_time.SetFocus()
@@ -461,11 +465,14 @@ class EventEditor(wx.Dialog):
                 break
 
     def _on_close(self,e):
-        self._event.selected = False
-        self.Close()
+        logging.debug("_on_close")
+        if self._event != None:
+            self._event.selected = False
+        self.EndModal(wx.ID_OK)
 
     def _on_ok(self,e):
         """Add new or update existing event"""
+        logging.debug("_on_ok")
         try:
             start_time = self.__validate_start_time()
             end_time   = self.__validate_end_time()
@@ -486,19 +493,19 @@ class EventEditor(wx.Dialog):
                 self._event = Event(start_time, end_time, name, category)
                 self._timeline.add_event(self._event)
             if self._cb_close_on_ok.GetValue():
-                self.Close()
+                self.EndModal(wx.ID_OK)
             self._event.selected = False
         except Exception, e:
-            display_error_message("Error: %s" % e)
+            display_error_message("%s" % e)
 
     def __validate_start_time(self):
         """Validate start time value from textbox"""
         try:
             start_time = todt(self._textctrl_start_time.GetValue())
         except:
-            self.__display_dateformat_error()
             set_focus_on_textctrl(self._textctrl_start_time)
-            raise
+            raise ValueError, "Invalid start_time data format"
+
         return start_time
 
     def __validate_end_time(self):
@@ -506,9 +513,8 @@ class EventEditor(wx.Dialog):
         try:
             end_time = todt(self._textctrl_end_time.GetValue())
         except:
-            self.__display_dateformat_error()
             set_focus_on_textctrl(self._textctrl_end_time)
-            raise
+            raise ValueError, "Invalid end_time data format"
         return end_time
 
     def __validate_name(self):
@@ -516,17 +522,11 @@ class EventEditor(wx.Dialog):
         try:
             name = self._textctrl_name.GetValue().strip()
             if len(name) == 0:
-                raise
+                raise ValueError, "Name: Can't be empty"
         except:
-            display_error_message("Name: Can't be empty")
             set_focus_on_textctrl(self._textctrl_name)
             raise
         return name
-
-    def __display_dateformat_error(self):
-        """Display datetime fromat error message"""
-        display_error_message('Date format must be "year-month-day"' +
-                                ' or "year-month-day-hour:minue:second"')
 
 
 class CategoriesEditor(wx.Dialog):
