@@ -551,8 +551,10 @@ class CategoriesEditor(wx.Dialog):
         # The Delete button
         btn_del = wx.Button(self, wx.ID_DELETE)
         self.Bind(wx.EVT_BUTTON, self.__btn_del_click, btn_del)
-        # The OK button
-        btn_ok = wx.Button(self, wx.ID_OK)
+        # The close button
+        btn_close = wx.Button(self, wx.ID_CLOSE)
+        btn_close.SetDefault()
+        self.SetEscapeId(wx.ID_CLOSE)
         # Setup layout
         vbox = wx.BoxSizer(wx.VERTICAL)
         vbox.Add(self.lst_categories, flag=wx.ALL|wx.EXPAND, border=BORDER)
@@ -560,9 +562,10 @@ class CategoriesEditor(wx.Dialog):
         button_box.Add(btn_add, flag=wx.RIGHT, border=BORDER)
         button_box.Add(btn_del, flag=wx.RIGHT, border=BORDER)
         button_box.AddStretchSpacer()
-        button_box.Add(btn_ok, flag=wx.LEFT, border=BORDER)
+        button_box.Add(btn_close, flag=wx.LEFT, border=BORDER)
         vbox.Add(button_box, flag=wx.ALL|wx.EXPAND, border=BORDER)
         self.SetSizerAndFit(vbox)
+        self.lst_categories.SetFocus()
 
     def __add_category_to_list(self, category):
         self.lst_categories.Append(category.name, category)
@@ -602,39 +605,32 @@ class CategoryEditor(wx.Dialog):
         self.category = category
         self.__create_gui()
         if not self.category:
-            self.category = Category("", (0, 0, 0))
+            self.category = Category("", (200, 200, 200))
         self.txt_name.SetValue(self.category.name)
         self.colorpicker.SetColour(self.category.color)
 
     def __create_gui(self):
         # The name text box
         self.txt_name = wx.TextCtrl(self, size=(150, -1))
-        set_focus_on_textctrl(self.txt_name)
         # The color chooser
         self.colorpicker = colourselect.ColourSelect(self)
-        # The OK button
-        btn_ok = wx.Button(self, wx.ID_OK)
-        self.Bind(wx.EVT_BUTTON, self.__btn_ok_click, btn_ok)
-        # The Cancel button
-        btn_cancel = wx.Button(self, wx.ID_CANCEL)
         # Setup layout
         vbox = wx.BoxSizer(wx.VERTICAL)
-        field_box = wx.BoxSizer(wx.HORIZONTAL)
-        field_box.Add(wx.StaticText(self, label="Name:", size=(60, -1)),
-                      flag=wx.ALIGN_CENTER_VERTICAL)
-        field_box.Add(self.txt_name, proportion=1)
-        vbox.Add(field_box, flag=wx.EXPAND|wx.ALL, border=BORDER)
-        field_box = wx.BoxSizer(wx.HORIZONTAL)
-        field_box.Add(wx.StaticText(self, label="Color:", size=(60, -1)),
-                      flag=wx.ALIGN_CENTER_VERTICAL)
-        field_box.Add(self.colorpicker)
-        vbox.Add(field_box, flag=wx.EXPAND|wx.LEFT|wx.RIGHT|wx.BOTTOM, border=BORDER)
-        button_box = wx.StdDialogButtonSizer()
-        button_box.AddButton(btn_ok)
-        button_box.AddButton(btn_cancel)
-        button_box.Realize()
+        # Grid for controls
+        field_grid = wx.FlexGridSizer(2, 2, BORDER, BORDER)
+        field_grid.Add(wx.StaticText(self, label="Name:"),
+                       flag=wx.ALIGN_CENTER_VERTICAL)
+        field_grid.Add(self.txt_name, proportion=1)
+        field_grid.Add(wx.StaticText(self, label="Color:"),
+                       flag=wx.ALIGN_CENTER_VERTICAL)
+        field_grid.Add(self.colorpicker)
+        vbox.Add(field_grid, flag=wx.EXPAND|wx.ALL, border=BORDER)
+        # Buttons
+        button_box = self.CreateStdDialogButtonSizer(wx.OK|wx.CANCEL)
+        self.Bind(wx.EVT_BUTTON, self.__ok_click, id=wx.ID_OK)
         vbox.Add(button_box, flag=wx.ALL|wx.EXPAND, border=BORDER)
         self.SetSizerAndFit(vbox)
+        set_focus_on_textctrl(self.txt_name)
 
     def __verify_name(self):
         for cat in self.timeline.get_categories():
@@ -642,14 +638,15 @@ class CategoryEditor(wx.Dialog):
                 return False
         return True
 
-    def __btn_ok_click(self, e):
+    def __ok_click(self, e):
         name = self.txt_name.GetValue()
         if self.__verify_name():
             self.category.name = name
             self.category.color = self.colorpicker.GetColour()
             self.EndModal(wx.ID_OK)
         else:
-            display_error_message("Category name '%s' already in use." % name)
+            display_error_message("Category name '%s' already in use." % name,
+                                  self)
 
 
 def todt(datetime_string):
@@ -679,7 +676,7 @@ def set_focus_on_textctrl(control):
     control.SetFocus()
     control.SelectAll()
 
-def display_error_message(message):
+def display_error_message(message, parent=None):
     """Display an error message in a modal dialog box"""
-    dial = wx.MessageDialog(None, message, 'Error', wx.OK | wx.ICON_ERROR)
+    dial = wx.MessageDialog(parent, message, 'Error', wx.OK | wx.ICON_ERROR)
     dial.ShowModal()
