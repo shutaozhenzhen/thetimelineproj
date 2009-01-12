@@ -488,8 +488,8 @@ class EventEditor(wx.Dialog):
             if self._cb_close_on_ok.GetValue():
                 self.Close()
             self._event.selected = False
-        except:
-            pass
+        except Exception, e:
+            display_error_message("Error: %s" % e)
 
     def __validate_start_time(self):
         """Validate start time value from textbox"""
