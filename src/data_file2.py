@@ -12,14 +12,17 @@ from logging import error as logerror
 from logging import info as loginfo
 
 from datetime import datetime
+from datetime import timedelta
 
 from data import Timeline
 from data import TimePeriod
 from data import Event
 from data import Category
+from data import time_period_center
 
 
 ENCODING = "utf-8"
+TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
 class ParseException(Exception):
@@ -36,8 +39,6 @@ class FileTimeline2(Timeline):
     def __init__(self, file_path):
         """Create a new timeline from a file."""
         self.file_path = file_path
-        self.categories = []
-        self.events = []
         self.__load_data()
 
     def __load_data(self):
@@ -45,6 +46,9 @@ class FileTimeline2(Timeline):
         Raise IOError if file can not be opened for reading. This should be
         handled by caller.
         """
+        self.preferred_period = None
+        self.categories = []
+        self.events = []
         if not os.path.exists(self.file_path):
             loginfo("Creating file '%s'" % self.file_path)
             self.__save_data()
@@ -67,15 +71,19 @@ class FileTimeline2(Timeline):
         try:
             f = codecs.open(self.file_path, "w", ENCODING)
             f.write("# Written by 'FileTimeline2' on %s\n" % (
-                    datetime.now()))
+                    datetime.now().strftime(TIME_FORMAT)))
+            if self.preferred_period:
+                f.write("PREFERRED-PERIOD:%s;%s\n" % (
+                    self.preferred_period.start_time.strftime(TIME_FORMAT),
+                    self.preferred_period.end_time.strftime(TIME_FORMAT)))
             for cat in self.categories:
                 r, g, b = cat.color
-                f.write("CATEGORY:%s;%s,%s,%s\n" % (
-                    self.__quote(cat.name), r, g, b))
+                f.write("CATEGORY:%s;%s,%s,%s\n" % (self.__quote(cat.name),
+                                                    r, g, b))
             for event in self.events:
                 f.write("EVENT:%s;%s;%s" % (
-                    event.time_period.start_time.strftime("%Y-%m-%d %H:%M:%S"),
-                    event.time_period.end_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    event.time_period.start_time.strftime(TIME_FORMAT),
+                    event.time_period.end_time.strftime(TIME_FORMAT),
                     self.__quote(event.text)))
                 if event.category:
                     f.write(";%s" % self.__quote(event.category.name))
@@ -88,6 +96,7 @@ class FileTimeline2(Timeline):
         loginfo("Processing line '%s'" % line)
         # Map prefixes to functions that handle the rest of that line
         prefixes = (
+            ("PREFERRED-PERIOD:", self.__process_preferred_period),
             ("CATEGORY:", self.__process_category),
             ("EVENT:", self.__process_event),
             ("#", self.__process_comment),
@@ -115,6 +124,18 @@ class FileTimeline2(Timeline):
 
     def __quote(self, text):
         return text.replace(r";", r"\;")
+
+    def __process_preferred_period(self, period_text):
+        """Expected format 'start_time;end_time'."""
+        split = self.__split_on_delim(period_text)
+        try:
+            if len(split) != 2:
+                raise ParseException("Unexpected number of components")
+            self.preferred_period = TimePeriod(self.__parse_time(split[0]),
+                                               self.__parse_time(split[1]))
+        except Exception, e:
+            logerror("Unable to parse preferred period from '%s'" % (
+                     period_text), exc_info=e)
 
     def __process_category(self, category_text):
         """Expected format 'name;color'."""
@@ -229,8 +250,14 @@ class FileTimeline2(Timeline):
                 event.category = None
         self.__save_data()
 
-    def preferred_period(self):
-        return TimePeriod(datetime(2008, 11, 1), datetime(2008, 11, 30))
+    def get_preferred_period(self):
+        if self.preferred_period:
+            return self.preferred_period
+        return time_period_center(datetime.now(), timedelta(days=30))
+
+    def set_preferred_period(self, period):
+        self.preferred_period = period
+        self.__save_data()
 
     def reset_selection(self):
         for e in self.events:

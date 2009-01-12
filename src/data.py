@@ -53,8 +53,12 @@ class Timeline(object):
         """Delete `category` and remove it from all events."""
         pass
 
-    def preferred_period(self):
+    def get_preferred_period(self):
         """Return the preferred period to display of this timeline."""
+        pass
+
+    def set_preferred_period(self, period):
+        """Set the preferred period to display of this timeline."""
         pass
 
     def reset_selection(self):
@@ -113,7 +117,7 @@ class TimePeriod(object):
     def __init__(self, start_time, end_time):
         self.start_time = start_time
         self.end_time = end_time
-        if start_time > end_time:
+        if start_time >= end_time:
             raise Exception("Invalid time period")
 
     def inside(self, time):
@@ -180,3 +184,11 @@ def div_timedeltas(td1, td2):
     total_us2 = delta_to_microseconds(td2)
     # Make sure that the result is a floating point number
     return total_us1 / float(total_us2)
+
+
+def time_period_center(time, length):
+    """Create a time period with the given length centered around `time`."""
+    half_length = mult_timedelta(length, 0.5)
+    start_time = time - half_length
+    end_time = time + half_length
+    return TimePeriod(start_time, end_time)
