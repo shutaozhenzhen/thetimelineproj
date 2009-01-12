@@ -117,7 +117,7 @@ class TimePeriod(object):
     def __init__(self, start_time, end_time):
         self.start_time = start_time
         self.end_time = end_time
-        if start_time >= end_time:
+        if start_time > end_time:
             raise Exception("Invalid time period")
 
     def inside(self, time):
