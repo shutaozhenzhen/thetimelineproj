@@ -297,14 +297,24 @@ class DrawingArea(wx.Window):
 
     def _on_motion_event(self, evt):
         """The mouse has been moved."""
-        if not evt.Dragging:
-            return
+        if evt.Dragging:
+            event = self.drawing_algorithm.event_at(evt.m_x, evt.m_y)
+            if event != None:
+                self._display_eventname_in_statusbar(event.text)
+            else:
+                self._reset_eventname_in_statusbar()
         if not evt.m_leftDown:
             return
         if evt.m_controlDown:
             self.__mark_selected_minor_strips(evt.m_x)
         else:
             self.__scoll_timeline(evt.m_x)
+
+    def _display_eventname_in_statusbar(self, eventname):
+        wx.GetTopLevelParent(self).SetStatusText(eventname)
+
+    def _reset_eventname_in_statusbar(self):
+        wx.GetTopLevelParent(self).SetStatusText('')
 
     def __scoll_timeline(self, current_x):
         current_time = self.drawing_algorithm.metrics.get_time(current_x)
