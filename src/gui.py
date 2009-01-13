@@ -370,6 +370,7 @@ class DrawingArea(wx.Window):
             self.bgbuf = None
             logging.fatal('Error in drawing', exc_info=e)
 
+
 class EventEditor(wx.Dialog):
     """This dialog is used for creating and updating events"""
 
@@ -381,8 +382,6 @@ class EventEditor(wx.Dialog):
         btn_ok.SetDefault()
         button_box.SetCancelButton(btn_close)
         button_box.SetAffirmativeButton(btn_ok)
-        #button_box.AddButton(btn_close)
-        #button_box.AddButton(btn_ok)
         button_box.Realize()
         wx.EVT_BUTTON(self, btn_ok.GetId()   , self._on_ok)
         wx.EVT_BUTTON(self, btn_close.GetId(), self._on_close)
@@ -425,21 +424,25 @@ class EventEditor(wx.Dialog):
         start = self.__time_text(start)
         end   = self.__time_text(end  )
         # Controls within the groupbox
-        grid = wx.FlexGridSizer(4, 2, vgap=4, hgap=4)
+        grid = wx.FlexGridSizer(4, 2, BORDER, BORDER)
         self._textctrl_start_time = wx.TextCtrl(self, -1, start, size=(self.CTRL_W, -1))
         self._textctrl_end_time   = wx.TextCtrl(self, -1, end  , size=(self.CTRL_W, -1))
         self._textctrl_name       = wx.TextCtrl(self, -1, name , size=(self.CTRL_W, -1))
         self._category_choice     = wx.Choice  (self, -1,        size=(self.CTRL_W, -1))
         grid.AddMany([
-         (wx.StaticText(self, -1, "Start:"   )), (self._textctrl_start_time),
-         (wx.StaticText(self, -1, "End:"     )), (self._textctrl_end_time  ),
-         (wx.StaticText(self, -1, "Name:"    )), (self._textctrl_name      ),
-         (wx.StaticText(self, -1, "Category:")), (self._category_choice    ),
+            (wx.StaticText(self, -1, "Start:"), 0, wx.ALIGN_CENTER_VERTICAL),
+            (self._textctrl_start_time),
+            (wx.StaticText(self, -1, "End:"), 0, wx.ALIGN_CENTER_VERTICAL),
+            (self._textctrl_end_time),
+            (wx.StaticText(self, -1, "Name:"), 0, wx.ALIGN_CENTER_VERTICAL),
+            (self._textctrl_name),
+            (wx.StaticText(self, -1, "Category:"), 0, wx.ALIGN_CENTER_VERTICAL),
+            (self._category_choice),
         ])
         # The Group box
         box    = wx.StaticBox(self, -1, "Event Properties")
         groupbox = wx.StaticBoxSizer(box, wx.VERTICAL)
-        groupbox.Add(grid, 0, wx.TOP|wx.LEFT, self.CTRL_BORDER)
+        groupbox.Add(grid, 0, wx.ALL, BORDER)
         # The checkbox
         self._cb_close_on_ok = wx.CheckBox(self, -1, "Close on OK")
         # Control data
@@ -452,9 +455,9 @@ class EventEditor(wx.Dialog):
             count += 1
         # Add controls and buttons do the dialog
         border = wx.BoxSizer(wx.VERTICAL)
-        border.Add(groupbox            , 1, wx.EXPAND|wx.ALL, 4)
-        border.Add(self._cb_close_on_ok, 0, wx.EXPAND|wx.ALL, 4)
-        border.Add(self.__buttons()         , 0, wx.EXPAND|wx.ALL)
+        border.Add(groupbox            , 1, wx.EXPAND|wx.ALL, BORDER)
+        border.Add(self._cb_close_on_ok, 0, wx.EXPAND|wx.ALL, BORDER)
+        border.Add(self.__buttons()    , 0, wx.EXPAND|wx.ALL, BORDER)
         self.SetSizerAndFit(border)
         # Decide focus control
         self._textctrl_start_time.SetFocus()
@@ -554,7 +557,8 @@ class CategoriesEditor(wx.Dialog):
         # The close button
         btn_close = wx.Button(self, wx.ID_CLOSE)
         btn_close.SetDefault()
-        self.SetEscapeId(wx.ID_CLOSE)
+        btn_close.SetFocus()
+        self.SetAffirmativeId(wx.ID_CLOSE)
         # Setup layout
         vbox = wx.BoxSizer(wx.VERTICAL)
         vbox.Add(self.lst_categories, flag=wx.ALL|wx.EXPAND, border=BORDER)
@@ -620,7 +624,7 @@ class CategoryEditor(wx.Dialog):
         field_grid = wx.FlexGridSizer(2, 2, BORDER, BORDER)
         field_grid.Add(wx.StaticText(self, label="Name:"),
                        flag=wx.ALIGN_CENTER_VERTICAL)
-        field_grid.Add(self.txt_name, proportion=1)
+        field_grid.Add(self.txt_name)
         field_grid.Add(wx.StaticText(self, label="Color:"),
                        flag=wx.ALIGN_CENTER_VERTICAL)
         field_grid.Add(self.colorpicker)
@@ -668,7 +672,7 @@ def todt(datetime_string):
 
 def create_new_event(timeline, start=None, end=None):
     """Create a new event"""
-    dlg = EventEditor(None, -1, 'Create a new Event', timeline, start, end)
+    dlg = EventEditor(None, -1, 'Create Event', timeline, start, end)
     dlg.ShowModal()
     dlg.Destroy()
 
