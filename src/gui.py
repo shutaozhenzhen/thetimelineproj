@@ -393,9 +393,9 @@ class EventEditor(wx.Dialog):
         button_box.SetCancelButton(btn_close)
         button_box.SetAffirmativeButton(btn_ok)
         button_box.Realize()
-        wx.EVT_BUTTON(self, btn_ok.GetId()   , self._on_ok)
+        wx.EVT_BUTTON(self, btn_ok.GetId()   , self._on_ok   )
         wx.EVT_BUTTON(self, btn_close.GetId(), self._on_close)
-        wx.EVT_BUTTON(self, wx.ID_CANCEL, self._on_close)
+        wx.EVT_BUTTON(self, wx.ID_CANCEL     , self._on_close)
         self.SetEscapeId(btn_close.GetId())
         self.SetDefaultItem(btn_ok)
         self.SetAffirmativeId(btn_ok.GetId())
@@ -411,9 +411,7 @@ class EventEditor(wx.Dialog):
     def __init__(self, parent, id, title, timeline, start=None, end=None, event=None):
         wx.Dialog.__init__(self, parent, id, title)
         # Constants
-        self.TXT_W   = 60
         self.CTRL_W  = 160
-        self.CTRL_BORDER = 4
         # Instance variables
         self._timeline = timeline
         self._event    = event
