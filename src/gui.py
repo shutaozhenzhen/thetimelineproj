@@ -9,15 +9,15 @@ GUI component on which it will draw.
 
 
 import logging
-
 import os.path
 from datetime import datetime as dt
+
 import wx
 import wx.lib.colourselect as colourselect
 
 from data import Event
 from data import Category
-from data import get_timeline
+import data
 import drawing
 
 
@@ -77,7 +77,7 @@ class MainFrame(wx.Frame):
 
     def open_timeline(self, input_file):
         try:
-            self.timeline = get_timeline(input_file)
+            self.timeline = data.get_timeline(input_file)
         except Exception, e:
             wx.MessageBox("Unable to open timeline '%s'.\n\n%s" % (input_file, e), "Error", wx.OK|wx.ICON_ERROR, self)
         else:

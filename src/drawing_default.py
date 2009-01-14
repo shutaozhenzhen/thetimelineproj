@@ -1,5 +1,5 @@
 """
-Implements a prototype algorithm for drawing a timeline.
+Implements the default algorithm for drawing a timeline.
 
 The drawing interface is implemented in the `DefaultDrawingAlgorithm` class in
 the `draw` method.
