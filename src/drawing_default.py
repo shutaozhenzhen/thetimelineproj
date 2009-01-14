@@ -401,7 +401,7 @@ class DefaultDrawingAlgorithm(DrawingAlgorithm):
             base_color = (200, 200, 200)
             if event.category:
                 base_color = event.category.color
-            border_color = self.__darken_color(base_color)
+            border_color = drawing.darken_color(base_color)
             self.dc.SetBrush(wx.Brush(base_color, wx.SOLID))
             self.dc.SetPen(wx.Pen(border_color, 1, wx.SOLID))
             self.dc.DrawRectangleRect(rect)
@@ -413,10 +413,3 @@ class DefaultDrawingAlgorithm(DrawingAlgorithm):
             self.dc.DrawText(event.text,
                              rect.X + INNER_PADDING,
                              rect.Y + INNER_PADDING)
-
-    def __darken_color(self, color, factor=0.7):
-        r, g, b = color
-        new_r = int(r * factor)
-        new_g = int(g * factor)
-        new_b = int(b * factor)
-        return (new_r, new_g, new_b)

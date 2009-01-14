@@ -18,6 +18,9 @@ class Timeline(object):
     A possible implementation could be for a timeline stored in a flat file or
     in a SQL database.
 
+    In order to get an implementation, the `get_timeline` factory method should
+    be used.
+
     All methods that modify the timeline should automatically save it.
     """
 
@@ -187,7 +190,11 @@ def div_timedeltas(td1, td2):
 
 
 def time_period_center(time, length):
-    """Create a time period with the given length centered around `time`."""
+    """
+    TimePeriod factory method.
+    
+    Create a time period with the given length centered around `time`.
+    """
     half_length = mult_timedelta(length, 0.5)
     start_time = time - half_length
     end_time = time + half_length

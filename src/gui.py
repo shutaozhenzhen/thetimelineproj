@@ -2,7 +2,7 @@
 GUI components.
 
 The GUI components are mainly for interacting with the user and should not
-contain much logic. For example, the `drawing` module is responsible for
+contain much logic. For example, the drawing algorithm is responsible for
 drawing the timeline, but the `DrawingArea` class in this module provides the
 GUI component on which it will draw.
 """
