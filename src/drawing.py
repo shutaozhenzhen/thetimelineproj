@@ -78,20 +78,7 @@ def get_default_font(size, bold=False):
                    wx.FONTSTYLE_NORMAL, weight)
 
 
-def setup_drawing_algorithm(drawing_algorithm):
-    global _drawing_algorithm
-    _drawing_algorithm = drawing_algorithm
-
-
-from drawing_simple1 import SimpleDrawingAlgorithm1
-from drawing_simple2 import SimpleDrawingAlgorithm2
-
-
 def get_algorithm():
     """Factory method."""
-    return _drawing_algorithms.get(_drawing_algorithm, SimpleDrawingAlgorithm1)()
-
-
-_drawing_algorithm  = None
-_drawing_algorithms = {'simple1': SimpleDrawingAlgorithm1,
-                       'simple2': SimpleDrawingAlgorithm2}
+    from drawing_default import DefaultDrawingAlgorithm
+    return DefaultDrawingAlgorithm()
