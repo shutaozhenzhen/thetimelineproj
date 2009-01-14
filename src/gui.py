@@ -42,8 +42,8 @@ class MainFrame(wx.Frame):
         self.timeline = None
         self.title_base = "The Timeline Project"
         self.SetTitle(self.title_base)
-        self.extensions = [".timeline", ".timeline2"]
-        self.default_extension = self.extensions[1]
+        self.extensions = [".timeline"]
+        self.default_extension = self.extensions[0]
         self.wildcard = "Timeline file (%s)|%s" % (
             ", ".join(["*" + e for e in self.extensions]),
             ";".join(["*" + e for e in self.extensions]))

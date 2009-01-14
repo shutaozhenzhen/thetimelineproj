@@ -207,10 +207,7 @@ def get_timeline(input_file):
 
     Return a specific timeline depending on the input_file.
     """
-    if input_file.endswith(".timeline2"):
-        from data_file2 import FileTimeline2
-        return FileTimeline2(input_file)
-    elif input_file.endswith(".timeline"):
+    if input_file.endswith(".timeline"):
         from data_file import FileTimeline
         return FileTimeline(input_file)
     else:
