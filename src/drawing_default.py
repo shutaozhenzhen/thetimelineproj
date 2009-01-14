@@ -1,7 +1,7 @@
 """
 Implements a prototype algorithm for drawing a timeline.
 
-The drawing interface is implemented in the `SimpleDrawingAlgorithm1` class in
+The drawing interface is implemented in the `DefaultDrawingAlgorithm` class in
 the `draw` method.
 """
 
@@ -157,7 +157,7 @@ class StripHour(Strip):
         return time + timedelta(hours=1)
 
 
-class SimpleDrawingAlgorithm1(DrawingAlgorithm):
+class DefaultDrawingAlgorithm(DrawingAlgorithm):
 
     def __init__(self):
         # Fonts and pens we use when drawing
