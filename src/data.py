@@ -192,3 +192,19 @@ def time_period_center(time, length):
     start_time = time - half_length
     end_time = time + half_length
     return TimePeriod(start_time, end_time)
+
+
+def get_timeline(input_file):
+    """
+    Timeline factory method.
+
+    Return a specific timeline depending on the input_file.
+    """
+    if input_file.endswith(".timeline2"):
+        from data_file2 import FileTimeline2
+        return FileTimeline2(input_file)
+    elif input_file.endswith(".timeline"):
+        from data_file import FileTimeline
+        return FileTimeline(input_file)
+    else:
+        raise Exception("Unknown format")
