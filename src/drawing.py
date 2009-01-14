@@ -1,9 +1,7 @@
 """
-Contains algorithms for drawing a timeline.
+Defines the interface for drawing algorithms and provides common utilities for
+drawing.
 """
-
-import logging
-from datetime import timedelta
 
 import wx
 
@@ -13,7 +11,12 @@ from data import delta_to_microseconds
 
 
 class DrawingAlgorithm(object):
-    """Base class for timeline drawing algorithms."""
+    """
+    Base class for timeline drawing algorithms.
+    
+    In order to get an implementation, the `get_algorithm` factory method
+    should be used.
+    """
 
     def draw(self, dc, time_period, events, period_selection=None):
         """
@@ -76,6 +79,14 @@ def get_default_font(size, bold=False):
         weight = wx.FONTWEIGHT_NORMAL
     return wx.Font(size, wx.FONTFAMILY_DEFAULT,
                    wx.FONTSTYLE_NORMAL, weight)
+
+
+def darken_color(color, factor=0.7):
+    r, g, b = color
+    new_r = int(r * factor)
+    new_g = int(g * factor)
+    new_b = int(b * factor)
+    return (new_r, new_g, new_b)
 
 
 def get_algorithm():
