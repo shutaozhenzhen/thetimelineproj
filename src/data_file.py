@@ -18,6 +18,7 @@ from data import TimePeriod
 from data import Event
 from data import Category
 from data import time_period_center
+from version import get_version
 
 
 ENCODING = "utf-8"
@@ -69,7 +70,8 @@ class FileTimeline(Timeline):
         f = None
         try:
             f = codecs.open(self.file_path, "w", ENCODING)
-            f.write("# Written by 'FileTimeline2' on %s\n" % (
+            f.write("# Written by Timeline %s on %s\n" % (
+                    get_version(),
                     datetime.now().strftime(TIME_FORMAT)))
             if self.preferred_period:
                 f.write("PREFERRED-PERIOD:%s;%s\n" % (

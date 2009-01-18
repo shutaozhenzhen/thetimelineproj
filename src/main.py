@@ -14,10 +14,12 @@ from logging import info as loginfo
 import wx
 
 from gui import MainFrame
+from version import get_version
 
 
 def parse_options():
-    op = OptionParser(usage="%prog [options] [filename]", version="%prog 0.1.0")
+    version_str = "%prog " + get_version()
+    op = OptionParser(usage="%prog [options] [filename]", version=version_str)
     op.add_option("-l", "--log-level", type="int", default=logging.ERROR,
                   help="specify log level (0 to log everything)")
     op.add_option("-f", "--log-file", default=None,
