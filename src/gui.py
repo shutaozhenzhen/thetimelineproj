@@ -20,7 +20,6 @@ from data import Category
 import data
 import drawing
 
-
 ID_NEW_EVENT = 1
 ID_CATEGORIES = 2
 BORDER = 5
@@ -38,7 +37,6 @@ class MainFrame(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, size=(900, 400),
                           style=wx.DEFAULT_FRAME_STYLE|wx.MAXIMIZE)
-        self.__create_gui()
         self.timeline = None
         self.title_base = "The Timeline Project"
         self.SetTitle(self.title_base)
@@ -47,6 +45,7 @@ class MainFrame(wx.Frame):
         self.wildcard = "Timeline file (%s)|%s" % (
             ", ".join(["*" + e for e in self.extensions]),
             ";".join(["*" + e for e in self.extensions]))
+        self.__create_gui()
 
     def __create_gui(self):
         self.main_panel = MainPanel(self)
@@ -63,17 +62,29 @@ class MainFrame(wx.Frame):
         file_menu.AppendSeparator()
         file_menu.Append(wx.ID_EXIT, "E&xit\tAlt-F4", "Exit the program")
         self.Bind(wx.EVT_MENU, self._on_exit, id=wx.ID_EXIT)
-        # Edit menu
+        # Timeline menu
         timeline_menu = wx.Menu()
         menuBar.Append(timeline_menu, "&Timeline")
-        timeline_menu.Append(ID_NEW_EVENT, "&Add Event", "Add a new event")
+        timeline_menu.Append(ID_NEW_EVENT, "&Create Event", "Create a new event")
         self.Bind(wx.EVT_MENU, self._on_new_event, id=ID_NEW_EVENT)
         timeline_menu.Append(ID_CATEGORIES, "Edit &Categories", "Edit categories")
         self.Bind(wx.EVT_MENU, self._on_categories, id=ID_CATEGORIES)
+        self.enable_disable_menus()
         # Status bar
         self.CreateStatusBar()
         # Window events
         wx.EVT_CLOSE(self, self._on_close)
+
+    def enable_disable_menus(self):
+        """Enable or Disable menu items dependeing on the state of the app"""
+        timeline_menu_index = 1
+        timeline_menu = self.GetMenuBar().GetMenu(timeline_menu_index)
+        if self.timeline == None:
+            timeline_menu.Enable(ID_NEW_EVENT , False)
+            timeline_menu.Enable(ID_CATEGORIES, False)
+        else:
+            timeline_menu.Enable(ID_NEW_EVENT , True)
+            timeline_menu.Enable(ID_CATEGORIES, True)
 
     def open_timeline(self, input_file):
         try:
@@ -83,6 +94,7 @@ class MainFrame(wx.Frame):
         else:
             self.SetTitle("%s (%s)" % (self.title_base, input_file))
             self.main_panel.drawing_area.set_timeline(self.timeline)
+        self.enable_disable_menus()
 
     def _on_new(self, event):
         dialog = wx.FileDialog(self, message="Create Timeline",
