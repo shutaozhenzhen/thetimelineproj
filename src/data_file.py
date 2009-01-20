@@ -7,6 +7,7 @@ The class `FileTimeline` implements the timeline interface.
 
 import re
 import codecs
+import os.path
 from logging import error as logerror
 from logging import info as loginfo
 from datetime import datetime
@@ -46,6 +47,9 @@ class FileTimeline(Timeline):
         self.categories = []
         self.events = []
         self.disable_save_due_to_corrupt_data = False
+        if not os.path.exists(self.file_path): 
+            # Nothing to load if file does not exist
+            return
         loginfo("Opening file '%s'" % self.file_path)
         f = None
         try:
@@ -108,7 +112,7 @@ class FileTimeline(Timeline):
             ("CATEGORY:", self.__process_category),
             ("EVENT:", self.__process_event),
             ("#", self.__process_comment),
-            # Catch all (makes sure this function always returns something)
+            # Catch all (make sure this function always return something)
             ("", self.__process_unknown),
         )
         for (prefix, processing_func) in prefixes:
