@@ -320,7 +320,7 @@ class DrawingArea(wx.Window):
         if evt.m_controlDown:
             self.__mark_selected_minor_strips(evt.m_x)
         else:
-            self.__scoll_timeline(evt.m_x)
+            self.__scroll_timeline(evt.m_x)
 
     def _display_eventname_in_statusbar(self, eventname):
         wx.GetTopLevelParent(self).SetStatusText(eventname)
@@ -328,7 +328,9 @@ class DrawingArea(wx.Window):
     def _reset_eventname_in_statusbar(self):
         wx.GetTopLevelParent(self).SetStatusText('')
 
-    def __scoll_timeline(self, current_x):
+    def __scroll_timeline(self, current_x):
+        if not self._marked_time:
+            return
         current_time = self.drawing_algorithm.metrics.get_time(current_x)
         delta = current_time - self._marked_time
         self.time_period.start_time -= delta
