@@ -23,7 +23,6 @@ from gui import display_error_message
 
 
 ENCODING = "utf-8"
-TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
 class ParseException(Exception):
@@ -82,19 +81,19 @@ class FileTimeline(Timeline):
             else:
                 f.write("# Written by Timeline %s on %s\n" % (
                         get_version(),
-                        datetime.now().strftime(TIME_FORMAT)))
+                        time_str(datetime.now())))
                 if self.preferred_period:
                     f.write("PREFERRED-PERIOD:%s;%s\n" % (
-                        self.preferred_period.start_time.strftime(TIME_FORMAT),
-                        self.preferred_period.end_time.strftime(TIME_FORMAT)))
+                        time_str(self.preferred_period.start_time),
+                        time_str(self.preferred_period.end_time)))
                 for cat in self.categories:
                     r, g, b = cat.color
                     f.write("CATEGORY:%s;%s,%s,%s\n" % (quote(cat.name),
                                                         r, g, b))
                 for event in self.events:
                     f.write("EVENT:%s;%s;%s" % (
-                        event.time_period.start_time.strftime(TIME_FORMAT),
-                        event.time_period.end_time.strftime(TIME_FORMAT),
+                        time_str(event.time_period.start_time),
+                        time_str(event.time_period.end_time),
                         quote(event.text)))
                     if event.category:
                         f.write(";%s" % quote(event.category.name))
@@ -254,7 +253,7 @@ def parse_color(color_string):
 
 def parse_time(time_str):
     """
-    Return a date time or raise exception.
+    Return a DateTime or raise exception.
 
     Expected format 'year-month-day hour:minute:second'.
     """
@@ -272,6 +271,14 @@ def parse_time(time_str):
             raise ParseException("Invalid time")
     else:
         raise ParseException("Time not on correct format")
+
+
+def time_str(time):
+    """
+    Return time formatted for writing to file.
+    """
+    return "%s-%s-%s %s:%s:%s" % (time.year, time.month, time.day,
+                                  time.hour, time.minute, time.second)
 
 
 def split_on_delim(text):
