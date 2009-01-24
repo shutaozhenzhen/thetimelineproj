@@ -97,7 +97,7 @@ class StripYear(Strip):
         return time_period.delta() > timedelta(365*2)
 
     def label(self, time, major=False):
-        return time.strftime("%Y")
+        return str(time.year)
 
     def start(self, time):
         return datetime(time.year, 1, 1)
@@ -113,8 +113,8 @@ class StripMonth(Strip):
 
     def label(self, time, major=False):
         if major:
-            return time.strftime("%b %Y")
-        return time.strftime("%b")
+            return "%s %s" % (calendar.month_abbr[time.month], time.year)
+        return calendar.month_abbr[time.month]
 
     def start(self, time):
         return datetime(time.year, time.month, 1)
@@ -130,7 +130,8 @@ class StripDay(Strip):
 
     def label(self, time, major=False):
         if major:
-            return time.strftime("%d %b %Y")
+            return "%s %s %s" % (time.day, calendar.month_abbr[time.month],
+                                 time.year)
         return str(time.day)
 
     def start(self, time):
@@ -147,7 +148,8 @@ class StripHour(Strip):
 
     def label(self, time, major=False):
         if major:
-            return time.strftime("%b %d %Y %h")
+            return "%s %s %s %s" % (time.day, calendar.month_abbr[time.month],
+                                    time.year, time.hour)
         return str(time.hour)
 
     def start(self, time):
