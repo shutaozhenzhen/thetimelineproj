@@ -1,7 +1,7 @@
 """
-Implementation of timeline with file storage.
+Implementation of `Timeline` with file storage.
 
-The class `FileTimeline` implements the timeline interface.
+The class `FileTimeline` implements the `Timeline` interface.
 """
 
 
@@ -26,14 +26,16 @@ ENCODING = "utf-8"
 
 
 class ParseException(Exception):
+    """Thrown if parsing of data read from file fails."""
     pass
 
 
 class FileTimeline(Timeline):
     """
-    Implements the timeline interface.
+    Implements the `Timeline` interface.
 
-    The comments in `Timeline` describes what the public methods should do.
+    The comments in the `Timeline` class describes what the public methods
+    should do.
     """
 
     def __init__(self, file_path):
@@ -42,6 +44,7 @@ class FileTimeline(Timeline):
         self.__load_data()
 
     def __load_data(self):
+        """Load timeline data from the file that this timeline points to."""
         self.preferred_period = None
         self.categories = []
         self.events = []
@@ -50,57 +53,58 @@ class FileTimeline(Timeline):
             # Nothing to load if file does not exist
             return
         loginfo("Opening file '%s'" % self.file_path)
-        f = None
+        file = None
         try:
             try:
-                f = codecs.open(self.file_path, "r", ENCODING)
+                file = codecs.open(self.file_path, "r", ENCODING)
             except IOError, e:
                 display_error_message("Unable to read data from timeline.\n\n%s" % e)
             else:
                 data_corrupt = False
-                for line in f:
+                for line in file:
                     if not self.__process_line(line.strip()):
                         data_corrupt = True
                 if data_corrupt:
                     display_error_message("Timeline data corrupt. Enable logging and open the timeline again to get more information about the problem.")
                     self.disable_save_due_to_corrupt_data = True
         finally:
-            if f:
-                f.close()
+            if file:
+                file.close()
 
     def __save_data(self):
+        """Save timeline data to the file that this timeline points to."""
         if self.disable_save_due_to_corrupt_data:
             display_error_message("Save disabled because timeline data was corrupt.")
             return
-        f = None
+        file = None
         try:
             try:
-                f = codecs.open(self.file_path, "w", ENCODING)
+                file = codecs.open(self.file_path, "w", ENCODING)
             except IOError, e:
                 display_error_message("Unable to save timeline data.\n\n%s" % e)
             else:
-                f.write("# Written by Timeline %s on %s\n" % (
-                        get_version(),
-                        time_str(datetime.now())))
+                file.write("# Written by Timeline %s on %s\n" % (
+                    get_version(),
+                    time_string(datetime.now())))
                 if self.preferred_period:
-                    f.write("PREFERRED-PERIOD:%s;%s\n" % (
-                        time_str(self.preferred_period.start_time),
-                        time_str(self.preferred_period.end_time)))
+                    file.write("PREFERRED-PERIOD:%s;%s\n" % (
+                        time_string(self.preferred_period.start_time),
+                        time_string(self.preferred_period.end_time)))
                 for cat in self.categories:
                     r, g, b = cat.color
-                    f.write("CATEGORY:%s;%s,%s,%s\n" % (quote(cat.name),
-                                                        r, g, b))
+                    file.write("CATEGORY:%s;%s,%s,%s\n" % (quote(cat.name),
+                                                           r, g, b))
                 for event in self.events:
-                    f.write("EVENT:%s;%s;%s" % (
-                        time_str(event.time_period.start_time),
-                        time_str(event.time_period.end_time),
+                    file.write("EVENT:%s;%s;%s" % (
+                        time_string(event.time_period.start_time),
+                        time_string(event.time_period.end_time),
                         quote(event.text)))
                     if event.category:
-                        f.write(";%s" % quote(event.category.name))
-                    f.write("\n")
+                        file.write(";%s" % quote(event.category.name))
+                    file.write("\n")
         finally:
-            if f:
-                f.close()
+            if file:
+                file.close()
 
     def __process_line(self, line):
         """Process data on `line` and return True if successful."""
@@ -120,12 +124,12 @@ class FileTimeline(Timeline):
 
     def __process_preferred_period(self, period_text):
         """Expected format 'start_time;end_time'."""
-        split = split_on_delim(period_text)
+        times = split_on_semicolon(period_text)
         try:
-            if len(split) != 2:
+            if len(times) != 2:
                 raise ParseException("Unexpected number of components")
-            self.preferred_period = TimePeriod(parse_time(split[0]),
-                                               parse_time(split[1]))
+            self.preferred_period = TimePeriod(parse_time(times[0]),
+                                               parse_time(times[1]))
             return True
         except ParseException, e:
             logerror("Unable to parse preferred period from '%s'" % (
@@ -134,12 +138,12 @@ class FileTimeline(Timeline):
 
     def __process_category(self, category_text):
         """Expected format 'name;color'."""
-        split = split_on_delim(category_text)
+        category_data = split_on_semicolon(category_text)
         try:
-            if len(split) != 2:
+            if len(category_data) != 2:
                 raise ParseException("Unexpected number of components")
-            name = dequote(split[0])
-            color = parse_color(split[1])
+            name = dequote(category_data[0])
+            color = parse_color(category_data[1])
             self.categories.append(Category(name, color))
             return True
         except ParseException, e:
@@ -149,16 +153,16 @@ class FileTimeline(Timeline):
 
     def __process_event(self, event_text):
         """Expected format 'start_time;end_time;text[;category]'."""
-        split = split_on_delim(event_text)
+        event_specification = split_on_semicolon(event_text)
         try:
-            if len(split) != 3 and len(split) != 4:
+            if len(event_specification) != 3 and len(event_specification) != 4:
                 raise ParseException("Unexpected number of components")
-            start_time = parse_time(split[0])
-            end_time = parse_time(split[1])
-            text = dequote(split[2])
+            start_time = parse_time(event_specification[0])
+            end_time = parse_time(event_specification[1])
+            text = dequote(event_specification[2])
             cat_name = None
-            if len(split) == 4:
-                cat_name = dequote(split[3])
+            if len(event_specification) == 4:
+                cat_name = dequote(event_specification[3])
             category = self.__get_category(cat_name)
             self.events.append(Event(start_time, end_time, text, category))
             return True
@@ -171,21 +175,21 @@ class FileTimeline(Timeline):
         return True
 
     def __process_unknown(self, line):
-        if line.strip():
-            logerror("Skipping unknown line: '%s'" % line)
-            # An unknown line can not be processed successfully
-            return False
-        # Ignore empty lines
-        return True
+        line_is_empty = line.strip() == ""
+        if line_is_empty:
+            return True
+        logerror("Skipping unknown line: '%s'" % line)
+        return False
 
     def __get_category(self, name):
-        for cat in self.categories:
-            if cat.name == name:
-                return cat
+        for category in self.categories:
+            if category.name == name:
+                return category
         return None
 
     def get_events(self, time_period):
-        return [e for e in self.events if e.inside_period(time_period)]
+        return [event for event in self.events
+                if event.inside_period(time_period)]
 
     def add_event(self, event):
         self.events.append(event)
@@ -195,7 +199,7 @@ class FileTimeline(Timeline):
         self.__save_data()
 
     def delete_selected_events(self):
-        self.events = [e for e in self.events if not e.selected]
+        self.events = [event for event in self.events if not event.selected]
         self.__save_data()
 
     def get_categories(self):
@@ -227,8 +231,8 @@ class FileTimeline(Timeline):
         self.__save_data()
 
     def reset_selection(self):
-        for e in self.events:
-            e.selected = False
+        for event in self.events:
+            event.selected = False
 
 
 def parse_color(color_string):
@@ -239,7 +243,7 @@ def parse_color(color_string):
     """
     def verify_255_number(num):
         if num < 0 or num > 255:
-            raise ParseException("Color number not in range [0, 255]")
+            raise ParseException("Color number not in range [0, 255], color string = '%s'" % color_string)
     match = re.search(r"^(\d+),(\d+),(\d+)$", color_string)
     if match:
         r, g, b = int(match.group(1)), int(match.group(2)), int(match.group(3))
@@ -248,16 +252,16 @@ def parse_color(color_string):
         verify_255_number(b)
         return (r, g, b)
     else:
-        raise ParseException("Color not on correct format")
+        raise ParseException("Color not on correct format, color string = '%s'" % color_string)
 
 
-def parse_time(time_str):
+def parse_time(time_string):
     """
     Return a DateTime or raise exception.
 
     Expected format 'year-month-day hour:minute:second'.
     """
-    match = re.search(r"^(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)$", time_str)
+    match = re.search(r"^(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)$", time_string)
     if match:
         year = int(match.group(1))
         month = int(match.group(2))
@@ -268,12 +272,12 @@ def parse_time(time_str):
         try:
             return datetime(year, month, day, hour, minute, second)
         except ValueError:
-            raise ParseException("Invalid time")
+            raise ParseException("Invalid time, time string = '%s'" % time_string)
     else:
-        raise ParseException("Time not on correct format")
+        raise ParseException("Time not on correct format = '%s'" % time_string)
 
 
-def time_str(time):
+def time_string(time):
     """
     Return time formatted for writing to file.
     """
@@ -281,9 +285,9 @@ def time_str(time):
                                   time.hour, time.minute, time.second)
 
 
-def split_on_delim(text):
+def split_on_semicolon(text):
     """
-    The delimiter is ; but only of not proceeded by backslash.
+    The delimiter is ; but only if not proceeded by backslash.
 
     Examples:
 
