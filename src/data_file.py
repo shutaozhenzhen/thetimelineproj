@@ -62,7 +62,7 @@ class FileTimeline(Timeline):
             else:
                 data_corrupt = False
                 for line in file:
-                    if not self.__process_line(line.strip()):
+                    if not self.__load_object_from_line(line.strip()):
                         data_corrupt = True
                 if data_corrupt:
                     display_error_message("Timeline data corrupt. Enable logging and open the timeline again to get more information about the problem.")
@@ -106,23 +106,23 @@ class FileTimeline(Timeline):
             if file:
                 file.close()
 
-    def __process_line(self, line):
-        """Process data on `line` and return True if successful."""
+    def __load_object_from_line(self, line):
+        """Return True if object successfully loaded, otherwise False."""
         loginfo("Processing line '%s'" % line)
-        # Map prefixes to functions that handle the rest of that line
+        # Map prefixes to functions that handle the loading of those objects
         prefixes = (
-            ("PREFERRED-PERIOD:", self.__process_preferred_period),
-            ("CATEGORY:", self.__process_category),
-            ("EVENT:", self.__process_event),
-            ("#", self.__process_comment),
+            ("PREFERRED-PERIOD:", self.__load_preferred_period),
+            ("CATEGORY:", self.__load_category),
+            ("EVENT:", self.__load_event),
+            ("#", self.__load_comment),
             # Catch all (make sure this function always return something)
-            ("", self.__process_unknown),
+            ("", self.__load_unknown),
         )
-        for (prefix, processing_func) in prefixes:
+        for (prefix, loading_function) in prefixes:
             if line.startswith(prefix):
-                return processing_func(line[len(prefix):])
+                return loading_function(line[len(prefix):])
 
-    def __process_preferred_period(self, period_text):
+    def __load_preferred_period(self, period_text):
         """Expected format 'start_time;end_time'."""
         times = split_on_semicolon(period_text)
         try:
@@ -136,7 +136,7 @@ class FileTimeline(Timeline):
                      period_text), exc_info=e)
             return False
 
-    def __process_category(self, category_text):
+    def __load_category(self, category_text):
         """Expected format 'name;color'."""
         category_data = split_on_semicolon(category_text)
         try:
@@ -151,7 +151,7 @@ class FileTimeline(Timeline):
                      exc_info=e)
             return False
 
-    def __process_event(self, event_text):
+    def __load_event(self, event_text):
         """Expected format 'start_time;end_time;text[;category]'."""
         event_specification = split_on_semicolon(event_text)
         try:
@@ -171,15 +171,17 @@ class FileTimeline(Timeline):
                      exc_info=e)
             return False
 
-    def __process_comment(self, comment):
+    def __load_comment(self, comment):
+        # No processing of comments
         return True
 
-    def __process_unknown(self, line):
+    def __load_unknown(self, line):
         line_is_empty = line.strip() == ""
         if line_is_empty:
             return True
-        logerror("Skipping unknown line: '%s'" % line)
-        return False
+        else:
+            logerror("Skipping unknown line: '%s'" % line)
+            return False
 
     def __get_category(self, name):
         for category in self.categories:
