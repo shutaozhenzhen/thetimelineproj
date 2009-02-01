@@ -333,8 +333,7 @@ class DrawingArea(wx.Window):
             return
         current_time = self.drawing_algorithm.metrics.get_time(current_x)
         delta = current_time - self._marked_time
-        self.time_period.start_time -= delta
-        self.time_period.end_time   -= delta
+        self.time_period.move_delta(-delta)
         self.timeline.set_preferred_period(self.time_period)
         self.draw_timeline()
 
@@ -396,44 +395,65 @@ class DrawingArea(wx.Window):
 
 
 class EventEditor(wx.Dialog):
-    """This dialog is used for creating and updating events"""
-
-    def __buttons(self):
-        """Convenience method for creating a button controls"""
-        button_box = wx.StdDialogButtonSizer()
-        btn_ok    = wx.Button(self, wx.ID_OK    )
-        btn_close = wx.Button(self, wx.ID_CLOSE)
-        btn_ok.SetDefault()
-        button_box.SetCancelButton(btn_close)
-        button_box.SetAffirmativeButton(btn_ok)
-        button_box.Realize()
-        wx.EVT_BUTTON(self, btn_ok.GetId()   , self._on_ok   )
-        wx.EVT_BUTTON(self, btn_close.GetId(), self._on_close)
-        wx.EVT_BUTTON(self, wx.ID_CANCEL     , self._on_close)
-        self.SetEscapeId(btn_close.GetId())
-        self.SetDefaultItem(btn_ok)
-        self.SetAffirmativeId(btn_ok.GetId())
-        return button_box
-
-    def __time_text(self, time):
-        if time != None:
-            text = time.split('.')[0]
-        else:
-            text = ''
-        return text
+    """This dialog is used for creating and updating events."""
 
     def __init__(self, parent, id, title, timeline, start=None, end=None, event=None):
+        """
+        Create a event editor dialog.
+
+        The dialog can be used both for creating new events and for updating
+        old ones.
+
+        The 'event' argument is optional. If it is given the dialog is used
+        to update this event and the textboxes are filled with data from
+        the event and the arguments 'start' and 'end' are ignored.
+
+        If the 'event' argument isn't given thedialog is used to create a
+        new event, and the textboxes for start and end time are intially
+        filled with data from the arguments 'start' and 'end' if they are
+        given.
+        """
         wx.Dialog.__init__(self, parent, id, title)
-        # Constants
-        self.CTRL_W  = 160
-        # Instance variables
         self._timeline = timeline
         self._event    = event
-        # gui
-        self.__create_gui(start, end)
+        self.__create_gui()
+        self.__fill_controls_with_data(start, end)
+        self.__set_initial_focus()
 
-    def __create_gui(self, start=None, end=None):
-        # Input data
+    def __create_gui(self):
+        """Create the controls of the dialog."""
+        grid = wx.FlexGridSizer(4, 2, BORDER, BORDER)
+        CTRL_W = 160
+        self._txt_start_time = wx.TextCtrl(self, wx.ID_ANY, size=(CTRL_W, -1))
+        self._txt_end_time   = wx.TextCtrl(self, wx.ID_ANY, size=(CTRL_W, -1))
+        self._txt_name       = wx.TextCtrl(self, wx.ID_ANY, size=(CTRL_W, -1))
+        self._lst_category   = wx.Choice  (self, wx.ID_ANY, size=(CTRL_W, -1))
+        grid.AddMany([
+            (wx.StaticText(self, wx.ID_ANY, "Start:"), 0,
+             wx.ALIGN_CENTER_VERTICAL), (self._txt_start_time),
+            (wx.StaticText(self, wx.ID_ANY, "End:"), 0,
+             wx.ALIGN_CENTER_VERTICAL), (self._txt_end_time),
+            (wx.StaticText(self, wx.ID_ANY, "Name:"), 0,
+             wx.ALIGN_CENTER_VERTICAL), (self._txt_name),
+            (wx.StaticText(self, wx.ID_ANY, "Category:"), 0,
+             wx.ALIGN_CENTER_VERTICAL), (self._lst_category),
+        ])
+        # The Group box
+        box      = wx.StaticBox(self, wx.ID_ANY, "Event Properties")
+        groupbox = wx.StaticBoxSizer(box, wx.VERTICAL)
+        groupbox.Add(grid, 0, wx.ALL, BORDER)
+        # The checkbox
+        self._cbx_close_on_ok = wx.CheckBox(self, wx.ID_ANY, "Close on OK")
+        # Add controls and buttons do the dialog
+        border = wx.BoxSizer(wx.VERTICAL)
+        border.Add(groupbox, 1, wx.EXPAND|wx.ALL, BORDER)
+        border.Add(self._cbx_close_on_ok, 0, wx.EXPAND|wx.ALL, BORDER)
+        border.Add(self.__create_button_box(), 0, wx.EXPAND|wx.ALL, BORDER)
+        self.SetSizerAndFit(border)
+
+    def __fill_controls_with_data(self, start=None, end=None):
+        """Initially fill the controls in the dialog with data."""
+        # Text fields
         if self._event != None:
             start    = self._event.time_period.start_time.isoformat('-')
             end      = self._event.time_period.end_time.isoformat('-')
@@ -444,115 +464,115 @@ class EventEditor(wx.Dialog):
             self._updatemode = False
             name = ''
             category = None
-        start = self.__time_text(start)
-        end   = self.__time_text(end  )
-        # Controls within the groupbox
-        grid = wx.FlexGridSizer(4, 2, BORDER, BORDER)
-        self._textctrl_start_time = wx.TextCtrl(self, -1, start, size=(self.CTRL_W, -1))
-        self._textctrl_end_time   = wx.TextCtrl(self, -1, end  , size=(self.CTRL_W, -1))
-        self._textctrl_name       = wx.TextCtrl(self, -1, name , size=(self.CTRL_W, -1))
-        self._category_choice     = wx.Choice  (self, -1,        size=(self.CTRL_W, -1))
-        grid.AddMany([
-            (wx.StaticText(self, -1, "Start:"), 0, wx.ALIGN_CENTER_VERTICAL),
-            (self._textctrl_start_time),
-            (wx.StaticText(self, -1, "End:"), 0, wx.ALIGN_CENTER_VERTICAL),
-            (self._textctrl_end_time),
-            (wx.StaticText(self, -1, "Name:"), 0, wx.ALIGN_CENTER_VERTICAL),
-            (self._textctrl_name),
-            (wx.StaticText(self, -1, "Category:"), 0, wx.ALIGN_CENTER_VERTICAL),
-            (self._category_choice),
-        ])
-        # The Group box
-        box    = wx.StaticBox(self, -1, "Event Properties")
-        groupbox = wx.StaticBoxSizer(box, wx.VERTICAL)
-        groupbox.Add(grid, 0, wx.ALL, BORDER)
-        # The checkbox
-        self._cb_close_on_ok = wx.CheckBox(self, -1, "Close on OK")
-        # Control data
-        self._cb_close_on_ok.SetValue(True)
+        self._txt_start_time.SetValue(self.__strip_milliseconds(start))
+        self._txt_end_time  .SetValue(self.__strip_milliseconds(end  ))
+        self._txt_name      .SetValue(name)
         count = 0
+        # Category Choice
+        selection_set = False
         for cat in self._timeline.get_categories():
-            self._category_choice.Append(cat.name, cat)
+            self._lst_category.Append(cat.name, cat)
             if cat == category:
-                self._category_choice.SetSelection(count)
+                self._lst_category.SetSelection(count)
+                selection_set = True
             count += 1
-        # Add controls and buttons do the dialog
-        border = wx.BoxSizer(wx.VERTICAL)
-        border.Add(groupbox            , 1, wx.EXPAND|wx.ALL, BORDER)
-        border.Add(self._cb_close_on_ok, 0, wx.EXPAND|wx.ALL, BORDER)
-        border.Add(self.__buttons()    , 0, wx.EXPAND|wx.ALL, BORDER)
-        self.SetSizerAndFit(border)
-        # Decide focus control
-        self._textctrl_start_time.SetFocus()
-        for ctrl in [self._textctrl_start_time, self._textctrl_end_time,
-                     self._textctrl_name]:
+        if not selection_set:
+            self._lst_category.SetSelection(0)
+        # Close on ok Checkbox
+        self._cbx_close_on_ok.SetValue(True)
+
+    def __set_initial_focus(self):
+        """
+        Sets focus on the first empty textbox. If there is no empty
+        textbox the focus is set to the 'start_time' textbox.
+        """
+        self._txt_start_time.SetFocus()
+        for ctrl in [self._txt_start_time, self._txt_end_time,
+                     self._txt_name]:
             if ctrl.GetValue().strip() == '':
                 ctrl.SetFocus()
                 break
 
-    def _on_close(self,e):
-        logging.debug("_on_close")
-        if self._event != None:
-            self._event.selected = False
-        self.EndModal(wx.ID_OK)
+    def __create_button_box(self):
+        """
+        Convenience method for creating a button box control.
 
-    def _on_ok(self,e):
-        """Add new or update existing event"""
-        logging.debug("_on_ok")
+        The control contains one OK button and one Close button
+        """
+        button_box = wx.StdDialogButtonSizer()
+        btn_ok     = wx.Button(self, wx.ID_OK   )
+        btn_close  = wx.Button(self, wx.ID_CLOSE)
+        btn_ok.SetDefault()
+        button_box.SetCancelButton(btn_close)
+        button_box.SetAffirmativeButton(btn_ok)
+        button_box.Realize()
+        self.Bind(wx.EVT_BUTTON, self.__btn_close_click, id=wx.ID_CANCEL)
+        self.Bind(wx.EVT_BUTTON, self.__btn_ok_click   , btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.__btn_close_click, btn_close)
+        self.SetEscapeId(btn_close.GetId())
+        self.SetDefaultItem(btn_ok)
+        self.SetAffirmativeId(btn_ok.GetId())
+        return button_box
+
+    def __strip_milliseconds(self, time):
+        """Strip milliseconds of the time text"""
+        return time.split('.')[0] if time != None else ''
+
+    def __btn_close_click(self, evt):
+        """
+        Close the dialog.
+
+        This event is triggered by one of the following actions:
+          * Click the Close button
+          * Press the Escape key
+          * Click the dialog (X) button
+        """
+        logging.debug("__btn_close_click")
+        self.__close()
+
+    def __btn_ok_click(self, evt):
+        """
+        Add new or update existing event.
+
+        If the Close-on-ok checkbox is checked the dialog is also closed.
+        """
+        logging.debug("__btn_ok_click")
         try:
-            start_time = self.__validate_start_time()
-            end_time   = self.__validate_end_time()
-            name       = self.__validate_name()
-            selection  = self._category_choice.GetSelection()
+            # Input value retrieval and validation
+            start_time = str_to_time(self._txt_start_time, "start_time")
+            end_time   = str_to_time(self._txt_end_time, "end_time")
+            name       = str_to_str (self._txt_name, "Name")
+            selection  = self._lst_category.GetSelection()
             if selection >= 0:
-                category = self._category_choice.GetClientData(selection)
+                category = self._lst_category.GetClientData(selection)
             else:
                 category = None
             if start_time > end_time:
-                display_error_message("End must be > Start")
-                set_focus_on_textctrl(self._textctrl_start_time)
-                return
+                raise TxtException, ("End must be > Start", self._txt_start_time)
+            # Update exisiting event
             if self._updatemode:
                 self._event.update(start_time, end_time, name, category)
                 self._timeline.event_edited(self._event)
+            # Create new event
             else:
                 self._event = Event(start_time, end_time, name, category)
                 self._timeline.add_event(self._event)
-            if self._cb_close_on_ok.GetValue():
-                self.EndModal(wx.ID_OK)
+            # Close the dialog ?
+            if self._cbx_close_on_ok.GetValue():
+                self.__close()
+        except TxtException, ex:
+            display_error_message("%s" % ex[0])
+            set_focus_on_textctrl(ex[1])
+
+    def __close(self):
+        """
+        Close the dialog.
+
+        Make sure that no events are selected after the dialog is closed.
+        """
+        if self._event != None:
             self._event.selected = False
-        except Exception, e:
-            display_error_message("%s" % e)
-
-    def __validate_start_time(self):
-        """Validate start time value from textbox"""
-        try:
-            start_time = todt(self._textctrl_start_time.GetValue())
-        except:
-            set_focus_on_textctrl(self._textctrl_start_time)
-            raise ValueError, "Invalid start_time data format"
-
-        return start_time
-
-    def __validate_end_time(self):
-        """Validate end time value from textbox"""
-        try:
-            end_time = todt(self._textctrl_end_time.GetValue())
-        except:
-            set_focus_on_textctrl(self._textctrl_end_time)
-            raise ValueError, "Invalid end_time data format"
-        return end_time
-
-    def __validate_name(self):
-        """Validate the name value from textbox"""
-        try:
-            name = self._textctrl_name.GetValue().strip()
-            if len(name) == 0:
-                raise ValueError, "Name: Can't be empty"
-        except:
-            set_focus_on_textctrl(self._textctrl_name)
-            raise
-        return name
+        self.EndModal(wx.ID_OK)
 
 
 class CategoriesEditor(wx.Dialog):
@@ -654,7 +674,7 @@ class CategoryEditor(wx.Dialog):
         vbox.Add(field_grid, flag=wx.EXPAND|wx.ALL, border=BORDER)
         # Buttons
         button_box = self.CreateStdDialogButtonSizer(wx.OK|wx.CANCEL)
-        self.Bind(wx.EVT_BUTTON, self.__ok_click, id=wx.ID_OK)
+        self.Bind(wx.EVT_BUTTON, self.__btn_ok_click, id=wx.ID_OK)
         vbox.Add(button_box, flag=wx.ALL|wx.EXPAND, border=BORDER)
         self.SetSizerAndFit(vbox)
         set_focus_on_textctrl(self.txt_name)
@@ -665,7 +685,7 @@ class CategoryEditor(wx.Dialog):
                 return False
         return True
 
-    def __ok_click(self, e):
+    def __btn_ok_click(self, e):
         name = self.txt_name.GetValue()
         if self.__verify_name():
             self.category.name = name
@@ -674,6 +694,17 @@ class CategoryEditor(wx.Dialog):
         else:
             display_error_message("Category name '%s' already in use." % name,
                                   self)
+
+
+class TxtException(ValueError):
+    """
+    Thrown if a text control contains an invalid value.
+
+    The constructor takes two arguments.
+
+    The first is a text string containing any exception text.
+    The seocond is a TextCtrl object.
+    """
 
 
 def todt(datetime_string):
@@ -699,11 +730,45 @@ def create_new_event(timeline, start=None, end=None):
     dlg.ShowModal()
     dlg.Destroy()
 
-def set_focus_on_textctrl(control):
-    control.SetFocus()
-    control.SelectAll()
+def set_focus_on_textctrl(txt):
+    txt.SetFocus()
+    txt.SelectAll()
+
+def str_to_str(txt, name):
+    """
+    Return a text control field.
+
+    If the value is an empty string the method raises a ValueError
+    exception and sets foucs on the control.
+
+    If the value is valid the text in the control is returned
+    """
+    data = txt.GetValue().strip()
+    if len(data) == 0:
+        raise TxtException, ("%s: Can't be empty" % name, txt)
+    return data
+
+def str_to_time(txt, name):
+    """
+    Convert a text string into a time value.
+
+    If the value is not a valid time format a ValueError exception is
+    raised and foucs is set on the control.
+
+    If the text value is valid the text is converted into a  time value
+    and thereafter returned.
+    """
+    try:
+        time = todt(txt.GetValue())
+    except:
+        raise TxtException, ("Invalid %s data format" % name, txt)
+    return time
 
 def display_error_message(message, parent=None):
     """Display an error message in a modal dialog box"""
     dial = wx.MessageDialog(parent, message, 'Error', wx.OK | wx.ICON_ERROR)
     dial.ShowModal()
+
+
+
+
