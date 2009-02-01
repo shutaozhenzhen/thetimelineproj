@@ -25,7 +25,7 @@ class Timeline(object):
     """
 
     def get_events(self, time_period):
-        """Return all events visible within the time period."""
+        """Return a list of all events visible within the time period."""
         pass
 
     def add_event(self, event):
@@ -37,11 +37,11 @@ class Timeline(object):
         pass
 
     def delete_selected_events(self):
-        """Delete all events that are selected."""
+        """Delete all events whose selected flag is True."""
         pass
 
     def get_categories(self):
-        """Return all available categories."""
+        """Return a list of all available categories."""
         pass
 
     def add_category(self, category):
@@ -82,22 +82,26 @@ class Event(object):
         self.update(start_time, end_time, text, category)
 
     def update(self, start_time, end_time, text, category=None):
+        """Change the event data."""
         self.time_period = TimePeriod(start_time, end_time)
         self.text = text
         self.category = category
 
     def inside_period(self, time_period):
+        """Wrapper for time period method."""
         return self.time_period.overlap(time_period)
 
     def is_period(self):
+        """Wrapper for time period method."""
         return self.time_period.is_period()
 
     def mean_time(self):
+        """Wrapper for time period method."""
         return self.time_period.mean_time()
 
 
 class Category(object):
-    """Represent a category that an event belongs to."""
+    """Represents a category that an event belongs to."""
 
     def __init__(self, name, color):
         """
@@ -112,79 +116,127 @@ class Category(object):
 
 class TimePeriod(object):
     """
+    Represents a period in time using a start and end time.
     """
 
-    MAX_DIFF = timedelta(120 * 365) # 120 years
-    MIN_DIFF = timedelta(hours=1) # 1 hour
-
     def __init__(self, start_time, end_time):
+        """
+        Create a time period.
+        
+        `start_time` and `end_time` should be of the type datetime.
+        """
+        self.update(start_time, end_time)
+
+    def update(self, start_time, end_time):
+        """
+        Change the time period data.
+        
+        If data is invalid, it will not be set, and a ValueError will be raised
+        instead.
+        """
+        if start_time > end_time:
+            raise ValueError("Invalid time period: Start time after end time")
+        if start_time.year < 10:
+            raise ValueError("Invalid time period: Start time before year 10")
         self.start_time = start_time
         self.end_time = end_time
-        if start_time > end_time:
-            raise Exception("Invalid time period")
 
     def inside(self, time):
+        """
+        Return True if the given time is inside this period or on the border,
+        otherwise False.
+        """
         return time >= self.start_time and time <= self.end_time
 
     def overlap(self, time_period):
+        """Return True if this time period has any overlap with the given."""
         return not (time_period.end_time < self.start_time or
                     time_period.start_time > self.end_time)
 
     def is_period(self):
+        """
+        Return True if this time period is longer than just a point in time,
+        otherwise False.
+        """
         return self.start_time != self.end_time
 
     def mean_time(self):
+        """
+        Return the time in the middle if this time period is longer than just a
+        point in time, otherwise the point in time for this time period.
+        """
         return self.start_time + self.delta() / 2
 
     def zoom(self, times):
+        """
+        Intended to be used bu GUI only to change which time period is
+        displayed.
+        """
+        MAX_ZOOM_DELTA = timedelta(days=120*365)
+        MIN_ZOOM_DELTA = timedelta(hours=1)
         delta = mult_timedelta(self.delta(), times / 10.0)
-        self.start_time += delta
-        self.end_time -= delta
-        if self.delta() > TimePeriod.MAX_DIFF:
-            foo = (self.delta() - TimePeriod.MAX_DIFF) / 2
-            self.start_time += foo
-            self.end_time -= foo
-        elif self.delta() < TimePeriod.MIN_DIFF:
-            foo = (TimePeriod.MIN_DIFF - self.delta()) / 2
-            self.start_time -= foo
-            self.end_time += foo
+        new_delta = self.delta() - 2 * delta
+        try:
+            if new_delta > MAX_ZOOM_DELTA:
+                raise ValueError("Can't zoom wider than 120 years")
+            if new_delta < MIN_ZOOM_DELTA:
+                raise ValueError("Can't zoom deeper than 1 hour")
+            self.update(self.start_time + delta, self.end_time - delta)
+        except (ValueError, OverflowError):
+            # Zoomed out of range, nothing to do, GUI will not change
+            pass
 
     def move(self, dir):
+        """
+        Intended to be used bu GUI only to change which time period is
+        displayed.
+        """
         delta = mult_timedelta(self.delta(), dir / 10.0)
-        self.start_time += delta
-        self.end_time += delta
+        self.move_delta(delta)
+
+    def move_delta(self, delta):
+        """
+        Intended to be used bu GUI only to change which time period is
+        displayed.
+        """
+        try:
+            self.update(self.start_time + delta, self.end_time + delta)
+        except (ValueError, OverflowError):
+            # Moved out of range, nothing to do, GUI will not change
+            pass
 
     def delta(self):
+        """Return the length of this time period as a timedelta object."""
         return self.end_time - self.start_time
 
 
 def delta_to_microseconds(delta):
-    """Convert a timedelta into microseconds."""
+    """Return the number of microseconds that the timedelta represents."""
     return (delta.days * US_PER_DAY +
             delta.seconds * US_PER_SEC +
             delta.microseconds)
 
 
 def microseconds_to_delta(microsecs):
-    """Convert microseconds into a timedelta."""
+    """Return a timedelta representing the given number of microseconds."""
     return timedelta(microseconds=microsecs)
 
 
-def mult_timedelta(td, num):
-    """Calculate a new timedelta that is `num` times larger than `td`."""
-    days = td.days * num
-    seconds = td.seconds * num
-    microseconds = td.microseconds * num
+def mult_timedelta(delta, num):
+    """Return a new timedelta that is `num` times larger than `delta`."""
+    days = delta.days * num
+    seconds = delta.seconds * num
+    microseconds = delta.microseconds * num
     return timedelta(days, seconds, microseconds)
 
 
-def div_timedeltas(td1, td2):
-    """Calculate how many times td2 fit in td1."""
+def div_timedeltas(delta1, delta2):
+    """Return how many times delta2 fit in delta1."""
     # Since Python can handle infinitely large numbers, this solution works. It
     # might however not be optimal. If you are clever, you should be able to
     # treat the different parts individually. But this is simple.
-    total_us1 = delta_to_microseconds(td1)
-    total_us2 = delta_to_microseconds(td2)
+    total_us1 = delta_to_microseconds(delta1)
+    total_us2 = delta_to_microseconds(delta2)
     # Make sure that the result is a floating point number
     return total_us1 / float(total_us2)
 
@@ -193,7 +245,8 @@ def time_period_center(time, length):
     """
     TimePeriod factory method.
     
-    Create a time period with the given length centered around `time`.
+    Return a time period with the given length (represented as a timedelta)
+    centered around `time`.
     """
     half_length = mult_timedelta(length, 0.5)
     start_time = time - half_length
