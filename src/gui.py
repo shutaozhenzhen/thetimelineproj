@@ -397,7 +397,8 @@ class DrawingArea(wx.Window):
 class EventEditor(wx.Dialog):
     """This dialog is used for creating and updating events."""
 
-    def __init__(self, parent, id, title, timeline, start=None, end=None, event=None):
+    def __init__(self, parent, id, title, timeline, start=None, end=None,
+                 event=None):
         """
         Create a event editor dialog.
 
@@ -408,8 +409,8 @@ class EventEditor(wx.Dialog):
         to update this event and the textboxes are filled with data from
         the event and the arguments 'start' and 'end' are ignored.
 
-        If the 'event' argument isn't given thedialog is used to create a
-        new event, and the textboxes for start and end time are intially
+        If the 'event' argument isn't given the dialog is used to create a
+        new event, and the textboxes for start and end time are initially
         filled with data from the arguments 'start' and 'end' if they are
         given.
         """
@@ -483,8 +484,8 @@ class EventEditor(wx.Dialog):
 
     def __set_initial_focus(self):
         """
-        Sets focus on the first empty textbox. If there is no empty
-        textbox the focus is set to the 'start_time' textbox.
+        Set focus on the first empty textbox. If there is no empty textbox the
+        focus is set to the 'start_time' textbox.
         """
         self._txt_start_time.SetFocus()
         for ctrl in [self._txt_start_time, self._txt_end_time,
@@ -497,7 +498,7 @@ class EventEditor(wx.Dialog):
         """
         Convenience method for creating a button box control.
 
-        The control contains one OK button and one Close button
+        The control contains one OK button and one Close button.
         """
         button_box = wx.StdDialogButtonSizer()
         btn_ok     = wx.Button(self, wx.ID_OK   )
@@ -516,7 +517,10 @@ class EventEditor(wx.Dialog):
 
     def __strip_milliseconds(self, time):
         """Strip milliseconds of the time text"""
-        return time.split('.')[0] if time != None else ''
+        if time:
+            return time.split('.')[0]
+        else:
+            return ''
 
     def __btn_close_click(self, evt):
         """
@@ -549,7 +553,7 @@ class EventEditor(wx.Dialog):
                 category = None
             if start_time > end_time:
                 raise TxtException, ("End must be > Start", self._txt_start_time)
-            # Update exisiting event
+            # Update existing event
             if self._updatemode:
                 self._event.update(start_time, end_time, name, category)
                 self._timeline.event_edited(self._event)
