@@ -416,7 +416,7 @@ class EventEditor(wx.Dialog):
         """
         wx.Dialog.__init__(self, parent, id, title)
         self._timeline = timeline
-        self._event    = event
+        self._event = event
         self.__create_gui()
         self.__fill_controls_with_data(start, end)
         self.__set_initial_focus()
@@ -424,41 +424,45 @@ class EventEditor(wx.Dialog):
     def __create_gui(self):
         """Create the controls of the dialog."""
         grid = wx.FlexGridSizer(4, 2, BORDER, BORDER)
-        CTRL_W = 160
-        self._txt_start_time = wx.TextCtrl(self, wx.ID_ANY, size=(CTRL_W, -1))
-        self._txt_end_time   = wx.TextCtrl(self, wx.ID_ANY, size=(CTRL_W, -1))
-        self._txt_name       = wx.TextCtrl(self, wx.ID_ANY, size=(CTRL_W, -1))
-        self._lst_category   = wx.Choice  (self, wx.ID_ANY, size=(CTRL_W, -1))
+        CTRL_MIN_WIDTH = 160
+        self._txt_start_time = wx.TextCtrl(self, wx.ID_ANY,
+                                           size=(CTRL_MIN_WIDTH, -1))
+        self._txt_end_time = wx.TextCtrl(self, wx.ID_ANY,
+                                         size=(CTRL_MIN_WIDTH, -1))
+        self._txt_name = wx.TextCtrl(self, wx.ID_ANY,
+                                     size=(CTRL_MIN_WIDTH, -1))
+        self._lst_category = wx.Choice(self, wx.ID_ANY,
+                                       size=(CTRL_MIN_WIDTH, -1))
         grid.AddMany([
             (wx.StaticText(self, wx.ID_ANY, "Start:"), 0,
-             wx.ALIGN_CENTER_VERTICAL), (self._txt_start_time),
+                           wx.ALIGN_CENTER_VERTICAL), (self._txt_start_time),
             (wx.StaticText(self, wx.ID_ANY, "End:"), 0,
-             wx.ALIGN_CENTER_VERTICAL), (self._txt_end_time),
+                           wx.ALIGN_CENTER_VERTICAL), (self._txt_end_time),
             (wx.StaticText(self, wx.ID_ANY, "Name:"), 0,
-             wx.ALIGN_CENTER_VERTICAL), (self._txt_name),
+                           wx.ALIGN_CENTER_VERTICAL), (self._txt_name),
             (wx.StaticText(self, wx.ID_ANY, "Category:"), 0,
-             wx.ALIGN_CENTER_VERTICAL), (self._lst_category),
+                           wx.ALIGN_CENTER_VERTICAL), (self._lst_category),
         ])
         # The Group box
-        box      = wx.StaticBox(self, wx.ID_ANY, "Event Properties")
-        groupbox = wx.StaticBoxSizer(box, wx.VERTICAL)
-        groupbox.Add(grid, 0, wx.ALL, BORDER)
+        groupbox = wx.StaticBox(self, wx.ID_ANY, "Event Properties")
+        groupbox_sizer = wx.StaticBoxSizer(groupbox, wx.VERTICAL)
+        groupbox_sizer.Add(grid, 0, wx.ALL, BORDER)
         # The checkbox
         self._cbx_close_on_ok = wx.CheckBox(self, wx.ID_ANY, "Close on OK")
         # Add controls and buttons do the dialog
-        border = wx.BoxSizer(wx.VERTICAL)
-        border.Add(groupbox, 1, wx.EXPAND|wx.ALL, BORDER)
-        border.Add(self._cbx_close_on_ok, 0, wx.EXPAND|wx.ALL, BORDER)
-        border.Add(self.__create_button_box(), 0, wx.EXPAND|wx.ALL, BORDER)
-        self.SetSizerAndFit(border)
+        main_box = wx.BoxSizer(wx.VERTICAL)
+        main_box.Add(groupbox_sizer, 1, wx.EXPAND|wx.ALL, BORDER)
+        main_box.Add(self._cbx_close_on_ok, 0, wx.EXPAND|wx.ALL, BORDER)
+        main_box.Add(self.__create_button_box(), 0, wx.EXPAND|wx.ALL, BORDER)
+        self.SetSizerAndFit(main_box)
 
     def __fill_controls_with_data(self, start=None, end=None):
         """Initially fill the controls in the dialog with data."""
         # Text fields
         if self._event != None:
-            start    = self._event.time_period.start_time.isoformat('-')
-            end      = self._event.time_period.end_time.isoformat('-')
-            name     = self._event.text
+            start = self._event.time_period.start_time.isoformat('-')
+            end = self._event.time_period.end_time.isoformat('-')
+            name = self._event.text
             category = self._event.category
             self._updatemode = True
         else:
@@ -466,17 +470,17 @@ class EventEditor(wx.Dialog):
             name = ''
             category = None
         self._txt_start_time.SetValue(self.__strip_milliseconds(start))
-        self._txt_end_time  .SetValue(self.__strip_milliseconds(end  ))
-        self._txt_name      .SetValue(name)
-        count = 0
+        self._txt_end_time.SetValue(self.__strip_milliseconds(end  ))
+        self._txt_name.SetValue(name)
+        current_item_index = 0
         # Category Choice
         selection_set = False
         for cat in self._timeline.get_categories():
             self._lst_category.Append(cat.name, cat)
             if cat == category:
-                self._lst_category.SetSelection(count)
+                self._lst_category.SetSelection(current_item_index)
                 selection_set = True
-            count += 1
+            current_item_index += 1
         if not selection_set:
             self._lst_category.SetSelection(0)
         # Close on ok Checkbox
@@ -484,8 +488,10 @@ class EventEditor(wx.Dialog):
 
     def __set_initial_focus(self):
         """
-        Set focus on the first empty textbox. If there is no empty textbox the
-        focus is set to the 'start_time' textbox.
+        Set focus on the first empty textbox.
+
+        If there is no empty textbox the focus is set to the 'start_time'
+        textbox.
         """
         self._txt_start_time.SetFocus()
         for ctrl in [self._txt_start_time, self._txt_end_time,
@@ -501,24 +507,28 @@ class EventEditor(wx.Dialog):
         The control contains one OK button and one Close button.
         """
         button_box = wx.StdDialogButtonSizer()
-        btn_ok     = wx.Button(self, wx.ID_OK   )
-        btn_close  = wx.Button(self, wx.ID_CLOSE)
+        btn_ok = wx.Button(self, wx.ID_OK   )
+        btn_close = wx.Button(self, wx.ID_CLOSE)
         btn_ok.SetDefault()
         button_box.SetCancelButton(btn_close)
         button_box.SetAffirmativeButton(btn_ok)
         button_box.Realize()
         self.Bind(wx.EVT_BUTTON, self.__btn_close_click, id=wx.ID_CANCEL)
-        self.Bind(wx.EVT_BUTTON, self.__btn_ok_click   , btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.__btn_ok_click, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.__btn_close_click, btn_close)
         self.SetEscapeId(btn_close.GetId())
         self.SetDefaultItem(btn_ok)
         self.SetAffirmativeId(btn_ok.GetId())
         return button_box
 
-    def __strip_milliseconds(self, time):
-        """Strip milliseconds of the time text"""
-        if time:
-            return time.split('.')[0]
+    def __strip_milliseconds(self, time_string):
+        """
+        Return the time string with milliseconds removed.
+
+        Expected formt of time_string: yyyy-mm-dd-hh:mm:ss.mmmmmm
+        """
+        if time_string:
+            return time_string.split('.')[0]
         else:
             return ''
 
@@ -543,10 +553,12 @@ class EventEditor(wx.Dialog):
         logging.debug("__btn_ok_click")
         try:
             # Input value retrieval and validation
-            start_time = str_to_time(self._txt_start_time, "start_time")
-            end_time   = str_to_time(self._txt_end_time, "end_time")
-            name       = str_to_str (self._txt_name, "Name")
-            selection  = self._lst_category.GetSelection()
+            start_time = parse_time_from_textbox(self._txt_start_time,
+                                                 "start_time")
+            end_time = parse_time_from_textbox(self._txt_end_time,
+                                               "end_time")
+            name = parse_text_from_textbox (self._txt_name, "Name")
+            selection = self._lst_category.GetSelection()
             if selection >= 0:
                 category = self._lst_category.GetClientData(selection)
             else:
@@ -565,8 +577,8 @@ class EventEditor(wx.Dialog):
             if self._cbx_close_on_ok.GetValue():
                 self.__close()
         except TxtException, ex:
-            display_error_message("%s" % ex[0])
-            set_focus_on_textctrl(ex[1])
+            display_error_message("%s" % ex.error_message)
+            set_focus_on_textctrl(ex.control)
 
     def __close(self):
         """
@@ -709,6 +721,10 @@ class TxtException(ValueError):
     The first is a text string containing any exception text.
     The seocond is a TextCtrl object.
     """
+    def __init__(self, error_message, control):
+        ValueError.__init__(self, error_message)
+        self.error_message = error_message
+        self.control = control
 
 
 def todt(datetime_string):
@@ -738,7 +754,7 @@ def set_focus_on_textctrl(txt):
     txt.SetFocus()
     txt.SelectAll()
 
-def str_to_str(txt, name):
+def parse_text_from_textbox(txt, name):
     """
     Return a text control field.
 
@@ -752,7 +768,7 @@ def str_to_str(txt, name):
         raise TxtException, ("%s: Can't be empty" % name, txt)
     return data
 
-def str_to_time(txt, name):
+def parse_time_from_textbox(txt, name):
     """
     Convert a text string into a time value.
 
@@ -765,7 +781,8 @@ def str_to_time(txt, name):
     try:
         time = todt(txt.GetValue())
     except:
-        raise TxtException, ("Invalid %s data format" % name, txt)
+        raise TxtException, ("Invalid %s data format.\n" % name +
+                        "Expected format: yyyy-mm-dd:hh:mm:ss" , txt)
     return time
 
 def display_error_message(message, parent=None):
