@@ -5,6 +5,7 @@ CATEGORY:Foo;173,300,230
 # Unknown data
 FOO:bar;bar;bar
 # OK stuff
+
 EVENT:2009-01-15 08:51:00;2009-01-15 08:51:00;Test1;Foo
 EVENT:2009-03-07 19:00:00;2009-03-07 19:00:00;Test2;Foo
 # Invalid number of arguments
