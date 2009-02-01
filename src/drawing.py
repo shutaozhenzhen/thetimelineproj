@@ -23,9 +23,9 @@ class DrawingAlgorithm(object):
         This is the interface.
 
         - dc: used to do the actual drawing
-        - time_period: what period should of the timeline should be visible
+        - time_period: what period of the timeline should be visible
         - events: events inside time_period that should be drawn
-        - period_selection: tuple with start and end time indication selection
+        - period_selection: tuple with start and end time indicating selection
 
         When the dc is temporarily stored in a class variable such as self.dc,
         this class variable must be deleted before the draw method ends.
@@ -36,11 +36,16 @@ class DrawingAlgorithm(object):
         """
         Return a tuple where the selection has been stretched to fit to minor
         strip.
+
+        period_selection: (start, end)
+        Return: (new_start, new_end)
         """
         return period_selection
 
     def event_at(self, x, y):
-        """Return the event at (x, y) or None if no event there."""
+        """
+        Return the event at pixel coordinate (x, y) or None if no event there.
+        """
         return None
 
 
@@ -54,19 +59,19 @@ class Metrics(object):
         self.time_period = time_period
 
     def calc_x(self, time):
-        """Calculate the x position for the given time."""
+        """Return the x position in pixels for the given time."""
         delta1 = div_timedeltas(time - self.time_period.start_time,
                                 self.time_period.delta())
         float_res = self.width * delta1
         return int(round(float_res))
 
     def calc_width(self, time_period):
-        """Calculate the with in pixels for the given time_period."""
+        """Return the with in pixels for the given time_period."""
         return (self.calc_x(time_period.end_time) -
                 self.calc_x(time_period.start_time)) + 1
 
     def get_time(self, x):
-        """Calculate the time at pixel `x`."""
+        """Return the time at pixel `x`."""
         microsecs = delta_to_microseconds(self.time_period.delta())
         microsecs = microsecs * float(x) / self.width
         return self.time_period.start_time + microseconds_to_delta(microsecs)
@@ -77,8 +82,7 @@ def get_default_font(size, bold=False):
         weight = wx.FONTWEIGHT_BOLD
     else:
         weight = wx.FONTWEIGHT_NORMAL
-    return wx.Font(size, wx.FONTFAMILY_DEFAULT,
-                   wx.FONTSTYLE_NORMAL, weight)
+    return wx.Font(size, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, weight)
 
 
 def darken_color(color, factor=0.7):
@@ -90,6 +94,10 @@ def darken_color(color, factor=0.7):
 
 
 def get_algorithm():
-    """Factory method."""
+    """
+    Factory method.
+    
+    Return the drawing algorithm that should be used by the application.
+    """
     from drawing_default import DefaultDrawingAlgorithm
     return DefaultDrawingAlgorithm()
