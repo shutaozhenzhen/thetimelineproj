@@ -257,8 +257,8 @@ class DrawingArea(wx.Window):
         becomes active.
 
         Here we just draw the background buffer onto the screen.
+        Defining a dc is crucial. Even if it is not used.
         """
-        # Defining a dc is crucial. Even if it is not used.
         logging.debug("Paint event in DrawingArea")
         dc = wx.BufferedPaintDC(self)
         dc.BeginDrawing()
@@ -279,7 +279,6 @@ class DrawingArea(wx.Window):
         keycode = evt.GetKeyCode()
         if keycode == wx.WXK_DELETE:
             self.__delete_selected_events()
-        # Continue processing of the event
         evt.Skip()
 
     def __delete_selected_events(self):
@@ -456,10 +455,10 @@ class DrawingArea(wx.Window):
 
     def draw_timeline(self, period_selection=None):
         """Draws the timeline onto the background buffer."""
+        logging.debug('Draw timeline to bgbuf')
         memdc = wx.MemoryDC()
         memdc.SelectObject(self.bgbuf)
         try:
-            logging.debug('Draw timeline to bgbuf')
             memdc.BeginDrawing()
             memdc.SetBackground(wx.Brush(wx.WHITE, wx.SOLID))
             memdc.Clear()
@@ -470,9 +469,9 @@ class DrawingArea(wx.Window):
                                             period_selection)
             memdc.EndDrawing()
             self.Refresh()
-        except Exception, e:
+        except Exception, ex:
             self.bgbuf = None
-            logging.fatal('Error in drawing', exc_info=e)
+            logging.fatal('Error in drawing', exc_info=ex)
 
 
 class EventEditor(wx.Dialog):
