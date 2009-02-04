@@ -20,6 +20,7 @@ from data import Category
 import data
 import drawing
 
+
 ID_NEW_EVENT = 1
 ID_CATEGORIES = 2
 BORDER = 5
@@ -178,25 +179,26 @@ class DrawingArea(wx.Window):
     This class has information about what part of a timeline to draw and makes
     sure that the timeline is redrawn whenever it is needed.
 
-    Scrolling and zooming of the timeline is implementedin this class. This is
+    Scrolling and zooming of the timeline is implemented in this class. This is
     done whenever the mouse wheel is scrolled (_mouse_wheel_has_scrolled).
     Moving also takes place when the mouse is dragged while pressing the left
     mouse key (_mouse_has_moved).
 
     Selection of a period on the timeline (period = any number of minor strips)
-    is also implemented in this class. A selection is done in the following way:
-    Press and hold down the Control key on the keybord, move the mouse to the
-    first minor strip to be selected and then press and hold down the left
-    mouse key. Now, while movning the mouse over the timeline, the minor strips
+    is also implemented in this class. A selection is done in the following
+    way: Press and hold down the Control key on the keyboard, move the mouse to
+    the first minor strip to be selected and then press and hold down the left
+    mouse key. Now, while moving the mouse over the timeline, the minor strips
     will be selected.
+
     What happens is that when the left mouse button is pressed
     (_left_mouse_button_pressed) the variable self._current_time is set to the
     time on the timeline where the mouse is. This is the anchor point for the
-    selection. When the mouse is moved (_mouse_has_moved) and leftmouse button
+    selection. When the mouse is moved (_mouse_has_moved) and left mouse button
     is pressed and the Control key is held down the method
     self.__mark_selected_minor_strips(evt.m_x) is called. This method marks all
     minor strips between the anchor point and the current point (evt.m_x).
-    When themouse button i released the selection ends.
+    When the mouse button is released the selection ends.
     """
 
     def __init__(self, parent):
@@ -205,6 +207,33 @@ class DrawingArea(wx.Window):
         self.__set_colors_and_styles()
         self.__bind_events_to_handlers();
         logging.debug("Init done in DrawingArea")
+
+    def set_timeline(self, timeline):
+        self.timeline = timeline
+        self.time_period = timeline.get_preferred_period()
+        self.draw_timeline()
+        self.Enable()
+        self.SetFocus()
+
+    def draw_timeline(self, period_selection=None):
+        """Draws the timeline onto the background buffer."""
+        logging.debug('Draw timeline to bgbuf')
+        memdc = wx.MemoryDC()
+        memdc.SelectObject(self.bgbuf)
+        try:
+            memdc.BeginDrawing()
+            memdc.SetBackground(wx.Brush(wx.WHITE, wx.SOLID))
+            memdc.Clear()
+            if self.timeline:
+                current_events = self.timeline.get_events(self.time_period)
+                self.drawing_algorithm.draw(memdc, self.time_period,
+                                            current_events,
+                                            period_selection)
+            memdc.EndDrawing()
+            self.Refresh()
+        except Exception, ex:
+            self.bgbuf = None
+            logging.fatal('Error in drawing', exc_info=ex)
 
     def __set_initial_values_to_member_variables(self):
         """
@@ -220,9 +249,9 @@ class DrawingArea(wx.Window):
                             drawing area
         drawing_algorithm   The algorithm used to draw the timeline
         bgbuf               The bitmap to which the drawing methods draw the
-                            timeline. When the EVT_PAINT occurs the this bitmap
+                            timeline. When the EVT_PAINT occurs this bitmap
                             is painted on the screen. This is a buffer drawing
-                            approach for avoding screen flicker.
+                            approach for avoiding screen flicker.
         """
         self._current_time = None
         self._mark_selection = False
@@ -242,18 +271,11 @@ class DrawingArea(wx.Window):
         self.Bind(wx.EVT_SIZE, self._window_resized)
         self.Bind(wx.EVT_PAINT, self._window_needs_repaint)
         self.Bind(wx.EVT_LEFT_DOWN, self._left_mouse_button_pressed)
+        self.Bind(wx.EVT_LEFT_DCLICK, self._left_mouse_button_doubleclicked)
         self.Bind(wx.EVT_LEFT_UP, self._left_mouse_button_released)
         self.Bind(wx.EVT_MOTION, self._mouse_has_moved)
         self.Bind(wx.EVT_MOUSEWHEEL, self._mouse_wheel_has_scrolled)
-        self.Bind(wx.EVT_LEFT_DCLICK, self._left_mouse_button_doubleclicked)
         self.Bind(wx.EVT_KEY_DOWN, self._keyboard_key_pressed)
-
-    def set_timeline(self, timeline):
-        self.timeline = timeline
-        self.time_period = timeline.get_preferred_period()
-        self.draw_timeline()
-        self.Enable()
-        self.SetFocus()
 
     def _window_resized(self, event):
         """
@@ -286,6 +308,87 @@ class DrawingArea(wx.Window):
         dc.DrawBitmap(self.bgbuf, 0, 0, True)
         dc.EndDrawing()
 
+    def _left_mouse_button_pressed(self, evt):
+        """
+        Event handler used when the left mouse button has been pressed.
+
+        This event establishes a new current time on the timeline.
+
+        If the mouse hits an event that event will be selected.
+        """
+        logging.debug("Left mouse pressed event in DrawingArea")
+        self.__set_new_current_time(evt.m_x)
+        self.__toggle_event_selection(evt.m_x, evt.m_y, evt.m_controlDown)
+        evt.Skip()
+
+    def _left_mouse_button_doubleclicked(self, evt):
+        """
+        Event handler used when the left mouse button has been double clicked.
+
+        If the mouse hits an event, a dialog opens for editing this event.
+        Otherwise a dialog for creating a new event is opened.
+        """
+        logging.debug("Left Mouse doubleclicked event in DrawingArea")
+        event = self.drawing_algorithm.event_at(evt.m_x, evt.m_y)
+        if event:
+            edit_event(self.timeline, event)
+        else:
+            create_new_event(self.timeline,
+                             self._current_time.isoformat('-'),
+                             self._current_time.isoformat('-'))
+        self.draw_timeline()
+
+    def _left_mouse_button_released(self, evt):
+        """
+        Event handler used when the left mouse button has been released.
+
+        If there is an ongoing selection-marking, the dialog for creating an
+        event will be opened, and the selection-marking will be ended.
+        """
+        logging.debug("Left mouse released event in DrawingArea")
+        if self._mark_selection:
+            self.__end_selection_and_create_event(evt.m_x)
+
+    def _mouse_has_moved(self, evt):
+        """
+        Event handler used when the mouse has been moved.
+
+        If the mouse is over an event, the name of that event will be printed
+        in the status bar.
+
+        If the left mouse key is down one of two things happens depending on if
+        the Control key is down or not. If it is down a selection-marking takes
+        place and the minor strips passed by the mouse will be selected.  If
+        the Control key is up the timeline will scroll.
+        """
+        logging.debug("Mouse move event in DrawingArea")
+        if evt.Dragging:
+            self.__display_eventname_in_statusbar(evt.m_x, evt.m_y)
+        if evt.m_leftDown:
+            if evt.m_controlDown:
+                self.__mark_selected_minor_strips(evt.m_x)
+            else:
+                if self._current_time:
+                    delta = (self.drawing_algorithm.metrics.get_time(evt.m_x) -
+                             self._current_time)
+                    self.__scroll_timeline(delta)
+
+    def _mouse_wheel_has_scrolled(self, evt):
+        """
+        Event handler used when the mouse wheel is rotated.
+
+        If the Control key is pressed at the same time as the mouse wheel is
+        scrolled the timeline will be zoomed, otherwise it will be scrolled.
+        """
+        logging.debug("Mouse wheel event in DrawingArea")
+        direction = step_function(evt.m_wheelRotation)
+        if evt.ControlDown():
+            self.__zoom_timeline(direction)
+        else:
+            delta = data.mult_timedelta(self.time_period.delta(),
+                                        direction / 10.0)
+            self.__scroll_timeline(delta)
+
     def _keyboard_key_pressed(self, evt):
         """
         Event handler used when a keyboard key has been pressed.
@@ -299,55 +402,6 @@ class DrawingArea(wx.Window):
         keycode = evt.GetKeyCode()
         if keycode == wx.WXK_DELETE:
             self.__delete_selected_events()
-        #evt.Skip()
-
-    def __delete_selected_events(self):
-        """After acknowledge from the user, delete all selected events."""
-        ok_to_delete  = wx.MessageBox('Are you sure to delete?', 'Question',
-                                      wx.YES_NO|wx.CENTRE|wx.NO_DEFAULT,
-                                      self) == wx.YES
-        if ok_to_delete:
-            self.timeline.delete_selected_events()
-            self.draw_timeline()
-
-    def _mouse_wheel_has_scrolled(self, evt):
-        """
-        Event handler used when the mouse wheel is rotated.
-
-        If the Control key is pressed at the same time as the mouse wheel is
-        scrolled the timeline will be zoomed, otherwise it will be scrolled.
-        """
-        logging.debug("Mouse wheel event in DrawingArea")
-        print evt.m_wheelRotation
-        direction = step_function(evt.m_wheelRotation)
-        if evt.ControlDown():
-            self.__zoom_timeline(direction)
-        else:
-            delta = data.mult_timedelta(self.time_period.delta(),
-                                        direction / 10.0)
-            self.__scroll_timeline(delta)
-
-    def __zoom_timeline(self, direction=0):
-        self.time_period.zoom(direction)
-        self.timeline.set_preferred_period(self.time_period)
-        self.draw_timeline()
-
-    def __scroll_timeline(self, delta):
-        self.time_period.move_delta(-delta)
-        self.timeline.set_preferred_period(self.time_period)
-        self.draw_timeline()
-
-    def _left_mouse_button_pressed(self, evt):
-        """
-        Event handler used when the left mouse button has been pressed.
-
-        This event establishes a new current time on the timeline.
-
-        If the mouse hits an event that event will be selected.
-        """
-        logging.debug("Left mouse pressed event in DrawingArea")
-        self.__set_new_current_time(evt.m_x)
-        self.__toggle_event_selection(evt.m_x, evt.m_y, evt.m_controlDown)
         evt.Skip()
 
     def __set_new_current_time(self, current_x):
@@ -376,17 +430,6 @@ class DrawingArea(wx.Window):
             self.timeline.reset_selection()
         self.draw_timeline()
 
-    def _left_mouse_button_released(self, evt):
-        """
-        Event handler used when the left mouse button has been released.
-
-        If there is an ongoing selection-marking, the dialog for creating an
-        event will be opened, and the selection-marking will be ended.
-        """
-        logging.debug("Left mouse released event in DrawingArea")
-        if self._mark_selection:
-            self.__end_selection_and_create_event(evt.m_x)
-
     def __end_selection_and_create_event(self, current_x):
         self._mark_selection = False
         period_selection = self.__get_period_selection(current_x)
@@ -394,30 +437,6 @@ class DrawingArea(wx.Window):
         create_new_event(self.timeline, start.isoformat('-'),
                          end.isoformat('-'))
         self.draw_timeline()
-
-    def _mouse_has_moved(self, evt):
-        """
-        Event handler used when the mouse has been moved.
-
-        If the mouse is over an event, the name of that event will be printed
-        in the status bar.
-
-        If the left mouse key is down one of two things happens depending on if
-        the Control key is down or not. If it is down a selection-marking takes
-        place and the minor strips passed by the mouse will be selected.  If
-        the Control key is up the timeline will scroll.
-        """
-        logging.debug("Mouse move event in DrawingArea")
-        if evt.Dragging:
-            self.__display_eventname_in_statusbar(evt.m_x, evt.m_y)
-        if evt.m_leftDown:
-            if evt.m_controlDown:
-                self.__mark_selected_minor_strips(evt.m_x)
-            else:
-                if self._current_time:
-                    delta = (self.drawing_algorithm.metrics.get_time(evt.m_x) -
-                             self._current_time)
-                    self.__scroll_timeline(delta)
 
     def __display_eventname_in_statusbar(self, xpixelpos, ypixelpos):
         """
@@ -431,17 +450,30 @@ class DrawingArea(wx.Window):
         else:
             self.__reset_text_in_statusbar()
 
-    def __display_text_in_statusbar(self, text):
-        wx.GetTopLevelParent(self).SetStatusText(text)
-
-    def __reset_text_in_statusbar(self):
-        wx.GetTopLevelParent(self).SetStatusText('')
-
     def __mark_selected_minor_strips(self, current_x):
         """Selection-marking starts or continues."""
         self._mark_selection = True
         period_selection = self.__get_period_selection(current_x)
         self.draw_timeline(period_selection)
+
+    def __scroll_timeline(self, delta):
+        self.time_period.move_delta(-delta)
+        self.timeline.set_preferred_period(self.time_period)
+        self.draw_timeline()
+
+    def __zoom_timeline(self, direction=0):
+        self.time_period.zoom(direction)
+        self.timeline.set_preferred_period(self.time_period)
+        self.draw_timeline()
+
+    def __delete_selected_events(self):
+        """After acknowledge from the user, delete all selected events."""
+        ok_to_delete  = wx.MessageBox('Are you sure to delete?', 'Question',
+                                      wx.YES_NO|wx.CENTRE|wx.NO_DEFAULT,
+                                      self) == wx.YES
+        if ok_to_delete:
+            self.timeline.delete_selected_events()
+            self.draw_timeline()
 
     def __get_period_selection(self, current_x):
         """Return a tuple containing the start and end time of a selection."""
@@ -452,42 +484,11 @@ class DrawingArea(wx.Window):
         period_selection = self.drawing_algorithm.snap_selection((start,end))
         return period_selection
 
-    def _left_mouse_button_doubleclicked(self, evt):
-        """
-        Event handler used when the left mouse button has been double clicked.
+    def __display_text_in_statusbar(self, text):
+        wx.GetTopLevelParent(self).SetStatusText(text)
 
-        If the mouse hits an event, a dialog opens for editing this event.
-        Otherwise a dialog for creating a new event is opened.
-        """
-        logging.debug("Left Mouse doubleclicked event in DrawingArea")
-        event = self.drawing_algorithm.event_at(evt.m_x, evt.m_y)
-        if event:
-            edit_event(self.timeline, event)
-        else:
-            create_new_event(self.timeline,
-                             self._current_time.isoformat('-'),
-                             self._current_time.isoformat('-'))
-        self.draw_timeline()
-
-    def draw_timeline(self, period_selection=None):
-        """Draws the timeline onto the background buffer."""
-        logging.debug('Draw timeline to bgbuf')
-        memdc = wx.MemoryDC()
-        memdc.SelectObject(self.bgbuf)
-        try:
-            memdc.BeginDrawing()
-            memdc.SetBackground(wx.Brush(wx.WHITE, wx.SOLID))
-            memdc.Clear()
-            if self.timeline:
-                current_events = self.timeline.get_events(self.time_period)
-                self.drawing_algorithm.draw(memdc, self.time_period,
-                                            current_events,
-                                            period_selection)
-            memdc.EndDrawing()
-            self.Refresh()
-        except Exception, ex:
-            self.bgbuf = None
-            logging.fatal('Error in drawing', exc_info=ex)
+    def __reset_text_in_statusbar(self):
+        wx.GetTopLevelParent(self).SetStatusText('')
 
 
 class EventEditor(wx.Dialog):
@@ -840,11 +841,13 @@ def todt(datetime_string):
     else:
         raise Excepetion("Unknown datetime format='%s'" % datetime_string)
 
+
 def create_new_event(timeline, start=None, end=None):
     """Open a dialog for creating a new event."""
     dlg = EventEditor(None, -1, 'Create Event', timeline, start, end)
     dlg.ShowModal()
     dlg.Destroy()
+
 
 def edit_event(timeline, event):
     """Open a dialog for updating properties of a marked event"""
@@ -852,9 +855,11 @@ def edit_event(timeline, event):
     dlg.ShowModal()
     dlg.Destroy()
 
+
 def set_focus_on_textctrl(txt):
     txt.SetFocus()
     txt.SelectAll()
+
 
 def parse_text_from_textbox(txt, name):
     """
@@ -869,6 +874,7 @@ def parse_text_from_textbox(txt, name):
     if len(data) == 0:
         raise TxtException, ("%s: Can't be empty" % name, txt)
     return data
+
 
 def parse_time_from_textbox(txt, name):
     """
@@ -887,10 +893,12 @@ def parse_time_from_textbox(txt, name):
                         "Expected format: yyyy-mm-dd:hh:mm:ss" , txt)
     return time
 
+
 def display_error_message(message, parent=None):
     """Display an error message in a modal dialog box"""
     dial = wx.MessageDialog(parent, message, 'Error', wx.OK | wx.ICON_ERROR)
     dial.ShowModal()
+
 
 def step_function(x_value):
     """
