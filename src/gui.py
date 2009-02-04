@@ -177,6 +177,26 @@ class DrawingArea(wx.Window):
 
     This class has information about what part of a timeline to draw and makes
     sure that the timeline is redrawn whenever it is needed.
+
+    Scrolling and zooming of the timeline is implementedin this class. This is
+    done whenever the mouse wheel is scrolled (_mouse_wheel_has_scrolled).
+    Moving also takes place when the mouse is dragged while pressing the left
+    mouse key (_mouse_has_moved).
+
+    Selection of a period on the timeline (period = any number of minor strips)
+    is also implemented in this class. A selection is done in the following way:
+    Press and hold down the Control key on the keybord, move the mouse to the
+    first minor strip to be selected and then press and hold down the left
+    mouse key. Now, while movning the mouse over the timeline, the minor strips
+    will be selected.
+    What happens is that when the left mouse button is pressed
+    (_left_mouse_button_pressed) the variable self._current_time is set to the
+    time on the timeline where the mouse is. This is the anchor point for the
+    selection. When the mouse is moved (_mouse_has_moved) and leftmouse button
+    is pressed and the Control key is held down the method
+    self.__mark_selected_minor_strips(evt.m_x) is called. This method marks all
+    minor strips between the anchor point and the current point (evt.m_x).
+    When themouse button i released the selection ends.
     """
 
     def __init__(self, parent):
@@ -199,6 +219,10 @@ class DrawingArea(wx.Window):
         time_period         The part of the timeline currently displayed in the
                             drawing area
         drawing_algorithm   The algorithm used to draw the timeline
+        bgbuf               The bitmap to which the drawing methods draw the
+                            timeline. When the EVT_PAINT occurs the this bitmap
+                            is painted on the screen. This is a buffer drawing
+                            approach for avoding screen flicker.
         """
         self._current_time = None
         self._mark_selection = False
@@ -259,8 +283,7 @@ class DrawingArea(wx.Window):
         logging.debug("Paint event in DrawingArea")
         dc = wx.BufferedPaintDC(self)
         dc.BeginDrawing()
-        if self.bgbuf:
-            dc.DrawBitmap(self.bgbuf, 0, 0, True)
+        dc.DrawBitmap(self.bgbuf, 0, 0, True)
         dc.EndDrawing()
 
     def _keyboard_key_pressed(self, evt):
@@ -276,7 +299,7 @@ class DrawingArea(wx.Window):
         keycode = evt.GetKeyCode()
         if keycode == wx.WXK_DELETE:
             self.__delete_selected_events()
-        evt.Skip()
+        #evt.Skip()
 
     def __delete_selected_events(self):
         """After acknowledge from the user, delete all selected events."""
@@ -324,18 +347,21 @@ class DrawingArea(wx.Window):
         """
         logging.debug("Left mouse pressed event in DrawingArea")
         self.__set_new_current_time(evt.m_x)
-        self.__select_event(evt.m_x, evt.m_y, evt.m_controlDown)
+        self.__toggle_event_selection(evt.m_x, evt.m_y, evt.m_controlDown)
         evt.Skip()
 
     def __set_new_current_time(self, current_x):
         self._current_time = self.drawing_algorithm.metrics.get_time(current_x)
         logging.debug("Marked time " + self._current_time.isoformat('-'))
 
-    def __select_event(self, xpixelpos, ypixelpos, control_down):
+    def __toggle_event_selection(self, xpixelpos, ypixelpos, control_down):
         """
         If the given position is within the boundaries of an event that event
-        will be selected. If the Control key is down all previously events that
-        are selected will stay selected, otherwise they will be unselected.
+        will be selected or unselected depending on the current selection
+        state of the event. If the Control key is down all other events
+        selection state are preserved. This means that previously selected
+        events will stay selected. If the Control keys is not down all other
+        events will be unselected.
 
         If the given position isn't within an event all selected events will
         be unselected.
