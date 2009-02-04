@@ -181,44 +181,40 @@ class DrawingArea(wx.Window):
 
     def __init__(self, parent):
         wx.Window.__init__(self, parent, style=wx.NO_BORDER)
-        self.__set_initial_values_to_member_variables(parent)
+        self.__set_initial_values_to_member_variables()
         self.__set_colors_and_styles()
         self.__bind_events_to_handlers();
         logging.debug("Init done in DrawingArea")
 
-    def __set_initial_values_to_member_variables(self, parent):
+    def __set_initial_values_to_member_variables(self):
         """
-        Set initial values to member variables.
-
         Instance variables usage:
+
         _current_time       This variable is set to the time on the timeline
                             where the mouse button is clicked when the left
-                            mosue button is used.
+                            mouse button is used
         _mark_selection     Processing flag indicating ongoing selection of a
                             time period
-        timeline            The timline currently handled by the application.
+        timeline            The timeline currently handled by the application
         time_period         The part of the timeline currently displayed in the
-                            drawing area.
-        drawing_algorithm   The algorithm used to draw the timeline.
-
+                            drawing area
+        drawing_algorithm   The algorithm used to draw the timeline
         """
         self._current_time = None
         self._mark_selection = False
-        self.panel = parent
         self.bgbuf = None
         self.timeline = None
         self.time_period = None
         self.drawing_algorithm = drawing.get_algorithm()
 
     def __set_colors_and_styles(self):
-        """Define the look and feel of the drawing area"""
+        """Define the look and feel of the drawing area."""
         self.SetBackgroundColour(wx.WHITE)
         self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
         self.SetCursor(wx.CROSS_CURSOR)
         self.Disable()
 
     def __bind_events_to_handlers(self):
-        """Bind events to event handlers."""
         self.Bind(wx.EVT_SIZE, self._window_resized)
         self.Bind(wx.EVT_PAINT, self._window_needs_repaint)
         self.Bind(wx.EVT_LEFT_DOWN, self._left_mouse_button_pressed)
@@ -237,7 +233,7 @@ class DrawingArea(wx.Window):
 
     def _window_resized(self, event):
         """
-        Eventhandler used when the window has been resized.
+        Event handler used when the window has been resized.
 
         Called at the application start and when the frame is resized.
 
@@ -251,12 +247,13 @@ class DrawingArea(wx.Window):
 
     def _window_needs_repaint(self, event):
         """
-        Eventhandler used when the window needs repainting.
+        Event handler used when the window needs repainting.
 
         Called at the application start, after resizing, or when the window
         becomes active.
 
         Here we just draw the background buffer onto the screen.
+
         Defining a dc is crucial. Even if it is not used.
         """
         logging.debug("Paint event in DrawingArea")
@@ -268,7 +265,7 @@ class DrawingArea(wx.Window):
 
     def _keyboard_key_pressed(self, evt):
         """
-        Eventhandler used when a keyboard key has been pressed.
+        Event handler used when a keyboard key has been pressed.
 
         The following keys are handled:
         Key         Action
@@ -282,9 +279,9 @@ class DrawingArea(wx.Window):
         evt.Skip()
 
     def __delete_selected_events(self):
-        """After ack from the user, delete all selected events."""
+        """After acknowledge from the user, delete all selected events."""
         ok_to_delete  = wx.MessageBox('Are you sure to delete?', 'Question',
-                                      wx.YES_NO | wx.CENTRE | wx.NO_DEFAULT,
+                                      wx.YES_NO|wx.CENTRE|wx.NO_DEFAULT,
                                       self) == wx.YES
         if ok_to_delete:
             self.timeline.delete_selected_events()
@@ -292,12 +289,13 @@ class DrawingArea(wx.Window):
 
     def _mouse_wheel_has_scrolled(self, evt):
         """
-        Eventhandler used when the mouse wheel is rotated.
+        Event handler used when the mouse wheel is rotated.
 
         If the Control key is pressed at the same time as the mouse wheel is
         scrolled the timeline will be zoomed, otherwise it will be scrolled.
         """
         logging.debug("Mouse wheel event in DrawingArea")
+        print evt.m_wheelRotation
         direction = step_function(evt.m_wheelRotation)
         if evt.ControlDown():
             self.__zoom_timeline(direction)
@@ -307,22 +305,21 @@ class DrawingArea(wx.Window):
             self.__scroll_timeline(delta)
 
     def __zoom_timeline(self, direction=0):
-        """Zooms the timeline."""
         self.time_period.zoom(direction)
         self.timeline.set_preferred_period(self.time_period)
         self.draw_timeline()
 
     def __scroll_timeline(self, delta):
-        """Scroll the timeline."""
         self.time_period.move_delta(-delta)
         self.timeline.set_preferred_period(self.time_period)
         self.draw_timeline()
 
     def _left_mouse_button_pressed(self, evt):
         """
-        Eventhandler used when the left mouse button has been pressed.
+        Event handler used when the left mouse button has been pressed.
 
         This event establishes a new current time on the timeline.
+
         If the mouse hits an event that event will be selected.
         """
         logging.debug("Left mouse pressed event in DrawingArea")
@@ -331,14 +328,11 @@ class DrawingArea(wx.Window):
         evt.Skip()
 
     def __set_new_current_time(self, current_x):
-        """Set a new 'current time'."""
         self._current_time = self.drawing_algorithm.metrics.get_time(current_x)
         logging.debug("Marked time " + self._current_time.isoformat('-'))
 
     def __select_event(self, xpixelpos, ypixelpos, control_down):
         """
-        Select an event.
-
         If the given position is within the boundaries of an event that event
         will be selected. If the Control key is down all previously events that
         are selected will stay selected, otherwise they will be unselected.
@@ -358,7 +352,7 @@ class DrawingArea(wx.Window):
 
     def _left_mouse_button_released(self, evt):
         """
-        Eventhandler used when the left mouse button has been released.
+        Event handler used when the left mouse button has been released.
 
         If there is an ongoing selection-marking, the dialog for creating an
         event will be opened, and the selection-marking will be ended.
@@ -377,15 +371,15 @@ class DrawingArea(wx.Window):
 
     def _mouse_has_moved(self, evt):
         """
-        Eventhandler used when the mouse has been moved.
+        Event handler used when the mouse has been moved.
 
-        If themouse is ovar en avent, the name of that event will be printed
-        in the statusbar.
+        If the mouse is over an event, the name of that event will be printed
+        in the status bar.
 
-        If theleft mousekey is down one of two things happens depending on
-        if the Control key is downor not. If it is down a selection-marking
-        takes place and the minor strips passed by themouse willbe selected.
-        If the Control key is up the timeline will scroll.
+        If the left mouse key is down one of two things happens depending on if
+        the Control key is down or not. If it is down a selection-marking takes
+        place and the minor strips passed by the mouse will be selected.  If
+        the Control key is up the timeline will scroll.
         """
         logging.debug("Mouse move event in DrawingArea")
         if evt.Dragging:
@@ -401,11 +395,9 @@ class DrawingArea(wx.Window):
 
     def __display_eventname_in_statusbar(self, xpixelpos, ypixelpos):
         """
-        Display the name of an event in the statusbar.
-
-        If the given position is within the boundaries of an event, the name
-        of that event will be displayed inthe statusbar, otherwise the
-        statusbar text willbe removed.
+        If the given position is within the boundaries of an event, the name of
+        that event will be displayed in the status bar, otherwise the status
+        bar text will be removed.
         """
         event = self.drawing_algorithm.event_at(xpixelpos, ypixelpos)
         if event != None:
@@ -414,11 +406,9 @@ class DrawingArea(wx.Window):
             self.__reset_text_in_statusbar()
 
     def __display_text_in_statusbar(self, text):
-        """Display the given text in the statusbar."""
         wx.GetTopLevelParent(self).SetStatusText(text)
 
     def __reset_text_in_statusbar(self):
-        """Remove the text from the statusbar."""
         wx.GetTopLevelParent(self).SetStatusText('')
 
     def __mark_selected_minor_strips(self, current_x):
@@ -428,7 +418,7 @@ class DrawingArea(wx.Window):
         self.draw_timeline(period_selection)
 
     def __get_period_selection(self, current_x):
-        """Return a tuple containing the start and end time of a selection"""
+        """Return a tuple containing the start and end time of a selection."""
         start = self._current_time
         end   = self.drawing_algorithm.metrics.get_time(current_x)
         if start > end:
@@ -438,9 +428,9 @@ class DrawingArea(wx.Window):
 
     def _left_mouse_button_doubleclicked(self, evt):
         """
-        Eventhandler used when the left mouse button has been doubleclicked.
+        Event handler used when the left mouse button has been double clicked.
 
-        If the mousehits an event, a dialog opens for edting this event.
+        If the mouse hits an event, a dialog opens for editing this event.
         Otherwise a dialog for creating a new event is opened.
         """
         logging.debug("Left Mouse doubleclicked event in DrawingArea")
@@ -884,7 +874,6 @@ def step_function(x_value):
     F(x) =  { 0   when x = 0
             { 1   when x > 0
     """
-
     y_value = 0
     if x_value < 0:
         y_value = -1
