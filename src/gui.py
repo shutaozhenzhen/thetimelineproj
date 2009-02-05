@@ -252,6 +252,12 @@ class DrawingArea(wx.Window):
                             timeline. When the EVT_PAINT occurs this bitmap
                             is painted on the screen. This is a buffer drawing
                             approach for avoiding screen flicker.
+        is_scrolling        True when scrolling with the mouse takes place.
+                            It is set True in mouse_has_moved and set False
+                            in left_mouse_button_released.
+        is_selecting        True when selecting with the mouse takes place
+                            It is set True in mouse_has_moved and set False
+                            in left_mouse_button_released.
         """
         self._current_time = None
         self._mark_selection = False
@@ -259,6 +265,8 @@ class DrawingArea(wx.Window):
         self.timeline = None
         self.time_period = None
         self.drawing_algorithm = drawing.get_algorithm()
+        self.is_scrolling = False
+        self.is_selecting = False
 
     def __set_colors_and_styles(self):
         """Define the look and feel of the drawing area."""
@@ -346,8 +354,10 @@ class DrawingArea(wx.Window):
         event will be opened, and the selection-marking will be ended.
         """
         logging.debug("Left mouse released event in DrawingArea")
-        if self._mark_selection:
+        if self.is_selecting:
             self.__end_selection_and_create_event(evt.m_x)
+        self.is_selecting = False
+        self.is_scrolling = False
 
     def _mouse_has_moved(self, evt):
         """
@@ -365,13 +375,23 @@ class DrawingArea(wx.Window):
         if evt.Dragging:
             self.__display_eventname_in_statusbar(evt.m_x, evt.m_y)
         if evt.m_leftDown:
-            if evt.m_controlDown:
+            if self.is_scrolling:
+                self.__scroll(evt.m_x)
+            elif self.is_selecting:
                 self.__mark_selected_minor_strips(evt.m_x)
             else:
-                if self._current_time:
-                    delta = (self.drawing_algorithm.metrics.get_time(evt.m_x) -
-                             self._current_time)
-                    self.__scroll_timeline(delta)
+                if evt.m_controlDown:
+                    self.__mark_selected_minor_strips(evt.m_x)
+                    self.is_selecting = True
+                else:
+                    self.__scroll(evt.m_x)
+                    self.is_scrolling = True
+
+    def __scroll(self, xpixelpos):
+        if self._current_time:
+            delta = (self.drawing_algorithm.metrics.get_time(xpixelpos) -
+                        self._current_time)
+            self.__scroll_timeline(delta)
 
     def _mouse_wheel_has_scrolled(self, evt):
         """
