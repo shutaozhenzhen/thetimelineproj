@@ -56,7 +56,7 @@ class MainFrame(wx.Frame):
         # File menu
         file_menu = wx.Menu()
         menuBar.Append(file_menu, "&File")
-        file_menu.Append(wx.ID_NEW, "&New\tCtrl+N", "Create a new timeline")
+        file_menu.Append(wx.ID_NEW, "&New...\tCtrl+N", "Create a new timeline")
         self.Bind(wx.EVT_MENU, self._on_new, id=wx.ID_NEW)
         file_menu.Append(wx.ID_OPEN, "&Open...\tCtrl+O", "Open an existing timeline")
         self.Bind(wx.EVT_MENU, self._on_open, id=wx.ID_OPEN)
