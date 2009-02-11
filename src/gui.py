@@ -44,7 +44,9 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self._window_is_closing)
 
     def enable_disable_menus(self):
-        """Enable or Disable menu items dependeing on the state of the app"""
+        """
+        Enable or disable menu items depending on the state of the application.
+        """
         timeline_menu_index = 1
         timeline_menu = self.GetMenuBar().GetMenu(timeline_menu_index)
         if self.timeline == None:
@@ -137,9 +139,9 @@ class MainFrame(wx.Frame):
         Instance variables usage:
 
         timeline            The timeline currently handled by the application
-        title_base          The prefixof the titel displayed in the title bar.
-        extensions          Vallid extension for files containing timeline info.
-        default_extension   The defaultextension used in FileDialog
+        title_base          The prefix of the title displayed in the title bar
+        extensions          Valid extensions for files containing timeline info
+        default_extension   The default extension used in FileDialog
         wildcard            The wildcard used in FileDialog
         """
         self.timeline = None
@@ -167,7 +169,7 @@ class MainFrame(wx.Frame):
         file_mnu.Append(wx.ID_EXIT, "E&xit\tAlt-F4", "Exit the program")
         timeline_mnu.Append(ID_NEW_EVENT, "&Create Event", "Create a new event")
         timeline_mnu.Append(ID_CATEGORIES, "Edit &Categories", "Edit categories")
-        # Bind event handlersto menus
+        # Bind event handlers to menus
         self.Bind(wx.EVT_MENU, self._create_new_timeline, id=wx.ID_NEW)
         self.Bind(wx.EVT_MENU, self._open_existing_timeline, id=wx.ID_OPEN)
         self.Bind(wx.EVT_MENU, self._exit_application, id=wx.ID_EXIT)
@@ -915,8 +917,9 @@ def edit_event(timeline, event):
 
 def edit_categories(timeline):
     dialog = CategoriesEditor(None, timeline)
-    rv = dialog.ShowModal()
+    dialog.ShowModal()
     dialog.Destroy()
+
 
 def set_focus_on_textctrl(txt):
     txt.SetFocus()
