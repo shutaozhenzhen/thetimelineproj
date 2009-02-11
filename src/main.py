@@ -35,7 +35,7 @@ def parse_options():
 def setup_logging(log_level, filename):
     """
     Setup default logger to log to stderror and possible also to a file.
-    
+
     The default logger is used like this:
 
         import logging
@@ -64,7 +64,7 @@ def create_wx_app(input_files):
     main_frame = MainFrame()
     main_frame.Show()
     for input_file in input_files:
-        main_frame.open_timeline(input_file)
+        main_frame.display_timeline(input_file)
     return app
 
 
