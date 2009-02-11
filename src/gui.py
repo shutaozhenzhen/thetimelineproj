@@ -40,35 +40,22 @@ class MainFrame(wx.Frame):
                           style=wx.DEFAULT_FRAME_STYLE|wx.MAXIMIZE)
         self.__set_initial_values_to_member_variables()
         self.__create_gui()
-        self.enable_disable_menus()
+        self._enable_disable_menus()
         self.Bind(wx.EVT_CLOSE, self._window_is_closing)
-
-    def enable_disable_menus(self):
-        """
-        Enable or disable menu items depending on the state of the application.
-        """
-        timeline_menu_index = 1
-        timeline_menu = self.GetMenuBar().GetMenu(timeline_menu_index)
-        if self.timeline == None:
-            timeline_menu.Enable(ID_NEW_EVENT , False)
-            timeline_menu.Enable(ID_CATEGORIES, False)
-        else:
-            timeline_menu.Enable(ID_NEW_EVENT , True)
-            timeline_menu.Enable(ID_CATEGORIES, True)
 
     def display_timeline(self, input_file):
         """Read timeline info from the given input file and display it."""
         try:
             self.timeline = data.get_timeline(input_file)
         except Exception, e:
-            wx.MessageBox("Unable to open timeline '%s'.\n\n%s" %
-            (input_file, e), "Error", wx.OK|wx.ICON_ERROR, self)
+            display_error_message("Unable to open timeline '%s'.\n\n%s" %
+                                  (input_file, e))
         else:
             self.SetTitle("%s (%s)" % (self.title_base, input_file))
             self.main_panel.drawing_area.set_timeline(self.timeline)
-        self.enable_disable_menus()
+        self._enable_disable_menus()
 
-    def create_new_timeline(self):
+    def _create_new_timeline(self):
         """
         Create a new empty timeline.
 
@@ -97,7 +84,7 @@ class MainFrame(wx.Frame):
             self.display_timeline(path)
         dialog.Destroy()
 
-    def open_existing_timeline(self):
+    def _open_existing_timeline(self):
         """
         Open a new timeline.
 
@@ -109,27 +96,40 @@ class MainFrame(wx.Frame):
             self.display_timeline(dialog.GetPath())
         dialog.Destroy()
 
-    def _create_new_timeline(self, event):
-        """Event handler used when the user wants to create a new timeline."""
-        self.create_new_timeline()
+    def _enable_disable_menus(self):
+        """
+        Enable or disable menu items depending on the state of the application.
+        """
+        timeline_menu_index = 1
+        timeline_menu = self.GetMenuBar().GetMenu(timeline_menu_index)
+        if self.timeline == None:
+            timeline_menu.Enable(ID_NEW_EVENT , False)
+            timeline_menu.Enable(ID_CATEGORIES, False)
+        else:
+            timeline_menu.Enable(ID_NEW_EVENT , True)
+            timeline_menu.Enable(ID_CATEGORIES, True)
 
-    def _open_existing_timeline(self, event):
+    def _mnu_file_new_clicked(self, event):
+        """Event handler used when the user wants to create a new timeline."""
+        self._create_new_timeline()
+
+    def _mnu_file_open_clicked(self, event):
         """Event handler used when the user wants to open a new timeline."""
-        self.open_existing_timeline()
+        self._open_existing_timeline()
 
     def _window_is_closing(self, event):
         self.Destroy()
 
-    def _exit_application(self, evt):
+    def _mnu_file_exit_clicked(self, evt):
         """Event handler for the Exit menu item"""
         self.Close()
 
-    def _create_new_event(self, evt):
+    def _mnu_timeline_create_event_clicked(self, evt):
         """Event handler for the New Event menu item"""
         if create_new_event(self.timeline) == wx.ID_OK:
             self.main_panel.drawing_area.draw_timeline()
 
-    def _edit_categories(self, evt):
+    def _mnu_timeline_edit_categories_clicked(self, evt):
         """Event handler for the Edit Categories menu item"""
         if edit_categories(self.timeline) == wx.ID_OK:
             self.main_panel.drawing_area.draw_timeline()
@@ -170,11 +170,11 @@ class MainFrame(wx.Frame):
         timeline_mnu.Append(ID_NEW_EVENT, "&Create Event", "Create a new event")
         timeline_mnu.Append(ID_CATEGORIES, "Edit &Categories", "Edit categories")
         # Bind event handlers to menus
-        self.Bind(wx.EVT_MENU, self._create_new_timeline, id=wx.ID_NEW)
-        self.Bind(wx.EVT_MENU, self._open_existing_timeline, id=wx.ID_OPEN)
-        self.Bind(wx.EVT_MENU, self._exit_application, id=wx.ID_EXIT)
-        self.Bind(wx.EVT_MENU, self._create_new_event, id=ID_NEW_EVENT)
-        self.Bind(wx.EVT_MENU, self._edit_categories, id=ID_CATEGORIES)
+        self.Bind(wx.EVT_MENU, self._mnu_file_new_clicked, id=wx.ID_NEW)
+        self.Bind(wx.EVT_MENU, self._mnu_file_open_clicked, id=wx.ID_OPEN)
+        self.Bind(wx.EVT_MENU, self._mnu_file_exit_clicked, id=wx.ID_EXIT)
+        self.Bind(wx.EVT_MENU, self._mnu_timeline_create_event_clicked, id=ID_NEW_EVENT)
+        self.Bind(wx.EVT_MENU, self._mnu_timeline_edit_categories_clicked, id=ID_CATEGORIES)
         # The Menu bar
         menuBar = wx.MenuBar()
         menuBar.Append(file_mnu, "&File")
