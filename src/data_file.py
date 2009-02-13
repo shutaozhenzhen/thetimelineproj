@@ -7,9 +7,11 @@ The class `FileTimeline` implements the `Timeline` interface.
 
 import re
 import codecs
+import shutil
 import os.path
 from logging import error as logerror
 from logging import info as loginfo
+from logging import warning as logwarning
 from datetime import datetime
 from datetime import timedelta
 
@@ -52,6 +54,7 @@ class FileTimeline(Timeline):
         if not os.path.exists(self.file_path): 
             # Nothing to load if file does not exist
             return
+        self.__create_backup()
         loginfo("Opening file '%s'" % self.file_path)
         file = None
         try:
@@ -81,7 +84,7 @@ class FileTimeline(Timeline):
             try:
                 file = codecs.open(self.file_path, "w", ENCODING)
             except IOError, e:
-                display_error_message("Unable to save timeline data.\n\n%s" % e)
+                display_error_message("Unable to save timeline data.\n\nIf data was corrupted, check out the backed up file that was created when the timeline was opened.\n\n%s" % e)
             else:
                 file.write("# Written by Timeline %s on %s\n" % (
                     get_version(),
@@ -105,6 +108,15 @@ class FileTimeline(Timeline):
         finally:
             if file:
                 file.close()
+
+    def __create_backup(self):
+        backup_path = self.file_path + "~"
+        try:
+            loginfo("Creating backup to '%s'" % backup_path)
+            shutil.copy(self.file_path, backup_path)
+        except IOError, e:
+            logwarning("Unable to create backup to '%s'" % backup_path,
+                       exc_info=e)
 
     def __load_object_from_line(self, line):
         """Return True if object successfully loaded, otherwise False."""
