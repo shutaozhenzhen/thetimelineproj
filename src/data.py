@@ -117,6 +117,9 @@ class Category(object):
 class TimePeriod(object):
     """
     Represents a period in time using a start and end time.
+
+    This is used both to store the time period for an event and for storing the
+    currently displayed time period in the GUI.
     """
 
     def __init__(self, start_time, end_time):
