@@ -75,7 +75,7 @@ class Event(object):
     def __init__(self, start_time, end_time, text, category=None):
         """
         Create an event.
-        
+
         `start_time` and `end_time` should be of the type datetime.
         """
         self.selected = False
@@ -125,7 +125,7 @@ class TimePeriod(object):
     def __init__(self, start_time, end_time):
         """
         Create a time period.
-        
+
         `start_time` and `end_time` should be of the type datetime.
         """
         self.update(start_time, end_time)
@@ -133,7 +133,7 @@ class TimePeriod(object):
     def update(self, start_time, end_time):
         """
         Change the time period data.
-        
+
         If data is invalid, it will not be set, and a ValueError will be raised
         instead.
         """
@@ -247,7 +247,7 @@ def div_timedeltas(delta1, delta2):
 def time_period_center(time, length):
     """
     TimePeriod factory method.
-    
+
     Return a time period with the given length (represented as a timedelta)
     centered around `time`.
     """
@@ -266,5 +266,8 @@ def get_timeline(input_file):
     if input_file.endswith(".timeline"):
         from data_file import FileTimeline
         return FileTimeline(input_file)
+    elif input_file.endswith(".db2timeline"):
+        from data_db2 import Db2Timeline
+        return Db2Timeline(input_file)
     else:
         raise Exception("Unknown format")
