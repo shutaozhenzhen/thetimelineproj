@@ -1,7 +1,7 @@
-Index: src/paths.py
+Index: timeline-0.4.0dev8d3caf448cdb/src/paths.py
 ===================================================================
---- src/paths.py	(revision 271)
-+++ src/paths.py	(working copy)
+--- timeline-0.4.0dev8d3caf448cdb.orig/src/paths.py	2009-08-16 16:50:08.000000000 +0200
++++ timeline-0.4.0dev8d3caf448cdb/src/paths.py	2009-08-16 16:50:53.000000000 +0200
 @@ -24,7 +24,6 @@
  import os.path
  

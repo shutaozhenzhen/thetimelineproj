@@ -2,12 +2,12 @@ Source: timeline
 Section: misc
 Priority: extra
 Maintainer: Rickard Lindberg <ricli85@gmail.com>
-Build-Depends: debhelper (>= 7)
+Build-Depends: debhelper (>= 7), quilt
 Standards-Version: 3.7.3
 Homepage: http://thetimelineproj.sourceforge.net/
 
 Package: timeline
-Architecture: any
+Architecture: all
 Depends: python (>= 2.4), python-wxgtk2.8
 Description: Display and navigate information on a timeline.
  Timeline is a free, cross-platform application for displaying and navigating
