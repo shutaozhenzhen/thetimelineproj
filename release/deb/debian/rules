@@ -64,8 +64,10 @@ install: build
 	cp manual/figures/*.png $(CURDIR)/debian/timeline/usr/share/doc/timeline/manual/figures
 
 	# Install translations
-	cp -r po/sv $(CURDIR)/debian/timeline/usr/share/locale/
+	cp -r po/de $(CURDIR)/debian/timeline/usr/share/locale/
 	cp -r po/es $(CURDIR)/debian/timeline/usr/share/locale/
+	cp -r po/pt_BR $(CURDIR)/debian/timeline/usr/share/locale/
+	cp -r po/sv $(CURDIR)/debian/timeline/usr/share/locale/
 
 	# Install binary
 	cp debian/extra-files/timeline-bin $(CURDIR)/debian/timeline/usr/bin/timeline
