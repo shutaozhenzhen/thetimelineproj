@@ -10,10 +10,10 @@ AppSupportURL=http://thetimelineproj.sourceforge.net/
 AppUpdatesURL=http://thetimelineproj.sourceforge.net/
 DefaultDirName={pf}\Timeline
 DefaultGroupName=Timeline
-LicenseFile=..\..\COPYING
-InfoBeforeFile=..\..\INSTALL
-InfoAfterFile=..\..\README
-OutputDir=.\
+LicenseFile=w:\Projekt\Hg\win\timeline\COPYING
+InfoBeforeFile=w:\Projekt\Hg\win\timeline\INSTALL
+InfoAfterFile=w:\Projekt\Hg\win\timeline\README
+OutputDir=w:\Projekt\Hg\win\bin\
 OutputBaseFilename=SetupTimeline040_py25_wx28
 Compression=lzma
 SolidCompression=yes
@@ -25,16 +25,26 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\..\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
-Source: "..\..\src\*.py"; DestDir: "{app}\src"; Flags: ignoreversion
-Source: "..\..\src\*.pyc"; DestDir: "{app}\src"; Flags: ignoreversion
-Source: "..\..\po\sv_SE\LC_MESSAGES\*"; DestDir: "{app}\po\sv_SE\LC_MESSAGES\"; Flags: ignoreversion
-Source: ".\run.pyw"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "..\..\manual\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "w:\Projekt\Hg\win\timeline\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
+Source: "w:\Projekt\Hg\win\inno\Timeline.ico"; DestDir: "{app}\icons"; Flags: ignoreversion
+
+Source: "w:\Projekt\Hg\win\timeline\src\*.py"; DestDir: "{app}\src"; Flags: ignoreversion
+Source: "w:\Projekt\Hg\win\timeline\src\*.pyc"; DestDir: "{app}\src"; Flags: ignoreversion
+
+Source: "w:\Projekt\Hg\win\timeline\po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES\"; Flags: ignoreversion
+Source: "w:\Projekt\Hg\win\timeline\po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES\"; Flags: ignoreversion
+Source: "w:\Projekt\Hg\win\timeline\po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES\"; Flags: ignoreversion
+Source: "w:\Projekt\Hg\win\timeline\po\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\po\pt_BR\LC_MESSAGES\"; Flags: ignoreversion
+
+Source: "w:\Projekt\Hg\win\inno\run.pyw"; DestDir: "{app}"; Flags: ignoreversion
+Source: "w:\Projekt\Hg\win\timeline\manual\manual.html"; DestDir: "{app}\manual"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "w:\Projekt\Hg\win\timeline\manual\demo.timeline"; DestDir: "{app}\manual"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "w:\Projekt\Hg\win\timeline\manual\demo.timeline~"; DestDir: "{app}\manual"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "w:\Projekt\Hg\win\timeline\manual\figures\*"; DestDir: "{app}\manual\figures"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{commondesktop}\Timeline"; Filename:"{app}\run.pyw"; IconFilename: "{app}\Timeline.ico";Tasks: desktopicon
+Name: "{commondesktop}\Timeline"; Filename:"{app}\run.pyw"; IconFilename: "{app}\icons\Timeline.ico";Tasks: desktopicon
 
 
 [Run]
