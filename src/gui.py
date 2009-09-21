@@ -38,6 +38,7 @@ import wx.html
 import wx.lib.colourselect as colourselect
 from wx.lib.masked import TimeCtrl
 
+from data import TimelineIOError
 from data import Timeline
 from data import Event
 from data import Category
@@ -57,13 +58,15 @@ import help
 # Border, in pixels, between controls in a window (should always be used when
 # border is needed)
 BORDER = 5
+# Used by dialogs as a return code when a TimelineIOError has been raised
+ID_ERROR = wx.NewId()
 
 
 class MainFrame(wx.Frame):
     """
     The main frame of the application.
 
-    Can be resized, maximized and minimized. The frame contains one panel.
+    Can be resized, maximized and minimized. Contains one panel: MainPanel.
 
     Owns an instance of a timeline that is currently being displayed. When the
     timeline changes, this control will notify sub controls about it.
@@ -80,26 +83,60 @@ class MainFrame(wx.Frame):
         self.SetTitle(APPLICATION_NAME)
         self.mnu_view_sidebar.Check(config.get_show_sidebar())
         self.mnu_view_legend.Check(config.get_show_legend())
-        self._enable_disable_menus()
         self.SetIcons(self._load_icon_bundle())
         help.init(self, "contents", HELP_RESOURCES_DIR, ["help_pages"])
+        self.main_panel.show_welcome_panel()
+        self._enable_disable_menus()
 
-    def display_timeline(self, input_file):
+    def open_timeline(self, input_file):
         """Read timeline info from the given input file and display it."""
-        def error_fn(msg):
-            _display_error_message(msg, self)
         try:
-            self.timeline = data.get_timeline(input_file, error_fn)
-        except Exception, e:
-            msg_template = _("Unable to open timeline '%s'.") + "\n\n%s"
-            _display_error_message(msg_template % (input_file, e))
+            timeline = data.get_timeline(input_file)
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.switch_to_error_view(e)
         else:
-            self.SetTitle("%s (%s) - %s" % (os.path.basename(input_file),
-                                            os.path.dirname(os.path.abspath(input_file)),
-                                            APPLICATION_NAME))
-            # Notify sub controls that we have a new timeline
-            self.main_panel.catbox.set_timeline(self.timeline)
-            self.main_panel.drawing_area.set_timeline(self.timeline)
+            self._display_timeline(timeline)
+
+    def create_new_event(self, start=None, end=None):
+        try:
+            dialog = EventEditor(self, _("Create Event"), self.timeline,
+                                 start, end)
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.switch_to_error_view(e)
+        else:
+            if dialog.ShowModal() == ID_ERROR:
+                self.switch_to_error_view(dialog.error)
+            dialog.Destroy()
+
+    def edit_event(self, event):
+        try:
+            dialog = EventEditor(self, _("Edit Event"), self.timeline,
+                                 event=event)
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.switch_to_error_view(e)
+        else:
+            if dialog.ShowModal() == ID_ERROR:
+                self.switch_to_error_view(dialog.error)
+            dialog.Destroy()
+
+    def edit_categories(self):
+        try:
+            dialog = CategoriesEditor(self, self.timeline)
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.switch_to_error_view(e)
+        else:
+            if dialog.ShowModal() == ID_ERROR:
+                self.switch_to_error_view(dialog.error)
+            dialog.Destroy()
+
+    def switch_to_error_view(self, error):
+        self._display_timeline(None)
+        self.main_panel.error_panel.populate(error)
+        self.main_panel.show_error_panel()
         self._enable_disable_menus()
 
     def _create_gui(self):
@@ -112,7 +149,7 @@ class MainFrame(wx.Frame):
                 return plain[:tab_index] + "..." + plain[tab_index:]
             return plain + "..."
         # The only content of this frame is the MainPanel
-        self.main_panel = MainPanel(self)
+        self.main_panel = MainPanel(self, self)
         self.Bind(wx.EVT_CLOSE, self._window_on_close)
         # The status bar
         self.CreateStatusBar()
@@ -249,12 +286,10 @@ class MainFrame(wx.Frame):
         self.main_panel.drawing_area.show_hide_legend(evt.IsChecked())
 
     def _mnu_timeline_create_event_on_click(self, evt):
-        """Event handler for the New Event menu item"""
-        _create_new_event(self.timeline)
+        self.create_new_event()
 
     def _mnu_timeline_edit_categories_on_click(self, evt):
-        """Event handler for the Edit Categories menu item"""
-        _edit_categories(self.timeline)
+        self.edit_categories()
 
     def _mnu_navigate_goto_today_on_click(self, evt):
         self._navigate_timeline(lambda tp: tp.center(dt.now()))
@@ -289,6 +324,21 @@ class MainFrame(wx.Frame):
     def _mnu_help_about_on_click(self, e):
         display_about_dialog()
 
+    def _display_timeline(self, timeline):
+        self.timeline = timeline
+        self.main_panel.catbox.set_timeline(self.timeline)
+        self.main_panel.drawing_area.set_timeline(self.timeline)
+        if timeline == None:
+            self.main_panel.show_welcome_panel()
+            self.SetTitle(APPLICATION_NAME)
+        else:
+            self.main_panel.show_timeline_panel()
+            self.SetTitle("%s (%s) - %s" % (
+                os.path.basename(self.timeline.path),
+                os.path.dirname(os.path.abspath(self.timeline.path)),
+                APPLICATION_NAME))
+        self._enable_disable_menus()
+
     def _create_new_timeline(self):
         """
         Create a new empty timeline.
@@ -311,7 +361,7 @@ class MainFrame(wx.Frame):
                 wx.MessageBox("%s\n\n%s" % (msg_first_part, msg_second_part),
                               _("Information"),
                               wx.OK|wx.ICON_INFORMATION, self)
-            self.display_timeline(path)
+            self.open_timeline(path)
         dialog.Destroy()
 
     def _open_existing_timeline(self):
@@ -324,22 +374,33 @@ class MainFrame(wx.Frame):
                                wildcard=self.wildcard, style=wx.FD_OPEN)
         if dialog.ShowModal() == wx.ID_OK:
             self._save_current_timeline_data()
-            self.display_timeline(dialog.GetPath())
+            self.open_timeline(dialog.GetPath())
         dialog.Destroy()
 
     def _enable_disable_menus(self):
         """
         Enable or disable menu items depending on the state of the application.
         """
-        menues = [self.mnu_timeline, self.mnu_navigate]
-        enable = self.timeline != None
-        for menu in menues:
-            for menuitem in menu.GetMenuItems():
-                menuitem.Enable(enable)
-        self.mnu_file_print.Enable(enable)
-        self.mnu_file_print_preview.Enable(enable)
-        self.mnu_file_print_setup.Enable(enable)
-        self.mnu_file_export.Enable(enable)
+        items_requiring_timeline_view = [
+            self.mnu_view_sidebar,
+        ]
+        items_requiring_timeline = [
+            self.mnu_file_print,
+            self.mnu_file_print_preview,
+            self.mnu_file_print_setup,
+            self.mnu_file_export,
+            self.mnu_view_legend,
+        ]
+        for item in self.mnu_timeline.GetMenuItems():
+            items_requiring_timeline.append(item)
+        for item in self.mnu_navigate.GetMenuItems():
+            items_requiring_timeline.append(item)
+        have_timeline_view = self.main_panel.timeline_panel_visible()
+        have_timeline = self.timeline != None
+        for item in items_requiring_timeline_view:
+            item.Enable(have_timeline_view)
+        for item in items_requiring_timeline:
+            item.Enable(have_timeline)
 
     def _save_application_config(self):
         config.set_window_size(self.GetSize())
@@ -359,7 +420,13 @@ class MainFrame(wx.Frame):
         or created or when the application is closed.
         """
         if self.timeline:
-            self.timeline.set_preferred_period(self._get_time_period())
+            try:
+                self.timeline.set_preferred_period(self._get_time_period())
+            except TimelineIOError, e:
+                _display_error_message(e.message, self)
+                # No need to switch to error view since this method is only
+                # called on a timeline that is going to be closed anyway (and
+                # another timeline, or one, will be displayed instead).
 
     def _export_to_image(self):
         extension_map = {"png": wx.BITMAP_TYPE_PNG}
@@ -468,6 +535,123 @@ class MainFrame(wx.Frame):
         return self.main_panel.drawing_area.get_time_period()
 
 
+class MainPanel(wx.Panel):
+    """
+    Panel that covers the whole client area of MainFrame.
+
+    Displays one of the following panels:
+    
+      * The welcome panel (show_welcome_panel)
+      * A splitter with sidebar and DrawingArea (show_timeline_panel)
+      * The error panel (show_error_panel)
+    """
+
+    def __init__(self, parent, main_frame):
+        wx.Panel.__init__(self, parent)
+        self.main_frame = main_frame
+        self._create_gui()
+        # Install variables for backwards compatibility
+        self.catbox = self.timeline_panel.sidebar.catbox
+        self.drawing_area = self.timeline_panel.drawing_area
+        self.show_sidebar = self.timeline_panel.show_sidebar
+        self.hide_sidebar = self.timeline_panel.hide_sidebar
+        self.get_sidebar_width = self.timeline_panel.get_sidebar_width
+
+    def timeline_panel_visible(self):
+        return self.timeline_panel.IsShown()
+
+    def show_welcome_panel(self):
+        self._show_panel(self.welcome_panel)
+
+    def show_timeline_panel(self):
+        self._show_panel(self.timeline_panel)
+
+    def show_error_panel(self):
+        self._show_panel(self.error_panel)
+
+    def _create_gui(self):
+        self.sizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.welcome_panel = WelcomePanel(self)
+        self.sizer.Add(self.welcome_panel, flag=wx.GROW, proportion=1)
+        self.timeline_panel = TimelinePanel(self, self.main_frame)
+        self.sizer.Add(self.timeline_panel, flag=wx.GROW, proportion=1)
+        self.error_panel = ErrorPanel(self)
+        self.sizer.Add(self.error_panel, flag=wx.GROW, proportion=1)
+        self.SetSizer(self.sizer)
+
+    def _show_panel(self, panel):
+        # Hide all panels
+        for panel_to_hide in [self.welcome_panel, self.timeline_panel,
+                              self.error_panel]:
+            panel_to_hide.Show(False)
+        # Show this one
+        panel.Show(True)
+        self.sizer.Layout()
+
+
+class WelcomePanel(wx.Panel):
+
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent)
+        wx.StaticText(self, label="Welcome...")
+
+
+class TimelinePanel(wx.Panel):
+    """Showing the drawn timeline and the optional sidebar."""
+
+    def __init__(self, parent, main_frame):
+        wx.Panel.__init__(self, parent)
+        self.main_frame = main_frame
+        self.sidebar_width = config.get_sidebar_width()
+        self._create_gui()
+        self.show_sidebar()
+        if not config.get_show_sidebar():
+            self.hide_sidebar()
+
+    def get_sidebar_width(self):
+        return self.sidebar_width
+
+    def show_sidebar(self):
+        self.splitter.SplitVertically(self.sidebar, self.drawing_area,
+                                      self.sidebar_width)
+
+    def hide_sidebar(self):
+        self.splitter.Unsplit(self.sidebar)
+
+    def _create_gui(self):
+        self.splitter = wx.SplitterWindow(self, style=wx.SP_LIVE_UPDATE)
+        self.splitter.SetMinimumPaneSize(50)
+        self.Bind(wx.EVT_SPLITTER_SASH_POS_CHANGED,
+                  self._splitter_on_splitter_sash_pos_changed, self.splitter)
+        self.sidebar = Sidebar(self.splitter)
+        self.drawing_area = DrawingArea(self.splitter, self.main_frame)
+        globalSizer = wx.BoxSizer(wx.HORIZONTAL)
+        globalSizer.Add(self.splitter, flag=wx.GROW, proportion=1)
+        self.SetSizer(globalSizer)
+
+    def _splitter_on_splitter_sash_pos_changed(self, e):
+        self.sidebar_width = self.splitter.GetSashPosition()
+
+
+class Sidebar(wx.Panel):
+    """
+    The left part in TimelinePanel.
+
+    Currently only shows the categories with visibility check boxes.
+    """
+
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent, style=wx.BORDER_NONE)
+        self._create_gui()
+
+    def _create_gui(self):
+        self.catbox = CategoriesVisibleCheckListBox(self)
+        # Layout
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(self.catbox, flag=wx.GROW, proportion=1)
+        self.SetSizer(sizer)
+
+
 class CategoriesVisibleCheckListBox(wx.CheckListBox):
     # ClientData can not be used in this control
     # (see http://docs.wxwidgets.org/stable/wx_wxchecklistbox.html)
@@ -491,136 +675,34 @@ class CategoriesVisibleCheckListBox(wx.CheckListBox):
     def _checklistbox_on_checklistbox(self, e):
         i = e.GetSelection()
         self.categories[i].visible = self.IsChecked(i)
-        self.timeline.category_edited(self.categories[i])
+        try:
+            self.timeline.category_edited(self.categories[i])
+        except TimelineIOError, e:
+            _display_error_message(e.message, self.main_frame)
+            self.main_frame.switch_to_error_view(e)
 
     def _timeline_changed(self, state_change):
         if state_change == Timeline.STATE_CHANGE_CATEGORY:
             self._update_categories()
 
     def _update_categories(self):
-        self.categories = sort_categories(self.timeline.get_categories())
-        self.Clear()
-        self.AppendItems([category.name for category in self.categories])
-        for i in range(0, self.Count):
-            if self.categories[i].visible:
-                self.Check(i)
-            self.SetItemBackgroundColour(i, self.categories[i].color)
-
-
-class DateTimePicker(wx.Panel):
-    """
-    Control to pick a Python datetime object.
-
-    The time part will default to 00:00:00 if none is entered.
-    """
-
-    def __init__(self, parent, show_time=True):
-        wx.Panel.__init__(self, parent)
-        self._create_gui()
-        self.show_time(show_time)
-
-    def show_time(self, show=True):
-        self.time_picker.Show(show)
-        self.GetSizer().Layout()
-
-    def get_value(self):
-        """Return the selected date time as a Python datetime object."""
-        date = self.date_picker.GetValue()
-        date_time = dt(date.Year, date.Month+1, date.Day)
-        if self.time_picker.IsShown():
-            time = self.time_picker.GetValue(as_wxDateTime=True)
-            date_time = date_time.replace(hour=time.Hour,
-                                          minute=time.Minute)
-        return date_time
-
-    def set_value(self, value):
-        if value == None:
-            now = dt.now()
-            value = dt(now.year, now.month, now.day)
-        wx_date_time = self._python_date_to_wx_date(value)
-        self.date_picker.SetValue(wx_date_time)
-        self.time_picker.SetValue(wx_date_time)
-
-    def _create_gui(self):
-        self.date_picker = wx.GenericDatePickerCtrl(self,
-                               style=wx.DP_DROPDOWN|wx.DP_SHOWCENTURY)
-        self.Bind(wx.EVT_DATE_CHANGED, self._date_picker_on_date_changed,
-                  self.date_picker)
-        self.time_picker = TimeCtrl(self, format="24HHMM")
-        # Layout
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(self.date_picker, proportion=1,
-                  flag=wx.ALIGN_CENTER_VERTICAL)
-        sizer.Add(self.time_picker, proportion=0,
-                  flag=wx.ALIGN_CENTER_VERTICAL)
-        self.SetSizerAndFit(sizer)
-
-    def _date_picker_on_date_changed(self, e):
-        date = self.get_value()
-        if date < TimePeriod.MIN_TIME:
-            self.set_value(TimePeriod.MIN_TIME)
-        if date > TimePeriod.MAX_TIME:
-            self.set_value(TimePeriod.MAX_TIME)
-
-    def _python_date_to_wx_date(self, py_date):
-        return wx.DateTimeFromDMY(py_date.day, py_date.month-1, py_date.year,
-                                  py_date.hour, py_date.minute,
-                                  py_date.second)
-
-
-class MainPanel(wx.Panel):
-    """
-    Panel that covers the whole client area of MainFrame.
-
-    Contains a sidebar that can be hidden and shown and DrawingArea.
-    """
-
-    def __init__(self, parent):
-        """Create the Main Panel."""
-        wx.Panel.__init__(self, parent)
-        self.sidebar_width = config.get_sidebar_width()
-        self._create_gui()
-        self.show_sidebar()
-        if not config.get_show_sidebar():
-            self.hide_sidebar()
-
-    def get_sidebar_width(self):
-        return self.sidebar_width
-
-    def show_sidebar(self):
-        self.splitter.SplitVertically(self.sidebar, self.drawing_area,
-                                      self.sidebar_width)
-
-    def hide_sidebar(self):
-        self.splitter.Unsplit(self.sidebar)
-
-    def _create_gui(self):
-        """Create the controls of the Main Panel."""
-        self.splitter = wx.SplitterWindow(self, style=wx.SP_LIVE_UPDATE)
-        self.splitter.SetMinimumPaneSize(50)
-        self.Bind(wx.EVT_SPLITTER_SASH_POS_CHANGED,
-                  self._splitter_on_splitter_sash_pos_changed, self.splitter)
-        # DrawingArea
-        self.drawing_area = DrawingArea(self.splitter)
-        # Sidebar
-        self.sidebar = wx.Panel(self.splitter, style=wx.BORDER_NONE)
-        self.catbox = CategoriesVisibleCheckListBox(self.sidebar)
-        # Container sizer
-        pane_sizer = wx.BoxSizer(wx.VERTICAL)
-        pane_sizer.Add(self.catbox, flag=wx.GROW, proportion=1)
-        self.sidebar.SetSizer(pane_sizer)
-        # Splitter in sizer
-        globalSizer = wx.BoxSizer(wx.HORIZONTAL)
-        globalSizer.Add(self.splitter, flag=wx.GROW, proportion=1)
-        self.SetSizer(globalSizer)
-
-    def _splitter_on_splitter_sash_pos_changed(self, e):
-        self.sidebar_width = self.splitter.GetSashPosition()
+        try:
+            self.categories = sort_categories(self.timeline.get_categories())
+        except TimelineIOError, e:
+            _display_error_message(e.message, self.main_frame)
+            self.main_frame.switch_to_error_view(e)
+        else:
+            self.Clear()
+            self.AppendItems([category.name for category in self.categories])
+            for i in range(0, self.Count):
+                if self.categories[i].visible:
+                    self.Check(i)
+                self.SetItemBackgroundColour(i, self.categories[i].color)
 
 
 class DrawingArea(wx.Panel):
     """
-    Window on which the timeline is drawn.
+    The right part in TimelinePanel: a window on which the timeline is drawn.
 
     This class has information about what timeline and what part of the
     timeline to draw and makes sure that the timeline is redrawn whenever it is
@@ -652,8 +734,9 @@ class DrawingArea(wx.Panel):
     When the mouse button is released the selection ends.
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, main_frame):
         wx.Panel.__init__(self, parent, style=wx.NO_BORDER)
+        self.main_frame = main_frame
         self._create_gui()
         self._set_initial_values_to_member_variables()
         self._set_colors_and_styles()
@@ -710,7 +793,12 @@ class DrawingArea(wx.Panel):
         self.timeline = timeline
         if self.timeline:
             self.timeline.register(self._timeline_changed)
-            self.time_period = timeline.get_preferred_period()
+            try:
+                self.time_period = timeline.get_preferred_period()
+            except TimelineIOError, e:
+                _display_error_message(e.message, self.main_frame)
+                self.main_frame.switch_to_error_view(e)
+                return
             self._redraw_timeline()
             self.Enable()
             self.SetFocus()
@@ -806,16 +894,20 @@ class DrawingArea(wx.Panel):
 
         If the mouse hits an event that event will be selected.
         """
-        logging.debug("Left mouse pressed event in DrawingArea")
-        self._set_new_current_time(evt.m_x)
-        posAtEvent = self._toggle_event_selection(evt.m_x, evt.m_y,
-                                                  evt.m_controlDown)
-        if not posAtEvent:
-            if evt.m_controlDown:
-                self._set_select_period_cursor()
-            else:
-                self._set_drag_cursor()
-        evt.Skip()
+        try:
+            logging.debug("Left mouse pressed event in DrawingArea")
+            self._set_new_current_time(evt.m_x)
+            posAtEvent = self._toggle_event_selection(evt.m_x, evt.m_y,
+                                                      evt.m_controlDown)
+            if not posAtEvent:
+                if evt.m_controlDown:
+                    self._set_select_period_cursor()
+                else:
+                    self._set_drag_cursor()
+            evt.Skip()
+        except TimelineIOError, e:
+            _display_error_message(e.message, self.main_frame)
+            self.main_frame.switch_to_error_view(e)
 
     def _window_on_left_dclick(self, evt):
         """
@@ -827,10 +919,10 @@ class DrawingArea(wx.Panel):
         logging.debug("Left Mouse doubleclicked event in DrawingArea")
         event = self.drawing_algorithm.event_at(evt.m_x, evt.m_y)
         if event:
-            _edit_event(self.timeline, event)
+            self.main_frame.edit_event(event)
         else:
-            _create_new_event(self.timeline, self._current_time,
-                              self._current_time)
+            self.main_frame.create_new_event(self._current_time,
+                                             self._current_time)
 
     def _window_on_left_up(self, evt):
         """
@@ -966,11 +1058,16 @@ class DrawingArea(wx.Panel):
             memdc.SetBackground(wx.Brush(wx.WHITE, wx.SOLID))
             memdc.Clear()
             if self.timeline:
-                current_events = self.timeline.get_events(self.time_period)
-                self.drawing_algorithm.draw(memdc, self.time_period,
-                                            current_events,
-                                            period_selection,
-                                            self.show_legend)
+                try:
+                    current_events = self.timeline.get_events(self.time_period)
+                except TimelineIOError, e:
+                    _display_error_message(e.message, self.main_frame)
+                    self.main_frame.switch_to_error_view(e)
+                else:
+                    self.drawing_algorithm.draw(memdc, self.time_period,
+                                                current_events,
+                                                period_selection,
+                                                self.show_legend)
             memdc.EndDrawing()
             del memdc
             self.Refresh()
@@ -1018,7 +1115,7 @@ class DrawingArea(wx.Panel):
         self._mark_selection = False
         period_selection = self._get_period_selection(current_x)
         start, end = period_selection
-        _create_new_event(self.timeline, start, end)
+        self.main_frame.create_new_event(start, end)
         self._redraw_timeline()
 
     def _display_eventname_in_statusbar(self, xpixelpos, ypixelpos):
@@ -1048,7 +1145,11 @@ class DrawingArea(wx.Panel):
     def _delete_selected_events(self):
         """After acknowledge from the user, delete all selected events."""
         if _ask_question(_("Are you sure to delete?"), self) == wx.YES:
-            self.timeline.delete_selected_events()
+            try:
+                self.timeline.delete_selected_events()
+            except TimelineIOError, e:
+                _display_error_message(e.message, self.main_frame)
+                self.main_frame.switch_to_error_view(e)
 
     def _get_period_selection(self, current_x):
         """Return a tuple containing the start and end time of a selection."""
@@ -1079,11 +1180,21 @@ class DrawingArea(wx.Panel):
         self.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
 
 
+class ErrorPanel(wx.Panel):
+
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent)
+        wx.StaticText(self, label="Error...")
+
+    def populate(self, error):
+        print error
+
+
 class EventEditor(wx.Dialog):
     """Dialog used for creating and editing events."""
 
-    def __init__(self, parent, id, title, timeline, start=None, end=None,
-                 event=None):
+    def __init__(self, parent, title, timeline,
+                 start=None, end=None, event=None):
         """
         Create a event editor dialog.
 
@@ -1096,7 +1207,7 @@ class EventEditor(wx.Dialog):
         filled with data from the arguments 'start' and 'end' if they are
         given. Otherwise they will default to today.
         """
-        wx.Dialog.__init__(self, parent, id, title,
+        wx.Dialog.__init__(self, parent, title=title,
                            style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
         self.timeline = timeline
         self.event = event
@@ -1186,42 +1297,47 @@ class EventEditor(wx.Dialog):
 
         If the Close-on-ok checkbox is checked the dialog is also closed.
         """
-        logging.debug("_btn_ok_on_click")
         try:
-            # Input value retrieval and validation
-            start_time = self.dtp_start.get_value()
-            end_time = start_time
-            if self.chb_period.IsChecked():
-                end_time = self.dtp_end.get_value()
-            selection = self.lst_category.GetSelection()
-            category = self.lst_category.GetClientData(selection)
-            if start_time > end_time:
-                raise TxtException(_("End must be > Start"), self.dtp_start)
-            name = _parse_text_from_textbox(self.txt_text, _("Text"))
-            # Update existing event
-            if self.updatemode:
-                self.event.update(start_time, end_time, name, category)
-                for plugin, editor in self.event_data_plugins:
-                    self.event.set_data(plugin.get_id(),
-                                        plugin.get_editor_data(editor))
-                self.timeline.event_edited(self.event)
-            # Create new event
-            else:
-                self.event = Event(start_time, end_time, name, category)
-                for plugin, editor in self.event_data_plugins:
-                    self.event.set_data(plugin.get_id(),
-                                        plugin.get_editor_data(editor))
-                self.timeline.add_event(self.event)
-            # Close the dialog ?
-            if self.chb_add_more.GetValue():
-                self.txt_text.SetValue("")
-                for plugin, editor in self.event_data_plugins:
-                    plugin.clear_editor_data(editor)
-            else:
-                self._close()
-        except TxtException, ex:
-            _display_error_message("%s" % ex.error_message)
-            _set_focus_and_select(ex.control)
+            logging.debug("_btn_ok_on_click")
+            try:
+                # Input value retrieval and validation
+                start_time = self.dtp_start.get_value()
+                end_time = start_time
+                if self.chb_period.IsChecked():
+                    end_time = self.dtp_end.get_value()
+                selection = self.lst_category.GetSelection()
+                category = self.lst_category.GetClientData(selection)
+                if start_time > end_time:
+                    raise TxtException(_("End must be > Start"), self.dtp_start)
+                name = _parse_text_from_textbox(self.txt_text, _("Text"))
+                # Update existing event
+                if self.updatemode:
+                    self.event.update(start_time, end_time, name, category)
+                    for plugin, editor in self.event_data_plugins:
+                        self.event.set_data(plugin.get_id(),
+                                            plugin.get_editor_data(editor))
+                    self.timeline.event_edited(self.event)
+                # Create new event
+                else:
+                    self.event = Event(start_time, end_time, name, category)
+                    for plugin, editor in self.event_data_plugins:
+                        self.event.set_data(plugin.get_id(),
+                                            plugin.get_editor_data(editor))
+                    self.timeline.add_event(self.event)
+                # Close the dialog ?
+                if self.chb_add_more.GetValue():
+                    self.txt_text.SetValue("")
+                    for plugin, editor in self.event_data_plugins:
+                        plugin.clear_editor_data(editor)
+                else:
+                    self._close()
+            except TxtException, ex:
+                _display_error_message("%s" % ex.error_message)
+                _set_focus_and_select(ex.control)
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.error = e
+            self.EndModal(ID_ERROR)
 
     def _chb_period_on_checkbox(self, e):
         self._show_to_time(e.IsChecked())
@@ -1348,35 +1464,65 @@ class CategoriesEditor(wx.Dialog):
         self.EndModal(wx.ID_CLOSE)
 
     def _lst_categories_on_dclick(self, e):
-        selection = e.GetSelection()
-        dialog = CategoryEditor(self, _("Edit Category"), self.timeline,
-                                e.GetClientData())
-        if dialog.ShowModal() == wx.ID_OK:
-            self.timeline.category_edited(dialog.get_edited_category())
-        dialog.Destroy()
+        try:
+            selection = e.GetSelection()
+            dialog = CategoryEditor(self, _("Edit Category"), self.timeline,
+                                    e.GetClientData())
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.error = e
+            self.EndModal(ID_ERROR)
+        else:
+            if dialog.ShowModal() == ID_ERROR:
+                self.error = dialog.error
+                self.EndModal(ID_ERROR)
+            dialog.Destroy()
 
     def _btn_add_on_click(self, e):
-        dialog = CategoryEditor(self, _("Add Category"), self.timeline, None)
-        if dialog.ShowModal() == wx.ID_OK:
-            self.timeline.add_category(dialog.get_edited_category())
-        dialog.Destroy()
+        try:
+            dialog = CategoryEditor(self, _("Add Category"), self.timeline,
+                                    None)
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.error = e
+            self.EndModal(ID_ERROR)
+        else:
+            if dialog.ShowModal() == ID_ERROR:
+                self.error = dialog.error
+                self.EndModal(ID_ERROR)
+            dialog.Destroy()
 
     def _btn_del_on_click(self, e):
-        self._delete_selected_category()
+        try:
+            self._delete_selected_category()
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.error = e
+            self.EndModal(ID_ERROR)
 
     def _btn_close_on_click(self, e):
         self.Close()
 
     def _lst_categories_on_key_down(self, e):
-        logging.debug("Key down event in CategoriesEditor")
-        keycode = e.GetKeyCode()
-        if keycode == wx.WXK_DELETE:
-            self._delete_selected_category()
-        e.Skip()
+        try:
+            logging.debug("Key down event in CategoriesEditor")
+            keycode = e.GetKeyCode()
+            if keycode == wx.WXK_DELETE:
+                self._delete_selected_category()
+            e.Skip()
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.error = e
+            self.EndModal(ID_ERROR)
 
     def _timeline_changed(self, state_change):
-        if state_change == Timeline.STATE_CHANGE_CATEGORY:
-            self._update_categories()
+        try:
+            if state_change == Timeline.STATE_CHANGE_CATEGORY:
+                self._update_categories()
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.error = e
+            self.EndModal(ID_ERROR)
 
     def _delete_selected_category(self):
         selection = self.lst_categories.GetSelection()
@@ -1403,7 +1549,9 @@ class CategoryEditor(wx.Dialog):
         self._create_gui()
         self.timeline = timeline
         self.category = category
+        self.create_new = False
         if self.category == None:
+            self.create_new = True
             self.category = Category("", (200, 200, 200), True)
         self.txt_name.SetValue(self.category.name)
         self.colorpicker.SetColour(self.category.color)
@@ -1441,19 +1589,28 @@ class CategoryEditor(wx.Dialog):
         _set_focus_and_select(self.txt_name)
 
     def _btn_ok_on_click(self, e):
-        name = self.txt_name.GetValue().strip()
-        if not self._name_valid(name):
-            _display_error_message(_("Category name '%s' not valid. Must be non-empty.") % name,
-                                   self)
-            return
-        if self._name_in_use(name):
-            _display_error_message(_("Category name '%s' already in use.") % name,
-                                   self)
-            return
-        self.category.name = name
-        self.category.color = self.colorpicker.GetColour()
-        self.category.visible = self.chb_visible.IsChecked()
-        self.EndModal(wx.ID_OK)
+        try:
+            name = self.txt_name.GetValue().strip()
+            if not self._name_valid(name):
+                msg = _("Category name '%s' not valid. Must be non-empty.")
+                _display_error_message(msg % name, self)
+                return
+            if self._name_in_use(name):
+                msg = _("Category name '%s' already in use.")
+                _display_error_message(msg % name, self)
+                return
+            self.category.name = name
+            self.category.color = self.colorpicker.GetColour()
+            self.category.visible = self.chb_visible.IsChecked()
+            if self.create_new:
+                self.timeline.add_category(self.category)
+            else:
+                self.timeline.category_edited(self.category)
+            self.EndModal(wx.ID_OK)
+        except TimelineIOError, e:
+            _display_error_message(e.message, self)
+            self.error = e
+            self.EndModal(ID_ERROR)
 
     def _name_valid(self, name):
         return len(name) > 0
@@ -1497,6 +1654,67 @@ class GotoDateDialog(wx.Dialog):
         self.EndModal(wx.ID_OK)
 
 
+class DateTimePicker(wx.Panel):
+    """
+    Control to pick a Python datetime object.
+
+    The time part will default to 00:00:00 if none is entered.
+    """
+
+    def __init__(self, parent, show_time=True):
+        wx.Panel.__init__(self, parent)
+        self._create_gui()
+        self.show_time(show_time)
+
+    def show_time(self, show=True):
+        self.time_picker.Show(show)
+        self.GetSizer().Layout()
+
+    def get_value(self):
+        """Return the selected date time as a Python datetime object."""
+        date = self.date_picker.GetValue()
+        date_time = dt(date.Year, date.Month+1, date.Day)
+        if self.time_picker.IsShown():
+            time = self.time_picker.GetValue(as_wxDateTime=True)
+            date_time = date_time.replace(hour=time.Hour,
+                                          minute=time.Minute)
+        return date_time
+
+    def set_value(self, value):
+        if value == None:
+            now = dt.now()
+            value = dt(now.year, now.month, now.day)
+        wx_date_time = self._python_date_to_wx_date(value)
+        self.date_picker.SetValue(wx_date_time)
+        self.time_picker.SetValue(wx_date_time)
+
+    def _create_gui(self):
+        self.date_picker = wx.GenericDatePickerCtrl(self,
+                               style=wx.DP_DROPDOWN|wx.DP_SHOWCENTURY)
+        self.Bind(wx.EVT_DATE_CHANGED, self._date_picker_on_date_changed,
+                  self.date_picker)
+        self.time_picker = TimeCtrl(self, format="24HHMM")
+        # Layout
+        sizer = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(self.date_picker, proportion=1,
+                  flag=wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(self.time_picker, proportion=0,
+                  flag=wx.ALIGN_CENTER_VERTICAL)
+        self.SetSizerAndFit(sizer)
+
+    def _date_picker_on_date_changed(self, e):
+        date = self.get_value()
+        if date < TimePeriod.MIN_TIME:
+            self.set_value(TimePeriod.MIN_TIME)
+        if date > TimePeriod.MAX_TIME:
+            self.set_value(TimePeriod.MAX_TIME)
+
+    def _python_date_to_wx_date(self, py_date):
+        return wx.DateTimeFromDMY(py_date.day, py_date.month-1, py_date.year,
+                                  py_date.hour, py_date.minute,
+                                  py_date.second)
+
+
 class TxtException(ValueError):
     """
     Thrown if a text control contains an invalid value.
@@ -1516,26 +1734,6 @@ def sort_categories(categories):
     sorted_categories = list(categories)
     sorted_categories.sort(cmp, lambda x: x.name.lower())
     return sorted_categories
-
-
-def _create_new_event(timeline, start=None, end=None):
-    """Open a dialog for creating a new event."""
-    dlg = EventEditor(None, -1, _("Create Event"), timeline, start, end)
-    dlg.ShowModal()
-    dlg.Destroy()
-
-
-def _edit_event(timeline, event):
-    """Open a dialog for updating properties of a marked event"""
-    dlg = EventEditor(None, -1, _("Edit Event"), timeline, event=event)
-    dlg.ShowModal()
-    dlg.Destroy()
-
-
-def _edit_categories(timeline):
-    dialog = CategoriesEditor(None, timeline)
-    dialog.ShowModal()
-    dialog.Destroy()
 
 
 def _set_focus_and_select(ctrl):
@@ -1625,4 +1823,3 @@ def _create_button_box(parent, ok_method, cancel_method=None):
     parent.SetDefaultItem(btn_ok)
     parent.SetAffirmativeId(btn_ok.GetId())
     return button_box
-
