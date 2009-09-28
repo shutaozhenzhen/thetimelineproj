@@ -2,7 +2,6 @@ usr/bin
 usr/lib/timeline
 usr/share/applications
 usr/share/doc/timeline
-usr/share/doc/timeline/manual
-usr/share/doc/timeline/manual/figures
+usr/share/doc/timeline/help_resources
 usr/share/locale
 usr/share/timeline/icons
