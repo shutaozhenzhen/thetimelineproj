@@ -19,6 +19,7 @@ Update instructions:
      2. quilt push -a -f
      3. edit files for which patches were rejected
      4. quilt refresh
+  5. Update dependencies in control
 
 Online resources:
 
