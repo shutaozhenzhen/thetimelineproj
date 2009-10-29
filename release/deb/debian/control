@@ -10,6 +10,6 @@ Package: timeline
 Architecture: all
 Depends: python (>= 2.4), python-wxgtk2.8 (>= 2.8.8), python-markdown
 Recommends: wx2.8-i18n
-Description: Display and navigate information on a timeline.
+Description: Display and navigate events on a timeline.
  Timeline is a free, cross-platform application for displaying and navigating
- information on a timeline. 
+ events on a timeline. 
