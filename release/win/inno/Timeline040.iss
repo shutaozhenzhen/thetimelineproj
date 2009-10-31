@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Timeline
-AppVerName=Timeline 0.5.0
+AppVerName=Timeline 0.6.0
 AppPublisher=Rickard Lindberg <ricli85@gmail.com>
 AppPublisherURL=http://thetimelineproj.sourceforge.net/
 AppSupportURL=http://thetimelineproj.sourceforge.net/
@@ -14,7 +14,7 @@ LicenseFile=w:\Projekt\Hg\win\timeline\COPYING
 InfoBeforeFile=w:\Projekt\Hg\win\timeline\INSTALL
 InfoAfterFile=w:\Projekt\Hg\win\timeline\README
 OutputDir=w:\Projekt\Hg\win\bin\
-OutputBaseFilename=SetupTimeline050_py25_wx28
+OutputBaseFilename=SetupTimeline060_py25_wx28
 Compression=lzma
 SolidCompression=yes
 
@@ -28,15 +28,17 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "w:\Projekt\Hg\win\timeline\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
 Source: "w:\Projekt\Hg\win\timeline\help_resources\*"; DestDir: "{app}\help_resources"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "w:\Projekt\Hg\win\timeline\src\*.py"; DestDir: "{app}\src"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\src\*.pyc"; DestDir: "{app}\src"; Flags: ignoreversion
 Source: "w:\Projekt\Hg\win\timeline\po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES\"; Flags: ignoreversion
 Source: "w:\Projekt\Hg\win\timeline\po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES\"; Flags: ignoreversion
 Source: "w:\Projekt\Hg\win\timeline\po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES\"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\po\nl\LC_MESSAGES\*"; DestDir: "{app}\po\nl\LC_MESSAGES\"; Flags: ignoreversion
+Source: "w:\Projekt\Hg\win\timeline\po\pt\LC_MESSAGES\*"; DestDir: "{app}\po\pt\LC_MESSAGES\"; Flags: ignoreversion
 Source: "w:\Projekt\Hg\win\timeline\po\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\po\pt_BR\LC_MESSAGES\"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\samples\*.timeline"; DestDir: "{app}\samples"; Flags: ignoreversion
+Source: "w:\Projekt\Hg\win\timeline\tests\data\*.timeline"; DestDir: "{app}\samples"; Flags: ignoreversion
 Source: "w:\Projekt\Hg\win\inno\run.pyw"; DestDir: "{app}"; Flags: ignoreversion
 Source: "w:\Projekt\Hg\win\inno\Timeline.ico"; DestDir: "{app}\icons"; Flags: ignoreversion
+
+[UninstallDelete]
+Type: files; Name: "{app}\src\*.pyc"
 
 [Icons]
 Name: "{commondesktop}\Timeline"; Filename:"{app}\run.pyw"; IconFilename: "{app}\icons\Timeline.ico";Tasks: desktopicon
