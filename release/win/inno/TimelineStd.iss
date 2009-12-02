@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Timeline
-AppVerName=Timeline 0.6.0
+AppVerName=Timeline 0.7.0
 AppPublisher=Rickard Lindberg <ricli85@gmail.com>
 AppPublisherURL=http://thetimelineproj.sourceforge.net/
 AppSupportURL=http://thetimelineproj.sourceforge.net/
@@ -14,12 +14,13 @@ LicenseFile=w:\Projekt\Hg\win\timeline\COPYING
 InfoBeforeFile=w:\Projekt\Hg\win\timeline\INSTALL
 InfoAfterFile=w:\Projekt\Hg\win\timeline\README
 OutputDir=w:\Projekt\Hg\win\bin\
-OutputBaseFilename=SetupTimeline060_py25_wx28
+OutputBaseFilename=SetupTimeline070_py25_wx28
 Compression=lzma
 SolidCompression=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
+
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
@@ -33,8 +34,9 @@ Source: "w:\Projekt\Hg\win\timeline\po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\
 Source: "w:\Projekt\Hg\win\timeline\po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES\"; Flags: ignoreversion
 Source: "w:\Projekt\Hg\win\timeline\po\pt\LC_MESSAGES\*"; DestDir: "{app}\po\pt\LC_MESSAGES\"; Flags: ignoreversion
 Source: "w:\Projekt\Hg\win\timeline\po\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\po\pt_BR\LC_MESSAGES\"; Flags: ignoreversion
+Source: "w:\Projekt\Hg\win\timeline\po\ru\LC_MESSAGES\*"; DestDir: "{app}\po\ru\LC_MESSAGES\"; Flags: ignoreversion
 Source: "w:\Projekt\Hg\win\timeline\tests\data\*.timeline"; DestDir: "{app}\samples"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\inno\run.pyw"; DestDir: "{app}"; Flags: ignoreversion
+Source: "w:\Projekt\Hg\win\inno\run.pyw"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "w:\Projekt\Hg\win\inno\Timeline.ico"; DestDir: "{app}\icons"; Flags: ignoreversion
 
 [UninstallDelete]
@@ -43,8 +45,10 @@ Type: files; Name: "{app}\src\*.pyc"
 [Icons]
 Name: "{commondesktop}\Timeline"; Filename:"{app}\run.pyw"; IconFilename: "{app}\icons\Timeline.ico";Tasks: desktopicon
 
+[CustomMessages]
+
 [Run]
-Filename: "{app}\run.pyw"; Description: "{cm:LaunchProgram,Timeline}"; Flags: shellexec postinstall skipifsilent
+Filename: "{app}\run.pyw"; Description: "{cm:LaunchProgram,Timeline}"; Flags: shellexec postinstall skipifsilent;
 
 [Code]
 var

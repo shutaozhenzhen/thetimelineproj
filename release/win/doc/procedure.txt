@@ -1,0 +1,65 @@
+Procedure to produce Win install exe's
+======================================
+
+1. Copy version
+----------------
+Copy the contents of the version zip-file to the win\timeline
+directory (after deleteding all old files from the dir).
+
+
+2. Create po files and other
+----------------------------
+Run the command...
+    scons
+from the win\timeline directory to produce po files and doc.
+
+
+3. Edit inno scripts
+--------------------
+Edit the TimelineStd.iss script. (New version number)
+Edit the TimelineExe.iss script. (New version number)
+Check that all languages produced by the previous scons command are
+included in the script.
+
+4. Create Std version
+---------------------
+Run the inno script TimelineStd.iss an create a timeline installation
+in C:\programs\TimelineStd
+
+
+5. Uninstall check
+------------------
+Try to uninstall the just installed program.
+Verify that all files are removed.
+
+
+6. Reinstall TimelineStd
+------------------------
+Paragraph 4. again
+
+
+7. Preapre fro Py2Exe
+----------------------
+Copy the setup.py file from win\inno\setup.py to the source directory
+of the installed Std version, c:\TimelineStd\src\setup.py
+
+
+8. Run Py2Exe
+-------------
+Go to the src directory of the installed Std version and issue the
+following command:
+    python  setup.py  py2exe
+    
+
+9. Create Exe version
+---------------------
+Run the inno script TimelineExe.iss an create a timeline installation
+in C:\programs\TimelineExe
+
+
+10. Final test
+--------------
+As a final test, uninstall the two versions (Std, Exe)
+Run the installation exe's and verify that they install Timeline.
+The exe's are found in the win\bin directory.
+
