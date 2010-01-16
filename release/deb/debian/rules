@@ -64,6 +64,8 @@ install: build
 	cp icons/16.png $(CURDIR)/debian/timeline/usr/share/timeline/icons
 	cp icons/32.png $(CURDIR)/debian/timeline/usr/share/timeline/icons
 	cp icons/48.png $(CURDIR)/debian/timeline/usr/share/timeline/icons
+	cp icons/stickypin.png $(CURDIR)/debian/timeline/usr/share/timeline/icons
+	cp icons/unstickypin.png $(CURDIR)/debian/timeline/usr/share/timeline/icons
 
 	# Install man page
 	cp man/man1/timeline.1 $(CURDIR)/debian/timeline/usr/share/man/man1
