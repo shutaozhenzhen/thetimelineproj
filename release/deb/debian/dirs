@@ -1,7 +1,16 @@
 usr/bin
 usr/lib/timeline
+usr/lib/timeline/timelinelib
+usr/lib/timeline/timelinelib/db
+usr/lib/timeline/timelinelib/db/backends
+usr/lib/timeline/timelinelib/drawing
+usr/lib/timeline/timelinelib/drawing/drawers
+usr/lib/timeline/timelinelib/gui
+usr/lib/timeline/timelinelib/gui/components
+usr/lib/timeline/timelinelib/gui/dialogs
 usr/share/applications
 usr/share/doc/timeline
 usr/share/doc/timeline/help_resources
+usr/share/man/man1
 usr/share/locale
 usr/share/timeline/icons

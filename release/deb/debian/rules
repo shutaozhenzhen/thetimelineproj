@@ -27,7 +27,7 @@ build-stamp: configure-stamp
 	# Add here commands to compile the package.
 	#$(MAKE)
 	#docbook-to-man debian/timeline.sgml > timeline.1
-	scons
+	scons mo
 
 	touch $@
 
@@ -51,10 +51,22 @@ install: build
 	#$(MAKE) DESTDIR=$(CURDIR)/debian/timeline install
 
 	# Put source code in /usr/lib/timeline
-	cp src/*.py $(CURDIR)/debian/timeline/usr/lib/timeline
+	cp timelinelib/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib
+	cp timelinelib/db/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/db
+	cp timelinelib/db/backends/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/db/backends
+	cp timelinelib/drawing/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/drawing
+	cp timelinelib/drawing/drawers/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/drawing/drawers
+	cp timelinelib/gui/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/gui
+	cp timelinelib/gui/components/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/gui/components
+	cp timelinelib/gui/dialogs/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/gui/dialogs
 
 	# Install icons
-	cp icons/*.png $(CURDIR)/debian/timeline/usr/share/timeline/icons
+	cp icons/16.png $(CURDIR)/debian/timeline/usr/share/timeline/icons
+	cp icons/32.png $(CURDIR)/debian/timeline/usr/share/timeline/icons
+	cp icons/48.png $(CURDIR)/debian/timeline/usr/share/timeline/icons
+
+	# Install man page
+	cp man/man1/timeline.1 $(CURDIR)/debian/timeline/usr/share/man/man1
 
 	# Install .desktop file
 	cp debian/extra-files/timeline-desktop $(CURDIR)/debian/timeline/usr/share/applications/timeline.desktop
@@ -69,6 +81,8 @@ install: build
 	cp -r po/pt_BR $(CURDIR)/debian/timeline/usr/share/locale/
 	cp -r po/pt $(CURDIR)/debian/timeline/usr/share/locale/
 	cp -r po/ru $(CURDIR)/debian/timeline/usr/share/locale/
+	cp -r po/ca $(CURDIR)/debian/timeline/usr/share/locale/
+	cp -r po/he $(CURDIR)/debian/timeline/usr/share/locale/
 
 	# Install binary
 	cp debian/extra-files/timeline-bin $(CURDIR)/debian/timeline/usr/bin/timeline
