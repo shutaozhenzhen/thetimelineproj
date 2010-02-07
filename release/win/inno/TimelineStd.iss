@@ -3,18 +3,18 @@
 
 [Setup]
 AppName=Timeline
-AppVerName=Timeline 0.7.0
+AppVerName=Timeline 0.8.0
 AppPublisher=Rickard Lindberg <ricli85@gmail.com>
 AppPublisherURL=http://thetimelineproj.sourceforge.net/
 AppSupportURL=http://thetimelineproj.sourceforge.net/
 AppUpdatesURL=http://thetimelineproj.sourceforge.net/
 DefaultDirName={pf}\Timeline
 DefaultGroupName=Timeline
-LicenseFile=w:\Projekt\Hg\win\timeline\COPYING
-InfoBeforeFile=w:\Projekt\Hg\win\timeline\INSTALL
-InfoAfterFile=w:\Projekt\Hg\win\timeline\README
-OutputDir=w:\Projekt\Hg\win\bin\
-OutputBaseFilename=SetupTimeline070_py25_wx28
+LicenseFile=Y:\Projects\Hg\win\timeline\COPYING
+InfoBeforeFile=Y:\Projects\Hg\win\timeline\INSTALL
+InfoAfterFile=Y:\Projects\Hg\win\timeline\README
+OutputDir=Y:\Projects\Hg\win\bin\
+OutputBaseFilename=SetupTimeline080Std
 Compression=lzma
 SolidCompression=yes
 
@@ -26,18 +26,25 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "w:\Projekt\Hg\win\timeline\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\help_resources\*"; DestDir: "{app}\help_resources"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "w:\Projekt\Hg\win\timeline\src\*.py"; DestDir: "{app}\src"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES\"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES\"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES\"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\po\pt\LC_MESSAGES\*"; DestDir: "{app}\po\pt\LC_MESSAGES\"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\po\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\po\pt_BR\LC_MESSAGES\"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\po\ru\LC_MESSAGES\*"; DestDir: "{app}\po\ru\LC_MESSAGES\"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\timeline\tests\data\*.timeline"; DestDir: "{app}\samples"; Flags: ignoreversion
-Source: "w:\Projekt\Hg\win\inno\run.pyw"; DestDir: "{app}"; Flags: ignoreversion;
-Source: "w:\Projekt\Hg\win\inno\Timeline.ico"; DestDir: "{app}\icons"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\timeline\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\timeline\help_resources\*"; DestDir: "{app}\help_resources";  Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\timeline\timeline.py"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "Y:\Projects\Hg\win\timeline\timelinelib\*.py"; DestDir: "{app}\timelinelib"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "Y:\Projects\Hg\win\Timeline\po\ca\LC_MESSAGES\*"; DestDir: "{app}\po\ca\LC_MESSAGES"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\Timeline\po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\Timeline\po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\Timeline\po\he\LC_MESSAGES\*"; DestDir: "{app}\po\he\LC_MESSAGES"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\Timeline\po\pt\LC_MESSAGES\*"; DestDir: "{app}\po\pt\LC_MESSAGES"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\Timeline\po\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\po\pt_BR\LC_MESSAGES"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\Timeline\po\ru\LC_MESSAGES\*"; DestDir: "{app}\po\ru\LC_MESSAGES"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\Timeline\po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES"; Flags: ignoreversion
+
+Source: "Y:\Projects\Hg\win\timeline\tests\data\*.timeline"; DestDir: "{app}\samples"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\inno\run.pyw"; DestDir: "{app}"; Flags: ignoreversion;
+Source: "Y:\Projects\Hg\win\inno\Timeline.ico"; DestDir: "{app}\icons"; Flags: ignoreversion
+Source: "Y:\Projects\Hg\win\inno\setup.py"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "C:\Program Files\Python25\lib\site-packages\wx-2.8-msw-unicode\wx\MSVCP71.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 [UninstallDelete]
 Type: files; Name: "{app}\src\*.pyc"

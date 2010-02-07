@@ -4,8 +4,8 @@ import py2exe
 setup(
     windows = [
         {
-            "script": "main.py",
-            "icon_resources": [(1, "..\\icons\\timeline.ico")]
+            "script": "timeline.py",
+            "icon_resources": [(1, ".\\icons\\timeline.ico")]
         }
     ],
 )

@@ -3,16 +3,16 @@
 
 [Setup]
 AppName=Timeline
-AppVerName=Timeline 0.7.0
+AppVerName=Timeline 0.8.0
 AppPublisher=Rickard Lindberg <ricli85@gmail.com>
 AppPublisherURL=http://thetimelineproj.sourceforge.net/
 AppSupportURL=http://thetimelineproj.sourceforge.net/
 AppUpdatesURL=http://thetimelineproj.sourceforge.net/
 DefaultDirName={pf}\Timeline
 DefaultGroupName=Timeline
-LicenseFile=w:\Projekt\Hg\win\timeline\COPYING
-OutputDir=w:\Projekt\Hg\win\bin\
-OutputBaseFilename=SetupTimelinePy2Exe
+LicenseFile=Y:\Projects\Hg\win\timeline\COPYING
+OutputDir=Y:\Projects\Hg\win\bin\
+OutputBaseFilename=SetupTimeline080Py2Exe
 Compression=lzma
 SolidCompression=yes
 
@@ -24,24 +24,28 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "c:\Program\Timeline070Std\src\dist\*"; DestDir: "{app}"; Flags: ignoreversion
-Source: "c:\Program\Timeline070Std\help_resources\*"; DestDir: "{app}\help_resources"; Flags: ignoreversion
-Source: "c:\Program\Timeline070Std\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
-Source: "c:\Program\Timeline070Std\samples\*"; DestDir: "{app}\samples"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\dist\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\help_resources\*"; DestDir: "{app}\help_resources"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\samples\*"; DestDir: "{app}\samples"; Flags: ignoreversion
 
-Source: "c:\Program\Timeline070Std\po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES"; Flags: ignoreversion
-Source: "c:\Program\Timeline070Std\po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES"; Flags: ignoreversion
-Source: "c:\Program\Timeline070Std\po\pt\LC_MESSAGES\*"; DestDir: "{app}\po\pt\LC_MESSAGES"; Flags: ignoreversion
-Source: "c:\Program\Timeline070Std\po\ru\LC_MESSAGES\*"; DestDir: "{app}\po\ru\LC_MESSAGES"; Flags: ignoreversion
-Source: "c:\Program\Timeline070Std\po\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\po\pt_BR\LC_MESSAGES"; Flags: ignoreversion
-Source: "c:\Program\Timeline070Std\po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\po\ca\LC_MESSAGES\*"; DestDir: "{app}\po\ca\LC_MESSAGES"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\po\he\LC_MESSAGES\*"; DestDir: "{app}\po\he\LC_MESSAGES"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\po\pt\LC_MESSAGES\*"; DestDir: "{app}\po\pt\LC_MESSAGES"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\po\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\po\pt_BR\LC_MESSAGES"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\po\ru\LC_MESSAGES\*"; DestDir: "{app}\po\ru\LC_MESSAGES"; Flags: ignoreversion
+Source: "c:\Temp\Timeline\po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES"; Flags: ignoreversion
+
+Source: "C:\Program Files\Python25\lib\site-packages\wx-2.8-msw-unicode\wx\MSVCP71.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 [UninstallDelete]
 
 [Icons]
-Name: "{commondesktop}\Timeline"; Filename:"{app}\main.exe"; IconFilename: "{app}\icons\Timeline.ico";Tasks: desktopicon
+Name: "{commondesktop}\Timeline"; Filename:"{app}\timeline.exe"; IconFilename: "{app}\icons\Timeline.ico";Tasks: desktopicon
 
 
 [Run]
-Filename: "{app}\main.exe"; Description: "{cm:LaunchProgram,Timeline}"; Flags: shellexec postinstall skipifsilent;
+Filename: "{app}\timeline.exe"; Description: "{cm:LaunchProgram,Timeline}"; Flags: shellexec postinstall skipifsilent;
 
