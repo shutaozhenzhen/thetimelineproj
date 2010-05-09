@@ -13,6 +13,7 @@ Update instructions:
 
   1. Update changelog
   2. Update rules (if files have changed)
+     1. Check file change with 'hg stat --rev 0.8.0 --rev 0.9.0'
   3. Update dirs (if needed)
   4. Update patches
      1. export QUILT_PATCHES=debian/patches/
