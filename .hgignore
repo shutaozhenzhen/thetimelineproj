@@ -6,6 +6,6 @@ po/timeline.pot
 timelinelib/tags
 *.swp
 *.mo
-devdoc/*.html
-devdoc/api
+HACKING.html
+api/
 icalendar/
