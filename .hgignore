@@ -1,0 +1,11 @@
+syntax: glob
+
+.sconsign.dblite
+po/timeline.pot
+*.pyc
+timelinelib/tags
+*.swp
+*.mo
+HACKING.html
+api/
+icalendar/
