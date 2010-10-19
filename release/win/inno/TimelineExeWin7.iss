@@ -12,8 +12,8 @@ DefaultDirName={pf}\Timeline
 DefaultGroupName=Timeline
 SourceDir=W:\Projects\Hg\win\timeline
 LicenseFile=COPYING
-InfoBeforeFile=W:\Projects\Hg\win\inno\WINSTALL
-OutputDir=W:\Projects\Hg\win\bin\
+InfoBeforeFile=..\inno\WINSTALL
+OutputDir=..\bin\
 OutputBaseFilename=SetupTimeline0110Py2Exe
 Compression=lzma
 SolidCompression=yes
@@ -30,7 +30,6 @@ Name: "startmenu";   Description: "Create a start menu"; GroupDescription: "{cm:
 Source: "C:\Program Files\TimelineStd\dist\*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "help_resources\*"; DestDir: "{app}\help_resources"; Flags: ignoreversion
 Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
-;Source: "tests\data\*.timeline"; DestDir: "{app}\samples"; Flags: ignoreversion
 Source: "C:\Program Files\Python25\lib\site-packages\wx-2.8-msw-unicode\wx\MSVCP71.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Program Files\Python25\lib\site-packages\wx-2.8-msw-unicode\wx\gdiplus.dll"; DestDir: "{app}"; Flags: ignoreversion
 
@@ -47,7 +46,7 @@ Source: "po\ru\LC_MESSAGES\*"; DestDir: "{app}\po\ru\LC_MESSAGES"; Flags: ignore
 Source: "po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\tr\LC_MESSAGES\*"; DestDir: "{app}\po\tr\LC_MESSAGES"; Flags: ignoreversion
 
-Source: "W:\Projects\Hg\win\inno\Timeline.ico"; DestDir: "{app}\icons"; Flags: ignoreversion
+Source: "..\inno\Timeline.ico"; DestDir: "{app}\icons"; Flags: ignoreversion
 
 [UninstallDelete]
 Type: files; Name: "{app}\*.log"

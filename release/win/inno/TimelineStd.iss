@@ -44,7 +44,6 @@ Source: "po\ru\LC_MESSAGES\*"; DestDir: "{app}\po\ru\LC_MESSAGES"; Flags: ignore
 Source: "po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\tr\LC_MESSAGES\*"; DestDir: "{app}\po\tr\LC_MESSAGES"; Flags: ignoreversion
 
-;Source: "..\inno\run.pyw"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "..\inno\Timeline.ico"; DestDir: "{app}\icons"; Flags: ignoreversion
 Source: "..\inno\setup.py"; DestDir: "{app}"; Flags: ignoreversion
 
@@ -70,7 +69,6 @@ Name: "{commondesktop}\Timeline"; Filename:"{app}\run.pyw"; IconFilename: "{app}
 [CustomMessages]
 
 [Run]
-;Filename: "{app}\run.pyw"; Description: "{cm:LaunchProgram,Timeline}"; Flags: shellexec postinstall skipifsilent unchecked;
 Filename: "C:\Program Files\Python25\python.exe"; WorkingDir: "{app}"; Parameters: "setup.py py2exe"; Description: "Start Py2Exe"; Flags: postinstall nowait skipifsilent
 
 [Code]

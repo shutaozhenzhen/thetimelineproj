@@ -1,6 +1,18 @@
 Procedure to produce Win install exe's
 ======================================
 
+
+0. Download the win project from SourceForge
+---------------------------------------------
+hg clone http://thetimelineproj.hg.sourceforge.net:8000/hgroot/thetimelineproj/win
+
+to the win directory.
+
+At the moment the Inno scripts have a absolute reference to the directory
+W:\Projects\Hg\win\timeline where the source is expected to be found.
+
+
+
 1. Copy version
 ----------------
 Copy the contents of the version zip-file to the win\timeline
@@ -104,7 +116,8 @@ Source: "po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES"; Flags: ignore
 Run the inno script TimelineStd.iss and create a timeline installation
 in C:\Program Files\TimelineStd.
 
-The following files are required (timeline not included)
+The following files are required (timeline not included). They are
+under version control in the win project.
 win\inno\run.pyw
 win\inno\setup.py
 win\inno\Timeline.ico
@@ -138,7 +151,7 @@ in C:\Program Files\TimelineExe
 8. Final test
 --------------
 As a final test, uninstall the two versions (Std, Exe)
-Run the installation exe (win\bin\SetupTimelinexyzPy2Exe.exe) and verify 
+Run the installation exe (win\bin\SetupTimelinexyzPy2Exe.exe) and verify
 that it is possible to install Timeline.
 
 
