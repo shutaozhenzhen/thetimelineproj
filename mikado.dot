@@ -1,0 +1,65 @@
+digraph mikado
+{
+    node [shape=box];
+
+    wider_dates [label="Timeline supports wider\ndates (before year 0)"];
+    wider_dates [peripheries=2];
+        wider_dates -> switch_to_wx_time;
+
+    switch_to_wx_time [label="Timeline uses\nwxDateTime class"];
+        switch_to_wx_time -> different_time;
+
+    different_time [label="Timeline supports\ndifferent times "];
+        different_time -> event_editor;
+        different_time -> drawer;
+        different_time -> navigation;
+        different_time -> status_bar;
+
+    event_editor [label="Event editor can\nhandle different times"];
+        event_editor -> show_time;
+        event_editor -> db_has_type_info;
+
+    drawer [label="Drawer can\nhandle different times"];
+        drawer -> db_has_type_info;
+
+    navigation [label="Navigation functions\nare time specific\n(rickard)"];
+        navigation -> db_has_type_info;
+        navigation -> move_nav_to_time_type;
+        navigation -> create_menu_items_dynamically;
+        navigation -> time_period;
+
+    status_bar [label="Statusbar shows\ndifferent times"];
+    status_bar [style=filled,fillcolor="#A2E33F"];
+        status_bar -> get_label;
+        get_label -> time_period_knows_type;
+
+    get_label [label="get_label in TimePeriod\nworks for all time types\n(roger)"];
+    get_label [style=filled,fillcolor="#A2E33F"];
+        get_label -> type_format;
+
+    time_period_knows_type [label="TimePeriod knows about\ntime type used in it\n(roger)"];
+    time_period_knows_type [style=filled,fillcolor="#A2E33F"];
+	time_period_knows_type -> event_constructor;
+
+    // Leaves
+
+    show_time [label="Show time checkbox\ndepends on time type\n(roger)"];
+    show_time [style=filled,fillcolor="#A2E33F"];
+
+    db_has_type_info [label="DB knows the time\ntype used"];
+    db_has_type_info [style=filled,fillcolor="#A2E33F"];
+
+    move_nav_to_time_type [label="Move information about\nnavigation functions to\ntime type class\n(rickard)"];
+    move_nav_to_time_type [style=filled,fillcolor="#A2E33F"];
+
+    create_menu_items_dynamically [label="Create navigation menu\nitems dynamically\n(rickard)"];
+    create_menu_items_dynamically [style=filled,fillcolor="#A2E33F"];
+
+    time_period [label="Move time specific methods\nin TimePeriod to time type\n(rickard)"];
+
+    type_format [label="Time type can\nformat period\n(roger)"];
+    type_format [style=filled,fillcolor="#A2E33F"];
+    
+    event_constructor [label="Event constructor takes DB-argument\n(roger)"];
+    event_constructor [style=filled,fillcolor="#A2E33F"];
+}
