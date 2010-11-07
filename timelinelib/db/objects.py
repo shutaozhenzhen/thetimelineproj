@@ -26,7 +26,7 @@ from datetime import datetime as dt
 from datetime import time
 import calendar
 
-from timelinelib.db.utils import local_to_unicode
+from timelinelib.utils import local_to_unicode
 from timelinelib.drawing.utils import mult_timedelta
 
 
@@ -39,12 +39,13 @@ class Event(object):
     it will set the event id to a unique integer.
     """
 
-    def __init__(self, start_time, end_time, text, category=None):
+    def __init__(self, db, start_time, end_time, text, category=None):
         """
         Create an event.
 
         `start_time` and `end_time` should be of the type datetime.
         """
+        self.db = db
         self.id = None
         self.selected = False
         self.draw_ballon = False
@@ -59,25 +60,29 @@ class Event(object):
 
     def update(self, start_time, end_time, text, category=None):
         """Change the event data."""
-        self.time_period = TimePeriod(start_time, end_time)
+        time_type = self.db.get_time_type()
+        self.time_period = TimePeriod(time_type, start_time, end_time)
         self.text = text
         self.category = category
 
     def update_period(self, start_time, end_time):
         """Change the event period."""
-        self.time_period = TimePeriod(start_time, end_time)
+        self.time_period = TimePeriod(self.db.get_time_type(), start_time, 
+                                      end_time)
         
     def update_start(self, start_time):
         """Change the event data."""
         if start_time <= self.time_period.end_time:
-            self.time_period = TimePeriod(start_time, self.time_period.end_time)
+            self.time_period = TimePeriod(self.db.get_time_type(), start_time, 
+                                          self.time_period.end_time)
             return True
         return False            
 
     def update_end(self, end_time):
         """Change the event data."""
         if end_time >= self.time_period.start_time:
-            self.time_period = TimePeriod(self.time_period.start_time, end_time)
+            self.time_period = TimePeriod(self.db.get_time_type(), 
+                                          self.time_period.start_time, end_time)
             return True
         return False            
 
@@ -125,7 +130,7 @@ class Event(object):
 
     def clone(self):
         # Objects of type datetime are immutable.
-        new_event = Event(self.time_period.start_time, 
+        new_event = Event(self.db, self.time_period.start_time, 
                           self.time_period.end_time, self.text, self.category)
         # Description is immutable
         new_event.set_data("description", self.get_data("description") )
@@ -178,12 +183,14 @@ class TimePeriod(object):
     MIN_TIME = dt(10, 1, 1)
     MAX_TIME = dt(9990, 1, 1)
 
-    def __init__(self, start_time, end_time):
+    def __init__(self, time_type, start_time, end_time):
         """
         Create a time period.
 
-        `start_time` and `end_time` should be of the type datetime.
+        `start_time` and `end_time` should be of a type that can be handled
+        by the time_type object.
         """
+        self.time_type = time_type
         self.update(start_time, end_time)
 
     def __eq__(self, other):
@@ -326,12 +333,6 @@ class TimePeriod(object):
             end = dt(mean.year, mean.month + 1, 1)
         self.update(start, end)
 
-    def fit_day(self):
-        mean = self.mean_time()
-        start = dt(mean.year, mean.month, mean.day)
-        end = start + timedelta(days=1)
-        self.update(start, end)
-
     def move_page_smart(self, direction):
         """Move the period forward (direction positive) or backward (direction
         negative)."""
@@ -416,25 +417,7 @@ class TimePeriod(object):
 
     def get_label(self):
         """Returns a unicode string describing the time period."""
-        def label_with_time(time):
-            return u"%s %s" % (label_without_time(time), time_label(time))
-        def label_without_time(time):
-            return u"%s %s %s" % (time.day, local_to_unicode(calendar.month_abbr[time.month]), time.year)
-        def time_label(time):
-            return time.time().isoformat()[0:5]
-        if self.is_period():
-            if self.has_nonzero_time():
-                label = u"%s to %s" % (label_with_time(self.start_time),
-                                      label_with_time(self.end_time))
-            else:
-                label = u"%s to %s" % (label_without_time(self.start_time),
-                                      label_without_time(self.end_time))
-        else:
-            if self.has_nonzero_time():
-                label = u"%s" % label_with_time(self.start_time)
-            else:
-                label = u"%s" % label_without_time(self.start_time)
-        return label
+        return self.time_type.format_period(self)
 
     def has_nonzero_time(self):
         nonzero_time = (self.start_time.time() != time(0, 0, 0) or
@@ -442,7 +425,7 @@ class TimePeriod(object):
         return nonzero_time
 
 
-def time_period_center(time, length):
+def time_period_center(time_type, time, length):
     """
     TimePeriod factory method.
 
@@ -452,4 +435,4 @@ def time_period_center(time, length):
     half_length = mult_timedelta(length, 0.5)
     start_time = time - half_length
     end_time = time + half_length
-    return TimePeriod(start_time, end_time)
+    return TimePeriod(time_type, start_time, end_time)
