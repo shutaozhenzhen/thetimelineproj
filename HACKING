@@ -1,0 +1,219 @@
+This document contains some information that is useful when working with the
+source code.
+
+Commands
+========
+
+Useful commands to know about:
+
+  * `scons --help` - Show available targets
+  * `python specs/execute.py` - Execute all specifications
+  * `python tests/run.py` - Run all test in test suite
+  * `python tools/*.py` - See comment in tools to learn what they do
+
+Mercurial on Windows
+====================
+
+Windows users should use the Win32Text extension as described here:
+<http://mercurial.selenic.com/wiki/Win32TextExtension>.
+
+Coding Guidelines
+=================
+
+We try to follow the
+[Style Guide for Python Code](http://www.python.org/dev/peps/pep-0008/). Other
+guidelines and exceptions to the standard are listed here.
+
+Multiline docstrings
+--------------------
+
+We prefer to write multiline docstrings like this:
+
+    """
+    One line summary.
+
+    More comments...
+    """
+
+instead of like this:
+
+    """One line summary.
+
+    More comments...
+
+    """
+
+Strings
+-------
+
+We use the " character for strings. Not the ' character.
+
+Order of blocks inside a module (.py file)
+------------------------------------------
+
+All top-level blocks should be separated with two blank lines. Methods inside a
+class should be separated with one blank line.
+
+  * Module docstring
+  * Imports
+  * Global variables
+  * Classes
+    * `__init__`
+    * Public methods
+    * Private methods
+      * `_create_gui` (if it exists)
+      * Event handlers (if they exist)
+      * Others
+  * Functions
+
+Naming convention for private attributes
+----------------------------------------
+
+All methods inside a class that are not supposed to be called outside the class
+should be marked private by prefixing it with one underscore.
+
+All member variables should always be considered private but we don't append
+any underscores. The preferred way to access a class' variable is to write a
+get-method. In general member variables should never be directly accessed
+outside a class.
+
+Naming convention for event handlers
+------------------------------------
+
+`_(object)_on_(name of event)`
+
+Examples:
+
+  * `_btn_close_on_click`
+  * `_window_on_close`
+
+GUI components construction
+---------------------------
+
+All GUI components should construct the GUI in a method called
+`_create_gui`. Should there be any need to call other methods to simplify
+the creation of the GUI the preferred way is to make those methods inner
+methods of `_create_gui`. Example:
+
+    class MainPanel(wx.Panel):
+
+        def __init__(self, parent):
+            wx.Panel.__init__(self, parent)
+            self._create_gui()
+
+        def _create_gui(self):
+            def create_something_complex():
+                ...
+            ...
+            create_something_complex()
+            ...
+
+Handling events
+---------------
+
+All events should be hooked up in `_create_gui` using the `Bind` method
+of the `wx.Window`. ID's should not be used for events. We prefer to pass an
+object instead. Example:
+
+    FileMenu = wx.Menu()
+    item = FileMenu.append(wx.ID_ANY, "&Quit")
+    self.Bind(wx.EVT_MENU, self.OnQuit, item)
+
+ID's can be used for standard ID's.
+
+Documentation supporting this:
+
+  * [wx.EvtHandler API Documentation](http://www.wxpython.org/docs/api/wx.EvtHandler-class.html#Bind)
+  * [wxPython Migration Guide](http://www.wxpython.org/migrationguide.php) (the "Binding events" part)
+
+GUI Guidelines
+==============
+
+Guidelines for how the GUI should look like to conform to as many standards as possible.
+
+Some good resources:
+
+  * [When to use ellipsis after menu items](http://stackoverflow.com/questions/637683/when-to-use-ellipsis-after-menu-items)
+  * [UI Style Guides](http://www.experiencedynamics.com/science-usability/ui-style-guides) (index with links to other style guides)
+
+From the [GNOME guidelines](http://developer.gnome.org/projects/gup/hig/1.0/menus.html):
+
+> Label the menu item with a trailing ellipsis ("...") only if the command
+> requires further input from the user before it can be performed. Do not add
+> an ellipsis to items that only present a confirmation dialog (such as
+> Delete), or that do not require further input (such as Properties,
+> Preferences or About).
+
+Commit messages guidelines
+==========================
+
+  * Try to limit the first line to a 79-character summary
+  * If a ticket was fixed in this commit, include a message like "Fixed ticket #32" (example in r77)
+
+Release Actions
+===============
+
+Describes the actions to make a source release.
+
+Binary releases are created from source releases. Scripts in our other
+repositories (win and deb) are used for those purposes.
+
+Feature freeze
+--------------
+
+When all features for a major version (x.y) have been implemented in main we
+move the development for that version over to stable. In stable we prepare for
+the (x.y.0) release and the continue to do bugfix releases (x.y.1, x.y.2, ..)
+there.
+
+Features for the next version (x.y+1) can continue to be developed in main.
+
+  1. Move main repo to stable repo
+     1. `cd stable`
+     2. `hg pull ../main`
+     3. `hg push`
+  2. Notify developers of repo change
+    1. Send email to thetimelineproj-user@lists.sourceforge.net
+  3. Change versions numbers in main to denote the next version (x.y+1.0)
+     1. README
+     2. man/man1/timeline.1
+     3. version.py
+
+Work on stable
+--------------
+
+  1. Fix bugs
+  2. Import translations from Launchpad
+    1. Request download from here
+       http://translations.launchpad.net/thetimelineproj/trunk/+translations
+    2. Run `python tools/importpo.py /path/to/launchpad-export.tar.gz`
+    3. Commit
+  3. Check that information and version numbers are correct in
+     1. CHANGES
+     2. INSTALL
+     3. README
+     4. man/man1/timeline.1
+     5. version.py
+  4. Run `python tools/release.py check` to find possible errors
+
+Last changes
+------------
+
+  1. Update version.py so that DEV=False
+    1. Commit
+  2. Run `python tools/release.py` (look out for warning messages at the end)
+  3. Try running the unzipped release to make a basic check that it works
+  4. Run `hg tag x.y.z`
+
+After
+-----
+
+  * Create a downloadable release on SourceForge
+  * Create binary packages
+  * Write news on SourceForge
+  * Write news on [Freshmeat](http://freshmeat.net/projects/timeline-2)
+  * Update web page
+  * Close the milestone in Trac
+  * Add the new version in Trac 
+
+<!-- vim: set syntax=mkd: -->
