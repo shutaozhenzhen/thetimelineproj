@@ -6,5 +6,5 @@ Comment=Display and navigate information on a timeline
 Exec=/usr/bin/timeline
 Terminal=false
 Type=Application
-Categories=Net;
+Categories=Graphics;2DGraphics;
 StartupNotify=false
