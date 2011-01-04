@@ -3,18 +3,18 @@
 
 [Setup]
 AppName=Timeline
-AppVerName=Timeline 0.11.0
+AppVerName=Timeline 0.11.1
 AppPublisher=Rickard Lindberg <ricli85@gmail.com>
 AppPublisherURL=http://thetimelineproj.sourceforge.net/
 AppSupportURL=http://thetimelineproj.sourceforge.net/
 AppUpdatesURL=http://thetimelineproj.sourceforge.net/
 DefaultDirName={pf}\Timeline
 DefaultGroupName=Timeline
-SourceDir=W:\Projects\Hg\win\timeline
+SourceDir=..\timeline
 LicenseFile=COPYING
 InfoBeforeFile=..\inno\WINSTALL
 OutputDir=..\bin
-OutputBaseFilename=SetupTimeline0110Std
+OutputBaseFilename=SetupTimeline0111Std
 Compression=lzma
 SolidCompression=yes
 
