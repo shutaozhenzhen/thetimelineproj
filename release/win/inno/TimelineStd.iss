@@ -3,7 +3,18 @@
 
 [Setup]
 AppName=Timeline
-AppVerName=Timeline 0.11.1
+
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;
+; Before running this script ...
+; The two lines below must be uncommented and text changed to reflect
+; the version number of the executable to be built.
+;
+;AppVerName=Timeline 0.12.0
+;OutputBaseFilename=SetupTimeline0120Std
+;
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 AppPublisher=Rickard Lindberg <ricli85@gmail.com>
 AppPublisherURL=http://thetimelineproj.sourceforge.net/
 AppSupportURL=http://thetimelineproj.sourceforge.net/
@@ -14,7 +25,6 @@ SourceDir=..\timeline
 LicenseFile=COPYING
 InfoBeforeFile=..\inno\WINSTALL
 OutputDir=..\bin
-OutputBaseFilename=SetupTimeline0111Std
 Compression=lzma
 SolidCompression=yes
 
@@ -31,6 +41,13 @@ Source: "help_resources\*"; DestDir: "{app}\help_resources";  Flags: ignoreversi
 Source: "timeline.py"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "timelinelib\*.py"; DestDir: "{app}\timelinelib"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "icalendar\*.py"; DestDir: "{app}\icalendar"; Flags: ignoreversion recursesubdirs createallsubdirs
+
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;
+; Before running this script ...
+; You must check to see if there are any more po-files to add
+;
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source: "po\ca\LC_MESSAGES\*"; DestDir: "{app}\po\ca\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES"; Flags: ignoreversion
