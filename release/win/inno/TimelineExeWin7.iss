@@ -3,18 +3,27 @@
 
 [Setup]
 AppName=Timeline
-AppVerName=Timeline 0.11.0
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;
+; Before running this script ...
+; The two lines below must be uncommented and text changed to reflect
+; the version number of the executable to be built.
+;
+AppVerName=Timeline 0.12.0
+OutputBaseFilename=SetupTimeline0120Py2Exe
+;
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 AppPublisher=Rickard Lindberg <ricli85@gmail.com>
 AppPublisherURL=http://thetimelineproj.sourceforge.net/
 AppSupportURL=http://thetimelineproj.sourceforge.net/
 AppUpdatesURL=http://thetimelineproj.sourceforge.net/
 DefaultDirName={pf}\Timeline
 DefaultGroupName=Timeline
-SourceDir=W:\Projects\Hg\win\timeline
+SourceDir=C:\Temp\Hg\win\timeline
 LicenseFile=COPYING
 InfoBeforeFile=..\inno\WINSTALL
 OutputDir=..\bin\
-OutputBaseFilename=SetupTimeline0110Py2Exe
 Compression=lzma
 SolidCompression=yes
 
@@ -33,6 +42,12 @@ Source: "icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
 Source: "C:\Program Files\Python25\lib\site-packages\wx-2.8-msw-unicode\wx\MSVCP71.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Program Files\Python25\lib\site-packages\wx-2.8-msw-unicode\wx\gdiplus.dll"; DestDir: "{app}"; Flags: ignoreversion
 
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;
+; Before running this script ...
+; You must check to see if there are any more po-files to add
+;
+;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source: "po\ca\LC_MESSAGES\*"; DestDir: "{app}\po\ca\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES"; Flags: ignoreversion
