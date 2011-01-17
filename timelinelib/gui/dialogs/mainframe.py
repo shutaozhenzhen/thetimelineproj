@@ -319,6 +319,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self._mnu_help_contact_on_click, help_contact)
         self.Bind(wx.EVT_MENU, self._mnu_help_about_on_click, help_about)
        
+
     def _add_menu_items_to_menu_controller(self):
         self._add_items_requiering_timeline()
         self._collect_items_requiering_timeline_view()
@@ -335,6 +336,7 @@ class MainFrame(wx.Frame):
         ]
         for item in self.mnu_timeline.GetMenuItems():
             items_requiering_timeline.append(item)
+        n = self.mnu_navigate.GetMenuItemCount()
         for item in self.mnu_navigate.GetMenuItems():
             items_requiering_timeline.append(item)
         for item in self._navigation_menu_items:    
