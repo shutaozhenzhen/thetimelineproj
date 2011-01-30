@@ -1,3 +1,9 @@
+timeline (0.12.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Rickard Lindberg <ricli85@gmail.com>  Sun, 30 Jan 2011 11:56:58 +0200
+
 timeline (0.12.0-1) unstable; urgency=low
 
   * New upstream release.
