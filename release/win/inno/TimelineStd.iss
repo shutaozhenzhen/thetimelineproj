@@ -53,8 +53,8 @@ Source: "po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES"; Flags: ignore
 Source: "po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\fr\LC_MESSAGES\*"; DestDir: "{app}\po\fr\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\he\LC_MESSAGES\*"; DestDir: "{app}\po\he\LC_MESSAGES"; Flags: ignoreversion
-Source: "po\It\LC_MESSAGES\*"; DestDir: "{app}\po\It\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\it\LC_MESSAGES\*"; DestDir: "{app}\po\it\LC_MESSAGES"; Flags: ignoreversion
+Source: "po\lt\LC_MESSAGES\*"; DestDir: "{app}\po\lt\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\pl\LC_MESSAGES\*"; DestDir: "{app}\po\pl\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\pt\LC_MESSAGES\*"; DestDir: "{app}\po\pt\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\po\pt_BR\LC_MESSAGES"; Flags: ignoreversion
