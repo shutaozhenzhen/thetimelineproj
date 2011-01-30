@@ -9,8 +9,8 @@ AppName=Timeline
 ; The two lines below must be uncommented and text changed to reflect
 ; the version number of the executable to be built.
 ;
-AppVerName=Timeline 0.12.0
-OutputBaseFilename=SetupTimeline0120Py2Exe
+AppVerName=Timeline 0.12.1
+OutputBaseFilename=SetupTimeline0121Py2Exe
 ;
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -53,6 +53,7 @@ Source: "po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES"; Flags: ignore
 Source: "po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\fr\LC_MESSAGES\*"; DestDir: "{app}\po\fr\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\he\LC_MESSAGES\*"; DestDir: "{app}\po\he\LC_MESSAGES"; Flags: ignoreversion
+Source: "po\It\LC_MESSAGES\*"; DestDir: "{app}\po\It\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\it\LC_MESSAGES\*"; DestDir: "{app}\po\it\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\pl\LC_MESSAGES\*"; DestDir: "{app}\po\pl\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\pt\LC_MESSAGES\*"; DestDir: "{app}\po\pt\LC_MESSAGES"; Flags: ignoreversion
@@ -60,6 +61,7 @@ Source: "po\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\po\pt_BR\LC_MESSAGES"; Flags: 
 Source: "po\ru\LC_MESSAGES\*"; DestDir: "{app}\po\ru\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES"; Flags: ignoreversion
 Source: "po\tr\LC_MESSAGES\*"; DestDir: "{app}\po\tr\LC_MESSAGES"; Flags: ignoreversion
+Source: "po\vi\LC_MESSAGES\*"; DestDir: "{app}\po\vi\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "..\inno\Timeline.ico"; DestDir: "{app}\icons"; Flags: ignoreversion
 

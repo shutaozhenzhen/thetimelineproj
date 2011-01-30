@@ -31,7 +31,8 @@ mkdir %DIR%\bin
 rem Checkout timeline
 echo 3. Checking out Timeline
 mkdir %DIR%\timeline
-hg clone http://thetimelineproj.hg.sourceforge.net:8000/hgroot/thetimelineproj/stable %DIR%\timeline >nul
+rem hg clone http://thetimelineproj.hg.sourceforge.net:8000/hgroot/thetimelineproj/stable %DIR%\timeline >nul
+xcopy c:\temp\timeline %DIR%\timeline /S
 
 rem Run scons command
 echo 4. Running scons command
