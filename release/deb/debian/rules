@@ -60,6 +60,8 @@ install: build
 	cp timelinelib/gui/components/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/gui/components
 	cp timelinelib/gui/dialogs/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/gui/dialogs
 	cp timelinelib/time/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/time
+	cp timelinelib/domain/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/domain
+	cp timelinelib/help/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/help
 
 	# Install icons
 	cp icons/16.png $(CURDIR)/debian/timeline/usr/share/timeline/icons

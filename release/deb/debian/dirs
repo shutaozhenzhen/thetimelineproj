@@ -9,6 +9,8 @@ usr/lib/timeline/timelinelib/gui
 usr/lib/timeline/timelinelib/gui/components
 usr/lib/timeline/timelinelib/gui/dialogs
 usr/lib/timeline/timelinelib/time
+usr/lib/timeline/timelinelib/domain
+usr/lib/timeline/timelinelib/help
 usr/share/applications
 usr/share/doc/timeline
 usr/share/doc/timeline/help_resources
