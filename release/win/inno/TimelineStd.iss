@@ -10,8 +10,8 @@ AppName=Timeline
 ; The two lines below must be uncommented and text changed to reflect
 ; the version number of the executable to be built.
 ;
-AppVerName=Timeline 0.12.1
-OutputBaseFilename=SetupTimeline0121Std
+AppVerName=Timeline 0.13.0
+OutputBaseFilename=SetupTimeline0130Std
 ;
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -41,6 +41,7 @@ Source: "help_resources\*"; DestDir: "{app}\help_resources";  Flags: ignoreversi
 Source: "timeline.py"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "timelinelib\*.py"; DestDir: "{app}\timelinelib"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "icalendar\*.py"; DestDir: "{app}\icalendar"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "pysvg\*.py"; DestDir: "{app}\pysvg"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ;

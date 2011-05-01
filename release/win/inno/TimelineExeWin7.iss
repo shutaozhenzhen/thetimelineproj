@@ -9,8 +9,8 @@ AppName=Timeline
 ; The two lines below must be uncommented and text changed to reflect
 ; the version number of the executable to be built.
 ;
-AppVerName=Timeline 0.12.1
-OutputBaseFilename=SetupTimeline0121Py2Exe
+AppVerName=Timeline 0.13.0
+OutputBaseFilename=SetupTimeline0130Py2Exe
 ;
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

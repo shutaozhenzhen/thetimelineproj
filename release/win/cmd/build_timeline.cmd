@@ -2,7 +2,7 @@
 rem This script builds the Timeline installation executable
 rem for the Windows target os.
 
-set VERSION=0121
+set VERSION=0130
 
 set DIR=C:\Temp\TimelineBuild
 set DEL_SUBDIRS=/S
@@ -19,6 +19,7 @@ IF EXIST %DIR% (
     rd %DEL_SUBDIRS% %QUIET_MODE% %DIR%\bin
     rd %DEL_SUBDIRS% %QUIET_MODE% %DIR%\timeline
     rd %DEL_SUBDIRS% %QUIET_MODE% %DIR%\icalendar
+    rd %DEL_SUBDIRS% %QUIET_MODE% %DIR%\pysvg
 ) ELSE (
     mkdir %DIR%
 )
@@ -53,9 +54,15 @@ copy %DIR%\Inno\paths.py %DIR%\timeline\timelinelib\paths.py
 pause
 
 rem Include iCalendar
-echo 7. Include iCalendar
+echo 7.1. Include iCalendar
 mkdir %DIR%\timeline\icalendar
 copy  %DIR%\icalendar\*.* %DIR%\timeline\icalendar\*.*
+pause
+
+rem Include iCalendar
+echo 7.2. Include pysvg
+mkdir %DIR%\timeline\pysvg
+copy  %DIR%\pysvg\*.* %DIR%\timeline\pysvg\*.*
 pause
 
 rem Update Inno Std script
