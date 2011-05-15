@@ -340,7 +340,70 @@ class DefaultDrawingAlgorithm(Drawer):
         self.dc.SetBrush(self._get_box_brush(event))
         self.dc.SetPen(self._get_box_pen(event))
         self.dc.DrawRectangleRect(rect)
+        if event.fuzzy:
+            self._draw_fuzzy_edges(rect)
+        if event.locked:
+            self._draw_locked_edges(rect)
         self.dc.DestroyClippingRegion()
+
+    def _draw_fuzzy_edges(self, rect):
+        self._draw_fuzzy_start(rect)
+        self._draw_fuzzy_end(rect)
+       
+    def _draw_fuzzy_start(self, rect):
+        x1 = rect.x
+        x2 = rect.x + rect.height / 2
+        y1 = rect.y
+        y2 = rect.y + rect.height / 2
+        y3 = rect.y + rect.height
+        p1 = wx.Point(x1, y1)
+        p2 = wx.Point(x1, y2)
+        p3 = wx.Point(x2, y1)
+        self._draw_fuzzy_polygon(p1, p2 ,p3)
+        p1 = wx.Point(x1, y3)
+        p2 = wx.Point(x1, y2)
+        p3 = wx.Point(x2, y3)
+        self._draw_fuzzy_polygon(p1, p2 ,p3)
+
+    def _draw_fuzzy_end(self, rect):
+        x1 = rect.x + rect.width - rect.height / 2
+        x2 = rect.x + rect.width
+        y1 = rect.y
+        y2 = rect.y + rect.height / 2
+        y3 = rect.y + rect.height
+        p1 = wx.Point(x1, y1)
+        p2 = wx.Point(x2, y1)
+        p3 = wx.Point(x2, y2)
+        self._draw_fuzzy_polygon(p1, p2 ,p3)
+        p1 = wx.Point(x1, y3)
+        p2 = wx.Point(x2, y2)
+        p3 = wx.Point(x2, y3)
+        self._draw_fuzzy_polygon(p1, p2 ,p3)
+
+    def _draw_fuzzy_polygon(self, p1, p2 ,p3):
+        self.dc.SetBrush(wx.WHITE_BRUSH)
+        self.dc.SetPen(wx.WHITE_PEN)
+        self.dc.DrawPolygon((p1, p2, p3))
+
+    def _draw_locked_edges(self, rect):
+        self._draw_locked_start(rect)
+        self._draw_locked_end(rect)
+       
+    def _draw_locked_start(self, rect):
+        x = rect.x
+        y = rect.y + rect.height / 2
+        r = rect.height / 2.5
+        self.dc.SetBrush(wx.WHITE_BRUSH)
+        self.dc.SetPen(wx.WHITE_PEN)
+        self.dc.DrawCircle(x, y, r)
+
+    def _draw_locked_end(self, rect):
+        x = rect.x + rect.width
+        y = rect.y + rect.height / 2
+        r = rect.height / 2.5
+        self.dc.SetBrush(wx.WHITE_BRUSH)
+        self.dc.SetPen(wx.WHITE_PEN)
+        self.dc.DrawCircle(x, y, r)
         
     def _draw_text(self, rect, event):
         # Ensure that we can't draw content outside inner rectangle
@@ -350,6 +413,8 @@ class DefaultDrawingAlgorithm(Drawer):
             # Draw the text (if there is room for it)
             self.dc.SetClippingRect(rect_copy)
             text_x = rect.X + INNER_PADDING
+            if event.fuzzy or event.locked:
+                text_x += rect.Height / 2    
             text_y = rect.Y + INNER_PADDING
             if text_x < INNER_PADDING:
                 text_x = INNER_PADDING
@@ -395,10 +460,10 @@ class DefaultDrawingAlgorithm(Drawer):
         self.dc.SetBrush(wx.TRANSPARENT_BRUSH)
         self.dc.SetPen(pen)
         self.dc.DrawRectangleRect(small_rect)
-        self._draw_handles(rect)
+        self._draw_handles(rect, event)
         self.dc.DestroyClippingRegion()
 
-    def _draw_handles(self, rect):
+    def _draw_handles(self, rect, event):
         SIZE = 4
         big_rect = wx.Rect(rect.X - SIZE, rect.Y - SIZE, rect.Width + 2 * SIZE, rect.Height + 2 * SIZE)
         self.dc.DestroyClippingRegion()
@@ -410,9 +475,11 @@ class DefaultDrawingAlgorithm(Drawer):
         east_rect   = wx.Rect(x + rect.Width - 1, y, SIZE, SIZE)
         self.dc.SetBrush(wx.Brush("BLACK", wx.SOLID))
         self.dc.SetPen(wx.Pen("BLACK", 1, wx.SOLID))
-        self.dc.DrawRectangleRect(east_rect)
-        self.dc.DrawRectangleRect(west_rect)
-        self.dc.DrawRectangleRect(center_rect)
+        if not event.locked:
+            self.dc.DrawRectangleRect(east_rect)
+            self.dc.DrawRectangleRect(west_rect)
+        if not event.locked:
+            self.dc.DrawRectangleRect(center_rect)
 
     def _get_base_color(self, event):
         if event.category:

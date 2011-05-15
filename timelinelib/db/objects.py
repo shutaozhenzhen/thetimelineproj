@@ -30,8 +30,11 @@ class Event(object):
     it will set the event id to a unique integer.
     """
 
-    def __init__(self, db, start_time, end_time, text, category=None):
+    def __init__(self, db, start_time, end_time, text, category=None, 
+                 fuzzy=False, locked=False):
         self.db = db
+        self.fuzzy = fuzzy
+        self.locked = locked
         self.id = None
         self.selected = False
         self.draw_ballon = False
@@ -44,12 +47,17 @@ class Event(object):
     def set_id(self, id):
         self.id = id
 
-    def update(self, start_time, end_time, text, category=None):
+    def update(self, start_time, end_time, text, category=None, fuzzy=None, 
+               locked=None):
         """Change the event data."""
         time_type = self.db.get_time_type()
         self.time_period = TimePeriod(time_type, start_time, end_time)
         self.text = text
         self.category = category
+        if fuzzy is not None:
+            self.fuzzy = fuzzy
+        if locked is not None:
+            self.locked = locked
 
     def update_period(self, start_time, end_time):
         """Change the event period."""
