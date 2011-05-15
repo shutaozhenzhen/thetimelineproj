@@ -744,6 +744,8 @@ class NoOpInputHandler(InputHandler):
         if event_and_rect is None:
             return False
         event, rect = event_and_rect
+        if event.locked:
+            return None
         if not controller.get_view_properties().is_selected(event):
             return False
         center = rect.X + rect.Width / 2
@@ -756,6 +758,8 @@ class NoOpInputHandler(InputHandler):
         if event_and_rect == None:
             return None
         event, rect = event_and_rect
+        if event.locked:
+            return None
         if not controller.get_view_properties().is_selected(event):
             return None
         if abs(x - rect.X) < HIT_REGION_PX_WITH:
@@ -827,6 +831,8 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
         self._move_event(controller)
 
     def _move_event(self, controller):
+        if self.event.locked:
+            return
         current_time = controller.get_time(self.last_x)
         delta = current_time - self.start_drag_time
         new_start = self.event_start_time + delta
@@ -872,6 +878,8 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
         self._resize_event(controller)
 
     def _resize_event(self, controller):
+        if self.event.locked:
+            return
         new_time = controller.get_time(self.last_x)
         new_snapped_time = controller.get_drawer().snap(new_time)
         if self.direction == wx.LEFT:
