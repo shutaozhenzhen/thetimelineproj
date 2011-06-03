@@ -8,15 +8,15 @@ SRC_LIB=$SRC/timelinelib
 SRC_LIB_BACKUP=$SRC/timelinelib_old
 
 (
-./build $SRC $VERSION &&
+./build "$SRC" "$VERSION" &&
 su -c "dpkg -i $DEB_FILE" &&
 rm $DEB_FILE &&
 
-mv $SRC_LIB $SRC_LIB_BACKUP &&
-ln -s $LIB_INSTALL_PATH $SRC_LIB &&
-$SRC/execute-specs.py &&
-rm $SRC_LIB &&
-mv $SRC_LIB_BACKUP $SRC_LIB
+mv "$SRC_LIB" "$SRC_LIB_BACKUP" &&
+ln -s "$LIB_INSTALL_PATH" "$SRC_LIB" &&
+"$SRC/execute-specs.py" &&
+rm "$SRC_LIB" &&
+mv "$SRC_LIB_BACKUP" "$SRC_LIB"
 )
 
 exit_code=$?
