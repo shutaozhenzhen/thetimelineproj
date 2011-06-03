@@ -56,10 +56,11 @@ install: build
 	cp timelinelib/db/backends/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/db/backends
 	cp timelinelib/drawing/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/drawing
 	cp timelinelib/drawing/drawers/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/drawing/drawers
-	cp timelinelib/gui/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/gui
-	cp timelinelib/gui/components/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/gui/components
-	cp timelinelib/gui/dialogs/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/gui/dialogs
+	cp timelinelib/wxgui/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/wxgui
+	cp timelinelib/wxgui/components/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/wxgui/components
+	cp timelinelib/wxgui/dialogs/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/wxgui/dialogs
 	cp timelinelib/time/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/time
+	cp timelinelib/editors/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/editors
 	cp timelinelib/domain/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/domain
 	cp timelinelib/help/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/help
 

@@ -5,10 +5,11 @@ usr/lib/timeline/timelinelib/db
 usr/lib/timeline/timelinelib/db/backends
 usr/lib/timeline/timelinelib/drawing
 usr/lib/timeline/timelinelib/drawing/drawers
-usr/lib/timeline/timelinelib/gui
-usr/lib/timeline/timelinelib/gui/components
-usr/lib/timeline/timelinelib/gui/dialogs
+usr/lib/timeline/timelinelib/wxgui
+usr/lib/timeline/timelinelib/wxgui/components
+usr/lib/timeline/timelinelib/wxgui/dialogs
 usr/lib/timeline/timelinelib/time
+usr/lib/timeline/timelinelib/editors
 usr/lib/timeline/timelinelib/domain
 usr/lib/timeline/timelinelib/help
 usr/share/applications

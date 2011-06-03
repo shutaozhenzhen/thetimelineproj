@@ -1,8 +1,0 @@
-#!/bin/sh
-
-# Change to source code root directory
-cd `dirname $0`
-cd ..
-cd ..
-
-dpkg-buildpackage -B -tc -rfakeroot
