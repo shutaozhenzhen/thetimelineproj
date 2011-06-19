@@ -12,6 +12,7 @@ usr/lib/timeline/timelinelib/time
 usr/lib/timeline/timelinelib/editors
 usr/lib/timeline/timelinelib/domain
 usr/lib/timeline/timelinelib/help
+usr/lib/timeline/timelinelib/view
 usr/share/applications
 usr/share/doc/timeline
 usr/share/doc/timeline/help_resources

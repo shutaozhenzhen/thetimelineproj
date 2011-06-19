@@ -62,6 +62,7 @@ install: build
 	cp timelinelib/time/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/time
 	cp timelinelib/editors/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/editors
 	cp timelinelib/domain/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/domain
+	cp timelinelib/view/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/view
 	cp timelinelib/help/*.py $(CURDIR)/debian/timeline/usr/lib/timeline/timelinelib/help
 
 	# Install icons
