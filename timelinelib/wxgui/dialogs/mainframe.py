@@ -20,14 +20,15 @@ import os.path
 
 import wx
 
-from timelinelib.about import APPLICATION_NAME
-from timelinelib.about import display_about_dialog
 from timelinelib.application import TimelineApplication
-from timelinelib.config import read_config
+from timelinelib.config.dotfile import read_config
+from timelinelib.config.paths import ICONS_DIR
 from timelinelib.db import db_open
 from timelinelib.db.interface import TimelineIOError
 from timelinelib.db.objects import TimePeriod
-from timelinelib.paths import ICONS_DIR
+from timelinelib.export.bitmap import export_to_image
+from timelinelib.meta.about import APPLICATION_NAME
+from timelinelib.meta.about import display_about_dialog
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.cattree import CategoriesTree
 from timelinelib.wxgui.components.hyperlinkbutton import HyperlinkButton
@@ -81,8 +82,6 @@ class MainFrame(wx.Frame):
         self.timeline = None
         self.timeline_wildcard_helper = WildcardHelper(
             _("Timeline files"), ["timeline", "ics"])
-        self.images_wildcard_helper = WildcardHelper(
-            _("Image files"), [("png", wx.BITMAP_TYPE_PNG)])
         self.images_svg_wildcard_helper = WildcardHelper(
             _("SVG files"), ["svg"])
 
@@ -241,22 +240,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self._mnu_file_export_on_click, mnu_file_export)
 
     def _mnu_file_export_on_click(self, evt):
-        self._export_to_image()
-
-    def _export_to_image(self):
-        wildcard = self.images_wildcard_helper.wildcard_string()
-        dialog = wx.FileDialog(self, message=_("Export to Image"),
-                               wildcard=wildcard, style=wx.FD_SAVE)
-        if dialog.ShowModal() == wx.ID_OK:
-            path = self.images_wildcard_helper.get_path(dialog)
-            overwrite_question = _("File '%s' exists. Overwrite?") % path
-            if (not os.path.exists(path) or
-                _ask_question(overwrite_question, self) == wx.YES):
-                bitmap = self.main_panel.drawing_area.get_current_image()
-                image = wx.ImageFromBitmap(bitmap)
-                type = self.images_wildcard_helper.get_extension_data(path)
-                image.SaveFile(path, type)
-        dialog.Destroy()
+        export_to_image(self)
 
     def _create_file_export_to_svg_menu_item(self, file_menu):
         mnu_file_export_svg = file_menu.Append(
@@ -271,7 +255,7 @@ class MainFrame(wx.Frame):
         if not self._has_pysvg_module():
             _display_error_message(_("Could not find pysvg Python package. It is needed to export to SVG. See the Timeline website or the INSTALL file for instructions how to install it."), self)
             return
-        import timelinelib.svgexport as svgexport
+        import timelinelib.export.svg as svgexport
         wildcard = self.images_svg_wildcard_helper.wildcard_string()
         dialog = wx.FileDialog(self, message=_("Export to SVG"),
                                wildcard=wildcard, style=wx.FD_SAVE)

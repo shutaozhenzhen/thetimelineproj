@@ -16,15 +16,27 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-"""
-Paths to resources.
-"""
+VERSION = (0, 16, 0)
+DEV = True
 
 
-import os.path
+def get_version():
+    if DEV:
+        return ("%s.%s.%sdev" % VERSION) + DEV_REVISION
+    return "%s.%s.%s" % VERSION
 
 
-_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-ICONS_DIR = os.path.join(_ROOT, "icons")
-LOCALE_DIR = os.path.join(_ROOT, "po")
-HELP_RESOURCES_DIR = os.path.join(_ROOT, "help_resources")
+def _get_revision():
+    try:
+        import os
+        from subprocess import Popen, PIPE
+        root = os.path.join(os.path.dirname(__file__), "..", "..")
+        cmd = ["hg", "id", "-i", "-R", root]
+        rev = Popen(cmd, stdout=PIPE).communicate()[0].strip()
+        return rev
+    except:
+        return "0"
+
+
+if DEV:
+    DEV_REVISION = _get_revision()
