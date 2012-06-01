@@ -23,6 +23,7 @@ import os.path
 import shutil
 from datetime import datetime
 import unittest
+import wx
 
 from timelinelib.db.backends.xmlfile import XmlTimeline
 from timelinelib.db import db_open
@@ -42,6 +43,24 @@ class XmlTimelineSpec(unittest.TestCase):
         timeline = XmlTimeline(None, load=False, use_wide_date_range=True)
         self.assertTrue(isinstance(timeline.time_type, WxTimeType))
 
+    def testAlertStringParsingGivesAlertData(self):
+        timeline = XmlTimeline(None, load=False, use_wide_date_range=True)
+        time, text = timeline._parse_alert_string("2012-11-11 00:00:00;Now is the time")
+        self.assertEqual("Now is the time", text)
+        self.assertEqual("2012-11-11 00:00:00", "%s" % timeline.time_type.time_string(time))
+
+    def testAlertDataConversionGivesAlertString(self):
+        timeline = XmlTimeline(None, load=False, use_wide_date_range=False)
+        alert = (datetime(2010, 8, 31, 0, 0, 0), "Hoho")
+        alert_text = timeline.alert_string(alert)
+        self.assertEqual("2010-8-31 0:0:0;Hoho", alert_text)
+        
+    def testWxTimeAlertDataConversionGivesAlertString(self):
+        timeline = XmlTimeline(None, load=False, use_wide_date_range=True)
+        alert = (wx.DateTimeFromDMY(30, 8, 2010, 0, 0, 0), "Hoho")
+        alert_text = timeline.alert_string(alert)
+        self.assertEqual("2010-09-30 00:00:00;Hoho", alert_text)
+        
     def testDisplayedPeriodTagNotWrittenIfNotSet(self):
         # Create a new db and add one event
         db = db_open(self.tmp_path)
@@ -93,6 +112,7 @@ class XmlTimelineSpec(unittest.TestCase):
         ev1 = Event(db.get_time_type(), datetime(2010, 3, 3), datetime(2010, 3, 6),
                     "Event 1", cat1)
         ev1.set_data("description", u"The <b>first</b> event åäö.")
+        ev1.set_data("alert", (datetime(2012, 12, 31), "Time to go"))
         db.save_event(ev1)
         # Create view properties
         vp = ViewProperties()
@@ -112,6 +132,7 @@ class XmlTimelineSpec(unittest.TestCase):
         self.assertEquals(event.time_period.end_time, datetime(2010, 3, 6))
         self.assertEquals(event.category.name, "Category 1")
         self.assertEquals(event.get_data("description"), u"The <b>first</b> event åäö.")
+        self.assertEquals(event.get_data("alert"), (datetime(2012, 12, 31), "Time to go"))
         self.assertEquals(event.get_data("icon"), None)
         # Assert that correct view properties are loaded (category visibility
         # checked later)
