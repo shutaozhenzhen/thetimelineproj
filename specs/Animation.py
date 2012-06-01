@@ -16,27 +16,22 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-VERSION = (0, 17, 0)
-DEV = True
+import unittest
+
+from timelinelib.play.playcontroller import Animation
+from timelinelib.db.backends.memory import MemoryDB
+from specs.utils import py_period
 
 
-def get_version():
-    if DEV:
-        return ("%s.%s.%sdev" % VERSION) + DEV_REVISION
-    return "%s.%s.%s" % VERSION
+class AnimationTest(unittest.TestCase):
 
+    def setUp(self):
+        self.timeline = MemoryDB()
 
-def _get_revision():
-    try:
-        import os
-        from subprocess import Popen, PIPE
-        root = os.path.join(os.path.dirname(__file__), "..", "..")
-        cmd = ["hg", "id", "-i", "-R", root]
-        rev = Popen(cmd, stdout=PIPE).communicate()[0].strip()
-        return rev
-    except:
-        return "0"
-
-
-if DEV:
-    DEV_REVISION = _get_revision()
+    def test_can_move_period_without_zooming(self):
+        a = Animation(self.timeline,
+                py_period("1 Jan 2010", "2 Jan 2010"),
+                2,
+                py_period("3 Jan 2010", "4 Jan 2010"))
+        a.change_current_period(1)
+        self.assertEquals(a.current_period, py_period("2 Jan 2010", "3 Jan 2010"))

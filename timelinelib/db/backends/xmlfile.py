@@ -182,6 +182,8 @@ class XmlTimeline(MemoryDB):
                         parse_fn_store("tmp_category")),
                     Tag("description", OPTIONAL,
                         parse_fn_store("tmp_description")),
+                    Tag("alert", OPTIONAL,
+                        parse_fn_store("tmp_alert")),
                     Tag("icon", OPTIONAL,
                         parse_fn_store("tmp_icon")),
                 ])
@@ -229,6 +231,8 @@ class XmlTimeline(MemoryDB):
             if category is None:
                 raise ParseException("Category '%s' not found." % category_text)
         description = tmp_dict.pop("tmp_description", None)
+        alert_string = tmp_dict.pop("tmp_alert", None)
+        alert = self._parse_alert_string(alert_string)
         icon_text = tmp_dict.pop("tmp_icon", None)
         if icon_text is None:
             icon = None
@@ -244,8 +248,26 @@ class XmlTimeline(MemoryDB):
             event = Event(self.get_time_type(), start, end, text, category, fuzzy, locked, ends_today)
         event.set_data("description", description)
         event.set_data("icon", icon)
+        event.set_data("alert", alert)
         self.save_event(event)
 
+    def alert_string(self, alert):
+        time, text = alert
+        time_string = self._time_string(time)
+        return "%s;%s" % (time_string, text)
+    
+    def _parse_alert_string(self, alert_string):
+        if alert_string is not None:
+            try:
+                time_string, alert_text = alert_string.split(";", 1)
+                alert_time = self._parse_time(time_string)
+                alert = (alert_time, alert_text)
+            except:
+                raise ParseException("Could not parse alert from '%s'." % alert_string)
+        else:
+            alert = None
+        return alert
+        
     def _is_container_event(self, text):
         return text.startswith("[")
 
@@ -357,6 +379,10 @@ class XmlTimeline(MemoryDB):
         if evt.get_data("description") is not None:
             write_simple_tag(file, "description", evt.get_data("description"),
                              INDENT3)
+        alert = evt.get_data("alert")    
+        if alert is not None:
+            write_simple_tag(file, "alert", self.alert_string(alert),
+                             INDENT3)
         if evt.get_data("icon") is not None:
             icon_text = icon_string(evt.get_data("icon"))
             write_simple_tag(file, "icon", icon_text, INDENT3)
@@ -433,7 +459,6 @@ def parse_color(color_string):
     else:
         raise ParseException("Color not on correct format, color string = '%s'"
                              % color_string)
-
 
 def icon_string(bitmap):
     output = StringIO.StringIO()
