@@ -83,6 +83,12 @@ class MainFrame(wx.Frame):
 
     def week_starts_on_monday(self):
         return self.config.week_start == "monday"
+
+    def ok_to_edit(self):
+        return self.controller.ok_to_edit()
+        
+    def edit_ends(self):
+        self.controller.edit_ends()
         
     def _create_and_start_timer(self):
         self.alert_dialog_open = False
@@ -326,9 +332,11 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self._mnu_edit_preferences_on_click, preferences_item)
 
     def _mnu_edit_preferences_on_click(self, evt):
-        dialog = PreferencesDialog(self, self.config)
-        dialog.ShowModal()
-        dialog.Destroy()
+        if self.ok_to_edit():
+            dialog = PreferencesDialog(self, self.config)
+            dialog.ShowModal()
+            dialog.Destroy()
+            self.edit_ends()
 
     def _create_view_menu(self, main_menu_bar):
         view_menu = wx.Menu()
@@ -379,6 +387,7 @@ class MainFrame(wx.Frame):
         self._create_timeline_duplicate_event_menu_item(timeline_menu)
         self._create_timeline_measure_distance_between_events_menu_item(timeline_menu)
         self._create_timeline_edit_categories(timeline_menu)
+        self._create_timeline_set_readonly(timeline_menu)
         main_menu_bar.Append(timeline_menu, _("&Timeline"))
 
     def _create_timeline_create_event_menu_item(self, timeline_menu):
@@ -388,8 +397,10 @@ class MainFrame(wx.Frame):
         self.menu_controller.add_menu_requiring_writable_timeline(create_event_item)
 
     def _mnu_timeline_create_event_on_click(self, evt):
-        open_create_event_editor(
-            self, self.config, self.timeline, self.handle_db_error)
+        if self.ok_to_edit():
+            open_create_event_editor(
+                self, self.config, self.timeline, self.handle_db_error)
+            self.edit_ends()
 
     def _create_timeline_duplicate_event_menu_item(self, timeline_menu):
         self.mnu_timeline_duplicate_event = timeline_menu.Append(
@@ -406,11 +417,13 @@ class MainFrame(wx.Frame):
         except IndexError, e:
             # No event selected so do nothing!
             return
-        open_duplicate_event_dialog_for_event(
-            self,
-            self.timeline,
-            self.handle_db_error,
-            event)
+        if self.ok_to_edit():
+            open_duplicate_event_dialog_for_event(
+                self,
+                self.timeline,
+                self.handle_db_error,
+                event)
+            self.edit_ends()
 
     def _create_timeline_measure_distance_between_events_menu_item(self, timeline_menu):
         self.mnu_timeline_measure_distance_between_events = timeline_menu.Append(
@@ -466,7 +479,22 @@ class MainFrame(wx.Frame):
         self.menu_controller.add_menu_requiring_writable_timeline(edit_categories_item)
 
     def _mnu_timeline_edit_categories_on_click(self, evt):
-        self.edit_categories()
+        if self.ok_to_edit():
+            self.edit_categories()
+            self.edit_ends()
+
+    def _create_timeline_set_readonly(self, timeline_menu):
+        item = timeline_menu.Append(
+            wx.ID_ANY, _("Read Only"), _("Read Only"))
+        self.Bind(wx.EVT_MENU, self._mnu_timeline_set_readonly_on_click, item)
+        self.menu_controller.add_menu_requiring_writable_timeline(item)
+
+    def _mnu_timeline_set_readonly_on_click(self, evt):
+        self.controller.set_timeline_in_readonly_mode()
+        
+    def timeline_is_readonly(self):
+        self.status_bar_adapter.set_read_only_text(_("read-only"))
+        self.enable_disable_menus()
 
     def edit_categories(self):
         def create_categories_editor():
@@ -1009,7 +1037,7 @@ class TimelinePanel(wx.Panel):
             self.sidebar_width = self.splitter.GetSashPosition()
 
     def _create_sidebar(self):
-        self.sidebar = Sidebar(self.splitter, self.handle_db_error)
+        self.sidebar = Sidebar(self.main_frame, self.splitter, self.handle_db_error)
 
     def _create_drawing_area(self):
         self.drawing_area = DrawingAreaPanel(
@@ -1085,7 +1113,8 @@ class Sidebar(wx.Panel):
     Currently only shows the categories with visibility check boxes.
     """
 
-    def __init__(self, parent, handle_db_error):
+    def __init__(self, main_frame, parent, handle_db_error):
+        self.main_frame = main_frame
         wx.Panel.__init__(self, parent, style=wx.BORDER_NONE)
         self._create_gui(handle_db_error)
 
@@ -1095,6 +1124,12 @@ class Sidebar(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.cattree, flag=wx.GROW, proportion=1)
         self.SetSizer(sizer)
+        
+    def ok_to_edit(self):
+        return self.main_frame.ok_to_edit()
+
+    def edit_ends(self):
+        return self.main_frame.edit_ends()
 
 
 class StatusBarAdapter(object):
