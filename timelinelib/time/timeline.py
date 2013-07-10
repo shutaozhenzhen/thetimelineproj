@@ -16,8 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.time.numtime import NumTimeType
-from timelinelib.time.pytime import PyTimeType
-from timelinelib.time.wxtime import try_to_create_wx_date_time_from_dmy
-from timelinelib.time.wxtime import WxTimeType
-from timelinelib.time.gregoriantime import GregorianTimeType
+class TimelineDateTime(object):
+
+    def __init__(self, julian_day, seconds):
+        self.julian_day = julian_day
