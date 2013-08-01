@@ -120,7 +120,7 @@ The timeline is divided in two areas with a horizontal adjustable divider line. 
     help_system.install_page(
         id="events",
         header=_("Events"),
-        related_pages=["categories"],
+        related_pages=["event_properties", "categories"],
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
         # Just write them as they are.
@@ -128,6 +128,32 @@ The timeline is divided in two areas with a horizontal adjustable divider line. 
         # Dashes produce bullet lists. DON'T remove them.
         body=_("""
 An event is the basic data type for representing information on the timeline.  It must specify where on the timeline is should be placed (when that event happened). This can be either a specific point in time or a period.
+"""))
+
+    help_system.install_page(
+        id="event_properties",
+        header=_("Event Properties"),
+        related_pages=["events"],
+        # TRANSLATORS: This text uses special markup.
+        # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
+        # Just write them as they are.
+        # Stars produce emphasized text. DON'T remove them.
+        # Dashes produce bullet lists. DON'T remove them.
+        body=_("""
+For an event the following properties can be defined.
+
+ - Start Date and Time.
+ - End Date and Time (if period event).
+ - Text - The label displayed for an event.
+ - Category - A way to group events together.
+ - Container - Another way to group events together.
+ - Fuzzy - Draw start and end of event fuzzy, to indicate that exact times are unknown.
+ - Locked - Start- and End-points can't be changed.
+ - Ends Today - The End-point is always set to current date.
+ - Description - Event description that is shown i the balloon.
+ - Icon - Image icon shown in balloon.
+ - Alert - An alert dialog is opened at the specified alert time.
+ - Hyperlink - A hyperlink that can be reached in the event context menu.
 """))
 
     help_system.install_page(

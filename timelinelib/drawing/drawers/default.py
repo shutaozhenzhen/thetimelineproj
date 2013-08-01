@@ -42,14 +42,33 @@ BLACK = (0, 0, 0)
 class DefaultDrawingAlgorithm(Drawer):
 
     def __init__(self):
+        self.font_size = 8
         self._create_fonts()
         self._create_pens()
         self._create_brushes()
         self.fast_draw = False
+        self.outer_padding = OUTER_PADDING
 
+    def increment_font_size(self, step=2):
+        self.font_size += step
+        self.small_text_font = get_default_font(self.font_size)
+        self._adjust_outer_padding_to_font_size()
+        
+    def decrement_font_size(self, step=2):
+        if self.font_size > step:
+            self.font_size -= step
+            self.small_text_font = get_default_font(self.font_size)
+            self._adjust_outer_padding_to_font_size()
+
+    def _adjust_outer_padding_to_font_size(self):
+        if self.font_size < 8:
+            self.outer_padding = OUTER_PADDING * self.font_size / 8
+        else:
+            self.outer_padding = OUTER_PADDING
+        
     def _create_fonts(self):
         self.header_font = get_default_font(12, True)
-        self.small_text_font = get_default_font(8)
+        self.small_text_font = get_default_font(self.font_size)
         self.small_text_font_bold = get_default_font(8, True)
 
     def _create_pens(self):
@@ -91,7 +110,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _create_scene(self, size, db, view_properties, get_text_extent_fn):
         scene = TimelineScene(size, db, view_properties, get_text_extent_fn, self.config)
-        scene.set_outer_padding(OUTER_PADDING)
+        scene.set_outer_padding(self.outer_padding)
         scene.set_inner_padding(INNER_PADDING)
         scene.set_period_threshold(PERIOD_THRESHOLD)
         scene.set_data_indicator_size(DATA_INDICATOR_SIZE)
@@ -193,7 +212,10 @@ class DefaultDrawingAlgorithm(Drawer):
         return self.scene.get_time(x)
 
     def get_hidden_event_count(self):
-        return self.scene.get_hidden_event_count()
+        try:
+            return self.scene.get_hidden_event_count()
+        except AttributeError:
+            return 0
 
     def _draw_period_selection(self, view_properties):
         if not view_properties.period_selection:
@@ -390,8 +412,29 @@ class DefaultDrawingAlgorithm(Drawer):
             self.dc.DrawText(cat.name, OUTER_PADDING + INNER_PADDING, cur_y)
             cur_y = cur_y + item_height + INNER_PADDING
 
+    def _scroll_events_vertically(self, view_properties):
+        collection = []
+        amount = view_properties.hscroll_amount
+        for (event, rect) in self.scene.event_data:
+            if rect.Y < self.scene.divider_y:
+                self._scroll_point_events(amount, event, rect, collection)
+            else:
+                self._scroll_period_events(amount, event, rect, collection)
+        self.scene.event_data = collection
+        
+    def _scroll_point_events(self, amount, event, rect, collection):
+        rect.Y += amount
+        if rect.Y < self.scene.divider_y - rect.height:
+            collection.append((event, rect))
+
+    def _scroll_period_events(self, amount, event, rect, collection):
+        rect.Y -= amount
+        if rect.Y > self.scene.divider_y + rect.height:
+            collection.append((event, rect))
+        
     def _draw_events(self, view_properties):
         """Draw all event boxes and the text inside them."""
+        self._scroll_events_vertically(view_properties)
         self.dc.SetFont(self.small_text_font)
         self.dc.DestroyClippingRegion()
         self._draw_lines_to_non_period_events(view_properties)
