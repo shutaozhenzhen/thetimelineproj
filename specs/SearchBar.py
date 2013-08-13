@@ -77,11 +77,17 @@ class SearchBarTestCase(unittest.TestCase):
         self.assertTrue(self.controller.result_index == 0)
         self.controller.prev()
         self.assertTrue(self.controller.result_index == 0)
-        
+
+    def test_searching_for_same_term_twice_goes_to_next_match(self):
+        self.view.get_value.return_value = "three"
+        self.controller.search()
+        self.controller.search()
+        self.assertEqual(self.controller.result_index, 1)
+
     def test_no_drawing_area_panel_hides_search_bar(self):
         self.controller.set_drawing_area_panel(None)
         self.view.Enable.assert_called_with(False)
-        
+
     def setUp(self):
         self.view = Mock(SearchBar)
         self.drawing_area_panel = DrawingAreaPanel()
@@ -90,15 +96,15 @@ class SearchBarTestCase(unittest.TestCase):
 
 
 class DrawingAreaPanel():
-    
+
     def __init__(self):
         self.navigate = False
-        
+
     def get_filtered_events(self, search):
         if search == "":
             return []
         elif search == "one":
-            return [1,]
+            return [1]
         elif search == "two":
             return [1, 2]
         elif search == "three":
