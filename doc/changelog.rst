@@ -1,5 +1,9 @@
 Changelog
 =========
+Version 1.1.0
+-------------
+
+**Planned: Released on 30 December 2013.**
 
 Version 1.0.1
 -------------
