@@ -46,14 +46,14 @@ class ViewProperties(object):
 
     def get_displayed_period(self):
         return self.displayed_period
-    
+
     def filter_events(self, events):
         if self.view_cats_individually:
-            return self.filter_events_individually(events)
+            return self._filter_events_individually(events)
         else:
-            return self.filter_events_with_all_parents_selected(events)
+            return self._filter_events_with_all_parents_selected(events)
 
-    def filter_events_with_all_parents_selected(self, events):
+    def _filter_events_with_all_parents_selected(self, events):
         def category_visible(e, cat):
             if cat is None:
                 return True
@@ -73,7 +73,7 @@ class ViewProperties(object):
                 return False
         return [e for e in events if category_visible(e, e.category)]
 
-    def filter_events_individually(self, events):
+    def _filter_events_individually(self, events):
         def category_visible(e, cat):
             if cat is None:
                 return True
@@ -127,9 +127,22 @@ class ViewProperties(object):
     def category_visible(self, category):
         return not category.id in self.hidden_categories
 
+    def category_actually_visible(self, category):
+        if self.view_cats_individually:
+            return self.category_visible(category)
+        else:
+            return self._is_category_recursively_visible(category)
+
+    def _is_category_recursively_visible(self, category):
+        if category is None:
+            return True
+        elif self.category_visible(category) == True:
+            return self._is_category_recursively_visible(category.parent)
+        else:
+            return False
+
     def set_category_visible(self, category, is_visible=True):
         if is_visible == True and category.id in self.hidden_categories:
             self.hidden_categories.remove(category.id)
         elif is_visible == False and not category.id in self.hidden_categories:
             self.hidden_categories.append(category.id)
-
