@@ -1,6 +1,15 @@
 Changelog
 =========
 
+Version 1.1.0
+-------------
+
+**Planned: Released on 30 December 2013.**
+
+Bug fixes:
+
+* Move event vertically, can be done for events very close to each other (with different y-coordinates)
+
 Maybe be released: 1.0.2
 ------------------------
 
