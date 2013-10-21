@@ -46,52 +46,16 @@ class ViewProperties(object):
 
     def get_displayed_period(self):
         return self.displayed_period
-    
+
     def filter_events(self, events):
-        if self.view_cats_individually:
-            return self.filter_events_individually(events)
+        return [event for event in events if self._is_event_visible(event)]
+
+    def _is_event_visible(self, event):
+        if event.is_subevent():
+            return (self.is_event_with_category_visible(event.category) and
+                    self.is_event_with_category_visible(event.container.category))
         else:
-            return self.filter_events_with_all_parents_selected(events)
-
-    def filter_events_with_all_parents_selected(self, events):
-        def category_visible(e, cat):
-            if cat is None:
-                return True
-            elif e.is_subevent():
-                container_visible = category_visible(e.container,
-                                                     e.container.category)
-                if container_visible:
-                    if self.category_visible(cat) == True:
-                        return category_visible(e, cat.parent)
-                    else:
-                        return False
-                else:
-                    return False
-            elif self.category_visible(cat) == True:
-                return category_visible(e, cat.parent)
-            else:
-                return False
-        return [e for e in events if category_visible(e, e.category)]
-
-    def filter_events_individually(self, events):
-        def category_visible(e, cat):
-            if cat is None:
-                return True
-            elif e.is_subevent():
-                container_visible = category_visible(e.container,
-                                                     e.container.category)
-                if container_visible:
-                    if self.category_visible(cat) == True:
-                        return True
-                    else:
-                        return False
-                else:
-                    return False
-            elif self.category_visible(cat) == True:
-                return True
-            else:
-                return False
-        return [e for e in events if category_visible(e, e.category)]
+            return self.is_event_with_category_visible(event.category)
 
     def is_selected(self, event):
         return event.id in self.selected_event_ids
@@ -124,12 +88,28 @@ class ViewProperties(object):
     def get_selected_event_ids(self):
         return self.selected_event_ids[:]
 
-    def category_visible(self, category):
-        return not category.id in self.hidden_categories
+    def is_category_visible(self, category):
+        return category.id not in self.hidden_categories
+
+    def is_event_with_category_visible(self, category):
+        if category is None:
+            return True
+        elif self.view_cats_individually:
+            return self.is_category_visible(category)
+        else:
+            return self._is_category_recursively_visible(category)
+
+    def _is_category_recursively_visible(self, category):
+        if self.is_category_visible(category):
+            if category.parent is None:
+                return True
+            else:
+                return self._is_category_recursively_visible(category.parent)
+        else:
+            return False
 
     def set_category_visible(self, category, is_visible=True):
         if is_visible == True and category.id in self.hidden_categories:
             self.hidden_categories.remove(category.id)
         elif is_visible == False and not category.id in self.hidden_categories:
             self.hidden_categories.append(category.id)
-

@@ -81,8 +81,6 @@ CONTENT_0100 = u"""
 
 class DbOpenSpec(TmpDirTestCase):
 
-    IO = True
-
     def test_raises_error_when_reading_non_xml_file(self):
         self.writeContentToTmpFile(CONTENT_010)
         self.assertRaises(TimelineIOError, db_open, self.tmp_path)
@@ -118,15 +116,15 @@ class DbOpenSpec(TmpDirTestCase):
             self.assertTrue(cat.has_id())
             if cat.name == "Category 1":
                 self.assertEqual(cat.color, (188, 129, 224))
-                self.assertTrue(vp.category_visible(cat))
+                self.assertTrue(vp.is_category_visible(cat))
                 self.assertEqual(cat.parent, None)
             elif cat.name == "Category 2":
                 self.assertEqual(cat.color, (255, 165, 0))
-                self.assertTrue(vp.category_visible(cat))
+                self.assertTrue(vp.is_category_visible(cat))
                 self.assertEqual(cat.parent.name, "Category 1")
             elif cat.name == "Category 3":
                 self.assertEqual(cat.color, (173, 216, 230))
-                self.assertFalse(vp.category_visible(cat))
+                self.assertFalse(vp.is_category_visible(cat))
                 self.assertEqual(cat.parent.name, "Category 2")
             else:
                 self.fail("Unknown category.")
