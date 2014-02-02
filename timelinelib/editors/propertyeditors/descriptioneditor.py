@@ -18,31 +18,53 @@
 
 import wx
 
+from timelinelib.editors.propertyeditors.baseeditor import BaseEditor
 
-class DescriptionEditor(wx.TextCtrl):
 
-    def __init__(self, parent, editor):
-        wx.TextCtrl.__init__(self, parent, style=wx.TE_MULTILINE)
+class DescriptionEditorGuiCreator(wx.Panel):
+    
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent)
+            
+    def create_sizer(self):
+        return wx.BoxSizer()
+        
+    def create_controls(self):
+        text = self._create_text_control()
+        return (text,)
+    
+    def put_controls_in_sizer(self, sizer, controls):
+        text, = controls 
+        sizer.Add(text, 1, wx.ALL|wx.EXPAND, 0)
+        
+    def _create_text_control(self):
+        self.data = wx.TextCtrl(self, style=wx.TE_MULTILINE)
         self.Bind(wx.EVT_CHAR, self._on_char)
-
-    def get_data(self):
-        description = self.GetValue().strip()
-        if description != "":
-            return description
-        return None
-
-    def set_data(self, data):
-        self.SetValue(data)
-
-    def clear_data(self):
-        self.SetValue("")
-
+        return self.data
+        
     def _on_char(self, evt):
         if self._ctrl_a(evt):
             self.SelectAll()
         else: 
             evt.Skip()
-        
+            
     def _ctrl_a(self, evt):
         KEY_CODE_A = 1
         return evt.ControlDown() and evt.KeyCode == KEY_CODE_A
+
+                    
+class DescriptionEditor(BaseEditor, DescriptionEditorGuiCreator):
+
+    def __init__(self, parent, editor):
+        BaseEditor.__init__(self, parent, editor)
+        DescriptionEditorGuiCreator.__init__(self, parent)
+        self.create_gui()
+
+    def get_data(self):
+        description = self.data.GetValue().strip()
+        if description != "":
+            return description
+        return None
+
+    def clear_data(self):
+        self.SetValue("")
