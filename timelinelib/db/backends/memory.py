@@ -68,12 +68,15 @@ class MemoryDB(Observable):
     def get_time_type(self):
         return self.time_type
 
+    def set_time_type(self, time_type):
+        self.time_type = time_type
+
     def is_read_only(self):
         return self.readonly
 
     def set_readonly(self):
         self.readonly = True
-        
+
     def supported_event_data(self):
         return ["description", "icon", "alert", "hyperlink", "progress"]
 
@@ -353,6 +356,46 @@ class MemoryDB(Observable):
             if cat not in self.categories:
                 raise ValueError("Category '%s' not in db." % cat.name)
             self.hidden_categories.append(cat)
+
+    def import_db(self, db):
+        if self.get_time_type() != db.get_time_type():
+            raise Exception("Import failed: time type does not match")
+        self.disable_save()
+        self._import_events(db, self._import_categories(db))
+        self.enable_save()
+
+    def _import_categories(self, db):
+        category_map = {}
+        for category in db.get_categories():
+            cloned_category = category.clone()
+            category_map[category.name] = cloned_category
+            cloned_category.name = self._get_unique_import_category_name(category.name)
+            if cloned_category.parent is not None:
+                cloned_category.parent = category_map[cloned_category.parent.name]
+            self.save_category(cloned_category)
+        return category_map
+
+    def _import_events(self, db, category_map):
+        for event in db.get_all_events():
+            cloned_event = event.clone()
+            if event.category is not None:
+                cloned_event.category = category_map[event.category.name]
+            self.save_event(cloned_event)
+
+    def _get_unique_import_category_name(self, original_name):
+        number_of_tries = 1
+        while True:
+            new_name = "%s (imported %d)" % (original_name, number_of_tries)
+            if self._has_category_with_name(new_name):
+                number_of_tries += 1
+            else:
+                return new_name
+
+    def _has_category_with_name(self, name):
+        for category in self.get_categories():
+            if category.name == name:
+                return True
+        return False
 
 
 def clone_data(categories, events):
