@@ -313,8 +313,11 @@ class describe_memory_db(unittest.TestCase):
         self.assertEqual(self.save_callback_mock.call_count, 4)
 
     def testDeleteNonExistingEvent(self):
+        self.assertRaises(TimelineIOError, self.db.delete_event, self.e1)
+        self.assertRaises(TimelineIOError, self.db.delete_event, 5)
         other_db = MemoryDB()
         other_db.save_event(self.e2)
+        self.assertRaises(TimelineIOError, self.db.delete_event, self.e2)
         # Assert save not called
         self.assertEqual(self.save_callback_mock.call_count, 0)
 
@@ -372,11 +375,20 @@ class describe_memory_db(unittest.TestCase):
         self.assertTrue(self.db.get_all_events()[1] == self.e1)
         self.assertTrue(self.db.get_all_events()[2] == self.e2)
 
-    def testMoveEventToOriginalPlace(self):
+    def testMoveEventToOriginalPlaceBefore(self):
         self.db.save_event(self.e1)
         self.db.save_event(self.e2)
         self.db.save_event(self.e3)
         self.db.place_event_before_event(self.e2, self.e2)
+        self.assertTrue(self.db.get_all_events()[0] == self.e1)
+        self.assertTrue(self.db.get_all_events()[1] == self.e2)
+        self.assertTrue(self.db.get_all_events()[2] == self.e3)
+
+    def testMoveEventToOriginalPlaceAfter(self):
+        self.db.save_event(self.e1)
+        self.db.save_event(self.e2)
+        self.db.save_event(self.e3)
+        self.db.place_event_after_event(self.e2, self.e2)
         self.assertTrue(self.db.get_all_events()[0] == self.e1)
         self.assertTrue(self.db.get_all_events()[1] == self.e2)
         self.assertTrue(self.db.get_all_events()[2] == self.e3)
