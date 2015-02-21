@@ -18,48 +18,33 @@
 
 import wx
 
-from timelinelib.plugin.pluginbase import PluginBase
-from timelinelib.plugin.factory import EVENTBOX_DRAWER
+from timelinelib.plugin.plugins.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.drawing.utils import darken_color
 from timelinelib.drawing.utils import lighten_color
 
 
-class GradientEventBoxDrawer(PluginBase):
-
-    def service(self):
-        return EVENTBOX_DRAWER
+class GradientEventBoxDrawer(DefaultEventBoxDrawer):
 
     def display_name(self):
         return _("Gradient Event box drawer")
 
-    def run(self, dc, rect, event):
-        dc.SetBrush(wx.GREEN_BRUSH)
-        dc.SetPen(wx.Pen(self._get_border_color(event), 1, wx.SOLID))
+    def run(self, dc, rect, event, selected=False):
+        self._draw_background(dc, rect, event)
+        self._draw_fuzzy_edges(dc, rect, event)
+        self._draw_locked_edges(dc, rect, event)
+        self._draw_progress_box(dc, rect, event)
+        self._draw_text(dc, rect, event)
+        self._draw_contents_indicator(dc, event, rect)
+        self._draw_selection_handles(dc, event, rect, selected)
+
+    def _draw_background(self, dc, rect, event):
+        dc.SetPen(self._get_border_pen(event))
         dc.DrawRectangleRect(rect)
-        dc.GradientFillLinear((rect.x + 1, rect.y + 1, rect.width - 2, rect.height - 2), self._get_light_color(event), self._get_dark_color(event), wx.SOUTH)
+        inner_rect = wx.Rect(rect.x + 1, rect.y + 1, rect.width - 2, rect.height - 2)
+        dc.GradientFillLinear(inner_rect, self._get_light_color(event), self._get_dark_color(event), wx.SOUTH)
 
     def _get_light_color(self, event):
-        if event.get_category():
-            base_color = event.get_category().color
-        else:
-            base_color = (200, 200, 200)
-        return lighten_color(base_color)
+        return lighten_color(self._get_base_color(event))
 
     def _get_dark_color(self, event):
-        if event.get_category():
-            base_color = event.get_category().color
-        else:
-            base_color = (200, 200, 200)
-        return darken_color(base_color, factor=0.8)
-
-    def _get_base_color(self, event):
-        if event.get_category():
-            base_color = event.get_category().color
-        else:
-            base_color = (200, 200, 200)
-        return base_color
-
-    def _get_border_color(self, event):
-        base_color = self._get_base_color(event)
-        border_color = darken_color(base_color)
-        return border_color
+        return darken_color(self._get_base_color(event), factor=0.8)
