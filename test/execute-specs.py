@@ -18,6 +18,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import itertools
 import doctest
 import os.path
 import random
@@ -119,15 +120,14 @@ def find_test_modules():
     random.shuffle(modules)
     return modules
 
-
 def find_specs():
-    specs = []
-    for file in os.listdir(os.path.join(os.path.dirname(__file__), "specs")):
-        if file.endswith(".py") and file != "__init__.py":
-            module_name = os.path.basename(file)[:-3]
-            abs_module_name = "specs.%s" % module_name
-            specs.append(("spec", abs_module_name))
-    return specs
+     specs = []
+     for file in os.listdir(os.path.join(os.path.dirname(__file__), "specs")):
+         if file.endswith(".py") and file != "__init__.py":
+             module_name = os.path.basename(file)[:-3]
+             abs_module_name = "specs.%s" % module_name
+             specs.append(("spec", abs_module_name))
+     return specs
 
 
 def find_doctests():
