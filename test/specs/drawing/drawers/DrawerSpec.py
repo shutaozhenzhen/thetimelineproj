@@ -24,7 +24,7 @@ from mock import Mock
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event, TimePeriod
 from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
-from timelinelib.plugin.plugins.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.time.gregoriantime import GregorianTimeType
 import timelinelib.calendar.gregorian as gregorian

@@ -18,7 +18,7 @@
 
 import unittest
 from mock import Mock
-from timelinelib.plugin.plugins.gradienteventboxdrawer import GradientEventBoxDrawer
+from timelinelib.plugin.plugins.eventboxdrawers.gradienteventboxdrawer import GradientEventBoxDrawer
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 
 
