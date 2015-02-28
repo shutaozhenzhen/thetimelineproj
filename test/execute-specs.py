@@ -52,7 +52,6 @@ def setup_displayhook():
 
 def setup_paths():
     sys.path.insert(0, os.path.join(ROOT_DIR, "source"))
-    sys.path.insert(0, os.path.join(ROOT_DIR, "source", "timelinelib", "plugin", "plugins"))
     sys.path.insert(0, os.path.join(ROOT_DIR, "test"))
     sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "dev", "mock-0.7.2"))
     sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "icalendar-3.2"))
