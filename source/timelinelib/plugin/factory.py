@@ -69,15 +69,24 @@ class PluginFactory(object):
         except:
             pass
 
+    def _get_candidate_modules(self):
+        modules = self._find_modules("plugins")
+        return [self._import_module("timelinelib.plugin.%s" % mod) for mod in modules]
+
+    def _find_modules(self, subdir):
+        modules = []
+        for file in os.listdir(os.path.join(os.path.dirname(__file__), subdir)):
+            if os.path.isdir(os.path.join(os.path.dirname(__file__), subdir, file)):
+                modules.extend(self._find_modules(os.path.join(subdir, file)))
+            elif file.endswith(".py") and file != "__init__.py":
+                module_name = os.path.basename(file)[:-3]
+                abs_module_name = "%s.%s" % (subdir.replace(os.sep, "."), module_name)
+                modules.append(abs_module_name)
+        return modules
+
     def _import_module(self, module_name):
         __import__(module_name)
         return sys.modules[module_name]
-
-    def _get_candidate_modules(self):
-        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "plugins")
-        names = [f.split(".", 1)[0] for f in os.listdir(path) if f.endswith(".py") and not f.startswith("__")]
-        return [self._import_module("timelinelib.plugin.plugins.%s" % mod) for mod in names]
-        # return [importlib.import_module("timelinelib.plugin.plugins.%s" % mod, package=None) for mod in names]
 
     def _validate_plugin(self, instance):
         self._get_plugin_method(instance, "isplugin")
