@@ -37,13 +37,18 @@ class FeedbackForm(object):
             self.dialog.set_body_selection(0, len(DESCRIBE_TEXT))
 
     def send_with_default(self):
-        self.webbrowser.open("mailto:%s?subject=%s&body=%s" % (
-            urllib.quote(self.dialog.get_to_text()),
-            urllib.quote(self.dialog.get_subject_text()),
-            urllib.quote(self.dialog.get_body_text())))
+        attr = self.get_url_attributes()
+        m = (("subject", attr["subject"]), ("body", attr["body"]))
+        url = "mailto:%s?" % urllib.quote(attr["to"]) + urllib.urlencode(m)
+        self.webbrowser.open(url)
 
     def send_with_gmail(self):
-        self.webbrowser.open("https://mail.google.com/mail/?compose=1&view=cm&fs=1&to=%s&su=%s&body=%s" % (
-            urllib.quote(self.dialog.get_to_text()),
-            urllib.quote(self.dialog.get_subject_text()),
-            urllib.quote(self.dialog.get_body_text())))
+        attr = self.get_url_attributes()
+        m = (("to", attr["to"]), ("su", attr["subject"]), ("body", attr["body"]))
+        url = "https://mail.google.com/mail/?compose=1&view=cm&fs=1&" + urllib.urlencode(m)
+        self.webbrowser.open(url)
+
+    def get_url_attributes(self):
+        return {"to": self.dialog.get_to_text().encode("utf-8"),
+                "subject": self.dialog.get_subject_text().encode("utf-8"),
+                "body": self.dialog.get_body_text().encode("utf-8")}
