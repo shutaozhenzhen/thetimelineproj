@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -22,6 +23,7 @@ from mock import Mock
 
 from timelinelib.feedback.form import FeedbackForm
 from timelinelib.wxgui.dialogs.feedback import FeedbackDialog
+from timelinelib.utilities.encodings import to_unicode
 
 
 class FeedbackFormSpec(unittest.TestCase):
@@ -37,14 +39,21 @@ class FeedbackFormSpec(unittest.TestCase):
         self.dialog.get_subject_text.return_value = "sub ject"
         self.dialog.get_body_text.return_value = "bo dy"
         self.form.send_with_default()
-        self.webbrowser.open.assert_called_with("mailto:foo%40example.com?subject=sub%20ject&body=bo%20dy")
+        self.webbrowser.open.assert_called_with("mailto:foo%40example.com?subject=sub+ject&body=bo+dy")
+
+    def test_can_send_non_unicode_characters(self):
+        self.dialog.get_to_text.return_value = "foo@example.com"
+        self.dialog.get_subject_text.return_value = "subject"
+        self.dialog.get_body_text.return_value = to_unicode("åäöÅÄÖ")
+        self.form.send_with_default()
+        self.webbrowser.open.assert_called_with("mailto:foo%40example.com?subject=subject&body=%C3%A5%C3%A4%C3%B6%C3%85%C3%84%C3%96")
 
     def test_can_send_with_gmail(self):
         self.dialog.get_to_text.return_value = "foo@example.com"
         self.dialog.get_subject_text.return_value = "sub ject"
         self.dialog.get_body_text.return_value = "bo dy"
         self.form.send_with_gmail()
-        self.webbrowser.open.assert_called_with("https://mail.google.com/mail/?compose=1&view=cm&fs=1&to=foo%40example.com&su=sub%20ject&body=bo%20dy")
+        self.webbrowser.open.assert_called_with("https://mail.google.com/mail/?compose=1&view=cm&fs=1&to=foo%40example.com&su=sub+ject&body=bo+dy")
 
     def setUp(self):
         self.dialog = Mock(FeedbackDialog)
