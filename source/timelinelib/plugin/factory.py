@@ -21,9 +21,10 @@ import sys
 from inspect import isclass
 
 
+BACKGROUND_DRAWER = "backgrounddrawer"
 EVENTBOX_DRAWER = "eventboxdrawer"
 EXPORTER = "exporter"
-VALID_SERVICES = [EVENTBOX_DRAWER, EXPORTER]
+VALID_SERVICES = [BACKGROUND_DRAWER, EVENTBOX_DRAWER, EXPORTER]
 
 
 class PluginException(Exception):
