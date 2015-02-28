@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.plugin.plugins.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.drawing.utils import darken_color
 from timelinelib.drawing.utils import lighten_color
 

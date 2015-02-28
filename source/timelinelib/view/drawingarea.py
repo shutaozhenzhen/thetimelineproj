@@ -40,7 +40,7 @@ from timelinelib.view.scrolldrag import ScrollByDragInputHandler
 from timelinelib.view.zoom import ZoomByDragInputHandler
 from timelinelib.drawing import get_drawer
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
-from timelinelib.plugin.plugins.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.utilities.encodings import to_unicode
 
 
