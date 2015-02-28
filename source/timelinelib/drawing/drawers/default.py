@@ -53,6 +53,9 @@ class DefaultDrawingAlgorithm(Drawer):
     def set_event_box_drawer(self, event_box_drawer):
         self.event_box_drawer = event_box_drawer
 
+    def set_background_drawer(self, background_drawer):
+        self.background_drawer = background_drawer
+
     def increment_font_size(self, step=2):
         self.font_size += step
         self.small_text_font = get_default_font(self.font_size)
@@ -124,6 +127,7 @@ class DefaultDrawingAlgorithm(Drawer):
         return scene
 
     def _perform_drawing(self, view_properties):
+        self.background_drawer.draw(self.dc)
         if self.fast_draw:
             self._perform_fast_drawing(view_properties)
         else:

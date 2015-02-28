@@ -41,6 +41,7 @@ from timelinelib.view.zoom import ZoomByDragInputHandler
 from timelinelib.drawing import get_drawer
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.utilities.encodings import to_unicode
 
 
@@ -74,6 +75,7 @@ class TimelineCanvasController(object):
         else:
             self.drawing_algorithm = get_drawer()
         self.set_event_box_drawer(self.get_saved_drawer())
+        self.set_background_drawer(self.get_saved_background_drawer())
         self.drawing_algorithm.use_fast_draw(False)
         self._set_initial_values_to_member_variables()
         self._set_colors_and_styles()
@@ -86,8 +88,14 @@ class TimelineCanvasController(object):
         return self.plugin_factory.get_plugin(EVENTBOX_DRAWER, self.config.selected_event_box_drawer) or DefaultEventBoxDrawer()
         raise Exception("No default Event Box Drawer plugin found")
 
+    def get_saved_background_drawer(self):
+        return DefaultBackgroundDrawer()
+
     def set_event_box_drawer(self, drawer):
         self.drawing_algorithm.set_event_box_drawer(drawer)
+
+    def set_background_drawer(self, drawer):
+        self.drawing_algorithm.set_background_drawer(drawer)
 
     def change_input_handler_to_zoom_by_drag(self, start_time):
         self.input_handler = ZoomByDragInputHandler(self, self.status_bar_adapter, start_time)
