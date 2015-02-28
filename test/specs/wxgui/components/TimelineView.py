@@ -32,7 +32,7 @@ from timelinelib.wxgui.components.timeline import TimelineCanvas
 from timelinelib.wxgui.components.timeline import TimelineCanvasController
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
 from timelinelib.plugin import factory
-from timelinelib.plugin.plugins.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 
 
 # TODO: testSavesEventAfterMove

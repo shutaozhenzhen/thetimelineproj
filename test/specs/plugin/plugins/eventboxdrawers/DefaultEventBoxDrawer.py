@@ -18,7 +18,7 @@
 
 import unittest
 from mock import Mock
-from timelinelib.plugin.plugins.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from specs.utils import an_event_with
 from specs.utils import a_category_with
