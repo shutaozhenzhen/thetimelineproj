@@ -32,7 +32,7 @@ from timelinelib.wxgui.components.timeline import TimelineCanvas
 from timelinelib.wxgui.components.timeline import TimelineCanvasController
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
 from timelinelib.plugin import factory
-from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 
 
 # TODO: testSavesEventAfterMove
@@ -501,6 +501,7 @@ class MockDrawer(object):
         self.get_time_calls = {}
         self.hidden_event_count = 0
         self.set_event_box_drawer = Mock()
+        self.set_background_drawer = Mock()
 
     def use_fast_draw(self, value):
         pass

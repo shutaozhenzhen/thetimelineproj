@@ -25,6 +25,7 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event, TimePeriod
 from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.time.gregoriantime import GregorianTimeType
 import timelinelib.calendar.gregorian as gregorian
@@ -78,6 +79,7 @@ class DrawerSpec(unittest.TestCase):
         self.app = wx.App() # a stored app is needed to create fonts
         self.drawer = DefaultDrawingAlgorithm()
         self.drawer.set_event_box_drawer(DefaultEventBoxDrawer())
+        self.drawer.set_background_drawer(DefaultBackgroundDrawer())
         self.dc = Mock(wx.DC)
         self.dc.GetSizeTuple.return_value = IMAGE_SIZE
         self.dc.GetTextExtent.return_value = TEXT_SIZE
