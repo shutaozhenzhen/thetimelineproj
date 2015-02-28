@@ -59,7 +59,6 @@ import timelinelib.wxgui.utils as gui_utils
 from timelinelib.plugin import factory
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin.factory import EXPORTER
-from timelinelib.plugin.plugins.gradienteventboxdrawer import GradientEventBoxDrawer
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
