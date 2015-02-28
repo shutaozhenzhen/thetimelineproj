@@ -22,11 +22,11 @@ import sys
 
 
 PO_DIR_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "po")
+nbr_of_tested_files = 0
 
 
 def get_po_files(path):
-    return [f for f in os.listdir(path) 
-            if f[-3:] == ".po" ]
+    return [f for f in os.listdir(path) if f[-3:] == ".po"]
 
 
 def parse_translations(lines):
@@ -45,7 +45,6 @@ def parse_translations(lines):
             if line.startswith("#: "):
                 state = START
                 sourceline = line
-
         elif state == START:
             if line.startswith("msgid "):
                 state = MSGID
@@ -63,16 +62,15 @@ def parse_translations(lines):
                 msgid = None
                 msgstr = None
                 sourceline = None
-        
     return translations
-    
-    
+
+
 def get_translations(po_file):
     f = open(po_file, "r")
     lines = f.read().split("\n")
     f.close()
     return parse_translations(lines)
-    
+
 
 def validate_translations(translations):
     errors = []
@@ -81,18 +79,20 @@ def validate_translations(translations):
             if msgid.count("%s") != msgstr.count("%s"):
                 errors.append((sourceline, msgid, msgstr))
     return errors
-    
-    
+
+
 def get_invalid_translations(path):
+    global nbr_of_tested_files
     errors = []
     po_files = get_po_files(path)
     for po_file in po_files:
-        translations = get_translations(os.path.join(path,po_file))
+        nbr_of_tested_files += 1
+        translations = get_translations(os.path.join(path, po_file))
         err = validate_translations(translations)
         if len(err) > 0:
             errors.append((po_file, err))
     return errors
-    
+
 
 def report(errors):
     if len(errors) > 0:
@@ -108,9 +108,10 @@ def report(errors):
                 print "Str:", msgstr
                 print " "
     else:
-        print "No errors found"
-    return len(errors) 
-        
+        print "No errors found. %d files tested" % nbr_of_tested_files
+
+    return len(errors)
+
 
 class TranslationsSpec(unittest.TestCase):
 
@@ -119,6 +120,7 @@ class TranslationsSpec(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    print os.path.abspath(PO_DIR_PATH)
     invalid_translations = get_invalid_translations(PO_DIR_PATH)
     report(invalid_translations)
     print "Press any key to continue:",
