@@ -16,7 +16,7 @@ Crash report that has been fixed in the upcoming release::
 
     Thanks for taking the time to report this error.
 
-    The problem has been fixed and and will be available in the next release.
+    The problem has been fixed and will be available in the next release.
 
     /The Timeline Team
 
