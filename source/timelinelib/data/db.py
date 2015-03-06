@@ -19,6 +19,7 @@
 from timelinelib.data import Category
 from timelinelib.data import Event
 from timelinelib.data import Events
+from timelinelib.data import Eras
 from timelinelib.data.undohandler import UndoHandler
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.time.gregoriantime import GregorianTimeType
@@ -34,6 +35,7 @@ class MemoryDB(Observable):
         Observable.__init__(self)
         self.path = ""
         self._events = Events()
+        self._eras = Eras()
         self.displayed_period = None
         self.hidden_categories = []
         self.save_disabled = False
@@ -105,6 +107,17 @@ class MemoryDB(Observable):
             self._events.delete_event(event)
         error_text = "Deleting event failed"
         self._process_event(event_or_id, delete, error_text, save)
+
+    def get_all_eras(self):
+        return self._eras.get_all()
+
+    def save_era(self, era):
+        try:
+            self._eras.save_era(era)
+        except Exception, e:
+            raise TimelineIOError("Saving Era failed: %s" % e)
+        else:
+            self._save_if_not_disabled(STATE_CHANGE_CATEGORY)
 
     def get_max_cid(self):
         max_cid = 0
