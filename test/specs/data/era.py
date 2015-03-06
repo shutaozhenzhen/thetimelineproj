@@ -20,6 +20,7 @@ from specs.utils import TestCase
 from specs.utils import a_gregorian_era_with
 from specs.utils import a_numeric_era_with
 from specs.utils import ERA_MODIFIERS
+from specs.utils import NUM_ERA_MODIFIERS
 from specs.utils import gregorian_period
 from specs.utils import numeric_period
 from specs.utils import human_time_to_gregorian
@@ -258,4 +259,4 @@ class describe_gregorian_era_comparision(NumericEraTestCase):
 class describe_numeric_era_comparision(NumericEraTestCase):
 
     def test_can_be_compared(self):
-        self.assertEqNeImplementationIsCorrect(a_numeric_era_with, ERA_MODIFIERS)
+        self.assertEqNeImplementationIsCorrect(a_numeric_era_with, NUM_ERA_MODIFIERS)
