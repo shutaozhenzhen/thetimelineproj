@@ -69,6 +69,8 @@ class Exporter(object):
     def _write_timeline(self, file):
         write_simple_tag(file, "version", get_version(), INDENT1)
         write_simple_tag(file, "timetype", self.db.get_time_type().get_name(), INDENT1)
+        if len(self.db.get_all_eras()) > 0:
+            self._write_eras(file)
         self._write_categories(file)
         self._write_events(file)
         self._write_view(file)
@@ -136,6 +138,18 @@ class Exporter(object):
             icon_text = icon_string(evt.get_data("icon"))
             write_simple_tag(file, "icon", icon_text, INDENT3)
     _write_event = wrap_in_tag(_write_event, "event", INDENT2)
+
+    def _write_eras(self, file):
+        for era in self.db.get_all_eras():
+            self._write_era(file, era)
+    _write_eras = wrap_in_tag(_write_eras, "eras", INDENT1)
+
+    def _write_era(self, file, era):
+        write_simple_tag(file, "name", era.get_name(), INDENT3)
+        write_simple_tag(file, "start", self._time_string(era.get_time_period().start_time), INDENT3)
+        write_simple_tag(file, "end", self._time_string(era.get_time_period().end_time), INDENT3)
+        write_simple_tag(file, "color", color_string(era.get_color()), INDENT3)
+    _write_era = wrap_in_tag(_write_era, "era", INDENT2)
 
     def _text_starts_with_container_tag(self, text):
         return text[0] in ('(', '[')
