@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import time
 import wx
 
 from timelinelib.wxgui.dialogs.eraeditor import EraEditorDialog
@@ -46,10 +47,18 @@ class ErasEditorController(object):
         return False
 
     def add(self):
-        era = Era(self.time_type, self.time_type.now(), self.time_type.now(), "New Era")
+        era = self._create_era()
         dlg = EraEditorDialog(self.view, _("Add an Era"), self.time_type, self.config, era)
         if dlg.ShowModal() == wx.ID_OK:
             self.eras.append(era)
             self.view.append(era)
             self.timeline.save_era(era)
         dlg.Destroy()
+
+    def _create_era(self):
+        if self.time_type.is_date_time_type():
+            start = self.time_type.parse_time("%s 00:00:00" % time.strftime("%Y-%m-%d"))
+        else:
+            start = self.time_type.now()
+        end = start
+        return Era(self.time_type, start, end, "New Era")
