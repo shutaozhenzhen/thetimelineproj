@@ -100,3 +100,6 @@ class Era(object):
 
     def get_time_type(self):
         return self.time_type
+
+    def inside_period(self, time_period):
+        return self.time_period.overlap(time_period)
