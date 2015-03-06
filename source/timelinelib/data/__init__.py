@@ -22,6 +22,7 @@ from timelinelib.data.container import Container
 from timelinelib.data.event import Event
 from timelinelib.data.events import Events
 from timelinelib.data.subevent import Subevent
+from timelinelib.data.era import Era
 from timelinelib.data.timeperiod import PeriodTooLongError
 from timelinelib.data.timeperiod import TimeOutOfRangeLeftError
 from timelinelib.data.timeperiod import TimeOutOfRangeRightError

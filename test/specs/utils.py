@@ -34,35 +34,44 @@ from timelinelib.data import Category
 from timelinelib.data import Container
 from timelinelib.data import Event
 from timelinelib.data import Subevent
+from timelinelib.data import Era
 from timelinelib.data import TimePeriod
 from timelinelib.db import db_open
 from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.time.numtime import NumTimeType
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.timeline import TimeDelta
 from timelinelib.wxgui.setup import start_wx_application
 
 
 ANY_TIME = "1 Jan 2010"
+ANY_NUM_TIME = 10
 
 
 def gregorian_period(start, end):
     return TimePeriod(GregorianTimeType(), human_time_to_gregorian(start), human_time_to_gregorian(end))
 
 
+def numeric_period(start, end):
+    return TimePeriod(NumTimeType(), start, end)
+
+
 def human_time_to_gregorian(human_time):
     (year, month, day, hour, minute) = human_time_to_ymdhm(human_time)
     return Gregorian(year, month, day, hour, minute, 0).to_time()
 
+
 def a_time_period():
     year = random.randint(1, 4000)
     month = random.randint(1, 12)
-    day = random.randint(1,28)
+    day = random.randint(1, 28)
     end_year = year + random.randint(1, 5)
     end_month = random.randint(1, 12)
-    end_day = random.randint(1,28)
+    end_day = random.randint(1, 28)
     return TimePeriod(GregorianTimeType(),
                       Gregorian(year, month, day, 0, 0, 0).to_time(),
                       Gregorian(end_year, end_month, end_day, 0, 0, 0).to_time())
+
 
 def human_time_to_ymdhm(human_time):
     parts = human_time.split(" ")
@@ -141,6 +150,31 @@ def a_category_with(name, color=(255, 0, 0), font_color=(0, 255, 255),
                     parent=parent)
 
 
+def a_gregorian_era():
+    return a_gregorian_era_with()
+
+
+def a_gregorian_era_with(start=None, end=None, time=ANY_TIME, name="foo", color=(128, 128, 128), time_type=GregorianTimeType()):
+    if start and end:
+        start = human_time_to_gregorian(start)
+        end = human_time_to_gregorian(end)
+    else:
+        start = human_time_to_gregorian(time)
+        end = human_time_to_gregorian(time)
+    return Era(GregorianTimeType(), start, end, name, color)
+
+
+def a_numeric_era():
+    return a_numeric_era_with()
+
+
+def a_numeric_era_with(start=None, end=None, time=ANY_NUM_TIME, name="foo", color=(128, 128, 128)):
+    if not (start or end):
+        start = time
+        end = time
+    return Era(NumTimeType(), start, end, name, color)
+
+
 def get_random_modifier(modifiers):
     return random.choice(modifiers)
 
@@ -190,7 +224,6 @@ def modifier_change_ends_today(event):
     return event
 
 
-
 EVENT_MODIFIERS = [
     ("change time type", lambda event:
         event.set_time_type(new_time_type(event))),
@@ -222,13 +255,13 @@ EVENT_MODIFIERS = [
 
 SUBEVENT_MODIFIERS = [
     ("change container id", lambda event:
-        event.set_container_id(event.get_container_id()+1)),
+        event.set_container_id(event.get_container_id() + 1)),
 ] + EVENT_MODIFIERS
 
 
 CONTAINER_MODIFIERS = [
     ("change container id", lambda event:
-        event.set_cid(event.cid()+1)),
+        event.set_cid(event.cid() + 1)),
 ] + EVENT_MODIFIERS
 
 
@@ -238,9 +271,9 @@ CATEGORY_MODIFIERS = [
     ("change id", lambda category:
         category.set_id(inc(category.get_id()))),
     ("change color", lambda category:
-        category.set_color(category.get_color()+(1, 0, 3))),
+        category.set_color(category.get_color() + (1, 0, 3))),
     ("change font color", lambda category:
-        category.set_font_color(category.get_font_color()+(1, 0, 3))),
+        category.set_font_color(category.get_font_color() + (1, 0, 3))),
     ("change parent", lambda category:
         category.set_parent(new_parent(category))),
 ]
@@ -250,11 +283,20 @@ TIME_PERIOD_MODIFIERS = [
     ("zoom", lambda time_period:
         time_period.zoom(-1)),
     ("extend left", lambda time_period:
-        time_period.update(time_period.start_time-time_period.time_type.get_min_zoom_delta()[0],
+        time_period.update(time_period.start_time - time_period.time_type.get_min_zoom_delta()[0],
                            time_period.end_time)),
     ("extend right", lambda time_period:
         time_period.update(time_period.start_time,
-                           time_period.end_time+time_period.time_type.get_min_zoom_delta()[0])),
+                           time_period.end_time + time_period.time_type.get_min_zoom_delta()[0])),
+]
+
+
+ERA_MODIFIERS = [
+    ("change time type", lambda era: era.set_time_type(new_time_type(era))),
+    ("change id", lambda era: era.set_id(inc(era.get_id()))),
+    ("change time period", lambda era: era.set_time_period(era.get_time_period().move_delta(delta_from_days(1)))),
+    ("change text", lambda era: era.set_name("was: %s" % era.get_name())),
+    ("change color", lambda era: era.set_color(tuple([x + 1 for x in era.get_color()])))
 ]
 
 
@@ -287,8 +329,8 @@ class TestCase(unittest.TestCase):
         fail_message_one_other = "%r vs %r (%s)" % (one, other,
                                                     modification_description)
         self.assertTrue(type(one) == type(other), fail_message_one_other)
-        self.assertFalse(one == None, fail_message_one_other)
-        self.assertTrue(one != None, fail_message_one_other)
+        self.assertFalse(one is None, fail_message_one_other)
+        self.assertTrue(one is not None, fail_message_one_other)
         self.assertTrue(one is not other, fail_message_one_other)
         self.assertFalse(one is other, fail_message_one_other)
         self.assertTrue(one == other, fail_message_one_other)
@@ -356,7 +398,7 @@ class WxComponentTest(TestCase):
     def show_test_window(self):
         sizer = wx.BoxSizer(wx.VERTICAL)
         for component in self._components:
-            sizer.Add(component, flag=wx.ALL|wx.GROW, border=3)
+            sizer.Add(component, flag=wx.ALL | wx.GROW, border=3)
         self._main_panel.SetSizer(sizer)
         self._main_frame.Show()
         if not self.HALT_FOR_MANUAL_INSPECTION:
@@ -456,7 +498,7 @@ class WxEndToEndTestCase(TmpDirTestCase):
         for component_name in component_path.split(" -> "):
             component = self._find_component_with_name_in(
                 components_to_search_in, component_name)
-            if component == None:
+            if component is None:
                 self.fail("Could not find component with path '%s'." % component_path)
             else:
                 components_to_search_in = component.GetChildren()
