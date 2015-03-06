@@ -299,6 +299,14 @@ ERA_MODIFIERS = [
     ("change color", lambda era: era.set_color(tuple([x + 1 for x in era.get_color()])))
 ]
 
+NUM_ERA_MODIFIERS = [
+    ("change time type", lambda era: era.set_time_type(new_time_type(era))),
+    ("change id", lambda era: era.set_id(inc(era.get_id()))),
+    ("change time period", lambda era: era.set_time_period(era.get_time_period().move_delta(1))),
+    ("change text", lambda era: era.set_name("was: %s" % era.get_name())),
+    ("change color", lambda era: era.set_color(tuple([x + 1 for x in era.get_color()])))
+]
+
 
 TIME_MODIFIERS = [
     ("add", lambda time: time + TimeDelta(1)),
