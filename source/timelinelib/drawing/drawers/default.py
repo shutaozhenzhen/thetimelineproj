@@ -114,7 +114,7 @@ class DefaultDrawingAlgorithm(Drawer):
         self.dc = dc
         self.time_type = timeline.get_time_type()
         self.scene = self._create_scene(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
-        self._perform_drawing(view_properties)
+        self._perform_drawing(timeline, view_properties)
         del self.dc  # Program crashes if we don't delete the dc reference.
 
     def _create_scene(self, size, db, view_properties, get_text_extent_fn):
@@ -126,8 +126,8 @@ class DefaultDrawingAlgorithm(Drawer):
         scene.create()
         return scene
 
-    def _perform_drawing(self, view_properties):
-        self.background_drawer.draw(self.dc)
+    def _perform_drawing(self, timeline, view_properties):
+        self.background_drawer.draw(self, self.dc, self.scene, timeline)
         if self.fast_draw:
             self._perform_fast_drawing(view_properties)
         else:
@@ -651,6 +651,16 @@ class DefaultDrawingAlgorithm(Drawer):
         bh = H + R + H_ARROW + 1
         bounding_rect = wx.Rect(bx, by, bw, bh)
         return (bounding_rect, left_x + BALLOON_RADIUS, top_y + BALLOON_RADIUS)
+
+    def get_period_xpos(self, time_period):
+        w, _ = self.dc.GetSizeTuple()
+        return (max(0, self.scene.x_pos_for_time(time_period.start_time)),
+                min(w, self.scene.x_pos_for_time(time_period.end_time)))
+
+    def period_is_visible(self, time_period):
+        w, _ = self.dc.GetSizeTuple()
+        return (self.scene.x_pos_for_time(time_period.start_time) < w and
+                self.scene.x_pos_for_time(time_period.end_time) > 0)
 
 
 def break_text(text, dc, max_width_in_px):
