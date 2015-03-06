@@ -40,6 +40,7 @@ from timelinelib.wxgui.components.hyperlinkbutton import HyperlinkButton
 from timelinelib.wxgui.components.search import SearchBar
 from timelinelib.wxgui.components.timeline import TimelinePanel
 from timelinelib.wxgui.dialogs.categorieseditor import CategoriesEditor
+from timelinelib.wxgui.dialogs.eraseditor import ErasEditorDialog
 from timelinelib.wxgui.dialogs.duplicateevent import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.eventeditor import open_create_event_editor
 from timelinelib.wxgui.dialogs.feedback import show_feedback_dialog
@@ -82,6 +83,7 @@ ID_SET_CATEGORY_ON_SELECTED = wx.NewId()
 ID_MEASURE_DISTANCE = wx.NewId()
 ID_SET_CATEGORY_ON_WITHOUT = wx.NewId()
 ID_EDIT_CATEGORIES = wx.NewId()
+ID_EDIT_ERAS = wx.NewId()
 ID_SET_READONLY = wx.NewId()
 ID_FIND_FIRST = wx.NewId()
 ID_FIND_LAST = wx.NewId()
@@ -403,6 +405,11 @@ class GuiCreator(object):
                 self._edit_categories()
             safe_locking(self, edit_function)
 
+        def edit_eras(evt):
+            def edit_function():
+                self._edit_eras()
+            safe_locking(self, edit_function)
+
         def set_readonly(evt):
             self.controller.set_timeline_in_readonly_mode()
 
@@ -424,6 +431,8 @@ class GuiCreator(object):
                  None,
                  (ID_SET_CATEGORY_ON_WITHOUT, set_category_on_without, _("Set Category on events &without category..."), cbx),
                  (ID_EDIT_CATEGORIES, edit_categories, _("Edit &Categories"), cbx),
+                 None,
+                 (ID_EDIT_ERAS, edit_eras, _("Edit Era's..."), cbx),
                  None,
                  (ID_SET_READONLY, set_readonly, _("&Read Only"), cbx),
                  None,
@@ -1002,6 +1011,12 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         def create_categories_editor():
             return CategoriesEditor(self, self.timeline)
         gui_utils.show_modal(create_categories_editor, self.handle_db_error)
+
+    def _edit_eras(self):
+        def create_eras_editor():
+            return ErasEditorDialog(self, [], self.timeline, self.config)
+        gui_utils.show_modal(create_eras_editor, self.handle_db_error)
+        self.main_panel.redraw_timeline()
 
     # Navigate Menu action handlers
     def _navigate_timeline(self, navigation_fn):
