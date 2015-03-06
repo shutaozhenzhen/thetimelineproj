@@ -28,6 +28,7 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.data import Category
 from timelinelib.data import Container
 from timelinelib.data import Event
+from timelinelib.data import Era
 from timelinelib.data import Subevent
 from timelinelib.data import TimePeriod
 from timelinelib.db.exceptions import TimelineIOError
@@ -112,6 +113,14 @@ class Parser(object):
         """
         tmp_dict["partial_schema"].add_child_tags([
             Tag("timetype", OPTIONAL, self._parse_timetype),
+            Tag("eras", OPTIONAL, None, [
+                Tag("era", ANY, self._parse_era, [
+                    Tag("name", SINGLE, parse_fn_store("tmp_name")),
+                    Tag("start", SINGLE, parse_fn_store("tmp_start")),
+                    Tag("end", SINGLE, parse_fn_store("tmp_end")),
+                    Tag("color", SINGLE, parse_fn_store("tmp_color")),
+                ])
+            ]),
             Tag("categories", SINGLE, None, [
                 Tag("category", ANY, self._parse_category, [
                     Tag("name", SINGLE, parse_fn_store("tmp_name")),
@@ -231,6 +240,14 @@ class Parser(object):
         event.set_data("hyperlink", hyperlink)
         event.set_data("progress", int(progress))
         self.db.save_event(event)
+
+    def _parse_era(self, text, tmp_dict):
+        name = tmp_dict.pop("tmp_name")
+        start = self._parse_time(tmp_dict.pop("tmp_start"))
+        end = self._parse_time(tmp_dict.pop("tmp_end"))
+        color = parse_color(tmp_dict.pop("tmp_color"))
+        era = Era(self.db.get_time_type(), start, end, name, color)
+        self.db.save_era(era)
 
     def _text_starts_with_added_space(self, text):
         return text[0:2] in (" (", " [")
