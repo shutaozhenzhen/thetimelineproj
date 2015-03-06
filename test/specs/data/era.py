@@ -260,3 +260,21 @@ class describe_numeric_era_comparision(NumericEraTestCase):
 
     def test_can_be_compared(self):
         self.assertEqNeImplementationIsCorrect(a_numeric_era_with, NUM_ERA_MODIFIERS)
+
+
+class describe_gregorian_era_features(GregorianEraTestCase):
+
+    def test_can_decide_period_overlapping(self):
+        period = gregorian_period(GREGORIAN_START, GREGORIAN_END)
+        self.assertTrue(a_gregorian_era_with(start="1 Jul 2014", end="12 Jul 2014").inside_period(period))
+        self.assertTrue(a_gregorian_era_with(start=GREGORIAN_START, end="12 Jul 2014").inside_period(period))
+        self.assertFalse(a_gregorian_era_with(start="11 Jul 2000", end="11 Jul 2001").inside_period(period))
+
+
+class describe_numeric_era_features(NumericEraTestCase):
+
+    def test_can_decide_period_overlapping(self):
+        period = numeric_period(NUM_START, NUM_END)
+        self.assertTrue(a_numeric_era_with(start=1, end=15).inside_period(period))
+        self.assertTrue(a_numeric_era_with(start=1, end=NUM_START).inside_period(period))
+        self.assertFalse(a_numeric_era_with(start=1, end=5).inside_period(period))
