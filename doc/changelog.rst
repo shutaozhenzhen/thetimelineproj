@@ -12,6 +12,7 @@ New features, enhancements:
  * Introduced a Gradient Event box drawer
  * A new Event box drawer is added (gradient draw)
  * When selecting period in event editor - end date = start date + 1 day
+ * Introduced background Era's
 
 Bug fixes:
 

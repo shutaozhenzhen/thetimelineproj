@@ -44,6 +44,7 @@ def install(help_system):
     - Help(check_all_categories)
 - **%s**
     - Help(timeline)
+    - Help(era)
     - Help(events)
     - Help(categories)
     - Help(experimental_features)
@@ -185,6 +186,21 @@ To zoom vertically, hold down the Alt-key and scroll the mouse wheel.
         # Dashes produce bullet lists. DON'T remove them.
         body=_("""
 An event is the basic data type for representing information on the timeline.  It must specify where on the timeline it should be placed (when that event happened). This can be either a specific point in time or a period.
+"""))
+
+    help_system.install_page(
+        id="era",
+        header=_("Era"),
+        related_pages=["timeline"],
+        # TRANSLATORS: This text uses special markup.
+        # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
+        # Just write them as they are.
+        # Stars produce emphasized text. DON'T remove them.
+        # Dashes produce bullet lists. DON'T remove them.
+        body=_("""
+An Era is A clearly defined period of time of arbitrary but well-defined length.
+
+An Era is displayed as a background with the color defined for the Era. The Era name is written att the bottom of the timeline.
 """))
 
     help_system.install_page(
