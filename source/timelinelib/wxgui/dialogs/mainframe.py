@@ -604,12 +604,12 @@ class GuiCreator(object):
     def _create_menu_item(self, menu, item_spec):
         item_id, handler, label, checkbox = item_spec
         if label is not None:
-            if checkbox == CHECKBOX: #checkbox
+            if checkbox == CHECKBOX:
                 item = menu.Append(item_id, label, kind=wx.ITEM_CHECK)
-            elif checkbox == CHECKED_RB: #checked radiobutton
+            elif checkbox == CHECKED_RB:
                 item = menu.Append(item_id, label, kind=wx.ITEM_RADIO)
                 item.Check(True)
-            elif checkbox == UNCHECKED_RB: #unchecked radiobutton
+            elif checkbox == UNCHECKED_RB:
                 item = menu.Append(item_id, label, kind=wx.ITEM_RADIO)
             else:
                 if label is not None:
@@ -1363,7 +1363,7 @@ class WelcomePanel(wx.Panel):
         self.SetSizer(hsizer)
 
     def _btn_tutorial_on_click(self, e):
-        self.main_frame.open_timeline(":tutorial:")
+        self.main_frame.controller.open_timeline(":tutorial:")
 
     def activated(self):
         pass

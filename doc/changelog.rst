@@ -20,6 +20,7 @@ Bug fixes:
  * Fixed crash when opening hyperlink
  * Fixed crash when using experimental feature locale date 
  * Fixed crash when entering non-ascii characters in feedback dialog subject or text
+ * #22 Crash report: AttributeError: 'MainFrame' object has no attribute 'open_timeline'
  
 
 Version 1.5.0
