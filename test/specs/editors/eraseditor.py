@@ -32,12 +32,21 @@ class describe_eras_editor(unittest.TestCase):
         self.assertEquals(self.view, self.controller.view)
 
     def test_listbox_is_populated_at_construction(self):
-        #self.view.populate_listbox.assert_called_with(self.eras)
-        pass
+        self.view.populate.assert_called_with(self.eras)
+
+    def test_delete_removes_era(self):
+        era = self.eras[0]
+        self._simulate_delete_button_clicked_on(era)
+        self.view.remove.assert_called_with(era)
+        self.assertEquals([], self.controller.eras)
+
+    def _simulate_delete_button_clicked_on(self, era):
+        self.controller.delete(era)
 
     def setUp(self):
         self.eras = [a_gregorian_era()]
         self.view = Mock(ErasEditorDialog)
         self.timeline = Mock()
+        self.timeline.get_all_eras.return_value = self.eras
         self.config = None
-        self.controller = ErasEditorController(self.view, self.eras, self.timeline, self.config)
+        self.controller = ErasEditorController(self.view, self.timeline, self.config)
