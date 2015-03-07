@@ -1014,7 +1014,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
 
     def _edit_eras(self):
         def create_eras_editor():
-            return ErasEditorDialog(self, [], self.timeline, self.config)
+            return ErasEditorDialog(self, self.timeline, self.config)
         gui_utils.show_modal(create_eras_editor, self.handle_db_error)
         self.main_panel.redraw_timeline()
 

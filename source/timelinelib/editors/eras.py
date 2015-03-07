@@ -25,14 +25,14 @@ from timelinelib.data.era import Era
 
 class ErasEditorController(object):
 
-    def __init__(self, view, eras, timeline, config):
+    def __init__(self, view, timeline, config):
         self.view = view
-        self.eras = eras
+        self.eras = timeline.get_all_eras()
         self.eras.sort()
         self.timeline = timeline
         self.time_type = self.timeline.get_time_type()
         self.config = config
-        view.populate_listbox(self.eras)
+        view.populate(self.eras)
 
     def edit(self, era):
         dlg = EraEditorDialog(self.view, _("Edit an Era"), self.time_type, self.config, era)
@@ -43,8 +43,7 @@ class ErasEditorController(object):
     def delete(self, era):
         if era in self.eras:
             self.eras.remove(era)
-            return True
-        return False
+            self.view.remove(era)
 
     def add(self):
         era = self._create_era()

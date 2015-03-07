@@ -19,7 +19,6 @@
 import wx
 
 from timelinelib.wxgui.utils import BORDER
-import timelinelib.wxgui.utils as gui_utils
 from timelinelib.editors.eras import ErasEditorController
 
 
@@ -27,42 +26,24 @@ STYLE = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
 TITLE = _("Edit Era's")
 
 
-class ErasEditorDialog(wx.Dialog):
+class ErasEditorDialogGuiCreator(wx.Dialog):
     """
-    Dialog used to edit Era's of a timeline.
-
-    The edits happen immediately. In other words: when the dialog is closing
-    all edits have been applied already.
+    This class is responsible for the creation of the dialog GUI.
     """
 
-    def __init__(self, parent, eras, timeline, config):
+    def __init__(self, parent):
         wx.Dialog.__init__(self, parent, title=TITLE, name="eras_editor", style=STYLE)
-        self.eras = timeline.get_all_eras()
-        self.timeline = timeline
         self._create_gui()
-        self._bind()
-        self.controller = ErasEditorController(self, self.eras, self.timeline, config)
-        self._enable_disable_buttons()
-
-    def populate_listbox(self, eras):
-        for era in eras:
-            self.eras_list.Append(era.get_name(), era)
-        if len(eras) > 0:
-            self.eras_list.SetSelection(0)
-
-    def append(self, era):
-        self.eras_list.Append(era.get_name(), era)
-        self.eras_list.Select(self.eras_list.GetCount() - 1)
-        self._enable_disable_buttons()
-
-    def update(self, era):
-        self.eras_list.SetString(self.eras_list.GetSelection(), era.get_name())
 
     def _create_gui(self):
         sizer = wx.BoxSizer(wx.VERTICAL)
         self._create_eras_list(sizer)
         self._create_buttons(sizer)
         self.SetSizerAndFit(sizer)
+        self._set_size_and_position()
+        self._bind()
+
+    def _set_size_and_position(self):
         height = self.GetParent().GetSize()[1] / 2
         self.SetSize((-1, height))
         self.CenterOnParent()
@@ -73,74 +54,56 @@ class ErasEditorDialog(wx.Dialog):
 
     def _create_buttons(self, sizer):
         box_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        box_sizer.Add(self._create_edit_button(), flag=wx.RIGHT, border=BORDER)
-        box_sizer.Add(self._create_add_button(), flag=wx.RIGHT, border=BORDER)
-        box_sizer.Add(self._create_delete_button(), flag=wx.RIGHT, border=BORDER)
-        box_sizer.Add(self._create_close_button(), flag=wx.LEFT, border=BORDER)
+        self._create_edit_button(box_sizer)
+        self._create_add_button(box_sizer)
+        self._create_delete_button(box_sizer)
+        box_sizer.AddStretchSpacer()
+        self._create_close_button(box_sizer)
         sizer.Add(box_sizer, flag=wx.ALL | wx.EXPAND, border=BORDER)
 
-    def _create_edit_button(self):
+    def _create_edit_button(self, sizer):
         self.btn_edit = wx.Button(self, wx.ID_EDIT)
-        return self.btn_edit
+        sizer.Add(self.btn_edit, flag=wx.RIGHT, border=BORDER)
 
-    def _create_add_button(self):
-        return wx.Button(self, wx.ID_ADD)
+    def _create_add_button(self, sizer):
+        sizer.Add(wx.Button(self, wx.ID_ADD), flag=wx.RIGHT, border=BORDER)
 
-    def _create_delete_button(self):
+    def _create_delete_button(self, sizer):
         self.btn_del = wx.Button(self, wx.ID_DELETE)
+        sizer.Add(self.btn_del, flag=wx.RIGHT, border=BORDER)
         return self.btn_del
 
-    def _create_close_button(self):
-        return wx.Button(self, wx.ID_CLOSE)
+    def _create_close_button(self, sizer):
+        sizer.Add(wx.Button(self, wx.ID_CLOSE), flag=wx.LEFT, border=BORDER)
 
     def _bind(self):
-        self.Bind(wx.EVT_CLOSE, self._window_on_close)
-        self.Bind(wx.EVT_SIZE, self._on_size, self)
-        self.Bind(wx.EVT_BUTTON, self._btn_edit_on_click, id=wx.ID_EDIT)
-        self.Bind(wx.EVT_BUTTON, self._btn_add_on_click, id=wx.ID_ADD)
-        self.Bind(wx.EVT_BUTTON, self._btn_del_on_click, id=wx.ID_DELETE)
-        self.Bind(wx.EVT_BUTTON, self._btn_close_on_click, id=wx.ID_CLOSE)
-        self.Bind(wx.EVT_LISTBOX_DCLICK, self._btn_edit_on_click, self.eras_list)
+
+        def window_on_close(evt):
+            self.EndModal(wx.ID_CLOSE)
+
+        def on_size(evt):
+            self.Layout()
+
+        def btn_edit_on_click(evt):
+            self.controller.edit(self._get_selected_era())
+
+        def btn_add_on_click(evts):
+            self.controller.add()
+
+        def btn_del_on_click(evt):
+            self.controller.delete(self._get_selected_era())
+
+        def btn_close_on_click(evt):
+            self.Close()
+
+        self.Bind(wx.EVT_CLOSE, window_on_close)
+        self.Bind(wx.EVT_SIZE, on_size, self)
+        self.Bind(wx.EVT_BUTTON, btn_edit_on_click, id=wx.ID_EDIT)
+        self.Bind(wx.EVT_BUTTON, btn_add_on_click, id=wx.ID_ADD)
+        self.Bind(wx.EVT_BUTTON, btn_del_on_click, id=wx.ID_DELETE)
+        self.Bind(wx.EVT_BUTTON, btn_close_on_click, id=wx.ID_CLOSE)
+        self.Bind(wx.EVT_LISTBOX_DCLICK, btn_edit_on_click, self.eras_list)
         self.SetAffirmativeId(wx.ID_CLOSE)
-
-    def _on_size(self, evt):
-        self.Layout()
-
-    def _lbx_on_dblclick(self, evt):
-        pass
-
-    def _window_on_close(self, e):
-        self.EndModal(wx.ID_CLOSE)
-
-    def _btn_close_on_click(self, e):
-        self.Close()
-
-    def _enable_buttons(self, enabled):
-        self.btn_del.Enable(enabled)
-        self.btn_edit.Enable(enabled)
-
-    def _updateButtons(self):
-        selected_category = self.cat_tree.get_selected_category() is not None
-        self._enable_buttons(selected_category)
-
-    def _btn_edit_on_click(self, e):
-        self.controller.edit(self.eras_list.GetClientData(self.eras_list.GetSelection()))
-
-    def _btn_add_on_click(self, e):
-        self.controller.add()
-
-    def _btn_del_on_click(self, e):
-        inx = self.eras_list.GetSelection()
-        if self.controller.delete(self.eras_list.GetClientData(inx)):
-            self.eras_list.Delete(inx)
-            if self.eras_list.GetCount() == inx:
-                inx -= 1
-            if inx >= 0:
-                self.eras_list.SetSelection(inx)
-            self._enable_disable_buttons()
-
-    def db_error_handler(self, e):
-        gui_utils.handle_db_error_in_dialog(self, e)
 
     def _enable_disable_buttons(self):
         if self.eras_list.GetCount() == 0:
@@ -149,3 +112,49 @@ class ErasEditorDialog(wx.Dialog):
         else:
             self.btn_del.Enable(True)
             self.btn_edit.Enable(True)
+
+    def _get_selected_era(self):
+        return self.eras_list.GetClientData(self.eras_list.GetSelection())
+
+
+class ErasEditorDialogControllerApi(object):
+    """
+    This class defines the API used by the dialog controller.
+    """
+
+    def populate(self, eras):
+        for era in eras:
+            self.eras_list.Append(era.get_name(), era)
+        if len(eras) > 0:
+            self.eras_list.SetSelection(0)
+        self._enable_disable_buttons()
+
+    def append(self, era):
+        self.eras_list.Append(era.get_name(), era)
+        self.eras_list.Select(self.eras_list.GetCount() - 1)
+        self._enable_disable_buttons()
+
+    def update(self, era):
+        self.eras_list.SetString(self.eras_list.GetSelection(), era.get_name())
+
+    def remove(self, era):
+        inx = self.eras_list.GetSelection()
+        self.eras_list.Delete(inx)
+        if self.eras_list.GetCount() == inx:
+            inx -= 1
+        if inx >= 0:
+            self.eras_list.SetSelection(inx)
+        self._enable_disable_buttons()
+
+
+class ErasEditorDialog(ErasEditorDialogGuiCreator, ErasEditorDialogControllerApi):
+    """
+    Dialog used to edit Era's of a timeline.
+
+    The edits happen immediately. In other words: when the dialog is closing
+    all edits have been applied already.
+    """
+
+    def __init__(self, parent, timeline, config):
+        ErasEditorDialogGuiCreator.__init__(self, parent)
+        self.controller = ErasEditorController(self, timeline, config)
