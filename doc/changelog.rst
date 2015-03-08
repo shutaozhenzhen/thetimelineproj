@@ -13,6 +13,7 @@ New features, enhancements:
  * A new Event box drawer is added (gradient draw)
  * When selecting period in event editor - end date = start date + 1 day
  * Introduced background Era's
+ * Bitmaps used to mark fuzzy and locked edges
 
 Bug fixes:
 
