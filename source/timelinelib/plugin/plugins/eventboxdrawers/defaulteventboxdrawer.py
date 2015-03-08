@@ -58,9 +58,12 @@ class DefaultEventBoxDrawer(PluginBase):
     def _draw_fuzzy_edges(self, dc, rect, event):
         if event.get_fuzzy():
             self._draw_fuzzy_start(dc, rect, event)
-            self._draw_fuzzy_end(dc, rect, event)
+            if not event.get_ends_today():
+                self._draw_fuzzy_end(dc, rect, event)
 
     def _draw_locked_edges(self, dc, rect, event):
+        if event.get_ends_today():
+            self._draw_locked_end(dc, event, rect)
         if event.get_locked():
             self._draw_locked_start(dc, event, rect)
             self._draw_locked_end(dc, event, rect)
