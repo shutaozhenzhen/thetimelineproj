@@ -337,3 +337,6 @@ class MemoryDB(Observable):
             if category.get_name() == name:
                 return True
         return False
+
+    def compress(self):
+        self._events.compress()
