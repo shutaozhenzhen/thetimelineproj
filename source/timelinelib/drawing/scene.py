@@ -353,5 +353,6 @@ class TimelineScene(object):
                     rect.Y < self.divider_y)]
 
     def _rects_overlap(self, rect1, rect2):
-        return (rect2.x <= rect1.x + rect1.width and
-                rect1.x <= rect2.x + rect2.width)
+        REMOVE_X_PADDING = 2 + self._outer_padding * 2
+        return (rect2.x + REMOVE_X_PADDING <= rect1.x + rect1.width and
+                rect1.x + REMOVE_X_PADDING <= rect2.x + rect2.width)
