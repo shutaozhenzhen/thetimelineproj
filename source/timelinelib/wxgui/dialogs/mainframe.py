@@ -81,6 +81,7 @@ ID_EDIT_EVENT = wx.NewId()
 ID_DUPLICATE_EVENT = wx.NewId()
 ID_SET_CATEGORY_ON_SELECTED = wx.NewId()
 ID_MEASURE_DISTANCE = wx.NewId()
+ID_COMPRESS = wx.NewId()
 ID_SET_CATEGORY_ON_WITHOUT = wx.NewId()
 ID_EDIT_CATEGORIES = wx.NewId()
 ID_EDIT_ERAS = wx.NewId()
@@ -421,11 +422,17 @@ class GuiCreator(object):
             safe_locking(self, self.timeline.redo)
             self.main_panel.redraw_timeline()
 
+        def compress(evt):
+            self.timeline.compress()
+            self.main_panel.redraw_timeline()
+
         cbx = NONE
         items = ((ID_CREATE_EVENT, create_event, _("Create &Event..."), cbx),
                  (ID_EDIT_EVENT, edit_event, _("&Edit Selected Event..."), cbx),
                  (ID_DUPLICATE_EVENT, duplicate_event, _("&Duplicate Selected Event..."), cbx),
                  (ID_SET_CATEGORY_ON_SELECTED, set_categoryon_selected, _("Set Category on Selected Events..."), cbx),
+                 None,
+                 (ID_COMPRESS, compress, _("&Compress timeline Events..."), cbx),
                  None,
                  (ID_MEASURE_DISTANCE, measure_distance, _("&Measure Distance between two Events..."), cbx),
                  None,

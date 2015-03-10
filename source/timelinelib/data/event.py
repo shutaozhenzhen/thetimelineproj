@@ -64,8 +64,8 @@ class Event(object):
     def has_id(self):
         return self.id is not None
 
-    def set_id(self, id):
-        self.id = id
+    def set_id(self, event_id):
+        self.id = event_id
         return self
 
     def get_time_period(self):
@@ -218,15 +218,15 @@ class Event(object):
         """Wrapper for time period method."""
         return self.time_period.mean_time()
 
-    def get_data(self, id):
+    def get_data(self, event_id):
         """
         Return data with the given id or None if no data with that id exists.
 
         See set_data for information how ids map to data.
         """
-        return self.data.get(id, None)
+        return self.data.get(event_id, None)
 
-    def set_data(self, id, data):
+    def set_data(self, event_id, data):
         """
         Set data with the given id.
 
@@ -235,12 +235,12 @@ class Event(object):
             description - string
             icon - wx.Bitmap
         """
-        self.data[id] = data
+        self.data[event_id] = data
 
     def has_data(self):
         """Return True if the event has associated data, or False if not."""
-        for id in self.data:
-            if self.data[id] is not None:
+        for event_id in self.data:
+            if self.data[event_id] is not None:
                 return True
         return False
 
@@ -291,10 +291,15 @@ class Event(object):
     def time_span(self):
         return self.time_period.end_time - self.time_period.start_time
 
+    def overlaps(self, event):
+        return (event.time_period.start_time < self.time_period.end_time and
+                event.time_period.end_time > self.time_period.start_time)
+
 
 def clone_event_list(eventlist):
     from timelinelib.data.container import Container
     from timelinelib.data.subevent import Subevent
+
     def clone_events():
         events = []
         for event in eventlist:
@@ -302,18 +307,21 @@ def clone_event_list(eventlist):
             new_event.set_id(event.get_id())
             events.append(new_event)
         return events
+
     def get_containers(cloned_events):
         containers = {}
         for event in cloned_events:
             if isinstance(event, Container):
                 containers[event.container_id] = event
         return containers
+
     def get_subevents(cloned_events):
         subevents = []
         for event in cloned_events:
             if isinstance(event, Subevent):
                 subevents.append(event)
         return subevents
+
     def update_container_subevent_relations(containers, subevents):
         for subevent in subevents:
             try:

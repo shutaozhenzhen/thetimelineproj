@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import collections
+
 from timelinelib.data.category import clone_categories_list
 from timelinelib.data.event import clone_event_list
 from timelinelib.data.idnumber import get_process_unique_id
@@ -242,6 +244,46 @@ class Events(object):
     def clone(self):
         (categories, events) = clone_data(self._categories, self._events)
         return Events(categories, events)
+
+    def compress(self):
+        rows = self._place_events_on_rows()
+        self._set_events_order_from_rows(rows)
+
+    def _set_events_order_from_rows(self, rows):
+        evs = []
+        for key in sorted(rows.keys()):
+            evs.extend(rows[key])
+        self._events = evs
+
+    def _place_events_on_rows(self):
+        rows = collections.defaultdict(lambda: [])
+        for event in self._length_sort():
+            inx = 0
+            while True:
+                if self.fits_on_row(rows[inx], event):
+                    event.r = inx
+                    rows[inx].append(event)
+                    break
+                inx += 1
+        return rows
+    def _length_sort(self):
+        reordered_events = [event for event in self._events if not event.is_subevent()]
+        reordered_events = self._sort_by_length(reordered_events)
+        subevents = [event for event in self._events if event.is_subevent()]
+        reordered_events.extend(subevents)
+        return reordered_events
+
+    def _sort_by_length(self, events):
+        return sorted(events, key=self._event_length, reverse=True)
+
+    def _event_length(self, evt):
+        return evt.get_time_period().delta()
+
+    def fits_on_row(self, row_events, event):
+        for ev in row_events:
+            if ev.overlaps(event):
+                return False
+        return True
 
 
 def _generic_event_search(events, search_string):
