@@ -63,8 +63,15 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
             except:
                 return int(fields[self._field_positions[key2]])
 
+        bc = False
+        if dt.startswith("-"):
+            bc = True
+            dt = dt[1:]
         fields = dt.split(self._separator)
-        return get_value(YEAR), get_value(MONTH), get_value(DAY)
+        year = get_value(YEAR)
+        if bc:
+            year = -year
+        return year, get_value(MONTH), get_value(DAY)
 
     def separator(self):
         return self._separator
@@ -92,7 +99,7 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
         self._dateformat = self._get_date_format_string(dt)
 
     def _find_separator(self, dt):
-        return re.search('\D', dt).group()
+        return re.search('\D', dt[1:]).group()
 
     def _get_field_positions(self, dt):
         keys = dt.split(self._separator)
