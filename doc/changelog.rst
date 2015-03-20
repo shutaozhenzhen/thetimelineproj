@@ -23,6 +23,7 @@ Bug fixes:
  * Fixed crash when entering non-ascii characters in feedback dialog subject or text
  * #22 Crash report: AttributeError: 'MainFrame' object has no attribute 'open_timeline'
  * #21 Crash report: PyAssertionError: C++ assertion "Assert failure" failed (wx3.0)
+ * #26 Crash report: KeyError: '33' when using Experimental feature 'locale date'
 
 Version 1.5.0
 -------------

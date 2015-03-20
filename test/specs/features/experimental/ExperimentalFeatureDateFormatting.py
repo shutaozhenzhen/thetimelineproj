@@ -117,6 +117,39 @@ class describe_experimental_feature_date_formatting(unittest.TestCase):
             self.given_sample_date(template)
             self.assertEqual((15, 2, 1), self.ef.parse(date_string))
 
+    def test_bc_years_can_be_parsed(self):
+        date_strings = [# year, month, day
+                        ("-2015-02-01", "3333-11-22"),
+                        ("-2015/02/01", "3333/11/22"),
+                        ("-2015.02.01", "3333.11.22"),
+                        ("-2015 02 01", "3333 11 22"),
+                        ("-2015-2-1", "3333-1-2"),
+                        ("-2015/2/1", "3333/1/2"),
+                        ("-2015.2.1", "3333.1.2"),
+                        ("-2015 2 1", "3333 1 2"),
+                        # day, month, year
+                        ("-01-02-2015", "22-11-3333"),
+                        ("-01/02/2015", "22/11/3333"),
+                        ("-01.02.2015", "22.11.3333"),
+                        ("-01 02 2015", "22 11 3333"),
+                        ("-1-2-2015", "2-1-3333"),
+                        ("-1/2/2015", "2/1/3333"),
+                        ("-1.2.2015", "2.1.3333"),
+                        ("-1 2 2015", "2 1 3333"),
+                        # month, day, year
+                        ("-02-01-2015", "11-22-3333"),
+                        ("-02/01/2015", "11/22/3333"),
+                        ("-02.01.2015", "11.22.3333"),
+                        ("-02 01 2015", "11 22 3333"),
+                        ("-2-1-2015", "1-2-3333"),
+                        ("-2/1/2015", "1/2/3333"),
+                        ("-2.1.2015", "1.2.3333"),
+                        ("-2 1 2015", "1 2 3333"),
+                        ]
+        for date_string, template in date_strings:
+            self.given_sample_date(template)
+            self.assertEqual((-2015, 2, 1), self.ef.parse(date_string))
+
     def given_sample_date(self, sample_date):
         self.ef._construct_format(sample_date)
 
