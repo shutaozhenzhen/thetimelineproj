@@ -1,6 +1,9 @@
 Build a Dialog window
 =====================
 
+This pattern is inspired by the `Humbe Dialog Box
+<http://www.objectmentor.com/resources/articles/TheHumbleDialogBox.pdf>`_.
+
 The control object
 ------------------
 To make it easier to test a Dialog we follow  a pattern where all business logic is placed in a class of its own, which we call the controller class.
