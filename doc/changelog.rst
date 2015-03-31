@@ -6,24 +6,40 @@ Version 1.6.0
 
 **Planned release on 30 April 2015.**
 
-New features, enhancements:
+Solved problems:
 
- * Dividerline slider pos preserved between sessions
- * Introduced a Gradient Event box drawer
- * A new Event box drawer is added (gradient draw)
- * When selecting period in event editor - end date = start date + 1 day
- * Introduced background Era's
- * Bitmaps used to mark fuzzy and locked edges
+* Dividerline slider pos preserved between sessions
 
-Bug fixes:
+* Introduced a Gradient Event box drawer
 
- * Fixed crash when opening preferences dialog (wxPython 3.0.2.0)
- * Fixed crash when opening hyperlink
- * Fixed crash when using experimental feature locale date 
- * Fixed crash when entering non-ascii characters in feedback dialog subject or text
- * #22 Crash report: AttributeError: 'MainFrame' object has no attribute 'open_timeline'
- * #21 Crash report: PyAssertionError: C++ assertion "Assert failure" failed (wx3.0)
- * #26 Crash report: KeyError: '33' when using Experimental feature 'locale date'
+* A new Event box drawer is added (gradient draw)
+
+* When selecting period in event editor - end date = start date + 1 day
+
+* Introduced background Era's
+
+* Bitmaps used to mark fuzzy and locked edges
+
+* Fixed crash when opening preferences dialog (wxPython 3.0.2.0)
+
+* Fixed crash when opening hyperlink
+
+* Fixed crash when using experimental feature locale date
+
+* Fixed crash when entering non-ascii characters in feedback dialog subject or text
+
+* Crash report: AttributeError: 'MainFrame' object has no attribute 'open_timeline'
+  (`#22 <https://sourceforge.net/p/thetimelineproj/backlog/22>`_).
+
+* Crash report: PyAssertionError: C++ assertion "Assert failure" failed at
+  ../src/common/sizer.cpp(1401) in DoInsert(): too many items (9 > 24) in grid
+  sizer (maybe you should omit the number of either rows or columns?)
+  (`#21 <https://sourceforge.net/p/thetimelineproj/backlog/21>`_).
+  This was only a problem with wxPython 3.
+
+* Crash report: KeyError: '33'
+  (`#26 <https://sourceforge.net/p/thetimelineproj/backlog/26>`_).
+  This happened when using experimental feature 'locale date'.
 
 Version 1.5.0
 -------------
@@ -32,20 +48,20 @@ Version 1.5.0
 
 New features, enhancements:
 
- * Made progress bar thinner to improve visibility
- * Made progress- and done-colors selectable
- * Deeper zooming, to one minute, enabled
- * Introduced the concept of 'Experimental features'
- * Experimental feature - Mark event as done
- * Experimental feature - Extend container height
- * Experimental feature - Locale date formats
- 
+* Made progress bar thinner to improve visibility
+* Made progress- and done-colors selectable
+* Deeper zooming, to one minute, enabled
+* Introduced the concept of 'Experimental features'
+* Experimental feature - Mark event as done
+* Experimental feature - Extend container height
+* Experimental feature - Locale date formats
+
 Bug fixes:
 
- * Fixed: Crash report: Duplication subevent
- * Fixed: Crash report: Clicking Return in datetimepicker in Event alert editor
- * Fixed problem with duplication of containers
- * Fixed problem with menus requiring a timeline
+* Fixed: Crash report: Duplication subevent
+* Fixed: Crash report: Clicking Return in datetimepicker in Event alert editor
+* Fixed problem with duplication of containers
+* Fixed problem with menus requiring a timeline
 
 Version 1.4.1
 -------------
@@ -54,9 +70,7 @@ Version 1.4.1
 
 Bug fixes:
 
- * Fixed: Crash report: AttributeError: 'MemoryDB' object has no attribute 'events'
-
-Bug fixes:
+* Fixed: Crash report: AttributeError: 'MemoryDB' object has no attribute 'events'
 
 Version 1.4.0
 -------------
@@ -107,8 +121,6 @@ Version 1.2.4
 
 **Released on 7 April 2014.**
 
-New features, enhancements:
-
 Bug fixes:
 
 * Exception in event editors when "Add more events after this one" is checked
@@ -117,8 +129,6 @@ Version 1.2.3
 -------------
 
 **Released on 5 April 2014.**
-
-New features, enhancements:
 
 Bug fixes:
 
@@ -129,8 +139,6 @@ Version 1.2.2
 
 **Released on 5 April 2014.**
 
-New features, enhancements:
-
 Bug fixes:
 
 * Uninitialized flag comes into play when opening an ics file
@@ -139,8 +147,6 @@ Version 1.2.1
 -------------
 
 **Released on 5 April 2014.**
-
-New features, enhancements:
 
 Bug fixes:
 
