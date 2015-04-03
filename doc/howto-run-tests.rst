@@ -1,7 +1,7 @@
 Run automated tests (unit tests)
 ================================
 
-We like automated test. All of timeline's automated tests can be run with a
+We like automated test. All of Timeline's automated tests can be run with a
 single command::
 
     ./test/execute-specs.py

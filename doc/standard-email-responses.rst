@@ -29,7 +29,7 @@ Crash report that has been fixed in released version::
 
     /The Timeline Team
 
-Person interested in developing timeline::
+Person interested in developing Timeline::
 
     We're glad you're interested in contributing to Timeline. We want to help
     as much as we can.

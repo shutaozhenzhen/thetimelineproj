@@ -1,7 +1,7 @@
 Class descriptions
 ==================
 
-This page includes diagrams of some of the classes in timeline. They can remind
+This page includes diagrams of some of the classes in Timeline. They can remind
 you of how classes work, but they are not intended to fully explain the code.
 
 GUI classes

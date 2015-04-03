@@ -3,13 +3,13 @@ Installing
 
 Timeline runs on multiple platforms. If you can run `Python
 <http://www.python.org/>`_ and `wxPython <http://www.wxpython.org/>`_ you
-should be able to run Timeline. However, timeline is only tested on Windows and
+should be able to run Timeline. However, Timeline is only tested on Windows and
 Linux.
 
-The recommended way to install timeline is with a binary package or installer.
+The recommended way to install Timeline is with a binary package or installer.
 If that is not available for your platform, you have to install from source.
 
-If you have problems installing timeline, please see the :doc:`support` page
+If you have problems installing Timeline, please see the :doc:`support` page
 for ways to get help.
 
 Installing with a binary package or installer
@@ -22,7 +22,7 @@ Windows
     :align: right
 
 We provide a binary installer for Windows. It installs an executable version of
-timeline built with `py2exe <http://www.py2exe.org/>`_. It is a self contained
+Timeline built with `py2exe <http://www.py2exe.org/>`_. It is a self contained
 executable that doesn't need any other dependencies.
 
 Download |latest_exe|_ and execute it.
@@ -34,7 +34,7 @@ Fedora
 .. image:: /images/logo-fedora.png
     :align: right
 
-Someone else has packaged timeline for Fedora. Install using::
+Someone else has packaged Timeline for Fedora. Install using::
 
     su -c 'yum install timeline'
 
@@ -59,7 +59,7 @@ yourself. Timeline requires:
 
 On Linux systems, you can often install these via the package manager.
 
-Once you have extracted the timeline zip and installed the required
+Once you have extracted the Timeline zip and installed the required
 dependencies, you should be able to run the application with this command::
 
     python <path-to-timeline-directory>/source/timeline.py

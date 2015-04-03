@@ -1,7 +1,7 @@
 Build an exporter for Timeline
 ==============================
 
-In Timeline an Exporter is used to export data from a timeline to a file. The Exporter transforms the
+In Timeline an Exporter is used to export data from a Timeline to a file. The Exporter transforms the
 data into a format that is understood by another application such as a web browser or a spreadsheet
 program.
 

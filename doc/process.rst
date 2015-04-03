@@ -1,7 +1,7 @@
 Process
 =======
 
-This page describes how changes to timeline are made.
+This page describes how changes to Timeline are made.
 
 It describes how we work.
 
@@ -18,12 +18,12 @@ General workflow
 Backlog
 -------
 
-The backlog contains problems that have been identified by users of timeline.
+The backlog contains problems that have been identified by users of Timeline.
 
 Collecting problems
 ~~~~~~~~~~~~~~~~~~~
 
-* The main way users of timeline interact with the project is via the mailing list
+* The main way users of Timeline interact with the project is via the mailing list
 * Requests that users make are transformed into problem descriptions
 * Usually a conversation is needed to find the problem description
 * Crash reports are already clear problem descriptions
@@ -41,7 +41,7 @@ Sprints
 
 * A developer picks a problem from the backlog (preferably a problem with high
   priority) and works on it
-* To be accepted for inclusion in timeline, each patch must
+* To be accepted for inclusion in Timeline, each patch must
     * follow guidelines
     * pass tests
 * A patch is delivered by pushing to the repo (if the developer has

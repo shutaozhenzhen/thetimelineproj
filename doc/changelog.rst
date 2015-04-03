@@ -210,10 +210,10 @@ Version 1.0.0
 
 **Released on 30 September 2013.**
 
-After about 4.5 years in development, timeline 1.0.0 is released. This is the
+After about 4.5 years in development, Timeline 1.0.0 is released. This is the
 first time we increment the x-component of the version number
-(:ref:`label-version-number`). The main reason for doing so is that timeline
-can no longer read files produced with timeline versions before 0.10.0
+(:ref:`label-version-number`). The main reason for doing so is that Timeline
+can no longer read files produced with Timeline versions before 0.10.0
 (released over 3 years ago).
 
 The other big thing in 1.0.0 is that the experimental support for dates before
@@ -244,7 +244,7 @@ Bug fixes:
 Removed features:
 
 * Printing: Use export to image and print image instead
-* Old timeline file format: Last used in version 0.9.0
+* Old Timeline file format: Last used in version 0.9.0
 
 Non-visible changes:
 
