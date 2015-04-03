@@ -1,5 +1,5 @@
-Installing
-==========
+Installation instructions
+=========================
 
 Timeline runs on multiple platforms. If you can run `Python
 <http://www.python.org/>`_ and `wxPython <http://www.wxpython.org/>`_ you

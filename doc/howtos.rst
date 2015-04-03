@@ -1,5 +1,5 @@
-Howtos
-------
+Howtos for developers
+---------------------
 
 .. toctree::
     :maxdepth: 1
@@ -11,3 +11,4 @@ Howtos
     howto-run-tests
     howto-test-translations
     howto-timeline-component
+    dev/release-instructions

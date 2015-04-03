@@ -1,5 +1,5 @@
-Process
-=======
+Development process
+===================
 
 This page describes how changes to Timeline are made.
 

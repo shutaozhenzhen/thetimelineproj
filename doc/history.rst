@@ -1,5 +1,5 @@
-History
-=======
+Project history
+===============
 
 Initial mission statement
 -------------------------
