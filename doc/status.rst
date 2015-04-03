@@ -10,6 +10,15 @@ plan the next release.
 The :doc:`process` says something about how we work and what functionality goes
 into Timeline.
 
+News
+----
+
+News about the project can be found on the :sf:`SourceForge news page <news>`.
+
+.. image:: /images/feed-icon-28x28.png
+    :target: http://sourceforge.net/p/thetimelineproj/news/feed
+    :alt: News feed
+
 We are looking for more developers
 ----------------------------------
 
