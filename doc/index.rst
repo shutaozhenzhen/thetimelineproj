@@ -10,11 +10,10 @@ Welcome to Timeline
     installing
     support
     history
-    changelog
     process
     guidelines
     howtos
     standard-email-responses
     dev/project-infrastructure
     dev/class-descriptions
-    dev/release-instructions
+    changelog

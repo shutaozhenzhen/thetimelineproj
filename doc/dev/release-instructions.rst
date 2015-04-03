@@ -1,5 +1,5 @@
-Release instructions
-====================
+Make a release
+==============
 
 Feature freeze
 --------------
