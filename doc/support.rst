@@ -1,7 +1,7 @@
 Support
 =======
 
-Do you need help with timeline? This is where to look.
+Do you need help with Timeline? This is where to look.
 
 The manual
 ----------
@@ -12,7 +12,7 @@ question. Browse it to see if you can find it. You can also search this manual.
 The mailing list
 ----------------
 
-We use a mailing list for all kinds of discussions about timeline. Before you
+We use a mailing list for all kinds of discussions about Timeline. Before you
 send your question, please :sf:`browse <mailman/thetimelineproj-user>` or
 :sf:`search <mailman/search/?mail_list=thetimelineproj-user>` the mailing
 archive to see if you can find your answer.
@@ -32,7 +32,7 @@ this happens sometimes, and a period larger than 1200 years gets written to the
 
 When this happens, you can no longer open the file.
 
-This is a bug in timeline that we should fix. But there is a workaround that
+This is a bug in Timeline that we should fix. But there is a workaround that
 you can use to fix the problem yourself.
 
 The ``.timeline`` file is actually just an xml file. In there, somewhere around

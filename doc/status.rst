@@ -25,4 +25,4 @@ We are looking for more developers
 We want to get more people involved in the development of Timeline.
 
 If you are interested, please get in touch with us. We will help you to get
-started developing timeline and answer any questions you have.
+started developing Timeline and answer any questions you have.

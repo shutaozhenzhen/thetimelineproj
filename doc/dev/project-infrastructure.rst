@@ -30,7 +30,7 @@ Search: :sf:`search <mailman/search/?mail_list=thetimelineproj-user>`
 Build server
 ------------
 
-We host our own Jenkins server to automatically test timeline on different
+We host our own Jenkins server to automatically test Timeline on different
 platforms whenever the source code changes.
 
 If a build fails, an email will be sent to the mailing list.

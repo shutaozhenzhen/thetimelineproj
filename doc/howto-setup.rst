@@ -1,7 +1,7 @@
 Setting up a development environment
 ====================================
 
-The first step in setting up a development environment is to install timeline
+The first step in setting up a development environment is to install Timeline
 from source. Follow the instructions in :ref:`label-installing-from-source`,
 but instead of downloading the zip file, get the source code from our
 `Mercurial <http://mercurial.selenic.com>`_ repository::
