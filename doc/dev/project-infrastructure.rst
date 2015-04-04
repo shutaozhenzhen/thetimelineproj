@@ -15,17 +15,21 @@ We use Mercurial and the repository is hosted at SourceForge.
 
 URL: http://sourceforge.net/p/thetimelineproj/main/ci/default/tree/
 
+.. _label-mailing-list:
+
 Mailing list
 ------------
 
 We use a mailing list provided by SourceForge. We use only a single list, and
 we use it for all kinds of communication.
 
-Address: thetimelineproj-user@lists.sourceforge.net.
-
-Browse the archive: :sf:`browse <mailman/thetimelineproj-user>`
-
-Search: :sf:`search <mailman/search/?mail_list=thetimelineproj-user>`
+* **Address:** thetimelineproj-user@lists.sourceforge.net.
+    * You can send emails to this address and everyone that is registered will
+      receive your message. You **don't** need to be registered to send emails
+      to the mailing list.
+* **Browse the archive:** :sf:`browse <mailman/thetimelineproj-user>`.
+* **Search the archive:** :sf:`search <mailman/search/?mail_list=thetimelineproj-user>`.
+* **Register:** ??
 
 Build server
 ------------
