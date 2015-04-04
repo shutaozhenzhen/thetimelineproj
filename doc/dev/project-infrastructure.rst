@@ -29,7 +29,7 @@ we use it for all kinds of communication.
       to the mailing list.
 * **Browse the archive:** :sf:`browse <mailman/thetimelineproj-user>`.
 * **Search the archive:** :sf:`search <mailman/search/?mail_list=thetimelineproj-user>`.
-* **Register:** ??
+* **Register:** `register <https://lists.sourceforge.net/lists/listinfo/thetimelineproj-user>`_.
 
 Build server
 ------------
