@@ -13,7 +13,6 @@ Welcome to Timeline
     process
     guidelines
     howtos
-    standard-email-responses
     dev/project-infrastructure
     dev/class-descriptions
     changelog
