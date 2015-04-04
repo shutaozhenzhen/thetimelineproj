@@ -13,6 +13,6 @@ Welcome to Timeline
     process
     guidelines
     howtos
-    dev/class-descriptions
+    architecture
     dev/project-infrastructure
     changelog

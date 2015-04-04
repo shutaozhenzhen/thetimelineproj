@@ -1,5 +1,8 @@
-Class descriptions
-==================
+Architecture overview
+=====================
+
+This page intends to explain the internal architecture of Timeline on a high
+level.
 
 This page includes diagrams of some of the classes in Timeline. They can remind
 you of how classes work, but they are not intended to fully explain the code.
@@ -24,26 +27,7 @@ objects into the constructor of a class. This can be seen here when the
 ``DrawingArePanel`` creates its controller, the ``DrawingArea``, it passes the
 drawer object in the constructor, ``get_drawer()``.
 
-Database
---------
-
-.. image:: /images/classes-database.png
-
-================ ===========================================================
-Class            Description
-================ ===========================================================
-IcsTimleine      Data read from an ics file. The Timeline becomes read-only.
-DirTimeline      Data read from the filesystem and displays directories and
-                 files in a timeline. The Timeline becomes read-only.
-XmlTimeline      Data read from an xml file.
-TutorialTimeline The tutorial timeline is not a class by itself. It's a
-                 MemoryDb filled with fixed data by the function.
-                 ``create_in_memory_tutorial_db()``.
-MemoryDb         The base class for Timeline classes that are not read-only.
-================ ===========================================================
-
 Startup
 -------
-
 
 .. image:: /images/classes-startup.png
