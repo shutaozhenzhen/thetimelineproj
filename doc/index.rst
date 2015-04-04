@@ -6,13 +6,13 @@ Welcome to Timeline
 
     about
     screenshots
-    status
     installing
     support
+    status
     history
     process
     guidelines
     howtos
-    dev/project-infrastructure
     dev/class-descriptions
+    dev/project-infrastructure
     changelog
