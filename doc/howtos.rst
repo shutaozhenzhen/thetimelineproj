@@ -9,7 +9,7 @@ Howtos for developers
     howto-dialogs
     dev/translating
     howto-run-tests
-    howto-test-translations
     howto-timeline-component
     dev/release-instructions
     howto-make-string-translatable
+    howto-test-translations
