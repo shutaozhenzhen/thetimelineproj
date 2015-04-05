@@ -12,3 +12,4 @@ Howtos for developers
     howto-test-translations
     howto-timeline-component
     dev/release-instructions
+    howto-make-string-translatable

@@ -15,4 +15,5 @@ Welcome to Timeline
     howtos
     architecture
     dev/project-infrastructure
+    tools
     changelog
