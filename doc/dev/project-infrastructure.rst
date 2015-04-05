@@ -41,6 +41,8 @@ If a build fails, an email will be sent to the mailing list.
 
 URL: http://jenkins.rickardlindberg.me
 
+.. _label-launchpad:
+
 Translation service
 -------------------
 
