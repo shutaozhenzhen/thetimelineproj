@@ -1,15 +1,14 @@
 Test translations
 =================
 
-To test translations, you need:
+First you need to compile the translation files::
 
-* SCons (http://www.scons.org/)
-* gettext (http://www.gnu.org/software/gettext/)
-    * Windows users: get the zipfiles gettext-tools-0.17.zip and
-      gettext-runtime-0.17-1.zip from here
-      http://ftp.acc.umu.se/pub/gnome/binaries/win32/dependencies/.
+    ./po/generate-mo-files.py
 
-Test with::
+It requires the ``msgfmt`` program to be on the path. See :ref:`label-gettext`
+for instructions how to install it.
 
-    scons mo
-    LANG=sv_SE ./timeline.py
+Then you need to change your locale before running Timeline. On a Linux system,
+you can do it like this::
+
+    LANG=sv_SE ./source/timeline.py
