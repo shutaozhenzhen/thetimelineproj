@@ -46,22 +46,22 @@ Source: "dist\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
 ; You must check to see if there are any more po-files to add
 ;
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Source: "dist\po\ca\LC_MESSAGES\*"; DestDir: "{app}\po\ca\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\de\LC_MESSAGES\*"; DestDir: "{app}\po\de\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\es\LC_MESSAGES\*"; DestDir: "{app}\po\es\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\fr\LC_MESSAGES\*"; DestDir: "{app}\po\fr\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\gl\LC_MESSAGES\*"; DestDir: "{app}\po\gl\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\he\LC_MESSAGES\*"; DestDir: "{app}\po\he\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\it\LC_MESSAGES\*"; DestDir: "{app}\po\it\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\lt\LC_MESSAGES\*"; DestDir: "{app}\po\lt\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\pl\LC_MESSAGES\*"; DestDir: "{app}\po\pl\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\pt\LC_MESSAGES\*"; DestDir: "{app}\po\pt\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\po\pt_BR\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\ru\LC_MESSAGES\*"; DestDir: "{app}\po\ru\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\tr\LC_MESSAGES\*"; DestDir: "{app}\po\tr\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\vi\LC_MESSAGES\*"; DestDir: "{app}\po\vi\LC_MESSAGES"; Flags: ignoreversion
-Source: "dist\po\zh_CN\LC_MESSAGES\*"; DestDir: "{app}\po\zh_CN\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\ca\LC_MESSAGES\*"; DestDir: "{app}\translations\ca\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\de\LC_MESSAGES\*"; DestDir: "{app}\translations\de\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\es\LC_MESSAGES\*"; DestDir: "{app}\translations\es\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\fr\LC_MESSAGES\*"; DestDir: "{app}\translations\fr\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\gl\LC_MESSAGES\*"; DestDir: "{app}\translations\gl\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\he\LC_MESSAGES\*"; DestDir: "{app}\translations\he\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\it\LC_MESSAGES\*"; DestDir: "{app}\translations\it\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\lt\LC_MESSAGES\*"; DestDir: "{app}\translations\lt\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\pl\LC_MESSAGES\*"; DestDir: "{app}\translations\pl\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\pt\LC_MESSAGES\*"; DestDir: "{app}\translations\pt\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\translations\pt_BR\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\ru\LC_MESSAGES\*"; DestDir: "{app}\translations\ru\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\sv\LC_MESSAGES\*"; DestDir: "{app}\translations\sv\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\tr\LC_MESSAGES\*"; DestDir: "{app}\translations\tr\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\vi\LC_MESSAGES\*"; DestDir: "{app}\translations\vi\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\zh_CN\LC_MESSAGES\*"; DestDir: "{app}\translations\zh_CN\LC_MESSAGES"; Flags: ignoreversion
 
 
 [UninstallDelete]

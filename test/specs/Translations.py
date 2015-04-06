@@ -21,7 +21,7 @@ import os
 import sys
 
 
-PO_DIR_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "po")
+PO_DIR_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "translations")
 nbr_of_tested_files = 0
 
 

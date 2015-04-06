@@ -32,7 +32,7 @@ Checklist for making a timeline release
     4. Commit "import translations"
 
   3. Update Timeline.iss
-    1. Check that all po files found in the directory win\timeline\po also are
+    1. Check that all po files found in the directory win\timeline\translations also are
        mentioned in the main\release\win\inno\Timeline.iss file.
     2. Commit "Added po info to iss-file"
 
