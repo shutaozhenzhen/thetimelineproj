@@ -56,9 +56,10 @@ rem ren ..\inno\timelineWin32.iss  _timelineWin32.iss
 rem ren ..\inno\timelineWin32_tmp.iss timelineWin32.iss
 rem pause
 
-echo *** Running scons command
+echo *** Running translations command
 pushd %TIMELINE_DIR%
-call scons
+python translations\generate-pot-file.py
+python translations\generate-mo-files.py
 popd
 rem pause
 
