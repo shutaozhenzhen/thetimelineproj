@@ -88,7 +88,6 @@ win32_actions = ((ANNOTATE, "Modify some python files", ""),
 
                  (ANNOTATE, "Create distribution executable", ""),
                  (COPYDIR, "translations", "translations"),
-                 (RUNCMD, "python", r"translations\generate-pot-file.py"),
                  (RUNCMD, "python", r"translations\generate-mo-files.py"),
                  (CPYDIR, "translations", r"dist\translations"),
                  (COPYDIR, "icons", r"dist\icons"),
@@ -125,7 +124,6 @@ win32py25_actions = (  # Modify some python files
                      (RUNPYSCRIPT, "setup.py", "py2exe"),
                      # Create distribution executable
                      (COPYDIR, "translations", "translations"),
-                     (RUNCMD, "python", r"translations\generate-pot-file.py"),
                      (RUNCMD, "python", r"translations\generate-mo-files.py"),
                      (CPYDIR, "translations", r"dist\translations"),
                      (COPYDIR, "icons", r"dist\icons"),
