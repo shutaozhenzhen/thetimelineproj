@@ -1,5 +1,5 @@
-Test translations
-=================
+Run Timeline in a different language
+====================================
 
 First you need to compile the translation files::
 

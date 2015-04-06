@@ -28,5 +28,8 @@ that contains an entry for your string looking something like this::
     msgid "Hello!"
     msgstr ""
 
-Upload this pot file to Launchpad. Then translators will see your new string
-and can translate it.
+Upload this pot file to Launchpad using this form:
+https://translations.launchpad.net/thetimelineproj/trunk/+translations-upload.
+(It requires login.)
+
+Now translators will see your new string and can translate it.
