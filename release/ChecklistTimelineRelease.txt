@@ -76,7 +76,7 @@ Checklist for making a timeline release
   Launchpad
   ---------
     1. Upload new pot-file (So that new texts are found)
-        1. Create new pot-file with the command "scons pot"
+        1. Create new pot-file
         2. Request upload from here (login required)
            http://translations.launchpad.net/thetimelineproj/trunk/+translations
 

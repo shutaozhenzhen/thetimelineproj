@@ -1,6 +1,5 @@
 syntax: glob
 
-.sconsign.dblite
 mikado.png
 mikado.pdf
 make_mikado.cmd
