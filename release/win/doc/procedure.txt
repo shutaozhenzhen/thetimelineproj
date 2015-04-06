@@ -11,11 +11,11 @@ to a new directory
 
 2. Check po files
 -----------------
-Check that all po files found in the directory win\timeline\po also are mentioned
+Check that all po files found in the directory win\timeline\translations also are mentioned
 in the main\release\win\inno\Timeline.iss file.
 
 [Files]
-Source: "po\sv\LC_MESSAGES\*"; DestDir: "{app}\po\sv\LC_MESSAGES"; Flags: ignoreversion
+Source: "translations\sv\LC_MESSAGES\*"; DestDir: "{app}\translations\sv\LC_MESSAGES"; Flags: ignoreversion
 
 
 3. Execute build script

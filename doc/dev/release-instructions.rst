@@ -28,7 +28,7 @@ Work on stable
 2. Import translations from Launchpad
     1. Request download from here (login required)
        http://translations.launchpad.net/thetimelineproj/trunk/+translations
-    2. Run ``python po/import-po-from-launchpad-export.py /path/to/launchpad-export.tar.gz``
+    2. Run ``python translations/import-po-from-launchpad-export.py /path/to/launchpad-export.tar.gz``
     3. Upload new pot-file (Create new po-file with the command ``scons pot``)
 3. Check that information and version numbers are correct in
     1. timelinelib/meta/version.py

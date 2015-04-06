@@ -4,7 +4,7 @@ syntax: glob
 mikado.png
 mikado.pdf
 make_mikado.cmd
-po/timeline.pot
+translations/timeline.pot
 *.pyc
 tags
 *.swp

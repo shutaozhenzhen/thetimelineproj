@@ -74,10 +74,10 @@ copy %TIMELINE_DIR%\icons\*.*  %TIMELINE_DIR%\dist\icons\*.*
 rem pause
 
 echo ***. Copying po to dist directory.
-mkdir %TIMELINE_DIR%\dist\po
-xcopy %TIMELINE_DIR%\po\*.*  %TIMELINE_DIR%\dist\po\*.* /S
-del %TIMELINE_DIR%\dist\po\*.po
-del %TIMELINE_DIR%\dist\po\*.pot
+mkdir %TIMELINE_DIR%\dist\translations
+xcopy %TIMELINE_DIR%\translations\*.*  %TIMELINE_DIR%\dist\translations\*.* /S
+del %TIMELINE_DIR%\dist\translations\*.po
+del %TIMELINE_DIR%\dist\translations\*.pot
 rem pause
 
 echo ***. Compile Inno Std script

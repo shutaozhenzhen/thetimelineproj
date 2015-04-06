@@ -32,7 +32,7 @@ def build_xgettext_command(repo_root):
     command = []
     command.append("xgettext")
     command.append("-o")
-    command.append(join(repo_root, "po", "timeline.pot"))
+    command.append(join(repo_root, "translations", "timeline.pot"))
     command.append("--add-comments=TRANSLATORS")
     command.extend(find_py_files_in(join(repo_root, "source")))
     return command
