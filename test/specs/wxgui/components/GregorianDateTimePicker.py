@@ -369,7 +369,7 @@ class GregorianTimePickerBaseFixture(unittest.TestCase):
 
     def setUp(self):
         self.time_picker = Mock(GregorianTimePicker)
-        self.time_picker.get_time_string.return_value = "13:50"
+        self.time_picker._get_time_string.return_value = "13:50"
         self.time_picker.GetBackgroundColour.return_value = (1, 2, 3)
         self.time_picker.SetSelection.side_effect = self._update_insertion_point_and_selection
         self.controller = GregorianTimePickerController(self.time_picker)
@@ -379,7 +379,7 @@ class GregorianTimePickerBaseFixture(unittest.TestCase):
         self.time_picker.Refresh.assert_called_with()
 
     def simulate_change_time_string(self, new_time_string):
-        self.time_picker.get_time_string.return_value = new_time_string
+        self.time_picker._get_time_string.return_value = new_time_string
         self.controller.on_text_changed()
 
     def simulate_change_insertion_point(self, new_insertion_point):

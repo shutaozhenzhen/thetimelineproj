@@ -194,10 +194,10 @@ def new_cat(event):
 
 
 def new_parent(category):
-    if category.get_parent() is None:
+    if category._get_parent() is None:
         return a_category_with(name="new category")
     else:
-        return a_category_with(name="was: %s" % category.get_parent().get_name())
+        return a_category_with(name="was: %s" % category._get_parent().get_name())
 
 
 def new_time_type(event):

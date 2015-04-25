@@ -93,12 +93,12 @@ class Events(object):
         category.set_id(None)
         # Loop to update parent attribute on children
         for cat in self._categories:
-            if cat.get_parent() == category:
-                cat.set_parent(category.get_parent())
+            if cat._get_parent() == category:
+                cat.set_parent(category._get_parent())
         # Loop to update category for events
         for event in self._events:
             if event.get_category() == category:
-                event.set_category(category.get_parent())
+                event.set_category(category._get_parent())
 
     def _ensure_category_exists_for_update(self, category):
         message = "Updating a category that does not exist."
@@ -131,18 +131,18 @@ class Events(object):
 
     def _ensure_parent_exists(self, category):
         message = "Parent category not in db."
-        if (category.get_parent() is not None and
-            category.get_parent() not in self._categories):
+        if (category._get_parent() is not None and
+            category._get_parent() not in self._categories):
             raise InvalidOperationError(message)
 
     def _ensure_no_circular_parent(self, category):
         message = "Circular category parent."
-        parent = category.get_parent()
+        parent = category._get_parent()
         while parent is not None:
             if parent == category:
                 raise InvalidOperationError(message)
             else:
-                parent = parent.get_parent()
+                parent = parent._get_parent()
 
     def save_event(self, event):
         self._ensure_event_exists_for_update(event)

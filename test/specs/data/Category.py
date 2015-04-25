@@ -31,7 +31,7 @@ class describe_category(TestCase):
         self.assertEqual(category.get_name(), "work")
         self.assertEqual(category.get_color(), (50, 100, 150))
         self.assertEqual(category.get_font_color(), (0, 0, 0))
-        self.assertEqual(category.get_parent(), None)
+        self.assertEqual(category._get_parent(), None)
 
     def test_can_set_values(self):
         self.assertEqual(
@@ -48,7 +48,7 @@ class describe_category(TestCase):
             (11, 12, 13))
         a_parent = a_category_with(name="parent")
         self.assertEqual(
-            a_category().set_parent(a_parent).get_parent(),
+            a_category().set_parent(a_parent)._get_parent(),
             a_parent)
 
     def test_can_be_compared(self):
