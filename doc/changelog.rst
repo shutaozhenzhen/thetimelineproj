@@ -40,6 +40,8 @@ Solved problems:
 * Crash report: KeyError: '33'
   (`#26 <https://sourceforge.net/p/thetimelineproj/backlog/26>`_).
   This happened when using experimental feature 'locale date'.
+  
+* Added export function timeline -> CSV
 
 Version 1.5.0
 -------------
