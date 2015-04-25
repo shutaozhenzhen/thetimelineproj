@@ -79,7 +79,7 @@ class Exporter(object):
     def _write_categories(self, file):
         def write_with_parent(categories, parent):
             for cat in categories:
-                if cat.get_parent() == parent:
+                if cat._get_parent() == parent:
                     self._write_category(file, cat)
                     write_with_parent(categories, cat)
         write_with_parent(self.db.get_categories(), None)
@@ -91,8 +91,8 @@ class Exporter(object):
         write_simple_tag(file, "progress_color", color_string(cat.get_progress_color()), INDENT3)
         write_simple_tag(file, "done_color", color_string(cat.get_done_color()), INDENT3)
         write_simple_tag(file, "font_color", color_string(cat.get_font_color()), INDENT3)
-        if cat.get_parent():
-            write_simple_tag(file, "parent", cat.get_parent().get_name(), INDENT3)
+        if cat._get_parent():
+            write_simple_tag(file, "parent", cat._get_parent().get_name(), INDENT3)
     _write_category = wrap_in_tag(_write_category, "category", INDENT2)
 
     def _write_events(self, file):

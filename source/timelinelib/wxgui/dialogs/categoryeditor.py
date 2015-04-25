@@ -81,7 +81,7 @@ class WxCategoryEdtiorDialog(wx.Dialog):
     def set_font_color(self, new_color):
         self.fontcolorpicker.SetValue(new_color)
 
-    def get_parent(self):
+    def _get_parent(self):
         selection = self.parentlistbox.GetSelection()
         if selection == wx.NOT_FOUND:
             return None

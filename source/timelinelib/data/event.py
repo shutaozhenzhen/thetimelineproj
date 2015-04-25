@@ -21,6 +21,8 @@ from timelinelib.drawing.drawers import get_progress_color
 
 
 DEFAULT_COLOR = (200, 200, 200)
+EXPORTABLE_FIELDS = ("Text", "Description", "Start", "End", "Category", "Fuzzy", "Locked", "Ends Today", 
+                     "Hyperlink", "Progress", "Progress Color", "Done Color", "Alert", "Is Container", "Is Subevent")
 
 
 class Event(object):
@@ -159,6 +161,12 @@ class Event(object):
         self.set_data("progress", progress)
         return self
 
+    def get_done_color(self):
+        if self.category:
+            return self.category.get_done_color()
+        else:
+            return get_progress_color(DEFAULT_COLOR)
+
     def get_progress_color(self):
         category = self.category
         if category:
@@ -294,6 +302,9 @@ class Event(object):
     def overlaps(self, event):
         return (event.time_period.start_time < self.time_period.end_time and
                 event.time_period.end_time > self.time_period.start_time)
+
+    def get_exportable_fields(self):
+        return EXPORTABLE_FIELDS
 
 
 def clone_event_list(eventlist):

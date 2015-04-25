@@ -19,6 +19,9 @@
 from timelinelib.drawing.drawers import get_progress_color
 
 
+EXPORTABLE_FIELDS = FIELDS = ("Name", "Color", "Progress Color", "Done Color", "Parent")
+
+
 class Category(object):
 
     def __init__(self, name, color, font_color, parent=None):
@@ -78,7 +81,7 @@ class Category(object):
         self.font_color = font_color
         return self
 
-    def get_parent(self):
+    def _get_parent(self):
         return self.parent
 
     def set_parent(self, parent):
@@ -87,10 +90,13 @@ class Category(object):
 
     def clone(self):
         clone = Category(self.get_name(), self.get_color(),
-                         self.get_font_color(), self.get_parent())
+                         self.get_font_color(), self._get_parent())
         clone.set_progress_color(self.get_progress_color())
         clone.set_done_color(self.get_done_color())
         return clone
+
+    def get_exportable_fields(self):
+        return EXPORTABLE_FIELDS
 
     def __repr__(self):
         return "Category<id=%r, name=%r, color=%r, font_color=%r>" % (
@@ -107,7 +113,7 @@ class Category(object):
                 self.get_progress_color() == other.get_progress_color() and
                 self.get_done_color() == other.get_done_color() and
                 self.get_font_color() == other.get_font_color() and
-                self.get_parent() == other.get_parent())
+                self._get_parent() == other._get_parent())
 
     def __ne__(self, other):
         return not (self == other)
@@ -128,6 +134,6 @@ def clone_categories_list(categories):
         cloned_list.append(clone)
         clones[category] = clone
     for category in cloned_list:
-        if category.get_parent() is not None:
-            category.set_parent(clones[category.get_parent()])
+        if category._get_parent() is not None:
+            category.set_parent(clones[category._get_parent()])
     return (cloned_list, clones)
