@@ -4,7 +4,7 @@ Making a Timeline release
 Preparations on main
 --------------------
 1. Check that information is correct in changelog.rst
-    1. Check
+	1. Check
     2. Commit "Updated changes"
 
 2. Check that information is correct in about.py and AUTHORS
@@ -25,10 +25,10 @@ there.
 Features for the next version (x.y+1) can continue to be developed in main.
 
 1. Move main repo to stable repo
-     1. cd stable
-     2. hg pull ../main
-     3. hg update
-     3. hg push
+	1. cd stable
+	2. hg pull ../main
+	3. hg update
+	4. hg push
 
 2. Import translations from Launchpad
     1. Request download from here (login required)
@@ -79,7 +79,6 @@ Features for the next version (x.y+1) can continue to be developed in main.
 11. Update repository
     1. hg push
 
-
 Launchpad
 ---------
 1. Upload new pot-file (So that new texts are found)
@@ -101,7 +100,6 @@ Work on main
      4. Run "python execute-specs.py" to find where else you need to modify
 
 3. Commit and push
-
 
 Publish
 -------
