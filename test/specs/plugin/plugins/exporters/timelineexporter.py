@@ -23,8 +23,8 @@ from mock import Mock
 from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExporter
 from timelinelib.plugin.plugins.exporters.timelineexporter import CsvExporter
 from timelinelib.data.db import MemoryDB
-from test.specs.utils import an_event_with
-from test.specs.utils import a_category_with
+from specs.utils import an_event_with
+from specs.utils import a_category_with
 
 
 CSV_FILE = "test.csv"
