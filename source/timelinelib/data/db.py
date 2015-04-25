@@ -125,7 +125,7 @@ class MemoryDB(Observable):
             if event.is_container():
                 max_cid = max(event.cid(), max_cid)
         return max_cid
-    
+
     @experimental_feature(EVENT_DONE)
     def mark_event_as_done(self, event_or_id, save=True):
         def mark_as_done(event):
@@ -133,7 +133,7 @@ class MemoryDB(Observable):
                 event.set_progress(100)
         error_text = "Mark event Done failed"
         self._process_event(event_or_id, mark_as_done, error_text, save)
-        
+
     def _process_event(self, event_or_id, process_func, error_text, save=False):
         try:
             process_func(self._get_event(event_or_id))
@@ -142,13 +142,13 @@ class MemoryDB(Observable):
         else:
             if save:
                 self._save_if_not_disabled(STATE_CHANGE_ANY)
-        
+
     def _get_event(self, event_or_id):
         if isinstance(event_or_id, Event):
             return event_or_id
         else:
             return self.find_event_with_id(event_or_id)
-        
+
     def get_categories(self):
         return self._events.get_categories()
 
@@ -327,7 +327,7 @@ class MemoryDB(Observable):
         elif self._has_category_with_name(category.get_name()):
             return self.get_category_by_name(category.get_name())
         else:
-            imported_parent = self._create_imported_category(category.get_parent())
+            imported_parent = self._create_imported_category(category._get_parent())
             category = category.clone().set_parent(imported_parent)
             self.save_category(category)
             return category
