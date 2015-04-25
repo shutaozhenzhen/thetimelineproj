@@ -512,7 +512,7 @@ class GregorianTimePicker(wx.TextCtrl):
     def set_value(self, value):
         self.controller.set_value(value)
 
-    def get_time_string(self):
+    def _get_time_string(self):
         return self.GetValue()
 
     def set_time_string(self, time_string):
@@ -573,7 +573,7 @@ class GregorianTimePickerController(object):
 
     def get_value(self):
         try:
-            split = self.time_picker.get_time_string().split(self.separator)
+            split = self.time_picker._get_time_string().split(self.separator)
             if len(split) != 2:
                 raise ValueError()
             hour_string, minute_string = split
@@ -695,7 +695,7 @@ class GregorianTimePickerController(object):
         if part == self.hour_part:
             self.time_picker.SetSelection(0, self._separator_pos())
         else:
-            time_string_len = len(self.time_picker.get_time_string())
+            time_string_len = len(self.time_picker._get_time_string())
             self.time_picker.SetSelection(self._separator_pos() + 1, time_string_len)
         self.preferred_part = part
 
@@ -710,4 +710,4 @@ class GregorianTimePickerController(object):
         return self.time_picker.GetInsertionPoint() > self._separator_pos()
 
     def _separator_pos(self):
-        return self.time_picker.get_time_string().find(self.separator)
+        return self.time_picker._get_time_string().find(self.separator)

@@ -52,7 +52,7 @@ class CategoryEditor(object):
                 self.view.set_progress_color(self.category.get_progress_color())
                 self.view.set_done_color(self.category.get_done_color())
                 self.view.set_font_color(self.category.get_font_color())
-                self.view.set_parent(self.category.get_parent())
+                self.view.set_parent(self.category._get_parent())
 
     def save(self):
         try:
@@ -61,7 +61,7 @@ class CategoryEditor(object):
             new_progress_color = self.view.get_progress_color()
             new_done_color = self.view.get_done_color()
             new_font_color = self.view.get_font_color()
-            new_parent = self.view.get_parent()
+            new_parent = self.view._get_parent()
             if not self._name_valid(new_name):
                 self.view.handle_invalid_name(new_name)
                 return

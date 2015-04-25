@@ -89,8 +89,8 @@ class cloning(TestBase):
                          self.category_list[0].get_color())
         self.assertEqual(cloned_category.get_font_color(),
                          self.category_list[0].get_font_color())
-        self.assertEqual(cloned_category.get_parent(),
-                         self.category_list[0].get_parent())
+        self.assertEqual(cloned_category._get_parent(),
+                         self.category_list[0]._get_parent())
 
     def test_cloning_list_of_categories_keeps_track_of_parents(self):
         cloned_list, _ = clone_categories_list(self.category_list)
@@ -99,9 +99,9 @@ class cloning(TestBase):
             self.assertInstanceNotIn(clone, self.category_list)
         for clone in cloned_list:
             if clone.get_name() == "Football":
-                self.assertTrue(clone.get_parent() is not self.play)
-                self.assertTrue(clone.get_parent() is not None)
-                self.assertInstanceNotIn(clone.get_parent(), self.category_list)
+                self.assertTrue(clone._get_parent() is not self.play)
+                self.assertTrue(clone._get_parent() is not None)
+                self.assertInstanceNotIn(clone._get_parent(), self.category_list)
 
     def setUp(self):
         self.category_list = []

@@ -159,10 +159,10 @@ class describe_memory_db(unittest.TestCase):
         #       c111
         c11.set_parent(c12)
         self.db.save_category(c11)
-        self.assertEqual(c1.get_parent(), None)
-        self.assertEqual(c12.get_parent(), c1)
-        self.assertEqual(c11.get_parent(), c12)
-        self.assertEqual(c111.get_parent(), c11)
+        self.assertEqual(c1._get_parent(), None)
+        self.assertEqual(c12._get_parent(), c1)
+        self.assertEqual(c11._get_parent(), c12)
+        self.assertEqual(c111._get_parent(), c11)
         # Changing c11's parent to c111 should raise exception since that would
         # create a circular parent link.
         c11.set_parent(c111)
@@ -224,11 +224,11 @@ class describe_memory_db(unittest.TestCase):
         self.db.save_category(c121)
         # Delete c12 should cause c121 to get c1 as parent
         self.db.delete_category(c12)
-        self.assertEqual(c121.get_parent(), c1)
+        self.assertEqual(c121._get_parent(), c1)
         # Delete c1 should cause c11, and c121 to be parentless
         self.db.delete_category(c1)
-        self.assertEqual(c11.get_parent(), None)
-        self.assertEqual(c121.get_parent(), None)
+        self.assertEqual(c11._get_parent(), None)
+        self.assertEqual(c121._get_parent(), None)
 
     def testDelteCategoryWithEvent(self):
         # Create hierarchy:
