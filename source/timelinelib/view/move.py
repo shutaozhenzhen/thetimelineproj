@@ -75,9 +75,12 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
         return False
 
     def _move_selected_events(self):
-        total_move_delta = self._get_total_move_delta()
-        for (event, original_period) in self.event_periods:
-            event.update_period_o(original_period.move_delta(total_move_delta))
+        try:
+            total_move_delta = self._get_total_move_delta()
+            for (event, original_period) in self.event_periods:
+                event.update_period_o(original_period.move_delta(total_move_delta))
+        except ValueError, ex:
+            self.status_bar_adapter.set_text("%s" % ex)
 
     def _get_total_move_delta(self):
         moved_delta = self._get_moved_delta()
