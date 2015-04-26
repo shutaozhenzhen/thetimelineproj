@@ -43,6 +43,9 @@ Solved problems:
   
 * Added export function timeline -> CSV
 
+* Crash report: ValueError: to_julian_day only works for positive julian days, but was -32104
+  (`#43 <https://sourceforge.net/p/thetimelineproj/backlog/43>`_).
+
 Version 1.5.0
 -------------
 
