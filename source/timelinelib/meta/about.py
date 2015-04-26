@@ -35,8 +35,11 @@ DEVELOPERS = [
     u"    Glenn J. Mason",
     u"    Joe Gilmour",
     u"    Thomas Mohr",
+    u"    Linostar",
 ]
 TRANSLATORS = [
+    u"Basque:",
+    u"    Urtzi Odriozola",
     u"Brazilian Portuguese:",
     u"    Leo Frigo",
     u"    Marcelo Ribeiro de Almeida",
@@ -52,6 +55,8 @@ TRANSLATORS = [
     u"    Nils Steinger",
     u"    Daniel Winzen",
     u"    cmdrhenner",
+    u"Greek:",
+    u"    Yannis Kaskamanidis",
     u"Hebrew:",
     u"    Yaron Shahrabani",
     u"Lithuanian:",
