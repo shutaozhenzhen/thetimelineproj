@@ -50,7 +50,9 @@ Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\gdiplus.dll"; DestD
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source: "dist\translations\ca\LC_MESSAGES\*"; DestDir: "{app}\translations\ca\LC_MESSAGES"; Flags: ignoreversion
 Source: "dist\translations\de\LC_MESSAGES\*"; DestDir: "{app}\translations\de\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\el\LC_MESSAGES\*"; DestDir: "{app}\translations\el\LC_MESSAGES"; Flags: ignoreversion
 Source: "dist\translations\es\LC_MESSAGES\*"; DestDir: "{app}\translations\es\LC_MESSAGES"; Flags: ignoreversion
+Source: "dist\translations\eu\LC_MESSAGES\*"; DestDir: "{app}\translations\eu\LC_MESSAGES"; Flags: ignoreversion
 Source: "dist\translations\fr\LC_MESSAGES\*"; DestDir: "{app}\translations\fr\LC_MESSAGES"; Flags: ignoreversion
 Source: "dist\translations\gl\LC_MESSAGES\*"; DestDir: "{app}\translations\gl\LC_MESSAGES"; Flags: ignoreversion
 Source: "dist\translations\he\LC_MESSAGES\*"; DestDir: "{app}\translations\he\LC_MESSAGES"; Flags: ignoreversion
