@@ -4,7 +4,7 @@ Making a Timeline release
 Preparations on main
 --------------------
 1. Check that information is correct in changelog.rst
-	1. Check
+    1. Check
     2. Commit "Updated changes"
 
 2. Check that information is correct in about.py and AUTHORS
@@ -14,6 +14,9 @@ Preparations on main
       1. Check in LaunchPad for contributors that has an e-mail address.
     4. Commit "Updated about"
 
+3. For Windows build - check that all plugins are imported 
+    1. Add imports for new plugins, last in the file release\win\cmd\mod2_factory_py.py
+    
 Feature freeze
 --------------
 
@@ -25,10 +28,10 @@ there.
 Features for the next version (x.y+1) can continue to be developed in main.
 
 1. Move main repo to stable repo
-	1. cd stable
-	2. hg pull ../main
-	3. hg update
-	4. hg push
+    1. cd stable
+    2. hg pull ../main
+    3. hg update
+    4. hg push
 
 2. Import translations from Launchpad
     1. Request download from here (login required)
