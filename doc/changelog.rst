@@ -4,7 +4,7 @@ Changelog
 Version 1.6.0
 -------------
 
-**Planned release on 30 April 2015.**
+**Released on 30 April 2015.**
 
 Solved problems:
 
