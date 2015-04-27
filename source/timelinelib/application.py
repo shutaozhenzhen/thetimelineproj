@@ -174,7 +174,19 @@ class TimelineApplication(object):
     def _unlock(self):
         lockpath = self._get_lockpath()
         if os.path.exists(lockpath):
-            os.remove(lockpath)
+            try:
+                os.remove(lockpath)
+            except WindowsError, ex:
+                if ex.winerror == 32:
+                    self._report_other_process_uses_lockfile(lockpath)
+                else:
+                    raise ex
+
+    def _report_other_process_uses_lockfile(self, lockpath):
+        message = _("""The lockfile used to protect the timeline from concurrent updates is opened by another program or process.
+This lockfile must be removed in order be able to continue editing the timeline!
+The lockfile is found at: %s""") % lockpath
+        display_warning_message(message)
 
     def _the_lock_is_mine(self):
         fp = None
