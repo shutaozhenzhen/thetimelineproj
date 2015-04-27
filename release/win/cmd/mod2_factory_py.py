@@ -1,6 +1,9 @@
 CODE = """\
         import zipfile
-        file = zipfile.ZipFile("library.zip", "r")
+        import sys
+        import os
+        path = os.path.join(os.path.split(sys.executable)[0], "library.zip")
+        file = zipfile.ZipFile(path, "r")
         names = []
         for name in file.namelist():
             if name.startswith("timelinelib/plugin/plugins/"):
