@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 1.7.0
+-------------
+
+**Planned Release on 30 July 2015.**
+
 Version 1.6.0
 -------------
 
