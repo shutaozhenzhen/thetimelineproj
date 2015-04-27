@@ -6,6 +6,11 @@ Version 1.7.0
 
 **Planned Release on 30 July 2015.**
 
+Solved problems:
+
+* Crash report: WindowsError: [Error 32] The process cannot access the file because it is being used by another process: 
+  (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_).
+
 Version 1.6.0
 -------------
 
