@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
 import wx
 import math
 
@@ -24,6 +25,7 @@ from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.drawing.utils import darken_color
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
 from timelinelib.wxgui.utils import get_colour
+from timelinelib.config.paths import ICONS_DIR
 
 
 HANDLE_SIZE = 4
@@ -49,6 +51,7 @@ class DefaultEventBoxDrawer(PluginBase):
         self._draw_text(dc, rect, event)
         self._draw_contents_indicator(dc, event, rect)
         self._draw_selection_handles(dc, event, rect, selected)
+        self._draw_hyperlink(dc, rect, event)
 
     def _draw_background(self, dc, rect, event):
         dc.SetBrush(wx.Brush(self._get_base_color(event), wx.SOLID))
@@ -316,3 +319,12 @@ class DefaultEventBoxDrawer(PluginBase):
         set_pen_and_brush()
         handle_rect = create_handle_rect()
         draw_handle_rects(handle_rect)
+
+    def _draw_hyperlink(self, dc, rect, event):
+        if event.get_hyperlink():
+            #self._inflate_clipping_region(dc, rect)
+            dc.DrawBitmap(self._get_hyperlink_bitmap(), rect.x + rect.width - 14, rect.y + 4, True)
+
+    def _get_hyperlink_bitmap(self):
+        return wx.Bitmap(os.path.join(ICONS_DIR, "hyperlink.png"))
+

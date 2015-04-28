@@ -10,6 +10,9 @@ Solved problems:
 
 * Crash report: WindowsError: [Error 32] The process cannot access the file because it is being used by another process: 
   (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_).
+  
+* Hyperlink marker added
+  (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_).
 
 Version 1.6.0
 -------------
