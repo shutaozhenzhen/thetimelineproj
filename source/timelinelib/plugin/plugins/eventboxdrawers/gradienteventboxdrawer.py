@@ -39,7 +39,7 @@ class GradientEventBoxDrawer(DefaultEventBoxDrawer):
         self._draw_contents_indicator(dc, event, rect)
         self._draw_locked_edges(dc, rect, event)
         self._draw_selection_handles(dc, event, rect, selected)
-
+        self._draw_hyperlink(dc, rect, event)
 
     def _draw_background(self, dc, rect, event):
         dc.SetPen(self._get_border_pen(event))
