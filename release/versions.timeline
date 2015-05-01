@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.6.0devc7a126c279d9</version>
+  <version>1.6.0</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -390,7 +390,7 @@ New features, enhancements:
 
 Bug fixes:
 
-* Exception when opening event editor from menu for a numeric timeline.
+* Exception when opening event editor from menu for a nunmeric timeline.
 * Incorrect display of decades BC, fixed.
 * Contents indicator is drawn even when no balloon data exists.
 * End date is set to now in validate function when ends-today is checked</description>
@@ -587,26 +587,78 @@ Bug fixes:
  * Fixed problem with menus requiring a timeline</description>
     </event>
     <event>
-      <start>2015-05-30 06:38:00</start>
-      <end>2015-05-30 06:38:00</end>
+      <start>2015-04-30 06:38:00</start>
+      <end>2015-04-30 06:38:00</end>
       <text>Timeline 1.6.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
+      <category>Planned Release</category>
       <description>Version 1.6.0
 -------------
 
-**Planned release on 30 April 2015.**
+**Released on 30 April 2015.**
 
-New features, enhancements:</description>
+Solved problems:
+
+* Dividerline slider pos preserved between sessions
+
+* Introduced a Gradient Event box drawer
+
+* A new Event box drawer is added (gradient draw)
+
+* When selecting period in event editor - end date = start date + 1 day
+
+* Introduced background Era's
+
+* Bitmaps used to mark fuzzy and locked edges
+
+* Fixed crash when opening preferences dialog (wxPython 3.0.2.0)
+
+* Fixed crash when opening hyperlink
+
+* Fixed crash when using experimental feature locale date
+
+* Fixed crash when entering non-ascii characters in feedback dialog subject or text
+
+* Crash report: AttributeError: 'MainFrame' object has no attribute 'open_timeline'
+  (`#22 &lt;https://sourceforge.net/p/thetimelineproj/backlog/22&gt;`_).
+
+* Crash report: PyAssertionError: C++ assertion "Assert failure" failed at
+  ../src/common/sizer.cpp(1401) in DoInsert(): too many items (9 &gt; 24) in grid
+  sizer (maybe you should omit the number of either rows or columns?)
+  (`#21 &lt;https://sourceforge.net/p/thetimelineproj/backlog/21&gt;`_).
+  This was only a problem with wxPython 3.
+
+* Crash report: KeyError: '33'
+  (`#26 &lt;https://sourceforge.net/p/thetimelineproj/backlog/26&gt;`_).
+  This happened when using experimental feature 'locale date'.
+  
+* Added export function timeline -&gt; CSV
+
+* Crash report: ValueError: to_julian_day only works for positive julian days, but was -32104
+  (`#43 &lt;https://sourceforge.net/p/thetimelineproj/backlog/43&gt;`_).</description>
+    </event>
+    <event>
+      <start>2015-07-30 06:38:00</start>
+      <end>2015-07-30 06:38:00</end>
+      <text>Timeline 1.7.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Future Release</category>
+      <description>Version 1.7.0
+-------------
+
+**Planned release on 30 July 2015.**</description>
     </event>
   </events>
   <view>
     <displayed_period>
-      <start>2010-11-04 16:28:12</start>
-      <end>2017-10-24 07:31:48</end>
+      <start>2012-03-10 02:28:22</start>
+      <end>2019-02-27 17:31:58</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
