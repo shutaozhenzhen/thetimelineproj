@@ -236,26 +236,36 @@ class TimelineCanvasController(object):
     def display_event_context_menu(self):
         self.view_properties.set_selected(self.context_menu_event, True)
         menu_definitions = [
-            (_("Delete"), self._context_menu_on_delete_event),
+            (_("Delete"), self._context_menu_on_delete_event, None),
         ]
         nbr_of_selected_events = len(self.view_properties.get_selected_event_ids())
         if nbr_of_selected_events == 1:
-            menu_definitions.insert(0, (_("Edit"), self._context_menu_on_edit_event))
-            menu_definitions.insert(1, (_("Duplicate..."), self._context_menu_on_duplicate_event))
+            menu_definitions.insert(0, (_("Edit"), self._context_menu_on_edit_event, None))
+            menu_definitions.insert(1, (_("Duplicate..."), self._context_menu_on_duplicate_event, None))
         if EVENT_DONE.enabled():
-            menu_definitions.append((EVENT_DONE.get_display_name(), self._context_menu_on_done_event))
+            menu_definitions.append((EVENT_DONE.get_display_name(), self._context_menu_on_done_event, None))
         if nbr_of_selected_events == 1 and self.context_menu_event.has_data():
-            menu_definitions.append((_("Sticky Balloon"), self._context_menu_on_sticky_balloon_event))
+            menu_definitions.append((_("Sticky Balloon"), self._context_menu_on_sticky_balloon_event, None))
         if nbr_of_selected_events == 1:
-            hyperlink = self.context_menu_event.get_data("hyperlink")
-            if hyperlink is not None:
-                menu_definitions.append((_("Goto URL"), self._context_menu_on_goto_hyperlink_event))
+            hyperlinks = self.context_menu_event.get_data("hyperlink")
+            if hyperlinks is not None:
+                imp = wx.Menu()
+                menuid = 0
+                for hyperlink in hyperlinks.split(";"):
+                    imp.Append(menuid, hyperlink)
+                    menuid += 1
+                menu_definitions.append((_("Goto URL"), self._context_menu_on_goto_hyperlink_event, imp))
         menu = wx.Menu()
         for menu_definition in menu_definitions:
-            text, method = menu_definition
+            text, method, imp = menu_definition
             menu_item = wx.MenuItem(menu, wx.NewId(), text)
-            self.view.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
-            menu.AppendItem(menu_item)
+            if imp is not None:
+                for menu_item in imp.GetMenuItems():
+                    self.view.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
+                menu.AppendMenu(wx.ID_ANY, text, imp)
+            else:
+                self.view.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
+                menu.AppendItem(menu_item)
         self.view.PopupMenu(menu)
         menu.Destroy()
 
@@ -288,7 +298,8 @@ class TimelineCanvasController(object):
         self._redraw_timeline()
 
     def _context_menu_on_goto_hyperlink_event(self, evt):
-        hyperlink = self.context_menu_event.get_data("hyperlink")
+        hyperlinks = self.context_menu_event.get_data("hyperlink")
+        hyperlink = hyperlinks.split(";")[evt.Id]
         webbrowser.open(to_unicode(hyperlink))
 
     @experimental_feature(EVENT_DONE)
