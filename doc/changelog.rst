@@ -11,8 +11,11 @@ Solved problems:
 * Crash report: WindowsError: [Error 32] The process cannot access the file because it is being used by another process: 
   (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_).
   
-* Hyperlink marker added
+* It's not possible to see if an event has a hyperlink associated with it, or not.
   (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_).
+
+* An Event can only have one hyperlink
+  (`#30 <https://http://sourceforge.net/p/thetimelineproj/backlog/30/>`_).
 
 Version 1.6.0
 -------------
