@@ -27,7 +27,7 @@ class BaseEditor(object):
         controls = self.create_controls()
         self.put_controls_in_sizer(sizer, controls)
         self.SetSizerAndFit(sizer)
-        
+
     def get_data(self):
         return self.data.GetValue()
 
