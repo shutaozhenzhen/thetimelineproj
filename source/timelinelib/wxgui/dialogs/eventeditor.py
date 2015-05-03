@@ -183,7 +183,11 @@ class EventEditorDialog(wx.Dialog):
 
     def _chb_period_on_checkbox(self, e):
         if (e.IsChecked() and self.get_start() >= self.get_end()):
-            self.set_end(self.get_start() + delta_from_days(1))
+            if self.timeline.get_time_type().is_date_time_type():
+                delta = delta_from_days(1)
+            else:
+                delta = 1
+            self.set_end(self.get_start() + delta)
         self._show_to_time(e.IsChecked())
 
     def _create_show_time_checkbox(self, box):
