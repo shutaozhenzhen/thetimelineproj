@@ -45,7 +45,7 @@ class EventEditorDialog(wx.Dialog):
         self.TXT_ENLARGE = _("&Enlarge")
         self.TXT_REDUCE = _("&Reduce")
         wx.Dialog.__init__(self, parent, title=title, name="event_editor",
-                           style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.start = start
         self.event = event
         self.timeline = timeline
@@ -71,13 +71,11 @@ class EventEditorDialog(wx.Dialog):
         main_box_content = wx.StaticBoxSizer(groupbox, wx.VERTICAL)
         self._create_detail_content(main_box_content)
         self._create_notebook_content(main_box_content)
-        sizer.Add(main_box_content, flag=wx.EXPAND|wx.ALL,
-                           border=BORDER, proportion=1)
+        sizer.Add(main_box_content, flag=wx.EXPAND | wx.ALL, border=BORDER, proportion=1)
 
     def _create_detail_content(self, properties_box_content):
         details = self._create_details()
-        properties_box_content.Add(details, flag=wx.ALL|wx.EXPAND,
-                                   border=BORDER)
+        properties_box_content.Add(details, flag=wx.ALL | wx.EXPAND, border=BORDER)
 
     def _create_details(self):
         grid = wx.FlexGridSizer(6, 2, BORDER, BORDER)
@@ -98,7 +96,7 @@ class EventEditorDialog(wx.Dialog):
         when_box = wx.BoxSizer(wx.HORIZONTAL)
         when_box.Add(self.dtp_start, proportion=1)
         when_box.AddSpacer(BORDER)
-        flag = wx.ALIGN_CENTER_VERTICAL|wx.RESERVE_SPACE_EVEN_IF_HIDDEN
+        flag = wx.ALIGN_CENTER_VERTICAL | wx.RESERVE_SPACE_EVEN_IF_HIDDEN
         when_box.Add(self.lbl_to, flag=flag)
         when_box.AddSpacer(BORDER)
         when_box.Add(self.dtp_end, proportion=1,
@@ -236,7 +234,7 @@ class EventEditorDialog(wx.Dialog):
     def _create_notebook_content(self, properties_box_content):
         notebook = self._create_notebook()
         properties_box_content.Add(notebook, border=BORDER,
-                                   flag=wx.ALL|wx.EXPAND, proportion=1)
+                                   flag=wx.ALL | wx.EXPAND, proportion=1)
 
     def _create_notebook(self):
         self.event_data = []
@@ -249,7 +247,7 @@ class EventEditorDialog(wx.Dialog):
     def _notebook_page_changed(self, evt):
         _, editor = self.event_data[evt.Selection]
         editor.focus()
-    
+
     def _add_editor(self, notebook, data_id):
         editor_class_decription = self._get_editor_class_description(data_id)
         if editor_class_decription is None:
@@ -258,13 +256,14 @@ class EventEditorDialog(wx.Dialog):
         self.event_data.append((data_id, editor))
 
     def _get_editor_class_description(self, editor_class_id):
-        editors = {"description" : (_("Description"), DescriptionEditor),
-                   "alert" : (_("Alert"), AlertEditor),
-                   "icon" : (_("Icon"), IconEditor),
-                   "hyperlink" :  (_("Hyperlink"), HyperlinkEditor),
-                   "progress" :  (_("Progress"), ProgressEditor),
+        editors = {"description": (_("Description"), DescriptionEditor),
+                   "alert": (_("Alert"), AlertEditor),
+                   "icon": (_("Icon"), IconEditor),
+                   "hyperlink": (_("Hyperlink"), HyperlinkEditor),
+                   "progress": (_("Progress"), ProgressEditor),
                    }
-        if editors.has_key(editor_class_id):
+        if editor_class_id in editors:
+            print "tjoho"
             return editors[editor_class_id]
         else:
             return None
@@ -286,7 +285,7 @@ class EventEditorDialog(wx.Dialog):
         properties_box.Add(self.chb_add_more, flag=wx.ALL, border=BORDER)
 
     def _create_buttons(self, properties_box):
-        button_box = self.CreateStdDialogButtonSizer(wx.OK|wx.CANCEL)
+        button_box = self.CreateStdDialogButtonSizer(wx.OK | wx.CANCEL)
         button_box.InsertStretchSpacer(0)
         self.resizebutton = wx.Button(self, wx.ID_ANY, self.TXT_ENLARGE)
         self.Bind(wx.EVT_BUTTON, self._on_resize, self.resizebutton)
@@ -297,7 +296,7 @@ class EventEditorDialog(wx.Dialog):
             info="What would make the event editor dialog better for you?",
             subject="Feedback on event editor dialog"))
         self.Bind(wx.EVT_BUTTON, self._btn_ok_on_click, id=wx.ID_OK)
-        properties_box.Add(button_box, flag=wx.EXPAND|wx.ALL, border=BORDER)
+        properties_box.Add(button_box, flag=wx.EXPAND | wx.ALL, border=BORDER)
 
     def _on_resize(self, evt):
         if self.resizebutton.GetLabel() == self.TXT_ENLARGE:
@@ -306,22 +305,22 @@ class EventEditorDialog(wx.Dialog):
         else:
             self._reduce()
             self.resizebutton.SetLabel(self.TXT_ENLARGE)
-                 
+
     def _enlarge(self):
         self.reduced_size = self.GetSize()
         self.reduced_pos = self.GetPosition()
         screen_width, screen_height = wx.DisplaySize()
-        dialog_size = (screen_width * 0.9, screen_height * 0.8) 
+        dialog_size = (screen_width * 0.9, screen_height * 0.8)
         dialog_pos = (screen_width * 0.05, screen_height * 0.05)
         self._set_position_and_size(dialog_pos, dialog_size)
-    
+
     def _reduce(self):
         self._set_position_and_size(self.reduced_pos, self.reduced_size)
-    
+
     def _set_position_and_size(self, pos, size):
         self.SetPosition(pos)
         self.SetSize(size)
-        
+
     def on_return(self):
         self._btn_ok_on_click(None)
 
@@ -337,10 +336,10 @@ class EventEditorDialog(wx.Dialog):
         # from the constructor (and then error handling is done by the code
         # calling the constructor).
         self.lst_containers.Clear()
-        self.lst_containers.Append("", None) # The None-container
+        self.lst_containers.Append("", None)  # The None-container
         selection_set = False
         current_item_index = 1
-        if select_container != None and select_container not in self.timeline.get_containers():
+        if select_container is not None and select_container not in self.timeline.get_containers():
             self.lst_containers.Append(select_container.text, select_container)
             self.lst_containers.SetSelection(current_item_index)
             current_item_index += 1
@@ -426,16 +425,16 @@ class EventEditorDialog(wx.Dialog):
 
     def set_event_data(self, event_data):
         for data_id, editor in self.event_data:
-            if event_data.has_key(data_id):
+            if data_id in event_data:
                 data = event_data[data_id]
                 if data is not None:
                     editor.set_data(data)
-                    
+
     def get_event_data(self):
         event_data = {}
         for data_id, editor in self.event_data:
             data = editor.get_data()
-            if data != None:
+            if data is not None:
                 event_data[data_id] = editor.get_data()
         return event_data
 
@@ -446,8 +445,8 @@ class EventEditorDialog(wx.Dialog):
         return self.chb_add_more.GetValue()
 
     def set_focus(self, control_name):
-        controls = {"start" : self.dtp_start, "text" : self.txt_text}
-        if controls.has_key(control_name):
+        controls = {"start": self.dtp_start, "text": self.txt_text}
+        if control_name in controls:
             controls[control_name].SetFocus()
         else:
             self.dtp_start.SetFocus()
@@ -473,7 +472,7 @@ class EventEditorDialog(wx.Dialog):
 
     def clear_dialog(self):
         self.controller.clear()
-        for data_id, editor in self.event_data:
+        for _, editor in self.event_data:
             editor.clear_data()
 
     def close(self):
