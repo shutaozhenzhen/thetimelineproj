@@ -16,6 +16,9 @@ Solved problems:
 
 * An Event can only have one hyperlink
   (`#30 <https://http://sourceforge.net/p/thetimelineproj/backlog/30/>`_).
+  
+* Crash report: TypeError: unsupported operand type(s) for +: 'int' and 'TimeDelta'
+  (`#48 <https://http://sourceforge.net/p/thetimelineproj/backlog/48/>`_).
 
 Version 1.6.0
 -------------
