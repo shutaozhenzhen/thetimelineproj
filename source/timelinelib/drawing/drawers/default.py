@@ -312,7 +312,9 @@ class DefaultDrawingAlgorithm(Drawer):
         for (event, rect) in self.scene.event_data:
             if self._invisible_container_subevent(event, rect):
                 continue
-            if self._event_displayed_as_point_event(rect):
+            if not event.is_period():
+                self._draw_line(view_properties, event, rect)
+            elif not self.scene.never_show_period_events_as_point_events() and self._event_displayed_as_point_event(rect):
                 self._draw_line(view_properties, event, rect)
 
     def _invisible_container_subevent(self, event, rect):
@@ -471,7 +473,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_box(self, rect, event, view_properties):
         self.dc.SetClippingRect(rect)
-        self.event_box_drawer.run(self.dc, rect, event, view_properties.is_selected(event))
+        self.event_box_drawer.run(self.dc, self.scene, rect, event, view_properties.is_selected(event))
         self.dc.DestroyClippingRegion()
 
     def _draw_ballons(self, view_properties):

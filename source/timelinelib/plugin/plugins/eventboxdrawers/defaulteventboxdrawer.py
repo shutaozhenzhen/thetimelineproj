@@ -43,13 +43,30 @@ class DefaultEventBoxDrawer(PluginBase):
     def display_name(self):
         return _("Default Event box drawer")
 
-    def run(self, dc, rect, event, selected=False):
+    def run(self, dc, scene, rect, event, selected=False):
+        if scene.never_show_period_events_as_point_events() and rect.y < scene.divider_y and event.is_period():
+            self._draw_period_event_as_symbol_below_divider_line(dc, scene, event)
+        else:
+            self._draw_event_box(dc, rect, event, selected)
+
+    def _draw_period_event_as_symbol_below_divider_line(self, dc, scene, event):
+        dc.DestroyClippingRegion()
+        x = scene.x_pos_for_time(event.mean_time())
+        y0 = scene.divider_y
+        y1 = y0 + 10
+        dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0), wx.SOLID))
+        dc.SetPen(wx.Pen(wx.Colour(0, 0, 0), 1, wx.SOLID))
+        dc.DrawLine(x, y0, x, y1)
+        dc.DrawCircle(x, y1, 2)
+
+    def _draw_event_box(self, dc, rect, event, selected):
         self._draw_background(dc, rect, event)
         self._draw_fuzzy_edges(dc, rect, event)
         self._draw_locked_edges(dc, rect, event)
         self._draw_progress_box(dc, rect, event)
         self._draw_text(dc, rect, event)
         self._draw_contents_indicator(dc, event, rect)
+        self._draw_locked_edges(dc, rect, event)
         self._draw_selection_handles(dc, event, rect, selected)
         self._draw_hyperlink(dc, rect, event)
 
@@ -98,48 +115,12 @@ class DefaultEventBoxDrawer(PluginBase):
             return GRAY
 
     def _draw_fuzzy_start(self, dc, rect, event):
-        """
-               x1     x2
-
-          y1   p1    /p2 ----------
-                    /
-          y2   p3  <
-                    \
-          y3   p4    \p5 ----------
-        """
-        x1 = rect.x
-        x2 = rect.x + rect.height / 2
-        y1 = rect.y
-        y2 = rect.y + rect.height / 2
-        y3 = rect.y + rect.height
-        p1 = wx.Point(x1, y1)
-        p2 = wx.Point(x2, y1)
-        p3 = wx.Point(x1, y2)
-        p4 = wx.Point(x1, y3)
-        p5 = wx.Point(x2, y3)
-        self.draw_fuzzy(dc, event, p1, p2, p3, p4, p5)
+        self._inflate_clipping_region(dc, rect)
+        dc.DrawBitmap(self._get_fuzzy_bitmap(), rect.x - 4, rect.y + 4, True)
 
     def _draw_fuzzy_end(self, dc, rect, event):
-        """
-                   x1     x2
-
-          y1  ---- P2\    p1
-                      \
-          y2           >  p3
-                      /
-          y3  ---- p5/    p4
-        """
-        x1 = rect.x + rect.width - rect.height / 2
-        x2 = rect.x + rect.width
-        y1 = rect.y
-        y2 = rect.y + rect.height / 2
-        y3 = rect.y + rect.height
-        p1 = wx.Point(x2, y1)
-        p2 = wx.Point(x1, y1)
-        p3 = wx.Point(x2, y2)
-        p4 = wx.Point(x2, y3)
-        p5 = wx.Point(x1, y3)
-        self.draw_fuzzy(dc, event, p1, p2, p3, p4, p5)
+        self._inflate_clipping_region(dc, rect)
+        dc.DrawBitmap(self._get_fuzzy_bitmap(), rect.x + rect.width - 8, rect.y + 4, True)
 
     def draw_fuzzy(self, dc, event, p1, p2, p3, p4, p5):
         self._erase_outzide_fuzzy_box(dc, p1, p2, p3)
@@ -161,24 +142,12 @@ class DefaultEventBoxDrawer(PluginBase):
         gc.StrokePath(path)
 
     def _draw_locked_start(self, dc, event, rect):
-        x = rect.x
-        if event.fuzzy:
-            start_angle = -math.pi / 4
-            end_angle = math.pi / 4
-        else:
-            start_angle = -math.pi
-            end_angle = math.pi
-        self._draw_locked(dc, event, rect, x, start_angle, end_angle)
+        self._inflate_clipping_region(dc, rect)
+        dc.DrawBitmap(self._get_lock_bitmap(), rect.x - 7, rect.y + 3, True)
 
     def _draw_locked_end(self, dc, event, rect):
-        x = rect.x + rect.width
-        if event.fuzzy:
-            start_angle = 3 * math.pi / 4
-            end_angle = 5 * math.pi / 4
-        else:
-            start_angle = math.pi / 2
-            end_angle = 3 * math.pi / 2
-        self._draw_locked(dc, event, rect, x, start_angle, end_angle)
+        self._inflate_clipping_region(dc, rect)
+        dc.DrawBitmap(self._get_lock_bitmap(), rect.x + rect.width - 8, rect.y + 3, True)
 
     def _draw_locked(self, dc, event, rect, x, start_angle, end_angle):
         y = rect.y + rect.height / 2
@@ -328,3 +297,14 @@ class DefaultEventBoxDrawer(PluginBase):
     def _get_hyperlink_bitmap(self):
         return wx.Bitmap(os.path.join(ICONS_DIR, "hyperlink.png"))
 
+    def _inflate_clipping_region(self, dc, rect):
+        copy = wx.Rect(*rect)
+        copy.Inflate(10, 0)
+        dc.DestroyClippingRegion()
+        dc.SetClippingRect(copy)
+
+    def _get_lock_bitmap(self):
+        return wx.Bitmap(os.path.join(ICONS_DIR, "lock.png"))
+
+    def _get_fuzzy_bitmap(self):
+        return wx.Bitmap(os.path.join(ICONS_DIR, "appx.png"))
