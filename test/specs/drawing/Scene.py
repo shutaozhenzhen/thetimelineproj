@@ -26,6 +26,7 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
 from timelinelib.drawing.scene import TimelineScene
 from timelinelib.drawing.viewproperties import ViewProperties
+from timelinelib.config.dotfile import Config
 
 
 class SceneSpec(unittest.TestCase):
@@ -152,7 +153,7 @@ class SceneSpec(unittest.TestCase):
     def when_scene_is_created(self):
         self.scene = TimelineScene(
             self.size, self.db, self.view_properties, self.get_text_size_fn,
-            None)
+            Config(None))
         self.scene.set_outer_padding(self.outer_padding)
         self.scene.set_inner_padding(self.inner_padding)
         self.scene.set_baseline_padding(self.baseline_padding)

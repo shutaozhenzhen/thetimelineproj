@@ -264,7 +264,13 @@ class TimelineScene(object):
             rw += th + 2 * self._inner_padding
         rx = self._metrics.calc_x(event.mean_time()) - rw / 2
         ry = self._metrics.half_height - rh - self._baseline_padding
+        if self.never_show_period_events_as_point_events() and event.is_period():
+            rx = -1
+            rw = 0
         return self._create_ideal_wx_rect(rx, ry, rw, rh)
+
+    def never_show_period_events_as_point_events(self):
+        return self._config.get_never_show_period_events_as_point_events()
 
     def _create_ideal_wx_rect(self, rx, ry, rw, rh):
         # Drawing stuff on huge x-coordinates causes drawing to fail.

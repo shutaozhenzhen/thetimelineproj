@@ -48,6 +48,7 @@ WEEK_START = "week_start"
 USE_INERTIAL_SCROLLING = "use_inertial_scrolling"
 EXPERIMENTAL_FEATURES = "experimental_features"
 DIVIDER_LINE_SLIDER_POS = "divider_line_slider_pos"
+NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS = "never_show_period_events_as_point_events"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -65,6 +66,7 @@ DEFAULTS = {
     USE_INERTIAL_SCROLLING: "False",
     EXPERIMENTAL_FEATURES: "",
     DIVIDER_LINE_SLIDER_POS: "50",
+    NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS: "True"
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -242,3 +244,9 @@ class Config(object):
         self.config_parser.set(DEFAULTSECT, EXPERIMENTAL_FEATURES, value)
     experimental_features = property(get_experimental_features, set_experimental_features)
 
+    def get_never_show_period_events_as_point_events(self):
+        return self.config_parser.getboolean(DEFAULTSECT, NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS)
+    def set_never_show_period_events_as_point_events(self, value):
+        self.config_parser.set(DEFAULTSECT, NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS, str(value))
+    never_show_period_events_as_point_events = property(get_never_show_period_events_as_point_events,
+                                                        set_never_show_period_events_as_point_events)

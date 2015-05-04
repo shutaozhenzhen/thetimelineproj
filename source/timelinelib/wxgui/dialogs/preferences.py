@@ -34,6 +34,9 @@ class PreferencesDialog(wx.Dialog):
     def set_checkbox_use_inertial_scrolling(self, value):
         self.chb_inertial_scrolling.SetValue(value)
 
+    def set_checkbox_never_show_period_events_as_point_events(self, value):
+        self.chb_never_show_period_events_as_point_events.SetValue(value)
+
     def set_checkbox_open_recent_at_startup(self, value):
         self.chb_open_recent.SetValue(value)
 
@@ -81,7 +84,8 @@ class PreferencesDialog(wx.Dialog):
     def _create_general_tab_controls(self, panel):
         self.chb_open_recent = self._create_chb_open_recent(panel)
         self.chb_inertial_scrolling = self._create_chb_inertial_scrolling(panel)
-        return (self.chb_open_recent, self.chb_inertial_scrolling)
+        self.chb_never_show_period_events_as_point_events = self._create_chb_never_show_period_events_as_point_events(panel)
+        return (self.chb_open_recent, self.chb_inertial_scrolling,  self.chb_never_show_period_events_as_point_events)
 
     def _create_date_time_tab(self, notebook):
         panel = self._create_tab_panel(notebook, _("Date && Time"))
@@ -137,6 +141,12 @@ class PreferencesDialog(wx.Dialog):
         chb = self._create_chb(panel, label, handler)
         return chb
 
+    def _create_chb_never_show_period_events_as_point_events(self, panel):
+        label = _("Never show period Events as point Events")
+        handler = self._chb_never_show_period_events_as_point_events_on_checkbox
+        chb = self._create_chb(panel, label, handler)
+        return chb
+
     def _create_chb(self, panel, label, handler):
         chb = wx.CheckBox(panel, label=label)
         self.Bind(wx.EVT_CHECKBOX, handler, chb)
@@ -157,6 +167,9 @@ class PreferencesDialog(wx.Dialog):
 
     def _chb_use_inertial_scrolling_on_checkbox(self, evt):
         self._controller.on_use_inertial_scrolling_changed(evt.IsChecked())
+
+    def _chb_never_show_period_events_as_point_events_on_checkbox(self, evt):
+        self._controller.on_never_show_period_events_as_point_events_changed(evt.IsChecked())
 
     def _chb_open_recent_startup_on_checkbox(self, evt):
         self._controller.on_open_recent_changed(evt.IsChecked())

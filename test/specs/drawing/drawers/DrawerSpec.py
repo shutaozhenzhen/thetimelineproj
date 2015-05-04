@@ -29,6 +29,7 @@ from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import Default
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.time.gregoriantime import GregorianTimeType
 import timelinelib.calendar.gregorian as gregorian
+from timelinelib.config.dotfile import Config
 
 
 IMAGE_SIZE = (500, 200)
@@ -59,7 +60,8 @@ class DrawerSpec(unittest.TestCase):
         self.timeline.save_event(event)
 
     def when_timeline_is_drawn(self):
-        self.drawer.draw(self.dc, self.timeline, self.view_properties, None)
+        config = Config(None)
+        self.drawer.draw(self.dc, self.timeline, self.view_properties, config)
 
     def assert_text_drawn_above(self, text, y_limit):
         x, y = self.position_of_drawn_text(text)

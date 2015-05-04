@@ -30,12 +30,16 @@ class PreferencesEditor(object):
     def initialize_controls(self):
         self.dialog.set_checkbox_use_inertial_scrolling(self.config.get_use_inertial_scrolling())
         self.dialog.set_checkbox_open_recent_at_startup(self.config.get_open_recent_at_startup())
+        self.dialog.set_checkbox_never_show_period_events_as_point_events(self.config.get_never_show_period_events_as_point_events())
         self.dialog.set_experimental_features()
         index = self._week_index(self.config.week_start)
         self.dialog.set_week_start(index)
 
     def on_use_inertial_scrolling_changed(self, value):
         self.config.set_use_inertial_scrolling(value)
+
+    def on_never_show_period_events_as_point_events_changed(self, value):
+        self.config.set_never_show_period_events_as_point_events(value)
 
     def on_open_recent_changed(self, value):
         self.config.set_open_recent_at_startup(value)
