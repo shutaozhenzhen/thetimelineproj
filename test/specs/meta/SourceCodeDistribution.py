@@ -18,16 +18,16 @@
 
 import codecs
 import os
-import unittest
 import datetime
 
 from timelinelib.calendar.monthnames import english_name_of_month
 from timelinelib.calendar.monthnames import month_from_english_name
+from timelinetest import UnitTestCase
 import timelinelib.meta.about
 import timelinelib.meta.version
 
 
-class SourceCodeDistributionSpec(unittest.TestCase):
+class SourceCodeDistributionSpec(UnitTestCase):
 
     def test_version_number_in_README_should_match_that_in_version_module(self):
         self.assertTrue(

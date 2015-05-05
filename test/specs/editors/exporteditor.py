@@ -20,13 +20,14 @@ import unittest
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.export import ExportDialog
 from timelinelib.editors.export import ExportDialogController
-from timelinelib.editors.fieldselection import FIELDS
 from timelinelib.editors.export import TARGET_TYPES
+from timelinelib.editors.fieldselection import FIELDS
+from timelinelib.wxgui.dialogs.export import ExportDialog
+from timelinetest import UnitTestCase
 
 
-class ExportEditorTestCase(unittest.TestCase):
+class ExportEditorTestCase(UnitTestCase):
 
     def when_event_type_selected(self):
         self.view.get_export_events.return_value = True

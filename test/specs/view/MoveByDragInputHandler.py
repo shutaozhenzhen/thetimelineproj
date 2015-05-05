@@ -16,17 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from specs.utils import an_event_with, human_time_to_gregorian, gregorian_period
 from timelinelib.view.drawingarea import TimelineCanvasController
 from timelinelib.view.move import MoveByDragInputHandler
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
+from timelinetest import UnitTestCase
 
 
-class MoveByDragInputHandlerSpec(unittest.TestCase):
+class MoveByDragInputHandlerSpec(UnitTestCase):
 
     def test_moves_point_events(self):
         self.given_time_at_x_is(50, "5 Jan 2011")

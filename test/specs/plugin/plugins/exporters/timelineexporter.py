@@ -17,20 +17,20 @@
 
 import os
 
-import unittest
 from mock import Mock
 
-from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExporter
-from timelinelib.plugin.plugins.exporters.timelineexporter import CsvExporter
-from timelinelib.data.db import MemoryDB
-from specs.utils import an_event_with
 from specs.utils import a_category_with
+from specs.utils import an_event_with
+from timelinelib.data.db import MemoryDB
+from timelinelib.plugin.plugins.exporters.timelineexporter import CsvExporter
+from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExporter
+from timelinetest import UnitTestCase
 
 
 CSV_FILE = "test.csv"
 
 
-class TimelineExporterTestCase(unittest.TestCase):
+class TimelineExporterTestCase(UnitTestCase):
 
     def setUp(self):
         self.plugin = TimelineExporter()
@@ -43,7 +43,7 @@ class TimelineExporterTestCase(unittest.TestCase):
     def tearDown(self):
         self.close_tempfile()
         os.remove(CSV_FILE)
-        unittest.TestCase.tearDown(self)
+        UnitTestCase.tearDown(self)
 
     def open_tempfile_for_writing(self):
         self.tempfile = open(CSV_FILE, "w")

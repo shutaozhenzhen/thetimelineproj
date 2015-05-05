@@ -16,22 +16,21 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 import wx
 
-from timelinelib.config.shortcut import ShortcutController
 from timelinelib.config.dotfile import Config
-import timelinelib.wxgui.dialogs.mainframe as mf
+from timelinelib.config.shortcut import ShortcutController
+from timelinetest import UnitTestCase
 import timelinelib.config.shortcut as sc
+import timelinelib.wxgui.dialogs.mainframe as mf
 
 
 NEW_FUNCTION = "#File#->#File Timeline...#"
 SIDEBAR_FUNCTION = "#View#->#Sidebar#"
 
 
-class ShortcutControllerSpec(unittest.TestCase):
+class ShortcutControllerSpec(UnitTestCase):
 
     def test_get_functions_returns_list(self):
         list = self.controller.get_functions()

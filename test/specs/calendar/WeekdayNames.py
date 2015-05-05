@@ -16,12 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
+from timelinetest import UnitTestCase
 import timelinelib.calendar.weekdaynames
 
 
-class WeekdayNamesSpec(unittest.TestCase):
+class WeekdayNamesSpec(UnitTestCase):
 
     def test_abbreviated_weekday_name_for_0_should_be_mon_translated(self):
         self.assertEqual(

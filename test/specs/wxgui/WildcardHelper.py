@@ -16,15 +16,14 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 import wx
 
 from timelinelib.wxgui.utils import WildcardHelper
+from timelinetest import UnitTestCase
 
 
-class TestWildcardHelper(unittest.TestCase):
+class TestWildcardHelper(UnitTestCase):
 
     def testGeneratesWildcardStringForUseInFileDialog(self):
         helper = WildcardHelper("Source code files", ["cpp", "py"])

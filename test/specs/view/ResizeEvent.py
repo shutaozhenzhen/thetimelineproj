@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 import wx
 
@@ -29,9 +27,10 @@ from timelinelib.view.resize import ResizeByDragInputHandler
 from timelinelib.wxgui.components.timeline import TimelineCanvas
 from timelinelib.wxgui.components.timeline import TimelineCanvasController
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
+from timelinetest import UnitTestCase
 
 
-class ResizeEventSpec(unittest.TestCase):
+class ResizeEventSpec(UnitTestCase):
 
     def test_updates_period_on_event(self):
         self.given_time_at_x_is(50, "31 Aug 2010")

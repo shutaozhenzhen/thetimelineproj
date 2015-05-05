@@ -16,12 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from timelinelib.db.interface import ContainerStrategy
+from timelinetest import UnitTestCase
 
 
-class ContainerStrategyInterfaceSpec(unittest.TestCase):
+class ContainerStrategyInterfaceSpec(UnitTestCase):
 
     def testConstruction(self):
         self.given_strategy_with_none_container()

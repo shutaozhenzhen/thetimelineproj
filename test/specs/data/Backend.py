@@ -16,14 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from specs.utils import a_category_with
 from specs.utils import TmpDirTestCase
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.events import clone_data
 from timelinelib.data import Event
 from timelinelib.dataimport.ics import import_db_from_ics
+from timelinetest import UnitTestCase
 
 
 class BackendTest(object):
@@ -39,7 +38,7 @@ class BackendTest(object):
         self.backend.get_time_type()
 
 
-class MemoryBackendTest(unittest.TestCase, BackendTest):
+class MemoryBackendTest(UnitTestCase, BackendTest):
 
     def setUp(self):
         self.backend = MemoryDB()
@@ -81,7 +80,7 @@ END:VCALENDAR
 """
 
 
-class CloningTest(unittest.TestCase):
+class CloningTest(UnitTestCase):
     """
     An Event can be associated with a category.
     When the backend event-list and category-list are cloned this association must be maintained.

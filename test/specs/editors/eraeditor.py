@@ -16,18 +16,17 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.eraeditor import EraEditorDialog
-from timelinelib.editors.era import EraEditorDialogController
 from specs.utils import a_gregorian_era
 from specs.utils import a_gregorian_era_with
 from specs.utils import human_time_to_gregorian
+from timelinelib.editors.era import EraEditorDialogController
+from timelinelib.wxgui.dialogs.eraeditor import EraEditorDialog
+from timelinetest import UnitTestCase
 
 
-class EraEditorTestCase(unittest.TestCase):
+class EraEditorTestCase(UnitTestCase):
 
     def when_editor_opened_with_era(self, era):
         self.editor = EraEditorDialogController(self.view, era)
@@ -78,14 +77,14 @@ class EraEditorTestCase(unittest.TestCase):
         self.view = Mock(EraEditorDialog)
 
 
-class describe_era_editor_dialog_controller_add(unittest.TestCase):
+class describe_era_editor_dialog_controller_add(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(EraEditorDialog)
         self.controller = EraEditorDialogController(self.view)
 
 
-class describe_era_editor_dialog_controller_edit(unittest.TestCase):
+class describe_era_editor_dialog_controller_edit(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(EraEditorDialog)

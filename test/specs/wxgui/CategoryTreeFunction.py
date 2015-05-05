@@ -16,13 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from specs.utils import a_category_with
 from timelinelib.wxgui.utils import category_tree
+from timelinetest import UnitTestCase
 
 
-class CategoryTreeFunctionSpec(unittest.TestCase):
+class CategoryTreeFunctionSpec(UnitTestCase):
 
     def testCreatesTreeOfCategories(self):
         tree = category_tree([self.c11, self.c1, self.c2])

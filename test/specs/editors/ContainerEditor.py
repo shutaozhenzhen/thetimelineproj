@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from timelinelib.data.db import MemoryDB
@@ -25,9 +23,10 @@ from timelinelib.data import Container
 from timelinelib.editors.container import ContainerEditor
 from timelinelib.repositories.interface import EventRepository
 from timelinelib.wxgui.dialogs.eventeditor import ContainerEditorDialog
+from timelinetest import UnitTestCase
 
 
-class ContainerEditorTestCase(unittest.TestCase):
+class ContainerEditorTestCase(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(ContainerEditorDialog)

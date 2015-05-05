@@ -16,16 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.fieldselection import FieldSelectionDialog
-from timelinelib.editors.fieldselection import FieldSelectionDialogController
 from timelinelib.editors.fieldselection import FIELDS
+from timelinelib.editors.fieldselection import FieldSelectionDialogController
+from timelinelib.wxgui.dialogs.fieldselection import FieldSelectionDialog
+from timelinetest import UnitTestCase
 
 
-class FieldSelectionEditorTestCase(unittest.TestCase):
+class FieldSelectionEditorTestCase(UnitTestCase):
 
     def a_controller_with(self, data, fields):
         self.selected_fields = []

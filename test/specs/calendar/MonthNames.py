@@ -16,12 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
+from timelinetest import UnitTestCase
 import timelinelib.calendar.monthnames
 
 
-class MonthNamesSpec(unittest.TestCase):
+class MonthNamesSpec(UnitTestCase):
 
     def test_english_name_for_month_1_should_be_january(self):
         self.assertEqual(

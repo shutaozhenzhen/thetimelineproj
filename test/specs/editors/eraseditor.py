@@ -16,16 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.eraseditor import ErasEditorDialog
-from timelinelib.editors.eras import ErasEditorController
 from specs.utils import a_gregorian_era
+from timelinelib.editors.eras import ErasEditorController
+from timelinelib.wxgui.dialogs.eraseditor import ErasEditorDialog
+from timelinetest import UnitTestCase
 
 
-class describe_eras_editor(unittest.TestCase):
+class describe_eras_editor(UnitTestCase):
 
     def test_construction(self):
         self.assertEquals(1, len(self.controller.eras))

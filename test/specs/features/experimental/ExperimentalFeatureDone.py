@@ -16,14 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
-from timelinelib.features.experimental.experimentalfeaturedone import ExperimentalFeatureDone
-from timelinelib.features.experimental.experimentalfeaturedone import DISPLAY_NAME
 from timelinelib.features.experimental.experimentalfeaturedone import DESCRIPTION
+from timelinelib.features.experimental.experimentalfeaturedone import DISPLAY_NAME
+from timelinelib.features.experimental.experimentalfeaturedone import ExperimentalFeatureDone
+from timelinetest import UnitTestCase
 
 
-class describe_experimental_feature_done(unittest.TestCase):
+class describe_experimental_feature_done(UnitTestCase):
     
     def test_has_displayname(self):
         self.assertEqual(DISPLAY_NAME, self.ef.get_display_name())

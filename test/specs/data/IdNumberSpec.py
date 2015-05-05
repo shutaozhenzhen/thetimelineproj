@@ -16,12 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from timelinelib.data.idnumber import get_process_unique_id
+from timelinetest import UnitTestCase
 
 
-class IdNumberSpec(unittest.TestCase):
+class IdNumberSpec(UnitTestCase):
 
     def test_gives_unique_ids(self):
         previous_ids = []

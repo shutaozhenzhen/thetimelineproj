@@ -16,13 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
 from random import random
 
 from timelinelib.drawing.utils import darken_color, lighten_color
+from timelinetest import UnitTestCase
 
 
-class drawing_utils(unittest.TestCase):
+class drawing_utils(UnitTestCase):
 
     def test_darken_color_good_factor(self):
         randColor = self.random_color()

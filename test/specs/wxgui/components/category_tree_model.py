@@ -16,17 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from specs.utils import a_category_with
 from timelinelib.data.idnumber import get_process_unique_id
 from timelinelib.wxgui.components.categorytree import CategoriesFacade
 from timelinelib.wxgui.components.categorytree import CustomCategoryTreeModel
+from timelinetest import UnitTestCase
 
 
-class Base(unittest.TestCase):
+class Base(UnitTestCase):
 
     def setUp(self):
         self.categories = []

@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 import wx
 
@@ -25,9 +23,10 @@ from specs.utils import an_event, an_event_with, human_time_to_gregorian
 from timelinelib.view.drawingarea import TimelineCanvasController
 from timelinelib.view.noop import NoOpInputHandler
 from timelinelib.wxgui.components.timeline import TimelineCanvas
+from timelinetest import UnitTestCase
 
 
-class NoOpInputHandlerSpec(unittest.TestCase):
+class NoOpInputHandlerSpec(UnitTestCase):
 
     def test_changes_input_handler_to_move_when_pressing_move_handle(self):
         event = an_event()

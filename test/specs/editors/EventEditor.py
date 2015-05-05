@@ -26,9 +26,10 @@ from timelinelib.editors.event import EventEditor
 from timelinelib.repositories.interface import EventRepository
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.eventeditor import EventEditorDialog
+from timelinetest import UnitTestCase
 
 
-class EventEditorTestCase(unittest.TestCase):
+class EventEditorTestCase(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(EventEditorDialog)

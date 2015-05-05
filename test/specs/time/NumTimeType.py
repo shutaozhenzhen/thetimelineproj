@@ -16,16 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from timelinelib.data import TimePeriod
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
+from timelinetest import UnitTestCase
 
 
-class NumTimeTypeSpec(unittest.TestCase):
+class NumTimeTypeSpec(UnitTestCase):
 
     def setUp(self):
         self.time_type = NumTimeType()

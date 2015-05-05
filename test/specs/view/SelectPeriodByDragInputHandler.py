@@ -17,15 +17,15 @@
 
 
 import mock
-import unittest
 
 from timelinelib.calendar.gregorian import from_date
 from timelinelib.dataimport.tutorial import TutorialTimelineCreator
 from timelinelib.time.timeline import Time
 from timelinelib.view.periodbase import SelectPeriodByDragInputHandler
+from timelinetest import UnitTestCase
 
 
-class SelectperiodByDragInputHandler(unittest.TestCase):
+class SelectperiodByDragInputHandler(UnitTestCase):
 
     def test_no_exception_when_julian_day_lt_0(self):
         try:

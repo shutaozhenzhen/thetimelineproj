@@ -16,9 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
 import os
 import sys
+
+from timelinetest import UnitTestCase
 
 
 PO_DIR_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "translations")
@@ -113,7 +114,7 @@ def report(errors):
     return len(errors)
 
 
-class TranslationsSpec(unittest.TestCase):
+class TranslationsSpec(UnitTestCase):
 
     def test_string_replacemnts_are_conserved(self):
         self.assertEqual(0, len(get_invalid_translations(PO_DIR_PATH)))
