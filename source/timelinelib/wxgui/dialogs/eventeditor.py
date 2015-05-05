@@ -263,7 +263,6 @@ class EventEditorDialog(wx.Dialog):
                    "progress": (_("Progress"), ProgressEditor),
                    }
         if editor_class_id in editors:
-            print "tjoho"
             return editors[editor_class_id]
         else:
             return None
