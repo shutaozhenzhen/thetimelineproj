@@ -20,6 +20,9 @@ Solved problems:
 * Crash report: TypeError: unsupported operand type(s) for +: 'int' and 'TimeDelta'
   (`#48 <https://http://sourceforge.net/p/thetimelineproj/backlog/48/>`_).
 
+* #42 Show point events as symbols
+  (`#42 <https://http://sourceforge.net/p/thetimelineproj/backlog/42/>`_).
+
 Version 1.6.0
 -------------
 
