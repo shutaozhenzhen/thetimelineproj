@@ -19,14 +19,14 @@
 from specs.utils import a_gregorian_era
 from specs.utils import a_gregorian_era_with
 from specs.utils import a_numeric_era_with
-from specs.utils import numeric_period
 from specs.utils import gregorian_period
-from specs.utils import TestCase
+from specs.utils import numeric_period
 from timelinelib.data.eras import InvalidOperationError
 from timelinelib.data import Eras
+from timelinetest import UnitTestCase
 
 
-class ErasTestCase(TestCase):
+class ErasTestCase(UnitTestCase):
 
     def test_default_has_an_empty_list(self):
         self.assertEqual([], self.eras.get_all())

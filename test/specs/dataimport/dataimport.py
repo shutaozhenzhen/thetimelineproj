@@ -18,11 +18,11 @@
 
 import os.path
 
-from specs.utils import TestCase
 from timelinelib.dataimport.dir import import_db_from_dir
+from timelinetest import UnitTestCase
 
 
-class describe_import_dir(TestCase):
+class describe_import_dir(UnitTestCase):
 
     def test_can_import_this_dir(self):
         this_dir = os.path.dirname(__file__)

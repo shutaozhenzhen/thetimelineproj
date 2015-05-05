@@ -22,7 +22,6 @@ from specs.utils import an_event_with
 from specs.utils import EVENT_MODIFIERS
 from specs.utils import gregorian_period
 from specs.utils import human_time_to_gregorian
-from specs.utils import TestCase
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.event import clone_event_list
 from timelinelib.data import Container
@@ -32,9 +31,10 @@ from timelinelib.data.timeperiod import TimePeriod
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.time.timeline import delta_from_days
+from timelinetest import UnitTestCase
 
 
-class describe_event(TestCase):
+class describe_event(UnitTestCase):
 
     def test_can_get_values(self):
         event = Event(time_type=GregorianTimeType(),
@@ -169,7 +169,7 @@ class describe_event(TestCase):
             self.assertEqual(label, event._get_duration_label())
 
 
-class describe_event_construction(TestCase):
+class describe_event_construction(UnitTestCase):
 
     def test_event_properties_defaults_to_false(self):
         event = an_event()
@@ -192,14 +192,14 @@ class describe_event_construction(TestCase):
         self.assertTrue(event.get_ends_today())
 
 
-class describe_event_functions(TestCase):
+class describe_event_functions(UnitTestCase):
 
     def test_zero_time_span(self):
         event = an_event()
         self.assertEqual(event.get_time_type().get_zero_delta(), event.time_span())
 
 
-class describe_event_cloning(TestCase):
+class describe_event_cloning(UnitTestCase):
 
     def test_cloning_returns_new_object(self):
         event = an_event()
@@ -296,7 +296,7 @@ class describe_event_cloning(TestCase):
         self.assertTrue(time_period is not clone.get_time_period())
 
 
-class describe_event_cloning_of_containers(TestCase):
+class describe_event_cloning_of_containers(UnitTestCase):
 
     def test_container_relationships_are_maintained_when_cloning(self):
         self.given_container_with_subevents()

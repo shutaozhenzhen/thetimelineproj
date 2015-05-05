@@ -19,11 +19,11 @@
 from specs.utils import a_category
 from specs.utils import a_category_with
 from specs.utils import CATEGORY_MODIFIERS
-from specs.utils import TestCase
 from timelinelib.data import Category
+from timelinetest import UnitTestCase
 
 
-class describe_category(TestCase):
+class describe_category(UnitTestCase):
 
     def test_can_get_values(self):
         category = Category("work", (50, 100, 150), (0, 0, 0))

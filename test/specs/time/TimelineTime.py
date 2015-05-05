@@ -16,12 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import TestCase
 from specs.utils import TIME_MODIFIERS
 from timelinelib.time.timeline import *
+from timelinetest import UnitTestCase
 
 
-class TimeSpec(TestCase):
+class TimeSpec(UnitTestCase):
 
     def test_can_return_time_of_day(self):
         self.assertEqual(
@@ -75,7 +75,7 @@ class TimeSpec(TestCase):
         self.assertEqNeImplementationIsCorrect(a_time, TIME_MODIFIERS)
 
 
-class TimeDeltaSpec(TestCase):
+class TimeDeltaSpec(UnitTestCase):
 
     def test_can_create(self):
         self.assertEqual(delta_from_seconds(5), TimeDelta(5))
