@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock, sentinel
 
 from specs.utils import an_event_with, human_time_to_gregorian, ObjectWithTruthValue

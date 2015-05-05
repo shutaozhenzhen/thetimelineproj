@@ -17,7 +17,6 @@
 
 
 import sys
-import unittest
 
 from specs.utils import WxComponentTest
 from timelinelib.wxgui.components.messagebar import MessageBar

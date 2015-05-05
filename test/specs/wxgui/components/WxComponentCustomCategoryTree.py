@@ -17,7 +17,6 @@
 
 
 import sys
-import unittest
 
 from mock import Mock
 
