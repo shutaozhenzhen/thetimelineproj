@@ -22,6 +22,9 @@ Solved problems:
 
 * #42 Show point events as symbols
   (`#42 <https://http://sourceforge.net/p/thetimelineproj/backlog/42/>`_).
+  
+* #50 1.6.0 Crashes on startup
+  (`#50 <https://http://sourceforge.net/p/thetimelineproj/backlog/50/>`_).
 
 Version 1.6.0
 -------------
