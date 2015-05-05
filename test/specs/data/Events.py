@@ -19,12 +19,12 @@
 from specs.utils import a_category_with
 from specs.utils import an_event
 from specs.utils import an_event_with
-from specs.utils import TestCase
 from timelinelib.data.events import InvalidOperationError
 from timelinelib.data import Events
+from timelinetest import UnitTestCase
 
 
-class EventsTestCase(TestCase):
+class EventsTestCase(UnitTestCase):
 
     def setUp(self):
         self.events = Events()

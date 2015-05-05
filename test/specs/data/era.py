@@ -16,17 +16,17 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import TestCase
 from specs.utils import a_gregorian_era_with
 from specs.utils import a_numeric_era_with
 from specs.utils import ERA_MODIFIERS
-from specs.utils import NUM_ERA_MODIFIERS
 from specs.utils import gregorian_period
-from specs.utils import numeric_period
 from specs.utils import human_time_to_gregorian
+from specs.utils import NUM_ERA_MODIFIERS
+from specs.utils import numeric_period
 from timelinelib.data.timeperiod import TimePeriod
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
+from timelinetest import UnitTestCase
 
 
 NAME = "Era name"
@@ -37,13 +37,13 @@ NUM_START = 10
 NUM_END = 20
 
 
-class GregorianEraTestCase(TestCase):
+class GregorianEraTestCase(UnitTestCase):
 
     def setUp(self):
         self.era = a_gregorian_era_with(name=NAME, color=COLOR, start=GREGORIAN_START, end=GREGORIAN_END)
 
 
-class NumericEraTestCase(TestCase):
+class NumericEraTestCase(UnitTestCase):
 
     def setUp(self):
         self.era = a_numeric_era_with(name=NAME, color=COLOR, start=NUM_START, end=NUM_END)

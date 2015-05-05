@@ -16,11 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import TestCase
 from specs.utils import TIME_PERIOD_MODIFIERS
 from timelinelib.data import TimePeriod
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.typeinterface import TimeType
+from timelinetest import UnitTestCase
 
 
 class ATime(object):
@@ -138,7 +138,7 @@ class ATimeType(TimeType):
         return not (self == other)
 
 
-class time_period_spec(TestCase):
+class time_period_spec(UnitTestCase):
 
     def test_creating_period_with_too_small_start_time_should_fail(self):
         self.assertRaises(ValueError, TimePeriod,
