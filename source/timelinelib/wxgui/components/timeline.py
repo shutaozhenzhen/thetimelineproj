@@ -157,6 +157,7 @@ class _Sidebar(wx.Panel):
     def __init__(self, main_frame, parent, handle_db_error):
         self.main_frame = main_frame
         wx.Panel.__init__(self, parent, style=wx.BORDER_NONE)
+        self.Hide()
         self._create_gui(handle_db_error)
 
     def _create_gui(self, handle_db_error):
