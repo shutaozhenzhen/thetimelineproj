@@ -106,8 +106,11 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
         return {keys[0]: 0, keys[1]: 1, keys[2]: 2}
 
     def _get_date_format_string(self, dt):
-        MAP = {"3333": "%04d", "33": "%02d", "11": "%02d", "1": "%1d", "22": "%02d", "2": "%01d"}
-        return self.separator().join([MAP[part] for part in dt.split(self.separator())])
+        try:
+            MAP = {"3333": "%04d", "33": "%02d", "11": "%02d", "1": "%1d", "22": "%02d", "2": "%01d"}
+            return self.separator().join([MAP[part] for part in dt.split(self.separator())])
+        except:
+            return "%04d-%02d-%02d"
 
     def _get_data_tuple(self, year, month, day):
         result = [0, 0, 0]
@@ -116,7 +119,7 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
             self.century = 0
         except:
             result[self._field_positions[YEAR[2:]]] = year % 100
-            self.century = int(year/100) * 100
+            self.century = int(year / 100) * 100
         result[self._field_positions[MONTH]] = month
         result[self._field_positions[DAY]] = day
         return tuple(result)
