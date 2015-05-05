@@ -16,13 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from specs.utils import a_category_with
 from timelinelib.data import sort_categories
+from timelinetest import UnitTestCase
 
 
-class CategorySorter(unittest.TestCase):
+class CategorySorter(UnitTestCase):
 
     def test_sorts_categories_by_name(self):
         self.sort([

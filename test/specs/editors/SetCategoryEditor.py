@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from specs.utils import a_category_with
@@ -26,10 +24,11 @@ from timelinelib.data.event import Event
 from timelinelib.editors.setcategory import SetCategoryEditor
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.setcategoryeditor import SetCategoryEditorDialog
+from timelinetest import UnitTestCase
 import timelinelib.calendar.gregorian as gregorian
 
 
-class set_category_editor_spec_base(unittest.TestCase):
+class set_category_editor_spec_base(UnitTestCase):
 
     def setUp(self, view_properties):
         self.time_type = GregorianTimeType()

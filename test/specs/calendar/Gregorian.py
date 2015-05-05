@@ -17,15 +17,15 @@
 
 
 import datetime
-import unittest
 
 import wx
 
+from timelinetest import UnitTestCase
 import timelinelib.calendar.gregorian as gregorian
 import timelinelib.time.timeline as timeline
 
 
-class GregorianSpec(unittest.TestCase):
+class GregorianSpec(UnitTestCase):
 
     def test_rejects_invalid_dates(self):
         self.assertRaises(ValueError, gregorian.Gregorian, 2013, 0, 1, 0, 0, 0)
@@ -41,7 +41,7 @@ class GregorianSpec(unittest.TestCase):
         self.assertRaises(ValueError, g.replace, month=13)
 
 
-class GregorianConversionsSpec(unittest.TestCase):
+class GregorianConversionsSpec(UnitTestCase):
 
     def test_can_convert_from_timeline_time_to_gregorian(self):
         self.assertEqual(
@@ -100,7 +100,7 @@ class GregorianConversionsSpec(unittest.TestCase):
             self.assertEqual(tm1, tm2)
 
 
-class GregorianPrimitivesSpec(unittest.TestCase):
+class GregorianPrimitivesSpec(UnitTestCase):
 
     def test_is_valid(self):
         self.assertTrue(gregorian.is_valid(2013, 1, 1))

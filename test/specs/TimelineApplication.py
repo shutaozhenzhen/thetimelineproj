@@ -16,18 +16,17 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from timelinelib.application import TimelineApplication
 from timelinelib.config.dotfile import Config
 from timelinelib.db.exceptions import TimelineIOError
-from timelinelib.wxgui.dialogs.mainframe import MainFrame
 from timelinelib.time.numtime import NumTimeType
+from timelinelib.wxgui.dialogs.mainframe import MainFrame
+from timelinetest import UnitTestCase
 
 
-class describe_timeline_application(unittest.TestCase):
+class describe_timeline_application(UnitTestCase):
 
     def test_uses_db_open_function_to_create_timeline(self):
         self.application.open_timeline("foo.timeline")

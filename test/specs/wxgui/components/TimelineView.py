@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 import wx
 
@@ -28,11 +26,12 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
+from timelinelib.plugin import factory
+from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.wxgui.components.timeline import TimelineCanvas
 from timelinelib.wxgui.components.timeline import TimelineCanvasController
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
-from timelinelib.plugin import factory
-from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
+from timelinetest import UnitTestCase
 
 
 # TODO: testSavesEventAfterMove
@@ -42,7 +41,7 @@ from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import Default
 ANY_Y = 0
 
 
-class TimelineViewSpec(unittest.TestCase):
+class TimelineViewSpec(UnitTestCase):
 
     def test_initializes_displayed_period_from_db(self):
         self.init_view_with_db_with_period("1 Aug 2010", "2 Aug 2010")

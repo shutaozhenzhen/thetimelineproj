@@ -16,20 +16,19 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 import wx
 from mock import Mock
 
+from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event, TimePeriod
 from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
-from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.drawing.viewproperties import ViewProperties
+from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
+from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinetest import UnitTestCase
 import timelinelib.calendar.gregorian as gregorian
-from timelinelib.config.dotfile import Config
 
 
 IMAGE_SIZE = (500, 200)
@@ -38,7 +37,7 @@ BASELINE_Y_POS = IMAGE_HEIGHT / 2
 TEXT_SIZE = (50, 10)
 
 
-class DrawerSpec(unittest.TestCase):
+class DrawerSpec(UnitTestCase):
 
     def test_draws_period_event_below_baseline(self):
         self.given_event(name="vacation",

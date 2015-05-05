@@ -18,16 +18,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
 import os
 
 from timelinelib.utilities.encodings import to_unicode
+from timelinetest import UnitTestCase
 
 
 TESTFILE = "testdata.txt"
 
 
-class describe_to_unicode_function(unittest.TestCase):
+class describe_to_unicode_function(UnitTestCase):
 
     def test_can_open_url(self):
         self.save_file_data()

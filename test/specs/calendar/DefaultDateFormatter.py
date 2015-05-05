@@ -16,18 +16,17 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinetest import UnitTestCase
 
 
-class describe_date_formatter(unittest.TestCase):
-    
+class describe_date_formatter(UnitTestCase):
+
     def test_format_return_yyyy_mm_dd(self):
         self.assertEquals("2014-11-30", self.formatter.format(2014,11, 30))
-    
+
     def test_parse_return_year_mont_day(self):
         self.assertEquals((2014, 11, 30), self.formatter.parse("2014-11-30"))
-    
+
     def setUp(self):
         self.formatter = DefaultDateFormatter()

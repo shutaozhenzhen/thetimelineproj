@@ -16,16 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 import wx
 
 from timelinelib.data.db import MemoryDB
 from timelinelib.wxgui.dialogs.mainframe import MenuController
+from timelinetest import UnitTestCase
 
 
-class MenuControllerSpec(unittest.TestCase):
+class MenuControllerSpec(UnitTestCase):
 
     def test_menu_requiering_update_is_disabled_when_no_timeline_exists(self):
         self.given_menu_item_requires_update()

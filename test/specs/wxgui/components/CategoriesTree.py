@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from specs.utils import a_category_with
@@ -25,9 +23,10 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.wxgui.components.cattree import CategoriesTree
 from timelinelib.wxgui.components.cattree import CategoriesTreeController
 from timelinelib.wxgui.components.timeline import TimelineCanvas
+from timelinetest import UnitTestCase
 
 
-class describe_categories_tree_control(unittest.TestCase):
+class describe_categories_tree_control(UnitTestCase):
 
     def test_categories_are_populated_from_db_when_initializing_from_db(self):
         self.controller.initialize_from_db(self.db)

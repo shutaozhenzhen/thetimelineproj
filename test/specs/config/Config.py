@@ -17,12 +17,12 @@
 
 
 from os.path import abspath
-import unittest
 
 from timelinelib.config.dotfile import Config
+from timelinetest import UnitTestCase
 
 
-class ConfigSpec(unittest.TestCase):
+class ConfigSpec(UnitTestCase):
 
     def test_should_have_default_values_before_config_has_been_read(self):
         self.assertEqual(self.config.window_size, (900, 500))

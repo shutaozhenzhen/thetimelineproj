@@ -16,16 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from timelinelib.data import TimePeriod
 from timelinelib.time.numtime import move_period
 from timelinelib.time.numtime import NumTimeType
+from timelinetest import UnitTestCase
 
 
-class NumTimeDuplicateFunctionsSpec(unittest.TestCase):
+class NumTimeDuplicateFunctionsSpec(UnitTestCase):
 
     def setUp(self):
         self.period = TimePeriod(NumTimeType(), 1, 2)

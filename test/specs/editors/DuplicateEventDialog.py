@@ -30,10 +30,11 @@ from timelinelib.editors.duplicateevent import DuplicateEventEditor
 from timelinelib.editors.duplicateevent import FORWARD
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.duplicateevent import DuplicateEventDialog
+from timelinetest import UnitTestCase
 import timelinelib.calendar.gregorian as gregorian
 
 
-class duplicate_event_dialog_spec_base(unittest.TestCase):
+class duplicate_event_dialog_spec_base(UnitTestCase):
 
     def setUp(self):
         self.controller = DuplicateEventEditor(

@@ -16,15 +16,14 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from timelinelib.wxgui.components.search import SearchBar
 from timelinelib.wxgui.components.search import SearchBarController
+from timelinetest import UnitTestCase
 
 
-class SearchBarTestCase(unittest.TestCase):
+class SearchBarTestCase(UnitTestCase):
 
     def test_no_events_found_displays_nomatch_label(self):
         self.view.get_value.return_value = ""

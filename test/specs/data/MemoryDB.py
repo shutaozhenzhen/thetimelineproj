@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from specs.utils import a_category_with
@@ -27,9 +25,10 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.wxgui.utils import category_tree
+from timelinetest import UnitTestCase
 
 
-class describe_memory_db(unittest.TestCase):
+class describe_memory_db(UnitTestCase):
 
     def testInitialState(self):
         db = MemoryDB()
@@ -412,7 +411,7 @@ class describe_memory_db(unittest.TestCase):
         self.db.register(self.db_listener)
 
 
-class describe_querying(unittest.TestCase):
+class describe_querying(UnitTestCase):
 
     def test_can_get_first_event(self):
         aug_event = an_event_with(time="30 Aug 2010")
@@ -432,7 +431,7 @@ class describe_querying(unittest.TestCase):
         self.db = MemoryDB()
 
 
-class describe_searching(unittest.TestCase):
+class describe_searching(UnitTestCase):
 
     def test_find_events_with_matching_text(self):
         holiday_event = an_event_with(text="holiday in the alps")
@@ -445,7 +444,7 @@ class describe_searching(unittest.TestCase):
         self.db = MemoryDB()
 
 
-class describe_undo(unittest.TestCase):
+class describe_undo(UnitTestCase):
 
     def test_can_not_undo_non_modified_timeline(self):
         self.db.undo()
@@ -476,7 +475,7 @@ class describe_undo(unittest.TestCase):
         self.db.loaded()
 
 
-class describe_importing(unittest.TestCase):
+class describe_importing(UnitTestCase):
 
     def test_importing_empty_db_does_nothing(self):
         self.base_db.import_db(self.import_db)

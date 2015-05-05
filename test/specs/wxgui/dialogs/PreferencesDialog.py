@@ -16,16 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from timelinelib.config.dotfile import Config
 from timelinelib.config.preferences import PreferencesEditor
 from timelinelib.wxgui.dialogs.preferences import PreferencesDialog
+from timelinetest import UnitTestCase
 
 
-class PreferencesDialogSpec(unittest.TestCase):
+class PreferencesDialogSpec(UnitTestCase):
 
     def setUp(self):
         self.preferences_dialog = Mock(PreferencesDialog)

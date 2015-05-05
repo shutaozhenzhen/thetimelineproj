@@ -16,9 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from timelinelib.features.experimental.experimentalfeatures import LOCALE_DATE
+from timelinetest import UnitTestCase
 
 
 YEAR = "3333"
@@ -26,7 +25,7 @@ MONTH = "11"
 DAY = "22"
 
 
-class describe_experimental_feature_date_formatting(unittest.TestCase):
+class describe_experimental_feature_date_formatting(UnitTestCase):
 
     def test_big_endian_can_be_formatted(self):
         self.given_sample_date("%s-%s-%s" % (YEAR, MONTH, DAY))

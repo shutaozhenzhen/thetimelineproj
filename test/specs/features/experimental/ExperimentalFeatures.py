@@ -16,12 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
+from timelinetest import UnitTestCase
 
 
-class describe_experimental_features(unittest.TestCase):
+class describe_experimental_features(UnitTestCase):
     
     def test_has_a_list_of_all_features(self):
         features = self.ef.get_all_features()

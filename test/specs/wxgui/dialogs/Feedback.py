@@ -17,16 +17,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from timelinelib.feedback.form import FeedbackForm
-from timelinelib.wxgui.dialogs.feedback import FeedbackDialog
 from timelinelib.utilities.encodings import to_unicode
+from timelinelib.wxgui.dialogs.feedback import FeedbackDialog
+from timelinetest import UnitTestCase
 
 
-class FeedbackFormSpec(unittest.TestCase):
+class FeedbackFormSpec(UnitTestCase):
 
     def test_shows_parts_in_dialog(self):
         self.form.populate(info="info text", subject="subject text", body="body text")

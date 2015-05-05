@@ -16,23 +16,22 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 import wx
 
+from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
 from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
+from timelinelib.plugin import factory
+from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.view.drawingarea import HSCROLL_STEP
 from timelinelib.view.drawingarea import TimelineCanvasController
 from timelinelib.wxgui.components.timeline import TimelineCanvas
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
-from timelinelib.plugin import factory
-from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.config.dotfile import Config
+from timelinetest import UnitTestCase
 
 
-class DrawingAreaSpec(unittest.TestCase):
+class DrawingAreaSpec(UnitTestCase):
 
     def test_construction_works(self):
         self.timeline_canvas.SetBackgroundColour.assert_called_with(wx.WHITE)

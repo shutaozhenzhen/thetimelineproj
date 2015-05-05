@@ -16,15 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
 import wx
 
 from specs.utils import an_event
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.wxgui.dialogs.mainframe import AlertController
 from timelinelib.time.timeline import delta_from_days
+from timelinelib.wxgui.dialogs.mainframe import AlertController
+from timelinetest import UnitTestCase
 
-class AlertControllerSpec(unittest.TestCase):
+
+class AlertControllerSpec(UnitTestCase):
 
     def test_alert_text_formatting(self):
         text = self.controller._format_alert_text(self.alert, self.event)

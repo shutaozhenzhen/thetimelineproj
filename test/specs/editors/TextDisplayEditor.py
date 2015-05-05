@@ -17,12 +17,15 @@
 
 
 import unittest
+
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.textdisplay import TextDisplayDialog
 from timelinelib.editors.textdisplay import TextDisplayEditor
+from timelinelib.wxgui.dialogs.textdisplay import TextDisplayDialog
+from timelinetest import UnitTestCase
 
-class TextDisplayEditorSpec(unittest.TestCase):
+
+class TextDisplayEditorSpec(UnitTestCase):
 
     def test_set_text_sets_dialog_text(self):
         text = "aha"

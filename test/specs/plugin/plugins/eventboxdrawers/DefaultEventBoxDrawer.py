@@ -16,15 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
 from mock import Mock
-from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.plugin.factory import EVENTBOX_DRAWER
-from specs.utils import an_event_with
+
 from specs.utils import a_category_with
+from specs.utils import an_event_with
+from timelinelib.plugin.factory import EVENTBOX_DRAWER
+from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinetest import UnitTestCase
 
 
-class describe_default_event_box_drawer(unittest.TestCase):
+class describe_default_event_box_drawer(UnitTestCase):
 
     def test_is_a_plugin(self):
         self.assertTrue(self.plugin.isplugin())

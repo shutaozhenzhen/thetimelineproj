@@ -16,11 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
 from timelinelib.plugin.pluginbase import PluginBase
+from timelinetest import UnitTestCase
 
 
-class describe_plugin_base(unittest.TestCase):
+class describe_plugin_base(UnitTestCase):
 
     def test_is_a_plugin(self):
         self.assertTrue(self.plugin.isplugin())

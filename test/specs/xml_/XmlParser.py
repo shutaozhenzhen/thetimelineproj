@@ -17,13 +17,13 @@
 
 
 from StringIO import StringIO
-import unittest
 import xml.sax
 
+from timelinetest import UnitTestCase
 import timelinelib.xml.parser as xmlparser
 
 
-class TestXmlParser(unittest.TestCase):
+class TestXmlParser(UnitTestCase):
 
     def testIllFormedXml(self):
         xml_stream = StringIO("""
