@@ -25,3 +25,13 @@ Exceptions:
 
 * We allow longer lines than 79 characters. But preferably not longer than 120
 * We prefer to have double quoted strings
+
+How to write tests
+------------------
+
+The idea of having a guideline for how to write tests is that if they all look
+the same, they are easier to understand.
+
+Here are the guidelines:
+
+* All test classes should inherit a custom test case class
