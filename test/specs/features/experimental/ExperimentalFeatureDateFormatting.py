@@ -150,6 +150,14 @@ class describe_experimental_feature_date_formatting(unittest.TestCase):
             self.given_sample_date(template)
             self.assertEqual((-2015, 2, 1), self.ef.parse(date_string))
 
+    def test_known_formats_returns_calculated_formatting_string(self):
+        self.ef._separator = "-"
+        self.assertEqual("%02d-%02d-%02d", self.ef._get_date_format_string("33-11-22"))
+        
+    def test_unknown_formats_returns_default_formatting_string(self):
+        self.ef._separator = "-"
+        self.assertEqual("%04d-%02d-%02d", self.ef._get_date_format_string("33-Nov-22"))
+        
     def given_sample_date(self, sample_date):
         self.ef._construct_format(sample_date)
 
