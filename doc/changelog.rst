@@ -26,6 +26,9 @@ Solved problems:
 * #50 1.6.0 Crashes on startup
   (`#50 <https://http://sourceforge.net/p/thetimelineproj/backlog/50/>`_).
 
+* #52 Part of sidebar is visible at start of Timeline
+  (`#52 <https://http://sourceforge.net/p/thetimelineproj/backlog/52/>`_).
+
 Version 1.6.0
 -------------
 
