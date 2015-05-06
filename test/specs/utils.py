@@ -16,11 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
 import random
-import shutil
 import sys
-import tempfile
 import traceback
 import unittest
 
@@ -310,18 +307,6 @@ TIME_MODIFIERS = [
 ]
 
 
-class TmpDirTestCase(timelinetest.UnitTestCase):
-
-    def setUp(self):
-        self.tmp_dir = tempfile.mkdtemp(prefix="timeline-test")
-
-    def tearDown(self):
-        shutil.rmtree(self.tmp_dir)
-
-    def get_tmp_path(self, name):
-        return os.path.join(self.tmp_dir, name)
-
-
 class WxComponentTest(timelinetest.UnitTestCase):
 
     def setUp(self):
@@ -377,10 +362,10 @@ class WxComponentTest(timelinetest.UnitTestCase):
             self._is_close_called = True
 
 
-class WxEndToEndTestCase(TmpDirTestCase):
+class WxEndToEndTestCase(timelinetest.TmpDirTestCase):
 
     def setUp(self):
-        TmpDirTestCase.setUp(self)
+        timelinetest.TmpDirTestCase.setUp(self)
         self.timeline_path = self.get_tmp_path("test.timeline")
         self.config_file_path = self.get_tmp_path("thetimelineproj.cfg")
         self.config = read_config(self.config_file_path)
@@ -388,7 +373,7 @@ class WxEndToEndTestCase(TmpDirTestCase):
         self.error_in_gui_thread = None
 
     def tearDown(self):
-        TmpDirTestCase.tearDown(self)
+        timelinetest.TmpDirTestCase.tearDown(self)
         sys.excepthook = self.standard_excepthook
 
     def start_timeline_and(self, steps_to_perform_in_gui):

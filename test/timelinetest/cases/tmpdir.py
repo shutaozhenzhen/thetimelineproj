@@ -16,5 +16,20 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinetest.cases.unit import UnitTestCase
-from timelinetest.cases.tmpdir import TmpDirTestCase
+import os.path
+import shutil
+import tempfile
+
+from timelinetest import UnitTestCase
+
+
+class TmpDirTestCase(UnitTestCase):
+
+    def setUp(self):
+        self.tmp_dir = tempfile.mkdtemp(prefix="timeline-test")
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp_dir)
+
+    def get_tmp_path(self, name):
+        return os.path.join(self.tmp_dir, name)
