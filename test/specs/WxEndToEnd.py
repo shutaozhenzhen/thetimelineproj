@@ -20,7 +20,7 @@ import sys
 
 import wx
 
-from specs.utils import WxEndToEndTestCase
+from timelinetest import WxEndToEndTestCase
 
 
 class WxEndToEndSpec(WxEndToEndTestCase):
