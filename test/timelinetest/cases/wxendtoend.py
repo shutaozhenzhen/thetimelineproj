@@ -142,5 +142,3 @@ class WxEndToEndTestCase(TmpDirTestCase):
         if name.startswith("wxID_"):
             return getattr(wx, name[2:])
         return None
-
-

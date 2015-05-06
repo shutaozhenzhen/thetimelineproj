@@ -18,11 +18,11 @@
 
 import wx
 
-from specs.utils import WxComponentTest
 from timelinelib.wxgui.components.filechooser import FileChooser
+from timelinetest import WxComponentTestCase
 
 
-class FileChooserComponentTest(WxComponentTest):
+class FileChooserComponentTest(WxComponentTestCase):
 
     HALT_FOR_MANUAL_INSPECTION = False
 

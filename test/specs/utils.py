@@ -18,8 +18,6 @@
 
 import random
 
-import wx
-
 from timelinelib.calendar.gregorian import Gregorian
 from timelinelib.calendar.monthnames import ABBREVIATED_ENGLISH_MONTH_NAMES
 from timelinelib.data import Category
@@ -32,7 +30,6 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.timeline import TimeDelta
-import timelinetest
 
 
 ANY_TIME = "1 Jan 2010"
@@ -298,61 +295,6 @@ NUM_ERA_MODIFIERS = [
 TIME_MODIFIERS = [
     ("add", lambda time: time + TimeDelta(1)),
 ]
-
-
-class WxComponentTest(timelinetest.UnitTestCase):
-
-    def setUp(self):
-        self._app = wx.App(False)
-        self._main_frame = wx.Frame(None)
-        self._main_frame.Bind(wx.EVT_CLOSE, self._main_frame_on_close)
-        self._main_panel = wx.Panel(self._main_frame)
-        self._components = []
-        self._component_by_name = {}
-        self._is_close_called = False
-
-    def tearDown(self):
-        self._close()
-
-    def add_component(self, name, cls, *args):
-        self._component_by_name[name] = cls(self._main_panel, *args)
-        self._components.append(self._component_by_name[name])
-
-    def add_button(self, text, callback, component_name=None):
-        button = wx.Button(self._main_panel, label=text)
-        self._components.append(button)
-        def event_listener(event):
-            if component_name:
-                callback(self.get_component(component_name))
-            else:
-                callback()
-        button.Bind(wx.EVT_BUTTON, event_listener)
-
-    def add_separator(self):
-        label = "----- separator -----"
-        self._components.append(wx.StaticText(self._main_panel, label=label))
-
-    def get_component(self, name):
-        return self._component_by_name[name]
-
-    def show_test_window(self):
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        for component in self._components:
-            sizer.Add(component, flag=wx.ALL | wx.GROW, border=3)
-        self._main_panel.SetSizer(sizer)
-        self._main_frame.Show()
-        if not self.HALT_FOR_MANUAL_INSPECTION:
-            wx.CallAfter(self._close)
-        self._app.MainLoop()
-
-    def _main_frame_on_close(self, event):
-        self._is_close_called = True
-        self._main_frame.Destroy()
-
-    def _close(self):
-        if not self._is_close_called:
-            self._main_frame.Close()
-            self._is_close_called = True
 
 
 class ObjectWithTruthValue(object):

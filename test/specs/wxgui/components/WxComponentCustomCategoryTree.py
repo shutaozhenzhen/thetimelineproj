@@ -20,13 +20,13 @@ import sys
 
 from mock import Mock
 
-from specs.utils import WxComponentTest
 from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.wxgui.components.categorytree import CustomCategoryTree
+from timelinetest import WxComponentTestCase
 
 
-class CustomCategoryTreeComponentTest(WxComponentTest):
+class CustomCategoryTreeComponentTest(WxComponentTestCase):
 
     HALT_FOR_MANUAL_INSPECTION = False
 

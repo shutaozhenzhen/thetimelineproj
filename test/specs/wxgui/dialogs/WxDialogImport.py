@@ -16,12 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import WxComponentTest
 from timelinelib.db import db_open
 from timelinelib.wxgui.dialogs.importevents import ImportDialog
+from timelinetest import WxComponentTestCase
 
 
-class ImportDialogTest(WxComponentTest):
+class ImportDialogTest(WxComponentTestCase):
 
     HALT_FOR_MANUAL_INSPECTION = False
 
