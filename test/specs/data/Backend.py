@@ -17,11 +17,11 @@
 
 
 from specs.utils import a_category_with
-from specs.utils import TmpDirTestCase
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.events import clone_data
 from timelinelib.data import Event
 from timelinelib.dataimport.ics import import_db_from_ics
+from timelinetest import TmpDirTestCase
 from timelinetest import UnitTestCase
 
 

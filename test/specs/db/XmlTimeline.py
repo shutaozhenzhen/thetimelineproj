@@ -21,7 +21,6 @@ import codecs
 import os.path
 
 from specs.utils import a_category_with
-from specs.utils import TmpDirTestCase
 from timelinelib.dataexport.timelinexml import alert_string
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.data import Event
@@ -32,6 +31,7 @@ from timelinelib.db import db_open
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.meta.version import get_version
 from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinetest import TmpDirTestCase
 import timelinelib.calendar.gregorian as gregorian
 
 
