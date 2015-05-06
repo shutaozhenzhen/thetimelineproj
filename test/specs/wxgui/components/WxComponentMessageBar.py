@@ -18,11 +18,11 @@
 
 import sys
 
-from specs.utils import WxComponentTest
 from timelinelib.wxgui.components.messagebar import MessageBar
+from timelinetest import WxComponentTestCase
 
 
-class MessageBarComponentTest(WxComponentTest):
+class MessageBarComponentTest(WxComponentTestCase):
 
     HALT_FOR_MANUAL_INSPECTION = False
 
