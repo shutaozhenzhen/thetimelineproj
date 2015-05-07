@@ -16,17 +16,17 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_gregorian_era_with
-from specs.utils import a_numeric_era_with
-from specs.utils import ERA_MODIFIERS
-from specs.utils import gregorian_period
-from specs.utils import human_time_to_gregorian
-from specs.utils import NUM_ERA_MODIFIERS
-from specs.utils import numeric_period
 from timelinelib.data.timeperiod import TimePeriod
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_gregorian_era_with
+from timelinetest.utils import a_numeric_era_with
+from timelinetest.utils import ERA_MODIFIERS
+from timelinetest.utils import gregorian_period
+from timelinetest.utils import human_time_to_gregorian
+from timelinetest.utils import NUM_ERA_MODIFIERS
+from timelinetest.utils import numeric_period
 
 
 NAME = "Era name"

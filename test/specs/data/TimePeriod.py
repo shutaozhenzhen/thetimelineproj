@@ -16,11 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import TIME_PERIOD_MODIFIERS
 from timelinelib.data import TimePeriod
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.typeinterface import TimeType
 from timelinetest import UnitTestCase
+from timelinetest.utils import TIME_PERIOD_MODIFIERS
 
 
 class ATime(object):

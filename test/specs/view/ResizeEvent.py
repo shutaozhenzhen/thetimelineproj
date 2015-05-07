@@ -19,15 +19,15 @@
 from mock import Mock
 import wx
 
-from specs.utils import an_event
-from specs.utils import an_event_with
-from specs.utils import gregorian_period
-from specs.utils import human_time_to_gregorian
 from timelinelib.view.resize import ResizeByDragInputHandler
 from timelinelib.wxgui.components.timeline import TimelineCanvas
 from timelinelib.wxgui.components.timeline import TimelineCanvasController
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
 from timelinetest import UnitTestCase
+from timelinetest.utils import an_event
+from timelinetest.utils import an_event_with
+from timelinetest.utils import gregorian_period
+from timelinetest.utils import human_time_to_gregorian
 
 
 class ResizeEventSpec(UnitTestCase):

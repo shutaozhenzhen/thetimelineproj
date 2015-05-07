@@ -16,11 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_category
-from specs.utils import a_category_with
-from specs.utils import CATEGORY_MODIFIERS
 from timelinelib.data import Category
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category
+from timelinetest.utils import a_category_with
+from timelinetest.utils import CATEGORY_MODIFIERS
 
 
 class describe_category(UnitTestCase):

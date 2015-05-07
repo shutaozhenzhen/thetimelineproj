@@ -16,12 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_category_with
-from specs.utils import an_event
-from specs.utils import an_event_with
 from timelinelib.data.events import InvalidOperationError
 from timelinelib.data import Events
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import an_event
+from timelinetest.utils import an_event_with
 
 
 class EventsTestCase(UnitTestCase):

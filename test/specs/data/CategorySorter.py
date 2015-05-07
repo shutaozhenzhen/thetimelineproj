@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_category_with
 from timelinelib.data import sort_categories
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 
 
 class CategorySorter(UnitTestCase):

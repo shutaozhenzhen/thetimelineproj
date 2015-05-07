@@ -18,12 +18,12 @@
 
 import codecs
 
-from specs.utils import a_category_with
 from timelinelib.calendar.gregorian import Gregorian
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db import db_open
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinetest import TmpDirTestCase
+from timelinetest.utils import a_category_with
 
 import wx
 
