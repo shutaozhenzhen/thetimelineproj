@@ -18,10 +18,10 @@
 
 from mock import Mock
 
-from specs.utils import a_gregorian_era
 from timelinelib.editors.eras import ErasEditorController
 from timelinelib.wxgui.dialogs.eraseditor import ErasEditorDialog
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_gregorian_era
 
 
 class describe_eras_editor(UnitTestCase):

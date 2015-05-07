@@ -16,12 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_category_with
-from specs.utils import an_event
-from specs.utils import an_event_with
-from specs.utils import EVENT_MODIFIERS
-from specs.utils import gregorian_period
-from specs.utils import human_time_to_gregorian
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.event import clone_event_list
 from timelinelib.data import Container
@@ -32,6 +26,12 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.time.timeline import delta_from_days
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import an_event
+from timelinetest.utils import an_event_with
+from timelinetest.utils import EVENT_MODIFIERS
+from timelinetest.utils import gregorian_period
+from timelinetest.utils import human_time_to_gregorian
 
 
 class describe_event(UnitTestCase):

@@ -18,11 +18,11 @@
 
 from mock import Mock
 
-from specs.utils import a_category_with
 from timelinelib.data.idnumber import get_process_unique_id
 from timelinelib.wxgui.components.categorytree import CategoriesFacade
 from timelinelib.wxgui.components.categorytree import CustomCategoryTreeModel
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 
 
 class Base(UnitTestCase):

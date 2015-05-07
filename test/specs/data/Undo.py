@@ -19,13 +19,13 @@
 import random
 import subprocess
 
-from specs.utils import a_category_with
-from specs.utils import a_container
-from specs.utils import an_event
-from specs.utils import a_time_period
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
 from timelinetest import TmpDirTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import a_container
+from timelinetest.utils import an_event
+from timelinetest.utils import a_time_period
 
 
 class describe_undo(TmpDirTestCase):

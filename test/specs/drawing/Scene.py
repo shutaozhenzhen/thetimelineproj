@@ -18,15 +18,15 @@
 
 import datetime
 
-from specs.utils import a_category_with
-from specs.utils import gregorian_period
-from specs.utils import human_time_to_gregorian
 from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
 from timelinelib.drawing.scene import TimelineScene
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import gregorian_period
+from timelinetest.utils import human_time_to_gregorian
 
 
 class SceneSpec(UnitTestCase):

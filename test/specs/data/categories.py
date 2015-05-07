@@ -18,12 +18,12 @@
 
 from mock import Mock
 
-from specs.utils import a_category_with
 from timelinelib.data.category import clone_categories_list
 from timelinelib.data.db import MemoryDB
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 
 
 class TestBase(UnitTestCase):

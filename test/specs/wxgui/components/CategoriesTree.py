@@ -18,12 +18,12 @@
 
 from mock import Mock
 
-from specs.utils import a_category_with
 from timelinelib.data.db import MemoryDB
 from timelinelib.wxgui.components.cattree import CategoriesTree
 from timelinelib.wxgui.components.cattree import CategoriesTreeController
 from timelinelib.wxgui.components.timeline import TimelineCanvas
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 
 
 class describe_categories_tree_control(UnitTestCase):

@@ -16,10 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import an_event
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.undohandler import UndoHandler
 from timelinetest import UnitTestCase
+from timelinetest.utils import an_event
 
 
 class UndoHandlerSpec(UnitTestCase):

@@ -18,13 +18,13 @@
 
 from mock import Mock
 
-from specs.utils import a_category_with
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.event import Event
 from timelinelib.editors.setcategory import SetCategoryEditor
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.setcategoryeditor import SetCategoryEditorDialog
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 import timelinelib.calendar.gregorian as gregorian
 
 

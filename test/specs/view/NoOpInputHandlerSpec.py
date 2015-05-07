@@ -19,11 +19,11 @@
 from mock import Mock
 import wx
 
-from specs.utils import an_event, an_event_with, human_time_to_gregorian
 from timelinelib.view.drawingarea import TimelineCanvasController
 from timelinelib.view.noop import NoOpInputHandler
 from timelinelib.wxgui.components.timeline import TimelineCanvas
 from timelinetest import UnitTestCase
+from timelinetest.utils import an_event, an_event_with, human_time_to_gregorian
 
 
 class NoOpInputHandlerSpec(UnitTestCase):

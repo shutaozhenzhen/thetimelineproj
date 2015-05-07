@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import TIME_MODIFIERS
 from timelinelib.time.timeline import *
 from timelinetest import UnitTestCase
+from timelinetest.utils import TIME_MODIFIERS
 
 
 class TimeSpec(UnitTestCase):

@@ -18,11 +18,11 @@
 
 from mock import Mock
 
-from specs.utils import a_category_with
-from specs.utils import an_event_with
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import an_event_with
 
 
 class describe_default_event_box_drawer(UnitTestCase):

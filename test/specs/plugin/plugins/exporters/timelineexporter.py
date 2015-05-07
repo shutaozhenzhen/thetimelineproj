@@ -19,12 +19,12 @@ import os
 
 from mock import Mock
 
-from specs.utils import a_category_with
-from specs.utils import an_event_with
 from timelinelib.data.db import MemoryDB
 from timelinelib.plugin.plugins.exporters.timelineexporter import CsvExporter
 from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExporter
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import an_event_with
 
 
 CSV_FILE = "test.csv"

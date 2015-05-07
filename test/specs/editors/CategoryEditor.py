@@ -18,12 +18,12 @@
 
 from mock import Mock
 
-from specs.utils import a_category_with
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.editors.category import CategoryEditor
 from timelinelib.repositories.interface import CategoryRepository
 from timelinelib.wxgui.dialogs.categoryeditor import WxCategoryEdtiorDialog
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 
 
 class CategoryEditorBaseFixture(UnitTestCase):

@@ -18,12 +18,12 @@
 
 from mock import Mock
 
-from specs.utils import a_gregorian_era
-from specs.utils import a_gregorian_era_with
-from specs.utils import human_time_to_gregorian
 from timelinelib.editors.era import EraEditorDialogController
 from timelinelib.wxgui.dialogs.eraeditor import EraEditorDialog
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_gregorian_era
+from timelinetest.utils import a_gregorian_era_with
+from timelinetest.utils import human_time_to_gregorian
 
 
 class EraEditorTestCase(UnitTestCase):

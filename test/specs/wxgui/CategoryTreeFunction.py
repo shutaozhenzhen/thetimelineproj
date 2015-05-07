@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_category_with
 from timelinelib.wxgui.utils import category_tree
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 
 
 class CategoryTreeFunctionSpec(UnitTestCase):
