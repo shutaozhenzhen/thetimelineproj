@@ -39,7 +39,7 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
     def __init__(self):
         ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION)
         self.century = 0
-        dt = self._create_locale_sample_date()
+        dt = create_locale_sample_date()
         self._construct_format(dt)
 
     def set_active(self, value):
@@ -83,16 +83,6 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
             year = self._field_positions[YEAR[2:]]
         return year, self._field_positions[MONTH], self._field_positions[DAY]
 
-    def _create_locale_sample_date(self):
-        self._set_default_time_locale()
-        return self._create_sample_datestring_using_locale_formatting()
-
-    def _set_default_time_locale(self):
-        locale.setlocale(locale.LC_TIME, "")
-
-    def _create_sample_datestring_using_locale_formatting(self):
-        return datetime.datetime(int(YEAR), int(MONTH), int(DAY)).strftime('%x')
-
     def _construct_format(self, dt):
         self._separator = self._find_separator(dt)
         self._field_positions = self._get_field_positions(dt)
@@ -123,3 +113,16 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
         result[self._field_positions[MONTH]] = month
         result[self._field_positions[DAY]] = day
         return tuple(result)
+
+
+def create_locale_sample_date():
+    _set_default_time_locale()
+    return _create_sample_datestring_using_locale_formatting()
+
+
+def _set_default_time_locale():
+    locale.setlocale(locale.LC_TIME, "")
+
+
+def _create_sample_datestring_using_locale_formatting():
+    return datetime.datetime(int(YEAR), int(MONTH), int(DAY)).strftime('%x')

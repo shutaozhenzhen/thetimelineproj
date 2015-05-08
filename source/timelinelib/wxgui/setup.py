@@ -20,12 +20,14 @@ from sys import version as python_version
 import platform
 import sys
 import traceback
+import locale
 
 import wx
 
 from timelinelib.meta.version import get_version
 from timelinelib.wxgui.dialogs.mainframe import MainFrame
 from timelinelib.wxgui.dialogs.feedback import show_feedback_dialog
+from timelinelib.features.experimental.experimentalfeaturedateformatting import create_locale_sample_date
 
 
 def start_wx_application(application_arguments, before_main_loop_hook=None):
@@ -61,7 +63,8 @@ def create_subject(type, value):
 def create_error_message(type, value, tb):
     stacktrace = ("".join(traceback.format_exception(type, value, tb))).strip()
     versions = create_versions_message()
-    return "Describe what you did here...\n\n%s\n\n%s" % (stacktrace, versions)
+    locale = create_locale_message()
+    return "Describe what you did here...\n\n%s\n\n%s\n%s" % (stacktrace, versions, locale)
 
 
 def create_versions_message():
@@ -70,4 +73,11 @@ def create_versions_message():
         "System version: %s" % ", ".join(platform.uname()),
         "Python version: %s" % python_version.replace("\n", ""),
         "wxPython version: %s" % wx.version(),
+    ])
+
+
+def create_locale_message():
+    return "\n".join([
+        "Locale setting: %s" % " ".join(locale.getlocale(locale.LC_TIME)),
+        "Locale sample date: %s" % create_locale_sample_date(),
     ])
