@@ -28,6 +28,9 @@ Solved problems:
 
 * #52 Part of sidebar is visible at start of Timeline
   (`#52 <https://http://sourceforge.net/p/thetimelineproj/backlog/52/>`_).
+  
+* #54 Difficult to troubleshoot errors depending on locale settings
+  (`#54 <https://http://sourceforge.net/p/thetimelineproj/backlog/54/>`_).
 
 Version 1.6.0
 -------------
