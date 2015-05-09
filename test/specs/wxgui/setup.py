@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
 import locale
 
 from timelinelib.wxgui.setup import create_locale_message
@@ -31,5 +32,6 @@ class testbase(UnitTestCase):
 class localemessage(testbase):
     
     def test_create_locale_message(self):
-        self.set_locale()
-        self.assertEqual("Locale setting: Swedish_Sweden 850\nLocale sample date: 3333-11-22", create_locale_message())
+        if os.name == "nt":
+            self.set_locale()
+            self.assertEqual("Locale setting: Swedish_Sweden 850\nLocale sample date: 3333-11-22", create_locale_message())
