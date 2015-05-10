@@ -62,16 +62,18 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
                 return int(fields[self._field_positions[key1]])
             except:
                 return int(fields[self._field_positions[key2]])
-
-        bc = False
-        if dt.startswith("-"):
-            bc = True
-            dt = dt[1:]
-        fields = dt.split(self._separator)
-        year = get_value(YEAR)
-        if bc:
-            year = -year
-        return year, get_value(MONTH), get_value(DAY)
+        try:
+            bc = False
+            if dt.startswith("-"):
+                bc = True
+                dt = dt[1:]
+            fields = dt.split(self._separator)
+            year = get_value(YEAR)
+            if bc:
+                year = -year
+            return year, get_value(MONTH), get_value(DAY)
+        except:
+            raise ValueError()
 
     def separator(self):
         return self._separator
