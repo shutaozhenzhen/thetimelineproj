@@ -327,7 +327,7 @@ The *Edit Event* dialog can be opened by double clicking on an event or by selec
         # Stars produce emphasized text. DON'T remove them.
         # Dashes produce bullet lists. DON'T remove them.
         body=_("""
-An event can be moved vertically. This is done by first selecting the event and therefter using the Alt+Up or Alt+Down keys.
+An event can be moved vertically. This is done by first selecting the event and thereafter using the Up or Down keys.
 """))
 
     help_system.install_page(
