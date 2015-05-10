@@ -36,12 +36,15 @@ class EventEditor(object):
         self._set_view_content()
 
     def create_or_update_event(self):
-        self._get_and_verify_input()
-        self._save_event()
-        if self.view.get_show_add_more():
-            self.view.clear_dialog()
-        else:
-            self.view.close()
+        try:
+            self._get_and_verify_input()
+            self._save_event()
+            if self.view.get_show_add_more():
+                self.view.clear_dialog()
+            else:
+                self.view.close()
+        except ValueError, ex:
+            pass
 
     def clear(self):
         self.name = ""
@@ -105,11 +108,13 @@ class EventEditor(object):
         self.category = self.view.get_category()
         start = self.get_start_from_view()
         if self._dialog_has_signalled_invalid_input(start):
+            self.view.display_invalid_start(_("Invalid Start- date or time"))
             raise ValueError()
         end = self.get_end_from_view()
         if self._dialog_has_signalled_invalid_input(end):
+            self.view.display_invalid_start(_("Invalid End- date or time"))
             raise ValueError()
-        if self.event != None and self.locked:
+        if self.event is not None and self.locked:
             self._verify_that_time_has_not_been_changed(start, end)
         self.start = self._validate_and_save_start(self.get_start_from_view())
         self.end = self._validate_and_save_end(self.get_end_from_view())
