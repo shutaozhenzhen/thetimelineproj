@@ -157,6 +157,9 @@ class describe_experimental_feature_date_formatting(UnitTestCase):
         self.ef._separator = "-"
         self.assertEqual("%04d-%02d-%02d", self.ef._get_date_format_string("33-Nov-22"))
         
+    def test_invalid_dates_generates_value_error_exception(self):
+        self.assertRaises(ValueError, self.ef.parse, "-02-02")
+        
     def given_sample_date(self, sample_date):
         self.ef._construct_format(sample_date)
 
