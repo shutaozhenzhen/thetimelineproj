@@ -419,6 +419,11 @@ class TimelineCanvasController(object):
                 self._scroll_timeline_view_by_factor(LEFT_RIGHT_SCROLL_FACTOR)
             elif keycode in (wx.WXK_LEFT, wx.WXK_NUMPAD_LEFT):
                 self._scroll_timeline_view_by_factor(-LEFT_RIGHT_SCROLL_FACTOR)
+        else:
+            if keycode == wx.WXK_UP:
+                self._try_move_event_vertically(True)
+            elif keycode == wx.WXK_DOWN:
+                self._try_move_event_vertically(False)
 
     def _try_move_event_vertically(self, up=True):
         if self._one_and_only_one_event_selected():
