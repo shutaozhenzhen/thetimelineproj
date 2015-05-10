@@ -42,7 +42,7 @@ class GregorianDateTimePicker(wx.Panel):
 
     def on_return(self):
         self.parent.on_return()
-        
+
     def show_time(self, show=True):
         self.time_picker.Show(show)
         self.GetSizer().Layout()
