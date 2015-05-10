@@ -12,25 +12,35 @@ Solved problems:
   (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_).
   
 * It's not possible to see if an event has a hyperlink associated with it, or not.
+  Added an icon displayd in the Event box when the event has hyperlinks.
   (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_).
 
 * An Event can only have one hyperlink
+  Added support for multiple hyperlinks.
   (`#30 <https://http://sourceforge.net/p/thetimelineproj/backlog/30/>`_).
   
 * Crash report: TypeError: unsupported operand type(s) for +: 'int' and 'TimeDelta'
   (`#48 <https://http://sourceforge.net/p/thetimelineproj/backlog/48/>`_).
 
 * #42 Show point events as symbols
+  Added an option 'never show paeriod events as point events' to enable period events to 
+  be displayed as symbols below the divider line.
   (`#42 <https://http://sourceforge.net/p/thetimelineproj/backlog/42/>`_).
   
 * #50 1.6.0 Crashes on startup
   (`#50 <https://http://sourceforge.net/p/thetimelineproj/backlog/50/>`_).
 
 * #52 Part of sidebar is visible at start of Timeline
+  Made the sidebar hidden at application start-up
   (`#52 <https://http://sourceforge.net/p/thetimelineproj/backlog/52/>`_).
   
 * #54 Difficult to troubleshoot errors depending on locale settings
+  Added info on locale settings in the crash report.
   (`#54 <https://http://sourceforge.net/p/thetimelineproj/backlog/54/>`_).
+  
+* #57 Crash report: AttributeError: 'EraEditorDialog' object has no attribute 'on_return'    
+  Added the on_return attribute to the EraEditorDialog and made it call the controller on_btn_ok method.
+  (`#57 <https://http://sourceforge.net/p/thetimelineproj/backlog/57/>`_).
 
 Version 1.6.0
 -------------
