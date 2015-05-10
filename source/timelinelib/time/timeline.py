@@ -17,13 +17,14 @@
 
 
 SECONDS_IN_DAY = 24 * 60 * 60
+MIN_JULIAN_DAY = 0
 
 
 class Time(object):
 
     def __init__(self, julian_day, seconds):
-        if julian_day < 0:
-            raise ValueError("julian_day must be >= 0")
+        if julian_day < MIN_JULIAN_DAY:
+            raise ValueError("julian_day must be >= %d" % MIN_JULIAN_DAY)
         if seconds < 0 or seconds >= SECONDS_IN_DAY:
             raise ValueError("seconds must be >= 0 and <= 24*60*60")
         self.julian_day = julian_day
