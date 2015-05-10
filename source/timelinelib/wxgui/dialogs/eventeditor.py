@@ -185,7 +185,10 @@ class EventEditorDialog(wx.Dialog):
                 delta = delta_from_days(1)
             else:
                 delta = 1
-            self.set_end(self.get_start() + delta)
+            try:
+                self.set_end(self.get_start() + delta)
+            except TypeError:
+                pass
         self._show_to_time(e.IsChecked())
 
     def _create_show_time_checkbox(self, box):
@@ -324,7 +327,10 @@ class EventEditorDialog(wx.Dialog):
         self._btn_ok_on_click(None)
 
     def _btn_ok_on_click(self, evt):
-        self.controller.create_or_update_event()
+        try:
+            self.controller.create_or_update_event()
+        except ValueError:
+            display_error_message(_("Invalid Date or Time"))
 
     def _show_to_time(self, show=True):
         self.lbl_to.Show(show)
