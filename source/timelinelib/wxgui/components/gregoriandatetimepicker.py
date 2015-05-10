@@ -48,7 +48,10 @@ class GregorianDateTimePicker(wx.Panel):
         self.GetSizer().Layout()
 
     def get_value(self):
-        return self.controller.get_value()
+        try:
+            return self.controller.get_value()
+        except ValueError:
+            pass
 
     def set_value(self, value):
         self.controller.set_value(value)

@@ -45,6 +45,11 @@ Solved problems:
 * #53 Crash report: KeyError: '33'
   (`#53 <https://sourceforge.net/p/thetimelineproj/backlog/53/>`_).  
   Catches the ValueError exception when parsing dates when 'Locale date format' is used.
+  
+* #55 Crash report: ValueError: Invalid date.
+  (`#55 <https://sourceforge.net/p/thetimelineproj/backlog/55/>`_).    
+  
+  Added better exception handling
 
 Version 1.6.0
 -------------
