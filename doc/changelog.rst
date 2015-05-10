@@ -28,8 +28,7 @@ Solved problems:
   be displayed as symbols below the divider line.
 
 * #46 Lenght of period event is not obvious when zooming ou
-  (`#46 <https://sourceforge.net/p/thetimelineproj/backlog/46/>`_).  
-Solved by #42
+  (`#46 <https://sourceforge.net/p/thetimelineproj/backlog/46/>`_).     Solved by #42
 
 * #50 1.6.0 Crashes on startup
   (`#50 <https://sourceforge.net/p/thetimelineproj/backlog/50/>`_).  
@@ -51,9 +50,10 @@ Solved by #42
   Catches the ValueError exception when parsing dates when 'Locale date format' is used.
   
 * #55 Crash report: ValueError: Invalid date.
-  (`#55 <https://sourceforge.net/p/thetimelineproj/backlog/55/>`_).    
+  (`#55 <https://sourceforge.net/p/thetimelineproj/backlog/55/>`_).    Added better exception handling
   
-  Added better exception handling
+* #45 It is not obvious how to move events vertically
+  (`#45 <https://sourceforge.net/p/thetimelineproj/backlog/45/>`_).    Now, also Up/Down tries to move event vertically
 
 Version 1.6.0
 -------------
