@@ -189,7 +189,7 @@ class _Sidebar(wx.Panel):
 class TimelineCanvas(wx.Panel):
 
     def __init__(self, parent, status_bar_adapter, divider_line_slider, fn_handle_db_error, config, main_frame):
-        wx.Panel.__init__(self, parent, style=wx.NO_BORDER)
+        wx.Panel.__init__(self, parent, style=wx.NO_BORDER | wx.WANTS_CHARS)
         self.fn_handle_db_error = fn_handle_db_error
         self.config = config
         self.main_frame = main_frame
@@ -405,6 +405,7 @@ class TimelineCanvas(wx.Panel):
 
     def _on_key_up(self, evt):
         self.controller.key_up(evt.GetKeyCode())
+        evt.Skip()
 
     def display_timeline_context_menu(self):
         self.main_frame.display_timeline_context_menu()
