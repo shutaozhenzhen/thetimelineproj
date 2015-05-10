@@ -26,7 +26,11 @@ Solved problems:
   (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_).  
   Added an option 'never show paeriod events as point events' to enable period events to 
   be displayed as symbols below the divider line.
-  
+
+* #46 Lenght of period event is not obvious when zooming ou
+  (`#46 <https://sourceforge.net/p/thetimelineproj/backlog/46/>`_).  
+Solved by #42
+
 * #50 1.6.0 Crashes on startup
   (`#50 <https://sourceforge.net/p/thetimelineproj/backlog/50/>`_).  
 
