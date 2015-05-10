@@ -177,3 +177,6 @@ class EraEditorDialog(EraEditorDialogGuiCreator, EraEditorDialogControllerApi):
         self.config = config
         EraEditorDialogGuiCreator.__init__(self, parent, title=title)
         self.controller = EraEditorDialogController(self, era, time_type)
+
+    def on_return(self):
+        self.controller.on_btn_ok()
