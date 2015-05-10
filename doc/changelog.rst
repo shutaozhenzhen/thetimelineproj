@@ -9,38 +9,42 @@ Version 1.7.0
 Solved problems:
 
 * Crash report: WindowsError: [Error 32] The process cannot access the file because it is being used by another process: 
-  (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_).
+  (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_).  
   
 * It's not possible to see if an event has a hyperlink associated with it, or not.
+  (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_).  
   Added an icon displayd in the Event box when the event has hyperlinks.
-  (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_).
 
 * An Event can only have one hyperlink
+  (`#30 <https://sourceforge.net/p/thetimelineproj/backlog/30/>`_).  
   Added support for multiple hyperlinks.
-  (`#30 <https://http://sourceforge.net/p/thetimelineproj/backlog/30/>`_).
   
 * Crash report: TypeError: unsupported operand type(s) for +: 'int' and 'TimeDelta'
-  (`#48 <https://http://sourceforge.net/p/thetimelineproj/backlog/48/>`_).
+  (`#48 <https://sourceforge.net/p/thetimelineproj/backlog/48/>`_).  
 
 * #42 Show point events as symbols
+  (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_).  
   Added an option 'never show paeriod events as point events' to enable period events to 
   be displayed as symbols below the divider line.
-  (`#42 <https://http://sourceforge.net/p/thetimelineproj/backlog/42/>`_).
   
 * #50 1.6.0 Crashes on startup
-  (`#50 <https://http://sourceforge.net/p/thetimelineproj/backlog/50/>`_).
+  (`#50 <https://sourceforge.net/p/thetimelineproj/backlog/50/>`_).  
 
 * #52 Part of sidebar is visible at start of Timeline
+  (`#52 <https://sourceforge.net/p/thetimelineproj/backlog/52/>`_).  
   Made the sidebar hidden at application start-up
-  (`#52 <https://http://sourceforge.net/p/thetimelineproj/backlog/52/>`_).
   
 * #54 Difficult to troubleshoot errors depending on locale settings
+  (`#54 <https://sourceforge.net/p/thetimelineproj/backlog/54/>`_).  
   Added info on locale settings in the crash report.
-  (`#54 <https://http://sourceforge.net/p/thetimelineproj/backlog/54/>`_).
   
 * #57 Crash report: AttributeError: 'EraEditorDialog' object has no attribute 'on_return'    
+  (`#57 <https://sourceforge.net/p/thetimelineproj/backlog/57/>`_).  
   Added the on_return attribute to the EraEditorDialog and made it call the controller on_btn_ok method.
-  (`#57 <https://http://sourceforge.net/p/thetimelineproj/backlog/57/>`_).
+
+* #53 Crash report: KeyError: '33'
+  (`#53 <https://sourceforge.net/p/thetimelineproj/backlog/53/>`_).  
+  Catches the ValueError exception when parsing dates when 'Locale date format' is used.
 
 Version 1.6.0
 -------------
