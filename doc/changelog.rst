@@ -58,6 +58,10 @@ Solved problems:
   | Made the Up/Down keys move a selected event vertically.
     That should be more obvious
 
+* | Can't enter dates before 4714 BC
+    (`#51 <https://sourceforge.net/p/thetimelineproj/backlog/51/>`_).    
+  | Added an experimental feature that allows negative Julian days
+
 Version 1.6.0
 -------------
 
