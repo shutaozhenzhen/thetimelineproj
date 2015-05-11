@@ -56,6 +56,9 @@ class timeproperties(testbase):
             return Time(100, 100)
         self.assertEqNeImplementationIsCorrect(a_time, TIME_MODIFIERS)
 
+    def test_can_return_min_time(self):
+        self.assertEqual(Time(MIN_JULIAN_DAY, 0), get_min_time())
+
 
 class timedeltaproperties(testbase):
 

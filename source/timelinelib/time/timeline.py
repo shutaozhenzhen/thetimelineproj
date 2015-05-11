@@ -135,3 +135,16 @@ def delta_from_seconds(seconds):
 
 def delta_from_days(days):
     return TimeDelta(SECONDS_IN_DAY * days)
+
+
+def get_min_time():
+    return Time(MIN_JULIAN_DAY, 0)
+
+
+def set_min_julian_day(allow_negative_julian_yeras):
+    global MIN_JULIAN_DAY
+    if allow_negative_julian_yeras:
+        MIN_JULIAN_DAY = -1000000000000000000000000000000000000000000000000
+    else:
+        MIN_JULIAN_DAY = 0
+    print MIN_JULIAN_DAY
