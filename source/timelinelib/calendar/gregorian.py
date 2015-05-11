@@ -179,8 +179,8 @@ def from_julian_day(julian_day):
 
     This proves 1).
     """
-    if julian_day < 0:
-        raise ValueError("from_julian_day only works for positive julian days, but was %s" % julian_day)
+    if julian_day < timeline.MIN_JULIAN_DAY:
+        raise ValueError("from_julian_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
     a = julian_day + 32044
     b = ((4 * a) + 3) // 146097
     c = a - ((b * 146097) // 4)
@@ -260,8 +260,8 @@ def to_julian_day(year, month, day):
                   - (y // 100)
                   + (y // 400)
                   - 32045)
-    if julian_day < 0:
-        raise ValueError("to_julian_day only works for positive julian days, but was %s" % julian_day)
+    if julian_day < timeline.MIN_JULIAN_DAY:
+        raise ValueError("from_julian_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
     return julian_day
 
 

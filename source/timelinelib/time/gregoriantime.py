@@ -140,7 +140,7 @@ class GregorianTimeType(TimeType):
         return delta_string
 
     def get_min_time(self):
-        return (timeline.Time(0, 0), _("can't be before year 10"))
+        return (timeline.get_min_time(), _("can't be before year 10"))
 
     def get_max_time(self):
         return (timeline.Time(5369833, 0), _("can't be after year 9989"))
