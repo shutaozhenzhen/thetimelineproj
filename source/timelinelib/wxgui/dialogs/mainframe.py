@@ -77,6 +77,7 @@ ID_ZOOMOUT = wx.NewId()
 ID_VERT_ZOOMIN = wx.NewId()
 ID_VERT_ZOOMOUT = wx.NewId()
 ID_CREATE_EVENT = wx.NewId()
+ID_PT_EVENT_TO_RIGHT = wx.NewId()
 ID_EDIT_EVENT = wx.NewId()
 ID_DUPLICATE_EVENT = wx.NewId()
 ID_SET_CATEGORY_ON_SELECTED = wx.NewId()
@@ -110,7 +111,6 @@ ID_ABOUT = wx.ID_ABOUT
 ID_SAVEAS = wx.ID_SAVEAS
 ID_EXIT = wx.ID_EXIT
 ID_NAVIGATE = wx.NewId() + 100
-
 
 class GuiCreator(object):
 
@@ -321,6 +321,10 @@ class GuiCreator(object):
                 self.config.selected_event_box_drawer = plugin.display_name()
             return event_handler
 
+        def draw_point_events_to_right(evt):
+            self.config.draw_period_events_to_right = evt.IsChecked()
+            self.main_panel.redraw_timeline()
+
         items = [(ID_SIDEBAR, sidebar, _("&Sidebar\tCtrl+I"), CHECKBOX),
                  (ID_LEGEND, legend, _("&Legend"), CHECKBOX),
                  None,
@@ -330,6 +334,8 @@ class GuiCreator(object):
                  (ID_ZOOMOUT, zoomout, _("Zoom &Out\tCtrl+-"), NONE),
                  (ID_VERT_ZOOMIN, vert_zoomin, _("Vertical Zoom &In\tAlt++"), NONE),
                  (ID_VERT_ZOOMOUT, vert_zoomout, _("Vertical Zoom &Out\tAlt+-"), NONE),
+                 None,
+                 (ID_PT_EVENT_TO_RIGHT, draw_point_events_to_right, _("Draw point event right of line"), CHECKBOX),
                  None,
                  ]
         for plugin in factory.get_plugins(EVENTBOX_DRAWER):
@@ -349,9 +355,11 @@ class GuiCreator(object):
         sidebar_item = view_menu.FindItemById(ID_SIDEBAR)
         legend_item = view_menu.FindItemById(ID_LEGEND)
         balloons_item = view_menu.FindItemById(ID_BALLOONS)
+        pt_event_item = view_menu.FindItemById(ID_PT_EVENT_TO_RIGHT)
         sidebar_item.Check(self.config.get_show_sidebar())
         legend_item.Check(self.config.get_show_legend())
         balloons_item.Check(self.config.get_balloon_on_hover())
+        pt_event_item.Check(self.config.draw_period_events_to_right)
 
     def _add_view_menu_items_to_controller(self, view_menu):
         sidebar_item = view_menu.FindItemById(ID_SIDEBAR)

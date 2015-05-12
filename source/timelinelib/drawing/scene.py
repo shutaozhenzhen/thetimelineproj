@@ -262,7 +262,10 @@ class TimelineScene(object):
             rw += self._data_indicator_size / 3
         if event.get_fuzzy() or event.get_locked():
             rw += th + 2 * self._inner_padding
-        rx = self._metrics.calc_x(event.mean_time()) - rw / 2
+        if self._config.draw_period_events_to_right:
+            rx = self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
+        else:
+            rx = self._metrics.calc_x(event.mean_time()) - rw / 2
         ry = self._metrics.half_height - rh - self._baseline_padding
         if self.never_show_period_events_as_point_events() and event.is_period():
             rx = -1
