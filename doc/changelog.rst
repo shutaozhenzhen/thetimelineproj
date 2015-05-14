@@ -66,6 +66,10 @@ Solved problems:
       (`#60 <https://sourceforge.net/p/thetimelineproj/backlog/60/>`_).    
        Added an option to draw the point events right of the line conencting them with the time scale.  
 
+    * Category editor can't be opened with doubleclick
+      (`#47 <https://sourceforge.net/p/thetimelineproj/backlog/47/>`_).    
+       Left doublecklick now opens the category editor
+
 Version 1.6.0
 -------------
 
