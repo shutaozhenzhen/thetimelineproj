@@ -40,6 +40,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
         self.Bind(wx.EVT_SIZE, self._on_size)
         self.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
         self.Bind(wx.EVT_RIGHT_DOWN, self._on_right_down)
+        self.Bind(wx.EVT_LEFT_DCLICK, self._on_left_doubleclick)
         self.model = CustomCategoryTreeModel()
         self.model.listen_for_any(self._redraw)
         self.renderer = CustomCategoryTreeRenderer(self, self.model)
@@ -67,10 +68,15 @@ class CustomCategoryTree(wx.ScrolledWindow):
         return self.db is not None and self.view_properties is not None
 
     def _on_paint(self, event):
-        dc = wx.BufferedPaintDC(self, self.buffer_image, wx.BUFFER_VIRTUAL_AREA)
+        wx.BufferedPaintDC(self, self.buffer_image, wx.BUFFER_VIRTUAL_AREA)
 
     def _on_size(self, event):
         self._size_to_model()
+
+    def _on_left_doubleclick(self, event):
+        def edit_function():
+            self._edit_category()
+        safe_locking(self.parent, edit_function)
 
     def _on_left_down(self, event):
         self.SetFocus()
@@ -90,9 +96,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
         safe_locking(self.parent, edit_function)
 
     def _on_menu_edit(self, e):
-        hit_category = self.last_hit_info.get_category()
-        if hit_category:
-            edit_category(self, self.db, hit_category, self.handle_db_error)
+        self._edit_category()
 
     def _on_menu_add(self, e):
         add_category(self, self.db, self.handle_db_error)
@@ -137,6 +141,11 @@ class CustomCategoryTree(wx.ScrolledWindow):
     def _on_menu_uncheck_parents(self, e):
         self.view_properties.set_categories_visible(
             self.last_hit_info.get_parents(), False)
+
+    def _edit_category(self):
+        hit_category = self.last_hit_info.get_category()
+        if hit_category:
+            edit_category(self, self.db, hit_category, self.handle_db_error)
 
     def _store_hit_info(self, event):
         (x, y) = self.CalcUnscrolledPosition(event.GetX(), event.GetY())
