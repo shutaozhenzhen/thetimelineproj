@@ -8,63 +8,63 @@ Version 1.7.0
 
 Solved problems:
 
-  | * Crash report: WindowsError: [Error 32] The process cannot access the file because it is being used by another process. 
-    (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_).  
+    * Crash report: WindowsError: [Error 32] The process cannot access the file because it is being used by another process. 
+      (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_).  
     
-  | * It's not possible to see if an event has a hyperlink associated with it, or not.
-    (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_).  
-  |  Added an icon displayd in the Event box when the event has hyperlinks.
+    * It's not possible to see if an event has a hyperlink associated with it, or not.
+      (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_).  
+       Added an icon displayd in the Event box when the event has hyperlinks.
 
-  | * An Event can only have one hyperlink
-    (`#30 <https://sourceforge.net/p/thetimelineproj/backlog/30/>`_).  
-  |  Added support for multiple hyperlinks.
+    * An Event can only have one hyperlink
+      (`#30 <https://sourceforge.net/p/thetimelineproj/backlog/30/>`_).  
+       Added support for multiple hyperlinks.
   
-  | * Crash report: TypeError: unsupported operand type(s) for +: 'int' and 'TimeDelta'
-    (`#48 <https://sourceforge.net/p/thetimelineproj/backlog/48/>`_).  
+    * Crash report: TypeError: unsupported operand type(s) for +: 'int' and 'TimeDelta'
+      (`#48 <https://sourceforge.net/p/thetimelineproj/backlog/48/>`_).  
 
-  | * Show point events as symbols
-    (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_).  
-  |  Added an option 'never show paeriod events as point events' to enable period events to be displayed as symbols below the divider line.
+    * Show point events as symbols
+      (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_).  
+       Added an option 'never show paeriod events as point events' to enable period events to be displayed as symbols below the divider line.
 
-  | * Lenght of period event is not obvious when zooming out
-    (`#46 <https://sourceforge.net/p/thetimelineproj/backlog/46/>`_).     
-  |  Solved by (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_)
+    * Lenght of period event is not obvious when zooming out
+      (`#46 <https://sourceforge.net/p/thetimelineproj/backlog/46/>`_).     
+       Solved by (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_)
 
-  | * 1.6.0 Crashes on startup
-    (`#50 <https://sourceforge.net/p/thetimelineproj/backlog/50/>`_).  
+    * 1.6.0 Crashes on startup
+      (`#50 <https://sourceforge.net/p/thetimelineproj/backlog/50/>`_).  
 
-  | * Part of sidebar is visible at start of Timeline
-    (`#52 <https://sourceforge.net/p/thetimelineproj/backlog/52/>`_).  
-  |  Made the sidebar hidden at application start-up
+    * Part of sidebar is visible at start of Timeline
+      (`#52 <https://sourceforge.net/p/thetimelineproj/backlog/52/>`_).  
+       Made the sidebar hidden at application start-up
   
-  | * Difficult to troubleshoot errors depending on locale settings
-    (`#54 <https://sourceforge.net/p/thetimelineproj/backlog/54/>`_).  
-  |  Added info on locale settings in the crash report.
+    * Difficult to troubleshoot errors depending on locale settings
+      (`#54 <https://sourceforge.net/p/thetimelineproj/backlog/54/>`_).  
+       Added info on locale settings in the crash report.
   
-  | * Crash report: AttributeError: 'EraEditorDialog' object has no attribute 'on_return'    
-    (`#57 <https://sourceforge.net/p/thetimelineproj/backlog/57/>`_).  
-  |  Added the on_return attribute to the EraEditorDialog and made it call the controller on_btn_ok method.
+    * Crash report: AttributeError: 'EraEditorDialog' object has no attribute 'on_return'    
+      (`#57 <https://sourceforge.net/p/thetimelineproj/backlog/57/>`_).  
+       Added the on_return attribute to the EraEditorDialog and made it call the controller on_btn_ok method.
 
-  | * Crash report: KeyError: '33'
-    (`#53 <https://sourceforge.net/p/thetimelineproj/backlog/53/>`_).  
-  |  Catches the ValueError exception when parsing dates when 'Locale date format' is used.
+    * Crash report: KeyError: '33'
+      (`#53 <https://sourceforge.net/p/thetimelineproj/backlog/53/>`_).  
+       Catches the ValueError exception when parsing dates when 'Locale date format' is used.
   
-  | * Crash report: ValueError: Invalid date.
-    (`#55 <https://sourceforge.net/p/thetimelineproj/backlog/55/>`_).    
-  |  Added better exception handling
+    * Crash report: ValueError: Invalid date.
+      (`#55 <https://sourceforge.net/p/thetimelineproj/backlog/55/>`_).    
+       Added better exception handling
 
-  | * It is not obvious how to move events vertically
-    (`#45 <https://sourceforge.net/p/thetimelineproj/backlog/45/>`_).    
-  |  Made the Up/Down keys move a selected event vertically.
-     That should be more obvious
+    * It is not obvious how to move events vertically
+      (`#45 <https://sourceforge.net/p/thetimelineproj/backlog/45/>`_).    
+       Made the Up/Down keys move a selected event vertically.
+       That should be more obvious
 
-  | * Can't enter dates before 4714 BC
-    (`#51 <https://sourceforge.net/p/thetimelineproj/backlog/51/>`_).    
-  |  Added an experimental feature that allows negative Julian days
+    * Can't enter dates before 4714 BC
+      (`#51 <https://sourceforge.net/p/thetimelineproj/backlog/51/>`_).    
+       Added an experimental feature that allows negative Julian days
   
-  | * Draw point events with the left box edge at the vertical line
-    (`#60 <https://sourceforge.net/p/thetimelineproj/backlog/60/>`_).    
-  |  Added an option to draw the point events right of the line conencting them with the time scale.  
+    * Draw point events with the left box edge at the vertical line
+      (`#60 <https://sourceforge.net/p/thetimelineproj/backlog/60/>`_).    
+       Added an option to draw the point events right of the line conencting them with the time scale.  
 
 Version 1.6.0
 -------------
