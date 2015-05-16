@@ -70,6 +70,10 @@ Solved problems:
       (`#47 <https://sourceforge.net/p/thetimelineproj/backlog/47/>`_).    
        Left doublecklick now opens the category editor
 
+    * Undo doesn't work after Compress
+      (`#65 <https://sourceforge.net/p/thetimelineproj/backlog/65/>`_).
+      Undo now works after a Compress action    
+    
 Version 1.6.0
 -------------
 
