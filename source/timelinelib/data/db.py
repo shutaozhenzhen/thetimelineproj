@@ -340,3 +340,4 @@ class MemoryDB(Observable):
 
     def compress(self):
         self._events.compress()
+        self.save_events(self._events.get_all())
