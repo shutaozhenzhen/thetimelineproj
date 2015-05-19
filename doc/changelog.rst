@@ -74,6 +74,10 @@ Solved problems:
       (`#65 <https://sourceforge.net/p/thetimelineproj/backlog/65/>`_).
       Undo now works after a Compress action    
     
+    * There is no feedback that the shortcut has been created
+      (`#23 <https://sourceforge.net/p/thetimelineproj/backlog/23/>`_).
+      A popup window now shows the text 'Shortcut is saved' when clicking the Apply button
+      
 Version 1.6.0
 -------------
 
