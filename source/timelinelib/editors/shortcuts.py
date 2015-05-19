@@ -38,7 +38,7 @@ class ShortcutsEditor(object):
     #
     def on_function_selected(self):
         self._select_modifier_and_key_for_selected_function()
-        
+
     def apply(self):
         self._set_new_shortcut_for_selected_function()
         pass
@@ -51,7 +51,7 @@ class ShortcutsEditor(object):
         modifier, key = self.shortcut_config.get_modifier_and_key(function)
         self.view.set_modifier(modifier)
         self.view.set_shortcut_key(key)
-            
+
     def _set_new_shortcut_for_selected_function(self):
         try:
             self._validate_input()
@@ -59,32 +59,32 @@ class ShortcutsEditor(object):
             function = self.view.get_function()
             shortcut = self._get_shortcut()
             self.shortcut_config.edit(function, shortcut)
+            self.view.display_ack_popup_window(_("Shortcut is saved"))
         except MissingInput, ex:
             display_warning_message(ex.message)
         except DuplicateShortcut, ex:
             display_warning_message(ex.message)
-        
+
     def _validate_input(self):
         shortcut_key = self.view.get_shortcut_key()
         modifier = self.view.get_modifier()
         if not self.shortcut_config.is_valid(modifier, shortcut_key):
             raise MissingInput(_("Both Modifier and Shortcut key must be given!"))
-       
+
     def _validate_shortcut(self):
         shortcut = self._get_shortcut()
         if self.shortcut_config.exists(shortcut):
-            function = self.view.get_function()
-            raise DuplicateShortcut(_("The shortcut %s is already bound to function '%s'!") % 
+            raise DuplicateShortcut(_("The shortcut %s is already bound to function '%s'!") %
                                     (shortcut, self.shortcut_config.get_function(shortcut)))
 
-    def _get_shortcut(self): 
+    def _get_shortcut(self):
         modifier = self.view.get_modifier()
         shortcut_key = self.view.get_shortcut_key()
         shortcut = "%s+%s" % (modifier, shortcut_key)
         if shortcut.startswith("+"):
             shortcut = shortcut[1:]
         return shortcut
-                                
+
     #
     # Construction
     #
@@ -94,4 +94,3 @@ class ShortcutsEditor(object):
         self.view.set_functions(functions)
         self.view.set_modifiers(self.shortcut_config.get_modifiers(), modifier)
         self.view.set_shortcut_keys(self.shortcut_config.get_shortcuts(), key)
-        
