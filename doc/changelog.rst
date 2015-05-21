@@ -78,6 +78,11 @@ Solved problems:
       (`#23 <https://sourceforge.net/p/thetimelineproj/backlog/23/>`_).
       A popup window now shows the text 'Shortcut is saved' when clicking the Apply button
       
+    * Can’t zoom wider than 1200 years
+      (`#8 <https://sourceforge.net/p/thetimelineproj/backlog/8/>`_).
+      If a too long display period is saved in the timelinefile, the display period is 
+      set to the default display period when that file is opened.
+      
 Version 1.6.0
 -------------
 
