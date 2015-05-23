@@ -62,9 +62,10 @@ class PreferencesDialog(wx.Dialog):
         return main_box
 
     def _create_nootebook_control(self):
-        notebook = wx.Notebook(self, style=wx.BK_DEFAULT, size=(250, -1))
+        notebook = wx.Notebook(self, style=wx.BK_DEFAULT, size=(300, -1))
         self._create_general_tab(notebook)
         self._create_date_time_tab(notebook)
+        self._create_font_tab(notebook)
         if len(ExperimentalFeatures().get_all_features()) > 0:
             self._create_experimental_fetaures_tab(notebook)
         return notebook
@@ -92,12 +93,29 @@ class PreferencesDialog(wx.Dialog):
         controls = self._create_date_time_tab_controls(panel)
         self._size_tab_panel(panel, controls)
 
+    def _create_font_tab(self, notebook):
+        panel = self._create_tab_panel(notebook, _("Fonts"))
+        controls = self._create_font_tab_controls(panel)
+        self._size_tab_panel(panel, controls)
+
     def _create_date_time_tab_controls(self, panel):
         self.choice_week = self._create_choice_week(panel)
         grid = wx.FlexGridSizer(1, 2, BORDER, BORDER)
-        grid.Add(wx.StaticText(panel, label=_("Week start on:")),
-                 flag=wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(wx.StaticText(panel, label=_("Week start on:")), flag=wx.ALIGN_CENTER_VERTICAL)
         grid.Add(self.choice_week, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
+        return (grid,)
+
+    def _create_font_tab_controls(self, panel):
+        self.btn_major_strip_font = self._create_font_button(panel, wx.ID_ANY, _("Edit"))
+        self.btn_minor_strip_font = self._create_font_button(panel, wx.ID_ANY, _("Edit"))
+        self.btn_legend_font = self._create_font_button(panel, wx.ID_ANY, _("Edit"))
+        grid = wx.FlexGridSizer(3, 2, BORDER, BORDER)
+        grid.Add(wx.StaticText(panel, label=_("Major Strips:")), flag=wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self.btn_major_strip_font, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
+        grid.Add(wx.StaticText(panel, label=_("Minor Strips:")), flag=wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self.btn_minor_strip_font, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
+        grid.Add(wx.StaticText(panel, label=_("Legends:")), flag=wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self.btn_legend_font, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT)
         return (grid,)
 
     def _create_experimental_fetaures_tab(self, notebook):
@@ -157,6 +175,11 @@ class PreferencesDialog(wx.Dialog):
         self.Bind(wx.EVT_CHOICE, self._choice_week_on_choice, choice_week)
         return choice_week
 
+    def _create_font_button(self, parent_window, wxid, label):
+        btn = wx.Button(parent_window, wxid, label)
+        self.Bind(wx.EVT_BUTTON, self._btn_font_on_click, btn)
+        return btn
+
     def _create_close_button(self):
         btn_close = wx.Button(self, wx.ID_CLOSE)
         btn_close.SetDefault()
@@ -182,3 +205,11 @@ class PreferencesDialog(wx.Dialog):
 
     def _btn_close_on_click(self, e):
         self.EndModal(wx.ID_OK)
+
+    def _btn_font_on_click(self, e):
+        if e.EventObject == self.btn_major_strip_font:
+            self._controller.on_edit_major_strip_font()
+        elif e.EventObject == self.btn_minor_strip_font:
+            self._controller.on_edit_minor_strip_font()
+        elif e.EventObject == self.btn_legend_font:
+            self._controller.on_edit_legend_font()

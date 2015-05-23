@@ -17,6 +17,8 @@
 
 
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
+from timelinelib.wxgui.utils import edit_font_data
+from timelinelib.wxgui.components.font import deserialize_font
 
 
 class PreferencesEditor(object):
@@ -63,3 +65,18 @@ class PreferencesEditor(object):
             if i == index:
                 return w
         raise ValueError("Unknown week index '%s'." % index)
+
+    def on_edit_major_strip_font(self):
+        font = deserialize_font(self.config.major_strip_font)
+        if edit_font_data(self.dialog, font):
+            self.config.major_strip_font = font.serialize()
+
+    def on_edit_minor_strip_font(self):
+        font = deserialize_font(self.config.minor_strip_font)
+        if edit_font_data(self.dialog, font):
+            self.config.minor_strip_font = font.serialize()
+
+    def on_edit_legend_font(self):
+        font = deserialize_font(self.config.legend_font)
+        if edit_font_data(self.dialog, font):
+            self.config.legend_font = font.serialize()
