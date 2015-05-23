@@ -50,6 +50,9 @@ EXPERIMENTAL_FEATURES = "experimental_features"
 DIVIDER_LINE_SLIDER_POS = "divider_line_slider_pos"
 NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS = "never_show_period_events_as_point_events"
 DRAW_POINT_EVENTS_TO_RIGHT = "draw_point_events_to_right"
+MAJOR_STRIP_FONT = "major_strip_font"
+MINOR_STRIP_FONT = "minor_strip_font"
+LEGEND_FONT = "legend_font"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -69,6 +72,9 @@ DEFAULTS = {
     DIVIDER_LINE_SLIDER_POS: "50",
     NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS: "True",
     DRAW_POINT_EVENTS_TO_RIGHT: "False",
+    MAJOR_STRIP_FONT: "12:74:90:90:False:Tahoma:33:(0, 0, 0, 255)",
+    MINOR_STRIP_FONT: "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)",
+    LEGEND_FONT: "8:74:90:90:False:Tahoma:33:(0, 0, 0, 255)",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -259,3 +265,21 @@ class Config(object):
         self.config_parser.set(DEFAULTSECT, DRAW_POINT_EVENTS_TO_RIGHT, str(value))
     draw_period_events_to_right = property(get_draw_period_events_to_right,
                                            set_draw_period_events_to_right)
+
+    def get_major_strip_font(self):
+        return self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_FONT)
+    def set_major_strip_font(self, font):
+        self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_FONT, font)
+    font_major_strips = property(get_major_strip_font, set_major_strip_font)
+
+    def get_minor_strip_font(self):
+        return self.config_parser.get(DEFAULTSECT, MINOR_STRIP_FONT)
+    def set_minor_strip_font(self, font):
+        self.config_parser.set(DEFAULTSECT, MINOR_STRIP_FONT, font)
+    font_minor_strips = property(get_minor_strip_font, set_minor_strip_font)
+
+    def get_legend_font(self):
+        return self.config_parser.get(DEFAULTSECT, LEGEND_FONT)
+    def set_legend_font(self, font):
+        self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
+    font_legends = property(get_legend_font, set_legend_font)
