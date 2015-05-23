@@ -222,3 +222,20 @@ def set_focus(parent, name):
         if child.GetName() == name:
             child.SetFocus()
             break
+
+
+def edit_font_data(parent_window, font):
+    data = wx.FontData()
+    data.SetInitialFont(font)
+    data.SetColour(font.WxColor)
+    dialog = wx.FontDialog(parent_window, data)
+    try:
+        if dialog.ShowModal() == wx.ID_OK:
+            font_data = dialog.GetFontData()
+            font.WxFont = font_data.GetChosenFont()
+            font.WxColor = font_data.GetColour()
+            return True
+        else:
+            return False
+    finally:
+        dialog.Destroy()

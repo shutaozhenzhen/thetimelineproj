@@ -270,16 +270,16 @@ class Config(object):
         return self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_FONT)
     def set_major_strip_font(self, font):
         self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_FONT, font)
-    font_major_strips = property(get_major_strip_font, set_major_strip_font)
+    major_strip_font = property(get_major_strip_font, set_major_strip_font)
 
     def get_minor_strip_font(self):
         return self.config_parser.get(DEFAULTSECT, MINOR_STRIP_FONT)
     def set_minor_strip_font(self, font):
         self.config_parser.set(DEFAULTSECT, MINOR_STRIP_FONT, font)
-    font_minor_strips = property(get_minor_strip_font, set_minor_strip_font)
+    minor_strip_font = property(get_minor_strip_font, set_minor_strip_font)
 
     def get_legend_font(self):
         return self.config_parser.get(DEFAULTSECT, LEGEND_FONT)
     def set_legend_font(self, font):
         self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
-    font_legends = property(get_legend_font, set_legend_font)
+    legend_font = property(get_legend_font, set_legend_font)
