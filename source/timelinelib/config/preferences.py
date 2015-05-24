@@ -17,7 +17,7 @@
 
 
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
-from timelinelib.wxgui.utils import edit_font_data
+from timelinelib.wxgui.components.font import edit_font_data
 from timelinelib.wxgui.components.font import deserialize_font
 
 

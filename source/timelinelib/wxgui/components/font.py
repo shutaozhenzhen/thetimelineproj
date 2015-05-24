@@ -88,3 +88,20 @@ def set_text_font(selectable_font, dc, force_bold=False, force_normal=False):
         font.Weight = wx.FONTWEIGHT_NORMAL
     dc.SetFont(font)
     dc.SetTextForeground(font.WxColor)
+
+
+def edit_font_data(parent_window, font):
+    data = wx.FontData()
+    data.SetInitialFont(font)
+    data.SetColour(font.WxColor)
+    dialog = wx.FontDialog(parent_window, data)
+    try:
+        if dialog.ShowModal() == wx.ID_OK:
+            font_data = dialog.GetFontData()
+            font.WxFont = font_data.GetChosenFont()
+            font.WxColor = font_data.GetColour()
+            return True
+        else:
+            return False
+    finally:
+        dialog.Destroy()
