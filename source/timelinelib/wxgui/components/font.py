@@ -88,11 +88,3 @@ def set_text_font(selectable_font, dc, force_bold=False, force_normal=False):
         font.Weight = wx.FONTWEIGHT_NORMAL
     dc.SetFont(font)
     dc.SetTextForeground(font.WxColor)
-
-
-def get_default_font(size, bold=False):
-    if bold:
-        weight = wx.FONTWEIGHT_BOLD
-    else:
-        weight = wx.FONTWEIGHT_NORMAL
-    return Font(size, weight=weight)

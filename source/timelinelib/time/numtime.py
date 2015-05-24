@@ -21,7 +21,7 @@ import re
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
 from timelinelib.drawing.interface import Strip
-from timelinelib.wxgui.components.font import get_default_font
+from timelinelib.wxgui.components.font import Font
 from timelinelib.time.typeinterface import TimeType
 
 
@@ -175,7 +175,7 @@ class NumStrip(Strip):
         return time + self.size
 
     def get_font(self, time_period):
-        return get_default_font(8)
+        return Font(8)
 
 
 def go_to_zero_fn(main_frame, current_period, navigation_fn):

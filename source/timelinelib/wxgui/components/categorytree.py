@@ -20,13 +20,14 @@ import wx
 
 from timelinelib.db.utils import safe_locking
 from timelinelib.drawing.utils import darken_color
-from timelinelib.wxgui.components.font import get_default_font
+from timelinelib.wxgui.components.font import Font
 from timelinelib.monitoring import monitoring
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.utilities.observer import Observable
 from timelinelib.wxgui.components.cattree import add_category
 from timelinelib.wxgui.components.cattree import delete_category
 from timelinelib.wxgui.components.cattree import edit_category
+from wx import FONTWEIGHT_BOLD
 
 
 class CustomCategoryTree(wx.ScrolledWindow):
@@ -173,7 +174,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
             redraw_time = monitoring.timer_elapsed_ms()
             monitoring.count_category_redraw()
             memdc.SetTextForeground((255, 0, 0))
-            memdc.SetFont(get_default_font(10, bold=True))
+            memdc.SetFont(Font(10, weight=wx.FONTWEIGHT_BOLD))
             memdc.DrawText("Redraw count: %d" % monitoring.category_redraw_count, 10, height - 35)
             memdc.DrawText("Last redraw time: %.3f ms" % redraw_time, 10, height - 20)
         memdc.EndDrawing()

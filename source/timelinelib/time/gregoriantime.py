@@ -18,6 +18,7 @@
 
 from datetime import datetime
 import re
+import wx
 
 from timelinelib.calendar.gregorian import Gregorian
 from timelinelib.calendar.gregorian import gregorian_week
@@ -28,7 +29,7 @@ from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
 from timelinelib.drawing.interface import Strip
-from timelinelib.wxgui.components.font import get_default_font
+from timelinelib.wxgui.components.font import Font
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.typeinterface import TimeType
 import timelinelib.calendar.gregorian as gregorian
@@ -540,7 +541,7 @@ class StripCentury(Strip):
         return gregorian_time.replace(year=gregorian_time.year + 100).to_time()
 
     def get_font(self, time_period):
-        return get_default_font(8)
+        return Font(8)
 
     def _century_start_year(self, year):
         year = (int(year) / 100) * 100
@@ -569,7 +570,7 @@ class StripDecade(Strip):
         return (int(year) / 10) * 10 - 10
 
     def get_font(self, time_period):
-        return get_default_font(8)
+        return Font(8)
 
 
 class StripYear(Strip):
@@ -587,7 +588,7 @@ class StripYear(Strip):
         return gregorian_time.replace(year=gregorian_time.year + 1).to_time()
 
     def get_font(self, time_period):
-        return get_default_font(8)
+        return Font(8)
 
 
 class StripMonth(Strip):
@@ -609,7 +610,7 @@ class StripMonth(Strip):
         return time + delta_from_days(days_in_month)
 
     def get_font(self, time_period):
-        return get_default_font(8)
+        return Font(8)
 
 
 class StripDay(Strip):
@@ -632,9 +633,9 @@ class StripDay(Strip):
 
     def get_font(self, time_period):
         if (time_period.start_time.get_day_of_week() in (5, 6)):
-            return get_default_font(8, True)
+            return Font(8, weight=wx.FONTWEIGHT_BOLD)
         else:
-            return get_default_font(8)
+            return Font(8)
 
 
 class StripWeek(Strip):
@@ -689,7 +690,7 @@ class StripWeek(Strip):
         return time + delta_from_days(7)
 
     def get_font(self, time_period):
-        return get_default_font(8)
+        return Font(8)
 
 
 class StripWeekday(Strip):
@@ -714,7 +715,7 @@ class StripWeekday(Strip):
         return time + delta_from_days(1)
 
     def get_font(self, time_period):
-        return get_default_font(8)
+        return Font(8)
 
 
 class StripHour(Strip):
@@ -734,7 +735,7 @@ class StripHour(Strip):
         return time + timeline.delta_from_seconds(60 * 60)
 
     def get_font(self, time_period):
-        return get_default_font(8)
+        return Font(8)
 
 
 class StripMinute(Strip):
@@ -754,7 +755,7 @@ class StripMinute(Strip):
         return time + timeline.delta_from_seconds(60)
 
     def get_font(self, time_period):
-        return get_default_font(6)
+        return Font(6)
 
 
 def format_year(year):
