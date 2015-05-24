@@ -84,3 +84,11 @@ def set_text_font(selectable_font, dc):
     font = deserialize_font(selectable_font)
     dc.SetFont(font)
     dc.SetTextForeground(font.WxColor)
+
+
+def get_default_font(size, bold=False):
+    if bold:
+        weight = wx.FONTWEIGHT_BOLD
+    else:
+        weight = wx.FONTWEIGHT_NORMAL
+    return wx.Font(size, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, weight)

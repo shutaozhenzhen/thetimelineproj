@@ -28,7 +28,7 @@ from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
 from timelinelib.drawing.interface import Strip
-from timelinelib.drawing.utils import get_default_font
+from timelinelib.wxgui.components.font import get_default_font
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.typeinterface import TimeType
 import timelinelib.calendar.gregorian as gregorian

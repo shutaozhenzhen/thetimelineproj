@@ -26,7 +26,7 @@ from timelinelib.data import sort_categories
 from timelinelib.drawing.interface import Drawer
 from timelinelib.drawing.scene import TimelineScene
 from timelinelib.drawing.utils import darken_color
-from timelinelib.drawing.utils import get_default_font
+from timelinelib.wxgui.components.font import get_default_font
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
 import timelinelib.wxgui.components.font as font
 

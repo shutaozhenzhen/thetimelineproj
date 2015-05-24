@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.db.utils import safe_locking
 from timelinelib.drawing.utils import darken_color
-from timelinelib.drawing.utils import get_default_font
+from timelinelib.wxgui.components.font import get_default_font
 from timelinelib.monitoring import monitoring
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.utilities.observer import Observable
