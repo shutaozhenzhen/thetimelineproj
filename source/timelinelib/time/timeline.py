@@ -83,6 +83,9 @@ class Time(object):
     def get_day_of_week(self):
         return self.julian_day % 7
 
+    def is_weekend_day(self):
+        return self.get_day_of_week() in (5, 6)
+
 
 class TimeDelta(object):
 
