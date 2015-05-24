@@ -30,6 +30,8 @@ from ConfigParser import ConfigParser
 from ConfigParser import DEFAULTSECT
 import os.path
 
+from timelinelib.wxgui.components.font import Font
+
 
 # Name used in ConfigParser
 SELECTED_EVENT_BOX_DRAWER = "selected_event_box_drawer"
@@ -72,9 +74,6 @@ DEFAULTS = {
     DIVIDER_LINE_SLIDER_POS: "50",
     NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS: "True",
     DRAW_POINT_EVENTS_TO_RIGHT: "False",
-    MAJOR_STRIP_FONT: "12:74:90:90:False:Tahoma:33:(0, 0, 0, 255)",
-    MINOR_STRIP_FONT: "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)",
-    LEGEND_FONT: "8:74:90:90:False:Tahoma:33:(0, 0, 0, 255)",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -98,6 +97,7 @@ class Config(object):
 
     def __init__(self, path):
         self.path = path
+        self._set_default_fonts()
         self.config_parser = ConfigParser(DEFAULTS)
 
     def read(self):
@@ -283,3 +283,8 @@ class Config(object):
     def set_legend_font(self, font):
         self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
     legend_font = property(get_legend_font, set_legend_font)
+
+    def _set_default_fonts(self):
+        DEFAULTS[MAJOR_STRIP_FONT] = Font(12).serialize()
+        DEFAULTS[MINOR_STRIP_FONT] = Font(10).serialize()
+        DEFAULTS[LEGEND_FONT] = Font(8).serialize()
