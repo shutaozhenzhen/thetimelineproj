@@ -174,9 +174,6 @@ class NumStrip(Strip):
     def increment(self, time):
         return time + self.size
 
-    def get_font(self, time_period):
-        return Font(8)
-
 
 def go_to_zero_fn(main_frame, current_period, navigation_fn):
     navigation_fn(lambda tp: tp.center(0))

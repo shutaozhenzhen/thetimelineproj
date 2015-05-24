@@ -122,8 +122,3 @@ class Strip(object):
         Increment the given time so that it points to the start of the next
         strip.
         """
-
-    def get_font(self, time_period):
-        """
-        Return the preferred font for this strip
-        """

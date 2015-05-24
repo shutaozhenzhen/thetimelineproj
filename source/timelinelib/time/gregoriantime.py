@@ -540,9 +540,6 @@ class StripCentury(Strip):
         gregorian_time = gregorian.from_time(time)
         return gregorian_time.replace(year=gregorian_time.year + 100).to_time()
 
-    def get_font(self, time_period):
-        return Font(8)
-
     def _century_start_year(self, year):
         year = (int(year) / 100) * 100
         return year
@@ -569,9 +566,6 @@ class StripDecade(Strip):
         # line correctly. Therefore -10 in the calculation below
         return (int(year) / 10) * 10 - 10
 
-    def get_font(self, time_period):
-        return Font(8)
-
 
 class StripYear(Strip):
 
@@ -586,9 +580,6 @@ class StripYear(Strip):
     def increment(self, time):
         gregorian_time = gregorian.from_time(time)
         return gregorian_time.replace(year=gregorian_time.year + 1).to_time()
-
-    def get_font(self, time_period):
-        return Font(8)
 
 
 class StripMonth(Strip):
@@ -609,9 +600,6 @@ class StripMonth(Strip):
         days_in_month = gregorian.from_time(time).days_in_month()
         return time + delta_from_days(days_in_month)
 
-    def get_font(self, time_period):
-        return Font(8)
-
 
 class StripDay(Strip):
 
@@ -630,12 +618,6 @@ class StripDay(Strip):
 
     def increment(self, time):
         return time + delta_from_days(1)
-
-    def get_font(self, time_period):
-        if (time_period.start_time.get_day_of_week() in (5, 6)):
-            return Font(8, weight=wx.FONTWEIGHT_BOLD)
-        else:
-            return Font(8)
 
 
 class StripWeek(Strip):
@@ -689,9 +671,6 @@ class StripWeek(Strip):
     def increment(self, time):
         return time + delta_from_days(7)
 
-    def get_font(self, time_period):
-        return Font(8)
-
 
 class StripWeekday(Strip):
 
@@ -714,9 +693,6 @@ class StripWeekday(Strip):
     def increment(self, time):
         return time + delta_from_days(1)
 
-    def get_font(self, time_period):
-        return Font(8)
-
 
 class StripHour(Strip):
 
@@ -734,9 +710,6 @@ class StripHour(Strip):
     def increment(self, time):
         return time + timeline.delta_from_seconds(60 * 60)
 
-    def get_font(self, time_period):
-        return Font(8)
-
 
 class StripMinute(Strip):
 
@@ -753,9 +726,6 @@ class StripMinute(Strip):
 
     def increment(self, time):
         return time + timeline.delta_from_seconds(60)
-
-    def get_font(self, time_period):
-        return Font(6)
 
 
 def format_year(year):
