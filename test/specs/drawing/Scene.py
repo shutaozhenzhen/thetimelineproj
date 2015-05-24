@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import datetime
+import wx
 
 from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
@@ -102,15 +102,20 @@ class SceneSpec(UnitTestCase):
         try:
             self.when_scene_is_created()
             self.assertTrue(self.scene != None)
-        except:
+        except Exception, ex:
             self.assertTrue(False)
 
     def setUp(self):
+        self.app = wx.App()
+        self.app.MainLoop()
         self.db = MemoryDB()
         self.view_properties = ViewProperties()
         self.given_number_of_events_stackable_is(5)
         self.MAX_OUTSIDE_SCREEN = 20
 
+    def tearDown(self):
+        self.app.Destroy()
+        
     def get_text_size_fn(self, text):
         return (len(text), self.event_height)
 

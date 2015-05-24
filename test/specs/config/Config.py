@@ -18,6 +18,8 @@
 
 from os.path import abspath
 
+import wx
+
 from timelinelib.config.dotfile import Config
 from timelinetest import UnitTestCase
 
@@ -117,4 +119,9 @@ class ConfigSpec(UnitTestCase):
         self.assertRaises(ValueError, set_invalid_week)
 
     def setUp(self):
+        self.app = wx.App()
+        self.app.MainLoop()
         self.config = Config("")
+
+    def tearDown(self):
+        self.app.Destroy()
