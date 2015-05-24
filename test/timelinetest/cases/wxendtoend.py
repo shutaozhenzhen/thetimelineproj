@@ -31,6 +31,8 @@ from timelinetest.cases.tmpdir import TmpDirTestCase
 class WxEndToEndTestCase(TmpDirTestCase):
 
     def setUp(self):
+        self.app = wx.App()
+        self.app.MainLoop()
         TmpDirTestCase.setUp(self)
         self.timeline_path = self.get_tmp_path("test.timeline")
         self.config_file_path = self.get_tmp_path("thetimelineproj.cfg")
@@ -41,6 +43,7 @@ class WxEndToEndTestCase(TmpDirTestCase):
     def tearDown(self):
         TmpDirTestCase.tearDown(self)
         sys.excepthook = self.standard_excepthook
+        self.app.Destroy()
 
     def start_timeline_and(self, steps_to_perform_in_gui):
         self.config.write()
