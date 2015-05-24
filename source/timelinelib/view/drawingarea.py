@@ -26,7 +26,7 @@ from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
-from timelinelib.drawing.utils import get_default_font
+from timelinelib.wxgui.components.font import get_default_font
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.monitoring import monitoring
 from timelinelib.utilities.observer import STATE_CHANGE_ANY

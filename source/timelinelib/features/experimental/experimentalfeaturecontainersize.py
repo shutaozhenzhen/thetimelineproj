@@ -18,7 +18,7 @@
 
 import wx
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
-from timelinelib.drawing.utils import get_default_font
+from timelinelib.wxgui.components.font import get_default_font
 
 
 DISPLAY_NAME = "Extend Container height"
