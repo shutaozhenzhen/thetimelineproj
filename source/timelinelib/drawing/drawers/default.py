@@ -75,7 +75,6 @@ class DefaultDrawingAlgorithm(Drawer):
             self.outer_padding = OUTER_PADDING
 
     def _create_fonts(self):
-        self.header_font = Font(12, weight=wx.FONTWEIGHT_BOLD)
         self.small_text_font = Font(self.font_size)
         self.small_text_font_bold = Font(8, weight=wx.FONTWEIGHT_BOLD)
 
@@ -282,7 +281,7 @@ class DefaultDrawingAlgorithm(Drawer):
             font.set_minor_strip_text_font(self.config, self.dc)
 
     def _draw_major_strips(self):
-        self.dc.SetFont(self.header_font)
+        font.set_major_strip_text_font(self.config, self.dc)
         self.dc.SetPen(self.grey_solid_pen)
         for time_period in self.scene.major_strip_data:
             self._draw_major_strip_end_line(time_period)
@@ -296,7 +295,6 @@ class DefaultDrawingAlgorithm(Drawer):
     def _draw_major_strip_label(self, time_period):
         label = self.scene.major_strip.label(time_period.start_time, True)
         x = self._calculate_major_strip_label_x(time_period, label)
-        font.set_major_strip_text_font(self.config, self.dc)
         self.dc.DrawText(label, x, INNER_PADDING)
 
     def _calculate_major_strip_label_x(self, time_period, label):
