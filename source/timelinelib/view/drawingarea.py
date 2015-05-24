@@ -26,7 +26,7 @@ from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
-from timelinelib.wxgui.components.font import get_default_font
+from timelinelib.wxgui.components.font import Font
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.monitoring import monitoring
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
@@ -490,7 +490,7 @@ class TimelineCanvasController(object):
             redraw_time = monitoring.timer_elapsed_ms()
             monitoring.count_timeline_redraw()
             dc.SetTextForeground((255, 0, 0))
-            dc.SetFont(get_default_font(12, bold=True))
+            dc.SetFont(Font(12, weight=wx.FONTWEIGHT_BOLD))
             dc.DrawText("Undo buffer size: %d" % len(self.timeline._undo_handler._undo_buffer), width - 300, height - 100)
             dc.DrawText("Undo buffer pos: %d" % self.timeline._undo_handler._pos, width - 300, height - 80)
             dc.DrawText("Redraw count: %d" % monitoring.timeline_redraw_count, width - 300, height - 60)

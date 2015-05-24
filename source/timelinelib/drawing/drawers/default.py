@@ -26,7 +26,7 @@ from timelinelib.data import sort_categories
 from timelinelib.drawing.interface import Drawer
 from timelinelib.drawing.scene import TimelineScene
 from timelinelib.drawing.utils import darken_color
-from timelinelib.wxgui.components.font import get_default_font
+from timelinelib.wxgui.components.font import Font
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
 import timelinelib.wxgui.components.font as font
 
@@ -59,13 +59,13 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def increment_font_size(self, step=2):
         self.font_size += step
-        self.small_text_font = get_default_font(self.font_size)
+        self.small_text_font = Font(self.font_size)
         self._adjust_outer_padding_to_font_size()
 
     def decrement_font_size(self, step=2):
         if self.font_size > step:
             self.font_size -= step
-            self.small_text_font = get_default_font(self.font_size)
+            self.small_text_font = Font(self.font_size)
             self._adjust_outer_padding_to_font_size()
 
     def _adjust_outer_padding_to_font_size(self):
@@ -75,9 +75,9 @@ class DefaultDrawingAlgorithm(Drawer):
             self.outer_padding = OUTER_PADDING
 
     def _create_fonts(self):
-        self.header_font = get_default_font(12, True)
-        self.small_text_font = get_default_font(self.font_size)
-        self.small_text_font_bold = get_default_font(8, True)
+        self.header_font = Font(12, weight=wx.FONTWEIGHT_BOLD)
+        self.small_text_font = Font(self.font_size)
+        self.small_text_font_bold = Font(8, weight=wx.FONTWEIGHT_BOLD)
 
     def _create_pens(self):
         self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.SOLID)
@@ -528,7 +528,7 @@ class DefaultDrawingAlgorithm(Drawer):
             inner_rect_w = iw
             inner_rect_h = ih
         # Text
-        self.dc.SetFont(get_default_font(8))
+        self.dc.SetFont(Font(8))
         font_h = self.dc.GetCharHeight()
         (tw, th) = (0, 0)
         description = event.get_data("description")
