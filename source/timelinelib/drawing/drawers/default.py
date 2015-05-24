@@ -59,13 +59,13 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def increment_font_size(self, step=2):
         self.font_size += step
-        self.small_text_font = Font(self.font_size)
+        self.event_text_font = Font(self.font_size)
         self._adjust_outer_padding_to_font_size()
 
     def decrement_font_size(self, step=2):
         if self.font_size > step:
             self.font_size -= step
-            self.small_text_font = Font(self.font_size)
+            self.event_text_font = Font(self.font_size)
             self._adjust_outer_padding_to_font_size()
 
     def _adjust_outer_padding_to_font_size(self):
@@ -75,7 +75,7 @@ class DefaultDrawingAlgorithm(Drawer):
             self.outer_padding = OUTER_PADDING
 
     def _create_fonts(self):
-        self.small_text_font = Font(self.font_size)
+        self.event_text_font = Font(self.font_size)
 
     def _create_pens(self):
         self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.SOLID)
@@ -98,7 +98,7 @@ class DefaultDrawingAlgorithm(Drawer):
         return period_width_in_pixels > PERIOD_THRESHOLD
 
     def _get_text_extent(self, text):
-        self.dc.SetFont(self.small_text_font)
+        self.dc.SetFont(self.event_text_font)
         tw, th = self.dc.GetTextExtent(text)
         return (tw, th)
 
@@ -453,7 +453,7 @@ class DefaultDrawingAlgorithm(Drawer):
     def _draw_events(self, view_properties):
         """Draw all event boxes and the text inside them."""
         self._scroll_events_vertically(view_properties)
-        self.dc.SetFont(self.small_text_font)
+        self.dc.SetFont(self.event_text_font)
         self.dc.DestroyClippingRegion()
         self._draw_lines_to_non_period_events(view_properties)
         for (event, rect) in self.scene.event_data:
