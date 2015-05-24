@@ -46,7 +46,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def __init__(self):
         self.font_size = 8
-        self._create_fonts()
+        self.event_text_font = Font(self.font_size)
         self._create_pens()
         self._create_brushes()
         self.fast_draw = False
@@ -73,9 +73,6 @@ class DefaultDrawingAlgorithm(Drawer):
             self.outer_padding = OUTER_PADDING * self.font_size / 8
         else:
             self.outer_padding = OUTER_PADDING
-
-    def _create_fonts(self):
-        self.event_text_font = Font(self.font_size)
 
     def _create_pens(self):
         self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.SOLID)
