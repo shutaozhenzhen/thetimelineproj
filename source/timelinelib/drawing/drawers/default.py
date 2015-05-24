@@ -45,8 +45,7 @@ BLACK = (0, 0, 0)
 class DefaultDrawingAlgorithm(Drawer):
 
     def __init__(self):
-        self.font_size = 8
-        self.event_text_font = Font(self.font_size)
+        self.event_text_font = Font(8)
         self._create_pens()
         self._create_brushes()
         self.fast_draw = False
@@ -58,19 +57,17 @@ class DefaultDrawingAlgorithm(Drawer):
         self.background_drawer = background_drawer
 
     def increment_font_size(self, step=2):
-        self.font_size += step
-        self.event_text_font = Font(self.font_size)
+        self.event_text_font.increment(step)
         self._adjust_outer_padding_to_font_size()
 
     def decrement_font_size(self, step=2):
-        if self.font_size > step:
-            self.font_size -= step
-            self.event_text_font = Font(self.font_size)
+        if self.event_text_font.PointSize > step:
+            self.event_text_font.decrement(step)
             self._adjust_outer_padding_to_font_size()
 
     def _adjust_outer_padding_to_font_size(self):
-        if self.font_size < 8:
-            self.outer_padding = OUTER_PADDING * self.font_size / 8
+        if self.event_text_font.PointSize < 8:
+            self.outer_padding = OUTER_PADDING * self.event_text_font.PointSize / 8
         else:
             self.outer_padding = OUTER_PADDING
 
