@@ -83,6 +83,10 @@ Solved problems:
       If a too long display period is saved in the timelinefile, the display period is 
       set to the default display period when that file is opened.
       
+    * Selectable font color and size
+      (`#63 <https://sourceforge.net/p/thetimelineproj/backlog/63>`_).
+      Minor strip, major strip and legend fonts are now selectable
+
 Version 1.6.0
 -------------
 
