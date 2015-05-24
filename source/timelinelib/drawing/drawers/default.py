@@ -266,6 +266,13 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_minor_strip_label(self, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
+        self._set_minor_strip_font(strip_period)
+        (tw, th) = self.dc.GetTextExtent(label)
+        middle = self.scene.x_pos_for_time(strip_period.mean_time())
+        middley = self.scene.divider_y
+        self.dc.DrawText(label, middle - tw / 2, middley - th)
+
+    def _set_minor_strip_font(self, strip_period):
         if self.time_type.is_date_time_type():
             if strip_period.start_time.is_weekend_day():
                 font.set_minor_strip_text_font(self.config, self.dc, force_bold=True)
@@ -273,10 +280,6 @@ class DefaultDrawingAlgorithm(Drawer):
                 font.set_minor_strip_text_font(self.config, self.dc, force_normal=True)
         else:
             font.set_minor_strip_text_font(self.config, self.dc)
-        (tw, th) = self.dc.GetTextExtent(label)
-        middle = self.scene.x_pos_for_time(strip_period.mean_time())
-        middley = self.scene.divider_y
-        self.dc.DrawText(label, middle - tw / 2, middley - th)
 
     def _draw_major_strips(self):
         self.dc.SetFont(self.header_font)
