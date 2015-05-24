@@ -76,7 +76,6 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _create_fonts(self):
         self.small_text_font = Font(self.font_size)
-        self.small_text_font_bold = Font(8, weight=wx.FONTWEIGHT_BOLD)
 
     def _create_pens(self):
         self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.SOLID)
@@ -383,7 +382,6 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_legend(self, view_properties, categories):
         if self._legend_should_be_drawn(view_properties, categories):
-            # self.dc.SetFont(self.small_text_font)
             font.set_legend_text_font(self.config, self.dc)
             rect = self._calculate_legend_rect(categories)
             self._draw_legend_box(rect)
