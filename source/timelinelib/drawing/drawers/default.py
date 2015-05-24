@@ -266,8 +266,11 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_minor_strip_label(self, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
-        # self.dc.SetFont(self.scene.minor_strip.get_font(strip_period))
-        font.set_minor_strip_text_font(self.config, self.dc)
+        scene_font = self.scene.minor_strip.get_font(strip_period)
+        if scene_font.Weight == wx.FONTWEIGHT_BOLD:
+            font.set_minor_strip_text_font(self.config, self.dc, force_bold=True)
+        elif scene_font.Weight == wx.FONTWEIGHT_NORMAL:
+            font.set_minor_strip_text_font(self.config, self.dc, force_normal=True)
         (tw, th) = self.dc.GetTextExtent(label)
         middle = self.scene.x_pos_for_time(strip_period.mean_time())
         middley = self.scene.divider_y
