@@ -95,4 +95,4 @@ def get_default_font(size, bold=False):
         weight = wx.FONTWEIGHT_BOLD
     else:
         weight = wx.FONTWEIGHT_NORMAL
-    return wx.Font(size, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, weight)
+    return Font(size, weight=weight)
