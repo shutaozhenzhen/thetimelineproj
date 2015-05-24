@@ -28,6 +28,7 @@ from timelinelib.drawing.scene import TimelineScene
 from timelinelib.drawing.utils import darken_color
 from timelinelib.drawing.utils import get_default_font
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
+import timelinelib.wxgui.components.font as font
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -265,7 +266,8 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_minor_strip_label(self, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
-        self.dc.SetFont(self.scene.minor_strip.get_font(strip_period))
+        # self.dc.SetFont(self.scene.minor_strip.get_font(strip_period))
+        font.set_minor_strip_text_font(self.config, self.dc)
         (tw, th) = self.dc.GetTextExtent(label)
         middle = self.scene.x_pos_for_time(strip_period.mean_time())
         middley = self.scene.divider_y
@@ -286,6 +288,7 @@ class DefaultDrawingAlgorithm(Drawer):
     def _draw_major_strip_label(self, time_period):
         label = self.scene.major_strip.label(time_period.start_time, True)
         x = self._calculate_major_strip_label_x(time_period, label)
+        font.set_major_strip_text_font(self.config, self.dc)
         self.dc.DrawText(label, x, INNER_PADDING)
 
     def _calculate_major_strip_label_x(self, time_period, label):
@@ -374,7 +377,8 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_legend(self, view_properties, categories):
         if self._legend_should_be_drawn(view_properties, categories):
-            self.dc.SetFont(self.small_text_font)
+            # self.dc.SetFont(self.small_text_font)
+            font.set_legend_text_font(self.config, self.dc)
             rect = self._calculate_legend_rect(categories)
             self._draw_legend_box(rect)
             self._draw_legend_items(rect, categories)
@@ -418,7 +422,6 @@ class DefaultDrawingAlgorithm(Drawer):
             color_box_rect = (OUTER_PADDING + rect.Width - item_height -
                               INNER_PADDING, cur_y, item_height, item_height)
             self.dc.DrawRectangleRect(color_box_rect)
-            self.dc.SetTextForeground((0, 0, 0))
             self.dc.DrawText(cat.name, OUTER_PADDING + INNER_PADDING, cur_y)
             cur_y = cur_y + item_height + INNER_PADDING
 

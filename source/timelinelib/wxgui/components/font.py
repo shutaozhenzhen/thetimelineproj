@@ -66,3 +66,21 @@ def deserialize_font(serialized_font):
     color_args = color[1:-1].split(",")
     wxcolor = wx.Color(int(color_args[0]), int(color_args[1]), int(color_args[2]), int(color_args[3]))
     return Font(int(point_size), int(family), int(style), int(weight), bool_map[underlined], facename, int(encoding), wxcolor)
+
+
+def set_minor_strip_text_font(config, dc):
+    set_text_font(config.minor_strip_font, dc)
+
+
+def set_major_strip_text_font(config, dc):
+    set_text_font(config.major_strip_font, dc)
+
+
+def set_legend_text_font(config, dc):
+    set_text_font(config.legend_font, dc)
+
+
+def set_text_font(selectable_font, dc):
+    font = deserialize_font(selectable_font)
+    dc.SetFont(font)
+    dc.SetTextForeground(font.WxColor)
