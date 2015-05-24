@@ -68,20 +68,24 @@ def deserialize_font(serialized_font):
     return Font(int(point_size), int(family), int(style), int(weight), bool_map[underlined], facename, int(encoding), wxcolor)
 
 
-def set_minor_strip_text_font(config, dc):
-    set_text_font(config.minor_strip_font, dc)
+def set_minor_strip_text_font(config, dc, force_bold=False, force_normal=False):
+    set_text_font(config.minor_strip_font, dc, force_bold, force_normal)
 
 
-def set_major_strip_text_font(config, dc):
-    set_text_font(config.major_strip_font, dc)
+def set_major_strip_text_font(config, dc, force_bold=False, force_normal=False):
+    set_text_font(config.major_strip_font, dc, force_bold, force_normal)
 
 
 def set_legend_text_font(config, dc):
     set_text_font(config.legend_font, dc)
 
 
-def set_text_font(selectable_font, dc):
+def set_text_font(selectable_font, dc, force_bold=False, force_normal=False):
     font = deserialize_font(selectable_font)
+    if force_bold:
+        font.Weight = wx.FONTWEIGHT_BOLD
+    elif force_normal:
+        font.Weight = wx.FONTWEIGHT_NORMAL
     dc.SetFont(font)
     dc.SetTextForeground(font.WxColor)
 
