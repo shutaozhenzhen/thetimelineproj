@@ -54,9 +54,6 @@ class describe_font_default_values(FontsTestCase):
     def test_default_point_size_is_12(self):
         self.assertTrue(12, self.font.PointSize)
 
-    def test_default_font_family_is_wx_default(self):
-        self.assertEqual(wx.FONTFAMILY_DEFAULT, self.font.Family)
-
     def test_default_font_style_is_wx_normal(self):
         self.assertEqual(wx.FONTSTYLE_NORMAL, self.font.Style)
 
