@@ -84,6 +84,10 @@ class TimelineCanvasController(object):
         self.change_input_handler_to_no_op()
         self.timeline = None
 
+    def scroll_vertical(self, distance):
+        self.divider_line_slider.SetValue(self.divider_line_slider.GetValue() + distance)
+        self.config.divider_line_slider_pos = self.divider_line_slider.GetValue()
+
     def get_saved_drawer(self):
         return self.plugin_factory.get_plugin(EVENTBOX_DRAWER, self.config.selected_event_box_drawer) or DefaultEventBoxDrawer()
         raise Exception("No default Event Box Drawer plugin found")
