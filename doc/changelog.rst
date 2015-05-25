@@ -87,6 +87,10 @@ Solved problems:
       (`#63 <https://sourceforge.net/p/thetimelineproj/backlog/63>`_).
       Minor strip, major strip and legend fonts are now selectable
 
+    *  Locating and dragging the horizontal line scrollbar is inconvenient and difficult
+      (`#58 <https://sourceforge.net/p/thetimelineproj/backlog/58>`_).
+      The divider line can now be adjusted with mouse dragging
+
 Version 1.6.0
 -------------
 
