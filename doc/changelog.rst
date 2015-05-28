@@ -91,6 +91,10 @@ Solved problems:
       (`#58 <https://sourceforge.net/p/thetimelineproj/backlog/58>`_).
       The divider line can now be adjusted with mouse dragging
 
+	* Crash report: LockedException: Unable to take lock on...
+      (`#69 <https://sourceforge.net/p/thetimelineproj/backlog/69>`_).
+      If the Timeline dir is read-only, the Timlein file is opened in read-only mode
+
 Version 1.6.0
 -------------
 
