@@ -24,7 +24,6 @@ from timelinelib.data import TimePeriod
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.wxgui.utils import display_warning_message
 
 
 def db_open(path, timetype=None):
@@ -81,6 +80,7 @@ def db_open_newtype_timeline(path, timetype=None):
         from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
         db = import_db_from_timeline_xml(path)
         if dir_is_read_only(path):
+            from timelinelib.wxgui.utils import display_warning_message
             db.set_readonly()
             display_warning_message(_("Since the directory of the Timeline file is not writable,\nthe timeline is opened in read-only mode"))
             return db
