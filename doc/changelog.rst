@@ -95,6 +95,10 @@ Solved problems:
       (`#69 <https://sourceforge.net/p/thetimelineproj/backlog/69>`_).
       If the Timeline dir is read-only, the Timeline file is opened in read-only mode
 
+    * Adding multiple events to a category at once
+      (`#67 <https://sourceforge.net/p/thetimelineproj/backlog/67>`_).
+      Added 'Select Category...' item to event context menu.
+    
 Version 1.6.0
 -------------
 

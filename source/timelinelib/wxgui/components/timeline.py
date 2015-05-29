@@ -323,6 +323,9 @@ class TimelineCanvas(wx.Panel):
     def vert_zoom_out(self):
         self.controller.mouse_wheel_moved(-120, False, False, True, self._get_half_width())
 
+    def set_category_to_selected_events(self):
+        self.main_frame.set_category_on_selected()
+
     def _get_half_width(self):
         return self.GetSize()[0] / 2
 
