@@ -248,6 +248,7 @@ class TimelineCanvasController(object):
             menu_definitions.insert(1, (_("Duplicate..."), self._context_menu_on_duplicate_event, None))
         if EVENT_DONE.enabled():
             menu_definitions.append((EVENT_DONE.get_display_name(), self._context_menu_on_done_event, None))
+        menu_definitions.append((_("Select Category..."), self._context_menu_on_select_category, None))
         if nbr_of_selected_events == 1 and self.context_menu_event.has_data():
             menu_definitions.append((_("Sticky Balloon"), self._context_menu_on_sticky_balloon_event, None))
         if nbr_of_selected_events == 1:
@@ -309,6 +310,9 @@ class TimelineCanvasController(object):
     @experimental_feature(EVENT_DONE)
     def _context_menu_on_done_event(self, evt):
         self._mark_selected_events_as_done()
+
+    def _context_menu_on_select_category(self, evt):
+        self.view.set_category_to_selected_events()
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """

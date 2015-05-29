@@ -373,6 +373,14 @@ class GuiCreator(object):
         self.menu_controller.add_menu_requiring_timeline(view_menu.FindItemById(ID_VERT_ZOOMIN))
         self.menu_controller.add_menu_requiring_timeline(view_menu.FindItemById(ID_VERT_ZOOMOUT))
 
+    def set_category_on_selected(self):
+
+        def edit_function():
+                self._set_category_to_selected_events()
+                self.save_current_timeline_data()
+
+        safe_locking(self, edit_function)
+
     def _create_timeline_menu(self, main_menu_bar):
         def create_event(evt):
             open_create_event_editor(self, self.config, self.timeline, self.handle_db_error)
