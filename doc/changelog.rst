@@ -98,7 +98,11 @@ Solved problems:
     * Adding multiple events to a category at once
       (`#67 <https://sourceforge.net/p/thetimelineproj/backlog/67>`_).
       Added 'Select Category...' item to event context menu.
-    
+
+    * speedup enter of "Period" events    
+      (`#28 <https://sourceforge.net/p/thetimelineproj/backlog/28>`_).
+      Remember the checkbox setting from last time the Event editor dialog was opened to create a new event.
+
 Version 1.6.0
 -------------
 
