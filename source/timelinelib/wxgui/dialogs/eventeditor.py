@@ -51,7 +51,7 @@ class EventEditorDialog(wx.Dialog):
         self.timeline = timeline
         self.config = config
         self._create_gui()
-        self.controller = EventEditor(self)
+        self.controller = EventEditor(self, config)
         self.controller.edit(timeline.get_time_type(), DbWrapperEventRepository(timeline),
                              timeline, start, end, event)
 
@@ -388,6 +388,8 @@ class EventEditorDialog(wx.Dialog):
             self.chb_show_time.SetValue(checked)
             self.dtp_start.show_time(checked)
             self.dtp_end.show_time(checked)
+    def get_show_time(self):
+        return self.chb_show_time.IsChecked()
 
     def get_fuzzy(self):
         return self.chb_fuzzy.GetValue()
@@ -482,6 +484,7 @@ class EventEditorDialog(wx.Dialog):
 
     def close(self):
         # TODO: Replace with EventRuntimeData
+        self.controller.on_ok()
         self.EndModal(wx.ID_OK)
 
 

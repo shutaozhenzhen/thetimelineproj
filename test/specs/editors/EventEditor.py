@@ -25,6 +25,7 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.eventeditor import EventEditorDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import an_event_with, human_time_to_gregorian, ObjectWithTruthValue
+from timelinelib.config.dotfile import Config
 
 
 class EventEditorTestCase(UnitTestCase):
@@ -33,6 +34,21 @@ class EventEditorTestCase(UnitTestCase):
         self.view = Mock(EventEditorDialog)
         self.event_repository = Mock(EventRepository)
         self.timeline = MemoryDB()
+        self.config = Mock(Config)
+        self.config.event_editor_show_period = False
+        self.config.event_editor_show_time = False
+
+    def when_show_period_used_last_time(self):
+        self.config.event_editor_show_period = True
+
+    def when_show_period_not_used_last_time(self):
+        self.config.event_editor_show_period = False
+
+    def when_show_time_used_last_time(self):
+        self.config.event_editor_show_time = True
+
+    def when_show_time_not_used_last_time(self):
+        self.config.event_editor_show_time = False
 
     def when_editing_a_new_event(self):
         self.when_editor_opened_with_time("1 Jan 2010")
@@ -49,7 +65,7 @@ class EventEditorTestCase(UnitTestCase):
         self.when_editor_opened_with(None, None, event)
 
     def when_editor_opened_with(self, start, end, event):
-        self.editor = EventEditor(self.view)
+        self.editor = EventEditor(self.view, self.config)
         self.editor.edit(GregorianTimeType(), self.event_repository, self.timeline,
                          start, end, event)
 
@@ -115,9 +131,15 @@ class describe_event_editor__end_time_field(EventEditorTestCase):
         self.when_editor_opened_with_time("1 Jan 2010")
         self.view.set_show_period.assert_called_with(False)
 
-    def test_is_shown_if_period(self):
+    def test_is_shown_if_shown_previous_time(self):
+        self.when_show_period_used_last_time()
         self.when_editor_opened_with_period("1 Jan 2010", "2 Jan 2010")
         self.view.set_show_period.assert_called_with(True)
+
+    def test_is_not_shown_if_not_shown_previous_time(self):
+        self.when_show_period_not_used_last_time()
+        self.when_editor_opened_with_period("1 Jan 2010", "2 Jan 2010")
+        self.view.set_show_period.assert_called_with(False)
 
 
 class describe_event_editor__time_fields(EventEditorTestCase):
@@ -126,9 +148,15 @@ class describe_event_editor__time_fields(EventEditorTestCase):
         self.when_editor_opened_with_time("1 Jan 2010")
         self.view.set_show_time.assert_called_with(False)
 
-    def test_are_shown_if_time_specified(self):
+    def test_are_shown_if_shown_previous_time(self):
+        self.when_show_time_used_last_time()
         self.when_editor_opened_with_time("1 Jan 2010 15:30")
         self.view.set_show_time.assert_called_with(True)
+
+    def test_are_not_shown_if_not_shown_previous_time(self):
+        self.when_show_time_not_used_last_time()
+        self.when_editor_opened_with_time("1 Jan 2010 15:30")
+        self.view.set_show_time.assert_called_with(False)
 
 
 class describe_event_editor__fuzzy_checkbox(EventEditorTestCase):

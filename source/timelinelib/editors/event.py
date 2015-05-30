@@ -25,8 +25,9 @@ from timelinelib.utils import ex_msg
 
 class EventEditor(object):
 
-    def __init__(self, view):
+    def __init__(self, view, config):
         self.view = view
+        self.config = config
 
     def edit(self, time_type, event_repository, timeline, start, end, event):
         self.timeline = timeline
@@ -57,6 +58,10 @@ class EventEditor(object):
             return False
         return self.start < self.timeline.time_type.now()
 
+    def on_ok(self):
+        self.config.event_editor_show_period = self.view.get_show_period()
+        self.config.event_editor_show_time = self.view.get_show_time()
+
     def _set_values(self, start, end, event):
         self.event = event
         if self.event != None:
@@ -77,7 +82,7 @@ class EventEditor(object):
             self.ends_today = False
 
     def _set_view_content(self):
-        if self.event != None:
+        if self.event is not None:
             self.view.set_event_data(self.event.data)
             if self.event.is_subevent():
                 self.view.set_container(self.event.container)
@@ -89,9 +94,13 @@ class EventEditor(object):
         self.view.set_end(self.end)
         self.view.set_name(self.name)
         self.view.set_category(self.category)
-        self.view.set_show_period(self.end > self.start)
-        self.view.set_show_time(self._event_has_nonzero_time())
-        self.view.set_show_add_more(self.event == None)
+        if self.event:
+            self.view.set_show_period(self.end > self.start)
+            self.view.set_show_time(self._event_has_nonzero_time())
+        else:
+            self.view.set_show_period(self.config.event_editor_show_period)
+            self.view.set_show_time(self.config.event_editor_show_time)
+        self.view.set_show_add_more(self.event is None)
         self.view.set_fuzzy(self.fuzzy)
         self.view.set_locked(self.locked)
         self.view.set_ends_today(self.ends_today)

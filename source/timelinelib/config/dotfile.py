@@ -55,6 +55,8 @@ DRAW_POINT_EVENTS_TO_RIGHT = "draw_point_events_to_right"
 MAJOR_STRIP_FONT = "major_strip_font"
 MINOR_STRIP_FONT = "minor_strip_font"
 LEGEND_FONT = "legend_font"
+EVENT_EDITOR_SHOW_PERIOD = "event_editor_show_period"
+EVENT_EDITOR_SHOW_TIME = "event_editor_show_time"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -74,6 +76,8 @@ DEFAULTS = {
     DIVIDER_LINE_SLIDER_POS: "50",
     NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS: "True",
     DRAW_POINT_EVENTS_TO_RIGHT: "False",
+    EVENT_EDITOR_SHOW_PERIOD: "False",
+    EVENT_EDITOR_SHOW_TIME: "False",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -288,3 +292,15 @@ class Config(object):
         DEFAULTS[MAJOR_STRIP_FONT] = Font(12).serialize()
         DEFAULTS[MINOR_STRIP_FONT] = Font(10).serialize()
         DEFAULTS[LEGEND_FONT] = Font(8).serialize()
+
+    def get_event_editor_show_period(self):
+        return self.config_parser.getboolean(DEFAULTSECT, EVENT_EDITOR_SHOW_PERIOD)
+    def set_event_editor_show_period(self, value):
+        self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_SHOW_PERIOD, str(value))
+    event_editor_show_period = property(get_event_editor_show_period, set_event_editor_show_period)
+
+    def get_event_editor_show_time(self):
+        return self.config_parser.getboolean(DEFAULTSECT, EVENT_EDITOR_SHOW_TIME)
+    def set_event_editor_show_time(self, value):
+        self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_SHOW_TIME, str(value))
+    event_editor_show_time = property(get_event_editor_show_time, set_event_editor_show_time)
