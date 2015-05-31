@@ -103,6 +103,10 @@ Solved problems:
       (`#28 <https://sourceforge.net/p/thetimelineproj/backlog/28>`_).
       Remember the checkbox setting from last time the Event editor dialog was opened to create a new event.
 
+    * Events disappear vertically outside screen
+      (`#2 <https://sourceforge.net/p/thetimelineproj/backlog/2>`_).
+      A 'compress events' function was added and padding was removed
+
 Version 1.6.0
 -------------
 
