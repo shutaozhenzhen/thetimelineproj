@@ -439,7 +439,7 @@ class GuiCreator(object):
             self.main_panel.redraw_timeline()
 
         def compress(evt):
-            self.timeline.compress()
+            safe_locking(self, self.timeline.compress)
             self.main_panel.redraw_timeline()
 
         cbx = NONE
