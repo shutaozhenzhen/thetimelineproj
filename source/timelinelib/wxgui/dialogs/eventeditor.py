@@ -146,7 +146,6 @@ class EventEditorDialog(wx.Dialog):
         self.chb_fuzzy = self._create_fuzzy_checkbox(when_box)
         self.chb_locked = self._create_locked_checkbox(when_box)
         self.chb_ends_today = self._create_ends_today_checkbox(when_box)
-        self.chb_period.MoveAfterInTabOrder(self.chb_ends_today)
         grid.Add(when_box)
 
     def _create_container_listbox(self, grid):
