@@ -235,10 +235,6 @@ class describe_event_editor__text_field(EventEditorTestCase):
         self.when_editor_opened_with_event(event)
         self.view.set_name.assert_called_with(sentinel.TEXT)
 
-    def test_has_focus_if_period_event_edited(self):
-        self.when_editor_opened_with_period("1 Jan 2010", "2 Jan 2010")
-        self.view.set_focus.assert_called_with("text")
-
 
 class describe_event_editor__category_field(EventEditorTestCase):
 
