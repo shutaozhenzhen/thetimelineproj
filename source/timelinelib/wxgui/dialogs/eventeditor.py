@@ -51,12 +51,19 @@ class EventEditorDialog(wx.Dialog):
         self._create_gui()
         self.controller = EventEditor(self, config)
         self.controller.edit(timeline.get_time_type(), DbWrapperEventRepository(timeline), timeline, start, end, event)
+        self._set_focus()
+
+    def _set_focus(self):
+        key = self.config.event_editor_tab_order[0]
+        FOCUS_CONTROL = {"0": self.dtp_start, "1": self.chb_period, "2": self.txt_text,
+                         "3": self.lst_category, "4": self.lst_containers, ":": self.notebook}
+        FOCUS_CONTROL[key].SetFocus()
 
     def _define_constants(self):
         self.TXT_ENLARGE = _("&Enlarge")
         self.TXT_REDUCE = _("&Reduce")
         self.CONTROL_ROWS_CREATORS = {"0": self._create_time_details, "1": self._create_checkboxes,
-                                      "2": self._create_text_field, "3": self._create_categories_listbox, 
+                                      "2": self._create_text_field, "3": self._create_categories_listbox,
                                       "4": self._create_container_listbox}
 
     def _create_pre_notebook_control_rows_list(self):
@@ -259,8 +266,8 @@ class EventEditorDialog(wx.Dialog):
         self.Bind(wx.EVT_CHOICE, self.lst_category.on_choice, self.lst_category)
 
     def _create_notebook_content(self, properties_box_content):
-        notebook = self._create_notebook()
-        properties_box_content.Add(notebook, border=BORDER,
+        self.notebook = self._create_notebook()
+        properties_box_content.Add(self.notebook, border=BORDER,
                                    flag=wx.ALL | wx.EXPAND, proportion=1)
 
     def _create_notebook(self):

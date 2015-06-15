@@ -104,10 +104,6 @@ class describe_event_editor__start_time_field(EventEditorTestCase):
         self.when_editor_opened_with_event(event)
         self.view.set_start.assert_called_with(sentinel.START_TIME)
 
-    def test_has_focus_if_point_event_edited(self):
-        self.when_editor_opened_with_time("1 Jan 2010")
-        self.view.set_focus.assert_called_with("start")
-
 
 class describe_event_editor__end_time_field(EventEditorTestCase):
 
