@@ -479,15 +479,9 @@ class EventEditorDialog(wx.Dialog):
     def set_show_add_more(self, visible):
         self.chb_add_more.Show(visible)
         self.chb_add_more.SetValue(False)
+
     def get_show_add_more(self):
         return self.chb_add_more.GetValue()
-
-    def set_focus(self, control_name):
-        controls = {"start": self.dtp_start, "text": self.txt_text}
-        if control_name in controls:
-            controls[control_name].SetFocus()
-        else:
-            self.dtp_start.SetFocus()
 
     def display_invalid_start(self, message):
         self._display_invalid_input(message, self.dtp_start)

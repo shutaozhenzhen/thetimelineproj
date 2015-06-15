@@ -104,10 +104,6 @@ class EventEditor(object):
         self.view.set_fuzzy(self.fuzzy)
         self.view.set_locked(self.locked)
         self.view.set_ends_today(self.ends_today)
-        if self.start != self.end:
-            self.view.set_focus("text")
-        else:
-            self.view.set_focus("text")
 
     def _get_and_verify_input(self):
         self.name = self._get_name(self.view.get_name())
