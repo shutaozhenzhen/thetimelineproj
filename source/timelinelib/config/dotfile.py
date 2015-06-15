@@ -57,6 +57,7 @@ MINOR_STRIP_FONT = "minor_strip_font"
 LEGEND_FONT = "legend_font"
 EVENT_EDITOR_SHOW_PERIOD = "event_editor_show_period"
 EVENT_EDITOR_SHOW_TIME = "event_editor_show_time"
+EVENT_EDITOR_TAB_ORDER = "event_editor_tab_order"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -78,6 +79,7 @@ DEFAULTS = {
     DRAW_POINT_EVENTS_TO_RIGHT: "False",
     EVENT_EDITOR_SHOW_PERIOD: "False",
     EVENT_EDITOR_SHOW_TIME: "False",
+    EVENT_EDITOR_TAB_ORDER: "01234:"
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -304,3 +306,9 @@ class Config(object):
     def set_event_editor_show_time(self, value):
         self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_SHOW_TIME, str(value))
     event_editor_show_time = property(get_event_editor_show_time, set_event_editor_show_time)
+
+    def get_event_editor_tab_order(self):
+        return self.config_parser.get(DEFAULTSECT, EVENT_EDITOR_TAB_ORDER)
+    def set_event_editor_tab_order(self, tab_order):
+        self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_TAB_ORDER, tab_order)
+    event_editor_tab_order = property(get_event_editor_tab_order, set_event_editor_tab_order)

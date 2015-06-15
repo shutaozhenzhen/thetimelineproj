@@ -51,7 +51,7 @@ class EventEditor(object):
         self.name = ""
         self.event = None
         self.view.set_name(self.name)
-        self.view.set_focus("start")
+        self.view.set_focus("text")
 
     def start_is_in_history(self):
         if self.start is None:
@@ -107,7 +107,7 @@ class EventEditor(object):
         if self.start != self.end:
             self.view.set_focus("text")
         else:
-            self.view.set_focus("start")
+            self.view.set_focus("text")
 
     def _get_and_verify_input(self):
         self.name = self._get_name(self.view.get_name())

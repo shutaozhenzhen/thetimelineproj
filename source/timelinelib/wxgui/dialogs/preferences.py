@@ -20,12 +20,14 @@ import wx
 
 from timelinelib.config.preferences import PreferencesEditor
 from timelinelib.wxgui.utils import BORDER
+from timelinelib.wxgui.dialogs.eventeditortabselection import SelectTabOrderDialog
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 
 
 class PreferencesDialog(wx.Dialog):
 
     def __init__(self, parent, config):
+        self.config = config
         wx.Dialog.__init__(self, parent, title=_("Preferences"))
         self._create_gui()
         self._controller = PreferencesEditor(self, config)
@@ -86,7 +88,15 @@ class PreferencesDialog(wx.Dialog):
         self.chb_open_recent = self._create_chb_open_recent(panel)
         self.chb_inertial_scrolling = self._create_chb_inertial_scrolling(panel)
         self.chb_never_show_period_events_as_point_events = self._create_chb_never_show_period_events_as_point_events(panel)
-        return (self.chb_open_recent, self.chb_inertial_scrolling,  self.chb_never_show_period_events_as_point_events)
+        self.btn_event_editor_tab_order = wx.Button(panel, label=_("Select Event Editor Tab Order"))
+        self.Bind(wx.EVT_BUTTON, self._on_btn_event_editor_tab_order, self.btn_event_editor_tab_order)
+        return (self.chb_open_recent, self.chb_inertial_scrolling,  self.chb_never_show_period_events_as_point_events,
+                self.btn_event_editor_tab_order)
+
+    def _on_btn_event_editor_tab_order(self, evt):
+        dlg = SelectTabOrderDialog(self, self.config)
+        dlg.ShowModal()
+        dlg.Destroy()
 
     def _create_date_time_tab(self, notebook):
         panel = self._create_tab_panel(notebook, _("Date && Time"))
@@ -144,7 +154,10 @@ class PreferencesDialog(wx.Dialog):
     def _size_tab_panel(self, panel, controls):
         sizer = wx.BoxSizer(wx.VERTICAL)
         for control in controls:
-            sizer.Add(control, flag=wx.ALL | wx.EXPAND, border=BORDER)
+            if control == self.btn_event_editor_tab_order:
+                sizer.Add(control, flag=wx.ALL, border=BORDER)
+            else:
+                sizer.Add(control, flag=wx.ALL | wx.EXPAND, border=BORDER)
         panel.SetSizer(sizer)
 
     def _create_chb_open_recent(self, panel):
