@@ -107,6 +107,11 @@ Solved problems:
       (`#2 <https://sourceforge.net/p/thetimelineproj/backlog/2>`_).
       A 'compress events' function was added and padding was removed
 
+    * Better Tab-ing in the Event Editor dialog
+      (`#62 <https://sourceforge.net/p/thetimelineproj/backlog/62>`_).
+      The user can decide the Tab-order of controls in the event editor dialog
+
+
 Version 1.6.0
 -------------
 
