@@ -40,20 +40,38 @@ import timelinelib.wxgui.utils as gui_utils
 
 class EventEditorDialog(wx.Dialog):
 
-    def __init__(self, parent, config, title, timeline,
-                 start=None, end=None, event=None):
-        self.TXT_ENLARGE = _("&Enlarge")
-        self.TXT_REDUCE = _("&Reduce")
-        wx.Dialog.__init__(self, parent, title=title, name="event_editor",
-                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+    def __init__(self, parent, config, title, timeline, start=None, end=None, event=None):
         self.start = start
         self.event = event
         self.timeline = timeline
         self.config = config
+        self._define_constants()
+        dialog_style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
+        wx.Dialog.__init__(self, parent, title=title, name="event_editor", style=dialog_style)
         self._create_gui()
         self.controller = EventEditor(self, config)
-        self.controller.edit(timeline.get_time_type(), DbWrapperEventRepository(timeline),
-                             timeline, start, end, event)
+        self.controller.edit(timeline.get_time_type(), DbWrapperEventRepository(timeline), timeline, start, end, event)
+
+    def _define_constants(self):
+        self.TXT_ENLARGE = _("&Enlarge")
+        self.TXT_REDUCE = _("&Reduce")
+        self.CONTROL_ROWS_CREATORS = {"0": self._create_time_details, "1": self._create_checkboxes,
+                                      "2": self._create_text_field, "3": self._create_categories_listbox, 
+                                      "4": self._create_container_listbox}
+
+    def _create_pre_notebook_control_rows_list(self):
+        list = []
+        row_settings = self.config.event_editor_tab_order.split(":")[0]
+        for key in row_settings:
+            list.append(self.CONTROL_ROWS_CREATORS[key])
+        return list
+
+    def _create_post_notebook_control_rows_list(self):
+        list = []
+        row_settings = self.config.event_editor_tab_order.split(":")[1]
+        for key in row_settings:
+            list.append(self.CONTROL_ROWS_CREATORS[key])
+        return list
 
     def _create_gui(self):
         properties_box = self._create_properties_box()
@@ -69,23 +87,28 @@ class EventEditorDialog(wx.Dialog):
     def _create_properties_controls(self, sizer):
         groupbox = wx.StaticBox(self, wx.ID_ANY, _("Event Properties"))
         main_box_content = wx.StaticBoxSizer(groupbox, wx.VERTICAL)
-        self._create_detail_content(main_box_content)
+        self._create_details_content_before_notebook(main_box_content)
         self._create_notebook_content(main_box_content)
+        self._create_details_content_after_notebook(main_box_content)
         sizer.Add(main_box_content, flag=wx.EXPAND | wx.ALL, border=BORDER, proportion=1)
 
-    def _create_detail_content(self, properties_box_content):
-        details = self._create_details()
-        properties_box_content.Add(details, flag=wx.ALL | wx.EXPAND, border=BORDER)
+    def _create_details_content_before_notebook(self, properties_box_content):
+        details = self._create_details(self._create_pre_notebook_control_rows_list())
+        if details:
+            properties_box_content.Add(details, flag=wx.ALL | wx.EXPAND, border=BORDER)
 
-    def _create_details(self):
-        grid = wx.FlexGridSizer(6, 2, BORDER, BORDER)
-        grid.AddGrowableCol(1)
-        self._create_time_details(grid)
-        self._create_checkboxes(grid)
-        self._create_text_field(grid)
-        self._create_categories_listbox(grid)
-        self._create_container_listbox(grid)
-        return grid
+    def _create_details_content_after_notebook(self, properties_box_content):
+        details = self._create_details(self._create_post_notebook_control_rows_list())
+        if details:
+            properties_box_content.Add(details, flag=wx.ALL | wx.EXPAND, border=BORDER)
+
+    def _create_details(self, creators):
+        if creators:
+            grid = wx.FlexGridSizer(len(creators), 2, BORDER, BORDER)
+            grid.AddGrowableCol(1)
+            for creator in creators:
+                creator(grid)
+            return grid
 
     def _create_time_details(self, grid):
         grid.Add(wx.StaticText(self, label=_("When:")),
@@ -116,6 +139,7 @@ class EventEditorDialog(wx.Dialog):
         self.chb_fuzzy = self._create_fuzzy_checkbox(when_box)
         self.chb_locked = self._create_locked_checkbox(when_box)
         self.chb_ends_today = self._create_ends_today_checkbox(when_box)
+        self.chb_period.MoveAfterInTabOrder(self.chb_ends_today)
         grid.Add(when_box)
 
     def _create_container_listbox(self, grid):
