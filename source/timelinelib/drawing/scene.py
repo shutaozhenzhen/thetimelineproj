@@ -95,6 +95,9 @@ class TimelineScene(object):
         evt = self._get_overlapping_event(period, direction, selected_event, rect)
         return (evt, direction)
 
+    def center_text(self):
+        return self._config.center_event_texts
+
     def _inflate_event_rects_to_get_right_dimensions_for_overlap_calculations(self):
         for (_, rect) in self.event_data:
             rect.Inflate(self._outer_padding, self._outer_padding)

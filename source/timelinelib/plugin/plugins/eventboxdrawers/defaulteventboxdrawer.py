@@ -44,6 +44,7 @@ class DefaultEventBoxDrawer(PluginBase):
         return _("Default Event box drawer")
 
     def run(self, dc, scene, rect, event, selected=False):
+        self.center_text = scene.center_text()
         if scene.never_show_period_events_as_point_events() and rect.y < scene.divider_y and event.is_period():
             self._draw_period_event_as_symbol_below_divider_line(dc, scene, event)
         else:
@@ -212,6 +213,14 @@ class DefaultEventBoxDrawer(PluginBase):
         dc.DrawPolygon(points)
 
     def _draw_text(self, dc, rect, event):
+
+        def center_text():
+            width, _ = dc.GetTextExtent(event.get_text())
+            if width < rect_copy.width:
+                return text_x + (rect_copy.width - width) / 2
+            else:
+                return text_x
+
         # Ensure that we can't draw content outside inner rectangle
         rect_copy = wx.Rect(*rect)
         rect_copy.Deflate(INNER_PADDING, INNER_PADDING)
@@ -227,6 +236,8 @@ class DefaultEventBoxDrawer(PluginBase):
             if event.is_container() and EXTENDED_CONTAINER_HEIGHT.enabled():
                 EXTENDED_CONTAINER_HEIGHT.draw_container_text_top_adjusted(event.get_text(), dc, rect)
             else:
+                if self.center_text:
+                    text_x = center_text()
                 dc.SetClippingRect(rect_copy)
                 dc.DrawText(event.get_text(), text_x, text_y)
             dc.DestroyClippingRegion()

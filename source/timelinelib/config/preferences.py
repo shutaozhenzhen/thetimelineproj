@@ -33,6 +33,7 @@ class PreferencesEditor(object):
         self.dialog.set_checkbox_use_inertial_scrolling(self.config.get_use_inertial_scrolling())
         self.dialog.set_checkbox_open_recent_at_startup(self.config.get_open_recent_at_startup())
         self.dialog.set_checkbox_never_show_period_events_as_point_events(self.config.get_never_show_period_events_as_point_events())
+        self.dialog.set_checkbox_center_event_texts(self.config.center_event_texts)
         self.dialog.set_experimental_features()
         index = self._week_index(self.config.week_start)
         self.dialog.set_week_start(index)
@@ -43,6 +44,9 @@ class PreferencesEditor(object):
     def on_never_show_period_events_as_point_events_changed(self, value):
         self.config.set_never_show_period_events_as_point_events(value)
 
+    def on_center_event_texts_changed(self, value):
+        self.config.set_center_event_texts(value)
+
     def on_open_recent_changed(self, value):
         self.config.set_open_recent_at_startup(value)
 
@@ -50,10 +54,10 @@ class PreferencesEditor(object):
         self.config.week_start = self._index_week(value)
 
     def on_experimental_features_changed(self, feature_index, value):
-        ef = ExperimentalFeatures() 
+        ef = ExperimentalFeatures()
         ef.set_active_state_on_feature_by_index(feature_index, value)
-        self.config.experimental_features = str(ef) 
-    
+        self.config.experimental_features = str(ef)
+
     def _week_index(self, week):
         for (i, w) in self.weeks_map:
             if w == week:
