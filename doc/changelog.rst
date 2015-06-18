@@ -111,6 +111,9 @@ Solved problems:
       (`#62 <https://sourceforge.net/p/thetimelineproj/backlog/62>`_).
       The user can decide the Tab-order of controls in the event editor dialog
 
+	* Crash report: OverflowError: long int too large to convert to float
+      (`#75 <https://sourceforge.net/p/thetimelineproj/backlog/75>`_).
+      This special situation is handled by returning constant values
 
 Version 1.6.0
 -------------
