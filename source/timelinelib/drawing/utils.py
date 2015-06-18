@@ -46,7 +46,13 @@ class Metrics(object):
 
     def calc_x(self, time):
         """Return the x position in pixels as an integer for the given time."""
-        return int(round(self.calc_exact_x(time)))
+        try:
+            return int(round(self.calc_exact_x(time)))
+        except OverflowError:
+            if time < self.time_period.start_time:
+                return -1
+            if time > self.time_period.end_time:
+                return self.width + 1
 
     def calc_exact_width(self, time_period):
         """Return the with in pixels as a float for the given time_period."""
