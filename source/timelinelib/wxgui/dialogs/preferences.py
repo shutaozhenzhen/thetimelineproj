@@ -39,6 +39,9 @@ class PreferencesDialog(wx.Dialog):
     def set_checkbox_never_show_period_events_as_point_events(self, value):
         self.chb_never_show_period_events_as_point_events.SetValue(value)
 
+    def set_checkbox_center_event_texts(self, value):
+        self.chb_center_event_texts.SetValue(value)
+
     def set_checkbox_open_recent_at_startup(self, value):
         self.chb_open_recent.SetValue(value)
 
@@ -88,10 +91,11 @@ class PreferencesDialog(wx.Dialog):
         self.chb_open_recent = self._create_chb_open_recent(panel)
         self.chb_inertial_scrolling = self._create_chb_inertial_scrolling(panel)
         self.chb_never_show_period_events_as_point_events = self._create_chb_never_show_period_events_as_point_events(panel)
+        self.chb_center_event_texts = self._create_chb_center_event_texts(panel)
         self.btn_event_editor_tab_order = wx.Button(panel, label=_("Select Event Editor Tab Order"))
         self.Bind(wx.EVT_BUTTON, self._on_btn_event_editor_tab_order, self.btn_event_editor_tab_order)
         return (self.chb_open_recent, self.chb_inertial_scrolling,  self.chb_never_show_period_events_as_point_events,
-                self.btn_event_editor_tab_order)
+                self.chb_center_event_texts, self.btn_event_editor_tab_order)
 
     def _on_btn_event_editor_tab_order(self, evt):
         dlg = SelectTabOrderDialog(self, self.config)
@@ -178,6 +182,12 @@ class PreferencesDialog(wx.Dialog):
         chb = self._create_chb(panel, label, handler)
         return chb
 
+    def _create_chb_center_event_texts(self, panel):
+        label = _("Center Event texts")
+        handler = self._chb_center_event_texts_on_checkbox
+        chb = self._create_chb(panel, label, handler)
+        return chb
+
     def _create_chb(self, panel, label, handler):
         chb = wx.CheckBox(panel, label=label)
         self.Bind(wx.EVT_CHECKBOX, handler, chb)
@@ -206,6 +216,9 @@ class PreferencesDialog(wx.Dialog):
 
     def _chb_never_show_period_events_as_point_events_on_checkbox(self, evt):
         self._controller.on_never_show_period_events_as_point_events_changed(evt.IsChecked())
+
+    def _chb_center_event_texts_on_checkbox(self, evt):
+        self._controller.on_center_event_texts_changed(evt.IsChecked())
 
     def _chb_open_recent_startup_on_checkbox(self, evt):
         self._controller.on_open_recent_changed(evt.IsChecked())

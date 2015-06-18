@@ -58,6 +58,7 @@ LEGEND_FONT = "legend_font"
 EVENT_EDITOR_SHOW_PERIOD = "event_editor_show_period"
 EVENT_EDITOR_SHOW_TIME = "event_editor_show_time"
 EVENT_EDITOR_TAB_ORDER = "event_editor_tab_order"
+CENTER_EVENT_TEXTS = "center_event_texts"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -79,7 +80,8 @@ DEFAULTS = {
     DRAW_POINT_EVENTS_TO_RIGHT: "False",
     EVENT_EDITOR_SHOW_PERIOD: "False",
     EVENT_EDITOR_SHOW_TIME: "False",
-    EVENT_EDITOR_TAB_ORDER: "01234:"
+    EVENT_EDITOR_TAB_ORDER: "01234:",
+    CENTER_EVENT_TEXTS: "False",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -264,6 +266,12 @@ class Config(object):
         self.config_parser.set(DEFAULTSECT, NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS, str(value))
     never_show_period_events_as_point_events = property(get_never_show_period_events_as_point_events,
                                                         set_never_show_period_events_as_point_events)
+
+    def get_center_event_texts(self):
+        return self.config_parser.getboolean(DEFAULTSECT, CENTER_EVENT_TEXTS)
+    def set_center_event_texts(self, value):
+        self.config_parser.set(DEFAULTSECT, CENTER_EVENT_TEXTS, str(value))
+    center_event_texts = property(get_center_event_texts, set_center_event_texts)
 
     def get_draw_period_events_to_right(self):
         return self.config_parser.getboolean(DEFAULTSECT, DRAW_POINT_EVENTS_TO_RIGHT)
