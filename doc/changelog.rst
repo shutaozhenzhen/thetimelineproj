@@ -115,6 +115,10 @@ Solved problems:
       (`#75 <https://sourceforge.net/p/thetimelineproj/backlog/75>`_).
       This special situation is handled by returning constant values
 
+    * Center Event text
+      (`#73 <https://sourceforge.net/p/thetimelineproj/backlog/73>`_).
+      A settings option has been added that decides if Event texts should be centered or not
+
 Version 1.6.0
 -------------
 
