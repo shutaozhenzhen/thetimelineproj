@@ -37,6 +37,7 @@ class ConfigSpec(UnitTestCase):
         self.assertEqual(self.config.balloon_on_hover, True)
         self.assertEqual(self.config.week_start, "monday")
         self.assertEqual(self.config.get_use_inertial_scrolling(), False)
+        self.assertEqual(self.config.center_event_texts, False)
 
     def test_window_size_can_be_read_after_stored(self):
         self.config.window_size = (3, 20)
@@ -77,6 +78,10 @@ class ConfigSpec(UnitTestCase):
     def test_inertial_scrolling_can_be_read_after_stored(self):
         self.config.use_inertial_scrolling = False
         self.assertEqual(self.config.use_inertial_scrolling, False)
+
+    def test_center_event_texts_can_be_read_after_stored(self):
+        self.config.center_event_texts = True
+        self.assertEqual(self.config.center_event_texts, True)
 
     def test_config_returns_use_inertial_scrolling_is_true_when_set_to_true(self):
         self.config.set_use_inertial_scrolling(True)
