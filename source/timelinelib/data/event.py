@@ -180,7 +180,7 @@ class Event(object):
     def update(self, start_time, end_time, text, category=None, fuzzy=None,
                locked=None, ends_today=None):
         """Change the event data."""
-        self.time_period = TimePeriod(self.time_type, start_time, end_time)
+        self.time_period = TimePeriod(self.time_type, start_time, end_time, not self.is_container())
         self.text = text.strip()
         self.category = category
         if ends_today is not None:
