@@ -119,6 +119,10 @@ Solved problems:
       (`#73 <https://sourceforge.net/p/thetimelineproj/backlog/73>`_).
       A settings option has been added that decides if Event texts should be centered or not
 
+	* Crash report: Exception: No timeline set
+      (`#56 <https://sourceforge.net/p/thetimelineproj/backlog/56>`_).
+      Solved by not asserting time period length for container events
+
 Version 1.6.0
 -------------
 
