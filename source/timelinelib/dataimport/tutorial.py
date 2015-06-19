@@ -36,7 +36,7 @@ def create_in_memory_tutorial_db():
         tutcreator.get_days_delta(4))
     tutcreator.add_category(_("Intro"), (250, 250, 20), (0, 0, 0))
     tutcreator.add_event(
-        _("This event has a hyperlinks"),
+        _("This event has hyperlinks"),
         _("Right-click for context menu where the hyperlinks can be accessed."),
         tutcreator.get_days_delta(11),
         tutcreator.get_days_delta(19),
