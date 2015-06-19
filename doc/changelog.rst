@@ -122,6 +122,10 @@ Solved problems:
 	* Crash report: Exception: No timeline set
       (`#56 <https://sourceforge.net/p/thetimelineproj/backlog/56>`_).
       Solved by not asserting time period length for container events
+      
+    * Can't create the log file in windows distribution
+      (`#74 <https://sourceforge.net/p/thetimelineproj/backlog/74>`_).
+      The log file should now be created in a standard user temp directory
 
 Version 1.6.0
 -------------
