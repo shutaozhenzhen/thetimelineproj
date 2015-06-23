@@ -13,6 +13,7 @@ Welcome to Timeline
     process
     guidelines
     howtos
+    analysis
     architecture
     dev/project-infrastructure
     tools
