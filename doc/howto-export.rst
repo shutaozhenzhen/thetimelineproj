@@ -111,3 +111,17 @@ directory. That's it!  Sample code::
 
         def _transform_event(self, event):
             return "%s %s\n" % (event.get_text(), event.get_time_period().get_label())
+
+The TimelineExporter
+--------------------
+
+This class uses an input dialog to collect the export format as well as what data to export.
+At the moment, only export to CSV is implemented, but the idea is that this class can be extended
+to export other file formats as well.
+
+The code is found at::
+
+    timelinelib.plugin.plugins.exporters.timelineexporter.py
+
+
+            
