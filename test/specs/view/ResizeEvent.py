@@ -21,7 +21,7 @@ import wx
 
 from timelinelib.view.resize import ResizeByDragInputHandler
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
-from timelinelib.wxgui.components.timelinepanel import TimelineCanvasController
+from timelinelib.view.drawingarea import TimelineCanvasController
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
 from timelinetest import UnitTestCase
 from timelinetest.utils import an_event
