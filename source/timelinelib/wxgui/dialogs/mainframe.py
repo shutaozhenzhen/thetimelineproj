@@ -39,6 +39,7 @@ from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.hyperlinkbutton import HyperlinkButton
 from timelinelib.wxgui.components.search import SearchBar
 from timelinelib.wxgui.components.timeline import TimelinePanel
+from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.dialogs.categorieseditor import CategoriesEditor
 from timelinelib.wxgui.dialogs.eraseditor import ErasEditorDialog
 from timelinelib.wxgui.dialogs.duplicateevent import open_duplicate_event_dialog_for_event
@@ -1426,23 +1427,3 @@ class ErrorPanel(wx.Panel):
 
     def activated(self):
         pass
-
-
-class StatusBarAdapter(object):
-
-    HIDDEN_EVENT_COUNT_COLUMN = 1
-    READ_ONLY_COLUMN = 2
-
-    def __init__(self, wx_status_bar):
-        self.wx_status_bar = wx_status_bar
-        self.wx_status_bar.SetFieldsCount(3)
-        self.wx_status_bar.SetStatusWidths([-1, 200, 150])
-
-    def set_text(self, text):
-        self.wx_status_bar.SetStatusText(text)
-
-    def set_hidden_event_count_text(self, text):
-        self.wx_status_bar.SetStatusText(text, self.HIDDEN_EVENT_COUNT_COLUMN)
-
-    def set_read_only_text(self, text):
-        self.wx_status_bar.SetStatusText(text, self.READ_ONLY_COLUMN)
