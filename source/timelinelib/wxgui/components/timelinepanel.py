@@ -20,9 +20,9 @@ import wx
 
 from timelinelib.utilities.observer import Listener
 
-from timelinelib.wxgui.components.categorytree import CustomCategoryTree
 from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.components.timelinecanvas import TimelineCanvas
+from timelinelib.wxgui.components.sidebar import Sidebar
 
 
 class TimelinePanel(wx.Panel):
@@ -111,7 +111,7 @@ class TimelinePanel(wx.Panel):
             self.sidebar_width = self.splitter.GetSashPosition()
 
     def _create_sidebar(self):
-        self.sidebar = _Sidebar(self.main_frame, self.splitter, self.handle_db_error)
+        self.sidebar = Sidebar(self.main_frame, self.splitter, self.handle_db_error)
 
     def _create_timeline_canvas(self):
         self.timeline_canvas = TimelineCanvas(
@@ -146,38 +146,3 @@ class TimelinePanel(wx.Panel):
     def activated(self):
         if self.config.get_show_sidebar():
             self.show_sidebar()
-
-
-class _Sidebar(wx.Panel):
-
-    def __init__(self, main_frame, parent, handle_db_error):
-        self.main_frame = main_frame
-        wx.Panel.__init__(self, parent, style=wx.BORDER_NONE)
-        self.Hide()
-        self._create_gui(handle_db_error)
-
-    def _create_gui(self, handle_db_error):
-        self.category_tree = CustomCategoryTree(self, handle_db_error)
-        label = _("View Categories Individually")
-        self.cbx_toggle_cat_view = wx.CheckBox(self, -1, label)
-        # Layout
-        sizer = wx.GridBagSizer(vgap=0, hgap=0)
-        sizer.AddGrowableCol(0, proportion=0)
-        sizer.AddGrowableRow(0, proportion=0)
-        sizer.Add(self.category_tree, (0, 0), flag=wx.GROW)
-        sizer.Add(self.cbx_toggle_cat_view, (1, 0), flag=wx.ALL, border=5)
-        self.SetSizer(sizer)
-        self.Bind(wx.EVT_CHECKBOX, self._cbx_on_click, self.cbx_toggle_cat_view)
-
-    def ok_to_edit(self):
-        return self.main_frame.ok_to_edit()
-
-    def edit_ends(self):
-        return self.main_frame.edit_ends()
-
-    def _cbx_on_click(self, evt):
-        from timelinelib.wxgui.dialogs.mainframe import CatsViewChangedEvent
-        event = CatsViewChangedEvent(self.GetId())
-        event.ClientData = evt.GetEventObject().IsChecked()
-        self.GetEventHandler().ProcessEvent(event)
-
