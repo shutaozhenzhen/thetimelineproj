@@ -21,7 +21,7 @@ import wx
 
 from timelinelib.view.drawingarea import TimelineCanvasController
 from timelinelib.view.noop import NoOpInputHandler
-from timelinelib.wxgui.components.timeline import TimelineCanvas
+from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
 from timelinetest import UnitTestCase
 from timelinetest.utils import an_event, an_event_with, human_time_to_gregorian
 
