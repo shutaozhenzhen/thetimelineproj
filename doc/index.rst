@@ -10,10 +10,10 @@ Welcome to Timeline
     support
     status
     history
+    articles
     process
     guidelines
     howtos
-    analysis
     architecture
     dev/project-infrastructure
     tools
