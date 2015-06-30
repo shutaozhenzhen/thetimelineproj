@@ -36,10 +36,11 @@ from timelinelib.proxies.drawingarea import DrawingAreaProxy
 from timelinelib.proxies.sidebar import SidebarProxy
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
-from timelinelib.wxgui.components.hyperlinkbutton import HyperlinkButton
 from timelinelib.wxgui.components.search import SearchBar
 from timelinelib.wxgui.components.timeline import TimelinePanel
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
+from timelinelib.wxgui.components.errorpanel import ErrorPanel
+from timelinelib.wxgui.components.welcomepanel import WelcomePanel
 from timelinelib.wxgui.dialogs.categorieseditor import CategoriesEditor
 from timelinelib.wxgui.dialogs.eraseditor import ErasEditorDialog
 from timelinelib.wxgui.dialogs.duplicateevent import open_duplicate_event_dialog_for_event
@@ -112,6 +113,7 @@ ID_ABOUT = wx.ID_ABOUT
 ID_SAVEAS = wx.ID_SAVEAS
 ID_EXIT = wx.ID_EXIT
 ID_NAVIGATE = wx.NewId() + 100
+
 
 class GuiCreator(object):
 
@@ -1358,72 +1360,3 @@ class MainPanel(wx.Panel):
     def _hide_all_panels(self):
         for panel_to_hide in [self.welcome_panel, self.timeline_panel, self.error_panel]:
             panel_to_hide.Show(False)
-
-
-class WelcomePanel(wx.Panel):
-
-    def __init__(self, parent, main_frame):
-        wx.Panel.__init__(self, parent)
-        self.main_frame = main_frame
-        self._create_gui()
-
-    def _create_gui(self):
-        vsizer = wx.BoxSizer(wx.VERTICAL)
-        # Text 1
-        t1 = wx.StaticText(self, label=_("No timeline opened."))
-        vsizer.Add(t1, flag=wx.ALIGN_CENTER_HORIZONTAL)
-        # Spacer
-        vsizer.AddSpacer(20)
-        # Text 2
-        t2 = wx.StaticText(self, label=_("First time using Timeline?"))
-        vsizer.Add(t2, flag=wx.ALIGN_CENTER_HORIZONTAL)
-        # Button
-        btn_tutorial = HyperlinkButton(self, _("Getting started tutorial"))
-        self.Bind(wx.EVT_HYPERLINK, self._btn_tutorial_on_click, btn_tutorial)
-        vsizer.Add(btn_tutorial, flag=wx.ALIGN_CENTER_HORIZONTAL)
-        # Sizer
-        hsizer = wx.BoxSizer(wx.HORIZONTAL)
-        hsizer.Add(vsizer, flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, proportion=1)
-        self.SetSizer(hsizer)
-
-    def _btn_tutorial_on_click(self, e):
-        self.main_frame.controller.open_timeline(":tutorial:")
-
-    def activated(self):
-        pass
-
-
-class ErrorPanel(wx.Panel):
-
-    def __init__(self, parent, main_frame):
-        wx.Panel.__init__(self, parent)
-        self.main_frame = main_frame
-        self._create_gui()
-
-    def populate(self, error):
-        self.txt_error.SetLabel(ex_msg(error))
-
-    def _create_gui(self):
-        vsizer = wx.BoxSizer(wx.VERTICAL)
-        # Error text
-        self.txt_error = wx.StaticText(self, label="")
-        vsizer.Add(self.txt_error, flag=wx.ALIGN_CENTER_HORIZONTAL)
-        # Spacer
-        vsizer.AddSpacer(20)
-        # Help text
-        txt_help = wx.StaticText(self, label=_("Relevant help topics:"))
-        vsizer.Add(txt_help, flag=wx.ALIGN_CENTER_HORIZONTAL)
-        # Button
-        btn_contact = HyperlinkButton(self, _("Contact"))
-        self.Bind(wx.EVT_HYPERLINK, self._btn_contact_on_click, btn_contact)
-        vsizer.Add(btn_contact, flag=wx.ALIGN_CENTER_HORIZONTAL)
-        # Sizer
-        hsizer = wx.BoxSizer(wx.HORIZONTAL)
-        hsizer.Add(vsizer, flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, proportion=1)
-        self.SetSizer(hsizer)
-
-    def _btn_contact_on_click(self, e):
-        self.main_frame.help_browser.show_page("contact")
-
-    def activated(self):
-        pass
