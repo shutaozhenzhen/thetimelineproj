@@ -60,12 +60,37 @@ class Font(wx.Font):
         self.PointSize -= step
 
 
+# Profiling of timelinelib\wxgui\components\font.py:63(deserialize_font)
+#
+# Open Timeline and drag-scroll 10 times back and forth with the mouse.
+#
+# Before caching Font info:
+#          ncalls  tottime  percall  cumtime  percall
+# Try 1:     4265    0.154    0.000    0.610    0.000
+# Try 2:     4395    0.154    0.000    0.613    0.000
+# Try 3:     3801    0.133    0.000    0.528    0.000
+# Try 4:     4430    0.152    0.000    0.607    0.000
+# Try 5:     3926    0.139    0.000    0.553    0.000
+#
+# After caching Font info:
+# Try 1:     3894    0.004    0.000    0.004    0.000
+# Try 2:     5246    0.005    0.000    0.005    0.000
+# Try 3:     4972    0.004    0.000    0.005    0.000
+# Try 4:     4611    0.004    0.000    0.005    0.000
+# Try 5:     3306    0.003    0.000    0.003    0.000
+
+font_cache = {}
+
+
 def deserialize_font(serialized_font):
-    bool_map = {"True": True, "False": False}
-    point_size, family, style, weight, underlined, facename, encoding, color = serialized_font.split(":")
-    color_args = color[1:-1].split(",")
-    wxcolor = wx.Color(int(color_args[0]), int(color_args[1]), int(color_args[2]), int(color_args[3]))
-    return Font(int(point_size), int(family), int(style), int(weight), bool_map[underlined], facename, int(encoding), wxcolor)
+    if serialized_font not in font_cache:
+        bool_map = {"True": True, "False": False}
+        point_size, family, style, weight, underlined, facename, encoding, color = serialized_font.split(":")
+        color_args = color[1:-1].split(",")
+        wxcolor = wx.Color(int(color_args[0]), int(color_args[1]), int(color_args[2]), int(color_args[3]))
+        font = Font(int(point_size), int(family), int(style), int(weight), bool_map[underlined], facename, int(encoding), wxcolor)
+        font_cache[serialized_font] = font
+    return font_cache[serialized_font]
 
 
 def set_minor_strip_text_font(config, dc, force_bold=False, force_normal=False):
