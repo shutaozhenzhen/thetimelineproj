@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.db import db_open
-from timelinelib.wxgui.components.timeline import TimelinePanel
+from timelinelib.wxgui.components.timelinepanel import TimelinePanel
 
 
 class DummyConfig(object):
