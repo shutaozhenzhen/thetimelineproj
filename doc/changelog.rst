@@ -127,6 +127,10 @@ Solved problems:
       (`#74 <https://sourceforge.net/p/thetimelineproj/backlog/74>`_).
       The log file should now be created in a standard user temp directory
 
+    * Improve performance for deserialize_font
+      (`#77 <https://sourceforge.net/p/thetimelineproj/backlog/77>`_).
+       Store fonts in a cache
+    
 Version 1.6.0
 -------------
 
