@@ -25,57 +25,12 @@ from timelinelib.wxgui.components.timelinecanvas import TimelineCanvas
 from timelinelib.wxgui.components.sidebar import Sidebar
 
 
-class TimelinePanel(wx.Panel):
+class TimelinePanelGuiCreator(wx.Panel):
 
-    def __init__(self, parent, config, handle_db_error, status_bar_adapter, main_frame):
-        wx.Panel.__init__(self, parent)
-        self._db_listener = Listener(self._on_db_changed)
-        self.config = config
-        self.handle_db_error = handle_db_error
-        self.status_bar_adapter = status_bar_adapter
-        self.main_frame = main_frame
+    def __init__(self, parent):
         self.sidebar_width = self.config.get_sidebar_width()
+        wx.Panel.__init__(self, parent)
         self._create_gui()
-
-    def _on_db_changed(self, db):
-        if db.is_read_only():
-            header = _("This timeline is read-only.")
-            body = _("To edit this timeline, save it to a new file: File -> Save As.")
-            self.message_bar.ShowInformationMessage("%s\n%s" % (header, body))
-        elif not db.is_saved():
-            header = _("This timeline is not being saved.")
-            body = _("To save this timeline, save it to a new file: File -> Save As.")
-            self.message_bar.ShowWarningMessage("%s\n%s" % (header, body))
-        else:
-            self.message_bar.ShowNoMessage()
-
-    def set_timeline(self, timeline):
-        self.timeline_canvas.set_timeline(timeline)
-        self._db_listener.set_observable(timeline)
-
-    def get_timeline_canvas(self):
-        return self.timeline_canvas
-
-    def get_scene(self):
-        return self.timeline_canvas.get_drawer().scene
-
-    def get_time_period(self):
-        return self.timeline_canvas.get_time_period()
-
-    def open_event_editor(self, event):
-        self.timeline_canvas.open_event_editor_for(event)
-
-    def redraw_timeline(self):
-        self.timeline_canvas.redraw_timeline()
-
-    def navigate_timeline(self, navigation_fn):
-        return self.timeline_canvas.navigate_timeline(navigation_fn)
-
-    def get_view_properties(self):
-        return self.timeline_canvas.get_view_properties()
-
-    def get_current_image(self):
-        return self.timeline_canvas.get_current_image()
 
     def _create_gui(self):
         self._create_warning_bar()
@@ -131,12 +86,50 @@ class TimelinePanel(wx.Panel):
         vsizer.Add(hsizer, proportion=1, flag=wx.EXPAND)
         self.SetSizer(vsizer)
 
+
+class TimelinePanel(TimelinePanelGuiCreator):
+
+    def __init__(self, parent, config, handle_db_error, status_bar_adapter, main_frame):
+        self.config = config
+        self.handle_db_error = handle_db_error
+        self.status_bar_adapter = status_bar_adapter
+        self.main_frame = main_frame
+        TimelinePanelGuiCreator.__init__(self, parent)
+        self._db_listener = Listener(self._on_db_changed)
+
+    def set_timeline(self, timeline):
+        self.timeline_canvas.set_timeline(timeline)
+        self._db_listener.set_observable(timeline)
+
+    def get_timeline_canvas(self):
+        return self.timeline_canvas
+
+    def get_scene(self):
+        return self.timeline_canvas.get_drawer().scene
+
+    def get_time_period(self):
+        return self.timeline_canvas.get_time_period()
+
+    def open_event_editor(self, event):
+        self.timeline_canvas.open_event_editor_for(event)
+
+    def redraw_timeline(self):
+        self.timeline_canvas.redraw_timeline()
+
+    def navigate_timeline(self, navigation_fn):
+        return self.timeline_canvas.navigate_timeline(navigation_fn)
+
+    def get_view_properties(self):
+        return self.timeline_canvas.get_view_properties()
+
+    def get_current_image(self):
+        return self.timeline_canvas.get_current_image()
+
     def get_sidebar_width(self):
         return self.sidebar_width
 
     def show_sidebar(self):
-        self.splitter.SplitVertically(
-            self.sidebar, self.timeline_canvas, self.sidebar_width)
+        self.splitter.SplitVertically(self.sidebar, self.timeline_canvas, self.sidebar_width)
         self.splitter.SetSashPosition(self.sidebar_width)
         self.splitter.SetMinimumPaneSize(self.sidebar.GetBestSize()[0])
 
@@ -146,3 +139,15 @@ class TimelinePanel(wx.Panel):
     def activated(self):
         if self.config.get_show_sidebar():
             self.show_sidebar()
+
+    def _on_db_changed(self, db):
+        if db.is_read_only():
+            header = _("This timeline is read-only.")
+            body = _("To edit this timeline, save it to a new file: File -> Save As.")
+            self.message_bar.ShowInformationMessage("%s\n%s" % (header, body))
+        elif not db.is_saved():
+            header = _("This timeline is not being saved.")
+            body = _("To save this timeline, save it to a new file: File -> Save As.")
+            self.message_bar.ShowWarningMessage("%s\n%s" % (header, body))
+        else:
+            self.message_bar.ShowNoMessage()
