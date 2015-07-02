@@ -13,7 +13,7 @@ Solved problems:
     
     * It's not possible to see if an event has a hyperlink associated with it, or not.
       (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_).  
-       Added an icon displayd in the Event box when the event has hyperlinks.
+       Added an icon displayed in the Event box when the event has hyperlinks.
 
     * An Event can only have one hyperlink
       (`#30 <https://sourceforge.net/p/thetimelineproj/backlog/30/>`_).  
@@ -24,7 +24,7 @@ Solved problems:
 
     * Show point events as symbols
       (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_).  
-       Added an option 'never show paeriod events as point events' to enable period events to be displayed as symbols below the divider line.
+       Added an option 'never show period events as point events' to enable period events to be displayed as symbols below the divider line.
 
     * Lenght of period event is not obvious when zooming out
       (`#46 <https://sourceforge.net/p/thetimelineproj/backlog/46/>`_).     
