@@ -27,6 +27,10 @@ from timelinelib.wxgui.utils import _ask_question
 
 
 class TimelineCanvas(wx.Panel):
+    """
+    This is the surface on which a timeline is drawn. It is also the object that handles user
+    input events such as mouse and keyboard actions.
+    """
 
     def __init__(self, parent, status_bar_adapter, divider_line_slider, fn_handle_db_error, config, main_frame):
         wx.Panel.__init__(self, parent, style=wx.NO_BORDER | wx.WANTS_CHARS)
@@ -48,6 +52,9 @@ class TimelineCanvas(wx.Panel):
     def get_timeline(self):
         return self.controller.get_timeline()
 
+    def set_timeline(self, timeline):
+        self.controller.set_timeline(timeline)
+
     def get_view_properties(self):
         return self.controller.get_view_properties()
 
@@ -57,9 +64,6 @@ class TimelineCanvas(wx.Panel):
     def get_filtered_events(self, search_target):
         events = self.get_timeline().search(search_target)
         return self.get_view_properties().filter_events(events)
-
-    def set_timeline(self, timeline):
-        self.controller.set_timeline(timeline)
 
     def show_hide_legend(self, show):
         self.controller.show_hide_legend(show)
