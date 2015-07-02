@@ -19,7 +19,7 @@
 from mock import Mock
 import wx
 
-from timelinelib.view.drawingarea import TimelineCanvasController
+from timelinelib.view.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.view.noop import NoOpInputHandler
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
 from timelinetest import UnitTestCase
