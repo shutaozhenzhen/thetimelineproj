@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.view.drawingarea import TimelineCanvasController
+from timelinelib.view.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.view.move import MoveByDragInputHandler
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
 from timelinetest import UnitTestCase
