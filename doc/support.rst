@@ -31,7 +31,7 @@ FAQ
 Can't zoom wider than 1200 years
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*This workaround should not be needed in versions > 1.7.0.*
+*This workaround should not be needed in versions >= 1.7.0.*
 
 Timeline should not be able to zoom wider than 1200 years. But unfortunately,
 this happens sometimes, and a period larger than 1200 years gets written to the
