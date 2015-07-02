@@ -131,6 +131,10 @@ Solved problems:
       (`#77 <https://sourceforge.net/p/thetimelineproj/backlog/77>`_).
        Store fonts in a cache
     
+	* Crash report: TypeError: unsupported operand type(s) for +: 'int' and 'TimeDelta'
+      (`#78 <https://sourceforge.net/p/thetimelineproj/backlog/78>`_).
+      Solved by checking time-type
+      
 Version 1.6.0
 -------------
 
