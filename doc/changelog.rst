@@ -8,81 +8,81 @@ Version 1.7.0
 
 Solved problems:
 
-    * Crash report: WindowsError: [Error 32] The process cannot access the file because it is being used by another process. 
-      (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_).  
-    
+    * Crash report: WindowsError: [Error 32] The process cannot access the file because it is being used by another process.
+      (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_).
+
     * It's not possible to see if an event has a hyperlink associated with it, or not.
-      (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_).  
+      (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_).
        Added an icon displayed in the Event box when the event has hyperlinks.
 
     * An Event can only have one hyperlink
-      (`#30 <https://sourceforge.net/p/thetimelineproj/backlog/30/>`_).  
+      (`#30 <https://sourceforge.net/p/thetimelineproj/backlog/30/>`_).
        Added support for multiple hyperlinks.
-  
+
     * Crash report: TypeError: unsupported operand type(s) for +: 'int' and 'TimeDelta'
-      (`#48 <https://sourceforge.net/p/thetimelineproj/backlog/48/>`_).  
+      (`#48 <https://sourceforge.net/p/thetimelineproj/backlog/48/>`_).
 
     * Show point events as symbols
-      (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_).  
+      (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_).
        Added an option 'never show period events as point events' to enable period events to be displayed as symbols below the divider line.
 
     * Lenght of period event is not obvious when zooming out
-      (`#46 <https://sourceforge.net/p/thetimelineproj/backlog/46/>`_).     
+      (`#46 <https://sourceforge.net/p/thetimelineproj/backlog/46/>`_).
        Solved by (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_)
 
     * 1.6.0 Crashes on startup
-      (`#50 <https://sourceforge.net/p/thetimelineproj/backlog/50/>`_).  
+      (`#50 <https://sourceforge.net/p/thetimelineproj/backlog/50/>`_).
 
     * Part of sidebar is visible at start of Timeline
-      (`#52 <https://sourceforge.net/p/thetimelineproj/backlog/52/>`_).  
+      (`#52 <https://sourceforge.net/p/thetimelineproj/backlog/52/>`_).
        Made the sidebar hidden at application start-up
-  
+
     * Difficult to troubleshoot errors depending on locale settings
-      (`#54 <https://sourceforge.net/p/thetimelineproj/backlog/54/>`_).  
+      (`#54 <https://sourceforge.net/p/thetimelineproj/backlog/54/>`_).
        Added info on locale settings in the crash report.
-  
-    * Crash report: AttributeError: 'EraEditorDialog' object has no attribute 'on_return'    
-      (`#57 <https://sourceforge.net/p/thetimelineproj/backlog/57/>`_).  
+
+    * Crash report: AttributeError: 'EraEditorDialog' object has no attribute 'on_return'
+      (`#57 <https://sourceforge.net/p/thetimelineproj/backlog/57/>`_).
        Added the on_return attribute to the EraEditorDialog and made it call the controller on_btn_ok method.
 
     * Crash report: KeyError: '33'
-      (`#53 <https://sourceforge.net/p/thetimelineproj/backlog/53/>`_).  
+      (`#53 <https://sourceforge.net/p/thetimelineproj/backlog/53/>`_).
        Catches the ValueError exception when parsing dates when 'Locale date format' is used.
-  
+
     * Crash report: ValueError: Invalid date.
-      (`#55 <https://sourceforge.net/p/thetimelineproj/backlog/55/>`_).    
+      (`#55 <https://sourceforge.net/p/thetimelineproj/backlog/55/>`_).
        Added better exception handling
 
     * It is not obvious how to move events vertically
-      (`#45 <https://sourceforge.net/p/thetimelineproj/backlog/45/>`_).    
+      (`#45 <https://sourceforge.net/p/thetimelineproj/backlog/45/>`_).
        Made the Up/Down keys move a selected event vertically.
        That should be more obvious
 
     * Can't enter dates before 4714 BC
-      (`#51 <https://sourceforge.net/p/thetimelineproj/backlog/51/>`_).    
+      (`#51 <https://sourceforge.net/p/thetimelineproj/backlog/51/>`_).
        Added an experimental feature that allows negative Julian days
-  
+
     * Draw point events with the left box edge at the vertical line
-      (`#60 <https://sourceforge.net/p/thetimelineproj/backlog/60/>`_).    
-       Added an option to draw the point events right of the line conencting them with the time scale.  
+      (`#60 <https://sourceforge.net/p/thetimelineproj/backlog/60/>`_).
+       Added an option to draw the point events right of the line conencting them with the time scale.
 
     * Category editor can't be opened with doubleclick
-      (`#47 <https://sourceforge.net/p/thetimelineproj/backlog/47/>`_).    
+      (`#47 <https://sourceforge.net/p/thetimelineproj/backlog/47/>`_).
        Left doublecklick now opens the category editor
 
     * Undo doesn't work after Compress
       (`#65 <https://sourceforge.net/p/thetimelineproj/backlog/65/>`_).
-      Undo now works after a Compress action    
-    
+      Undo now works after a Compress action
+
     * There is no feedback that the shortcut has been created
       (`#23 <https://sourceforge.net/p/thetimelineproj/backlog/23/>`_).
       A popup window now shows the text 'Shortcut is saved' when clicking the Apply button
-      
+
     * Can’t zoom wider than 1200 years
       (`#8 <https://sourceforge.net/p/thetimelineproj/backlog/8/>`_).
-      If a too long display period is saved in the timelinefile, the display period is 
+      If a too long display period is saved in the timelinefile, the display period is
       set to the default display period when that file is opened.
-      
+
     * Selectable font color and size
       (`#63 <https://sourceforge.net/p/thetimelineproj/backlog/63>`_).
       Minor strip, major strip and legend fonts are now selectable
@@ -99,7 +99,7 @@ Solved problems:
       (`#67 <https://sourceforge.net/p/thetimelineproj/backlog/67>`_).
       Added 'Select Category...' item to event context menu.
 
-    * speedup enter of "Period" events    
+    * speedup enter of "Period" events
       (`#28 <https://sourceforge.net/p/thetimelineproj/backlog/28>`_).
       Remember the checkbox setting from last time the Event editor dialog was opened to create a new event.
 
@@ -122,7 +122,7 @@ Solved problems:
 	* Crash report: Exception: No timeline set
       (`#56 <https://sourceforge.net/p/thetimelineproj/backlog/56>`_).
       Solved by not asserting time period length for container events
-      
+
     * Can't create the log file in windows distribution
       (`#74 <https://sourceforge.net/p/thetimelineproj/backlog/74>`_).
       The log file should now be created in a standard user temp directory
@@ -130,11 +130,11 @@ Solved problems:
     * Improve performance for deserialize_font
       (`#77 <https://sourceforge.net/p/thetimelineproj/backlog/77>`_).
        Store fonts in a cache
-    
+
 	* Crash report: TypeError: unsupported operand type(s) for +: 'int' and 'TimeDelta'
       (`#78 <https://sourceforge.net/p/thetimelineproj/backlog/78>`_).
       Solved by checking time-type
-      
+
 Version 1.6.0
 -------------
 
