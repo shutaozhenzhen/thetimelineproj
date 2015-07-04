@@ -69,8 +69,12 @@ def export_to_image(main_frame):
 def export_to_images(main_frame):
     path, image_type = get_image_path(main_frame)
     if path is not None:
+        view_properties = main_frame.main_panel.timeline_panel.timeline_canvas.controller.view_properties
+        view_properties.set_use_fixed_event_vertical_pos(True)
         path_without_extension, extension = path.rsplit(".", 1)
         periods, current_period = main_frame.get_export_periods()
+        view_properties.set_use_fixed_event_vertical_pos(True)
+        view_properties.periods = periods
         count = 1
         for period in periods:
             path = "%s_%d.%s" % (path_without_extension, count, extension)
@@ -81,6 +85,7 @@ def export_to_images(main_frame):
                 image = wx.ImageFromBitmap(bitmap)
                 image.SaveFile(path, image_type)
             count += 1
+        view_properties.set_use_fixed_event_vertical_pos(False)
         main_frame.main_panel.timeline_panel.timeline_canvas.controller.view_properties.displayed_period = current_period
         main_frame.main_panel.redraw_timeline()
 
