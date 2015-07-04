@@ -29,6 +29,7 @@ from timelinelib.drawing.utils import darken_color
 from timelinelib.wxgui.components.font import Font
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
 import timelinelib.wxgui.components.font as font
+from timelinelib.data.timeperiod import TimePeriod
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -107,6 +108,8 @@ class DefaultDrawingAlgorithm(Drawer):
         self.dc = dc
         self.time_type = timeline.get_time_type()
         self.scene = self._create_scene(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
+        if view_properties.use_fixed_event_vertical_pos():
+            self._calc_fixed_event_rect_y(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
         self._perform_drawing(timeline, view_properties)
         del self.dc  # Program crashes if we don't delete the dc reference.
 
@@ -118,6 +121,14 @@ class DefaultDrawingAlgorithm(Drawer):
         scene.set_data_indicator_size(DATA_INDICATOR_SIZE)
         scene.create()
         return scene
+
+    def _calc_fixed_event_rect_y(self, size, db, view_properties, get_text_extent_fn):
+        periods = view_properties.periods
+        view_properties.set_displayed_period(TimePeriod(db.get_time_type(), periods[0].start_time, periods[-1].end_time, assert_period_length=False), False)
+        large_size = (size[0] * len(periods), size[1])
+        scene = self._create_scene(large_size, db, view_properties, get_text_extent_fn)
+        for (evt, rect) in scene.event_data:
+            evt.fixed_y = rect.GetY()
 
     def _perform_drawing(self, timeline, view_properties):
         self.background_drawer.draw(self, self.dc, self.scene, timeline)
@@ -451,6 +462,9 @@ class DefaultDrawingAlgorithm(Drawer):
         self.dc.DestroyClippingRegion()
         self._draw_lines_to_non_period_events(view_properties)
         for (event, rect) in self.scene.event_data:
+            main_frame = wx.GetApp().GetTopWindow()
+            if view_properties.use_fixed_event_vertical_pos():
+                rect.SetY(event.fixed_y)
             if event.is_container():
                 self._draw_container(event, rect, view_properties)
             else:

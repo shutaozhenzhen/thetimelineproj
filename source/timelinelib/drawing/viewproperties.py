@@ -39,6 +39,13 @@ class ViewProperties(Observable):
         self.displayed_period = None
         self.hscroll_amount = 0
         self.view_cats_individually = False
+        self.fixed_event_vertical_pos = False
+
+    def set_use_fixed_event_vertical_pos(self, value):
+        self.fixed_event_vertical_pos = value
+
+    def use_fixed_event_vertical_pos(self):
+        return self.fixed_event_vertical_pos
 
     def clear_db_specific(self):
         self.sticky_balloon_event_ids = []
@@ -115,9 +122,10 @@ class ViewProperties(Observable):
         else:
             self.clear_selected()
 
-    def set_displayed_period(self, period):
+    def set_displayed_period(self, period, notify=True):
         self.displayed_period = period
-        self._notify()
+        if notify:
+            self._notify()
 
     def get_selected_event_ids(self):
         return self.selected_event_ids[:]
