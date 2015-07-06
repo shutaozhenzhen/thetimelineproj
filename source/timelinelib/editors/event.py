@@ -59,12 +59,14 @@ class EventEditor(object):
         return self.start < self.timeline.time_type.now()
 
     def on_ok(self):
-        self.config.event_editor_show_period = self.view.get_show_period()
+        if self.opened_from_menu:
+            self.config.event_editor_show_period = self.view.get_show_period()
         self.config.event_editor_show_time = self.view.get_show_time()
 
     def _set_values(self, start, end, event):
         self.event = event
-        if self.event != None:
+        self.opened_from_menu = self.event is None
+        if self.event is not None:
             self.start = self.event.get_time_period().start_time
             self.end = self.event.get_time_period().end_time
             self.name = self.event.get_text()
@@ -98,7 +100,7 @@ class EventEditor(object):
             self.view.set_show_period(self.end > self.start)
             self.view.set_show_time(self._event_has_nonzero_time())
         else:
-            if self.start is None:
+            if self.opened_from_menu:
                 self.view.set_show_period(self.config.event_editor_show_period)
             else:
                 self.view.set_show_period(self.end > self.start)
