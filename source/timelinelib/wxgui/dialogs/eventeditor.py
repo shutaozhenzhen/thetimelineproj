@@ -64,21 +64,15 @@ class EventEditorDialog(wx.Dialog):
         self.TXT_REDUCE = _("&Reduce")
         self.CONTROL_ROWS_CREATORS = {"0": self._create_time_details, "1": self._create_checkboxes,
                                       "2": self._create_text_field, "3": self._create_categories_listbox,
-                                      "4": self._create_container_listbox}
+                                      "4": self._create_container_listbox, ":": self._create_notebook_content}
 
     def _create_pre_notebook_control_rows_list(self):
-        list = []
-        row_settings = self.config.event_editor_tab_order.split(":")[0]
-        for key in row_settings:
-            list.append(self.CONTROL_ROWS_CREATORS[key])
-        return list
-
-    def _create_post_notebook_control_rows_list(self):
-        list = []
-        row_settings = self.config.event_editor_tab_order.split(":")[1]
-        for key in row_settings:
-            list.append(self.CONTROL_ROWS_CREATORS[key])
-        return list
+        lst = []
+        row = 0
+        for key in self.config.event_editor_tab_order:
+            lst.append((self.CONTROL_ROWS_CREATORS[key], row))
+            row += 1
+        return lst
 
     def _create_gui(self):
         properties_box = self._create_properties_box()
@@ -94,32 +88,24 @@ class EventEditorDialog(wx.Dialog):
     def _create_properties_controls(self, sizer):
         groupbox = wx.StaticBox(self, wx.ID_ANY, _("Event Properties"))
         main_box_content = wx.StaticBoxSizer(groupbox, wx.VERTICAL)
-        self._create_details_content_before_notebook(main_box_content)
-        self._create_notebook_content(main_box_content)
-        self._create_details_content_after_notebook(main_box_content)
+        self._create_details_content(main_box_content)
         sizer.Add(main_box_content, flag=wx.EXPAND | wx.ALL, border=BORDER, proportion=1)
 
-    def _create_details_content_before_notebook(self, properties_box_content):
+    def _create_details_content(self, properties_box_content):
         details = self._create_details(self._create_pre_notebook_control_rows_list())
-        if details:
-            properties_box_content.Add(details, flag=wx.ALL | wx.EXPAND, border=BORDER)
-
-    def _create_details_content_after_notebook(self, properties_box_content):
-        details = self._create_details(self._create_post_notebook_control_rows_list())
         if details:
             properties_box_content.Add(details, flag=wx.ALL | wx.EXPAND, border=BORDER)
 
     def _create_details(self, creators):
         if creators:
-            grid = wx.FlexGridSizer(len(creators), 2, BORDER, BORDER)
+            grid = wx.GridBagSizer(BORDER * 2, BORDER)
             grid.AddGrowableCol(1)
-            for creator in creators:
-                creator(grid)
+            for creator, row in creators:
+                creator(grid, row)
             return grid
 
-    def _create_time_details(self, grid):
-        grid.Add(wx.StaticText(self, label=_("When:")),
-                 flag=wx.ALIGN_CENTER_VERTICAL)
+    def _create_time_details(self, grid, row):
+        grid.Add(wx.StaticText(self, label=_("When:")), (row, 0))
         self.dtp_start = self._create_time_picker()
         self.lbl_to = wx.StaticText(self, label=_("to"))
         self.dtp_end = self._create_time_picker()
@@ -131,14 +117,13 @@ class EventEditorDialog(wx.Dialog):
         when_box.AddSpacer(BORDER)
         when_box.Add(self.dtp_end, proportion=1,
                      flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN)
-        grid.Add(when_box)
+        grid.Add(when_box, (row, 1))
 
     def _create_time_picker(self):
         time_type = self.timeline.get_time_type()
         return time_picker_for(time_type)(self, config=self.config)
 
-    def _create_checkboxes(self, grid):
-        grid.AddStretchSpacer()
+    def _create_checkboxes(self, grid, row):
         when_box = wx.BoxSizer(wx.HORIZONTAL)
         self.chb_period = self._create_period_checkbox(when_box)
         if self.timeline.get_time_type().is_date_time_type():
@@ -146,19 +131,13 @@ class EventEditorDialog(wx.Dialog):
         self.chb_fuzzy = self._create_fuzzy_checkbox(when_box)
         self.chb_locked = self._create_locked_checkbox(when_box)
         self.chb_ends_today = self._create_ends_today_checkbox(when_box)
-        grid.Add(when_box)
+        grid.Add(when_box, (row, 1))
 
-    def _create_container_listbox(self, grid):
-        grid.AddStretchSpacer()
-        container_box = wx.BoxSizer(wx.HORIZONTAL)
-        grid.Add(container_box)
-        self._create_containers_listbox(grid)
-
-    def _create_containers_listbox(self, grid):
+    def _create_container_listbox(self, grid, row):
         self.lst_containers = wx.Choice(self, wx.ID_ANY)
         label = wx.StaticText(self, label=_("Container:"))
-        grid.Add(label, flag=wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self.lst_containers)
+        grid.Add(label, (row, 0))
+        grid.Add(self.lst_containers, (row, 1))
         self.Bind(wx.EVT_CHOICE, self._lst_containers_on_choice,
                   self.lst_containers)
 
@@ -193,14 +172,17 @@ class EventEditorDialog(wx.Dialog):
         return (index == 0)
 
     def _add_container(self):
+
         def create_container_editor():
             return ContainerEditorDialog(self, _("Add Container"), self.timeline, None)
+
         def handle_success(dialog):
             if dialog.GetReturnCode() == wx.ID_OK:
                 try:
                     self._fill_containers_listbox(dialog.get_edited_container())
                 except TimelineIOError, e:
                     gui_utils.handle_db_error_in_dialog(self, e)
+
         gui_utils.show_modal(create_container_editor,
                              gui_utils.create_dialog_db_error_handler(self),
                              handle_success)
@@ -251,23 +233,21 @@ class EventEditorDialog(wx.Dialog):
         box.Add(chb)
         return chb
 
-    def _create_text_field(self, grid):
+    def _create_text_field(self, grid, row):
         self.txt_text = wx.TextCtrl(self, wx.ID_ANY, name="text")
-        grid.Add(wx.StaticText(self, label=_("Text:")),
-                 flag=wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self.txt_text, flag=wx.EXPAND)
+        grid.Add(wx.StaticText(self, label=_("Text:")), (row, 0))
+        grid.Add(self.txt_text, (row, 1), flag=wx.EXPAND)
 
-    def _create_categories_listbox(self, grid):
+    def _create_categories_listbox(self, grid, row):
         self.lst_category = CategoryChoice(self, self.timeline)
         label = wx.StaticText(self, label=_("Category:"))
-        grid.Add(label, flag=wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self.lst_category)
+        grid.Add(label, (row, 0))
+        grid.Add(self.lst_category, (row, 1))
         self.Bind(wx.EVT_CHOICE, self.lst_category.on_choice, self.lst_category)
 
-    def _create_notebook_content(self, properties_box_content):
+    def _create_notebook_content(self, grid, row):
         self.notebook = self._create_notebook()
-        properties_box_content.Add(self.notebook, border=BORDER,
-                                   flag=wx.ALL | wx.EXPAND, proportion=1)
+        grid.Add(self.notebook, (row, 0), span=(1, 2))
 
     def _create_notebook(self):
         self.event_data = []
@@ -399,17 +379,20 @@ class EventEditorDialog(wx.Dialog):
 
     def set_start(self, start):
         self.dtp_start.set_value(start)
+
     def get_start(self):
         return self.dtp_start.get_value()
 
     def set_end(self, start):
         self.dtp_end.set_value(start)
+
     def get_end(self):
         return self.dtp_end.get_value()
 
     def set_show_period(self, show):
         self.chb_period.SetValue(show)
         self._show_to_time(show)
+
     def get_show_period(self):
         return self.chb_period.IsChecked()
 
@@ -418,6 +401,7 @@ class EventEditorDialog(wx.Dialog):
             self.chb_show_time.SetValue(checked)
             self.dtp_start.show_time(checked)
             self.dtp_end.show_time(checked)
+
     def get_show_time(self):
         if self.timeline.get_time_type().is_date_time_type():
             return self.chb_show_time.IsChecked()
@@ -425,17 +409,20 @@ class EventEditorDialog(wx.Dialog):
 
     def get_fuzzy(self):
         return self.chb_fuzzy.GetValue()
+
     def set_fuzzy(self, fuzzy):
         self.chb_fuzzy.SetValue(fuzzy)
 
     def get_locked(self):
         return self.chb_locked.GetValue()
+
     def set_locked(self, locked):
         self.chb_locked.SetValue(locked)
         self._enable_disable_ends_today()
 
     def get_ends_today(self):
         return self.chb_ends_today.GetValue()
+
     def set_ends_today(self, value):
         self.chb_ends_today.SetValue(value)
 
@@ -522,6 +509,7 @@ def open_event_editor_for(parent, config, db, handle_db_error, event):
         else:
             return EventEditorDialog(
                 parent, config, _("Edit Event"), db, event=event)
+
     def edit_function():
         gui_utils.show_modal(create_event_editor, handle_db_error)
     safe_locking(parent, edit_function)
@@ -531,6 +519,7 @@ def open_create_event_editor(parent, config, db, handle_db_error, start=None, en
     def create_event_editor():
         label = _("Create Event")
         return EventEditorDialog(parent, config, label, db, start, end)
+
     def edit_function():
         gui_utils.show_modal(create_event_editor, handle_db_error)
     safe_locking(parent, edit_function)
