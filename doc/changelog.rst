@@ -73,6 +73,13 @@ GUI:
   makes it more obvious how to move events vertically.
   (`#45 <https://sourceforge.net/p/thetimelineproj/backlog/45/>`_)
 
+Exporting:
+
+* Exporting a whole timeline to several images now preserves the vertical position
+  of events between images. So now images can be put together and the events
+  will allign corectly.
+  (`#72 <https://sourceforge.net/p/thetimelineproj/backlog/72/>`_)
+  
 Misc:
 
 * Undo works after compress. This allows users to undo compress action if
