@@ -98,7 +98,10 @@ class EventEditor(object):
             self.view.set_show_period(self.end > self.start)
             self.view.set_show_time(self._event_has_nonzero_time())
         else:
-            self.view.set_show_period(self.config.event_editor_show_period)
+            if self.start is None:
+                self.view.set_show_period(self.config.event_editor_show_period)
+            else:
+                self.view.set_show_period(self.end > self.start)
             self.view.set_show_time(self.config.event_editor_show_time)
         self.view.set_show_add_more(self.event is None)
         self.view.set_fuzzy(self.fuzzy)
