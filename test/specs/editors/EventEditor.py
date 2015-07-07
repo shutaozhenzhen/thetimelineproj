@@ -132,10 +132,10 @@ class describe_event_editor__end_time_field(EventEditorTestCase):
         self.when_editor_opened_with_period("1 Jan 2010", "2 Jan 2010")
         self.view.set_show_period.assert_called_with(True)
 
-    def test_is_not_shown_if_not_shown_previous_time(self):
+    def test_is_shown_if_period_defined(self):
         self.when_show_period_not_used_last_time()
         self.when_editor_opened_with_period("1 Jan 2010", "2 Jan 2010")
-        self.view.set_show_period.assert_called_with(False)
+        self.view.set_show_period.assert_called_with(True)
 
 
 class describe_event_editor__time_fields(EventEditorTestCase):
