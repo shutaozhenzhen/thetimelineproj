@@ -65,7 +65,7 @@ class EventEditor(object):
 
     def _set_values(self, start, end, event):
         self.event = event
-        self.opened_from_menu = self.event is None
+        self.opened_from_menu = self.event is None and start is None
         if self.event is not None:
             self.start = self.event.get_time_period().start_time
             self.end = self.event.get_time_period().end_time
