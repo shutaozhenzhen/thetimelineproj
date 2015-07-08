@@ -61,7 +61,7 @@ class EventEditor(object):
     def on_ok(self):
         if self.opened_from_menu:
             self.config.event_editor_show_period = self.view.get_show_period()
-        self.config.event_editor_show_time = self.view.get_show_time()
+            self.config.event_editor_show_time = self.view.get_show_time()
 
     def _set_values(self, start, end, event):
         self.event = event
@@ -102,9 +102,10 @@ class EventEditor(object):
         else:
             if self.opened_from_menu:
                 self.view.set_show_period(self.config.event_editor_show_period)
+                self.view.set_show_time(self.config.event_editor_show_time)
             else:
                 self.view.set_show_period(self.end > self.start)
-            self.view.set_show_time(self.config.event_editor_show_time)
+                self.view.set_show_time(self._event_has_nonzero_time())
         self.view.set_show_add_more(self.event is None)
         self.view.set_fuzzy(self.fuzzy)
         self.view.set_locked(self.locked)

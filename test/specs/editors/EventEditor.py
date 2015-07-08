@@ -152,7 +152,7 @@ class describe_event_editor__time_fields(EventEditorTestCase):
     def test_are_not_shown_if_not_shown_previous_time(self):
         self.when_show_time_not_used_last_time()
         self.when_editor_opened_with_time("1 Jan 2010 15:30")
-        self.view.set_show_time.assert_called_with(False)
+        self.view.set_show_time.assert_called_with(True)
 
 
 class describe_event_editor__fuzzy_checkbox(EventEditorTestCase):
