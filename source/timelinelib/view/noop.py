@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.view.inputhandler import InputHandler
+from timelinelib.wxgui.canvas.inputhandler import InputHandler
 
 
 # Used by Sizer and Mover classes to detect when to go into action
