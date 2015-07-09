@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.view.scrollbase import ScrollViewInputHandler
+from timelinelib.wxgui.canvas.scrollbase import ScrollViewInputHandler
 
 
 class MoveByDragInputHandler(ScrollViewInputHandler):
