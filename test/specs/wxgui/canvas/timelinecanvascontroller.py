@@ -24,7 +24,9 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
+from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.plugin import factory
+from timelinelib.wxgui.canvas.timelinecanvascontroller import HSCROLL_STEP
 from timelinelib.wxgui.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
@@ -555,3 +557,64 @@ class MockDrawer(object):
         self.draw_timeline = timeline
         self.draw_view_properties = view_properties
         self.draw_config = config
+
+
+class DrawingAreaSpec(UnitTestCase):
+
+    def test_construction_works(self):
+        self.timeline_canvas.SetBackgroundColour.assert_called_with(wx.WHITE)
+        self.timeline_canvas.SetBackgroundStyle.assert_called_with(wx.BG_STYLE_CUSTOM)
+        self.timeline_canvas.set_default_cursor.assert_called()
+        self.timeline_canvas.Disable.assert_called()
+        self.timeline_canvas.edit_ends.assert_called()
+
+    def test_get_drawer_returns_default_drawing_algorithm(self):
+        self.assertEqual(self.drawing_algorithm, self.controller.get_drawer())
+
+    def test_get_timeline_returns_given_null_timeline(self):
+        self.controller.set_timeline(None)
+        self.assertEqual(None, self.controller.get_timeline())
+
+    def test_get_timeline_returns_given_nonnull_timeline(self):
+        db = MemoryDB()
+        self.controller.set_timeline(db)
+        self.assertEqual(db, self.controller.get_timeline())
+
+    def test_scroll_horizontal_down_increases_scroll_amount(self):
+        self.when_scrolling_down_with(1)
+        self.assertEqual(HSCROLL_STEP, self.controller.view_properties.hscroll_amount)
+
+    def test_scroll_horizontal_up_decreases_scroll_amount(self):
+        self.when_scrolling_down_with(2)
+        self.when_scrolling_up_with(1)
+        self.assertEqual(HSCROLL_STEP, self.controller.view_properties.hscroll_amount)
+
+    def test_scroll_horizontal_amount_always_ge_zero(self):
+        self.when_scrolling_down_with(2)
+        self.when_scrolling_up_with(4)
+        self.assertEqual(0, self.controller.view_properties.hscroll_amount)
+
+    def when_scrolling_down_with(self, amount):
+        for _ in xrange(amount):
+            self.when_mouse_wheel_moved(-1)
+
+    def when_scrolling_up_with(self, amount):
+        for _ in xrange(amount):
+            self.when_mouse_wheel_moved(1)
+
+    def when_mouse_wheel_moved(self, rotation):
+        self.controller.mouse_wheel_moved(rotation, True, True, False, 0)
+
+    def setUp(self):
+        self.app = wx.App() # a stored app is needed to create fonts
+        self.timeline_canvas = Mock(TimelineCanvas)
+        status_bar_adapter = Mock(StatusBarAdapter)
+        config = Mock(Config)
+        self.drawing_algorithm = DefaultDrawingAlgorithm()
+        divider_line_slider = Mock(wx.Slider)
+        divider_line_slider.GetValue.return_value = 1
+        fn_handle_db_error = None
+        plugin_factory = factory
+        self.controller = TimelineCanvasController(
+            self.timeline_canvas, status_bar_adapter, config,
+            divider_line_slider, fn_handle_db_error, plugin_factory, drawer=self.drawing_algorithm)
