@@ -20,29 +20,29 @@ import webbrowser
 
 import wx
 
-from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
-from timelinelib.features.experimental.experimentalfeatures import experimental_feature
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
-from timelinelib.wxgui.components.font import Font
+from timelinelib.drawing import get_drawer
 from timelinelib.drawing.viewproperties import ViewProperties
+from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
+from timelinelib.features.experimental.experimentalfeatures import experimental_feature
 from timelinelib.monitoring import monitoring
+from timelinelib.plugin.factory import EVENTBOX_DRAWER
+from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
+from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.utilities.encodings import to_unicode
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
 from timelinelib.utils import ex_msg
 from timelinelib.view.move import MoveByDragInputHandler
-from timelinelib.view.noop import NoOpInputHandler
 from timelinelib.view.periodevent import CreatePeriodEventByDragInputHandler
 from timelinelib.view.resize import ResizeByDragInputHandler
 from timelinelib.view.scrolldrag import ScrollByDragInputHandler
 from timelinelib.view.zoom import ZoomByDragInputHandler
-from timelinelib.drawing import get_drawer
-from timelinelib.plugin.factory import EVENTBOX_DRAWER
-from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
-from timelinelib.utilities.encodings import to_unicode
+from timelinelib.wxgui.canvas.noop import NoOpInputHandler
+from timelinelib.wxgui.components.font import Font
 
 
 # The width in pixels of the vertical scroll zones.
