@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.editors.duplicateevent import DuplicateEventEditor
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventcontroller import DuplicateEventController
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import _set_focus_and_select
@@ -31,7 +31,7 @@ class DuplicateEventDialog(wx.Dialog):
     def __init__(self, parent, db, event):
         wx.Dialog.__init__(self, parent, title=_("Duplicate Event"))
         self._create_gui(db.get_time_type().get_duplicate_functions())
-        self.controller = DuplicateEventEditor(self, db, event)
+        self.controller = DuplicateEventController(self, db, event)
 
     def set_count(self, count):
         self.sc_count.SetValue(count)

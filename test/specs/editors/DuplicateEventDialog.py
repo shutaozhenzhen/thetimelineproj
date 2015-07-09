@@ -22,12 +22,12 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
 from timelinelib.data import TimePeriod
 from timelinelib.db.exceptions import TimelineIOError
-from timelinelib.editors.duplicateevent import BACKWARD
-from timelinelib.editors.duplicateevent import BOTH
-from timelinelib.editors.duplicateevent import DuplicateEventEditor
-from timelinelib.editors.duplicateevent import FORWARD
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventcontroller import BACKWARD
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventcontroller import BOTH
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventcontroller import DuplicateEventController
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventcontroller import FORWARD
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.wxgui.dialogs.duplicateevent import DuplicateEventDialog
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateventdialog import DuplicateEventDialog
 from timelinetest import UnitTestCase
 import timelinelib.calendar.gregorian as gregorian
 
@@ -35,7 +35,7 @@ import timelinelib.calendar.gregorian as gregorian
 class duplicate_event_dialog_spec_base(UnitTestCase):
 
     def setUp(self):
-        self.controller = DuplicateEventEditor(
+        self.controller = DuplicateEventController(
             self._create_view_mock(),
             self._create_db_mock(),
             self._create_event())
