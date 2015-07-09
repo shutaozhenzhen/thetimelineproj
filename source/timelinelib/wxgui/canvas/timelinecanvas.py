@@ -18,8 +18,8 @@
 
 import wx
 
-from timelinelib.view.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.plugin import factory
+from timelinelib.wxgui.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.dialogs.duplicateevent import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.eventeditor import open_create_event_editor
 from timelinelib.wxgui.dialogs.eventeditor import open_event_editor_for
