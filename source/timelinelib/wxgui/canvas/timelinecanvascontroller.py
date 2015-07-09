@@ -36,10 +36,10 @@ from timelinelib.utilities.encodings import to_unicode
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
 from timelinelib.utils import ex_msg
-from timelinelib.view.move import MoveByDragInputHandler
 from timelinelib.view.periodevent import CreatePeriodEventByDragInputHandler
 from timelinelib.view.resize import ResizeByDragInputHandler
 from timelinelib.view.scrolldrag import ScrollByDragInputHandler
+from timelinelib.wxgui.canvas.move import MoveByDragInputHandler
 from timelinelib.wxgui.canvas.noop import NoOpInputHandler
 from timelinelib.wxgui.canvas.zoom import ZoomByDragInputHandler
 from timelinelib.wxgui.components.font import Font
