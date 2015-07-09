@@ -24,7 +24,7 @@ BACKWARD = 1
 BOTH = 2
 
 
-class DuplicateEventEditor(object):
+class DuplicateEventController(object):
 
     def __init__(self, view, db, event):
         self.view = view
