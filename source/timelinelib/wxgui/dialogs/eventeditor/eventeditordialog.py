@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
-from timelinelib.editors.event import EventEditor
+from timelinelib.wxgui.dialogs.eventeditor.eventeditorcontroller import EventEditorController
 from timelinelib.editors.propertyeditors.descriptioneditor import DescriptionEditor
 from timelinelib.editors.propertyeditors.progresseditor import ProgressEditor
 from timelinelib.editors.propertyeditors.hyperlinkeditor import HyperlinkEditor
@@ -49,7 +49,7 @@ class EventEditorDialog(wx.Dialog):
         dialog_style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         wx.Dialog.__init__(self, parent, title=title, name="event_editor", style=dialog_style)
         self._create_gui()
-        self.controller = EventEditor(self, config)
+        self.controller = EventEditorController(self, config)
         self.controller.edit(timeline.get_time_type(), DbWrapperEventRepository(timeline), timeline, start, end, event)
         self._set_focus()
 

@@ -22,7 +22,7 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.data import Container
 from timelinelib.editors.container import ContainerEditor
 from timelinelib.repositories.interface import EventRepository
-from timelinelib.wxgui.dialogs.eventeditor import ContainerEditorDialog
+from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import ContainerEditorDialog
 from timelinetest import UnitTestCase
 
 
@@ -33,7 +33,7 @@ class ContainerEditorTestCase(UnitTestCase):
         self.event_repository = Mock(EventRepository)
         self.db = MemoryDB()
         start = self.time("2000-01-03 10:01:01")
-        end   = self.time("2000-01-03 10:01:01")
+        end = self.time("2000-01-03 10:01:01")
         self.container = Container(self.db.get_time_type(), start, end, "Container1")
 
     def testConstructionWithoutContainer(self):
@@ -51,7 +51,7 @@ class ContainerEditorTestCase(UnitTestCase):
         self.editor.save()
         self.view.get_name.assert_called()
         self.view.get_category.assert_called()
-        self.assertFalse(self.editor.container == None)
+        self.assertFalse(self.editor.container is None)
 
     def given_editor_without_container(self):
         self.editor = ContainerEditor(self.view, self.db, None)
