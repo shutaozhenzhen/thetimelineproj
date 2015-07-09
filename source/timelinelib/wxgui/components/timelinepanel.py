@@ -20,8 +20,8 @@ import wx
 
 from timelinelib.utilities.observer import Listener
 
+from timelinelib.wxgui.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.wxgui.components.messagebar import MessageBar
-from timelinelib.wxgui.components.timelinecanvas import TimelineCanvas
 from timelinelib.wxgui.components.sidebar import Sidebar
 
 
