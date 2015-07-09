@@ -24,8 +24,8 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.plugin import factory
 from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.view.timelinecanvascontroller import HSCROLL_STEP
-from timelinelib.view.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.wxgui.canvas.timelinecanvascontroller import HSCROLL_STEP
+from timelinelib.wxgui.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
 from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
 from timelinetest import UnitTestCase
