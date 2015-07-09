@@ -41,7 +41,7 @@ from timelinelib.wxgui.components.mainpanel import MainPanel
 from timelinelib.wxgui.dialogs.categorieseditor import CategoriesEditor
 from timelinelib.wxgui.dialogs.eraseditor import ErasEditorDialog
 from timelinelib.wxgui.dialogs.duplicateevent import open_duplicate_event_dialog_for_event
-from timelinelib.wxgui.dialogs.eventeditor import open_create_event_editor
+from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_create_event_editor
 from timelinelib.wxgui.dialogs.feedback import show_feedback_dialog
 from timelinelib.wxgui.dialogs.helpbrowser import HelpBrowser
 from timelinelib.wxgui.dialogs.importevents import ImportDialog

@@ -19,10 +19,10 @@
 from mock import Mock, sentinel
 
 from timelinelib.data.db import MemoryDB
-from timelinelib.editors.event import EventEditor
+from timelinelib.wxgui.dialogs.eventeditor.eventeditorcontroller import EventEditorController
 from timelinelib.repositories.interface import EventRepository
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.wxgui.dialogs.eventeditor import EventEditorDialog
+from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import EventEditorDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import an_event_with, human_time_to_gregorian, ObjectWithTruthValue
 from timelinelib.config.dotfile import Config
@@ -65,7 +65,7 @@ class EventEditorTestCase(UnitTestCase):
         self.when_editor_opened_with(None, None, event)
 
     def when_editor_opened_with(self, start, end, event):
-        self.editor = EventEditor(self.view, self.config)
+        self.editor = EventEditorController(self.view, self.config)
         self.editor.edit(GregorianTimeType(), self.event_repository, self.timeline,
                          start, end, event)
 

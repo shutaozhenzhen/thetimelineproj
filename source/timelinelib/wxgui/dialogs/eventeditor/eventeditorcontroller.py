@@ -23,7 +23,7 @@ from timelinelib.data import TimePeriod
 from timelinelib.utils import ex_msg
 
 
-class EventEditor(object):
+class EventEditorController(object):
 
     def __init__(self, view, config):
         self.view = view
