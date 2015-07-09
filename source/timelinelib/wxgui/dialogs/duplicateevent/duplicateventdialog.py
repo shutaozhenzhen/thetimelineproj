@@ -64,12 +64,12 @@ class DuplicateEventDialog(wx.Dialog):
         gui_utils.handle_db_error_in_dialog(self, e)
 
     def handle_date_errors(self, error_count):
-       display_error_message(
+        display_error_message(
             _("%d Events not duplicated due to missing dates.")
             % error_count)
 
     def _create_gui(self, move_period_config):
-        self._move_period_fns = [fn for (label, fn) in move_period_config]
+        self._move_period_fns = [fn for (_, fn) in move_period_config]
         period_list = [label for (label, fn) in move_period_config]
         vbox = wx.BoxSizer(wx.VERTICAL)
         self._create_and_add_sc_count_box(vbox)
@@ -86,8 +86,8 @@ class DuplicateEventDialog(wx.Dialog):
 
     def _create_count_spin_control(self):
         st_count = wx.StaticText(self, label=_("Number of duplicates:"))
-        self.sc_count = wx.SpinCtrl(self, wx.ID_ANY, size=(50,-1))
-        self.sc_count.SetRange(1,999)
+        self.sc_count = wx.SpinCtrl(self, wx.ID_ANY, size=(50, -1))
+        self.sc_count.SetRange(1, 999)
         self.sc_count.SetValue(1)
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(st_count, flag=wx.ALL, border=BORDER)
@@ -98,7 +98,7 @@ class DuplicateEventDialog(wx.Dialog):
         self.rb_period = wx.RadioBox(self, wx.ID_ANY, _("Period"),
                                      wx.DefaultPosition, wx.DefaultSize,
                                      period_list)
-        form.Add(self.rb_period, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        form.Add(self.rb_period, flag=wx.ALL | wx.EXPAND, border=BORDER)
 
     def _create_and_add_sc_frequency_box(self, form):
         sc_frequency_box = self._creat_frequency_spin_control()
@@ -106,8 +106,8 @@ class DuplicateEventDialog(wx.Dialog):
 
     def _creat_frequency_spin_control(self):
         st_frequency = wx.StaticText(self, label=_("Frequency:"))
-        self.sc_frequency = wx.SpinCtrl(self, wx.ID_ANY, size=(50,-1))
-        self.sc_frequency.SetRange(1,999)
+        self.sc_frequency = wx.SpinCtrl(self, wx.ID_ANY, size=(50, -1))
+        self.sc_frequency.SetRange(1, 999)
         self.sc_frequency.SetValue(1)
         hbox = wx.BoxSizer(wx.HORIZONTAL)
         hbox.Add(st_frequency, flag=wx.ALL, border=BORDER)
@@ -118,11 +118,11 @@ class DuplicateEventDialog(wx.Dialog):
         direction_list = [_("Forward"), _("Backward"), _("Both")]
         self.rb_direction = wx.RadioBox(self, wx.ID_ANY, _("Direction"),
                                         choices=direction_list)
-        form.Add(self.rb_direction, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        form.Add(self.rb_direction, flag=wx.ALL | wx.EXPAND, border=BORDER)
 
     def _create_and_add_button_box(self, form):
-        button_box = self.CreateStdDialogButtonSizer(wx.OK|wx.CANCEL)
-        form.Add(button_box, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        button_box = self.CreateStdDialogButtonSizer(wx.OK | wx.CANCEL)
+        form.Add(button_box, flag=wx.ALL | wx.EXPAND, border=BORDER)
         self.Bind(wx.EVT_BUTTON, self._btn_ok_on_click, id=wx.ID_OK)
 
     def _btn_ok_on_click(self, e):
