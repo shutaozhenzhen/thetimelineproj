@@ -44,7 +44,7 @@ class EventEditorController(object):
                 self.view.clear_dialog()
             else:
                 self.view.close()
-        except ValueError, ex:
+        except ValueError:
             pass
 
     def clear(self):
@@ -149,7 +149,7 @@ class EventEditorController(object):
             return self.get_start_from_view()
 
     def _dialog_has_signalled_invalid_input(self, time):
-        return time == None
+        return time is None
 
     def _verify_that_time_has_not_been_changed(self, start, end):
         self._exception_if_start_has_changed(start)
@@ -172,7 +172,7 @@ class EventEditorController(object):
         raise ValueError()
 
     def _save_event(self):
-        if self.event == None:
+        if self.event is None:
             self._create_new_event()
         else:
             self._update_event()
@@ -180,7 +180,7 @@ class EventEditorController(object):
         self._save_event_to_db()
 
     def _update_event(self):
-        container_selected = (self.container != None)
+        container_selected = (self.container is not None)
         if container_selected:
             if self.event.is_subevent():
                 if self.event.container == self.container:
@@ -214,7 +214,7 @@ class EventEditorController(object):
         self.container.register_subevent(self.event)
 
     def _create_new_event(self):
-        if self.container != None:
+        if self.container is not None:
             self._create_subevent()
         else:
             self.event = Event(self.time_type, self.start, self.end, self.name,
@@ -240,12 +240,12 @@ class EventEditorController(object):
         self._save_container_to_db()
 
     def _validate_and_save_start(self, start):
-        if start == None:
+        if start is None:
             raise ValueError()
         return start
 
     def _validate_and_save_end(self, end):
-        if end == None:
+        if end is None:
             raise ValueError()
         if self.ends_today:
             end_time = self.time_type.now()
