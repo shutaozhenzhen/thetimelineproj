@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.view.periodbase import SelectPeriodByDragInputHandler
+from timelinelib.wxgui.canvas.periodbase import SelectPeriodByDragInputHandler
 
 
 class ZoomByDragInputHandler(SelectPeriodByDragInputHandler):

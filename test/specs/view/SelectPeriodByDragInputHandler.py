@@ -21,7 +21,7 @@ import mock
 from timelinelib.calendar.gregorian import from_date
 from timelinelib.dataimport.tutorial import TutorialTimelineCreator
 from timelinelib.time.timeline import Time
-from timelinelib.view.periodbase import SelectPeriodByDragInputHandler
+from timelinelib.wxgui.canvas.periodbase import SelectPeriodByDragInputHandler
 from timelinetest import UnitTestCase
 
 
