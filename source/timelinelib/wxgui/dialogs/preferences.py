@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.config.preferences import PreferencesEditor
 from timelinelib.wxgui.utils import BORDER
-from timelinelib.wxgui.dialogs.eventeditortabselection import SelectTabOrderDialog
+from timelinelib.wxgui.dialogs.eventeditor.eventeditortabselectiondialog import SelectTabOrderDialog
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 
 
