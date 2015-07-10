@@ -21,7 +21,7 @@ from timelinelib.wxgui.components.font import edit_font_data
 from timelinelib.wxgui.components.font import deserialize_font
 
 
-class PreferencesEditor(object):
+class PreferencesController(object):
 
     def __init__(self, dialog, config):
         self.dialog = dialog
