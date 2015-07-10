@@ -27,7 +27,7 @@ class DuplicateShortcut(Exception):
     pass
 
 
-class ShortcutsEditor(object):
+class ShortcutsEditorController(object):
     def __init__(self, view, shortcut_config):
         self.view = view
         self.shortcut_config = shortcut_config

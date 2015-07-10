@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.editors.shortcuts import ShortcutsEditor
+from timelinelib.wxgui.dialogs.shortcutseditor.shortcutseditorcontroller import ShortcutsEditorController
 from timelinelib.wxgui.utils import PopupTextWindow
 
 
@@ -75,7 +75,7 @@ class ShortcutsEditorDialog(ShortcutsGuiCreator):
 
     def __init__(self, parent, shortcut_config):
         ShortcutsGuiCreator.__init__(self, parent)
-        self.controller = ShortcutsEditor(self, shortcut_config)
+        self.controller = ShortcutsEditorController(self, shortcut_config)
 
     #
     # Controller API
