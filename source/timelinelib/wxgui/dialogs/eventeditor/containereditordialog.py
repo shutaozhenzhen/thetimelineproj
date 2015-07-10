@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.eventeditor.containereditorcontroller import ContainerEditor
+from timelinelib.wxgui.dialogs.eventeditor.containereditorcontroller import ContainerEditorController
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_error_message
@@ -75,7 +75,7 @@ class ContainerEditorControllerApi(object):
 
     def __init__(self, db, container):
         self._bind_events()
-        self.controller = ContainerEditor(self, db, container)
+        self.controller = ContainerEditorController(self, db, container)
 
     def set_name(self, name):
         self.txt_name.SetValue(name)
