@@ -61,15 +61,15 @@ class ImportDialog(wx.Dialog):
         self._preview_text = FeedbackText(self, size=(300, 70))
 
     def _create_buttons(self):
-        self._buttons = self.CreateStdDialogButtonSizer(wx.OK|wx.CANCEL)
+        self._buttons = self.CreateStdDialogButtonSizer(wx.OK | wx.CANCEL)
         self.Bind(wx.EVT_BUTTON, self._on_button_ok_clicked, id=wx.ID_OK)
 
     def _layout_components(self):
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self._header, flag=wx.ALL|wx.EXPAND, border=BORDER)
-        sizer.Add(self._file_chooser, flag=wx.ALL|wx.EXPAND, border=BORDER)
-        sizer.Add(self._preview_text, flag=wx.ALL|wx.EXPAND, border=BORDER)
-        sizer.Add(self._buttons, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        sizer.Add(self._header, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        sizer.Add(self._file_chooser, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        sizer.Add(self._preview_text, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        sizer.Add(self._buttons, flag=wx.ALL | wx.EXPAND, border=BORDER)
         self.SetSizerAndFit(sizer)
 
     def _show_preview(self):
