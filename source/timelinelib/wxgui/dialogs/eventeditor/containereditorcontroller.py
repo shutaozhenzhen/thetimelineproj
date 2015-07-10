@@ -41,7 +41,7 @@ class ContainerEditor(object):
         self.view = view
         self.db = db
         self.container = container
-        self.container_exists = (self.container != None)
+        self.container_exists = (self.container is not None)
         if self.container_exists:
             self.name = self.container.get_text()
             self.category = self.container.get_category()
