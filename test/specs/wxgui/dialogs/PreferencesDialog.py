@@ -19,8 +19,8 @@
 from mock import Mock
 
 from timelinelib.config.dotfile import Config
-from timelinelib.config.preferences import PreferencesEditor
-from timelinelib.wxgui.dialogs.preferences import PreferencesDialog
+from timelinelib.wxgui.dialogs.preferences.preferencescontroller import PreferencesEditor
+from timelinelib.wxgui.dialogs.preferences.preferencesdialog import PreferencesDialog
 from timelinetest import UnitTestCase
 
 
