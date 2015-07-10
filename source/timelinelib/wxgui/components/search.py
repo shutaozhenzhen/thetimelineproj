@@ -21,7 +21,7 @@ import os.path
 import wx
 
 from timelinelib.config.paths import ICONS_DIR
-from timelinelib.wxgui.dialogs.eventlist import EventListDialog 
+from timelinelib.wxgui.dialogs.eventlist.eventlistdialog import EventListDialog
 
 class GuiCreator(object):
 
