@@ -22,7 +22,7 @@ import wx.lib.agw.customtreectrl as customtreectrl
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
-from timelinelib.wxgui.dialogs.categoryeditor import WxCategoryEdtiorDialog
+from timelinelib.wxgui.dialogs.categoryeditors.categoryeditordialog import WxCategoryEdtiorDialog
 import timelinelib.wxgui.utils as gui_utils
 
 
