@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.data import sort_categories
 from timelinelib.db.exceptions import TimelineIOError
-from timelinelib.wxgui.dialogs.categorieseditor import CategoriesEditor
+from timelinelib.wxgui.dialogs.categoryeditors.categorieseditordialog import CategoriesEditor
 from timelinelib.wxgui.dialogs.categoryeditors.categoryeditordialog import WxCategoryEdtiorDialog
 import timelinelib.wxgui.utils as gui_utils
 
