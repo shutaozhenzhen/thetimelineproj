@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.wxgui.dialogs.export.exportcontroller import ExportDialogController
 from timelinelib.wxgui.utils import BORDER
-from timelinelib.wxgui.dialogs.fieldselection import FieldSelectionDialog
+from timelinelib.wxgui.dialogs.export.fieldselectiondialog import FieldSelectionDialog
 from timelinelib.wxgui.utils import display_information_message
 
 
