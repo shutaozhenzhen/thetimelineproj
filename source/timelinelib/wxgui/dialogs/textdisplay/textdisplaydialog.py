@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_error_message
-from timelinelib.editors.textdisplay import TextDisplayEditor
+from timelinelib.wxgui.dialogs.textdisplay.textdisplaycontroller import TextDisplayEditor
 
 
 class TextDisplayDialogGui(wx.Dialog):
