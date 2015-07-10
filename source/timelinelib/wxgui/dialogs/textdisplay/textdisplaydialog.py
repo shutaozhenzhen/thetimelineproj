@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_error_message
-from timelinelib.wxgui.dialogs.textdisplay.textdisplaycontroller import TextDisplayEditor
+from timelinelib.wxgui.dialogs.textdisplay.textdisplaycontroller import TextDisplayController
 
 
 class TextDisplayDialogGui(wx.Dialog):
@@ -70,7 +70,7 @@ class TextDisplayDialog(TextDisplayDialogGui):
     def __init__(self, title, text, parent=None):
         TextDisplayDialogGui.__init__(self, title, parent)
         self._bind_events()
-        self.controller = TextDisplayEditor(self, text)
+        self.controller = TextDisplayController(self, text)
         self.controller.initialize()
 
     def set_text(self, text):
