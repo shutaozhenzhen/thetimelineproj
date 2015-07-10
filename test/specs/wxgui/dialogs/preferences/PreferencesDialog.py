@@ -19,7 +19,7 @@
 from mock import Mock
 
 from timelinelib.config.dotfile import Config
-from timelinelib.wxgui.dialogs.preferences.preferencescontroller import PreferencesEditor
+from timelinelib.wxgui.dialogs.preferences.preferencescontroller import PreferencesController
 from timelinelib.wxgui.dialogs.preferences.preferencesdialog import PreferencesDialog
 from timelinetest import UnitTestCase
 
@@ -31,7 +31,7 @@ class PreferencesDialogSpec(UnitTestCase):
         self.config = Mock(Config)
         self.config.week_start = "monday"
         self.config.get_experimental_features.return_value = ""
-        self.controller = PreferencesEditor(self.preferences_dialog, self.config)
+        self.controller = PreferencesController(self.preferences_dialog, self.config)
 
     def test_opens_with_inertial_scrolling_if_set_in_config(self):
         self.config.get_use_inertial_scrolling.return_value = True

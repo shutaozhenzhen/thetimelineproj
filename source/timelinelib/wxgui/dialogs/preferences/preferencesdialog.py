@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.preferences.preferencescontroller import PreferencesEditor
+from timelinelib.wxgui.dialogs.preferences.preferencescontroller import PreferencesController
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.dialogs.eventeditor.eventeditortabselectiondialog import SelectTabOrderDialog
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
@@ -30,7 +30,7 @@ class PreferencesDialog(wx.Dialog):
         self.config = config
         wx.Dialog.__init__(self, parent, title=_("Preferences"))
         self._create_gui()
-        self._controller = PreferencesEditor(self, config)
+        self._controller = PreferencesController(self, config)
         self._controller.initialize_controls()
 
     def set_checkbox_use_inertial_scrolling(self, value):
