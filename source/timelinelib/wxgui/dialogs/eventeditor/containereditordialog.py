@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.editors.container import ContainerEditor
+from timelinelib.wxgui.dialogs.eventeditor.containereditorcontroller import ContainerEditor
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_error_message

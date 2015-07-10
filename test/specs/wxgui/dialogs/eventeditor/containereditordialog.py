@@ -20,7 +20,7 @@ from mock import Mock
 
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Container
-from timelinelib.editors.container import ContainerEditor
+from timelinelib.wxgui.dialogs.eventeditor.containereditorcontroller import ContainerEditor
 from timelinelib.repositories.interface import EventRepository
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import ContainerEditorDialog
 from timelinetest import UnitTestCase
