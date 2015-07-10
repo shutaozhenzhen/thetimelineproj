@@ -35,7 +35,7 @@ class SetCategoryEditorController(object):
             self.view.close()
 
     def _category_is_given(self, category):
-        return category != None
+        return category is not None
 
     def _save_category_in_events(self, category):
         if self.selected_event_ids == []:
@@ -50,11 +50,11 @@ class SetCategoryEditorController(object):
 
     def _save_category_in_events_for_events_without_category(self, category):
         for event in self.timeline.get_all_events():
-            if event.get_category() == None:
+            if event.get_category() is None:
                 event.set_category(category)
 
     def _events_without_category_exists(self):
         for event in self.timeline.get_all_events():
-            if event.category == None:
+            if event.category is None:
                 return True
         return False

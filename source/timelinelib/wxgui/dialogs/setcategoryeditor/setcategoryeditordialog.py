@@ -24,7 +24,7 @@ from timelinelib.wxgui.utils import BORDER
 
 
 class CategoryEditorGuiCreator(object):
-    
+
     def _create_gui(self):
         properties_box = wx.BoxSizer(wx.VERTICAL)
         self._add_input_controls(properties_box)
@@ -35,15 +35,15 @@ class CategoryEditorGuiCreator(object):
 
     def _add_input_controls(self, sizer):
         category_selector = self._create_category_selector()
-        sizer.Add(category_selector, flag=wx.EXPAND|wx.ALL, border=BORDER, proportion=1)
+        sizer.Add(category_selector, flag=wx.EXPAND | wx.ALL, border=BORDER, proportion=1)
 
     def _add_buttons(self, properties_box):
-        button_box = self.CreateStdDialogButtonSizer(wx.OK|wx.CANCEL)
-        properties_box.Add(button_box, flag=wx.EXPAND|wx.ALL, border=BORDER)
+        button_box = self.CreateStdDialogButtonSizer(wx.OK | wx.CANCEL)
+        properties_box.Add(button_box, flag=wx.EXPAND | wx.ALL, border=BORDER)
 
     def _make_sure_title_is_visible(self, sizer):
-        sizer.SetMinSize((270,-1))
-        
+        sizer.SetMinSize((270, -1))
+
     def _bind_handlers(self):
         self.Bind(wx.EVT_CHOICE, self.lst_category.on_choice, self.lst_category)
         self.Bind(wx.EVT_BUTTON, self._btn_ok_on_click, id=wx.ID_OK)
@@ -62,26 +62,26 @@ class CategoryEditorGuiCreator(object):
         grid.Add(label, flag=wx.ALIGN_CENTER_VERTICAL)
         grid.Add(self.lst_category)
         return grid
-        
-        
+
+
 class ApiUsedByController(object):
-    
+
     def get_category(self):
         return self.lst_category.get()
-        
+
     def close(self):
         self.EndModal(wx.ID_OK)
 
     def cancel(self):
         self.EndModal(wx.ID_CANCEL)
-            
-    
+
+
 class SetCategoryEditorDialog(wx.Dialog, CategoryEditorGuiCreator, ApiUsedByController):
-    
+
     def __init__(self, parent, timeline, selected_event_ids=[]):
         title = self._get_title(selected_event_ids)
         wx.Dialog.__init__(self, parent, title=title, name="set_category_editor",
-                           style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.timeline = timeline
         self._create_gui()
         self.controller = SetCategoryEditorController(self, timeline, selected_event_ids)
@@ -94,4 +94,3 @@ class SetCategoryEditorDialog(wx.Dialog, CategoryEditorGuiCreator, ApiUsedByCont
             return _("Set Category on events without category")
         else:
             return _("Set Category on selected events")
-    
