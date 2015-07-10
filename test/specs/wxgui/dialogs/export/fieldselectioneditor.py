@@ -19,7 +19,7 @@
 from mock import Mock
 
 from timelinelib.wxgui.dialogs.export.fieldselectioncontroller import FIELDS
-from timelinelib.wxgui.dialogs.export.fieldselectioncontroller import FieldSelectionDialogController
+from timelinelib.wxgui.dialogs.export.fieldselectioncontroller import FieldSelectionController
 from timelinelib.wxgui.dialogs.export.fieldselectiondialog import FieldSelectionDialog
 from timelinetest import UnitTestCase
 
@@ -30,7 +30,7 @@ class FieldSelectionEditorTestCase(UnitTestCase):
         self.selected_fields = []
         for field in fields:
             self.simulate_select_field(field)
-        return FieldSelectionDialogController(self.view, data, fields)
+        return FieldSelectionController(self.view, data, fields)
 
     def simulate_select_field(self, field):
         if field not in self.selected_fields:
