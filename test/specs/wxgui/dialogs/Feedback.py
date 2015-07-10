@@ -21,7 +21,7 @@ from mock import Mock
 
 from timelinelib.feedback.form import FeedbackForm
 from timelinelib.utilities.encodings import to_unicode
-from timelinelib.wxgui.dialogs.feedback import FeedbackDialog
+from timelinelib.wxgui.dialogs.feedback.feedbackdialog import FeedbackDialog
 from timelinetest import UnitTestCase
 
 
