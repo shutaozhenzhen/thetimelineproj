@@ -47,17 +47,17 @@ class DuplicateEventController(object):
             return self._create_container_duplicates(self.event)
         else:
             return self._create_event_duplicates(self.event)
-    
+
     def _create_container_duplicates(self, container):
         """
         Duplicating a container is a little more complicated than duplicating an ordinary event
         because you have to duplicate all subevents also.
         For each cloned container (period) we calculate the periods of all subevents in this
         container. This makes it possible to create one container and all it's subevents for
-        each container period. 
+        each container period.
         The container must also get e unique id and the subevents has to be rgistered with
         the container.
-        """    
+        """
         periods_with_subperiods, nbr_of_missing_dates = self._repeat_container_period(container)
         events = []
         cid = self.db.get_max_cid()
@@ -71,7 +71,7 @@ class DuplicateEventController(object):
                 event.register_subevent(new_subevent)
         return events, nbr_of_missing_dates
 
-    def _create_event_duplicates(self, event):    
+    def _create_event_duplicates(self, event):
         periods, nbr_of_missing_dates = self._repeat_event_period(event)
         events = []
         for period in periods:
@@ -83,7 +83,7 @@ class DuplicateEventController(object):
         evt.update_period(period.start_time, period.end_time)
         events.append(evt)
         return evt
-        
+
     def _save_duplicates(self, events, nbr_of_missing_dates):
         try:
             self.db.save_events(events)
@@ -92,7 +92,7 @@ class DuplicateEventController(object):
             self.view.close()
         except TimelineIOError, e:
             self.view.handle_db_error(e)
-            
+
     def _repeat_container_period(self, event):
         period = self.event.get_time_period()
         move_period_fn = self.view.get_move_period_fn()
@@ -104,10 +104,10 @@ class DuplicateEventController(object):
         for index in self._calc_indicies(direction, repetitions):
             sub_periods = []
             for subevent in event.get_subevents():
-                sub_period = move_period_fn(subevent.get_time_period(), index*frequency)
+                sub_period = move_period_fn(subevent.get_time_period(), index * frequency)
                 sub_periods.append((subevent, sub_period))
-            new_period = move_period_fn(period, index*frequency)
-            if new_period == None:
+            new_period = move_period_fn(period, index * frequency)
+            if new_period is None:
                 nbr_of_missing_dates += 1
             else:
                 periods_with_subperiods.append((new_period, sub_periods))
@@ -123,7 +123,7 @@ class DuplicateEventController(object):
         nbr_of_missing_dates = 0
         for index in self._calc_indicies(direction, repetitions):
             new_period = move_period_fn(period, index * frequency)
-            if new_period == None:
+            if new_period is None:
                 nbr_of_missing_dates += 1
             else:
                 periods.append(new_period)

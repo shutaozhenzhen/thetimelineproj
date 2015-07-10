@@ -41,7 +41,7 @@ class WxCategoryEdtiorDialog(wx.Dialog):
                 self.parentlistbox.Append(indent + root.name, root)
                 add_tree(subtree, indent + "    ")
         self.parentlistbox.Clear()
-        self.parentlistbox.Append("", None) # No parent
+        self.parentlistbox.Append("", None)  # No parent
         add_tree(tree)
         self.SetSizerAndFit(self.vbox)
 
@@ -117,8 +117,8 @@ class WxCategoryEdtiorDialog(wx.Dialog):
         self.vbox = wx.BoxSizer(wx.VERTICAL)
         field_grid = self._create_field_grid()
         button_box = self._create_button_box()
-        self.vbox.Add(field_grid, flag=wx.ALL|wx.EXPAND, border=BORDER)
-        self.vbox.Add(button_box, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        self.vbox.Add(field_grid, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        self.vbox.Add(button_box, flag=wx.ALL | wx.EXPAND, border=BORDER)
         _set_focus_and_select(self.txt_name)
 
     def _create_field_grid(self):
@@ -142,7 +142,7 @@ class WxCategoryEdtiorDialog(wx.Dialog):
         grid.Add(ctrl)
 
     def _create_button_box(self):
-        button_box = self.CreateStdDialogButtonSizer(wx.OK|wx.CANCEL)
+        button_box = self.CreateStdDialogButtonSizer(wx.OK | wx.CANCEL)
         self.Bind(wx.EVT_BUTTON, self._btn_ok_on_click, id=wx.ID_OK)
         return button_box
 

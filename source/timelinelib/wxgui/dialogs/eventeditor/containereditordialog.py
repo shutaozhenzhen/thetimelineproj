@@ -30,7 +30,7 @@ class StaticContainerEditorDialog(wx.Dialog):
 
     def __init__(self, parent, title, db):
         wx.Dialog.__init__(self, parent, title=title, name="container_editor",
-                           style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.db = db
         self._create_gui()
 
@@ -45,14 +45,14 @@ class StaticContainerEditorDialog(wx.Dialog):
         groupbox = wx.StaticBox(self, wx.ID_ANY, _("Container Properties"))
         box = wx.StaticBoxSizer(groupbox, wx.VERTICAL)
         self._create_properties_groupbox_content(box)
-        sizer.Add(box, flag=wx.EXPAND|wx.ALL, border=BORDER, proportion=1)
+        sizer.Add(box, flag=wx.EXPAND | wx.ALL, border=BORDER, proportion=1)
 
     def _create_properties_groupbox_content(self, sizer):
         grid = wx.FlexGridSizer(4, 2, BORDER, BORDER)
         grid.AddGrowableCol(1)
         self._create_name_textctrl(grid)
         self._create_categories_listbox(grid)
-        sizer.Add(grid, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        sizer.Add(grid, flag=wx.ALL | wx.EXPAND, border=BORDER)
 
     def _create_name_textctrl(self, grid):
         self.txt_name = wx.TextCtrl(self, wx.ID_ANY, name="name")
@@ -67,8 +67,8 @@ class StaticContainerEditorDialog(wx.Dialog):
         grid.Add(self.lst_category)
 
     def _create_buttons(self, properties_box):
-        button_box = self.CreateStdDialogButtonSizer(wx.OK|wx.CANCEL)
-        properties_box.Add(button_box, flag=wx.EXPAND|wx.ALL, border=BORDER)
+        button_box = self.CreateStdDialogButtonSizer(wx.OK | wx.CANCEL)
+        properties_box.Add(button_box, flag=wx.EXPAND | wx.ALL, border=BORDER)
 
 
 class ContainerEditorControllerApi(object):
