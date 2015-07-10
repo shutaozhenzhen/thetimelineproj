@@ -23,7 +23,7 @@ import timelinelib.wxgui.utils as gui_utils
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import _set_focus_and_select
 from timelinelib.wxgui.utils import BORDER
-from timelinelib.editors.category import CategoryEditor
+from timelinelib.wxgui.dialogs.categoryeditors.categoryeditorcontroller import CategoryEditorController
 from timelinelib.repositories.dbwrapper import DbWrapperCategoryRepository
 
 
@@ -32,7 +32,7 @@ class WxCategoryEdtiorDialog(wx.Dialog):
     def __init__(self, parent, title, timeline, category):
         wx.Dialog.__init__(self, parent, title=title)
         self._create_gui()
-        self.controller = CategoryEditor(self)
+        self.controller = CategoryEditorController(self)
         self.controller.edit(category, DbWrapperCategoryRepository(timeline))
 
     def set_category_tree(self, tree):
