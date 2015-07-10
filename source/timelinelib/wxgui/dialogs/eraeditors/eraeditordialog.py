@@ -20,7 +20,7 @@ import wx
 import wx.lib.colourselect as colourselect
 
 import timelinelib.wxgui.utils as guiutils
-from timelinelib.editors.era import EraEditorDialogController
+from timelinelib.wxgui.dialogs.eraeditors.eraeditorcontroller import EraEditorDialogController
 from timelinelib.wxgui.utils import BORDER
 
 

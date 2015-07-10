@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.wxgui.utils import BORDER
-from timelinelib.editors.eras import ErasEditorController
+from timelinelib.wxgui.dialogs.eraeditors.eraseditorcontroller import ErasEditorController
 
 
 STYLE = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
