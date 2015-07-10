@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.editors.fieldselection import FIELDS
+from timelinelib.wxgui.dialogs.export.fieldselection import FIELDS
 
 
 CSV_FILE = _("CSV File")
