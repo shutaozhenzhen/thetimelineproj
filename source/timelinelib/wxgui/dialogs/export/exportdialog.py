@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.export.exportcontroller import ExportDialogController
+from timelinelib.wxgui.dialogs.export.exportcontroller import ExportController
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.dialogs.export.fieldselectiondialog import FieldSelectionDialog
 from timelinelib.wxgui.utils import display_information_message
@@ -167,4 +167,4 @@ class ExportDialog(ExportDialogGuiCreator, ExportDialogControllerApi):
 
     def __init__(self, parent, title):
         ExportDialogGuiCreator.__init__(self, parent, title=title)
-        self.controller = ExportDialogController(self)
+        self.controller = ExportController(self)

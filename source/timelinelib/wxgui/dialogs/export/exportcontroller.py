@@ -61,7 +61,7 @@ class ExportDialogApi(object):
         return self.category_fields
 
 
-class ExportDialogController(ExportDialogApi):
+class ExportController(ExportDialogApi):
     """
     This class is the dialog controller.
 
