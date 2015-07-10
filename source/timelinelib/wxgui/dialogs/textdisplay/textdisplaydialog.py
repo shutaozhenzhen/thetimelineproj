@@ -49,8 +49,8 @@ class TextDisplayDialogGui(wx.Dialog):
 
     def _create_vbox(self, text, btn_box):
         vbox = wx.BoxSizer(wx.VERTICAL)
-        vbox.Add(text, flag=wx.ALL|wx.EXPAND, border=BORDER)
-        vbox.Add(btn_box, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        vbox.Add(text, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        vbox.Add(btn_box, flag=wx.ALL | wx.EXPAND, border=BORDER)
         return vbox
 
     def _create_copy_btn(self):
@@ -93,6 +93,6 @@ class TextDisplayDialog(TextDisplayDialogGui):
         obj = wx.TextDataObject(self.controller.get_text())
         wx.TheClipboard.SetData(obj)
         wx.TheClipboard.Close()
-        
+
     def _btn_close_on_click(self, evt):
         self.EndModal(wx.ID_OK)
