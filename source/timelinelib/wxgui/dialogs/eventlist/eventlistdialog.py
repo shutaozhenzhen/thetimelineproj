@@ -25,18 +25,18 @@ class EventListDialog(wx.Dialog):
 
     def __init__(self, parent, event_list):
         wx.Dialog.__init__(self, parent, title=_("Found Events"), name="event_list",
-                           style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.event_list = event_list
         self._create_gui()
         self._bind()
 
     def get_selected_index(self):
         return self.lb_eventlist.GetSelection()
-        
+
     def _create_gui(self):
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self._create_listbox(), flag=wx.ALL|wx.EXPAND, border=BORDER, proportion=1)
-        sizer.Add(self._create_buttons(), flag=wx.ALL|wx.EXPAND, border=BORDER)
+        sizer.Add(self._create_listbox(), flag=wx.ALL | wx.EXPAND, border=BORDER, proportion=1)
+        sizer.Add(self._create_buttons(), flag=wx.ALL | wx.EXPAND, border=BORDER)
         self.SetSizerAndFit(sizer)
 
     def _create_listbox(self):
@@ -44,8 +44,8 @@ class EventListDialog(wx.Dialog):
         return self.lb_eventlist
 
     def _create_buttons(self):
-        return self.CreateStdDialogButtonSizer(wx.OK|wx.CANCEL)
-        
+        return self.CreateStdDialogButtonSizer(wx.OK | wx.CANCEL)
+
     def _bind(self):
         self.Bind(wx.EVT_BUTTON, self._btn_ok_on_click, id=wx.ID_OK)
         self.Bind(wx.EVT_SIZE, self._on_size, self)
@@ -57,6 +57,6 @@ class EventListDialog(wx.Dialog):
 
     def _on_size(self, evt):
         self.Layout()
-        
+
     def _window_on_close(self, e):
         self.EndModal(wx.ID_CANCEL)
