@@ -237,7 +237,7 @@ class GuiCreator(object):
         self.Bind(wx.EVT_MENU, self._mnu_file_exit_on_click, id=wx.ID_EXIT)
 
     def _create_edit_menu(self, main_menu_bar):
-        from timelinelib.wxgui.dialogs.categoryfind import CategoryFindDialog
+        from timelinelib.wxgui.dialogs.findcategory.findcategorydialog import CategoryFindDialog
 
         def create_category_find_dialog():
             return CategoryFindDialog(self, self.timeline)
