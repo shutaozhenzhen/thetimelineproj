@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.textdisplay.textdisplaycontroller import TextDisplayEditor
+from timelinelib.wxgui.dialogs.textdisplay.textdisplaycontroller import TextDisplayController
 from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialog import TextDisplayDialog
 from timelinetest import UnitTestCase
 
@@ -41,7 +41,7 @@ class TextDisplayEditorSpec(UnitTestCase):
     def setUp(self):
         self.text = "buu"
         self.view = Mock(TextDisplayDialog)
-        self.editor = TextDisplayEditor(self.view, self.text)
+        self.editor = TextDisplayController(self.view, self.text)
 
 
 class WhenDialogTextIs(object):

@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class TextDisplayEditor(object):
+class TextDisplayController(object):
 
     def __init__(self, view, text=""):
         self.view = view
