@@ -30,7 +30,7 @@ from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.components.feedbackbutton import FeedbackButton
-from timelinelib.wxgui.dialogs.containereditor import ContainerEditorDialog
+from timelinelib.wxgui.dialogs.eventeditor.containereditor import ContainerEditorDialog
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import _set_focus_and_select
