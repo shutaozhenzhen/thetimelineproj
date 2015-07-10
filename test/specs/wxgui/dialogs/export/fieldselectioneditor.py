@@ -18,8 +18,8 @@
 
 from mock import Mock
 
-from timelinelib.editors.fieldselection import FIELDS
-from timelinelib.editors.fieldselection import FieldSelectionDialogController
+from timelinelib.wxgui.dialogs.export.fieldselection import FIELDS
+from timelinelib.wxgui.dialogs.export.fieldselection import FieldSelectionDialogController
 from timelinelib.wxgui.dialogs.fieldselection import FieldSelectionDialog
 from timelinetest import UnitTestCase
 
