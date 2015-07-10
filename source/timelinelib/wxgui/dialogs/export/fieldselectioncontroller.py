@@ -38,7 +38,7 @@ class FieldSelectionDialogApi(object):
         return [field[0] for field in self.view.get_fields() if field[1] is True]
 
 
-class FieldSelectionDialogController(FieldSelectionDialogApi):
+class FieldSelectionController(FieldSelectionDialogApi):
 
     def __init__(self, view, data, fields):
         FieldSelectionDialogApi.__init__(self)

@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.wxgui.utils import BORDER
-from timelinelib.wxgui.dialogs.export.fieldselectioncontroller import FieldSelectionDialogController
+from timelinelib.wxgui.dialogs.export.fieldselectioncontroller import FieldSelectionController
 
 
 class FieldSelectionDialogControllerApi(object):
@@ -76,7 +76,7 @@ class FieldSelectionDialog(FieldSelectionDialogGuiCreator, FieldSelectionDialogC
 
     def __init__(self, parent, title, data, fields):
         FieldSelectionDialogGuiCreator.__init__(self, parent, title=title)
-        self.controller = FieldSelectionDialogController(self, data, fields)
+        self.controller = FieldSelectionController(self, data, fields)
 
     def get_selected_fields(self):
         return self.controller.get_selected_fields()
