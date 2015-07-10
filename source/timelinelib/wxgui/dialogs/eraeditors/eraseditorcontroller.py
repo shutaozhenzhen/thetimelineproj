@@ -19,7 +19,7 @@
 import time
 import wx
 
-from timelinelib.wxgui.dialogs.eraeditor import EraEditorDialog
+from timelinelib.wxgui.dialogs.eraeditors.eraeditordialog import EraEditorDialog
 from timelinelib.data.era import Era
 
 
