@@ -56,7 +56,7 @@ class TimeEditorDialog(wx.Dialog):
         self.time_picker = time_picker_for(self.time_type)(self, config=self.config)
 
     def _create_buttons(self):
-        self.button_box = self.CreateStdDialogButtonSizer(wx.OK|wx.CANCEL)
+        self.button_box = self.CreateStdDialogButtonSizer(wx.OK | wx.CANCEL)
         self.Bind(wx.EVT_BUTTON, self._ok_button_on_click, id=wx.ID_OK)
 
     def _ok_button_on_click(self, e):
@@ -74,19 +74,19 @@ class TimeEditorDialog(wx.Dialog):
             display_error_message(ex_msg(ex))
         else:
             self.EndModal(wx.ID_OK)
-        
+
     def _layout_components(self):
         vbox = wx.BoxSizer(wx.VERTICAL)
         if self._display_checkbox_show_time():
-            vbox.Add(self.checkbox, flag=wx.LEFT|wx.TOP|wx.RIGHT,
+            vbox.Add(self.checkbox, flag=wx.LEFT | wx.TOP | wx.RIGHT,
                      border=BORDER, proportion=1)
         if self._display_checkbox_show_time():
-            flag = wx.EXPAND|wx.RIGHT|wx.BOTTOM|wx.LEFT
+            flag = wx.EXPAND | wx.RIGHT | wx.BOTTOM | wx.LEFT
         else:
-            flag = wx.EXPAND|wx.RIGHT|wx.TOP|wx.BOTTOM|wx.LEFT
+            flag = wx.EXPAND | wx.RIGHT | wx.TOP | wx.BOTTOM | wx.LEFT
         vbox.Add(self.time_picker, flag=flag,
                  border=BORDER, proportion=1)
-        vbox.Add(self.button_box, flag=wx.ALL|wx.EXPAND, border=BORDER)
+        vbox.Add(self.button_box, flag=wx.ALL | wx.EXPAND, border=BORDER)
         self.SetSizerAndFit(vbox)
 
     def _display_checkbox_show_time(self):
