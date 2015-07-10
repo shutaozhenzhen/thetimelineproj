@@ -38,7 +38,7 @@ from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.components.mainpanel import MainPanel
-from timelinelib.wxgui.dialogs.categorieseditor import CategoriesEditor
+from timelinelib.wxgui.dialogs.categoryeditors.categorieseditordialog import CategoriesEditor
 from timelinelib.wxgui.dialogs.eraeditors.eraseditordialog import ErasEditorDialog
 from timelinelib.wxgui.dialogs.duplicateevent.duplicateventdialog import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_create_event_editor
