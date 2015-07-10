@@ -20,7 +20,7 @@ from timelinelib.data import Container
 from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
 
 
-class ContainerEditor(object):
+class ContainerEditorController(object):
     """
     This controller is responsible for two things:
       1. creating a new Container event
