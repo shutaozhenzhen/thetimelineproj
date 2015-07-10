@@ -22,7 +22,7 @@ import wx
 class SidebarProxy():
     
     def __init__(self, creator):
-        from timelinelib.wxgui.dialogs.mainframe import MainFrame
+        from timelinelib.wxgui.dialogs.mainframe.mainframe import MainFrame
         if isinstance(creator, MainFrame):
             self.sidebar = creator.main_panel.timeline_panel.sidebar
         

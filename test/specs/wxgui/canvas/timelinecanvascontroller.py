@@ -29,7 +29,7 @@ from timelinelib.plugin import factory
 from timelinelib.wxgui.canvas.timelinecanvascontroller import HSCROLL_STEP
 from timelinelib.wxgui.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
-from timelinelib.wxgui.dialogs.mainframe import StatusBarAdapter
+from timelinelib.wxgui.dialogs.mainframe.mainframe import StatusBarAdapter
 from timelinetest import UnitTestCase
 from timelinetest.utils import gregorian_period
 from timelinetest.utils import human_time_to_gregorian

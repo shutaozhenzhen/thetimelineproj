@@ -54,7 +54,7 @@ class SvgExporter(PluginBase):
         return _("Export to SVG...")
 
     def wxid(self):
-        from timelinelib.wxgui.dialogs.mainframe import ID_EXPORT_SVG
+        from timelinelib.wxgui.dialogs.mainframe.mainframe import ID_EXPORT_SVG
         return ID_EXPORT_SVG
 
     def run(self, main_frame):

@@ -37,7 +37,7 @@ class ListExporter(PluginBase):
         return _("Export to Listbox...")
 
 #     def wxid(self):
-#         from timelinelib.wxgui.dialogs.mainframe import ID_EXPORT
+#         from timelinelib.wxgui.dialogs.mainframe.mainframe import ID_EXPORT
 #         return ID_EXPORT
 
     def run(self, main_frame):
