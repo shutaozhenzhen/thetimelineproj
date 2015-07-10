@@ -19,7 +19,7 @@
 from timelinelib.wxgui.utils import display_error_message
 
 
-class SetCategoryEditor(object):
+class SetCategoryEditorController(object):
 
     def __init__(self, view, timeline, selected_event_ids=[]):
         self.view = view

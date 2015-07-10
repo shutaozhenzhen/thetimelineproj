@@ -20,7 +20,7 @@ from mock import Mock
 
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.event import Event
-from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditorcontroller import SetCategoryEditor
+from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditorcontroller import SetCategoryEditorController
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditordialog import SetCategoryEditorDialog
 from timelinetest import UnitTestCase
@@ -37,7 +37,7 @@ class set_category_editor_spec_base(UnitTestCase):
         self._create_event1()
         self._create_event2()
         self._create_db_mock()
-        self.controller = SetCategoryEditor(
+        self.controller = SetCategoryEditorController(
             self._create_view_mock(), self.db, view_properties)
 
     def _create_view_mock(self):
