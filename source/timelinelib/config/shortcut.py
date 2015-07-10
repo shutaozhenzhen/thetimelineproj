@@ -30,7 +30,7 @@ cfgid is the ID used in the configuration file associated with a shortcut.
 """
 
 
-import timelinelib.wxgui.dialogs.mainframe as mf
+import timelinelib.wxgui.dialogs.mainframe.mainframe as mf
 
 
 class Metadata(object):

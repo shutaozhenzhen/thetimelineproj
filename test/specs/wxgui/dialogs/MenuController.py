@@ -20,7 +20,7 @@ from mock import Mock
 import wx
 
 from timelinelib.data.db import MemoryDB
-from timelinelib.wxgui.dialogs.mainframe import MenuController
+from timelinelib.wxgui.dialogs.mainframe.mainframe import MenuController
 from timelinetest import UnitTestCase
 
 

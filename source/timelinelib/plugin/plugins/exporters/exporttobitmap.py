@@ -35,7 +35,7 @@ class BitmapExporter(PluginBase):
         return _("Export Current view to Image...")
 
     def wxid(self):
-        from timelinelib.wxgui.dialogs.mainframe import ID_EXPORT
+        from timelinelib.wxgui.dialogs.mainframe.mainframe import ID_EXPORT
         return ID_EXPORT
 
     def run(self, main_frame):
@@ -51,7 +51,7 @@ class MultiBitmapExporter(PluginBase):
         return _("Export Whole Timeline to Images...")
 
     def wxid(self):
-        from timelinelib.wxgui.dialogs.mainframe import ID_EXPORT_ALL
+        from timelinelib.wxgui.dialogs.mainframe.mainframe import ID_EXPORT_ALL
         return ID_EXPORT_ALL
 
     def run(self, main_frame):
