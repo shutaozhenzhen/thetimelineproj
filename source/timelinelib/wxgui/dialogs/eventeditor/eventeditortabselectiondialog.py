@@ -22,7 +22,7 @@ import wx
 
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.config.paths import ICONS_DIR
-from timelinelib.editors.eventeditortabselection import SelectTabOrderDialogController
+from timelinelib.wxgui.dialogs.eventeditor.eventeditortabselectioncontroller import SelectTabOrderDialogController
 
 
 UP = 0
