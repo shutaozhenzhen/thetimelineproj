@@ -68,10 +68,10 @@ class HelpBrowser(wx.Frame):
         if change_history:
             same_page_as_last = False
             if self.current_pos != -1:
-                current_type, current_id = self.history[self.current_pos]
+                _, current_id = self.history[self.current_pos]
                 if id == current_id:
                     same_page_as_last = True
-            if same_page_as_last == False:
+            if same_page_as_last is False:
                 self.history = self.history[:self.current_pos + 1]
                 self.history.append((type, id))
                 self.current_pos += 1
@@ -193,12 +193,12 @@ class HelpBrowser(wx.Frame):
         self.toolbar.EnableTool(HelpBrowser.BACKWARD_ID, enable_backward)
         self.toolbar.EnableTool(HelpBrowser.FORWARD_ID, enable_forward)
 
-    def _generate_page(self, id):
-        page = self.help_system.get_page(id)
-        if page == None:
+    def _generate_page(self, page_id):
+        page = self.help_system.get_page(page_id)
+        if page is None:
             error_page_html = "<h1>%s</h1><p>%s</p>" % (
                 _("Page not found"),
-                _("Could not find page '%s'.") % id)
+                _("Could not find page '%s'.") % page_id)
             return self._wrap_in_html(error_page_html)
         else:
             return self._wrap_in_html(page.render_to_html())
