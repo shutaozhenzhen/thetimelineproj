@@ -18,8 +18,8 @@
 
 from mock import Mock
 
-from timelinelib.editors.textdisplay import TextDisplayEditor
-from timelinelib.wxgui.dialogs.textdisplay import TextDisplayDialog
+from timelinelib.wxgui.dialogs.textdisplay.textdisplaycontroller import TextDisplayEditor
+from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialog import TextDisplayDialog
 from timelinetest import UnitTestCase
 
 
