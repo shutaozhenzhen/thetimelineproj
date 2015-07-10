@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.editors.setcategory import SetCategoryEditor
+from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditorcontroller import SetCategoryEditor
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.utils import BORDER
 
