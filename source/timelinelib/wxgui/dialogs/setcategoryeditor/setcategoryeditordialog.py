@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditorcontroller import SetCategoryEditor
+from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditorcontroller import SetCategoryEditorController
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.utils import BORDER
 
@@ -84,7 +84,7 @@ class SetCategoryEditorDialog(wx.Dialog, CategoryEditorGuiCreator, ApiUsedByCont
                            style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
         self.timeline = timeline
         self._create_gui()
-        self.controller = SetCategoryEditor(self, timeline, selected_event_ids)
+        self.controller = SetCategoryEditorController(self, timeline, selected_event_ids)
 
     def _btn_ok_on_click(self, evt):
         self.controller.save()
