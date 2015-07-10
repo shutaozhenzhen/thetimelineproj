@@ -21,7 +21,7 @@ CONTROL_ROWS_CREATORS = {"0": "Time details", "1": "Checkboxes",
                          "4": "Container listbox", ":": "Notebook"}
 
 
-class SelectTabOrderDialogController(object):
+class EventEditorTabSelectionController(object):
 
     def __init__(self, view, config):
         self.view = view

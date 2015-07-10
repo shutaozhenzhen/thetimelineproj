@@ -22,7 +22,7 @@ import wx
 
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.config.paths import ICONS_DIR
-from timelinelib.wxgui.dialogs.eventeditor.eventeditortabselectioncontroller import SelectTabOrderDialogController
+from timelinelib.wxgui.dialogs.eventeditor.eventeditortabselectioncontroller import EventEditorTabSelectionController
 
 
 UP = 0
@@ -93,7 +93,7 @@ class SelectTabOrderDialog(wx.Dialog, SelectTabOrderGuiCreator):
         style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         wx.Dialog.__init__(self, parent, title=title, name="select_event_editor_tab_order", style=style)
         self._create_gui()
-        self.controller = SelectTabOrderDialogController(self, config)
+        self.controller = EventEditorTabSelectionController(self, config)
 
     def _on_list_item_selected(self, evt):
         self._btn_up.Enable()
