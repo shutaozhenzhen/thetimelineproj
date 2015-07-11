@@ -76,11 +76,11 @@ class PluginFactory(object):
 
     def _find_modules(self, subdir):
         modules = []
-        for file in os.listdir(os.path.join(os.path.dirname(__file__), subdir)):
-            if os.path.isdir(os.path.join(os.path.dirname(__file__), subdir, file)):
-                modules.extend(self._find_modules(os.path.join(subdir, file)))
-            elif file.endswith(".py") and file != "__init__.py":
-                module_name = os.path.basename(file)[:-3]
+        for module_file in os.listdir(os.path.join(os.path.dirname(__file__), subdir)):
+            if os.path.isdir(os.path.join(os.path.dirname(__file__), subdir, module_file)):
+                modules.extend(self._find_modules(os.path.join(subdir, module_file)))
+            elif module_file.endswith(".py") and module_file != "__init__.py":
+                module_name = os.path.basename(module_file)[:-3]
                 abs_module_name = "%s.%s" % (subdir.replace(os.sep, "."), module_name)
                 modules.append(abs_module_name)
         return modules

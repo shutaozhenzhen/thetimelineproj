@@ -68,4 +68,3 @@ class DefaultBackgroundDrawer(PluginBase):
     def _set_color(self, dc, color):
         dc.SetPen(wx.Pen(color))
         dc.SetBrush(wx.Brush(color))
-
