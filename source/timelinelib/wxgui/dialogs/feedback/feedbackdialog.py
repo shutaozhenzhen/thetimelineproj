@@ -81,9 +81,9 @@ class FeedbackDialog(wx.Dialog):
     def _on_char(self, evt):
         if self._ctrl_a(evt):
             self.body_text.SelectAll()
-        else: 
+        else:
             evt.Skip()
-        
+
     def _ctrl_a(self, evt):
         KEY_CODE_A = 1
         return evt.ControlDown() and evt.KeyCode == KEY_CODE_A
@@ -117,9 +117,9 @@ class FeedbackDialog(wx.Dialog):
 
     def _layout_components(self):
         vbox = wx.BoxSizer(wx.VERTICAL)
-        vbox.Add(self.title_label, flag=wx.ALL|wx.EXPAND, border=BORDER)
-        vbox.Add(self.info_label, flag=wx.ALL|wx.EXPAND, border=BORDER)
-        vbox.Add(self._create_layout_grid(), flag=wx.ALL|wx.EXPAND, border=BORDER)
+        vbox.Add(self.title_label, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        vbox.Add(self.info_label, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        vbox.Add(self._create_layout_grid(), flag=wx.ALL | wx.EXPAND, border=BORDER)
         self.SetSizerAndFit(vbox)
 
     def _create_layout_grid(self):
