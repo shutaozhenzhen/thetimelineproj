@@ -42,8 +42,8 @@ class Category(object):
     def has_id(self):
         return self.id is not None
 
-    def set_id(self, id):
-        self.id = id
+    def set_id(self, category_id):
+        self.id = category_id
         return self
 
     def get_name(self):

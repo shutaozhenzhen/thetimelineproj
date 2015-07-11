@@ -55,8 +55,7 @@ class TimePeriod(object):
         new_start, new_end = self._update(start_time, end_time, start_delta, end_delta)
         return TimePeriod(self.time_type, new_start, new_end)
 
-    def _update(self, start_time, end_time,
-               start_delta=None, end_delta=None):
+    def _update(self, start_time, end_time, start_delta=None, end_delta=None):
         """
         Change the time period data.
 
@@ -166,7 +165,7 @@ class TimePeriod(object):
         the range [self.time_type.get_min_time(),
         self.time_type.get_max_time()].
         """
-        if delta == None:
+        if delta is None:
             delta = self.time_type.get_zero_delta()
         new_time, overflow, error_text = self._calculate_overflow(time, delta)
         if overflow != 0:

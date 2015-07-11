@@ -21,12 +21,12 @@ MAX_BUFFER_SIZE = 10
 
 class UndoHandler(object):
     """
-    The changes made to a timeline are stored in a list (self._undo_buffer). 
+    The changes made to a timeline are stored in a list (self._undo_buffer).
     This list has a maximum size (MAX_BUFFER_SIZE) for the purpose of restricting
-    memory consumption. When a timeline is opened, the original timeline data is 
-    stored in the first element of the list. If more changes are made than can be 
-    stored in the list, the first element in the list is discarded. The list has a 
-    'current position' (self._pos) that keeps track of which data to use after an 
+    memory consumption. When a timeline is opened, the original timeline data is
+    stored in the first element of the list. If more changes are made than can be
+    stored in the list, the first element in the list is discarded. The list has a
+    'current position' (self._pos) that keeps track of which data to use after an
     undo/redo action. When 'current position' is at the beginning of the list, no
     more Undo's can be performed and when 'current position' is at the end of the
     list no more Redo's can be performed.
@@ -43,7 +43,7 @@ class UndoHandler(object):
         self._enabled = value
 
     def undo(self):
-        if self._changes_to_undo(): 
+        if self._changes_to_undo():
             self._pos -= 1
             self.enable(False)
             self._notify_undo_redo_states()
@@ -72,16 +72,12 @@ class UndoHandler(object):
             self._undo_buffer.append(self._db._events.clone())
             self._pos += 1
             self._notify_undo_redo_states()
-            
+
     def _notify_undo_redo_states(self):
-        self._db.notify_undo_redo_states(self._changes_to_undo(), 
-                                         self._changes_to_redo())
+        self._db.notify_undo_redo_states(self._changes_to_undo(), self._changes_to_redo())
 
     def _changes_to_undo(self):
         return self._pos > 0
 
     def _changes_to_redo(self):
         return self._pos < len(self._undo_buffer) - 1
-    
-
-    

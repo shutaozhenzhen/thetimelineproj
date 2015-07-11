@@ -21,7 +21,7 @@ from timelinelib.drawing.drawers import get_progress_color
 
 
 DEFAULT_COLOR = (200, 200, 200)
-EXPORTABLE_FIELDS = ("Text", "Description", "Start", "End", "Category", "Fuzzy", "Locked", "Ends Today", 
+EXPORTABLE_FIELDS = ("Text", "Description", "Start", "End", "Category", "Fuzzy", "Locked", "Ends Today",
                      "Hyperlink", "Progress", "Progress Color", "Done Color", "Alert", "Is Container", "Is Subevent")
 
 
