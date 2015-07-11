@@ -100,7 +100,7 @@ class Parser(object):
                                  % text)
 
     def _backup(self, current_version):
-        (x, y, z) = current_version
+        (x, _, _) = current_version
         if x == 0:
             shutil.copy(self.path,
                         create_non_exising_path(self.path, "pre100bak"))
