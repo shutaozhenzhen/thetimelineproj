@@ -18,7 +18,6 @@
 
 
 import codecs
-import os.path
 
 from timelinelib.dataexport.timelinexml import alert_string
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
