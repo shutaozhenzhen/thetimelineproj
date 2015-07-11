@@ -20,20 +20,20 @@ import wx
 
 
 class SidebarProxy():
-    
+
     def __init__(self, creator):
         from timelinelib.wxgui.dialogs.mainframe.mainframe import MainFrame
         if isinstance(creator, MainFrame):
             self.sidebar = creator.main_panel.timeline_panel.sidebar
-        
+
     def mouse_over_sidebar(self):
         pos = wx.GetMousePosition()
         panel_pos = self.sidebar.ScreenToClient(pos)
         size = self.sidebar.Size
         return panel_pos.x <= size.width and panel_pos.y < size.height
-        
+
     def check_categories(self, categories):
         self.sidebar.category_tree.check_categories(categories)
-        
+
     def uncheck_categories(self, categories):
         self.sidebar.category_tree.uncheck_categories(categories)
