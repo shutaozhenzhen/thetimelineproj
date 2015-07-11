@@ -24,26 +24,26 @@ from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.baseeditor import Bas
 
 
 class AlertEditorGuiCreator(wx.Panel):
-    
+
     def __init__(self, parent):
         self.parent = parent
         wx.Panel.__init__(self, parent)
-            
+
     def create_sizer(self):
         return wx.GridBagSizer(vgap=5, hgap=5)
-        
+
     def create_controls(self):
         self.btn_add = self._create_add_button()
         self.btn_clear = self._create_clear_button()
         self.input_panel = self._create_input_controls()
         return (self.btn_add, self.btn_clear, self.input_panel)
-    
+
     def put_controls_in_sizer(self, sizer, controls):
-        btn_add, btn_clear, input_panel = controls 
+        btn_add, btn_clear, input_panel = controls
         sizer.Add(btn_add, wx.GBPosition(0, 0), wx.GBSpan(1, 1))
         sizer.Add(btn_clear, wx.GBPosition(0, 1), wx.GBSpan(1, 1))
         sizer.Add(input_panel, wx.GBPosition(1, 0), wx.GBSpan(4, 5))
-        
+
     def _create_add_button(self):
         btn_add = wx.Button(self, wx.ID_ADD)
         self.Bind(wx.EVT_BUTTON, self._btn_add_on_click, btn_add)
@@ -58,15 +58,15 @@ class AlertEditorGuiCreator(wx.Panel):
         alert_panel = wx.Panel(self)
         alert_panel.on_return = self._on_return
         time_type = self.editor.timeline.get_time_type()
-        self.dtp_start =  time_picker_for(time_type)(alert_panel, config=self.editor.config)
-        self.text_data = wx.TextCtrl(alert_panel, size=(300,80), style=wx.TE_MULTILINE)
+        self.dtp_start = time_picker_for(time_type)(alert_panel, config=self.editor.config)
+        self.text_data = wx.TextCtrl(alert_panel, size=(300, 80), style=wx.TE_MULTILINE)
         self.data = self.dtp_start
         self._layout_input_controls(alert_panel)
         return alert_panel
 
     def _on_return(self):
         self.parent.on_return()
-    
+
     def _layout_input_controls(self, alert_panel):
         when = wx.StaticText(alert_panel, label=_("When:"))
         text = wx.StaticText(alert_panel, label=_("Text:"))
@@ -109,7 +109,7 @@ class AlertEditor(BaseEditor, AlertEditorGuiCreator):
             return None
 
     def set_data(self, data):
-        if data == None:
+        if data is None:
             self._set_visible(False)
         else:
             self._set_visible(True)

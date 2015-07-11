@@ -134,6 +134,7 @@ class DuplicateEventDialog(wx.Dialog):
 def open_duplicate_event_dialog_for_event(parent, db, handle_db_error, event):
     def create_dialog():
         return DuplicateEventDialog(parent, db, event)
+
     def edit_function():
         gui_utils.show_modal(create_dialog, handle_db_error)
     safe_locking(parent, edit_function)
