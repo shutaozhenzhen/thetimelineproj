@@ -58,7 +58,7 @@ def open_tutorial_timeline(path):
     from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
     db = create_in_memory_tutorial_db()
     db.path = path
-    return  db
+    return db
 
 
 def open_directory_timeline(path):
@@ -91,6 +91,7 @@ def db_open_newtype_timeline(path, timetype=None):
             db.set_time_type(GregorianTimeType())
         else:
             db.set_time_type(timetype)
+
     def save_callback():
         from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
         export_db_to_timeline_xml(db, path)
@@ -101,7 +102,6 @@ def db_open_newtype_timeline(path, timetype=None):
 
 def dir_is_read_only(path):
     try:
-        fpath = os.path.join(os.path.dirname(path), "test.txt")
         f = open(path, "w")
         f.close()
         return False
