@@ -55,4 +55,3 @@ class WhenDialogTextIs(object):
     def controller_returns(self, text):
         text = self.editor.get_text()
         return self.text == text
-
