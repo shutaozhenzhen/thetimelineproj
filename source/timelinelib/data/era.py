@@ -27,7 +27,7 @@ class Era(object):
     A clearly defined period of time of arbitrary but well-defined length.
 
     In addition to the time period attributes (start, end) an Era also has a
-    name and a color. The color is used to display the Era period as a 
+    name and a color. The color is used to display the Era period as a
     background color in a timeline.
     """
 
