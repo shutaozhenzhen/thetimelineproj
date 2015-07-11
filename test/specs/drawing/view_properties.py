@@ -16,12 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
-
 from timelinelib.data.idnumber import get_process_unique_id
-from timelinelib.data import Event
 from timelinelib.drawing.viewproperties import ViewProperties
-from timelinelib.wxgui.components.categorytree import CustomCategoryTreeModel
 from timelinetest import UnitTestCase
 from timelinetest.utils import an_event_with, a_container, a_category_with
 
