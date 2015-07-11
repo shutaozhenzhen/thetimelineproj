@@ -100,17 +100,17 @@ class ViewProperties(Observable):
         return event.id in self.sticky_balloon_event_ids
 
     def set_event_has_sticky_balloon(self, event, has_sticky=True):
-        if has_sticky == True and not event.id in self.sticky_balloon_event_ids:
+        if has_sticky is True and event.id not in self.sticky_balloon_event_ids:
             self.sticky_balloon_event_ids.append(event.id)
-        elif has_sticky == False and event.id in self.sticky_balloon_event_ids:
+        elif has_sticky is False and event.id in self.sticky_balloon_event_ids:
             self.sticky_balloon_event_ids.remove(event.id)
         self._notify()
 
     def set_selected(self, event, is_selected=True):
-        if is_selected == True and not event.get_id() in self.selected_event_ids:
+        if is_selected is True and not event.get_id() in self.selected_event_ids:
             self.selected_event_ids.append(event.get_id())
             self._notify()
-        elif is_selected == False and event.get_id() in self.selected_event_ids:
+        elif is_selected is False and event.get_id() in self.selected_event_ids:
             self.selected_event_ids.remove(event.get_id())
             self._notify()
 
@@ -163,12 +163,12 @@ class ViewProperties(Observable):
 
     def _set_categories_with_ids_visible(self, category_ids, is_visible):
         need_notify = False
-        for id in category_ids:
-            if is_visible == True and id in self.hidden_categories:
-                self.hidden_categories.remove(id)
+        for category_id in category_ids:
+            if is_visible is True and category_id in self.hidden_categories:
+                self.hidden_categories.remove(category_id)
                 need_notify = True
-            elif is_visible == False and not id in self.hidden_categories:
-                self.hidden_categories.append(id)
+            elif is_visible is False and category_id not in self.hidden_categories:
+                self.hidden_categories.append(category_id)
                 need_notify = True
         if need_notify:
             self._notify()
