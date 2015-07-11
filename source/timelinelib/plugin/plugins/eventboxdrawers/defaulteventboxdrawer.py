@@ -302,7 +302,6 @@ class DefaultEventBoxDrawer(PluginBase):
 
     def _draw_hyperlink(self, dc, rect, event):
         if event.get_hyperlink():
-            #self._inflate_clipping_region(dc, rect)
             dc.DrawBitmap(self._get_hyperlink_bitmap(), rect.x + rect.width - 14, rect.y + 4, True)
 
     def _get_hyperlink_bitmap(self):

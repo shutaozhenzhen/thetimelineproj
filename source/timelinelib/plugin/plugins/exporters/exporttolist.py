@@ -16,16 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
-
 import wx
 
-from timelinelib.wxgui.utils import _ask_question
-from timelinelib.wxgui.utils import WildcardHelper
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.factory import EXPORTER
-import  wx.lib.mixins.listctrl  as  listmix
+import wx.lib.mixins.listctrl as listmix
 
 
 class ListExporter(PluginBase):
@@ -98,4 +94,3 @@ class TestListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
         for period, event in items:
             index = self.InsertStringItem(sys.maxint, period, 0)
             self.SetStringItem(index, 1, event)
-
