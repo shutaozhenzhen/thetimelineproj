@@ -47,7 +47,7 @@ class SceneSpec(UnitTestCase):
     def test_considers_events_outside_screen_hidden(self):
         self.given_displayed_period("1 Jan 2010", "10 Jan 2010")
         self.given_number_of_events_stackable_is(5)
-        for i in range(6):
+        for _ in range(6):
             self.given_visible_event_at("5 Jan 2010")
         self.when_scene_is_created()
         self.assertEqual(1, self.scene.get_hidden_event_count())
@@ -101,8 +101,8 @@ class SceneSpec(UnitTestCase):
         self.given_displayed_period("1 Jan 9890", "1 Jan 9990")
         try:
             self.when_scene_is_created()
-            self.assertTrue(self.scene != None)
-        except Exception, ex:
+            self.assertTrue(self.scene is not None)
+        except Exception:
             self.assertTrue(False)
 
     def setUp(self):
@@ -115,7 +115,7 @@ class SceneSpec(UnitTestCase):
 
     def tearDown(self):
         self.app.Destroy()
-        
+
     def get_text_size_fn(self, text):
         return (len(text), self.event_height)
 

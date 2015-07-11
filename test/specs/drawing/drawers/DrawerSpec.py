@@ -63,21 +63,21 @@ class DrawerSpec(UnitTestCase):
         self.drawer.draw(self.dc, self.timeline, self.view_properties, config)
 
     def assert_text_drawn_above(self, text, y_limit):
-        x, y = self.position_of_drawn_text(text)
+        _, y = self.position_of_drawn_text(text)
         self.assertTrue(y < y_limit)
 
     def assert_text_drawn_below(self, text, y_limit):
-        x, y = self.position_of_drawn_text(text)
+        _, y = self.position_of_drawn_text(text)
         self.assertTrue(y > y_limit)
 
     def position_of_drawn_text(self, text_to_look_for):
-        for ((text, x, y), kwargs) in self.dc.DrawText.call_args_list:
+        for ((text, x, y), _) in self.dc.DrawText.call_args_list:
             if text == text_to_look_for:
                 return (x, y)
         self.fail("Text '%s' never drawn." % text_to_look_for)
 
     def setUp(self):
-        self.app = wx.App() # a stored app is needed to create fonts
+        self.app = wx.App()  # a stored app is needed to create fonts
         self.drawer = DefaultDrawingAlgorithm()
         self.drawer.set_event_box_drawer(DefaultEventBoxDrawer())
         self.drawer.set_background_drawer(DefaultBackgroundDrawer())
