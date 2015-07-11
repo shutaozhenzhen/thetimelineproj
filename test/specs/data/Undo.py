@@ -209,7 +209,7 @@ class DBOperations(object):
         event.set_hyperlink("http://%s" % self._get_random_string(2, 7))
         db.save_event(event)
         return "changed hyperlink to %s %r" % (event.get_hyperlink(), event)
-        
+
     def _operation_change_time_period(self, db):
         event = self._get_random_event(db, container=False)
         event.set_time_period(a_time_period())
@@ -220,7 +220,7 @@ class DBOperations(object):
         all_events = a_container("Container", None, [("sub1", None), ("sub2", None)])
         db.save_events(all_events)
         return "added a cantainer with subevents %r" % (all_events[0])
-    
+
     def _get_random_string(self, min_length, max_length):
         import string
         return ''.join(random.choice(string.ascii_lowercase + "     ") for _ in range(random.randint(min_length, max_length)))

@@ -17,7 +17,6 @@
 
 
 from timelinelib.data import TimePeriod
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.typeinterface import TimeType
 from timelinetest import UnitTestCase
 from timelinetest.utils import TIME_PERIOD_MODIFIERS

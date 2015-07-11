@@ -117,7 +117,7 @@ class describe_memory_db(UnitTestCase):
         self.db.save_category(self.c1)
         self.assertEqual(id_before, self.c1.get_id())
         self.assertEqual(self.db.get_categories(), [self.c1])
-        self.assertEqual(self.db_listener.call_count, 2) # 2 save
+        self.assertEqual(self.db_listener.call_count, 2)  # 2 save
         # Assert save called: 2 save category
         self.assertEqual(self.save_callback_mock.call_count, 2)
 
@@ -193,7 +193,7 @@ class describe_memory_db(UnitTestCase):
         self.assertEqual(len(categories), 0)
         self.assertFalse(self.c2.has_id())
         # Check events
-        self.assertEqual(self.db_listener.call_count, 4) # 2 save, 2 delete
+        self.assertEqual(self.db_listener.call_count, 4)  # 2 save, 2 delete
         # Assert save called: 2 save category, 1 save view
         # properties, 2 delete categories
         self.assertEqual(self.save_callback_mock.call_count, 5)
@@ -264,7 +264,7 @@ class describe_memory_db(UnitTestCase):
         self.assertTrue(self.e1.has_id())
         self.assertEqual(self.db.get_events(tp), [self.e1])
         self.assertEqual(self.db.get_all_events(), [self.e1])
-        self.assertEqual(self.db_listener.call_count, 1) # 1 save
+        self.assertEqual(self.db_listener.call_count, 1)  # 1 save
         # Assert save called: 1 save event
         self.assertEqual(self.save_callback_mock.call_count, 1)
 
@@ -277,7 +277,7 @@ class describe_memory_db(UnitTestCase):
         self.assertEqual(id_before, self.e1.get_id())
         self.assertEqual(self.db.get_events(tp), [self.e1])
         self.assertEqual(self.db.get_all_events(), [self.e1])
-        self.assertEqual(self.db_listener.call_count, 2) # 1 save
+        self.assertEqual(self.db_listener.call_count, 2)  # 1 save
         # Assert save called: 2 save event
         self.assertEqual(self.save_callback_mock.call_count, 2)
 
@@ -307,7 +307,7 @@ class describe_memory_db(UnitTestCase):
         self.assertFalse(self.e2.has_id())
         self.assertEqual(len(self.db.get_events(tp)), 0)
         # Check events
-        self.assertEqual(self.db_listener.call_count, 4) # 2 save, 2 delete
+        self.assertEqual(self.db_listener.call_count, 4)  # 2 save, 2 delete
         # Assert save called: 2 save event, 2 delete event
         self.assertEqual(self.save_callback_mock.call_count, 4)
 
@@ -326,7 +326,7 @@ class describe_memory_db(UnitTestCase):
         self.assertEqual(self.save_callback_mock.call_count, 1)
         self.db.disable_save()
         self.db.save_category(self.c1)
-        self.assertEqual(self.save_callback_mock.call_count, 1) # still 1
+        self.assertEqual(self.save_callback_mock.call_count, 1)  # still 1
         self.db.enable_save()
         self.assertEqual(self.save_callback_mock.call_count, 2)
         # Now do the same thing but tell enable not to call save
