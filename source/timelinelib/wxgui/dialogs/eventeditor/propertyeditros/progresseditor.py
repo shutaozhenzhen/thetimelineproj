@@ -22,24 +22,24 @@ from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.baseeditor import Bas
 
 
 class ProgressEditorGuiCreator(wx.Panel):
-    
+
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
-      
+
     def create_sizer(self):
         return wx.GridBagSizer(vgap=10, hgap=10)
-        
+
     def create_controls(self):
         label = wx.StaticText(self, label=_("Progress %:"))
         self.data = self._create_spin_control()
         return (label, self.data)
-    
+
     def put_controls_in_sizer(self, sizer, controls):
-        label, spin_ctrl = controls 
+        label, spin_ctrl = controls
         span = wx.GBSpan(rowspan=1, colspan=1)
         sizer.Add(label, wx.GBPosition(row=1, col=0), span)
         sizer.Add(spin_ctrl, wx.GBPosition(row=1, col=1), span)
-       
+
     def _create_spin_control(self):
         progress = wx.SpinCtrl(self, size=(50, -1))
         progress.SetRange(0, 100)
@@ -56,7 +56,7 @@ class ProgressEditor(BaseEditor, ProgressEditorGuiCreator):
     def focus(self):
         super(ProgressEditor, self).focus()
         self._select_all()
-        
+
     def _select_all(self):
         self.data.SetSelection(0, -1)
 
