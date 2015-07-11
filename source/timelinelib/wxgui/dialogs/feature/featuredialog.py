@@ -54,15 +54,14 @@ class FeatureDialogGui(wx.Dialog):
         style = wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH | wx.TE_AUTO_URL
         self.body_text = wx.TextCtrl(self, size=(-1, BODY_TEXT_HEIGHT), style=style)
         self.body_text.Bind(wx.EVT_TEXT_URL, self._on_text_url)
-        
+
     def _on_text_url(self, evt):
-        if evt.MouseEvent.LeftUp(): 
+        if evt.MouseEvent.LeftUp():
             start = evt.GetURLStart()
             end = evt.GetURLEnd()
             url = self.body_text.GetValue()[start:end]
             webbrowser.open(url)
-        evt.Skip() 
-
+        evt.Skip()
 
     def _create_feedback_button(self):
         def on_click(event):
@@ -77,9 +76,9 @@ class FeatureDialogGui(wx.Dialog):
 
     def _layout_components(self):
         vbox = wx.BoxSizer(wx.VERTICAL)
-        vbox.Add(self.info_label, flag=wx.ALL|wx.EXPAND, border=BORDER)
-        vbox.Add(self.body_text, flag=wx.ALL|wx.EXPAND, border=BORDER)
-        vbox.Add(self._create_button_box(), flag=wx.ALL|wx.EXPAND, border=BORDER)
+        vbox.Add(self.info_label, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        vbox.Add(self.body_text, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        vbox.Add(self._create_button_box(), flag=wx.ALL | wx.EXPAND, border=BORDER)
         self.SetSizerAndFit(vbox)
 
     def _create_button_box(self):
@@ -88,7 +87,7 @@ class FeatureDialogGui(wx.Dialog):
         button_box.AddStretchSpacer()
         button_box.Add(self.btn_cancel, flag=wx.LEFT, border=BORDER)
         return button_box
-    
+
     def _set_default_component(self):
         self.btn_feedback.SetDefault()
         self.btn_feedback.SetFocus()
@@ -114,4 +113,3 @@ def show_feature_feedback_dialog(feature, parent=None):
     dialog.controller.populate(feature)
     dialog.ShowModal()
     dialog.Destroy()
-        
