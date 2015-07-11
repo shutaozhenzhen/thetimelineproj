@@ -152,13 +152,13 @@ class Tag(object):
 
     def handle_start_tag(self, name, tmp_dict):
         if name == self.name:
-            if self.start_read == True:
+            if self.start_read is True:
                 # Nested tag
                 raise ValidationError("Did not expect <%s>." % name)
             else:
                 self.start_read = True
                 return self
-        elif self.start_read == True:
+        elif self.start_read is True:
             next_child = self._find_next_child(name)
             return next_child.handle_start_tag(name, tmp_dict)
         else:
