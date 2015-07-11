@@ -58,15 +58,15 @@ class NoOpInputHandler(InputHandler):
                     self.timeline_canvas.edit_ends()
                     raise
             return
-        if (event is None and ctrl_down == False and shift_down == False):
+        if (event is None and ctrl_down is False and shift_down is False):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
             self.timeline_canvas_controller.change_input_handler_to_scroll_by_drag(time_at_x)
             return
-        if (event is None and ctrl_down == True):
+        if (event is None and ctrl_down is True):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
             self.timeline_canvas_controller.change_input_handler_to_create_period_event_by_drag(time_at_x)
             return
-        if (event is None and shift_down == True):
+        if (event is None and shift_down is True):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
             self.timeline_canvas_controller.change_input_handler_to_zoom_by_drag(time_at_x)
             return
@@ -175,7 +175,7 @@ class NoOpInputHandler(InputHandler):
 
     def _hit_resize_handle(self, x, y, alt_down=False):
         event_and_rect = self.timeline_canvas_controller.event_with_rect_at(x, y, alt_down)
-        if event_and_rect == None:
+        if event_and_rect is None:
             return None
         event, rect = event_and_rect
         if event.get_locked():

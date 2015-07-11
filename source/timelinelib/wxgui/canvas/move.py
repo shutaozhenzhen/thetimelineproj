@@ -31,7 +31,7 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
     def _store_event_periods(self, event_being_dragged):
         self.event_periods = []
         selected_events = self.timeline_canvas_controller.get_selected_events()
-        if not event_being_dragged in selected_events:
+        if event_being_dragged not in selected_events:
             return
         for event in selected_events:
             period_pair = (event, event.get_time_period())
@@ -69,7 +69,7 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
         self.timeline_canvas_controller.redraw_timeline()
 
     def _any_event_locked(self):
-        for (event, original_period) in self.event_periods:
+        for (event, _) in self.event_periods:
             if event.get_locked():
                 return True
         return False
