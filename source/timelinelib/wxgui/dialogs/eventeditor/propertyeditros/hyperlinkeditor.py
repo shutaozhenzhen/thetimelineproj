@@ -19,7 +19,7 @@
 import wx
 import webbrowser
 
-from timelinelib.editors.propertyeditors.baseeditor import BaseEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.baseeditor import BaseEditor
 
 
 class HyperlinkEditorGuiCreator(wx.Panel):
