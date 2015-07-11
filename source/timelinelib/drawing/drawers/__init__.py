@@ -43,12 +43,12 @@ def adjust_gray_luminence(base_color):
 
 def apply_gray_factor_on_item(item):
     return min(255, int(GRAY_FACTOR * item))
-    
-    
+
+
 def adjust_color_luminence(base_color):
     h, s, l = rgb2hsl(base_color)
     l = LUMINENCE_FACTOR * s
-    return  hsl2rgb(h, s, l)
+    return hsl2rgb(h, s, l)
 
 
 def rgb2hsl(color):
@@ -94,10 +94,10 @@ def hsl2rgb(h, s, l):
             var_2 = l * (1.0 + s)
         else:
             var_2 = (l + s) - (s * l)
-        var_1 = 2.0 * l - var_2;
-        r = 255 * hue_2_rgb(var_1, var_2, h + (1.0 / 3.0));
-        g = 255 * hue_2_rgb(var_1, var_2, h);
-        b = 255 * hue_2_rgb(var_1, var_2, h - (1.0 / 3.0));
+        var_1 = 2.0 * l - var_2
+        r = 255 * hue_2_rgb(var_1, var_2, h + (1.0 / 3.0))
+        g = 255 * hue_2_rgb(var_1, var_2, h)
+        b = 255 * hue_2_rgb(var_1, var_2, h - (1.0 / 3.0))
     return (r, g, b)
 
 
