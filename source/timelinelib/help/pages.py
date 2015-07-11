@@ -32,7 +32,7 @@ Template for translator comments (should be before all body parts):
 def install(help_system):
 
     help_system.install_page(
-        id="contents",
+        page_id="contents",
         header=_("Help contents"),
         body=("""
 - **%s**
@@ -60,9 +60,8 @@ def install(help_system):
 - **Help(contact)**
 """ % (_("Questions and answers"), _("Concepts"), _("Tasks"))))
 
-
     help_system.install_page(
-        id="where_is_save",
+        page_id="where_is_save",
         header=_("Where is the save button?"),
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
@@ -73,9 +72,8 @@ def install(help_system):
 There is no save button. Timeline will automatically save your data whenever needed.
 """))
 
-
     help_system.install_page(
-        id="week_numbers_sunday_week_start",
+        page_id="week_numbers_sunday_week_start",
         header=_("Where do the week numbers go if I start my weeks on Sunday?"),
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
@@ -87,7 +85,7 @@ The date data object used does not support week numbers for weeks that start on 
 """))
 
     help_system.install_page(
-        id="multiple_users",
+        page_id="multiple_users",
         header=_("Can multiple users work with the same timeline?"),
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
@@ -101,12 +99,12 @@ When you try to make a change and someone else has made a change you will be ask
 
 - Set timeline in read-only mode.
 - Synchronize the timeline.
- 
+
 During the your edit action the timeline is locked for changes by others. If you try to edit a timeline when it is locked by someone else you will be notified about this situation.
 """))
 
     help_system.install_page(
-        id="check_all_categories",
+        page_id="check_all_categories",
         header=_("Can I Check or Uncheck all categories?"),
         related_pages=["categories", "edit_categories"],
         # TRANSLATORS: This text uses special markup.
@@ -123,7 +121,7 @@ A context menu will now show up with all the check/uncheck alternatives availabl
 """))
 
     help_system.install_page(
-        id="timeline",
+        page_id="timeline",
         header=_("Timeline"),
         related_pages=["scrolling", "zooming", "import_timeline", "events", "categories", "contact"],
         # TRANSLATORS: This text uses special markup.
@@ -140,7 +138,7 @@ The timeline is divided in two areas with a horizontal adjustable divider line. 
 """))
 
     help_system.install_page(
-        id="scrolling",
+        page_id="scrolling",
         header=_("Scrolling Timeline"),
         related_pages=["timeline"],
         # TRANSLATORS: This text uses special markup.
@@ -159,7 +157,7 @@ Events are scrolled towards or away from the divider line separating point- and 
 """))
 
     help_system.install_page(
-        id="zooming",
+        page_id="zooming",
         header=_("Zooming Timeline"),
         related_pages=["timeline"],
         # TRANSLATORS: This text uses special markup.
@@ -176,7 +174,7 @@ To zoom vertically, hold down the Alt-key and scroll the mouse wheel.
 """))
 
     help_system.install_page(
-        id="events",
+        page_id="events",
         header=_("Events"),
         related_pages=["event_properties", "create_event", "select_events", "edit_event", "delete_event", "move_event_vertically", "duplicate_event", "categories"],
         # TRANSLATORS: This text uses special markup.
@@ -189,7 +187,7 @@ An event is the basic data type for representing information on the timeline.  I
 """))
 
     help_system.install_page(
-        id="era",
+        page_id="era",
         header=_("Era"),
         related_pages=["timeline"],
         # TRANSLATORS: This text uses special markup.
@@ -204,7 +202,7 @@ An Era is displayed as a background with the color defined for the Era. The Era 
 """))
 
     help_system.install_page(
-        id="event_properties",
+        page_id="event_properties",
         header=_("Event Properties"),
         related_pages=["events", "event_containers"],
         # TRANSLATORS: This text uses special markup.
@@ -230,7 +228,7 @@ For an event the following properties can be defined.
 """))
 
     help_system.install_page(
-        id="categories",
+        page_id="categories",
         header=_("Categories"),
         related_pages=["categories_delete", "events"],
         # TRANSLATORS: This text uses special markup.
@@ -243,7 +241,7 @@ Categories are used to group events. An event can only belong to one category. A
 """))
 
     help_system.install_page(
-        id="experimental_features",
+        page_id="experimental_features",
         header=_("Experimental Features"),
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
@@ -257,11 +255,11 @@ An experimental feature can be switched on or off in the preferences dialog.
 
 The functionality in these features may not be fully implemented and may not have been as extensively tested as the rest of the application.
 
-The users feedback can be important when the decision to make the features permanent or not, is taken.  
+The users feedback can be important when the decision to make the features permanent or not, is taken.
 """))
 
     help_system.install_page(
-        id="create_event",
+        page_id="create_event",
         header=_("Create event"),
         related_pages=["events", "delete_event"],
         # TRANSLATORS: This text uses special markup.
@@ -278,7 +276,7 @@ The *Create Event* dialog can be opened in the following ways:
 """))
 
     help_system.install_page(
-        id="undo_action",
+        page_id="undo_action",
         header=_("Undo/Redo"),
         related_pages=["create_event", "edit_event", "delete_event", "edit_categories"],
         # TRANSLATORS: This text uses special markup.
@@ -290,8 +288,8 @@ The *Create Event* dialog can be opened in the following ways:
 The *Undo* function can revert an action such as creating an event, editing a category or deleting an event.
 
 To revert an action you:
- 
-- Use the Ctrl+Z key (Key combination can be changed by user) 
+
+- Use the Ctrl+Z key (Key combination can be changed by user)
 - Select the menu *Timeline* - *Undo*
 
 To save memory usage we have decided to limit the number of actions that can be reverted.
@@ -299,13 +297,13 @@ This means that only the 10 latest actions can be Undone.
 
 An action that is Undone can also be Redone if you:
 
-- Use the Alt+Z key (Key combination can be changed by user) 
+- Use the Alt+Z key (Key combination can be changed by user)
 - Select the menu *Timeline* - *Redo*
 
 """))
 
     help_system.install_page(
-        id="edit_event",
+        page_id="edit_event",
         header=_("Edit event"),
         related_pages=["events", "select_events"],
         # TRANSLATORS: This text uses special markup.
@@ -318,7 +316,7 @@ The *Edit Event* dialog can be opened by double clicking on an event or by selec
 """))
 
     help_system.install_page(
-        id="move_event_vertically",
+        page_id="move_event_vertically",
         header=_("Move event vertically"),
         related_pages=["events", "select_events"],
         # TRANSLATORS: This text uses special markup.
@@ -331,7 +329,7 @@ An event can be moved vertically. This is done by first selecting the event and 
 """))
 
     help_system.install_page(
-        id="duplicate_event",
+        page_id="duplicate_event",
         header=_("Duplicate event"),
         related_pages=["events", "select_events"],
         # TRANSLATORS: This text uses special markup.
@@ -347,14 +345,14 @@ Now a dialog appears in which you can define
  - The time period used
  - The frequency of time periods
  - The direction
- 
+
  If number of duplications = 3, time span = day and frequency = 2, you will get 3 new copies of the event spread out with the time span of 2 days between them.
- 
+
  You can also get to the duplication dialog from the event context menu, wich appears if you right-click an event with the mouse.
 """))
 
     help_system.install_page(
-        id="select_events",
+        page_id="select_events",
         header=_("Selecting events"),
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
@@ -366,7 +364,7 @@ To select an event, click on it. To select multiple events, hold down the *Ctrl*
 """))
 
     help_system.install_page(
-        id="import_timeline",
+        page_id="import_timeline",
         header=_("Import timeline"),
         related_pages=["timeline"],
         # TRANSLATORS: This text uses special markup.
@@ -381,7 +379,7 @@ First open a timeline and then select menu 'File -> Import timeline...' and sele
 """))
 
     help_system.install_page(
-        id="event_containers",
+        page_id="event_containers",
         header=_("Event Containers"),
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
@@ -393,13 +391,13 @@ Containers are a way to group events together.
 In a container events can not overlap, so if you add a new event to a container
 all other events are moved to give room for the new event. The same thing happens
 if you resize an event within the container.
-             
-Have a look at this video for a demo. 
+
+Have a look at this video for a demo.
     <http://www.youtube.com/watch?v=dBwEQ3vqB_I>
 """))
 
     help_system.install_page(
-        id="delete_event",
+        page_id="delete_event",
         header=_("Delete event"),
         related_pages=["events", "select_events"],
         # TRANSLATORS: This text uses special markup.
@@ -412,7 +410,7 @@ To delete an event, select it and press the *Del* key. Multiple events can be de
 """))
 
     help_system.install_page(
-        id="categories_delete",
+        page_id="categories_delete",
         header=_("Will associated events be deleted when I delete a category?"),
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
@@ -424,7 +422,7 @@ No. The events will still be there but they will not belong to a category.
 """))
 
     help_system.install_page(
-        id="edit_categories",
+        page_id="edit_categories",
         header=_("Edit categories"),
         related_pages=["categories"],
         # TRANSLATORS: This text uses special markup.
@@ -439,7 +437,7 @@ The visibility of categories can also be edited in the sidebar (*View* > *Sideba
 """))
 
     help_system.install_page(
-        id="contact",
+        page_id="contact",
         header=_("Contact"),
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
@@ -451,7 +449,7 @@ If you have more questions about Timeline, or if you want to get in contact with
 """))
 
     help_system.install_page(
-        id="why_not_timeline_in_my_language",
+        page_id="why_not_timeline_in_my_language",
         header=_("Why is Timeline not available in my language?"),
         related_pages=["contact"],
         # TRANSLATORS: This text uses special markup.

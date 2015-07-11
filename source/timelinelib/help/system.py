@@ -44,11 +44,11 @@ class HelpSystem(object):
         self.resources_prefix = resources_prefix
         self.page_prefix = page_prefix
 
-    def install_page(self, id, header="", body="", related_pages=[]):
-        self.pages[id] = HelpPage(self, id, header, body, related_pages)
+    def install_page(self, page_id, header="", body="", related_pages=[]):
+        self.pages[page_id] = HelpPage(self, page_id, header, body, related_pages)
 
-    def get_page(self, id):
-        return self.pages.get(id, None)
+    def get_page(self, page_id):
+        return self.pages.get(page_id, None)
 
     def get_search_results_page(self, search):
         matches = self._get_pages_matching_search(search)
@@ -72,8 +72,8 @@ class HelpSystem(object):
         for page in self.pages.values():
             match = True
             for content_re in content_res:
-                if (not re.search(content_re, page.header, re.IGNORECASE) and
-                    not re.search(content_re, page.body, re.IGNORECASE)):
+                if (not re.search(content_re, page.header, re.IGNORECASE)
+                    and not re.search(content_re, page.body, re.IGNORECASE)):
                     match = False
                     break
             if match:
@@ -83,9 +83,9 @@ class HelpSystem(object):
 
 class HelpPage(object):
 
-    def __init__(self, help_system, id, header, body, related_pages):
+    def __init__(self, help_system, page_id, header, body, related_pages):
         self.help_system = help_system
-        self.id = id
+        self.id = page_id
         self.header = header
         self.body = body
         self.related_pages = related_pages
@@ -103,8 +103,7 @@ class HelpPage(object):
                     replacement = "<a href=\"%s%s\">%s</a>" % (
                         self.help_system.page_prefix,
                         match.group(1), page.header)
-                html = html[0:match.start(0)] + replacement + \
-                       html[match.end(0):]
+                html = html[0:match.start(0)] + replacement + html[match.end(0):]
             else:
                 break
         # Our link markup: Replace HelpFigure(foo) with proper image
@@ -113,8 +112,7 @@ class HelpPage(object):
             if match:
                 replacement = "<img src=\"%s%s.png\" border=\"0\">" % (
                     self.help_system.resources_prefix, match.group(1))
-                html = html[0:match.start(0)] + replacement + \
-                       html[match.end(0):]
+                html = html[0:match.start(0)] + replacement + html[match.end(0):]
             else:
                 break
         # Related pages
