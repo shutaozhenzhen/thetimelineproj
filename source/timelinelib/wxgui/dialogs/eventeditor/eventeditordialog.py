@@ -21,11 +21,11 @@ import wx
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
 from timelinelib.wxgui.dialogs.eventeditor.eventeditorcontroller import EventEditorController
-from timelinelib.editors.propertyeditors.descriptioneditor import DescriptionEditor
-from timelinelib.editors.propertyeditors.progresseditor import ProgressEditor
-from timelinelib.editors.propertyeditors.hyperlinkeditor import HyperlinkEditor
-from timelinelib.editors.propertyeditors.alerteditor import AlertEditor
-from timelinelib.editors.propertyeditors.iconeditor import IconEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.descriptioneditor import DescriptionEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.progresseditor import ProgressEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.hyperlinkeditor import HyperlinkEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.alerteditor import AlertEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.iconeditor import IconEditor
 from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
