@@ -154,11 +154,9 @@ class DefaultContainerStrategy(ContainerStrategy):
         for event in events:
             if event == new_event:
                 continue
-            if (event.get_time_period().end_time >= start and
-                event.get_time_period().end_time <= end):
+            if (event.get_time_period().end_time >= start and event.get_time_period().end_time <= end):
                 return event
-            if (event.get_time_period().start_time <= start and
-                event.get_time_period().end_time > end):
+            if (event.get_time_period().start_time <= start and event.get_time_period().end_time > end):
                 return event
         return None
 
@@ -174,9 +172,8 @@ class DefaultContainerStrategy(ContainerStrategy):
             if not event.is_period():
                 if event.get_time_period().start_time < thr:
                     continue
-            if (event.get_time_period().start_time >= start and
-                event.get_time_period().start_time <= end):
-                if min_start == None:
+            if (event.get_time_period().start_time >= start and event.get_time_period().start_time <= end):
+                if min_start is None:
                     min_start = event.get_time_period().start_time
                 else:
                     if event.get_time_period().start_time < min_start:
@@ -203,8 +200,7 @@ class DefaultContainerStrategy(ContainerStrategy):
         overlapping_events = []
         for event in self.container.events:
             if event != new_event:
-                if (self._starts_within(event, new_event) or
-                    self._ends_within(event, new_event)):
+                if (self._starts_within(event, new_event) or self._ends_within(event, new_event)):
                     overlapping_events.append(event)
         return overlapping_events
 
