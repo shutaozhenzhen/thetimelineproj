@@ -25,8 +25,6 @@ from timelinelib.drawing.viewproperties import ViewProperties
 from timelinetest import TmpDirTestCase
 from timelinetest.utils import a_category_with
 
-import wx
-
 
 CONTENT_010 = u"""
 # Written by Timeline 0.1.0 on 2009-11-15 19:28:7
@@ -108,10 +106,8 @@ class DbOpenSpec(TmpDirTestCase):
         # checked later)
         vp = ViewProperties()
         db.load_view_properties(vp)
-        self.assertEqual(vp.displayed_period.start_time,
-                          Gregorian(2009, 10, 17, 22, 38, 32).to_time())
-        self.assertEqual(vp.displayed_period.end_time,
-                          Gregorian(2009, 12, 2, 16, 22, 4).to_time())
+        self.assertEqual(vp.displayed_period.start_time, Gregorian(2009, 10, 17, 22, 38, 32).to_time())
+        self.assertEqual(vp.displayed_period.end_time, Gregorian(2009, 12, 2, 16, 22, 4).to_time())
         # Assert categories correctly loaded
         categories = db.get_categories()
         self.assertEqual(len(categories), 3)
