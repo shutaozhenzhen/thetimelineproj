@@ -65,7 +65,6 @@ class describe_container(UnitTestCase):
         self.assertEqNeImplementationIsCorrect(a_container_with, CONTAINER_MODIFIERS)
 
 
-
 class describe_container_construction(UnitTestCase):
 
     def test_properties_defaults(self):

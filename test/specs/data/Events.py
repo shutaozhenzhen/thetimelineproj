@@ -128,7 +128,6 @@ class describe_saving_events(EventsTestCase):
                           self.events.save_event,
                           an_event_with(category=a_category_with(name="work")))
 
-
     def test_fails_if_existing_event_does_not_seem_to_be_found(self):
         event = an_event()
         event.set_id(15)
