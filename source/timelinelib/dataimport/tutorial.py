@@ -135,7 +135,7 @@ class TutorialTimelineCreator(object):
         self.db.set_displayed_period(TimePeriod(self.db.get_time_type(),
                                                 self.start, self.end))
         self.last_cat = None
-        self.next_cid = 1 
+        self.next_cid = 1
 
     def add_category(self, name, color, font_color, make_last_added_parent=False):
         if make_last_added_parent:
