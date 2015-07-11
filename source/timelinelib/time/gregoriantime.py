@@ -18,7 +18,6 @@
 
 from datetime import datetime
 import re
-import wx
 
 from timelinelib.calendar.gregorian import Gregorian
 from timelinelib.calendar.gregorian import gregorian_week
@@ -29,7 +28,6 @@ from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
 from timelinelib.drawing.interface import Strip
-from timelinelib.wxgui.components.font import Font
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.typeinterface import TimeType
 import timelinelib.calendar.gregorian as gregorian
