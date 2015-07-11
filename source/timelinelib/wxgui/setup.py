@@ -40,12 +40,12 @@ def start_wx_application(application_arguments, before_main_loop_hook=None):
     app.MainLoop()
 
 
-def unhandled_exception_hook(type, value, tb):
+def unhandled_exception_hook(exception_type, value, tb):
     show_feedback_dialog(
         parent=None,
         info=create_info_message(),
-        subject=create_subject(type, value),
-        body=create_error_message(type, value, tb))
+        subject=create_subject(exception_type, value),
+        body=create_error_message(exception_type, value, tb))
 
 
 def create_info_message():
@@ -55,13 +55,13 @@ def create_info_message():
             "before the error occurred.")
 
 
-def create_subject(type, value):
-    exception_message = "".join(traceback.format_exception_only(type, value)).strip()
+def create_subject(exception_type, value):
+    exception_message = "".join(traceback.format_exception_only(exception_type, value)).strip()
     return "Crash report: %s" % exception_message
 
 
-def create_error_message(type, value, tb):
-    stacktrace = ("".join(traceback.format_exception(type, value, tb))).strip()
+def create_error_message(exception_type, value, tb):
+    stacktrace = ("".join(traceback.format_exception(exception_type, value, tb))).strip()
     versions = create_versions_message()
     locale = create_locale_message()
     return "Describe what you did here...\n\n%s\n\n%s\n%s" % (stacktrace, versions, locale)

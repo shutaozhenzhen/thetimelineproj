@@ -31,6 +31,6 @@ class TimelineTimer(Observable):
 
     def start(self, interval_in_ms):
         self.timer.Start(interval_in_ms)
-        
+
     def _timer_tick(self, evt):
         self._notify(TIMER_TICK)

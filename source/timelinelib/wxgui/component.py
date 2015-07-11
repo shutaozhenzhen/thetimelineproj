@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
 from timelinelib.db import db_open
 from timelinelib.wxgui.components.timelinepanel import TimelinePanel
 
