@@ -21,7 +21,6 @@ import re
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
 from timelinelib.drawing.interface import Strip
-from timelinelib.wxgui.components.font import Font
 from timelinelib.time.typeinterface import TimeType
 
 
@@ -129,10 +128,10 @@ class NumTimeType(TimeType):
 
     def get_duplicate_functions(self):
         return [
-            (_("1-period"), lambda p, d : move_period(p, d)),
-            (_("10-period"), lambda p, d : move_period(p, d * 10)),
-            (_("100-period"), lambda p, d : move_period(p, d * 100)),
-            (_("1000-period"), lambda p, d : move_period(p, d * 1000)),
+            (_("1-period"), lambda p, d: move_period(p, d)),
+            (_("10-period"), lambda p, d: move_period(p, d * 10)),
+            (_("100-period"), lambda p, d: move_period(p, d * 100)),
+            (_("1000-period"), lambda p, d: move_period(p, d * 1000)),
         ]
 
     def zoom_is_ok(self, delta):
@@ -149,7 +148,7 @@ class NumTimeType(TimeType):
 
     def event_date_string(self, time):
         return "%s" % time
-        
+
     def event_time_string(self, time):
         return "%s" % time
 
