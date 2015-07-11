@@ -32,12 +32,9 @@ class GregorianSpec(UnitTestCase):
 
     def test_can_replace(self):
         g = gregorian.Gregorian(2013, 7, 12, 10, 16, 12)
-        self.assertEqual(g.replace(year=1990),
-                          gregorian.Gregorian(1990, 7, 12, 10, 16, 12))
-        self.assertEqual(g.replace(month=6),
-                          gregorian.Gregorian(2013, 6, 12, 10, 16, 12))
-        self.assertEqual(g.replace(year=1990, month=6),
-                          gregorian.Gregorian(1990, 6, 12, 10, 16, 12))
+        self.assertEqual(g.replace(year=1990), gregorian.Gregorian(1990, 7, 12, 10, 16, 12))
+        self.assertEqual(g.replace(month=6), gregorian.Gregorian(2013, 6, 12, 10, 16, 12))
+        self.assertEqual(g.replace(year=1990, month=6), gregorian.Gregorian(1990, 6, 12, 10, 16, 12))
         self.assertRaises(ValueError, g.replace, month=13)
 
 
@@ -79,7 +76,7 @@ class GregorianConversionsSpec(UnitTestCase):
     def test_works_same_as_python_date(self):
         py_date = datetime.date(1900, 1, 1)
         jd = gregorian.to_julian_day(1900, 1, 1)
-        for i in range(365*200):
+        for _ in range(365 * 200):
             (y, m, d) = gregorian.from_julian_day(jd)
             self.assertEqual(py_date, datetime.date(y, m, d))
             py_date += datetime.timedelta(days=1)
@@ -146,7 +143,7 @@ class GregorianPrimitivesSpec(UnitTestCase):
     def test_week_number_against_python(self):
         self.longMessage = True
         time = datetime.date(1900, 1, 1)
-        for i in range(365*50):
+        for _ in range(365*50):
             y = time.year
             m = time.month
             d = time.day
