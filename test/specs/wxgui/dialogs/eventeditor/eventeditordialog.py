@@ -289,8 +289,6 @@ class describe_event_editor__saving(object):
         self.view.get_event_data.return_value = sentinel.EVENT_DATA
         self.view.get_container.return_value = None
         self.simulate_user_clicks_ok()
-        er = self.event_repository
-        ca = self.event_repository.save.call_args
         self.saved_event = self.event_repository.save.call_args[0][0]
         pass
 
