@@ -38,6 +38,7 @@ class CategoryEditorBaseFixture(UnitTestCase):
         self.foofoo = a_category_with(name="foofoo", font_color=(0, 255, 0), parent=self.foo)
         self.bar = a_category_with(name="bar")
         self.category_repository.get_all.return_value = [self.foo, self.foofoo, self.bar]
+
         def get_tree_mock(remove):
             if remove is None:
                 return [
@@ -167,7 +168,7 @@ class WhenTryingToSaveACategoryButDbRaisesException(CategoryEditorBaseFixture):
         CategoryEditorBaseFixture.setUp(self)
         self._initializeControllerWith(None)
         self.view.get_name.return_value = "foobar"
-        self.view.get_color.return_value = (0,0,0)
+        self.view.get_color.return_value = (0, 0, 0)
         self.category_repository.save.side_effect = TimelineIOError
         self.controller.save()
 
