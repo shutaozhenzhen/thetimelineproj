@@ -32,7 +32,6 @@ class AlertControllerSpec(UnitTestCase):
         expected_text = "Trigger time: %s\n\nEvent: %s\n\nTime to go" % (self.now, self.event.get_label())
         self.assertEqual(expected_text, text)
 
-
     def test_pytime_has_expired(self):
         self.given_early_pytimes()
         self.given_controller_time_type(GregorianTimeType())
