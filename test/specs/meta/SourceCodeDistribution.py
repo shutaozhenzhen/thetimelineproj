@@ -18,10 +18,7 @@
 
 import codecs
 import os
-import datetime
 
-from timelinelib.calendar.monthnames import english_name_of_month
-from timelinelib.calendar.monthnames import month_from_english_name
 from timelinetest import UnitTestCase
 import timelinelib.meta.about
 import timelinelib.meta.version
