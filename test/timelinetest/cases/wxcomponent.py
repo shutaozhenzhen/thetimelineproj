@@ -42,6 +42,7 @@ class WxComponentTestCase(UnitTestCase):
     def add_button(self, text, callback, component_name=None):
         button = wx.Button(self._main_panel, label=text)
         self._components.append(button)
+
         def event_listener(event):
             if component_name:
                 callback(self.get_component(component_name))
