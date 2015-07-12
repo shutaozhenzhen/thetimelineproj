@@ -52,7 +52,7 @@ class describe_experimental_feature_date_formatting(UnitTestCase):
         self.assertEqual((2014, 11, 2), self.ef.parse("02.11.2014"))
 
     def test_all_endians_can_be_parsed(self):
-        date_strings = [# year, month, day
+        date_strings = [  # year, month, day
                         ("2015-02-01", "3333-11-22"),
                         ("2015/02/01", "3333/11/22"),
                         ("2015.02.01", "3333.11.22"),
@@ -152,17 +152,16 @@ class describe_experimental_feature_date_formatting(UnitTestCase):
     def test_known_formats_returns_calculated_formatting_string(self):
         self.ef._separator = "-"
         self.assertEqual("%02d-%02d-%02d", self.ef._get_date_format_string("33-11-22"))
-        
+
     def test_unknown_formats_returns_default_formatting_string(self):
         self.ef._separator = "-"
         self.assertEqual("%04d-%02d-%02d", self.ef._get_date_format_string("33-Nov-22"))
-        
+
     def test_invalid_dates_generates_value_error_exception(self):
         self.assertRaises(ValueError, self.ef.parse, "-02-02")
-        
+
     def given_sample_date(self, sample_date):
         self.ef._construct_format(sample_date)
 
     def setUp(self):
         self.ef = LOCALE_DATE
-

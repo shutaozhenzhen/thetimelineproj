@@ -25,27 +25,27 @@ DESCRIPTION = "Display description"
 
 
 class describe_experimental_feature(UnitTestCase):
-    
+
     def test_has_a_display_name(self):
         self.assertEqual(DISPLAY_NAME, self.feature.get_display_name())
-    
+
     def test_has_a_description(self):
         self.assertEqual(DESCRIPTION, self.feature.get_description())
-    
+
     def test_is_not_activated_by_default(self):
         self.assertFalse(self.feature.enabled())
-    
+
     def test_can_be_activated(self):
         self.feature.set_active(True)
         self.assertTrue(self.feature.enabled())
-        
+
     def test_can_be_deactivated(self):
         self.feature.set_active(True)
         self.feature.set_active(False)
         self.assertFalse(self.feature.enabled())
-        
+
     def test_can_format_config_string(self):
         self.assertEqual("%s=False;" % DISPLAY_NAME, self.feature.get_config())
-    
+
     def setUp(self):
         self.feature = ExperimentalFeature(DISPLAY_NAME, DESCRIPTION)
