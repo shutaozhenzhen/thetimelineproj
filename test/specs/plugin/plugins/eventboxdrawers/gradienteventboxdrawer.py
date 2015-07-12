@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
-
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin.plugins.eventboxdrawers.gradienteventboxdrawer import GradientEventBoxDrawer
 from timelinetest import UnitTestCase
