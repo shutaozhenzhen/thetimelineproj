@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
-
 from timelinelib.data import TimePeriod
 from timelinelib.time.numtime import move_period
 from timelinelib.time.numtime import NumTimeType
