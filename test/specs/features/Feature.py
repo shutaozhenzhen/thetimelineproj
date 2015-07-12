@@ -27,7 +27,7 @@ from timelinetest import UnitTestCase
 
 DISPLAY_NAME = "Display name"
 DESCRIPTION = "Display description"
-        
+
 
 class FeedbackFormSpec(UnitTestCase):
 
@@ -40,15 +40,15 @@ class FeedbackFormSpec(UnitTestCase):
     def setUp(self):
         self.dialog = Mock(FeatureDialog)
         self.form = FeatureDialogController(self.dialog)
-        
+
 
 class describe_feature(UnitTestCase):
-    
+
     def test_has_a_display_name(self):
         self.assertEqual(DISPLAY_NAME, self.feature.get_display_name())
-    
+
     def test_has_a_description(self):
         self.assertEqual(DESCRIPTION, self.feature.get_description())
-    
+
     def setUp(self):
         self.feature = Feature(DISPLAY_NAME, DESCRIPTION)
