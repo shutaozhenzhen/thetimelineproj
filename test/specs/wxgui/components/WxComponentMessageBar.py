@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-
 from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinetest import WxComponentTestCase
 

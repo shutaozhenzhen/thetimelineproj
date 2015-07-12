@@ -195,7 +195,7 @@ class AGregorianDatePicker(GregorianDatePickerBaseFixture):
         self.controller.on_down()
         self.date_picker.set_date_string.assert_called_with("2010-02-28")
 
-        
+
 class GregorianDatePickerWithFocusOnYear(GregorianDatePickerBaseFixture):
 
     def setUp(self):
@@ -539,6 +539,7 @@ class ACalendarPopup(UnitTestCase):
 def get_min_time_string():
     year, month, day = gregorian.from_time(GregorianTimeType().get_min_time()[0]).to_date_tuple()
     return "%d-%02d-%02d" % (year, month, day)
+
 
 def get_max_time_string():
     # max_time is not a valid date so we must decrease with one day
