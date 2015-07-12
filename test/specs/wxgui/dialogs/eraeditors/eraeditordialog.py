@@ -87,7 +87,6 @@ class describe_era_editor_dialog_controller_edit(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(EraEditorDialog)
-        self.era = an_era()
         self.controller = EraEditorDialogController(self.view, self.era)
 
 
