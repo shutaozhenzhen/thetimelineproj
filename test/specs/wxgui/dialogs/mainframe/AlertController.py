@@ -35,7 +35,6 @@ class AlertControllerSpec(UnitTestCase):
     def test_pytime_has_expired(self):
         self.given_early_pytimes()
         self.given_controller_time_type(GregorianTimeType())
-        time_as_text = "%s" % self.tm
         expired = self.controller._time_has_expired(self.tm)
         self.assertTrue(expired)
 
