@@ -18,8 +18,6 @@
 
 import sys
 
-import wx
-
 from timelinetest import WxEndToEndTestCase
 
 
