@@ -217,18 +217,18 @@ class expandedness(Base):
         work = self.add_category("Work")
         self.model.set_categories(self.categories_facade)
         self.assert_model_has_itmes_matching([
-            { "name": "Reading", "expanded": True, },
-            { "name": "Work",    "expanded": True, },
+            {"name": "Reading", "expanded": True, },
+            {"name": "Work",    "expanded": True, },
         ])
         self.model.toggle_expandedness(work)
         self.assert_model_has_itmes_matching([
-            { "name": "Reading", "expanded": True, },
-            { "name": "Work",    "expanded": False, },
+            {"name": "Reading", "expanded": True, },
+            {"name": "Work",    "expanded": False, },
         ])
         self.model.toggle_expandedness(work)
         self.assert_model_has_itmes_matching([
-            { "name": "Reading", "expanded": True, },
-            { "name": "Work",    "expanded": True, },
+            {"name": "Reading", "expanded": True, },
+            {"name": "Work",    "expanded": True, },
         ])
 
     def test_hides_subtrees_if_parent_not_expanded(self):
