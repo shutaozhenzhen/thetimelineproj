@@ -106,7 +106,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.controller.view = Mock()
         self.controller.get_time.side_effect = lambda x: self.times_at[x]
         self.controller.event_is_period.side_effect = lambda event: event in self.period_events
-        #self.controller.snap.side_effect = lambda time: self.snap_times[time]
+        # self.controller.snap.side_effect = lambda time: self.snap_times[time]
         self.controller.snap.side_effect = x
         self.controller.get_selected_events.return_value = self.selected_events
         self.status_bar = Mock(StatusBarAdapter)

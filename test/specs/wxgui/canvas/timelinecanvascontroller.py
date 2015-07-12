@@ -606,7 +606,7 @@ class DrawingAreaSpec(UnitTestCase):
         self.controller.mouse_wheel_moved(rotation, True, True, False, 0)
 
     def setUp(self):
-        self.app = wx.App() # a stored app is needed to create fonts
+        self.app = wx.App()  # a stored app is needed to create fonts
         self.timeline_canvas = Mock(TimelineCanvas)
         status_bar_adapter = Mock(StatusBarAdapter)
         config = Mock(Config)
