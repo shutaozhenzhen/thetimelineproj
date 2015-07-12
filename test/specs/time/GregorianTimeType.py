@@ -94,7 +94,7 @@ class GregorianTimeTypeSpec(UnitTestCase):
 
     def test_returns_max_time(self):
         self.assertEqual(self.time_type.parse_time("9990-01-01 00:00:00"),
-                          self.time_type.get_max_time()[0])
+                         self.time_type.get_max_time()[0])
 
     def test_returns_half_delta(self):
         self.assertEqual(
@@ -518,7 +518,7 @@ class GregorianTimeTypeDeltaFormattingSpec(UnitTestCase):
         return TimePeriod(self.time_type, dt, dt)
 
     def get_days_delta(self, days=0, hours=0, minutes=0):
-        return timeline.TimeDelta(days * 24 * 60 *60 + hours * 60 * 60 + minutes * 60)
+        return timeline.TimeDelta(days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60)
 
 
 class GregorianTimeNavigationFunctionsSpec(UnitTestCase):
@@ -760,10 +760,9 @@ class GregorianTimeDuplicateFunctionsSpec(UnitTestCase):
             Gregorian(2012, 2, 29, 13, 0, 0).to_time())
         new_period = move_period_num_years(self.period, 1)
         self.assertEqual(None, new_period)
-        
+
     def setUp(self):
         self.period = TimePeriod(
             GregorianTimeType(),
             Gregorian(2010, 1, 1, 12, 0, 0).to_time(),
             Gregorian(2010, 1, 1, 13, 0, 0).to_time())
-
