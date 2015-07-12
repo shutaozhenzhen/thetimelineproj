@@ -223,6 +223,7 @@ class describe_event_editor__ends_today_checkbox(EventEditorTestCase):
         end_time = human_time_to_gregorian("1 Jan 2010")
         self.assertTrue(end_time <= self.editor._validate_and_save_end(end_time))
 
+
 class describe_event_editor__text_field(EventEditorTestCase):
 
     def test_has_no_value_by_default(self):
@@ -296,18 +297,18 @@ class describe_event_editor__saving(object):
     def test_saves_start_time(self):
         self.given_saving_valid_event()
         self.assertEqual(self.saved_event.get_time_period().start_time,
-                          human_time_to_gregorian("1 Jan 2010"))
+                         human_time_to_gregorian("1 Jan 2010"))
 
     def test_saves_end_time(self):
         self.given_saving_valid_event()
         self.assertEqual(self.saved_event.get_time_period().end_time,
-                          human_time_to_gregorian("2 Jan 2010"))
+                         human_time_to_gregorian("2 Jan 2010"))
 
     def test_saves_end_time_from_start_time(self):
         self.view.get_show_period.return_value = False
         self.given_saving_valid_event()
         self.assertEqual(self.saved_event.get_time_period().end_time,
-                          human_time_to_gregorian("1 Jan 2010"))
+                         human_time_to_gregorian("1 Jan 2010"))
 
     def test_saves_text(self):
         self.given_saving_valid_event()
@@ -334,16 +335,14 @@ class describe_event_editor__saving(object):
         self.assertEqual(self.saved_event.data, sentinel.EVENT_DATA)
 
 
-class describe_event_editor__saving_new(
-    EventEditorTestCase, describe_event_editor__saving):
+class describe_event_editor__saving_new(EventEditorTestCase, describe_event_editor__saving):
 
     def setUp(self):
         EventEditorTestCase.setUp(self)
         self.when_editing_a_new_event()
 
 
-class describe_event_editor__saving_existing(
-    EventEditorTestCase, describe_event_editor__saving):
+class describe_event_editor__saving_existing(EventEditorTestCase, describe_event_editor__saving):
 
     def setUp(self):
         EventEditorTestCase.setUp(self)
@@ -385,8 +384,8 @@ class describe_event_editor__validation(EventEditorTestCase):
 
     def test_period_can_not_be_too_long(self):
         self.when_editor_opened_with_time("1 Jan 2010")
-        self.view.get_name.return_value = "a valid name" # why needed?
-        self.view.get_locked.return_value = False # why needed?
+        self.view.get_name.return_value = "a valid name"  # why needed?
+        self.view.get_locked.return_value = False  # why needed?
         self.view.get_ends_today.return_value = False
         self.simulate_user_enters_start_time("1 Jan 2000")
         self.simulate_user_enters_end_time("1 Jan 5000")
