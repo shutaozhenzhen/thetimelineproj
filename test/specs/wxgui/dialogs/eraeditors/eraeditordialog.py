@@ -21,7 +21,6 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.eraeditors.eraeditorcontroller import EraEditorDialogController
 from timelinelib.wxgui.dialogs.eraeditors.eraeditordialog import EraEditorDialog
 from timelinetest import UnitTestCase
-from timelinetest.utils import a_gregorian_era
 from timelinetest.utils import a_gregorian_era_with
 from timelinetest.utils import human_time_to_gregorian
 
@@ -139,17 +138,17 @@ class describe_era_editor__saving(EraEditorTestCase):
         self.when_editing_an_era()
         self.given_saving_valid_era()
         self.assertEqual(self.era.get_time_period().end_time, human_time_to_gregorian("1 Jan 2020"))
- 
+
     def test_saves_name(self):
         self.when_editing_an_era()
         self.given_saving_valid_era()
         self.assertEqual(self.era.get_name(), "New event")
- 
+
     def test_saves_color(self):
         self.when_editing_an_era()
         self.given_saving_valid_era()
         self.assertEqual(self.era.get_color(), (220, 220, 220))
- 
+
     def given_saving_valid_era(self):
         self.simulate_user_enters_start_time("1 Jan 2010")
         self.simulate_user_enters_end_time("1 Jan 2020")
