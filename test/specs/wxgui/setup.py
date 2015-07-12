@@ -27,10 +27,10 @@ class testbase(UnitTestCase):
 
     def set_locale(self):
         locale.setlocale(locale.LC_TIME, ("Swedish_Sweden",  "850"))
-        
-        
+
+
 class localemessage(testbase):
-    
+
     def test_create_locale_message(self):
         if os.name == "nt":
             self.set_locale()
