@@ -27,7 +27,6 @@ from timelinelib.utilities.observer import Observable
 from timelinelib.wxgui.components.cattree import add_category
 from timelinelib.wxgui.components.cattree import delete_category
 from timelinelib.wxgui.components.cattree import edit_category
-from wx import FONTWEIGHT_BOLD
 
 
 class CustomCategoryTree(wx.ScrolledWindow):
