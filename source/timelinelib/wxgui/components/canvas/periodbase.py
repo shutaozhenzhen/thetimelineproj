@@ -17,7 +17,7 @@
 
 
 from timelinelib.data import TimePeriod
-from timelinelib.wxgui.canvas.scrollbase import ScrollViewInputHandler
+from timelinelib.wxgui.components.canvas.scrollbase import ScrollViewInputHandler
 
 
 class SelectPeriodByDragInputHandler(ScrollViewInputHandler):
