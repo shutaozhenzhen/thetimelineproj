@@ -18,54 +18,54 @@
 
 from mock import Mock
 
-from timelinelib.application import TimelineApplication
 from timelinelib.config.dotfile import Config
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.time.numtime import NumTimeType
+from timelinelib.wxgui.dialogs.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.dialogs.mainframe.mainframe import MainFrame
 from timelinetest import UnitTestCase
 
 
-class describe_timeline_application(UnitTestCase):
+class MainFrameControllerTest(UnitTestCase):
 
     def test_uses_db_open_function_to_create_timeline(self):
-        self.application.open_timeline("foo.timeline")
+        self.controller.open_timeline("foo.timeline")
         self.db_open.assert_called_with("foo.timeline", timetype=None)
 
     def test_uses_db_open_function_to_create_numeric_timeline(self):
         timetype = NumTimeType()
-        self.application.open_timeline("foo.timeline", timetype=timetype)
+        self.controller.open_timeline("foo.timeline", timetype=timetype)
         self.db_open.assert_called_with("foo.timeline", timetype=timetype)
 
     def test_displays_opened_timeline(self):
         timeline = Mock()
         self.db_open.return_value = timeline
-        self.application.open_timeline("foo.timeline")
+        self.controller.open_timeline("foo.timeline")
         self.main_frame.display_timeline.assert_called_with(timeline)
 
     def test_can_set_no_timeline(self):
-        self.application.set_no_timeline()
+        self.controller.set_no_timeline()
         self.main_frame.display_timeline.assert_called_with(None)
 
     def test_saves_current_timeline_data_when_opening_new_timeline(self):
-        self.application.open_timeline("foo.timeline")
+        self.controller.open_timeline("foo.timeline")
         self.main_frame.save_current_timeline_data.assert_called_with()
 
     def test_does_not_save_current_timeline_data_when_reloading_from_disk(self):
-        self.application.open_timeline("foo.timeline")
+        self.controller.open_timeline("foo.timeline")
         self.main_frame.reset_mock()
-        self.application.reload_from_disk()
+        self.controller.reload_from_disk()
         self.assertFalse(self.main_frame.save_current_timeline_data.called)
 
     def test_adds_opened_timeline_to_recently_opened_list(self):
-        self.application.open_timeline("foo.timeline")
+        self.controller.open_timeline("foo.timeline")
         self.config.append_recently_opened.assert_called_with("foo.timeline")
         self.main_frame.update_open_recent_submenu.assert_called_with()
 
     def test_handles_open_timeline_failure(self):
         error = TimelineIOError("")
         self.db_open.side_effect = error
-        self.application.open_timeline("foo.timeline")
+        self.controller.open_timeline("foo.timeline")
         self.main_frame.handle_db_error.assert_called_with(error)
 
     def setUp(self):
@@ -75,5 +75,5 @@ class describe_timeline_application(UnitTestCase):
         self.main_frame.main_panel.timeline_panel.timeline_canvas = Mock()
         self.db_open = Mock()
         self.config = Mock(Config)
-        self.application = TimelineApplication(self.main_frame, self.db_open,
-                                               self.config)
+        self.controller = MainFrameController(self.main_frame, self.db_open,
+                                              self.config)

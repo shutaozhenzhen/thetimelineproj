@@ -20,7 +20,6 @@ import os.path
 
 import wx.lib.newevent
 
-from timelinelib.application import TimelineApplication
 from timelinelib.config.dotfile import read_config
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
@@ -45,6 +44,7 @@ from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_create_
 from timelinelib.wxgui.dialogs.feedback.feedbackdialog import show_feedback_dialog
 from timelinelib.wxgui.dialogs.helpbrowser.helpbrowserframe import HelpBrowser
 from timelinelib.wxgui.dialogs.importevents.importeventsdialog import ImportDialog
+from timelinelib.wxgui.dialogs.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.dialogs.preferences.preferencesdialog import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditordialog import SetCategoryEditorDialog
 from timelinelib.wxgui.dialogs.shortcutseditor.shortcutseditordialog import ShortcutsEditorDialog
@@ -831,7 +831,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         # To enable translations of wx stock items.
         self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
         self.help_browser = HelpBrowser(self)
-        self.controller = TimelineApplication(self, db_open, self.config)
+        self.controller = MainFrameController(self, db_open, self.config)
         self.menu_controller = MenuController()
         self._set_initial_values_to_member_variables()
         self._create_print_data()
