@@ -346,6 +346,8 @@ class DefaultDrawingAlgorithm(Drawer):
         y2 = self._get_end_of_line(event)
         self._set_line_color(view_properties, event)
         self.dc.DrawLine(x, y, x, y2)
+        if event.is_period():
+            self.dc.DrawLine(x+1, y, x+1, y2)
         self.dc.DrawCircle(x, y2, 2)
 
     def _get_end_of_line(self, event):
