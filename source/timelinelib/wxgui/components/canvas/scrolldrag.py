@@ -18,7 +18,7 @@
 
 import time
 
-from timelinelib.wxgui.canvas.inputhandler import InputHandler
+from timelinelib.wxgui.components.canvas.inputhandler import InputHandler
 
 
 class ScrollByDragInputHandler(InputHandler):
