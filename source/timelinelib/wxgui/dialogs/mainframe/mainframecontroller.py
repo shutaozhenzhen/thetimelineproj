@@ -29,7 +29,7 @@ class LockedException(Exception):
     pass
 
 
-class TimelineApplication(object):
+class MainFrameController(object):
 
     def __init__(self, main_frame, db_open_fn, config):
         self.main_frame = main_frame
