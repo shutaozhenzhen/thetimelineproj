@@ -471,6 +471,7 @@ class TimelineCanvasController(object):
     def _context_menu_on_menu_center(self, evt):
         """The 'Center' context menu has been selected."""
         self.divider_line_slider.SetValue(50)
+        self.config.divider_line_slider_pos = self.divider_line_slider.GetValue()
         self._redraw_timeline()
 
     def _timeline_changed(self, state_change):
