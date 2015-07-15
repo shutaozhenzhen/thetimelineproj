@@ -109,6 +109,8 @@ ID_HELP = wx.ID_HELP
 ID_ABOUT = wx.ID_ABOUT
 ID_SAVEAS = wx.ID_SAVEAS
 ID_EXIT = wx.ID_EXIT
+ID_MOVE_EVENT_UP = wx.NewId()
+ID_MOVE_EVENT_DOWN = wx.NewId()
 ID_NAVIGATE = wx.NewId() + 100
 
 
@@ -442,11 +444,19 @@ class GuiCreator(object):
             safe_locking(self, self.timeline.compress)
             self.main_panel.redraw_timeline()
 
+        def move_up_handler(event):
+            self.main_panel.get_timeline_canvas().MoveSelectedEventUp()
+
+        def move_down_handler(event):
+            self.main_panel.get_timeline_canvas().MoveSelectedEventDown()
+
         cbx = NONE
         items = ((ID_CREATE_EVENT, create_event, _("Create &Event..."), cbx),
                  (ID_EDIT_EVENT, edit_event, _("&Edit Selected Event..."), cbx),
                  (ID_DUPLICATE_EVENT, duplicate_event, _("&Duplicate Selected Event..."), cbx),
                  (ID_SET_CATEGORY_ON_SELECTED, set_categoryon_selected, _("Set Category on Selected Events..."), cbx),
+                 (ID_MOVE_EVENT_UP, move_up_handler, _("Move event up\tAlt+Up"), cbx),
+                 (ID_MOVE_EVENT_DOWN, move_down_handler, _("Move event down\tAlt+Down"), cbx),
                  None,
                  (ID_COMPRESS, compress, _("&Compress timeline Events..."), cbx),
                  None,
@@ -795,6 +805,8 @@ class MainFrameApiUsedByController(object):
         mnu_edit_event.Enable(one_event_selected)
         mnu_duplicate_event.Enable(one_event_selected)
         mnu_set_category.Enable(some_event_selected)
+        self.timeline_menu.FindItemById(ID_MOVE_EVENT_UP).Enable(one_event_selected)
+        self.timeline_menu.FindItemById(ID_MOVE_EVENT_DOWN).Enable(one_event_selected)
         # self.mnu_timeline_edit_event.Enable(one_event_selected)
         # self.mnu_timeline_duplicate_event.Enable(one_event_selected)
         # self.mnu_timeline_set_event_category.Enable(some_event_selected)

@@ -420,18 +420,24 @@ class TimelineCanvasController(object):
             self._delete_selected_events()
         elif alt_down:
             if keycode == wx.WXK_UP:
-                self._try_move_event_vertically(True)
+                self.move_selected_event_up()
             elif keycode == wx.WXK_DOWN:
-                self._try_move_event_vertically(False)
+                self.move_selected_event_down()
             elif keycode in (wx.WXK_RIGHT, wx.WXK_NUMPAD_RIGHT):
                 self._scroll_timeline_view_by_factor(LEFT_RIGHT_SCROLL_FACTOR)
             elif keycode in (wx.WXK_LEFT, wx.WXK_NUMPAD_LEFT):
                 self._scroll_timeline_view_by_factor(-LEFT_RIGHT_SCROLL_FACTOR)
         else:
             if keycode == wx.WXK_UP:
-                self._try_move_event_vertically(True)
+                self.move_selected_event_up()
             elif keycode == wx.WXK_DOWN:
-                self._try_move_event_vertically(False)
+                self.move_selected_event_down()
+
+    def move_selected_event_up(self):
+        self._try_move_event_vertically(True)
+
+    def move_selected_event_down(self):
+        self._try_move_event_vertically(False)
 
     def _try_move_event_vertically(self, up=True):
         if self._one_and_only_one_event_selected():
