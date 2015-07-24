@@ -19,8 +19,8 @@
 from mock import Mock
 import wx
 
-from timelinelib.wxgui.canvas.resize import ResizeByDragInputHandler
-from timelinelib.wxgui.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.wxgui.components.canvas.resize import ResizeByDragInputHandler
+from timelinelib.wxgui.components.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
 from timelinelib.wxgui.dialogs.mainframe.mainframe import StatusBarAdapter
 from timelinetest import UnitTestCase

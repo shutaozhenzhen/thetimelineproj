@@ -69,8 +69,9 @@ GUI:
   more convenient to use Timeline on a touch device.
   (`#58 <https://sourceforge.net/p/thetimelineproj/backlog/58>`_)
 
-* Events can be moved vertically by selecting them and pressing Up/Down. This
-  makes it more obvious how to move events vertically.
+* Events can be moved vertically by selecting them and pressing Up/Down or
+  selecting menu items. This makes it more obvious how to move events
+  vertically.
   (`#45 <https://sourceforge.net/p/thetimelineproj/backlog/45/>`_)
 
 Exporting:

@@ -345,6 +345,11 @@ class DefaultDrawingAlgorithm(Drawer):
         y = rect.Y + rect.Height
         y2 = self._get_end_of_line(event)
         self._set_line_color(view_properties, event)
+        if event.is_period():
+            if self.config.draw_period_events_to_right:
+                x += 1
+            self.dc.DrawLine(x-1, y, x-1, y2)
+            self.dc.DrawLine(x+1, y, x+1, y2)
         self.dc.DrawLine(x, y, x, y2)
         self.dc.DrawCircle(x, y2, 2)
 

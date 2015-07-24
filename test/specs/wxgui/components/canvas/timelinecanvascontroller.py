@@ -26,8 +26,8 @@ from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.plugin import factory
-from timelinelib.wxgui.canvas.timelinecanvascontroller import HSCROLL_STEP
-from timelinelib.wxgui.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.wxgui.components.canvas.timelinecanvascontroller import HSCROLL_STEP
+from timelinelib.wxgui.components.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
 from timelinelib.wxgui.dialogs.mainframe.mainframe import StatusBarAdapter
 from timelinetest import UnitTestCase

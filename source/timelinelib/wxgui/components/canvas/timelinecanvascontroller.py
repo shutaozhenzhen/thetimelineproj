@@ -36,12 +36,12 @@ from timelinelib.utilities.encodings import to_unicode
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
 from timelinelib.utils import ex_msg
-from timelinelib.wxgui.canvas.move import MoveByDragInputHandler
-from timelinelib.wxgui.canvas.noop import NoOpInputHandler
-from timelinelib.wxgui.canvas.periodevent import CreatePeriodEventByDragInputHandler
-from timelinelib.wxgui.canvas.resize import ResizeByDragInputHandler
-from timelinelib.wxgui.canvas.scrolldrag import ScrollByDragInputHandler
-from timelinelib.wxgui.canvas.zoom import ZoomByDragInputHandler
+from timelinelib.wxgui.components.canvas.move import MoveByDragInputHandler
+from timelinelib.wxgui.components.canvas.noop import NoOpInputHandler
+from timelinelib.wxgui.components.canvas.periodevent import CreatePeriodEventByDragInputHandler
+from timelinelib.wxgui.components.canvas.resize import ResizeByDragInputHandler
+from timelinelib.wxgui.components.canvas.scrolldrag import ScrollByDragInputHandler
+from timelinelib.wxgui.components.canvas.zoom import ZoomByDragInputHandler
 from timelinelib.wxgui.components.font import Font
 
 
@@ -420,18 +420,24 @@ class TimelineCanvasController(object):
             self._delete_selected_events()
         elif alt_down:
             if keycode == wx.WXK_UP:
-                self._try_move_event_vertically(True)
+                self.move_selected_event_up()
             elif keycode == wx.WXK_DOWN:
-                self._try_move_event_vertically(False)
+                self.move_selected_event_down()
             elif keycode in (wx.WXK_RIGHT, wx.WXK_NUMPAD_RIGHT):
                 self._scroll_timeline_view_by_factor(LEFT_RIGHT_SCROLL_FACTOR)
             elif keycode in (wx.WXK_LEFT, wx.WXK_NUMPAD_LEFT):
                 self._scroll_timeline_view_by_factor(-LEFT_RIGHT_SCROLL_FACTOR)
         else:
             if keycode == wx.WXK_UP:
-                self._try_move_event_vertically(True)
+                self.move_selected_event_up()
             elif keycode == wx.WXK_DOWN:
-                self._try_move_event_vertically(False)
+                self.move_selected_event_down()
+
+    def move_selected_event_up(self):
+        self._try_move_event_vertically(True)
+
+    def move_selected_event_down(self):
+        self._try_move_event_vertically(False)
 
     def _try_move_event_vertically(self, up=True):
         if self._one_and_only_one_event_selected():
@@ -471,6 +477,7 @@ class TimelineCanvasController(object):
     def _context_menu_on_menu_center(self, evt):
         """The 'Center' context menu has been selected."""
         self.divider_line_slider.SetValue(50)
+        self.config.divider_line_slider_pos = self.divider_line_slider.GetValue()
         self._redraw_timeline()
 
     def _timeline_changed(self, state_change):

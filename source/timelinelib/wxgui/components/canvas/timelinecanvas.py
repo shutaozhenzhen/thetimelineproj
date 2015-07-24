@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.plugin import factory
-from timelinelib.wxgui.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.wxgui.components.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.dialogs.duplicateevent.duplicateventdialog import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_create_event_editor
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_event_editor_for
@@ -41,6 +41,12 @@ class TimelineCanvas(wx.Panel):
                                                    divider_line_slider, fn_handle_db_error, factory)
         self.surface_bitmap = None
         self._create_gui()
+
+    def MoveSelectedEventUp(self):
+        self.controller.move_selected_event_up()
+
+    def MoveSelectedEventDown(self):
+        self.controller.move_selected_event_down()
 
     def set_event_box_drawer(self, event_box_drawer):
         self.controller.set_event_box_drawer(event_box_drawer)
