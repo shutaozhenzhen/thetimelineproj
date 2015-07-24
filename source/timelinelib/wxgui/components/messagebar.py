@@ -36,10 +36,9 @@ class MessageBar(wx.Panel):
         self._add_with_border(self._inner_panel, self._label, 5,
                               style=wx.ALIGN_CENTER)
 
-
     def _add_with_border(self, parent, child, border, style=0):
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(child, proportion=1, flag=wx.ALL|style, border=border)
+        sizer.Add(child, proportion=1, flag=wx.ALL | style, border=border)
         parent.SetSizer(sizer)
 
     def ShowWarningMessage(self, message):

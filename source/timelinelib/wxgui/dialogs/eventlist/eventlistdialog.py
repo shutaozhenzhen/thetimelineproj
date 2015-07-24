@@ -22,6 +22,10 @@ from timelinelib.wxgui.utils import BORDER
 
 
 class EventListDialog(wx.Dialog):
+    """
+    This dialog is used to present a list of Events that are matched
+    when the user has searched for events.
+    """
 
     def __init__(self, parent, event_list):
         wx.Dialog.__init__(self, parent, title=_("Found Events"), name="event_list",

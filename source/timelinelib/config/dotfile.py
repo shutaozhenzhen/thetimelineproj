@@ -30,6 +30,8 @@ from ConfigParser import ConfigParser
 from ConfigParser import DEFAULTSECT
 import os.path
 
+import wx
+
 from timelinelib.wxgui.components.font import Font
 
 
@@ -76,7 +78,7 @@ DEFAULTS = {
     USE_INERTIAL_SCROLLING: "False",
     EXPERIMENTAL_FEATURES: "",
     DIVIDER_LINE_SLIDER_POS: "50",
-    NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS: "True",
+    NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS: "False",
     DRAW_POINT_EVENTS_TO_RIGHT: "False",
     EVENT_EDITOR_SHOW_PERIOD: "False",
     EVENT_EDITOR_SHOW_TIME: "False",
@@ -318,8 +320,8 @@ class Config(object):
     legend_font = property(get_legend_font, set_legend_font)
 
     def _set_default_fonts(self):
-        DEFAULTS[MAJOR_STRIP_FONT] = Font(12).serialize()
-        DEFAULTS[MINOR_STRIP_FONT] = Font(10).serialize()
+        DEFAULTS[MAJOR_STRIP_FONT] = Font(12, weight=wx.FONTWEIGHT_BOLD).serialize()
+        DEFAULTS[MINOR_STRIP_FONT] = Font(8).serialize()
         DEFAULTS[LEGEND_FONT] = Font(8).serialize()
 
     def get_event_editor_show_period(self):

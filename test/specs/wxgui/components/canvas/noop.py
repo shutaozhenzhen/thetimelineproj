@@ -19,8 +19,8 @@
 from mock import Mock
 import wx
 
-from timelinelib.wxgui.canvas.noop import NoOpInputHandler
-from timelinelib.wxgui.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.wxgui.components.canvas.noop import NoOpInputHandler
+from timelinelib.wxgui.components.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
 from timelinetest import UnitTestCase
 from timelinetest.utils import an_event, an_event_with, human_time_to_gregorian

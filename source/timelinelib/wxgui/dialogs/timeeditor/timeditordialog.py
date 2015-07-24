@@ -26,6 +26,12 @@ import timelinelib.calendar.gregorian as gregorian
 
 
 class TimeEditorDialog(wx.Dialog):
+    """
+    This dialog is used to enter a date or a time depending on which
+    time type the timeline has.
+    It is opened when the user selects the Navigate -> Go to Date/Time
+    is selected.
+    """
 
     def __init__(self, parent, config, time_type, time, title):
         wx.Dialog.__init__(self, parent, title=title)
