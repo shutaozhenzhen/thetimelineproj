@@ -78,9 +78,9 @@ Exporting:
 
 * Exporting a whole timeline to several images now preserves the vertical position
   of events between images. So now images can be put together and the events
-  will allign corectly.
+  will align correctly.
   (`#72 <https://sourceforge.net/p/thetimelineproj/backlog/72/>`_)
-  
+
 Misc:
 
 * Undo works after compress. This allows users to undo compress action if
