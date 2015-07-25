@@ -20,6 +20,8 @@ import wx
 
 from timelinelib.data import TimePeriod
 from timelinelib.drawing.utils import Metrics
+from timelinelib.time.gregoriantime import StripDay
+from timelinelib.time.gregoriantime import StripWeekday
 
 
 FORWARD = 1
@@ -311,6 +313,9 @@ class TimelineScene(object):
         self.major_strip, self.minor_strip = self._db.get_time_type().choose_strip(self._metrics, self._config)
         fill(self.major_strip_data, self.major_strip)
         fill(self.minor_strip_data, self.minor_strip)
+
+    def minor_strip_is_day(self):
+        return isinstance(self.minor_strip, StripDay) or isinstance(self.minor_strip, StripWeekday)
 
     def get_hidden_event_count(self):
         return len(self.events_from_db) - self._count_visible_events()
