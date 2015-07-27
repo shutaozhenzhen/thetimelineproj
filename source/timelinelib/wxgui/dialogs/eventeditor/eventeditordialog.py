@@ -116,7 +116,7 @@ class EventEditorDialog(wx.Dialog):
         when_box.Add(self.lbl_to, flag=flag)
         when_box.AddSpacer(BORDER)
         when_box.Add(self.dtp_end, proportion=1,
-                     flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN)
+                     flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.EXPAND | wx.ALL)
         grid.Add(when_box, (row, 1))
 
     def _create_time_picker(self):
@@ -131,13 +131,13 @@ class EventEditorDialog(wx.Dialog):
         self.chb_fuzzy = self._create_fuzzy_checkbox(when_box)
         self.chb_locked = self._create_locked_checkbox(when_box)
         self.chb_ends_today = self._create_ends_today_checkbox(when_box)
-        grid.Add(when_box, (row, 1))
+        grid.Add(when_box, (row, 1), flag=wx.EXPAND | wx.ALL)
 
     def _create_container_listbox(self, grid, row):
         self.lst_containers = wx.Choice(self, wx.ID_ANY)
         label = wx.StaticText(self, label=_("Container:"))
-        grid.Add(label, (row, 0))
-        grid.Add(self.lst_containers, (row, 1))
+        grid.Add(label, (row, 0), flag=wx.EXPAND | wx.ALL)
+        grid.Add(self.lst_containers, (row, 1), flag=wx.EXPAND | wx.ALL)
         self.Bind(wx.EVT_CHOICE, self._lst_containers_on_choice,
                   self.lst_containers)
 
@@ -247,7 +247,7 @@ class EventEditorDialog(wx.Dialog):
 
     def _create_notebook_content(self, grid, row):
         self.notebook = self._create_notebook()
-        grid.Add(self.notebook, (row, 0), span=(1, 2))
+        grid.Add(self.notebook, (row, 0), span=(1, 2), flag=wx.EXPAND | wx.ALL)
 
     def _create_notebook(self):
         self.event_data = []
@@ -287,7 +287,7 @@ class EventEditorDialog(wx.Dialog):
         editor = editor_class(panel, self)
         notebook.AddPage(panel, name)
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(editor, flag=wx.EXPAND, proportion=1)
+        sizer.Add(editor, flag=wx.EXPAND | wx.ALL, proportion=1)
         panel.SetSizer(sizer)
         return editor
 
