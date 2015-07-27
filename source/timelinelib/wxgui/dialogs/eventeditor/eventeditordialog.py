@@ -242,7 +242,7 @@ class EventEditorDialog(wx.Dialog):
         self.lst_category = CategoryChoice(self, self.timeline)
         label = wx.StaticText(self, label=_("Category:"))
         grid.Add(label, (row, 0))
-        grid.Add(self.lst_category, (row, 1))
+        grid.Add(self.lst_category, (row, 1), flag=wx.EXPAND)
         self.Bind(wx.EVT_CHOICE, self.lst_category.on_choice, self.lst_category)
 
     def _create_notebook_content(self, grid, row):
