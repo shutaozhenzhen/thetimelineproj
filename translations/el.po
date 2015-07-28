@@ -7,371 +7,361 @@ msgid ""
 msgstr ""
 "Project-Id-Version: thetimelineproj\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2015-01-18 11:17+0100\n"
-"PO-Revision-Date: 2015-01-27 20:08+0000\n"
+"POT-Creation-Date: 2015-07-26 11:58+0200\n"
+"PO-Revision-Date: 2015-05-28 08:49+0000\n"
 "Last-Translator: Yannis Kaskamanidis <ttnfy17@yahoo.gr>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-04-26 06:36+0000\n"
-"X-Generator: Launchpad (build 17430)\n"
+"X-Launchpad-Export-Date: 2015-07-27 07:36+0000\n"
+"X-Generator: Launchpad (build 17628)\n"
 
-#: timelinelib\application.py:54
-#, python-format
-msgid "File '%s' does not exist."
-msgstr "Το αρχείο '%s' δεν υπάρχει."
-
-#: timelinelib\application.py:103
-msgid ""
-"Someoneelse has changed the Timeline.\n"
-"You have two choices!\n"
-"  1. Set Timeline in Read-Only mode.\n"
-"  2. Synchronize Timeline.\n"
-"\n"
-"Do you want to Synchronize?"
-msgstr ""
-"Κάποιος έχει μετατρέψει την εφαρμογή Timeline.\n"
-"Έχετε δύο επιλογές:\n"
-"  1. Να βάλετε την εφαρμογή σε λειτουργία 'Μόνο ανάγνωση'.\n"
-"  2. Να κάνετε συγχρονισμό της εφαρμογής.\n"
-"\n"
-"Θέλετε να κάνετε συγχρονισμό;"
-
-#: timelinelib\calendar\monthnames.py:38
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:38
 msgid "Jan"
 msgstr "Ιαν"
 
-#: timelinelib\calendar\monthnames.py:39
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:39
 msgid "Feb"
 msgstr "Φεβ"
 
-#: timelinelib\calendar\monthnames.py:40
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:40
 msgid "Mar"
 msgstr "Μάρ"
 
-#: timelinelib\calendar\monthnames.py:41
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:41
 msgid "Apr"
 msgstr "Απρ"
 
-#: timelinelib\calendar\monthnames.py:42
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:42
 msgid "May"
 msgstr "Μάι"
 
-#: timelinelib\calendar\monthnames.py:43
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:43
 msgid "Jun"
 msgstr "Ιούν"
 
-#: timelinelib\calendar\monthnames.py:44
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:44
 msgid "Jul"
 msgstr "Ιούλ"
 
-#: timelinelib\calendar\monthnames.py:45
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:45
 msgid "Aug"
 msgstr "Αύγ"
 
-#: timelinelib\calendar\monthnames.py:46
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:46
 msgid "Sep"
 msgstr "Σεπ"
 
-#: timelinelib\calendar\monthnames.py:47
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:47
 msgid "Oct"
 msgstr "Οκτ"
 
-#: timelinelib\calendar\monthnames.py:48
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:48
 msgid "Nov"
 msgstr "Νοέ"
 
-#: timelinelib\calendar\monthnames.py:49
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\monthnames.py:49
 msgid "Dec"
 msgstr "Δεκ"
 
-#: timelinelib\calendar\weekdaynames.py:22
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\weekdaynames.py:22
 msgid "Mon"
 msgstr "Δευ"
 
-#: timelinelib\calendar\weekdaynames.py:23
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\weekdaynames.py:23
 msgid "Tue"
 msgstr "Τρί"
 
-#: timelinelib\calendar\weekdaynames.py:24
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\weekdaynames.py:24
 msgid "Wed"
 msgstr "Τετ"
 
-#: timelinelib\calendar\weekdaynames.py:25
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\weekdaynames.py:25
 msgid "Thu"
 msgstr "Πέμ"
 
-#: timelinelib\calendar\weekdaynames.py:26
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\weekdaynames.py:26
 msgid "Fri"
 msgstr "Παρ"
 
-#: timelinelib\calendar\weekdaynames.py:27
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\weekdaynames.py:27
 msgid "Sat"
 msgstr "Σάβ"
 
-#: timelinelib\calendar\weekdaynames.py:28
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\calendar\weekdaynames.py:28
 msgid "Sun"
 msgstr "Κυρ"
 
-#: timelinelib\config\shortcut.py:49
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:49
 msgid "File"
 msgstr "Αρχείο"
 
-#: timelinelib\config\shortcut.py:50 timelinelib\view\drawingarea.py:223
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:50
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:247
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:123
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:124
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:125
 msgid "Edit"
 msgstr "Επεξεργασία"
 
-#: timelinelib\config\shortcut.py:51
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:51
 msgid "View"
 msgstr "Προβολή"
 
-#: timelinelib\config\shortcut.py:52 timelinelib\help\pages.py:126
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:52
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:125
 msgid "Timeline"
 msgstr "Χρονογραμμή"
 
-#: timelinelib\config\shortcut.py:53 timelinelib\config\shortcut.py:56
-#: timelinelib\config\shortcut.py:57
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:53
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:56
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:57
 msgid "Navigate"
 msgstr "Περιήγηση"
 
-#: timelinelib\config\shortcut.py:54
-#: timelinelib\wxgui\dialogs\helpbrowser.py:36
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:54
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\helpbrowser\helpbrowserframe.py:36
 msgid "Help"
 msgstr "Βοήθεια"
 
-#: timelinelib\config\shortcut.py:60
-#: timelinelib\wxgui\dialogs\mainframe.py:172
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:59
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:197
 msgid "File Timeline..."
 msgstr "Χρονογραμμή..."
 
-#: timelinelib\config\shortcut.py:61
-#: timelinelib\wxgui\dialogs\mainframe.py:178
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:60
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:203
 msgid "Numeric Timeline..."
 msgstr "Αριθμητική χρονογραμμή..."
 
-#: timelinelib\config\shortcut.py:62
-#: timelinelib\wxgui\dialogs\mainframe.py:184
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:61
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:209
 msgid "Directory Timeline..."
 msgstr "Χρονογραμμή φακέλου..."
 
-#: timelinelib\config\shortcut.py:63
-#: timelinelib\wxgui\dialogs\mainframe.py:200
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:62
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:225
 msgid "Save As..."
 msgstr "Αποθήκευση ως...."
 
-#: timelinelib\config\shortcut.py:64
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:63
 msgid "Import..."
 msgstr "Εισαγωγή..."
 
-#: timelinelib\config\shortcut.py:65
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:64
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:35
 msgid "Export Current view to Image..."
 msgstr "Εξαγωγή τρέχουσας προβολής σε αρχείο εικόνας..."
 
-#: timelinelib\config\shortcut.py:66
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:65
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:51
 msgid "Export Whole Timeline to Images..."
 msgstr "Εξαγωγή όλης της χρονολογραμμής σε εικόνες..."
 
-#: timelinelib\config\shortcut.py:67
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:66
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttosvg.py:54
 msgid "Export to SVG..."
 msgstr "Εξαγωγή σε SVG..."
 
-#: timelinelib\config\shortcut.py:68
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:67
 msgid "Exit"
 msgstr "Έξοδος"
 
-#: timelinelib\config\shortcut.py:70
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:69
 msgid "Find"
 msgstr "Αναζήτηση"
 
-#: timelinelib\config\shortcut.py:71
-#: timelinelib\wxgui\dialogs\preferences.py:29
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:70
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:31
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
-#: timelinelib\config\shortcut.py:72
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:71
 msgid "Shortcuts"
 msgstr "Συντομεύσεις"
 
-#: timelinelib\config\shortcut.py:74
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:73
 msgid "Sidebar"
 msgstr "Πλευρική μπάρα"
 
-#: timelinelib\config\shortcut.py:75
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:74
 msgid "Legend"
 msgstr "Υπόμνημα"
 
-#: timelinelib\config\shortcut.py:76
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:75
 msgid "Ballons on hover"
 msgstr "Μπαλόνια κατά την αιώρηση"
 
-#: timelinelib\config\shortcut.py:77
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:76
 msgid "Zoom In"
 msgstr "Μεγέθυνση"
 
-#: timelinelib\config\shortcut.py:78
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:77
 msgid "Zoom Out"
 msgstr "Σμίκρυνση"
 
-#: timelinelib\config\shortcut.py:79
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:78
 msgid "Vertical Zoom In"
 msgstr "Κάθετη μεγέθυνση"
 
-#: timelinelib\config\shortcut.py:80
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:79
 msgid "Vertical Zoom Out"
 msgstr "Κάθετη σμίκρυνση"
 
-#: timelinelib\config\shortcut.py:82
-#: timelinelib\wxgui\dialogs\eventeditor.py:494
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:81
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:520
 msgid "Create Event"
 msgstr "Δημιουργία γεγονότος"
 
-#: timelinelib\config\shortcut.py:83
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:82
 msgid "Edit Selected Event"
 msgstr "Επεξεργασία επιλεγμένου γεγονότος"
 
-#: timelinelib\config\shortcut.py:84
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:83
 msgid "Duplicate Selected Event"
 msgstr "Δημιουργία αντιγράφου επιλεγμένου γεγονότος"
 
-#: timelinelib\config\shortcut.py:85
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:84
 msgid "Set Category on Selected Events"
 msgstr "Ορισμός κατηγορίας"
 
-#: timelinelib\config\shortcut.py:86
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:85
 msgid "Measure Distance between two Events"
 msgstr "Μέτρηση απόστασης μεταξύ δύο γεγονότων"
 
-#: timelinelib\config\shortcut.py:87
-#: timelinelib\wxgui\dialogs\setcategoryeditor.py:94
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:86
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\setcategoryeditor\setcategoryeditordialog.py:94
 msgid "Set Category on events without category"
 msgstr "Καθορισμός κατηγορίας για γεγονότα χωρίς κατηγορία"
 
-#: timelinelib\config\shortcut.py:88
-#: timelinelib\wxgui\dialogs\categorieseditor.py:38
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:87
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\categoryeditors\categorieseditordialog.py:38
 msgid "Edit Categories"
 msgstr "Επεξεργασία κατηγοριών"
 
-#: timelinelib\config\shortcut.py:89
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:88
 msgid "Read Only"
 msgstr "Μόνο για ανάγνωση"
 
-#: timelinelib\config\shortcut.py:90
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:89
 msgid "Undo"
 msgstr "Αναίρεση"
 
-#: timelinelib\config\shortcut.py:91
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:90
 msgid "Redo"
 msgstr "Ακύρωση αναίρεσης"
 
-#: timelinelib\config\shortcut.py:93
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:92
 msgid "Contents"
 msgstr "Περιεχόμενα"
 
-#: timelinelib\config\shortcut.py:94
-#: timelinelib\wxgui\dialogs\mainframe.py:1361
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:93
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\welcomepanel.py:42
 msgid "Getting started tutorial"
 msgstr "Βοήθημα για να ξεκινήσετε"
 
-#: timelinelib\config\shortcut.py:95 timelinelib\wxgui\dialogs\feature.py:70
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:94
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feature\featuredialog.py:69
 msgid "Give Feedback"
 msgstr "Ανατροφοδότηση"
 
-#: timelinelib\config\shortcut.py:96 timelinelib\help\pages.py:427
-#: timelinelib\wxgui\dialogs\mainframe.py:1397
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:95
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:441
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\errorpanel.py:47
 msgid "Contact"
 msgstr "Επικοινωνία"
 
-#: timelinelib\config\shortcut.py:97
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:96
 msgid "About"
 msgstr "Σχετικά"
 
-#: timelinelib\config\shortcut.py:99
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:98
 msgid "Find First Event"
 msgstr "Πρώτο γεγονός"
 
-#: timelinelib\config\shortcut.py:100
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:99
 msgid "Find Last Event"
 msgstr "Τελευταίο γεγονός"
 
-#: timelinelib\config\shortcut.py:101
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\config\shortcut.py:100
 msgid "Find All Events"
 msgstr "Όλα τα γεγονότα"
 
-#: timelinelib\data\db.py:183
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\data\db.py:197
 msgid "Displayed period must be > 0."
 msgstr "Η εμφανιζόμενη χρονική περίοδος πρέπει να είναι > 0."
 
-#: timelinelib\data\event.py:257
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\data\event.py:265
 msgid "Duration"
 msgstr "Διάρκεια"
 
-#: timelinelib\data\timeperiod.py:72
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\data\timeperiod.py:72
 msgid "Start time "
 msgstr "Χρόνος έναρξης "
 
-#: timelinelib\data\timeperiod.py:74
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\data\timeperiod.py:74
 msgid "End time "
 msgstr "Χρόνος λήξης "
 
-#: timelinelib\data\timeperiod.py:84
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\data\timeperiod.py:85
 msgid "Start time can't be after end time"
 msgstr "Ο χρόνος έναρξης δεν μπορεί να είναι μετά τον χρόνο λήξης"
 
-#: timelinelib\dataexport\bitmap.py:55
-msgid "Image files"
-msgstr "Αρχεία εικόνων"
-
-#: timelinelib\dataexport\bitmap.py:59
-msgid "Export to Image"
-msgstr "Εξαγωγή σε εικόνα"
-
-#: timelinelib\dataexport\bitmap.py:69
-#: timelinelib\wxgui\dialogs\mainframe.py:947
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\dir.py:91
 #, python-format
-msgid "File '%s' exists. Overwrite?"
-msgstr "Το αρχείο '%s' υπάρχει. Θέλετε να αντικατασταθεί;"
+msgid "Unable to read from filename '%s'."
+msgstr ""
 
-#: timelinelib\dataimport\dir.py:92 timelinelib\dataimport\ics.py:56
-#, python-format
-msgid "Unable to read from file '%s'."
-msgstr "Αδυναμία ανάγνωσης από το αρχείο '%s'."
-
-#: timelinelib\dataimport\ics.py:50 timelinelib\dataimport\timelinexml.py:84
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\ics.py:50
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\timelinexml.py:86
 #, python-format
 msgid "Unable to read timeline data from '%s'."
 msgstr "Αδυναμία ανάγνωσης  δεδομένων χρονογραμμής από το '%s'."
 
-#: timelinelib\dataimport\tutorial.py:32
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\ics.py:56
+#, python-format
+msgid "Unable to read from file '%s'."
+msgstr "Αδυναμία ανάγνωσης από το αρχείο '%s'."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:32
 msgid "Welcome"
 msgstr "Καλωσορίσατε"
 
-#: timelinelib\dataimport\tutorial.py:34
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:34
 msgid "Welcome to Timeline"
 msgstr "Καλωσήλθατε στο Timeline"
 
-#: timelinelib\dataimport\tutorial.py:37
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:37
 msgid "Intro"
 msgstr "Εισαγωγή"
 
-#: timelinelib\dataimport\tutorial.py:39
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:39
+msgid "This event has hyperlinks"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:40
+msgid "Right-click for context menu where the hyperlinks can be accessed."
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:45
 msgid "Hover me!"
 msgstr "Αιωρήσου επάνω μου!"
 
-#: timelinelib\dataimport\tutorial.py:40
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:46
 msgid "Hovering events with a triangle shows the event description."
 msgstr ""
 "Με αιώρηση πάνω από γεγονότα με τριγωνάκι εμφανίζεται η περιγραφή τους."
 
-#: timelinelib\dataimport\tutorial.py:42
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:48
 msgid "Features"
 msgstr "Χαρακτηριστικά"
 
-#: timelinelib\dataimport\tutorial.py:44
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:50
 msgid "Scroll"
 msgstr "Κύλιση"
 
-#: timelinelib\dataimport\tutorial.py:45
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:51
 msgid ""
 "Left click somewhere on the timeline and start dragging.\n"
 "\n"
@@ -386,19 +376,19 @@ msgstr ""
 "Μπορείτε, επίσης, να κάνετε μεσαίο κλικ με το ποντίκι, για να κεντράρετε "
 "γύρω από εκείνο το σημείο."
 
-#: timelinelib\dataimport\tutorial.py:53
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:59
 msgid "Container"
 msgstr "Περιέκτης"
 
-#: timelinelib\dataimport\tutorial.py:54
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:60
 msgid "?"
 msgstr ";"
 
-#: timelinelib\dataimport\tutorial.py:59
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:65
 msgid "Resize me"
 msgstr "Άλλαξε το μέγεθός μου"
 
-#: timelinelib\dataimport\tutorial.py:60
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:66
 msgid ""
 "Container Subevent 1\n"
 "Click on the event to get the resize handles"
@@ -406,11 +396,11 @@ msgstr ""
 "Υπογεγονός περιέκτη 1\n"
 "Κάντε κλικ στο γεγονός για να εμφανιστούν τα χειριστήρια αλλαγής μεγέθους"
 
-#: timelinelib\dataimport\tutorial.py:65
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:71
 msgid "Drag me"
 msgstr "Σύρε με"
 
-#: timelinelib\dataimport\tutorial.py:66
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:72
 msgid ""
 "Container Subevent 2\n"
 "\n"
@@ -428,11 +418,11 @@ msgstr ""
 "Για να σύρετε ολόκληρο τον περιέκτη, ενώ κρατάτε πατημένο το πλήκτρο Alt "
 "κάντε κλικ στο σημείο συρσίματος στο κέντρο του περιέκτη και σύρετέ τον."
 
-#: timelinelib\dataimport\tutorial.py:73
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:79
 msgid "Zoom"
 msgstr "Μεγέθυνση"
 
-#: timelinelib\dataimport\tutorial.py:74
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:80
 msgid ""
 "Hold down Ctrl while scrolling the mouse wheel.\n"
 "\n"
@@ -442,11 +432,12 @@ msgstr ""
 "\n"
 "Κρατήστε πατημένο το Shift καθώς σύρετε με το ποντίκι."
 
-#: timelinelib\dataimport\tutorial.py:80 timelinelib\help\pages.py:249
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:86
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:263
 msgid "Create event"
 msgstr "Δημιουργία γεγονότος"
 
-#: timelinelib\dataimport\tutorial.py:81
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:87
 msgid ""
 "Double click somewhere on the timeline.\n"
 "\n"
@@ -457,19 +448,20 @@ msgstr ""
 "Κρατήστε πατημένο το Ctrl καθώς σύρετε το ποντίκι για να επιλέξετε μια "
 "χρονική περίοδο."
 
-#: timelinelib\dataimport\tutorial.py:87 timelinelib\help\pages.py:293
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:93
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:307
 msgid "Edit event"
 msgstr "Επεξεργασία γεγονότος"
 
-#: timelinelib\dataimport\tutorial.py:88
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:94
 msgid "Double click on an event."
 msgstr "Διπλό κλικ σε ένα γεγονός"
 
-#: timelinelib\dataimport\tutorial.py:92
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:98
 msgid "Select event"
 msgstr "Επιλογή γεγονότος"
 
-#: timelinelib\dataimport\tutorial.py:93
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:99
 msgid ""
 "Click on it.\n"
 "\n"
@@ -480,28 +472,29 @@ msgstr ""
 "Κρατήστε πατημένο το Ctrl ενώ κάνετε κλικ σε γεγονότα, για να επιλέξετε "
 "πολλά από αυτά."
 
-#: timelinelib\dataimport\tutorial.py:99 timelinelib\help\pages.py:387
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:105
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:401
 msgid "Delete event"
 msgstr "Διαγραφή γεγονότος"
 
-#: timelinelib\dataimport\tutorial.py:100
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:106
 msgid "Select events to be deleted and press the Del key."
 msgstr "Επιλέξτε γεγονότα προς διαγραφή και πατήστε το πλήκτρο Del."
 
-#: timelinelib\dataimport\tutorial.py:104
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:110
 msgid "Resize and move me!"
 msgstr "Άλλαξε το μέγεθός μου και μετακίνησέ με!"
 
-#: timelinelib\dataimport\tutorial.py:105
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:111
 msgid "First select me and then drag the handles."
 msgstr "Πρώτα επίλεξέ με και μετά σύρε τα χειριστήρια."
 
-#: timelinelib\dataimport\tutorial.py:108
-#: timelinelib\dataimport\tutorial.py:110
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:114
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:116
 msgid "Saving"
 msgstr "Αποθήκευση"
 
-#: timelinelib\dataimport\tutorial.py:111
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\dataimport\tutorial.py:117
 msgid ""
 "This timeline is stored in memory and modifications to it will not be "
 "persisted between sessions.\n"
@@ -514,47 +507,47 @@ msgstr ""
 "Επιλέξτε Αρχείο/Νέα/Χρονογραμμή για δημιουργία χρονογραμμής που αποθηκεύεται "
 "στον σκληρό δίσκο."
 
-#: timelinelib\db\utils.py:35
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\utils.py:34
 #, python-format
 msgid "Unable to save timeline data to '%s'. File left unmodified."
 msgstr ""
 "Αδυναμία αποθήκευσης των δεδομένων της χρονογραμμής στο '%s'. Το αρχείο "
 "παρέμεινε ως είχε."
 
-#: timelinelib\db\utils.py:50
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\utils.py:49
 msgid "Unable to write timeline data."
 msgstr "Αδυναμία εγγραφής δεδομένων χρονογραμμής."
 
-#: timelinelib\db\utils.py:54
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\utils.py:53
 #, python-format
-msgid "Unable to write to temporary file '%s'."
-msgstr "Αδυναμία εγγραφής στο προσωρινό αρχείο '%s'."
+msgid "Unable to write to temporary dbfile '%s'."
+msgstr ""
 
-#: timelinelib\db\utils.py:60
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\utils.py:59
 #, python-format
 msgid "Unable to take backup to '%s'."
 msgstr "Αδυναμία λήψης αντιγράφου ασφαλείας στο '%s'."
 
-#: timelinelib\db\utils.py:65
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\utils.py:64
 #, python-format
-msgid "Unable to rename temporary file '%s' to original."
-msgstr "Αδυναμία μετονομασίας του προσωρινού αρχείου '%s' στο αρχικό."
+msgid "Unable to rename temporary dbfile '%s' to original."
+msgstr ""
 
-#: timelinelib\db\utils.py:71
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\utils.py:70
 #, python-format
-msgid "Unable to delete backup file '%s'."
-msgstr "Αδυναμία διαγραφής του αντιγράφου ασφαλείας '%s'."
+msgid "Unable to delete backup dbfile '%s'."
+msgstr ""
 
-#: timelinelib\db\__init__.py:52
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\__init__.py:52
 #, python-format
 msgid "Unable to open timeline '%s'."
 msgstr "Αδυναμία ανοίγματος χρονογραμμής '%s'."
 
-#: timelinelib\db\__init__.py:53
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\__init__.py:53
 msgid "Unknown format."
 msgstr "Άγνωστη μορφή αρχείου."
 
-#: timelinelib\db\__init__.py:73
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\__init__.py:73
 msgid ""
 "You are trying to open an old file with a new version of timeline. Please "
 "install version 0.21.1 of timeline to convert it to the new format."
@@ -563,7 +556,13 @@ msgstr ""
 "Παρακαλώ εγκαταστήστε την έκδοση 0.21.1 του Timeline για να το μετατρέψετε "
 "σε νέα μορφή αρχείου."
 
-#: timelinelib\db\__init__.py:101
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\__init__.py:85
+msgid ""
+"Since the directory of the Timeline file is not writable,\n"
+"the timeline is opened in read-only mode"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\db\__init__.py:117
 msgid ""
 "Could not find iCalendar Python package. It is required for working with ICS "
 "files. See the Timeline website or the doc/installing.rst file for "
@@ -573,98 +572,23 @@ msgstr ""
 "εργασίες με αρχεία ICS. Δείτε στον ιστότοπο της εφαρμογής Timeline ή στο "
 "αρχείο doc/installing.rst για οδηγίες σχετικά με την εγκατάστασή του."
 
-#: timelinelib\editors\container.py:81 timelinelib\editors\event.py:260
-#, python-format
-msgid "Field '%s' can't be empty."
-msgstr "Το πεδίο '%s' δεν μπορεί να παραμείνει κενό."
-
-#: timelinelib\editors\container.py:81
-msgid "Name"
-msgstr "Όνομα"
-
-#: timelinelib\editors\event.py:157
-msgid "You can't change time when the Event is locked"
-msgstr "Δεν μπορείτε να αλλάξετε τον χρόνο όταν το γεγονός είναι κλειδωμένο"
-
-#: timelinelib\editors\event.py:242
-msgid "End must be > Start"
-msgstr "Το Τέλος πρέπει να είναι > Αρχή"
-
-#: timelinelib\editors\event.py:250
-msgid "Entered period is too long."
-msgstr "Η χρονική περίοδος που εισαγάγατε είναι πολύ μεγάλη."
-
-#: timelinelib\editors\event.py:255
-msgid "Start time > Now."
-msgstr "Χρόνος έναρξης > Τώρα."
-
-#: timelinelib\editors\event.py:260
-msgid "Text"
-msgstr "Κείμενο"
-
-#: timelinelib\editors\setcategory.py:32
-msgid "You must select a category!"
-msgstr "Πρέπει να επιλέξετε μια κατηγορία"
-
-#: timelinelib\editors\shortcuts.py:71
-msgid "Both Modifier and Shortcut key must be given!"
-msgstr "Και ο μετατροπέας και το πλήκτρο συντόμευσης πρέπει να δίνονται."
-
-#: timelinelib\editors\shortcuts.py:77
-#, python-format
-msgid "The shortcut %s is already bound to function '%s'!"
-msgstr "Η συντόμευση %s είναι ήδη προορισμένη για τη λειτουργία '%s'."
-
-#: timelinelib\editors\propertyeditors\alerteditor.py:71
-#: timelinelib\wxgui\dialogs\eventeditor.py:94
-msgid "When:"
-msgstr "Πότε:"
-
-#: timelinelib\editors\propertyeditors\alerteditor.py:72
-#: timelinelib\wxgui\dialogs\eventeditor.py:220
-msgid "Text:"
-msgstr "Κείμενο:"
-
-#: timelinelib\editors\propertyeditors\hyperlinkeditor.py:58
-msgid "Test"
-msgstr "Δοκιμή"
-
-#: timelinelib\editors\propertyeditors\hyperlinkeditor.py:64
-msgid "URL:"
-msgstr "Διεύθυνση URL:"
-
-#: timelinelib\editors\propertyeditors\iconeditor.py:60
-#, python-format
-msgid "Images will be scaled to fit inside a %ix%i box."
-msgstr ""
-"Το μέγεθος των εικόνων θα αλλάξει ώστε να ταιριάζουν μέσα σε ένα %ix%i "
-"πλαίσιο."
-
-#: timelinelib\editors\propertyeditors\iconeditor.py:99
-msgid "Select Icon"
-msgstr "Επιλογή εικόνας"
-
-#: timelinelib\editors\propertyeditors\progresseditor.py:33
-msgid "Progress %:"
-msgstr "Πρόοδος %:"
-
-#: timelinelib\help\pages.py:36
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:36
 msgid "Help contents"
 msgstr "Περιεχόμενα βοήθειας"
 
-#: timelinelib\help\pages.py:60
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:61
 msgid "Questions and answers"
 msgstr "Ερωτήσεις και απαντήσεις"
 
-#: timelinelib\help\pages.py:60
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:61
 msgid "Concepts"
 msgstr "Έννοιες"
 
-#: timelinelib\help\pages.py:60
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:61
 msgid "Tasks"
 msgstr "Εργασίες"
 
-#: timelinelib\help\pages.py:65
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:65
 msgid "Where is the save button?"
 msgstr "Πού είναι το κουμπί για την αποθήκευση;"
 
@@ -673,7 +597,7 @@ msgstr "Πού είναι το κουμπί για την αποθήκευση;"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:71
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:71
 msgid ""
 "\n"
 "There is no save button. Timeline will automatically save your data whenever "
@@ -683,7 +607,7 @@ msgstr ""
 "Δεν υπάρχει κουμπί για την αποθήκευση. Η χρονογραμμή θα αποθηκεύει αυτόματα "
 "τα δεδομένα σας όποτε χρειάζεται.\n"
 
-#: timelinelib\help\pages.py:78
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:77
 msgid "Where do the week numbers go if I start my weeks on Sunday?"
 msgstr ""
 "Τι γίνεται με τους αριθμούς των εβδομάδων εάν αυτές ξεκινούν Κυριακή;"
@@ -693,7 +617,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:84
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:83
 msgid ""
 "\n"
 "The date data object used does not support week numbers for weeks that start "
@@ -705,7 +629,7 @@ msgstr ""
 "αρχίζουν Κυριακή. Σχεδιάζουμε να χρησιμοποιήσουμε έναν διαφορετικό τρόπο για "
 "την εμφάνισή τους σε επόμενες εκδόσεις.\n"
 
-#: timelinelib\help\pages.py:90
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:89
 msgid "Can multiple users work with the same timeline?"
 msgstr "Είναι εφικτή η εργασία πολλών χρηστών στην ίδια χρονογραμμή;"
 
@@ -714,7 +638,7 @@ msgstr "Είναι εφικτή η εργασία πολλών χρηστών σ
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:96
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:95
 msgid ""
 "\n"
 "There are some support for multiple users to work on the same timeline "
@@ -725,22 +649,13 @@ msgid ""
 "\n"
 "- Set timeline in read-only mode.\n"
 "- Synchronize the timeline.\n"
-" \n"
+"\n"
 "During the your edit action the timeline is locked for changes by others. If "
 "you try to edit a timeline when it is locked by someone else you will be "
 "notified about this situation.\n"
 msgstr ""
-"\n"
-"Υπάρχει κάποια υποστήριξη για εργασία πολλών χρηστών στο ίδιο αρχείο "
-"χρονογραμμής.\n"
-"\n"
-"Όταν προσπαθείτε να κάνετε κάποια αλλαγή και κάποιος άλλος έχει ήδη κάνει "
-"μια αλλαγή, θα έχετε δύο επιλογές:\n"
-"\n"
-"- Να βάλετε τη χρονογραμμή σε λειτουργία 'Μόνο ανάγνωση'.\n"
-"- Να κάνετε συγχρονισμό της χρονογραμμής.\n"
 
-#: timelinelib\help\pages.py:109
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:108
 msgid "Can I Check or Uncheck all categories?"
 msgstr "Μπορώ να επιλέξω ή να αποεπιλέξω όλες τις κατηγορίες;"
 
@@ -749,7 +664,7 @@ msgstr "Μπορώ να επιλέξω ή να αποεπιλέξω όλες τ�
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:116
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:115
 msgid ""
 "\n"
 "Yes you can check or uncheck all categories as well as a lot of other "
@@ -776,7 +691,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:133
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:132
 msgid ""
 "\n"
 "The timeline shows dates according to the Gregorian calendar on the x-axis. "
@@ -805,7 +720,7 @@ msgstr ""
 "γραμμή σε δύο περιοχές . Τα γεγονότα με συγκεκριμένη ημερομηνία εμφανίζονται "
 "πάνω από αυτήν, ενώ όσα έχουν χρονική διάρκεια εμφανίζονται κάτω από αυτήν.\n"
 
-#: timelinelib\help\pages.py:143
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:142
 msgid "Scrolling Timeline"
 msgstr "Κύλιση χρονογραμμής"
 
@@ -814,7 +729,7 @@ msgstr "Κύλιση χρονογραμμής"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:150
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:149
 msgid ""
 "\n"
 "A Timeline can be scrolled both horizontal (along time axis) and vertically "
@@ -846,7 +761,7 @@ msgstr ""
 "χρονική διάρκεια.\n"
 "\n"
 
-#: timelinelib\help\pages.py:162
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:161
 msgid "Zooming Timeline"
 msgstr "Εστίαση στη χρονογραμμή"
 
@@ -855,7 +770,7 @@ msgstr "Εστίαση στη χρονογραμμή"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:169
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:168
 msgid ""
 "\n"
 "A Timeline can be Zoomed both horizontal (along time axis) and vertically "
@@ -875,7 +790,9 @@ msgstr ""
 "Για την κάθετη κύλιση, κρατήστε πατημένο το πλήκτρο Alt και κυλίστε το "
 "ροδάκι του ποντικιού.\n"
 
-#: timelinelib\help\pages.py:179
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:178
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\timelineexporter.py:78
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:83
 msgid "Events"
 msgstr "Γεγονότα"
 
@@ -884,7 +801,7 @@ msgstr "Γεγονότα"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:186
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:185
 msgid ""
 "\n"
 "An event is the basic data type for representing information on the "
@@ -899,7 +816,32 @@ msgstr ""
 "ένα συγκεκριμενο σημείο στη χρονογραμμή, ακριβής χρονολογία, ή μια χρονική "
 "περίοδος.\n"
 
-#: timelinelib\help\pages.py:192 timelinelib\wxgui\dialogs\eventeditor.py:71
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:191
+msgid "Era"
+msgstr "Ιστορική περίοδος"
+
+#. TRANSLATORS: This text uses special markup.
+#. DON'T translate 'HelpFigure(..)' or 'Help(..)'.
+#. Just write them as they are.
+#. Stars produce emphasized text. DON'T remove them.
+#. Dashes produce bullet lists. DON'T remove them.
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:198
+msgid ""
+"\n"
+"An Era is A clearly defined period of time of arbitrary but well-defined "
+"length.\n"
+"\n"
+"An Era is displayed as a background with the color defined for the Era. The "
+"Era name is written att the bottom of the timeline.\n"
+msgstr ""
+"\n"
+"Η ιστορική περίοδος είναι μια ευκρινώς οριοθετημένη χρονική περίοδος.\n"
+"\n"
+"Eμφανίζεται στο παρασκήνιο με το χρώμα που έχει επιλεγεί γι' αυτήν. Το όνομά "
+"της εμφανίζεται στο κάτω μέρος της χρονογραμμής.\n"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:206
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:89
 msgid "Event Properties"
 msgstr "Ιδιότητες γεγονότος"
 
@@ -908,7 +850,7 @@ msgstr "Ιδιότητες γεγονότος"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:199
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:213
 msgid ""
 "\n"
 "For an event the following properties can be defined.\n"
@@ -944,7 +886,9 @@ msgstr ""
 "στιγμή.\n"
 " - Σύνδεσμος: εισαγωγή συνδέσμου και πρόσβαση σε αυτόν με δεξί κλικ.\n"
 
-#: timelinelib\help\pages.py:218
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:232
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\timelineexporter.py:84
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:89
 msgid "Categories"
 msgstr "Κατηγορίες"
 
@@ -953,7 +897,7 @@ msgstr "Κατηγορίες"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:225
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:239
 msgid ""
 "\n"
 "Categories are used to group events. An event can only belong to one "
@@ -965,7 +909,8 @@ msgstr ""
 "μόνο σε μία κατηγορία. Όλα τα γεγονότας της ίδιας κατηγορίας, εμφανίζονται "
 "με το ίδιο χρώμα υποβάθρου.\n"
 
-#: timelinelib\help\pages.py:231 timelinelib\wxgui\dialogs\preferences.py:100
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:245
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:136
 msgid "Experimental Features"
 msgstr "Δοκιμαστικά χαρακτηριστικά"
 
@@ -974,7 +919,7 @@ msgstr "Δοκιμαστικά χαρακτηριστικά"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:237
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:251
 msgid ""
 "\n"
 "Experimental features are features implemented in Timeline but not yet "
@@ -987,27 +932,15 @@ msgid ""
 "have been as extensively tested as the rest of the application.\n"
 "\n"
 "The users feedback can be important when the decision to make the features "
-"permanent or not, is taken.  \n"
+"permanent or not, is taken.\n"
 msgstr ""
-"\n"
-"Τα δοκιμαστικά χαρακτηριστικά έχουν τεθεί σε εφαρμογή στο Timeline, αλλά δεν "
-"έχει ακόμη αποφασιστεί η οριστικοποίησή τους.\n"
-"\n"
-"Κάθε τέτοιο χαρακτηριστικό μπορεί να ενεργοποιηθεί ή να απενεργοποιηθεί από "
-"τις προτιμήσεις.\n"
-"\n"
-"Η λειτουργικότητα αυτών των χαρακτηριστικών δεν είναι πλήρης και δεν έχει "
-"δοκιμαστεί εκτεταμένα όπως άλλα.\n"
-"\n"
-"Η ανατροφοδότηση των χρηστών είναι πολύ σημαντική και σε αυτή θα στηριχθεί η "
-"απόφαση για την οριστικοποίηση ή όχι αυτών των χαρακτηριστικών.  \n"
 
 #. TRANSLATORS: This text uses special markup.
 #. DON'T translate 'HelpFigure(..)' or 'Help(..)'.
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:256
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:270
 msgid ""
 "\n"
 "The *Create Event* dialog can be opened in the following ways:\n"
@@ -1027,7 +960,7 @@ msgstr ""
 "στη χρονογραμμή, σύρτε το ποντίκι και αφήστε το για δημιουργία χρονικής "
 "περιόδου.\n"
 
-#: timelinelib\help\pages.py:266
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:280
 msgid "Undo/Redo"
 msgstr "Αναίρεση/Ακύρωση αναίρεσης"
 
@@ -1036,15 +969,15 @@ msgstr "Αναίρεση/Ακύρωση αναίρεσης"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:273
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:287
 msgid ""
 "\n"
 "The *Undo* function can revert an action such as creating an event, editing "
 "a category or deleting an event.\n"
 "\n"
 "To revert an action you:\n"
-" \n"
-"- Use the Ctrl+Z key (Key combination can be changed by user) \n"
+"\n"
+"- Use the Ctrl+Z key (Key combination can be changed by user)\n"
 "- Select the menu *Timeline* - *Undo*\n"
 "\n"
 "To save memory usage we have decided to limit the number of actions that can "
@@ -1053,38 +986,17 @@ msgid ""
 "\n"
 "An action that is Undone can also be Redone if you:\n"
 "\n"
-"- Use the Alt+Z key (Key combination can be changed by user) \n"
+"- Use the Alt+Z key (Key combination can be changed by user)\n"
 "- Select the menu *Timeline* - *Redo*\n"
 "\n"
 msgstr ""
-"\n"
-"Η λειτουργία *Αναίρεση* ακυρώνει μια ενέργεια, π.χ. τη δημιουργία ενός "
-"γεγονότος, την επεξεργασία μιας κατηγορίας ή τη διαγραφή ενός γεγονότος.\n"
-"\n"
-"Για να ακυρώσετε μια ενέργεια:\n"
-" \n"
-"- Χρησιμοποιήστε το συνδυασμό πλήκτρων Ctrl+Z (συνδυασμός που μπορεί να "
-"αλλάξει από τον χρήστη) \n"
-"- (ή) Επιλέξτε *Αναίρεση* από το μενού *Χρονογραμμή*\n"
-"\n"
-"Για εξοικονόμηση μνήμης ο αριθμός των ενεργειών που μπορούν να αναιρεθούν "
-"είναι περιορισμένος.\n"
-"Αυτό σημαίνει ότι μόνο οι τελευταίες 10 ενέργειες είναι δυνατό να "
-"αναιρεθούν.\n"
-"\n"
-"Μια ενέργεια που έχει ακυρωθεί, είναι δυνατό να την επαναφέρουμε:\n"
-"\n"
-"- Χρησιμοποιήστε το συνδυασμό πλήκτρων Alt+Z (συνδυασμός που μπορεί να "
-"αλλάξει από τον χρήστη) \n"
-"- (ή) Επιλέξτε *Ακύρωση αναίρεσης* από το μενού *Χρονογραμμή*\n"
-"\n"
 
 #. TRANSLATORS: This text uses special markup.
 #. DON'T translate 'HelpFigure(..)' or 'Help(..)'.
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:300
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:314
 msgid ""
 "\n"
 "The *Edit Event* dialog can be opened by double clicking on an event or by "
@@ -1095,7 +1007,7 @@ msgstr ""
 "Η *Επεξεργασία γεγονότος* με διπλό κλικ σε ένα γεγονός ή με επιλογή ενός "
 "γεγονότος και επιλογή 'Χρονογραμμή -> Επεξεργασία επιλεγμένου γεγονότος...'\n"
 
-#: timelinelib\help\pages.py:306
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:320
 msgid "Move event vertically"
 msgstr "Κάθετη μετακίνηση γεγονότος"
 
@@ -1104,17 +1016,14 @@ msgstr "Κάθετη μετακίνηση γεγονότος"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:313
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:327
 msgid ""
 "\n"
 "An event can be moved vertically. This is done by first selecting the event "
-"and therefter using the Alt+Up or Alt+Down keys.\n"
+"and thereafter using the Up or Down keys.\n"
 msgstr ""
-"\n"
-"Ένα γεγονός μπορεί να μετακινηθεί κάθετα. Αυτό γίνεται επιλέγοντας πρώτα το "
-"γεγονός και χρησιμοποιώντας τα πλήκτρα Alt+Up ή Alt+Down.\n"
 
-#: timelinelib\help\pages.py:319
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:333
 msgid "Duplicate event"
 msgstr "Δημιουργία αντιγράφου του γεγονότος"
 
@@ -1123,7 +1032,7 @@ msgstr "Δημιουργία αντιγράφου του γεγονότος"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:326
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:340
 msgid ""
 "\n"
 "An event can be duplicated. Select the event you want to duplicate and "
@@ -1134,28 +1043,16 @@ msgid ""
 " - The time period used\n"
 " - The frequency of time periods\n"
 " - The direction\n"
-" \n"
+"\n"
 " If number of duplications = 3, time span = day and frequency = 2, you will "
 "get 3 new copies of the event spread out with the time span of 2 days "
 "between them.\n"
-" \n"
+"\n"
 " You can also get to the duplication dialog from the event context menu, "
 "wich appears if you right-click an event with the mouse.\n"
 msgstr ""
-"\n"
-"Ένα γεγονός μπορεί να αντιγραφεί. Επιλέξτε το πρώτα και κατόπιν πηγαίνετε "
-"στο μενού 'Χρονογραμμή -> Δημιουργία αντιγράφου γεγονότος...'. Επιλογές:\n"
-"\n"
-" - Πόσα αντίγραφα να δημιουργηθούν.\n"
-" - Η περίοδος που θα χρησιμοποιηθεί.\n"
-" - Η συχνότητα των χρονικών περιόδων.\n"
-" - Η κατεύθυνση.\n"
-"\n"
-"Παράδειγμα: Εάν ο αριθμός των αντιγράφων είναι = 3, το χρονικό διάστημα = "
-"ημέρα και η συχνότητα = 2, τότε θα δημιουργηθούν 3 νέα αντίγραφα του "
-"γεγονότος τοποθετημένα ανά 2 ημέρες μεταξύ τους.\n"
 
-#: timelinelib\help\pages.py:342
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:356
 msgid "Selecting events"
 msgstr "Επιλογή γεγονότων"
 
@@ -1164,7 +1061,7 @@ msgstr "Επιλογή γεγονότων"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:348
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:362
 msgid ""
 "\n"
 "To select an event, click on it. To select multiple events, hold down the "
@@ -1174,7 +1071,7 @@ msgstr ""
 "Για να επιλέξετε ένα γεγονός, κάντε κλικ επάνω του. Για να επιλέξετε πολλά "
 "γεγονότα μαζί, πατήστε το πλήκτρο *Ctrl* και κάνετε κλικ στα γεγονότα.\n"
 
-#: timelinelib\help\pages.py:354
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:368
 msgid "Import timeline"
 msgstr "Εισαγωγή χρονογραμμής"
 
@@ -1183,7 +1080,7 @@ msgstr "Εισαγωγή χρονογραμμής"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:361
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:375
 msgid ""
 "\n"
 "This feature can be used to merge two timelines into one.\n"
@@ -1197,7 +1094,7 @@ msgstr ""
 "Ανοίξτε μια χρονογραμμή και μετά επιλέξτε από το μενού 'Αρχείο -> Εισαγωγή "
 "χρονογραμμής...' και επιλέξτε τη χρονογραμμή που θέλετε να εισάγετε.\n"
 
-#: timelinelib\help\pages.py:369
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:383
 msgid "Event Containers"
 msgstr "Περιέκτες γεγονότων"
 
@@ -1206,7 +1103,7 @@ msgstr "Περιέκτες γεγονότων"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:375
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:389
 msgid ""
 "\n"
 "Containers are a way to group events together.\n"
@@ -1215,28 +1112,17 @@ msgid ""
 "all other events are moved to give room for the new event. The same thing "
 "happens\n"
 "if you resize an event within the container.\n"
-"             \n"
-"Have a look at this video for a demo. \n"
+"\n"
+"Have a look at this video for a demo.\n"
 "    <http://www.youtube.com/watch?v=dBwEQ3vqB_I>\n"
 msgstr ""
-"\n"
-"Οι περιέκτες είναι ένας τρόπος ομαδοποίησης γεγονότων.\n"
-"Σε έναν περιέκτη τα γεγονότα δεν επικαλύπτονται κι έτσι εάν προσθέσετε ένα "
-"νέο γεγονός\n"
-"στον περιέκτη όλα τα προηγούμενα θα μετακινηθούν για να δώσουν χώρο σε αυτό. "
-"Το ίδιο\n"
-"συμβαίνει εάν αλλάξετε το μέγεθος ενός γεγονότος που βρίσκεται σε έναν "
-"περιέκτη.\n"
-"             \n"
-"Για ένα βίντεο επίδειξης κάντε κλικ στον παρακάτω σύνδεσμο:\n"
-"    <http://www.youtube.com/watch?v=dBwEQ3vqB_I>\n"
 
 #. TRANSLATORS: This text uses special markup.
 #. DON'T translate 'HelpFigure(..)' or 'Help(..)'.
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:394
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:408
 msgid ""
 "\n"
 "To delete an event, select it and press the *Del* key. Multiple events can "
@@ -1246,7 +1132,7 @@ msgstr ""
 "Για να διαγράψετε ένα γεγονός επιλέξτε το και πατήστε το πλήκτρο *Del*. "
 "Μπορείτε να διαγράψετε πολλά γεγονότα ταυτόχρονα με τον ίδιο τρόπο.\n"
 
-#: timelinelib\help\pages.py:400
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:414
 msgid "Will associated events be deleted when I delete a category?"
 msgstr ""
 "Αν διαγράψω μια κατηγορία, θα διαγραφούν και τα σχετιζόμενα με αυτή γεγονότα;"
@@ -1256,7 +1142,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:406
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:420
 msgid ""
 "\n"
 "No. The events will still be there but they will not belong to a category.\n"
@@ -1265,8 +1151,8 @@ msgstr ""
 "Όχι. Τα γεγονότα θα είναι ακόμη εκεί, αλλά δεν θα ανήκουν πλέον σε κάποια "
 "κατηγορία.\n"
 
-#: timelinelib\help\pages.py:412
-#: timelinelib\wxgui\components\categorychoice.py:53
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:426
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorychoice.py:53
 msgid "Edit categories"
 msgstr "Επεξεργασία κατηγοριών"
 
@@ -1275,7 +1161,7 @@ msgstr "Επεξεργασία κατηγοριών"
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:419
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:433
 msgid ""
 "\n"
 "Categories can be managed in the *Edit Categories* dialog (*Timeline* > "
@@ -1297,7 +1183,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:433
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:447
 msgid ""
 "\n"
 "If you have more questions about Timeline, or if you want to get in contact "
@@ -1310,7 +1196,7 @@ msgstr ""
 "στη λίστα χρηστών: <thetimelineproj-user@lists.sourceforge.net>. (Παρακαλώ "
 "χρησιμοποιήστε αγγλικά)\n"
 
-#: timelinelib\help\pages.py:439
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:453
 msgid "Why is Timeline not available in my language?"
 msgstr "Γιατί το Timeline δεν είναι διαθέσιμο στη γλώσσα μου;"
 
@@ -1319,7 +1205,7 @@ msgstr "Γιατί το Timeline δεν είναι διαθέσιμο στη γ�
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: timelinelib\help\pages.py:446
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\pages.py:460
 msgid ""
 "\n"
 "Timeline is developed and translated by volunteers. If you would like to "
@@ -1330,902 +1216,51 @@ msgstr ""
 "συνεισφέρετε με τις μεταφράσεις σας, τότε είστε ευπρόσδεκτοι να έρθετε σε "
 "επαφή μαζί μας.\n"
 
-#: timelinelib\help\system.py:64
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\system.py:64
 #, python-format
 msgid "Search results for '%s'"
 msgstr "Αποτελέσματα αναζήτησης για '%s'"
 
-#: timelinelib\help\system.py:122
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\help\system.py:120
 msgid "Related pages"
 msgstr "Σχετικές σελίδες"
 
-#: timelinelib\time\gregoriantime.py:71
-msgid "Go to &Today\tCtrl+T"
-msgstr "Πηγαίνετε στη σημερινή ημέρα\tCtrl+T"
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\backgrounddrawers\defaultbgdrawer.py:32
+msgid "Default background drawer"
+msgstr "Προκαθορισμένος σχεδιαστής παρασκηνίου"
 
-#: timelinelib\time\gregoriantime.py:72
-msgid "Go to &Date...\tCtrl+G"
-msgstr "Μετάβαση στην &Ημερομηνία...\tCtrl+G"
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\eventboxdrawers\defaulteventboxdrawer.py:44
+msgid "Default Event box drawer"
+msgstr "Προκαθορισμένος σχεδιαστής πλαισίου γεγονότος"
 
-#: timelinelib\time\gregoriantime.py:74 timelinelib\time\numtime.py:55
-msgid "Backward\tPgUp"
-msgstr "Προς τα πίσω\tPgUp"
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\eventboxdrawers\gradienteventboxdrawer.py:29
+msgid "Gradient Event box drawer"
+msgstr "Σχεδιαστής διαβαθμισμένου χρωματικά πλαισίου γεγονότος"
 
-#: timelinelib\time\gregoriantime.py:75 timelinelib\time\numtime.py:56
-msgid "Forward\tPgDn"
-msgstr "Προς τα εμπρός\tPgDn"
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\eventboxdrawers\othergradienteventboxdrawer.py:29
+msgid "Other Gradient Event box drawer"
+msgstr "Άλλος σχεδιαστής διαβαθμισμένου χρωματικά πλαισίου γεγονότος"
 
-#: timelinelib\time\gregoriantime.py:76
-msgid "Forward One Wee&k\tCtrl+K"
-msgstr "Εμπρός κατά μία εβδομάδα\tCtrl+K"
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:96
+msgid "Image files"
+msgstr "Αρχεία εικόνων"
 
-#: timelinelib\time\gregoriantime.py:77
-msgid "Back One &Week\tCtrl+W"
-msgstr "Πίσω κατά μία εβδομάδα\tCtrl+W"
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:100
+msgid "Export to Image"
+msgstr "Εξαγωγή σε εικόνα"
 
-#: timelinelib\time\gregoriantime.py:78
-msgid "Forward One Mont&h\tCtrl+h"
-msgstr "Εμπρός κατά έναν μήνα\tCtrl+h"
-
-#: timelinelib\time\gregoriantime.py:79
-msgid "Back One &Month\tCtrl+M"
-msgstr "Πίσω κατά έναν μήνα\tCtrl+M"
-
-#: timelinelib\time\gregoriantime.py:80
-msgid "Forward One Yea&r\tCtrl+R"
-msgstr "Εμπρός κατά ένα έτος\tCtrl+R"
-
-#: timelinelib\time\gregoriantime.py:81
-msgid "Back One &Year\tCtrl+Y"
-msgstr "Προς τα πίσω κατά ένα έτος\tCtrl+Y"
-
-#: timelinelib\time\gregoriantime.py:83
-msgid "Fit Millennium"
-msgstr "Προσαρμογή σε χιλιετία"
-
-#: timelinelib\time\gregoriantime.py:84
-msgid "Fit Century"
-msgstr "Προσαρμογή σε αιώνα"
-
-#: timelinelib\time\gregoriantime.py:85
-msgid "Fit Decade"
-msgstr "Προσαρμογή σε δεκαετία"
-
-#: timelinelib\time\gregoriantime.py:86
-msgid "Fit Year"
-msgstr "Προσαρμογή σε έτος"
-
-#: timelinelib\time\gregoriantime.py:87
-msgid "Fit Month"
-msgstr "Προσαρμογή σε μήνα"
-
-#: timelinelib\time\gregoriantime.py:88
-msgid "Fit Week"
-msgstr "Προσαρμογή σε εβδομάδα"
-
-#: timelinelib\time\gregoriantime.py:89
-msgid "Fit Day"
-msgstr "Προσαρμογή σε ημέρα"
-
-#: timelinelib\time\gregoriantime.py:126
-msgid "day"
-msgstr "ημέρα"
-
-#: timelinelib\time\gregoriantime.py:128
-msgid "days"
-msgstr "ημέρες"
-
-#: timelinelib\time\gregoriantime.py:130
-msgid "hour"
-msgstr "ώρα"
-
-#: timelinelib\time\gregoriantime.py:132
-msgid "hours"
-msgstr "ώρες"
-
-#: timelinelib\time\gregoriantime.py:134
-msgid "minute"
-msgstr "λεπτό"
-
-#: timelinelib\time\gregoriantime.py:136
-msgid "minutes"
-msgstr "λεπτά"
-
-#: timelinelib\time\gregoriantime.py:143
-msgid "can't be before year 10"
-msgstr "δεν μπορεί να είναι πριν το έτος 10"
-
-#: timelinelib\time\gregoriantime.py:146
-msgid "can't be after year 9989"
-msgstr "δεν μπορεί να είναι πριν το έτος 9989"
-
-#: timelinelib\time\gregoriantime.py:194
-msgid "Can't zoom wider than 1200 years"
-msgstr "Δεν είναι δυνατή η  εστίαση περισσότερο από 1200 χρόνια"
-
-#: timelinelib\time\gregoriantime.py:197
-msgid "Can't zoom deeper than 1 minute"
-msgstr "Δεν είναι δυνατή η μεγέθυνση πέρα από το 1 λεπτό"
-
-#: timelinelib\time\gregoriantime.py:212
-msgid "Day"
-msgstr "Ημέρα"
-
-#: timelinelib\time\gregoriantime.py:213 timelinelib\time\gregoriantime.py:653
-msgid "Week"
-msgstr "Εβδομάδα"
-
-#: timelinelib\time\gregoriantime.py:214
-msgid "Month"
-msgstr "Μήνας"
-
-#: timelinelib\time\gregoriantime.py:215
-msgid "Year"
-msgstr "Έτος"
-
-#: timelinelib\time\gregoriantime.py:260
-msgid "Go to Date"
-msgstr "Μετάβαση στην ημερομηνία"
-
-#: timelinelib\time\numtime.py:52
-msgid "Go to &Zero\tCtrl+Z"
-msgstr "Μετάβαση στο έτος μηδέν\tCtrl+Z"
-
-#: timelinelib\time\numtime.py:53
-msgid "Go to &Time\tCtrl+T"
-msgstr "Μετάβαση στην ώρα\tCtrl+T"
-
-#: timelinelib\time\numtime.py:119
-msgid "Can't zoom deeper than 5"
-msgstr "Είναι αδύνταη η εστίαση περισσότερο από 5"
-
-#: timelinelib\time\numtime.py:132
-msgid "1-period"
-msgstr "1-χρονική περίοδος"
-
-#: timelinelib\time\numtime.py:133
-msgid "10-period"
-msgstr "10-χρονικές περίοδοι"
-
-#: timelinelib\time\numtime.py:134
-msgid "100-period"
-msgstr "100-περίοδοι"
-
-#: timelinelib\time\numtime.py:135
-msgid "1000-period"
-msgstr "1000-περίοδοι"
-
-#: timelinelib\time\numtime.py:189
-msgid "Go to Time"
-msgstr "Μετάβαση στην ώρα"
-
-#: timelinelib\view\drawingarea.py:162 timelinelib\view\drawingarea.py:180
-msgid "No timeline set"
-msgstr "Δεν έχει ορισθεί χρονογραμμή"
-
-#: timelinelib\view\drawingarea.py:186
-msgid "Can't scroll more to the left"
-msgstr "Αδύνατη η κύλιση προς τα αριστερά"
-
-#: timelinelib\view\drawingarea.py:188
-msgid "Can't scroll more to the right"
-msgstr "Αδύνατη η κύλιση προς τα δεξιά"
-
-#: timelinelib\view\drawingarea.py:219
-#: timelinelib\wxgui\components\categorytree.py:195
-#: timelinelib\wxgui\components\cattree.py:80
-msgid "Delete"
-msgstr "Διαγραφή"
-
-#: timelinelib\view\drawingarea.py:224
-msgid "Duplicate..."
-msgstr "Δημιουργία αντιγράφου..."
-
-#: timelinelib\view\drawingarea.py:228
-msgid "Sticky Balloon"
-msgstr "Αναδυόμενο μπαλόνι"
-
-#: timelinelib\view\drawingarea.py:232
-msgid "Goto URL"
-msgstr "Μετάβαση στο URL"
-
-#: timelinelib\view\drawingarea.py:421
-msgid "Center"
-msgstr "Κέντρο"
-
-#: timelinelib\view\drawingarea.py:483
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:110
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttosvg.py:69
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\timelineexporter.py:221
 #, python-format
-msgid "%s events hidden"
-msgstr "%s των συμβάντων είναι κρυφά"
+msgid "File '%s' exists. Overwrite?"
+msgstr "Το αρχείο '%s' υπάρχει. Θέλετε να αντικατασταθεί;"
 
-#: timelinelib\view\drawingarea.py:559
-#, python-format
-msgid "Are you sure you want to delete %d events?"
-msgstr "Είστε βέβαιος ότι θέλετε να διαγράψετε %d γεγονότα;"
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttolist.py:33
+msgid "Export to Listbox..."
+msgstr "Εξαγωγή χρονογραμμής σε λίστα..."
 
-#: timelinelib\view\drawingarea.py:562
-msgid "Are you sure you want to delete this event?"
-msgstr "Είστε σίγουρος ότι θέλετε να διαγράψετε αυτό το γεγονός;"
-
-#: timelinelib\view\move.py:66
-msgid "Can't move locked event"
-msgstr "Αδύνατη η μετακίνηση ενός κλειδωμένου γεγονότος"
-
-#: timelinelib\view\resize.py:67
-msgid "Period is too long"
-msgstr "Η χρονική περίοδος είναι πολύ μεγάλη"
-
-#: timelinelib\view\zoom.py:28
-msgid "Select region to zoom into"
-msgstr "Επιλέξτε την περιοχή που θέλετε να μεγεθύνετε"
-
-#: timelinelib\view\zoom.py:35
-msgid "Region too long"
-msgstr "Η περιοχή είναι πολύ μεγάλη"
-
-#: timelinelib\view\zoom.py:38
-msgid "Region too short"
-msgstr "Η περιοχή είναι πολύ μικρή"
-
-#: timelinelib\wxgui\utils.py:136
-msgid "Error"
-msgstr "Σφάλμα"
-
-#: timelinelib\wxgui\utils.py:141
-msgid "Warning"
-msgstr "Προειδοποίηση"
-
-#: timelinelib\wxgui\utils.py:155
-msgid "Timeline has encountered a fatal error:"
-msgstr "Το Timeline αντιμετωπίζει ένα σοβαρό σφάλμα:"
-
-#: timelinelib\wxgui\utils.py:157
-msgid "To prevent you from loosing data, timeline will now crash."
-msgstr ""
-"Για να αποτρέψει την απώλεια δεδομένων σας, η χρονογραμμή θα καταρρεύσει."
-
-#: timelinelib\wxgui\utils.py:167 timelinelib\wxgui\utils.py:173
-msgid "Question"
-msgstr "Ερώτηση"
-
-#: timelinelib\wxgui\components\categorychoice.py:52
-#: timelinelib\wxgui\dialogs\eventeditor.py:355
-msgid "Add new"
-msgstr "Προσθήκη νέου"
-
-#: timelinelib\wxgui\components\categorychoice.py:76
-#: timelinelib\wxgui\components\cattree.py:374
-msgid "Add Category"
-msgstr "Προσθήκη κατηγορίας"
-
-#: timelinelib\wxgui\components\categorytree.py:187
-#: timelinelib\wxgui\components\cattree.py:74
-msgid "Edit..."
-msgstr "Επεξεργασία..."
-
-#: timelinelib\wxgui\components\categorytree.py:191
-#: timelinelib\wxgui\components\cattree.py:77
-msgid "Add..."
-msgstr "Προσθήκη..."
-
-#: timelinelib\wxgui\components\categorytree.py:200
-#: timelinelib\wxgui\components\cattree.py:85
-msgid "Check All"
-msgstr "Επιλογή όλων"
-
-#: timelinelib\wxgui\components\categorytree.py:204
-#: timelinelib\wxgui\components\cattree.py:90
-msgid "Check children"
-msgstr "Επιλογή απόγονου"
-
-#: timelinelib\wxgui\components\categorytree.py:208
-#: timelinelib\wxgui\components\cattree.py:95
-msgid "Check all children"
-msgstr "Επιλογή όλων των απόγονων"
-
-#: timelinelib\wxgui\components\categorytree.py:212
-#: timelinelib\wxgui\components\cattree.py:100
-msgid "Check all parents"
-msgstr "Επιλογή όλων των προγόνων"
-
-#: timelinelib\wxgui\components\categorytree.py:216
-msgid "Check parents for checked children"
-msgstr "Επιλογή προγόνων για τους επιλεγμένους απόγονους"
-
-#: timelinelib\wxgui\components\categorytree.py:221
-#: timelinelib\wxgui\components\cattree.py:111
-msgid "Uncheck All"
-msgstr "Αποεπιλογή όλων"
-
-#: timelinelib\wxgui\components\categorytree.py:225
-#: timelinelib\wxgui\components\cattree.py:116
-msgid "Uncheck children"
-msgstr "Αποεπιλογή απογόνων"
-
-#: timelinelib\wxgui\components\categorytree.py:229
-#: timelinelib\wxgui\components\cattree.py:121
-msgid "Uncheck all children"
-msgstr "Αποεπιλογή όλων των απογόνων"
-
-#: timelinelib\wxgui\components\categorytree.py:233
-#: timelinelib\wxgui\components\cattree.py:126
-msgid "Uncheck all parents"
-msgstr "Αποεπιλογή όλων των προγόνων"
-
-#: timelinelib\wxgui\components\cattree.py:105
-msgid "Check all parents of all childs"
-msgstr "Επιλογή όλων των προγόνων για όλους τους απόγονους"
-
-#: timelinelib\wxgui\components\cattree.py:357
-msgid "Checking not allowed when there is no timeline view."
-msgstr "Η επιλογή δεν επιτρέπεται όταν δεν υπάρχει προβολή χρονογραμμής."
-
-#: timelinelib\wxgui\components\cattree.py:368
-msgid "Edit Category"
-msgstr "Επεξεργασία κατηγορίας"
-
-#: timelinelib\wxgui\components\cattree.py:379
-#, python-format
-msgid "Are you sure you want to delete category '%s'?"
-msgstr "Είστε βέβαιος ότι θέλετε να διαγράψετε την κατηγορία '%s';"
-
-#: timelinelib\wxgui\components\cattree.py:382
-#, python-format
-msgid "Events belonging to '%s' will no longer belong to a category."
-msgstr ""
-"Τα γεγονότα που ανήκουν στην κατηγορία '%s' δεν θα ανήκουν πλέον σε μια "
-"κατηγορία."
-
-#: timelinelib\wxgui\components\cattree.py:385
-#, python-format
-msgid "Events belonging to '%s' will now belong to '%s'."
-msgstr ""
-"Τα γεγονότα που ανήκουν στην κατηγορία '%s' τώρα θα ανήκουν πλέον στην "
-"κατηγορία '%s'."
-
-#: timelinelib\wxgui\components\feedbackbutton.py:38
-msgid "Give feedback"
-msgstr "Υποβολή ανατροφοδότησης"
-
-#: timelinelib\wxgui\components\filechooser.py:30
-msgid "Choose file"
-msgstr "Επιλογή αρχείου"
-
-#: timelinelib\wxgui\components\gregoriandatetimepicker.py:87
-msgid "Invalid date"
-msgstr "Μη έγκυρη ημερομηνία"
-
-#: timelinelib\wxgui\components\search.py:76
-msgid "No match"
-msgstr "Καμία αντιστοιχία"
-
-#: timelinelib\wxgui\components\search.py:81
-msgid "Only one match"
-msgstr "Μόνο μία αντιστοίχιση"
-
-#: timelinelib\wxgui\components\timeline.py:45
-msgid "This timeline is read-only."
-msgstr "Η χρονογραμμή είναι μόνο για ανάγνωση."
-
-#: timelinelib\wxgui\components\timeline.py:46
-msgid "To edit this timeline, save it to a new file: File -> Save As."
-msgstr ""
-"Για να επεξεργαστείτε αυτή τη χρονογραμμή, αποθηκεύστε τη σε νέο αρχείο: "
-"Αρχείο -> Αποθήκευση ως."
-
-#: timelinelib\wxgui\components\timeline.py:49
-msgid "This timeline is not being saved."
-msgstr "Αυτή η χρονογραμμή δεν αποθηκεύεται."
-
-#: timelinelib\wxgui\components\timeline.py:50
-msgid "To save this timeline, save it to a new file: File -> Save As."
-msgstr "Για να την αποθηκεύσετε, επιλέξτε: Αρχείο -> Αποθήκευση ως."
-
-#: timelinelib\wxgui\components\timeline.py:157
-msgid "View Categories Individually"
-msgstr "Ξεχωριστή προβολή κατηγοριών"
-
-#: timelinelib\wxgui\dialogs\categoryeditor.py:101
-#, python-format
-msgid "Category name '%s' not valid. Must be non-empty."
-msgstr ""
-"Το όνομα της κατηγορίας '%s' δεν είναι έγκυρο. Πρέπει να μην είναι κενό."
-
-#: timelinelib\wxgui\dialogs\categoryeditor.py:106
-#, python-format
-msgid "Category name '%s' already in use."
-msgstr "Το όνομα της κατηγορίας '%s' χρησιμοποιείται ήδη."
-
-#: timelinelib\wxgui\dialogs\categoryeditor.py:132
-#: timelinelib\wxgui\dialogs\containereditor.py:59
-msgid "Name:"
-msgstr "Όνομα:"
-
-#: timelinelib\wxgui\dialogs\categoryeditor.py:133
-msgid "Color:"
-msgstr "Χρώμα:"
-
-#: timelinelib\wxgui\dialogs\categoryeditor.py:134
-msgid "Progress Color:"
-msgstr "Χρώμα προόδου:"
-
-#: timelinelib\wxgui\dialogs\categoryeditor.py:135
-msgid "Done Color:"
-msgstr "Χρώμα ολοκλήρωσης:"
-
-#: timelinelib\wxgui\dialogs\categoryeditor.py:136
-msgid "Font Color:"
-msgstr "Χρώμα γραμματοσειράς:"
-
-#: timelinelib\wxgui\dialogs\categoryeditor.py:137
-msgid "Parent:"
-msgstr "Πρόγονος:"
-
-#: timelinelib\wxgui\dialogs\categoryfind.py:28
-msgid "Category Finder"
-msgstr "Φίλτρο κατηγορίας"
-
-#: timelinelib\wxgui\dialogs\categoryfind.py:87
-msgid "Check"
-msgstr "Επιλογή"
-
-#: timelinelib\wxgui\dialogs\categoryfind.py:88
-msgid "Uncheck"
-msgstr "Αποεπιλογή"
-
-#: timelinelib\wxgui\dialogs\containereditor.py:45
-msgid "Container Properties"
-msgstr "Ιδιότητες περιέκτη"
-
-#: timelinelib\wxgui\dialogs\containereditor.py:65
-#: timelinelib\wxgui\dialogs\eventeditor.py:226
-msgid "Category:"
-msgstr "Κατηγορία:"
-
-#: timelinelib\wxgui\dialogs\duplicateevent.py:32
-msgid "Duplicate Event"
-msgstr "Δημιουργία αντιγράφου γεγονότος"
-
-#: timelinelib\wxgui\dialogs\duplicateevent.py:68
-#, python-format
-msgid "%d Events not duplicated due to missing dates."
-msgstr "%d γεγονότα δεν αντιγράφηκαν επειδή έλειπαν ημερομηνίες."
-
-#: timelinelib\wxgui\dialogs\duplicateevent.py:88
-msgid "Number of duplicates:"
-msgstr "Αριθμός αντιγράφων:"
-
-#: timelinelib\wxgui\dialogs\duplicateevent.py:98
-#: timelinelib\wxgui\dialogs\eventeditor.py:183
-msgid "Period"
-msgstr "Χρονική περίοδος"
-
-#: timelinelib\wxgui\dialogs\duplicateevent.py:108
-msgid "Frequency:"
-msgstr "Συχνότητα:"
-
-#: timelinelib\wxgui\dialogs\duplicateevent.py:118
-msgid "Forward"
-msgstr "Εμπρός"
-
-#: timelinelib\wxgui\dialogs\duplicateevent.py:118
-msgid "Backward"
-msgstr "Πίσω"
-
-#: timelinelib\wxgui\dialogs\duplicateevent.py:118
-msgid "Both"
-msgstr "Εμπρός & Πίσω"
-
-#: timelinelib\wxgui\dialogs\duplicateevent.py:119
-msgid "Direction"
-msgstr "Κατεύθυνση"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:46
-msgid "&Enlarge"
-msgstr "&Μεγέθυνση"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:47
-msgid "&Reduce"
-msgstr "&Σμίκρυνση"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:97
-msgid "to"
-msgstr "μέχρι"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:132
-msgid "Container:"
-msgstr "Περιέκτης:"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:170
-msgid "Add Container"
-msgstr "Προσθήκη περιέκτη"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:190
-#: timelinelib\wxgui\dialogs\timeeditor.py:48
-msgid "Show time"
-msgstr "Εμφάνιση ώρας"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:198
-msgid "Fuzzy"
-msgstr "Ασαφές"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:202
-msgid "Locked"
-msgstr "Κλειδωμένο"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:209
-msgid "Ends today"
-msgstr "Λήγει σήμερα"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:256
-msgid "Description"
-msgstr "Περιγραφή"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:257
-msgid "Alert"
-msgstr "Ειδοποίηση"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:258
-msgid "Icon"
-msgstr "Εικόνα"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:259
-msgid "Hyperlink"
-msgstr "Σύνδεσμος"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:260
-msgid "Progress"
-msgstr "Εξέλιξη"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:279
-msgid "Add more events after this one"
-msgstr "Προσθήκη περισσότερων γεγονότων μετά από αυτό"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:482
-msgid "Edit Container"
-msgstr "Επεξεργασία περιέκτη"
-
-#: timelinelib\wxgui\dialogs\eventeditor.py:486
-msgid "Edit Event"
-msgstr "Επεξεργασία γεγονότος"
-
-#: timelinelib\wxgui\dialogs\eventlist.py:27
-msgid "Found Events"
-msgstr "Εύρεση γεγονότων"
-
-#: timelinelib\wxgui\dialogs\feature.py:33
-msgid "Feedback On Feature"
-msgstr "Ανατροφοδότηση για τη λειτουργία"
-
-#: timelinelib\wxgui\dialogs\feedback.py:52
-msgid "Email Feedback"
-msgstr "Αποστολή ανατροφοδότησης με email"
-
-#: timelinelib\wxgui\dialogs\feedback.py:94
-msgid "Default client"
-msgstr "Προκαθορισμένος client"
-
-#: timelinelib\wxgui\dialogs\feedback.py:100
-msgid "Gmail"
-msgstr "Gmail"
-
-#: timelinelib\wxgui\dialogs\feedback.py:106
-msgid "Other email client"
-msgstr "Άλλος email client"
-
-#: timelinelib\wxgui\dialogs\feedback.py:107
-msgid ""
-"Copy and paste this email into your favorite email client and send it from "
-"there."
-msgstr ""
-"Αντιγράψτε και επικολήστε αυτό το email στον email client που χρησιμοποιείτε "
-"και στείλτε το από εκεί."
-
-#: timelinelib\wxgui\dialogs\feedback.py:109
-msgid "Other"
-msgstr "Άλλο"
-
-#: timelinelib\wxgui\dialogs\feedback.py:128
-msgid "To:"
-msgstr "Προς:"
-
-#: timelinelib\wxgui\dialogs\feedback.py:130
-msgid "Subject:"
-msgstr "Θέμα:"
-
-#: timelinelib\wxgui\dialogs\feedback.py:132
-msgid "Body:"
-msgstr "Κείμενο:"
-
-#: timelinelib\wxgui\dialogs\feedback.py:134
-msgid "Send With:"
-msgstr "Αποστολή με:"
-
-#: timelinelib\wxgui\dialogs\helpbrowser.py:65
-msgid ""
-"Could not find markdown Python package.  It is needed by the help system. "
-"See the Timeline website or the doc/installing.rst file for instructions how "
-"to install it."
-msgstr ""
-"Αδυναμία εύρεσης του πακέτου markdown Python, που είναι απαραίτητο από το "
-"σύστημα βοήθειας. Δείτε τον ιστότοπο του Timeline ή το αρχείο "
-"doc/installing.rst για πληροφορίες σχετικά με την εγκατάσταση του."
-
-#: timelinelib\wxgui\dialogs\helpbrowser.py:103
-msgid "Go to home page"
-msgstr "Μετάβαση στην αρχική σελίδα"
-
-#: timelinelib\wxgui\dialogs\helpbrowser.py:110
-msgid "Go back one page"
-msgstr "Μετάβαση πίσω μία σελίδα"
-
-#: timelinelib\wxgui\dialogs\helpbrowser.py:116
-msgid "Go forward one page"
-msgstr "Μπροστά μια σελίδα"
-
-#: timelinelib\wxgui\dialogs\helpbrowser.py:200
-msgid "Page not found"
-msgstr "Η σελίδα δεν βρέθηκε"
-
-#: timelinelib\wxgui\dialogs\helpbrowser.py:201
-#, python-format
-msgid "Could not find page '%s'."
-msgstr "Αδυναμία εύρεσης της σελίδας '%s'."
-
-#: timelinelib\wxgui\dialogs\importevents.py:34
-msgid "Import events"
-msgstr "Εισαγωγή γεγονότων"
-
-#: timelinelib\wxgui\dialogs\importevents.py:47
-msgid "Select timeline to import from:"
-msgstr "Επιλέξτε τη χρονογραμμή από την οποία θα γίνει η εισαγωγή:"
-
-#: timelinelib\wxgui\dialogs\importevents.py:53
-#: timelinelib\wxgui\dialogs\mainframe.py:837
-#: timelinelib\wxgui\dialogs\mainframe.py:919
-msgid "Timeline files"
-msgstr "Αρχεία χρονογραμμών"
-
-#: timelinelib\wxgui\dialogs\importevents.py:77
-msgid "File does not exist."
-msgstr "Το αρχείο δεν υπάρχει."
-
-#: timelinelib\wxgui\dialogs\importevents.py:82
-#, python-format
-msgid "Unable to load events: %s."
-msgstr "Αδυναμία φόρτωσης γεγονότων: %s."
-
-#: timelinelib\wxgui\dialogs\importevents.py:85
-msgid "The selected timeline has a different time type."
-msgstr "Η επιλεγμένη χρονογραμμή έχει διαφορετικό είδος χρόνου."
-
-#: timelinelib\wxgui\dialogs\importevents.py:87
-#, python-format
-msgid "%d events will be imported."
-msgstr "Θα γίνει εισαγωγή %d γεγονότων."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:158
-msgid "&File"
-msgstr "&Αρχείο"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:166
-msgid "New"
-msgstr "Νέο"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:166
-msgid "Create a new timeline"
-msgstr "Δημιουργία νέας χρονογραμμής"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:191
-msgid "Open an existing timeline"
-msgstr "Άνοιγμα υπάρχουσας χρονογραμμής"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:196
-msgid "Open &Recent"
-msgstr "Άνοιγμα &πρόσφατου αρχείου"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:206
-msgid "Import events..."
-msgstr "Εισαγωγή γεγονότων..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:213
-msgid "&Export Current view to Image..."
-msgstr "&Εξαγωγή τρέχουσας προβολής σε εικόνα..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:213
-msgid "Export the current view to a PNG image"
-msgstr "Εξαγωγή τρέχουσας προβολής σε εικόνα PNG"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:220
-msgid "&Export Whole Timeline to Images..."
-msgstr "&Εξαγωγή όλης της χρονογραμμής σε εικόνες..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:220
-msgid "Export whole Timeline to PNG images"
-msgstr "Εξαγωγή όλης της χρονογραμμής σε εικόνες PNG"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:227
-msgid "&Export to SVG..."
-msgstr "&Εξαγωγή σε SVG..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:227
-msgid "Export the current view to a SVG image"
-msgstr "Εξαγωγή της τρέχουσας προβολής σε εικόνα SVG"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:233
-msgid "Exit the program"
-msgstr "Τερματισμός του προγράμματος"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:271
-msgid "Find Categories..."
-msgstr "Εύρεση κατηγοριών..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:274
-msgid "Shortcuts..."
-msgstr "Συντομεύσεις..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:277
-msgid "&Edit"
-msgstr "&Επεξεργασία"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:316
-msgid "&Sidebar\tCtrl+I"
-msgstr "&Πλευρική μπάρα\tCtrl+I"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:317
-msgid "&Legend"
-msgstr "&Υπόμνημα"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:319
-msgid "&Balloons on hover"
-msgstr "&Μπαλόνια κατά την αιώρηση"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:321
-msgid "Zoom &In\tCtrl++"
-msgstr "Μεγέθυνση \tCtrl++"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:322
-msgid "Zoom &Out\tCtrl+-"
-msgstr "Σμίκρυνση \tCtrl+-"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:323
-msgid "Vertical Zoom &In\tAlt++"
-msgstr "Κάθετη μεγέθυνση\tAlt++"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:324
-msgid "Vertical Zoom &Out\tAlt+-"
-msgstr "Κάθετη σμίκρυνση\tAlt+-"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:329
-msgid "&View"
-msgstr "&Προβολή"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:405
-msgid "Create &Event..."
-msgstr "Δημιουργία &γεγονότος..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:406
-msgid "&Edit Selected Event..."
-msgstr "&Επεξεργασία επιλεγμένου γεγονότος..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:407
-msgid "&Duplicate Selected Event..."
-msgstr "&Δημιουργία αντιγράφου επιλεγμένου γεγονότος..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:408
-msgid "Set Category on Selected Events..."
-msgstr "Καθορισμός κατηγορίας στα επιλεγμένα γεγονότα..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:410
-msgid "&Measure Distance between two Events..."
-msgstr "&Μέτρηση απόστασης μεταξύ δύο γεγονότων..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:412
-msgid "Set Category on events &without category..."
-msgstr "Καθορισμός κατηγορίας σε γεγονότα &χωρίς κατηγορία..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:413
-msgid "Edit &Categories"
-msgstr "Επεξεργασία &κατηγοριών"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:415
-msgid "&Read Only"
-msgstr "Μόνο για &ανάγνωση"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:417
-msgid "&Undo\tCtrl+Z"
-msgstr "&Αναίρεση\tCtrl+Z"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:418
-msgid "&Redo\tAlt+Z"
-msgstr "&Ακύρωση αναίρεσης\tAlt+Z"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:422
-msgid "&Timeline"
-msgstr "&Χρονογραμμή"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:461
-msgid "Find &First Event"
-msgstr "Εύρεση &πρώτου γεγονότος"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:462
-msgid "Find &Last Event"
-msgstr "Εύρεση &τελευταίου γεγονότος"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:463
-msgid "Fit &All Events"
-msgstr "Προβολή όλων των γεγονότων"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:471
-msgid "&Navigate"
-msgstr "&Περιήγηση"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:494
-msgid "Feedback"
-msgstr "Ανατροφοδότηση"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:508
-msgid "&Contents\tF1"
-msgstr "&Περιεχόμενα\tF1"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:510
-msgid "Getting started &tutorial"
-msgstr "&Βοήθημα για να ξεκινήσετε"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:512
-msgid "Give &Feedback..."
-msgstr "Υποβολή &ανατροφοδότησης..."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:513
-msgid "Co&ntact"
-msgstr "Επικοινωνία"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:519
-msgid "&Help"
-msgstr "&Βοήθεια"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:538
-msgid "&Give Feedback on Features"
-msgstr "&Παροχή ανατροφοδότησης για τα χαρακτηριστικά"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:547
-msgid "&Give Feedback on Experimental Features"
-msgstr "&Παροχή ανατροφοδότησης για τα δοκιμαστικά χαρακτηριστικά"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:691
-msgid "read-only"
-msgstr "μόνο για ανάγνωση"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:839
-msgid "SVG files"
-msgstr "Αρχεία SVG"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:882
-#: timelinelib\wxgui\dialogs\mainframe.py:896
-msgid "Create Timeline"
-msgstr "Δημιουργία χρονογραμμής"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:887
-msgid "The specified timeline already exists."
-msgstr "Η συγκεκριμένη χρονογραμμή υπάρχει ήδη."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:888
-msgid "Opening timeline instead of creating new."
-msgstr "Άνοιγμα χρονογραμμής αντί για δημιουργία νέας."
-
-#: timelinelib\wxgui\dialogs\mainframe.py:890
-msgid "Information"
-msgstr "Πληροφορίες"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:906
-msgid "Open Timeline"
-msgstr "Άνοιγμα χρονογραμμής"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:922
-msgid "Save Timeline As"
-msgstr "Αποθήκευση χρονογραμμής ως"
-
-#: timelinelib\wxgui\dialogs\mainframe.py:940
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttosvg.py:62
 msgid ""
 "Could not find pysvg Python package. It is needed to export to SVG. See the "
 "Timeline website or the doc/installing.rst file for instructions how to "
@@ -2235,86 +1270,1266 @@ msgstr ""
 "σε SVG. Δείτε στον ιστότοπο του Timeline ή στο αρχείο doc/installing.rst για "
 "πληροφορίες σχετικά με την εγκατάστασή του."
 
-#: timelinelib\wxgui\dialogs\mainframe.py:943
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttosvg.py:64
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:889
+msgid "SVG files"
+msgstr "Αρχεία SVG"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\exporttosvg.py:66
 msgid "Export to SVG"
 msgstr "Εξαγωγή σε SVG"
 
-#: timelinelib\wxgui\dialogs\mainframe.py:972
-msgid "Unable to write configuration file."
-msgstr "Αδυναμία εγγραφής στο αρχείο ρυθμίσεων."
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\timelineexporter.py:40
+msgid "Export Timeline to File..."
+msgstr "Εξαγωγή χρονογραμμής σε αρχείο..."
 
-#: timelinelib\wxgui\dialogs\mainframe.py:996
-msgid "Distance between selected events"
-msgstr "Απόσταση μεταξύ επιλεγμένων γεγονότων."
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\timelineexporter.py:48
+msgid "Export Timeline"
+msgstr "Εξαγωγή χρονογραμμής"
 
-#: timelinelib\wxgui\dialogs\mainframe.py:999
-msgid "Events are overlapping or distance is 0"
-msgstr "Τα γεγονότα επικαλύπτονται ή η απόσταση είναι 0"
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\timelineexporter.py:207
+msgid "export files"
+msgstr "εξαγωγή αρχείων"
 
-#: timelinelib\wxgui\dialogs\mainframe.py:1353
-msgid "No timeline opened."
-msgstr "Δεν άνοιξε καμιά χρονογραμμή"
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\plugin\plugins\exporters\timelineexporter.py:211
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:176
+msgid "Export"
+msgstr "Εξαγωγή"
 
-#: timelinelib\wxgui\dialogs\mainframe.py:1358
-msgid "First time using Timeline?"
-msgstr "Είναι η πρώτη σας φορά στο Timeline;"
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:70
+msgid "Go to &Today\tCtrl+T"
+msgstr "Πηγαίνετε στη σημερινή ημέρα\tCtrl+T"
 
-#: timelinelib\wxgui\dialogs\mainframe.py:1394
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:71
+msgid "Go to &Date...\tCtrl+G"
+msgstr "Μετάβαση στην &Ημερομηνία...\tCtrl+G"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:73
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\numtime.py:54
+msgid "Backward\tPgUp"
+msgstr "Προς τα πίσω\tPgUp"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:74
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\numtime.py:55
+msgid "Forward\tPgDn"
+msgstr "Προς τα εμπρός\tPgDn"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:75
+msgid "Forward One Wee&k\tCtrl+K"
+msgstr "Εμπρός κατά μία εβδομάδα\tCtrl+K"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:76
+msgid "Back One &Week\tCtrl+W"
+msgstr "Πίσω κατά μία εβδομάδα\tCtrl+W"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:77
+msgid "Forward One Mont&h\tCtrl+h"
+msgstr "Εμπρός κατά έναν μήνα\tCtrl+h"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:78
+msgid "Back One &Month\tCtrl+M"
+msgstr "Πίσω κατά έναν μήνα\tCtrl+M"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:79
+msgid "Forward One Yea&r\tCtrl+R"
+msgstr "Εμπρός κατά ένα έτος\tCtrl+R"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:80
+msgid "Back One &Year\tCtrl+Y"
+msgstr "Προς τα πίσω κατά ένα έτος\tCtrl+Y"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:82
+msgid "Fit Millennium"
+msgstr "Προσαρμογή σε χιλιετία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:83
+msgid "Fit Century"
+msgstr "Προσαρμογή σε αιώνα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:84
+msgid "Fit Decade"
+msgstr "Προσαρμογή σε δεκαετία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:85
+msgid "Fit Year"
+msgstr "Προσαρμογή σε έτος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:86
+msgid "Fit Month"
+msgstr "Προσαρμογή σε μήνα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:87
+msgid "Fit Week"
+msgstr "Προσαρμογή σε εβδομάδα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:88
+msgid "Fit Day"
+msgstr "Προσαρμογή σε ημέρα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:125
+msgid "day"
+msgstr "ημέρα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:127
+msgid "days"
+msgstr "ημέρες"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:129
+msgid "hour"
+msgstr "ώρα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:131
+msgid "hours"
+msgstr "ώρες"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:133
+msgid "minute"
+msgstr "λεπτό"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:135
+msgid "minutes"
+msgstr "λεπτά"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:142
+msgid "can't be before year 10"
+msgstr "δεν μπορεί να είναι πριν το έτος 10"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:145
+msgid "can't be after year 9989"
+msgstr "δεν μπορεί να είναι πριν το έτος 9989"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:193
+msgid "Can't zoom wider than 1200 years"
+msgstr "Δεν είναι δυνατή η  εστίαση περισσότερο από 1200 χρόνια"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:196
+msgid "Can't zoom deeper than 1 minute"
+msgstr "Δεν είναι δυνατή η μεγέθυνση πέρα από το 1 λεπτό"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:211
+msgid "Day"
+msgstr "Ημέρα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:212
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:634
+msgid "Week"
+msgstr "Εβδομάδα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:213
+msgid "Month"
+msgstr "Μήνας"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:214
+msgid "Year"
+msgstr "Έτος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\gregoriantime.py:259
+msgid "Go to Date"
+msgstr "Μετάβαση στην ημερομηνία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\numtime.py:51
+msgid "Go to &Zero\tCtrl+Z"
+msgstr "Μετάβαση στο έτος μηδέν\tCtrl+Z"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\numtime.py:52
+msgid "Go to &Time\tCtrl+T"
+msgstr "Μετάβαση στην ώρα\tCtrl+T"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\numtime.py:118
+msgid "Can't zoom deeper than 5"
+msgstr "Είναι αδύνταη η εστίαση περισσότερο από 5"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\numtime.py:131
+msgid "1-period"
+msgstr "1-χρονική περίοδος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\numtime.py:132
+msgid "10-period"
+msgstr "10-χρονικές περίοδοι"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\numtime.py:133
+msgid "100-period"
+msgstr "100-περίοδοι"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\numtime.py:134
+msgid "1000-period"
+msgstr "1000-περίοδοι"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\time\numtime.py:185
+msgid "Go to Time"
+msgstr "Μετάβαση στην ώρα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\utils.py:154
+msgid "Error"
+msgstr "Σφάλμα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\utils.py:159
+msgid "Warning"
+msgstr "Προειδοποίηση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\utils.py:173
+msgid "Timeline has encountered a fatal error:"
+msgstr "Το Timeline αντιμετωπίζει ένα σοβαρό σφάλμα:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\utils.py:175
+msgid "To prevent you from loosing data, timeline will now crash."
+msgstr ""
+"Για να αποτρέψει την απώλεια δεδομένων σας, η χρονογραμμή θα καταρρεύσει."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\utils.py:185
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\utils.py:191
+msgid "Question"
+msgstr "Ερώτηση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorychoice.py:52
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:374
+msgid "Add new"
+msgstr "Προσθήκη νέου"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorychoice.py:76
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:374
+msgid "Add Category"
+msgstr "Προσθήκη κατηγορίας"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:196
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:74
+msgid "Edit..."
+msgstr "Επεξεργασία..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:200
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:77
+msgid "Add..."
+msgstr "Προσθήκη..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:204
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:80
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:243
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:209
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:85
+msgid "Check All"
+msgstr "Επιλογή όλων"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:213
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:90
+msgid "Check children"
+msgstr "Επιλογή απόγονου"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:217
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:95
+msgid "Check all children"
+msgstr "Επιλογή όλων των απόγονων"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:221
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:100
+msgid "Check all parents"
+msgstr "Επιλογή όλων των προγόνων"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:225
+msgid "Check parents for checked children"
+msgstr "Επιλογή προγόνων για τους επιλεγμένους απόγονους"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:230
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:111
+msgid "Uncheck All"
+msgstr "Αποεπιλογή όλων"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:234
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:116
+msgid "Uncheck children"
+msgstr "Αποεπιλογή απογόνων"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:238
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:121
+msgid "Uncheck all children"
+msgstr "Αποεπιλογή όλων των απογόνων"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\categorytree.py:242
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:126
+msgid "Uncheck all parents"
+msgstr "Αποεπιλογή όλων των προγόνων"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:105
+msgid "Check all parents of all childs"
+msgstr "Επιλογή όλων των προγόνων για όλους τους απόγονους"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:357
+msgid "Checking not allowed when there is no timeline view."
+msgstr "Η επιλογή δεν επιτρέπεται όταν δεν υπάρχει προβολή χρονογραμμής."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:368
+msgid "Edit Category"
+msgstr "Επεξεργασία κατηγορίας"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:379
+#, python-format
+msgid "Are you sure you want to delete category '%s'?"
+msgstr "Είστε βέβαιος ότι θέλετε να διαγράψετε την κατηγορία '%s';"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:382
+#, python-format
+msgid "Events belonging to '%s' will no longer belong to a category."
+msgstr ""
+"Τα γεγονότα που ανήκουν στην κατηγορία '%s' δεν θα ανήκουν πλέον σε μια "
+"κατηγορία."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\cattree.py:385
+#, python-format
+msgid "Events belonging to '%s' will now belong to '%s'."
+msgstr ""
+"Τα γεγονότα που ανήκουν στην κατηγορία '%s' τώρα θα ανήκουν πλέον στην "
+"κατηγορία '%s'."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\errorpanel.py:44
 msgid "Relevant help topics:"
 msgstr "Σχετικά θέματα βοήθειας:"
 
-#: timelinelib\wxgui\dialogs\preferences.py:77
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\feedbackbutton.py:38
+msgid "Give feedback"
+msgstr "Υποβολή ανατροφοδότησης"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\filechooser.py:30
+msgid "Choose file"
+msgstr "Επιλογή αρχείου"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\gregoriandatetimepicker.py:90
+msgid "Invalid date"
+msgstr "Μη έγκυρη ημερομηνία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\search.py:76
+msgid "No match"
+msgstr "Καμία αντιστοιχία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\search.py:81
+msgid "Only one match"
+msgstr "Μόνο μία αντιστοίχιση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\sidebar.py:34
+msgid "View Categories Individually"
+msgstr "Ξεχωριστή προβολή κατηγοριών"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\timelinepanel.py:145
+msgid "This timeline is read-only."
+msgstr "Η χρονογραμμή είναι μόνο για ανάγνωση."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\timelinepanel.py:146
+msgid "To edit this timeline, save it to a new file: File -> Save As."
+msgstr ""
+"Για να επεξεργαστείτε αυτή τη χρονογραμμή, αποθηκεύστε τη σε νέο αρχείο: "
+"Αρχείο -> Αποθήκευση ως."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\timelinepanel.py:149
+msgid "This timeline is not being saved."
+msgstr "Αυτή η χρονογραμμή δεν αποθηκεύεται."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\timelinepanel.py:150
+msgid "To save this timeline, save it to a new file: File -> Save As."
+msgstr "Για να την αποθηκεύσετε, επιλέξτε: Αρχείο -> Αποθήκευση ως."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\welcomepanel.py:34
+msgid "No timeline opened."
+msgstr "Δεν άνοιξε καμιά χρονογραμμή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\welcomepanel.py:39
+msgid "First time using Timeline?"
+msgstr "Είναι η πρώτη σας φορά στο Timeline;"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\move.py:66
+msgid "Can't move locked event"
+msgstr "Αδύνατη η μετακίνηση ενός κλειδωμένου γεγονότος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\resize.py:67
+msgid "Period is too long"
+msgstr "Η χρονική περίοδος είναι πολύ μεγάλη"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:186
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:204
+msgid "No timeline set"
+msgstr "Δεν έχει ορισθεί χρονογραμμή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:210
+msgid "Can't scroll more to the left"
+msgstr "Αδύνατη η κύλιση προς τα αριστερά"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:212
+msgid "Can't scroll more to the right"
+msgstr "Αδύνατη η κύλιση προς τα δεξιά"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:248
+msgid "Duplicate..."
+msgstr "Δημιουργία αντιγράφου..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:251
+msgid "Select Category..."
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:253
+msgid "Sticky Balloon"
+msgstr "Αναδυόμενο μπαλόνι"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:262
+msgid "Goto URL"
+msgstr "Μετάβαση στο URL"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:471
+msgid "Center"
+msgstr "Κέντρο"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:534
+#, python-format
+msgid "%s events hidden"
+msgstr "%s των συμβάντων είναι κρυφά"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:610
+#, python-format
+msgid "Are you sure you want to delete %d events?"
+msgstr "Είστε βέβαιος ότι θέλετε να διαγράψετε %d γεγονότα;"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\timelinecanvascontroller.py:613
+msgid "Are you sure you want to delete this event?"
+msgstr "Είστε σίγουρος ότι θέλετε να διαγράψετε αυτό το γεγονός;"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\zoom.py:28
+msgid "Select region to zoom into"
+msgstr "Επιλέξτε την περιοχή που θέλετε να μεγεθύνετε"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\zoom.py:35
+msgid "Region too long"
+msgstr "Η περιοχή είναι πολύ μεγάλη"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\components\canvas\zoom.py:38
+msgid "Region too short"
+msgstr "Η περιοχή είναι πολύ μικρή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\categoryeditors\categoryeditordialog.py:101
+#, python-format
+msgid "Category name '%s' not valid. Must be non-empty."
+msgstr ""
+"Το όνομα της κατηγορίας '%s' δεν είναι έγκυρο. Πρέπει να μην είναι κενό."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\categoryeditors\categoryeditordialog.py:106
+#, python-format
+msgid "Category name '%s' already in use."
+msgstr "Το όνομα της κατηγορίας '%s' χρησιμοποιείται ήδη."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\categoryeditors\categoryeditordialog.py:132
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditordialog.py:86
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\containereditordialog.py:59
+msgid "Name:"
+msgstr "Όνομα:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\categoryeditors\categoryeditordialog.py:133
+msgid "Color:"
+msgstr "Χρώμα:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\categoryeditors\categoryeditordialog.py:134
+msgid "Progress Color:"
+msgstr "Χρώμα προόδου:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\categoryeditors\categoryeditordialog.py:135
+msgid "Done Color:"
+msgstr "Χρώμα ολοκλήρωσης:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\categoryeditors\categoryeditordialog.py:136
+msgid "Font Color:"
+msgstr "Χρώμα γραμματοσειράς:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\categoryeditors\categoryeditordialog.py:137
+msgid "Parent:"
+msgstr "Πρόγονος:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\duplicateevent\duplicateventdialog.py:32
+msgid "Duplicate Event"
+msgstr "Δημιουργία αντιγράφου γεγονότος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\duplicateevent\duplicateventdialog.py:68
+#, python-format
+msgid "%d Events not duplicated due to missing dates."
+msgstr "%d γεγονότα δεν αντιγράφηκαν επειδή έλειπαν ημερομηνίες."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\duplicateevent\duplicateventdialog.py:88
+msgid "Number of duplicates:"
+msgstr "Αριθμός αντιγράφων:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\duplicateevent\duplicateventdialog.py:98
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:192
+msgid "Period"
+msgstr "Χρονική περίοδος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\duplicateevent\duplicateventdialog.py:108
+msgid "Frequency:"
+msgstr "Συχνότητα:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\duplicateevent\duplicateventdialog.py:118
+msgid "Forward"
+msgstr "Εμπρός"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\duplicateevent\duplicateventdialog.py:118
+msgid "Backward"
+msgstr "Πίσω"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\duplicateevent\duplicateventdialog.py:118
+msgid "Both"
+msgstr "Εμπρός & Πίσω"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\duplicateevent\duplicateventdialog.py:119
+msgid "Direction"
+msgstr "Κατεύθυνση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditorcontroller.py:78
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\containereditorcontroller.py:81
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditorcontroller.py:273
+#, python-format
+msgid "Field '%s' can't be empty."
+msgstr "Το πεδίο '%s' δεν μπορεί να παραμείνει κενό."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditorcontroller.py:78
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\containereditorcontroller.py:81
+msgid "Name"
+msgstr "Όνομα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditorcontroller.py:86
+msgid "Invalid start time."
+msgstr "Μη έγκυρη ημερομηνία/χρονολογία έναρξης"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditorcontroller.py:94
+msgid "Invalid end time."
+msgstr "Μη έγκυρη ημερομηνία/χρονολογία λήξης"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditorcontroller.py:102
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditorcontroller.py:255
+msgid "End must be > Start"
+msgstr "Το Τέλος πρέπει να είναι > Αρχή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditorcontroller.py:112
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditorcontroller.py:263
+msgid "Entered period is too long."
+msgstr "Η χρονική περίοδος που εισαγάγατε είναι πολύ μεγάλη."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditorcontroller.py:118
+msgid "Invalid color value"
+msgstr "Μη έγκυρη τιμή χρώματος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditordialog.py:44
+msgid "Era Properties"
+msgstr "Ιδιότητες ιστορικής περιόδου"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditordialog.py:59
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:108
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\propertyeditros\alerteditor.py:71
+msgid "When:"
+msgstr "Πότε:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditordialog.py:65
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:110
+msgid "to"
+msgstr "μέχρι"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditordialog.py:74
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:208
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\timeeditor\timeditordialog.py:54
+msgid "Show time"
+msgstr "Εμφάνιση ώρας"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraeditordialog.py:91
+msgid "Colour:"
+msgstr "Χρώμα:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraseditorcontroller.py:38
+msgid "Edit an Era"
+msgstr "Επεξεργασία ιστορικής περιόδου"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraseditorcontroller.py:50
+msgid "Add an Era"
+msgstr "Προσθήκη ιστορικής περιόδου"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eraeditors\eraseditordialog.py:26
+msgid "Edit Era's"
+msgstr "Επεξεργασία ιστορικής περιόδου"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\containereditordialog.py:45
+msgid "Container Properties"
+msgstr "Ιδιότητες περιέκτη"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\containereditordialog.py:65
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:243
+msgid "Category:"
+msgstr "Κατηγορία:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditorcontroller.py:122
+msgid "Invalid Start- date or time"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditorcontroller.py:126
+msgid "Invalid End- date or time"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditorcontroller.py:170
+msgid "You can't change time when the Event is locked"
+msgstr "Δεν μπορείτε να αλλάξετε τον χρόνο όταν το γεγονός είναι κλειδωμένο"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditorcontroller.py:268
+msgid "Start time > Now."
+msgstr "Χρόνος έναρξης > Τώρα."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditorcontroller.py:273
+msgid "Text"
+msgstr "Κείμενο"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:63
+msgid "&Enlarge"
+msgstr "&Μεγέθυνση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:64
+msgid "&Reduce"
+msgstr "&Σμίκρυνση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:138
+msgid "Container:"
+msgstr "Περιέκτης:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:177
+msgid "Add Container"
+msgstr "Προσθήκη περιέκτη"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:216
+msgid "Fuzzy"
+msgstr "Ασαφές"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:220
+msgid "Locked"
+msgstr "Κλειδωμένο"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:227
+msgid "Ends today"
+msgstr "Λήγει σήμερα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:238
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\propertyeditros\alerteditor.py:72
+msgid "Text:"
+msgstr "Κείμενο:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:272
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:273
+msgid "Alert"
+msgstr "Ειδοποίηση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:274
+msgid "Icon"
+msgstr "Εικόνα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:275
+msgid "Hyperlink"
+msgstr "Σύνδεσμος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:276
+msgid "Progress"
+msgstr "Εξέλιξη"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:295
+msgid "Add more events after this one"
+msgstr "Προσθήκη περισσότερων γεγονότων μετά από αυτό"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:343
+msgid "Invalid Date or Time"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:507
+msgid "Edit Container"
+msgstr "Επεξεργασία περιέκτη"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditordialog.py:511
+msgid "Edit Event"
+msgstr "Επεξεργασία γεγονότος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditortabselectiondialog.py:51
+msgid "Select Tab Order:"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\eventeditortabselectiondialog.py:92
+msgid "Event Editor Tab Order"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\propertyeditros\hyperlinkeditor.py:36
+msgid "&Append"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\propertyeditros\hyperlinkeditor.py:37
+msgid "&Remove"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\propertyeditros\hyperlinkeditor.py:38
+msgid "Te&st"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\propertyeditros\hyperlinkeditor.py:68
+msgid "URL:"
+msgstr "Διεύθυνση URL:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\propertyeditros\iconeditor.py:60
+#, python-format
+msgid "Images will be scaled to fit inside a %ix%i box."
+msgstr ""
+"Το μέγεθος των εικόνων θα αλλάξει ώστε να ταιριάζουν μέσα σε ένα %ix%i "
+"πλαίσιο."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\propertyeditros\iconeditor.py:99
+msgid "Select Icon"
+msgstr "Επιλογή εικόνας"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventeditor\propertyeditros\progresseditor.py:33
+msgid "Progress %:"
+msgstr "Πρόοδος %:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\eventlist\eventlistdialog.py:31
+msgid "Found Events"
+msgstr "Εύρεση γεγονότων"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportcontroller.py:22
+msgid "CSV File"
+msgstr "Αρχείο CSV"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportcontroller.py:41
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportcontroller.py:44
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportcontroller.py:47
+msgid "Invalid Data"
+msgstr "Μη έγκυρα δεδομένα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportcontroller.py:41
+msgid "At least one Export Item must be selected"
+msgstr "Θα πρέπει να επιλεγεί τουλάχιστον ένα αντικείμενο προς εξαγωγή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportcontroller.py:44
+msgid "At least one Event Field must be selected"
+msgstr "Θα πρέπει να επιλεγεί τουλάχιστον ένα πεδίο γεγονότος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportcontroller.py:47
+msgid "At least one Category Field must be selected"
+msgstr "Θα πρέπει να επιλεγεί  τουλάχιστον μια κατηγορία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:50
+msgid "Select Export File Type"
+msgstr "Επιλογή είδους αρχείου προς εξαγωγή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:60
+msgid "Select Text Encoding"
+msgstr "Επιλογή κωδικοποίησης κειμένου"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:70
+msgid "Select Items to export"
+msgstr "Επιλογή αντικειμένων προς εξαγωγή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:84
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:90
+msgid "Select Fields..."
+msgstr "Επιλογή πεδίων..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:104
+msgid "Select Event Fields"
+msgstr "Επιλογή πεδίων γεγονότος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:104
+msgid "Event"
+msgstr "Γεγονός"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:111
+msgid "Select Category Fields"
+msgstr "Επιλογή πεδίων κατηγορίας"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\exportdialog.py:111
+msgid "Category"
+msgstr "Κατηγορία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\export\fieldselectiondialog.py:59
+msgid "Select Fields to Export"
+msgstr "Επιλογή πεδίων προς εξαγωγή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feature\featuredialog.py:33
+msgid "Feedback On Feature"
+msgstr "Ανατροφοδότηση για τη λειτουργία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feedback\feedbackdialog.py:52
+msgid "Email Feedback"
+msgstr "Αποστολή ανατροφοδότησης με email"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feedback\feedbackdialog.py:94
+msgid "Default client"
+msgstr "Προκαθορισμένος client"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feedback\feedbackdialog.py:100
+msgid "Gmail"
+msgstr "Gmail"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feedback\feedbackdialog.py:106
+msgid "Other email client"
+msgstr "Άλλος email client"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feedback\feedbackdialog.py:107
+msgid ""
+"Copy and paste this email into your favorite email client and send it from "
+"there."
+msgstr ""
+"Αντιγράψτε και επικολήστε αυτό το email στον email client που χρησιμοποιείτε "
+"και στείλτε το από εκεί."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feedback\feedbackdialog.py:109
+msgid "Other"
+msgstr "Άλλο"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feedback\feedbackdialog.py:128
+msgid "To:"
+msgstr "Προς:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feedback\feedbackdialog.py:130
+msgid "Subject:"
+msgstr "Θέμα:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feedback\feedbackdialog.py:132
+msgid "Body:"
+msgstr "Κείμενο:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\feedback\feedbackdialog.py:134
+msgid "Send With:"
+msgstr "Αποστολή με:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\findcategory\findcategorydialog.py:28
+msgid "Category Finder"
+msgstr "Φίλτρο κατηγορίας"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\findcategory\findcategorydialog.py:87
+msgid "Check"
+msgstr "Επιλογή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\findcategory\findcategorydialog.py:88
+msgid "Uncheck"
+msgstr "Αποεπιλογή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\helpbrowser\helpbrowserframe.py:65
+msgid ""
+"Could not find markdown Python package.  It is needed by the help system. "
+"See the Timeline website or the doc/installing.rst file for instructions how "
+"to install it."
+msgstr ""
+"Αδυναμία εύρεσης του πακέτου markdown Python, που είναι απαραίτητο από το "
+"σύστημα βοήθειας. Δείτε τον ιστότοπο του Timeline ή το αρχείο "
+"doc/installing.rst για πληροφορίες σχετικά με την εγκατάσταση του."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\helpbrowser\helpbrowserframe.py:103
+msgid "Go to home page"
+msgstr "Μετάβαση στην αρχική σελίδα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\helpbrowser\helpbrowserframe.py:110
+msgid "Go back one page"
+msgstr "Μετάβαση πίσω μία σελίδα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\helpbrowser\helpbrowserframe.py:116
+msgid "Go forward one page"
+msgstr "Μπροστά μια σελίδα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\helpbrowser\helpbrowserframe.py:200
+msgid "Page not found"
+msgstr "Η σελίδα δεν βρέθηκε"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\helpbrowser\helpbrowserframe.py:201
+#, python-format
+msgid "Could not find page '%s'."
+msgstr "Αδυναμία εύρεσης της σελίδας '%s'."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\importevents\importeventsdialog.py:34
+msgid "Import events"
+msgstr "Εισαγωγή γεγονότων"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\importevents\importeventsdialog.py:47
+msgid "Select timeline to import from:"
+msgstr "Επιλέξτε τη χρονογραμμή από την οποία θα γίνει η εισαγωγή:"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\importevents\importeventsdialog.py:53
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:887
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:969
+msgid "Timeline files"
+msgstr "Αρχεία χρονογραμμών"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\importevents\importeventsdialog.py:77
+msgid "File does not exist."
+msgstr "Το αρχείο δεν υπάρχει."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\importevents\importeventsdialog.py:82
+#, python-format
+msgid "Unable to load events: %s."
+msgstr "Αδυναμία φόρτωσης γεγονότων: %s."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\importevents\importeventsdialog.py:85
+msgid "The selected timeline has a different time type."
+msgstr "Η επιλεγμένη χρονογραμμή έχει διαφορετικό είδος χρόνου."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\importevents\importeventsdialog.py:87
+#, python-format
+msgid "%d events will be imported."
+msgstr "Θα γίνει εισαγωγή %d γεγονότων."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:165
+msgid "&File"
+msgstr "&Αρχείο"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:191
+msgid "New"
+msgstr "Νέο"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:191
+msgid "Create a new timeline"
+msgstr "Δημιουργία νέας χρονογραμμής"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:216
+msgid "Open an existing timeline"
+msgstr "Άνοιγμα υπάρχουσας χρονογραμμής"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:221
+msgid "Open &Recent"
+msgstr "Άνοιγμα &πρόσφατου αρχείου"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:231
+msgid "Import events..."
+msgstr "Εισαγωγή γεγονότων..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:237
+msgid "Exit the program"
+msgstr "Τερματισμός του προγράμματος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:275
+msgid "Find Categories..."
+msgstr "Εύρεση κατηγοριών..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:278
+msgid "Shortcuts..."
+msgstr "Συντομεύσεις..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:281
+msgid "&Edit"
+msgstr "&Επεξεργασία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:330
+msgid "&Sidebar\tCtrl+I"
+msgstr "&Πλευρική μπάρα\tCtrl+I"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:331
+msgid "&Legend"
+msgstr "&Υπόμνημα"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:333
+msgid "&Balloons on hover"
+msgstr "&Μπαλόνια κατά την αιώρηση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:335
+msgid "Zoom &In\tCtrl++"
+msgstr "Μεγέθυνση \tCtrl++"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:336
+msgid "Zoom &Out\tCtrl+-"
+msgstr "Σμίκρυνση \tCtrl+-"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:337
+msgid "Vertical Zoom &In\tAlt++"
+msgstr "Κάθετη μεγέθυνση\tAlt++"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:338
+msgid "Vertical Zoom &Out\tAlt+-"
+msgstr "Κάθετη σμίκρυνση\tAlt+-"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:340
+msgid "Draw point event right of line"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:353
+msgid "&View"
+msgstr "&Προβολή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:454
+msgid "Create &Event..."
+msgstr "Δημιουργία &γεγονότος..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:455
+msgid "&Edit Selected Event..."
+msgstr "&Επεξεργασία επιλεγμένου γεγονότος..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:456
+msgid "&Duplicate Selected Event..."
+msgstr "&Δημιουργία αντιγράφου επιλεγμένου γεγονότος..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:457
+msgid "Set Category on Selected Events..."
+msgstr "Καθορισμός κατηγορίας στα επιλεγμένα γεγονότα..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:458
+msgid "Move event up\tAlt+Up"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:459
+msgid "Move event down\tAlt+Down"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:461
+msgid "&Compress timeline Events..."
+msgstr "&Συμπίεση γεγονότων χρονογραμμής..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:463
+msgid "&Measure Distance between two Events..."
+msgstr "&Μέτρηση απόστασης μεταξύ δύο γεγονότων..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:465
+msgid "Set Category on events &without category..."
+msgstr "Καθορισμός κατηγορίας σε γεγονότα &χωρίς κατηγορία..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:466
+msgid "Edit &Categories"
+msgstr "Επεξεργασία &κατηγοριών"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:468
+msgid "Edit Era's..."
+msgstr "Επεξεργασία ιστορικής περιόδου"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:470
+msgid "&Read Only"
+msgstr "Μόνο για &ανάγνωση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:472
+msgid "&Undo\tCtrl+Z"
+msgstr "&Αναίρεση\tCtrl+Z"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:473
+msgid "&Redo\tAlt+Z"
+msgstr "&Ακύρωση αναίρεσης\tAlt+Z"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:477
+msgid "&Timeline"
+msgstr "&Χρονογραμμή"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:516
+msgid "Find &First Event"
+msgstr "Εύρεση &πρώτου γεγονότος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:517
+msgid "Find &Last Event"
+msgstr "Εύρεση &τελευταίου γεγονότος"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:518
+msgid "Fit &All Events"
+msgstr "Προβολή όλων των γεγονότων"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:526
+msgid "&Navigate"
+msgstr "&Περιήγηση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:549
+msgid "Feedback"
+msgstr "Ανατροφοδότηση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:563
+msgid "&Contents\tF1"
+msgstr "&Περιεχόμενα\tF1"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:565
+msgid "Getting started &tutorial"
+msgstr "&Βοήθημα για να ξεκινήσετε"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:567
+msgid "Give &Feedback..."
+msgstr "Υποβολή &ανατροφοδότησης..."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:568
+msgid "Co&ntact"
+msgstr "Επικοινωνία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:574
+msgid "&Help"
+msgstr "&Βοήθεια"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:593
+msgid "&Give Feedback on Features"
+msgstr "&Παροχή ανατροφοδότησης για τα χαρακτηριστικά"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:602
+msgid "&Give Feedback on Experimental Features"
+msgstr "&Παροχή ανατροφοδότησης για τα δοκιμαστικά χαρακτηριστικά"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:739
+msgid "read-only"
+msgstr "μόνο για ανάγνωση"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:932
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:946
+msgid "Create Timeline"
+msgstr "Δημιουργία χρονογραμμής"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:937
+msgid "The specified timeline already exists."
+msgstr "Η συγκεκριμένη χρονογραμμή υπάρχει ήδη."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:938
+msgid "Opening timeline instead of creating new."
+msgstr "Άνοιγμα χρονογραμμής αντί για δημιουργία νέας."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:940
+msgid "Information"
+msgstr "Πληροφορίες"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:956
+msgid "Open Timeline"
+msgstr "Άνοιγμα χρονογραμμής"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:972
+msgid "Save Timeline As"
+msgstr "Αποθήκευση χρονογραμμής ως"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:1001
+msgid "Unable to write configuration file."
+msgstr "Αδυναμία εγγραφής στο αρχείο ρυθμίσεων."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:1025
+msgid "Distance between selected events"
+msgstr "Απόσταση μεταξύ επιλεγμένων γεγονότων."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframe.py:1028
+msgid "Events are overlapping or distance is 0"
+msgstr "Τα γεγονότα επικαλύπτονται ή η απόσταση είναι 0"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframecontroller.py:53
+#, python-format
+msgid "File '%s' does not exist."
+msgstr "Το αρχείο '%s' δεν υπάρχει."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframecontroller.py:102
+msgid ""
+"Someoneelse has changed the Timeline.\n"
+"You have two choices!\n"
+"  1. Set Timeline in Read-Only mode.\n"
+"  2. Synchronize Timeline.\n"
+"\n"
+"Do you want to Synchronize?"
+msgstr ""
+"Κάποιος έχει μετατρέψει την εφαρμογή Timeline.\n"
+"Έχετε δύο επιλογές:\n"
+"  1. Να βάλετε την εφαρμογή σε λειτουργία 'Μόνο ανάγνωση'.\n"
+"  2. Να κάνετε συγχρονισμό της εφαρμογής.\n"
+"\n"
+"Θέλετε να κάνετε συγχρονισμό;"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\mainframe\mainframecontroller.py:186
+#, python-format
+msgid ""
+"The lockfile used to protect the timeline from concurrent updates is opened "
+"by another program or process.\n"
+"This lockfile must be removed in order be able to continue editing the "
+"timeline!\n"
+"The lockfile is found at: %s"
+msgstr ""
+"Το αρχείο κλειδώματος στοχεύει στην προστασία της χρονογραμμής από "
+"ταυτόχρονες ενημερώσεις άλλου προγράμματος ή διαδικασίας.\n"
+"Αυτό το αρχείο θα πρέπει να αφαιρεθεί, ώστε να είναι δυνατή η επεξεργασία "
+"της χρονογραμμής.\n"
+"Το αρχείο βρέθηκε στη θέση: %s"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:86
 msgid "General"
 msgstr "Γενικά"
 
-#: timelinelib\wxgui\dialogs\preferences.py:87
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:95
+msgid "Select Event Editor Tab Order"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:106
 msgid "Date && Time"
 msgstr "Ημερομηνία && Ώρα"
 
-#: timelinelib\wxgui\dialogs\preferences.py:94
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:111
+msgid "Fonts"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:118
 msgid "Week start on:"
 msgstr "Η εβδομάδα αρχίζει από:"
 
-#: timelinelib\wxgui\dialogs\preferences.py:128
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:127
+msgid "Major Strips:"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:129
+msgid "Minor Strips:"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:131
+msgid "Legends:"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:168
 msgid "Open most recent timeline on startup"
 msgstr "Άνοιγμα της πιο πρόσφατης χρονογραμμής στο ξεκίνημα"
 
-#: timelinelib\wxgui\dialogs\preferences.py:134
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:174
 msgid "Use inertial scrolling"
 msgstr "Χρήση αδρανούς κύλισης"
 
-#: timelinelib\wxgui\dialogs\preferences.py:145
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:180
+msgid "Never show period Events as point Events"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:186
+msgid "Center Event texts"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:197
 msgid "Monday"
 msgstr "Δευτέρα"
 
-#: timelinelib\wxgui\dialogs\preferences.py:145
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\preferences\preferencesdialog.py:197
 msgid "Sunday"
 msgstr "Κυριακή"
 
-#: timelinelib\wxgui\dialogs\setcategoryeditor.py:61
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\setcategoryeditor\setcategoryeditorcontroller.py:32
+msgid "You must select a category!"
+msgstr "Πρέπει να επιλέξετε μια κατηγορία"
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\setcategoryeditor\setcategoryeditordialog.py:61
 msgid "Select a Category:"
 msgstr "Επιλέξτε μια κατηγορία:"
 
-#: timelinelib\wxgui\dialogs\setcategoryeditor.py:96
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\setcategoryeditor\setcategoryeditordialog.py:96
 msgid "Set Category on selected events"
 msgstr "Καθορισμός κατηγορίες για τα επιλεγμένα γεγονότα"
 
-#: timelinelib\wxgui\dialogs\shortcutseditor.py:26
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\shortcutseditor\shortcutseditorcontroller.py:62
+msgid "Shortcut is saved"
+msgstr ""
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\shortcutseditor\shortcutseditorcontroller.py:72
+msgid "Both Modifier and Shortcut key must be given!"
+msgstr "Και ο μετατροπέας και το πλήκτρο συντόμευσης πρέπει να δίνονται."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\shortcutseditor\shortcutseditorcontroller.py:77
+#, python-format
+msgid "The shortcut %s is already bound to function '%s'!"
+msgstr "Η συντόμευση %s είναι ήδη προορισμένη για τη λειτουργία '%s'."
+
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\shortcutseditor\shortcutseditordialog.py:27
 msgid "Edit Shortcuts"
 msgstr "Επεξεργασία συντομεύσεων"
 
-#: timelinelib\wxgui\dialogs\shortcutseditor.py:45
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\shortcutseditor\shortcutseditordialog.py:46
 msgid "Functions:"
 msgstr "Λειτουργίες:"
 
-#: timelinelib\wxgui\dialogs\shortcutseditor.py:47
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\shortcutseditor\shortcutseditordialog.py:48
 msgid "Modifier:"
 msgstr "Μετατροπέας:"
 
-#: timelinelib\wxgui\dialogs\shortcutseditor.py:49
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\shortcutseditor\shortcutseditordialog.py:50
 msgid "Shortcut Key:"
 msgstr "Πλήκτρο συντόμευσης:"
 
-#: timelinelib\wxgui\dialogs\textdisplay.py:90
+#: C:\Users\roger\workspace\PyDev\Timeline\main\source\timelinelib\wxgui\dialogs\textdisplay\textdisplaydialog.py:90
 msgid "Unable to copy to clipboard."
 msgstr "Αδυναμία αντιγραφής στο πρόχειρο"
