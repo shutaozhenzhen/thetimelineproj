@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -17,13 +17,14 @@
 
 
 SECONDS_IN_DAY = 24 * 60 * 60
+MIN_JULIAN_DAY = 0
 
 
 class Time(object):
 
     def __init__(self, julian_day, seconds):
-        if julian_day < 0:
-            raise ValueError("julian_day must be >= 0")
+        if julian_day < MIN_JULIAN_DAY:
+            raise ValueError("julian_day must be >= %d" % MIN_JULIAN_DAY)
         if seconds < 0 or seconds >= SECONDS_IN_DAY:
             raise ValueError("seconds must be >= 0 and <= 24*60*60")
         self.julian_day = julian_day
@@ -82,6 +83,9 @@ class Time(object):
     def get_day_of_week(self):
         return self.julian_day % 7
 
+    def is_weekend_day(self):
+        return self.get_day_of_week() in (5, 6)
+
 
 class TimeDelta(object):
 
@@ -134,3 +138,15 @@ def delta_from_seconds(seconds):
 
 def delta_from_days(days):
     return TimeDelta(SECONDS_IN_DAY * days)
+
+
+def get_min_time():
+    return Time(MIN_JULIAN_DAY, 0)
+
+
+def set_min_julian_day(allow_negative_julian_yeras):
+    global MIN_JULIAN_DAY
+    if allow_negative_julian_yeras:
+        MIN_JULIAN_DAY = -1000000000000000000000000000000000000000000000000
+    else:
+        MIN_JULIAN_DAY = 0

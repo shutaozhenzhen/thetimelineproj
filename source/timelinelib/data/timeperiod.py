@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -24,13 +24,14 @@ class TimePeriod(object):
     currently displayed time period in the GUI.
     """
 
-    def __init__(self, time_type, start_time, end_time):
+    def __init__(self, time_type, start_time, end_time, assert_period_length=True):
         """
         Create a time period.
 
         `start_time` and `end_time` should be of a type that can be handled
         by the time_type object.
         """
+        self.assert_period_length = assert_period_length
         self.time_type = time_type
         self.start_time, self.end_time = self._update(start_time, end_time)
 
@@ -54,8 +55,7 @@ class TimePeriod(object):
         new_start, new_end = self._update(start_time, end_time, start_delta, end_delta)
         return TimePeriod(self.time_type, new_start, new_end)
 
-    def _update(self, start_time, end_time,
-               start_delta=None, end_delta=None):
+    def _update(self, start_time, end_time, start_delta=None, end_delta=None):
         """
         Change the time period data.
 
@@ -77,7 +77,8 @@ class TimePeriod(object):
 
     def _assert_period_is_valid(self, new_start, new_end):
         self._assert_start_gt_end(new_start, new_end)
-        self._assert_period_lt_max(new_start, new_end)
+        if self.assert_period_length:
+            self._assert_period_lt_max(new_start, new_end)
 
     def _assert_start_gt_end(self, new_start, new_end):
         if new_start > new_end:
@@ -164,7 +165,7 @@ class TimePeriod(object):
         the range [self.time_type.get_min_time(),
         self.time_type.get_max_time()].
         """
-        if delta == None:
+        if delta is None:
             delta = self.time_type.get_zero_delta()
         new_time, overflow, error_text = self._calculate_overflow(time, delta)
         if overflow != 0:

@@ -7,54 +7,80 @@ program.
 
 To be able to install an Exporter into Timeline it must be built as a Plugin. That means it must
 implement all the methods defined in the class PluginBase. To install the Exporter it is placed in the
-directory timlinelib.plugin.plugins.
+directory timlinelib.plugin.plugins.exporters
 
-Step 1 – Inherit from PluginBase
+Step 1 - Inherit from PluginBase
 --------------------------------
 
-Say that we want to build an Exporter that creates a file to be used by the fictive application
-EventViewer. The first thing to do is to create a module with a class definition like this:
-from timelinelib.plugin.pluginbase import PluginBase
-class ExportToEventViewerFile(PluginBase):
-pass
+Say that we want to build an Exporter that creates a file to be used by the fictitious application
+EventViewer. The first thing to do is to create a module with a class definition like this::
 
-Step 2 – Implement base class methods
+    from timelinelib.plugin.pluginbase import PluginBase
+
+    class ExportToEventViewerFile(PluginBase):
+        pass
+
+Step 2 - Implement base class methods
 -------------------------------------
 
-Next step is to implement the methods defined in the PluginBase class.
-from timelinelib.plugin.pluginbase import PluginBase
-from timelinelib.plugin.factory import EXPORTER
-class ExportToEventViewerFile(PluginBase):
-def displayname(self):
-return _(“Export to EventViewer...”)
-def service(self):
-return EXPORTER
-def run(timeline, parent=None)
-pass
+Next step is to implement the methods defined in the PluginBase class::
+
+    from timelinelib.plugin.pluginbase import PluginBase
+    from timelinelib.plugin.factory import EXPORTER
+
+    class ExportToEventViewerFile(PluginBase):
+
+        def displayname(self):
+            return _("Export to EventViewer...")
+
+        def service(self):
+            return EXPORTER
+
+        def run(timeline, parent=None)
+            pass
+
 Note that the displayname() returns a string surrounded by _(). The reason for this is to make it
 possible to internationalize the text.
 
-Step 3 – Write the implementation
+The service() returns the constant EXPORTER which makes Timeline understand to create a menu alternative
+for the exporter under File -> Export.
+
+Step 3 - Write the implementation
 ---------------------------------
 
 The implementation is written in the run() method.
 This method is passed a timeline object, from which information about the timeline data can be
 retrieved. The parent argument is the gui object from which the run function is called. For exporters,
 this is the mainframe window.
-The following timeline methods are useful for retrieving timeline data.
-timeline.get_all_events() Return a list with all events in a timeline
-timeline.get_containers() Return a list with all container events in a timeline
-timeline.get_categories() Return a list with all categories in a timeline
-Useful Event functions.
-event.get_text() Returns the event title
-event.get_category() Returns the category associated with the event
-container.get_subevents() Returns the events associated with the container
+The following timeline methods are useful for retrieving timeline data::
 
-Step 4 – Install the Exporter
+    timeline.get_all_events() Return a list with all events in a timeline
+    timeline.get_containers() Return a list with all container events in a timeline
+    timeline.get_categories() Return a list with all categories in a timeline
+
+Useful Event functions::
+
+    event.get_timeperiod() Returns the start and end of the event
+    event.get_text() Returns the event title
+    event.get_category() Returns the category associated with the event
+    event.get_fuzzy() Returns True if the event has a fuzzy period
+    event.get_locked() Returns True if ther event period is locked
+    event.get_ends_today() Returns True if the event ends today
+    event.get_description() Returns the event description
+    event.get_icon() Returns the link to the icon
+    event.get_hyperlink() Returns string with semicolon separated hyperlinks.
+    event.get_alert() Returns alert information
+    event.get_progress() Return the percentage done
+    event.is_container() Returns True if it is a container
+    event.is_subevent() Returns True if the event is inside a container
+    container.get_subevents() Returns the events associated with the container
+    
+
+Step 4 - Install the Exporter
 -----------------------------
 
-Put the module that contains the Exporter in the timleinelib.plugin.plugins
-directory. That’s it!  Sample code::
+Put the module that contains the Exporter in the timleinelib.plugin.plugins.exporters
+directory. That's it!  Sample code::
 
     from timelinelib.plugin.pluginbase import PluginBase
     from timelinelib.plugin.factory import EXPORTER
@@ -85,3 +111,17 @@ directory. That’s it!  Sample code::
 
         def _transform_event(self, event):
             return "%s %s\n" % (event.get_text(), event.get_time_period().get_label())
+
+The TimelineExporter
+--------------------
+
+This class uses an input dialog to collect the export format as well as what data to export.
+At the moment, only export to CSV is implemented, but the idea is that this class can be extended
+to export other file formats as well.
+
+The code is found at::
+
+    timelinelib.plugin.plugins.exporters.timelineexporter.py
+
+
+            

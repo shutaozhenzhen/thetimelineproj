@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -42,8 +42,8 @@ class Category(object):
     def has_id(self):
         return self.id is not None
 
-    def set_id(self, id):
-        self.id = id
+    def set_id(self, category_id):
+        self.id = category_id
         return self
 
     def get_name(self):

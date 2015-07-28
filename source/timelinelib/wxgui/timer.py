@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -31,6 +31,6 @@ class TimelineTimer(Observable):
 
     def start(self, interval_in_ms):
         self.timer.Start(interval_in_ms)
-        
+
     def _timer_tick(self, evt):
         self._notify(TIMER_TICK)

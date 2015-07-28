@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,15 +16,14 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
-from timelinelib.wxgui.components.numtimepicker import NumTimePickerController
 from timelinelib.wxgui.components.numtimepicker import NumTimePicker
+from timelinelib.wxgui.components.numtimepicker import NumTimePickerController
+from timelinetest import UnitTestCase
 
 
-class desribe_NumTimePickerController(unittest.TestCase):
+class desribe_NumTimePickerController(UnitTestCase):
 
     def test_time_control_is_assigned_time_from_set_value(self):
         self.controller.set_value(5)

@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -67,6 +67,24 @@ class WildcardHelper(object):
                 self.ext_names.append(name)
             else:
                 self.ext_names.append(ext)
+
+
+class PopupTextWindow(wx.PopupTransientWindow):
+
+    def __init__(self, parent, color, text, timeout=1500):
+        self.timeout = timeout
+        wx.PopupTransientWindow.__init__(self, parent, wx.NO_BORDER)
+        self.SetBackgroundColour(color)
+        st = wx.StaticText(self, wx.ID_ANY, text, pos=(10, 10))
+        sz = st.GetBestSize()
+        self.SetSize((sz.width + 20, sz.height + 20))
+
+    def ProcessLeftDown(self, evt):
+        return False
+
+    def Popup(self):
+        super(PopupTextWindow, self).Popup()
+        wx.CallLater(self.timeout, self.Dismiss)
 
 
 def category_tree(category_list, parent=None, remove=None):
@@ -156,22 +174,22 @@ def handle_db_error(e):
             str(e),
             _("To prevent you from loosing data, timeline will now crash."),
         ]))
-        (type, value, traceback) = sys.exc_info()
+        (error_type, value, traceback) = sys.exc_info()
         from timelinelib.wxgui.setup import unhandled_exception_hook
-        unhandled_exception_hook(type, value, traceback)
+        unhandled_exception_hook(error_type, value, traceback)
     finally:
         sys.exit(1)
 
 
 def get_user_ack(question, parent=None):
     return wx.MessageBox(question, _("Question"),
-                         wx.YES_NO|wx.CENTRE|wx.NO_DEFAULT, parent) == wx.YES
+                         wx.YES_NO | wx.CENTRE | wx.NO_DEFAULT, parent) == wx.YES
 
 
 def _ask_question(question, parent=None):
     """Ask a yes/no question and return the reply."""
     return wx.MessageBox(question, _("Question"),
-                         wx.YES_NO|wx.CENTRE|wx.NO_DEFAULT, parent)
+                         wx.YES_NO | wx.CENTRE | wx.NO_DEFAULT, parent)
 
 
 def set_wait_cursor(parent):

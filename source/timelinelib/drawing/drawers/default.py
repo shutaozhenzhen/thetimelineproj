@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -26,8 +26,10 @@ from timelinelib.data import sort_categories
 from timelinelib.drawing.interface import Drawer
 from timelinelib.drawing.scene import TimelineScene
 from timelinelib.drawing.utils import darken_color
-from timelinelib.drawing.utils import get_default_font
+from timelinelib.wxgui.components.font import Font
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
+import timelinelib.wxgui.components.font as font
+from timelinelib.data.timeperiod import TimePeriod
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -44,8 +46,7 @@ BLACK = (0, 0, 0)
 class DefaultDrawingAlgorithm(Drawer):
 
     def __init__(self):
-        self.font_size = 8
-        self._create_fonts()
+        self.event_text_font = Font(8)
         self._create_pens()
         self._create_brushes()
         self.fast_draw = False
@@ -57,26 +58,19 @@ class DefaultDrawingAlgorithm(Drawer):
         self.background_drawer = background_drawer
 
     def increment_font_size(self, step=2):
-        self.font_size += step
-        self.small_text_font = get_default_font(self.font_size)
+        self.event_text_font.increment(step)
         self._adjust_outer_padding_to_font_size()
 
     def decrement_font_size(self, step=2):
-        if self.font_size > step:
-            self.font_size -= step
-            self.small_text_font = get_default_font(self.font_size)
+        if self.event_text_font.PointSize > step:
+            self.event_text_font.decrement(step)
             self._adjust_outer_padding_to_font_size()
 
     def _adjust_outer_padding_to_font_size(self):
-        if self.font_size < 8:
-            self.outer_padding = OUTER_PADDING * self.font_size / 8
+        if self.event_text_font.PointSize < 8:
+            self.outer_padding = OUTER_PADDING * self.event_text_font.PointSize / 8
         else:
             self.outer_padding = OUTER_PADDING
-
-    def _create_fonts(self):
-        self.header_font = get_default_font(12, True)
-        self.small_text_font = get_default_font(self.font_size)
-        self.small_text_font_bold = get_default_font(8, True)
 
     def _create_pens(self):
         self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.SOLID)
@@ -99,7 +93,7 @@ class DefaultDrawingAlgorithm(Drawer):
         return period_width_in_pixels > PERIOD_THRESHOLD
 
     def _get_text_extent(self, text):
-        self.dc.SetFont(self.small_text_font)
+        self.dc.SetFont(self.event_text_font)
         tw, th = self.dc.GetTextExtent(text)
         return (tw, th)
 
@@ -114,6 +108,8 @@ class DefaultDrawingAlgorithm(Drawer):
         self.dc = dc
         self.time_type = timeline.get_time_type()
         self.scene = self._create_scene(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
+        if view_properties.use_fixed_event_vertical_pos():
+            self._calc_fixed_event_rect_y(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
         self._perform_drawing(timeline, view_properties)
         del self.dc  # Program crashes if we don't delete the dc reference.
 
@@ -125,6 +121,14 @@ class DefaultDrawingAlgorithm(Drawer):
         scene.set_data_indicator_size(DATA_INDICATOR_SIZE)
         scene.create()
         return scene
+
+    def _calc_fixed_event_rect_y(self, size, db, view_properties, get_text_extent_fn):
+        periods = view_properties.periods
+        view_properties.set_displayed_period(TimePeriod(db.get_time_type(), periods[0].start_time, periods[-1].end_time, assert_period_length=False), False)
+        large_size = (size[0] * len(periods), size[1])
+        scene = self._create_scene(large_size, db, view_properties, get_text_extent_fn)
+        for (evt, rect) in scene.event_data:
+            evt.fixed_y = rect.GetY()
 
     def _perform_drawing(self, timeline, view_properties):
         self.background_drawer.draw(self, self.dc, self.scene, timeline)
@@ -265,14 +269,26 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_minor_strip_label(self, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
-        self.dc.SetFont(self.scene.minor_strip.get_font(strip_period))
+        self._set_minor_strip_font(strip_period)
         (tw, th) = self.dc.GetTextExtent(label)
         middle = self.scene.x_pos_for_time(strip_period.mean_time())
         middley = self.scene.divider_y
         self.dc.DrawText(label, middle - tw / 2, middley - th)
 
+    def _set_minor_strip_font(self, strip_period):
+        if self.time_type.is_date_time_type():
+            if self.scene.minor_strip_is_day():
+                if strip_period.start_time.is_weekend_day():
+                    font.set_minor_strip_text_font(self.config, self.dc, force_bold=True)
+                else:
+                    font.set_minor_strip_text_font(self.config, self.dc, force_normal=True)
+            else:
+                font.set_minor_strip_text_font(self.config, self.dc)
+        else:
+            font.set_minor_strip_text_font(self.config, self.dc)
+
     def _draw_major_strips(self):
-        self.dc.SetFont(self.header_font)
+        font.set_major_strip_text_font(self.config, self.dc)
         self.dc.SetPen(self.grey_solid_pen)
         for time_period in self.scene.major_strip_data:
             self._draw_major_strip_end_line(time_period)
@@ -312,7 +328,9 @@ class DefaultDrawingAlgorithm(Drawer):
         for (event, rect) in self.scene.event_data:
             if self._invisible_container_subevent(event, rect):
                 continue
-            if self._event_displayed_as_point_event(rect):
+            if not event.is_period():
+                self._draw_line(view_properties, event, rect)
+            elif not self.scene.never_show_period_events_as_point_events() and self._event_displayed_as_point_event(rect):
                 self._draw_line(view_properties, event, rect)
 
     def _invisible_container_subevent(self, event, rect):
@@ -323,10 +341,18 @@ class DefaultDrawingAlgorithm(Drawer):
         return self.scene.divider_y > rect.Y
 
     def _draw_line(self, view_properties, event, rect):
-        x = self.scene.x_pos_for_time(event.mean_time())
+        if self.config.draw_period_events_to_right:
+            x = rect.X
+        else:
+            x = self.scene.x_pos_for_time(event.mean_time())
         y = rect.Y + rect.Height
         y2 = self._get_end_of_line(event)
         self._set_line_color(view_properties, event)
+        if event.is_period():
+            if self.config.draw_period_events_to_right:
+                x += 1
+            self.dc.DrawLine(x-1, y, x-1, y2)
+            self.dc.DrawLine(x+1, y, x+1, y2)
         self.dc.DrawLine(x, y, x, y2)
         self.dc.DrawCircle(x, y2, 2)
 
@@ -372,7 +398,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_legend(self, view_properties, categories):
         if self._legend_should_be_drawn(view_properties, categories):
-            self.dc.SetFont(self.small_text_font)
+            font.set_legend_text_font(self.config, self.dc)
             rect = self._calculate_legend_rect(categories)
             self._draw_legend_box(rect)
             self._draw_legend_items(rect, categories)
@@ -416,7 +442,6 @@ class DefaultDrawingAlgorithm(Drawer):
             color_box_rect = (OUTER_PADDING + rect.Width - item_height -
                               INNER_PADDING, cur_y, item_height, item_height)
             self.dc.DrawRectangleRect(color_box_rect)
-            self.dc.SetTextForeground((0, 0, 0))
             self.dc.DrawText(cat.name, OUTER_PADDING + INNER_PADDING, cur_y)
             cur_y = cur_y + item_height + INNER_PADDING
 
@@ -444,10 +469,12 @@ class DefaultDrawingAlgorithm(Drawer):
     def _draw_events(self, view_properties):
         """Draw all event boxes and the text inside them."""
         self._scroll_events_vertically(view_properties)
-        self.dc.SetFont(self.small_text_font)
+        self.dc.SetFont(self.event_text_font)
         self.dc.DestroyClippingRegion()
         self._draw_lines_to_non_period_events(view_properties)
         for (event, rect) in self.scene.event_data:
+            if view_properties.use_fixed_event_vertical_pos():
+                rect.SetY(event.fixed_y)
             if event.is_container():
                 self._draw_container(event, rect, view_properties)
             else:
@@ -471,7 +498,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_box(self, rect, event, view_properties):
         self.dc.SetClippingRect(rect)
-        self.event_box_drawer.run(self.dc, rect, event, view_properties.is_selected(event))
+        self.event_box_drawer.run(self.dc, self.scene, rect, event, view_properties.is_selected(event))
         self.dc.DestroyClippingRegion()
 
     def _draw_ballons(self, view_properties):
@@ -515,7 +542,7 @@ class DefaultDrawingAlgorithm(Drawer):
             inner_rect_w = iw
             inner_rect_h = ih
         # Text
-        self.dc.SetFont(get_default_font(8))
+        self.dc.SetFont(Font(8))
         font_h = self.dc.GetCharHeight()
         (tw, th) = (0, 0)
         description = event.get_data("description")

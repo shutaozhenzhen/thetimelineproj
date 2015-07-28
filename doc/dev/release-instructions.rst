@@ -53,7 +53,7 @@ Features for the next version (x.y+1) can continue to be developed in main.
 
 5. Check that information is correct in changelog.rst
     1. Change Planned -> Released
-       Update versions.timeline
+       Update versions.timeline. (release/versions.timeline)
     2. Commit "Updated changes"
     3. Pull these changes into main.
 
@@ -86,8 +86,11 @@ Launchpad
 ---------
 1. Upload new pot-file (So that new texts are found)
         1. Create new pot-file
+           Run the script translations/generate-pot-file.py
         2. Request upload from here (login required)
-           http://translations.launchpad.net/thetimelineproj/trunk/+translations
+             http://translations.launchpad.net/thetimelineproj/trunk/+translations
+           Status of upload can be checked at
+             https://translations.launchpad.net/thetimelineproj/trunk/+imports
 
 Work on main
 ------------

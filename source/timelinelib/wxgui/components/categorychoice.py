@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -20,8 +20,8 @@ import wx
 
 from timelinelib.data import sort_categories
 from timelinelib.db.exceptions import TimelineIOError
-from timelinelib.wxgui.dialogs.categorieseditor import CategoriesEditor
-from timelinelib.wxgui.dialogs.categoryeditor import WxCategoryEdtiorDialog
+from timelinelib.wxgui.dialogs.categoryeditors.categorieseditordialog import CategoriesEditor
+from timelinelib.wxgui.dialogs.categoryeditors.categoryeditordialog import WxCategoryEdtiorDialog
 import timelinelib.wxgui.utils as gui_utils
 
 

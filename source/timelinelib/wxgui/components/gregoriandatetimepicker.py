@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -27,7 +27,7 @@ from timelinelib.config.paths import ICONS_DIR
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.calendar import get_date_formatter
-
+from timelinelib.time.timeline import Time
 
 class GregorianDateTimePicker(wx.Panel):
 
@@ -42,13 +42,16 @@ class GregorianDateTimePicker(wx.Panel):
 
     def on_return(self):
         self.parent.on_return()
-        
+
     def show_time(self, show=True):
         self.time_picker.Show(show)
         self.GetSizer().Layout()
 
     def get_value(self):
-        return self.controller.get_value()
+        try:
+            return self.controller.get_value()
+        except ValueError:
+            pass
 
     def set_value(self, value):
         self.controller.set_value(value)
@@ -165,7 +168,12 @@ class CalendarPopup(wx.PopupTransientWindow):
 
     def time_to_wx_date(self, time):
         year, month, day = gregorian.from_time(time).to_date_tuple()
-        return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
+        try:
+            return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
+        except OverflowError:
+            if year < 0:
+                year, month, day = gregorian.from_time(Time(0, 0)).to_date_tuple()
+                return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
 
     def _bind_events(self):
         def on_month(evt):

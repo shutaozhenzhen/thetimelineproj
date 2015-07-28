@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -18,15 +18,15 @@
 
 from mock import Mock
 
-from specs.utils import a_category_with
-from specs.utils import TestCase
 from timelinelib.data.category import clone_categories_list
 from timelinelib.data.db import MemoryDB
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.repositories.categories import CategoriesFacade
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 
 
-class TestBase(TestCase):
+class TestBase(UnitTestCase):
 
     def _create_example_tree(self):
         self.work = self.add_category("Work")

@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,13 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_category_with
-from specs.utils import an_event
-from specs.utils import an_event_with
-from specs.utils import EVENT_MODIFIERS
-from specs.utils import gregorian_period
-from specs.utils import human_time_to_gregorian
-from specs.utils import TestCase
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.event import clone_event_list
 from timelinelib.data import Container
@@ -31,10 +24,16 @@ from timelinelib.data import Subevent
 from timelinelib.data.timeperiod import TimePeriod
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
-from timelinelib.time.timeline import delta_from_days
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import an_event
+from timelinetest.utils import an_event_with
+from timelinetest.utils import EVENT_MODIFIERS
+from timelinetest.utils import gregorian_period
+from timelinetest.utils import human_time_to_gregorian
 
 
-class describe_event(TestCase):
+class describe_event(UnitTestCase):
 
     def test_can_get_values(self):
         event = Event(time_type=GregorianTimeType(),
@@ -145,31 +144,31 @@ class describe_event(TestCase):
         self.assertEqual(u"", event._get_duration_label())
 
     def test_duration_label_for_period_events(self):
-        cases = ( ("11 Jul 2014 10:11", "11 Jul 2014 10:12", "1 #minute#"), 
-                  ("11 Jul 2014 10:11", "11 Jul 2014 11:11", "1 #hour#"), 
-                  ("11 Jul 2014 10:11", "12 Jul 2014 10:11", "1 #day#"), 
-                  ("11 Jul 2014 10:11", "11 Jul 2014 11:12", "1 #hour# 1 #minute#"), 
-                  ("11 Jul 2014 10:11", "12 Jul 2014 10:12", "1 #day# 1 #minute#"), 
-                  ("11 Jul 2014 10:11", "12 Jul 2014 11:11", "1 #day# 1 #hour#"), 
-                  ("11 Jul 2014 10:11", "12 Jul 2014 11:12", "1 #day# 1 #hour# 1 #minute#"), 
-                  ("11 Jul 2014 10:11", "11 Jul 2014 10:13", "2 #minutes#"), 
-                  ("11 Jul 2014 10:11", "11 Jul 2014 12:11", "2 #hours#"), 
-                  ("11 Jul 2014 10:11", "13 Jul 2014 10:11", "2 #days#"), 
-                  ("11 Jul 2014 10:11", "11 Jul 2014 12:13", "2 #hours# 2 #minutes#"), 
-                  ("11 Jul 2014 10:11", "13 Jul 2014 10:13", "2 #days# 2 #minutes#"), 
-                  ("11 Jul 2014 10:11", "13 Jul 2014 12:11", "2 #days# 2 #hours#"), 
-                  ("11 Jul 2014 10:11", "13 Jul 2014 12:13", "2 #days# 2 #hours# 2 #minutes#"), 
-                  ("11 Jul 2014 10:11", "11 Jul 2014 11:13", "1 #hour# 2 #minutes#"), 
-                  ("11 Jul 2014 10:11", "12 Jul 2014 10:13", "1 #day# 2 #minutes#"), 
-                  ("11 Jul 2014 10:11", "12 Jul 2014 12:11", "1 #day# 2 #hours#"), 
-                  ("11 Jul 2014 10:11", "12 Jul 2014 12:13", "1 #day# 2 #hours# 2 #minutes#"), 
-                )
+        cases = (("11 Jul 2014 10:11", "11 Jul 2014 10:12", "1 #minute#"),
+                 ("11 Jul 2014 10:11", "11 Jul 2014 11:11", "1 #hour#"),
+                 ("11 Jul 2014 10:11", "12 Jul 2014 10:11", "1 #day#"),
+                 ("11 Jul 2014 10:11", "11 Jul 2014 11:12", "1 #hour# 1 #minute#"),
+                 ("11 Jul 2014 10:11", "12 Jul 2014 10:12", "1 #day# 1 #minute#"),
+                 ("11 Jul 2014 10:11", "12 Jul 2014 11:11", "1 #day# 1 #hour#"),
+                 ("11 Jul 2014 10:11", "12 Jul 2014 11:12", "1 #day# 1 #hour# 1 #minute#"),
+                 ("11 Jul 2014 10:11", "11 Jul 2014 10:13", "2 #minutes#"),
+                 ("11 Jul 2014 10:11", "11 Jul 2014 12:11", "2 #hours#"),
+                 ("11 Jul 2014 10:11", "13 Jul 2014 10:11", "2 #days#"),
+                 ("11 Jul 2014 10:11", "11 Jul 2014 12:13", "2 #hours# 2 #minutes#"),
+                 ("11 Jul 2014 10:11", "13 Jul 2014 10:13", "2 #days# 2 #minutes#"),
+                 ("11 Jul 2014 10:11", "13 Jul 2014 12:11", "2 #days# 2 #hours#"),
+                 ("11 Jul 2014 10:11", "13 Jul 2014 12:13", "2 #days# 2 #hours# 2 #minutes#"),
+                 ("11 Jul 2014 10:11", "11 Jul 2014 11:13", "1 #hour# 2 #minutes#"),
+                 ("11 Jul 2014 10:11", "12 Jul 2014 10:13", "1 #day# 2 #minutes#"),
+                 ("11 Jul 2014 10:11", "12 Jul 2014 12:11", "1 #day# 2 #hours#"),
+                 ("11 Jul 2014 10:11", "12 Jul 2014 12:13", "1 #day# 2 #hours# 2 #minutes#"),
+                 )
         for start, end, label in cases:
             event = an_event_with(start=start, end=end)
             self.assertEqual(label, event._get_duration_label())
 
 
-class describe_event_construction(TestCase):
+class describe_event_construction(UnitTestCase):
 
     def test_event_properties_defaults_to_false(self):
         event = an_event()
@@ -192,14 +191,14 @@ class describe_event_construction(TestCase):
         self.assertTrue(event.get_ends_today())
 
 
-class describe_event_functions(TestCase):
+class describe_event_functions(UnitTestCase):
 
     def test_zero_time_span(self):
         event = an_event()
         self.assertEqual(event.get_time_type().get_zero_delta(), event.time_span())
 
 
-class describe_event_cloning(TestCase):
+class describe_event_cloning(UnitTestCase):
 
     def test_cloning_returns_new_object(self):
         event = an_event()
@@ -234,46 +233,46 @@ class describe_event_cloning(TestCase):
         event.set_ends_today(True)
         clone = event.clone()
         self.assertEqual(clone, event)
-        
+
     def test_cloning_copies_progress_attribute(self):
         event = an_event()
-        event.set_progress(75) 
+        event.set_progress(75)
         clone = event.clone()
         self.assertEqual(clone, event)
 
     def test_cloning_copies_icon_attribute(self):
         event = an_event()
-        event.set_icon("icon") 
+        event.set_icon("icon")
         clone = event.clone()
         self.assertEqual(clone, event)
 
     def test_cloning_copies_hyperlink_attribute(self):
         event = an_event()
-        event.set_hyperlink("hyperlink") 
+        event.set_hyperlink("hyperlink")
         clone = event.clone()
         self.assertEqual(clone, event)
 
     def test_cloning_copies_alert_attribute(self):
         event = an_event()
-        event.set_alert("2015-01-07 00:00:00;hoho") 
+        event.set_alert("2015-01-07 00:00:00;hoho")
         clone = event.clone()
         self.assertEqual(clone, event)
 
     def test_cloning_copies_description_attribute(self):
         event = an_event()
-        event.set_description("Description") 
+        event.set_description("Description")
         clone = event.clone()
         self.assertEqual(clone, event)
 
     def test_cloning_copies_category_attribute(self):
         event = an_event()
-        event.set_category("Category") 
+        event.set_category("Category")
         clone = event.clone()
         self.assertEqual(clone, event)
 
     def test_cloning_copies_text_attribute(self):
         event = an_event()
-        event.set_text("Text") 
+        event.set_text("Text")
         clone = event.clone()
         self.assertEqual(clone, event)
 
@@ -282,7 +281,7 @@ class describe_event_cloning(TestCase):
         time_period = TimePeriod(event.time_type,
                                  event.time_type.parse_time("2010-08-01 13:44:00"),
                                  event.time_type.parse_time("2014-08-01 13:44:00"))
-        event.set_time_period(time_period) 
+        event.set_time_period(time_period)
         clone = event.clone()
         self.assertEqual(clone, event)
 
@@ -291,12 +290,12 @@ class describe_event_cloning(TestCase):
         time_period = TimePeriod(event.time_type,
                                  event.time_type.parse_time("2010-08-01 13:44:00"),
                                  event.time_type.parse_time("2014-08-01 13:44:00"))
-        event.set_time_period(time_period) 
+        event.set_time_period(time_period)
         clone = event.clone()
         self.assertTrue(time_period is not clone.get_time_period())
 
 
-class describe_event_cloning_of_containers(TestCase):
+class describe_event_cloning_of_containers(UnitTestCase):
 
     def test_container_relationships_are_maintained_when_cloning(self):
         self.given_container_with_subevents()

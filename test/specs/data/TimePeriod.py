@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,11 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import TestCase
-from specs.utils import TIME_PERIOD_MODIFIERS
 from timelinelib.data import TimePeriod
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.typeinterface import TimeType
+from timelinetest import UnitTestCase
+from timelinetest.utils import TIME_PERIOD_MODIFIERS
 
 
 class ATime(object):
@@ -138,7 +137,7 @@ class ATimeType(TimeType):
         return not (self == other)
 
 
-class time_period_spec(TestCase):
+class time_period_spec(UnitTestCase):
 
     def test_creating_period_with_too_small_start_time_should_fail(self):
         self.assertRaises(ValueError, TimePeriod,

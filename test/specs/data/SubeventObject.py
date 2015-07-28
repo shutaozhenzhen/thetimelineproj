@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,20 +16,20 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_category_with
-from specs.utils import a_container_with
-from specs.utils import a_subevent
-from specs.utils import a_subevent_with
-from specs.utils import gregorian_period
-from specs.utils import human_time_to_gregorian
-from specs.utils import SUBEVENT_MODIFIERS
-from specs.utils import TestCase
 from timelinelib.data.subevent import Subevent
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import a_container_with
+from timelinetest.utils import a_subevent
+from timelinetest.utils import a_subevent_with
+from timelinetest.utils import gregorian_period
+from timelinetest.utils import human_time_to_gregorian
+from timelinetest.utils import SUBEVENT_MODIFIERS
 
 
-class describe_subevent(TestCase):
+class describe_subevent(UnitTestCase):
 
     def test_can_get_values(self):
         event = Subevent(time_type=GregorianTimeType(),
@@ -126,7 +126,7 @@ class describe_subevent(TestCase):
         self.assertEqual(99, subevent.cid())
 
 
-class describe_subevent_cloning(TestCase):
+class describe_subevent_cloning(UnitTestCase):
 
     def test_cloning_returns_new_object(self):
         subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01", cid=99)

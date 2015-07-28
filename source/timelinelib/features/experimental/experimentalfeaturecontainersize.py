@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -18,7 +18,7 @@
 
 import wx
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
-from timelinelib.drawing.utils import get_default_font
+from timelinelib.wxgui.components.font import Font
 
 
 DISPLAY_NAME = "Extend Container height"
@@ -51,7 +51,7 @@ class ExperimentalFeatureContainerSize(ExperimentalFeature):
 
     def draw_container_text_top_adjusted(self, text, dc, rect):
         old_font = dc.GetFont()
-        dc.SetFont(get_default_font(FONT_SIZE))
+        dc.SetFont(Font(FONT_SIZE))
         dc.SetClippingRect(wx.Rect(rect.X, rect.Y + Y_OFFSET, rect.Width, rect.Height))
         text_x = rect.X + INNER_PADDING
         text_y = rect.Y + INNER_PADDING + TEXT_OFFSET

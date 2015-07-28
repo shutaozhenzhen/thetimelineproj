@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,66 +16,51 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import TestCase
-from specs.utils import TIME_MODIFIERS
 from timelinelib.time.timeline import *
+from timelinetest import UnitTestCase
+from timelinetest.utils import TIME_MODIFIERS
 
 
-class TimeSpec(TestCase):
+class testbase(UnitTestCase):
+    pass
+
+
+class timeproperties(testbase):
 
     def test_can_return_time_of_day(self):
-        self.assertEqual(
-            Time(0, 0).get_time_of_day(),
-            (0, 0, 0))
-        self.assertEqual(
-            Time(0, 1).get_time_of_day(),
-            (0, 0, 1))
-        self.assertEqual(
-            Time(0, 61).get_time_of_day(),
-            (0, 1, 1))
-        self.assertEqual(
-            Time(0, 60 * 60 * 2 + 60 * 3 + 5).get_time_of_day(),
-            (2, 3, 5))
+        self.assertEqual((0, 0, 0), Time(0, 0).get_time_of_day())
+        self.assertEqual((0, 0, 1), Time(0, 1).get_time_of_day())
+        self.assertEqual((0, 1, 1), Time(0, 61).get_time_of_day())
+        self.assertEqual((2, 3, 5), Time(0, 60 * 60 * 2 + 60 * 3 + 5).get_time_of_day())
 
     def test_add(self):
-        self.assertEqual(
-            Time(10, 61) + delta_from_seconds(9),
-            Time(10, 70))
-        self.assertEqual(
-            Time(10, 61) + delta_from_days(1),
-            Time(11, 61))
+        self.assertEqual(Time(10, 70), Time(10, 61) + delta_from_seconds(9))
+        self.assertEqual(Time(11, 61), Time(10, 61) + delta_from_days(1))
 
     def test_sub_delta(self):
-        self.assertEqual(
-            Time(10, 61) - delta_from_seconds(1),
-            Time(10, 60))
-        self.assertEqual(
-            Time(10, 0) - delta_from_seconds(1),
-            Time(9, 24 * 60 * 60 - 1))
+        self.assertEqual(Time(10, 60), Time(10, 61) - delta_from_seconds(1))
+        self.assertEqual(Time(9, 24 * 60 * 60 - 1), Time(10, 0) - delta_from_seconds(1))
 
     def test_sub_time(self):
-        self.assertEqual(
-            Time(10, 0) - Time(5, 0),
-            delta_from_seconds(5 * 24 * 60 * 60))
-        self.assertEqual(
-            Time(10, 5) - Time(5, 0),
-            delta_from_seconds(5 * 24 * 60 * 60 + 5))
-        self.assertEqual(
-            Time(10, 5) - Time(5, 10),
-            delta_from_seconds(4 * 24 * 60 * 60 + (24 * 60 * 60 - 5)))
+        self.assertEqual(delta_from_seconds(5 * 24 * 60 * 60), Time(10, 0) - Time(5, 0))
+        self.assertEqual(delta_from_seconds(5 * 24 * 60 * 60 + 5), Time(10, 5) - Time(5, 0))
+        self.assertEqual(delta_from_seconds(4 * 24 * 60 * 60 + (24 * 60 * 60 - 5)), Time(10, 5) - Time(5, 10))
 
     def test_rejects_invalid_times(self):
-        self.assertRaises(ValueError, Time, -1, 0)
-        self.assertRaises(ValueError, Time, 0, -1)
-        self.assertRaises(ValueError, Time, 0, 24*60*60)
+        self.assertRaises(ValueError, Time, MIN_JULIAN_DAY - 1, 0)
+        self.assertRaises(ValueError, Time, MIN_JULIAN_DAY, -1)
+        self.assertRaises(ValueError, Time, MIN_JULIAN_DAY, 24 * 60 * 60)
 
     def test_can_be_compared(self):
         def a_time():
             return Time(100, 100)
         self.assertEqNeImplementationIsCorrect(a_time, TIME_MODIFIERS)
 
+    def test_can_return_min_time(self):
+        self.assertEqual(Time(MIN_JULIAN_DAY, 0), get_min_time())
 
-class TimeDeltaSpec(TestCase):
+
+class timedeltaproperties(testbase):
 
     def test_can_create(self):
         self.assertEqual(delta_from_seconds(5), TimeDelta(5))

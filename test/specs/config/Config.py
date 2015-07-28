@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -17,12 +17,14 @@
 
 
 from os.path import abspath
-import unittest
+
+import wx
 
 from timelinelib.config.dotfile import Config
+from timelinetest import UnitTestCase
 
 
-class ConfigSpec(unittest.TestCase):
+class ConfigSpec(UnitTestCase):
 
     def test_should_have_default_values_before_config_has_been_read(self):
         self.assertEqual(self.config.window_size, (900, 500))
@@ -35,6 +37,7 @@ class ConfigSpec(unittest.TestCase):
         self.assertEqual(self.config.balloon_on_hover, True)
         self.assertEqual(self.config.week_start, "monday")
         self.assertEqual(self.config.get_use_inertial_scrolling(), False)
+        self.assertEqual(self.config.center_event_texts, False)
 
     def test_window_size_can_be_read_after_stored(self):
         self.config.window_size = (3, 20)
@@ -75,6 +78,10 @@ class ConfigSpec(unittest.TestCase):
     def test_inertial_scrolling_can_be_read_after_stored(self):
         self.config.use_inertial_scrolling = False
         self.assertEqual(self.config.use_inertial_scrolling, False)
+
+    def test_center_event_texts_can_be_read_after_stored(self):
+        self.config.center_event_texts = True
+        self.assertEqual(self.config.center_event_texts, True)
 
     def test_config_returns_use_inertial_scrolling_is_true_when_set_to_true(self):
         self.config.set_use_inertial_scrolling(True)
@@ -117,4 +124,9 @@ class ConfigSpec(unittest.TestCase):
         self.assertRaises(ValueError, set_invalid_week)
 
     def setUp(self):
+        self.app = wx.App()
+        self.app.MainLoop()
         self.config = Config("")
+
+    def tearDown(self):
+        self.app.Destroy()

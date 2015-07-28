@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,18 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
-from mock import Mock
-
-from specs.utils import an_event_with, a_container, a_category_with
 from timelinelib.data.idnumber import get_process_unique_id
-from timelinelib.data import Event
 from timelinelib.drawing.viewproperties import ViewProperties
-from timelinelib.wxgui.components.categorytree import CustomCategoryTreeModel
+from timelinetest import UnitTestCase
+from timelinetest.utils import an_event_with, a_container, a_category_with
 
 
-class Base(unittest.TestCase):
+class Base(UnitTestCase):
 
     def setUp(self):
         self.view_properties = ViewProperties()

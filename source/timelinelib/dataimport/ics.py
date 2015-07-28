@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -61,23 +61,23 @@ def _load(db, path):
 def _load_event(db, vevent):
     start, end = _extract_start_end(vevent)
     txt = ""
-    if vevent.has_key("summary"):
+    if "summary" in vevent:
         txt = vevent["summary"]
-    elif vevent.has_key("description"):
+    elif "description" in vevent:
         txt = vevent["description"]
     else:
-        txt == "Unknown"
+        txt = "Unknown"
     e = Event(db.get_time_type(), start, end, txt)
-    if vevent.has_key("description"):
+    if "description" in vevent:
         e.set_data("description", vevent["description"])
     db.save_event(e)
 
 
 def _extract_start_end(vevent):
     start = _convert_to_datetime(vevent.decoded("dtstart"))
-    if vevent.has_key("dtend"):
+    if "dtend" in vevent:
         end = _convert_to_datetime(vevent.decoded("dtend"))
-    elif vevent.has_key("duration"):
+    elif "duration" in vevent:
         end = start + vevent.decoded("duration")
     else:
         end = _convert_to_datetime(vevent.decoded("dtstart"))

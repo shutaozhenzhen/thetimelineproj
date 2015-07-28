@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,17 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from timelinelib.utilities.observer import Listener
 from timelinelib.utilities.observer import Observable
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
+from timelinetest import UnitTestCase
 
 
-class describe_observable(unittest.TestCase):
+class describe_observable(UnitTestCase):
 
     def test_at_construction_there_area_zero_observers(self):
         self.assertTrue(len(self.observable._observers) == 0)
@@ -78,7 +77,7 @@ class describe_observable(unittest.TestCase):
         self.observable.register(self.observer.event_triggered)
 
 
-class describe_listener(unittest.TestCase):
+class describe_listener(UnitTestCase):
 
     def test_does_not_call_callback_at_construction(self):
         Listener(self.callback)

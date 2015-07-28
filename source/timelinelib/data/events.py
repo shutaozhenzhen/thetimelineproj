@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -71,9 +71,9 @@ class Events(object):
             if category.get_name() == name:
                 return category
 
-    def get_category_with_id(self, id):
+    def get_category_with_id(self, event_id):
         for category in self._categories:
-            if category.get_id() == id:
+            if category.get_id() == event_id:
                 return category
         return None
 
@@ -131,8 +131,7 @@ class Events(object):
 
     def _ensure_parent_exists(self, category):
         message = "Parent category not in db."
-        if (category._get_parent() is not None and
-            category._get_parent() not in self._categories):
+        if (category._get_parent() is not None and category._get_parent() not in self._categories):
             raise InvalidOperationError(message)
 
     def _ensure_no_circular_parent(self, category):
@@ -194,8 +193,7 @@ class Events(object):
 
     def _ensure_event_category_exists(self, event):
         message = "Event's category not in db."
-        if (event.get_category() is not None and
-            event.get_category() not in self._categories):
+        if (event.get_category() is not None and event.get_category() not in self._categories):
             raise InvalidOperationError(message)
 
     def _register_subevent(self, subevent):
@@ -209,11 +207,11 @@ class Events(object):
             container = containers[subevent.cid()]
             container.register_subevent(subevent)
         except:
-            id = subevent.cid()
-            if id == 0:
-                id = self._get_max_container_id(container_events) + 1
-                subevent.set_cid(id)
-            name = "[%d]Container" % id
+            subevent_id = subevent.cid()
+            if subevent_id == 0:
+                subevent_id = self._get_max_container_id(container_events) + 1
+                subevent.set_cid(subevent_id)
+            name = "[%d]Container" % subevent_id
             container = Container(subevent.time_type,
                                   subevent.get_time_period().start_time,
                                   subevent.get_time_period().end_time, name)
@@ -221,11 +219,11 @@ class Events(object):
             self._register_subevent(subevent)
 
     def _get_max_container_id(self, container_events):
-        id = 0
+        event_id = 0
         for event in container_events:
-            if id < event.cid():
-                id = event.cid()
-        return id
+            if event_id < event.cid():
+                event_id = event.cid()
+        return event_id
 
     def place_event_after_event(self, event_to_place, target_event):
         if event_to_place == target_event:
@@ -266,6 +264,7 @@ class Events(object):
                     break
                 inx += 1
         return rows
+
     def _length_sort(self):
         reordered_events = [event for event in self._events if not event.is_subevent()]
         reordered_events = self._sort_by_length(reordered_events)
@@ -295,6 +294,7 @@ def _generic_event_search(events, search_string):
         else:
             description = description.lower()
         return target in event.get_text().lower() or target in description
+
     def mean_time(event):
         return event.mean_time()
     matches = [event for event in events if match(event)]

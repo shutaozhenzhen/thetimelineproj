@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -18,11 +18,11 @@
 
 import wx
 
-from specs.utils import WxComponentTest
 from timelinelib.wxgui.components.filechooser import FileChooser
+from timelinetest import WxComponentTestCase
 
 
-class FileChooserComponentTest(WxComponentTest):
+class FileChooserComponentTest(WxComponentTestCase):
 
     HALT_FOR_MANUAL_INSPECTION = False
 

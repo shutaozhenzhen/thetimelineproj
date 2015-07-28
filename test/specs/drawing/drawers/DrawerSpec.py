@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,18 +16,18 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 import wx
 from mock import Mock
 
+from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event, TimePeriod
 from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
-from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.drawing.viewproperties import ViewProperties
+from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
+from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinetest import UnitTestCase
 import timelinelib.calendar.gregorian as gregorian
 
 
@@ -37,7 +37,7 @@ BASELINE_Y_POS = IMAGE_HEIGHT / 2
 TEXT_SIZE = (50, 10)
 
 
-class DrawerSpec(unittest.TestCase):
+class DrawerSpec(UnitTestCase):
 
     def test_draws_period_event_below_baseline(self):
         self.given_event(name="vacation",
@@ -59,24 +59,25 @@ class DrawerSpec(unittest.TestCase):
         self.timeline.save_event(event)
 
     def when_timeline_is_drawn(self):
-        self.drawer.draw(self.dc, self.timeline, self.view_properties, None)
+        config = Config(None)
+        self.drawer.draw(self.dc, self.timeline, self.view_properties, config)
 
     def assert_text_drawn_above(self, text, y_limit):
-        x, y = self.position_of_drawn_text(text)
+        _, y = self.position_of_drawn_text(text)
         self.assertTrue(y < y_limit)
 
     def assert_text_drawn_below(self, text, y_limit):
-        x, y = self.position_of_drawn_text(text)
+        _, y = self.position_of_drawn_text(text)
         self.assertTrue(y > y_limit)
 
     def position_of_drawn_text(self, text_to_look_for):
-        for ((text, x, y), kwargs) in self.dc.DrawText.call_args_list:
+        for ((text, x, y), _) in self.dc.DrawText.call_args_list:
             if text == text_to_look_for:
                 return (x, y)
         self.fail("Text '%s' never drawn." % text_to_look_for)
 
     def setUp(self):
-        self.app = wx.App() # a stored app is needed to create fonts
+        self.app = wx.App()  # a stored app is needed to create fonts
         self.drawer = DefaultDrawingAlgorithm()
         self.drawer.set_event_box_drawer(DefaultEventBoxDrawer())
         self.drawer.set_background_drawer(DefaultBackgroundDrawer())

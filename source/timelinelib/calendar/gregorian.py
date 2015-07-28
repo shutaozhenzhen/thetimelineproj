@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -179,8 +179,8 @@ def from_julian_day(julian_day):
 
     This proves 1).
     """
-    if julian_day < 0:
-        raise ValueError("from_julian_day only works for positive julian days, but was %s" % julian_day)
+    if julian_day < timeline.MIN_JULIAN_DAY:
+        raise ValueError("from_julian_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
     a = julian_day + 32044
     b = ((4 * a) + 3) // 146097
     c = a - ((b * 146097) // 4)
@@ -260,8 +260,8 @@ def to_julian_day(year, month, day):
                   - (y // 100)
                   + (y // 400)
                   - 32045)
-    if julian_day < 0:
-        raise ValueError("to_julian_day only works for positive julian days, but was %s" % julian_day)
+    if julian_day < timeline.MIN_JULIAN_DAY:
+        raise ValueError("from_julian_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
     return julian_day
 
 
@@ -269,9 +269,12 @@ def gregorian_week(time):
     def monday_week_1(year):
         jan_4 = from_date(year, 1, 4).to_time()
         return jan_4 - timeline.delta_from_days(jan_4.get_day_of_week())
+
     def days_between(end, start):
         return end.julian_day - start.julian_day
+
     def days_since_monday_week_1(time):
+
         year = from_time(time).year
         diff = days_between(end=time, start=monday_week_1(year + 1))
         if diff >= 0:

@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,27 +16,26 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 import wx
 
-from timelinelib.config.shortcut import ShortcutController
 from timelinelib.config.dotfile import Config
-import timelinelib.wxgui.dialogs.mainframe as mf
+from timelinelib.config.shortcut import ShortcutController
+from timelinetest import UnitTestCase
 import timelinelib.config.shortcut as sc
+import timelinelib.wxgui.dialogs.mainframe.mainframe as mf
 
 
 NEW_FUNCTION = "#File#->#File Timeline...#"
 SIDEBAR_FUNCTION = "#View#->#Sidebar#"
 
 
-class ShortcutControllerSpec(unittest.TestCase):
+class ShortcutControllerSpec(UnitTestCase):
 
     def test_get_functions_returns_list(self):
-        list = self.controller.get_functions()
-        self.assertTrue(len(list) > 0)
-        self.assertEqual(NEW_FUNCTION, list[0])
+        func_list = self.controller.get_functions()
+        self.assertTrue(len(func_list) > 0)
+        self.assertEqual(NEW_FUNCTION, func_list[0])
 
     def test_get_function_returns_function(self):
         function = self.controller.get_function("Ctrl+N")
@@ -51,7 +50,7 @@ class ShortcutControllerSpec(unittest.TestCase):
         self.assertTrue(self.controller.is_valid("", ""))
         for modifier in sc.NON_EMPTY_MODIFIERS:
             self.assertTrue(self.controller.is_valid(modifier, "N"))
-        
+
     def test_invalid_shortcuts(self):
         self.assertFalse(self.controller.is_valid("", "N"))
         self.assertFalse(self.controller.is_valid("Ctrl", ""))
@@ -81,11 +80,10 @@ class ShortcutControllerSpec(unittest.TestCase):
         self.assertEqual(SIDEBAR_FUNCTION, function)
 
     def setUp(self):
-        self.app = wx.App() # a stored app is needed to create a menu item
+        self.app = wx.App()  # a stored app is needed to create a menu item
         config = Mock(Config)
         menuitem = wx.MenuItem(wx.Menu("title"), -1, "label")
-        self.controller = ShortcutController(config, {mf.ID_SIDEBAR:menuitem,})
+        self.controller = ShortcutController(config, {mf.ID_SIDEBAR: menuitem, })
 
     def tearDown(self):
         self.controller = None
-        

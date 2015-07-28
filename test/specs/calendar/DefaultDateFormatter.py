@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,18 +16,17 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinetest import UnitTestCase
 
 
-class describe_date_formatter(unittest.TestCase):
-    
+class describe_date_formatter(UnitTestCase):
+
     def test_format_return_yyyy_mm_dd(self):
-        self.assertEquals("2014-11-30", self.formatter.format(2014,11, 30))
-    
+        self.assertEquals("2014-11-30", self.formatter.format(2014, 11, 30))
+
     def test_parse_return_year_mont_day(self):
         self.assertEquals((2014, 11, 30), self.formatter.parse("2014-11-30"))
-    
+
     def setUp(self):
         self.formatter = DefaultDateFormatter()

@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -21,7 +21,7 @@ from timelinelib.drawing.drawers import get_progress_color
 
 
 DEFAULT_COLOR = (200, 200, 200)
-EXPORTABLE_FIELDS = ("Text", "Description", "Start", "End", "Category", "Fuzzy", "Locked", "Ends Today", 
+EXPORTABLE_FIELDS = ("Text", "Description", "Start", "End", "Category", "Fuzzy", "Locked", "Ends Today",
                      "Hyperlink", "Progress", "Progress Color", "Done Color", "Alert", "Is Container", "Is Subevent")
 
 
@@ -180,7 +180,7 @@ class Event(object):
     def update(self, start_time, end_time, text, category=None, fuzzy=None,
                locked=None, ends_today=None):
         """Change the event data."""
-        self.time_period = TimePeriod(self.time_type, start_time, end_time)
+        self.time_period = TimePeriod(self.time_type, start_time, end_time, not self.is_container())
         self.text = text.strip()
         self.category = category
         if ends_today is not None:

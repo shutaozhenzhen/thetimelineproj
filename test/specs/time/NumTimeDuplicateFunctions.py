@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,16 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
-from mock import Mock
-
 from timelinelib.data import TimePeriod
 from timelinelib.time.numtime import move_period
 from timelinelib.time.numtime import NumTimeType
+from timelinetest import UnitTestCase
 
 
-class NumTimeDuplicateFunctionsSpec(unittest.TestCase):
+class NumTimeDuplicateFunctionsSpec(UnitTestCase):
 
     def setUp(self):
         self.period = TimePeriod(NumTimeType(), 1, 2)

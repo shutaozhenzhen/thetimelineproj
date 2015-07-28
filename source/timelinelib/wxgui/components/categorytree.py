@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.db.utils import safe_locking
 from timelinelib.drawing.utils import darken_color
-from timelinelib.drawing.utils import get_default_font
+from timelinelib.wxgui.components.font import Font
 from timelinelib.monitoring import monitoring
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.utilities.observer import Observable
@@ -40,6 +40,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
         self.Bind(wx.EVT_SIZE, self._on_size)
         self.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
         self.Bind(wx.EVT_RIGHT_DOWN, self._on_right_down)
+        self.Bind(wx.EVT_LEFT_DCLICK, self._on_left_doubleclick)
         self.model = CustomCategoryTreeModel()
         self.model.listen_for_any(self._redraw)
         self.renderer = CustomCategoryTreeRenderer(self, self.model)
@@ -67,10 +68,15 @@ class CustomCategoryTree(wx.ScrolledWindow):
         return self.db is not None and self.view_properties is not None
 
     def _on_paint(self, event):
-        dc = wx.BufferedPaintDC(self, self.buffer_image, wx.BUFFER_VIRTUAL_AREA)
+        wx.BufferedPaintDC(self, self.buffer_image, wx.BUFFER_VIRTUAL_AREA)
 
     def _on_size(self, event):
         self._size_to_model()
+
+    def _on_left_doubleclick(self, event):
+        def edit_function():
+            self._edit_category()
+        safe_locking(self.parent, edit_function)
 
     def _on_left_down(self, event):
         self.SetFocus()
@@ -90,9 +96,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
         safe_locking(self.parent, edit_function)
 
     def _on_menu_edit(self, e):
-        hit_category = self.last_hit_info.get_category()
-        if hit_category:
-            edit_category(self, self.db, hit_category, self.handle_db_error)
+        self._edit_category()
 
     def _on_menu_add(self, e):
         add_category(self, self.db, self.handle_db_error)
@@ -138,13 +142,18 @@ class CustomCategoryTree(wx.ScrolledWindow):
         self.view_properties.set_categories_visible(
             self.last_hit_info.get_parents(), False)
 
+    def _edit_category(self):
+        hit_category = self.last_hit_info.get_category()
+        if hit_category:
+            edit_category(self, self.db, hit_category, self.handle_db_error)
+
     def _store_hit_info(self, event):
         (x, y) = self.CalcUnscrolledPosition(event.GetX(), event.GetY())
         self.last_hit_info = self.model.hit(x, y)
 
     def _redraw(self):
         self.SetVirtualSize((-1, self.model.ITEM_HEIGHT_PX * len(self.model.items)))
-        self.SetScrollRate(0, self.model.ITEM_HEIGHT_PX/2)
+        self.SetScrollRate(0, self.model.ITEM_HEIGHT_PX / 2)
         self._draw_bitmap()
         self.Refresh()
         self.Update()
@@ -164,7 +173,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
             redraw_time = monitoring.timer_elapsed_ms()
             monitoring.count_category_redraw()
             memdc.SetTextForeground((255, 0, 0))
-            memdc.SetFont(get_default_font(10, bold=True))
+            memdc.SetFont(Font(10, weight=wx.FONTWEIGHT_BOLD))
             memdc.DrawText("Redraw count: %d" % monitoring.category_redraw_count, 10, height - 35)
             memdc.DrawText("Last redraw time: %.3f ms" % redraw_time, 10, height - 20)
         memdc.EndDrawing()
@@ -264,14 +273,14 @@ class CustomCategoryTreeRenderer(object):
     def _render_arrow(self, item):
         self.dc.SetBrush(wx.Brush(wx.Colour(100, 100, 100), wx.SOLID))
         self.dc.SetPen(wx.Pen(wx.Colour(100, 100, 100), 0, wx.SOLID))
-        offset = self.TRIANGLE_SIZE/2
-        center_x = item["x"] + 2*self.INNER_PADDING + offset
-        center_y = item["y"] + self.model.ITEM_HEIGHT_PX/2 - 1
+        offset = self.TRIANGLE_SIZE / 2
+        center_x = item["x"] + 2 * self.INNER_PADDING + offset
+        center_y = item["y"] + self.model.ITEM_HEIGHT_PX / 2 - 1
         if item["expanded"]:
             open_polygon = [
                 wx.Point(center_x - offset, center_y - offset),
                 wx.Point(center_x + offset, center_y - offset),
-                wx.Point(center_x         , center_y + offset),
+                wx.Point(center_x, center_y + offset),
             ]
             self.dc.DrawPolygon(open_polygon)
         else:
@@ -284,19 +293,19 @@ class CustomCategoryTreeRenderer(object):
 
     def _render_name(self, item):
         x = item["x"] + self.TRIANGLE_SIZE + 4 * self.INNER_PADDING + 20
-        (w, h) = self.dc.GetTextExtent(item["name"])
+        (_, h) = self.dc.GetTextExtent(item["name"])
         if item["actually_visible"]:
             self.dc.SetTextForeground(self.window.GetForegroundColour())
         else:
             self.dc.SetTextForeground((150, 150, 150))
         self.dc.DrawText(item["name"],
                          x + self.INNER_PADDING,
-                         item["y"] + (self.model.ITEM_HEIGHT_PX - h)/2)
+                         item["y"] + (self.model.ITEM_HEIGHT_PX - h) / 2)
 
     def _render_checkbox(self, item):
         (w, h) = (17, 17)
         bouning_rect = wx.Rect(item["x"] + self.model.INDENT_PX,
-                               item["y"] + (self.model.ITEM_HEIGHT_PX - h)/2,
+                               item["y"] + (self.model.ITEM_HEIGHT_PX - h) / 2,
                                w,
                                h)
         if item["visible"]:
@@ -313,7 +322,7 @@ class CustomCategoryTreeRenderer(object):
         (w, h) = (16, 16)
         self.dc.DrawRectangle(
             item["x"] + item["width"] - w - self.INNER_PADDING,
-            item["y"] + self.model.ITEM_HEIGHT_PX/2 - h/2,
+            item["y"] + self.model.ITEM_HEIGHT_PX / 2 - h / 2,
             w,
             h)
 
@@ -378,7 +387,7 @@ class CustomCategoryTreeModel(Observable):
 
     def _hits_checkbox(self, x, item):
         return (x > (item["x"] + self.INDENT_PX) and
-                x < (item["x"] + 2*self.INDENT_PX))
+                x < (item["x"] + 2 * self.INDENT_PX))
 
     def _update_items(self):
         self.items = []
@@ -416,7 +425,7 @@ class CustomCategoryTreeModel(Observable):
             })
             self.y += self.ITEM_HEIGHT_PX
             if expanded:
-                self._update_from_tree(child_tree, indent_level+1)
+                self._update_from_tree(child_tree, indent_level + 1)
 
     def _is_category_visible(self, category):
         return self.categories.is_visible(category)
@@ -450,7 +459,7 @@ class HitInfo(object):
 
     def get_parents_for_checked_childs(self):
         return self._categories.get_parents_for_checked_childs()
-        
+
     def is_on_arrow(self):
         return self._is_on_arrow
 

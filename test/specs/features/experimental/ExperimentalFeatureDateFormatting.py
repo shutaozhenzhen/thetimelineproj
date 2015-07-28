@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,9 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from timelinelib.features.experimental.experimentalfeatures import LOCALE_DATE
+from timelinetest import UnitTestCase
 
 
 YEAR = "3333"
@@ -26,7 +25,7 @@ MONTH = "11"
 DAY = "22"
 
 
-class describe_experimental_feature_date_formatting(unittest.TestCase):
+class describe_experimental_feature_date_formatting(UnitTestCase):
 
     def test_big_endian_can_be_formatted(self):
         self.given_sample_date("%s-%s-%s" % (YEAR, MONTH, DAY))
@@ -53,7 +52,7 @@ class describe_experimental_feature_date_formatting(unittest.TestCase):
         self.assertEqual((2014, 11, 2), self.ef.parse("02.11.2014"))
 
     def test_all_endians_can_be_parsed(self):
-        date_strings = [# year, month, day
+        date_strings = [  # year, month, day
                         ("2015-02-01", "3333-11-22"),
                         ("2015/02/01", "3333/11/22"),
                         ("2015.02.01", "3333.11.22"),
@@ -150,9 +149,19 @@ class describe_experimental_feature_date_formatting(unittest.TestCase):
             self.given_sample_date(template)
             self.assertEqual((-2015, 2, 1), self.ef.parse(date_string))
 
+    def test_known_formats_returns_calculated_formatting_string(self):
+        self.ef._separator = "-"
+        self.assertEqual("%02d-%02d-%02d", self.ef._get_date_format_string("33-11-22"))
+
+    def test_unknown_formats_returns_default_formatting_string(self):
+        self.ef._separator = "-"
+        self.assertEqual("%04d-%02d-%02d", self.ef._get_date_format_string("33-Nov-22"))
+
+    def test_invalid_dates_generates_value_error_exception(self):
+        self.assertRaises(ValueError, self.ef.parse, "-02-02")
+
     def given_sample_date(self, sample_date):
         self.ef._construct_format(sample_date)
 
     def setUp(self):
         self.ef = LOCALE_DATE
-

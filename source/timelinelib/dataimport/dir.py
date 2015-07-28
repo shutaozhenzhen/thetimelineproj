@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -38,9 +38,9 @@ def _load(db, dir_path):
     """
     Load timeline data from the given directory.
 
-    Each file inside the directory (at any level) becomes an event where
-    the text is the file name and the time is the modification time for
-    the file.
+    Each filename inside the directory (at any level) becomes an event where
+    the text is the filename name and the time is the modification time for
+    the filename.
 
     For each sub-directory a category is created and all events (files)
     belong the category (directory) in which they are.
@@ -53,22 +53,21 @@ def _load(db, dir_path):
         return
     try:
         db.disable_save()
-        color_ranges = {} # Used to color categories
+        color_ranges = {}  # Used to color categories
         color_ranges[dir_path] = (0.0, 1.0, 1.0)
         all_cats = []
         parents = {}
         for (dirpath, dirnames, filenames) in os.walk(dir_path):
             # Assign color ranges
-            range = (rstart, rend, b) = color_ranges[dirpath]
+            (rstart, rend, b) = color_ranges[dirpath]
             step = (rend - rstart) / (len(dirnames) + 1)
             next_start = rstart + step
             new_b = b - 0.2
             if new_b < 0:
                 new_b = 0
-            for dir in dirnames:
+            for dirname in dirnames:
                 next_end = next_start + step
-                color_ranges[os.path.join(dirpath, dir)] = (next_start,
-                                                            next_end, new_b)
+                color_ranges[os.path.join(dirpath, dirname)] = (next_start, next_end, new_b)
                 next_start = next_end
             # Create the stuff
             p = parents.get(os.path.normpath(os.path.join(dirpath, "..")),
@@ -77,8 +76,8 @@ def _load(db, dir_path):
             parents[os.path.normpath(dirpath)] = cat
             all_cats.append(cat)
             db.save_category(cat)
-            for file in filenames:
-                path_inner = os.path.join(dirpath, file)
+            for filename in filenames:
+                path_inner = os.path.join(dirpath, filename)
                 evt = _event_from_path(db, path_inner)
                 db.save_event(evt)
         # Hide all categories but the first
@@ -89,7 +88,7 @@ def _load(db, dir_path):
             cat.name = os.path.basename(cat.name)
             db.save_category(cat)
     except Exception, e:
-        msg = _("Unable to read from file '%s'.") % dir_path
+        msg = _("Unable to read from filename '%s'.") % dir_path
         whole_msg = "%s\n\n%s" % (msg, e)
         raise TimelineIOError(whole_msg)
     finally:
@@ -120,7 +119,7 @@ def _category_from_path(db, file_path):
     return None
 
 
-def _color_from_range(range):
-    (rstart, rend, b) = range
+def _color_from_range(color_range):
+    (rstart, _, b) = color_range
     (r, g, b) = colorsys.hsv_to_rgb(rstart, b, 1)
     return (r*255, g*255, b*255)

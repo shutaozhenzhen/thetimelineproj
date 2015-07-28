@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -21,7 +21,6 @@ import re
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
 from timelinelib.drawing.interface import Strip
-from timelinelib.drawing.utils import get_default_font
 from timelinelib.time.typeinterface import TimeType
 
 
@@ -129,10 +128,10 @@ class NumTimeType(TimeType):
 
     def get_duplicate_functions(self):
         return [
-            (_("1-period"), lambda p, d : move_period(p, d)),
-            (_("10-period"), lambda p, d : move_period(p, d * 10)),
-            (_("100-period"), lambda p, d : move_period(p, d * 100)),
-            (_("1000-period"), lambda p, d : move_period(p, d * 1000)),
+            (_("1-period"), lambda p, d: move_period(p, d)),
+            (_("10-period"), lambda p, d: move_period(p, d * 10)),
+            (_("100-period"), lambda p, d: move_period(p, d * 100)),
+            (_("1000-period"), lambda p, d: move_period(p, d * 1000)),
         ]
 
     def zoom_is_ok(self, delta):
@@ -149,7 +148,7 @@ class NumTimeType(TimeType):
 
     def event_date_string(self, time):
         return "%s" % time
-        
+
     def event_time_string(self, time):
         return "%s" % time
 
@@ -173,9 +172,6 @@ class NumStrip(Strip):
 
     def increment(self, time):
         return time + self.size
-
-    def get_font(self, time_period):
-        return get_default_font(8)
 
 
 def go_to_zero_fn(main_frame, current_period, navigation_fn):

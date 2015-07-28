@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -121,9 +121,4 @@ class Strip(object):
         """
         Increment the given time so that it points to the start of the next
         strip.
-        """
-
-    def get_font(self, time_period):
-        """
-        Return the preferred font for this strip
         """
