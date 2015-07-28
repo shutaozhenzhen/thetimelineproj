@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,10 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
 from timelinelib.db import db_open
-from timelinelib.wxgui.components.timeline import TimelinePanel
+from timelinelib.wxgui.components.timelinepanel import TimelinePanel
 
 
 class DummyConfig(object):

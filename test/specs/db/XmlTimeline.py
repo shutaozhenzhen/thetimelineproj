@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -18,10 +18,7 @@
 
 
 import codecs
-import os.path
 
-from specs.utils import a_category_with
-from specs.utils import TmpDirTestCase
 from timelinelib.dataexport.timelinexml import alert_string
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.data import Event
@@ -32,6 +29,8 @@ from timelinelib.db import db_open
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.meta.version import get_version
 from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinetest import TmpDirTestCase
+from timelinetest.utils import a_category_with
 import timelinelib.calendar.gregorian as gregorian
 
 
@@ -69,9 +68,28 @@ class XmlTimelineSpec(TmpDirTestCase):
   </view>
 </timeline>
 """
+
+    def test_too_large_time_period_generates_default_time_period(self):
+        contents = """<?xml version="1.0" encoding="utf-8"?>
+<timeline>
+  <version>1.7.0</version>
+  <categories>
+  </categories>
+  <events>
+  </events>
+  <view>
+    <displayed_period>
+      <start>0000-05-06 18:27:28</start>
+      <end>2400-06-05 18:27:28</end>
+    </displayed_period>
+    <hidden_categories>
+    </hidden_categories>
+  </view>
+</timeline>
+"""
         self.write(self.tmp_path, contents)
-        import_db_from_timeline_xml(self.tmp_path)
-        self.assertFalse(os.path.exists(self.tmp_path + ".pre100bak1"))
+        db = import_db_from_timeline_xml(self.tmp_path)
+        self.assertEqual(db.get_time_type().get_default_time_period(), db.get_displayed_period())
 
     def testAlertStringParsingGivesAlertData(self):
         time, text = parse_alert_string(GregorianTimeType(), "2012-11-11 00:00:00;Now is the time")
@@ -137,7 +155,7 @@ class XmlTimelineSpec(TmpDirTestCase):
         # Create events
         ev1 = Event(db.get_time_type(), gregorian.from_date(2010, 3, 3).to_time(), gregorian.from_date(2010, 3, 6).to_time(),
                     "Event 1", cat1)
-        ev1.set_data("description", u"The <b>first</b> event åäö.")
+        ev1.set_data("description", u"The <b>first</b> event Ã¥Ã¤Ã¶.")
         ev1.set_data("alert", (gregorian.from_date(2012, 12, 31).to_time(), "Time to go"))
         db.save_event(ev1)
         # Create view properties
@@ -158,7 +176,7 @@ class XmlTimelineSpec(TmpDirTestCase):
         self.assertEqual(event.get_time_period().start_time, gregorian.from_date(2010, 3, 3).to_time())
         self.assertEqual(event.get_time_period().end_time, gregorian.from_date(2010, 3, 6).to_time())
         self.assertEqual(event.get_category().get_name(), "Category 1")
-        self.assertEqual(event.get_data("description"), u"The <b>first</b> event åäö.")
+        self.assertEqual(event.get_data("description"), u"The <b>first</b> event Ã¥Ã¤Ã¶.")
         self.assertEqual(event.get_data("alert"), (gregorian.from_date(2012, 12, 31).to_time(), "Time to go"))
         self.assertEqual(event.get_data("icon"), None)
         # Assert that correct view properties are loaded (category visibility

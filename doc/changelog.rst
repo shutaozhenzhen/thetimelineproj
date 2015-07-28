@@ -1,6 +1,140 @@
 Changelog
 =========
 
+Version 1.7.0
+-------------
+
+**Planned Release on 30 July 2015.**
+
+This is a periodic release of Timeline. It contains many solutions to problems
+identified by users of Timeline.
+
+Data:
+
+* Events can have multiple hyperlinks.
+  (`#30 <https://sourceforge.net/p/thetimelineproj/backlog/30/>`_)
+
+* An experimental feature allows entering dates before 4714 BC. This allows
+  larger time periods to be created.
+  (`#51 <https://sourceforge.net/p/thetimelineproj/backlog/51/>`_)
+
+Drawing:
+
+* An icon is drawn in the event box if it has hyperlinks. This makes it easier
+  to see which events have hyperlinks.
+  (`#29 <https://sourceforge.net/p/thetimelineproj/backlog/29/>`_)
+
+* Period events can be configured to never be drawn above the center line. This
+  should make it more obvious which events are period events and which are
+  point events.
+  (`#42 <https://sourceforge.net/p/thetimelineproj/backlog/42/>`_, `#46 <https://sourceforge.net/p/thetimelineproj/backlog/46/>`_)
+
+* A setting exist that decides if event texts should be centered or not.
+  (`#73 <https://sourceforge.net/p/thetimelineproj/backlog/73>`_)
+
+* There is no horizontal padding between events. This allows more events to fit
+  on the screen.
+  (`#2 <https://sourceforge.net/p/thetimelineproj/backlog/2>`_)
+
+* Some fonts used to draw the timeline can be customized. This should allow
+  users to customize the look of their timelines to their taste.
+  (`#63 <https://sourceforge.net/p/thetimelineproj/backlog/63>`_)
+
+* A setting can draw point events with the left box edge at the vertical line.
+  This makes it more clear where the event starts in time.
+  (`#60 <https://sourceforge.net/p/thetimelineproj/backlog/60/>`_)
+
+GUI:
+
+* A notification is shown when a shortcut is saved.
+  (`#23 <https://sourceforge.net/p/thetimelineproj/backlog/23/>`_)
+
+* The category editor can be opened with double click. This makes the intuitive
+  way to open the editor possible.
+  (`#47 <https://sourceforge.net/p/thetimelineproj/backlog/47/>`_)
+
+* The period checkbox in the event editor remembers its value from last time.
+  This should speed up entering of period events.
+  (`#28 <https://sourceforge.net/p/thetimelineproj/backlog/28>`_)
+
+* Multiple events can be added to a category by selecting them and selecting a
+  context menu item. This should make it more convenient to assign categories.
+  (`#67 <https://sourceforge.net/p/thetimelineproj/backlog/67>`_)
+
+* The tab-order of controls in the event editor dialog can be customized. This
+  allows users to put their most frequently used controls first.
+  (`#62 <https://sourceforge.net/p/thetimelineproj/backlog/62>`_)
+
+* The divider line can be adjusted with mouse dragging. This should make it
+  more convenient to use Timeline on a touch device.
+  (`#58 <https://sourceforge.net/p/thetimelineproj/backlog/58>`_)
+
+* Events can be moved vertically by selecting them and pressing Up/Down or
+  selecting menu items. This makes it more obvious how to move events
+  vertically.
+  (`#45 <https://sourceforge.net/p/thetimelineproj/backlog/45/>`_)
+
+Exporting:
+
+* Exporting a whole timeline to several images now preserves the vertical position
+  of events between images. So now images can be put together and the events
+  will align correctly.
+  (`#72 <https://sourceforge.net/p/thetimelineproj/backlog/72/>`_)
+
+Misc:
+
+* Undo works after compress. This allows users to undo compress action if
+  the result was not desirable.
+  (`#65 <https://sourceforge.net/p/thetimelineproj/backlog/65/>`_)
+
+* Does not fail to open Timeline files that have period wider than 1200 years.
+  This should prevent users from having to manually edit the xml file.
+  (`#8 <https://sourceforge.net/p/thetimelineproj/backlog/8/>`_)
+
+* Crash reports have information about locale settings. This makes it easier to
+  troubleshoot errors depending on locale settings.
+  (`#54 <https://sourceforge.net/p/thetimelineproj/backlog/54/>`_)
+
+Fixed crash reports:
+
+* ``AttributeError: 'EraEditorDialog' object has no attribute 'on_return'``
+  (`#57 <https://sourceforge.net/p/thetimelineproj/backlog/57/>`_)
+
+* ``KeyError: '33'``
+  (`#53 <https://sourceforge.net/p/thetimelineproj/backlog/53/>`_)
+
+* ``KeyError: 'Nov'``
+  (`#50 <https://sourceforge.net/p/thetimelineproj/backlog/50/>`_)
+
+* ``ValueError: Invalid date.``
+  (`#55 <https://sourceforge.net/p/thetimelineproj/backlog/55/>`_)
+
+* ``LockedException: Unable to take lock on...``
+  (`#69 <https://sourceforge.net/p/thetimelineproj/backlog/69>`_)
+
+* ``OverflowError: long int too large to convert to float``
+  (`#75 <https://sourceforge.net/p/thetimelineproj/backlog/75>`_)
+
+* ``Exception: No timeline set``
+  (`#56 <https://sourceforge.net/p/thetimelineproj/backlog/56>`_)
+
+* ``TypeError: unsupported operand type(s) for +: 'int' and 'TimeDelta'``
+  (`#48 <https://sourceforge.net/p/thetimelineproj/backlog/48/>`_, `#78 <https://sourceforge.net/p/thetimelineproj/backlog/78>`_)
+
+* ``WindowsError: [Error 32] The process cannot access the file because it is
+  being used by another process``
+  (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_)
+
+Windows specific:
+
+* The log file is created in a standard user temp directory. This ensures that
+  even if Timeline is installed in a read-only location, the log file can be
+  created.
+  (`#74 <https://sourceforge.net/p/thetimelineproj/backlog/74>`_)
+
+* Broken fragments of sidebar is not shown at startup.
+  (`#52 <https://sourceforge.net/p/thetimelineproj/backlog/52/>`_)
+
 Version 1.6.0
 -------------
 

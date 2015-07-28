@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,14 +16,14 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_category
-from specs.utils import a_category_with
-from specs.utils import CATEGORY_MODIFIERS
-from specs.utils import TestCase
 from timelinelib.data import Category
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category
+from timelinetest.utils import a_category_with
+from timelinetest.utils import CATEGORY_MODIFIERS
 
 
-class describe_category(TestCase):
+class describe_category(UnitTestCase):
 
     def test_can_get_values(self):
         category = Category("work", (50, 100, 150), (0, 0, 0))

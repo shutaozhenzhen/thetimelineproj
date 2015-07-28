@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -18,14 +18,12 @@
 
 import codecs
 
-from specs.utils import a_category_with
-from specs.utils import TmpDirTestCase
 from timelinelib.calendar.gregorian import Gregorian
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db import db_open
 from timelinelib.drawing.viewproperties import ViewProperties
-
-import wx
+from timelinetest import TmpDirTestCase
+from timelinetest.utils import a_category_with
 
 
 CONTENT_010 = u"""
@@ -108,10 +106,8 @@ class DbOpenSpec(TmpDirTestCase):
         # checked later)
         vp = ViewProperties()
         db.load_view_properties(vp)
-        self.assertEqual(vp.displayed_period.start_time,
-                          Gregorian(2009, 10, 17, 22, 38, 32).to_time())
-        self.assertEqual(vp.displayed_period.end_time,
-                          Gregorian(2009, 12, 2, 16, 22, 4).to_time())
+        self.assertEqual(vp.displayed_period.start_time, Gregorian(2009, 10, 17, 22, 38, 32).to_time())
+        self.assertEqual(vp.displayed_period.end_time, Gregorian(2009, 12, 2, 16, 22, 4).to_time())
         # Assert categories correctly loaded
         categories = db.get_categories()
         self.assertEqual(len(categories), 3)

@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -17,31 +17,28 @@
 
 
 import datetime
-import unittest
 
 import wx
 
+from timelinetest import UnitTestCase
 import timelinelib.calendar.gregorian as gregorian
 import timelinelib.time.timeline as timeline
 
 
-class GregorianSpec(unittest.TestCase):
+class GregorianSpec(UnitTestCase):
 
     def test_rejects_invalid_dates(self):
         self.assertRaises(ValueError, gregorian.Gregorian, 2013, 0, 1, 0, 0, 0)
 
     def test_can_replace(self):
         g = gregorian.Gregorian(2013, 7, 12, 10, 16, 12)
-        self.assertEqual(g.replace(year=1990),
-                          gregorian.Gregorian(1990, 7, 12, 10, 16, 12))
-        self.assertEqual(g.replace(month=6),
-                          gregorian.Gregorian(2013, 6, 12, 10, 16, 12))
-        self.assertEqual(g.replace(year=1990, month=6),
-                          gregorian.Gregorian(1990, 6, 12, 10, 16, 12))
+        self.assertEqual(g.replace(year=1990), gregorian.Gregorian(1990, 7, 12, 10, 16, 12))
+        self.assertEqual(g.replace(month=6), gregorian.Gregorian(2013, 6, 12, 10, 16, 12))
+        self.assertEqual(g.replace(year=1990, month=6), gregorian.Gregorian(1990, 6, 12, 10, 16, 12))
         self.assertRaises(ValueError, g.replace, month=13)
 
 
-class GregorianConversionsSpec(unittest.TestCase):
+class GregorianConversionsSpec(UnitTestCase):
 
     def test_can_convert_from_timeline_time_to_gregorian(self):
         self.assertEqual(
@@ -79,7 +76,7 @@ class GregorianConversionsSpec(unittest.TestCase):
     def test_works_same_as_python_date(self):
         py_date = datetime.date(1900, 1, 1)
         jd = gregorian.to_julian_day(1900, 1, 1)
-        for i in range(365*200):
+        for _ in range(365 * 200):
             (y, m, d) = gregorian.from_julian_day(jd)
             self.assertEqual(py_date, datetime.date(y, m, d))
             py_date += datetime.timedelta(days=1)
@@ -100,7 +97,7 @@ class GregorianConversionsSpec(unittest.TestCase):
             self.assertEqual(tm1, tm2)
 
 
-class GregorianPrimitivesSpec(unittest.TestCase):
+class GregorianPrimitivesSpec(UnitTestCase):
 
     def test_is_valid(self):
         self.assertTrue(gregorian.is_valid(2013, 1, 1))
@@ -146,7 +143,7 @@ class GregorianPrimitivesSpec(unittest.TestCase):
     def test_week_number_against_python(self):
         self.longMessage = True
         time = datetime.date(1900, 1, 1)
-        for i in range(365*50):
+        for _ in range(365*50):
             y = time.year
             m = time.month
             d = time.day

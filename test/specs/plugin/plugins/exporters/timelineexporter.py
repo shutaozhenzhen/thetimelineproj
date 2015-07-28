@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -17,20 +17,20 @@
 
 import os
 
-import unittest
 from mock import Mock
 
-from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExporter
-from timelinelib.plugin.plugins.exporters.timelineexporter import CsvExporter
 from timelinelib.data.db import MemoryDB
-from specs.utils import an_event_with
-from specs.utils import a_category_with
+from timelinelib.plugin.plugins.exporters.timelineexporter import CsvExporter
+from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExporter
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import an_event_with
 
 
 CSV_FILE = "test.csv"
 
 
-class TimelineExporterTestCase(unittest.TestCase):
+class TimelineExporterTestCase(UnitTestCase):
 
     def setUp(self):
         self.plugin = TimelineExporter()
@@ -43,7 +43,7 @@ class TimelineExporterTestCase(unittest.TestCase):
     def tearDown(self):
         self.close_tempfile()
         os.remove(CSV_FILE)
-        unittest.TestCase.tearDown(self)
+        UnitTestCase.tearDown(self)
 
     def open_tempfile_for_writing(self):
         self.tempfile = open(CSV_FILE, "w")
@@ -80,11 +80,11 @@ class describe_timeline_exporter(TimelineExporterTestCase):
         self.simulate_dialog_entries(True, ["Text", "Start"], False, [])
         CsvExporter(self.plugin.timeline, CSV_FILE, self.dlg).export()
         content = self.get_tempfile_content()
-        self.assertEqual("#Events#\nText;Start;\nfoo;2014-07-11 10:11:00;\n\n", content)
+        self.assertEqual("#Events#;Text;Start;\nfoo;2014-07-11 10:11:00;\n\n", content)
 
     def test_category_csv_data_saved_in_file(self):
         self.open_tempfile_for_writing()
         self.simulate_dialog_entries(False, [], True, ["Name", "Color"])
         CsvExporter(self.plugin.timeline, CSV_FILE, self.dlg).export()
         content = self.get_tempfile_content()
-        self.assertEqual("#Categories#\nName;Color;\nCat1;(255, 0, 0);\n", content)
+        self.assertEqual("#Categories#;Name;Color;\nCat1;(255, 0, 0);\n", content)

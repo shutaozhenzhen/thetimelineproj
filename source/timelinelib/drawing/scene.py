@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -20,6 +20,8 @@ import wx
 
 from timelinelib.data import TimePeriod
 from timelinelib.drawing.utils import Metrics
+from timelinelib.time.gregoriantime import StripDay
+from timelinelib.time.gregoriantime import StripWeekday
 
 
 FORWARD = 1
@@ -94,6 +96,9 @@ class TimelineScene(object):
         direction = self._get_direction(period, up)
         evt = self._get_overlapping_event(period, direction, selected_event, rect)
         return (evt, direction)
+
+    def center_text(self):
+        return self._config.center_event_texts
 
     def _inflate_event_rects_to_get_right_dimensions_for_overlap_calculations(self):
         for (_, rect) in self.event_data:
@@ -262,9 +267,18 @@ class TimelineScene(object):
             rw += self._data_indicator_size / 3
         if event.get_fuzzy() or event.get_locked():
             rw += th + 2 * self._inner_padding
-        rx = self._metrics.calc_x(event.mean_time()) - rw / 2
+        if self._config.draw_period_events_to_right:
+            rx = self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
+        else:
+            rx = self._metrics.calc_x(event.mean_time()) - rw / 2
         ry = self._metrics.half_height - rh - self._baseline_padding
+        if self.never_show_period_events_as_point_events() and event.is_period():
+            rx = -1
+            rw = 0
         return self._create_ideal_wx_rect(rx, ry, rw, rh)
+
+    def never_show_period_events_as_point_events(self):
+        return self._config.get_never_show_period_events_as_point_events()
 
     def _create_ideal_wx_rect(self, rx, ry, rw, rh):
         # Drawing stuff on huge x-coordinates causes drawing to fail.
@@ -299,6 +313,9 @@ class TimelineScene(object):
         self.major_strip, self.minor_strip = self._db.get_time_type().choose_strip(self._metrics, self._config)
         fill(self.major_strip_data, self.major_strip)
         fill(self.minor_strip_data, self.minor_strip)
+
+    def minor_strip_is_day(self):
+        return isinstance(self.minor_strip, StripDay) or isinstance(self.minor_strip, StripWeekday)
 
     def get_hidden_event_count(self):
         return len(self.events_from_db) - self._count_visible_events()

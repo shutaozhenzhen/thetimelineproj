@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,12 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from timelinelib.db.interface import ContainerStrategy
+from timelinetest import UnitTestCase
 
 
-class ContainerStrategyInterfaceSpec(unittest.TestCase):
+class ContainerStrategyInterfaceSpec(UnitTestCase):
 
     def testConstruction(self):
         self.given_strategy_with_none_container()

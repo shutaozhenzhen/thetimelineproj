@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -46,7 +46,13 @@ class Metrics(object):
 
     def calc_x(self, time):
         """Return the x position in pixels as an integer for the given time."""
-        return int(round(self.calc_exact_x(time)))
+        try:
+            return int(round(self.calc_exact_x(time)))
+        except OverflowError:
+            if time < self.time_period.start_time:
+                return -1
+            if time > self.time_period.end_time:
+                return self.width + 1
 
     def calc_exact_width(self, time_period):
         """Return the with in pixels as a float for the given time_period."""
@@ -65,14 +71,6 @@ class Metrics(object):
     def get_difftime(self, x1, x2):
         """Return the time length between two x positions."""
         return self.get_time(x1) - self.get_time(x2)
-
-
-def get_default_font(size, bold=False):
-    if bold:
-        weight = wx.FONTWEIGHT_BOLD
-    else:
-        weight = wx.FONTWEIGHT_NORMAL
-    return wx.Font(size, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, weight)
 
 
 def darken_color(color, factor=0.7):

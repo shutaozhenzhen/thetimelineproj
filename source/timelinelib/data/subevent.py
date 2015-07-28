@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -26,7 +26,7 @@ class Subevent(Event):
         Event.__init__(self, time_type, start_time, end_time, text, category,
                        False, False, False)
         self.container = container
-        if self.container != None:
+        if self.container is not None:
             self.container_id = self.container.cid()
         else:
             self.container_id = cid
@@ -84,7 +84,7 @@ class Subevent(Event):
             self.get_time_period().end_time, self.get_text(),
             self.get_category(), None, self.container_id)
         # Description is immutable
-        new_event.set_data("description", self.get_data("description") )
+        new_event.set_data("description", self.get_data("description"))
         # Icon is immutable in the sense that it is never changed by our
         # application.
         new_event.set_data("icon", self.get_data("icon"))

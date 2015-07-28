@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -39,7 +39,7 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
     def __init__(self):
         ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION)
         self.century = 0
-        dt = self._create_locale_sample_date()
+        dt = create_locale_sample_date()
         self._construct_format(dt)
 
     def set_active(self, value):
@@ -62,16 +62,18 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
                 return int(fields[self._field_positions[key1]])
             except:
                 return int(fields[self._field_positions[key2]])
-
-        bc = False
-        if dt.startswith("-"):
-            bc = True
-            dt = dt[1:]
-        fields = dt.split(self._separator)
-        year = get_value(YEAR)
-        if bc:
-            year = -year
-        return year, get_value(MONTH), get_value(DAY)
+        try:
+            bc = False
+            if dt.startswith("-"):
+                bc = True
+                dt = dt[1:]
+            fields = dt.split(self._separator)
+            year = get_value(YEAR)
+            if bc:
+                year = -year
+            return year, get_value(MONTH), get_value(DAY)
+        except:
+            raise ValueError()
 
     def separator(self):
         return self._separator
@@ -82,16 +84,6 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
         except:
             year = self._field_positions[YEAR[2:]]
         return year, self._field_positions[MONTH], self._field_positions[DAY]
-
-    def _create_locale_sample_date(self):
-        self._set_default_time_locale()
-        return self._create_sample_datestring_using_locale_formatting()
-
-    def _set_default_time_locale(self):
-        locale.setlocale(locale.LC_TIME, "")
-
-    def _create_sample_datestring_using_locale_formatting(self):
-        return datetime.datetime(int(YEAR), int(MONTH), int(DAY)).strftime('%x')
 
     def _construct_format(self, dt):
         self._separator = self._find_separator(dt)
@@ -106,8 +98,11 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
         return {keys[0]: 0, keys[1]: 1, keys[2]: 2}
 
     def _get_date_format_string(self, dt):
-        MAP = {"3333": "%04d", "33": "%02d", "11": "%02d", "1": "%1d", "22": "%02d", "2": "%01d"}
-        return self.separator().join([MAP[part] for part in dt.split(self.separator())])
+        try:
+            MAP = {"3333": "%04d", "33": "%02d", "11": "%02d", "1": "%1d", "22": "%02d", "2": "%01d"}
+            return self.separator().join([MAP[part] for part in dt.split(self.separator())])
+        except:
+            return "%04d-%02d-%02d"
 
     def _get_data_tuple(self, year, month, day):
         result = [0, 0, 0]
@@ -116,7 +111,20 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
             self.century = 0
         except:
             result[self._field_positions[YEAR[2:]]] = year % 100
-            self.century = int(year/100) * 100
+            self.century = int(year / 100) * 100
         result[self._field_positions[MONTH]] = month
         result[self._field_positions[DAY]] = day
         return tuple(result)
+
+
+def create_locale_sample_date():
+    _set_default_time_locale()
+    return _create_sample_datestring_using_locale_formatting()
+
+
+def _set_default_time_locale():
+    locale.setlocale(locale.LC_TIME, "")
+
+
+def _create_sample_datestring_using_locale_formatting():
+    return datetime.datetime(int(YEAR), int(MONTH), int(DAY)).strftime('%x')

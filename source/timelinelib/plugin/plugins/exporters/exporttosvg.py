@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -54,7 +54,7 @@ class SvgExporter(PluginBase):
         return _("Export to SVG...")
 
     def wxid(self):
-        from timelinelib.wxgui.dialogs.mainframe import ID_EXPORT_SVG
+        from timelinelib.wxgui.dialogs.mainframe.mainframe import ID_EXPORT_SVG
         return ID_EXPORT_SVG
 
     def run(self, main_frame):

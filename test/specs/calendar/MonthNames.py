@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,12 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
+from timelinetest import UnitTestCase
 import timelinelib.calendar.monthnames
 
 
-class MonthNamesSpec(unittest.TestCase):
+class MonthNamesSpec(UnitTestCase):
 
     def test_english_name_for_month_1_should_be_january(self):
         self.assertEqual(

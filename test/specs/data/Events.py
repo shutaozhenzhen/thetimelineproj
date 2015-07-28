@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,15 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_category_with
-from specs.utils import an_event
-from specs.utils import an_event_with
-from specs.utils import TestCase
 from timelinelib.data.events import InvalidOperationError
 from timelinelib.data import Events
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import an_event
+from timelinetest.utils import an_event_with
 
 
-class EventsTestCase(TestCase):
+class EventsTestCase(UnitTestCase):
 
     def setUp(self):
         self.events = Events()
@@ -127,7 +127,6 @@ class describe_saving_events(EventsTestCase):
         self.assertRaises(InvalidOperationError,
                           self.events.save_event,
                           an_event_with(category=a_category_with(name="work")))
-
 
     def test_fails_if_existing_event_does_not_seem_to_be_found(self):
         event = an_event()

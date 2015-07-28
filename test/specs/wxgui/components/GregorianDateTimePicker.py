@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,24 +16,23 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
 from timelinelib.calendar.gregorian import Gregorian
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
-import timelinelib.calendar.gregorian as gregorian 
-from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDateTimePickerController
-from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDatePicker
-from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDatePickerController
-from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianTimePicker
-from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianTimePickerController
 from timelinelib.wxgui.components.gregoriandatetimepicker import CalendarPopup
 from timelinelib.wxgui.components.gregoriandatetimepicker import CalendarPopupController
+from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDatePicker
+from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDatePickerController
+from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDateTimePickerController
+from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianTimePicker
+from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianTimePickerController
+from timelinetest import UnitTestCase
+import timelinelib.calendar.gregorian as gregorian
 
 
-class AGregorianDateTimePicker(unittest.TestCase):
+class AGregorianDateTimePicker(UnitTestCase):
 
     def setUp(self):
         self.date_picker = Mock(GregorianDatePicker)
@@ -77,14 +76,14 @@ class AGregorianDateTimePicker(unittest.TestCase):
     def testControllerCanConverDateTupleToWxDate(self):
         wx_date = self.controller.date_tuple_to_wx_date((2010, 8, 31))
         self.assertEqual((2010, 8, 31), (wx_date.Year, wx_date.Month + 1, wx_date.Day))
-        
+
     def testControllerCanConverWxdateToDateTuple(self):
         wx_date = self.controller.date_tuple_to_wx_date((2010, 8, 31))
         year, month, day = self.controller.wx_date_to_date_tuple(wx_date)
         self.assertEqual((2010, 8, 31), (year, month, day))
 
 
-class GregorianDatePickerBaseFixture(unittest.TestCase):
+class GregorianDatePickerBaseFixture(UnitTestCase):
 
     def setUp(self):
         self.date_picker = Mock(GregorianDatePicker)
@@ -196,7 +195,7 @@ class AGregorianDatePicker(GregorianDatePickerBaseFixture):
         self.controller.on_down()
         self.date_picker.set_date_string.assert_called_with("2010-02-28")
 
-        
+
 class GregorianDatePickerWithFocusOnYear(GregorianDatePickerBaseFixture):
 
     def setUp(self):
@@ -365,7 +364,7 @@ class GregorianDatePickerWithFocusOnDay(GregorianDatePickerBaseFixture):
         self.date_picker.set_date_string.assert_called_with("2010-02-01")
 
 
-class GregorianTimePickerBaseFixture(unittest.TestCase):
+class GregorianTimePickerBaseFixture(UnitTestCase):
 
     def setUp(self):
         self.time_picker = Mock(GregorianTimePicker)
@@ -507,7 +506,7 @@ class GregorianTimeCtrlWithFocusOnMinute(GregorianTimePickerBaseFixture):
         self.time_picker.set_time_string.assert_called_with("23:59")
 
 
-class ACalendarPopup(unittest.TestCase):
+class ACalendarPopup(UnitTestCase):
 
     def setUp(self):
         self.calendar_popup = Mock(CalendarPopup)
@@ -540,6 +539,7 @@ class ACalendarPopup(unittest.TestCase):
 def get_min_time_string():
     year, month, day = gregorian.from_time(GregorianTimeType().get_min_time()[0]).to_date_tuple()
     return "%d-%02d-%02d" % (year, month, day)
+
 
 def get_max_time_string():
     # max_time is not a valid date so we must decrease with one day

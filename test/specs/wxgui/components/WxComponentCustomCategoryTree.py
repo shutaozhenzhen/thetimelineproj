@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,18 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-import unittest
-
 from mock import Mock
 
-from specs.utils import WxComponentTest
 from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.wxgui.components.categorytree import CustomCategoryTree
+from timelinetest import WxComponentTestCase
 
 
-class CustomCategoryTreeComponentTest(WxComponentTest):
+class CustomCategoryTreeComponentTest(WxComponentTestCase):
 
     HALT_FOR_MANUAL_INSPECTION = False
 

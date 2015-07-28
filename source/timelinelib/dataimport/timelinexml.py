@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -31,6 +31,7 @@ from timelinelib.data import Event
 from timelinelib.data import Era
 from timelinelib.data import Subevent
 from timelinelib.data import TimePeriod
+from timelinelib.data.timeperiod import PeriodTooLongError
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import create_non_exising_path
 from timelinelib.time.gregoriantime import GregorianTimeType
@@ -99,7 +100,7 @@ class Parser(object):
                                  % text)
 
     def _backup(self, current_version):
-        (x, y, z) = current_version
+        (x, _, _) = current_version
         if x == 0:
             shutil.copy(self.path,
                         create_non_exising_path(self.path, "pre100bak"))
@@ -299,7 +300,10 @@ class Parser(object):
     def _parse_displayed_period(self, text, tmp_dict):
         start = self._parse_time(tmp_dict.pop("tmp_start"))
         end = self._parse_time(tmp_dict.pop("tmp_end"))
-        self.db.set_displayed_period(TimePeriod(self.db.get_time_type(), start, end))
+        try:
+            self.db.set_displayed_period(TimePeriod(self.db.get_time_type(), start, end))
+        except PeriodTooLongError:
+            self.db.set_displayed_period(self.db.get_time_type().get_default_time_period())
 
     def _parse_hidden_category(self, text, tmp_dict):
         category = tmp_dict["category_map"].get(text, None)

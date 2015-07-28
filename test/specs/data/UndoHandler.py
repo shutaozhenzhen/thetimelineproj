@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,14 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
-from specs.utils import an_event
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.undohandler import UndoHandler
+from timelinetest import UnitTestCase
+from timelinetest.utils import an_event
 
 
-class UndoHandlerSpec(unittest.TestCase):
+class UndoHandlerSpec(UnitTestCase):
 
     def test_undo_buffer_is_empty_after_construction(self):
         self.assertEqual(0, self.get_undo_buffer_len())

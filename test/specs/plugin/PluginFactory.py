@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,12 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-from timelinelib.plugin import factory
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
+from timelinelib.plugin import factory
+from timelinetest import UnitTestCase
 
 
-class describe_plugin_factory(unittest.TestCase):
+class describe_plugin_factory(UnitTestCase):
 
     def test_can_return_a_named_plugin(self):
         plugin = factory.get_plugin(EVENTBOX_DRAWER, "Default Event box drawer")

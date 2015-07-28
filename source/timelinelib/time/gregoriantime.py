@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -28,7 +28,6 @@ from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
 from timelinelib.drawing.interface import Strip
-from timelinelib.drawing.utils import get_default_font
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.typeinterface import TimeType
 import timelinelib.calendar.gregorian as gregorian
@@ -140,7 +139,7 @@ class GregorianTimeType(TimeType):
         return delta_string
 
     def get_min_time(self):
-        return (timeline.Time(0, 0), _("can't be before year 10"))
+        return (timeline.get_min_time(), _("can't be before year 10"))
 
     def get_max_time(self):
         return (timeline.Time(5369833, 0), _("can't be after year 9989"))
@@ -279,7 +278,7 @@ def _move_page_smart(current_period, navigation_fn, direction):
 
 def _whole_number_of_years(period):
     """
-    >>> from specs.utils import gregorian_period
+    >>> from timelinetest.utils import gregorian_period
 
     >>> _whole_number_of_years(gregorian_period("1 Jan 2013", "1 Jan 2014"))
     True
@@ -328,7 +327,7 @@ def _calculate_year_diff(period):
 
 def _whole_number_of_months(period):
     """
-    >>> from specs.utils import gregorian_period
+    >>> from timelinetest.utils import gregorian_period
 
     >>> _whole_number_of_months(gregorian_period("1 Jan 2013", "1 Jan 2014"))
     True
@@ -539,9 +538,6 @@ class StripCentury(Strip):
         gregorian_time = gregorian.from_time(time)
         return gregorian_time.replace(year=gregorian_time.year + 100).to_time()
 
-    def get_font(self, time_period):
-        return get_default_font(8)
-
     def _century_start_year(self, year):
         year = (int(year) / 100) * 100
         return year
@@ -568,9 +564,6 @@ class StripDecade(Strip):
         # line correctly. Therefore -10 in the calculation below
         return (int(year) / 10) * 10 - 10
 
-    def get_font(self, time_period):
-        return get_default_font(8)
-
 
 class StripYear(Strip):
 
@@ -585,9 +578,6 @@ class StripYear(Strip):
     def increment(self, time):
         gregorian_time = gregorian.from_time(time)
         return gregorian_time.replace(year=gregorian_time.year + 1).to_time()
-
-    def get_font(self, time_period):
-        return get_default_font(8)
 
 
 class StripMonth(Strip):
@@ -608,9 +598,6 @@ class StripMonth(Strip):
         days_in_month = gregorian.from_time(time).days_in_month()
         return time + delta_from_days(days_in_month)
 
-    def get_font(self, time_period):
-        return get_default_font(8)
-
 
 class StripDay(Strip):
 
@@ -629,12 +616,6 @@ class StripDay(Strip):
 
     def increment(self, time):
         return time + delta_from_days(1)
-
-    def get_font(self, time_period):
-        if (time_period.start_time.get_day_of_week() in (5, 6)):
-            return get_default_font(8, True)
-        else:
-            return get_default_font(8)
 
 
 class StripWeek(Strip):
@@ -688,9 +669,6 @@ class StripWeek(Strip):
     def increment(self, time):
         return time + delta_from_days(7)
 
-    def get_font(self, time_period):
-        return get_default_font(8)
-
 
 class StripWeekday(Strip):
 
@@ -713,9 +691,6 @@ class StripWeekday(Strip):
     def increment(self, time):
         return time + delta_from_days(1)
 
-    def get_font(self, time_period):
-        return get_default_font(8)
-
 
 class StripHour(Strip):
 
@@ -733,9 +708,6 @@ class StripHour(Strip):
     def increment(self, time):
         return time + timeline.delta_from_seconds(60 * 60)
 
-    def get_font(self, time_period):
-        return get_default_font(8)
-
 
 class StripMinute(Strip):
 
@@ -752,9 +724,6 @@ class StripMinute(Strip):
 
     def increment(self, time):
         return time + timeline.delta_from_seconds(60)
-
-    def get_font(self, time_period):
-        return get_default_font(6)
 
 
 def format_year(year):

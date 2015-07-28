@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,37 +16,36 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
+from timelinetest import UnitTestCase
 
 
 DISPLAY_NAME = "Display name"
 DESCRIPTION = "Display description"
 
 
-class describe_experimental_feature(unittest.TestCase):
-    
+class describe_experimental_feature(UnitTestCase):
+
     def test_has_a_display_name(self):
         self.assertEqual(DISPLAY_NAME, self.feature.get_display_name())
-    
+
     def test_has_a_description(self):
         self.assertEqual(DESCRIPTION, self.feature.get_description())
-    
+
     def test_is_not_activated_by_default(self):
         self.assertFalse(self.feature.enabled())
-    
+
     def test_can_be_activated(self):
         self.feature.set_active(True)
         self.assertTrue(self.feature.enabled())
-        
+
     def test_can_be_deactivated(self):
         self.feature.set_active(True)
         self.feature.set_active(False)
         self.assertFalse(self.feature.enabled())
-        
+
     def test_can_format_config_string(self):
         self.assertEqual("%s=False;" % DISPLAY_NAME, self.feature.get_config())
-    
+
     def setUp(self):
         self.feature = ExperimentalFeature(DISPLAY_NAME, DESCRIPTION)

@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -22,7 +22,7 @@ import wx.lib.agw.customtreectrl as customtreectrl
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
-from timelinelib.wxgui.dialogs.categoryeditor import WxCategoryEdtiorDialog
+from timelinelib.wxgui.dialogs.categoryeditors.categoryeditordialog import WxCategoryEdtiorDialog
 import timelinelib.wxgui.utils as gui_utils
 
 

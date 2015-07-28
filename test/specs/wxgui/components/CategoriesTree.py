@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,18 +16,17 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
-from specs.utils import a_category_with
 from timelinelib.data.db import MemoryDB
 from timelinelib.wxgui.components.cattree import CategoriesTree
 from timelinelib.wxgui.components.cattree import CategoriesTreeController
-from timelinelib.wxgui.components.timeline import TimelineCanvas
+from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 
 
-class describe_categories_tree_control(unittest.TestCase):
+class describe_categories_tree_control(UnitTestCase):
 
     def test_categories_are_populated_from_db_when_initializing_from_db(self):
         self.controller.initialize_from_db(self.db)

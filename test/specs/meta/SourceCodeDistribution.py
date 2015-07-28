@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -18,16 +18,13 @@
 
 import codecs
 import os
-import unittest
-import datetime
 
-from timelinelib.calendar.monthnames import english_name_of_month
-from timelinelib.calendar.monthnames import month_from_english_name
+from timelinetest import UnitTestCase
 import timelinelib.meta.about
 import timelinelib.meta.version
 
 
-class SourceCodeDistributionSpec(unittest.TestCase):
+class SourceCodeDistributionSpec(UnitTestCase):
 
     def test_version_number_in_README_should_match_that_in_version_module(self):
         self.assertTrue(

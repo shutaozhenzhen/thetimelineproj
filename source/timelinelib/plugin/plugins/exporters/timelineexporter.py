@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -25,10 +25,10 @@ import wx
 
 from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.factory import EXPORTER
-from timelinelib.wxgui.dialogs.export import ExportDialog
+from timelinelib.wxgui.dialogs.export.exportdialog import ExportDialog
 from timelinelib.wxgui.utils import WildcardHelper
 from timelinelib.wxgui.utils import _ask_question
-from timelinelib.editors.export import CSV_FILE
+from timelinelib.wxgui.dialogs.export.exportcontroller import CSV_FILE
 
 
 class TimelineExporter(PluginBase):
@@ -40,7 +40,7 @@ class TimelineExporter(PluginBase):
         return _("Export Timeline to File...")
 
     def wxid(self):
-        from timelinelib.wxgui.dialogs.mainframe import ID_EXPORT
+        from timelinelib.wxgui.dialogs.mainframe.mainframe import ID_EXPORT
         return ID_EXPORT
 
     def run(self, main_frame):
@@ -86,7 +86,7 @@ class CsvExporter(object):
             self._write_categories_fields(f, category_fields)
 
     def _write_label(self, f, text):
-        f.write("%s\n" % text)
+        self._write_encoded_text(f, text)
 
     def _write_heading(self, f, fields):
         for field in fields:

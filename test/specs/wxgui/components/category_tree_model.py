@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,17 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
 from mock import Mock
 
-from specs.utils import a_category_with
 from timelinelib.data.idnumber import get_process_unique_id
 from timelinelib.wxgui.components.categorytree import CategoriesFacade
 from timelinelib.wxgui.components.categorytree import CustomCategoryTreeModel
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 
 
-class Base(unittest.TestCase):
+class Base(UnitTestCase):
 
     def setUp(self):
         self.categories = []
@@ -218,18 +217,18 @@ class expandedness(Base):
         work = self.add_category("Work")
         self.model.set_categories(self.categories_facade)
         self.assert_model_has_itmes_matching([
-            { "name": "Reading", "expanded": True, },
-            { "name": "Work",    "expanded": True, },
+            {"name": "Reading", "expanded": True, },
+            {"name": "Work",    "expanded": True, },
         ])
         self.model.toggle_expandedness(work)
         self.assert_model_has_itmes_matching([
-            { "name": "Reading", "expanded": True, },
-            { "name": "Work",    "expanded": False, },
+            {"name": "Reading", "expanded": True, },
+            {"name": "Work",    "expanded": False, },
         ])
         self.model.toggle_expandedness(work)
         self.assert_model_has_itmes_matching([
-            { "name": "Reading", "expanded": True, },
-            { "name": "Work",    "expanded": True, },
+            {"name": "Reading", "expanded": True, },
+            {"name": "Work",    "expanded": True, },
         ])
 
     def test_hides_subtrees_if_parent_not_expanded(self):

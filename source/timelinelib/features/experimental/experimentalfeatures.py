@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -39,12 +39,14 @@ To add a new experimental feature, do as follows:
 from timelinelib.features.experimental.experimentalfeaturedone import ExperimentalFeatureDone
 from timelinelib.features.experimental.experimentalfeaturecontainersize import ExperimentalFeatureContainerSize
 from timelinelib.features.experimental.experimentalfeaturedateformatting import ExperimentalFeatureDateFormatting
+from timelinelib.features.experimental.experimentalfeaturenegativejuliandays import ExperimentalFeatureNegativeJulianDays
 
 
 EVENT_DONE = ExperimentalFeatureDone()
 EXTENDED_CONTAINER_HEIGHT = ExperimentalFeatureContainerSize()
 LOCALE_DATE = ExperimentalFeatureDateFormatting()
-FEATURES = (EVENT_DONE, EXTENDED_CONTAINER_HEIGHT, LOCALE_DATE)
+NEGATIVE_JULIAN_DAYS = ExperimentalFeatureNegativeJulianDays()
+FEATURES = (EVENT_DONE, EXTENDED_CONTAINER_HEIGHT, LOCALE_DATE, NEGATIVE_JULIAN_DAYS)
 
 
 class ExperimentalFeatureException(Exception):

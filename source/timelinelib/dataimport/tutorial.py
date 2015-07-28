@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -35,6 +35,12 @@ def create_in_memory_tutorial_db():
         "",
         tutcreator.get_days_delta(4))
     tutcreator.add_category(_("Intro"), (250, 250, 20), (0, 0, 0))
+    tutcreator.add_event(
+        _("This event has hyperlinks"),
+        _("Right-click for context menu where the hyperlinks can be accessed."),
+        tutcreator.get_days_delta(11),
+        tutcreator.get_days_delta(19),
+        "https://sourceforge.net/projects/thetimelineproj/;http://thetimelineproj.sourceforge.net/")
     tutcreator.add_event(
         _("Hover me!"),
         _("Hovering events with a triangle shows the event description."),
@@ -129,7 +135,7 @@ class TutorialTimelineCreator(object):
         self.db.set_displayed_period(TimePeriod(self.db.get_time_type(),
                                                 self.start, self.end))
         self.last_cat = None
-        self.next_cid = 1 
+        self.next_cid = 1
 
     def add_category(self, name, color, font_color, make_last_added_parent=False):
         if make_last_added_parent:
@@ -140,11 +146,13 @@ class TutorialTimelineCreator(object):
         self.last_cat = Category(name, color, font_color, parent)
         self.db.save_category(self.last_cat)
 
-    def add_event(self, text, description, start_add, end_add=None):
+    def add_event(self, text, description, start_add, end_add=None, hyperlink=None):
         start, end = self.calc_start_end(start_add, end_add)
         evt = Event(self.db.get_time_type(), start, end, text, self.last_cat)
         if description:
             evt.set_data("description", description)
+        if hyperlink:
+            evt.set_hyperlink(hyperlink)
         self.db.save_event(evt)
 
     def add_container(self, text, description, start_add, end_add=None):

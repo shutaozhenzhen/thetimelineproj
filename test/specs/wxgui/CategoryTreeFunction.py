@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,13 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import unittest
-
-from specs.utils import a_category_with
 from timelinelib.wxgui.utils import category_tree
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
 
 
-class CategoryTreeFunctionSpec(unittest.TestCase):
+class CategoryTreeFunctionSpec(UnitTestCase):
 
     def testCreatesTreeOfCategories(self):
         tree = category_tree([self.c11, self.c1, self.c2])

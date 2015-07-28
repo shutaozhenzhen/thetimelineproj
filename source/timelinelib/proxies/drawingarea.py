@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -19,7 +19,7 @@
 class DrawingAreaProxy():
 
     def __init__(self, creator):
-        from timelinelib.wxgui.dialogs.mainframe import MainFrame
+        from timelinelib.wxgui.dialogs.mainframe.mainframe import MainFrame
         if isinstance(creator, MainFrame):
             self.timeline_canvas = creator.main_panel.timeline_panel.timeline_canvas
 

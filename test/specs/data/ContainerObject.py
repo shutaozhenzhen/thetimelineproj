@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,14 +16,14 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from specs.utils import a_category_with
-from specs.utils import a_container_with
-from specs.utils import a_subevent_with
-from specs.utils import CONTAINER_MODIFIERS
-from specs.utils import TestCase
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import a_container_with
+from timelinetest.utils import a_subevent_with
+from timelinetest.utils import CONTAINER_MODIFIERS
 
 
-class describe_container(TestCase):
+class describe_container(UnitTestCase):
 
     def test_can_have_subevents(self):
         subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01")
@@ -65,8 +65,7 @@ class describe_container(TestCase):
         self.assertEqNeImplementationIsCorrect(a_container_with, CONTAINER_MODIFIERS)
 
 
-
-class describe_container_construction(TestCase):
+class describe_container_construction(UnitTestCase):
 
     def test_properties_defaults(self):
         container = a_container_with(text="container")
@@ -83,7 +82,7 @@ class describe_container_construction(TestCase):
         self.assertEqual(99, container.cid())
 
 
-class describe_container_cloning(TestCase):
+class describe_container_cloning(UnitTestCase):
 
     def test_cloning_returns_new_object(self):
         container = a_container_with(text="container", cid=99)

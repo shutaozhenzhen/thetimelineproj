@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -58,7 +58,7 @@ def open_tutorial_timeline(path):
     from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
     db = create_in_memory_tutorial_db()
     db.path = path
-    return  db
+    return db
 
 
 def open_directory_timeline(path):
@@ -79,6 +79,11 @@ def db_open_newtype_timeline(path, timetype=None):
     if os.path.exists(path):
         from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
         db = import_db_from_timeline_xml(path)
+        if dir_is_read_only(path):
+            from timelinelib.wxgui.utils import display_warning_message
+            db.set_readonly()
+            display_warning_message(_("Since the directory of the Timeline file is not writable,\nthe timeline is opened in read-only mode"))
+            return db
     else:
         from timelinelib.data.db import MemoryDB
         db = MemoryDB()
@@ -86,12 +91,23 @@ def db_open_newtype_timeline(path, timetype=None):
             db.set_time_type(GregorianTimeType())
         else:
             db.set_time_type(timetype)
+
     def save_callback():
         from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
         export_db_to_timeline_xml(db, path)
     db.register_save_callback(save_callback)
     db.set_should_lock(True)
     return db
+
+
+def dir_is_read_only(path):
+    try:
+        f = open(path, "w")
+        f.close()
+        return False
+    except Exception, ex:
+        print ex
+        return True
 
 
 def db_open_ics(path):

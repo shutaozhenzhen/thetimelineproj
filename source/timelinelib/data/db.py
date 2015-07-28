@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -28,6 +28,7 @@ from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature
+
 
 class MemoryDB(Observable):
 
@@ -205,9 +206,9 @@ class MemoryDB(Observable):
         self.save_disabled = True
 
     def enable_save(self, call_save=True):
-        if self.save_disabled == True:
+        if self.save_disabled is True:
             self.save_disabled = False
-            if call_save == True:
+            if call_save is True:
                 self._save_if_not_disabled()
 
     def place_event_after_event(self, event_to_place, target_event):
@@ -240,14 +241,14 @@ class MemoryDB(Observable):
     def redo_enabled(self):
         return self._redo_enabled
 
-    def find_event_with_id(self, id):
+    def find_event_with_id(self, event_id):
         for e in self._events.get_all():
-            if e.get_id() == id:
+            if e.get_id() == event_id:
                 return e
         return None
 
     def _save_enabled(self):
-        return self.save_disabled == False
+        return self.save_disabled is False
 
     def _save_if_not_disabled(self, notification=None):
         if self._save_enabled():
@@ -305,6 +306,7 @@ class MemoryDB(Observable):
                     if event.cid() > max_container_id:
                         max_container_id = event.cid()
             return max_container_id
+
         def set_imported_ids(max_cid):
             for event in db.get_all_events():
                 if event.is_container():
@@ -340,3 +342,4 @@ class MemoryDB(Observable):
 
     def compress(self):
         self._events.compress()
+        self.save_events(self._events.get_all())

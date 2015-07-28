@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,19 +16,20 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import datetime
-import unittest
+import wx
 
-from specs.utils import a_category_with
-from specs.utils import gregorian_period
-from specs.utils import human_time_to_gregorian
+from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
 from timelinelib.drawing.scene import TimelineScene
 from timelinelib.drawing.viewproperties import ViewProperties
+from timelinetest import UnitTestCase
+from timelinetest.utils import a_category_with
+from timelinetest.utils import gregorian_period
+from timelinetest.utils import human_time_to_gregorian
 
 
-class SceneSpec(unittest.TestCase):
+class SceneSpec(UnitTestCase):
 
     def test_has_no_hidden_events_when_all_events_belong_to_visible_categories(self):
         self.given_displayed_period("1 Jan 2010", "10 Jan 2010")
@@ -46,7 +47,7 @@ class SceneSpec(unittest.TestCase):
     def test_considers_events_outside_screen_hidden(self):
         self.given_displayed_period("1 Jan 2010", "10 Jan 2010")
         self.given_number_of_events_stackable_is(5)
-        for i in range(6):
+        for _ in range(6):
             self.given_visible_event_at("5 Jan 2010")
         self.when_scene_is_created()
         self.assertEqual(1, self.scene.get_hidden_event_count())
@@ -100,15 +101,20 @@ class SceneSpec(unittest.TestCase):
         self.given_displayed_period("1 Jan 9890", "1 Jan 9990")
         try:
             self.when_scene_is_created()
-            self.assertTrue(self.scene != None)
-        except:
+            self.assertTrue(self.scene is not None)
+        except Exception:
             self.assertTrue(False)
 
     def setUp(self):
+        self.app = wx.App()
+        self.app.MainLoop()
         self.db = MemoryDB()
         self.view_properties = ViewProperties()
         self.given_number_of_events_stackable_is(5)
         self.MAX_OUTSIDE_SCREEN = 20
+
+    def tearDown(self):
+        self.app.Destroy()
 
     def get_text_size_fn(self, text):
         return (len(text), self.event_height)
@@ -152,7 +158,7 @@ class SceneSpec(unittest.TestCase):
     def when_scene_is_created(self):
         self.scene = TimelineScene(
             self.size, self.db, self.view_properties, self.get_text_size_fn,
-            None)
+            Config(None))
         self.scene.set_outer_padding(self.outer_padding)
         self.scene.set_inner_padding(self.inner_padding)
         self.scene.set_baseline_padding(self.baseline_padding)

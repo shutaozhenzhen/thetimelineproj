@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -30,6 +30,10 @@ from ConfigParser import ConfigParser
 from ConfigParser import DEFAULTSECT
 import os.path
 
+import wx
+
+from timelinelib.wxgui.components.font import Font
+
 
 # Name used in ConfigParser
 SELECTED_EVENT_BOX_DRAWER = "selected_event_box_drawer"
@@ -48,6 +52,15 @@ WEEK_START = "week_start"
 USE_INERTIAL_SCROLLING = "use_inertial_scrolling"
 EXPERIMENTAL_FEATURES = "experimental_features"
 DIVIDER_LINE_SLIDER_POS = "divider_line_slider_pos"
+NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS = "never_show_period_events_as_point_events"
+DRAW_POINT_EVENTS_TO_RIGHT = "draw_point_events_to_right"
+MAJOR_STRIP_FONT = "major_strip_font"
+MINOR_STRIP_FONT = "minor_strip_font"
+LEGEND_FONT = "legend_font"
+EVENT_EDITOR_SHOW_PERIOD = "event_editor_show_period"
+EVENT_EDITOR_SHOW_TIME = "event_editor_show_time"
+EVENT_EDITOR_TAB_ORDER = "event_editor_tab_order"
+CENTER_EVENT_TEXTS = "center_event_texts"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -65,6 +78,12 @@ DEFAULTS = {
     USE_INERTIAL_SCROLLING: "False",
     EXPERIMENTAL_FEATURES: "",
     DIVIDER_LINE_SLIDER_POS: "50",
+    NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS: "False",
+    DRAW_POINT_EVENTS_TO_RIGHT: "False",
+    EVENT_EDITOR_SHOW_PERIOD: "False",
+    EVENT_EDITOR_SHOW_TIME: "False",
+    EVENT_EDITOR_TAB_ORDER: "01234:",
+    CENTER_EVENT_TEXTS: "False",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -88,6 +107,7 @@ class Config(object):
 
     def __init__(self, path):
         self.path = path
+        self._set_default_fonts()
         self.config_parser = ConfigParser(DEFAULTS)
 
     def read(self):
@@ -107,13 +127,15 @@ class Config(object):
 
     def get_selected_event_box_drawer(self):
         return self.config_parser.get(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER)
+
     def set_selected_event_box_drawer(self, selected):
         self.config_parser.set(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER, str(selected))
     selected_event_box_drawer = property(get_selected_event_box_drawer, set_selected_event_box_drawer)
-    
+
     def get_window_size(self):
         return (self.config_parser.getint(DEFAULTSECT, WINDOW_WIDTH),
                 self.config_parser.getint(DEFAULTSECT, WINDOW_HEIGHT))
+
     def set_window_size(self, size):
         width, height = size
         self.config_parser.set(DEFAULTSECT, WINDOW_WIDTH, str(width))
@@ -121,7 +143,7 @@ class Config(object):
     window_size = property(get_window_size, set_window_size)
 
     def get_window_pos(self):
-        width, height = self.get_window_size()
+        width, _ = self.get_window_size()
         # Make sure that some area of the window is visible on the screen
         # Some part of the titlebar must be visible
         xpos = max(-width + 100,
@@ -138,30 +160,35 @@ class Config(object):
 
     def get_window_maximized(self):
         return self.config_parser.getboolean(DEFAULTSECT, WINDOW_MAXIMIZED)
+
     def set_window_maximized(self, maximized):
         self.config_parser.set(DEFAULTSECT, WINDOW_MAXIMIZED, str(maximized))
     window_maximized = property(get_window_maximized, set_window_maximized)
 
     def get_show_sidebar(self):
         return self.config_parser.getboolean(DEFAULTSECT, SHOW_SIDEBAR)
+
     def set_show_sidebar(self, show):
         self.config_parser.set(DEFAULTSECT, SHOW_SIDEBAR, str(show))
     show_sidebar = property(get_show_sidebar, set_show_sidebar)
 
     def get_show_legend(self):
         return self.config_parser.getboolean(DEFAULTSECT, SHOW_LEGEND)
+
     def set_show_legend(self, show):
         self.config_parser.set(DEFAULTSECT, SHOW_LEGEND, str(show))
     show_legend = property(get_show_legend, set_show_legend)
 
     def get_sidebar_width(self):
         return self.config_parser.getint(DEFAULTSECT, SIDEBAR_WIDTH)
+
     def set_sidebar_width(self, width):
         self.config_parser.set(DEFAULTSECT, SIDEBAR_WIDTH, str(width))
     sidebar_width = property(get_sidebar_width, set_sidebar_width)
 
     def get_divider_line_slider_pos(self):
         return self.config_parser.getint(DEFAULTSECT, DIVIDER_LINE_SLIDER_POS)
+
     def set_divider_line_slider_pos(self, pos):
         self.config_parser.set(DEFAULTSECT, DIVIDER_LINE_SLIDER_POS, str(pos))
     divider_line_slider_pos = property(get_divider_line_slider_pos, set_divider_line_slider_pos)
@@ -198,31 +225,35 @@ class Config(object):
             current.remove(abs_path)
         current.insert(0, abs_path)
         self.config_parser.set(DEFAULTSECT, RECENT_FILES,
-              (",".join(current[:MAX_NBR_OF_RECENT_FILES_SAVED])).encode(ENCODING))
+                               (",".join(current[:MAX_NBR_OF_RECENT_FILES_SAVED])).encode(ENCODING))
 
     def get_open_recent_at_startup(self):
         return self.config_parser.getboolean(DEFAULTSECT, OPEN_RECENT_AT_STARTUP)
-    def set_open_recent_at_startup(self, open):
-        self.config_parser.set(DEFAULTSECT, OPEN_RECENT_AT_STARTUP, str(open))
+
+    def set_open_recent_at_startup(self, value):
+        self.config_parser.set(DEFAULTSECT, OPEN_RECENT_AT_STARTUP, str(value))
     open_recent_at_startup = property(get_open_recent_at_startup,
                                       set_open_recent_at_startup)
 
     def get_balloon_on_hover(self):
         return self.config_parser.getboolean(DEFAULTSECT, BALLOON_ON_HOVER)
+
     def set_balloon_on_hover(self, balloon_on_hover):
         self.config_parser.set(DEFAULTSECT, BALLOON_ON_HOVER, str(balloon_on_hover))
     balloon_on_hover = property(get_balloon_on_hover, set_balloon_on_hover)
 
     def get_week_start(self):
         return self.config_parser.get(DEFAULTSECT, WEEK_START)
+
     def set_week_start(self, week_start):
-        if not week_start in ["monday", "sunday"]:
+        if week_start not in ["monday", "sunday"]:
             raise ValueError("Invalid week start.")
         self.config_parser.set(DEFAULTSECT, WEEK_START, week_start)
     week_start = property(get_week_start, set_week_start)
 
     def get_use_inertial_scrolling(self):
         return self.config_parser.getboolean(DEFAULTSECT, USE_INERTIAL_SCROLLING)
+
     def set_use_inertial_scrolling(self, value):
         self.config_parser.set(DEFAULTSECT, USE_INERTIAL_SCROLLING, str(value))
     use_inertial_scrolling = property(get_use_inertial_scrolling, set_use_inertial_scrolling)
@@ -233,12 +264,83 @@ class Config(object):
         except:
             self.set_shortcut_key(cfgid, default)
             return default
+
     def set_shortcut_key(self, cfgid, value):
         self.config_parser.set(DEFAULTSECT, cfgid, value)
 
     def get_experimental_features(self):
         return self.config_parser.get(DEFAULTSECT, EXPERIMENTAL_FEATURES)
+
     def set_experimental_features(self, value):
         self.config_parser.set(DEFAULTSECT, EXPERIMENTAL_FEATURES, value)
     experimental_features = property(get_experimental_features, set_experimental_features)
 
+    def get_never_show_period_events_as_point_events(self):
+        return self.config_parser.getboolean(DEFAULTSECT, NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS)
+
+    def set_never_show_period_events_as_point_events(self, value):
+        self.config_parser.set(DEFAULTSECT, NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS, str(value))
+    never_show_period_events_as_point_events = property(get_never_show_period_events_as_point_events,
+                                                        set_never_show_period_events_as_point_events)
+
+    def get_center_event_texts(self):
+        return self.config_parser.getboolean(DEFAULTSECT, CENTER_EVENT_TEXTS)
+
+    def set_center_event_texts(self, value):
+        self.config_parser.set(DEFAULTSECT, CENTER_EVENT_TEXTS, str(value))
+    center_event_texts = property(get_center_event_texts, set_center_event_texts)
+
+    def get_draw_period_events_to_right(self):
+        return self.config_parser.getboolean(DEFAULTSECT, DRAW_POINT_EVENTS_TO_RIGHT)
+
+    def set_draw_period_events_to_right(self, value):
+        self.config_parser.set(DEFAULTSECT, DRAW_POINT_EVENTS_TO_RIGHT, str(value))
+    draw_period_events_to_right = property(get_draw_period_events_to_right,
+                                           set_draw_period_events_to_right)
+
+    def get_major_strip_font(self):
+        return self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_FONT)
+
+    def set_major_strip_font(self, font):
+        self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_FONT, font)
+    major_strip_font = property(get_major_strip_font, set_major_strip_font)
+
+    def get_minor_strip_font(self):
+        return self.config_parser.get(DEFAULTSECT, MINOR_STRIP_FONT)
+
+    def set_minor_strip_font(self, font):
+        self.config_parser.set(DEFAULTSECT, MINOR_STRIP_FONT, font)
+    minor_strip_font = property(get_minor_strip_font, set_minor_strip_font)
+
+    def get_legend_font(self):
+        return self.config_parser.get(DEFAULTSECT, LEGEND_FONT)
+
+    def set_legend_font(self, font):
+        self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
+    legend_font = property(get_legend_font, set_legend_font)
+
+    def _set_default_fonts(self):
+        DEFAULTS[MAJOR_STRIP_FONT] = Font(12, weight=wx.FONTWEIGHT_BOLD).serialize()
+        DEFAULTS[MINOR_STRIP_FONT] = Font(8).serialize()
+        DEFAULTS[LEGEND_FONT] = Font(8).serialize()
+
+    def get_event_editor_show_period(self):
+        return self.config_parser.getboolean(DEFAULTSECT, EVENT_EDITOR_SHOW_PERIOD)
+
+    def set_event_editor_show_period(self, value):
+        self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_SHOW_PERIOD, str(value))
+    event_editor_show_period = property(get_event_editor_show_period, set_event_editor_show_period)
+
+    def get_event_editor_show_time(self):
+        return self.config_parser.getboolean(DEFAULTSECT, EVENT_EDITOR_SHOW_TIME)
+
+    def set_event_editor_show_time(self, value):
+        self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_SHOW_TIME, str(value))
+    event_editor_show_time = property(get_event_editor_show_time, set_event_editor_show_time)
+
+    def get_event_editor_tab_order(self):
+        return self.config_parser.get(DEFAULTSECT, EVENT_EDITOR_TAB_ORDER)
+
+    def set_event_editor_tab_order(self, tab_order):
+        self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_TAB_ORDER, tab_order)
+    event_editor_tab_order = property(get_event_editor_tab_order, set_event_editor_tab_order)
