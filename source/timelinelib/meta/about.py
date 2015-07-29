@@ -23,7 +23,7 @@ from timelinelib.meta.version import get_version
 
 
 APPLICATION_NAME = "Timeline"
-COPYRIGHT_TEXT = "Copyright (C) 2009, 2010, 2011 The %s Authors" % APPLICATION_NAME
+COPYRIGHT_TEXT = "Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015 The %s Authors" % APPLICATION_NAME
 APPLICATION_DESCRIPTION = "Timeline is a free, cross-platform application for displaying and navigating events on a timeline."
 WEBSITE = "http://thetimelineproj.sourceforge.net/"
 DEVELOPERS = [
