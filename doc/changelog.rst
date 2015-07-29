@@ -1,10 +1,15 @@
 Changelog
 =========
 
+Version 1.8.0
+-------------
+
+**Planned Release on 31 October 2015.**
+
 Version 1.7.0
 -------------
 
-**Planned Release on 30 July 2015.**
+**Released on 30 July 2015.**
 
 This is a periodic release of Timeline. It contains many solutions to problems
 identified by users of Timeline.
