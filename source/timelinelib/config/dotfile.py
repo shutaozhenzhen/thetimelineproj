@@ -126,10 +126,10 @@ class Config(object):
             f.close()
 
     def get_selected_event_box_drawer(self):
-        return self.config_parser.get(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER)
+        return self.config_parser.get(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER).decode("utf-8")
 
     def set_selected_event_box_drawer(self, selected):
-        self.config_parser.set(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER, str(selected))
+        self.config_parser.set(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER, str(selected.encode("utf-8")))
     selected_event_box_drawer = property(get_selected_event_box_drawer, set_selected_event_box_drawer)
 
     def get_window_size(self):
