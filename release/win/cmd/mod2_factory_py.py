@@ -13,9 +13,6 @@ CODE = """\
                     name = name.split(".")[0]
                     name = name.replace("/", ".")
                     names.append(name)
-        f = open("test.txt", "w")
-        f.write(" ".join(names))
-        f.close()
         return [self._import_module("timelinelib.plugin.plugins.%s" % mod) for mod in names]        
 """
 
