@@ -23,5 +23,7 @@ Screenshots
     information. It is an easy to use and robust piece of software. Highly
     recommended.
 
+.. figure:: /images/screenshots/famous_composers.png
+
 Do you have a screenshot that you would like to be included here? :doc:`Send us
 an email<support>`.
