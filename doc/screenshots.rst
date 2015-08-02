@@ -25,5 +25,7 @@ Screenshots
 
 .. figure:: /images/screenshots/famous_composers.png
 
+    Famous composers
+
 Do you have a screenshot that you would like to be included here? :doc:`Send us
 an email<support>`.
