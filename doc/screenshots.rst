@@ -25,7 +25,7 @@ Screenshots
 
 .. figure:: /images/screenshots/famous_composers.png
 
-    Famous composers
+    An interactive list of famous composers: click on the name and you can see the portrait of the artist 
 
 Do you have a screenshot that you would like to be included here? :doc:`Send us
 an email<support>`.
