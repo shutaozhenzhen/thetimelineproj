@@ -119,6 +119,8 @@ Publish
        execute stable-copy\bin\SetupTimeline9nn9Py2Exe.exe
     4. Try running the installed Timeline to make a basic check that it works
     5. Upload the install file to Source Forge
+	6. Ensure that the exe file has "Default Download For" Windows checkbox checked and 
+       ensure that the the zip file has all the others checked
 
 3. Make release announcement:
     1. Post news to SF (http://sourceforge.net/p/thetimelineproj/news/?source=navbar)
