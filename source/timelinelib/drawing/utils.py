@@ -67,12 +67,16 @@ class Metrics(object):
         return self.get_time(x1) - self.get_time(x2)
 
 
-def get_default_font(size, bold=False):
+def get_default_font(size, bold=False, italics=False):
     if bold:
         weight = wx.FONTWEIGHT_BOLD
     else:
         weight = wx.FONTWEIGHT_NORMAL
-    return wx.Font(size, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, weight)
+    if italics:
+        style = wx.FONTSTYLE_ITALIC
+    else:
+        style = wx.FONTSTYLE_NORMAL
+    return wx.Font(size, wx.FONTFAMILY_DEFAULT, style, weight)
 
 
 def darken_color(color, factor=0.7):

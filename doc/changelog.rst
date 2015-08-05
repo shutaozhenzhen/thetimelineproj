@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 1.7.0-DSA
+------------------
+
+**Planned Release after official 1.7.0 release.**
+
+Added support for "The Dark Eye" (Das Schwarze Auge, DSA) official calender.
+
 Version 1.7.0
 -------------
 
