@@ -73,6 +73,7 @@ class Metrics(object):
         return self.get_time(x1) - self.get_time(x2)
 
 
+
 def darken_color(color, factor=0.7):
     if (factor < 0.0 or factor > 1.0):
         return color
