@@ -22,6 +22,7 @@ import wx
 
 from timelinelib.data import sort_categories
 from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.time.bosparaniantime import BosparanianTimeType
 
 
 # Border, in pixels, between controls in a window (should always be used when
@@ -203,10 +204,13 @@ def set_default_cursor(parent):
 def time_picker_for(time_type):
     from timelinelib.wxgui.components.numtimepicker import NumTimePicker
     from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDateTimePicker
+    from timelinelib.wxgui.components.bosparaniandatetimepicker import BosparanianDateTimePicker
     from timelinelib.time.numtime import NumTimeType
     from timelinelib.time.gregoriantime import GregorianTimeType
     if isinstance(time_type, NumTimeType):
         return NumTimePicker
+    if isinstance(time_type, BosparanianTimeType):
+        return BosparanianDateTimePicker
     elif isinstance(time_type, GregorianTimeType):
         return GregorianDateTimePicker
     else:
