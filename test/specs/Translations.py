@@ -19,7 +19,7 @@
 import os
 import sys
 
-import unittest
+from timelinetest import UnitTestCase
 
 
 PO_DIR_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "translations")
@@ -95,35 +95,7 @@ def get_invalid_translations(path):
     return errors
 
 
-def report(errors):
-    if len(errors) > 0:
-        print "------------------------------------"
-        print "!!!! Invalid translations found !!!!"
-        print "------------------------------------"
-        for po_file, errs in errors:
-            print "PO file:", po_file
-            print " "
-            for sourceline, msgid, msgstr in errs:
-                print "Src:", sourceline
-                print "Id: ", msgid
-                print "Str:", msgstr
-                print " "
-    else:
-        print "No errors found. %d files tested" % nbr_of_tested_files
-
-    return len(errors)
-
-
-class TranslationsSpec(unittest.TestCase):
+class TranslationsSpec(UnitTestCase):
 
     def test_string_replacemnts_are_conserved(self):
         self.assertEqual(0, len(get_invalid_translations(PO_DIR_PATH)))
-
-
-if __name__ == '__main__':
-    print os.path.abspath(PO_DIR_PATH)
-    invalid_translations = get_invalid_translations(PO_DIR_PATH)
-    report(invalid_translations)
-    print "Press any key to continue:",
-    raw_input()
-    sys.exit(len(invalid_translations))
