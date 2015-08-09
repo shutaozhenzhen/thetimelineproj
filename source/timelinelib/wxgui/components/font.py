@@ -87,7 +87,7 @@ def deserialize_font(serialized_font):
         bool_map = {"True": True, "False": False}
         point_size, family, style, weight, underlined, facename, encoding, color = serialized_font.split(":")
         color_args = color[1:-1].split(",")
-        wxcolor = wx.Color(int(color_args[0]), int(color_args[1]), int(color_args[2]), int(color_args[3]))
+        wxcolor = wx.Colour(int(color_args[0]), int(color_args[1]), int(color_args[2]), int(color_args[3]))
         font = Font(int(point_size), int(family), int(style), int(weight), bool_map[underlined], facename, int(encoding), wxcolor)
         font_cache[serialized_font] = font
     return font_cache[serialized_font]
