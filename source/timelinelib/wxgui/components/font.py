@@ -107,12 +107,14 @@ def set_legend_text_font(config, dc):
 
 def set_text_font(selectable_font, dc, force_bold=False, force_normal=False):
     font = deserialize_font(selectable_font)
+    old_weight = font.Weight
     if force_bold:
         font.Weight = wx.FONTWEIGHT_BOLD
     elif force_normal:
         font.Weight = wx.FONTWEIGHT_NORMAL
     dc.SetFont(font)
     dc.SetTextForeground(font.WxColor)
+    font.Weight = old_weight
 
 
 def edit_font_data(parent_window, font):
