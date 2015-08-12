@@ -31,7 +31,8 @@ INFO_LABEL_WIDTH = 600
 class FeedbackDialog(wx.Dialog):
 
     def __init__(self, parent=None):
-        wx.Dialog.__init__(self, parent, title="Feedback")
+        wx.Dialog.__init__(self, parent, title="Feedback",
+                           style=wx.RESIZE_BORDER)
         self.controller = FeedbackDialogController(self, webbrowser)
         self._create_gui()
 
@@ -119,12 +120,15 @@ class FeedbackDialog(wx.Dialog):
         vbox = wx.BoxSizer(wx.VERTICAL)
         vbox.Add(self.title_label, flag=wx.ALL | wx.EXPAND, border=BORDER)
         vbox.Add(self.info_label, flag=wx.ALL | wx.EXPAND, border=BORDER)
-        vbox.Add(self._create_layout_grid(), flag=wx.ALL | wx.EXPAND, border=BORDER)
+        vbox.Add(self._create_layout_grid(), flag=wx.ALL | wx.EXPAND,
+                 border=BORDER, proportion=1)
         self.SetSizerAndFit(vbox)
 
     def _create_layout_grid(self):
         grid = wx.FlexGridSizer(4, 2, BORDER, BORDER)
+        grid.SetFlexibleDirection(wx.BOTH)
         grid.AddGrowableCol(1)
+        grid.AddGrowableRow(2)
         grid.Add(wx.StaticText(self, label=_("To:")), flag=wx.ALIGN_CENTER_VERTICAL)
         grid.Add(self.to_text, flag=wx.EXPAND)
         grid.Add(wx.StaticText(self, label=_("Subject:")), flag=wx.ALIGN_CENTER_VERTICAL)
