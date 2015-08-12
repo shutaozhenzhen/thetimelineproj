@@ -28,7 +28,7 @@ from timelinetest import UnitTestCase
 from timelinetest.utils import an_event_with, human_time_to_gregorian, ObjectWithTruthValue
 
 
-class EventEditorTestCase(UnitTestCase):
+class EventEditorDialogControllerTestCase(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(EventEditorDialog)
@@ -90,7 +90,7 @@ class EventEditorTestCase(UnitTestCase):
         self.assertFalse(self.view.clear_dialog.called)
 
 
-class describe_event_editor__start_time_field(EventEditorTestCase):
+class describe_event_editor__start_time_field(EventEditorDialogControllerTestCase):
 
     def test_has_value_from_first_argument(self):
         self.when_editor_opened_with_time("1 Jan 2010")
@@ -105,7 +105,7 @@ class describe_event_editor__start_time_field(EventEditorTestCase):
         self.view.set_start.assert_called_with(sentinel.START_TIME)
 
 
-class describe_event_editor__end_time_field(EventEditorTestCase):
+class describe_event_editor__end_time_field(EventEditorDialogControllerTestCase):
 
     def test_has_value_from_first_argument_if_only_one_given(self):
         self.when_editor_opened_with_time("1 Jan 2010")
@@ -138,7 +138,7 @@ class describe_event_editor__end_time_field(EventEditorTestCase):
         self.view.set_show_period.assert_called_with(True)
 
 
-class describe_event_editor__time_fields(EventEditorTestCase):
+class describe_event_editor__time_fields(EventEditorDialogControllerTestCase):
 
     def test_are_hidden_if_no_time_specified(self):
         self.when_editor_opened_with_time("1 Jan 2010")
@@ -155,7 +155,7 @@ class describe_event_editor__time_fields(EventEditorTestCase):
         self.view.set_show_time.assert_called_with(True)
 
 
-class describe_event_editor__fuzzy_checkbox(EventEditorTestCase):
+class describe_event_editor__fuzzy_checkbox(EventEditorDialogControllerTestCase):
 
     def test_is_not_checked_by_default(self):
         self.when_editing_a_new_event()
@@ -168,7 +168,7 @@ class describe_event_editor__fuzzy_checkbox(EventEditorTestCase):
         self.view.set_fuzzy.assert_called_with(sentinel.FUZZY)
 
 
-class describe_event_editor__locked_checkbox(EventEditorTestCase):
+class describe_event_editor__locked_checkbox(EventEditorDialogControllerTestCase):
 
     def test_is_not_checked_by_default(self):
         self.when_editing_a_new_event()
@@ -205,7 +205,7 @@ class describe_event_editor__locked_checkbox(EventEditorTestCase):
         self.assertTrue(self.editor.start_is_in_history())
 
 
-class describe_event_editor__ends_today_checkbox(EventEditorTestCase):
+class describe_event_editor__ends_today_checkbox(EventEditorDialogControllerTestCase):
 
     def test_is_not_checked_by_default(self):
         self.when_editing_a_new_event()
@@ -224,7 +224,7 @@ class describe_event_editor__ends_today_checkbox(EventEditorTestCase):
         self.assertTrue(end_time <= self.editor._validate_and_save_end(end_time))
 
 
-class describe_event_editor__text_field(EventEditorTestCase):
+class describe_event_editor__text_field(EventEditorDialogControllerTestCase):
 
     def test_has_no_value_by_default(self):
         self.when_editing_a_new_event()
@@ -237,7 +237,7 @@ class describe_event_editor__text_field(EventEditorTestCase):
         self.view.set_name.assert_called_with(sentinel.TEXT)
 
 
-class describe_event_editor__category_field(EventEditorTestCase):
+class describe_event_editor__category_field(EventEditorDialogControllerTestCase):
 
     def test_has_no_value_by_default(self):
         self.when_editing_a_new_event()
@@ -250,7 +250,7 @@ class describe_event_editor__category_field(EventEditorTestCase):
         self.view.set_category.assert_called_with(sentinel.CATEGORY)
 
 
-class describe_event_editor__additional_data(EventEditorTestCase):
+class describe_event_editor__additional_data(EventEditorDialogControllerTestCase):
 
     def test_is_populated_from_event(self):
         event = Mock()
@@ -263,7 +263,7 @@ class describe_event_editor__additional_data(EventEditorTestCase):
         self.assertFalse(self.view.set_event_data.called)
 
 
-class describe_event_editor__add_more_checkbox(EventEditorTestCase):
+class describe_event_editor__add_more_checkbox(EventEditorDialogControllerTestCase):
 
     def test_is_hidden_when_editing_existing_event(self):
         self.when_editor_opened_with_event(an_event_with(time="1 Jan 2010"))
@@ -333,21 +333,21 @@ class describe_event_editor__saving(object):
         self.assertEqual(self.saved_event.data, sentinel.EVENT_DATA)
 
 
-class describe_event_editor__saving_new(EventEditorTestCase, describe_event_editor__saving):
+class describe_event_editor__saving_new(EventEditorDialogControllerTestCase, describe_event_editor__saving):
 
     def setUp(self):
-        EventEditorTestCase.setUp(self)
+        EventEditorDialogControllerTestCase.setUp(self)
         self.when_editing_a_new_event()
 
 
-class describe_event_editor__saving_existing(EventEditorTestCase, describe_event_editor__saving):
+class describe_event_editor__saving_existing(EventEditorDialogControllerTestCase, describe_event_editor__saving):
 
     def setUp(self):
-        EventEditorTestCase.setUp(self)
+        EventEditorDialogControllerTestCase.setUp(self)
         self.when_editor_opened_with_event(an_event_with(time="1 Jan 2010"))
 
 
-class describe_event_editor__validation(EventEditorTestCase):
+class describe_event_editor__validation(EventEditorDialogControllerTestCase):
 
     def test_name_field_must_not_be_empty(self):
         self.when_editing_a_new_event()
