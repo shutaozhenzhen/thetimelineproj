@@ -25,7 +25,7 @@ from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.components.feedbackbutton import FeedbackButton
 from timelinelib.wxgui.dialogs.eventeditor.containereditordialog import ContainerEditorDialog
-from timelinelib.wxgui.dialogs.eventeditor.eventeditorcontroller import EventEditorController
+from timelinelib.wxgui.dialogs.eventeditor.eventeditordialogcontroller import EventEditorDialogController
 from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.alerteditor import AlertEditor
 from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.descriptioneditor import DescriptionEditor
 from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.hyperlinkeditor import HyperlinkEditor
@@ -49,7 +49,7 @@ class EventEditorDialog(wx.Dialog):
         dialog_style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         wx.Dialog.__init__(self, parent, title=title, name="event_editor", style=dialog_style)
         self._create_gui()
-        self.controller = EventEditorController(self, config)
+        self.controller = EventEditorDialogController(self, config)
         self.controller.edit(timeline.get_time_type(), DbWrapperEventRepository(timeline), timeline, start, end, event)
         self._set_focus()
 
