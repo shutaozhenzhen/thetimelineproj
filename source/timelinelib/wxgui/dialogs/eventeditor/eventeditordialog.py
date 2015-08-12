@@ -467,7 +467,7 @@ class EventEditorDialog(wx.Dialog):
         self.chb_add_more.Show(visible)
         self.chb_add_more.SetValue(False)
 
-    def get_show_add_more(self):
+    def is_add_more_checked(self):
         return self.chb_add_more.GetValue()
 
     def display_invalid_start(self, message):

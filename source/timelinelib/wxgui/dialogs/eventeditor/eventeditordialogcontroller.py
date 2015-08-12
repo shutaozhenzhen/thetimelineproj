@@ -40,7 +40,7 @@ class EventEditorDialogController(object):
         try:
             self._get_and_verify_input()
             self._save_event()
-            if self.view.get_show_add_more():
+            if self.view.is_add_more_checked():
                 self.view.clear_dialog()
             else:
                 self.view.close()
