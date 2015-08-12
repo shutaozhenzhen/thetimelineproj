@@ -99,9 +99,9 @@ class EventEditorDialog(wx.Dialog):
     def _create_details(self, creators):
         if creators:
             grid = wx.GridBagSizer(BORDER * 2, BORDER)
-            grid.AddGrowableCol(1)
             for creator, row in creators:
                 creator(grid, row)
+            grid.AddGrowableCol(1)
             return grid
 
     def _create_time_details(self, grid, row):
