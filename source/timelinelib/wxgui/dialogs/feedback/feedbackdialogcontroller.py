@@ -22,7 +22,7 @@ import urllib
 DESCRIBE_TEXT = "Describe what you did here..."
 
 
-class FeedbackForm(object):
+class FeedbackDialogController(object):
 
     def __init__(self, dialog, webbrowser):
         self.dialog = dialog
