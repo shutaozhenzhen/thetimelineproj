@@ -50,21 +50,24 @@ def unhandled_exception_hook(exception_type, value, tb):
 
 def create_info_message():
     return ("An unexpected error has occurred. Help us fix it by reporting "
-            "the error through this form. "
-            "It would also be useful to describe what you did just "
-            "before the error occurred.")
+            "the error through this form. ")
 
 
 def create_subject(exception_type, value):
-    exception_message = "".join(traceback.format_exception_only(exception_type, value)).strip()
-    return "Crash report: %s" % exception_message
+    return "".join(traceback.format_exception_only(exception_type, value)).strip()
 
 
 def create_error_message(exception_type, value, tb):
-    stacktrace = ("".join(traceback.format_exception(exception_type, value, tb))).strip()
-    versions = create_versions_message()
-    locale = create_locale_message()
-    return "Describe what you did here...\n\n%s\n\n%s\n%s" % (stacktrace, versions, locale)
+    return "\n".join([
+        "Stacktrace:",
+        "",
+        indent(("".join(traceback.format_exception(exception_type, value, tb))).strip()),
+        "",
+        "Environment:",
+        "",
+        indent(create_versions_message()),
+        indent(create_locale_message()),
+    ])
 
 
 def create_versions_message():
@@ -81,3 +84,7 @@ def create_locale_message():
         "Locale setting: %s" % " ".join(locale.getlocale(locale.LC_TIME)),
         "Locale sample date: %s" % create_locale_sample_date(),
     ])
+
+
+def indent(text):
+    return "\n".join("    " + x for x in text.split("\n"))
