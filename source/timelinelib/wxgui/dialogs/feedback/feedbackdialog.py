@@ -20,7 +20,7 @@ import webbrowser
 
 import wx
 
-from timelinelib.feedback.form import FeedbackForm
+from timelinelib.wxgui.dialogs.feedback.feedbackdialogcontroller import FeedbackDialogController
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_information_message
 
@@ -32,7 +32,7 @@ class FeedbackDialog(wx.Dialog):
 
     def __init__(self, parent=None):
         wx.Dialog.__init__(self, parent, title="Feedback")
-        self.controller = FeedbackForm(self, webbrowser)
+        self.controller = FeedbackDialogController(self, webbrowser)
         self._create_gui()
 
     def _create_gui(self):

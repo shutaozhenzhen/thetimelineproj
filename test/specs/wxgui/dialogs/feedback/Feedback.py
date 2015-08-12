@@ -19,13 +19,13 @@
 
 from mock import Mock
 
-from timelinelib.feedback.form import FeedbackForm
 from timelinelib.utilities.encodings import to_unicode
+from timelinelib.wxgui.dialogs.feedback.feedbackdialogcontroller import FeedbackDialogController
 from timelinelib.wxgui.dialogs.feedback.feedbackdialog import FeedbackDialog
 from timelinetest import UnitTestCase
 
 
-class FeedbackFormSpec(UnitTestCase):
+class FeedbackDialogControllerSpec(UnitTestCase):
 
     def test_shows_parts_in_dialog(self):
         self.form.populate(info="info text", subject="subject text", body="body text")
@@ -57,4 +57,4 @@ class FeedbackFormSpec(UnitTestCase):
     def setUp(self):
         self.dialog = Mock(FeedbackDialog)
         self.webbrowser = Mock()
-        self.form = FeedbackForm(self.dialog, self.webbrowser)
+        self.form = FeedbackDialogController(self.dialog, self.webbrowser)
