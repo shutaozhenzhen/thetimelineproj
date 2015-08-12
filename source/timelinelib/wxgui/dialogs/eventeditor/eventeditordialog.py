@@ -20,17 +20,17 @@ import wx
 
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
-from timelinelib.wxgui.dialogs.eventeditor.eventeditorcontroller import EventEditorController
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.descriptioneditor import DescriptionEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.progresseditor import ProgressEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.hyperlinkeditor import HyperlinkEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.alerteditor import AlertEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.iconeditor import IconEditor
 from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.components.feedbackbutton import FeedbackButton
 from timelinelib.wxgui.dialogs.eventeditor.containereditordialog import ContainerEditorDialog
+from timelinelib.wxgui.dialogs.eventeditor.eventeditorcontroller import EventEditorController
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.alerteditor import AlertEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.descriptioneditor import DescriptionEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.hyperlinkeditor import HyperlinkEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.iconeditor import IconEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.progresseditor import ProgressEditor
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import _set_focus_and_select
@@ -366,7 +366,6 @@ class EventEditorDialog(wx.Dialog):
                     self.lst_containers.SetSelection(current_item_index)
                     selection_set = True
             current_item_index += 1
-
         self.last_real_container_index = current_item_index - 1
         self.add_container_item_index = self.last_real_container_index + 2
         self.edit_container_item_index = self.last_real_container_index + 3
@@ -509,7 +508,6 @@ def open_event_editor_for(parent, config, db, handle_db_error, event):
         else:
             return EventEditorDialog(
                 parent, config, _("Edit Event"), db, event=event)
-
     def edit_function():
         gui_utils.show_modal(create_event_editor, handle_db_error)
     safe_locking(parent, edit_function)
@@ -519,7 +517,6 @@ def open_create_event_editor(parent, config, db, handle_db_error, start=None, en
     def create_event_editor():
         label = _("Create Event")
         return EventEditorDialog(parent, config, label, db, start, end)
-
     def edit_function():
         gui_utils.show_modal(create_event_editor, handle_db_error)
     safe_locking(parent, edit_function)
