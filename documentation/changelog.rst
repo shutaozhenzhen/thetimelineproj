@@ -6,6 +6,10 @@ Version 1.8.0
 
 **Planned Release on 31 October 2015.**
 
+Fixed crash reports:
+
+* ``AttributeError: 'module' object has no attribute 'Color'``
+
 Version 1.7.0
 -------------
 
