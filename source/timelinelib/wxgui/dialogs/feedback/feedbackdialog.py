@@ -163,7 +163,7 @@ class FeedbackDialog(wx.Dialog):
     def set_info_text(self, text):
         self.info_label.SetLabel(text)
         self.info_label.Wrap(INFO_LABEL_WIDTH)
-        self.Fit()
+        self.SetSizerAndFit(self.GetSizer())
 
     def set_to_text(self, text):
         self.to_text.SetValue(text)
