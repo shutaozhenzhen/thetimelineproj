@@ -51,9 +51,9 @@ class EventEditorDialog(wx.Dialog):
         self._create_gui()
         self.controller = EventEditorDialogController(self, config)
         self.controller.edit(timeline.get_time_type(), DbWrapperEventRepository(timeline), timeline, start, end, event)
-        self._set_focus()
+        self.set_focus_on_first_control()
 
-    def _set_focus(self):
+    def set_focus_on_first_control(self):
         key = self.config.event_editor_tab_order[0]
         FOCUS_CONTROL = {"0": self.dtp_start, "1": self.chb_period, "2": self.txt_text,
                          "3": self.lst_category, "4": self.lst_containers, ":": self.notebook}
