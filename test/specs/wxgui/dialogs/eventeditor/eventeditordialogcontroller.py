@@ -65,8 +65,8 @@ class EventEditorDialogControllerTestCase(UnitTestCase):
         self.when_editor_opened_with(None, None, event)
 
     def when_editor_opened_with(self, start, end, event):
-        self.editor = EventEditorDialogController(self.dialog, self.config)
-        self.editor.edit(GregorianTimeType(), self.event_repository, self.db,
+        self.controller = EventEditorDialogController(self.dialog, self.config)
+        self.controller.edit(GregorianTimeType(), self.event_repository, self.db,
                          start, end, event)
 
     def simulate_user_enters_start_time(self, time):
@@ -76,7 +76,7 @@ class EventEditorDialogControllerTestCase(UnitTestCase):
         self.dialog.get_end.return_value = human_time_to_gregorian(time)
 
     def simulate_user_clicks_ok(self):
-        self.editor.create_or_update_event()
+        self.controller.create_or_update_event()
 
     def assert_start_time_set_to(self, time):
         self.dialog.set_start.assert_called_with(human_time_to_gregorian(time))
@@ -185,11 +185,11 @@ class describe_start_is_in_history(EventEditorDialogControllerTestCase):
 
     def test_new_event_not_starting_in_history(self):
         self.when_editor_opened_with_time("1 Jan 3010")
-        self.assertFalse(self.editor.start_is_in_history())
+        self.assertFalse(self.controller.start_is_in_history())
 
     def test_new_event_starting_in_history(self):
         self.when_editor_opened_with_time("1 Jan 2010")
-        self.assertTrue(self.editor.start_is_in_history())
+        self.assertTrue(self.controller.start_is_in_history())
 
     def test_event_not_starting_in_history(self):
         time_period = Mock()
@@ -197,7 +197,7 @@ class describe_start_is_in_history(EventEditorDialogControllerTestCase):
         event = Mock()
         event.get_time_period.return_value = time_period
         self.when_editor_opened_with_event(event)
-        self.assertFalse(self.editor.start_is_in_history())
+        self.assertFalse(self.controller.start_is_in_history())
 
     def test_event_starting_in_history(self):
         time_period = Mock()
@@ -205,7 +205,7 @@ class describe_start_is_in_history(EventEditorDialogControllerTestCase):
         event = Mock()
         event.get_time_period.return_value = time_period
         self.when_editor_opened_with_event(event)
-        self.assertTrue(self.editor.start_is_in_history())
+        self.assertTrue(self.controller.start_is_in_history())
 
 
 class describe_ends_today_checkbox(EventEditorDialogControllerTestCase):
@@ -222,9 +222,9 @@ class describe_ends_today_checkbox(EventEditorDialogControllerTestCase):
 
     def test_no_endtime_check(self):
         self.when_editor_opened_with_period("2 Jan 2010", "3 Jan 2010")
-        self.editor.ends_today = True
+        self.controller.ends_today = True
         end_time = human_time_to_gregorian("1 Jan 2010")
-        self.assertTrue(end_time <= self.editor._validate_and_save_end(end_time))
+        self.assertTrue(end_time <= self.controller._validate_and_save_end(end_time))
 
 
 class describe_text_field(EventEditorDialogControllerTestCase):
