@@ -47,7 +47,7 @@ class EventEditorDialogController(object):
                 self.event = None
                 self.view.set_name(self.name)
                 self.view.set_focus_on_first_control()
-                self.view.clear_dialog()
+                self.view.clear_event_data()
             else:
                 if self.opened_from_menu:
                     self.config.event_editor_show_period = self.view.get_show_period()

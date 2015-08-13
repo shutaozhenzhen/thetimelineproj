@@ -463,6 +463,10 @@ class EventEditorDialog(wx.Dialog):
                 event_data[data_id] = editor.get_data()
         return event_data
 
+    def clear_event_data(self):
+        for _, editor in self.event_data:
+            editor.clear_data()
+
     def set_show_add_more(self, visible):
         self.chb_add_more.Show(visible)
         self.chb_add_more.SetValue(False)
@@ -488,10 +492,6 @@ class EventEditorDialog(wx.Dialog):
 
     def display_error_message(self, message):
         display_error_message(message, self)
-
-    def clear_dialog(self):
-        for _, editor in self.event_data:
-            editor.clear_data()
 
 
 def open_event_editor_for(parent, config, db, handle_db_error, event):
