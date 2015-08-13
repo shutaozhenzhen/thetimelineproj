@@ -86,7 +86,7 @@ class EventEditorDialogControllerTestCase(UnitTestCase):
 
     def assert_no_event_saved(self):
         self.assertFalse(self.event_repository.save.called)
-        self.assertFalse(self.dialog.close.called)
+        self.assertFalse(self.dialog.EndModal.called)
         self.assertFalse(self.dialog.clear_dialog.called)
 
 

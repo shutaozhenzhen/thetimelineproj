@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.data import Event
 from timelinelib.data import PeriodTooLongError
 from timelinelib.data import Subevent
@@ -43,7 +45,10 @@ class EventEditorDialogController(object):
             if self.view.is_add_more_checked():
                 self.view.clear_dialog()
             else:
-                self.view.close()
+                if self.opened_from_menu:
+                    self.config.event_editor_show_period = self.view.get_show_period()
+                    self.config.event_editor_show_time = self.view.get_show_time()
+                self.view.EndModal(wx.ID_OK)
         except ValueError:
             pass
 
@@ -57,11 +62,6 @@ class EventEditorDialogController(object):
         if self.start is None:
             return False
         return self.start < self.timeline.time_type.now()
-
-    def on_ok(self):
-        if self.opened_from_menu:
-            self.config.event_editor_show_period = self.view.get_show_period()
-            self.config.event_editor_show_time = self.view.get_show_time()
 
     def _set_values(self, start, end, event):
         self.event = event

@@ -494,11 +494,6 @@ class EventEditorDialog(wx.Dialog):
         for _, editor in self.event_data:
             editor.clear_data()
 
-    def close(self):
-        # TODO: Replace with EventRuntimeData
-        self.controller.on_ok()
-        self.EndModal(wx.ID_OK)
-
 
 def open_event_editor_for(parent, config, db, handle_db_error, event):
     def create_event_editor():
