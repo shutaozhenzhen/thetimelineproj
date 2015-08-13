@@ -43,6 +43,10 @@ class EventEditorDialogController(object):
             self._get_and_verify_input()
             self._save_event()
             if self.view.is_add_more_checked():
+                self.name = ""
+                self.event = None
+                self.view.set_name(self.name)
+                self.view.set_focus_on_first_control()
                 self.view.clear_dialog()
             else:
                 if self.opened_from_menu:
@@ -51,12 +55,6 @@ class EventEditorDialogController(object):
                 self.view.EndModal(wx.ID_OK)
         except ValueError:
             pass
-
-    def clear(self):
-        self.name = ""
-        self.event = None
-        self.view.set_name(self.name)
-        self.view.set_focus("text")
 
     def start_is_in_history(self):
         if self.start is None:
