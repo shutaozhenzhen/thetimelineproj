@@ -10,6 +10,9 @@ Fixed crash reports:
 
 * ``AttributeError: 'module' object has no attribute 'Color'``
 
+* ``AttributeError: 'EventEditorDialog' object has no attribute 'set_focus'``
+  (`#89 <https://sourceforge.net/p/thetimelineproj/backlog/89/>`_)
+
 Version 1.7.0
 -------------
 
