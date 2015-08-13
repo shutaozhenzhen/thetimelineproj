@@ -490,7 +490,6 @@ class EventEditorDialog(wx.Dialog):
         display_error_message(message, self)
 
     def clear_dialog(self):
-        self.controller.clear()
         for _, editor in self.event_data:
             editor.clear_data()
 
