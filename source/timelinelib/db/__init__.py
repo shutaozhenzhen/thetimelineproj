@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import tempfile
 import os.path
 
 from timelinelib.data import Category
@@ -102,12 +103,11 @@ def db_open_newtype_timeline(path, timetype=None):
 
 def dir_is_read_only(path):
     try:
-        f = open(path, "w")
-        f.close()
-        return False
-    except Exception, ex:
-        print ex
+        testfile = tempfile.TemporaryFile(dir=path)
+        testfile.close()
         return True
+    except:
+        return False
 
 
 def db_open_ics(path):
