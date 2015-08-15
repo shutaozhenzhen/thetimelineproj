@@ -137,6 +137,10 @@ Fixed crash reports:
   being used by another process``
   (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_)
 
+* ``UnicodeEncodeError: 'ascii' codec can't encode character u'\xc9' in
+  position 0: ordinal not in range(128)``
+  (`#49 <https://sourceforge.net/p/thetimelineproj/backlog/49>`_)
+
 Windows specific:
 
 * The log file is created in a standard user temp directory. This ensures that
