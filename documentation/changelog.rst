@@ -1,10 +1,10 @@
 Changelog
 =========
 
-Version 1.8.0
+Version 1.7.1
 -------------
 
-**Planned Release on 31 October 2015.**
+**Released on 17 August 2015.**
 
 Data:
 
