@@ -87,7 +87,7 @@ def deserialize_font(serialized_font):
         bool_map = {"True": True, "False": False}
         point_size, family, style, weight, underlined, facename, encoding, color = serialized_font.split(":")
         color_args = color[1:-1].split(",")
-        wxcolor = wx.Color(int(color_args[0]), int(color_args[1]), int(color_args[2]), int(color_args[3]))
+        wxcolor = wx.Colour(int(color_args[0]), int(color_args[1]), int(color_args[2]), int(color_args[3]))
         font = Font(int(point_size), int(family), int(style), int(weight), bool_map[underlined], facename, int(encoding), wxcolor)
         font_cache[serialized_font] = font
     return font_cache[serialized_font]
@@ -107,6 +107,8 @@ def set_legend_text_font(config, dc):
 
 def set_text_font(selectable_font, dc, force_bold=False, force_normal=False, force_italic=False, force_upright=False):
     font = deserialize_font(selectable_font)
+    old_weight = font.Weight
+    old_style = font.Style
     if force_bold:
         font.Weight = wx.FONTWEIGHT_BOLD
     elif force_normal:
@@ -117,6 +119,8 @@ def set_text_font(selectable_font, dc, force_bold=False, force_normal=False, for
         font.Style = wx.FONTSTYLE_NORMAL
     dc.SetFont(font)
     dc.SetTextForeground(font.WxColor)
+    font.Style = old_style
+    font.Weight = old_weight
 
 
 def edit_font_data(parent_window, font):

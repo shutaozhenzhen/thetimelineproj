@@ -29,6 +29,7 @@ from timelinelib.db import db_open
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.meta.version import get_version
 from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.time.timeline import delta_from_days
 from timelinetest import TmpDirTestCase
 from timelinetest.utils import a_category_with
 import timelinelib.calendar.gregorian as gregorian
@@ -89,7 +90,8 @@ class XmlTimelineSpec(TmpDirTestCase):
 """
         self.write(self.tmp_path, contents)
         db = import_db_from_timeline_xml(self.tmp_path)
-        self.assertEqual(db.get_time_type().get_default_time_period(), db.get_displayed_period())
+        default_time_period_delta = delta_from_days(30)
+        self.assertEqual(default_time_period_delta, db.get_displayed_period().delta())
 
     def testAlertStringParsingGivesAlertData(self):
         time, text = parse_alert_string(GregorianTimeType(), "2012-11-11 00:00:00;Now is the time")

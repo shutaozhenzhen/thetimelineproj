@@ -44,9 +44,8 @@ class SourceCodeDistributionSpec(UnitTestCase):
     def setUp(self):
         self.ROOT_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "..")
         self.README = os.path.join(self.ROOT_DIR, "README")
-        self.changelog = os.path.join(self.ROOT_DIR, "doc", "changelog.rst")
+        self.changelog = os.path.join(self.ROOT_DIR, "documentation", "changelog.rst")
         self.AUTHORS = os.path.join(self.ROOT_DIR, "AUTHORS")
-        self.MANPAGE = os.path.join(self.ROOT_DIR, "man", "man1", "timeline.1")
 
     def get_authors_from_about_module(self):
         return [possible_author.strip()

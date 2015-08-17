@@ -20,7 +20,7 @@ import webbrowser
 
 import wx
 
-from timelinelib.feedback.form import FeedbackForm
+from timelinelib.wxgui.dialogs.feedback.feedbackdialogcontroller import FeedbackDialogController
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_information_message
 
@@ -31,8 +31,9 @@ INFO_LABEL_WIDTH = 600
 class FeedbackDialog(wx.Dialog):
 
     def __init__(self, parent=None):
-        wx.Dialog.__init__(self, parent, title="Feedback")
-        self.controller = FeedbackForm(self, webbrowser)
+        wx.Dialog.__init__(self, parent, title="Feedback",
+                           style=wx.RESIZE_BORDER)
+        self.controller = FeedbackDialogController(self, webbrowser)
         self._create_gui()
 
     def _create_gui(self):
@@ -119,12 +120,15 @@ class FeedbackDialog(wx.Dialog):
         vbox = wx.BoxSizer(wx.VERTICAL)
         vbox.Add(self.title_label, flag=wx.ALL | wx.EXPAND, border=BORDER)
         vbox.Add(self.info_label, flag=wx.ALL | wx.EXPAND, border=BORDER)
-        vbox.Add(self._create_layout_grid(), flag=wx.ALL | wx.EXPAND, border=BORDER)
+        vbox.Add(self._create_layout_grid(), flag=wx.ALL | wx.EXPAND,
+                 border=BORDER, proportion=1)
         self.SetSizerAndFit(vbox)
 
     def _create_layout_grid(self):
         grid = wx.FlexGridSizer(4, 2, BORDER, BORDER)
+        grid.SetFlexibleDirection(wx.BOTH)
         grid.AddGrowableCol(1)
+        grid.AddGrowableRow(2)
         grid.Add(wx.StaticText(self, label=_("To:")), flag=wx.ALIGN_CENTER_VERTICAL)
         grid.Add(self.to_text, flag=wx.EXPAND)
         grid.Add(wx.StaticText(self, label=_("Subject:")), flag=wx.ALIGN_CENTER_VERTICAL)
@@ -159,7 +163,7 @@ class FeedbackDialog(wx.Dialog):
     def set_info_text(self, text):
         self.info_label.SetLabel(text)
         self.info_label.Wrap(INFO_LABEL_WIDTH)
-        self.Fit()
+        self.SetSizerAndFit(self.GetSizer())
 
     def set_to_text(self, text):
         self.to_text.SetValue(text)

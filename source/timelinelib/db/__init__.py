@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import tempfile
 import os.path
 
 from timelinelib.data import Category
@@ -102,19 +103,19 @@ def db_open_newtype_timeline(path, timetype=None):
 
 def dir_is_read_only(path):
     try:
-        f = open(path, "w")
-        f.close()
-        return False
-    except Exception, ex:
-        print ex
+        testfile = tempfile.TemporaryFile(dir=os.path.dirname(os.path.abspath(path)))
+    except:
         return True
+    else:
+        testfile.close()
+        return False
 
 
 def db_open_ics(path):
     try:
         import icalendar
     except ImportError:
-        raise TimelineIOError(_("Could not find iCalendar Python package. It is required for working with ICS files. See the Timeline website or the doc/installing.rst file for instructions how to install it."))
+        raise TimelineIOError(_("Could not find iCalendar Python package. It is required for working with ICS files."))
     else:
         from timelinelib.dataimport.ics import import_db_from_ics
         return import_db_from_ics(path)
