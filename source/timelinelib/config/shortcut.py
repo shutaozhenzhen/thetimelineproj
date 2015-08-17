@@ -101,7 +101,7 @@ METADATA = [  # File
     ]
 FUNCTION_KEYS = ["PgDn", "PgUp", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]
 SHORTCUT_KEYS = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
-                 "O", "P", "Q", "R", "S", "T", "U", "V", "X", "Y", "Z",
+                 "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
                  "1", "2", "3", "4", "5", "6", "7", "8", "9", 
                  "+", "-",
                 ] + FUNCTION_KEYS 
@@ -210,7 +210,7 @@ class ShortcutController(object):
             try:
                 modifier, shortcut_key = shortcut.split("+")
             except:
-                modifier, shortcut_key = ("", shortcut) 
+                modifier, shortcut_key = ("", shortcut)
         except:
             modifier, shortcut_key = ("", "")
         if shortcut_key not in SHORTCUT_KEYS:
