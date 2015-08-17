@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.7.0</version>
+  <version>1.7.1</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -795,11 +795,42 @@ Windows specific:
 
 **Planned Release on 31 October 2015.**</description>
     </event>
+    <event>
+      <start>2015-08-17 00:00:00</start>
+      <end>2015-08-17 00:00:00</end>
+      <text>Timeline 1.7.1</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Correction Release</category>
+      <description>Version 1.7.1
+-------------
+
+**Released on 17 August 2015.**
+
+Data:
+
+* Content of .timeline file is not erased when it is opened. This was a bug
+  that has now been fixed.
+
+Drawing:
+
+* Minor strip font is only bold for weekend days. A bug made it a bit random
+  before.
+
+Fixed crash reports:
+
+* ``AttributeError: 'module' object has no attribute 'Color'``
+
+* ``AttributeError: 'EventEditorDialog' object has no attribute 'set_focus'``
+  (`#89 &lt;https://sourceforge.net/p/thetimelineproj/backlog/89/&gt;`_)</description>
+    </event>
   </events>
   <view>
     <displayed_period>
-      <start>2012-02-15 14:20:42</start>
-      <end>2019-02-04 05:24:18</end>
+      <start>2014-02-14 00:51:29</start>
+      <end>2017-02-25 00:59:20</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
