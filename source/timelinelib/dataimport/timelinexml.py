@@ -47,6 +47,7 @@ from timelinelib.xml.parser import Tag
 from timelinelib.calendar import set_date_formatter
 from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.features.experimental.experimentalfeaturedateformatting import DAY
 
 
 def import_db_from_timeline_xml(path):
@@ -168,6 +169,7 @@ class Parser(object):
                     Tag("name", ANY, self._parse_hidden_category),
                 ]),
             ]),
+            Tag("now", OPTIONAL, self._parse_saved_now),
         ])
 
     def _parse_timetype(self, text, tmp_dict):
@@ -324,6 +326,10 @@ class Parser(object):
 
     def _parse_time(self, time_string):
         return self.db.get_time_type().parse_time(time_string)
+
+    def _parse_saved_now(self, text, tmp_dict):
+        time = self.db.time_type.parse_time(text)
+        self.db.set_saved_now(time)
 
     def _fill_containers(self):
         container_events = [event for event in self.db.get_all_events()

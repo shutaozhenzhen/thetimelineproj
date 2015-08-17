@@ -28,6 +28,7 @@ from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature
+from timelinelib.time.timeline import Time
 
 
 class MemoryDB(Observable):
@@ -70,7 +71,7 @@ class MemoryDB(Observable):
             try:
                 self.saved_now = time_type.now()
             except NotImplementedError:
-                self.saved_now = 0
+                self.saved_now = Time(0,0)
 
     def is_read_only(self):
         return self.readonly
@@ -190,6 +191,13 @@ class MemoryDB(Observable):
             raise TimelineIOError("Deleting category failed: %s" % e)
         else:
             self._save_if_not_disabled(STATE_CHANGE_CATEGORY)
+
+    def get_saved_now(self):
+        return self.saved_now
+    
+    def set_saved_now(self,time):
+        self.saved_now = time
+        self.time_type.set_saved_now(time)        
 
     def load_view_properties(self, view_properties):
         view_properties.displayed_period = self.displayed_period

@@ -176,6 +176,9 @@ class GregorianTimeType(TimeType):
     def get_default_time_period(self):
         return time_period_center(self, self.now(), delta_from_days(30))
 
+    def set_saved_now(self, time):
+        ()
+
     def now(self):
         py = datetime.now()
         gregorian = Gregorian(py.year, py.month, py.day,
