@@ -19,6 +19,7 @@
 from datetime import datetime
 import re
 
+from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.calendar.bosparanian import Bosparanian
 from timelinelib.calendar.bosparanian import bosparanian_week
 from timelinelib.calendar.bosparanian_monthnames import bosp_name_of_month
@@ -36,17 +37,13 @@ import timelinelib.time.timeline as timeline
 from timelinelib.calendar import get_date_formatter
 from sys import stdout
 
-
-class BosparanianTimeType(TimeType):
+class BosparanianTimeType(GregorianTimeType):
 
     def __init__(self):
         self.major_strip_is_decade = False
 
     def __eq__(self, other):
         return isinstance(other, BosparanianTimeType)
-
-    def __ne__(self, other):
-        return not (self == other)
 
     def time_string(self, time):
         return "%d-%02d-%02d %02d:%02d:%02d" % bosparanian.from_time(time).to_tuple()
@@ -90,9 +87,6 @@ class BosparanianTimeType(TimeType):
             (_("Fit Day"), fit_day_fn),
         ]
 
-    def is_date_time_type(self):
-        return True
-
     def format_period(self, time_period):
         """Returns a unicode string describing the time period."""
         def label_with_time(time):
@@ -118,33 +112,11 @@ class BosparanianTimeType(TimeType):
                 label = u"%s" % label_without_time(time_period.start_time)
         return label
 
-    def format_delta(self, delta):
-        days = delta.get_days()
-        hours = delta.get_hours()
-        minutes = delta.get_minutes()
-        collector = []
-        if days == 1:
-            collector.append(u"1 %s" % _("day"))
-        elif days > 1:
-            collector.append(u"%d %s" % (days, _("days")))
-        if hours == 1:
-            collector.append(u"1 %s" % _("hour"))
-        elif hours > 1:
-            collector.append(u"%d %s" % (hours, _("hours")))
-        if minutes == 1:
-            collector.append(u"1 %s" % _("minute"))
-        elif minutes > 1:
-            collector.append(u"%d %s" % (minutes, _("minutes")))
-        delta_string = u" ".join(collector)
-        if delta_string == "":
-            delta_string = "0"
-        return delta_string
-
     def get_min_time(self):
-        return (timeline.get_min_time(), _("can't be before year 10"))
+        return (timeline.get_min_time(), _("can't be before year -7299"))
 
     def get_max_time(self):
-        return (timeline.BosparanianTime(5369833, 0), _("can't be after year 9989"))
+        return (timeline.BosparanianTime(5369833, 0), _("can't be after year 7410"))
 
     def choose_strip(self, metrics, config):
         """
@@ -176,55 +148,11 @@ class BosparanianTimeType(TimeType):
         else:
             return (StripCentury(), StripCentury())
 
-    def mult_timedelta(self, delta, num):
-        return delta * num
-
-    def get_default_time_period(self):
-        return time_period_center(self, self.now(), delta_from_days(30))
-
     def now(self):
         return Bosparanian(1000, 1, 1, 12, 0, 0).to_time()
 
-    def get_time_at_x(self, time_period, x_percent_of_width):
-        """Return the time at pixel `x`."""
-        return time_period.start_time + time_period.delta() * x_percent_of_width
-
-    def div_timedeltas(self, delta1, delta2):
-        return delta1 / delta2
-
-    def get_max_zoom_delta(self):
-        return (delta_from_days(1200 * 365), _("Can't zoom wider than 1200 years"))
-
-    def get_min_zoom_delta(self):
-        return (timeline.delta_from_seconds(60), _("Can't zoom deeper than 1 minute"))
-
-    def get_zero_delta(self):
-        return timeline.delta_from_seconds(0)
-
-    def time_period_has_nonzero_time(self, time_period):
-        nonzero_time = (time_period.start_time.seconds != 0 or
-                        time_period.end_time.seconds != 0)
-        return nonzero_time
-
     def get_name(self):
         return u"bosparaniantime"
-
-    def get_duplicate_functions(self):
-        return [
-            (_("Day"), move_period_num_days),
-            (_("Week"), move_period_num_weeks),
-            (_("Month"), move_period_num_months),
-            (_("Year"), move_period_num_years),
-        ]
-
-    def zoom_is_ok(self, delta):
-        return (delta.seconds > 60) or (delta.get_days() > 0)
-
-    def half_delta(self, delta):
-        return delta / 2
-
-    def margin_delta(self, delta):
-        return delta / 24
 
     def event_date_string(self, time):
         bosparanian_time = bosparanian.from_time(time)
@@ -233,13 +161,6 @@ class BosparanianTimeType(TimeType):
     def event_time_string(self, time):
         bosparanian_time = bosparanian.from_time(time)
         return "%02d:%02d" % (bosparanian_time.hour, bosparanian_time.minute)
-
-    def eventtimes_equals(self, time1, time2):
-        s1 = "%s %s" % (self.event_date_string(time1),
-                        self.event_date_string(time1))
-        s2 = "%s %s" % (self.event_date_string(time2),
-                        self.event_date_string(time2))
-        return s1 == s2
 
     def adjust_for_bc_years(self, time):
         return time
