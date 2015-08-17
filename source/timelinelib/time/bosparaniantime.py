@@ -349,7 +349,7 @@ def fit_millennium_fn(main_frame, current_period, navigation_fn):
     if mean.year > get_millenium_max_year():
         year = get_millenium_max_year()
     else:
-        year = max(get_min_year_containing_jan_1(), int(mean.year / 1000) * 1000)
+        year = max(get_min_year_containing_praios_1(), int(mean.year / 1000) * 1000)
     start = bosparanian.from_date(year, 1, 1).to_time()
     end = bosparanian.from_date(year + 1000, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
