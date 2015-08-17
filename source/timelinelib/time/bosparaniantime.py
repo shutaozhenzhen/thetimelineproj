@@ -636,6 +636,9 @@ class StripDay(Strip):
 
     def increment(self, time):
         return time + delta_from_days(1)
+    
+    def is_day(self):
+        return True
 
 #    def get_font(self, time_period):
 #        if (time_period.start_time.get_day_of_week() == 0): # Windsday in italics (start of week)
@@ -709,6 +712,9 @@ class StripWeekday(Strip):
 
     def increment(self, time):
         return time + delta_from_days(1)
+    
+    def is_day(self):
+        return True
 
 #    def get_font(self, time_period):
 #        if (time_period.start_time.get_day_of_week() == 0): # Windsday in italics (start of week)

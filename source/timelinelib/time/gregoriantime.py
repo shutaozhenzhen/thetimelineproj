@@ -616,6 +616,9 @@ class StripDay(Strip):
 
     def increment(self, time):
         return time + delta_from_days(1)
+    
+    def is_day(self):
+        return True
 
 
 class StripWeek(Strip):
@@ -690,6 +693,9 @@ class StripWeekday(Strip):
 
     def increment(self, time):
         return time + delta_from_days(1)
+    
+    def is_day(self):
+        return True
 
 
 class StripHour(Strip):
