@@ -111,7 +111,7 @@ ID_SAVEAS = wx.ID_SAVEAS
 ID_EXIT = wx.ID_EXIT
 ID_MOVE_EVENT_UP = wx.NewId()
 ID_MOVE_EVENT_DOWN = wx.NewId()
-ID_NAVIGATE = wx.NewId() + 100
+ID_NAVIGATE = wx.NewId() + 1000
 
 
 class GuiCreator(object):
