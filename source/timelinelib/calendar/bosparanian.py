@@ -55,7 +55,7 @@ class Bosparanian(object):
     def to_time(self):
         days = to_bosparanian_day(self.year, self.month, self.day)
         seconds = self.hour * 60 * 60 + self.minute * 60 + self.second
-        return timeline.Time(days, seconds)
+        return timeline.BosparanianTime(days, seconds)
 
     def is_praios_first(self):
         return (self.month == 1 and
