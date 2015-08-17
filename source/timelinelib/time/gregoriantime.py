@@ -74,7 +74,7 @@ class GregorianTimeType(TimeType):
             (_("Forward\tPgDn"), forward_fn),
             (_("Forward One Wee&k\tCtrl+K"), forward_one_week_fn),
             (_("Back One &Week\tCtrl+W"), backward_one_week_fn),
-            (_("Forward One Mont&h\tCtrl+h"), forward_one_month_fn),
+            (_("Forward One Mont&h\tCtrl+H"), forward_one_month_fn),
             (_("Back One &Month\tCtrl+M"), backward_one_month_fn),
             (_("Forward One Yea&r\tCtrl+R"), forward_one_year_fn),
             (_("Back One &Year\tCtrl+Y"), backward_one_year_fn),

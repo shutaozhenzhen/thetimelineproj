@@ -63,6 +63,7 @@ from timelinelib.plugin.factory import EXPORTER
 from timelinelib.calendar import set_date_formatter
 from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from wxPython._core import wxMenuItem, wxAcceleratorEntry
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -116,7 +117,7 @@ ID_SAVEAS = wx.ID_SAVEAS
 ID_EXIT = wx.ID_EXIT
 ID_MOVE_EVENT_UP = wx.NewId()
 ID_MOVE_EVENT_DOWN = wx.NewId()
-ID_NAVIGATE = wx.NewId() + 1000
+ID_NAVIGATE = wx.NewId() + 100
 
 
 class GuiCreator(object):
