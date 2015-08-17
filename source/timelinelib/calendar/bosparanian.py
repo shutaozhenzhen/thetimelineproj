@@ -17,9 +17,9 @@
 
 
 import timelinelib.time.timeline as timeline
+from timelinelib.calendar.gregorian import Gregorian
 
-
-class Bosparanian(object):
+class Bosparanian(Gregorian):
 
     def __init__(self, year, month, day, hour, minute, second):
         if not is_valid(year, month, day):
@@ -31,26 +31,8 @@ class Bosparanian(object):
         self.minute = minute
         self.second = second
 
-    def replace(self, year=None, month=None):
-        if year is None:
-            year = self.year
-        if month is None:
-            month = self.month
-        return Bosparanian(year, month, self.day,
-                         self.hour, self.minute, self.second)
-
     def days_in_month(self):
         return days_in_month(self.month)
-
-    def to_tuple(self):
-        return (self.year, self.month, self.day, self.hour, self.minute,
-                self.second)
-
-    def to_date_tuple(self):
-        return (self.year, self.month, self.day)
-
-    def to_time_tuple(self):
-        return (self.hour, self.minute, self.second)
 
     def to_time(self):
         days = to_bosparanian_day(self.year, self.month, self.day)
@@ -60,12 +42,6 @@ class Bosparanian(object):
     def is_praios_first(self):
         return (self.month == 1 and
                 self.day == 1 and
-                self.hour == 0 and
-                self.minute == 0 and
-                self.second == 0)
-
-    def is_first_of_month(self):
-        return (self.day == 1 and
                 self.hour == 0 and
                 self.minute == 0 and
                 self.second == 0)

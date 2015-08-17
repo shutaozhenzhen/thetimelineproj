@@ -36,7 +36,7 @@ class Gregorian(object):
             year = self.year
         if month is None:
             month = self.month
-        return Gregorian(year, month, self.day,
+        return self.__class__(year, month, self.day,
                          self.hour, self.minute, self.second)
 
     def days_in_month(self):
