@@ -29,7 +29,6 @@ from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
 from timelinelib.drawing.interface import Strip
-from timelinelib.drawing.utils import get_default_font
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.typeinterface import TimeType
 import timelinelib.calendar.bosparanian as bosparanian
@@ -145,14 +144,14 @@ class BosparanianTimeType(TimeType):
         return (timeline.get_min_time(), _("can't be before year 10"))
 
     def get_max_time(self):
-        return (timeline.Time(5369833, 0), _("can't be after year 9989"))
+        return (timeline.BosparanianTime(5369833, 0), _("can't be after year 9989"))
 
     def choose_strip(self, metrics, config):
         """
         Return a tuple (major_strip, minor_strip) for current time period and
         window size.
         """
-        day_period = TimePeriod(self, timeline.Time(0, 0), timeline.Time(1, 0))
+        day_period = TimePeriod(self, timeline.BosparanianTime(0, 0), timeline.BosparanianTime(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         self.major_strip_is_decade = False
         if one_day_width > 20000:
@@ -521,9 +520,6 @@ class StripCentury(Strip):
         gregorian_time = bosparanian.from_time(time)
         return gregorian_time.replace(year=gregorian_time.year + 100).to_time()
 
-    def get_font(self, time_period):
-        return get_default_font(8)
-
     def _century_start_year(self, year):
         year = (int(year) / 100) * 100
         return year
@@ -550,9 +546,6 @@ class StripDecade(Strip):
         # line correctly. Therefore -10 in the calculation below
         return (int(year) / 10) * 10 - 10
 
-    def get_font(self, time_period):
-        return get_default_font(8)
-
 
 class StripYear(Strip):
 
@@ -567,9 +560,6 @@ class StripYear(Strip):
     def increment(self, time):
         bosparanian_time = bosparanian.from_time(time)
         return bosparanian_time.replace(year=bosparanian_time.year + 1).to_time()
-
-    def get_font(self, time_period):
-        return get_default_font(8)
 
 
 class StripMonth(Strip):
@@ -592,11 +582,11 @@ class StripMonth(Strip):
         days_in_month = bosparanian.from_time(time).days_in_month()
         return time + delta_from_days(days_in_month)
 
-    def get_font(self, time_period):
-        if (bosparanian.from_time(time_period.start_time).month == 1):
-            return get_default_font(8, True)
-        else:
-            return get_default_font(8)
+#    def get_font(self, time_period):
+#        if (bosparanian.from_time(time_period.start_time).month == 1):
+#            return get_default_font(8, True)
+#        else:
+#            return get_default_font(8)
 
 class StripQuarter(Strip):
     
@@ -628,10 +618,6 @@ class StripQuarter(Strip):
             days_in_quarter = 30 * 3
         return time + delta_from_days(days_in_quarter)
 
-    def get_font(self, time_period):
-            return get_default_font(8)
-        
-
 
 class StripDay(Strip):
 
@@ -651,13 +637,13 @@ class StripDay(Strip):
     def increment(self, time):
         return time + delta_from_days(1)
 
-    def get_font(self, time_period):
-        if (time_period.start_time.get_day_of_week() == 0): # Windsday in italics (start of week)
-            return get_default_font(8,True,False)
-        elif (time_period.start_time.get_day_of_week() == 3): # Praiosday in bold
-            return get_default_font(8, True, True)
-        else:
-            return get_default_font(8)
+#    def get_font(self, time_period):
+#        if (time_period.start_time.get_day_of_week() == 0): # Windsday in italics (start of week)
+#            return get_default_font(8,True,False)
+#        elif (time_period.start_time.get_day_of_week() == 3): # Praiosday in bold
+#            return get_default_font(8, True, True)
+#        else:
+#            return get_default_font(8)
 
 
 class StripWeek(Strip):
@@ -697,13 +683,10 @@ class StripWeek(Strip):
 
     def start(self, time):
         days_to_subtract = time.get_day_of_week()
-        return timeline.Time(time.julian_day - days_to_subtract, 0)
+        return timeline.BosparanianTime(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
         return time + delta_from_days(7)
-
-    def get_font(self, time_period):
-        return get_default_font(8)
 
 
 class StripWeekday(Strip):
@@ -727,13 +710,13 @@ class StripWeekday(Strip):
     def increment(self, time):
         return time + delta_from_days(1)
 
-    def get_font(self, time_period):
-        if (time_period.start_time.get_day_of_week() == 0): # Windsday in italics (start of week)
-            return get_default_font(8,True,False)
-        elif (time_period.start_time.get_day_of_week() == 3): # Praiosday in bold
-            return get_default_font(8, True, True)
-        else:
-            return get_default_font(8)
+#    def get_font(self, time_period):
+#        if (time_period.start_time.get_day_of_week() == 0): # Windsday in italics (start of week)
+#            return get_default_font(8,True,False)
+#        elif (time_period.start_time.get_day_of_week() == 3): # Praiosday in bold
+#            return get_default_font(8, True, True)
+#        else:
+#            return get_default_font(8)
 
 
 class StripHour(Strip):
@@ -747,14 +730,10 @@ class StripHour(Strip):
 
     def start(self, time):
         (hours, _, _) = time.get_time_of_day()
-        return timeline.Time(time.julian_day, hours * 60 * 60)
+        return timeline.BosparanianTime(time.julian_day, hours * 60 * 60)
 
     def increment(self, time):
         return time + timeline.delta_from_seconds(60 * 60)
-
-    def get_font(self, time_period):
-        (hours,_,_)=time_period.start_time.get_time_of_day()
-        return get_default_font(8,hours==12)
 
 
 class StripMinute(Strip):
@@ -768,13 +747,10 @@ class StripMinute(Strip):
 
     def start(self, time):
         (hours, minutes, _) = time.get_time_of_day()
-        return timeline.Time(time.julian_day, minutes * 60 + hours * 60 * 60)
+        return timeline.BosparanianTime(time.julian_day, minutes * 60 + hours * 60 * 60)
 
     def increment(self, time):
         return time + timeline.delta_from_seconds(60)
-
-    def get_font(self, time_period):
-        return get_default_font(6)
 
 
 def format_year(year):
