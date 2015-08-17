@@ -103,10 +103,11 @@ def db_open_newtype_timeline(path, timetype=None):
 
 def dir_is_read_only(path):
     try:
-        testfile = tempfile.TemporaryFile(dir=path)
-        testfile.close()
-        return True
+        testfile = tempfile.TemporaryFile(dir=os.path.dirname(os.path.abspath(path)))
     except:
+        return True
+    else:
+        testfile.close()
         return False
 
 
