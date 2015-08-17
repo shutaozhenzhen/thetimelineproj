@@ -41,6 +41,7 @@ class MemoryDB(Observable):
         self.hidden_categories = []
         self.save_disabled = False
         self.time_type = GregorianTimeType()
+        self.saved_now = self.time_type.now()
         self.readonly = False
         self._undo_handler = UndoHandler(self)
         self._save_callback = None
@@ -65,6 +66,11 @@ class MemoryDB(Observable):
 
     def set_time_type(self, time_type):
         self.time_type = time_type
+        if not time_type is None:
+            try:
+                self.saved_now = time_type.now()
+            except NotImplementedError:
+                self.saved_now = 0
 
     def is_read_only(self):
         return self.readonly
