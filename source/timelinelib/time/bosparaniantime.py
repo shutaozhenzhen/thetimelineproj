@@ -37,6 +37,7 @@ class BosparanianTimeType(GregorianTimeType):
 
     def __init__(self):
         self.major_strip_is_decade = False
+        self.saved_now = None
 
     def __eq__(self, other):
         return isinstance(other, BosparanianTimeType)
@@ -144,8 +145,13 @@ class BosparanianTimeType(GregorianTimeType):
         else:
             return (StripCentury(), StripCentury())
 
+    def set_saved_now(self,time):
+        self.saved_now = time
+
     def now(self):
-        return Bosparanian(1000, 1, 1, 12, 0, 0).to_time()
+        if self.saved_now is None:
+            return Bosparanian(1000, 1, 1, 12, 0, 0).to_time()
+        return self.saved_now
 
     def get_name(self):
         return u"bosparaniantime"
