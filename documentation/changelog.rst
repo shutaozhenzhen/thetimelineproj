@@ -6,6 +6,16 @@ Version 1.8.0
 
 **Planned Release on 31 October 2015.**
 
+Data:
+
+* Content of .timeline file is not erased when it is opened. This was a bug
+  that has now been fixed.
+
+Drawing:
+
+* Minor strip font is only bold for weekend days. A bug made it a bit random
+  before.
+
 Fixed crash reports:
 
 * ``AttributeError: 'module' object has no attribute 'Color'``
