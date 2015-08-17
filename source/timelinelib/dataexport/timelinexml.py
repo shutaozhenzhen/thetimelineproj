@@ -74,6 +74,7 @@ class Exporter(object):
         self._write_categories(xmlfile)
         self._write_events(xmlfile)
         self._write_view(xmlfile)
+        self._write_now_value(xmlfile)
     _write_timeline = wrap_in_tag(_write_timeline, "timeline")
 
     def _write_categories(self, xmlfile):
@@ -163,6 +164,7 @@ class Exporter(object):
         self._write_hidden_categories(xmlfile)
     _write_view = wrap_in_tag(_write_view, "view", INDENT1)
 
+
     def _write_displayed_period(self, xmlfile):
         period = self.db.get_displayed_period()
         write_simple_tag(xmlfile, "start",
@@ -177,6 +179,14 @@ class Exporter(object):
             write_simple_tag(xmlfile, "name", cat.get_name(), INDENT3)
     _write_hidden_categories = wrap_in_tag(_write_hidden_categories,
                                            "hidden_categories", INDENT2)
+
+    def _write_now_value(self,xmlfile):
+        time = self.db.time_type.now()
+        write_simple_tag(xmlfile,"day",str(time.julian_day),INDENT2)
+        write_simple_tag(xmlfile,"seconds",str(time.seconds),INDENT2)
+    _write_now_value = wrap_in_tag(_write_now_value,
+                                   "now",INDENT1)
+        
 
 
 def write_simple_tag(xmlfile, name, content, indent=""):
