@@ -19,9 +19,7 @@
 import wx
 
 from timelinelib.data import TimePeriod
-from timelinelib.drawing.utils import Metrics
-from timelinelib.time.gregoriantime import StripDay
-from timelinelib.time.gregoriantime import StripWeekday
+from timelinelib.drawing.utils import Metrics 
 
 
 FORWARD = 1
