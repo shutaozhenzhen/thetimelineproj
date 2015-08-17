@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from datetime import datetime
 import re
 
 from timelinelib.time.gregoriantime import GregorianTimeType
@@ -28,14 +27,11 @@ from timelinelib.calendar.bosparanian_weekdaynames import bosp_abbreviated_name_
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.data import TimePeriod
-from timelinelib.data import time_period_center
 from timelinelib.drawing.interface import Strip
 from timelinelib.time.timeline import delta_from_days
-from timelinelib.time.typeinterface import TimeType
 import timelinelib.calendar.bosparanian as bosparanian
 import timelinelib.time.timeline as timeline
 from timelinelib.calendar import get_date_formatter
-from sys import stdout
 
 class BosparanianTimeType(GregorianTimeType):
 
