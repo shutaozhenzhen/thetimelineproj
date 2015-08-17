@@ -135,7 +135,6 @@ class HyperlinkEditor(BaseEditor, HyperlinkEditorGuiCreator):
         self._change_btn_visibility()
 
     def clear_data(self):
-        self._set_initial_text()
         self._set_visible(False)
 
     def _set_visible(self, value):

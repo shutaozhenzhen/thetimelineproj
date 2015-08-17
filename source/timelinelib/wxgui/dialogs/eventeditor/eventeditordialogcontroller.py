@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.data import Event
 from timelinelib.data import PeriodTooLongError
 from timelinelib.data import Subevent
@@ -23,7 +25,7 @@ from timelinelib.data import TimePeriod
 from timelinelib.utils import ex_msg
 
 
-class EventEditorController(object):
+class EventEditorDialogController(object):
 
     def __init__(self, view, config):
         self.view = view
@@ -40,28 +42,24 @@ class EventEditorController(object):
         try:
             self._get_and_verify_input()
             self._save_event()
-            if self.view.get_show_add_more():
-                self.view.clear_dialog()
+            if self.view.is_add_more_checked():
+                self.name = ""
+                self.event = None
+                self.view.set_name(self.name)
+                self.view.set_focus_on_first_control()
+                self.view.clear_event_data()
             else:
-                self.view.close()
+                if self.opened_from_menu:
+                    self.config.event_editor_show_period = self.view.get_show_period()
+                    self.config.event_editor_show_time = self.view.get_show_time()
+                self.view.EndModal(wx.ID_OK)
         except ValueError:
             pass
-
-    def clear(self):
-        self.name = ""
-        self.event = None
-        self.view.set_name(self.name)
-        self.view.set_focus("text")
 
     def start_is_in_history(self):
         if self.start is None:
             return False
         return self.start < self.timeline.time_type.now()
-
-    def on_ok(self):
-        if self.opened_from_menu:
-            self.config.event_editor_show_period = self.view.get_show_period()
-            self.config.event_editor_show_time = self.view.get_show_time()
 
     def _set_values(self, start, end, event):
         self.event = event

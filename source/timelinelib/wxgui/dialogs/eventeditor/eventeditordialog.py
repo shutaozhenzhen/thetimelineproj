@@ -20,17 +20,17 @@ import wx
 
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
-from timelinelib.wxgui.dialogs.eventeditor.eventeditorcontroller import EventEditorController
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.descriptioneditor import DescriptionEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.progresseditor import ProgressEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.hyperlinkeditor import HyperlinkEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.alerteditor import AlertEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.iconeditor import IconEditor
 from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.components.feedbackbutton import FeedbackButton
 from timelinelib.wxgui.dialogs.eventeditor.containereditordialog import ContainerEditorDialog
+from timelinelib.wxgui.dialogs.eventeditor.eventeditordialogcontroller import EventEditorDialogController
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.alerteditor import AlertEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.descriptioneditor import DescriptionEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.hyperlinkeditor import HyperlinkEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.iconeditor import IconEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.progresseditor import ProgressEditor
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import _set_focus_and_select
@@ -49,11 +49,11 @@ class EventEditorDialog(wx.Dialog):
         dialog_style = wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER
         wx.Dialog.__init__(self, parent, title=title, name="event_editor", style=dialog_style)
         self._create_gui()
-        self.controller = EventEditorController(self, config)
+        self.controller = EventEditorDialogController(self, config)
         self.controller.edit(timeline.get_time_type(), DbWrapperEventRepository(timeline), timeline, start, end, event)
-        self._set_focus()
+        self.set_focus_on_first_control()
 
-    def _set_focus(self):
+    def set_focus_on_first_control(self):
         key = self.config.event_editor_tab_order[0]
         FOCUS_CONTROL = {"0": self.dtp_start, "1": self.chb_period, "2": self.txt_text,
                          "3": self.lst_category, "4": self.lst_containers, ":": self.notebook}
@@ -99,9 +99,9 @@ class EventEditorDialog(wx.Dialog):
     def _create_details(self, creators):
         if creators:
             grid = wx.GridBagSizer(BORDER * 2, BORDER)
-            grid.AddGrowableCol(1)
             for creator, row in creators:
                 creator(grid, row)
+            grid.AddGrowableCol(1)
             return grid
 
     def _create_time_details(self, grid, row):
@@ -366,7 +366,6 @@ class EventEditorDialog(wx.Dialog):
                     self.lst_containers.SetSelection(current_item_index)
                     selection_set = True
             current_item_index += 1
-
         self.last_real_container_index = current_item_index - 1
         self.add_container_item_index = self.last_real_container_index + 2
         self.edit_container_item_index = self.last_real_container_index + 3
@@ -464,11 +463,15 @@ class EventEditorDialog(wx.Dialog):
                 event_data[data_id] = editor.get_data()
         return event_data
 
+    def clear_event_data(self):
+        for _, editor in self.event_data:
+            editor.clear_data()
+
     def set_show_add_more(self, visible):
         self.chb_add_more.Show(visible)
         self.chb_add_more.SetValue(False)
 
-    def get_show_add_more(self):
+    def is_add_more_checked(self):
         return self.chb_add_more.GetValue()
 
     def display_invalid_start(self, message):
@@ -490,16 +493,6 @@ class EventEditorDialog(wx.Dialog):
     def display_error_message(self, message):
         display_error_message(message, self)
 
-    def clear_dialog(self):
-        self.controller.clear()
-        for _, editor in self.event_data:
-            editor.clear_data()
-
-    def close(self):
-        # TODO: Replace with EventRuntimeData
-        self.controller.on_ok()
-        self.EndModal(wx.ID_OK)
-
 
 def open_event_editor_for(parent, config, db, handle_db_error, event):
     def create_event_editor():
@@ -509,7 +502,6 @@ def open_event_editor_for(parent, config, db, handle_db_error, event):
         else:
             return EventEditorDialog(
                 parent, config, _("Edit Event"), db, event=event)
-
     def edit_function():
         gui_utils.show_modal(create_event_editor, handle_db_error)
     safe_locking(parent, edit_function)
@@ -519,7 +511,6 @@ def open_create_event_editor(parent, config, db, handle_db_error, start=None, en
     def create_event_editor():
         label = _("Create Event")
         return EventEditorDialog(parent, config, label, db, start, end)
-
     def edit_function():
         gui_utils.show_modal(create_event_editor, handle_db_error)
     safe_locking(parent, edit_function)

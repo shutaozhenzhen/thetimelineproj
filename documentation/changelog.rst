@@ -6,6 +6,23 @@ Version 1.8.0
 
 **Planned Release on 31 October 2015.**
 
+Data:
+
+* Content of .timeline file is not erased when it is opened. This was a bug
+  that has now been fixed.
+
+Drawing:
+
+* Minor strip font is only bold for weekend days. A bug made it a bit random
+  before.
+
+Fixed crash reports:
+
+* ``AttributeError: 'module' object has no attribute 'Color'``
+
+* ``AttributeError: 'EventEditorDialog' object has no attribute 'set_focus'``
+  (`#89 <https://sourceforge.net/p/thetimelineproj/backlog/89/>`_)
+
 Version 1.7.0-DSA
 ------------------
 
@@ -136,6 +153,10 @@ Fixed crash reports:
 * ``WindowsError: [Error 32] The process cannot access the file because it is
   being used by another process``
   (`#33 <https://sourceforge.net/p/thetimelineproj/backlog/33/>`_)
+
+* ``UnicodeEncodeError: 'ascii' codec can't encode character u'\xc9' in
+  position 0: ordinal not in range(128)``
+  (`#49 <https://sourceforge.net/p/thetimelineproj/backlog/49>`_)
 
 Windows specific:
 

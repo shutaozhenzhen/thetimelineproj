@@ -1,6 +1,12 @@
 Screenshots
 ===========
 
+Here you can find various screenshots of Timeline and timelines created using
+it.
+
+Do you have a screenshot that you would like to be included here? :doc:`Send us
+an email<support>`.
+
 .. figure:: /images/screenshots/main_window.png
 
     The main window when the tutorial timeline is open.
@@ -25,7 +31,10 @@ Screenshots
 
 .. figure:: /images/screenshots/famous_composers.png
 
-    An interactive list of famous composers: click on the name and you can see the portrait of the artist 
+    An interactive list of famous composers: click on the name and you can see
+    the portrait of the artist
 
-Do you have a screenshot that you would like to be included here? :doc:`Send us
-an email<support>`.
+.. figure:: /images/screenshots/cinemas.png
+
+    An overwiew for all cinemas in our city for `this blog
+    <http://heilbronnerkinos.wordpress.com>`_.

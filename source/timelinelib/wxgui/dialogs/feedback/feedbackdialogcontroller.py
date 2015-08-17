@@ -22,7 +22,7 @@ import urllib
 DESCRIBE_TEXT = "Describe what you did here..."
 
 
-class FeedbackForm(object):
+class FeedbackDialogController(object):
 
     def __init__(self, dialog, webbrowser):
         self.dialog = dialog
@@ -38,14 +38,20 @@ class FeedbackForm(object):
 
     def send_with_default(self):
         attr = self.get_url_attributes()
-        m = (("subject", attr["subject"]), ("body", attr["body"]))
-        url = "mailto:%s?" % urllib.quote(attr["to"]) + urllib.urlencode(m)
+        url = "mailto:%s?subject=%s&body=%s" % (
+            urllib.quote(attr["to"]),
+            urllib.quote(attr["subject"]),
+            urllib.quote(attr["body"]),
+        )
         self.webbrowser.open(url)
 
     def send_with_gmail(self):
         attr = self.get_url_attributes()
-        m = (("to", attr["to"]), ("su", attr["subject"]), ("body", attr["body"]))
-        url = "https://mail.google.com/mail/?compose=1&view=cm&fs=1&" + urllib.urlencode(m)
+        url = "https://mail.google.com/mail/?compose=1&view=cm&fs=1&to=%s&su=%s&body=%s" % (
+            urllib.quote(attr["to"]),
+            urllib.quote(attr["subject"]),
+            urllib.quote(attr["body"]),
+        )
         self.webbrowser.open(url)
 
     def get_url_attributes(self):
