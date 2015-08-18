@@ -43,7 +43,7 @@ class Font(wx.Font):
         self.Family = wxfont.Family
         self.Style = wxfont.Style
         self.Weight = wxfont.Weight
-        self.Underlined = wxfont.GetUnderlined()
+        self.SetUnderlined(wxfont.GetUnderlined())
         self.FaceName = wxfont.FaceName
         self.Encoding = wxfont.Encoding
 
