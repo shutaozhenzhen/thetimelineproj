@@ -91,11 +91,13 @@ class describe_font_updates(FontsTestCase):
         self.assertEqual(wx.RED, self.font.WxColor)
 
     def test_wxfont_can_be_changed(self):
-        wxfont = wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_BOLD)
+        wxfont = wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC,
+                         wx.FONTWEIGHT_BOLD, True)
         self.font.WxFont = wxfont
         self.assertEqual(10, self.font.PointSize)
         self.assertEqual(wx.FONTSTYLE_ITALIC, self.font.Style)
         self.assertEqual(wx.FONTWEIGHT_BOLD, self.font.Weight)
+        self.assertEqual(self.font.GetUnderlined(), wxfont.GetUnderlined())
 
     def test_point_size_can_be_incremented(self):
         self.font.PointSize = 12
