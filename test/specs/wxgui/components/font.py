@@ -61,7 +61,7 @@ class describe_font_default_values(FontsTestCase):
         self.assertEqual(wx.FONTWEIGHT_NORMAL, self.font.Weight)
 
     def test_default_font_is_not_underlined(self):
-        self.assertFalse(self.font.Underlined)
+        self.assertFalse(self.font.GetUnderlined())
 
     def test_default_font_has_no_facename(self):
         self.assertEqual(self.wx_default_font.FaceName, self.font.FaceName)
@@ -78,7 +78,7 @@ class describe_font_serialization(FontsTestCase):
         self.assertEqual(self.font.Family, font.Family)
         self.assertEqual(self.font.Style, font.Style)
         self.assertEqual(self.font.Weight, font.Weight)
-        self.assertEqual(self.font.Underlined, font.Underlined)
+        self.assertEqual(self.font.GetUnderlined(), font.GetUnderlined())
         self.assertEqual(self.font.FaceName, font.FaceName)
         self.assertEqual(self.font.Encoding, font.Encoding)
         self.assertEqual(self.font.WxColor, font.WxColor)
