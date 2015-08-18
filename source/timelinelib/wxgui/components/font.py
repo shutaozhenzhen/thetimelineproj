@@ -50,8 +50,15 @@ class Font(wx.Font):
     WxFont = property(_get_wxfont, _set_wxfont)
 
     def serialize(self):
-        return "%s:%s:%s:%s:%s:%s:%s:%s" % (self.PointSize, self.Family, self.Style, self.Weight,
-                                            self.Underlined, self.FaceName, self.Encoding, self.WxColor)
+        return "%s:%s:%s:%s:%s:%s:%s:%s" % (
+            self.PointSize,
+            self.Family,
+            self.Style,
+            self.Weight,
+            self.GetUnderlined(),
+            self.FaceName,
+            self.Encoding,
+            self.WxColor)
 
     def increment(self, step=2):
         self.PointSize += step
