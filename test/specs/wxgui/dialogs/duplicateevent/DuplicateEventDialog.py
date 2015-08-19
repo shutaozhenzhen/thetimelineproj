@@ -29,7 +29,7 @@ from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventcontroller import FO
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.duplicateevent.duplicateventdialog import DuplicateEventDialog
 from timelinetest import UnitTestCase
-import timelinelib.calendar.gregorian as gregorian
+from timelinelib.calendar.gregorian import GregorianUtils
 
 
 class duplicate_event_dialog_spec_base(UnitTestCase):
@@ -49,8 +49,8 @@ class duplicate_event_dialog_spec_base(UnitTestCase):
         self.move_period_fn = Mock()
         self.move_period_fn.return_value = TimePeriod(
             GregorianTimeType(),
-            gregorian.from_date(2010, 8, 1).to_time(),
-            gregorian.from_date(2010, 8, 1).to_time())
+            GregorianUtils.from_date(2010, 8, 1).to_time(),
+            GregorianUtils.from_date(2010, 8, 1).to_time())
         return self.move_period_fn
 
     def _create_db_mock(self):
@@ -61,8 +61,8 @@ class duplicate_event_dialog_spec_base(UnitTestCase):
     def _create_event(self):
         self.event = Event(
             self.db.get_time_type(),
-            gregorian.from_date(2010, 1, 1).to_time(),
-            gregorian.from_date(2010, 1, 1).to_time(),
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
             "foo",
             category=None)
         return self.event
@@ -106,8 +106,8 @@ class when_duplicating_event_with_default_settings(duplicate_event_dialog_spec_b
         new_period = new_events[0].get_time_period()
         expected_period = TimePeriod(
             GregorianTimeType(),
-            gregorian.from_date(2010, 8, 1).to_time(),
-            gregorian.from_date(2010, 8, 1).to_time())
+            GregorianUtils.from_date(2010, 8, 1).to_time(),
+            GregorianUtils.from_date(2010, 8, 1).to_time())
         self.assertEqual(expected_period, new_period)
 
     def test_the_new_event_should_not_be_the_same_as_the_existing(self):

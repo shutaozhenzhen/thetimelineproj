@@ -42,10 +42,10 @@ class GregorianConversionsSpec(UnitTestCase):
 
     def test_can_convert_from_timeline_time_to_gregorian(self):
         self.assertEqual(
-            gregorian.from_time(timeline.Time(julian_day=0, seconds=0)),
+            gregorian.GregorianUtils.from_time(timeline.Time(julian_day=0, seconds=0)),
             gregorian.Gregorian(-4713, 11, 24, 0, 0, 0))
         self.assertEqual(
-            gregorian.from_time(timeline.Time(julian_day=1, seconds=0)),
+            gregorian.GregorianUtils.from_time(timeline.Time(julian_day=1, seconds=0)),
             gregorian.Gregorian(-4713, 11, 25, 0, 0, 0))
 
     def test_can_convert_from_gregorian_to_timeline_time(self):
@@ -58,7 +58,7 @@ class GregorianConversionsSpec(UnitTestCase):
 
     def test_roundtrip_julian_day_conversions(self):
         for julian_day in range(100):
-            (year, month, day) = gregorian.from_absolute_day(julian_day)
+            (year, month, day) = gregorian.GregorianUtils.from_absolute_day(julian_day)
             roundtrip = gregorian.GregorianUtils.to_absolute_day(year, month, day)
             self.assertEqual(roundtrip, julian_day)
 
@@ -77,7 +77,7 @@ class GregorianConversionsSpec(UnitTestCase):
         py_date = datetime.date(1900, 1, 1)
         jd = gregorian.GregorianUtils.to_absolute_day(1900, 1, 1)
         for _ in range(365 * 200):
-            (y, m, d) = gregorian.from_absolute_day(jd)
+            (y, m, d) = gregorian.GregorianUtils.from_absolute_day(jd)
             self.assertEqual(py_date, datetime.date(y, m, d))
             py_date += datetime.timedelta(days=1)
             jd += 1
@@ -87,7 +87,7 @@ class GregorianConversionsSpec(UnitTestCase):
         STOP = 10 * STEP
         for i in range(0, STOP, STEP):
             tm1 = timeline.Time(i, 0)
-            gt = gregorian.from_time(tm1)
+            gt = gregorian.GregorianUtils.from_time(tm1)
             wt = wx.DateTime()
             wt.SetJDN(i)
             ws = "%d-%02d-%02d" % (wt.Year, wt.Month + 1, wt.Day)

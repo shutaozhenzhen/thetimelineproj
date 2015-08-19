@@ -181,8 +181,9 @@ class Exporter(object):
                                            "hidden_categories", INDENT2)
 
     def _write_now_value(self,xmlfile):
-        time = self.db.time_type.time_string(self.db.time_type.now())
-        write_simple_tag(xmlfile,"now",time,INDENT1)        
+        if self.db.get_time_type().supports_saved_now():
+            time = self.db.get_time_type().time_string(self.db.time_type.now())
+            write_simple_tag(xmlfile,"now",time,INDENT1)        
 
 
 def write_simple_tag(xmlfile, name, content, indent=""):
