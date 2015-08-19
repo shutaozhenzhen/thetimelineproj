@@ -36,7 +36,7 @@ DEVELOPERS = [
     u"    Joe Gilmour",
     u"    Thomas Mohr",
     u"    Linostar",
-    u"    Garin",
+    u"    Norbert Langermann",
 ]
 TRANSLATORS = [
     u"Basque:",
@@ -56,7 +56,7 @@ TRANSLATORS = [
     u"    Nils Steinger",
     u"    Daniel Winzen",
     u"    cmdrhenner",
-    u"    Garin",
+    u"    Norbert Langermann",
     u"Greek:",
     u"    Yannis Kaskamanidis",
     u"Hebrew:",

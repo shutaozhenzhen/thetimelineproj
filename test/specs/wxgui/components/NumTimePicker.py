@@ -38,4 +38,4 @@ class desribe_NumTimePickerController(UnitTestCase):
 
     def setUp(self):
         self.time_picker = Mock(NumTimePicker)
-        self.controller = NumTimePickerController(self.time_picker, 0)
+        self.controller = NumTimePickerController(self.time_picker, 0, None)

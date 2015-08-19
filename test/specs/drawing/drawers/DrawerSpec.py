@@ -28,7 +28,7 @@ from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import Default
 from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinetest import UnitTestCase
-import timelinelib.calendar.gregorian as gregorian
+from timelinelib.calendar.gregorian import GregorianUtils
 
 
 IMAGE_SIZE = (500, 200)
@@ -41,15 +41,15 @@ class DrawerSpec(UnitTestCase):
 
     def test_draws_period_event_below_baseline(self):
         self.given_event(name="vacation",
-                         start=gregorian.from_date(2010, 2, 1).to_time(),
-                         end=gregorian.from_date(2010, 8, 1).to_time())
+                         start=GregorianUtils.from_date(2010, 2, 1).to_time(),
+                         end=GregorianUtils.from_date(2010, 8, 1).to_time())
         self.when_timeline_is_drawn()
         self.assert_text_drawn_below("vacation", BASELINE_Y_POS)
 
     def test_draws_non_period_event_above_baseline(self):
         self.given_event(name="mike's birthday",
-                         start=gregorian.from_date(2010, 2, 1).to_time(),
-                         end=gregorian.from_date(2010, 2, 1).to_time())
+                         start=GregorianUtils.from_date(2010, 2, 1).to_time(),
+                         end=GregorianUtils.from_date(2010, 2, 1).to_time())
         self.when_timeline_is_drawn()
         self.assert_text_drawn_above("mike's birthday", BASELINE_Y_POS)
 
@@ -88,5 +88,5 @@ class DrawerSpec(UnitTestCase):
         self.view_properties = ViewProperties()
         self.view_properties.displayed_period = TimePeriod(
             GregorianTimeType(),
-            gregorian.from_date(2010, 1, 1).to_time(),
-            gregorian.from_date(2011, 1, 1).to_time())
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
+            GregorianUtils.from_date(2011, 1, 1).to_time())
