@@ -51,6 +51,9 @@ class TimeType(object):
     def get_default_time_period(self):
         raise NotImplementedError("get_default_time_period not implemented.")
 
+    def supports_saved_now(self):
+        raise NotImplementedError("supports_saved_now not implemented.")        
+
     def set_saved_now(self,time):
         raise NotImplementedError("set_saved_now not implemented.")
 

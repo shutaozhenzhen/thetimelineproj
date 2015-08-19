@@ -30,17 +30,26 @@ from timelinelib.time.timeline import Time
 
 class GregorianDateTimePicker(wx.Panel):
 
-    def __init__(self, parent, show_time=True, config=None):
+    def __init__(self, parent, show_time=True, config=None, on_change=None):
         wx.Panel.__init__(self, parent)
         self.config = config
         self._create_gui()
         self.controller = GregorianDateTimePickerController(
-            self.date_picker, self.time_picker, GregorianTimeType().now)
+            self.date_picker, self.time_picker, GregorianTimeType().now, on_change)
         self.show_time(show_time)
         self.parent = parent
 
     def on_return(self):
-        self.parent.on_return()
+        try:
+            self.parent.on_return()
+        except AttributeError:
+            pass            
+
+    def on_escape(self):
+        try:
+            self.parent.on_escape()
+        except AttributeError:
+            pass
 
     def show_time(self, show=True):
         self.time_picker.Show(show)
@@ -100,10 +109,11 @@ class GregorianDateTimePicker(wx.Panel):
 
 class GregorianDateTimePickerController(object):
 
-    def __init__(self, date_picker, time_picker, now_fn):
+    def __init__(self, date_picker, time_picker, now_fn, on_change):
         self.date_picker = date_picker
         self.time_picker = time_picker
         self.now_fn = now_fn
+        self.on_change = on_change
 
     def get_value(self):
         if self.time_picker.IsShown():
@@ -118,6 +128,8 @@ class GregorianDateTimePickerController(object):
             time = self.now_fn()
         self.date_picker.set_value(GregorianUtils.from_time(time).to_date_tuple())
         self.time_picker.set_value(GregorianUtils.from_time(time).to_time_tuple())
+        if not self.on_change is None:
+            self.on_change()
 
     def date_tuple_to_wx_date(self, date):
         year, month, day = date
@@ -262,6 +274,8 @@ class GregorianDatePicker(wx.TextCtrl):
             elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or 
                   evt.GetKeyCode() == wx.WXK_RETURN):
                 self.parent.on_return()
+            elif (evt.GetKeyCode() == wx.WXK_ESCAPE):
+                self.parent.on_escape()
             else:
                 evt.Skip()
         self.Bind(wx.EVT_KEY_DOWN, on_key_down)
@@ -558,6 +572,8 @@ class GregorianTimePicker(wx.TextCtrl):
             elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or 
                   evt.GetKeyCode() == wx.WXK_RETURN):
                 self.parent.on_return()
+            elif (evt.GetKeyCode() == wx.WXK_ESCAPE):
+                self.parent.on_escape()
             else:
                 evt.Skip()
         self.Bind(wx.EVT_KEY_DOWN, on_key_down)
