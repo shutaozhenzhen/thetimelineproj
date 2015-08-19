@@ -99,3 +99,6 @@ class TimeType(object):
 
     def adjust_for_bc_years(self, time):
         raise NotImplementedError("adjust_for_bc_years not implemented.")
+    
+    def get_utils(self):
+        raise NotImplementedError("get_utils not implemented.")

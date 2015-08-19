@@ -51,6 +51,7 @@ from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditordialog import 
 from timelinelib.wxgui.dialogs.shortcutseditor.shortcutseditordialog import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialog import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditor.timeditordialog import TimeEditorDialog
+from timelinelib.wxgui.dialogs.nowdateeditor.nowdateeditordialog import NowDateEditorDialog
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
@@ -524,7 +525,7 @@ class GuiCreator(object):
 
         def fit_all(evt):
             self._fit_all_events()
-
+        
         cbx = NONE
         items = ((ID_FIND_FIRST, find_first, _("Find &First Event"), cbx),
                  (ID_FIND_LAST, find_last, _("Find &Last Event"), cbx),
@@ -880,6 +881,15 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
     def display_time_editor_dialog(self, time_type, initial_time,
                                    handle_new_time_fn, title):
         dialog = TimeEditorDialog(self, self.config, time_type, initial_time, title)
+        dialog.ShowModal()
+        result = dialog.GetReturnCode()
+        dialog.Destroy()
+        if result == wx.ID_OK:
+            handle_new_time_fn(dialog.time)
+    
+    def display_now_date_editor_dialog(self, time_type, initial_time,
+                                   handle_new_time_fn, title):
+        dialog = NowDateEditorDialog(self, self.config, time_type, initial_time, title)
         dialog.ShowModal()
         result = dialog.GetReturnCode()
         dialog.Destroy()

@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian import Gregorian
+from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Category
 from timelinelib.data import Container
@@ -129,7 +129,7 @@ class TutorialTimelineCreator(object):
         self.db = MemoryDB()
         from timelinelib.time.gregoriantime import GregorianTimeType
         self.db.time_type = GregorianTimeType()
-        now = gregorian.from_time(self.db.time_type.now())
+        now = GregorianUtils.from_time(self.db.time_type.now())
         self.start = self.get_time(now.year, now.month, 1)
         self.end = self.start + self.get_days_delta(30)
         self.db.set_displayed_period(TimePeriod(self.db.get_time_type(),

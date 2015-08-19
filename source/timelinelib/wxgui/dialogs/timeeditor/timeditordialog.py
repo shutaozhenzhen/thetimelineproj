@@ -22,7 +22,6 @@ from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import time_picker_for
 from timelinelib.utils import ex_msg
-import timelinelib.calendar.gregorian as gregorian
 
 
 class TimeEditorDialog(wx.Dialog):
@@ -73,7 +72,7 @@ class TimeEditorDialog(wx.Dialog):
             self.time = self.time_picker.get_value()
             if self._display_checkbox_show_time():
                 if not self.checkbox.IsChecked():
-                    gt = gregorian.from_time(self.time)
+                    gt = self.time_type.get_utils().from_time(self.time)
                     gt.hour = 12
                     self.time = gt.to_time()
         except ValueError, ex:
