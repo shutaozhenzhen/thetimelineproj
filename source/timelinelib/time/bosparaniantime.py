@@ -145,6 +145,9 @@ class BosparanianTimeType(GregorianTimeType):
         else:
             return (StripCentury(), StripCentury())
 
+    def supports_saved_now(self):
+        return True
+
     def set_saved_now(self,time):
         self.saved_now = time
 
@@ -174,9 +177,7 @@ class BosparanianTimeType(GregorianTimeType):
 def open_now_date_editor(main_frame, current_period, navigation_fn):
     def navigate_to(time):
         navigation_fn(lambda tp: tp.center(time))
-    navigate_to(main_frame.timeline.get_time_type().now())
-    main_frame.display_now_date_editor_dialog(
-        BosparanianTimeType(), current_period.mean_time(), navigate_to, _("Go to Date"))
+    main_frame.display_now_date_editor_dialog(navigate_to, _("Change Now Date"))
 
 def go_to_1000_fn(main_frame, current_period, navigation_fn):
     navigation_fn(lambda tp: tp.center(current_period.time_type.now()))
@@ -207,21 +208,6 @@ def _move_page_smart(current_period, navigation_fn, direction):
 
 
 def _whole_number_of_years(period):
-    """
-    >>> from timelinetest.utils import gregorian_period
-
-    >>> _whole_number_of_years(gregorian_period("1 Jan 2013", "1 Jan 2014"))
-    True
-
-    >>> _whole_number_of_years(gregorian_period("1 Jan 2013", "1 Jan 2015"))
-    True
-
-    >>> _whole_number_of_years(gregorian_period("1 Feb 2013", "1 Feb 2014"))
-    False
-
-    >>> _whole_number_of_years(gregorian_period("1 Jan 2013", "1 Feb 2014"))
-    False
-    """
     return (BosparanianUtils.from_time(period.start_time).is_first_day_in_year() and
             BosparanianUtils.from_time(period.end_time).is_first_day_in_year() and
             _calculate_year_diff(period) > 0)
@@ -256,21 +242,6 @@ def _calculate_year_diff(period):
 
 
 def _whole_number_of_months(period):
-    """
-    >>> from timelinetest.utils import gregorian_period
-
-    >>> _whole_number_of_months(gregorian_period("1 Jan 2013", "1 Jan 2014"))
-    True
-
-    >>> _whole_number_of_months(gregorian_period("1 Jan 2013", "1 Mar 2014"))
-    True
-
-    >>> _whole_number_of_months(gregorian_period("2 Jan 2013", "2 Mar 2014"))
-    False
-
-    >>> _whole_number_of_months(gregorian_period("1 Jan 2013 12:00", "1 Mar 2014"))
-    False
-    """
     start, end = BosparanianUtils.from_time(period.start_time), BosparanianUtils.from_time(period.end_time)
     start_months = start.year * 13 + start.month
     end_months = end.year * 13 + end.month
@@ -328,10 +299,6 @@ def backward_one_week_fn(main_frame, current_period, navigation_fn):
 
 
 def navigate_month_step(current_period, navigation_fn, direction):
-    """
-    Currently does notice leap years.
-    """
-    # TODO: NEW-TIME: (year, month, day, hour, minute, second) -> int (days in # month)
     tm = current_period.mean_time()
     gt = BosparanianUtils.from_time(tm)
     mv=delta_from_days(gt.days_in_month())

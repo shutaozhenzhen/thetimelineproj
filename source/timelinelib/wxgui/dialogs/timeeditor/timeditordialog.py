@@ -79,6 +79,9 @@ class TimeEditorDialog(wx.Dialog):
             display_error_message(ex_msg(ex))
         else:
             self.EndModal(wx.ID_OK)
+            
+    def on_escape(self):
+        self.EndModal(wx.ID_CANCEL)
 
     def _layout_components(self):
         vbox = wx.BoxSizer(wx.VERTICAL)

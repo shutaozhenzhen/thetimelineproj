@@ -887,14 +887,9 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         if result == wx.ID_OK:
             handle_new_time_fn(dialog.time)
     
-    def display_now_date_editor_dialog(self, time_type, initial_time,
-                                   handle_new_time_fn, title):
-        dialog = NowDateEditorDialog(self, self.config, time_type, initial_time, title)
-        dialog.ShowModal()
-        result = dialog.GetReturnCode()
-        dialog.Destroy()
-        if result == wx.ID_OK:
-            handle_new_time_fn(dialog.time)
+    def display_now_date_editor_dialog(self, handle_new_time_fn, title):
+        dialog = NowDateEditorDialog(self, self.config, self.timeline, handle_new_time_fn, title)
+        dialog.Show()
 
     # Concurrent editing
     def ok_to_edit(self):

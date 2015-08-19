@@ -15,8 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
-
-import wx.calendar
+import wx
 
 from timelinelib.calendar.bosparanian import Bosparanian, BosparanianUtils
 from timelinelib.time.bosparaniantime import BosparanianTimeType
@@ -26,17 +25,26 @@ from timelinelib.calendar import get_date_formatter
 
 class BosparanianDateTimePicker(wx.Panel):
 
-    def __init__(self, parent, show_time=True, config=None):
+    def __init__(self, parent, show_time=True, config=None, on_change=None):
         wx.Panel.__init__(self, parent)
         self.config = config
-        self._create_gui()
+        self._create_gui(on_change)
         self.controller = BosparanianDateTimePickerController(
             self.date_picker, self.time_picker, BosparanianTimeType().now)
         self.show_time(show_time)
         self.parent = parent
 
     def on_return(self):
-        self.parent.on_return()
+        try:
+            self.parent.on_return()
+        except AttributeError:
+            pass            
+
+    def on_escape(self):
+        try:
+            self.parent.on_escape()
+        except AttributeError:
+            pass
 
     def show_time(self, show=True):
         self.time_picker.Show(show)
@@ -51,9 +59,9 @@ class BosparanianDateTimePicker(wx.Panel):
     def set_value(self, value):
         self.controller.set_value(value)
 
-    def _create_gui(self):
-        self.date_picker = BosparanianDatePicker(self)
-        self.time_picker = BosparanianTimePicker(self)
+    def _create_gui(self, on_change):
+        self.date_picker = BosparanianDatePicker(self, on_change)
+        self.time_picker = BosparanianTimePicker(self, on_change)
         # Layout
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(self.date_picker, proportion=1,
@@ -89,9 +97,9 @@ class BosparanianDateTimePickerController(object):
 
 class BosparanianDatePicker(wx.TextCtrl):
 
-    def __init__(self, parent):
+    def __init__(self, parent, on_change):
         wx.TextCtrl.__init__(self, parent, style=wx.TE_PROCESS_ENTER)
-        self.controller = BosparanianDatePickerController(self)
+        self.controller = BosparanianDatePickerController(self, on_change=on_change)
         self._bind_events()
         self._resize_to_fit_text()
         self.parent = parent
@@ -141,6 +149,8 @@ class BosparanianDatePicker(wx.TextCtrl):
             elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or 
                   evt.GetKeyCode() == wx.WXK_RETURN):
                 self.parent.on_return()
+            elif (evt.GetKeyCode() == wx.WXK_ESCAPE):
+                self.parent.on_escape()
             else:
                 evt.Skip()
         self.Bind(wx.EVT_KEY_DOWN, on_key_down)
@@ -154,7 +164,7 @@ class BosparanianDatePicker(wx.TextCtrl):
 
 class BosparanianDatePickerController(object):
 
-    def __init__(self, date_picker, error_bg="pink"):
+    def __init__(self, date_picker, error_bg="pink", on_change=None):
         self.date_picker = date_picker
         self.error_bg = error_bg
         self.original_bg = self.date_picker.GetBackgroundColour()
@@ -166,6 +176,7 @@ class BosparanianDatePickerController(object):
         self.preferred_day = None
         self.save_preferred_day = True
         self.last_selection = None
+        self.on_change = on_change
 
     def get_value(self):
         try:
@@ -179,6 +190,11 @@ class BosparanianDatePickerController(object):
         year, month, day = value
         date_string = get_date_formatter().format(year, month, day)
         self.date_picker.set_date_string(date_string)
+        self._on_change()
+
+    def _on_change(self):
+        if self._current_date_is_valid() and not self.on_change is None:
+            self.on_change() 
 
     def on_set_focus(self):
         if self.last_selection:
@@ -218,6 +234,8 @@ class BosparanianDatePickerController(object):
             # on_up() and on_down() only when day is changed.
             if self.save_preferred_day:
                 self._save_preferred_day(current_date)
+            self._on_change()
+
 
     def on_up(self):
         max_year = BosparanianUtils.from_time(BosparanianTimeType().get_max_time()[0]).year
@@ -252,6 +270,7 @@ class BosparanianDatePickerController(object):
             self._save_preferred_day(new_date)
         if current_date != new_date:
             self._set_new_date_and_restore_selection(new_date, selection)
+        self._on_change()
 
     def on_down(self):
         def decrement_year(date):
@@ -292,6 +311,7 @@ class BosparanianDatePickerController(object):
             self._save_preferred_day(new_date)
         if current_date != new_date:
             self._set_new_date_and_restore_selection(new_date, selection)
+        self._on_change()
 
     def _change_background_depending_on_date_validity(self):
         if self._current_date_is_valid():
@@ -385,9 +405,9 @@ class BosparanianDatePickerController(object):
 
 class BosparanianTimePicker(wx.TextCtrl):
 
-    def __init__(self, parent):
+    def __init__(self, parent, on_change):
         wx.TextCtrl.__init__(self, parent, style=wx.TE_PROCESS_ENTER)
-        self.controller = BosparanianTimePickerController(self)
+        self.controller = BosparanianTimePickerController(self, on_change)
         self._bind_events()
         self._resize_to_fit_text()
         self.parent = parent
@@ -437,6 +457,8 @@ class BosparanianTimePicker(wx.TextCtrl):
             elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or 
                   evt.GetKeyCode() == wx.WXK_RETURN):
                 self.parent.on_return()
+            elif (evt.GetKeyCode() == wx.WXK_ESCAPE):
+                self.parent.on_escape()
             else:
                 evt.Skip()
         self.Bind(wx.EVT_KEY_DOWN, on_key_down)
@@ -449,13 +471,14 @@ class BosparanianTimePicker(wx.TextCtrl):
 
 class BosparanianTimePickerController(object):
 
-    def __init__(self, time_picker):
+    def __init__(self, time_picker, on_change):
         self.time_picker = time_picker
         self.original_bg = self.time_picker.GetBackgroundColour()
         self.separator = BosparanianTimeType().event_time_string(BosparanianTimeType().now())[2]
         self.hour_part = 0
         self.minute_part = 1
         self.last_selection = None
+        self.on_change = on_change
 
     def get_value(self):
         try:
@@ -475,6 +498,11 @@ class BosparanianTimePickerController(object):
         hour, minute, _ = value
         time_string = "%02d:%02d" % (hour, minute)
         self.time_picker.set_time_string(time_string)
+        self._on_change()
+
+    def _on_change(self):
+        if self._time_is_valid() and not self.on_change is None:
+            self.on_change()
 
     def on_set_focus(self):
         if self.last_selection:
@@ -533,6 +561,7 @@ class BosparanianTimePickerController(object):
             new_time = increment_minutes(current_time)
         if current_time != new_time:
             self._set_new_time_and_restore_selection(new_time, selection)
+        self._on_change()
 
     def on_down(self):
         def decrement_hour(time):
@@ -561,6 +590,7 @@ class BosparanianTimePickerController(object):
             new_time = decrement_minutes(current_time)
         if current_time != new_time:
             self._set_new_time_and_restore_selection(new_time, selection)
+        self._on_change()
 
     def _set_new_time_and_restore_selection(self, new_time, selection):
         def restore_selection(selection):
