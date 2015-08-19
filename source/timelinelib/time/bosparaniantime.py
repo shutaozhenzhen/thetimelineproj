@@ -61,9 +61,7 @@ class BosparanianTimeType(GregorianTimeType):
 
     def get_navigation_functions(self):
         return [
-            (_("Open &Now Date Editor"), open_now_date_editor),
-            ("SEP", None),
-            (_("Go to &1000 BF\tCtrl+T"), go_to_1000_fn),
+            (_("Open &Now Date Editor\tCtrl+T"), open_now_date_editor),
             (_("Go to &Date...\tCtrl+G"), go_to_date_fn),
             ("SEP", None),
             (_("Backward\tPgUp"), backward_fn),
@@ -82,6 +80,7 @@ class BosparanianTimeType(GregorianTimeType):
             (_("Fit Month"), fit_month_fn),
             (_("Fit Week"), fit_week_fn),
             (_("Fit Day"), fit_day_fn),
+            ("SEP", None),
         ]
 
     def format_period(self, time_period):
