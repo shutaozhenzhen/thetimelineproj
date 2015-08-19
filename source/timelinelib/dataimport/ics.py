@@ -22,7 +22,7 @@ from os.path import abspath
 
 from icalendar import Calendar
 
-from timelinelib.calendar.gregorian import Gregorian
+from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
 from timelinelib.db.exceptions import TimelineIOError
@@ -88,6 +88,6 @@ def _convert_to_datetime(d):
     if isinstance(d, datetime):
         return Gregorian(d.year, d.month, d.day, d.hour, d.minute, d.second).to_time()
     elif isinstance(d, date):
-        return gregorian.from_date(d.year, d.month, d.day).to_time()
+        return GregorianUtils.from_date(d.year, d.month, d.day).to_time()
     else:
         raise TimelineIOError("Unknown date.")

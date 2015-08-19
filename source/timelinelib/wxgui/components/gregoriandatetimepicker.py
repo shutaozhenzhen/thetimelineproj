@@ -20,8 +20,7 @@ import os.path
 
 import wx.calendar
 
-import timelinelib.calendar.gregorian as gregorian
-from timelinelib.calendar.gregorian import Gregorian
+from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.wxgui.utils import display_error_message
@@ -117,8 +116,8 @@ class GregorianDateTimePickerController(object):
     def set_value(self, time):
         if time == None:
             time = self.now_fn()
-        self.date_picker.set_value(gregorian.from_time(time).to_date_tuple())
-        self.time_picker.set_value(gregorian.from_time(time).to_time_tuple())
+        self.date_picker.set_value(GregorianUtils.from_time(time).to_date_tuple())
+        self.time_picker.set_value(GregorianUtils.from_time(time).to_time_tuple())
 
     def date_tuple_to_wx_date(self, date):
         year, month, day = date
@@ -167,12 +166,12 @@ class CalendarPopup(wx.PopupTransientWindow):
         cal.SetDateRange(min_date, max_date)
 
     def time_to_wx_date(self, time):
-        year, month, day = gregorian.from_time(time).to_date_tuple()
+        year, month, day = GregorianUtils.from_time(time).to_date_tuple()
         try:
             return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
         except OverflowError:
             if year < 0:
-                year, month, day = gregorian.from_time(Time(0, 0)).to_date_tuple()
+                year, month, day = GregorianUtils.from_time(Time(0, 0)).to_date_tuple()
                 return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
 
     def _bind_events(self):
@@ -342,7 +341,7 @@ class GregorianDatePickerController(object):
                 self._save_preferred_day(current_date)
 
     def on_up(self):
-        max_year = gregorian.from_time(GregorianTimeType().get_max_time()[0]).year
+        max_year = GregorianUtils.from_time(GregorianTimeType().get_max_time()[0]).year
         def increment_year(date):
             year, month, day = date
             if year < max_year - 1:
@@ -357,9 +356,9 @@ class GregorianDatePickerController(object):
             return date
         def increment_day(date):
             year, month, day = date
-            time = gregorian.from_date(year, month, day).to_time()
+            time = GregorianUtils.from_date(year, month, day).to_time()
             if time <  GregorianTimeType().get_max_time()[0] - delta_from_days(1):
-                return gregorian.from_time(time + delta_from_days(1)).to_date_tuple()
+                return GregorianUtils.from_time(time + delta_from_days(1)).to_date_tuple()
             return date
         if not self._current_date_is_valid():
             return
@@ -378,14 +377,14 @@ class GregorianDatePickerController(object):
     def on_down(self):
         def decrement_year(date):
             year, month, day = date
-            if year > gregorian.from_time(GregorianTimeType().get_min_time()[0]).year:
+            if year > GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).year:
                 return self._set_valid_day(year - 1, month, day)
             return date
         def decrement_month(date):
             year, month, day = date
             if month > 1:
                 return self._set_valid_day(year, month - 1, day)
-            elif year > gregorian.from_time(GregorianTimeType().get_min_time()[0]).year:
+            elif year > GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).year:
                 return self._set_valid_day(year - 1, 12, day)
             return date
         def decrement_day(date):
@@ -394,7 +393,7 @@ class GregorianDatePickerController(object):
                 return self._set_valid_day(year, month, day - 1)
             elif month > 1:
                 return self._set_valid_day(year, month - 1, 31)
-            elif year > gregorian.from_time(GregorianTimeType().get_min_time()[0]).year:
+            elif year > GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).year:
                 return self._set_valid_day(year - 1, 12, 31)
             return date
         if not self._current_date_is_valid():
@@ -407,8 +406,8 @@ class GregorianDatePickerController(object):
             new_date = decrement_month(current_date)
         else:
             year, month, day = current_date
-            gregorian.from_date(year, month, day)
-            if gregorian.from_date(year, month, day).to_time() == GregorianTimeType().get_min_time()[0]:
+            GregorianUtils.from_date(year, month, day)
+            if GregorianUtils.from_date(year, month, day).to_time() == GregorianTimeType().get_min_time()[0]:
                 return 
             new_date = decrement_day(current_date)
             self._save_preferred_day(new_date)
@@ -448,7 +447,7 @@ class GregorianDatePickerController(object):
         done = False
         while not done:
             try:
-                date = gregorian.from_date(new_year, new_month, new_day)
+                date = GregorianUtils.from_date(new_year, new_month, new_day)
                 done = True
             except Exception:
                 new_day -= 1
@@ -587,7 +586,7 @@ class GregorianTimePickerController(object):
             hour_string, minute_string = split
             hour = int(hour_string)
             minute = int(minute_string)
-            if not gregorian.is_valid_time(hour, minute, 0):
+            if not GregorianUtils.is_valid_time(hour, minute, 0):
                 raise ValueError()
             return (hour, minute, 0)
         except ValueError:

@@ -58,8 +58,8 @@ class GregorianConversionsSpec(UnitTestCase):
 
     def test_roundtrip_julian_day_conversions(self):
         for julian_day in range(100):
-            (year, month, day) = gregorian.from_julian_day(julian_day)
-            roundtrip = gregorian.to_julian_day(year, month, day)
+            (year, month, day) = gregorian.from_absolute_day(julian_day)
+            roundtrip = gregorian.GregorianUtils.to_absolute_day(year, month, day)
             self.assertEqual(roundtrip, julian_day)
 
     def test_roundtrip_gregorian_dates_conversions(self):
@@ -69,15 +69,15 @@ class GregorianConversionsSpec(UnitTestCase):
         ]
         for gregorian_date in dates:
             (year, month, day) = gregorian_date
-            julian_day = gregorian.to_julian_day(year, month, day)
-            roundtrip = gregorian.from_julian_day(julian_day)
+            julian_day = gregorian.GregorianUtils.to_absolute_day(year, month, day)
+            roundtrip = gregorian.GregorianUtils.from_absolute_day(julian_day)
             self.assertEqual(roundtrip, gregorian_date)
 
     def test_works_same_as_python_date(self):
         py_date = datetime.date(1900, 1, 1)
-        jd = gregorian.to_julian_day(1900, 1, 1)
+        jd = gregorian.GregorianUtils.to_absolute_day(1900, 1, 1)
         for _ in range(365 * 200):
-            (y, m, d) = gregorian.from_julian_day(jd)
+            (y, m, d) = gregorian.from_absolute_day(jd)
             self.assertEqual(py_date, datetime.date(y, m, d))
             py_date += datetime.timedelta(days=1)
             jd += 1
@@ -100,39 +100,39 @@ class GregorianConversionsSpec(UnitTestCase):
 class GregorianPrimitivesSpec(UnitTestCase):
 
     def test_is_valid(self):
-        self.assertTrue(gregorian.is_valid(2013, 1, 1))
-        self.assertFalse(gregorian.is_valid(2013, 0, 1))
-        self.assertFalse(gregorian.is_valid(2013, 13, 1))
-        self.assertFalse(gregorian.is_valid(2013, 1, 0))
-        self.assertFalse(gregorian.is_valid(2013, 1, 32))
-        self.assertFalse(gregorian.is_valid(2013, 2, 30))
+        self.assertTrue(gregorian.GregorianUtils.is_valid(2013, 1, 1))
+        self.assertFalse(gregorian.GregorianUtils.is_valid(2013, 0, 1))
+        self.assertFalse(gregorian.GregorianUtils.is_valid(2013, 13, 1))
+        self.assertFalse(gregorian.GregorianUtils.is_valid(2013, 1, 0))
+        self.assertFalse(gregorian.GregorianUtils.is_valid(2013, 1, 32))
+        self.assertFalse(gregorian.GregorianUtils.is_valid(2013, 2, 30))
 
     def test_days_in_month(self):
-        self.assertEqual(31, gregorian.days_in_month(2013, 1))
-        self.assertEqual(28, gregorian.days_in_month(2013, 2))
-        self.assertEqual(31, gregorian.days_in_month(2013, 3))
-        self.assertEqual(30, gregorian.days_in_month(2013, 4))
-        self.assertEqual(31, gregorian.days_in_month(2013, 5))
-        self.assertEqual(30, gregorian.days_in_month(2013, 6))
-        self.assertEqual(31, gregorian.days_in_month(2013, 7))
-        self.assertEqual(31, gregorian.days_in_month(2013, 8))
-        self.assertEqual(30, gregorian.days_in_month(2013, 9))
-        self.assertEqual(31, gregorian.days_in_month(2013, 10))
-        self.assertEqual(30, gregorian.days_in_month(2013, 11))
-        self.assertEqual(31, gregorian.days_in_month(2013, 12))
-        self.assertEqual(29, gregorian.days_in_month(2016, 2))
+        self.assertEqual(31, gregorian.GregorianUtils.days_in_month(2013, 1))
+        self.assertEqual(28, gregorian.GregorianUtils.days_in_month(2013, 2))
+        self.assertEqual(31, gregorian.GregorianUtils.days_in_month(2013, 3))
+        self.assertEqual(30, gregorian.GregorianUtils.days_in_month(2013, 4))
+        self.assertEqual(31, gregorian.GregorianUtils.days_in_month(2013, 5))
+        self.assertEqual(30, gregorian.GregorianUtils.days_in_month(2013, 6))
+        self.assertEqual(31, gregorian.GregorianUtils.days_in_month(2013, 7))
+        self.assertEqual(31, gregorian.GregorianUtils.days_in_month(2013, 8))
+        self.assertEqual(30, gregorian.GregorianUtils.days_in_month(2013, 9))
+        self.assertEqual(31, gregorian.GregorianUtils.days_in_month(2013, 10))
+        self.assertEqual(30, gregorian.GregorianUtils.days_in_month(2013, 11))
+        self.assertEqual(31, gregorian.GregorianUtils.days_in_month(2013, 12))
+        self.assertEqual(29, gregorian.GregorianUtils.days_in_month(2016, 2))
 
     def test_is_leap_year(self):
-        self.assertFalse(gregorian.is_leap_year(2013))
-        self.assertFalse(gregorian.is_leap_year(1900))
-        self.assertTrue(gregorian.is_leap_year(2016))
-        self.assertTrue(gregorian.is_leap_year(2000))
+        self.assertFalse(gregorian.GregorianUtils.is_leap_year(2013))
+        self.assertFalse(gregorian.GregorianUtils.is_leap_year(1900))
+        self.assertTrue(gregorian.GregorianUtils.is_leap_year(2016))
+        self.assertTrue(gregorian.GregorianUtils.is_leap_year(2000))
 
     def test_week_number(self):
         def assert_is_week(date_tuple, w):
             (y, m, d) = date_tuple
-            date = gregorian.from_date(y, m, d).to_time()
-            self.assertEqual(gregorian.gregorian_week(date), w)
+            date = gregorian.GregorianUtils.from_date(y, m, d).to_time()
+            self.assertEqual(gregorian.GregorianUtils.calendar_week(date), w)
         assert_is_week((2012, 12, 30), 52)
         assert_is_week((2012, 12, 31), 1)
         assert_is_week((2013, 1, 1), 1)
@@ -148,7 +148,7 @@ class GregorianPrimitivesSpec(UnitTestCase):
             m = time.month
             d = time.day
             self.assertEqual(
-                gregorian.gregorian_week(gregorian.from_date(y, m, d).to_time()),
+                gregorian.GregorianUtils.calendar_week(gregorian.GregorianUtils.from_date(y, m, d).to_time()),
                 time.isocalendar()[1],
                 "%s" % time)
             time += datetime.timedelta(days=1)
