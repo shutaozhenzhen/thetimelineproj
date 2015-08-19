@@ -64,7 +64,6 @@ from timelinelib.plugin.factory import EXPORTER
 from timelinelib.calendar import set_date_formatter
 from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
-from wxPython._core import wxMenuItem, wxAcceleratorEntry
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
