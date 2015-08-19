@@ -61,7 +61,7 @@ class describe_font_default_values(FontsTestCase):
         self.assertEqual(wx.FONTWEIGHT_NORMAL, self.font.Weight)
 
     def test_default_font_is_not_underlined(self):
-        self.assertFalse(self.font.Underlined)
+        self.assertFalse(self.font.GetUnderlined())
 
     def test_default_font_has_no_facename(self):
         self.assertEqual(self.wx_default_font.FaceName, self.font.FaceName)
@@ -78,7 +78,7 @@ class describe_font_serialization(FontsTestCase):
         self.assertEqual(self.font.Family, font.Family)
         self.assertEqual(self.font.Style, font.Style)
         self.assertEqual(self.font.Weight, font.Weight)
-        self.assertEqual(self.font.Underlined, font.Underlined)
+        self.assertEqual(self.font.GetUnderlined(), font.GetUnderlined())
         self.assertEqual(self.font.FaceName, font.FaceName)
         self.assertEqual(self.font.Encoding, font.Encoding)
         self.assertEqual(self.font.WxColor, font.WxColor)
@@ -91,11 +91,13 @@ class describe_font_updates(FontsTestCase):
         self.assertEqual(wx.RED, self.font.WxColor)
 
     def test_wxfont_can_be_changed(self):
-        wxfont = wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC, wx.FONTWEIGHT_BOLD)
+        wxfont = wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_ITALIC,
+                         wx.FONTWEIGHT_BOLD, True)
         self.font.WxFont = wxfont
         self.assertEqual(10, self.font.PointSize)
         self.assertEqual(wx.FONTSTYLE_ITALIC, self.font.Style)
         self.assertEqual(wx.FONTWEIGHT_BOLD, self.font.Weight)
+        self.assertEqual(self.font.GetUnderlined(), wxfont.GetUnderlined())
 
     def test_point_size_can_be_incremented(self):
         self.font.PointSize = 12

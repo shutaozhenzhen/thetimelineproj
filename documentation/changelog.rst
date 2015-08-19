@@ -6,6 +6,17 @@ Version 1.8.0
 
 **Planned Release on 31 October 2015.**
 
+Fixed crash reports:
+
+* ``KeyError: <bound method Font.Underlined of <timelinelib.wxgui.components.font.Font; proxy of <Swig Object of type 'wxFont *' at 0x8f240f0> >>``
+  (`#83 <https://sourceforge.net/p/thetimelineproj/backlog/83/>`_)
+
+
+Version 1.7.1
+-------------
+
+**Released on 17 August 2015.**
+
 Data:
 
 * Content of .timeline file is not erased when it is opened. This was a bug
