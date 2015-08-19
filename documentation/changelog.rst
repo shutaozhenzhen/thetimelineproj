@@ -6,6 +6,8 @@ Version 1.8.0
 
 **Planned Release on 31 October 2015.**
 
+This is a periodic release.
+
 Fixed crash reports:
 
 * ``KeyError: <bound method Font.Underlined of <timelinelib.wxgui.components.font.Font; proxy of <Swig Object of type 'wxFont *' at 0x8f240f0> >>``
@@ -16,6 +18,8 @@ Version 1.7.1
 -------------
 
 **Released on 17 August 2015.**
+
+This is a bugfix release. It fixes a critical bug where data could be lost.
 
 Data:
 
