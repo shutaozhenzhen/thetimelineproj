@@ -351,13 +351,6 @@ class describe_saving_existing(EventEditorDialogControllerTestCase, describe_sav
 
 class describe_validation(EventEditorDialogControllerTestCase):
 
-    def test_name_field_must_not_be_empty(self):
-        self.when_editing_a_new_event()
-        self.dialog.get_name.return_value = ""
-        self.simulate_user_clicks_ok()
-        self.assertTrue(self.dialog.display_invalid_name.called)
-        self.assert_no_event_saved()
-
     def test_start_must_be_valid(self):
         self.when_editing_a_new_event()
         self.dialog.get_start.side_effect = ValueError
