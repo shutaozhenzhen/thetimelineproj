@@ -110,7 +110,7 @@ class EventEditorDialogController(object):
         self.view.set_ends_today(self.ends_today)
 
     def _get_and_verify_input(self):
-        self.name = self._get_name(self.view.get_name())
+        self.name = self.view.get_name()
         self.fuzzy = self.view.get_fuzzy()
         self.locked = self.view.get_locked()
         self.ends_today = self.view.get_ends_today()
@@ -265,13 +265,6 @@ class EventEditorDialogController(object):
         if self.ends_today and self.start > self.time_type.now():
             self.view.display_error_message(_("Start time > Now."))
             raise ValueError()
-
-    def _get_name(self, name):
-        if name == "":
-            msg = _("Field '%s' can't be empty.") % _("Text")
-            self.view.display_invalid_name(msg)
-            raise ValueError()
-        return name
 
     def _save_event_to_db(self):
         try:
