@@ -33,7 +33,7 @@ class TimelineScene(object):
     def __init__(self, size, db, view_properties, get_text_size_fn, config):
         self._db = db
         self._view_properties = view_properties
-        self._get_text_size = get_text_size_fn
+        self._get_text_size_fn = get_text_size_fn
         self._config = config
         self._outer_padding = 5
         self._inner_padding = 3
@@ -276,6 +276,12 @@ class TimelineScene(object):
             rx = -1
             rw = 0
         return self._create_ideal_wx_rect(rx, ry, rw, rh)
+
+    def _get_text_size(self, text):
+        if len(text) > 0:
+            return self._get_text_size_fn(text)
+        else:
+            return self._get_text_size_fn(" ")
 
     def never_show_period_events_as_point_events(self):
         return self._config.get_never_show_period_events_as_point_events()
