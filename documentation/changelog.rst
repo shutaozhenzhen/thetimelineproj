@@ -13,6 +13,8 @@ Fixed crash reports:
 * ``KeyError: <bound method Font.Underlined of <timelinelib.wxgui.components.font.Font; proxy of <Swig Object of type 'wxFont *' at 0x8f240f0> >>``
   (`#83 <https://sourceforge.net/p/thetimelineproj/backlog/83/>`_)
 
+* ``string index out of range``
+  (`#85 <https://sourceforge.net/p/thetimelineproj/backlog/85`_)
 
 Version 1.7.1
 -------------
