@@ -14,7 +14,7 @@ Fixed crash reports:
   (`#83 <https://sourceforge.net/p/thetimelineproj/backlog/83/>`_)
 
 * ``string index out of range``
-  (`#85 <https://sourceforge.net/p/thetimelineproj/backlog/85`_)
+  (`#85 <https://sourceforge.net/p/thetimelineproj/backlog/85/>`_)
 
 Version 1.7.1
 -------------
