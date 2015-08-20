@@ -101,7 +101,7 @@ Person interested in developing Timeline::
     * Crash reports in the backlog are usually easy to fix. Although they might
       require some investigation.
 
-    * Timeline is licensed under GLPv3. We propose a model where you (and
+    * Timeline is licensed under GPLv3. We propose a model where you (and
       everyone else) keep the copyright of their patches. As the patches will
       be GPLv3 as well, we can include them in the project.
 
