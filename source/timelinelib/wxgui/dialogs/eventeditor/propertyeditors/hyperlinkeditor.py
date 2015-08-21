@@ -158,3 +158,4 @@ class HyperlinkEditor(BaseEditor, HyperlinkEditorGuiCreator):
             self.btn_remove.Enable(True)
             self.btn_test.Enable(True)
             self.btn_append.Enable(False)
+
