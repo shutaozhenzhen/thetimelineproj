@@ -10,6 +10,9 @@ This is a periodic release.
 
 Fixed crash reports:
 
+* ``PyAssertionError: C++ assertion "wxAssertFailure" failed at ..\..\src\common\stockitem.cpp(166) in wxGetStockLabel(): invalid stock item ID``
+  (`#95 <https://sourceforge.net/p/thetimelineproj/backlog/95/>`_)
+
 * ``KeyError: <bound method Font.Underlined of <timelinelib.wxgui.components.font.Font; proxy of <Swig Object of type 'wxFont *' at 0x8f240f0> >>``
   (`#83 <https://sourceforge.net/p/thetimelineproj/backlog/83/>`_)
 
