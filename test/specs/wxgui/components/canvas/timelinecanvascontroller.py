@@ -361,8 +361,11 @@ class TimelineViewSpec(UnitTestCase):
         self.timeline_canvas.Disable.assert_called_with()
 
     def setUp(self):
+        self.app = wx.App()
+        self.app.MainLoop()
         self.db = MemoryDB()
         self.timeline_canvas = Mock(TimelineCanvas)
+        self.timeline_canvas.GetSize.return_value = (200, 100)
         self.width = 10
         self.middle_x = self.width / 2
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
