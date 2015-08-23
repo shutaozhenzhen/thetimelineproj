@@ -10,7 +10,7 @@ To make it easier to test a Dialog we follow  a pattern where all business logic
 The controller is instantiated in the __init__ function of the Dialog class like this::
 
     def __init__(self, timeline, ...):
-        self.controller = MyDialogControllet (self, timeline)
+        self.controller = MyDialogController (self, timeline)
 
 Notice that the constructor takes a reference to the Dialog as first argument.
 The controller __init__ function looks like this::
