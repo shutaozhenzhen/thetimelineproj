@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,33 +16,29 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from datetime import datetime
 import re
 
-from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
-from timelinelib.calendar.monthnames import abbreviated_name_of_month
-from timelinelib.calendar.weekdaynames import abbreviated_name_of_weekday
+from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.calendar.bosparanian import Bosparanian, BosparanianUtils
+from timelinelib.calendar.bosparanian_monthnames import bosp_name_of_month
+from timelinelib.calendar.bosparanian_monthnames import bosp_abbreviated_name_of_month
+from timelinelib.calendar.bosparanian_weekdaynames import bosp_abbreviated_name_of_weekday
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.data import TimePeriod
-from timelinelib.data import time_period_center
 from timelinelib.drawing.interface import Strip
 from timelinelib.time.timeline import delta_from_days
-from timelinelib.time.typeinterface import TimeType
 import timelinelib.time.timeline as timeline
 from timelinelib.calendar import get_date_formatter
 
-
-class GregorianTimeType(TimeType):
+class BosparanianTimeType(GregorianTimeType):
 
     def __init__(self):
         self.major_strip_is_decade = False
+        self.saved_now = None
 
     def __eq__(self, other):
-        return isinstance(other, GregorianTimeType)
-
-    def __ne__(self, other):
-        return not (self == other)
+        return isinstance(other, BosparanianTimeType)
 
     def time_string(self, time):
         return "%d-%02d-%02d %02d:%02d:%02d" % self.get_utils().from_time(time).to_tuple()
@@ -57,7 +53,7 @@ class GregorianTimeType(TimeType):
             minute = int(match.group(5))
             second = int(match.group(6))
             try:
-                return Gregorian(year, month, day, hour, minute, second).to_time()
+                return Bosparanian(year, month, day, hour, minute, second).to_time()
             except ValueError:
                 raise ValueError("Invalid time, time string = '%s'" % time_string)
         else:
@@ -65,7 +61,7 @@ class GregorianTimeType(TimeType):
 
     def get_navigation_functions(self):
         return [
-            (_("Go to &Today\tCtrl+T"), go_to_today_fn),
+            (_("Open &Now Date Editor\tCtrl+T"), open_now_date_editor),
             (_("Go to &Date...\tCtrl+G"), go_to_date_fn),
             ("SEP", None),
             (_("Backward\tPgUp"), backward_fn),
@@ -84,10 +80,8 @@ class GregorianTimeType(TimeType):
             (_("Fit Month"), fit_month_fn),
             (_("Fit Week"), fit_week_fn),
             (_("Fit Day"), fit_day_fn),
+            ("SEP", None),
         ]
-
-    def is_date_time_type(self):
-        return True
 
     def format_period(self, time_period):
         """Returns a unicode string describing the time period."""
@@ -95,8 +89,8 @@ class GregorianTimeType(TimeType):
             return u"%s %s" % (label_without_time(time), time_label(time))
 
         def label_without_time(time):
-            gregorian_datetime = self.get_utils().from_time(time)
-            return u"%s %s %s" % (gregorian_datetime.day, abbreviated_name_of_month(gregorian_datetime.month), gregorian_datetime.year)
+            bosparanian_datetime = self.get_utils().from_time(time)
+            return u"%s %s %s" % (bosparanian_datetime.day, bosp_abbreviated_name_of_month(bosparanian_datetime.month), bosparanian_datetime.year)
 
         def time_label(time):
             return "%02d:%02d" % time.get_time_of_day()[:-1]
@@ -114,52 +108,34 @@ class GregorianTimeType(TimeType):
                 label = u"%s" % label_without_time(time_period.start_time)
         return label
 
-    def format_delta(self, delta):
-        days = delta.get_days()
-        hours = delta.get_hours()
-        minutes = delta.get_minutes()
-        collector = []
-        if days == 1:
-            collector.append(u"1 %s" % _("day"))
-        elif days > 1:
-            collector.append(u"%d %s" % (days, _("days")))
-        if hours == 1:
-            collector.append(u"1 %s" % _("hour"))
-        elif hours > 1:
-            collector.append(u"%d %s" % (hours, _("hours")))
-        if minutes == 1:
-            collector.append(u"1 %s" % _("minute"))
-        elif minutes > 1:
-            collector.append(u"%d %s" % (minutes, _("minutes")))
-        delta_string = u" ".join(collector)
-        if delta_string == "":
-            delta_string = "0"
-        return delta_string
-
     def get_min_time(self):
-        return (timeline.get_min_time(), _("can't be before year 10"))
+        return (timeline.get_min_time(), _("can't be before year -7299"))
 
     def get_max_time(self):
-        return (timeline.Time(5369833, 0), _("can't be after year 9989"))
+        return (timeline.BosparanianTime(5369833, 0), _("can't be after year 7410"))
 
     def choose_strip(self, metrics, config):
         """
         Return a tuple (major_strip, minor_strip) for current time period and
         window size.
         """
-        day_period = TimePeriod(self, timeline.Time(0, 0), timeline.Time(1, 0))
+        day_period = TimePeriod(self, timeline.BosparanianTime(0, 0), timeline.BosparanianTime(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         self.major_strip_is_decade = False
         if one_day_width > 20000:
             return (StripHour(), StripMinute())
         elif one_day_width > 600:
             return (StripDay(), StripHour())
-        elif one_day_width > 45:
-            return (StripWeek(config), StripWeekday())
+        elif one_day_width > 60:
+            return (StripMonth(), StripWeekday())
         elif one_day_width > 25:
             return (StripMonth(), StripDay())
-        elif one_day_width > 1.5:
+        elif one_day_width > 10:
+            return (StripMonth(),StripWeek(config))
+        elif one_day_width > 1.75:
             return (StripYear(), StripMonth())
+        elif one_day_width > 0.5:
+            return (StripYear(), StripQuarter())
         elif one_day_width > 0.12:
             self.major_strip_is_decade = True
             return (StripDecade(), StripYear())
@@ -168,93 +144,41 @@ class GregorianTimeType(TimeType):
         else:
             return (StripCentury(), StripCentury())
 
-    def mult_timedelta(self, delta, num):
-        return delta * num
-
-    def get_default_time_period(self):
-        return time_period_center(self, self.now(), delta_from_days(30))
-
     def supports_saved_now(self):
-        return False
+        return True
 
-    def set_saved_now(self, time):
-        ()
+    def set_saved_now(self,time):
+        self.saved_now = time
 
     def now(self):
-        py = datetime.now()
-        gregorian = Gregorian(py.year, py.month, py.day,
-                              py.hour, py.minute, py.second)
-        return gregorian.to_time()
-
-    def get_time_at_x(self, time_period, x_percent_of_width):
-        """Return the time at pixel `x`."""
-        return time_period.start_time + time_period.delta() * x_percent_of_width
-
-    def div_timedeltas(self, delta1, delta2):
-        return delta1 / delta2
-
-    def get_max_zoom_delta(self):
-        return (delta_from_days(1200 * 365), _("Can't zoom wider than 1200 years"))
-
-    def get_min_zoom_delta(self):
-        return (timeline.delta_from_seconds(60), _("Can't zoom deeper than 1 minute"))
-
-    def get_zero_delta(self):
-        return timeline.delta_from_seconds(0)
-
-    def time_period_has_nonzero_time(self, time_period):
-        nonzero_time = (time_period.start_time.seconds != 0 or
-                        time_period.end_time.seconds != 0)
-        return nonzero_time
+        if self.saved_now is None:
+            return Bosparanian(1000, 1, 1, 12, 0, 0).to_time()
+        return self.saved_now
 
     def get_name(self):
-        return u"gregoriantime"
-
-    def get_duplicate_functions(self):
-        return [
-            (_("Day"), move_period_num_days),
-            (_("Week"), move_period_num_weeks),
-            (_("Month"), move_period_num_months),
-            (_("Year"), move_period_num_years),
-        ]
-
-    def zoom_is_ok(self, delta):
-        return (delta.seconds > 60) or (delta.get_days() > 0)
-
-    def half_delta(self, delta):
-        return delta / 2
-
-    def margin_delta(self, delta):
-        return delta / 24
+        return u"bosparaniantime"
 
     def event_date_string(self, time):
-        gregorian_time = self.get_utils().from_time(time)
-        return get_date_formatter().format(gregorian_time.year, gregorian_time.month, gregorian_time.day)
+        bosparanian_time = self.get_utils().from_time(time)
+        return get_date_formatter().format(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
 
     def event_time_string(self, time):
-        gregorian_time = self.get_utils().from_time(time)
-        return "%02d:%02d" % (gregorian_time.hour, gregorian_time.minute)
-
-    def eventtimes_equals(self, time1, time2):
-        s1 = "%s %s" % (self.event_date_string(time1),
-                        self.event_date_string(time1))
-        s2 = "%s %s" % (self.event_date_string(time2),
-                        self.event_date_string(time2))
-        return s1 == s2
+        bosparanian_time = self.get_utils().from_time(time)
+        return "%02d:%02d" % (bosparanian_time.hour, bosparanian_time.minute)
 
     def adjust_for_bc_years(self, time):
-        gregorian_time = self.get_utils().from_time(time)
-        if self.major_strip_is_decade:
-            if gregorian_time.year < 0:
-                gregorian_time.year += 2
-            elif gregorian_time.year < 10:
-                gregorian_time.year += 1
-        return gregorian_time.to_time()
-
+        return time
+    
     def get_utils(self):
-        return GregorianUtils
+        return BosparanianUtils
 
-def go_to_today_fn(main_frame, current_period, navigation_fn):
+
+def open_now_date_editor(main_frame, current_period, navigation_fn):
+    def navigate_to(time):
+        navigation_fn(lambda tp: tp.center(time))
+    main_frame.display_now_date_editor_dialog(navigate_to, _("Change Now Date"))
+
+def go_to_1000_fn(main_frame, current_period, navigation_fn):
     navigation_fn(lambda tp: tp.center(current_period.time_type.now()))
 
 
@@ -262,7 +186,7 @@ def go_to_date_fn(main_frame, current_period, navigation_fn):
     def navigate_to(time):
         navigation_fn(lambda tp: tp.center(time))
     main_frame.display_time_editor_dialog(
-        GregorianTimeType(), current_period.mean_time(), navigate_to, _("Go to Date"))
+        BosparanianTimeType(), current_period.mean_time(), navigate_to, _("Go to Date"))
 
 
 def backward_fn(main_frame, current_period, navigation_fn):
@@ -283,36 +207,21 @@ def _move_page_smart(current_period, navigation_fn, direction):
 
 
 def _whole_number_of_years(period):
-    """
-    >>> from timelinetest.utils import gregorian_period
-
-    >>> _whole_number_of_years(gregorian_period("1 Jan 2013", "1 Jan 2014"))
-    True
-
-    >>> _whole_number_of_years(gregorian_period("1 Jan 2013", "1 Jan 2015"))
-    True
-
-    >>> _whole_number_of_years(gregorian_period("1 Feb 2013", "1 Feb 2014"))
-    False
-
-    >>> _whole_number_of_years(gregorian_period("1 Jan 2013", "1 Feb 2014"))
-    False
-    """
-    return (GregorianUtils.from_time(period.start_time).is_first_day_in_year() and
-            GregorianUtils.from_time(period.end_time).is_first_day_in_year() and
+    return (BosparanianUtils.from_time(period.start_time).is_first_day_in_year() and
+            BosparanianUtils.from_time(period.end_time).is_first_day_in_year() and
             _calculate_year_diff(period) > 0)
 
 
 def _move_page_years(curret_period, navigation_fn, direction):
     def navigate(tp):
         year_delta = direction * _calculate_year_diff(curret_period)
-        gregorian_start = GregorianUtils.from_time(curret_period.start_time)
-        gregorian_end = GregorianUtils.from_time(curret_period.end_time)
-        new_start_year = gregorian_start.year + year_delta
-        new_end_year = gregorian_end.year + year_delta
+        bosparanian_start = BosparanianUtils.from_time(curret_period.start_time)
+        bosparanian_end = BosparanianUtils.from_time(curret_period.end_time)
+        new_start_year = bosparanian_start.year + year_delta
+        new_end_year = bosparanian_end.year + year_delta
         try:
-            new_start = gregorian_start.replace(year=new_start_year).to_time()
-            new_end = gregorian_end.replace(year=new_end_year).to_time()
+            new_start = bosparanian_start.replace(year=new_start_year).to_time()
+            new_end = bosparanian_end.replace(year=new_end_year).to_time()
             if new_end > curret_period.time_type.get_max_time()[0]:
                 raise ValueError()
             if new_start < curret_period.time_type.get_min_time()[0]:
@@ -327,29 +236,14 @@ def _move_page_years(curret_period, navigation_fn, direction):
 
 
 def _calculate_year_diff(period):
-    return (GregorianUtils.from_time(period.end_time).year -
-            GregorianUtils.from_time(period.start_time).year)
+    return (BosparanianUtils.from_time(period.end_time).year -
+            BosparanianUtils.from_time(period.start_time).year)
 
 
 def _whole_number_of_months(period):
-    """
-    >>> from timelinetest.utils import gregorian_period
-
-    >>> _whole_number_of_months(gregorian_period("1 Jan 2013", "1 Jan 2014"))
-    True
-
-    >>> _whole_number_of_months(gregorian_period("1 Jan 2013", "1 Mar 2014"))
-    True
-
-    >>> _whole_number_of_months(gregorian_period("2 Jan 2013", "2 Mar 2014"))
-    False
-
-    >>> _whole_number_of_months(gregorian_period("1 Jan 2013 12:00", "1 Mar 2014"))
-    False
-    """
-    start, end = GregorianUtils.from_time(period.start_time), GregorianUtils.from_time(period.end_time)
-    start_months = start.year * 12 + start.month
-    end_months = end.year * 12 + end.month
+    start, end = BosparanianUtils.from_time(period.start_time), BosparanianUtils.from_time(period.end_time)
+    start_months = start.year * 13 + start.month
+    end_months = end.year * 13 + end.month
     month_diff = end_months - start_months
     return (start.is_first_of_month() and
             end.is_first_of_month() and
@@ -358,10 +252,10 @@ def _whole_number_of_months(period):
 
 def _move_page_months(curret_period, navigation_fn, direction):
     def navigate(tp):
-        start = GregorianUtils.from_time(curret_period.start_time)
-        end = GregorianUtils.from_time(curret_period.end_time)
-        start_months = start.year * 12 + start.month
-        end_months = end.year * 12 + end.month
+        start = BosparanianUtils.from_time(curret_period.start_time)
+        end = BosparanianUtils.from_time(curret_period.end_time)
+        start_months = start.year * 13 + start.month
+        end_months = end.year * 13 + end.month
         month_diff = end_months - start_months
         month_delta = month_diff * direction
         new_start_year, new_start_month = _months_to_year_and_month(start_months + month_delta)
@@ -385,10 +279,10 @@ def _move_page_months(curret_period, navigation_fn, direction):
 
 
 def _months_to_year_and_month(months):
-    years = int(months / 12)
-    month = months - years * 12
+    years = int(months / 13)
+    month = months - years * 13
     if month == 0:
-        month = 12
+        month = 13
         years -= 1
     return years, month
 
@@ -404,27 +298,9 @@ def backward_one_week_fn(main_frame, current_period, navigation_fn):
 
 
 def navigate_month_step(current_period, navigation_fn, direction):
-    """
-    Currently does notice leap years.
-    """
-    # TODO: NEW-TIME: (year, month, day, hour, minute, second) -> int (days in # month)
     tm = current_period.mean_time()
-    gt = GregorianUtils.from_time(tm)
-    if direction > 0:
-        if gt.month == 2:
-            d = 28
-        elif gt.month in (4, 6, 9, 11):
-            d = 30
-        else:
-            d = 31
-    else:
-        if gt.month == 3:
-            d = 28
-        elif gt.month in (5, 7, 10, 12):
-            d = 30
-        else:
-            d = 31
-    mv = delta_from_days(d)
+    gt = BosparanianUtils.from_time(tm)
+    mv=delta_from_days(gt.days_in_month())
     navigation_fn(lambda tp: tp.move_delta(direction * mv))
 
 
@@ -447,73 +323,73 @@ def backward_one_year_fn(main_frame, current_period, navigation_fn):
 
 
 def fit_millennium_fn(main_frame, current_period, navigation_fn):
-    mean = GregorianUtils.from_time(current_period.mean_time())
+    mean = BosparanianUtils.from_time(current_period.mean_time())
     if mean.year > get_millenium_max_year():
         year = get_millenium_max_year()
     else:
-        year = max(get_min_year_containing_jan_1(), int(mean.year / 1000) * 1000)
-    start = GregorianUtils.from_date(year, 1, 1).to_time()
-    end = GregorianUtils.from_date(year + 1000, 1, 1).to_time()
+        year = max(get_min_year_containing_praios_1(), int(mean.year / 1000) * 1000)
+    start = BosparanianUtils.from_date(year, 1, 1).to_time()
+    end = BosparanianUtils.from_date(year + 1000, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
-def get_min_year_containing_jan_1():
-    return GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).year + 1
+def get_min_year_containing_praios_1():
+    return BosparanianUtils.from_time(BosparanianTimeType().get_min_time()[0]).year + 1
 
 
 def get_millenium_max_year():
-    return GregorianUtils.from_time(GregorianTimeType().get_max_time()[0]).year - 1000
+    return BosparanianUtils.from_time(BosparanianTimeType().get_max_time()[0]).year - 1000
 
 
 def get_century_max_year():
-    return GregorianUtils.from_time(GregorianTimeType().get_max_time()[0]).year - 100
+    return BosparanianUtils.from_time(BosparanianTimeType().get_max_time()[0]).year - 100
 
 
 def fit_century_fn(main_frame, current_period, navigation_fn):
-    mean = GregorianUtils.from_time(current_period.mean_time())
+    mean = BosparanianUtils.from_time(current_period.mean_time())
     if mean.year > get_century_max_year():
         year = get_century_max_year()
     else:
-        year = max(get_min_year_containing_jan_1(), int(mean.year / 100) * 100)
-    start = GregorianUtils.from_date(year, 1, 1).to_time()
-    end = GregorianUtils.from_date(year + 100, 1, 1).to_time()
+        year = max(get_min_year_containing_praios_1(), int(mean.year / 100) * 100)
+    start = BosparanianUtils.from_date(year, 1, 1).to_time()
+    end = BosparanianUtils.from_date(year + 100, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_decade_fn(main_frame, current_period, navigation_fn):
-    mean = GregorianUtils.from_time(current_period.mean_time())
-    start = GregorianUtils.from_date(int(mean.year / 10) * 10, 1, 1).to_time()
-    end = GregorianUtils.from_date(int(mean.year / 10) * 10 + 10, 1, 1).to_time()
+    mean = BosparanianUtils.from_time(current_period.mean_time())
+    start = BosparanianUtils.from_date(int(mean.year / 10) * 10, 1, 1).to_time()
+    end = BosparanianUtils.from_date(int(mean.year / 10) * 10 + 10, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_year_fn(main_frame, current_period, navigation_fn):
-    mean = GregorianUtils.from_time(current_period.mean_time())
-    start = GregorianUtils.from_date(mean.year, 1, 1).to_time()
-    end = GregorianUtils.from_date(mean.year + 1, 1, 1).to_time()
+    mean = BosparanianUtils.from_time(current_period.mean_time())
+    start = BosparanianUtils.from_date(mean.year, 1, 1).to_time()
+    end = BosparanianUtils.from_date(mean.year + 1, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_month_fn(main_frame, current_period, navigation_fn):
-    mean = GregorianUtils.from_time(current_period.mean_time())
-    start = GregorianUtils.from_date(mean.year, mean.month, 1).to_time()
-    if mean.month == 12:
-        end = GregorianUtils.from_date(mean.year + 1, 1, 1).to_time()
+    mean = BosparanianUtils.from_time(current_period.mean_time())
+    start = BosparanianUtils.from_date(mean.year, mean.month, 1).to_time()
+    if mean.month == 13:
+        end = BosparanianUtils.from_date(mean.year + 1, 1, 1).to_time()
     else:
-        end = GregorianUtils.from_date(mean.year, mean.month + 1, 1).to_time()
+        end = BosparanianUtils.from_date(mean.year, mean.month + 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_day_fn(main_frame, current_period, navigation_fn):
-    mean = GregorianUtils.from_time(current_period.mean_time())
-    start = GregorianUtils.from_date(mean.year, mean.month, mean.day).to_time()
+    mean = BosparanianUtils.from_time(current_period.mean_time())
+    start = BosparanianUtils.from_date(mean.year, mean.month, mean.day).to_time()
     end = start + delta_from_days(1)
     navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_week_fn(main_frame, current_period, navigation_fn):
-    mean = GregorianUtils.from_time(current_period.mean_time())
-    start = GregorianUtils.from_date(mean.year, mean.month, mean.day).to_time()
+    mean = BosparanianUtils.from_time(current_period.mean_time())
+    start = BosparanianUtils.from_date(mean.year, mean.month, mean.day).to_time()
     weekday = start.get_day_of_week()
     start = start - delta_from_days(weekday)
     if not main_frame.week_starts_on_monday():
@@ -527,21 +403,20 @@ class StripCentury(Strip):
     def label(self, time, major=False):
         if major:
             # TODO: This only works for English. Possible to localize?
-            time = GregorianUtils.from_time(time)
+            time = BosparanianUtils.from_time(time)
             start_year = self._century_start_year(time.year)
             century = (start_year + 100) / 100
             if century <= 0:
-                return str(abs(century - 1)) + " century BC"
-            else:
-                return str(century) + " century"
+                century -= 1
+            return str(century) + " century BF"
         return ""
 
     def start(self, time):
-        time = GregorianUtils.from_time(time)
-        return GregorianUtils.from_date(self._century_start_year(time.year), 1, 1).to_time()
+        time = BosparanianUtils.from_time(time)
+        return BosparanianUtils.from_date(self._century_start_year(time.year), 1, 1).to_time()
 
     def increment(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
+        gregorian_time = BosparanianUtils.from_time(time)
         return gregorian_time.replace(year=gregorian_time.year + 100).to_time()
 
     def _century_start_year(self, year):
@@ -552,17 +427,17 @@ class StripCentury(Strip):
 class StripDecade(Strip):
 
     def label(self, time, major=False):
-        time = GregorianUtils.from_time(time)
+        time = BosparanianUtils.from_time(time)
         return format_decade(self._decade_start_year(time.year))
 
     def start(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        new_gregorian = GregorianUtils.from_date(self._decade_start_year(gregorian_time.year), 1, 1)
-        return new_gregorian.to_time()
+        bosparanian_time = BosparanianUtils.from_time(time)
+        new_bosparanian = BosparanianUtils.from_date(self._decade_start_year(bosparanian_time.year), 1, 1)
+        return new_bosparanian.to_time()
 
     def increment(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        return gregorian_time.replace(year=gregorian_time.year + 10).to_time()
+        bosparanian_time = BosparanianUtils.from_time(time)
+        return bosparanian_time.replace(year=bosparanian_time.year + 10).to_time()
 
     def _decade_start_year(self, year):
         # The first start year must be to the left of the first visible
@@ -574,57 +449,103 @@ class StripDecade(Strip):
 class StripYear(Strip):
 
     def label(self, time, major=False):
-        return format_year(GregorianUtils.from_time(time).year)
+        return format_year(BosparanianUtils.from_time(time).year)
 
     def start(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        new_gregorian = GregorianUtils.from_date(gregorian_time.year, 1, 1)
-        return new_gregorian.to_time()
+        bosparanian_time = BosparanianUtils.from_time(time)
+        new_bosparanian = BosparanianUtils.from_date(bosparanian_time.year, 1, 1)
+        return new_bosparanian.to_time()
 
     def increment(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        return gregorian_time.replace(year=gregorian_time.year + 1).to_time()
+        bosparanian_time = BosparanianUtils.from_time(time)
+        return bosparanian_time.replace(year=bosparanian_time.year + 1).to_time()
 
 
 class StripMonth(Strip):
 
     def label(self, time, major=False):
-        time = GregorianUtils.from_time(time)
+        time = BosparanianUtils.from_time(time)
         if major:
-            return "%s %s" % (abbreviated_name_of_month(time.month),
+            return "%s %s" % (bosp_name_of_month(time.month),
                               format_year(time.year))
-        return abbreviated_name_of_month(time.month)
+        if time.month == 13:
+            return bosp_abbreviated_name_of_month(time.month)
+        return bosp_name_of_month(time.month)
 
     def start(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        new_gregorian = GregorianUtils.from_date(gregorian_time.year, gregorian_time.month, 1)
-        return new_gregorian.to_time()
+        bosparanian_time = BosparanianUtils.from_time(time)
+        new_bosparanian = BosparanianUtils.from_date(bosparanian_time.year, bosparanian_time.month, 1)
+        return new_bosparanian.to_time()
 
     def increment(self, time):
-        days_in_month = GregorianUtils.from_time(time).days_in_month()
+        days_in_month = BosparanianUtils.from_time(time).days_in_month()
         return time + delta_from_days(days_in_month)
+
+#    def get_font(self, time_period):
+#        if (bosparanian.from_time(time_period.start_time).month == 1):
+#            return get_default_font(8, True)
+#        else:
+#            return get_default_font(8)
+
+class StripQuarter(Strip):
+    
+    def get_quarter(self,time):
+        m = BosparanianUtils.from_time(time).month;
+        if m == 13:
+            return 0
+        return (m - 1) // 3 + 1
+
+    def label(self, time, major=False):
+        q = self.get_quarter(time)
+        if q == 0:
+            return "NLD"
+        return "Q%d"%q
+
+    def start(self, time):
+        q = self.get_quarter(time)
+        if q == 0:
+            m = 13
+        else:
+            m = (q - 1) * 3 + 1
+        return BosparanianUtils.from_date(BosparanianUtils.from_time(time).year, m, 1).to_time()
+
+    def increment(self, time):
+        q = self.get_quarter(time)
+        if q == 0:
+            days_in_quarter = 5
+        else:
+            days_in_quarter = 30 * 3
+        return time + delta_from_days(days_in_quarter)
 
 
 class StripDay(Strip):
 
     def label(self, time, major=False):
-        time = GregorianUtils.from_time(time)
+        time = BosparanianUtils.from_time(time)
         if major:
             return "%s %s %s" % (time.day,
-                                 abbreviated_name_of_month(time.month),
+                                 bosp_abbreviated_name_of_month(time.month),
                                  format_year(time.year))
         return str(time.day)
 
     def start(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        new_gregorian = GregorianUtils.from_date(gregorian_time.year, gregorian_time.month, gregorian_time.day)
-        return new_gregorian.to_time()
+        bosparanian_time = BosparanianUtils.from_time(time)
+        new_bosparanian = BosparanianUtils.from_date(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
+        return new_bosparanian.to_time()
 
     def increment(self, time):
         return time + delta_from_days(1)
     
     def is_day(self):
         return True
+
+#    def get_font(self, time_period):
+#        if (time_period.start_time.get_day_of_week() == 0): # Windsday in italics (start of week)
+#            return get_default_font(8,True,False)
+#        elif (time_period.start_time.get_day_of_week() == 3): # Praiosday in bold
+#            return get_default_font(8, True, True)
+#        else:
+#            return get_default_font(8)
 
 
 class StripWeek(Strip):
@@ -639,41 +560,32 @@ class StripWeek(Strip):
             next_first_weekday = self.increment(first_weekday)
             last_weekday = next_first_weekday - delta_from_days(1)
             range_string = self._time_range_string(first_weekday, last_weekday)
-            if self.config.week_start == "monday":
-                return (_("Week") + " %s (%s)") % (GregorianUtils.calendar_week(time), range_string)
-            else:
-                # It is sunday (don't know what to do about week numbers here)
-                return range_string
-        # This strip should never be used as minor
-        return ""
+            return (_("Week") + " %s (%s)") % (BosparanianUtils.calendar_week(time), range_string)
+        return _("Week") + " %s" % BosparanianUtils.calendar_week(time)
 
     def _time_range_string(self, start, end):
-        start = GregorianUtils.from_time(start)
-        end = GregorianUtils.from_time(end)
+        start = BosparanianUtils.from_time(start)
+        end = BosparanianUtils.from_time(end)
         if start.year == end.year:
             if start.month == end.month:
                 return "%s-%s %s %s" % (start.day, end.day,
-                                        abbreviated_name_of_month(start.month),
+                                        bosp_abbreviated_name_of_month(start.month),
                                         format_year(start.year))
             return "%s %s-%s %s %s" % (start.day,
-                                       abbreviated_name_of_month(start.month),
+                                       bosp_abbreviated_name_of_month(start.month),
                                        end.day,
-                                       abbreviated_name_of_month(end.month),
+                                       bosp_abbreviated_name_of_month(end.month),
                                        format_year(start.year))
         return "%s %s %s-%s %s %s" % (start.day,
-                                      abbreviated_name_of_month(start.month),
+                                      bosp_abbreviated_name_of_month(start.month),
                                       format_year(start.year),
                                       end.day,
-                                      abbreviated_name_of_month(end.month),
+                                      bosp_abbreviated_name_of_month(end.month),
                                       format_year(end.year))
 
     def start(self, time):
-        if self.config.week_start == "monday":
-            days_to_subtract = time.get_day_of_week()
-        else:
-            # It is sunday
-            days_to_subtract = (time.get_day_of_week() + 1) % 7
-        return timeline.Time(time.julian_day - days_to_subtract, 0)
+        days_to_subtract = time.get_day_of_week()
+        return timeline.BosparanianTime(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
         return time + delta_from_days(7)
@@ -684,18 +596,18 @@ class StripWeekday(Strip):
     def label(self, time, major=False):
         if major:
             day_of_week = time.get_day_of_week()
-            time = GregorianUtils.from_time(time)
-            return "%s %s %s %s" % (abbreviated_name_of_weekday(day_of_week),
+            time = BosparanianUtils.from_time(time)
+            return "%s %s %s %s" % (bosp_abbreviated_name_of_weekday(day_of_week),
                                     time.day,
-                                    abbreviated_name_of_month(time.month),
+                                    bosp_abbreviated_name_of_month(time.month),
                                     format_year(time.year))
-        return (abbreviated_name_of_weekday(time.get_day_of_week()) +
-                " %s" % GregorianUtils.from_time(time).day)
+        return (bosp_abbreviated_name_of_weekday(time.get_day_of_week()) +
+                " %s" % BosparanianUtils.from_time(time).day)
 
     def start(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        new_gregorian = GregorianUtils.from_date(gregorian_time.year, gregorian_time.month, gregorian_time.day)
-        return new_gregorian.to_time()
+        bosparanian_time = BosparanianUtils.from_time(time)
+        new_bosparanian = BosparanianUtils.from_date(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
+        return new_bosparanian.to_time()
 
     def increment(self, time):
         return time + delta_from_days(1)
@@ -703,19 +615,27 @@ class StripWeekday(Strip):
     def is_day(self):
         return True
 
+#    def get_font(self, time_period):
+#        if (time_period.start_time.get_day_of_week() == 0): # Windsday in italics (start of week)
+#            return get_default_font(8,True,False)
+#        elif (time_period.start_time.get_day_of_week() == 3): # Praiosday in bold
+#            return get_default_font(8, True, True)
+#        else:
+#            return get_default_font(8)
+
 
 class StripHour(Strip):
 
     def label(self, time, major=False):
-        time = GregorianUtils.from_time(time)
+        time = BosparanianUtils.from_time(time)
         if major:
-            return "%s %s %s: %sh" % (time.day, abbreviated_name_of_month(time.month),
+            return "%s %s %s: %sh" % (time.day, bosp_abbreviated_name_of_month(time.month),
                                       format_year(time.year), time.hour)
         return str(time.hour)
 
     def start(self, time):
         (hours, _, _) = time.get_time_of_day()
-        return timeline.Time(time.julian_day, hours * 60 * 60)
+        return timeline.BosparanianTime(time.julian_day, hours * 60 * 60)
 
     def increment(self, time):
         return time + timeline.delta_from_seconds(60 * 60)
@@ -724,32 +644,26 @@ class StripHour(Strip):
 class StripMinute(Strip):
 
     def label(self, time, major=False):
-        time = GregorianUtils.from_time(time)
+        time = BosparanianUtils.from_time(time)
         if major:
-            return "%s %s %s: %s:%s" % (time.day, abbreviated_name_of_month(time.month),
+            return "%s %s %s: %s:%s" % (time.day, bosp_abbreviated_name_of_month(time.month),
                                         format_year(time.year), time.hour, time.minute)
         return str(time.minute)
 
     def start(self, time):
         (hours, minutes, _) = time.get_time_of_day()
-        return timeline.Time(time.julian_day, minutes * 60 + hours * 60 * 60)
+        return timeline.BosparanianTime(time.julian_day, minutes * 60 + hours * 60 * 60)
 
     def increment(self, time):
         return time + timeline.delta_from_seconds(60)
 
 
 def format_year(year):
-    if year <= 0:
-        return "%d BC" % (1 - year)
-    else:
-        return str(year)
+    return "%dBF" % year
 
 
 def format_decade(start_year):
-    if start_year >= -10:
-        return str(start_year + 10) + "s"
-    else:
-        return "%ds BC" % (abs(start_year) - 20)
+    return str(start_year + 10) + "s"
 
 
 def move_period_num_days(period, num):
@@ -769,31 +683,31 @@ def move_period_num_weeks(period, num):
 def move_period_num_months(period, num):
     try:
         delta = num
-        years = abs(delta) / 12
-        gregorian_start = GregorianUtils.from_time(period.start_time)
-        gregorian_end = GregorianUtils.from_time(period.end_time)
+        years = abs(delta) / 13
+        bosparanian_start = BosparanianUtils.from_time(period.start_time)
+        bosparanian_end = BosparanianUtils.from_time(period.end_time)
         if num < 0:
             years = -years
-        delta = delta - 12 * years
+        delta = delta - 13 * years
         if delta < 0:
-            start_month = gregorian_start.month + 12 + delta
-            end_month = gregorian_end.month + 12 + delta
-            if start_month > 12:
-                start_month -= 12
-                end_month -= 12
-            if start_month > gregorian_start.month:
+            start_month = bosparanian_start.month + 13 + delta
+            end_month = bosparanian_end.month + 13 + delta
+            if start_month > 13:
+                start_month -= 13
+                end_month -= 13
+            if start_month > bosparanian_start.month:
                 years -= 1
         else:
-            start_month = gregorian_start.month + delta
-            end_month = gregorian_start.month + delta
-            if start_month > 12:
-                start_month -= 12
-                end_month -= 12
+            start_month = bosparanian_start.month + delta
+            end_month = bosparanian_start.month + delta
+            if start_month > 13:
+                start_month -= 13
+                end_month -= 13
                 years += 1
-        start_year = gregorian_start.year + years
-        end_year = gregorian_start.year + years
-        start_time = gregorian_start.replace(year=start_year, month=start_month)
-        end_time = gregorian_end.replace(year=end_year, month=end_month)
+        start_year = bosparanian_start.year + years
+        end_year = bosparanian_start.year + years
+        start_time = bosparanian_start.replace(year=start_year, month=start_month)
+        end_time = bosparanian_end.replace(year=end_year, month=end_month)
         return TimePeriod(period.time_type, start_time.to_time(), end_time.to_time())
     except ValueError:
         return None
@@ -802,10 +716,10 @@ def move_period_num_months(period, num):
 def move_period_num_years(period, num):
     try:
         delta = num
-        start_year = GregorianUtils.from_time(period.start_time).year
-        end_year = GregorianUtils.from_time(period.end_time).year
-        start_time = GregorianUtils.from_time(period.start_time).replace(year=start_year + delta)
-        end_time = GregorianUtils.from_time(period.end_time).replace(year=end_year + delta)
+        start_year = BosparanianUtils.from_time(period.start_time).year
+        end_year = BosparanianUtils.from_time(period.end_time).year
+        start_time = BosparanianUtils.from_time(period.start_time).replace(year=start_year + delta)
+        end_time = BosparanianUtils.from_time(period.end_time).replace(year=end_year + delta)
         return TimePeriod(period.time_type, start_time.to_time(), end_time.to_time())
     except ValueError:
         return None

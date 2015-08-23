@@ -21,10 +21,10 @@ import wx
 
 class NumTimePicker(wx.Panel):
 
-    def __init__(self, parent, show_time=False, config=None):
+    def __init__(self, parent, show_time=False, config=None, on_change=None):
         wx.Panel.__init__(self, parent)
         self.time_picker = self._create_gui()
-        self.controller = NumTimePickerController(self, 0)
+        self.controller = NumTimePickerController(self, 0, on_change)
 
     def get_value(self):
         return self.time_picker.GetValue()
@@ -56,10 +56,11 @@ class NumTimePicker(wx.Panel):
 
 class NumTimePickerController(object):
 
-    def __init__(self, time_picker, default_num_time):
+    def __init__(self, time_picker, default_num_time, on_change):
         self.time_picker = time_picker
         self.time_picker.set_range(-1000000000, 1000000000)
         self.default_num_time = default_num_time
+        self.on_change = on_change
 
     def get_value(self):
         num_time = self.time_picker.get_value()
@@ -69,6 +70,10 @@ class NumTimePickerController(object):
         if num_time == None:
             num_time = self.default_num_time
         self.time_picker.set_value(num_time)
+        if not self.on_change is None:
+            self.on_change()         
 
     def on_spin(self):
         pass
+
+

@@ -25,7 +25,7 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditordialog import SetCategoryEditorDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import a_category_with
-import timelinelib.calendar.gregorian as gregorian
+from timelinelib.calendar.gregorian import GregorianUtils
 
 
 class set_category_editor_spec_base(UnitTestCase):
@@ -68,8 +68,8 @@ class set_category_editor_spec_base(UnitTestCase):
     def _create_event(self, category):
         return Event(
             self.time_type,
-            gregorian.from_date(2010, 1, 1).to_time(),
-            gregorian.from_date(2010, 1, 1).to_time(),
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
             "foo",
             category)
 
