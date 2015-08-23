@@ -8,6 +8,13 @@ Version 1.8.0
 
 This is a periodic release.
 
+Drawing:
+
+* Keep a group of events together. 
+  Expand containers vertically when it contains overlapping subevents.
+  Implemented as an experimental feature.
+  (`#39 <https://sourceforge.net/p/thetimelineproj/backlog/39/>`_)
+
 Fixed crash reports:
 
 * ``PyAssertionError: C++ assertion "wxAssertFailure" failed at ..\..\src\common\stockitem.cpp(166) in wxGetStockLabel(): invalid stock item ID``
