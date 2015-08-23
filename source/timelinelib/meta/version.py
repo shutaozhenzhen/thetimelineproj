@@ -22,8 +22,8 @@ DEV = True
 
 def get_version():
     if DEV:
-        return ("%s.%s.%s-DSAdev" % VERSION) + DEV_REVISION
-    return "%s.%s.%s-DSA" % VERSION
+        return ("%s.%s.%sdev" % VERSION) + DEV_REVISION
+    return "%s.%s.%s" % VERSION
 
 
 def _get_revision():
