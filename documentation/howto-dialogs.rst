@@ -104,3 +104,24 @@ these files are placed in a module under source.timelinelib.wxgui.dialogs.
 
 The tests for these classes are placed in a module under test.specs.wxgui.dialogs.
 
+Calling updating dialogs
+------------------------
+When a dialog is used to change data in a timeline, it's important that the mechanism to
+prevent two users to change a timeline at the same time, somes into play.
+
+For that reason an updating dialog should always be opened through the helper function
+self_locking. Like the code where the EventEditorDialog is opened:
+
+Sample::
+
+    def open_event_editor_for(parent, config, db, handle_db_error, event):
+        def create_event_editor():
+            if event.is_container():
+                title = _("Edit Container")
+                return ContainerEditorDialog(parent, title, db, event)
+            else:
+                return EventEditorDialog(
+                    parent, config, _("Edit Event"), db, event=event)
+        def edit_function():
+            gui_utils.show_modal(create_event_editor, handle_db_error)
+        safe_locking(parent, edit_function)
