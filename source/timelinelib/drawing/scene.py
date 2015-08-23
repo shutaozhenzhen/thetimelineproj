@@ -173,20 +173,6 @@ class TimelineScene(object):
 
     def _place_subevents_last(self, events):
         return self._place_subevents_after_container(events)
-        reordered_events = [event for event in events
-                            if not event.is_subevent() and not event.is_container()]
-        subevents = [event for event in events
-                     if event.is_subevent()]
-        containers = [event for event in events
-                      if event.is_container()]
-        result = []
-        for container in containers:
-            result.append(container)
-            ls = [event for event in subevents 
-                  if event.get_container_id() == container.container_id]
-            result.extend(ls)
-        result.extend(reordered_events)
-        return result
 
     def _place_subevents_after_container(self, events):
         result = []
