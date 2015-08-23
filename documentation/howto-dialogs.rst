@@ -18,7 +18,7 @@ The controller __init__ function looks like this::
     def __init__(self, view):
         self.view = view
 
-The Dialog class should contain no business logic at all. It should only contain simple logic to administer the gui objects within the Dialog. 
+The Dialog class should contain no business logic at all. It should only contain simple logic to handle the gui objects within the Dialog. 
 For example to set a value in a TextBox the Dialog, the dialog shall provide a method set_text(text)  that can be used by the controller. 
 For the same reason it must provide a get_text() function that the controller can use to retrieve values entered by a user.
 
