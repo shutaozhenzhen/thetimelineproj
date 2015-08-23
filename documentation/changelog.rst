@@ -28,6 +28,9 @@ Fixed crash reports:
 
 * ``string index out of range``
   (`#85 <https://sourceforge.net/p/thetimelineproj/backlog/85/>`_)
+  
+* ``AttributeError: 'NoneType' object has no attribute 'julian_day'``
+  (`#96 <https://sourceforge.net/p/thetimelineproj/backlog/96/>`_)
 
 Version 1.7.1
 -------------
