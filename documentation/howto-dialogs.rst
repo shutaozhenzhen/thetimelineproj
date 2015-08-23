@@ -10,7 +10,7 @@ To make it easier to test a Dialog we follow  a pattern where all business logic
 The controller is instantiated in the __init__ function of the Dialog class like this::
 
     def __init__(self, timeline, ...):
-        self.controller = MyDialogControllet (self, timeline)
+        self.controller = MyDialogController (self, timeline)
 
 Notice that the constructor takes a reference to the Dialog as first argument.
 The controller __init__ function looks like this::
@@ -18,7 +18,7 @@ The controller __init__ function looks like this::
     def __init__(self, view):
         self.view = view
 
-The Dialog class should contain no business logic at all. It should only contain simple logic to administer the gui objects within the Dialog. 
+The Dialog class should contain no business logic at all. It should only contain simple logic to handle the gui objects within the Dialog. 
 For example to set a value in a TextBox the Dialog, the dialog shall provide a method set_text(text)  that can be used by the controller. 
 For the same reason it must provide a get_text() function that the controller can use to retrieve values entered by a user.
 
@@ -39,7 +39,7 @@ That means we can concentrate on testing the business logic in the controller.
 The gui constructor
 -------------------
 The gui constructor typically contains the following
-   * Initiation of gui sperclass
+   * Initiation of gui superclass
    * Call to the create_gui() method
    * Creation of controller object
    * Tell the controller to populate the dialog
@@ -68,7 +68,7 @@ Sample::
         
 Sizers and controls
 -------------------
-We try to break the cretion of the gui into small functions.
+We try to break the creation of the gui into small functions.
 Normally a sizer is passed to a function. The idea is that the function shall create som objects
 and place them in the sizer::
 
@@ -97,3 +97,31 @@ In this package the following gui helper code can be found:
  * display_error_message
  * show_modal           Show a modal dialog using error handling pattern
  
+Module structure
+----------------
+The dialog class and the controller class are typically saved in separate source files and
+these files are placed in a module under source.timelinelib.wxgui.dialogs.
+
+The tests for these classes are placed in a module under test.specs.wxgui.dialogs.
+
+Calling updating dialogs
+------------------------
+When a dialog is used to change data in a timeline, it's important that the mechanism to
+prevent two users to change a timeline at the same time, somes into play.
+
+For that reason an updating dialog should always be opened through the helper function
+self_locking. Like the code where the EventEditorDialog is opened:
+
+Sample::
+
+    def open_event_editor_for(parent, config, db, handle_db_error, event):
+        def create_event_editor():
+            if event.is_container():
+                title = _("Edit Container")
+                return ContainerEditorDialog(parent, title, db, event)
+            else:
+                return EventEditorDialog(
+                    parent, config, _("Edit Event"), db, event=event)
+        def edit_function():
+            gui_utils.show_modal(create_event_editor, handle_db_error)
+        safe_locking(parent, edit_function)

@@ -17,6 +17,7 @@
 
 
 from timelinelib.data.event import Event
+from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_STRATEGY
 
 
 class Container(Event):
@@ -28,7 +29,10 @@ class Container(Event):
         self.container_id = cid
         self.events = []
         import timelinelib.db.strategies
-        self.strategy = timelinelib.db.strategies.DefaultContainerStrategy(self)
+        if EXTENDED_CONTAINER_STRATEGY.enabled():
+            self.strategy = timelinelib.db.strategies.ExtendedContainerStrategy(self)
+        else:
+            self.strategy = timelinelib.db.strategies.DefaultContainerStrategy(self)
 
     def __eq__(self, other):
         return (isinstance(other, Container) and

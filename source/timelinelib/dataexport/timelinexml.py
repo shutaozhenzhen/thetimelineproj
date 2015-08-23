@@ -153,7 +153,10 @@ class Exporter(object):
     _write_era = wrap_in_tag(_write_era, "era", INDENT2)
 
     def _text_starts_with_container_tag(self, text):
-        return text[0] in ('(', '[')
+        if len(text) > 0:
+            return text[0] in ('(', '[')
+        else:
+            return False
 
     def _add_leading_space_to_text(self, text):
         return " %s" % text

@@ -18,53 +18,47 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.baseeditor import BaseEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.baseeditor import BaseEditor
 
 
-class DescriptionEditorGuiCreator(wx.Panel):
+class ProgressEditorGuiCreator(wx.Panel):
 
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
     def create_sizer(self):
-        return wx.BoxSizer()
+        return wx.GridBagSizer(vgap=10, hgap=10)
 
     def create_controls(self):
-        text = self._create_text_control()
-        return (text,)
+        label = wx.StaticText(self, label=_("Progress %:"))
+        self.data = self._create_spin_control()
+        return (label, self.data)
 
     def put_controls_in_sizer(self, sizer, controls):
-        text, = controls
-        sizer.Add(text, 1, wx.ALL | wx.EXPAND, 0)
+        label, spin_ctrl = controls
+        span = wx.GBSpan(rowspan=1, colspan=1)
+        sizer.Add(label, wx.GBPosition(row=1, col=0), span)
+        sizer.Add(spin_ctrl, wx.GBPosition(row=1, col=1), span)
 
-    def _create_text_control(self):
-        self.data = wx.TextCtrl(self, style=wx.TE_MULTILINE)
-        self.Bind(wx.EVT_CHAR, self._on_char)
-        return self.data
-
-    def _on_char(self, evt):
-        if self._ctrl_a(evt):
-            self.SelectAll()
-        else:
-            evt.Skip()
-
-    def _ctrl_a(self, evt):
-        KEY_CODE_A = 1
-        return evt.ControlDown() and evt.KeyCode == KEY_CODE_A
+    def _create_spin_control(self):
+        progress = wx.SpinCtrl(self, size=(50, -1))
+        progress.SetRange(0, 100)
+        return progress
 
 
-class DescriptionEditor(BaseEditor, DescriptionEditorGuiCreator):
+class ProgressEditor(BaseEditor, ProgressEditorGuiCreator):
 
     def __init__(self, parent, editor):
         BaseEditor.__init__(self, parent, editor)
-        DescriptionEditorGuiCreator.__init__(self, parent)
+        ProgressEditorGuiCreator.__init__(self, parent)
         self.create_gui()
 
-    def get_data(self):
-        description = self.data.GetValue().strip()
-        if description != "":
-            return description
-        return None
+    def focus(self):
+        super(ProgressEditor, self).focus()
+        self._select_all()
+
+    def _select_all(self):
+        self.data.SetSelection(0, -1)
 
     def clear_data(self):
-        self.data.SetValue("")
+        self.data.SetValue(0)

@@ -234,3 +234,12 @@ class DefaultContainerStrategy(ContainerStrategy):
         new_end = event.get_time_period().end_time + delta
         event.get_time_period().start_time = new_start
         event.get_time_period().end_time = new_end
+
+
+class ExtendedContainerStrategy(DefaultContainerStrategy):
+
+    def register_subevent(self, subevent):
+        if subevent not in self.container.events:
+            self.container.events.append(subevent)
+            subevent.register_container(self.container)
+            self._set_time_period()
