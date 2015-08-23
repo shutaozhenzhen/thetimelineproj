@@ -25,6 +25,7 @@ class ScrollByDragInputHandler(InputHandler):
 
     def __init__(self, controller, start_time):
         self.controller = controller
+        self.controller.start()
         self.start_time = start_time
         self.last_clock_time = time.clock()
         self.last_x = 0
@@ -35,8 +36,9 @@ class ScrollByDragInputHandler(InputHandler):
         self.INERTIAL_SCROLLING_SPEED_THRESHOLD = 200
 
     def mouse_moved(self, x, y, alt_down=False):
-        self._calculate_sped(x, y)
+        self._calculate_sped(x)
         self._scroll_timeline(x)
+        self.controller.scroll_vertical()
 
     def left_mouse_up(self):
         self.controller.change_input_handler_to_no_op()
@@ -44,15 +46,10 @@ class ScrollByDragInputHandler(InputHandler):
             if self.speed_px_per_sec > self.INERTIAL_SCROLLING_SPEED_THRESHOLD:
                 self._inertial_scrolling()
 
-    def _calculate_sped(self, x, y):
+    def _calculate_sped(self, x):
         MAX_SPEED = 10000
         self.last_x_distance = x - self.last_x
         self.last_x = x
-        self.last_y_distance = y - self.last_y
-        self.last_y = y
-        if self._move_is_vertical() and self._vertical_move_is_significant():
-            self.controller.scroll_vertical(self.last_y_distance / 2)
-            return
         current_clock_time = time.clock()
         elapsed_clock_time = current_clock_time - self.last_clock_time
         if elapsed_clock_time == 0:
@@ -61,12 +58,6 @@ class ScrollByDragInputHandler(InputHandler):
             self.speed_px_per_sec = min(MAX_SPEED, abs(self.last_x_distance /
                                         elapsed_clock_time))
         self.last_clock_time = current_clock_time
-
-    def _move_is_vertical(self):
-        return abs(self.last_y_distance) > abs(self.last_x_distance)
-
-    def _vertical_move_is_significant(self):
-        return abs(self.last_y_distance) > 0 and abs(self.last_y - self.last_y_distance) > 0
 
     def _scroll_timeline(self, x):
         self.current_time = self.controller.get_time(x)

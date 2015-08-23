@@ -10,6 +10,9 @@ This is a periodic release.
 
 Drawing:
 
+* Vertical scroll by drag is not proportional
+  (`#88 <https://sourceforge.net/p/thetimelineproj/backlog/88/>`_)
+
 * Keep a group of events together. 
   Expand containers vertically when it contains overlapping subevents.
   Implemented as an experimental feature.
