@@ -97,3 +97,10 @@ In this package the following gui helper code can be found:
  * display_error_message
  * show_modal           Show a modal dialog using error handling pattern
  
+Module structure
+----------------
+The dialog class and the controller class are typically saved in separate source files and
+these files are placed in a module under source.timelinelib.wxgui.dialogs.
+
+The tests for these classes are placed in a module under test.specs.wxgui.dialogs.
+
