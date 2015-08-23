@@ -24,10 +24,10 @@ import timelinelib.calendar.gregorian as gregorian
 from timelinelib.calendar.gregorian import Gregorian
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.config.paths import ICONS_DIR
-from timelinelib.wxgui.utils import display_error_message
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.calendar import get_date_formatter
 from timelinelib.time.timeline import Time
+
 
 class GregorianDateTimePicker(wx.Panel):
 
@@ -75,19 +75,19 @@ class GregorianDateTimePicker(wx.Panel):
     def _date_button_on_click(self, evt):
         try:
             wx_date = self.controller.date_tuple_to_wx_date(self.date_picker.get_value())
-            calendar_popup = CalendarPopup(self, wx_date, self.config)
-            calendar_popup.Bind(wx.calendar.EVT_CALENDAR_SEL_CHANGED,
-                                self._calendar_on_date_changed)
-            calendar_popup.Bind(wx.calendar.EVT_CALENDAR,
-                                self._calendar_on_date_changed_dclick)
-            btn = evt.GetEventObject()
-            pos = btn.ClientToScreen((0,0))
-            sz = btn.GetSize()
-            calendar_popup.Position(pos, (0, sz[1]))
-            calendar_popup.Popup()
-            self.calendar_popup = calendar_popup
         except ValueError:
-            display_error_message(_("Invalid date"))
+            wx_date = wx.DateTime.Now()
+        calendar_popup = CalendarPopup(self, wx_date, self.config)
+        calendar_popup.Bind(wx.calendar.EVT_CALENDAR_SEL_CHANGED,
+                            self._calendar_on_date_changed)
+        calendar_popup.Bind(wx.calendar.EVT_CALENDAR,
+                            self._calendar_on_date_changed_dclick)
+        btn = evt.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        calendar_popup.Position(pos, (0, sz[1]))
+        calendar_popup.Popup()
+        self.calendar_popup = calendar_popup
 
     def _calendar_on_date_changed(self, evt):
         wx_date = evt.GetEventObject().GetDate()
@@ -115,7 +115,7 @@ class GregorianDateTimePickerController(object):
         return Gregorian(year, month, day, hour, minute, second).to_time()
 
     def set_value(self, time):
-        if time == None:
+        if time is None:
             time = self.now_fn()
         self.date_picker.set_value(gregorian.from_time(time).to_date_tuple())
         self.time_picker.set_value(gregorian.from_time(time).to_time_tuple())
@@ -127,7 +127,7 @@ class GregorianDateTimePickerController(object):
     def wx_date_to_date_tuple(self, wx_date):
         return (wx_date.Year, wx_date.Month + 1, wx_date.Day)
 
-    
+
 class CalendarPopup(wx.PopupTransientWindow):
 
     def __init__(self, parent, wx_date, config):
@@ -146,7 +146,7 @@ class CalendarPopup(wx.PopupTransientWindow):
     def _create_calendar_control(self, wx_date, border):
         style = self._get_cal_style()
         cal = wx.calendar.CalendarCtrl(self, -1, wx_date,
-                                       pos=(border,border), style=style)
+                                       pos=(border, border), style=style)
         self._set_cal_range(cal)
         return cal
 
@@ -260,13 +260,12 @@ class GregorianDatePicker(wx.TextCtrl):
                 self.controller.on_up()
             elif evt.GetKeyCode() == wx.WXK_DOWN:
                 self.controller.on_down()
-            elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or 
+            elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or
                   evt.GetKeyCode() == wx.WXK_RETURN):
                 self.parent.on_return()
             else:
                 evt.Skip()
         self.Bind(wx.EVT_KEY_DOWN, on_key_down)
-       
 
     def _resize_to_fit_text(self):
         w, _ = self.GetTextExtent("0000-00-00")
@@ -358,7 +357,7 @@ class GregorianDatePickerController(object):
         def increment_day(date):
             year, month, day = date
             time = gregorian.from_date(year, month, day).to_time()
-            if time <  GregorianTimeType().get_max_time()[0] - delta_from_days(1):
+            if time < GregorianTimeType().get_max_time()[0] - delta_from_days(1):
                 return gregorian.from_time(time + delta_from_days(1)).to_date_tuple()
             return date
         if not self._current_date_is_valid():
@@ -409,7 +408,7 @@ class GregorianDatePickerController(object):
             year, month, day = current_date
             gregorian.from_date(year, month, day)
             if gregorian.from_date(year, month, day).to_time() == GregorianTimeType().get_min_time()[0]:
-                return 
+                return
             new_date = decrement_day(current_date)
             self._save_preferred_day(new_date)
         if current_date != new_date:
@@ -430,14 +429,14 @@ class GregorianDatePickerController(object):
         year, month, day = date
         time = Gregorian(year, month, day, 0, 0, 0).to_time()
         if (time >= GregorianTimeType().get_max_time()[0] or
-            time <  GregorianTimeType().get_min_time()[0]):
+           time < GregorianTimeType().get_min_time()[0]):
             raise ValueError()
 
     def _set_new_date_and_restore_selection(self, new_date, selection):
         def restore_selection(selection):
             self.date_picker.SetSelection(selection[0], selection[1])
         self.save_preferred_day = False
-        if self.preferred_day != None:
+        if self.preferred_day is not None:
             year, month, _ = new_date
             new_date = self._set_valid_day(year, month, self.preferred_day)
         self.set_value(new_date)
@@ -556,7 +555,7 @@ class GregorianTimePicker(wx.TextCtrl):
                 self.controller.on_up()
             elif evt.GetKeyCode() == wx.WXK_DOWN:
                 self.controller.on_down()
-            elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or 
+            elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or
                   evt.GetKeyCode() == wx.WXK_RETURN):
                 self.parent.on_return()
             else:
