@@ -375,12 +375,20 @@ class TimelineScene(object):
     def _adjust_period_rect(self, event_rect):
         rect = self._get_overlapping_period_rect_with_largest_y(event_rect)
         if rect is not None:
-            event_rect.Y = rect.Y + event_rect.height
+            event_rect.Y = rect.Y + rect.height
 
     def _adjust_subevent_rect(self, subevent, event_rect):
         rect = self._get_overlapping_subevent_rect_with_largest_y(subevent, event_rect)
         if rect is not None:
             event_rect.Y = rect.Y + rect.height
+            for (evt, rct) in self.event_data:
+                if evt.is_container() and evt.container_id == subevent.get_container_id():
+                    tw, th = self._get_text_size(evt.get_text())
+                    rh = th + 2 * (self._inner_padding + self._outer_padding)
+                    h = event_rect.Y - rct.Y + rh
+                    if rct.height < h:
+                        rct.Height = h
+                    break
 
     def _get_overlapping_subevent_rect_with_largest_y(self, subevent, event_rect):
         event_data = self._get_list_with_overlapping_subevents(subevent, event_rect)
@@ -392,16 +400,16 @@ class TimelineScene(object):
 
     def _get_overlapping_period_rect_with_largest_y(self, event_rect):
         event_data = self._get_list_with_overlapping_period_events(event_rect)
-        rect_with_largest_y = None
+        rect_with_largest_yh = None
         for (_, rect) in event_data:
-            if rect_with_largest_y is None or rect.Y > rect_with_largest_y.Y:
-                rect_with_largest_y = rect
-        return rect_with_largest_y
+            if rect_with_largest_yh is None or rect.Y + rect.Height > rect_with_largest_yh.Y + rect_with_largest_yh.Height:
+                rect_with_largest_yh = rect
+        return rect_with_largest_yh
 
     def _get_list_with_overlapping_period_events(self, event_rect):
         return [(event, rect) for (event, rect) in self.event_data
                 if (self._rects_overlap(event_rect, rect) and
-                    rect.Y >= self.divider_y) ]
+                    rect.Y >= self.divider_y)]
 
     def _get_list_with_overlapping_subevents(self, subevent, event_rect):
         container_id = subevent.get_container_id()
@@ -410,13 +418,6 @@ class TimelineScene(object):
                     event.get_container_id() == container_id and
                     self._rects_overlap(event_rect, rect) and
                     rect.Y >= self.divider_y)]
-        if len(ls) > 0:
-            for (event, rect) in self.event_data:
-                if event.is_container() and event.container_id == container_id:
-                    tw, th = self._get_text_size(event.get_text())
-                    rh = th + 2 * (self._inner_padding + self._outer_padding)
-                    rect.Height = rect.Height + rh
-                    break
         return ls
 
     def _adjust_point_rect(self, event_rect):
