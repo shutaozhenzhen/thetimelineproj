@@ -84,8 +84,14 @@ class TimelineCanvasController(object):
         self.change_input_handler_to_no_op()
         self.timeline = None
 
-    def scroll_vertical(self, distance):
-        self.divider_line_slider.SetValue(self.divider_line_slider.GetValue() + distance)
+    def start(self):
+        self.start_slider_pos = self.divider_line_slider.GetValue()
+        self.start_mouse_pos = wx.GetMousePosition()[1]
+        self.view_height = self.view.GetSize()[1]
+
+    def scroll_vertical(self):
+        percentage_distance = 100 * (wx.GetMousePosition()[1] - self.start_mouse_pos) / self.view_height
+        self.divider_line_slider.SetValue(self.start_slider_pos + percentage_distance)
         self.config.divider_line_slider_pos = self.divider_line_slider.GetValue()
 
     def get_saved_drawer(self):

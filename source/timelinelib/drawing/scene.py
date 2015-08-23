@@ -31,7 +31,7 @@ class TimelineScene(object):
     def __init__(self, size, db, view_properties, get_text_size_fn, config):
         self._db = db
         self._view_properties = view_properties
-        self._get_text_size = get_text_size_fn
+        self._get_text_size_fn = get_text_size_fn
         self._config = config
         self._outer_padding = 5
         self._inner_padding = 3
@@ -145,6 +145,8 @@ class TimelineScene(object):
     def _get_next_overlapping_event(self, event_data, selected_event):
         selected_event_found = False
         for (e, _) in event_data:
+            if not selected_event.is_subevent() and e.is_subevent():
+                continue
             if selected_event_found:
                 return e
             else:
@@ -155,6 +157,8 @@ class TimelineScene(object):
     def _get_prev_overlapping_event(self, event_data, selected_event):
         prev_event = None
         for (e, _) in event_data:
+            if not selected_event.is_subevent() and e.is_subevent():
+                continue
             if e == selected_event:
                 return prev_event
             prev_event = e
@@ -166,12 +170,36 @@ class TimelineScene(object):
         self._calc_rects(visible_events)
 
     def _place_subevents_last(self, events):
+        return self._place_subevents_after_container(events)
         reordered_events = [event for event in events
-                            if not event.is_subevent()]
+                            if not event.is_subevent() and not event.is_container()]
         subevents = [event for event in events
                      if event.is_subevent()]
-        reordered_events.extend(subevents)
-        return reordered_events
+        containers = [event for event in events
+                      if event.is_container()]
+        result = []
+        for container in containers:
+            result.append(container)
+            ls = [event for event in subevents 
+                  if event.get_container_id() == container.container_id]
+            result.extend(ls)
+        result.extend(reordered_events)
+        return result
+
+    def _place_subevents_after_container(self, events):
+        result = []
+        for event in events:
+            if event.is_container():
+                result.append(event)
+                ls = [evt for evt in events
+                      if evt.is_subevent() and
+                      evt.get_container_id() == event.container_id]
+                result.extend(ls)
+            elif event.is_subevent():
+                pass
+            else:
+                result.append(event)
+        return result
 
     def _calc_rects(self, events):
         self.event_data = []
@@ -191,7 +219,9 @@ class TimelineScene(object):
         return event.is_subevent() and event.is_period()
 
     def _create_rectangle_for_period_subevent(self, event):
-        return self._create_ideal_rect_for_event(event)
+        rect = self._create_ideal_rect_for_event(event)
+        self._prevent_overlapping_by_adjusting_rect_y(event, rect)
+        return rect
 
     def _create_rectangle_for_possibly_overlapping_event(self, event):
         rect = self._create_ideal_rect_for_event(event)
@@ -275,6 +305,12 @@ class TimelineScene(object):
             rw = 0
         return self._create_ideal_wx_rect(rx, ry, rw, rh)
 
+    def _get_text_size(self, text):
+        if len(text) > 0:
+            return self._get_text_size_fn(text)
+        else:
+            return self._get_text_size_fn(" ")
+
     def never_show_period_events_as_point_events(self):
         return self._config.get_never_show_period_events_as_point_events()
 
@@ -326,15 +362,31 @@ class TimelineScene(object):
         return num_visible
 
     def _prevent_overlapping_by_adjusting_rect_y(self, event, event_rect):
-        if self._display_as_period(event):
-            self._adjust_period_rect(event_rect)
+        if event.is_subevent():
+            self._adjust_subevent_rect(event, event_rect)
         else:
-            self._adjust_point_rect(event_rect)
+            if self._display_as_period(event):
+                self._adjust_period_rect(event_rect)
+            else:
+                self._adjust_point_rect(event_rect)
 
     def _adjust_period_rect(self, event_rect):
         rect = self._get_overlapping_period_rect_with_largest_y(event_rect)
         if rect is not None:
             event_rect.Y = rect.Y + event_rect.height
+
+    def _adjust_subevent_rect(self, subevent, event_rect):
+        rect = self._get_overlapping_subevent_rect_with_largest_y(subevent, event_rect)
+        if rect is not None:
+            event_rect.Y = rect.Y + rect.height
+
+    def _get_overlapping_subevent_rect_with_largest_y(self, subevent, event_rect):
+        event_data = self._get_list_with_overlapping_subevents(subevent, event_rect)
+        rect_with_largest_y = None
+        for (_, rect) in event_data:
+            if rect_with_largest_y is None or rect.Y > rect_with_largest_y.Y:
+                rect_with_largest_y = rect
+        return rect_with_largest_y
 
     def _get_overlapping_period_rect_with_largest_y(self, event_rect):
         event_data = self._get_list_with_overlapping_period_events(event_rect)
@@ -347,7 +399,23 @@ class TimelineScene(object):
     def _get_list_with_overlapping_period_events(self, event_rect):
         return [(event, rect) for (event, rect) in self.event_data
                 if (self._rects_overlap(event_rect, rect) and
+                    rect.Y >= self.divider_y) ]
+
+    def _get_list_with_overlapping_subevents(self, subevent, event_rect):
+        container_id = subevent.get_container_id()
+        ls = [(event, rect) for (event, rect) in self.event_data
+                if (event.is_subevent() and
+                    event.get_container_id() == container_id and
+                    self._rects_overlap(event_rect, rect) and
                     rect.Y >= self.divider_y)]
+        if len(ls) > 0:
+            for (event, rect) in self.event_data:
+                if event.is_container() and event.container_id == container_id:
+                    tw, th = self._get_text_size(event.get_text())
+                    rh = th + 2 * (self._inner_padding + self._outer_padding)
+                    rect.Height = rect.Height + rh
+                    break
+        return ls
 
     def _adjust_point_rect(self, event_rect):
         rect = self._get_overlapping_point_rect_with_smallest_y(event_rect)

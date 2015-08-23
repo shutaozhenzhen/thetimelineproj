@@ -26,11 +26,11 @@ from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.components.feedbackbutton import FeedbackButton
 from timelinelib.wxgui.dialogs.eventeditor.containereditordialog import ContainerEditorDialog
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialogcontroller import EventEditorDialogController
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.alerteditor import AlertEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.descriptioneditor import DescriptionEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.hyperlinkeditor import HyperlinkEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.iconeditor import IconEditor
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.progresseditor import ProgressEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.alerteditor import AlertEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.descriptioneditor import DescriptionEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.hyperlinkeditor import HyperlinkEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.iconeditor import IconEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.progresseditor import ProgressEditor
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import _set_focus_and_select
@@ -192,15 +192,18 @@ class EventEditorDialog(wx.Dialog):
         return self._create_chb(box, _("Period"), handler)
 
     def _chb_period_on_checkbox(self, e):
-        if (e.IsChecked() and self.get_start() >= self.get_end()):
-            if self.timeline.get_time_type().is_date_time_type():
-                delta = delta_from_days(1)
-            else:
-                delta = 1
-            try:
-                self.set_end(self.get_start() + delta)
-            except TypeError:
-                pass
+        end = self.get_end()
+        start = self.get_start()
+        if start is not None and end is not None:
+            if (e.IsChecked() and start >= end):
+                if self.timeline.get_time_type().is_date_time_type():
+                    delta = delta_from_days(1)
+                else:
+                    delta = 1
+                try:
+                    self.set_end(start + delta)
+                except TypeError:
+                    pass
         self._show_to_time(e.IsChecked())
 
     def _create_show_time_checkbox(self, box):

@@ -19,7 +19,7 @@
 import wx
 import webbrowser
 
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditros.baseeditor import BaseEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.baseeditor import BaseEditor
 
 
 class HyperlinkEditorGuiCreator(wx.Panel):
@@ -90,8 +90,11 @@ class HyperlinkEditor(BaseEditor, HyperlinkEditorGuiCreator):
 
     def get_data(self):
         if self.url_visible:
-            return ";".join(self.list.GetItems())
-            return self.data.GetValue()
+            urls = [item for item in self.list.GetItems() if len(item.strip()) > 0]
+            if len(urls) > 0:
+                return ";".join(urls)
+            else:
+                return None
         else:
             return None
 
@@ -155,3 +158,4 @@ class HyperlinkEditor(BaseEditor, HyperlinkEditorGuiCreator):
             self.btn_remove.Enable(True)
             self.btn_test.Enable(True)
             self.btn_append.Enable(False)
+

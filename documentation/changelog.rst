@@ -6,16 +6,38 @@ Version 1.8.0
 
 **Planned Release on 31 October 2015.**
 
+This is a periodic release.
+
+Drawing:
+
+* Vertical scroll by drag is not proportional
+  (`#88 <https://sourceforge.net/p/thetimelineproj/backlog/88/>`_)
+
+* Keep a group of events together. 
+  Expand containers vertically when it contains overlapping subevents.
+  Implemented as an experimental feature.
+  (`#39 <https://sourceforge.net/p/thetimelineproj/backlog/39/>`_)
+
 Fixed crash reports:
+
+* ``PyAssertionError: C++ assertion "wxAssertFailure" failed at ..\..\src\common\stockitem.cpp(166) in wxGetStockLabel(): invalid stock item ID``
+  (`#95 <https://sourceforge.net/p/thetimelineproj/backlog/95/>`_)
 
 * ``KeyError: <bound method Font.Underlined of <timelinelib.wxgui.components.font.Font; proxy of <Swig Object of type 'wxFont *' at 0x8f240f0> >>``
   (`#83 <https://sourceforge.net/p/thetimelineproj/backlog/83/>`_)
 
+* ``string index out of range``
+  (`#85 <https://sourceforge.net/p/thetimelineproj/backlog/85/>`_)
+  
+* ``AttributeError: 'NoneType' object has no attribute 'julian_day'``
+  (`#96 <https://sourceforge.net/p/thetimelineproj/backlog/96/>`_)
 
 Version 1.7.1
 -------------
 
 **Released on 17 August 2015.**
+
+This is a bugfix release. It fixes a critical bug where data could be lost.
 
 Data:
 
