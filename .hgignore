@@ -22,3 +22,6 @@ main.v12.suo
 main.sln
 main.pyproj
 .ropeproject/
+_hgtags
+_hgignore
+_hgeol

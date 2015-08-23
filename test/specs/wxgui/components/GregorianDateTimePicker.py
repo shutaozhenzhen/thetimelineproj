@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian import Gregorian
+from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.components.gregoriandatetimepicker import CalendarPopup
@@ -39,7 +39,7 @@ class AGregorianDateTimePicker(UnitTestCase):
         self.time_picker = Mock(GregorianTimePicker)
         self.now_fn = Mock()
         self.controller = GregorianDateTimePickerController(
-            self.date_picker, self.time_picker, self.now_fn)
+            self.date_picker, self.time_picker, self.now_fn, None)
 
     def testDateControlIsAssignedDatePartFromSetValue(self):
         self.controller.set_value(Gregorian(2010, 11, 20, 15, 33, 0).to_time())
@@ -149,7 +149,7 @@ class AGregorianDatePicker(GregorianDatePickerBaseFixture):
         self.assertRaises(ValueError, self.controller.get_value)
 
     def testChangesToErrorBackgroundWhenTooSmallDateIsEntered(self):
-        year, month, day = gregorian.from_time(GregorianTimeType().get_min_time()[0]).to_date_tuple()
+        year, month, day = GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).to_date_tuple()
         self.simulate_change_date_string("%d-%02d-%02d" % (year - 1, month, day))
         self.assertBackgroundChangedTo("pink")
 
@@ -158,7 +158,7 @@ class AGregorianDatePicker(GregorianDatePickerBaseFixture):
         self.assertBackgroundChangedTo((1, 2, 3))
 
     def testChangesToErrorBackgroundWhenTooLargeDateIsEntered(self):
-        year, month, day = gregorian.from_time(GregorianTimeType().get_max_time()[0]).to_date_tuple()
+        year, month, day = GregorianUtils.from_time(GregorianTimeType().get_max_time()[0]).to_date_tuple()
         self.simulate_change_date_string("%d-%02d-%02d" % (year + 1, month, day))
         self.assertBackgroundChangedTo("pink")
 
@@ -537,11 +537,11 @@ class ACalendarPopup(UnitTestCase):
 
 
 def get_min_time_string():
-    year, month, day = gregorian.from_time(GregorianTimeType().get_min_time()[0]).to_date_tuple()
+    year, month, day = GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).to_date_tuple()
     return "%d-%02d-%02d" % (year, month, day)
 
 
 def get_max_time_string():
     # max_time is not a valid date so we must decrease with one day
-    year, month, day = gregorian.from_time(GregorianTimeType().get_max_time()[0] - delta_from_days(1)).to_date_tuple()
+    year, month, day = GregorianUtils.from_time(GregorianTimeType().get_max_time()[0] - delta_from_days(1)).to_date_tuple()
     return "%d-%02d-%02d" % (year, month, day)

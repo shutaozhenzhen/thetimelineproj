@@ -19,33 +19,35 @@
 import wx
 
 from timelinelib.wxgui.utils import BORDER
-from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import time_picker_for
-from timelinelib.utils import ex_msg
 
 
-class TimeEditorDialog(wx.Dialog):
+class NowDateEditorDialog(wx.Dialog):
     """
-    This dialog is used to enter a date or a time depending on which
-    time type the timeline has.
-    It is opened when the user selects the Navigate -> Go to Date/Time
+    This dialog is used to change the "now" date.
+    It is opened when the user selects the Navigate -> Open Now Date Editor 
     is selected.
     """
 
-    def __init__(self, parent, config, time_type, time, title):
+    def __init__(self, parent, config, db, handle_new_time_fn, title):
         wx.Dialog.__init__(self, parent, title=title)
-        self.time_type = time_type
+        self.db = db
+        self.handle_new_time_fn = handle_new_time_fn
+        self.time_type = self.db.get_time_type()
         self.config = config
         self._create_gui()
-        self.time_picker.set_value(time)
+        self.time_picker.set_value(self.db.get_saved_now())
         if self._display_checkbox_show_time():
             self.time_picker.show_time(self.checkbox.IsChecked())
         self.time_picker.SetFocus()
+        self.handle_new_time_fn(self.db.get_saved_now())
+
+    def on_escape(self):
+        self.Close()
 
     def _create_gui(self):
         self._create_show_time_checkbox()
         self._create_time_picker()
-        self._create_buttons()
         self._layout_components()
 
     def _create_show_time_checkbox(self):
@@ -58,30 +60,29 @@ class TimeEditorDialog(wx.Dialog):
         self.time_picker.show_time(e.IsChecked())
 
     def _create_time_picker(self):
-        self.time_picker = time_picker_for(self.time_type)(self, config=self.config)
-
-    def _create_buttons(self):
-        self.button_box = self.CreateStdDialogButtonSizer(wx.OK | wx.CANCEL)
-        self.Bind(wx.EVT_BUTTON, self._ok_button_on_click, id=wx.ID_OK)
-
-    def _ok_button_on_click(self, e):
-        self.on_return()
-
-    def on_return(self):
+        self.time_picker = time_picker_for(self.time_type)(self, config=self.config, on_change=self._time_picker_on_changed)
+    
+    def _time_picker_on_changed(self):
         try:
-            self.time = self.time_picker.get_value()
-            if self._display_checkbox_show_time():
-                if not self.checkbox.IsChecked():
-                    gt = self.time_type.get_utils().from_time(self.time)
-                    gt.hour = 12
-                    self.time = gt.to_time()
-        except ValueError, ex:
-            display_error_message(ex_msg(ex))
-        else:
-            self.EndModal(wx.ID_OK)
+            self.db.set_saved_now(self._get_timepicker_time())
+            self.handle_new_time_fn(self.db.get_saved_now())
+        except ValueError:
+            pass
             
-    def on_escape(self):
-        self.EndModal(wx.ID_CANCEL)
+    def _get_timepicker_time(self):
+        time = self.time_picker.get_value()
+        if time is None:
+            raise ValueError()
+        if self._display_checkbox_show_time():
+            if not self.checkbox.IsChecked():
+                gt = self.time_type.get_utils().from_time(time)
+                gt.hour = 12
+                time=gt.to_time()
+        return time        
+        
+    def _change_time(self,time):
+        self.db.set_saved_now(time)
+        self.handle_new_time_fn(time)
 
     def _layout_components(self):
         vbox = wx.BoxSizer(wx.VERTICAL)
@@ -94,7 +95,6 @@ class TimeEditorDialog(wx.Dialog):
             flag = wx.EXPAND | wx.RIGHT | wx.TOP | wx.BOTTOM | wx.LEFT
         vbox.Add(self.time_picker, flag=flag,
                  border=BORDER, proportion=1)
-        vbox.Add(self.button_box, flag=wx.ALL | wx.EXPAND, border=BORDER)
         self.SetSizerAndFit(vbox)
 
     def _display_checkbox_show_time(self):

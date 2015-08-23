@@ -34,6 +34,7 @@ from timelinelib.meta.about import display_about_dialog
 from timelinelib.proxies.drawingarea import DrawingAreaProxy
 from timelinelib.proxies.sidebar import SidebarProxy
 from timelinelib.time.numtime import NumTimeType
+from timelinelib.time.bosparaniantime import BosparanianTimeType
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.components.mainpanel import MainPanel
@@ -50,6 +51,7 @@ from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditordialog import 
 from timelinelib.wxgui.dialogs.shortcutseditor.shortcutseditordialog import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialog import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditor.timeditordialog import TimeEditorDialog
+from timelinelib.wxgui.dialogs.nowdateeditor.nowdateeditordialog import NowDateEditorDialog
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
@@ -59,6 +61,9 @@ import timelinelib.wxgui.utils as gui_utils
 from timelinelib.plugin import factory
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin.factory import EXPORTER
+from timelinelib.calendar import set_date_formatter
+from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -98,6 +103,7 @@ ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
 ID_NEW_NUMERIC = wx.NewId()
+ID_NEW_BOSPARANIAN = wx.NewId()
 ID_NEW_DIR = wx.NewId()
 ID_FIND_CATEGORIES = wx.NewId()
 ID_NEW = wx.ID_NEW
@@ -186,9 +192,16 @@ class GuiCreator(object):
     def _create_file_new_menu(self, file_menu):
         file_new_menu = wx.Menu()
         self._create_file_new_timeline_menu_item(file_new_menu)
+        self._create_file_new_bosptimeline_menu_item(file_new_menu)
         self._create_file_new_numtimeline_menu_item(file_new_menu)
         self._create_file_new_dir_timeline_menu_item(file_new_menu)
         file_menu.AppendMenu(wx.ID_ANY, _("New"), file_new_menu, _("Create a new timeline"))
+
+    def _create_file_new_bosptimeline_menu_item(self, file_new_menu):
+        mnu_file_new_bosparanian = file_new_menu.Append(
+            ID_NEW_BOSPARANIAN, _("Bosparanian Timeline..."), _("Bosparanian Timeline..."))
+        self.shortcut_items[ID_NEW_BOSPARANIAN] = mnu_file_new_bosparanian
+        self.Bind(wx.EVT_MENU, self._mnu_file_new_bosparanian_on_click, mnu_file_new_bosparanian)
 
     def _create_file_new_timeline_menu_item(self, file_new_menu):
         accel = wx.GetStockLabel(wx.ID_NEW, wx.STOCK_WITH_ACCELERATOR | wx.STOCK_WITH_MNEMONIC)
@@ -511,7 +524,7 @@ class GuiCreator(object):
 
         def fit_all(evt):
             self._fit_all_events()
-
+        
         cbx = NONE
         items = ((ID_FIND_FIRST, find_first, _("Find &First Event"), cbx),
                  (ID_FIND_LAST, find_last, _("Find &Last Event"), cbx),
@@ -657,6 +670,9 @@ class GuiCreator(object):
 
     def _mnu_file_new_on_click(self, event):
         self._create_new_timeline()
+
+    def _mnu_file_new_bosparanian_on_click(self, event):
+        self._create_new_bosparanian_timeline()
 
     def _mnu_file_new_numeric_on_click(self, event):
         self._create_new_numeric_timeline()
@@ -869,6 +885,10 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         dialog.Destroy()
         if result == wx.ID_OK:
             handle_new_time_fn(dialog.time)
+    
+    def display_now_date_editor_dialog(self, handle_new_time_fn, title):
+        dialog = NowDateEditorDialog(self, self.config, self.timeline, handle_new_time_fn, title)
+        dialog.Show()
 
     # Concurrent editing
     def ok_to_edit(self):
@@ -919,12 +939,21 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         path = self._get_file_path()
         if path is not None:
             self.controller.open_timeline(path)
+            set_date_formatter(DefaultDateFormatter())
+
+    def _create_new_bosparanian_timeline(self):
+        path = self._get_file_path()
+        if path is not None:
+            timetype = BosparanianTimeType()
+            set_date_formatter(BosparanianDateFormatter())
+            self.controller.open_timeline(path, timetype)
 
     def _create_new_numeric_timeline(self):
         path = self._get_file_path()
         if path is not None:
             timetype = NumTimeType()
             self.controller.open_timeline(path, timetype)
+            set_date_formatter(DefaultDateFormatter())
 
     def _get_file_path(self):
         path = None

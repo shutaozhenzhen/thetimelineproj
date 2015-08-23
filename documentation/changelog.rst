@@ -8,6 +8,10 @@ Version 1.8.0
 
 This is a periodic release.
 
+Calendar:
+
+* Added support for "The Dark Eye" (Das Schwarze Auge, DSA) official calender.
+
 Drawing:
 
 * Vertical scroll by drag is not proportional

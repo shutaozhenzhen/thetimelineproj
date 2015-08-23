@@ -1,4 +1,4 @@
-# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
+# Copyright (C) 2009, 2010, 2011  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
 #
@@ -16,27 +16,19 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-VERSION = (1, 8, 0)
-DEV = True
+def _(message):
+    return message  # deferred translation
+BOSP_ABBREVIATED_WEEKDAY_NAMES = [
+    _("Wind"),
+    _("Earth"),
+    _("Market"),
+    _("Praios"),
+    _("Rohal"),
+    _("Fire"),
+    _("Water"),
+]
+del _
 
 
-def get_version():
-    if DEV:
-        return ("%s.%s.%s-DSAdev" % VERSION) + DEV_REVISION
-    return "%s.%s.%s-DSA" % VERSION
-
-
-def _get_revision():
-    try:
-        import os
-        from subprocess import Popen, PIPE
-        root = os.path.join(os.path.dirname(__file__), "..", "..", "..")
-        cmd = ["hg", "id", "-i", "-R", root]
-        rev = Popen(cmd, stdout=PIPE).communicate()[0].strip()
-        return rev
-    except:
-        return "0"
-
-
-if DEV:
-    DEV_REVISION = _get_revision()
+def bosp_abbreviated_name_of_weekday(weekday):
+    return _(BOSP_ABBREVIATED_WEEKDAY_NAMES[weekday])

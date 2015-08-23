@@ -41,7 +41,7 @@ class Time(object):
     def __add__(self, delta):
         if isinstance(delta, TimeDelta):
             seconds = self.seconds + delta.seconds
-            return Time(self.julian_day + seconds / SECONDS_IN_DAY, seconds % SECONDS_IN_DAY)
+            return self.__class__(self.julian_day + seconds / SECONDS_IN_DAY, seconds % SECONDS_IN_DAY)
         raise TypeError("Time + %s not supported" % type(delta))
 
     def __sub__(self, other):
@@ -54,9 +54,9 @@ class Time(object):
                 else:
                     days = abs(seconds) / SECONDS_IN_DAY + 1
                     seconds = SECONDS_IN_DAY - abs(seconds) % SECONDS_IN_DAY
-                return Time(self.julian_day - days, seconds)
+                return self.__class__(self.julian_day - days, seconds)
             else:
-                return Time(self.julian_day, seconds)
+                return self.__class__(self.julian_day, seconds)
         else:
             days_diff = self.julian_day - other.julian_day
             seconds_diff = self.seconds - other.seconds
@@ -85,6 +85,20 @@ class Time(object):
 
     def is_weekend_day(self):
         return self.get_day_of_week() in (5, 6)
+    
+    def is_special_day(self):
+        return False
+
+
+class BosparanianTime(Time):
+    
+    def is_weekend_day(self):
+        return self.get_day_of_week() in (0,3)
+
+    def is_special_day(self):
+        return self.get_day_of_week()==3
+    
+    
 
 
 class TimeDelta(object):

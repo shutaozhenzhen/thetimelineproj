@@ -278,10 +278,13 @@ class DefaultDrawingAlgorithm(Drawer):
     def _set_minor_strip_font(self, strip_period):
         if self.time_type.is_date_time_type():
             if self.scene.minor_strip_is_day():
+                bold=False
+                italic=False
                 if strip_period.start_time.is_weekend_day():
-                    font.set_minor_strip_text_font(self.config, self.dc, force_bold=True)
-                else:
-                    font.set_minor_strip_text_font(self.config, self.dc, force_normal=True)
+                    bold=True
+                if strip_period.start_time.is_special_day():
+                    italic=True
+                font.set_minor_strip_text_font(self.config, self.dc, force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
             else:
                 font.set_minor_strip_text_font(self.config, self.dc)
         else:

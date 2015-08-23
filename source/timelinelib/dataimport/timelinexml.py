@@ -35,6 +35,7 @@ from timelinelib.data.timeperiod import PeriodTooLongError
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import create_non_exising_path
 from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.time.bosparaniantime import BosparanianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
 from timelinelib.xml.parser import ANY
@@ -43,6 +44,10 @@ from timelinelib.xml.parser import parse
 from timelinelib.xml.parser import parse_fn_store
 from timelinelib.xml.parser import SINGLE
 from timelinelib.xml.parser import Tag
+from timelinelib.calendar import set_date_formatter
+from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.features.experimental.experimentalfeaturedateformatting import DAY
 
 
 def import_db_from_timeline_xml(path):
@@ -88,7 +93,7 @@ class Parser(object):
             raise TimelineIOError(whole_msg)
 
     def _parse_version(self, text, tmp_dict):
-        match = re.search(r"^(\d+).(\d+).(\d+)(dev.*)?$", text)
+        match = re.search(r"^(\d+).(\d+).(\d+)(-DSA)?(dev.*)?$", text)
         if match:
             (x, y, z) = (int(match.group(1)), int(match.group(2)),
                          int(match.group(3)))
@@ -164,14 +169,19 @@ class Parser(object):
                     Tag("name", ANY, self._parse_hidden_category),
                 ]),
             ]),
+            Tag("now", OPTIONAL, self._parse_saved_now),
         ])
 
     def _parse_timetype(self, text, tmp_dict):
         self.db.set_time_type(None)
-        valid_time_types = (GregorianTimeType(), NumTimeType())
+        valid_time_types = (GregorianTimeType(), BosparanianTimeType(), NumTimeType())
         for timetype in valid_time_types:
             if text == timetype.get_name():
                 self.db.set_time_type(timetype)
+                if timetype.get_name()==BosparanianTimeType().get_name():
+                    set_date_formatter(BosparanianDateFormatter())
+                else:
+                    set_date_formatter(DefaultDateFormatter())
                 break
         if self.db.get_time_type() is None:
             raise ParseException("Invalid timetype '%s' found." % text)
@@ -316,6 +326,10 @@ class Parser(object):
 
     def _parse_time(self, time_string):
         return self.db.get_time_type().parse_time(time_string)
+
+    def _parse_saved_now(self, text, tmp_dict):
+        time = self.db.time_type.parse_time(text)
+        self.db.set_saved_now(time)
 
     def _fill_containers(self):
         container_events = [event for event in self.db.get_all_events()

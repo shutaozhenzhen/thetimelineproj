@@ -122,3 +122,7 @@ class Strip(object):
         Increment the given time so that it points to the start of the next
         strip.
         """
+    
+    def is_day(self):
+        return False
+    

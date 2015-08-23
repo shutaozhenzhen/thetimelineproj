@@ -18,7 +18,7 @@
 
 import mock
 
-from timelinelib.calendar.gregorian import from_date
+from timelinelib.calendar.gregorian import GregorianUtils
 from timelinelib.dataimport.tutorial import TutorialTimelineCreator
 from timelinelib.wxgui.components.canvas.periodbase import SelectPeriodByDragInputHandler
 from timelinetest import UnitTestCase
@@ -41,7 +41,7 @@ class SelectperiodByDragInputHandler(UnitTestCase):
         controller = RaiseValueErrorController()
         controller.get_timeline.return_value = TutorialTimelineCreator().db
         controller.get_drawer.return_value = Snap()
-        self.handler = SelectPeriodByDragInputHandler(controller, from_date(2013, 12, 31))
+        self.handler = SelectPeriodByDragInputHandler(controller, GregorianUtils.from_date(2013, 12, 31))
 
     def setUp(self):
         pass
@@ -50,7 +50,7 @@ class SelectperiodByDragInputHandler(UnitTestCase):
 class Snap(object):
 
     def snap(self, time):
-        return from_date(2013, 12, 1).to_time()
+        return GregorianUtils.from_date(2013, 12, 1).to_time()
 
 
 class RaiseValueErrorController(mock.Mock):
