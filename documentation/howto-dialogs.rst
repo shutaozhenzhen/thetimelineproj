@@ -68,7 +68,7 @@ Sample::
         
 Sizers and controls
 -------------------
-We try to break the cretion of the gui into small functions.
+We try to break the creation of the gui into small functions.
 Normally a sizer is passed to a function. The idea is that the function shall create som objects
 and place them in the sizer::
 
