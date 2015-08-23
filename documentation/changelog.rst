@@ -8,6 +8,10 @@ Version 1.8.0
 
 This is a periodic release.
 
+Calendar:
+
+* Added support for "The Dark Eye" (Das Schwarze Auge, DSA) official calender.
+
 Drawing:
 
 * Vertical scroll by drag is not proportional
@@ -55,13 +59,6 @@ Fixed crash reports:
 
 * ``AttributeError: 'EventEditorDialog' object has no attribute 'set_focus'``
   (`#89 <https://sourceforge.net/p/thetimelineproj/backlog/89/>`_)
-
-Version 1.7.0-DSA
-------------------
-
-**Planned Release after official 1.7.0 release.**
-
-Added support for "The Dark Eye" (Das Schwarze Auge, DSA) official calender.
 
 Version 1.7.0
 -------------
