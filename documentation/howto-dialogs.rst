@@ -39,7 +39,7 @@ That means we can concentrate on testing the business logic in the controller.
 The gui constructor
 -------------------
 The gui constructor typically contains the following
-   * Initiation of gui sperclass
+   * Initiation of gui superclass
    * Call to the create_gui() method
    * Creation of controller object
    * Tell the controller to populate the dialog
