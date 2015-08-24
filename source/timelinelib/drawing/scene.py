@@ -206,10 +206,7 @@ class TimelineScene(object):
         if event.get_ends_today():
             event.time_period.end_time = self._db.get_time_type().now()
         if self._display_as_period(event):
-            if self._display_as_period(event):
-                return self._create_ideal_rect_for_period_event(event)
-            else:
-                return self._create_ideal_rect_for_non_period_event(event)
+            return self._create_ideal_rect_for_period_event(event)
         else:
             return self._create_ideal_rect_for_non_period_event(event)
 
