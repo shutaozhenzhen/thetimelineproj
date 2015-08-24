@@ -330,12 +330,12 @@ class TimelineScene(object):
             except:
                 # Exception occurs when major=century and when we are at the end of the calendar
                 pass
-        self.major_strip_data = []  # List of time_period
-        self.minor_strip_data = []  # List of time_period
+        major_strip_data = []  # List of time_period
+        minor_strip_data = []  # List of time_period
         self.major_strip, self.minor_strip = self._db.get_time_type().choose_strip(self._metrics, self._config)
-        fill(self.major_strip_data, self.major_strip)
-        fill(self.minor_strip_data, self.minor_strip)
-        return (self.minor_strip_data, self.major_strip_data)
+        fill(major_strip_data, self.major_strip)
+        fill(minor_strip_data, self.minor_strip)
+        return (minor_strip_data, major_strip_data)
 
     def minor_strip_is_day(self):
         return self.minor_strip.is_day()
