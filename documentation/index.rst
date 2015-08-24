@@ -15,6 +15,6 @@ Welcome to Timeline
     guidelines
     howtos
     architecture
-    dev/project-infrastructure
+    project-infrastructure
     tools
     changelog
