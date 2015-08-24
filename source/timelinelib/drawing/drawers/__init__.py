@@ -46,7 +46,7 @@ def apply_gray_factor_on_item(item):
 
 
 def adjust_color_luminence(base_color):
-    h, s, l = rgb2hsl(base_color)
+    h, s, _ = rgb2hsl(base_color)
     l = LUMINENCE_FACTOR * s
     return hsl2rgb(h, s, l)
 
