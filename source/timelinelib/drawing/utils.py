@@ -70,7 +70,6 @@ class Metrics(object):
         return self.get_time(x1) - self.get_time(x2)
 
 
-
 def darken_color(color, factor=0.7):
     if (factor < 0.0 or factor > 1.0):
         return color
@@ -81,5 +80,5 @@ def lighten_color(color, factor=1.5):
     if (factor < 1.0 or factor > 255.0):
         return color
     if (color == (0, 0, 0)):
-        color = (1, 1, 1) # avoid multiplying factor by zero
+        color = (1, 1, 1)  # avoid multiplying factor by zero
     return tuple([min(int(x * factor), 255) for x in color])
