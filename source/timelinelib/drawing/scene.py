@@ -166,11 +166,8 @@ class TimelineScene(object):
     def _calc_event_positions(self):
         self.events_from_db = self._db.get_events(self._view_properties.displayed_period)
         visible_events = self._view_properties.filter_events(self.events_from_db)
-        visible_events = self._place_subevents_last(visible_events)
+        visible_events = self._place_subevents_after_container(visible_events)
         self._calc_rects(visible_events)
-
-    def _place_subevents_last(self, events):
-        return self._place_subevents_after_container(events)
 
     def _place_subevents_after_container(self, events):
         result = []
