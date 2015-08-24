@@ -351,14 +351,17 @@ class TimelineScene(object):
         rect = self._get_overlapping_subevent_rect_with_largest_y(subevent, event_rect)
         if rect is not None:
             event_rect.Y = rect.Y + rect.height
-            for (evt, rct) in self.event_data:
-                if evt.is_container() and evt.container_id == subevent.get_container_id():
-                    _, th = self._get_text_size(evt.get_text())
-                    rh = th + 2 * (self._inner_padding + self._outer_padding)
-                    h = event_rect.Y - rct.Y + rh
-                    if rct.height < h:
-                        rct.Height = h
-                    break
+            self._adjust_container_rect_height(subevent.get_container_id(), event_rect)
+
+    def _adjust_container_rect_height(self, cid, event_rect):
+        for (evt, rect) in self.event_data:
+            if evt.is_container() and evt.cid() == cid:
+                _, th = self._get_text_size(evt.get_text())
+                rh = th + 2 * (self._inner_padding + self._outer_padding)
+                h = event_rect.Y - rect.Y + rh
+                if rect.height < h:
+                    rect.Height = h
+                break
 
     def _get_overlapping_subevent_rect_with_largest_y(self, subevent, event_rect):
         event_data = self._get_list_with_overlapping_subevents(subevent, event_rect)
