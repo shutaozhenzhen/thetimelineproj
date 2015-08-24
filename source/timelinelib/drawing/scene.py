@@ -203,19 +203,19 @@ class TimelineScene(object):
         is depending on the container in which they live.
         """
         if self._period_subevent(event):
-            return self._create_rectangle_for_period_subevent(event)
+            return self._create_rect_for_period_subevent(event)
         else:
-            return self._create_rectangle_for_possibly_overlapping_event(event)
+            return self._create_rect_for_possibly_overlapping_event(event)
 
     def _period_subevent(self, event):
         return event.is_subevent() and event.is_period()
 
-    def _create_rectangle_for_period_subevent(self, event):
+    def _create_rect_for_period_subevent(self, event):
         rect = self._create_ideal_rect_for_event(event)
         self._prevent_overlapping_by_adjusting_rect_y(event, rect)
         return rect
 
-    def _create_rectangle_for_possibly_overlapping_event(self, event):
+    def _create_rect_for_possibly_overlapping_event(self, event):
         rect = self._create_ideal_rect_for_event(event)
         self._prevent_overlapping_by_adjusting_rect_y(event, rect)
         return rect
