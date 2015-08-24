@@ -192,12 +192,12 @@ class TimelineScene(object):
     def _calc_event_rects(self, events):
         self.event_data = []
         for event in events:
-            rect = self._create_rectangle_for_event(event)
+            rect = self._calc_event_rect(event)
             self.event_data.append((event, rect))
         for (event, rect) in self.event_data:
             rect.Deflate(self._outer_padding, self._outer_padding)
 
-    def _create_rectangle_for_event(self, event):
+    def _calc_event_rect(self, event):
         if self._period_subevent(event):
             return self._create_rectangle_for_period_subevent(event)
         else:
