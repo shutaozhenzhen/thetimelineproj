@@ -21,9 +21,6 @@ Utilities used by drawers.
 """
 
 
-import wx
-
-
 class Metrics(object):
     """
     Convert between pixel coordinates and time coordinates.
