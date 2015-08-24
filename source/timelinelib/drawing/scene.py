@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.data import TimePeriod
-from timelinelib.drawing.utils import Metrics 
+from timelinelib.drawing.utils import Metrics
 
 
 FORWARD = 1
@@ -332,7 +332,7 @@ class TimelineScene(object):
         fill(self.minor_strip_data, self.minor_strip)
 
     def minor_strip_is_day(self):
-        return self.minor_strip.is_day() 
+        return self.minor_strip.is_day()
 
     def get_hidden_event_count(self):
         return len(self.events_from_db) - self._count_visible_events()
@@ -364,7 +364,7 @@ class TimelineScene(object):
             event_rect.Y = rect.Y + rect.height
             for (evt, rct) in self.event_data:
                 if evt.is_container() and evt.container_id == subevent.get_container_id():
-                    tw, th = self._get_text_size(evt.get_text())
+                    _, th = self._get_text_size(evt.get_text())
                     rh = th + 2 * (self._inner_padding + self._outer_padding)
                     h = event_rect.Y - rct.Y + rh
                     if rct.height < h:
@@ -395,10 +395,10 @@ class TimelineScene(object):
     def _get_list_with_overlapping_subevents(self, subevent, event_rect):
         container_id = subevent.get_container_id()
         ls = [(event, rect) for (event, rect) in self.event_data
-                if (event.is_subevent() and
-                    event.get_container_id() == container_id and
-                    self._rects_overlap(event_rect, rect) and
-                    rect.Y >= self.divider_y)]
+              if (event.is_subevent() and
+              event.get_container_id() == container_id and
+              self._rects_overlap(event_rect, rect) and
+              rect.Y >= self.divider_y)]
         return ls
 
     def _adjust_point_rect(self, event_rect):
