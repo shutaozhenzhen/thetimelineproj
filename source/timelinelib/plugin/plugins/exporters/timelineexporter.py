@@ -90,7 +90,8 @@ class CsvExporter(object):
 
     def _write_heading(self, f, fields):
         for field in fields:
-            f.write("%s;" % field)
+            self._write_encoded_text(f, field)
+            #f.write("%s;" % field)
         f.write("\n")
 
     def _write_events_fields(self, f, event_fields):
@@ -182,8 +183,8 @@ class CsvExporter(object):
 
     def _write_encoded_text(self, f, text):
         if text is not None:
-            text = text.replace(";", " ")
-        f.write("%s;" % self._encode_text(text))
+            text = text.replace('"', '""')
+        f.write("\"%s\";" % self._encode_text(text))
 
     def _encode_text(self, text):
         if text is not None:
