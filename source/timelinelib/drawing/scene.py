@@ -68,11 +68,9 @@ class TimelineScene(object):
         """
         Creating a scene means that pixel sizes and positions are calculated
         for events and strips.
-        After these calculations Events data is stored in self.event_data and
-        Strips data is stored in self.major_strip_data and self.minor_strip_data.
         """
-        self._calc_event_sizes_and_positions()
-        self._calc_strips_sizes_and_positions()
+        self.event_data = self._calc_event_sizes_and_positions()
+        self.minor_strip_data, self.major_strip_data = self._calc_strips_sizes_and_positions()
 
     def x_pos_for_time(self, time):
         return self._metrics.calc_x(time)
@@ -174,6 +172,7 @@ class TimelineScene(object):
         visible_events = self._view_properties.filter_events(self.events_from_db)
         visible_events = self._place_subevents_after_container(visible_events)
         self._calc_rects(visible_events)
+        return self.event_data
 
     def _place_subevents_after_container(self, events):
         result = []
@@ -336,6 +335,7 @@ class TimelineScene(object):
         self.major_strip, self.minor_strip = self._db.get_time_type().choose_strip(self._metrics, self._config)
         fill(self.major_strip_data, self.major_strip)
         fill(self.minor_strip_data, self.minor_strip)
+        return (self.minor_strip_data, self.major_strip_data)
 
     def minor_strip_is_day(self):
         return self.minor_strip.is_day()
