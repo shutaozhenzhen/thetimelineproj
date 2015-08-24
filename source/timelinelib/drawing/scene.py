@@ -65,8 +65,12 @@ class TimelineScene(object):
         self._data_indicator_size = data_indicator_size
 
     def create(self):
-        self._calc_event_positions()
-        self._calc_strips()
+        """
+        Creating a scene means that pixel sizes and positions are calculated
+        for events and strips
+        """
+        self._calc_event_sizes_and_positions()
+        self._calc_strips_sizes_and_positions()
 
     def x_pos_for_time(self, time):
         return self._metrics.calc_x(time)
@@ -163,7 +167,7 @@ class TimelineScene(object):
                 return prev_event
             prev_event = e
 
-    def _calc_event_positions(self):
+    def _calc_event_sizes_and_positions(self):
         self.events_from_db = self._db.get_events(self._view_properties.displayed_period)
         visible_events = self._view_properties.filter_events(self.events_from_db)
         visible_events = self._place_subevents_after_container(visible_events)
@@ -311,7 +315,7 @@ class TimelineScene(object):
             rw -= right_edge_x - self.width - MARGIN
         return wx.Rect(rx, ry, rw, rh)
 
-    def _calc_strips(self):
+    def _calc_strips_sizes_and_positions(self):
         """Fill the two arrays `minor_strip_data` and `major_strip_data`."""
 
         def fill(strip_list, strip):
