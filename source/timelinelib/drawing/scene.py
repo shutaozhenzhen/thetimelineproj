@@ -171,7 +171,7 @@ class TimelineScene(object):
         self.events_from_db = self._db.get_events(self._view_properties.displayed_period)
         visible_events = self._view_properties.filter_events(self.events_from_db)
         visible_events = self._place_subevents_after_container(visible_events)
-        self._calc_rects(visible_events)
+        self._calc_event_rects(visible_events)
         return self.event_data
 
     def _place_subevents_after_container(self, events):
@@ -189,7 +189,7 @@ class TimelineScene(object):
                 result.append(event)
         return result
 
-    def _calc_rects(self, events):
+    def _calc_event_rects(self, events):
         self.event_data = []
         for event in events:
             rect = self._create_rectangle_for_event(event)
