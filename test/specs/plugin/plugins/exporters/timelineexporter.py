@@ -36,8 +36,8 @@ class TimelineExporterTestCase(UnitTestCase):
         self.plugin = TimelineExporter()
         self.plugin.text_encoding = "cp1250"
         self.plugin.timeline = MemoryDB()
-        self.plugin.timeline._events._events.append(an_event_with(text="foo", time="11 Jul 2014 10:11"))
-        self.plugin.timeline._events._categories.append(a_category_with("Cat1"))
+        self.plugin.timeline._events._events.append(an_event_with(text="foo\nbar", time="11 Jul 2014 10:11"))
+        self.plugin.timeline._events._categories.append(a_category_with("Cat\"1\""))
         self.open_tempfile_for_writing()
 
     def tearDown(self):
@@ -80,11 +80,11 @@ class describe_timeline_exporter(TimelineExporterTestCase):
         self.simulate_dialog_entries(True, ["Text", "Start"], False, [])
         CsvExporter(self.plugin.timeline, CSV_FILE, self.dlg).export()
         content = self.get_tempfile_content()
-        self.assertEqual("#Events#;Text;Start;\nfoo;2014-07-11 10:11:00;\n\n", content)
+        self.assertEqual("\"#Events#\";\"Text\";\"Start\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n", content)
 
     def test_category_csv_data_saved_in_file(self):
         self.open_tempfile_for_writing()
         self.simulate_dialog_entries(False, [], True, ["Name", "Color"])
         CsvExporter(self.plugin.timeline, CSV_FILE, self.dlg).export()
         content = self.get_tempfile_content()
-        self.assertEqual("#Categories#;Name;Color;\nCat1;(255, 0, 0);\n", content)
+        self.assertEqual("\"#Categories#\";\"Name\";\"Color\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n", content)

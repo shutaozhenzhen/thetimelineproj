@@ -22,6 +22,11 @@ Drawing:
   Implemented as an experimental feature.
   (`#39 <https://sourceforge.net/p/thetimelineproj/backlog/39/>`_)
 
+Exporting:
+
+* Exporting to CSV with newline within description
+  (`#92 <https://sourceforge.net/p/thetimelineproj/backlog/92/>`_)
+
 Fixed crash reports:
 
 * ``PyAssertionError: C++ assertion "wxAssertFailure" failed at ..\..\src\common\stockitem.cpp(166) in wxGetStockLabel(): invalid stock item ID``
