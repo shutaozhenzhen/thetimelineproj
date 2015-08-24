@@ -206,9 +206,9 @@ class TimelineScene(object):
         if event.get_ends_today():
             event.time_period.end_time = self._db.get_time_type().now()
         if self._display_as_period(event):
-            return self._create_ideal_rect_for_period_event(event)
+            return self._calc_ideal_rect_for_period_event(event)
         else:
-            return self._create_ideal_rect_for_non_period_event(event)
+            return self._calc_ideal_rect_for_non_period_event(event)
 
     def _display_as_period(self, event):
         if event.is_container():
@@ -232,7 +232,7 @@ class TimelineScene(object):
         enlarging_factor = 2
         return enlarging_factor * self._metrics.calc_width(event.time_period)
 
-    def _create_ideal_rect_for_period_event(self, event):
+    def _calc_ideal_rect_for_period_event(self, event):
         _, th = self._get_text_size(event.get_text())
         ew = self._metrics.calc_width(event.get_time_period())
         min_w = 5 * self._outer_padding
@@ -258,7 +258,7 @@ class TimelineScene(object):
                 return rect.y
         return self._metrics.half_height + self._baseline_padding
 
-    def _create_ideal_rect_for_non_period_event(self, event):
+    def _calc_ideal_rect_for_non_period_event(self, event):
         tw, th = self._get_text_size(event.get_text())
         rw = tw + 2 * self._inner_padding + 2 * self._outer_padding
         rh = th + 2 * self._inner_padding + 2 * self._outer_padding
@@ -335,7 +335,10 @@ class TimelineScene(object):
 
     def _prevent_overlapping_by_adjusting_rect_y(self, event, event_rect):
         if event.is_subevent():
-            self._adjust_subevent_rect(event, event_rect)
+            if self._display_as_period(event):
+                self._adjust_subevent_rect(event, event_rect)
+            else:
+                self._adjust_point_rect(event_rect)
         else:
             if self._display_as_period(event):
                 self._adjust_period_rect(event_rect)
