@@ -198,9 +198,9 @@ class TimelineScene(object):
             rect.Deflate(self._outer_padding, self._outer_padding)
 
     def _calc_event_rect(self, event):
-        return self._create_rect_for_possibly_overlapping_event(event)
+        return self._calc_rect_for_possibly_overlapping_event(event)
 
-    def _create_rect_for_possibly_overlapping_event(self, event):
+    def _calc_rect_for_possibly_overlapping_event(self, event):
         rect = self._create_ideal_rect_for_event(event)
         self._prevent_overlapping_by_adjusting_rect_y(event, rect)
         return rect
