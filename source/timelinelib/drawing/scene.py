@@ -334,11 +334,8 @@ class TimelineScene(object):
         return num_visible
 
     def _prevent_overlapping_by_adjusting_rect_y(self, event, event_rect):
-        if event.is_subevent():
-            if self._display_as_period(event):
-                self._adjust_subevent_rect(event, event_rect)
-            else:
-                self._adjust_point_rect(event_rect)
+        if event.is_subevent() and self._display_as_period(event):
+            self._adjust_subevent_rect(event, event_rect)
         else:
             if self._display_as_period(event):
                 self._adjust_period_rect(event_rect)
