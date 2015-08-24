@@ -198,6 +198,10 @@ class TimelineScene(object):
             rect.Deflate(self._outer_padding, self._outer_padding)
 
     def _calc_event_rect(self, event):
+        """
+        Subevents are treated specially because their y-position
+        is depending on the container in which they live.
+        """
         if self._period_subevent(event):
             return self._create_rectangle_for_period_subevent(event)
         else:
