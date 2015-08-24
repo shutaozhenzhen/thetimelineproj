@@ -198,10 +198,6 @@ class TimelineScene(object):
             rect.Deflate(self._outer_padding, self._outer_padding)
 
     def _calc_event_rect(self, event):
-        """
-        Subevents are treated specially because their y-position
-        is depending on the container in which they live.
-        """
         return self._create_rect_for_possibly_overlapping_event(event)
 
     def _create_rect_for_possibly_overlapping_event(self, event):
