@@ -67,7 +67,9 @@ class TimelineScene(object):
     def create(self):
         """
         Creating a scene means that pixel sizes and positions are calculated
-        for events and strips
+        for events and strips.
+        After these calculations Events data is stored in self.event_data and
+        Strips data is stored in self.major_strip_data and self.minor_strip_data.
         """
         self._calc_event_sizes_and_positions()
         self._calc_strips_sizes_and_positions()
