@@ -243,7 +243,7 @@ class TimelineScene(object):
     def _calc_ideal_rect_for_period_event(self, event):
         rw, rh = self._calc_width_and_height_for_period_event(event)
         rx = self._calc_x_pos_for_period_event(event)
-        ry = self._get_ry(event)
+        ry = self._calc_y_pos_for_period_event(event)
         return self._calc_ideal_wx_rect(rx, ry, rw, rh)
 
     def _calc_width_and_height_for_period_event(self, event):
@@ -257,7 +257,7 @@ class TimelineScene(object):
     def _calc_x_pos_for_period_event(self, event):
         return self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
 
-    def _get_ry(self, event):
+    def _calc_y_pos_for_period_event(self, event):
         if event.is_subevent():
             if event.is_period():
                 return self._get_container_ry(event)
