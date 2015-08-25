@@ -241,7 +241,7 @@ class TimelineScene(object):
         rx = (self._metrics.calc_x(event.get_time_period().start_time) -
               self._outer_padding)
         ry = self._get_ry(event)
-        return self._create_ideal_wx_rect(rx, ry, rw, rh)
+        return self._calc_ideal_wx_rect(rx, ry, rw, rh)
 
     def _get_ry(self, event):
         if event.is_subevent():
@@ -274,7 +274,7 @@ class TimelineScene(object):
         if self.never_show_period_events_as_point_events() and event.is_period():
             rx = -1
             rw = 0
-        return self._create_ideal_wx_rect(rx, ry, rw, rh)
+        return self._calc_ideal_wx_rect(rx, ry, rw, rh)
 
     def _get_text_size(self, text):
         if len(text) > 0:
@@ -285,7 +285,7 @@ class TimelineScene(object):
     def never_show_period_events_as_point_events(self):
         return self._config.get_never_show_period_events_as_point_events()
 
-    def _create_ideal_wx_rect(self, rx, ry, rw, rh):
+    def _calc_ideal_wx_rect(self, rx, ry, rw, rh):
         # Drawing stuff on huge x-coordinates causes drawing to fail.
         # MARGIN must be big enough to hide outer padding, borders, and
         # selection markers.
