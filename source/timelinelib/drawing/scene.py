@@ -270,22 +270,33 @@ class TimelineScene(object):
         if self.never_show_period_events_as_point_events() and event.is_period():
             return self._calc_invisible_wx_rect()
         else:
-            tw, th = self._get_text_size(event.get_text())
-            rw = tw + 2 * self._inner_padding + 2 * self._outer_padding
-            rh = th + 2 * self._inner_padding + 2 * self._outer_padding
-            if event.has_data():
-                rw += self._data_indicator_size / 3
-            if event.get_fuzzy() or event.get_locked():
-                rw += th + 2 * self._inner_padding
-            if self._config.draw_period_events_to_right:
-                rx = self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
-            else:
-                rx = self._metrics.calc_x(event.mean_time()) - rw / 2
-            ry = self._metrics.half_height - rh - self._baseline_padding
+            rw, rh = self._calc_width_and_height_for_non_period_event(event)
+            rx = self._calc_x_pos_for_non_period_event(event, rw)
+            ry = self._calc_y_pos_for_non_period_event(event, rh)
             return self._calc_ideal_wx_rect(rx, ry, rw, rh)
 
     def _calc_invisible_wx_rect(self):
         return self._calc_ideal_wx_rect(-1, -1, 0, 0)
+
+    def _calc_width_and_height_for_non_period_event(self, event):
+        tw, th = self._get_text_size(event.get_text())
+        rw = tw + 2 * self._inner_padding + 2 * self._outer_padding
+        rh = th + 2 * self._inner_padding + 2 * self._outer_padding
+        if event.has_data():
+            rw += self._data_indicator_size / 3
+        if event.get_fuzzy() or event.get_locked():
+            rw += th + 2 * self._inner_padding
+        return rw, rh
+
+    def _calc_x_pos_for_non_period_event(self, event, rw):
+        if self._config.draw_period_events_to_right:
+            rx = self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
+        else:
+            rx = self._metrics.calc_x(event.mean_time()) - rw / 2
+        return rx
+
+    def _calc_y_pos_for_non_period_event(self, event, rh):
+        return self._metrics.half_height - rh - self._baseline_padding
 
     def _get_text_size(self, text):
         if len(text) > 0:
