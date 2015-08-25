@@ -174,6 +174,13 @@ class TimelineScene(object):
         return self._calc_event_rects(visible_events)
 
     def _place_subevents_after_container(self, events):
+        """
+        All subevent belonging to a container are placed directly after
+        the container event in the events list.
+        This is necessary because the position of the subevents are
+        dependent on the position of the container. So the container metrics
+        must be calculated first.
+        """
         result = []
         for event in events:
             if event.is_container():
