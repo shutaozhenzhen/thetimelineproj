@@ -267,22 +267,25 @@ class TimelineScene(object):
         return self._metrics.half_height + self._baseline_padding
 
     def _calc_ideal_rect_for_non_period_event(self, event):
-        tw, th = self._get_text_size(event.get_text())
-        rw = tw + 2 * self._inner_padding + 2 * self._outer_padding
-        rh = th + 2 * self._inner_padding + 2 * self._outer_padding
-        if event.has_data():
-            rw += self._data_indicator_size / 3
-        if event.get_fuzzy() or event.get_locked():
-            rw += th + 2 * self._inner_padding
-        if self._config.draw_period_events_to_right:
-            rx = self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
-        else:
-            rx = self._metrics.calc_x(event.mean_time()) - rw / 2
-        ry = self._metrics.half_height - rh - self._baseline_padding
         if self.never_show_period_events_as_point_events() and event.is_period():
-            rx = -1
-            rw = 0
-        return self._calc_ideal_wx_rect(rx, ry, rw, rh)
+            return self._calc_invisible_wx_rect()
+        else:
+            tw, th = self._get_text_size(event.get_text())
+            rw = tw + 2 * self._inner_padding + 2 * self._outer_padding
+            rh = th + 2 * self._inner_padding + 2 * self._outer_padding
+            if event.has_data():
+                rw += self._data_indicator_size / 3
+            if event.get_fuzzy() or event.get_locked():
+                rw += th + 2 * self._inner_padding
+            if self._config.draw_period_events_to_right:
+                rx = self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
+            else:
+                rx = self._metrics.calc_x(event.mean_time()) - rw / 2
+            ry = self._metrics.half_height - rh - self._baseline_padding
+            return self._calc_ideal_wx_rect(rx, ry, rw, rh)
+
+    def _calc_invisible_wx_rect(self):
+        return self._calc_ideal_wx_rect(-1, -1, 0, 0)
 
     def _get_text_size(self, text):
         if len(text) > 0:
