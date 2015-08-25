@@ -290,10 +290,9 @@ class TimelineScene(object):
 
     def _calc_x_pos_for_non_period_event(self, event, rw):
         if self._config.draw_period_events_to_right:
-            rx = self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
+            return self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
         else:
-            rx = self._metrics.calc_x(event.mean_time()) - rw / 2
-        return rx
+            return self._metrics.calc_x(event.mean_time()) - rw / 2
 
     def _calc_y_pos_for_non_period_event(self, event, rh):
         return self._metrics.half_height - rh - self._baseline_padding
