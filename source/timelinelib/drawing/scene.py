@@ -241,15 +241,21 @@ class TimelineScene(object):
         return enlarging_factor * self._metrics.calc_width(event.time_period)
 
     def _calc_ideal_rect_for_period_event(self, event):
+        rw, rh = self._calc_width_and_height_for_period_event(event)
+        rx = self._calc_x_pos_for_period_event(event)
+        ry = self._get_ry(event)
+        return self._calc_ideal_wx_rect(rx, ry, rw, rh)
+
+    def _calc_width_and_height_for_period_event(self, event):
         _, th = self._get_text_size(event.get_text())
         ew = self._metrics.calc_width(event.get_time_period())
         min_w = 5 * self._outer_padding
         rw = max(ew + 2 * self._outer_padding, min_w)
         rh = th + 2 * self._inner_padding + 2 * self._outer_padding
-        rx = (self._metrics.calc_x(event.get_time_period().start_time) -
-              self._outer_padding)
-        ry = self._get_ry(event)
-        return self._calc_ideal_wx_rect(rx, ry, rw, rh)
+        return rw, rh
+
+    def _calc_x_pos_for_period_event(self, event):
+        return self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
 
     def _get_ry(self, event):
         if event.is_subevent():
