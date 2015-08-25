@@ -189,14 +189,21 @@ class TimelineScene(object):
         return result
 
     def _calc_event_rects(self, events):
+        self.event_data = self._calc_non_overlapping_event_rects(events)
+        self._deflate_rects(self.event_data)
+        return self.event_data
+
+    def _calc_non_overlapping_event_rects(self, events):
         self.event_data = []
         for event in events:
             rect = self._create_ideal_rect_for_event(event)
             self._prevent_overlapping_by_adjusting_rect_y(event, rect)
             self.event_data.append((event, rect))
-        for (_, rect) in self.event_data:
-            rect.Deflate(self._outer_padding, self._outer_padding)
         return self.event_data
+
+    def _deflate_rects(self, event_data):
+        for (_, rect) in event_data:
+            rect.Deflate(self._outer_padding, self._outer_padding)
 
     def _create_ideal_rect_for_event(self, event):
         if event.get_ends_today():
