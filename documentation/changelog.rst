@@ -41,6 +41,9 @@ Fixed crash reports:
 * ``AttributeError: 'NoneType' object has no attribute 'julian_day'``
   (`#96 <https://sourceforge.net/p/thetimelineproj/backlog/96/>`_)
 
+* ``ValueError: julian_day must be >= 0``
+  (`#79 <https://sourceforge.net/p/thetimelineproj/backlog/79/>`_)
+
 Version 1.7.1
 -------------
 
