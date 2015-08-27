@@ -22,6 +22,7 @@ import wx
 
 from timelinelib.wxgui.utils import _ask_question
 from timelinelib.wxgui.utils import WildcardHelper
+from timelinelib.wxgui.utils import display_warning_message
 from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.factory import EXPORTER
 
@@ -69,10 +70,15 @@ def export_to_image(main_frame):
 def export_to_images(main_frame):
     path, image_type = get_image_path(main_frame)
     if path is not None:
+        try:
+            periods, current_period = main_frame.get_export_periods()
+        except ValueError:
+            msg = _("The first image contains a Julian day < 0\n\nNavigate to first event or\nUse the feature 'Accept negative Julian days'")
+            display_warning_message(msg)
+            return
         view_properties = main_frame.main_panel.timeline_panel.timeline_canvas.controller.view_properties
         view_properties.set_use_fixed_event_vertical_pos(True)
         path_without_extension, extension = path.rsplit(".", 1)
-        periods, current_period = main_frame.get_export_periods()
         view_properties.set_use_fixed_event_vertical_pos(True)
         view_properties.periods = periods
         count = 1

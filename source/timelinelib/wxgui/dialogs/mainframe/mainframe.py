@@ -10,7 +10,7 @@
 # Timeline is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# GNU General Public License for more etails.
 #
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
@@ -518,13 +518,16 @@ class GuiCreator(object):
             if event:
                 end = event.time_period.end_time
                 delta = self.main_panel.get_displayed_period_delta()
-                start = end - delta
+                try:
+                    start = end - delta
+                except ValueError:
+                    start = self.timeline.get_time_type().get_min_time()[0]
                 margin_delta = self.timeline.get_time_type().margin_delta(delta)
                 self._navigate_timeline(lambda tp: tp.update(start, end, end_delta=margin_delta))
 
         def fit_all(evt):
             self._fit_all_events()
-        
+
         cbx = NONE
         items = ((ID_FIND_FIRST, find_first, _("Find &First Event"), cbx),
                  (ID_FIND_LAST, find_last, _("Find &Last Event"), cbx),
@@ -885,7 +888,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         dialog.Destroy()
         if result == wx.ID_OK:
             handle_new_time_fn(dialog.time)
-    
+
     def display_now_date_editor_dialog(self, handle_new_time_fn, title):
         dialog = NowDateEditorDialog(self, self.config, self.timeline, handle_new_time_fn, title)
         dialog.Show()
