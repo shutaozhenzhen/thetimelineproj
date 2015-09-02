@@ -219,20 +219,7 @@ class TimelineScene(object):
             return self._calc_ideal_rect_for_non_period_event(event)
 
     def _display_as_period(self, event):
-        if event.is_container():
-            event_width = self._calc_min_subevent_threshold_width(event)
-        else:
-            event_width = self._metrics.calc_width(event.get_time_period())
-        return event_width > self._period_threshold
-
-    def _calc_min_subevent_threshold_width(self, container):
-        min_width = self._metrics.calc_width(container.time_period)
-        for event in container.events:
-            if event.is_period():
-                width = self._calc_subevent_threshold_width(event)
-                if width > 0 and width < min_width:
-                    min_width = width
-        return min_width
+        return self._metrics.calc_width(event.get_time_period()) > self._period_threshold
 
     def _calc_subevent_threshold_width(self, event):
         # The enlarging factor allows sub-events to be smaller than a normal
