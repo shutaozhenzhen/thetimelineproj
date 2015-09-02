@@ -193,9 +193,6 @@ class GregorianTimeType(TimeType):
     def div_timedeltas(self, delta1, delta2):
         return delta1 / delta2
 
-    def get_max_zoom_delta(self):
-        return (delta_from_days(1200 * 365), _("Can't zoom wider than 1200 years"))
-
     def get_min_zoom_delta(self):
         return (timeline.delta_from_seconds(60), _("Can't zoom deeper than 1 minute"))
 
