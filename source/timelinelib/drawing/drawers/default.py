@@ -329,16 +329,10 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_lines_to_non_period_events(self, view_properties):
         for (event, rect) in self.scene.event_data:
-            if self._invisible_container_subevent(event, rect):
-                continue
             if not event.is_period():
                 self._draw_line(view_properties, event, rect)
             elif not self.scene.never_show_period_events_as_point_events() and self._event_displayed_as_point_event(rect):
                 self._draw_line(view_properties, event, rect)
-
-    def _invisible_container_subevent(self, event, rect):
-        return (self._subevent_displayed_as_point_event(event, rect) and
-                event.is_period())
 
     def _event_displayed_as_point_event(self, rect):
         return self.scene.divider_y > rect.Y
@@ -360,14 +354,13 @@ class DefaultDrawingAlgorithm(Drawer):
         self.dc.DrawCircle(x, y2, 2)
 
     def _get_end_of_line(self, event):
-        if self._point_subevent(event):
+        # Lines are only drawn for events shown as point events and the line length
+        # is only dependent on the fact that an event is a subevent or not
+        if event.is_subevent():
             y = self._get_container_y(event.container_id)
         else:
             y = self.scene.divider_y
         return y
-
-    def _point_subevent(self, event):
-        return event.is_subevent() and not event.is_period()
 
     def _get_container_y(self, cid):
         for (event, rect) in self.scene.event_data:
@@ -481,23 +474,13 @@ class DefaultDrawingAlgorithm(Drawer):
             if event.is_container():
                 self._draw_container(event, rect, view_properties)
             else:
-                self._draw_event(event, rect, view_properties)
+                self._draw_box(rect, event, view_properties)
 
     def _draw_container(self, event, rect, view_properties):
         box_rect = wx.Rect(rect.X - 2, rect.Y - 2, rect.Width + 4, rect.Height + 4)
         if EXTENDED_CONTAINER_HEIGHT.enabled():
             box_rect = EXTENDED_CONTAINER_HEIGHT.get_vertical_larger_box_rect(rect)
         self._draw_box(box_rect, event, view_properties)
-
-    def _draw_event(self, event, rect, view_properties):
-        if self._subevent_displayed_as_point_event(event, rect):
-            if event.is_period():
-                return
-        self._draw_box(rect, event, view_properties)
-
-    def _subevent_displayed_as_point_event(self, event, rect):
-        return (event.is_subevent() and
-                self._event_displayed_as_point_event(rect))
 
     def _draw_box(self, rect, event, view_properties):
         self.dc.SetClippingRect(rect)
