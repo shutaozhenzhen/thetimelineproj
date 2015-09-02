@@ -77,17 +77,10 @@ class TimePeriod(object):
 
     def _assert_period_is_valid(self, new_start, new_end):
         self._assert_start_gt_end(new_start, new_end)
-        if self.assert_period_length:
-            self._assert_period_lt_max(new_start, new_end)
 
     def _assert_start_gt_end(self, new_start, new_end):
         if new_start > new_end:
             raise ValueError(_("Start time can't be after end time"))
-
-    def _assert_period_lt_max(self, new_start, new_end):
-        MAX_ZOOM_DELTA, max_zoom_error_text = self.time_type.get_max_zoom_delta()
-        if MAX_ZOOM_DELTA and (new_end - new_start > MAX_ZOOM_DELTA):
-            raise PeriodTooLongError(max_zoom_error_text)
 
     def inside(self, time):
         """
@@ -116,13 +109,10 @@ class TimePeriod(object):
         return self.start_time + self.time_type.half_delta(self.delta())
 
     def zoom(self, times, ratio=0.5):
-        MAX_ZOOM_DELTA, max_zoom_error_text = self.time_type.get_max_zoom_delta()
         MIN_ZOOM_DELTA, min_zoom_error_text = self.time_type.get_min_zoom_delta()
         start_delta = self.time_type.mult_timedelta(self.delta(), times * ratio / 5.0)
         end_delta = self.time_type.mult_timedelta(self.delta(), -times * (1.0 - ratio) / 5.0)
         new_delta = self.delta() - 2 * start_delta
-        if MAX_ZOOM_DELTA and new_delta > MAX_ZOOM_DELTA:
-            raise ValueError(max_zoom_error_text)
         if new_delta < MIN_ZOOM_DELTA:
             raise ValueError(min_zoom_error_text)
         return self.update(self.start_time, self.end_time, start_delta, end_delta)
