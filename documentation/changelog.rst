@@ -27,6 +27,13 @@ Exporting:
 * Exporting to CSV with newline within description
   (`#92 <https://sourceforge.net/p/thetimelineproj/backlog/92/>`_)
 
+GUI:
+
+* PeriodTooLongError: Can't zoom wider than 1200 years
+  Limitation now removed.
+  (`#90 <https://sourceforge.net/p/thetimelineproj/backlog/90/>`_)
+
+* 
 Fixed crash reports:
 
 * ``PyAssertionError: C++ assertion "wxAssertFailure" failed at ..\..\src\common\stockitem.cpp(166) in wxGetStockLabel(): invalid stock item ID``
