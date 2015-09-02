@@ -33,6 +33,10 @@ GUI:
   Limitation now removed.
   (`#90 <https://sourceforge.net/p/thetimelineproj/backlog/90/>`_)
 
+* Event and Era periods are limited
+  Limitation now removed.
+  (`#98 <https://sourceforge.net/p/thetimelineproj/backlog/98/>`_)
+
 * 
 Fixed crash reports:
 
