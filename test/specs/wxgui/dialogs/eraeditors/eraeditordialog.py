@@ -194,10 +194,9 @@ class describe_era_editor__validation(EraEditorTestCase):
         self.assertTrue(self.view.display_invalid_start.called)
         self.assert_era_unchanged()
 
-    def test_period_can_not_be_too_long(self):
+    def test_period_can_be_long(self):
         self.when_editing_an_era()
         self.simulate_user_enters_start_time("1 Jan 2000")
         self.simulate_user_enters_end_time("1 Jan 5000")
         self.simulate_user_clicks_ok()
-        self.assertEqual(1, self.view.display_invalid_period.call_count)
-        self.assert_era_unchanged()
+        self.assertEqual(0, self.view.display_invalid_period.call_count)

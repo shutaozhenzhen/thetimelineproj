@@ -83,13 +83,13 @@ class TimelineViewSpec(UnitTestCase):
         self.move_mouse_to_x(1)
         self.assert_displays_status_text("")
 
-    def test_displays_period_to_long_message_when_zooming(self):
+    def test_displays_nothing_for_long_period_zooming(self):
         self.given_time_at_x_is(0, "1 Aug 2000")
         self.given_time_at_x_is(200, "1 Aug 4000")
         self.init_view_with_db()
         self.start_shift_drag_at_x(0)
         self.move_mouse_to_x(200)
-        self.assert_displays_status_text(_("Region too long"))
+        self.assert_displays_status_text("")
 
     def test_removes_zoom_instructions_when_zoom_done(self):
         self.init_view_with_db()
@@ -104,33 +104,12 @@ class TimelineViewSpec(UnitTestCase):
         self.move_mouse_to_x(1)
         self.assert_highlights_region(("1 Jan 2010", "1 Jan 2011"))
 
-    def test_highlights_last_valid_region_while_zooming(self):
-        self.given_time_at_x_is(0, "1 Jan 2010")
-        self.given_time_at_x_is(1, "1 Jan 2011")
-        self.given_time_at_x_is(2000, "1 Jan 4010")
-        self.init_view_with_db()
-        self.start_shift_drag_at_x(0)
-        self.move_mouse_to_x(1)
-        self.move_mouse_to_x(2000)
-        self.assert_highlights_region(("1 Jan 2010", "1 Jan 2011"))
-
     def test_highlights_no_region_when_zooming_is_completed(self):
         self.given_time_at_x_is(0, "1 Aug 2010")
         self.given_time_at_x_is(20, "3 Aug 2010")
         self.init_view_with_db()
         self.simulate_mouse_down_move_up((0, ANY_Y), (20, ANY_Y), shift_down=True)
         self.assert_highlights_region(None)
-
-    def test_zooms_to_last_valid_selection(self):
-        self.given_time_at_x_is(0, "1 Jan 2010")
-        self.given_time_at_x_is(1, "1 Jan 2011")
-        self.given_time_at_x_is(2000, "1 Jan 4010")
-        self.init_view_with_db()
-        self.start_shift_drag_at_x(0)
-        self.move_mouse_to_x(1)
-        self.move_mouse_to_x(2000)
-        self.release_mouse()
-        self.assert_displays_period("1 Jan 2010", "1 Jan 2011")
 
     def test_centers_displayed_period_around_middle_click_position(self):
         self.given_time_at_x_is(150, "15 Aug 2010")

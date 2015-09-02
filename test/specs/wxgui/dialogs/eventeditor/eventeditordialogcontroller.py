@@ -375,7 +375,7 @@ class describe_validation(EventEditorDialogControllerTestCase):
         self.assertTrue(self.dialog.display_invalid_start.called)
         self.assert_no_event_saved()
 
-    def test_period_can_not_be_too_long(self):
+    def test_period_can_be_long(self):
         self.when_editor_opened_with_time("1 Jan 2010")
         self.dialog.get_name.return_value = "a valid name"  # why needed?
         self.dialog.get_locked.return_value = False  # why needed?
@@ -383,8 +383,7 @@ class describe_validation(EventEditorDialogControllerTestCase):
         self.simulate_user_enters_start_time("1 Jan 2000")
         self.simulate_user_enters_end_time("1 Jan 5000")
         self.simulate_user_clicks_ok()
-        self.assertEqual(1, self.dialog.display_error_message.call_count)
-        self.assert_no_event_saved()
+        self.assertEqual(0, self.dialog.display_error_message.call_count)
 
     def test_time_cant_change_when_event_is_locked(self):
         self.when_editor_opened_with_event(an_event_with(time="1 Jan 2010"))
