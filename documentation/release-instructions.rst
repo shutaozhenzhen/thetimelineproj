@@ -3,6 +3,7 @@ Making a Timeline release
 
 Preparations on main
 --------------------
+
 1. Check that information is correct in changelog.rst
     1. Check
     2. Commit "Updated changes"
@@ -11,12 +12,12 @@ Preparations on main
     1. Check developers
     2. Check contributors
     3. Check translators
-      1. Check in LaunchPad for contributors that has an e-mail address.
+        1. Check in LaunchPad for contributors that has an e-mail address.
     4. Commit "Updated about"
 
-3. For Windows build - check that all plugins are imported 
+3. For Windows build - check that all plugins are imported
     1. Add imports for new plugins, last in the file release\win\cmd\mod2_factory_py.py
-    
+
 Feature freeze
 --------------
 
@@ -119,8 +120,8 @@ Publish
        execute stable-copy\bin\SetupTimeline9nn9Py2Exe.exe
     4. Try running the installed Timeline to make a basic check that it works
     5. Upload the install file to Source Forge
-	6. Ensure that the exe file has "Default Download For" Windows checkbox checked and 
-       ensure that the the zip file has all the others checked
+	6. Ensure that the exe file has "Default Download For" Windows checkbox
+           checked and ensure that the the zip file has all the others checked
 
 3. Make release announcement:
     1. Post news to SF (http://sourceforge.net/p/thetimelineproj/news/?source=navbar)
