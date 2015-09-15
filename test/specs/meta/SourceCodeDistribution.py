@@ -41,11 +41,30 @@ class SourceCodeDistributionSpec(UnitTestCase):
         for author in self.get_authors_from_about_module():
             self.assertTrue(author in authors_content)
 
+    def test_py_files_should_have_copyright(self):
+        for py_file in self.get_py_files():
+            with open(py_file) as f:
+                content = f.read()
+                if content:
+                    self.assertIn(COPYRIGHT_HEADER, content, "%s lacks proper copyright notice." % py_file)
+
     def setUp(self):
         self.ROOT_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "..")
         self.README = os.path.join(self.ROOT_DIR, "README")
         self.changelog = os.path.join(self.ROOT_DIR, "documentation", "changelog.rst")
         self.AUTHORS = os.path.join(self.ROOT_DIR, "AUTHORS")
+
+    def get_py_files(self):
+        subdirs = [
+            "source",
+            os.path.join("test", "specs"),
+            os.path.join("test", "timelinetest"),
+        ]
+        for subdir in subdirs:
+            for (root, dirs, files) in os.walk(os.path.join(self.ROOT_DIR, subdir)):
+                for file in files:
+                    if file.endswith(".py"):
+                        yield os.path.relpath(os.path.normpath(os.path.join(root, file)))
 
     def get_authors_from_about_module(self):
         return [possible_author.strip()
@@ -87,3 +106,23 @@ class SourceCodeDistributionSpec(UnitTestCase):
         content = f.read()
         f.close()
         return content
+
+
+COPYRIGHT_HEADER = "".join([
+    "# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg\n",
+    "#\n",
+    "# This file is part of Timeline.\n",
+    "#\n",
+    "# Timeline is free software: you can redistribute it and/or modify\n",
+    "# it under the terms of the GNU General Public License as published by\n",
+    "# the Free Software Foundation, either version 3 of the License, or\n",
+    "# (at your option) any later version.\n",
+    "#\n",
+    "# Timeline is distributed in the hope that it will be useful,\n",
+    "# but WITHOUT ANY WARRANTY; without even the implied warranty of\n",
+    "# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n",
+    "# GNU General Public License for more details.\n",
+    "#\n",
+    "# You should have received a copy of the GNU General Public License\n",
+    "# along with Timeline.  If not, see <http://www.gnu.org/licenses/>.\n",
+])
