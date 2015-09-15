@@ -14,10 +14,10 @@ Calendar:
 
 Drawing:
 
-* Vertical scroll by drag is not proportional
+* Vertical scroll by drag is not proportional.
   (`#88 <https://sourceforge.net/p/thetimelineproj/backlog/88/>`_)
 
-* Keep a group of events together. 
+* Keep a group of events together.
   Expand containers vertically when it contains overlapping subevents.
   Implemented as an experimental feature.
   (`#39 <https://sourceforge.net/p/thetimelineproj/backlog/39/>`_)
@@ -29,15 +29,13 @@ Exporting:
 
 GUI:
 
-* PeriodTooLongError: Can't zoom wider than 1200 years
+* PeriodTooLongError: Can't zoom wider than 1200 years.
   Limitation now removed.
   (`#90 <https://sourceforge.net/p/thetimelineproj/backlog/90/>`_)
 
-* Event and Era periods are limited
-  Limitation now removed.
+* Event and era periods are no longer limited.
   (`#98 <https://sourceforge.net/p/thetimelineproj/backlog/98/>`_)
 
-* 
 Fixed crash reports:
 
 * ``PyAssertionError: C++ assertion "wxAssertFailure" failed at ..\..\src\common\stockitem.cpp(166) in wxGetStockLabel(): invalid stock item ID``
@@ -48,7 +46,7 @@ Fixed crash reports:
 
 * ``string index out of range``
   (`#85 <https://sourceforge.net/p/thetimelineproj/backlog/85/>`_)
-  
+
 * ``AttributeError: 'NoneType' object has no attribute 'julian_day'``
   (`#96 <https://sourceforge.net/p/thetimelineproj/backlog/96/>`_)
 
