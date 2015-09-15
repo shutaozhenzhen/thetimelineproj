@@ -44,12 +44,15 @@ Summary:
 * We want to continue developing Timeline
 * We want to get more people involved in the development of Timeline
 * We worked on making it easier for new people to get into Timeline
+
     * We started writing guides
     * We improved the structure of the files in the repository
     * We experimented with a plugin architecture that will make it easier to
       make small modifications to Timeline
+
 * We want to let the Timeline community decide the direction in which Timeline
   should develop
+
     * We looked at mailing list traffic from 2014 to learn what problems users
       face when they are using Timeline
     * We started entering those problems in a backlog
