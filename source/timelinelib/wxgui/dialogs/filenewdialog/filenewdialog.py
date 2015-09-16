@@ -63,7 +63,7 @@ class FileNewDialog(Dialog):
 
     def __init__(self, parent, items):
         Dialog.__init__(self, FileNewDialogController, parent, {
-            "explanation_text": _("Choose what type of timeline you wish to create."),
+            "explanation_text": _("Choose what type of timeline you want to create."),
             "description_text": _("Description"),
         }, title=_("Create new timeline"))
         self.controller.on_init(items)
