@@ -18,20 +18,19 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.filenewdialog.filenewdialog import FileNewDialog
 from timelinelib.wxgui.dialogs.filenewdialog.filenewdialogcontroller import FileNewDialogController
+from timelinelib.wxgui.dialogs.filenewdialog.filenewdialog import FileNewDialog
 from timelinetest import UnitTestCase
-from timelinetest import WxDialogTestCase
+from timelinetest.utils import create_dialog
 
 
-class describe_file_new_dialog(WxDialogTestCase):
+class describe_file_new_dialog(UnitTestCase):
 
-    HALT_FOR_MANUAL_INSPECTION = False
+    def setUp(self):
+        self.view = Mock(FileNewDialog)
+        self.controller = FileNewDialogController(self.view)
 
     def test_it_can_be_created(self):
-        self.open_dialog(self.create_dialog)
-
-    def create_dialog(self):
         items = [
             {
                 "text": "hello",
@@ -43,17 +42,10 @@ class describe_file_new_dialog(WxDialogTestCase):
                                "long label\n\nand some newlines",
             },
         ]
-        return FileNewDialog(None, items)
-
-    def on_closing(self, dialog):
-        print(dialog.GetSelection())
-
-
-class describe_file_new_dialog_controller(UnitTestCase):
-
-    def setUp(self):
-        self.view = Mock(FileNewDialog)
-        self.controller = FileNewDialogController(self.view)
+        with create_dialog(FileNewDialog, None, items) as dialog:
+            if False:
+                dialog.ShowModal()
+                print(dialog.GetSelection())
 
     def test_it_selects_the_first_item(self):
         self.controller.on_init([])
