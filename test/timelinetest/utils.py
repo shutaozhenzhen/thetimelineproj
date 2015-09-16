@@ -213,10 +213,10 @@ def modifier_change_ends_today(event):
 
 @contextlib.contextmanager
 def create_dialog(dialog_class, *args, **kwargs):
+    app = wx.App(False)
     try:
-        app = wx.App(False)
+        dialog = dialog_class(*args, **kwargs)
         try:
-            dialog = dialog_class(*args, **kwargs)
             yield dialog
         finally:
             dialog.Destroy()
