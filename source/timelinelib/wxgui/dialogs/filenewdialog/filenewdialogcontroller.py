@@ -21,12 +21,9 @@ from timelinelib.wxgui.framework import Controller
 
 class FileNewDialogController(Controller):
 
-    def on_init(self):
+    def on_init(self, items):
         self.selection = None
-        self.items = [
-            { "text": "hello", "description": "hello is a standard phrase" },
-            { "text": "there", "description": "there can be used after hello.  but this is a long label\n\nand some newlines" },
-        ]
+        self.items = items
         self.view.SetItems([item["text"] for item in self.items])
         self.view.SelectItem(0)
 

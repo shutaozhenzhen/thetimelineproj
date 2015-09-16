@@ -57,11 +57,11 @@ class FileNewDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, title, items):
         Dialog.__init__(self, FileNewDialogController, parent, {
             "description_text": _("Description"),
-        })
-        self.controller.on_init()
+        }, title=title)
+        self.controller.on_init(items)
 
     def SetItems(self, items):
         self.type_list.SetItems(items)
@@ -83,5 +83,15 @@ class FileNewDialog(Dialog):
 
 if __name__ == "__main__":
     from timelinelib.wxgui.framework import show_modal_test
-    with show_modal_test(FileNewDialog, None) as dialog:
+    items = [
+        {
+            "text": "hello",
+            "description": "hello is a standard phrase",
+        },
+        {
+            "text": "there",
+            "description": "there can be used after hello. but this is a long label\n\nand some newlines",
+        },
+    ]
+    with show_modal_test(FileNewDialog, None, "Select test item", items) as dialog:
         print(dialog.GetSelection())
