@@ -29,6 +29,10 @@ Exporting:
 
 GUI:
 
+* Replaced "file new" menu items with a single dialog that let's you choose
+  what type of timeline you want to create.
+  (`#97 <https://sourceforge.net/p/thetimelineproj/backlog/97/>`_)
+
 * PeriodTooLongError: Can't zoom wider than 1200 years.
   Limitation now removed.
   (`#90 <https://sourceforge.net/p/thetimelineproj/backlog/90/>`_)
