@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import __builtin__
+import contextlib
 import xml.etree.ElementTree
 
 import wx
@@ -23,13 +25,12 @@ import wx
 
 class GuiCreator(object):
 
-    def __init__(self, controller_class):
+    def _create(self, controller_class, variables):
+        self._variables = variables
         self.controller = controller_class(self)
-        o = self._create(self, xml.etree.ElementTree.fromstring(self.__doc__))
-        if isinstance(o, wx.Sizer):
-            self.SetSizerAndFit(o)
+        return self._create_from_node(self, xml.etree.ElementTree.fromstring(self.__doc__))
 
-    def _create(self, parent, node):
+    def _create_from_node(self, parent, node):
         try:
             creator = getattr(self, "_create_%s" % node.tag)
         except AttributeError:
@@ -39,16 +40,6 @@ class GuiCreator(object):
         if node.get("id", None):
             setattr(self, node.get("id"), component)
         return component
-
-    def _bind_events(self, node, component):
-        for key in node.keys():
-            if key.startswith("event_"):
-                event_name = key[6:]
-                target = getattr(self.controller, node.get(key))
-                if node.tag == "Container":
-                    self.Bind(getattr(wx, event_name), target, self)
-                else:
-                    self.Bind(getattr(wx, event_name), target, component)
 
     def _create_StdDialogButtonSizer(self, parent, node):
         return self.CreateStdDialogButtonSizer(flags=self._get_or_value(node.get("buttons", "")))
@@ -61,25 +52,14 @@ class GuiCreator(object):
 
     def _create_StaticBoxSizerVertical(self, parent, node):
         box = wx.StaticBox(parent, label=self._get_text(node.get("label", "")), **self._get_wx_window_attributes(node))
-        return self._populate_sizer(parent, node,
-                wx.StaticBoxSizer(box, wx.HORIZONTAL))
-
-    def _create_Container(self, parent, node):
-        assert len(node.getchildren()) == 1, "Container can have only one child node"
-        return self._create(parent, node.getchildren()[0])
-
-    def _get_text(self, text):
-        if text.startswith("$(") and text.endswith(")"):
-            return getattr(self, text[2:-1])
-        else:
-            return text
+        return self._populate_sizer(parent, node, wx.StaticBoxSizer(box, wx.HORIZONTAL))
 
     def _populate_sizer(self, parent, node, sizer):
         for child_node in node.getchildren():
             if child_node.tag == "Spacer":
                 sizer.AddSpacer(int(child_node.get("size", "5")))
             else:
-                component = self._create(parent, child_node)
+                component = self._create_from_node(parent, child_node)
                 border = self._get_or_value(child_node.get("border", ""))
                 sizer.Add(component,
                           flag=border|wx.EXPAND,
@@ -90,8 +70,14 @@ class GuiCreator(object):
     def _create_generic_component(self, parent, node):
         component = getattr(wx, node.tag)(parent, **self._get_wx_window_attributes(node))
         for child_node in node.getchildren():
-            self._create(component, child_node)
+            self._create_from_node(component, child_node)
         return component
+
+    def _get_text(self, text):
+        if text.startswith("$(") and text.endswith(")"):
+            return self._variables[text[2:-1]]
+        else:
+            return text
 
     def _get_wx_window_attributes(self, node):
         return {
@@ -107,15 +93,36 @@ class GuiCreator(object):
                 value |= getattr(wx, wx_constant_name)
         return value
 
+    def _bind_events(self, node, component):
+        for key in node.keys():
+            if key.startswith("event_"):
+                event_name = key[6:]
+                target = getattr(self.controller, node.get(key))
+                self.Bind(getattr(wx, event_name), target, component)
+
 
 class Dialog(wx.Dialog, GuiCreator):
 
-    def __init__(self, controller_class, parent=None, title=""):
-        wx.Dialog.__init__(self, parent, title=title)
-        GuiCreator.__init__(self, controller_class)
+    def __init__(self, controller_class, parent, variables={}, **kwargs):
+        wx.Dialog.__init__(self, parent, **kwargs)
+        component = self._create(controller_class, variables)
+        if isinstance(component, wx.Sizer):
+            self.SetSizerAndFit(component)
 
 
 class Controller(object):
 
     def __init__(self, view):
         self.view = view
+
+
+@contextlib.contextmanager
+def show_modal_test(dialog_class, *args, **kwargs):
+    def _(message):
+        return message
+    __builtin__.__dict__["_"] = _
+    app = wx.App()
+    dialog = dialog_class(*args, **kwargs)
+    dialog.ShowModal()
+    yield dialog
+    dialog.Destroy()

@@ -16,11 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-def _(message):
-    return message
-import __builtin__
-__builtin__.__dict__["_"] = _
-
+import wx
 
 from timelinelib.wxgui.dialogs.filenewdialog.filenewdialogcontroller import FileNewDialogController
 from timelinelib.wxgui.framework import Dialog
@@ -43,7 +39,7 @@ class FileNewDialog(Dialog):
             <StaticBoxSizerVertical
                 width="300"
                 proportion="1"
-                label="$(DESCRIPTION)"
+                label="$(description_text)"
                 border="LEFT"
             >
                 <StaticText
@@ -61,15 +57,15 @@ class FileNewDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    DESCRIPTION = _("Description")
-
     def __init__(self, parent):
-        Dialog.__init__(self, FileNewDialogController, parent=parent)
+        Dialog.__init__(self, FileNewDialogController, parent, {
+            "description_text": _("Description"),
+        })
         self.controller.on_init()
-        self.type_list.SetFocus()
 
     def SetItems(self, items):
         self.type_list.SetItems(items)
+        self.type_list.SetFocus()
 
     def SelectItem(self, index):
         self.type_list.SetSelection(index)
@@ -86,8 +82,6 @@ class FileNewDialog(Dialog):
 
 
 if __name__ == "__main__":
-    import wx
-    app = wx.App()
-    dialog = FileNewDialog(None)
-    dialog.ShowModal()
-    print("you chose: %s" % dialog.GetSelection())
+    from timelinelib.wxgui.framework import show_modal_test
+    with show_modal_test(FileNewDialog, None) as dialog:
+        print(dialog.GetSelection())
