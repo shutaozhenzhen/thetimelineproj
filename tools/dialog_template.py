@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import wx
 import os.path
 
@@ -27,6 +29,7 @@ IMPORTS = """\
 import wx
 
 from timelinelib.wxgui.dialogs.%s.%scontroller import %sController
+from timelinelib.wxgui.framework import Dialog
 
 
 """
@@ -34,53 +37,53 @@ from timelinelib.wxgui.dialogs.%s.%scontroller import %sController
 TEST_IMPORTS = """\
 from mock import Mock
 
-from timelinetest import UnitTestCase
 from timelinelib.wxgui.dialogs.%s.%s import %s
 from timelinelib.wxgui.dialogs.%s.%scontroller import %sController
+from timelinetest import UnitTestCase
+from timelinetest.utils import create_dialog
 
 
 """
 
 
 DIALOG = """\
-class %sGuiCreator(wx.Dialog):
+class %s(Dialog):
 
-    def __init__(self, title, parent=None):
-        wx.Dialog.__init__(self, parent, title=title)
-        self._create_gui()
+    \"\"\"
+    <BoxSizerVertical>
+        <Button label="$(test_text)" />
+    </BoxSizerVertical>
+    \"\"\"
 
-    def _create_gui(self):
-        pass
-
-
-class %s(%sGuiCreator):
-
-    def __init__(self, title, parent=None):
-        %sGuiCreator.__init__(self, parent, title=title)
-        self.controller = %sController(self)
+    def __init__(self, parent):
+        Dialog.__init__(self, %sController, parent, {
+            "test_text": "Hello World",
+        }, title=_("New dialog title"))
+        self.controller.on_init()
 """
 
 
 CONTROLLER = """\
-class %sController(object):
+from timelinelib.wxgui.framework import Controller
 
-    def __init__(self, view):
-        self.view = view
+
+class %sController(Controller):
+
+    def on_init(self):
+        pass
 """
 
 TEST = """\
-class %sTestCase(UnitTestCase):
+class describe_%s(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(%s)
         self.controller = %sController(self.view)
 
-
-class describe_controller_instantiation(%sTestCase):
-
-    def test_controller_can_be_instantiated(self):
-        self.assertTrue(self.controller is not None)
-
+    def test_it_can_be_created(self):
+        with create_dialog(%s, None) as dialog:
+            if True: # Make sure to set to False before committing
+                dialog.ShowModal()
 """
 
 
@@ -98,7 +101,7 @@ def create_dialog_source_file(path, file_name, class_name):
     f = open(os.path.join(path, file_name + ".py"), "w")
     f.write(COPYRIGHT)
     f.write(IMPORTS % (file_name, file_name, class_name))
-    f.write(DIALOG % (class_name, class_name, class_name, class_name, class_name))
+    f.write(DIALOG % (class_name, class_name))
     f.close()
 
 
