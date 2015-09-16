@@ -16,23 +16,78 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
+def _(message):
+    return message
+import __builtin__
+__builtin__.__dict__["_"] = _
+
 
 from timelinelib.wxgui.dialogs.filenewdialog.filenewdialogcontroller import FileNewDialogController
+from timelinelib.wxgui.framework import Dialog
 
 
-class FileNewDialogGuiCreator(wx.Dialog):
+class FileNewDialog(Dialog):
 
-    def __init__(self, title, parent=None):
-        wx.Dialog.__init__(self, parent, title=title)
-        self._create_gui()
+    """
+    <BoxSizerVertical>
+        <BoxSizerHorizontal
+            proportion="1"
+            border="LEFT|TOP|RIGHT"
+        >
+            <ListBox
+                id="type_list"
+                width="150"
+                height="300"
+                event_EVT_LISTBOX="on_selection_changed"
+            />
+            <StaticBoxSizerVertical
+                width="300"
+                proportion="1"
+                label="$(DESCRIPTION)"
+                border="LEFT"
+            >
+                <StaticText
+                    id="description"
+                    style="TE_READONLY"
+                    proportion="1"
+                    border="ALL"
+                />
+            </StaticBoxSizerVertical>
+        </BoxSizerHorizontal>
+        <StdDialogButtonSizer
+            buttons="OK|CANCEL"
+            border="TOP|BOTTOM"
+        />
+    </BoxSizerVertical>
+    """
 
-    def _create_gui(self):
-        pass
+    DESCRIPTION = _("Description")
+
+    def __init__(self, parent):
+        Dialog.__init__(self, FileNewDialogController, parent=parent)
+        self.controller.on_init()
+        self.type_list.SetFocus()
+
+    def SetItems(self, items):
+        self.type_list.SetItems(items)
+
+    def SelectItem(self, index):
+        self.type_list.SetSelection(index)
+        event = wx.CommandEvent()
+        event.SetInt(index)
+        self.controller.on_selection_changed(event)
+
+    def SetDescription(self, text):
+        self.description.SetLabel(text)
+        self.description.Wrap(self.description.GetSize()[0])
+
+    def GetSelection(self):
+        return self.controller.get_selection()
 
 
-class FileNewDialog(FileNewDialogGuiCreator):
-
-    def __init__(self, title, parent=None):
-        FileNewDialogGuiCreator.__init__(self, parent, title=title)
-        self.controller = FileNewDialogController(self)
+if __name__ == "__main__":
+    import wx
+    app = wx.App()
+    dialog = FileNewDialog(None)
+    dialog.ShowModal()
+    print("you chose: %s" % dialog.GetSelection())
