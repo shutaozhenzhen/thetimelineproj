@@ -56,9 +56,7 @@ NAVLABEL = "%s(%s)->%%s"
 LABEL_NAVIGATE_TIME = NAVLABEL % (_("Navigate"), "tm")
 LABEL_NAVIGATE_NUM = NAVLABEL % (_("Navigate"), "num")
 METADATA = [  # File
-              Metadata(mf.ID_NEW, "shortcut_file_new",  LABEL_FILE % _("File Timeline..."), CTRL_MODIFIER, "N"),
-              Metadata(mf.ID_NEW_NUMERIC, "shortcut_file_new_numeric",  LABEL_FILE % _("Numeric Timeline..."), NO_MODIFIER, ""),
-              Metadata(mf.ID_NEW_DIR, "shortcut_file_new_dir",  LABEL_FILE % _("Directory Timeline..."), NO_MODIFIER, ""),
+              Metadata(mf.ID_NEW, "shortcut_file_new",  LABEL_FILE % _("New..."), CTRL_MODIFIER, "N"),
               Metadata(mf.ID_SAVEAS, "shortcut_save_as",  LABEL_FILE % _("Save As..."), NO_MODIFIER, ""),
               Metadata(mf.ID_IMPORT, "shortcut_import",  LABEL_FILE % _("Import..."), NO_MODIFIER, ""),
               Metadata(mf.ID_EXPORT, "shortcut_export",  LABEL_FILE % _("Export Current view to Image..."), NO_MODIFIER, ""),
