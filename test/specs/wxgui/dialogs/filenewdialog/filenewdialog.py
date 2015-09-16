@@ -16,15 +16,19 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinetest import WxDialogTestCase
+from mock import Mock
+
 from timelinelib.wxgui.dialogs.filenewdialog.filenewdialog import FileNewDialog
+from timelinelib.wxgui.dialogs.filenewdialog.filenewdialogcontroller import FileNewDialogController
+from timelinetest import UnitTestCase
+from timelinetest import WxDialogTestCase
 
 
 class describe_file_new_dialog(WxDialogTestCase):
 
     HALT_FOR_MANUAL_INSPECTION = False
 
-    def test_can_create_dialog(self):
+    def test_it_can_be_created(self):
         self.open_dialog(self.create_dialog)
 
     def create_dialog(self):
@@ -43,3 +47,14 @@ class describe_file_new_dialog(WxDialogTestCase):
 
     def on_closing(self, dialog):
         print(dialog.GetSelection())
+
+
+class describe_file_new_dialog_controller(UnitTestCase):
+
+    def setUp(self):
+        self.view = Mock(FileNewDialog)
+        self.controller = FileNewDialogController(self.view)
+
+    def test_it_selects_the_first_item(self):
+        self.controller.on_init([])
+        self.view.SelectItem.assert_called_with(0)
