@@ -26,14 +26,18 @@ class FileNewDialog(Dialog):
 
     """
     <BoxSizerVertical>
+        <StaticText
+            label="$(explanation_text)"
+            border="ALL"
+        />
         <BoxSizerHorizontal
             proportion="1"
-            border="LEFT|TOP|RIGHT"
+            border="LEFT|RIGHT"
         >
             <ListBox
                 id="type_list"
                 width="150"
-                height="300"
+                height="200"
                 event_EVT_LISTBOX="on_selection_changed"
             />
             <StaticBoxSizerVertical
@@ -59,6 +63,7 @@ class FileNewDialog(Dialog):
 
     def __init__(self, parent, title, items):
         Dialog.__init__(self, FileNewDialogController, parent, {
+            "explanation_text": _("Choose what type of timeline you wish to create."),
             "description_text": _("Description"),
         }, title=title)
         self.controller.on_init(items)
