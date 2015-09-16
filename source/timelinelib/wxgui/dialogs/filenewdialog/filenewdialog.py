@@ -61,11 +61,11 @@ class FileNewDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent, title, items):
+    def __init__(self, parent, items):
         Dialog.__init__(self, FileNewDialogController, parent, {
             "explanation_text": _("Choose what type of timeline you wish to create."),
             "description_text": _("Description"),
-        }, title=title)
+        }, title=_("Create new timeline"))
         self.controller.on_init(items)
 
     def SetItems(self, items):

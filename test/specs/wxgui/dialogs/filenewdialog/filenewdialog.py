@@ -39,7 +39,7 @@ class describe_file_new_dialog(WxDialogTestCase):
                                "long label\n\nand some newlines",
             },
         ]
-        return FileNewDialog(None, "Select test item", items)
+        return FileNewDialog(None, items)
 
     def on_closing(self, dialog):
         print(dialog.GetSelection())
