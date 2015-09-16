@@ -16,7 +16,23 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class FileNewDialogController(object):
+from timelinelib.wxgui.framework import Controller
 
-    def __init__(self, view):
-        self.view = view
+
+class FileNewDialogController(Controller):
+
+    def on_init(self):
+        self.selection = None
+        self.items = [
+            { "text": "hello", "description": "hello is a standard phrase" },
+            { "text": "there", "description": "there can be used after hello.  but this is a long label\n\nand some newlines" },
+        ]
+        self.view.SetItems([item["text"] for item in self.items])
+        self.view.SelectItem(0)
+
+    def on_selection_changed(self, event):
+        self.selection = self.items[event.GetSelection()]
+        self.view.SetDescription(self.selection["description"])
+
+    def get_selection(self):
+        return self.selection
