@@ -16,30 +16,29 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinetest import WxDialogTestCase
-from timelinelib.wxgui.dialogs.filenewdialog.filenewdialog import FileNewDialog
+import wx
+
+from timelinetest import UnitTestCase
 
 
-class describe_file_new_dialog(WxDialogTestCase):
+class WxDialogTestCase(UnitTestCase):
 
-    HALT_FOR_MANUAL_INSPECTION = False
+    def setUp(self):
+        UnitTestCase.setUp(self)
+        self.app = wx.App(False)
+        self.dialog = None
 
-    def test_can_create_dialog(self):
-        self.open_dialog(self.create_dialog)
+    def tearDown(self):
+        UnitTestCase.tearDown(self)
+        if self.dialog:
+            self.dialog.Destroy()
+        self.app.Destroy()
 
-    def create_dialog(self):
-        items = [
-            {
-                "text": "hello",
-                "description": "hello is a standard phrase",
-            },
-            {
-                "text": "there",
-                "description": "there can be used after hello. but this is a "
-                               "long label\n\nand some newlines",
-            },
-        ]
-        return FileNewDialog(None, "Select test item", items)
+    def open_dialog(self, create_dialog_fn):
+        self.dialog = create_dialog_fn()
+        if self.HALT_FOR_MANUAL_INSPECTION:
+            self.dialog.ShowModal()
+            self.on_closing(self.dialog)
 
     def on_closing(self, dialog):
-        print(dialog.GetSelection())
+        pass
