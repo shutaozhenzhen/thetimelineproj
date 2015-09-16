@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import __builtin__
-import contextlib
 import xml.etree.ElementTree
 
 import wx
@@ -114,15 +112,3 @@ class Controller(object):
 
     def __init__(self, view):
         self.view = view
-
-
-@contextlib.contextmanager
-def show_modal_test(dialog_class, *args, **kwargs):
-    def _(message):
-        return message
-    __builtin__.__dict__["_"] = _
-    app = wx.App()
-    dialog = dialog_class(*args, **kwargs)
-    dialog.ShowModal()
-    yield dialog
-    dialog.Destroy()

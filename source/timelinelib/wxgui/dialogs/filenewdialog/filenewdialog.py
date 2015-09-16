@@ -79,19 +79,3 @@ class FileNewDialog(Dialog):
 
     def GetSelection(self):
         return self.controller.get_selection()
-
-
-if __name__ == "__main__":
-    from timelinelib.wxgui.framework import show_modal_test
-    items = [
-        {
-            "text": "hello",
-            "description": "hello is a standard phrase",
-        },
-        {
-            "text": "there",
-            "description": "there can be used after hello. but this is a long label\n\nand some newlines",
-        },
-    ]
-    with show_modal_test(FileNewDialog, None, "Select test item", items) as dialog:
-        print(dialog.GetSelection())

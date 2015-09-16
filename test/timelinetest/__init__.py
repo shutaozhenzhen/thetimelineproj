@@ -20,3 +20,4 @@ from timelinetest.cases.unit import UnitTestCase
 from timelinetest.cases.tmpdir import TmpDirTestCase
 from timelinetest.cases.wxendtoend import WxEndToEndTestCase
 from timelinetest.cases.wxcomponent import WxComponentTestCase
+from timelinetest.cases.wxdialog import WxDialogTestCase
