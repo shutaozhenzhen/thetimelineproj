@@ -20,6 +20,9 @@ import os.path
 
 import wx.lib.newevent
 
+from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.calendar import set_date_formatter
 from timelinelib.config.dotfile import read_config
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
@@ -27,43 +30,41 @@ from timelinelib.data import TimePeriod
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db import db_open
 from timelinelib.db.utils import safe_locking
+from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 from timelinelib.features.installed.installedfeatures import InstalledFeatures
-from timelinelib.wxgui.dialogs.feature.featuredialog import show_feature_feedback_dialog
 from timelinelib.meta.about import APPLICATION_NAME
 from timelinelib.meta.about import display_about_dialog
+from timelinelib.plugin.factory import EVENTBOX_DRAWER
+from timelinelib.plugin.factory import EXPORTER
+from timelinelib.plugin import factory
 from timelinelib.proxies.drawingarea import DrawingAreaProxy
 from timelinelib.proxies.sidebar import SidebarProxy
-from timelinelib.time.numtime import NumTimeType
 from timelinelib.time.bosparaniantime import BosparanianTimeType
+from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
-from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.components.mainpanel import MainPanel
+from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.dialogs.categoryeditors.categorieseditordialog import CategoriesEditor
-from timelinelib.wxgui.dialogs.eraeditors.eraseditordialog import ErasEditorDialog
 from timelinelib.wxgui.dialogs.duplicateevent.duplicateventdialog import open_duplicate_event_dialog_for_event
+from timelinelib.wxgui.dialogs.eraeditors.eraseditordialog import ErasEditorDialog
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_create_event_editor
+from timelinelib.wxgui.dialogs.feature.featuredialog import show_feature_feedback_dialog
 from timelinelib.wxgui.dialogs.feedback.feedbackdialog import show_feedback_dialog
+from timelinelib.wxgui.dialogs.filenewdialog.filenewdialog import FileNewDialog
 from timelinelib.wxgui.dialogs.helpbrowser.helpbrowserframe import HelpBrowser
 from timelinelib.wxgui.dialogs.importevents.importeventsdialog import ImportDialog
 from timelinelib.wxgui.dialogs.mainframe.mainframecontroller import MainFrameController
+from timelinelib.wxgui.dialogs.nowdateeditor.nowdateeditordialog import NowDateEditorDialog
 from timelinelib.wxgui.dialogs.preferences.preferencesdialog import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditordialog import SetCategoryEditorDialog
 from timelinelib.wxgui.dialogs.shortcutseditor.shortcutseditordialog import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialog import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditor.timeditordialog import TimeEditorDialog
-from timelinelib.wxgui.dialogs.nowdateeditor.nowdateeditordialog import NowDateEditorDialog
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.utils import WildcardHelper
-from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 import timelinelib.wxgui.utils as gui_utils
-from timelinelib.plugin import factory
-from timelinelib.plugin.factory import EVENTBOX_DRAWER
-from timelinelib.plugin.factory import EXPORTER
-from timelinelib.calendar import set_date_formatter
-from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -102,9 +103,6 @@ ID_IMPORT = wx.NewId()
 ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
-ID_NEW_NUMERIC = wx.NewId()
-ID_NEW_BOSPARANIAN = wx.NewId()
-ID_NEW_DIR = wx.NewId()
 ID_FIND_CATEGORIES = wx.NewId()
 ID_NEW = wx.ID_NEW
 ID_FIND = wx.ID_FIND
@@ -157,7 +155,7 @@ class GuiCreator(object):
 
     def _create_file_menu(self, main_menu_bar):
         file_menu = wx.Menu()
-        self._create_file_new_menu(file_menu)
+        self._create_file_new_menu_item(file_menu)
         self._create_file_open_menu_item(file_menu)
         self._create_file_open_recent_menu(file_menu)
         file_menu.AppendSeparator()
@@ -189,39 +187,13 @@ class GuiCreator(object):
             if callable(method):
                 self.shortcut_items[method()] = mnu
 
-    def _create_file_new_menu(self, file_menu):
-        file_new_menu = wx.Menu()
-        self._create_file_new_timeline_menu_item(file_new_menu)
-        self._create_file_new_bosptimeline_menu_item(file_new_menu)
-        self._create_file_new_numtimeline_menu_item(file_new_menu)
-        self._create_file_new_dir_timeline_menu_item(file_new_menu)
-        file_menu.AppendMenu(wx.ID_ANY, _("New"), file_new_menu, _("Create a new timeline"))
-
-    def _create_file_new_bosptimeline_menu_item(self, file_new_menu):
-        mnu_file_new_bosparanian = file_new_menu.Append(
-            ID_NEW_BOSPARANIAN, _("Bosparanian Timeline..."), _("Bosparanian Timeline..."))
-        self.shortcut_items[ID_NEW_BOSPARANIAN] = mnu_file_new_bosparanian
-        self.Bind(wx.EVT_MENU, self._mnu_file_new_bosparanian_on_click, mnu_file_new_bosparanian)
-
-    def _create_file_new_timeline_menu_item(self, file_new_menu):
+    def _create_file_new_menu_item(self, file_menu):
         accel = wx.GetStockLabel(wx.ID_NEW, wx.STOCK_WITH_ACCELERATOR | wx.STOCK_WITH_MNEMONIC)
         accel = accel.split("\t", 1)[1]
-        file_new_menu.Append(
-            wx.ID_NEW, _("File Timeline...") + "\t" + accel, _("File Timeline..."))
-        self.shortcut_items[wx.ID_NEW] = file_new_menu.FindItemById(wx.ID_NEW)
+        file_menu.Append(
+            wx.ID_NEW, _("New...") + "\t" + accel, _("Create a new timeline"))
+        self.shortcut_items[wx.ID_NEW] = file_menu.FindItemById(wx.ID_NEW)
         self.Bind(wx.EVT_MENU, self._mnu_file_new_on_click, id=wx.ID_NEW)
-
-    def _create_file_new_numtimeline_menu_item(self, file_new_menu):
-        mnu_file_new_numeric = file_new_menu.Append(
-            ID_NEW_NUMERIC, _("Numeric Timeline..."), _("Numeric Timeline..."))
-        self.shortcut_items[ID_NEW_NUMERIC] = mnu_file_new_numeric
-        self.Bind(wx.EVT_MENU, self._mnu_file_new_numeric_on_click, mnu_file_new_numeric)
-
-    def _create_file_new_dir_timeline_menu_item(self, file_new_menu):
-        mnu_file_new_dir = file_new_menu.Append(
-            ID_NEW_DIR, _("Directory Timeline..."), _("Directory Timeline..."))
-        self.shortcut_items[ID_NEW_DIR] = mnu_file_new_dir
-        self.Bind(wx.EVT_MENU, self._mnu_file_new_dir_on_click, mnu_file_new_dir)
 
     def _create_file_open_menu_item(self, file_menu):
         file_menu.Append(
@@ -672,16 +644,32 @@ class GuiCreator(object):
         return item
 
     def _mnu_file_new_on_click(self, event):
-        self._create_new_timeline()
-
-    def _mnu_file_new_bosparanian_on_click(self, event):
-        self._create_new_bosparanian_timeline()
-
-    def _mnu_file_new_numeric_on_click(self, event):
-        self._create_new_numeric_timeline()
-
-    def _mnu_file_new_dir_on_click(self, event):
-        self._create_new_dir_timeline()
+        items = [
+            {
+                "text": _("Gregorian"),
+                "description": _("This creates a timeline using the standard calendar."),
+                "create_fn": self._create_new_timeline,
+            },
+            {
+                "text": _("Numeric"),
+                "description": _("This creates a timeline that has numbers on the x-axis instead of dates."),
+                "create_fn": self._create_new_numeric_timeline,
+            },
+            {
+                "text": _("Directory"),
+                "description": _("This creates a timeline where the modification date of files in a directory are shown as events."),
+                "create_fn": self._create_new_dir_timeline,
+            },
+            {
+                "text": _("Bosparanian"),
+                "description": _("This creates a timeline using the bosparanian calendar."),
+                "create_fn": self._create_new_bosparanian_timeline,
+            },
+        ]
+        dialog = FileNewDialog(self, items)
+        if dialog.ShowModal() == wx.ID_OK:
+            dialog.GetSelection()["create_fn"]()
+        dialog.Destroy()
 
     def _mnu_file_open_on_click(self, event):
         self._open_existing_timeline()

@@ -26,7 +26,7 @@ import timelinelib.config.shortcut as sc
 import timelinelib.wxgui.dialogs.mainframe.mainframe as mf
 
 
-NEW_FUNCTION = "#File#->#File Timeline...#"
+NEW_FUNCTION = "#File#->#New...#"
 SIDEBAR_FUNCTION = "#View#->#Sidebar#"
 
 
