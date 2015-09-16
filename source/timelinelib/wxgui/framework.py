@@ -49,7 +49,7 @@ class GuiCreator(object):
         return self._populate_sizer(parent, node, wx.BoxSizer(wx.HORIZONTAL))
 
     def _create_StaticBoxSizerVertical(self, parent, node):
-        box = wx.StaticBox(parent, label=self._get_text(node.get("label", "")), **self._get_wx_window_attributes(node))
+        box = wx.StaticBox(parent, **self._get_standard_wx_attributes(node))
         return self._populate_sizer(parent, node, wx.StaticBoxSizer(box, wx.HORIZONTAL))
 
     def _populate_sizer(self, parent, node, sizer):
@@ -66,7 +66,7 @@ class GuiCreator(object):
         return sizer
 
     def _create_generic_component(self, parent, node):
-        component = getattr(wx, node.tag)(parent, **self._get_wx_window_attributes(node))
+        component = getattr(wx, node.tag)(parent, **self._get_standard_wx_attributes(node))
         for child_node in node.getchildren():
             self._create_from_node(component, child_node)
         return component
@@ -77,12 +77,16 @@ class GuiCreator(object):
         else:
             return text
 
-    def _get_wx_window_attributes(self, node):
-        return {
-            "size": (int(node.get("width", "-1")),
-                     int(node.get("height", "-1"))),
-            "style": self._get_or_value(node.get("style", None))
-        }
+    def _get_standard_wx_attributes(self, node):
+        attributes = {}
+        if node.get("width") or node.get("height"):
+            attributes["size"] = (int(node.get("width", "-1")),
+                                  int(node.get("height", "-1")))
+        if node.get("style"):
+            attributes["style"] = self._get_or_value(node.get("style", None))
+        if node.get("label"):
+            attributes["label"] = self._get_text(node.get("label"))
+        return attributes
 
     def _get_or_value(self, wx_constant_names):
         value = 0
