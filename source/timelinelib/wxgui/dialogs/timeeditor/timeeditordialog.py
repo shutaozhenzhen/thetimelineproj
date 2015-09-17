@@ -60,6 +60,7 @@ class TimeEditorDialog(Dialog):
         try:
             self.time_picker.show_time(value)
         except:
+            # Not all TimePicker objects has a 'show_time' attribute
             pass
 
     def Close(self):
