@@ -1,8 +1,154 @@
-Build a Dialog window
+Build a dialog widget
 =====================
 
-This pattern is inspired by the `Humbe Dialog Box
-<http://www.objectmentor.com/resources/articles/TheHumbleDialogBox.pdf>`_.
+This howto describes how we like to build dialog widgets (``wx.Dialog``).
+
+To get started, we have a tool that can generate boilerplate code. Let's try
+it::
+
+    python tools/dialog_template.py
+
+If we enter the name ``TestDialog``, the following files will be created for
+us::
+
+    source/timelinelib/wxgui/dialogs/testdialog/__init__.py
+    source/timelinelib/wxgui/dialogs/testdialog/testdialog.py
+    source/timelinelib/wxgui/dialogs/testdialog/testdialogcontroller.py
+    test/specs/wxgui/dialogs/testdialog/__init__.py
+    test/specs/wxgui/dialogs/testdialog/testdialog.py
+
+Essentially, a dialog consists of 3 files: the dialog itself, the controller,
+and the test file.
+
+The dialog and the controller collaborate in a pattern inspired by the
+`Humbe Dialog Box <http://www.objectmentor.com/resources/articles/TheHumbleDialogBox.pdf>`_.
+The dialog corresponds to the view and the controller corresponds to the smart
+object.
+
+What the boiler plate code has given us is a way to test our dialog. Let's try
+the following command::
+
+    python test/execute-specs.py --halt-gui --only testdialog
+
+A dialog shows up with a hello world button.
+
+The ``--halt-gui`` flag ensures that the dialog stays open until we manually
+close it. That is not desirable when running tests automatically because it
+needs manual inspection, but for quickly inspecting our dialog, it's perfect.
+
+Let's try without the ``--halt-gui`` flag just to ensure that it works::
+
+    python test/execute-specs.py --only testdialog
+
+Now let's look at how the GUI elements are created. Here is
+``source/timelinelib/wxgui/dialogs/testdialog/testdialog.py`` without the
+copyright notice::
+
+    from timelinelib.wxgui.dialogs.testdialog.testdialogcontroller import TestDialogController
+    from timelinelib.wxgui.framework import Dialog
+
+
+    class TestDialog(Dialog):
+
+        """
+        <BoxSizerVertical>
+            <Button label="$(test_text)" />
+        </BoxSizerVertical>
+        """
+
+        def __init__(self, parent):
+            Dialog.__init__(self, TestDialogController, parent, {
+                "test_text": "Hello World",
+            }, title=_("New dialog title"))
+            self.controller.on_init()
+
+Notice the docstring that contains XML. That XML describes the GUI elements
+that are present in the dialog and how they are laid out.
+
+Let's try to change the XML to the following::
+
+        <BoxSizerVertical>
+            <Button label="$(test_text)" />
+            <BoxSizerHorizontal>
+                <TextCtrl id="text_one" />
+                <TextCtrl id="text_two" />
+            </BoxSizerHorizontal>
+        </BoxSizerVertical>
+
+And run the test again::
+
+    python test/execute-specs.py --halt-gui --only testdialog
+
+We see that the elements are laid out as described in the XML.
+
+Now let's implement some functionality. When we press the button we want to
+fill the text widgets with some text. The way this is going to work is that the
+dialog will send an event to the controller, the controller then calls methods
+on the dialog to update some part.
+
+First, let's connect the event by changing the XML for the button::
+
+    <Button label="$(test_text)" event_EVT_BUTTON="on_click" />
+
+We also need to add the appropriate method in the controller. The controller
+(``source/timelinelib/wxgui/dialogs/testdialog/testdialogcontroller.py``)
+should now look like this::
+
+    from timelinelib.wxgui.framework import Controller
+
+
+    class TestDialogController(Controller):
+
+        def on_init(self):
+            pass
+
+        def on_click(self, event):
+            pass
+
+If we run the test again, it will not crash, but nothing happens when we click
+the button. Let's change the ``on_click`` method to call methods on the dialog
+(referred to as the view)::
+
+    def on_click(self, event):
+        self.view.SetTextOne("hello")
+        self.view.SetTextTwo("world")
+
+And let's add the two methods in the dialog class::
+
+    def SetTextOne(self, text):
+        self.text_one.SetValue(text)
+
+    def SetTextTwo(self, text):
+        self.text_two.SetValue(text)
+
+``self.text_one`` and ``self.text_two`` were automatically created because we
+assigned those ids to the controls in the xml.
+
+If we run the tests again and press the button, the texts should be updated.
+
+One purpose for splitting a dialog into a GUI part and a controller part is to
+make the controller testable in isolation. The idea is to put most of the
+dialog logic in the controller and test that independently of the GUI.
+
+Let's try to add a test of this kind to
+``test/specs/wxgui/dialogs/testdialog/testdialog.py``::
+
+    def test_it_populates_text_when_button_is_clicked(self):
+        self.controller.on_click(wx.CommandEvent())
+        self.view.SetTextOne.assert_called_with("Hello")
+
+Let's run the tests again (but this time there is no need to halt the gui)::
+
+    python test/execute-specs.py --only testdialog
+
+We see this::
+
+    AssertionError: Expected: (('Hello',), {})
+    Called with: (('hello',), {})
+
+There is a missmatch between the value we set and the value we expect to be set
+in the first text field. We have to figure out which one is correct, fix it,
+and move on.
 
 The control object
 ------------------
