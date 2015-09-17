@@ -65,7 +65,7 @@ class FileNewDialog(Dialog):
         Dialog.__init__(self, FileNewDialogController, parent, {
             "explanation_text": _("Choose what type of timeline you want to create."),
             "description_text": _("Description"),
-        }, title=_("Create new timeline"))
+        }, title=_("Create new timeline"), style=wx.RESIZE_BORDER)
         self.controller.on_init(items)
 
     def SetItems(self, items):
