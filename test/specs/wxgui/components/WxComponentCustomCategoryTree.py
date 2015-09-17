@@ -26,8 +26,6 @@ from timelinetest import WxComponentTestCase
 
 class CustomCategoryTreeComponentTest(WxComponentTestCase):
 
-    HALT_FOR_MANUAL_INSPECTION = False
-
     def test_shows_up(self):
         self.handle_db_error = Mock()
         self.db = create_in_memory_tutorial_db()

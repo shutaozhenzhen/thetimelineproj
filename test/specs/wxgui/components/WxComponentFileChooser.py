@@ -24,8 +24,6 @@ from timelinetest import WxComponentTestCase
 
 class FileChooserComponentTest(WxComponentTestCase):
 
-    HALT_FOR_MANUAL_INSPECTION = False
-
     def test_shows_up(self):
         self.add_separator()
         self.add_component("file_chooser", FileChooser)

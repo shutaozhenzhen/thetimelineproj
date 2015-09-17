@@ -23,8 +23,6 @@ from timelinetest import WxComponentTestCase
 
 class ImportDialogTest(WxComponentTestCase):
 
-    HALT_FOR_MANUAL_INSPECTION = False
-
     def test_shows_up(self):
         self.add_separator()
         self.add_button("Open import dialog", self._on_open_import_dialog_click)

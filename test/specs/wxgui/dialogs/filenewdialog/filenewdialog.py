@@ -43,7 +43,7 @@ class describe_file_new_dialog(UnitTestCase):
             },
         ]
         with create_dialog(FileNewDialog, None, items) as dialog:
-            if False:
+            if self.HALT_GUI:
                 dialog.ShowModal()
                 print(dialog.GetSelection())
 
