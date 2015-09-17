@@ -18,84 +18,49 @@
 
 import wx
 
-from timelinelib.wxgui.utils import BORDER
-from timelinelib.wxgui.utils import display_error_message
-from timelinelib.wxgui.utils import time_picker_for
-from timelinelib.utils import ex_msg
+from timelinelib.wxgui.dialogs.timeeditor.timeeditordialogcontroller import TimeEditorDialogController
+from timelinelib.wxgui.framework import Dialog
 
 
-class TimeEditorDialog(wx.Dialog):
+class TimeEditorDialog(Dialog):
+
     """
-    This dialog is used to enter a date or a time depending on which
-    time type the timeline has.
-    It is opened when the user selects the Navigate -> Go to Date/Time
-    is selected.
+    <BoxSizerVertical>
+        <CheckBox use="$(use_checkbox)" label="$(cb_text)" id="cbx_show_time"
+                  border="LEFT|TOP"
+                  event_EVT_CHECKBOX="show_time_checkbox_on_checked" />
+        <TimePicker border="LEFT|RIGHT|TOP" id="time_picker"/>
+        <StdDialogButtonSizer
+            buttons="OK|CANCEL"
+            border="ALL"
+            event_EVT_BUTTON="ok_button_clicked|ID_OK"
+        />
+    </BoxSizerVertical>
     """
 
     def __init__(self, parent, config, time_type, time, title):
-        wx.Dialog.__init__(self, parent, title=title)
         self.time_type = time_type
         self.config = config
-        self._create_gui()
+        Dialog.__init__(self, TimeEditorDialogController, parent, {
+            "cb_text": _("Show time"),
+            "use_checkbox": self.time_type.is_date_time_type()
+        }, title=title)
+        self.controller.on_init(self.time_type, time)
+
+    def SetTime(self, time):
         self.time_picker.set_value(time)
-        if self._display_checkbox_show_time():
-            self.time_picker.show_time(self.checkbox.IsChecked())
-        self.time_picker.SetFocus()
 
-    def _create_gui(self):
-        self._create_show_time_checkbox()
-        self._create_time_picker()
-        self._create_buttons()
-        self._layout_components()
+    def GetTime(self):
+        return self.time_picker.get_value()
 
-    def _create_show_time_checkbox(self):
-        if self._display_checkbox_show_time():
-            self.checkbox = wx.CheckBox(self, label=_("Show time"))
-            self.checkbox.SetValue(False)
-            self.Bind(wx.EVT_CHECKBOX, self._show_time_checkbox_on_checked, self.checkbox)
+    def ShowTimeIsChecked(self):
+        return self.cbx_show_time.IsChecked()
 
-    def _show_time_checkbox_on_checked(self, e):
-        self.time_picker.show_time(e.IsChecked())
-
-    def _create_time_picker(self):
-        self.time_picker = time_picker_for(self.time_type)(self, config=self.config)
-
-    def _create_buttons(self):
-        self.button_box = self.CreateStdDialogButtonSizer(wx.OK | wx.CANCEL)
-        self.Bind(wx.EVT_BUTTON, self._ok_button_on_click, id=wx.ID_OK)
-
-    def _ok_button_on_click(self, e):
-        self.on_return()
-
-    def on_return(self):
+    def ShowTime(self, value):
         try:
-            self.time = self.time_picker.get_value()
-            if self._display_checkbox_show_time():
-                if not self.checkbox.IsChecked():
-                    gt = self.time_type.get_utils().from_time(self.time)
-                    gt.hour = 12
-                    self.time = gt.to_time()
-        except ValueError, ex:
-            display_error_message(ex_msg(ex))
-        else:
-            self.EndModal(wx.ID_OK)
-            
-    def on_escape(self):
-        self.EndModal(wx.ID_CANCEL)
+            self.time_picker.show_time(value)
+        except:
+            pass
 
-    def _layout_components(self):
-        vbox = wx.BoxSizer(wx.VERTICAL)
-        if self._display_checkbox_show_time():
-            vbox.Add(self.checkbox, flag=wx.LEFT | wx.TOP | wx.RIGHT,
-                     border=BORDER, proportion=1)
-        if self._display_checkbox_show_time():
-            flag = wx.EXPAND | wx.RIGHT | wx.BOTTOM | wx.LEFT
-        else:
-            flag = wx.EXPAND | wx.RIGHT | wx.TOP | wx.BOTTOM | wx.LEFT
-        vbox.Add(self.time_picker, flag=flag,
-                 border=BORDER, proportion=1)
-        vbox.Add(self.button_box, flag=wx.ALL | wx.EXPAND, border=BORDER)
-        self.SetSizerAndFit(vbox)
-
-    def _display_checkbox_show_time(self):
-        return self.time_type.is_date_time_type()
+    def Close(self):
+        self.EndModal(wx.ID_OK)
