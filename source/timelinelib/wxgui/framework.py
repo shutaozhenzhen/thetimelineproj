@@ -20,6 +20,8 @@ import xml.etree.ElementTree
 
 import wx
 
+from timelinelib.wxgui.utils import time_picker_for
+
 
 class GuiCreator(object):
 
@@ -30,6 +32,9 @@ class GuiCreator(object):
 
     def _create_from_node(self, parent, node):
         try:
+            if node.get("use"):
+                if self._variables[node.get("use")[2:-1]] is False:
+                    return None
             creator = getattr(self, "_create_%s" % node.tag)
         except AttributeError:
             creator = self._create_generic_component
@@ -38,6 +43,9 @@ class GuiCreator(object):
         if node.get("id", None):
             setattr(self, node.get("id"), component)
         return component
+
+    def _create_TimePicker(self, parent, node):
+        return time_picker_for(self.time_type)(self, config=self.config)
 
     def _create_StdDialogButtonSizer(self, parent, node):
         return self.CreateStdDialogButtonSizer(flags=self._get_or_value(node.get("buttons", "")))
@@ -58,11 +66,12 @@ class GuiCreator(object):
                 sizer.AddSpacer(int(child_node.get("size", "5")))
             else:
                 component = self._create_from_node(parent, child_node)
-                border = self._get_or_value(child_node.get("border", ""))
-                sizer.Add(component,
-                          flag=border|wx.EXPAND,
-                          border=12,
-                          proportion=int(child_node.get("proportion", "0")))
+                if component:
+                    border = self._get_or_value(child_node.get("border", ""))
+                    sizer.Add(component,
+                              flag=border|wx.EXPAND,
+                              border=12,
+                              proportion=int(child_node.get("proportion", "0")))
         return sizer
 
     def _create_generic_component(self, parent, node):
@@ -99,8 +108,15 @@ class GuiCreator(object):
         for key in node.keys():
             if key.startswith("event_"):
                 event_name = key[6:]
-                target = getattr(self.controller, node.get(key))
-                self.Bind(getattr(wx, event_name), target, component)
+                wxid = None
+                target_name = node.get(key)
+                if "|" in target_name:
+                    target_name, wxid = target_name.split("|", 1)
+                target = getattr(self.controller, target_name)
+                if wxid:
+                    self.Bind(getattr(wx, event_name), target, id=getattr(wx, wxid))
+                else:
+                    self.Bind(getattr(wx, event_name), target, component)
 
 
 class Dialog(wx.Dialog, GuiCreator):
