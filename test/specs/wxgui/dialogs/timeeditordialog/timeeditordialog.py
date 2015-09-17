@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.timeeditor.timeditordialog import TimeEditorDialog
+from timelinelib.wxgui.dialogs.timeeditor.timeeditordialog import TimeEditorDialog
 from timelinelib.wxgui.dialogs.timeeditor.timeeditordialogcontroller import TimeEditorDialogController
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
