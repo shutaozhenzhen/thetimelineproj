@@ -22,6 +22,8 @@ import unittest
 
 class UnitTestCase(unittest.TestCase):
 
+    HALT_GUI = False
+
     def assertListIsCloneOf(self, cloned_list, original_list):
         self.assertEqual(cloned_list, original_list)
         self.assertTrue(cloned_list is not original_list)

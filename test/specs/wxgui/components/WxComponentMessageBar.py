@@ -22,8 +22,6 @@ from timelinetest import WxComponentTestCase
 
 class MessageBarComponentTest(WxComponentTestCase):
 
-    HALT_FOR_MANUAL_INSPECTION = False
-
     INFORMATION_TEXT = "This is an\ninformation message."
     WARNING_TEXT = "This is a\nwarning message!"
 

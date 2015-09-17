@@ -82,7 +82,7 @@ class describe_%s(UnitTestCase):
 
     def test_it_can_be_created(self):
         with create_dialog(%s, None) as dialog:
-            if True: # Make sure to set to False before committing
+            if self.HALT_GUI:
                 dialog.ShowModal()
 """
 

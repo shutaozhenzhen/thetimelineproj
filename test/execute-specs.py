@@ -27,6 +27,7 @@ import unittest
 
 
 ONLY_FLAG = "--only"
+HALT_FLAG = "--halt-gui"
 ROOT_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..")
 
 
@@ -35,6 +36,7 @@ def execute_specs(args):
     setup_paths()
     install_gettext_in_builtin_namespace()
     disable_monitoring()
+    set_halt_gui_flag(args)
     suite = create_suite(create_include_test_function(args))
     all_pass = execute_suite(suite, select_verbosity(args))
     return all_pass
@@ -70,6 +72,11 @@ def install_gettext_in_builtin_namespace():
 def disable_monitoring():
     from timelinelib.monitoring import monitoring
     monitoring.IS_ENABLED = False
+
+
+def set_halt_gui_flag(args):
+    from timelinetest import UnitTestCase
+    UnitTestCase.HALT_GUI = HALT_FLAG in args
 
 
 def create_include_test_function(args):
