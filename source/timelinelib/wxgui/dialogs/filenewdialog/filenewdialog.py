@@ -48,7 +48,7 @@ class FileNewDialog(Dialog):
                 <StaticText
                     id="description"
                     width="200"
-                    style="TE_READONLY"
+                    style="ST_NO_AUTORESIZE"
                     proportion="1"
                     border="ALL"
                 />
@@ -66,7 +66,6 @@ class FileNewDialog(Dialog):
             "explanation_text": _("Choose what type of timeline you want to create."),
             "description_text": _("Description"),
         }, title=_("Create new timeline"))
-        self.description_width = self.description.GetSize()[0]
         self.controller.on_init(items)
 
     def SetItems(self, items):
@@ -81,7 +80,6 @@ class FileNewDialog(Dialog):
 
     def SetDescription(self, text):
         self.description.SetLabel(text)
-        self.description.Wrap(self.description_width)
 
     def GetSelection(self):
         return self.controller.get_selection()
