@@ -26,8 +26,6 @@ COPYRIGHT = """\
 """
 
 IMPORTS = """\
-import wx
-
 from timelinelib.wxgui.dialogs.%s.%scontroller import %sController
 from timelinelib.wxgui.framework import Dialog
 
