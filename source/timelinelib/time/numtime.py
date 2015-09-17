@@ -152,6 +152,9 @@ class NumTimeType(TimeType):
     def adjust_for_bc_years(self, time):
         return time
 
+    def supports_saved_now(self):
+        return False
+
 
 class NumStrip(Strip):
 
