@@ -19,9 +19,14 @@
 import xml.etree.ElementTree
 
 import wx
+import wx.lib.colourselect
 
 from timelinelib.wxgui.utils import time_picker_for
 import timelinelib.wxgui.components as timelinecomponents
+
+
+BORDER = 12
+SMALL_BORDER = 6
 
 
 class GuiCreator(object):
@@ -57,21 +62,31 @@ class GuiCreator(object):
     def _create_BoxSizerHorizontal(self, parent, node):
         return self._populate_sizer(parent, node, wx.BoxSizer(wx.HORIZONTAL))
 
+    def _create_FlexGridSizer(self, parent, node):
+        rows = int(node.get("rows"))
+        columns = int(node.get("columns"))
+        sizer = wx.FlexGridSizer(rows, columns, SMALL_BORDER, SMALL_BORDER)
+        return self._populate_sizer(parent, node, sizer)
+
     def _create_StaticBoxSizerVertical(self, parent, node):
         box = wx.StaticBox(parent, **self._get_attributes(node))
-        return self._populate_sizer(parent, node, wx.StaticBoxSizer(box, wx.HORIZONTAL))
+        return self._populate_sizer(parent, node, wx.StaticBoxSizer(box, wx.VERTICAL))
 
     def _populate_sizer(self, parent, node, sizer):
         for child_node in node.getchildren():
             if child_node.tag == "Spacer":
-                sizer.AddSpacer(int(child_node.get("size", "5")))
+                sizer.AddSpacer(int(child_node.get("size", SMALL_BORDER)))
             else:
                 component = self._create_from_node(parent, child_node)
                 if component:
                     border = self._get_or_value(child_node.get("border", ""))
+                    if child_node.get("align"):
+                        align = self._get_or_value(child_node.get("align", ""))
+                    else:
+                        align = wx.EXPAND
                     sizer.Add(component,
-                              flag=border|wx.EXPAND,
-                              border=12,
+                              flag=border|align,
+                              border=BORDER,
                               proportion=int(child_node.get("proportion", "0")))
         return sizer
 
@@ -82,10 +97,12 @@ class GuiCreator(object):
         return component
 
     def _get_component_constructor(self, node):
-        try:
-            return getattr(timelinecomponents, node.tag)
-        except AttributeError:
-            return getattr(wx, node.tag)
+        for module in [timelinecomponents, wx.lib.colourselect, wx]:
+            try:
+                return getattr(module, node.tag)
+            except AttributeError:
+                pass # Try the next
+        raise ValueError("Component %s not found." % node.tag)
 
     def _get_attributes(self, node):
         SPECIAL_ATTRIBUTES = [
@@ -96,7 +113,8 @@ class GuiCreator(object):
             "style",
             # Spacer attributes
             "border",
-            "proportion"
+            "proportion",
+            "align",
         ]
         attributes = {}
         if node.get("width") or node.get("height"):
