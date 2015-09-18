@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.timeeditor.timeeditordialogcontroller import TimeEditorDialogController
+from timelinelib.wxgui.dialogs.timeeditordialog.timeeditordialogcontroller import TimeEditorDialogController
 from timelinelib.wxgui.framework import Dialog
 
 
