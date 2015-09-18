@@ -17,7 +17,7 @@
 
 
 from timelinelib.db import db_open
-from timelinelib.wxgui.dialogs.importevents.importeventsdialog import ImportEventsDialog
+from timelinelib.wxgui.dialogs.importeventsdialog.importeventsdialog import ImportEventsDialog
 from timelinetest import WxComponentTestCase
 
 
