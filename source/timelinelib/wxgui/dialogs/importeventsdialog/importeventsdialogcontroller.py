@@ -16,20 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.db import db_open
-from timelinelib.wxgui.dialogs.importeventsdialog.importeventsdialog import ImportEventsDialog
-from timelinetest import WxComponentTestCase
+from timelinelib.wxgui.framework import Controller
 
 
-class ImportDialogTest(WxComponentTestCase):
+class ImportEventsDialogController(Controller):
 
-    def test_shows_up(self):
-        self.add_separator()
-        self.add_button("Open import dialog", self._on_open_import_dialog_click)
-        self.add_separator()
-        self.show_test_window()
-
-    def _on_open_import_dialog_click(self):
-        dialog = ImportEventsDialog(db_open(":tutorial:"))
-        dialog.ShowModal()
-        dialog.Destroy()
+    def on_init(self):
+        pass
