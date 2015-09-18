@@ -28,7 +28,7 @@ from timelinelib.wxgui.utils import handle_db_error
 from timelinelib.wxgui.utils import WildcardHelper
 
 
-class ImportDialog(wx.Dialog):
+class ImportEventsDialog(wx.Dialog):
 
     def __init__(self, db, parent=None):
         wx.Dialog.__init__(self, parent, title=_("Import events"))

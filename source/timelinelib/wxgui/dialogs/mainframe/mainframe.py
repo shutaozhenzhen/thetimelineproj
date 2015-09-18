@@ -52,7 +52,7 @@ from timelinelib.wxgui.dialogs.feature.featuredialog import show_feature_feedbac
 from timelinelib.wxgui.dialogs.feedback.feedbackdialog import show_feedback_dialog
 from timelinelib.wxgui.dialogs.filenewdialog.filenewdialog import FileNewDialog
 from timelinelib.wxgui.dialogs.helpbrowser.helpbrowserframe import HelpBrowser
-from timelinelib.wxgui.dialogs.importevents.importeventsdialog import ImportDialog
+from timelinelib.wxgui.dialogs.importevents.importeventsdialog import ImportEventsDialog
 from timelinelib.wxgui.dialogs.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.dialogs.nowdateeditor.nowdateeditordialog import NowDateEditorDialog
 from timelinelib.wxgui.dialogs.preferences.preferencesdialog import PreferencesDialog
@@ -680,7 +680,7 @@ class GuiCreator(object):
 
     def _mnu_file_import_on_click(self, menu):
         def open_import_dialog():
-            dialog = ImportDialog(self.timeline, self)
+            dialog = ImportEventsDialog(self.timeline, self)
             dialog.ShowModal()
             dialog.Destroy()
         safe_locking(self, open_import_dialog)
