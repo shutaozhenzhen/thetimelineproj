@@ -23,3 +23,6 @@ class EditCategoryDialogController(Controller):
 
     def on_init(self):
         pass
+
+    def on_ok_clicked(self, event):
+        pass

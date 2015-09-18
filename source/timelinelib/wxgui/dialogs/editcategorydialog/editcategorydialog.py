@@ -24,12 +24,35 @@ class EditCategoryDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+        <FlexGridSizer rows="6" columns="2" border="ALL">
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(name_text)" />
+            <TextCtrl id="txt_name" width="150" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(color_text)" />
+            <ColourSelect id="colorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(progress_color_text)" />
+            <ColourSelect id="progresscolorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(done_color_text)" />
+            <ColourSelect id="donecolorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(font_color_text)" />
+            <ColourSelect id="fontcolorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(parent_text)" />
+            <Choice id="parentlistbox" align="ALIGN_CENTER_VERTICAL" />
+        </FlexGridSizer>
+        <StdDialogButtonSizer
+            buttons="OK|CANCEL"
+            border="BOTTOM"
+            event_EVT_BUTTON="on_ok_clicked|ID_OK"
+        />
     </BoxSizerVertical>
     """
 
     def __init__(self, parent):
         Dialog.__init__(self, EditCategoryDialogController, parent, {
-            "test_text": "Hello World",
+            "name_text": _("Name:"),
+            "color_text": _("Color:"),
+            "progress_color_text": _("Progress Color:"),
+            "done_color_text": _("Done Color:"),
+            "font_color_text": _("Font Color:"),
+            "parent_text": _("Parent:"),
         }, title=_("New dialog title"))
         self.controller.on_init()
