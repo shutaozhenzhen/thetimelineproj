@@ -23,17 +23,33 @@ from timelinelib.wxgui.dialogs.timeeditor.timeeditordialogcontroller import Time
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 from timelinelib.data.db import MemoryDB
+from timelinetest.utils import human_time_to_gregorian
 
 
-class describe_TimeEditorDialog(UnitTestCase):
+class describe_TimeEditorDialog_for_gregorian_time(UnitTestCase):
 
     def setUp(self):
+        self.db = MemoryDB()
         self.view = Mock(TimeEditorDialog)
         self.controller = TimeEditorDialogController(self.view)
 
     def test_it_can_be_created(self):
-        db = MemoryDB()
-        tm = db.get_time_type().parse_time("2010-12-31 0:0:0")
-        with create_dialog(TimeEditorDialog, None, None, db.get_time_type(), tm, "Go to Date") as dialog:
+        tm = human_time_to_gregorian("31 Dec 2010 00:00")
+        with create_dialog(TimeEditorDialog, None, None, self.db.get_time_type(), tm, "Go to Date") as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
+
+    def test_hours_set_to_midday_if_not_given_by_user(self):
+        self.given_time_not_shown_in_dialog("31 Dec 2010 00:00")
+        self.when_ok_button_clikced()
+        self.view.SetTime.assert_called_with(human_time_to_gregorian("31 Dec 2010 12:00"))
+
+    def given_time_not_shown_in_dialog(self, human_time):
+        tm = human_time_to_gregorian(human_time)
+        self.controller.on_init(self.db.get_time_type(), tm)
+        self.view.GetTime.return_value = tm
+        self.view.ShowTimeIsChecked.return_value = False
+
+    def when_ok_button_clikced(self):
+        self.controller.ok_button_clicked(None)
+
