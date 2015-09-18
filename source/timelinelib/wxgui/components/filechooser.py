@@ -29,8 +29,9 @@ class FileChooser(wx.Panel):
     def __init__(self, parent,
                  dialog_message=_("Choose file"),
                  dialog_dir="",
-                 dialog_wildcard="*"):
-        wx.Panel.__init__(self, parent)
+                 dialog_wildcard="*",
+                 **kwargs):
+        wx.Panel.__init__(self, parent, **kwargs)
         self._dialog_message = dialog_message
         self._dialog_dir = dialog_dir
         self._dialog_wildcard = dialog_wildcard

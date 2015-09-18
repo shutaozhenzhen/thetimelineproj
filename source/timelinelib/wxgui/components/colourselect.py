@@ -16,7 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.colourselect import ColourSelect
-from timelinelib.wxgui.components.feedbacktext import FeedbackText
-from timelinelib.wxgui.components.filechooser import FileChooser
-from timelinelib.wxgui.components.header import Header
+import wx.lib.colourselect
+
+
+class ColourSelect(wx.lib.colourselect.ColourSelect):
+
+    def __init__(self, parent, name="", *args, **kwargs):
+        wx.lib.colourselect.ColourSelect.__init__(self, parent, *args, **kwargs)

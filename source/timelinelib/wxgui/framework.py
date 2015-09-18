@@ -19,10 +19,9 @@
 import xml.etree.ElementTree
 
 import wx
-import wx.lib.colourselect
 
 from timelinelib.wxgui.utils import time_picker_for
-import timelinelib.wxgui.components as timelinecomponents
+import timelinelib.wxgui.components
 
 
 BORDER = 12
@@ -46,8 +45,8 @@ class GuiCreator(object):
             creator = self._create_generic_component
         component = creator(parent, node)
         self._bind_events(node, component)
-        if node.get("id", None):
-            setattr(self, node.get("id"), component)
+        if node.get("name", None):
+            setattr(self, node.get("name"), component)
         return component
 
     def _create_TimePicker(self, parent, node):
@@ -97,7 +96,7 @@ class GuiCreator(object):
         return component
 
     def _get_component_constructor(self, node):
-        for module in [timelinecomponents, wx.lib.colourselect, wx]:
+        for module in [timelinelib.wxgui.components, wx]:
             try:
                 return getattr(module, node.tag)
             except AttributeError:
@@ -106,7 +105,6 @@ class GuiCreator(object):
 
     def _get_attributes(self, node):
         SPECIAL_ATTRIBUTES = [
-            "id",
             "use",
             # Standard wx
             "width", "height",

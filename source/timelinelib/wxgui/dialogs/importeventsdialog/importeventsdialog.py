@@ -29,13 +29,13 @@ class ImportEventsDialog(Dialog):
             border="ALL"
         />
         <FileChooser
-            id="file_chooser"
+            name="file_chooser"
             dialog_wildcard="$(dialog_wildcard)"
             event_EVT_FILE_PATH_CHANGED="on_file_path_changed"
             border="LEFT|RIGHT"
         />
         <FeedbackText
-            id="feedback_text"
+            name="feedback_text"
             width="300"
             height="70"
             border="ALL"

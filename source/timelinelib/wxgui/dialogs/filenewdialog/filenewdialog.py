@@ -35,7 +35,7 @@ class FileNewDialog(Dialog):
             border="LEFT|RIGHT"
         >
             <ListBox
-                id="type_list"
+                name="type_list"
                 width="150"
                 height="200"
                 event_EVT_LISTBOX="on_selection_changed"
@@ -46,7 +46,7 @@ class FileNewDialog(Dialog):
                 border="LEFT"
             >
                 <StaticText
-                    id="description"
+                    name="description"
                     width="200"
                     style="ST_NO_AUTORESIZE"
                     proportion="1"
