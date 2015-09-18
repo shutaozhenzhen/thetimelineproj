@@ -215,7 +215,11 @@ def modifier_change_ends_today(event):
 def create_dialog(dialog_class, *args, **kwargs):
     app = wx.App(False)
     try:
-        yield dialog_class(*args, **kwargs)
+        dialog = dialog_class(*args, **kwargs)
+        try:
+            yield dialog
+        finally:
+            dialog.Destroy()
     finally:
         if app.GetTopWindow():
             app.GetTopWindow().Destroy()
