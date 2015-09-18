@@ -21,6 +21,7 @@ import xml.etree.ElementTree
 import wx
 
 from timelinelib.wxgui.utils import time_picker_for
+import timelinelib.wxgui.components as timelinecomponents
 
 
 class GuiCreator(object):
@@ -57,7 +58,7 @@ class GuiCreator(object):
         return self._populate_sizer(parent, node, wx.BoxSizer(wx.HORIZONTAL))
 
     def _create_StaticBoxSizerVertical(self, parent, node):
-        box = wx.StaticBox(parent, **self._get_standard_wx_attributes(node))
+        box = wx.StaticBox(parent, **self._get_attributes(node))
         return self._populate_sizer(parent, node, wx.StaticBoxSizer(box, wx.HORIZONTAL))
 
     def _populate_sizer(self, parent, node, sizer):
@@ -75,27 +76,44 @@ class GuiCreator(object):
         return sizer
 
     def _create_generic_component(self, parent, node):
-        component = getattr(wx, node.tag)(parent, **self._get_standard_wx_attributes(node))
+        component = self._get_component_constructor(node)(parent, **self._get_attributes(node))
         for child_node in node.getchildren():
             self._create_from_node(component, child_node)
         return component
 
-    def _get_text(self, text):
-        if text.startswith("$(") and text.endswith(")"):
-            return self._variables[text[2:-1]]
-        else:
-            return text
+    def _get_component_constructor(self, node):
+        try:
+            return getattr(timelinecomponents, node.tag)
+        except AttributeError:
+            return getattr(wx, node.tag)
 
-    def _get_standard_wx_attributes(self, node):
+    def _get_attributes(self, node):
+        SPECIAL_ATTRIBUTES = [
+            "id",
+            "use",
+            # Standard wx
+            "width", "height",
+            "style",
+            # Spacer attributes
+            "border",
+            "proportion"
+        ]
         attributes = {}
         if node.get("width") or node.get("height"):
             attributes["size"] = (int(node.get("width", "-1")),
                                   int(node.get("height", "-1")))
         if node.get("style"):
             attributes["style"] = self._get_or_value(node.get("style", None))
-        if node.get("label"):
-            attributes["label"] = self._get_text(node.get("label"))
+        for attribute in node.keys():
+            if (attribute not in SPECIAL_ATTRIBUTES) and not attribute.startswith("event_"):
+                attributes[attribute] = self._get_variable_or_string(node.get(attribute))
         return attributes
+
+    def _get_variable_or_string(self, text):
+        if text.startswith("$(") and text.endswith(")"):
+            return self._variables[text[2:-1]]
+        else:
+            return text
 
     def _get_or_value(self, wx_constant_names):
         value = 0
@@ -116,7 +134,10 @@ class GuiCreator(object):
                 if wxid:
                     self.Bind(getattr(wx, event_name), target, id=getattr(wx, wxid))
                 else:
-                    self.Bind(getattr(wx, event_name), target, component)
+                    try:
+                        component.Bind(getattr(component, event_name), target)
+                    except AttributeError:
+                        self.Bind(getattr(wx, event_name), target, component)
 
 
 class Dialog(wx.Dialog, GuiCreator):
