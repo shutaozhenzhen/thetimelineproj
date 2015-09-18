@@ -40,7 +40,7 @@ class TimeEditorDialog(Dialog):
 
     def __init__(self, parent, config, time_type, time, title):
         self.time_type = time_type
-        self.config = config
+        self.config = config  # Used by Dialog to create the TimePickerControl
         Dialog.__init__(self, TimeEditorDialogController, parent, {
             "cb_text": _("Show time"),
             "use_checkbox": self.time_type.is_date_time_type()
