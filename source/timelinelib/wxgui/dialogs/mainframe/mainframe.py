@@ -1006,6 +1006,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
             self.controller.open_timeline(new_timeline_path)
 
     def _window_on_close(self, event):
+        self.timer.stop()
         self.save_current_timeline_data()
         self._save_application_config()
         self.Destroy()
