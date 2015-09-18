@@ -16,6 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.feedbacktext import FeedbackText
-from timelinelib.wxgui.components.filechooser import FileChooser
-from timelinelib.wxgui.components.header import Header
+import wx
+
+
+class FeedbackText(wx.StaticText):
+
+    def SetError(self, text):
+        self.SetForegroundColour((255, 0, 0))
+        self.SetLabel(text)
+
+    def SetSuccess(self, text):
+        self.SetForegroundColour((0, 0, 0))
+        self.SetLabel(text)
