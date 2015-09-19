@@ -16,8 +16,18 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.colourselect import ColourSelect
-from timelinelib.wxgui.components.feedbacktext import FeedbackText
-from timelinelib.wxgui.components.filechooser import FileChooser
-from timelinelib.wxgui.components.header import Header
-from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsapplyclosesizer import DialogButtonsApplyCloseSizer
+import wx
+
+
+class DialogButtonsApplyCloseSizer(wx.BoxSizer):
+
+    def __init__(self, parent):
+        wx.BoxSizer.__init__(self, wx.HORIZONTAL)
+        parent.btn_apply = wx.Button(parent, wx.ID_APPLY)
+        parent.btn_close = wx.Button(parent, wx.ID_CLOSE)
+        parent.btn_apply.SetDefault()
+        parent.SetAffirmativeId(wx.ID_CLOSE)
+        self.AddStretchSpacer()
+        self.Add(parent.btn_apply, 0, wx.TOP | wx.LEFT | wx.RIGHT | wx.ALIGN_RIGHT, 5)
+        self.Add(parent.btn_close, 0, wx.TOP | wx.LEFT | wx.RIGHT | wx.ALIGN_RIGHT, 5)
+        self.AddSpacer(6)

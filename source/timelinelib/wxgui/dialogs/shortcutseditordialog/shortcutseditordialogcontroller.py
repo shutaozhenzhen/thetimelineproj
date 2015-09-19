@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.utils import display_warning_message
+from timelinelib.wxgui.framework import Controller
 
 
 class MissingInput(Exception):
@@ -27,47 +27,45 @@ class DuplicateShortcut(Exception):
     pass
 
 
-class ShortcutsEditorController(object):
-    def __init__(self, view, shortcut_config):
-        self.view = view
-        self.shortcut_config = shortcut_config
-        self._populate_view()
+class ShortcutsEditorDialogController(Controller):
 
-    #
-    # View API
-    #
-    def on_function_selected(self):
+    def on_init(self, shortcut_config):
+        self.shortcut_config = shortcut_config
+        if shortcut_config:
+            functions = self.shortcut_config.get_functions()
+            modifier, key = self.shortcut_config.get_modifier_and_key(functions[0])
+            self.view.SetFunctions(functions)
+            self.view.SetModifiers(self.shortcut_config.get_modifiers(), modifier)
+            self.view.SetShortcutKeys(self.shortcut_config.get_shortcuts(), key)
+
+    def on_apply_clicked(self, evt):
+        self._set_new_shortcut_for_selected_function()
+
+    def on_selection_changed(self, evt):
         self._select_modifier_and_key_for_selected_function()
 
-    def apply(self):
-        self._set_new_shortcut_for_selected_function()
-        pass
-
-    #
-    # Internals
-    #
     def _select_modifier_and_key_for_selected_function(self):
-        function = self.view.get_function()
+        function = self.view.GetFunction()
         modifier, key = self.shortcut_config.get_modifier_and_key(function)
-        self.view.set_modifier(modifier)
-        self.view.set_shortcut_key(key)
+        self.view.SetModifier(modifier)
+        self.view.SetShortcutKey(key)
 
     def _set_new_shortcut_for_selected_function(self):
         try:
             self._validate_input()
             self._validate_shortcut()
-            function = self.view.get_function()
+            function = self.view.GetFunction()
             shortcut = self._get_shortcut()
             self.shortcut_config.edit(function, shortcut)
-            self.view.display_ack_popup_window(_("Shortcut is saved"))
+            self.view.DisplayAckPopupWindow(_("Shortcut is saved"))
         except MissingInput, ex:
-            display_warning_message(ex.message)
+            self.view.DisplayWarningMessage(ex.message)
         except DuplicateShortcut, ex:
-            display_warning_message(ex.message)
+            self.view.DisplayWarningMessage(ex.message)
 
     def _validate_input(self):
-        shortcut_key = self.view.get_shortcut_key()
-        modifier = self.view.get_modifier()
+        shortcut_key = self.view.GetShortcutKey()
+        modifier = self.view.GetModifier()
         if not self.shortcut_config.is_valid(modifier, shortcut_key):
             raise MissingInput(_("Both Modifier and Shortcut key must be given!"))
 
@@ -78,19 +76,9 @@ class ShortcutsEditorController(object):
                                     (shortcut, self.shortcut_config.get_function(shortcut)))
 
     def _get_shortcut(self):
-        modifier = self.view.get_modifier()
-        shortcut_key = self.view.get_shortcut_key()
+        modifier = self.view.GetModifier()
+        shortcut_key = self.view.GetShortcutKey()
         shortcut = "%s+%s" % (modifier, shortcut_key)
         if shortcut.startswith("+"):
             shortcut = shortcut[1:]
         return shortcut
-
-    #
-    # Construction
-    #
-    def _populate_view(self):
-        functions = self.shortcut_config.get_functions()
-        modifier, key = self.shortcut_config.get_modifier_and_key(functions[0])
-        self.view.set_functions(functions)
-        self.view.set_modifiers(self.shortcut_config.get_modifiers(), modifier)
-        self.view.set_shortcut_keys(self.shortcut_config.get_shortcuts(), key)
