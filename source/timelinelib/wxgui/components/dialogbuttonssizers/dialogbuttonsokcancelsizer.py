@@ -16,9 +16,22 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.colourselect import ColourSelect
-from timelinelib.wxgui.components.feedbacktext import FeedbackText
-from timelinelib.wxgui.components.filechooser import FileChooser
-from timelinelib.wxgui.components.header import Header
-from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsapplyclosesizer import DialogButtonsApplyCloseSizer
-from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsokcancelsizer import DialogButtonsOkCancelSizer
+import wx
+import platform
+
+from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonssizer import DialogButtonsSizer
+
+
+class DialogButtonsOkCancelSizer(DialogButtonsSizer):
+
+    def __init__(self, parent):
+        DialogButtonsSizer.__init__(self, parent)
+        parent.btn_ok = wx.Button(parent, wx.ID_OK)
+        parent.btn_cancel = wx.Button(parent, wx.ID_CANCEL)
+        if platform.system() == "Windows":
+            self.buttons = (parent.btn_ok, parent.btn_cancel)
+            self.default = 0
+        else:
+            self.buttons = (parent.btn_cancel, parent.btn_ok)
+            self.default = 0
+        self.AddButtons(self.buttons, self.default)
