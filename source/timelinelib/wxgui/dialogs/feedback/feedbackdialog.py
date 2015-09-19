@@ -32,7 +32,7 @@ class FeedbackDialog(wx.Dialog):
 
     def __init__(self, parent=None):
         wx.Dialog.__init__(self, parent, title="Feedback",
-                           style=wx.RESIZE_BORDER)
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller = FeedbackDialogController(self, webbrowser)
         self._create_gui()
 
