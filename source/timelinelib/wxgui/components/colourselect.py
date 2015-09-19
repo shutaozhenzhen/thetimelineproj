@@ -23,3 +23,8 @@ class ColourSelect(wx.lib.colourselect.ColourSelect):
 
     def __init__(self, parent, name="", *args, **kwargs):
         wx.lib.colourselect.ColourSelect.__init__(self, parent, *args, **kwargs)
+
+    def GetValueAsRgbTuple(self):
+        # Convert wx.Colour to (r, g, b) tuple
+        (r, g, b) = self.GetValue()
+        return (r, g, b)
