@@ -18,6 +18,8 @@
 
 import wx
 
+from timelinelib.wxgui.framework import SMALL_BORDER
+
 
 class DialogButtonsSizer(wx.BoxSizer):
 
@@ -27,6 +29,6 @@ class DialogButtonsSizer(wx.BoxSizer):
     def AddButtons(self, buttons, default):
         self.AddStretchSpacer()
         for button in buttons:
-            self.Add(button, 0, wx.ALIGN_RIGHT)
+            self.Add(button, 0, wx.LEFT | wx.ALIGN_RIGHT, SMALL_BORDER)
         if default is not None:
             buttons[default].SetDefault()
