@@ -22,7 +22,7 @@ import wx.lib.agw.customtreectrl as customtreectrl
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
-from timelinelib.wxgui.dialogs.categoryeditors.categoryeditordialog import WxCategoryEdtiorDialog
+from timelinelib.wxgui.dialogs.editcategorydialog.editcategorydialog import EditCategoryDialog
 import timelinelib.wxgui.utils as gui_utils
 
 
@@ -365,13 +365,13 @@ class CategoriesTreeController(object):
 
 def edit_category(parent_ctrl, db, cat, fn_handle_db_error):
     def create_category_editor():
-        return WxCategoryEdtiorDialog(parent_ctrl, _("Edit Category"), db, cat)
+        return EditCategoryDialog(parent_ctrl, _("Edit Category"), db, cat)
     gui_utils.show_modal(create_category_editor, fn_handle_db_error)
 
 
 def add_category(parent_ctrl, db, fn_handle_db_error):
     def create_category_editor():
-        return WxCategoryEdtiorDialog(parent_ctrl, _("Add Category"), db, None)
+        return EditCategoryDialog(parent_ctrl, _("Add Category"), db, None)
     gui_utils.show_modal(create_category_editor, fn_handle_db_error)
 
 

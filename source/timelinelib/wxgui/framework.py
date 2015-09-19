@@ -169,6 +169,9 @@ class Dialog(wx.Dialog, GuiCreator):
         if isinstance(component, wx.Sizer):
             self.SetSizerAndFit(component)
 
+    def EndModalOk(self):
+        self.EndModal(wx.ID_OK)
+
 
 class Controller(object):
 

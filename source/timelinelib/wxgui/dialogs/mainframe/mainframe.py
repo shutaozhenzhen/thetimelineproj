@@ -662,7 +662,7 @@ class GuiCreator(object):
             },
             {
                 "text": _("Bosparanian"),
-                "description": _("This creates a timeline using the bosparanian calendar."),
+                "description": _("This creates a timeline using the fictuous Bosparanian calendar from the German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."),
                 "create_fn": self._create_new_bosparanian_timeline,
             },
         ]
