@@ -21,7 +21,7 @@ import wx
 from timelinelib.data import sort_categories
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.wxgui.dialogs.categoryeditors.categorieseditordialog import CategoriesEditor
-from timelinelib.wxgui.dialogs.categoryeditors.categoryeditordialog import WxCategoryEdtiorDialog
+from timelinelib.wxgui.dialogs.editcategorydialog.editcategorydialog import EditCategoryDialog
 import timelinelib.wxgui.utils as gui_utils
 
 
@@ -73,12 +73,12 @@ class CategoryChoice(wx.Choice):
 
     def _add_category(self):
         def create_category_editor():
-            return WxCategoryEdtiorDialog(self, _("Add Category"),
-                                          self.timeline, None)
+            return EditCategoryDialog(
+                self, _("Add Category"), self.timeline, None)
         def handle_success(dialog):
             if dialog.GetReturnCode() == wx.ID_OK:
                 try:
-                    self.select(dialog.get_edited_category())
+                    self.select(dialog.GetEditedCategory())
                 except TimelineIOError, e:
                     gui_utils.handle_db_error_in_dialog(self, e)
         gui_utils.show_modal(create_category_editor,
