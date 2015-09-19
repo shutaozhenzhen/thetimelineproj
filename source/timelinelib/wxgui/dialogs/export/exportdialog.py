@@ -20,7 +20,8 @@ import wx
 
 from timelinelib.wxgui.dialogs.export.exportcontroller import ExportController
 from timelinelib.wxgui.utils import BORDER
-from timelinelib.wxgui.dialogs.export.fieldselectiondialog import FieldSelectionDialog
+#from timelinelib.wxgui.dialogs.export.fieldselectiondialog import FieldSelectionDialog
+from timelinelib.wxgui.dialogs.fieldselectiondialog.fieldselectiondialog import FieldSelectionDialog
 from timelinelib.wxgui.utils import display_information_message
 
 
@@ -104,14 +105,14 @@ class ExportDialogGuiCreator(wx.Dialog):
             dlg = FieldSelectionDialog(self.parent, _("Select Event Fields"), _("Event"),
                                        self.controller.get_event_fields())
             if dlg.ShowModal() == wx.ID_OK:
-                self.controller.set_event_fields(dlg.get_selected_fields())
+                self.controller.set_event_fields(dlg.GetSelectedFields())
             dlg.Destroy()
 
         def on_select_categories_fields_click(evt):
             dlg = FieldSelectionDialog(self.parent, _("Select Category Fields"), _("Category"),
                                        self.controller.get_category_fields())
             if dlg.ShowModal() == wx.ID_OK:
-                self.controller.set_category_fields(dlg.get_selected_fields())
+                self.controller.set_category_fields(dlg.GetSelectedFields())
             dlg.Destroy()
 
         self.Bind(wx.EVT_BUTTON, ok_on_click, id=wx.ID_OK)
