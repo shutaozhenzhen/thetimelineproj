@@ -16,8 +16,14 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
+from timelinelib.repositories.dbwrapper import DbWrapperCategoryRepository
 from timelinelib.wxgui.dialogs.editcategorydialog.editcategorydialogcontroller import EditCategoryDialogController
 from timelinelib.wxgui.framework import Dialog
+from timelinelib.wxgui.utils import display_error_message
+from timelinelib.wxgui.utils import _set_focus_and_select
+import timelinelib.wxgui.utils as gui_utils
 
 
 class EditCategoryDialog(Dialog):
@@ -46,7 +52,7 @@ class EditCategoryDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, category, db):
         Dialog.__init__(self, EditCategoryDialogController, parent, {
             "name_text": _("Name:"),
             "color_text": _("Color:"),
@@ -55,4 +61,79 @@ class EditCategoryDialog(Dialog):
             "font_color_text": _("Font Color:"),
             "parent_text": _("Parent:"),
         }, title=_("New dialog title"))
-        self.controller.on_init()
+        self.controller.on_init(category, DbWrapperCategoryRepository(db))
+
+    def SetCategoryTree(self, tree):
+        def add_tree(tree, indent=""):
+            for (root, subtree) in tree:
+                self.parentlistbox.Append(indent + root.name, root)
+                add_tree(subtree, indent + "    ")
+        self.parentlistbox.Clear()
+        self.parentlistbox.Append("", None)  # No parent
+        add_tree(tree)
+        self.SetSizerAndFit(self.GetSizer())
+
+    def GetName(self):
+        return self.txt_name.GetValue().strip()
+
+    def SetName(self, new_name):
+        self.txt_name.SetValue(new_name)
+
+    def GetColor(self):
+        # Convert wx.Colour to (r, g, b) tuple
+        (r, g, b) = self.colorpicker.GetValue()
+        return (r, g, b)
+
+    def SetColor(self, new_color):
+        self.colorpicker.SetValue(new_color)
+
+    def GetProgressColor(self):
+        (r, g, b) = self.progresscolorpicker.GetValue()
+        return (r, g, b)
+
+    def SetProgressColor(self, new_color):
+        self.progresscolorpicker.SetValue(new_color)
+
+    def GetDoneColor(self):
+        (r, g, b) = self.donecolorpicker.GetValue()
+        return (r, g, b)
+
+    def SetDoneColor(self, new_color):
+        self.donecolorpicker.SetValue(new_color)
+
+    def GetFontColor(self):
+        # Convert wx.Colour to (r, g, b) tuple
+        (r, g, b) = self.fontcolorpicker.GetValue()
+        return (r, g, b)
+
+    def SetFontColor(self, new_color):
+        self.fontcolorpicker.SetValue(new_color)
+
+    def GetParent(self):
+        selection = self.parentlistbox.GetSelection()
+        if selection == wx.NOT_FOUND:
+            return None
+        return self.parentlistbox.GetClientData(selection)
+
+    def SetParent(self, parent):
+        no_items = self.parentlistbox.GetCount()
+        for i in range(0, no_items):
+            if self.parentlistbox.GetClientData(i) is parent:
+                self.parentlistbox.SetSelection(i)
+                return
+
+    def HandleInvalidName(self, name):
+        msg = _("Category name '%s' not valid. Must be non-empty.")
+        display_error_message(msg % name, self)
+        _set_focus_and_select(self.txt_name)
+
+    def HandleUsedName(self, name):
+        msg = _("Category name '%s' already in use.")
+        display_error_message(msg % name, self)
+        _set_focus_and_select(self.txt_name)
+
+    def HandleDbError(self, e):
+        gui_utils.handle_db_error_in_dialog(self, e)
+
+    def get_edited_category(self):
+        return self.controller.category
