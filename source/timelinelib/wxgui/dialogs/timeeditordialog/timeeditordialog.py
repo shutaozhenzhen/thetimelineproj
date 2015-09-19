@@ -30,9 +30,8 @@ class TimeEditorDialog(Dialog):
                   border="LEFT|TOP"
                   event_EVT_CHECKBOX="show_time_checkbox_on_checked" />
         <TimePicker border="LEFT|RIGHT|TOP" name="time_picker"/>
-        <StdDialogButtonSizer
-            buttons="OK|CANCEL"
-            border="ALL"
+        <DialogButtonsOkCancelSizer
+            border="BOTTOM|RIGHT|TOP"
             event_EVT_BUTTON="ok_button_clicked|ID_OK"
         />
     </BoxSizerVertical>
