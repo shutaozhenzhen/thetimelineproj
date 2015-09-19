@@ -443,7 +443,7 @@ class GuiCreator(object):
                  (ID_MOVE_EVENT_UP, move_up_handler, _("Move event up\tAlt+Up"), cbx),
                  (ID_MOVE_EVENT_DOWN, move_down_handler, _("Move event down\tAlt+Down"), cbx),
                  None,
-                 (ID_COMPRESS, compress, _("&Compress timeline Events..."), cbx),
+                 (ID_COMPRESS, compress, _("&Compress timeline Events"), cbx),
                  None,
                  (ID_MEASURE_DISTANCE, measure_distance, _("&Measure Distance between two Events..."), cbx),
                  None,
