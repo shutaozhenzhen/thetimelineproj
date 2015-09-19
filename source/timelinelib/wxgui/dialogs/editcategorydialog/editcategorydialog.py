@@ -52,7 +52,7 @@ class EditCategoryDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent, category, db):
+    def __init__(self, parent, title, db, category):
         Dialog.__init__(self, EditCategoryDialogController, parent, {
             "name_text": _("Name:"),
             "color_text": _("Color:"),
@@ -60,7 +60,7 @@ class EditCategoryDialog(Dialog):
             "done_color_text": _("Done Color:"),
             "font_color_text": _("Font Color:"),
             "parent_text": _("Parent:"),
-        }, title=_("New dialog title"))
+        }, title=title)
         self.controller.on_init(category, DbWrapperCategoryRepository(db))
 
     def SetCategoryTree(self, tree):
@@ -135,5 +135,5 @@ class EditCategoryDialog(Dialog):
     def HandleDbError(self, e):
         gui_utils.handle_db_error_in_dialog(self, e)
 
-    def get_edited_category(self):
+    def GetEditedCategory(self):
         return self.controller.get_edited_category()
