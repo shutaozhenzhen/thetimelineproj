@@ -49,7 +49,6 @@ class ExportDialogApi(object):
         return True
 
     def set_event_fields(self, fields):
-        print fields
         self.event_fields = fields
 
     def set_category_fields(self, fields):
