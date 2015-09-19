@@ -18,14 +18,14 @@
 
 import wx
 
+from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonssizer import DialogButtonsSizer
 
-class DialogButtonsCloseSizer(wx.BoxSizer):
+
+class DialogButtonsCloseSizer(DialogButtonsSizer):
 
     def __init__(self, parent):
-        wx.BoxSizer.__init__(self, wx.HORIZONTAL)
+        DialogButtonsSizer.__init__(self, parent)
         parent.btn_close = wx.Button(parent, wx.ID_CLOSE)
-        parent.btn_close.SetDefault()
-        parent.SetAffirmativeId(wx.ID_CLOSE)
-        self.AddStretchSpacer()
-        self.Add(parent.btn_close, 0, wx.TOP | wx.LEFT | wx.RIGHT | wx.ALIGN_RIGHT, 5)
-        self.AddSpacer(6)
+        self.buttons = (parent.btn_close,)
+        self.default = 0
+        self.AddButtons(self.buttons, self.default)
