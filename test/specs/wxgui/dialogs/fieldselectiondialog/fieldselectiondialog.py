@@ -35,3 +35,38 @@ class describe_FieldSelectionDialog(UnitTestCase):
         with create_dialog(FieldSelectionDialog, None, "Field Selection", "Event", FIELDS["Event"]) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
+
+class FieldSelectionEditorTestCase(UnitTestCase):
+
+    def a_controller_with(self, data, fields):
+        self.selected_fields = []
+        for field in fields:
+            self.simulate_select_field(field)
+        controller = FieldSelectionDialogController(self.view)
+        controller.on_init(data, fields)
+        return controller
+
+    def simulate_select_field(self, field):
+        if field not in self.selected_fields:
+            self.selected_fields.append((field, True))
+            self.view.GetFields.return_value = self.selected_fields
+
+    def setUp(self):
+        self.selected_fields = []
+        self.view = Mock(FieldSelectionDialog)
+
+
+class describe_event_field_selection_editor_dialog_controller(FieldSelectionEditorTestCase):
+
+    def test_construction_when_no_fields_selected(self):
+        self.controller = self.a_controller_with("Event", [])
+        self.view.CreateFieldCheckboxes.assert_called_with(FIELDS[self.controller.data], [])
+
+    def test_construction_when_some_fields_selected(self):
+        self.controller = self.a_controller_with("Event", ["Description"])
+        self.view.CreateFieldCheckboxes.assert_called_with(FIELDS[self.controller.data], ["Description"])
+
+    def test_selected_fields_are_returned(self):
+        self.controller = self.a_controller_with("Event", ["Description"])
+        self.simulate_select_field("Text")
+        self.assertEqual(["Description", "Text"], self.controller.get_selected_fields())
