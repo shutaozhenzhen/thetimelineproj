@@ -37,7 +37,7 @@ class ListExporter(PluginBase):
 #         return ID_EXPORT
 
     def run(self, main_frame):
-        dlg = ListboxDialox(self.display_name())
+        dlg = ListboxDialox(self.display_name()[:-3])
         dlg.populate(self.get_events(main_frame.timeline))
         dlg.ShowModal()
         dlg.Destroy()
@@ -49,7 +49,7 @@ class ListExporter(PluginBase):
 class ListboxDialox(wx.Dialog):
 
     def __init__(self, title, parent=None):
-        wx.Dialog.__init__(self, parent, title=title, style=wx.RESIZE_BORDER)
+        wx.Dialog.__init__(self, parent, title=title, style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
         self._create_gui()
 
     def populate(self, events):
@@ -76,14 +76,14 @@ class ListboxDialox(wx.Dialog):
 
     def _create_vbox(self, ctrl, btn_box):
         vbox = wx.BoxSizer(wx.VERTICAL)
-        vbox.Add(ctrl, flag=wx.ALL | wx.EXPAND, border=BORDER)
-        vbox.Add(btn_box, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        vbox.Add(ctrl, 1, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        vbox.Add(btn_box, 0, flag=wx.ALL | wx.EXPAND, border=BORDER)
         return vbox
 
 
 class TestListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 
-    def __init__(self, parent, pos=wx.DefaultPosition, size=(250, 400), style=wx.LC_REPORT):
+    def __init__(self, parent, pos=wx.DefaultPosition, size=(400, 400), style=wx.LC_REPORT):
         wx.ListCtrl.__init__(self, parent, wx.ID_ANY, pos, size, style)
         listmix.ListCtrlAutoWidthMixin.__init__(self)
 
@@ -94,3 +94,5 @@ class TestListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
         for period, event in items:
             index = self.InsertStringItem(sys.maxint, period, 0)
             self.SetStringItem(index, 1, event)
+        self.SetColumnWidth(0, wx.LIST_AUTOSIZE)
+        self.SetColumnWidth(1, wx.LIST_AUTOSIZE)
