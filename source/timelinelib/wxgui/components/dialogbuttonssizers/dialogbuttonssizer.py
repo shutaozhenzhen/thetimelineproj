@@ -17,23 +17,16 @@
 
 
 import wx
-import platform
 
 
 class DialogButtonsSizer(wx.BoxSizer):
 
     def __init__(self, parent):
         wx.BoxSizer.__init__(self, wx.HORIZONTAL)
-        self.AddStretchSpacer()
 
     def AddButtons(self, buttons, default):
+        self.AddStretchSpacer()
         for button in buttons:
-            self.Add(button, 0, wx.TOP | wx.LEFT | wx.RIGHT | wx.ALIGN_RIGHT, 5)
-        buttons[default].SetDefault()
-        self.AddEndingSpacer()
-
-    def AddEndingSpacer(self):
-        if platform.system() == "Windows":
-            self.AddSpacer(6)
-        else:
-            self.AddSpacer(6)
+            self.Add(button, 0, wx.ALIGN_RIGHT)
+        if default is not None:
+            buttons[default].SetDefault()
