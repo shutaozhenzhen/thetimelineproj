@@ -17,17 +17,21 @@
 
 
 import wx
+import platform
+
+from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonssizer import DialogButtonsSizer
 
 
-class DialogButtonsApplyCloseSizer(wx.BoxSizer):
+class DialogButtonsApplyCloseSizer(DialogButtonsSizer):
 
     def __init__(self, parent):
-        wx.BoxSizer.__init__(self, wx.HORIZONTAL)
+        DialogButtonsSizer.__init__(self, parent)
         parent.btn_apply = wx.Button(parent, wx.ID_APPLY)
         parent.btn_close = wx.Button(parent, wx.ID_CLOSE)
-        parent.btn_apply.SetDefault()
-        parent.SetAffirmativeId(wx.ID_CLOSE)
-        self.AddStretchSpacer()
-        self.Add(parent.btn_apply, 0, wx.TOP | wx.LEFT | wx.RIGHT | wx.ALIGN_RIGHT, 5)
-        self.Add(parent.btn_close, 0, wx.TOP | wx.LEFT | wx.RIGHT | wx.ALIGN_RIGHT, 5)
-        self.AddSpacer(6)
+        if platform.system() == "Windows":
+            self.buttons = (parent.btn_apply, parent.btn_close)
+            self.default = 0
+        else:
+            self.buttons = (parent.btn_apply, parent.btn_close)
+            self.default = 0
+        self.AddButtons(self.buttons, self.default)
