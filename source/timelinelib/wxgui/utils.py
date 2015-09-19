@@ -72,13 +72,16 @@ class WildcardHelper(object):
 
 class PopupTextWindow(wx.PopupTransientWindow):
 
-    def __init__(self, parent, color, text, timeout=1500):
+    def __init__(self, parent, text, color="#D3F4B8", timeout=1200, pos=None):
         self.timeout = timeout
         wx.PopupTransientWindow.__init__(self, parent, wx.NO_BORDER)
         self.SetBackgroundColour(color)
         st = wx.StaticText(self, wx.ID_ANY, text, pos=(10, 10))
         sz = st.GetBestSize()
         self.SetSize((sz.width + 20, sz.height + 20))
+        if pos:
+            self.Position(pos, (-1, -1))
+        self.Popup()
 
     def ProcessLeftDown(self, evt):
         return False
