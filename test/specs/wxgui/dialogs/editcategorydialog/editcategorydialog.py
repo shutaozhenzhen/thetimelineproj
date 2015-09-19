@@ -71,7 +71,7 @@ class describe_edit_category_dialog(UnitTestCase):
         db = MemoryDB()
         db.save_category(a_category_with(name="one"))
         db.save_category(a_category_with(name="two"))
-        with create_dialog(EditCategoryDialog, None, category, db) as dialog:
+        with create_dialog(EditCategoryDialog, None, "title", db, category) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
 
