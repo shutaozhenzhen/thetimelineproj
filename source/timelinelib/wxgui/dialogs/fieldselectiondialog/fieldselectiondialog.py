@@ -27,8 +27,8 @@ class FieldSelectionDialog(Dialog):
 
     """
     <BoxSizerVertical name="sizer">
-        <StaticBoxSizerVertical label="$(description_text)" name="box" border="LEFT|RIGHT|TOP"/>
-        <DialogButtonsOkCancelSizer  border="BOTTOM"/>
+        <StaticBoxSizerVertical label="$(description_text)" name="box" border="ALL"/>
+        <DialogButtonsOkCancelSizer  border="BOTTOM|LEFT|RIGHT"/>
     </BoxSizerVertical>
     """
 
