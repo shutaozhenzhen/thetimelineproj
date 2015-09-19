@@ -27,7 +27,7 @@ import timelinelib.wxgui.components
 
 if platform.system() == "Windows":
     BORDER = 10
-    SMALL_BORDER = 5
+    SMALL_BORDER = 6
 else:
     BORDER = 12
     SMALL_BORDER = 6
