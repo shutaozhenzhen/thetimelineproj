@@ -80,31 +80,25 @@ class EditCategoryDialog(Dialog):
         self.txt_name.SetValue(new_name)
 
     def GetColor(self):
-        # Convert wx.Colour to (r, g, b) tuple
-        (r, g, b) = self.colorpicker.GetValue()
-        return (r, g, b)
+        return self.colorpicker.GetValueAsRgbTuple()
 
     def SetColor(self, new_color):
         self.colorpicker.SetValue(new_color)
 
     def GetProgressColor(self):
-        (r, g, b) = self.progresscolorpicker.GetValue()
-        return (r, g, b)
+        return self.progresscolorpicker.GetValueAsRgbTuple()
 
     def SetProgressColor(self, new_color):
         self.progresscolorpicker.SetValue(new_color)
 
     def GetDoneColor(self):
-        (r, g, b) = self.donecolorpicker.GetValue()
-        return (r, g, b)
+        return self.donecolorpicker.GetValueAsRgbTuple()
 
     def SetDoneColor(self, new_color):
         self.donecolorpicker.SetValue(new_color)
 
     def GetFontColor(self):
-        # Convert wx.Colour to (r, g, b) tuple
-        (r, g, b) = self.fontcolorpicker.GetValue()
-        return (r, g, b)
+        return self.fontcolorpicker.GetValueAsRgbTuple()
 
     def SetFontColor(self, new_color):
         self.fontcolorpicker.SetValue(new_color)
