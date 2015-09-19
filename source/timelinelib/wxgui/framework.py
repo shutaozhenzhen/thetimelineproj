@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import platform
 import xml.etree.ElementTree
 
 import wx
@@ -24,8 +25,12 @@ from timelinelib.wxgui.utils import time_picker_for
 import timelinelib.wxgui.components
 
 
-BORDER = 12
-SMALL_BORDER = 6
+if platform.system() == "Windows":
+    BORDER = 10
+    SMALL_BORDER = 5
+else:
+    BORDER = 12
+    SMALL_BORDER = 6
 
 
 class GuiCreator(object):
