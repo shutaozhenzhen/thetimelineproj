@@ -87,6 +87,7 @@ class CsvExporter(object):
 
     def _write_label(self, f, text):
         self._write_encoded_text(f, text)
+        f.write("\n")
 
     def _write_heading(self, f, fields):
         for field in fields:
