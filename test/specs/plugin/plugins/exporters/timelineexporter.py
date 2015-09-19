@@ -80,11 +80,11 @@ class describe_timeline_exporter(TimelineExporterTestCase):
         self.simulate_dialog_entries(True, ["Text", "Start"], False, [])
         CsvExporter(self.plugin.timeline, CSV_FILE, self.dlg).export()
         content = self.get_tempfile_content()
-        self.assertEqual("\"#Events#\";\"Text\";\"Start\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n", content)
+        self.assertEqual("\"#Events#\";\n\"Text\";\"Start\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n", content)
 
     def test_category_csv_data_saved_in_file(self):
         self.open_tempfile_for_writing()
         self.simulate_dialog_entries(False, [], True, ["Name", "Color"])
         CsvExporter(self.plugin.timeline, CSV_FILE, self.dlg).export()
         content = self.get_tempfile_content()
-        self.assertEqual("\"#Categories#\";\"Name\";\"Color\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n", content)
+        self.assertEqual("\"#Categories#\";\n\"Name\";\"Color\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n", content)
