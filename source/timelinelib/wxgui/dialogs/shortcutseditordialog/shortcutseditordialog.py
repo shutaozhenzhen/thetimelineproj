@@ -43,9 +43,9 @@ class ShortcutsEditorDialog(Dialog):
 
     def __init__(self, parent, shortcut_config):
         Dialog.__init__(self, ShortcutsEditorDialogController, parent, {
-            "functions": _("Functions") + ":",
-            "modifiers": _("Modifier") + ":",
-            "shortcutkey": _("Shortcut Key") + ":",
+            "functions": _("Functions:"),
+            "modifiers": _("Modifier:"),
+            "shortcutkey": _("Shortcut Key:"),
         }, title=_("Edit Shortcuts"))
         self.controller.on_init(shortcut_config)
 
