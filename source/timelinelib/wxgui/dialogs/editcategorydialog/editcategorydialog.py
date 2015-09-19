@@ -136,4 +136,4 @@ class EditCategoryDialog(Dialog):
         gui_utils.handle_db_error_in_dialog(self, e)
 
     def get_edited_category(self):
-        return self.controller.category
+        return self.controller.get_edited_category()
