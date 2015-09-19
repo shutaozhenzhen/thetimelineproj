@@ -21,6 +21,7 @@ import wx
 from timelinelib.wxgui.utils import BORDER
 from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.factory import EXPORTER
+from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsclosesize import DialogButtonsCloseSizer
 import wx.lib.mixins.listctrl as listmix
 
 
@@ -57,22 +58,8 @@ class ListboxDialox(wx.Dialog):
 
     def _create_gui(self):
         self.list = TestListCtrl(self)
-        button_box = self._create_button_box()
-        vbox = self._create_vbox(self.list, button_box)
+        vbox = self._create_vbox(self.list, DialogButtonsCloseSizer(self))
         self.SetSizerAndFit(vbox)
-
-    def _create_button_box(self):
-        self.btn_close = self._create_close_btn()
-        button_box = wx.BoxSizer(wx.HORIZONTAL)
-        button_box.Add(self.btn_close, flag=wx.LEFT, border=BORDER)
-        return button_box
-
-    def _create_close_btn(self):
-        btn_close = wx.Button(self, wx.ID_CLOSE)
-        btn_close.SetDefault()
-        btn_close.SetFocus()
-        self.SetAffirmativeId(wx.ID_CLOSE)
-        return btn_close
 
     def _create_vbox(self, ctrl, btn_box):
         vbox = wx.BoxSizer(wx.VERTICAL)
