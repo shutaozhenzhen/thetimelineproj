@@ -18,9 +18,9 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.export.fieldselectioncontroller import FIELDS
-from timelinelib.wxgui.dialogs.export.fieldselectioncontroller import FieldSelectionController
-from timelinelib.wxgui.dialogs.export.fieldselectiondialog import FieldSelectionDialog
+from timelinelib.wxgui.dialogs.fieldselectiondialog.fieldselectiondialogcontroller import FIELDS
+from timelinelib.wxgui.dialogs.fieldselectiondialog.fieldselectiondialogcontroller import FieldSelectionDialogController
+from timelinelib.wxgui.dialogs.fieldselectiondialog.fieldselectiondialog import FieldSelectionDialog
 from timelinetest import UnitTestCase
 
 
@@ -30,15 +30,14 @@ class FieldSelectionEditorTestCase(UnitTestCase):
         self.selected_fields = []
         for field in fields:
             self.simulate_select_field(field)
-        return FieldSelectionController(self.view, data, fields)
+        controller = FieldSelectionDialogController(self.view)
+        controller.on_init(data, fields)
+        return controller
 
     def simulate_select_field(self, field):
         if field not in self.selected_fields:
             self.selected_fields.append((field, True))
-            self.view.get_fields.return_value = self.selected_fields
-
-    def simulate_ok_clicked(self):
-        self.controller.on_btn_ok()
+            self.view.GetFields.return_value = self.selected_fields
 
     def setUp(self):
         self.selected_fields = []
@@ -49,16 +48,11 @@ class describe_event_field_selection_editor_dialog_controller(FieldSelectionEdit
 
     def test_construction_when_no_fields_selected(self):
         self.controller = self.a_controller_with("Event", [])
-        self.view.create_field_checkboxes.assert_called_with(FIELDS[self.controller.data], [])
+        self.view.CreateFieldCheckboxes.assert_called_with(FIELDS[self.controller.data], [])
 
     def test_construction_when_some_fields_selected(self):
         self.controller = self.a_controller_with("Event", ["Description"])
-        self.view.create_field_checkboxes.assert_called_with(FIELDS[self.controller.data], ["Description"])
-
-    def test_view_closes_when_ok_button_clicked(self):
-        self.controller = self.a_controller_with("Event", ["Description"])
-        self.simulate_ok_clicked()
-        self.view.close.assert_called_with()
+        self.view.CreateFieldCheckboxes.assert_called_with(FIELDS[self.controller.data], ["Description"])
 
     def test_selected_fields_are_returned(self):
         self.controller = self.a_controller_with("Event", ["Description"])
