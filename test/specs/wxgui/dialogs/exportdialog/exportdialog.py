@@ -22,6 +22,8 @@ from timelinelib.wxgui.dialogs.exportdialog.exportdialog import ExportDialog
 from timelinelib.wxgui.dialogs.exportdialog.exportdialogcontroller import ExportDialogController
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
+from timelinelib.wxgui.dialogs.export.exportcontroller import TARGET_TYPES
+from timelinelib.wxgui.dialogs.fieldselectiondialog.fieldselectiondialogcontroller import FIELDS
 
 
 class describe_ExportDialog(UnitTestCase):
@@ -29,8 +31,55 @@ class describe_ExportDialog(UnitTestCase):
     def setUp(self):
         self.view = Mock(ExportDialog)
         self.controller = ExportDialogController(self.view)
+        self.view.GetExportEvents.return_value = False
+        self.view.GetExportCategories.return_value = False
 
     def test_it_can_be_created(self):
         with create_dialog(ExportDialog, None) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
+
+    def when_event_type_selected(self):
+        self.view.GetExportEvents.return_value = True
+
+    def when_category_type_selected(self):
+        self.view.GetExportCategories.return_value = True
+
+    def when_event_fields_selected(self, fields):
+        self.controller.event_fields = fields
+
+    def when_category_fields_selected(self, fields):
+        self.controller.category_fields = fields
+
+    def simulate_ok_button_clicked(self):
+        self.controller.on_ok(None)
+
+    def test_controller_populates_dialog_when_constructed(self):
+        self.controller.on_init()
+        self.view.SetTargetTypes.assert_called_with(TARGET_TYPES)
+        self.view.SetEvents.assert_called_with(True)
+        self.view.SetCategories.assert_called_with(False)
+        self.assertEqual(FIELDS["Event"], self.controller.get_event_fields())
+        self.assertEqual(FIELDS["Category"], self.controller.get_category_fields())
+
+    def test_no_item_types_selected_generates_info_message(self):
+        self.controller.on_ok(None)
+        self.view.DisplayInformationMessage.assert_called()
+
+    def test_no_event_fields_selected_generates_info_message(self):
+        self.when_event_type_selected()
+        self.when_event_fields_selected([])
+        self.simulate_ok_button_clicked()
+        self.assertTrue(self.view.DisplayInformationMessage.called)
+
+    def test_no_category_fields_selected_generates_info_message(self):
+        self.when_category_type_selected()
+        self.when_category_fields_selected([])
+        self.simulate_ok_button_clicked()
+        self.assertTrue(self.view.DisplayInformationMessage.called)
+
+    def test_dialog_closes_when_ok_button_is_clicked(self):
+        self.when_category_type_selected()
+        self.when_category_fields_selected(["Name"])
+        self.simulate_ok_button_clicked()
+        self.assertTrue(self.view.Close.called)

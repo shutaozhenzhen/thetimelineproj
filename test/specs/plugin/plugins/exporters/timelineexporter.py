@@ -63,11 +63,11 @@ class TimelineExporterTestCase(UnitTestCase):
 
     def simulate_dialog_entries(self, export_events, event_fields, export_categories, category_fields):
         self.dlg = Mock()
-        self.dlg.get_export_events.return_value = export_events
-        self.dlg.get_export_categories.return_value = export_categories
-        self.dlg.get_event_fields.return_value = event_fields
-        self.dlg.get_category_fields.return_value = category_fields
-        self.dlg.get_text_encoding.return_value = "cp1252"
+        self.dlg.GetExportEvents.return_value = export_events
+        self.dlg.GetExportCategories.return_value = export_categories
+        self.dlg.GetEventFields.return_value = event_fields
+        self.dlg.GetCategoryFields.return_value = category_fields
+        self.dlg.GetTextEncoding.return_value = "cp1252"
 
 
 class describe_timeline_exporter(TimelineExporterTestCase):
