@@ -25,7 +25,8 @@ import wx
 
 from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.factory import EXPORTER
-from timelinelib.wxgui.dialogs.export.exportdialog import ExportDialog
+#from timelinelib.wxgui.dialogs.export.exportdialog import ExportDialog
+from timelinelib.wxgui.dialogs.exportdialog.exportdialog import ExportDialog 
 from timelinelib.wxgui.utils import WildcardHelper
 from timelinelib.wxgui.utils import _ask_question
 from timelinelib.wxgui.dialogs.export.exportcontroller import CSV_FILE
@@ -45,7 +46,7 @@ class TimelineExporter(PluginBase):
 
     def run(self, main_frame):
         self.timeline = main_frame.timeline
-        dlg = ExportDialog(main_frame, _("Export Timeline"))
+        dlg = ExportDialog(main_frame)
         if dlg.ShowModal() == wx.ID_OK:
             self.export_timeline(dlg, main_frame)
         dlg.Destroy()
@@ -53,7 +54,7 @@ class TimelineExporter(PluginBase):
     def export_timeline(self, dlg, main_frame):
         path, _ = get_path(main_frame)
         if path is not None and overwrite_existing_path(main_frame, path):
-            if dlg.get_export_type() == CSV_FILE:
+            if dlg.GetExportType() == CSV_FILE:
                 CsvExporter(self.timeline, path, dlg).export()
 
 
@@ -62,11 +63,11 @@ class CsvExporter(object):
     def __init__(self, timeline, path, dlg):
         self.path = path
         self.timeline = timeline
-        self.text_encoding = dlg.get_text_encoding()
-        self.export_events = dlg.get_export_events()
-        self.export_categories = dlg.get_export_categories()
-        self.event_fields = dlg.get_event_fields()
-        self.category_fields = dlg.get_category_fields()
+        self.text_encoding = dlg.GetTextEncoding()
+        self.export_events = dlg.GetExportEvents()
+        self.export_categories = dlg.GetExportCategories()
+        self.event_fields = dlg.GetEventFields()
+        self.category_fields = dlg.GetCategoryFields()
 
     def export(self):
         with open(self.path, "w") as f:
