@@ -28,6 +28,8 @@ class FieldSelectionDialogController(Controller):
 
     def on_init(self, data, fields):
         self.data = data
+        if self.data.startswith("#"):
+            self.data = self.data[1:-1]
         self._populate_view(fields)
 
     def get_selected_fields(self):
