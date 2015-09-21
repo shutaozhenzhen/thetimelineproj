@@ -57,9 +57,6 @@ class GuiCreator(object):
     def _create_TimePicker(self, parent, node):
         return time_picker_for(self.time_type)(self, config=self.config)
 
-    def _create_StdDialogButtonSizer(self, parent, node):
-        return self.CreateStdDialogButtonSizer(flags=self._get_or_value(node.get("buttons", "")))
-
     def _create_BoxSizerVertical(self, parent, node):
         return self._populate_sizer(parent, node, wx.BoxSizer(wx.VERTICAL))
 
