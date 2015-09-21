@@ -18,8 +18,9 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialog import SetCategoryDialog
+from timelinelib.db import db_open
 from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialogcontroller import SetCategoryDialogController
+from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialog import SetCategoryDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 
@@ -31,6 +32,7 @@ class describe_SetCategoryDialog(UnitTestCase):
         self.controller = SetCategoryDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(SetCategoryDialog, None) as dialog:
+        db = db_open(":tutorial:")
+        with create_dialog(SetCategoryDialog, None, db) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
