@@ -61,7 +61,7 @@ class StaticContainerEditorDialog(wx.Dialog):
         grid.Add(self.txt_name, flag=wx.EXPAND)
 
     def _create_categories_listbox(self, grid):
-        self.lst_category = CategoryChoice(self, self.db)
+        self.lst_category = CategoryChoice(self, self.db, allow_add=True, allow_edit=True)
         label = wx.StaticText(self, label=_("Category:"))
         grid.Add(label, flag=wx.ALIGN_CENTER_VERTICAL)
         grid.Add(self.lst_category)
@@ -84,10 +84,10 @@ class ContainerEditorControllerApi(object):
         return self.txt_name.GetValue().strip()
 
     def set_category(self, category):
-        self.lst_category.select(category)
+        self.lst_category.Populate(select=category)
 
     def get_category(self):
-        return self.lst_category.get()
+        return self.lst_category.GetSelectedCategory()
 
     def display_invalid_name(self, message):
         display_error_message(message, self)
@@ -101,7 +101,6 @@ class ContainerEditorControllerApi(object):
 
     def _bind_events(self):
         self.Bind(wx.EVT_BUTTON, self._btn_ok_on_click, id=wx.ID_OK)
-        self.Bind(wx.EVT_CHOICE, self.lst_category.on_choice, self.lst_category)
 
     def _btn_ok_on_click(self, evt):
         self.controller.save()
