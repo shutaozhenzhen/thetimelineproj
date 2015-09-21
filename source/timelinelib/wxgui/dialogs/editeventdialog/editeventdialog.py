@@ -35,7 +35,7 @@ class EditEventDialog(Dialog):
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(text_label)" />
                 <Button />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_label)" />
-                <Button />
+                <CategoryChoice name="category_choice" timeline="$(db)" />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(container_label)" />
                 <Button />
             </FlexGridSizer>
@@ -46,8 +46,9 @@ class EditEventDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, db):
         Dialog.__init__(self, EditEventDialogController, parent, {
+            "db": db,
             "properties_label": _("Event Properties"),
             "when_label": _("When:"),
             "text_label": _("Text:"),
@@ -58,5 +59,6 @@ class EditEventDialog(Dialog):
         self.controller.on_init()
         self.notebook.AddPage(wx.Button(self.notebook), "haha")
         self.notebook.AddPage(wx.Button(self.notebook), "hoho")
+        self.category_choice.Populate()
         self.Fit()
         self.SetMinSize(self.GetSize())

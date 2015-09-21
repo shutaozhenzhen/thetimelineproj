@@ -20,6 +20,7 @@ import wx
 
 from timelinelib.data import sort_categories
 from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.repositories.dbwrapper import DbWrapperCategoryRepository
 from timelinelib.wxgui.dialogs.categoryeditors.categorieseditordialog import CategoriesEditor
 from timelinelib.wxgui.dialogs.editcategorydialog.editcategorydialog import EditCategoryDialog
 import timelinelib.wxgui.utils as gui_utils
@@ -27,9 +28,45 @@ import timelinelib.wxgui.utils as gui_utils
 
 class CategoryChoice(wx.Choice):
 
-    def __init__(self, parent, timeline):
-        wx.Choice.__init__(self, parent, wx.ID_ANY)
+    def __init__(self, parent, timeline, **kwargs):
+        wx.Choice.__init__(self, parent, wx.ID_ANY, **kwargs)
         self.timeline = timeline
+        self.category_repository = DbWrapperCategoryRepository(self.timeline)
+
+    def Populate(self, exclude=None, select=None):
+        try:
+            tree = self.category_repository.get_tree(remove=exclude)
+        except:
+            self.Clear()
+            # We can not do error handling here since this method is also
+            # called from the constructor (and then error handling is done by
+            # the code calling the constructor).
+            raise
+        else:
+            self._populate_tree(tree)
+            self.SetSelectedCategory(select)
+
+    def GetSelectedCategory(self):
+        if self.GetSelection() == wx.NOT_FOUND:
+            return None
+        return self.GetClientData(self.GetSelection())
+
+    def SetSelectedCategory(self, category):
+        for index in range(self.GetCount()):
+            if self.GetClientData(index) == category:
+                self.SetSelection(index)
+                return
+        self.SetSelection(0)
+
+    def _populate_tree(self, tree):
+        self.Clear()
+        self.Append("", None)
+        self._append_tree(tree)
+
+    def _append_tree(self, tree, indent=""):
+        for (category, subtree) in tree:
+            self.Append(indent + category.name, category)
+            self._append_tree(subtree, indent + "    ")
 
     def select(self, select_category):
         # We can not do error handling here since this method is also called

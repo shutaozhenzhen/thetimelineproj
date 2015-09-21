@@ -18,8 +18,9 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.editeventdialog.editeventdialog import EditEventDialog
+from timelinelib.db import db_open
 from timelinelib.wxgui.dialogs.editeventdialog.editeventdialogcontroller import EditEventDialogController
+from timelinelib.wxgui.dialogs.editeventdialog.editeventdialog import EditEventDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 
@@ -31,6 +32,10 @@ class describe_EditEventDialog(UnitTestCase):
         self.controller = EditEventDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(EditEventDialog, None) as dialog:
+        db = db_open(":tutorial:")
+        categories = db.get_categories()
+        categories[0].parent = categories[1]
+        db.save_category(categories[0])
+        with create_dialog(EditEventDialog, None, db) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()

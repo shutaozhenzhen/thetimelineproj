@@ -16,9 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.components.colourselect import ColourSelect
+from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsapplyclosesizer import DialogButtonsApplyCloseSizer
+from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsokcancelsizer import DialogButtonsOkCancelSizer
 from timelinelib.wxgui.components.feedbacktext import FeedbackText
 from timelinelib.wxgui.components.filechooser import FileChooser
 from timelinelib.wxgui.components.header import Header
-from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsapplyclosesizer import DialogButtonsApplyCloseSizer
-from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsokcancelsizer import DialogButtonsOkCancelSizer
