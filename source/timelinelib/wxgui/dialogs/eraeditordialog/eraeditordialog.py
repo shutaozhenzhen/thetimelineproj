@@ -47,7 +47,7 @@ class EraEditorDialog(Dialog):
                 <TextCtrl name="txt_name" />
 
                 <StaticText label="$(colour_text)" align="ALIGN_CENTER_VERTICAL" />
-                <ColourSelect name="colorpicker" align="ALIGN_CENTER_VERTICAL" width="30" height="30" />
+                <ColourSelect name="colorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
 
             </FlexGridSizer>
 
