@@ -24,12 +24,24 @@ class SetCategoryDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+        <FlexGridSizer columns="2" growableColumns="1" proportion="1" border="ALL">
+            <StaticText label="$(label)" align="ALIGN_CENTER_VERTICAL" />
+            <CategoryChoice name="category_choice" timeline="$(db)" align="ALIGN_CENTER_VERTICAL" />
+        </FlexGridSizer>
+        <DialogButtonsOkCancelSizer
+            border="LEFT|BOTTOM|RIGHT"
+            event_EVT_BUTTON="on_ok_clicked|ID_OK"
+        />
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, db):
         Dialog.__init__(self, SetCategoryDialogController, parent, {
-            "test_text": "Hello World",
+            "db": db,
+            "label": _("Select a Category:"),
         }, title=_("New dialog title"))
         self.controller.on_init()
+
+    def PopulateCategories(self):
+        self.category_choice.Populate()
+        self.Fit()
