@@ -35,7 +35,7 @@ class EditEventDialog(Dialog):
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(text_label)" />
                 <Button />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_label)" />
-                <CategoryChoice name="category_choice" timeline="$(db)" />
+                <CategoryChoice name="category_choice" allow_add="True" allow_edit="True" timeline="$(db)" />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(container_label)" />
                 <Button />
             </FlexGridSizer>

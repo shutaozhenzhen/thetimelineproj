@@ -242,11 +242,10 @@ class EventEditorDialog(wx.Dialog):
         grid.Add(self.txt_text, (row, 1), flag=wx.EXPAND)
 
     def _create_categories_listbox(self, grid, row):
-        self.lst_category = CategoryChoice(self, self.timeline)
+        self.lst_category = CategoryChoice(self, self.timeline, allow_add=True, allow_edit=True)
         label = wx.StaticText(self, label=_("Category:"))
         grid.Add(label, (row, 0))
         grid.Add(self.lst_category, (row, 1), flag=wx.EXPAND)
-        self.Bind(wx.EVT_CHOICE, self.lst_category.on_choice, self.lst_category)
 
     def _create_notebook_content(self, grid, row):
         self.notebook = self._create_notebook()
@@ -435,10 +434,10 @@ class EventEditorDialog(wx.Dialog):
         return self.txt_text.GetValue().strip()
 
     def set_category(self, category):
-        self.lst_category.select(category)
+        self.lst_category.Populate(select=category)
 
     def get_category(self):
-        return self.lst_category.get()
+        return self.lst_category.GetSelectedCategory()
 
     def set_container(self, container):
         self._fill_containers_listbox(container)
