@@ -30,7 +30,7 @@ class EditCategoryDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <FlexGridSizer rows="6" columns="2" border="ALL">
+        <FlexGridSizer rows="6" columns="2" growableColumns="1" proportion="1" border="ALL">
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(name_text)" />
             <TextCtrl name="txt_name" width="150" />
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(color_text)" />

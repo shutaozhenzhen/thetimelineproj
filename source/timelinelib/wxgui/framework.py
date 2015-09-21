@@ -67,6 +67,8 @@ class GuiCreator(object):
         rows = int(node.get("rows"))
         columns = int(node.get("columns"))
         sizer = wx.FlexGridSizer(rows, columns, SMALL_BORDER, SMALL_BORDER)
+        for column_string in self._get_comma_int_list(node.get("growableColumns")):
+            sizer.AddGrowableCol(int(column_string))
         return self._populate_sizer(parent, node, sizer)
 
     def _create_StaticBoxSizerVertical(self, parent, node):
@@ -132,6 +134,12 @@ class GuiCreator(object):
             return self._variables[text[2:-1]]
         else:
             return text
+
+    def _get_comma_int_list(self, text):
+        if text:
+            return [int(x) for x in text.split(",")]
+        else:
+            return []
 
     def _get_or_value(self, wx_constant_names):
         value = 0
