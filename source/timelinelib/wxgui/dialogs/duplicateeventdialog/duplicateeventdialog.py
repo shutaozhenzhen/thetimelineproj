@@ -28,7 +28,7 @@ class DuplicateEventDialog(Dialog):
         <BoxSizerHorizontal border="ALL" >
             <StaticText label="$(nbr_of_duplicates_text)" />
             <Spacer />
-            <SpinCtrl width="50" />
+            <SpinCtrl width="50" name="sc_nbr_of_duplicates" />
         </BoxSizerHorizontal>
 
         <RadioBox label="$(period_text)" name="rb_periods" choices="$(period_choices)" border="LEFT|RIGHT|BOTTOM" />
@@ -59,3 +59,4 @@ class DuplicateEventDialog(Dialog):
             "directions": [_("Forward"), _("Backward"), _("Both")],
         }, title=_("Duplicate Event"))
         self.controller.on_init()
+        self.sc_nbr_of_duplicates.SetSelection(-1, -1)
