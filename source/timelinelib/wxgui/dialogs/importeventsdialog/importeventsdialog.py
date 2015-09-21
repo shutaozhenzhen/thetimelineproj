@@ -41,9 +41,8 @@ class ImportEventsDialog(Dialog):
             border="ALL"
             proportion="1"
         />
-        <StdDialogButtonSizer
-            buttons="OK|CANCEL"
-            border="BOTTOM"
+        <DialogButtonsOkCancelSizer
+            border="LEFT|BOTTOM|RIGHT"
             event_EVT_BUTTON="on_ok_clicked|ID_OK"
         />
     </BoxSizerVertical>

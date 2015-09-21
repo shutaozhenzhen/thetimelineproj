@@ -22,6 +22,7 @@ import xml.etree.ElementTree
 import wx
 
 from timelinelib.wxgui.utils import time_picker_for
+from timelinelib.wxgui.utils import display_error_message
 import timelinelib.wxgui.components
 
 
@@ -57,9 +58,6 @@ class GuiCreator(object):
     def _create_TimePicker(self, parent, node):
         return time_picker_for(self.time_type)(self, config=self.config)
 
-    def _create_StdDialogButtonSizer(self, parent, node):
-        return self.CreateStdDialogButtonSizer(flags=self._get_or_value(node.get("buttons", "")))
-
     def _create_BoxSizerVertical(self, parent, node):
         return self._populate_sizer(parent, node, wx.BoxSizer(wx.VERTICAL))
 
@@ -67,9 +65,11 @@ class GuiCreator(object):
         return self._populate_sizer(parent, node, wx.BoxSizer(wx.HORIZONTAL))
 
     def _create_FlexGridSizer(self, parent, node):
-        rows = int(node.get("rows"))
-        columns = int(node.get("columns"))
+        rows = int(node.get("rows", "0"))
+        columns = int(node.get("columns", "0"))
         sizer = wx.FlexGridSizer(rows, columns, SMALL_BORDER, SMALL_BORDER)
+        for column_string in self._get_comma_int_list(node.get("growableColumns")):
+            sizer.AddGrowableCol(int(column_string))
         return self._populate_sizer(parent, node, sizer)
 
     def _create_StaticBoxSizerVertical(self, parent, node):
@@ -136,6 +136,12 @@ class GuiCreator(object):
         else:
             return text
 
+    def _get_comma_int_list(self, text):
+        if text:
+            return [int(x) for x in text.split(",")]
+        else:
+            return []
+
     def _get_or_value(self, wx_constant_names):
         value = 0
         if wx_constant_names:
@@ -171,6 +177,9 @@ class Dialog(wx.Dialog, GuiCreator):
 
     def EndModalOk(self):
         self.EndModal(wx.ID_OK)
+
+    def DisplayErrorMessage(self, message):
+        display_error_message(message, parent=self)
 
 
 class Controller(object):

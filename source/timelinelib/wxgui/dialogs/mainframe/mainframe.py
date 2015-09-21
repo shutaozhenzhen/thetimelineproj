@@ -56,7 +56,7 @@ from timelinelib.wxgui.dialogs.importeventsdialog.importeventsdialog import Impo
 from timelinelib.wxgui.dialogs.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.dialogs.nowdateeditor.nowdateeditordialog import NowDateEditorDialog
 from timelinelib.wxgui.dialogs.preferences.preferencesdialog import PreferencesDialog
-from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditordialog import SetCategoryEditorDialog
+from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialog import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditordialog.shortcutseditordialog import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialog import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditordialog.timeeditordialog import TimeEditorDialog
@@ -1051,15 +1051,14 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
 
     def _set_category(self):
         def create_set_category_editor():
-            return SetCategoryEditorDialog(self, self.timeline)
+            return SetCategoryDialog(self, self.timeline)
         gui_utils.show_modal(create_set_category_editor, self.handle_db_error)
         self.main_panel.redraw_timeline()
 
     def _set_category_to_selected_events(self):
         selected_event_ids = self.main_panel.get_selected_event_ids()
-
         def create_set_category_editor():
-            return SetCategoryEditorDialog(self, self.timeline, selected_event_ids)
+            return SetCategoryDialog(self, self.timeline, selected_event_ids)
         gui_utils.show_modal(create_set_category_editor, self.handle_db_error)
         self.main_panel.redraw_timeline()
 

@@ -16,23 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-import platform
-
-from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonssizer import DialogButtonsSizer
+from timelinelib.wxgui.framework import Controller
 
 
-class DialogButtonsApplyCloseSizer(DialogButtonsSizer):
+class EditEventDialogController(Controller):
 
-    def __init__(self, parent):
-        DialogButtonsSizer.__init__(self, parent)
-        parent.btn_apply = wx.Button(parent, wx.ID_APPLY)
-        parent.btn_close = wx.Button(parent, wx.ID_CLOSE)
-        if platform.system() == "Windows":
-            self.buttons = (parent.btn_apply, parent.btn_close)
-            self.default = 0
-        else:
-            self.buttons = (parent.btn_apply, parent.btn_close)
-            self.default = 0
-        self.AddButtons(self.buttons, self.default)
-        parent.SetEscapeId(wx.ID_CLOSE)
+    def on_init(self):
+        pass

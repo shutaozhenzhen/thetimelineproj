@@ -33,5 +33,5 @@ class DialogButtonsOkCancelSizer(DialogButtonsSizer):
             self.default = 0
         else:
             self.buttons = (parent.btn_cancel, parent.btn_ok)
-            self.default = 0
+            self.default = 1
         self.AddButtons(self.buttons, self.default)
