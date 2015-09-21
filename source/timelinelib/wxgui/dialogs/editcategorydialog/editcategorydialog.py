@@ -30,7 +30,7 @@ class EditCategoryDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <FlexGridSizer rows="6" columns="2" border="ALL">
+        <FlexGridSizer rows="6" columns="2" growableColumns="1" proportion="1" border="ALL">
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(name_text)" />
             <TextCtrl name="txt_name" width="150" />
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(color_text)" />
@@ -42,11 +42,10 @@ class EditCategoryDialog(Dialog):
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(font_color_text)" />
             <ColourSelect name="fontcolorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(parent_text)" />
-            <Choice name="parentlistbox" align="ALIGN_CENTER_VERTICAL" />
+            <CategoryChoice name="category_choice" timeline="$(db)" align="ALIGN_CENTER_VERTICAL" />
         </FlexGridSizer>
-        <StdDialogButtonSizer
-            buttons="OK|CANCEL"
-            border="BOTTOM"
+        <DialogButtonsOkCancelSizer
+            border="LEFT|BOTTOM|RIGHT"
             event_EVT_BUTTON="on_ok_clicked|ID_OK"
         />
     </BoxSizerVertical>
@@ -54,6 +53,7 @@ class EditCategoryDialog(Dialog):
 
     def __init__(self, parent, title, db, category):
         Dialog.__init__(self, EditCategoryDialogController, parent, {
+            "db": db,
             "name_text": _("Name:"),
             "color_text": _("Color:"),
             "progress_color_text": _("Progress Color:"),
@@ -63,15 +63,9 @@ class EditCategoryDialog(Dialog):
         }, title=title)
         self.controller.on_init(category, DbWrapperCategoryRepository(db))
 
-    def SetCategoryTree(self, tree):
-        def add_tree(tree, indent=""):
-            for (root, subtree) in tree:
-                self.parentlistbox.Append(indent + root.name, root)
-                add_tree(subtree, indent + "    ")
-        self.parentlistbox.Clear()
-        self.parentlistbox.Append("", None)  # No parent
-        add_tree(tree)
-        self.SetSizerAndFit(self.GetSizer())
+    def PopulateCategories(self, exclude):
+        self.category_choice.Populate(exclude=exclude)
+        self.Fit()
 
     def GetName(self):
         return self.txt_name.GetValue().strip()
@@ -104,17 +98,10 @@ class EditCategoryDialog(Dialog):
         self.fontcolorpicker.SetValue(new_color)
 
     def GetParent(self):
-        selection = self.parentlistbox.GetSelection()
-        if selection == wx.NOT_FOUND:
-            return None
-        return self.parentlistbox.GetClientData(selection)
+        return self.category_choice.GetSelectedCategory()
 
     def SetParent(self, parent):
-        no_items = self.parentlistbox.GetCount()
-        for i in range(0, no_items):
-            if self.parentlistbox.GetClientData(i) is parent:
-                self.parentlistbox.SetSelection(i)
-                return
+        return self.category_choice.SetSelectedCategory(parent)
 
     def HandleInvalidName(self, name):
         msg = _("Category name '%s' not valid. Must be non-empty.")

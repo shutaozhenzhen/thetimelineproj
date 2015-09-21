@@ -35,11 +35,10 @@ class EditCategoryDialogController(Controller):
         self._category = category
         self._category_repository = category_repository
         try:
-            tree = self._category_repository.get_tree(remove=self._category)
+            self.view.PopulateCategories(exclude=self._category)
         except TimelineIOError, e:
             self.view.HandleDbError(e)
         else:
-            self.view.SetCategoryTree(tree)
             if self._category is None:
                 self.view.SetName("")
                 self.view.SetColor(DEFAULT_COLOR)

@@ -18,32 +18,30 @@
 
 from mock import Mock
 
+from timelinelib.calendar.gregorian import GregorianUtils
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.event import Event
-from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditorcontroller import SetCategoryEditorController
+from timelinelib.db import db_open
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.wxgui.dialogs.setcategoryeditor.setcategoryeditordialog import SetCategoryEditorDialog
+from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialogcontroller import SetCategoryDialogController
+from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialog import SetCategoryDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import a_category_with
-from timelinelib.calendar.gregorian import GregorianUtils
+from timelinetest.utils import create_dialog
 
 
-class set_category_editor_spec_base(UnitTestCase):
+class describe_set_category_dialog(UnitTestCase):
 
-    def setUp(self, view_properties):
+    def setUp(self):
+        self.view = Mock(SetCategoryDialog)
+        self.controller = SetCategoryDialogController(self.view)
         self.time_type = GregorianTimeType()
         self._create_category1()
         self._create_category2()
         self._create_event1()
         self._create_event2()
         self._create_db_mock()
-        self.controller = SetCategoryEditorController(
-            self._create_view_mock(), self.db, view_properties)
-
-    def _create_view_mock(self):
-        self.view = Mock(SetCategoryEditorDialog)
-        self.view.get_category.return_value = self.category1
-        return self.view
+        self.view.GetSelectedCategory.return_value = self.category1
 
     def _create_db_mock(self):
         def get_all_events():
@@ -73,21 +71,29 @@ class set_category_editor_spec_base(UnitTestCase):
             "foo",
             category)
 
-
-class a_newly_initialized_dialog(set_category_editor_spec_base):
-
-    def setUp(self):
-        set_category_editor_spec_base.setUp(self, [])
+    def test_it_can_be_created(self):
+        db = db_open(":tutorial:")
+        with create_dialog(SetCategoryDialog, None, db) as dialog:
+            if self.HALT_GUI:
+                dialog.ShowModal()
 
     def test_category_can_be_set_on_all_events_without_category(self):
-        self.controller.save()
-        self.view.close.assert_called()
-        self.assertTrue(self.event1.get_category() == self.category1)
-        self.assertTrue(self.event2.get_category() == self.category2)
+        self.controller.on_init(self.db, [])
+        self.controller.on_ok_clicked(None)
+        self.view.EndModalOk.assert_called_with()
+        self.assertEqual(self.event1.get_category(), self.category1)
+        self.assertEqual(self.event2.get_category(), self.category2)
 
     def test_category_can_be_set_when_all_events_has_catageroies(self):
         self.event1.set_category(self.category2)
-        self.controller.save()
-        self.view.close.assert_called()
-        self.assertTrue(self.event1.get_category() == self.category2)
-        self.assertTrue(self.event2.get_category() == self.category2)
+        self.controller.on_init(self.db, [])
+        self.controller.on_ok_clicked(None)
+        self.view.EndModalOk.assert_called_with()
+        self.assertEqual(self.event1.get_category(), self.category2)
+        self.assertEqual(self.event2.get_category(), self.category2)
+
+    def test_displays_error_message_if_no_category_selected(self):
+        self.controller.on_init(self.db, [])
+        self.view.GetSelectedCategory.return_value = None
+        self.controller.on_ok_clicked(None)
+        self.view.DisplayErrorMessage.assert_called_with("#You must select a category!#")

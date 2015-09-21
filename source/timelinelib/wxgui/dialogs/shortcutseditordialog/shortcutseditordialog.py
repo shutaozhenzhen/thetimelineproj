@@ -36,7 +36,7 @@ class ShortcutsEditorDialog(Dialog):
             <ComboBox name="cb_shortcut_keys" style="CB_READONLY"  align="ALIGN_CENTER_VERTICAL" />
         </FlexGridSizer>
         <DialogButtonsApplyCloseSizer
-            border="BOTTOM"
+            border="LEFT|BOTTOM|RIGHT"
             event_EVT_BUTTON="on_apply_clicked|ID_APPLY"/>
     </BoxSizerVertical>
     """

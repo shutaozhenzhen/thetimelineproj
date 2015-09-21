@@ -54,9 +54,8 @@ class FileNewDialog(Dialog):
                 />
             </StaticBoxSizerVertical>
         </BoxSizerHorizontal>
-        <StdDialogButtonSizer
-            buttons="OK|CANCEL"
-            border="TOP|BOTTOM"
+        <DialogButtonsOkCancelSizer
+            border="ALL"
         />
     </BoxSizerVertical>
     """
