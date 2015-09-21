@@ -48,8 +48,8 @@ class DuplicateEventDialog(Dialog):
 
     def __init__(self, parent, db):
         self.db = db
-        move_period_config = db.get_time_type().get_duplicate_functions()
-        period_list = [label for (label, fn) in move_period_config]
+        self. move_period_config = db.get_time_type().get_duplicate_functions()
+        period_list = [label for (label, fn) in self.move_period_config]
         Dialog.__init__(self, DuplicateEventDialogController, parent, {
             "nbr_of_duplicates_text": _("Number of duplicates:"),
             "period_text": _("Period"),
@@ -60,3 +60,7 @@ class DuplicateEventDialog(Dialog):
         }, title=_("Duplicate Event"))
         self.controller.on_init()
         self.sc_nbr_of_duplicates.SetSelection(-1, -1)
+
+    def GetMovePeriodFn(self):
+        move_period_fns = [fn for (_, fn) in self.move_period_config]
+        return move_period_fns[self.rb_periods.GetSelection()]
