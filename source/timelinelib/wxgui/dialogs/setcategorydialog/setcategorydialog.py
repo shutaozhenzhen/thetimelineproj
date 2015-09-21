@@ -35,13 +35,16 @@ class SetCategoryDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent, db):
+    def __init__(self, parent, db, selected_event_ids=[]):
         Dialog.__init__(self, SetCategoryDialogController, parent, {
             "db": db,
             "label": _("Select a Category:"),
-        }, title=_("New dialog title"))
-        self.controller.on_init()
+        })
+        self.controller.on_init(db, selected_event_ids)
 
     def PopulateCategories(self):
         self.category_choice.Populate()
         self.Fit()
+
+    def GetSelectedCategory(self):
+        return self.category_choice.GetSelectedCategory()
