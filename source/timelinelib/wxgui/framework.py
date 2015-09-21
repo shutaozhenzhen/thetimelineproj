@@ -64,8 +64,8 @@ class GuiCreator(object):
         return self._populate_sizer(parent, node, wx.BoxSizer(wx.HORIZONTAL))
 
     def _create_FlexGridSizer(self, parent, node):
-        rows = int(node.get("rows"))
-        columns = int(node.get("columns"))
+        rows = int(node.get("rows", "0"))
+        columns = int(node.get("columns", "0"))
         sizer = wx.FlexGridSizer(rows, columns, SMALL_BORDER, SMALL_BORDER)
         for column_string in self._get_comma_int_list(node.get("growableColumns")):
             sizer.AddGrowableCol(int(column_string))
