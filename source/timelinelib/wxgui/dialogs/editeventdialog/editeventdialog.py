@@ -19,17 +19,44 @@
 from timelinelib.wxgui.dialogs.editeventdialog.editeventdialogcontroller import EditEventDialogController
 from timelinelib.wxgui.framework import Dialog
 
+import wx
+
 
 class EditEventDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+        <StaticBoxSizerVertical label="$(properties_label)" border="ALL" proportion="1">
+            <FlexGridSizer columns="2" growableColumns="1" border="ALL">
+                <StaticText align="ALIGN_CENTER_VERTICAL" label="$(when_label)" />
+                <Button />
+                <StaticText align="ALIGN_CENTER_VERTICAL" label="" />
+                <Button />
+                <StaticText align="ALIGN_CENTER_VERTICAL" label="$(text_label)" />
+                <Button />
+                <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_label)" />
+                <Button />
+                <StaticText align="ALIGN_CENTER_VERTICAL" label="$(container_label)" />
+                <Button />
+            </FlexGridSizer>
+            <Notebook name="notebook" style="BK_DEFAULT" border="LEFT|RIGHT|BOTTOM" proportion="1" />
+        </StaticBoxSizerVertical>
+        <CheckBox label="$(add_more_label)" border="LEFT|RIGHT" />
+        <DialogButtonsOkCancelSizer border="ALL" />
     </BoxSizerVertical>
     """
 
     def __init__(self, parent):
         Dialog.__init__(self, EditEventDialogController, parent, {
-            "test_text": "Hello World",
-        }, title=_("New dialog title"))
+            "properties_label": _("Event Properties"),
+            "when_label": _("When:"),
+            "text_label": _("Text:"),
+            "category_label": _("Category:"),
+            "container_label": _("Container:"),
+            "add_more_label": _("Add more events after this one"),
+        }, title=_("New dialog title"), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller.on_init()
+        self.notebook.AddPage(wx.Button(self.notebook), "haha")
+        self.notebook.AddPage(wx.Button(self.notebook), "hoho")
+        self.Fit()
+        self.SetMinSize(self.GetSize())
