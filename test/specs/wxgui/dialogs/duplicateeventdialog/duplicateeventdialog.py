@@ -50,18 +50,32 @@ class describe_DuplicateEventDialog(UnitTestCase):
 
 
 class duplicate_event_dialog_spec_base(UnitTestCase):
-    pass
-#     def setUp(self):
-#         self.controller = DuplicateEventDialogController(
-#             self._create_view_mock(),
-#             self._create_db_mock(),
-#             self._create_event())
-#
-#     def _create_view_mock(self):
-#         self.view = Mock(DuplicateEventDialog)
-#         self.view.get_move_period_fn.return_value = self._create_move_period_fn_mock()
-#         return self.view
-# 
+
+    def setUp(self):
+        self.controller = DuplicateEventDialogController(
+            self._create_view_mock(),
+            self._create_db_mock(),
+            self._create_event())
+
+    def _create_view_mock(self):
+        self.view = Mock(DuplicateEventDialog)
+        self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
+        return self.view
+
+    def _create_db_mock(self):
+        self.db = Mock(MemoryDB)
+        self.db.get_time_type.return_value = GregorianTimeType()
+        return self.db
+
+    def _create_event(self):
+        self.event = Event(
+            self.db.get_time_type(),
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
+            "foo",
+            category=None)
+        return self.event
+ 
 #     def _create_move_period_fn_mock(self):
 #         self.move_period_fn = Mock()
 #         self.move_period_fn.return_value = TimePeriod(
@@ -69,20 +83,6 @@ class duplicate_event_dialog_spec_base(UnitTestCase):
 #             GregorianUtils.from_date(2010, 8, 1).to_time(),
 #             GregorianUtils.from_date(2010, 8, 1).to_time())
 #         return self.move_period_fn
-# 
-#     def _create_db_mock(self):
-#         self.db = Mock(MemoryDB)
-#         self.db.get_time_type.return_value = GregorianTimeType()
-#         return self.db
-# 
-#     def _create_event(self):
-#         self.event = Event(
-#             self.db.get_time_type(),
-#             GregorianUtils.from_date(2010, 1, 1).to_time(),
-#             GregorianUtils.from_date(2010, 1, 1).to_time(),
-#             "foo",
-#             category=None)
-#         return self.event
 # 
 #     def _duplicate_with(self, count, freq, direction):
 #         self.view.get_count.return_value = count
@@ -92,11 +92,10 @@ class duplicate_event_dialog_spec_base(UnitTestCase):
 
 
 class a_newly_initialized_dialog(duplicate_event_dialog_spec_base):
-    pass
-# 
-#     def setUp(self):
-#         duplicate_event_dialog_spec_base.setUp(self)
-# 
+
+    def setUp(self):
+        duplicate_event_dialog_spec_base.setUp(self)
+
 #     def test_number_of_duplicates_should_be_1(self):
 #         self.view.set_count.assert_called_with(1)
 # 
