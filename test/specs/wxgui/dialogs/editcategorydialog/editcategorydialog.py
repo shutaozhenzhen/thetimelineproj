@@ -82,13 +82,8 @@ class describe_editing_a_new_category(EditCategoryDialogTestCase):
         EditCategoryDialogTestCase.setUp(self)
         self._initializeControllerWith(None)
 
-    def test_all_categories_in_db_are_listed_as_possible_parents(self):
-        self.view.SetCategoryTree.assert_called_with([
-            (self.bar, []),
-            (self.foo, [
-                (self.foofoo, [])
-            ])
-        ])
+    def test_categories_are_populated(self):
+        self.view.PopulateCategories.assert_called_with(exclude=None)
 
     def test_name_is_initialized_to_empty_string(self):
         self.view.SetName.assert_called_with("")
@@ -109,11 +104,8 @@ class describe_editing_an_existing_category(EditCategoryDialogTestCase):
         EditCategoryDialogTestCase.setUp(self)
         self._initializeControllerWith(self.foofoo)
 
-    def test_all_categories_in_db_except_the_one_being_edited_are_possible_parents(self):
-        self.view.SetCategoryTree.assert_called_with([
-            (self.bar, []),
-            (self.foo, [])
-        ])
+    def test_categories_are_populated(self):
+        self.view.PopulateCategories.assert_called_with(exclude=self.foofoo)
 
     def test_name_is_initialized_from_edited_category(self):
         self.view.SetName.assert_called_with("foofoo")
@@ -132,7 +124,7 @@ class describe_editing_a_category_and_db_raises_exception(EditCategoryDialogTest
 
     def setUp(self):
         EditCategoryDialogTestCase.setUp(self)
-        self.category_repository.get_tree.side_effect = TimelineIOError
+        self.view.PopulateCategories.side_effect = TimelineIOError
         self._initializeControllerWith(None)
 
     def test_error_is_handled_by_view(self):
