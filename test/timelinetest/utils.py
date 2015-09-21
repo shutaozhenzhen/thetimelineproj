@@ -322,3 +322,14 @@ class ObjectWithTruthValue(object):
 
     def __nonzero__(self):
         return self.truth_value
+
+
+def select_language(language):
+    import platform
+    from timelinelib.config.paths import LOCALE_DIR
+    from timelinelib.meta.about import APPLICATION_NAME
+    if platform.system() == "Windows":
+        import gettext
+        import os
+        os.environ['LANG'] = language
+        gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR, unicode=True)

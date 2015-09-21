@@ -21,8 +21,13 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialog import DuplicateEventDialog
 from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import DuplicateEventDialogController
 from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
+from timelinetest import UnitTestCase
 from timelinelib.data.db import MemoryDB
+from timelinetest.utils import create_dialog
+from timelinetest.utils import select_language
+
+
+select_language("sv")
 
 
 class describe_DuplicateEventDialog(UnitTestCase):
