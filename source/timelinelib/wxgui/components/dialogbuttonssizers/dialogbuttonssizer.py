@@ -28,7 +28,11 @@ class DialogButtonsSizer(wx.BoxSizer):
 
     def AddButtons(self, buttons, default):
         self.AddStretchSpacer()
-        for button in buttons:
-            self.Add(button, 0, wx.LEFT | wx.ALIGN_RIGHT, SMALL_BORDER)
+        for (index, button) in enumerate(buttons):
+            if index == 0:
+                border = 0
+            else:
+                border = wx.LEFT
+            self.Add(button, 0, border | wx.EXPAND, SMALL_BORDER)
         if default is not None:
             buttons[default].SetDefault()
