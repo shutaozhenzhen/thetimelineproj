@@ -44,9 +44,8 @@ class EditCategoryDialog(Dialog):
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(parent_text)" />
             <Choice name="parentlistbox" align="ALIGN_CENTER_VERTICAL" />
         </FlexGridSizer>
-        <StdDialogButtonSizer
-            buttons="OK|CANCEL"
-            border="BOTTOM"
+        <DialogButtonsOkCancelSizer
+            border="LEFT|BOTTOM|RIGHT"
             event_EVT_BUTTON="on_ok_clicked|ID_OK"
         />
     </BoxSizerVertical>
