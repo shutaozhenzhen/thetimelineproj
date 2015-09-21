@@ -30,7 +30,7 @@ class SetCategoryDialogController(Controller):
     def on_ok_clicked(self, event):
         category = self.view.GetSelectedCategory()
         if not self._category_is_given(category) and self.selected_event_ids == []:
-            display_error_message(_("You must select a category!"))
+            self.view.DisplayErrorMessage(_("You must select a category!"))
         else:
             self._save_category_in_events(category)
             self.view.EndModalOk()

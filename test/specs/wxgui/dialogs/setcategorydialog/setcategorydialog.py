@@ -91,3 +91,9 @@ class describe_set_category_dialog(UnitTestCase):
         self.view.EndModalOk.assert_called_with()
         self.assertEqual(self.event1.get_category(), self.category2)
         self.assertEqual(self.event2.get_category(), self.category2)
+
+    def test_displays_error_message_if_no_category_selected(self):
+        self.controller.on_init(self.db, [])
+        self.view.GetSelectedCategory.return_value = None
+        self.controller.on_ok_clicked(None)
+        self.view.DisplayErrorMessage.assert_called_with("#You must select a category!#")
