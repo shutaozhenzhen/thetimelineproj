@@ -21,8 +21,47 @@ from timelinelib.wxgui.framework import Controller
 
 class SetCategoryDialogController(Controller):
 
-    def on_init(self):
+    def on_init(self, db, selected_event_ids):
+        self.db = db
+        self.selected_event_ids = selected_event_ids
         self.view.PopulateCategories()
+        self._set_title()
 
     def on_ok_clicked(self, event):
-        pass
+        category = self.view.GetSelectedCategory()
+        if not self._category_is_given(category) and self.selected_event_ids == []:
+            display_error_message(_("You must select a category!"))
+        else:
+            self._save_category_in_events(category)
+            self.view.EndModalOk()
+
+    def _set_title(self):
+        if self.selected_event_ids == []:
+            self.view.SetTitle(_("Set Category on events without category"))
+        else:
+            self.view.SetTitle(_("Set Category on selected events"))
+
+    def _category_is_given(self, category):
+        return category is not None
+
+    def _save_category_in_events(self, category):
+        if self.selected_event_ids == []:
+            self._save_category_in_events_for_events_without_category(category)
+        else:
+            self._save_category_in_events_for_selected_events(category)
+
+    def _save_category_in_events_for_selected_events(self, category):
+        for event_id in self.selected_event_ids:
+            event = self.db.find_event_with_id(event_id)
+            event.set_category(category)
+
+    def _save_category_in_events_for_events_without_category(self, category):
+        for event in self.db.get_all_events():
+            if event.get_category() is None:
+                event.set_category(category)
+
+    def _events_without_category_exists(self):
+        for event in self.db.get_all_events():
+            if event.category is None:
+                return True
+        return False
