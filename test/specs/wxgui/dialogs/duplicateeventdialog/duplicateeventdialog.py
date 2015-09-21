@@ -22,6 +22,7 @@ from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialog import 
 from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import DuplicateEventDialogController
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
+from timelinelib.data.db import MemoryDB
 
 
 class describe_DuplicateEventDialog(UnitTestCase):
@@ -31,6 +32,6 @@ class describe_DuplicateEventDialog(UnitTestCase):
         self.controller = DuplicateEventDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(DuplicateEventDialog, None) as dialog:
+        with create_dialog(DuplicateEventDialog, None, MemoryDB()) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()

@@ -24,12 +24,38 @@ class DuplicateEventDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+
+        <BoxSizerHorizontal border="ALL" >
+            <StaticText label="$(nbr_of_duplicates_text)" />
+            <Spacer />
+            <SpinCtrl width="50" />
+        </BoxSizerHorizontal>
+
+        <RadioBox label="$(period_text)" name="rb_periods" choices="$(period_choices)" border="LEFT|RIGHT|BOTTOM" />
+
+        <BoxSizerHorizontal border="LEFT|RIGHT|BOTTOM" >
+            <StaticText label="$(frequency_text)" />
+            <Spacer />
+            <SpinCtrl width="50" />
+        </BoxSizerHorizontal>
+
+        <RadioBox label="$(direction_text)" name="rb_periods" choices="$(period_choices)" border="LEFT|RIGHT|BOTTOM" />
+
+        <DialogButtonsOkCancelSizer border="LEFT|RIGHT|BOTTOM" />
+
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, db):
+        self.db = db
+        move_period_config = db.get_time_type().get_duplicate_functions()
+        period_list = [label for (label, fn) in move_period_config]
         Dialog.__init__(self, DuplicateEventDialogController, parent, {
-            "test_text": "Hello World",
-        }, title=_("New dialog title"))
+            "nbr_of_duplicates_text": _("Number of duplicates:"),
+            "period_text": _("Period"),
+            "direction_text": _("Direction"),
+            "period_choices": period_list,
+            "frequency_text": _("Frequency:"),
+            "directions": [_("Forward"), _("Backward"), _("Both")],
+        }, title=_("Duplicate Event"))
         self.controller.on_init()
