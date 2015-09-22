@@ -71,5 +71,5 @@ class EditContainerDialog(Dialog):
     def DisplayDbException(self, e):
         gui_utils.handle_db_error_in_dialog(self, e)
 
-    def get_edited_container(self):
+    def GetEditedContainer(self):
         return self.controller.get_container()
