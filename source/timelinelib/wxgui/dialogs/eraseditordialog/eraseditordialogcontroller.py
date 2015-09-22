@@ -33,7 +33,11 @@ class ErasEditorDialogController(Controller):
         self.view.SetEras(self.eras)
 
     def on_edit(self, evt):
-        pass
+        era = self.view.GetSelectedEra()
+        dlg = EraEditorDialog(self.view, _("Edit an Era"), self.db.time_type, self.config, era)
+        if dlg.ShowModal() == wx.ID_OK:
+            self.view.UpdateEra(era)
+        dlg.Destroy()
 
     def on_add(self, evt):
         era = self._create_era()
