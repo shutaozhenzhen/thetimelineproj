@@ -18,7 +18,10 @@
 
 from mock import Mock
 
+from timelinelib.data.db import MemoryDB
+from timelinelib.data import Container
 from timelinelib.db import db_open
+from timelinelib.repositories.interface import EventRepository
 from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialogcontroller import EditContainerDialogController
 from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialog import EditContainerDialog
 from timelinetest import UnitTestCase
@@ -30,8 +33,39 @@ class describe_edit_container_dialog(UnitTestCase):
     def setUp(self):
         self.view = Mock(EditContainerDialog)
         self.controller = EditContainerDialogController(self.view)
+        self.event_repository = Mock(EventRepository)
+        self.db = MemoryDB()
+        start = self.time("2000-01-03 10:01:01")
+        end = self.time("2000-01-03 10:01:01")
+        self.container = Container(self.db.get_time_type(), start, end, "Container1")
 
     def test_it_can_be_created(self):
         with create_dialog(EditContainerDialog, None, "test title", db_open(":tutorial:")) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
+
+    def testConstructionWithoutContainer(self):
+        self.given_editor_without_container()
+        self.view.SetName.assert_called_with("")
+        self.view.SetCategory.assert_called_with(None)
+
+    def testConstructionWithContainer(self):
+        self.given_editor_with_container()
+        self.view.SetName.assert_called_with("Container1")
+        self.view.SetCategory.assert_called_with(None)
+
+    def testContainerCreated(self):
+        self.given_editor_without_container()
+        self.controller.on_ok_clicked(None)
+        self.view.GetName.assert_called()
+        self.view.GetCategory.assert_called()
+        self.assertFalse(self.controller.get_container() is None)
+
+    def given_editor_without_container(self):
+        self.controller.on_init(self.db, None)
+
+    def given_editor_with_container(self):
+        self.controller.on_init(self.db, self.container)
+
+    def time(self, tm):
+        return self.db.get_time_type().parse_time(tm)

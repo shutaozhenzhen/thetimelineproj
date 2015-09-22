@@ -18,6 +18,9 @@
 
 from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialogcontroller import EditContainerDialogController
 from timelinelib.wxgui.framework import Dialog
+from timelinelib.wxgui.utils import display_error_message
+from timelinelib.wxgui.utils import _set_focus_and_select
+import timelinelib.wxgui.utils as gui_utils
 
 
 class EditContainerDialog(Dialog):
@@ -43,8 +46,30 @@ class EditContainerDialog(Dialog):
             "name_text": _("Name:"),
             "category_text": _("Category:"),
         }, title=title)
-        self.controller.on_init()
+        self.controller.on_init(db, container)
 
     def PopulateCategories(self):
         self.category_choice.Populate()
         self.Fit()
+
+    def GetName(self):
+        return self.txt_name.GetValue().strip()
+
+    def SetName(self, name):
+        self.txt_name.SetValue(name)
+
+    def GetCategory(self):
+        return self.category_choice.GetSelectedCategory()
+
+    def SetCategory(self, category):
+        return self.category_choice.SetSelectedCategory(category)
+
+    def DisplayInvalidName(self, message):
+        display_error_message(message, self)
+        _set_focus_and_select(self.txt_name)
+
+    def DisplayDbException(self, e):
+        gui_utils.handle_db_error_in_dialog(self, e)
+
+    def get_edited_container(self):
+        return self.controller.get_container()
