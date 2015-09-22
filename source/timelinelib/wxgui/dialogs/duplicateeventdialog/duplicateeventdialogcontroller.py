@@ -35,9 +35,14 @@ class DuplicateEventDialogController(Controller):
         self.view.SetDirection(FORWARD)
         self.view.SelectMovePeriodFnAtIndex(0)
 
+    def on_ok(self, evt):
+        self.create_duplicates_and_save()
+
     def create_duplicates_and_save(self):
+        self.view.SetWaitCursor()
         events, nbr_of_missing_dates = self._create_duplicates()
         self._save_duplicates(events, nbr_of_missing_dates)
+        self.view.SetDefaultCursor()
 
     def _create_duplicates(self):
         if self.event.is_container():

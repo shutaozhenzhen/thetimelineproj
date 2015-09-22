@@ -21,6 +21,8 @@ import wx
 import timelinelib.wxgui.utils as gui_utils
 from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import DuplicateEventDialogController
 from timelinelib.wxgui.framework import Dialog
+from timelinelib.wxgui.utils import display_error_message
+from timelinelib.db.utils import safe_locking
 
 
 class DuplicateEventDialog(Dialog):
@@ -44,7 +46,8 @@ class DuplicateEventDialog(Dialog):
 
         <RadioBox label="$(direction_text)" name="rb_direction" choices="$(direction_choices)" border="LEFT|RIGHT|BOTTOM" />
 
-        <DialogButtonsOkCancelSizer border="LEFT|RIGHT|BOTTOM" />
+        <DialogButtonsOkCancelSizer border="LEFT|RIGHT|BOTTOM"
+            event_EVT_BUTTON="on_ok|ID_OK"/>
 
     </BoxSizerVertical>
     """
@@ -74,13 +77,13 @@ class DuplicateEventDialog(Dialog):
         self.sc_frequency.SetValue(frequency)
 
     def GetFrequency(self):
-        return self.sc_frequency.SetValue()
+        return self.sc_frequency.GetValue()
 
     def SetDirection(self, direction):
         self.rb_direction.SetSelection(direction)
 
     def GetDirection(self):
-        return self.rb_direction.SetSelection()
+        return self.rb_direction.GetSelection()
 
     def SelectMovePeriodFnAtIndex(self, index):
         self.rb_periods.SetSelection(index)
@@ -99,3 +102,18 @@ class DuplicateEventDialog(Dialog):
         display_error_message(
             _("%d Events not duplicated due to missing dates.")
             % error_count)
+
+    def SetWaitCursor(self):
+        gui_utils.set_wait_cursor(self)
+
+    def SetDefaultCursor(self):
+        gui_utils.set_default_cursor(self)
+
+
+def open_duplicate_event_dialog_for_event(parent, db, handle_db_error, event):
+    def create_dialog():
+        return DuplicateEventDialog(parent, db, event)
+
+    def edit_function():
+        gui_utils.show_modal(create_dialog, handle_db_error)
+    safe_locking(parent, edit_function)
