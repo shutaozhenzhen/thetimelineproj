@@ -39,26 +39,61 @@ class EditEventDialog(Dialog):
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(container_label)" />
                 <Button />
             </FlexGridSizer>
-            <Notebook name="notebook" style="BK_DEFAULT" border="LEFT|RIGHT|BOTTOM" proportion="1" />
+            <Notebook name="notebook" style="BK_DEFAULT" border="LEFT|RIGHT|BOTTOM" proportion="1">
+                <Page label="$(page_description)">
+                    <BoxSizerVertical>
+                        <DescriptionEditor editor="$(self)" proportion="1" />
+                    </BoxSizerVertical>
+                </Page>
+                <Page label="$(page_icon)">
+                    <BoxSizerVertical>
+                        <IconEditor editor="$(self)" proportion="1" />
+                    </BoxSizerVertical>
+                </Page>
+                <Page label="$(page_alert)">
+                    <BoxSizerVertical>
+                        <AlertEditor editor="$(self)" proportion="1" />
+                    </BoxSizerVertical>
+                </Page>
+                <Page label="$(page_hyperlink)">
+                    <BoxSizerVertical>
+                        <HyperlinkEditor editor="$(self)" proportion="1" />
+                    </BoxSizerVertical>
+                </Page>
+                <Page label="$(page_progress)">
+                    <BoxSizerVertical>
+                        <ProgressEditor editor="$(self)" proportion="1" />
+                    </BoxSizerVertical>
+                </Page>
+            </Notebook>
         </StaticBoxSizerVertical>
         <CheckBox label="$(add_more_label)" border="LEFT|RIGHT" />
         <DialogButtonsOkCancelSizer border="ALL" />
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent, db):
+    def __init__(self, parent, config, title, db, start=None, end=None, event=None):
+        self.timeline = db
+        self.config = config
+        self.start = start
+        self.event = event
         Dialog.__init__(self, EditEventDialogController, parent, {
+            "self": self,
             "db": db,
             "properties_label": _("Event Properties"),
             "when_label": _("When:"),
             "text_label": _("Text:"),
             "category_label": _("Category:"),
             "container_label": _("Container:"),
+            "page_description": _("Description"),
+            "page_icon": _("Icon"),
+            "page_alert": _("Alert"),
+            "page_hyperlink": _("Hyperlink"),
+            "page_progress": _("Progress"),
             "add_more_label": _("Add more events after this one"),
-        }, title=_("New dialog title"), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        }, title=title, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller.on_init()
-        self.notebook.AddPage(wx.Button(self.notebook), "haha")
-        self.notebook.AddPage(wx.Button(self.notebook), "hoho")
         self.category_choice.Populate()
+        self.SetMinSize((800, -1))
         self.Fit()
         self.SetMinSize(self.GetSize())

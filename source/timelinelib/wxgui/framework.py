@@ -76,6 +76,18 @@ class GuiCreator(object):
         box = wx.StaticBox(parent, **self._get_attributes(node))
         return self._populate_sizer(parent, node, wx.StaticBoxSizer(box, wx.VERTICAL))
 
+    def _create_Notebook(self, parent, node):
+        notebook = self._get_component_constructor(node)(parent, **self._get_attributes(node))
+        for page_node in node.getchildren():
+            assert page_node.tag == "Page"
+            panel = wx.Panel(notebook)
+            for child_node in page_node.getchildren():
+                child_component = self._create_from_node(panel, child_node)
+                if isinstance(child_component, wx.Sizer):
+                    panel.SetSizer(child_component)
+            notebook.AddPage(panel, self._get_variable_or_value(page_node.get("label", "")))
+        return notebook
+
     def _populate_sizer(self, parent, node, sizer):
         for child_node in node.getchildren():
             if child_node.tag == "Spacer":
