@@ -20,6 +20,9 @@ from mock import Mock
 
 from timelinelib.wxgui.dialogs.eraseditordialog.eraseditordialog import ErasEditorDialog
 from timelinelib.wxgui.dialogs.eraseditordialog.eraseditordialogcontroller import ErasEditorDialogController
+from timelinelib.data.db import MemoryDB
+from timelinelib.data.era import Era
+from timelinetest.utils import a_gregorian_era_with
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 
@@ -31,6 +34,11 @@ class describe_ErasEditorDialog(UnitTestCase):
         self.controller = ErasEditorDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(ErasEditorDialog, None) as dialog:
+        db = MemoryDB()
+        era1 = a_gregorian_era_with(start="1 Jan 2010", end="1 Jan 2020", name="Haha")
+        era2 = a_gregorian_era_with(start="1 Jan 2010", end="1 Jan 2020", name="Hej Hej")
+        db.save_era(era1)
+        db.save_era(era2)
+        with create_dialog(ErasEditorDialog, None, db, None) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
