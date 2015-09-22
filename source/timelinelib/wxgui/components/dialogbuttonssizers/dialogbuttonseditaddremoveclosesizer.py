@@ -32,3 +32,5 @@ class DialogButtonsEditAddRemoveCloseSizer(DialogButtonsSizer):
         self.buttons = (parent.btn_edit, parent.btn_add, parent.btn_remove, parent.btn_close)
         self.default = 3
         self.AddButtons(self.buttons, self.default)
+        parent.SetEscapeId(wx.ID_ANY)
+        parent.SetAffirmativeId(wx.ID_CLOSE)
