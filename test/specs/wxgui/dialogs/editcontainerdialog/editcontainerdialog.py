@@ -18,19 +18,20 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialog import EditContainerDialog
+from timelinelib.db import db_open
 from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialogcontroller import EditContainerDialogController
+from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialog import EditContainerDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 
 
-class describe_EditContainerDialog(UnitTestCase):
+class describe_edit_container_dialog(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(EditContainerDialog)
         self.controller = EditContainerDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(EditContainerDialog, None) as dialog:
+        with create_dialog(EditContainerDialog, None, "test title", db_open(":tutorial:")) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()

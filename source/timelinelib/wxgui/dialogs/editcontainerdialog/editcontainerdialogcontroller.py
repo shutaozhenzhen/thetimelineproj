@@ -22,4 +22,7 @@ from timelinelib.wxgui.framework import Controller
 class EditContainerDialogController(Controller):
 
     def on_init(self):
+        self.view.PopulateCategories()
+
+    def on_ok_clicked(self, event):
         pass
