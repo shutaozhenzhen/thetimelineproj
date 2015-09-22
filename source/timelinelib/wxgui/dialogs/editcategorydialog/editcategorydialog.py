@@ -42,7 +42,7 @@ class EditCategoryDialog(Dialog):
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(font_color_text)" />
             <ColourSelect name="fontcolorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(parent_text)" />
-            <CategoryChoice name="category_choice" timeline="$(db)" align="ALIGN_CENTER_VERTICAL" />
+            <CategoryChoice name="category_choice" allow_add="True" timeline="$(db)" align="ALIGN_CENTER_VERTICAL" />
         </FlexGridSizer>
         <DialogButtonsOkCancelSizer
             border="LEFT|BOTTOM|RIGHT"
