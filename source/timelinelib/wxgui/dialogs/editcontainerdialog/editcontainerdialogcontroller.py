@@ -23,6 +23,21 @@ from timelinelib.wxgui.framework import Controller
 
 class EditContainerDialogController(Controller):
 
+    """
+    This controller is responsible for two things:
+
+    1. creating a new Container event
+    2. updating properties of an existing Container event
+
+    When creating a new Container event the result is NOT stored in the
+    timeline database. This happens later when the first event added to the
+    container is saved to the database.
+
+    The reason for this behavior is that we don't want to have empty containers
+    in the database. When updating the properties of an existing Container
+    event the changes are stored in the timeline database.
+    """
+
     def on_init(self, db, container):
         self.view.PopulateCategories()
         self._set_initial_values_to_member_variables(db, container)
@@ -73,7 +88,6 @@ class EditContainerDialogController(Controller):
     def _save_to_db(self):
         try:
             DbWrapperEventRepository(self.db).save(self.container)
-            raise Exception()
         except Exception, ex:
             self.view.DisplayDbException(ex)
             raise ex

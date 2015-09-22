@@ -24,7 +24,7 @@ from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.components.feedbackbutton import FeedbackButton
-from timelinelib.wxgui.dialogs.eventeditor.containereditordialog import ContainerEditorDialog
+from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialog import EditContainerDialog
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialogcontroller import EventEditorDialogController
 from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.alerteditor import AlertEditor
 from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.descriptioneditor import DescriptionEditor
@@ -174,7 +174,7 @@ class EventEditorDialog(wx.Dialog):
     def _add_container(self):
 
         def create_container_editor():
-            return ContainerEditorDialog(self, _("Add Container"), self.timeline, None)
+            return EditContainerDialog(self, _("Add Container"), self.timeline, None)
 
         def handle_success(dialog):
             if dialog.GetReturnCode() == wx.ID_OK:
@@ -500,7 +500,7 @@ def open_event_editor_for(parent, config, db, handle_db_error, event):
     def create_event_editor():
         if event.is_container():
             title = _("Edit Container")
-            return ContainerEditorDialog(parent, title, db, event)
+            return EditContainerDialog(parent, title, db, event)
         else:
             return EventEditorDialog(
                 parent, config, _("Edit Event"), db, event=event)
