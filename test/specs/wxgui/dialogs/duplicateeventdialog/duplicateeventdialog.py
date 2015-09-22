@@ -28,9 +28,9 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.data import TimePeriod
 from timelinelib.calendar.gregorian import GregorianUtils
 from timelinelib.data import Event
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventcontroller import BACKWARD
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventcontroller import BOTH
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventcontroller import FORWARD
+from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import BACKWARD
+from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import BOTH
+from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import FORWARD
 from timelinelib.db.exceptions import TimelineIOError
 
 
