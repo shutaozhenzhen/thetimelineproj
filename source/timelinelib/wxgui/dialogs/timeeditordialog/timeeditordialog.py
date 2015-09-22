@@ -27,11 +27,11 @@ class TimeEditorDialog(Dialog):
     """
     <BoxSizerVertical>
         <CheckBox use="$(use_checkbox)" label="$(cb_text)" name="cbx_show_time"
-                  border="LEFT|TOP"
+                  border="ALL"
                   event_EVT_CHECKBOX="show_time_checkbox_on_checked" />
-        <TimePicker border="LEFT|RIGHT|TOP" name="time_picker"/>
+        <TimePicker border="LEFT|RIGHT|BOTTOM" name="time_picker"/>
         <DialogButtonsOkCancelSizer
-            border="BOTTOM|RIGHT|TOP"
+            border="BOTTOM|LEFT|RIGHT"
             event_EVT_BUTTON="ok_button_clicked|ID_OK"
         />
     </BoxSizerVertical>
