@@ -18,7 +18,6 @@
 
 import wx
 
-from timelinelib.data import sort_categories
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.repositories.dbwrapper import DbWrapperCategoryRepository
 from timelinelib.wxgui.dialogs.categoryeditors.categorieseditordialog import CategoriesEditor
@@ -35,13 +34,14 @@ class CategoryChoice(wx.Choice):
         self.allow_add = allow_add
         self.allow_edit = allow_edit
         self.Bind(wx.EVT_CHOICE, self._on_choice)
+        self._clear()
 
     def Populate(self, exclude=None, select=None):
+        self._clear()
         self.exclude = exclude
         try:
             tree = self.category_repository.get_tree(remove=exclude)
         except:
-            self.Clear()
             # We can not do error handling here since this method is also
             # called from the constructor (and then error handling is done by
             # the code calling the constructor).
@@ -49,7 +49,6 @@ class CategoryChoice(wx.Choice):
         else:
             self._populate_tree(tree)
             self.SetSelectedCategory(select)
-            self.current_category_selection = self.GetSelection()
 
     def GetSelectedCategory(self):
         if self.GetSelection() == wx.NOT_FOUND:
@@ -58,6 +57,14 @@ class CategoryChoice(wx.Choice):
 
     def SetSelectedCategory(self, category):
         self.SetSelection(self._get_index(category))
+        self.current_category_selection = self.GetSelection()
+
+    def _clear(self):
+        self.Clear()
+        self.add_category_item_index = None
+        self.edit_categoris_item_index = None
+        self.last_real_category_index = None
+        self.current_category_selection = self.GetSelection()
 
     def _get_index(self, category):
         for index in range(self.GetCount()):
@@ -66,10 +73,6 @@ class CategoryChoice(wx.Choice):
         return 0
 
     def _populate_tree(self, tree):
-        self.add_category_item_index = None
-        self.edit_categoris_item_index = None
-        self.last_real_category_index = None
-        self.Clear()
         self.Append("", None)
         self._append_tree(tree)
         self.last_real_category_index = self.GetCount() - 1
