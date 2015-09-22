@@ -127,12 +127,20 @@ class GuiCreator(object):
             attributes["style"] = self._get_or_value(node.get("style", None))
         for attribute in node.keys():
             if (attribute not in SPECIAL_ATTRIBUTES) and not attribute.startswith("event_"):
-                attributes[attribute] = self._get_variable_or_string(node.get(attribute))
+                attributes[attribute] = self._get_variable_or_value(node.get(attribute))
         return attributes
 
-    def _get_variable_or_string(self, text):
+    def _get_variable_or_value(self, text):
         if text.startswith("$(") and text.endswith(")"):
             return self._variables[text[2:-1]]
+        else:
+            return self._get_value(text)
+
+    def _get_value(self, text):
+        if text == "True":
+            return True
+        elif text == "False":
+            return False
         else:
             return text
 
