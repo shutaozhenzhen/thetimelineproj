@@ -179,7 +179,7 @@ class EventEditorDialog(wx.Dialog):
         def handle_success(dialog):
             if dialog.GetReturnCode() == wx.ID_OK:
                 try:
-                    self._fill_containers_listbox(dialog.get_edited_container())
+                    self._fill_containers_listbox(dialog.GetEditedContainer())
                 except TimelineIOError, e:
                     gui_utils.handle_db_error_in_dialog(self, e)
 
