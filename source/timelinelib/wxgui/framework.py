@@ -78,14 +78,10 @@ class GuiCreator(object):
 
     def _create_Notebook(self, parent, node):
         notebook = self._get_component_constructor(node)(parent, **self._get_attributes(node))
-        for page_node in node.getchildren():
-            assert page_node.tag == "Page"
-            panel = wx.Panel(notebook)
-            for child_node in page_node.getchildren():
-                child_component = self._create_from_node(panel, child_node)
-                if isinstance(child_component, wx.Sizer):
-                    panel.SetSizer(child_component)
-            notebook.AddPage(panel, self._get_variable_or_value(page_node.get("label", "")))
+        for child_node in node.getchildren():
+            child_component = self._create_from_node(notebook, child_node)
+            label = self._get_variable_or_value(child_node.get("notebookLabel", ""))
+            notebook.AddPage(child_component, label)
         return notebook
 
     def _populate_sizer(self, parent, node, sizer):
@@ -123,6 +119,7 @@ class GuiCreator(object):
     def _get_attributes(self, node):
         SPECIAL_ATTRIBUTES = [
             "use",
+            "notebookLabel",
             # Standard wx
             "width", "height",
             "style",

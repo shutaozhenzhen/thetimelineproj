@@ -40,31 +40,11 @@ class EditEventDialog(Dialog):
                 <Button />
             </FlexGridSizer>
             <Notebook name="notebook" style="BK_DEFAULT" border="LEFT|RIGHT|BOTTOM" proportion="1">
-                <Page label="$(page_description)">
-                    <BoxSizerVertical>
-                        <DescriptionEditor editor="$(self)" proportion="1" />
-                    </BoxSizerVertical>
-                </Page>
-                <Page label="$(page_icon)">
-                    <BoxSizerVertical>
-                        <IconEditor editor="$(self)" proportion="1" />
-                    </BoxSizerVertical>
-                </Page>
-                <Page label="$(page_alert)">
-                    <BoxSizerVertical>
-                        <AlertEditor editor="$(self)" proportion="1" />
-                    </BoxSizerVertical>
-                </Page>
-                <Page label="$(page_hyperlink)">
-                    <BoxSizerVertical>
-                        <HyperlinkEditor editor="$(self)" proportion="1" />
-                    </BoxSizerVertical>
-                </Page>
-                <Page label="$(page_progress)">
-                    <BoxSizerVertical>
-                        <ProgressEditor editor="$(self)" proportion="1" />
-                    </BoxSizerVertical>
-                </Page>
+                <DescriptionEditor notebookLabel="$(page_description)" editor="$(self)" proportion="1" />
+                <IconEditor notebookLabel="$(page_icon)" editor="$(self)" proportion="1" />
+                <AlertEditor notebookLabel="$(page_alert)" editor="$(self)" proportion="1" />
+                <HyperlinkEditor notebookLabel="$(page_hyperlink)" editor="$(self)" proportion="1" />
+                <ProgressEditor notebookLabel="$(page_progress)" editor="$(self)" proportion="1" />
             </Notebook>
         </StaticBoxSizerVertical>
         <CheckBox label="$(add_more_label)" border="LEFT|RIGHT" />
