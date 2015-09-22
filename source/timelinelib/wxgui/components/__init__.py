@@ -23,3 +23,8 @@ from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsokcancelsizer
 from timelinelib.wxgui.components.feedbacktext import FeedbackText
 from timelinelib.wxgui.components.filechooser import FileChooser
 from timelinelib.wxgui.components.header import Header
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.alerteditor import AlertEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.descriptioneditor import DescriptionEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.hyperlinkeditor import HyperlinkEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.iconeditor import IconEditor
+from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.progresseditor import ProgressEditor
