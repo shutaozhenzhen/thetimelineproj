@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.plugin import factory
 from timelinelib.wxgui.components.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateventdialog import open_duplicate_event_dialog_for_event
+from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialog import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_create_event_editor
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_event_editor_for
 from timelinelib.wxgui.utils import _ask_question
