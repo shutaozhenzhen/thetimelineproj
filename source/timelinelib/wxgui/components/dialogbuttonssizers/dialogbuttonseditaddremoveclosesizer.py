@@ -18,21 +18,17 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.eraseditordialog.eraseditordialogcontroller import ErasEditorDialogController
-from timelinelib.wxgui.framework import Dialog
+from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonssizer import DialogButtonsSizer
 
 
-class ErasEditorDialog(Dialog):
-
-    """
-    <BoxSizerVertical>
-        <ListBox border="ALL" proportion="1" height="250" />
-        <DialogButtonsEditAddRemoveCloseSizer border="LEFT|RIGHT|BOTTOM" />
-    </BoxSizerVertical>
-    """
+class DialogButtonsEditAddRemoveCloseSizer(DialogButtonsSizer):
 
     def __init__(self, parent):
-        Dialog.__init__(self, ErasEditorDialogController, parent, {
-            "test_text": "Hello World",
-        }, title=_("Edit Era's"), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
-        self.controller.on_init()
+        DialogButtonsSizer.__init__(self, parent)
+        parent.btn_edit = wx.Button(parent, wx.ID_EDIT)
+        parent.btn_add = wx.Button(parent, wx.ID_ADD)
+        parent.btn_remove = wx.Button(parent, wx.ID_REMOVE)
+        parent.btn_close = wx.Button(parent, wx.ID_CLOSE)
+        self.buttons = (parent.btn_edit, parent.btn_add, parent.btn_remove, parent.btn_close)
+        self.default = 3
+        self.AddButtons(self.buttons, self.default)
