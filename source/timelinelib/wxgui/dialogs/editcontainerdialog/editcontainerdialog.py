@@ -24,12 +24,27 @@ class EditContainerDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+        <FlexGridSizer columns="2" growableColumns="1" proportion="1" border="ALL">
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(name_text)" />
+            <TextCtrl name="txt_name" width="150" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_text)" />
+            <CategoryChoice name="category_choice" allow_add="True" timeline="$(db)" align="ALIGN_CENTER_VERTICAL" />
+        </FlexGridSizer>
+        <DialogButtonsOkCancelSizer
+            border="LEFT|BOTTOM|RIGHT"
+            event_EVT_BUTTON="on_ok_clicked|ID_OK"
+        />
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, title, db, container=None):
         Dialog.__init__(self, EditContainerDialogController, parent, {
-            "test_text": "Hello World",
-        }, title=_("New dialog title"))
+            "db": db,
+            "name_text": _("Name:"),
+            "category_text": _("Category:"),
+        }, title=title)
         self.controller.on_init()
+
+    def PopulateCategories(self):
+        self.category_choice.Populate()
+        self.Fit()
