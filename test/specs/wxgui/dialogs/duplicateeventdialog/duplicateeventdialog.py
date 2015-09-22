@@ -86,6 +86,76 @@ class describe_DuplicateEventDialog(UnitTestCase):
         self.assertTrue(self.view.Close.assert_called)
 
     #
+    # when_saving_duplicated_event_fails
+    #
+    def test_the_failure_is_handled(self):
+        self.db.save_events.side_effect = TimelineIOError
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        self.assertTrue(self.view.HandleDbError.called)
+
+    def test_the_dialog_is_not_closed(self):
+        self.db.save_events.side_effect = TimelineIOError
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        self.assertFalse(self.view.Close.called)
+
+    #
+    # when_event_can_not_be_duplicated
+    #
+    def test_None_period_failure_is_handled(self):
+        self.move_period_fn.return_value = None
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        self.view.HandleDateErrors.assert_called_with(1)
+
+    def test_the_dialog_is_closed(self):
+        self.move_period_fn.return_value = None
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        self.assertTrue(self.view.Close.called)
+
+    #
+    # a_diloag_with_different_settings
+    #
+    def _assert_move_period_called_with(self, num_list):
+        self.assertEqual(
+            [((self.event.get_time_period(), num), {}) for num in num_list],
+            self.move_period_fn.call_args_list)
+
+    def test_count_1_freq_1_direction_forward(self):
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        self._assert_move_period_called_with([1])
+
+    def test_count_1_freq_1_direction_backward(self):
+        self._duplicate_with(count=1, freq=1, direction=BACKWARD)
+        self._assert_move_period_called_with([-1])
+
+    def test_count_1_freq_1_direction_both(self):
+        self._duplicate_with(count=1, freq=1, direction=BOTH)
+        self._assert_move_period_called_with([-1, 1])
+ 
+    def test_count_2_freq_1_direction_forward(self):
+        self._duplicate_with(count=2, freq=1, direction=FORWARD)
+        self._assert_move_period_called_with([1, 2])
+
+    def test_count_2_freq_1_direction_backward(self):
+        self._duplicate_with(count=2, freq=1, direction=BACKWARD)
+        self._assert_move_period_called_with([-2, -1])
+
+    def test_count_2_freq_1_direction_both(self):
+        self._duplicate_with(count=2, freq=1, direction=BOTH)
+        self._assert_move_period_called_with([-2, -1, 1, 2])
+
+    def test_count_1_freq_2_direction_forward(self):
+        self._duplicate_with(count=1, freq=2, direction=FORWARD)
+        self._assert_move_period_called_with([2])
+
+    def test_count_1_freq_2_direction_backward(self):
+        self._duplicate_with(count=1, freq=2, direction=BACKWARD)
+        self._assert_move_period_called_with([-2])
+
+    def test_count_1_freq_2_direction_both(self):
+        self._duplicate_with(count=1, freq=2, direction=BOTH)
+        self._assert_move_period_called_with([-2, 2])
+
+    #
     # Setup
     #
     def setUp(self):
@@ -115,101 +185,3 @@ class describe_DuplicateEventDialog(UnitTestCase):
         self.view.GetFrequency.return_value = freq
         self.view.GetDirection.return_value = direction
         self.controller.create_duplicates_and_save()
-
-
-class duplicate_event_dialog_spec_base(UnitTestCase):
-
-    def setUp(self):
-        self.controller = DuplicateEventDialogController(
-            self._create_view_mock(),
-            self._create_db_mock(),
-            self._create_event())
-
-    def _create_move_period_fn_mock(self):
-        self.move_period_fn = Mock()
-        self.move_period_fn.return_value = TimePeriod(
-            GregorianTimeType(),
-            GregorianUtils.from_date(2010, 8, 1).to_time(),
-            GregorianUtils.from_date(2010, 8, 1).to_time())
-        return self.move_period_fn
-
-    def _duplicate_with(self, count, freq, direction):
-        self.view.get_count.return_value = count
-        self.view.get_frequency.return_value = freq
-        self.view.get_direction.return_value = direction
-        self.controller.create_duplicates_and_save()
-
-
-class when_saving_duplicated_event_fails(duplicate_event_dialog_spec_base):
-    pass
-# 
-#     def setUp(self):
-#         duplicate_event_dialog_spec_base.setUp(self)
-#         self.db.save_events.side_effect = TimelineIOError
-#         self._duplicate_with(count=1, freq=1, direction=FORWARD)
-# 
-#     def test_the_failure_is_handled(self):
-#         self.assertTrue(self.view.handle_db_error.called)
-# 
-#     def test_the_dialog_is_not_closed(self):
-#         self.assertFalse(self.view.close.called)
-
-
-class when_event_can_not_be_duplicated(duplicate_event_dialog_spec_base):
-    pass
-# 
-#     def setUp(self):
-#         duplicate_event_dialog_spec_base.setUp(self)
-#         self.move_period_fn.return_value = None
-#         self._duplicate_with(count=1, freq=1, direction=FORWARD)
-# 
-#     def test_the_failure_is_handled(self):
-#         self.view.handle_date_errors.assert_called_with(1)
-# 
-#     def test_the_dialog_is_closed(self):
-#         self.assertTrue(self.view.close.called)
-
-
-class a_diloag_with_different_settings(duplicate_event_dialog_spec_base):
-    pass
-# 
-#     def _assert_move_period_called_with(self, num_list):
-#         self.assertEqual(
-#             [((self.event.get_time_period(), num), {}) for num in num_list],
-#             self.move_period_fn.call_args_list)
-# 
-#     def test_count_1_freq_1_direction_forward(self):
-#         self._duplicate_with(count=1, freq=1, direction=FORWARD)
-#         self._assert_move_period_called_with([1])
-# 
-#     def test_count_1_freq_1_direction_backward(self):
-#         self._duplicate_with(count=1, freq=1, direction=BACKWARD)
-#         self._assert_move_period_called_with([-1])
-# 
-#     def test_count_1_freq_1_direction_both(self):
-#         self._duplicate_with(count=1, freq=1, direction=BOTH)
-#         self._assert_move_period_called_with([-1, 1])
-# 
-#     def test_count_2_freq_1_direction_forward(self):
-#         self._duplicate_with(count=2, freq=1, direction=FORWARD)
-#         self._assert_move_period_called_with([1, 2])
-# 
-#     def test_count_2_freq_1_direction_backward(self):
-#         self._duplicate_with(count=2, freq=1, direction=BACKWARD)
-#         self._assert_move_period_called_with([-2, -1])
-# 
-#     def test_count_2_freq_1_direction_both(self):
-#         self._duplicate_with(count=2, freq=1, direction=BOTH)
-#         self._assert_move_period_called_with([-2, -1, 1, 2])
-# 
-#     def test_count_1_freq_2_direction_forward(self):
-#         self._duplicate_with(count=1, freq=2, direction=FORWARD)
-#         self._assert_move_period_called_with([2])
-# 
-#     def test_count_1_freq_2_direction_backward(self):
-#         self._duplicate_with(count=1, freq=2, direction=BACKWARD)
-#         self._assert_move_period_called_with([-2])
-# 
-#     def test_count_1_freq_2_direction_both(self):
-#         self._duplicate_with(count=1, freq=2, direction=BOTH)
-#         self._assert_move_period_called_with([-2, 2])
