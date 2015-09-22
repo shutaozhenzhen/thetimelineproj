@@ -16,6 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
+import timelinelib.wxgui.utils as gui_utils
 from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import DuplicateEventDialogController
 from timelinelib.wxgui.framework import Dialog
 
@@ -89,3 +92,10 @@ class DuplicateEventDialog(Dialog):
     def Close(self):
         self.EndModal(wx.ID_OK)
 
+    def HandleDbError(self, e):
+        gui_utils.handle_db_error_in_dialog(self, e)
+
+    def HandleDateErrors(self, error_count):
+        display_error_message(
+            _("%d Events not duplicated due to missing dates.")
+            % error_count)

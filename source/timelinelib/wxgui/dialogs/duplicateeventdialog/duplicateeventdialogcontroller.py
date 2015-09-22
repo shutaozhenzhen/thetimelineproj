@@ -85,10 +85,10 @@ class DuplicateEventDialogController(Controller):
         try:
             self.db.save_events(events)
             if nbr_of_missing_dates > 0:
-                self.view.handle_date_errors(nbr_of_missing_dates)
+                self.view.HandleDateErrors(nbr_of_missing_dates)
             self.view.Close()
         except TimelineIOError, e:
-            self.view.handle_db_error(e)
+            self.view.HandleDbError(e)
 
     def _repeat_container_period(self, event):
         period = self.event.get_time_period()
