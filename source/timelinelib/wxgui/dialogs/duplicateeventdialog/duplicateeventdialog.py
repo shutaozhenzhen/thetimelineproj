@@ -36,17 +36,17 @@ class DuplicateEventDialog(Dialog):
         <BoxSizerHorizontal border="LEFT|RIGHT|BOTTOM" >
             <StaticText label="$(frequency_text)" />
             <Spacer />
-            <SpinCtrl width="50" />
+            <SpinCtrl width="50" name="sc_frequency" />
         </BoxSizerHorizontal>
 
-        <RadioBox label="$(direction_text)" name="rb_periods" choices="$(period_choices)" border="LEFT|RIGHT|BOTTOM" />
+        <RadioBox label="$(direction_text)" name="rb_direction" choices="$(direction_choices)" border="LEFT|RIGHT|BOTTOM" />
 
         <DialogButtonsOkCancelSizer border="LEFT|RIGHT|BOTTOM" />
 
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent, db):
+    def __init__(self, parent, db, event):
         self.db = db
         self. move_period_config = db.get_time_type().get_duplicate_functions()
         period_list = [label for (label, fn) in self.move_period_config]
@@ -56,11 +56,36 @@ class DuplicateEventDialog(Dialog):
             "direction_text": _("Direction"),
             "period_choices": period_list,
             "frequency_text": _("Frequency:"),
-            "directions": [_("Forward"), _("Backward"), _("Both")],
+            "direction_choices": [_("Forward"), _("Backward"), _("Both")],
         }, title=_("Duplicate Event"))
-        self.controller.on_init()
+        self.controller.on_init(db, event)
         self.sc_nbr_of_duplicates.SetSelection(-1, -1)
+
+    def SetCount(self, count):
+        self.sc_nbr_of_duplicates.SetValue(count)
+
+    def GetCount(self):
+        return self.sc_nbr_of_duplicates.GetValue()
+
+    def SetFrequency(self, frequency):
+        self.sc_frequency.SetValue(frequency)
+
+    def GetFrequency(self):
+        return self.sc_frequency.SetValue()
+
+    def SetDirection(self, direction):
+        self.rb_direction.SetSelection(direction)
+
+    def GetDirection(self):
+        return self.rb_direction.SetSelection()
+
+    def SelectMovePeriodFnAtIndex(self, index):
+        self.rb_periods.SetSelection(index)
 
     def GetMovePeriodFn(self):
         move_period_fns = [fn for (_, fn) in self.move_period_config]
         return move_period_fns[self.rb_periods.GetSelection()]
+
+    def Close(self):
+        self.EndModal(wx.ID_OK)
+
