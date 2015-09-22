@@ -25,11 +25,10 @@ import wx
 
 from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.factory import EXPORTER
-#from timelinelib.wxgui.dialogs.export.exportdialog import ExportDialog
-from timelinelib.wxgui.dialogs.exportdialog.exportdialog import ExportDialog 
 from timelinelib.wxgui.utils import WildcardHelper
 from timelinelib.wxgui.utils import _ask_question
-from timelinelib.wxgui.dialogs.export.exportcontroller import CSV_FILE
+from timelinelib.wxgui.dialogs.exportdialog.exportdialogcontroller import CSV_FILE
+from timelinelib.wxgui.dialogs.exportdialog.exportdialog import ExportDialog
 
 
 class TimelineExporter(PluginBase):
