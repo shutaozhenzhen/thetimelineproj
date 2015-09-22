@@ -39,14 +39,82 @@ from timelinelib.db.exceptions import TimelineIOError
 
 class describe_DuplicateEventDialog(UnitTestCase):
 
-    def setUp(self):
-        self.view = Mock(DuplicateEventDialog)
-        self.controller = DuplicateEventDialogController(self.view)
-
+    #
+    # Construction
+    #
     def test_it_can_be_created(self):
-        with create_dialog(DuplicateEventDialog, None, MemoryDB()) as dialog:
+        with create_dialog(DuplicateEventDialog, None, MemoryDB(), None) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
+
+    def test_number_of_duplicates_should_be_1(self):
+        self.view.SetCount.assert_called_with(1)
+
+    def test_first_period_should_be_selected(self):
+        self.view.SelectMovePeriodFnAtIndex.assert_called_with(0)
+
+    def test_frequency_should_be_one(self):
+        self.view.SetFrequency.assert_called_with(1)
+
+    def test_direction_should_be_forward(self):
+        self.view.SetDirection.assert_called_with(FORWARD)
+
+    #
+    # when_duplicating_event_with_default_settings
+    #
+    def test_one_new_event_is_saved(self):
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        self.assertEqual(1, self.db.save_events.call_count)
+
+    def test_the_new_event_gets_period_from_move_period_fn(self):
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        new_events = self.db.save_events.call_args[0][0]
+        new_period = new_events[0].get_time_period()
+        expected_period = TimePeriod(
+            GregorianTimeType(),
+            GregorianUtils.from_date(2010, 8, 1).to_time(),
+            GregorianUtils.from_date(2010, 8, 1).to_time())
+        self.assertEqual(expected_period, new_period)
+
+    def test_the_new_event_should_not_be_the_same_as_the_existing(self):
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        new_events = self.db.save_events.call_args[0][0]
+        self.assertNotEquals(self.event, new_events[0])
+
+    def test_the_dialog_should_close(self):
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        self.assertTrue(self.view.Close.assert_called)
+
+    #
+    # Setup
+    #
+    def setUp(self):
+        self.db = Mock(MemoryDB)
+        self.db.get_time_type.return_value = GregorianTimeType()
+        self.view = Mock(DuplicateEventDialog)
+        self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
+        self.event = Event(
+            self.db.get_time_type(),
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
+            "foo",
+            category=None)
+        self.controller = DuplicateEventDialogController(self.view)
+        self.controller.on_init(self.db, self.event)
+
+    def _create_move_period_fn_mock(self):
+        self.move_period_fn = Mock()
+        self.move_period_fn.return_value = TimePeriod(
+            GregorianTimeType(),
+            GregorianUtils.from_date(2010, 8, 1).to_time(),
+            GregorianUtils.from_date(2010, 8, 1).to_time())
+        return self.move_period_fn
+
+    def _duplicate_with(self, count, freq, direction):
+        self.view.GetCount.return_value = count
+        self.view.GetFrequency.return_value = freq
+        self.view.GetDirection.return_value = direction
+        self.controller.create_duplicates_and_save()
 
 
 class duplicate_event_dialog_spec_base(UnitTestCase):
@@ -57,83 +125,19 @@ class duplicate_event_dialog_spec_base(UnitTestCase):
             self._create_db_mock(),
             self._create_event())
 
-    def _create_view_mock(self):
-        self.view = Mock(DuplicateEventDialog)
-        self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
-        return self.view
+    def _create_move_period_fn_mock(self):
+        self.move_period_fn = Mock()
+        self.move_period_fn.return_value = TimePeriod(
+            GregorianTimeType(),
+            GregorianUtils.from_date(2010, 8, 1).to_time(),
+            GregorianUtils.from_date(2010, 8, 1).to_time())
+        return self.move_period_fn
 
-    def _create_db_mock(self):
-        self.db = Mock(MemoryDB)
-        self.db.get_time_type.return_value = GregorianTimeType()
-        return self.db
-
-    def _create_event(self):
-        self.event = Event(
-            self.db.get_time_type(),
-            GregorianUtils.from_date(2010, 1, 1).to_time(),
-            GregorianUtils.from_date(2010, 1, 1).to_time(),
-            "foo",
-            category=None)
-        return self.event
- 
-#     def _create_move_period_fn_mock(self):
-#         self.move_period_fn = Mock()
-#         self.move_period_fn.return_value = TimePeriod(
-#             GregorianTimeType(),
-#             GregorianUtils.from_date(2010, 8, 1).to_time(),
-#             GregorianUtils.from_date(2010, 8, 1).to_time())
-#         return self.move_period_fn
-# 
-#     def _duplicate_with(self, count, freq, direction):
-#         self.view.get_count.return_value = count
-#         self.view.get_frequency.return_value = freq
-#         self.view.get_direction.return_value = direction
-#         self.controller.create_duplicates_and_save()
-
-
-class a_newly_initialized_dialog(duplicate_event_dialog_spec_base):
-
-    def setUp(self):
-        duplicate_event_dialog_spec_base.setUp(self)
-
-#     def test_number_of_duplicates_should_be_1(self):
-#         self.view.set_count.assert_called_with(1)
-# 
-#     def test_first_period_should_be_selected(self):
-#         self.view.select_move_period_fn_at_index.assert_called_with(0)
-# 
-#     def test_frequency_should_be_one(self):
-#         self.view.set_frequency.assert_called_with(1)
-# 
-#     def test_direction_should_be_forward(self):
-#         self.view.set_direction.assert_called_with(FORWARD)
-
-
-class when_duplicating_event_with_default_settings(duplicate_event_dialog_spec_base):
-    pass
-# 
-#     def setUp(self):
-#         duplicate_event_dialog_spec_base.setUp(self)
-#         self._duplicate_with(count=1, freq=1, direction=FORWARD)
-# 
-#     def test_one_new_event_is_saved(self):
-#         self.assertEqual(1, self.db.save_events.call_count)
-# 
-#     def test_the_new_event_gets_period_from_move_period_fn(self):
-#         new_events = self.db.save_events.call_args[0][0]
-#         new_period = new_events[0].get_time_period()
-#         expected_period = TimePeriod(
-#             GregorianTimeType(),
-#             GregorianUtils.from_date(2010, 8, 1).to_time(),
-#             GregorianUtils.from_date(2010, 8, 1).to_time())
-#         self.assertEqual(expected_period, new_period)
-# 
-#     def test_the_new_event_should_not_be_the_same_as_the_existing(self):
-#         new_events = self.db.save_events.call_args[0][0]
-#         self.assertNotEquals(self.event, new_events[0])
-# 
-#     def test_the_dialog_should_close(self):
-#         self.assertTrue(self.view.close.assert_called)
+    def _duplicate_with(self, count, freq, direction):
+        self.view.get_count.return_value = count
+        self.view.get_frequency.return_value = freq
+        self.view.get_direction.return_value = direction
+        self.controller.create_duplicates_and_save()
 
 
 class when_saving_duplicated_event_fails(duplicate_event_dialog_spec_base):
