@@ -17,9 +17,32 @@
 
 
 from timelinelib.wxgui.framework import Controller
+from timelinelib.proxies.sidebar import SidebarProxy
 
 
 class CategoryFinderDialogController(Controller):
 
-    def on_init(self, db):
+    def on_init(self, db, mainframe):
         self.db = db
+        self.mainframe = mainframe
+        self.view.SetCategories(self._get_categories_names())
+
+    def on_char(self, evt):
+        target = self.view.GetTarget()
+        self.view.SetCategories(self._get_categories_names())
+
+    def on_check(self, evt):
+        SidebarProxy(self.mainframe).check_categories(self._get_categories())
+
+    def on_uncheck(self, evt):
+        SidebarProxy(self.mainframe).uncheck_categories(self._get_categories())
+
+    def _get_categories_names(self):
+        target = self.view.GetTarget()
+        return sorted([category.name for category in self.db.get_categories()
+                      if category.name.upper().startswith(target.upper())])
+
+    def _get_categories(self):
+        target = self.view.GetTarget()
+        return sorted([category for category in self.db.get_categories()
+                      if category.name.upper().startswith(target.upper())])

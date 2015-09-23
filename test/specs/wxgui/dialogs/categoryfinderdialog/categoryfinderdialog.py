@@ -20,15 +20,21 @@ from mock import Mock
 
 from timelinelib.wxgui.dialogs.categoryfinderdialog.categoryfinderdialog import CategoryFinderDialog
 from timelinelib.wxgui.dialogs.categoryfinderdialog.categoryfinderdialogcontroller import CategoryFinderDialogController
+from timelinelib.wxgui.dialogs.mainframe.mainframe import MainFrame
 from timelinelib.data.db import MemoryDB
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
+from timelinetest.utils import a_category_with
 
 
 class describe_CategoryFinderDialog(UnitTestCase):
 
     def setUp(self):
+        self.mainframe = Mock(MainFrame)
         self.db = Mock(MemoryDB)
+        self.db.get_categories.return_value = [a_category_with("Aaaa"),
+                                               a_category_with("Abc"),
+                                               a_category_with("xxx")]
         self.view = Mock(CategoryFinderDialog)
         self.controller = CategoryFinderDialogController(self.view)
 
