@@ -24,5 +24,5 @@ class EventListDialogController(Controller):
     def on_init(self):
         pass
 
-    def on_ok(self):
+    def on_ok(self, evt):
         self.view.Close()

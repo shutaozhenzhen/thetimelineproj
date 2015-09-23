@@ -21,7 +21,7 @@ import os.path
 import wx
 
 from timelinelib.config.paths import ICONS_DIR
-from timelinelib.wxgui.dialogs.eventlist.eventlistdialog import EventListDialog
+from timelinelib.wxgui.dialogs.eventlistdialog.eventlistdialog import EventListDialog
 
 
 class GuiCreator(object):
@@ -145,7 +145,7 @@ class SearchBarController(object):
         event_list = [event.get_label() for event in self.result]
         dlg = EventListDialog(self.view, event_list)
         if dlg.ShowModal() == wx.ID_OK:
-            self.result_index = dlg.get_selected_index()
+            self.result_index = dlg.GetSelectedIndex()
             self.navigate_to_match()
         dlg.Destroy()
 
