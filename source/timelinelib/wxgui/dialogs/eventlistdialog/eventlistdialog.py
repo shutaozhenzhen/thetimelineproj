@@ -29,6 +29,7 @@ class EventListDialog(Dialog):
 
         <ListBox proportion="1" border="ALL" width="300"
             choices="$(event_list)"
+            name="lb_events"
             event_EVT_LISTBOX_DCLICK="on_ok"
         />
 
@@ -44,6 +45,11 @@ class EventListDialog(Dialog):
             "event_list": event_list
         }, title=_("Found Events"), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller.on_init()
+        if len(event_list) > 0:
+            self.lb_events.SetSelection(0)
+
+    def GetSelectedIndex(self):
+        return self.lb_events.GetSelection()
 
     def Close(self):
         self.EndModal(wx.ID_OK)
