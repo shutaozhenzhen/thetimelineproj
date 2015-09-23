@@ -20,6 +20,7 @@ from mock import Mock
 
 from timelinelib.wxgui.dialogs.categoryfinderdialog.categoryfinderdialog import CategoryFinderDialog
 from timelinelib.wxgui.dialogs.categoryfinderdialog.categoryfinderdialogcontroller import CategoryFinderDialogController
+from timelinelib.data.db import MemoryDB
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 
@@ -27,10 +28,11 @@ from timelinetest.utils import create_dialog
 class describe_CategoryFinderDialog(UnitTestCase):
 
     def setUp(self):
+        self.db = Mock(MemoryDB)
         self.view = Mock(CategoryFinderDialog)
         self.controller = CategoryFinderDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(CategoryFinderDialog, None) as dialog:
+        with create_dialog(CategoryFinderDialog, None, self.db) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()

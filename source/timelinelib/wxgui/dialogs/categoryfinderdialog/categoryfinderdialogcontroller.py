@@ -21,5 +21,5 @@ from timelinelib.wxgui.framework import Controller
 
 class CategoryFinderDialogController(Controller):
 
-    def on_init(self):
-        pass
+    def on_init(self, db):
+        self.db = db

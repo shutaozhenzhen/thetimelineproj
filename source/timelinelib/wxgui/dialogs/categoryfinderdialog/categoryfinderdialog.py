@@ -32,8 +32,8 @@ class CategoryFinderDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, db):
         Dialog.__init__(self, CategoryFinderDialogController, parent, {
             "test_text": "Hello World",
         }, title=_("Category Finder"), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
-        self.controller.on_init()
+        self.controller.on_init(db)
