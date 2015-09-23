@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.wxgui.dialogs.categoryfinderdialog.categoryfinderdialogcontroller import CategoryFinderDialogController
 from timelinelib.wxgui.framework import Dialog
 
@@ -31,5 +33,5 @@ class CategoryFinderDialog(Dialog):
     def __init__(self, parent):
         Dialog.__init__(self, CategoryFinderDialogController, parent, {
             "test_text": "Hello World",
-        }, title=_("New dialog title"))
+        }, title=_("Category Finder"), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller.on_init()
