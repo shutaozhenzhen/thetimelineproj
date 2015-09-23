@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.wxgui.dialogs.eventlistdialog.eventlistdialogcontroller import EventListDialogController
 from timelinelib.wxgui.framework import Dialog
 
@@ -24,12 +26,24 @@ class EventListDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+
+        <ListBox proportion="1" border="ALL" width="300"
+            choices="$(event_list)"
+            event_EVT_LISTBOX_DCLICK="on_ok"
+        />
+
+        <DialogButtonsOkCancelSizer border="LEFT|RIGHT|BOTTOM"
+            event_EVT_BUTTON__ID_OK="on_ok"
+        />
+
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, event_list):
         Dialog.__init__(self, EventListDialogController, parent, {
-            "test_text": "Hello World",
-        }, title=_("New dialog title"))
+            "event_list": event_list
+        }, title=_("Found Events"), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller.on_init()
+
+    def Close(self):
+        self.EndModal(wx.ID_OK)

@@ -31,6 +31,7 @@ class describe_EventListDialog(UnitTestCase):
         self.controller = EventListDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(EventListDialog, None) as dialog:
+        event_list = ["foo", "bar"]
+        with create_dialog(EventListDialog, None, event_list) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
