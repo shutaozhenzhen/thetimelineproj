@@ -37,7 +37,8 @@ class ShortcutsEditorDialog(Dialog):
         </FlexGridSizer>
         <DialogButtonsApplyCloseSizer
             border="LEFT|BOTTOM|RIGHT"
-            event_EVT_BUTTON="on_apply_clicked|ID_APPLY"/>
+            event_EVT_BUTTON__ID_APPLY="on_apply_clicked"
+        />
     </BoxSizerVertical>
     """
 

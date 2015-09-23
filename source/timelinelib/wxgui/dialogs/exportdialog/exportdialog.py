@@ -47,8 +47,10 @@ class ExportDialog(Dialog):
             </FlexGridSizer>
         </StaticBoxSizerVertical>
 
-        <DialogButtonsOkCancelSizer border="LEFT|RIGHT|BOTTOM"
-            event_EVT_BUTTON="on_ok|ID_OK" />
+        <DialogButtonsOkCancelSizer
+            border="LEFT|RIGHT|BOTTOM"
+            event_EVT_BUTTON__ID_OK="on_ok"
+        />
     </BoxSizerVertical>
     """
 

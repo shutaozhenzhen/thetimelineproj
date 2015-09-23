@@ -26,13 +26,12 @@ class ErasEditorDialog(Dialog):
 
     """
     <BoxSizerVertical>
-
         <ListBox name="lb_eras" border="ALL" proportion="1" height="250"
-            event_EVT_LISTBOX_DCLICK="on_dclick" />
-
+            event_EVT_LISTBOX_DCLICK="on_dclick"
+        />
         <DialogButtonsEditAddRemoveCloseSizer border="LEFT|RIGHT|BOTTOM"
-            event_EVT_BUTTON="on_add|ID_ADD"
-             />
+            event_EVT_BUTTON__ID_ADD="on_add"
+        />
     </BoxSizerVertical>
     """
 
