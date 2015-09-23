@@ -31,6 +31,8 @@ class ErasEditorDialog(Dialog):
         />
         <DialogButtonsEditAddRemoveCloseSizer border="LEFT|RIGHT|BOTTOM"
             event_EVT_BUTTON__ID_ADD="on_add"
+            event_EVT_BUTTON__ID_REMOVE="on_remove"
+            event_EVT_BUTTON__ID_EDIT="on_edit"
         />
     </BoxSizerVertical>
     """
@@ -39,8 +41,6 @@ class ErasEditorDialog(Dialog):
         Dialog.__init__(self, ErasEditorDialogController, parent, {},
                         title=_("Edit Era's"), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller.on_init(db, config)
-        self.Bind(wx.EVT_BUTTON, self.controller.on_remove, id=wx.ID_REMOVE)
-        self.Bind(wx.EVT_BUTTON, self.controller.on_edit, id=wx.ID_EDIT)
 
     def SetEras(self, eras):
         for era in eras:

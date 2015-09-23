@@ -21,6 +21,7 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.eraseditordialog.eraseditordialog import ErasEditorDialog
 from timelinelib.wxgui.dialogs.eraseditordialog.eraseditordialogcontroller import ErasEditorDialogController
 from timelinelib.data.db import MemoryDB
+from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinetest.utils import a_gregorian_era_with
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
@@ -55,6 +56,7 @@ class describe_ErasEditorDialog(UnitTestCase):
                 a_gregorian_era_with(start="1 Jan 2010", end="1 Jan 2020", name="Hey Hey")]
         self.db = Mock(MemoryDB)
         self.db.get_all_eras.return_value = eras
+        self.db.time_type = GregorianTimeType()
         self.view = Mock(ErasEditorDialog)
         self.controller = ErasEditorDialogController(self.view)
         self.controller.on_init(self.db, None)
