@@ -21,12 +21,23 @@ import wx
 from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonssizer import DialogButtonsSizer
 
 
+try:
+    getattr(wx, "ID_CHECK")
+except:
+    wx.ID_CHECK = wx.NewId()
+
+try:
+    getattr(wx, "ID_UNCHECK")
+except:
+    wx.ID_UNCHECK = wx.NewId()
+
+
 class DialogButtonsCheckUncheckCloseSizer(DialogButtonsSizer):
 
     def __init__(self, parent):
         DialogButtonsSizer.__init__(self, parent)
-        parent.btn_check = wx.Button(parent, wx.ID_ANY, label=_("Check"))
-        parent.btn_uncheck = wx.Button(parent, wx.ID_ANY, label=_("Unheck"))
+        parent.btn_check = wx.Button(parent, wx.ID_CHECK, label=_("Check"))
+        parent.btn_uncheck = wx.Button(parent, wx.ID_UNCHECK, label=_("Unheck"))
         parent.btn_close = wx.Button(parent, wx.ID_CLOSE)
         self.buttons = (parent.btn_check, parent.btn_uncheck, parent.btn_close)
         self.default = 2
