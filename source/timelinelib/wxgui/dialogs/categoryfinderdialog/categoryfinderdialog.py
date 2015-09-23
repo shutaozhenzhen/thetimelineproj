@@ -32,7 +32,10 @@ class CategoryFinderDialog(Dialog):
 
         <ListBox name="lst_categories" border="LEFT|RIGHT|BOTTOM" height="250" proportion="1" />
 
-        <DialogButtonsCheckUncheckCloseSizer border="LEFT|RIGHT|BOTTOM" />
+        <DialogButtonsCheckUncheckCloseSizer border="LEFT|RIGHT|BOTTOM"
+            event_EVT_BUTTON__ID_CHECK="on_check"
+            event_EVT_BUTTON__ID_UNCHECK="on_uncheck"
+        />
 
     </BoxSizerVertical>
     """
@@ -42,8 +45,6 @@ class CategoryFinderDialog(Dialog):
             "test_text": "Hello World",
         }, title=_("Category Finder"), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller.on_init(db, parent)
-        self.Bind(wx.EVT_BUTTON, self.controller.on_check, self.btn_check)
-        self.Bind(wx.EVT_BUTTON, self.controller.on_uncheck, self.btn_uncheck)
 
     def GetTarget(self):
         return self.txt_target.GetValue()
