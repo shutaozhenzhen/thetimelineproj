@@ -25,8 +25,10 @@ from timelinelib.wxgui.framework import Dialog
 class CategoryFinderDialog(Dialog):
 
     """
-    <BoxSizerVertical>
-        <Button label="$(test_text)" />
+    <BoxSizerVertical >
+        <TextCtrl border="ALL" width="250" />
+        <ListBox  border="LEFT|RIGHT|BOTTOM" height="250" proportion="1" />
+        <DialogButtonsCheckUncheckCloseSizer border="LEFT|RIGHT|BOTTOM" />
     </BoxSizerVertical>
     """
 
