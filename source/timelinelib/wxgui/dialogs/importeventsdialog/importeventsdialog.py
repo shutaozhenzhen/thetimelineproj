@@ -43,7 +43,7 @@ class ImportEventsDialog(Dialog):
         />
         <DialogButtonsOkCancelSizer
             border="LEFT|BOTTOM|RIGHT"
-            event_EVT_BUTTON="on_ok_clicked|ID_OK"
+            event_EVT_BUTTON__ID_OK="on_ok_clicked"
         />
     </BoxSizerVertical>
     """

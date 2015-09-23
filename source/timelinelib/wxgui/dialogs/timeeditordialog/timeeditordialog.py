@@ -32,7 +32,7 @@ class TimeEditorDialog(Dialog):
         <TimePicker border="LEFT|RIGHT|BOTTOM" name="time_picker"/>
         <DialogButtonsOkCancelSizer
             border="BOTTOM|LEFT|RIGHT"
-            event_EVT_BUTTON="ok_button_clicked|ID_OK"
+            event_EVT_BUTTON__ID_OK="ok_button_clicked"
         />
     </BoxSizerVertical>
     """

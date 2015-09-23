@@ -169,19 +169,20 @@ class GuiCreator(object):
     def _bind_events(self, node, component):
         for key in node.keys():
             if key.startswith("event_"):
-                event_name = key[6:]
-                wxid = None
-                target_name = node.get(key)
-                if "|" in target_name:
-                    target_name, wxid = target_name.split("|", 1)
-                target = getattr(self.controller, target_name)
-                if wxid:
-                    self.Bind(getattr(wx, event_name), target, id=getattr(wx, wxid))
-                else:
-                    try:
-                        component.Bind(getattr(component, event_name), target)
-                    except AttributeError:
-                        self.Bind(getattr(wx, event_name), target, component)
+                self._bind_event(key[6:], node.get(key), component)
+
+    def _bind_event(self, event_name, target_name, component):
+        wxid = None
+        if "__" in event_name:
+            (event_name, wxid) = event_name.split("__")
+        target = getattr(self.controller, target_name)
+        if wxid:
+            self.Bind(getattr(wx, event_name), target, id=getattr(wx, wxid))
+        else:
+            try:
+                component.Bind(getattr(component, event_name), target)
+            except AttributeError:
+                self.Bind(getattr(wx, event_name), target, component)
 
 
 class Dialog(wx.Dialog, GuiCreator):

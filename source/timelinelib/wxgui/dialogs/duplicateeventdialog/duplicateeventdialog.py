@@ -46,8 +46,10 @@ class DuplicateEventDialog(Dialog):
 
         <RadioBox label="$(direction_text)" name="rb_direction" choices="$(direction_choices)" border="LEFT|RIGHT|BOTTOM" />
 
-        <DialogButtonsOkCancelSizer border="LEFT|RIGHT|BOTTOM"
-            event_EVT_BUTTON="on_ok|ID_OK"/>
+        <DialogButtonsOkCancelSizer
+            border="LEFT|RIGHT|BOTTOM"
+            event_EVT_BUTTON__ID_OK="on_ok"
+        />
 
     </BoxSizerVertical>
     """
