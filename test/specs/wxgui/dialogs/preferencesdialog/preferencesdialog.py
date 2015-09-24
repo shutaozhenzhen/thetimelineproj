@@ -105,10 +105,12 @@ class describe_preferences_dialog(UnitTestCase):
     def test_set_experimental_features_on_change(self):
         self.controller.on_init(self.config, self.experimental_features)
         event = Mock(wx.CommandEvent)
-        event.GetString.return_value = sentinel.NAME
+        mock_object = Mock()
+        mock_object.GetLabel.return_value = sentinel.NAME
+        event.GetEventObject.return_value = mock_object
         event.IsChecked.return_value = sentinel.VALUE
         self.controller.on_experimental_changed(event)
-        self.experimental_features._set_active_state_on_feature_by_name.assert_called_with(sentinel.NAME, sentinel.VALUE)
+        self.experimental_features.set_active_state_on_feature_by_name.assert_called_with(sentinel.NAME, sentinel.VALUE)
 
 
 def event_is_checked(value):
