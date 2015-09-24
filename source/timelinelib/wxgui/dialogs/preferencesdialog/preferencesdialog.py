@@ -108,8 +108,7 @@ class PreferencesDialog(Dialog):
             "edit_text": _("Edit"),
             "experimental_text": _("Experimental Features"),
         }, title=_("Preferences"))
-        self.controller.on_init(config)
-        self._add_experimental_checkboxes()
+        self.controller.on_init(config, ExperimentalFeatures())
 
     def SetCheckboxOpenRecent(self, value):
         self.open_recent.SetValue(value)
@@ -126,11 +125,11 @@ class PreferencesDialog(Dialog):
     def SetWeekStart(self, value):
         self.week_start.Select(value)
 
-    def _add_experimental_checkboxes(self):
-        features = ExperimentalFeatures().get_all_features()
+    def AddExperimentalFeatures(self, features):
         for feature in features:
             name = feature.get_display_name()
             cb = wx.CheckBox(self.experimental_panel, label=name)
             cb.SetValue(feature.enabled())
             self.experimental_panel_sizer.Add(cb)
+            self.Bind(wx.EVT_CHECKBOX, self.controller.on_experimental_changed, cb)
         self.Fit()

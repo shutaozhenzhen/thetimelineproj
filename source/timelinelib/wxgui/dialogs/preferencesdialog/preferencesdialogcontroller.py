@@ -21,14 +21,16 @@ from timelinelib.wxgui.framework import Controller
 
 class PreferencesDialogController(Controller):
 
-    def on_init(self, config):
+    def on_init(self, config, experimental_features):
         self.config = config
+        self.experimental_features = experimental_features
         self.weeks_map = ((0, "monday"), (1, "sunday"))
         self.view.SetCheckboxOpenRecent(config.get_open_recent_at_startup())
         self.view.SetCheckboxInertialScrolling(config.get_use_inertial_scrolling())
         self.view.SetCheckboxPeriodPoint(config.get_never_show_period_events_as_point_events())
         self.view.SetCheckboxCenterText(config.get_center_event_texts())
         self.view.SetWeekStart(self._week_index(config.get_week_start()))
+        self.view.AddExperimentalFeatures(self.experimental_features.get_all_features())
 
     def on_open_recent_change(self, event):
         self.config.set_open_recent_at_startup(event.IsChecked())
@@ -44,6 +46,11 @@ class PreferencesDialogController(Controller):
 
     def on_week_start_changed(self, event):
         self.config.set_week_start(self._index_week(event.GetSelection()))
+
+    def on_experimental_changed(self, event):
+        self.experimental_features._set_active_state_on_feature_by_name(
+            event.GetString(), event.IsChecked())
+        self.config.experimental_features = str(self.experimental_features)
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:
