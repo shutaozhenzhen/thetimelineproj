@@ -24,12 +24,14 @@ class FeatureDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+        <StaticText label="$(feature_text)" width="600" border="ALL" />
+        <TextCtrl height="200" style = "TE_MULTILINE|TE_READONLY|TE_RICH|TE_AUTO_URL" border="LEFT|RIGHT|BOTTOM" />
+        <DialogButtonsGiveFeatureCloseSizer border="LEFT|RIGHT|BOTTOM" />
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, feature_text):
         Dialog.__init__(self, FeatureDialogController, parent, {
-            "test_text": "Hello World",
-        }, title=_("New dialog title"))
+            "feature_text": feature_text,
+        }, title=_("Feedback On Feature"))
         self.controller.on_init()
