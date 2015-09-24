@@ -108,7 +108,7 @@ class FeatureDialog(FeatureDialogGui):
         self.body_text.SetValue(text)
 
 
-def show_feature_feedback_dialog(feature, parent=None):
+def ___show_feature_feedback_dialog(feature, parent=None):
     dialog = FeatureDialog(parent)
     dialog.controller.populate(feature)
     dialog.ShowModal()
