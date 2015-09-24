@@ -26,9 +26,9 @@ class TextDisplayDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <TextCtrl style="TE_MULTILINE" width="660" height="300" border="ALL" />
+        <TextCtrl name="text" style="TE_MULTILINE" width="660" height="300" border="ALL" />
         <BoxSizerHorizontal border="LEFT|BOTTOM|RIGHT">
-            <Button id="$(id_copy)" border="RIGHT" />
+            <Button id="$(id_copy)" border="RIGHT" event_EVT_BUTTON="on_copy_click" />
             <StretchSpacer />
             <DialogButtonsCloseSizer />
         </BoxSizerHorizontal>
@@ -40,3 +40,9 @@ class TextDisplayDialog(Dialog):
             "id_copy": wx.ID_COPY,
         }, title=title)
         self.controller.on_init(text)
+
+    def GetText(self):
+        return self.text.GetValue()
+
+    def SetText(self, text):
+        self.text.SetValue(text)
