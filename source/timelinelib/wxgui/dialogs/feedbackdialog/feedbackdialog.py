@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialogcontroller import FeedbackDialogController
 from timelinelib.wxgui.framework import Dialog
 
@@ -24,12 +26,35 @@ class FeedbackDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+        <StaticText name="info" border="LEFT|TOP|RIGHT" />
+        <FlexGridSizer columns="2" growableColumns="1" growableRows="2" proportion="1" border="ALL">
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(to_text)" />
+            <TextCtrl style="TE_READONLY" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(subject_text)" />
+            <TextCtrl />
+            <StaticText align="ALIGN_TOP" label="$(body_text)" />
+            <TextCtrl height="200" style="TE_MULTILINE" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(send_with_text)" />
+            <BoxSizerHorizontal>
+                <Button label="$(default_button_text)" borderType="SMALL" border="RIGHT" />
+                <Button label="$(gmail_button_text)" borderType="SMALL" border="RIGHT" />
+                <Button label="$(other_button_text)" border="RIGHT" />
+                <StretchSpacer />
+                <DialogButtonsCloseSizer />
+            </BoxSizerHorizontal>
+        </FlexGridSizer>
     </BoxSizerVertical>
     """
 
     def __init__(self, parent):
         Dialog.__init__(self, FeedbackDialogController, parent, {
-            "test_text": "Hello World",
-        }, title=_("New dialog title"))
+            "title_text": _("Email Feedback"),
+            "to_text": _("To:"),
+            "subject_text": _("Subject:"),
+            "body_text": _("Body:"),
+            "send_with_text": _("Send With:"),
+            "default_button_text": _("Default client"),
+            "gmail_button_text": _("Gmail"),
+            "other_button_text": _("Other"),
+        }, title=_("Email Feedback"))
         self.controller.on_init()
