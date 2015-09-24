@@ -21,5 +21,38 @@ from timelinelib.wxgui.framework import Controller
 
 class PreferencesDialogController(Controller):
 
-    def on_init(self):
-        pass
+    def on_init(self, config):
+        self.config = config
+        self.weeks_map = ((0, "monday"), (1, "sunday"))
+        self.view.SetCheckboxOpenRecent(config.get_open_recent_at_startup())
+        self.view.SetCheckboxInertialScrolling(config.get_use_inertial_scrolling())
+        self.view.SetCheckboxPeriodPoint(config.get_never_show_period_events_as_point_events())
+        self.view.SetCheckboxCenterText(config.get_center_event_texts())
+        self.view.SetWeekStart(self._week_index(config.get_week_start()))
+
+    def on_open_recent_change(self, event):
+        self.config.set_open_recent_at_startup(event.IsChecked())
+
+    def on_inertial_scrolling_changed(self, event):
+        self.config.set_use_inertial_scrolling(event.IsChecked())
+
+    def on_period_point_changed(self, event):
+        self.config.set_never_show_period_events_as_point_events(event.IsChecked())
+
+    def on_center_changed(self, event):
+        self.config.set_center_event_texts(event.IsChecked())
+
+    def on_week_start_changed(self, event):
+        self.config.set_week_start(self._index_week(event.GetSelection()))
+
+    def _week_index(self, week):
+        for (i, w) in self.weeks_map:
+            if w == week:
+                return i
+        raise ValueError("Unknown week '%s'." % week)
+
+    def _index_week(self, index):
+        for (i, w) in self.weeks_map:
+            if i == index:
+                return w
+        raise ValueError("Unknown week index '%s'." % index)
