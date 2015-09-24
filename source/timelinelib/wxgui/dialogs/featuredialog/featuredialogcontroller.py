@@ -23,3 +23,6 @@ class FeatureDialogController(Controller):
 
     def on_init(self):
         pass
+
+    def on_give_feature(self, evt):
+        print "Give Feedback"
