@@ -55,7 +55,7 @@ from timelinelib.wxgui.dialogs.helpbrowser.helpbrowserframe import HelpBrowser
 from timelinelib.wxgui.dialogs.importeventsdialog.importeventsdialog import ImportEventsDialog
 from timelinelib.wxgui.dialogs.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.dialogs.nowdateeditor.nowdateeditordialog import NowDateEditorDialog
-from timelinelib.wxgui.dialogs.preferences.preferencesdialog import PreferencesDialog
+from timelinelib.wxgui.dialogs.preferencesdialog.preferencesdialog import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialog import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditordialog.shortcutseditordialog import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.textdisplaydialog.textdisplaydialog import TextDisplayDialog
