@@ -21,8 +21,9 @@ import xml.etree.ElementTree
 
 import wx
 
-from timelinelib.wxgui.utils import time_picker_for
 from timelinelib.wxgui.utils import display_error_message
+from timelinelib.wxgui.utils import display_information_message
+from timelinelib.wxgui.utils import time_picker_for
 import timelinelib.wxgui.components
 
 
@@ -207,6 +208,9 @@ class Dialog(wx.Dialog, GuiCreator):
 
     def DisplayErrorMessage(self, message):
         display_error_message(message, parent=self)
+
+    def DisplayInformationMessage(self, caption, message):
+        display_information_message(caption, message, parent=self)
 
 
 class Controller(object):
