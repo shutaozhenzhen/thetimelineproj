@@ -29,7 +29,7 @@ class TimeEditorDialog(Dialog):
         <CheckBox use="$(use_checkbox)" label="$(cb_text)" name="cbx_show_time"
                   border="ALL"
                   event_EVT_CHECKBOX="show_time_checkbox_on_checked" />
-        <TimePicker border="LEFT|RIGHT|BOTTOM" name="time_picker"/>
+        <TimePicker time_type="$(time_type)" config="$(config)" border="LEFT|RIGHT|BOTTOM" name="time_picker"/>
         <DialogButtonsOkCancelSizer
             border="BOTTOM|LEFT|RIGHT"
             event_EVT_BUTTON__ID_OK="ok_button_clicked"
@@ -38,13 +38,13 @@ class TimeEditorDialog(Dialog):
     """
 
     def __init__(self, parent, config, time_type, time, title):
-        self.time_type = time_type
-        self.config = config  # Used by Dialog to create the TimePickerControl
         Dialog.__init__(self, TimeEditorDialogController, parent, {
             "cb_text": _("Show time"),
-            "use_checkbox": self.time_type.is_date_time_type()
+            "use_checkbox": time_type.is_date_time_type(),
+            "time_type": time_type,
+            "config": config,
         }, title=title)
-        self.controller.on_init(self.time_type, time)
+        self.controller.on_init(time_type, time)
 
     def SetTime(self, time):
         self.time_picker.set_value(time)

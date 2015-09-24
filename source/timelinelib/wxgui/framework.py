@@ -23,7 +23,6 @@ import wx
 
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
-from timelinelib.wxgui.utils import time_picker_for
 import timelinelib.wxgui.components
 
 
@@ -55,9 +54,6 @@ class GuiCreator(object):
         if node.get("name", None):
             setattr(self, node.get("name"), component)
         return component
-
-    def _create_TimePicker(self, parent, node):
-        return time_picker_for(self.time_type)(self, config=self.config)
 
     def _create_BoxSizerVertical(self, parent, node):
         return self._populate_sizer(parent, node, wx.BoxSizer(wx.VERTICAL))
