@@ -21,12 +21,18 @@ import wx
 from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonssizer import DialogButtonsSizer
 
 
+try:
+    getattr(wx, "ID_GIVE_FEEDBACK")
+except:
+    wx.ID_GIVE_FEEDBACK = wx.NewId()
+
+
 class DialogButtonsGiveFeatureCloseSizer(DialogButtonsSizer):
 
     def __init__(self, parent):
         self.parent = parent
         DialogButtonsSizer.__init__(self, parent)
-        parent.btn_give_feature = wx.Button(parent, wx.ID_ANY, _("Give Feature"))
+        parent.btn_give_feature = wx.Button(parent, wx.ID_GIVE_FEEDBACK, _("Give Feedback"))
         parent.btn_close = wx.Button(parent, wx.ID_CLOSE)
         self.buttons = (parent.btn_give_feature, parent.btn_close)
         self.default = len(self.buttons) - 1
