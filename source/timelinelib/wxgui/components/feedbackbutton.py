@@ -21,7 +21,7 @@ import os.path
 import wx
 
 from timelinelib.config.paths import ICONS_DIR
-from timelinelib.wxgui.dialogs.feedback.feedbackdialog import show_feedback_dialog
+from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialog import show_feedback_dialog
 
 
 class FeedbackButton(wx.BitmapButton):

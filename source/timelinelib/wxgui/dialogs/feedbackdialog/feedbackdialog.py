@@ -85,3 +85,9 @@ class FeedbackDialog(Dialog):
 
     def SelectAllBodyText(self):
         self.body_text.SelectAll()
+
+
+def show_feedback_dialog(info, subject, body, parent=None):
+    dialog = FeedbackDialog(parent, info, subject, body)
+    dialog.ShowModal()
+    dialog.Destroy()
