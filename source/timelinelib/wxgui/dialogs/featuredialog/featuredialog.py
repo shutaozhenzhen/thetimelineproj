@@ -26,22 +26,26 @@ class FeatureDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <StaticText name="feature_text" label="$(feature_text)" width="600" border="ALL" />
-        <TextCtrl height="200" style = "TE_MULTILINE|TE_READONLY|TE_RICH|TE_AUTO_URL" border="LEFT|RIGHT|BOTTOM" />
+        <StaticText name="feature_name" label="" width="600" border="ALL" />
+        <TextCtrl name="feature_description" height="200" style = "TE_MULTILINE|TE_READONLY|TE_RICH|TE_AUTO_URL" border="LEFT|RIGHT|BOTTOM" />
         <DialogButtonsGiveFeatureCloseSizer border="LEFT|RIGHT|BOTTOM"
-            event_EVT_BUTTON__ID_GIVE_FEEDBACK="on_give_feature"
+            event_EVT_BUTTON__ID_GIVE_FEEDBACK="on_give_feedback"
         />
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent, feature_text):
-        Dialog.__init__(self, FeatureDialogController, parent, {
-            "feature_text": feature_text,
-        }, title=_("Feedback On Feature"))
+    def __init__(self, parent, feature):
+        Dialog.__init__(self, FeatureDialogController, parent, {}, title=_("Feedback On Feature"))
         self._make_info_label_bold()
-        self.controller.on_init()
+        self.controller.on_init(feature)
+
+    def SetFeatureName(self, name):
+        self.feature_name.SetLabel(name)
+
+    def SetFeatureDescription(self, description):
+        self.feature_description.SetValue(description)
 
     def _make_info_label_bold(self):
-        font = self.feature_text.GetFont()
+        font = self.feature_name.GetFont()
         font.SetWeight(wx.BOLD)
-        self.feature_text.SetFont(font)
+        self.feature_name.SetFont(font)
