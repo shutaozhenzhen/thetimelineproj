@@ -16,10 +16,23 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.wxgui.framework import Controller
 
 
 class TextDisplayDialogController(Controller):
 
     def on_init(self, text):
-        pass
+        self.view.SetText(text)
+
+    def on_copy_click(self, event):
+        if wx.TheClipboard.Open():
+            self._copy_text_to_clipboard()
+        else:
+            self.view.DisplayErrorMessage(_("Unable to copy to clipboard."))
+
+    def _copy_text_to_clipboard(self):
+        obj = wx.TextDataObject(self.view.GetText())
+        wx.TheClipboard.SetData(obj)
+        wx.TheClipboard.Close()

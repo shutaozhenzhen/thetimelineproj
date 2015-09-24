@@ -34,3 +34,7 @@ class describe_text_display_dialog(UnitTestCase):
         with create_dialog(TextDisplayDialog, "title", "text", None) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
+
+    def test_set_text_on_init(self):
+        self.controller.on_init("hello world")
+        self.view.SetText.assert_called_with("hello world")
