@@ -21,5 +21,5 @@ from timelinelib.wxgui.framework import Controller
 
 class TextDisplayDialogController(Controller):
 
-    def on_init(self):
+    def on_init(self, text):
         pass

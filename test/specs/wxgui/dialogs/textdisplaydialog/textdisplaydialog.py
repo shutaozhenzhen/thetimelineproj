@@ -24,13 +24,13 @@ from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 
 
-class describe_TextDisplayDialog(UnitTestCase):
+class describe_text_display_dialog(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(TextDisplayDialog)
         self.controller = TextDisplayDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(TextDisplayDialog, None) as dialog:
+        with create_dialog(TextDisplayDialog, "title", "text", None) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
