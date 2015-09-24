@@ -29,8 +29,11 @@ class describe_FeatureDialog(UnitTestCase):
     def setUp(self):
         self.view = Mock(FeatureDialog)
         self.controller = FeatureDialogController(self.view)
+        self.feature = Mock()
+        self.feature.get_display_name.return_value = "Feature display name"
+        self.feature.get_description.return_value = "Feature description"
 
     def test_it_can_be_created(self):
-        with create_dialog(FeatureDialog, None, "Feature text test") as dialog:
+        with create_dialog(FeatureDialog, None, self.feature) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()

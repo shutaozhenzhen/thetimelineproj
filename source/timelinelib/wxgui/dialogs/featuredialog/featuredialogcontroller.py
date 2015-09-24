@@ -17,12 +17,15 @@
 
 
 from timelinelib.wxgui.framework import Controller
+from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialog import show_feedback_dialog
 
 
 class FeatureDialogController(Controller):
 
-    def on_init(self):
-        pass
+    def on_init(self, feature):
+        self.feature = feature
+        self.view.SetFeatureName(feature.get_display_name())
+        self.view.SetFeatureDescription(feature.get_description())
 
-    def on_give_feature(self, evt):
-        print "Give Feedback"
+    def on_give_feedback(self, evt):
+        show_feedback_dialog("", self.feature.get_display_name(), "")
