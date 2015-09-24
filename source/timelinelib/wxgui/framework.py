@@ -70,6 +70,8 @@ class GuiCreator(object):
         sizer = wx.FlexGridSizer(rows, columns, SMALL_BORDER, SMALL_BORDER)
         for column_string in self._get_comma_int_list(node.get("growableColumns")):
             sizer.AddGrowableCol(int(column_string))
+        for row_string in self._get_comma_int_list(node.get("growableRows")):
+            sizer.AddGrowableRow(int(row_string))
         return self._populate_sizer(parent, node, sizer)
 
     def _create_StaticBoxSizerVertical(self, parent, node):
@@ -88,6 +90,8 @@ class GuiCreator(object):
         for child_node in node.getchildren():
             if child_node.tag == "Spacer":
                 sizer.AddSpacer(int(child_node.get("size", SMALL_BORDER)))
+            elif child_node.tag == "StretchSpacer":
+                sizer.AddStretchSpacer()
             else:
                 component = self._create_from_node(parent, child_node)
                 if component:
@@ -96,9 +100,13 @@ class GuiCreator(object):
                         align = self._get_or_value(child_node.get("align", ""))
                     else:
                         align = wx.EXPAND
+                    if child_node.get("borderType") == "SMALL":
+                        borderType = SMALL_BORDER
+                    else:
+                        borderType = BORDER
                     sizer.Add(component,
                               flag=border|align,
-                              border=BORDER,
+                              border=borderType,
                               proportion=int(child_node.get("proportion", "0")))
         return sizer
 
@@ -125,6 +133,7 @@ class GuiCreator(object):
             "style",
             # Spacer attributes
             "border",
+            "borderType",
             "proportion",
             "align",
         ]
