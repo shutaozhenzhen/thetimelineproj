@@ -84,6 +84,7 @@ class GuiCreator(object):
 
     def _btn_close_on_click(self, e):
         self.Show(False)
+        self.GetParent().Layout()
 
     def _search_on_search_btn(self, e):
         self.controller.search()
