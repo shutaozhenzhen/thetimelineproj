@@ -19,6 +19,7 @@
 import wx
 
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
+from timelinelib.wxgui.components.font import edit_font_data
 from timelinelib.wxgui.dialogs.eventeditor.eventeditortabselectiondialog import SelectTabOrderDialog
 from timelinelib.wxgui.dialogs.preferencesdialog.preferencesdialogcontroller import PreferencesDialogController
 from timelinelib.wxgui.framework import Dialog
@@ -76,11 +77,20 @@ class PreferencesDialog(Dialog):
                 <BoxSizerVertical>
                     <FlexGridSizer columns="2" border="ALL">
                         <StaticText label="$(major_strip_text)" align="ALIGN_CENTER_VERTICAL" />
-                        <Button label="$(edit_text)" />
+                        <Button
+                            event_EVT_BUTTON="on_major_strip_click"
+                            label="$(edit_text)"
+                        />
                         <StaticText label="$(minor_strip_text)" align="ALIGN_CENTER_VERTICAL" />
-                        <Button label="$(edit_text)" />
+                        <Button
+                            event_EVT_BUTTON="on_minor_strip_click"
+                            label="$(edit_text)"
+                        />
                         <StaticText label="$(legends_text)" align="ALIGN_CENTER_VERTICAL" />
-                        <Button label="$(edit_text)" />
+                        <Button
+                            event_EVT_BUTTON="on_legend_click"
+                            label="$(edit_text)"
+                        />
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -143,3 +153,6 @@ class PreferencesDialog(Dialog):
         dialog = SelectTabOrderDialog(self, config)
         dialog.ShowModal()
         dialog.Destroy()
+
+    def ShowEditFontDialog(self, font):
+        return edit_font_data(self, font)
