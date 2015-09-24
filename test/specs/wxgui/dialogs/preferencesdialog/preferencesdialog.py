@@ -50,7 +50,7 @@ class describe_preferences_dialog(UnitTestCase):
     def test_sets_open_recent_on_init(self):
         self.config.get_open_recent_at_startup.return_value = sentinel.OPEN_RECENT
         self.simulate_dialog_opens()
-        self.view.SetCheckboxOpenRecent.assert_called_with(sentinel.OPEN_RECENT)
+        self.view.SetOpenRecentCheckboxValue.assert_called_with(sentinel.OPEN_RECENT)
 
     def test_sets_open_recent_on_change(self):
         self.simulate_dialog_opens()
@@ -60,7 +60,7 @@ class describe_preferences_dialog(UnitTestCase):
     def test_sets_inertial_scrolling_on_init(self):
         self.config.get_use_inertial_scrolling.return_value = sentinel.INERTIAL_SCROLLING
         self.simulate_dialog_opens()
-        self.view.SetCheckboxInertialScrolling.assert_called_with(sentinel.INERTIAL_SCROLLING)
+        self.view.SetInertialScrollingCheckboxValue.assert_called_with(sentinel.INERTIAL_SCROLLING)
 
     def test_sets_inertial_scrolling_on_change(self):
         self.simulate_dialog_opens()
@@ -70,27 +70,32 @@ class describe_preferences_dialog(UnitTestCase):
     def test_sets_period_point_on_init(self):
         self.config.get_never_show_period_events_as_point_events.return_value = sentinel.PERIOD_POINT
         self.simulate_dialog_opens()
-        self.view.SetCheckboxPeriodPoint.assert_called_with(sentinel.PERIOD_POINT)
+        self.view.SetNeverPeriodPointCheckboxValue.assert_called_with(sentinel.PERIOD_POINT)
 
     def test_sets_period_point_on_change(self):
         self.simulate_dialog_opens()
-        self.controller.on_period_point_changed(event_is_checked(sentinel.PERIOD_POINT))
+        self.controller.on_never_period_point_changed(event_is_checked(sentinel.PERIOD_POINT))
         self.config.set_never_show_period_events_as_point_events.assert_called_with(sentinel.PERIOD_POINT)
 
     def test_sets_center_text_on_init(self):
         self.config.get_center_event_texts.return_value = sentinel.CENTER_TEXT
         self.simulate_dialog_opens()
-        self.view.SetCheckboxCenterText.assert_called_with(sentinel.CENTER_TEXT)
+        self.view.SetCenterTextCheckboxValue.assert_called_with(sentinel.CENTER_TEXT)
 
     def test_sets_center_text_on_change(self):
         self.simulate_dialog_opens()
-        self.controller.on_center_changed(event_is_checked(sentinel.CENTER_TEXT))
+        self.controller.on_center_text_changed(event_is_checked(sentinel.CENTER_TEXT))
         self.config.set_center_event_texts.assert_called_with(sentinel.CENTER_TEXT)
 
-    def test_sets_week_start_on_init(self):
+    def test_sets_week_start_on_init_sunday(self):
         self.config.get_week_start.return_value = "sunday"
         self.simulate_dialog_opens()
-        self.view.SetWeekStart.assert_called_with(1)
+        self.view.SetWeekStartSelection.assert_called_with(1)
+
+    def test_sets_week_start_on_init_monday(self):
+        self.config.get_week_start.return_value = "monday"
+        self.simulate_dialog_opens()
+        self.view.SetWeekStartSelection.assert_called_with(0)
 
     def test_sets_week_start_on_change(self):
         self.simulate_dialog_opens()
@@ -112,7 +117,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.controller.on_experimental_changed(event)
         self.experimental_features.set_active_state_on_feature_by_name.assert_called_with(sentinel.NAME, sentinel.VALUE)
 
-    def test_opens_select_tab_order_dialog(self):
+    def test_opens_select_tab_order_dialog_on_click(self):
         self.simulate_dialog_opens()
         self.controller.on_tab_order_click(None)
         self.view.ShowSelectTabOrderDialog.assert_called_with(self.config)

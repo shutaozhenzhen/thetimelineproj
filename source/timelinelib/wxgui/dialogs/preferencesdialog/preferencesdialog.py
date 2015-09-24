@@ -34,24 +34,24 @@ class PreferencesDialog(Dialog):
                 <BoxSizerVertical>
                     <FlexGridSizer columns="1" border="ALL">
                         <CheckBox
-                            name="open_recent"
+                            name="open_recent_checkbox"
                             event_EVT_CHECKBOX="on_open_recent_change"
                             label="$(open_recent_text)"
                         />
                         <CheckBox
-                            name="inertial_scrolling"
+                            name="inertial_scrolling_checkbox"
                             event_EVT_CHECKBOX="on_inertial_scrolling_changed"
                             label="$(inertial_scrolling_text)"
                         />
                         <CheckBox
-                            name="period_point"
-                            event_EVT_CHECKBOX="on_period_point_changed"
-                            label="$(period_point_text)"
+                            name="never_period_point_checkbox"
+                            event_EVT_CHECKBOX="on_never_period_point_changed"
+                            label="$(never_period_point_text)"
                         />
                         <CheckBox
-                            name="center"
-                            event_EVT_CHECKBOX="on_center_changed"
-                            label="$(center_text)"
+                            name="center_text_checkbox"
+                            event_EVT_CHECKBOX="on_center_text_changed"
+                            label="$(center_text_text)"
                         />
                         <Button
                             event_EVT_BUTTON="on_tab_order_click"
@@ -64,9 +64,12 @@ class PreferencesDialog(Dialog):
             <Panel notebookLabel="$(date_time_text)">
                 <BoxSizerVertical>
                     <FlexGridSizer columns="2" border="ALL">
-                        <StaticText label="$(week_start_text)" align="ALIGN_CENTER_VERTICAL" />
+                        <StaticText
+                            label="$(week_start_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
                         <Choice
-                            name="week_start"
+                            name="week_start_choice"
                             event_EVT_CHOICE="on_week_start_changed"
                             choices="$(week_start_choices)"
                         />
@@ -76,17 +79,26 @@ class PreferencesDialog(Dialog):
             <Panel notebookLabel="$(fonts_text)">
                 <BoxSizerVertical>
                     <FlexGridSizer columns="2" border="ALL">
-                        <StaticText label="$(major_strip_text)" align="ALIGN_CENTER_VERTICAL" />
+                        <StaticText
+                            label="$(major_strip_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
                         <Button
                             event_EVT_BUTTON="on_major_strip_click"
                             label="$(edit_text)"
                         />
-                        <StaticText label="$(minor_strip_text)" align="ALIGN_CENTER_VERTICAL" />
+                        <StaticText
+                            label="$(minor_strip_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
                         <Button
                             event_EVT_BUTTON="on_minor_strip_click"
                             label="$(edit_text)"
                         />
-                        <StaticText label="$(legends_text)" align="ALIGN_CENTER_VERTICAL" />
+                        <StaticText
+                            label="$(legends_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
                         <Button
                             event_EVT_BUTTON="on_legend_click"
                             label="$(edit_text)"
@@ -96,8 +108,11 @@ class PreferencesDialog(Dialog):
             </Panel>
             <Panel name="experimental_panel" notebookLabel="$(experimental_text)">
                 <BoxSizerVertical>
-                    <FlexGridSizer name="experimental_panel_sizer" columns="1" border="ALL">
-                    </FlexGridSizer>
+                    <FlexGridSizer
+                        name="experimental_panel_sizer"
+                        columns="1"
+                        border="ALL"
+                    />
                 </BoxSizerVertical>
             </Panel>
         </Notebook>
@@ -110,8 +125,8 @@ class PreferencesDialog(Dialog):
             "general_text": _("General"),
             "open_recent_text": _("Open most recent timeline on startup"),
             "inertial_scrolling_text": _("Use inertial scrolling"),
-            "period_point_text": _("Never show period Events as point Events"),
-            "center_text": _("Center Event texts"),
+            "never_period_point_text": _("Never show period Events as point Events"),
+            "center_text_text": _("Center Event texts"),
             "tab_order_text": _("Select Event Editor Tab Order"),
             "date_time_text": _("Date && Time"),
             "week_start_text": _("Week start on:"),
@@ -125,20 +140,20 @@ class PreferencesDialog(Dialog):
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
 
-    def SetCheckboxOpenRecent(self, value):
-        self.open_recent.SetValue(value)
+    def SetOpenRecentCheckboxValue(self, value):
+        self.open_recent_checkbox.SetValue(value)
 
-    def SetCheckboxInertialScrolling(self, value):
-        self.inertial_scrolling.SetValue(value)
+    def SetInertialScrollingCheckboxValue(self, value):
+        self.inertial_scrolling_checkbox.SetValue(value)
 
-    def SetCheckboxPeriodPoint(self, value):
-        self.period_point.SetValue(value)
+    def SetNeverPeriodPointCheckboxValue(self, value):
+        self.never_period_point_checkbox.SetValue(value)
 
-    def SetCheckboxCenterText(self, value):
-        self.center.SetValue(value)
+    def SetCenterTextCheckboxValue(self, value):
+        self.center_text_checkbox.SetValue(value)
 
-    def SetWeekStart(self, value):
-        self.week_start.Select(value)
+    def SetWeekStartSelection(self, value):
+        self.week_start_choice.Select(value)
 
     def AddExperimentalFeatures(self, features):
         for feature in features:
