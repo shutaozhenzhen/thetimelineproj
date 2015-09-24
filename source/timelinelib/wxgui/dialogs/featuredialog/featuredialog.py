@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.wxgui.dialogs.featuredialog.featuredialogcontroller import FeatureDialogController
 from timelinelib.wxgui.framework import Dialog
 
@@ -24,9 +26,11 @@ class FeatureDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <StaticText label="$(feature_text)" width="600" border="ALL" />
+        <StaticText name="feature_text" label="$(feature_text)" width="600" border="ALL" />
         <TextCtrl height="200" style = "TE_MULTILINE|TE_READONLY|TE_RICH|TE_AUTO_URL" border="LEFT|RIGHT|BOTTOM" />
-        <DialogButtonsGiveFeatureCloseSizer border="LEFT|RIGHT|BOTTOM" />
+        <DialogButtonsGiveFeatureCloseSizer border="LEFT|RIGHT|BOTTOM"
+            event_EVT_BUTTON__ID_GIVE_FEEDBACK="on_give_feature"
+        />
     </BoxSizerVertical>
     """
 
@@ -34,4 +38,10 @@ class FeatureDialog(Dialog):
         Dialog.__init__(self, FeatureDialogController, parent, {
             "feature_text": feature_text,
         }, title=_("Feedback On Feature"))
+        self._make_info_label_bold()
         self.controller.on_init()
+
+    def _make_info_label_bold(self):
+        font = self.feature_text.GetFont()
+        font.SetWeight(wx.BOLD)
+        self.feature_text.SetFont(font)
