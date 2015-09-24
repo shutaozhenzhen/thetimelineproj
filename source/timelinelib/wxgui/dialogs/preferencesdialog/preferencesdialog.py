@@ -31,10 +31,26 @@ class PreferencesDialog(Dialog):
             <Panel notebookLabel="$(general_text)">
                 <BoxSizerVertical>
                     <FlexGridSizer columns="1" border="ALL">
-                        <CheckBox label="$(open_recent_text)" />
-                        <CheckBox label="$(inertial_scrolling_text)" />
-                        <CheckBox label="$(period_point_text)" />
-                        <CheckBox label="$(center_text)" />
+                        <CheckBox
+                            name="open_recent"
+                            event_EVT_CHECKBOX="on_open_recent_change"
+                            label="$(open_recent_text)"
+                        />
+                        <CheckBox
+                            name="inertial_scrolling"
+                            event_EVT_CHECKBOX="on_inertial_scrolling_changed"
+                            label="$(inertial_scrolling_text)"
+                        />
+                        <CheckBox
+                            name="period_point"
+                            event_EVT_CHECKBOX="on_period_point_changed"
+                            label="$(period_point_text)"
+                        />
+                        <CheckBox
+                            name="center"
+                            event_EVT_CHECKBOX="on_center_changed"
+                            label="$(center_text)"
+                        />
                         <Button label="$(tab_order_text)" align="ALIGN_LEFT" />
                     </FlexGridSizer>
                 </BoxSizerVertical>
@@ -43,7 +59,11 @@ class PreferencesDialog(Dialog):
                 <BoxSizerVertical>
                     <FlexGridSizer columns="2" border="ALL">
                         <StaticText label="$(week_start_text)" align="ALIGN_CENTER_VERTICAL" />
-                        <Choice choices="$(week_start_choices)" />
+                        <Choice
+                            name="week_start"
+                            event_EVT_CHOICE="on_week_start_changed"
+                            choices="$(week_start_choices)"
+                        />
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -70,7 +90,7 @@ class PreferencesDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, config):
         Dialog.__init__(self, PreferencesDialogController, parent, {
             "general_text": _("General"),
             "open_recent_text": _("Open most recent timeline on startup"),
@@ -88,8 +108,23 @@ class PreferencesDialog(Dialog):
             "edit_text": _("Edit"),
             "experimental_text": _("Experimental Features"),
         }, title=_("Preferences"))
-        self.controller.on_init()
+        self.controller.on_init(config)
         self._add_experimental_checkboxes()
+
+    def SetCheckboxOpenRecent(self, value):
+        self.open_recent.SetValue(value)
+
+    def SetCheckboxInertialScrolling(self, value):
+        self.inertial_scrolling.SetValue(value)
+
+    def SetCheckboxPeriodPoint(self, value):
+        self.period_point.SetValue(value)
+
+    def SetCheckboxCenterText(self, value):
+        self.center.SetValue(value)
+
+    def SetWeekStart(self, value):
+        self.week_start.Select(value)
 
     def _add_experimental_checkboxes(self):
         features = ExperimentalFeatures().get_all_features()
