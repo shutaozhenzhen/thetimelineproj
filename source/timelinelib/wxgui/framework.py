@@ -87,6 +87,14 @@ class GuiCreator(object):
             notebook.AddPage(child_component, label)
         return notebook
 
+    def _create_Panel(self, parent, node):
+        component = self._get_component_constructor(node)(parent, **self._get_attributes(node))
+        for child_node in node.getchildren():
+            child_component = self._create_from_node(component, child_node)
+            if isinstance(child_component, wx.Sizer):
+                component.SetSizer(child_component)
+        return component
+
     def _populate_sizer(self, parent, node, sizer):
         for child_node in node.getchildren():
             if child_node.tag == "Spacer":
