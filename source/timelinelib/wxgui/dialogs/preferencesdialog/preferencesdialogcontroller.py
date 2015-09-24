@@ -47,6 +47,9 @@ class PreferencesDialogController(Controller):
     def on_week_start_changed(self, event):
         self.config.set_week_start(self._index_week(event.GetSelection()))
 
+    def on_tab_order_click(self, event):
+        self.view.ShowSelectTabOrderDialog(self.config)
+
     def on_experimental_changed(self, event):
         self.experimental_features.set_active_state_on_feature_by_name(
             event.GetEventObject().GetLabel(), event.IsChecked())

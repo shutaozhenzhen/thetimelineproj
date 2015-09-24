@@ -49,61 +49,61 @@ class describe_preferences_dialog(UnitTestCase):
 
     def test_sets_open_recent_on_init(self):
         self.config.get_open_recent_at_startup.return_value = sentinel.OPEN_RECENT
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.view.SetCheckboxOpenRecent.assert_called_with(sentinel.OPEN_RECENT)
 
     def test_sets_open_recent_on_change(self):
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.controller.on_open_recent_change(event_is_checked(sentinel.OPEN_RECENT))
         self.config.set_open_recent_at_startup.assert_called_with(sentinel.OPEN_RECENT)
 
     def test_sets_inertial_scrolling_on_init(self):
         self.config.get_use_inertial_scrolling.return_value = sentinel.INERTIAL_SCROLLING
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.view.SetCheckboxInertialScrolling.assert_called_with(sentinel.INERTIAL_SCROLLING)
 
     def test_sets_inertial_scrolling_on_change(self):
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.controller.on_inertial_scrolling_changed(event_is_checked(sentinel.INERTIAL_SCROLLING))
         self.config.set_use_inertial_scrolling.assert_called_with(sentinel.INERTIAL_SCROLLING)
 
     def test_sets_period_point_on_init(self):
         self.config.get_never_show_period_events_as_point_events.return_value = sentinel.PERIOD_POINT
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.view.SetCheckboxPeriodPoint.assert_called_with(sentinel.PERIOD_POINT)
 
     def test_sets_period_point_on_change(self):
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.controller.on_period_point_changed(event_is_checked(sentinel.PERIOD_POINT))
         self.config.set_never_show_period_events_as_point_events.assert_called_with(sentinel.PERIOD_POINT)
 
     def test_sets_center_text_on_init(self):
         self.config.get_center_event_texts.return_value = sentinel.CENTER_TEXT
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.view.SetCheckboxCenterText.assert_called_with(sentinel.CENTER_TEXT)
 
     def test_sets_center_text_on_change(self):
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.controller.on_center_changed(event_is_checked(sentinel.CENTER_TEXT))
         self.config.set_center_event_texts.assert_called_with(sentinel.CENTER_TEXT)
 
     def test_sets_week_start_on_init(self):
         self.config.get_week_start.return_value = "sunday"
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.view.SetWeekStart.assert_called_with(1)
 
     def test_sets_week_start_on_change(self):
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.controller.on_week_start_changed(event_selection(1))
         self.config.set_week_start.assert_called_with("sunday")
 
     def test_set_experimental_features_on_init(self):
         self.experimental_features.get_all_features.return_value = sentinel.FEATURES
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         self.view.AddExperimentalFeatures.assert_called_with(sentinel.FEATURES)
 
     def test_set_experimental_features_on_change(self):
-        self.controller.on_init(self.config, self.experimental_features)
+        self.simulate_dialog_opens()
         event = Mock(wx.CommandEvent)
         mock_object = Mock()
         mock_object.GetLabel.return_value = sentinel.NAME
@@ -111,6 +111,14 @@ class describe_preferences_dialog(UnitTestCase):
         event.IsChecked.return_value = sentinel.VALUE
         self.controller.on_experimental_changed(event)
         self.experimental_features.set_active_state_on_feature_by_name.assert_called_with(sentinel.NAME, sentinel.VALUE)
+
+    def test_opens_select_tab_order_dialog(self):
+        self.simulate_dialog_opens()
+        self.controller.on_tab_order_click(None)
+        self.view.ShowSelectTabOrderDialog.assert_called_with(self.config)
+
+    def simulate_dialog_opens(self):
+        self.controller.on_init(self.config, self.experimental_features)
 
 
 def event_is_checked(value):
