@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.wxgui.components.font import deserialize_font
 from timelinelib.wxgui.framework import Controller
 
 
@@ -49,6 +50,21 @@ class PreferencesDialogController(Controller):
 
     def on_tab_order_click(self, event):
         self.view.ShowSelectTabOrderDialog(self.config)
+
+    def on_major_strip_click(self, event):
+        font = deserialize_font(self.config.major_strip_font)
+        if self.view.ShowEditFontDialog(font):
+            self.config.major_strip_font = font.serialize()
+
+    def on_minor_strip_click(self, event):
+        font = deserialize_font(self.config.minor_strip_font)
+        if self.view.ShowEditFontDialog(font):
+            self.config.minor_strip_font = font.serialize()
+
+    def on_legend_click(self, event):
+        font = deserialize_font(self.config.legend_font)
+        if self.view.ShowEditFontDialog(font):
+            self.config.legend_font = font.serialize()
 
     def on_experimental_changed(self, event):
         self.experimental_features.set_active_state_on_feature_by_name(
