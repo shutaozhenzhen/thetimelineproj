@@ -35,7 +35,7 @@ class FeedbackDialog(Dialog):
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(subject_text)" />
             <TextCtrl name="subject_text" />
             <StaticText align="ALIGN_TOP" label="$(body_text)" />
-            <TextCtrl name="body_text" height="200" style="TE_MULTILINE" />
+            <TextCtrlSelect name="body_text" height="200" style="TE_MULTILINE" />
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(send_with_text)" />
             <BoxSizerHorizontal>
                 <Button label="$(default_button_text)" borderType="SMALL" border="RIGHT" event_EVT_BUTTON="on_default_click" />
