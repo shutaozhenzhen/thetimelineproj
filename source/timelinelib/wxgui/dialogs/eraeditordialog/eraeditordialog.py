@@ -34,9 +34,9 @@ class EraEditorDialog(Dialog):
 
                 <StaticText label="$(when_text)" align="ALIGN_CENTER" />
                 <BoxSizerHorizontal >
-                    <TimePicker name="dtp_start" />
+                    <TimePicker time_type="$(time_type)" config="$(config)" name="dtp_start" />
                     <StaticText label="$(to_text)" align="ALIGN_CENTER_VERTICAL" border="LEFT|RIGHT"/>
-                    <TimePicker name="dtp_end"  />
+                    <TimePicker time_type="$(time_type)" config="$(config)" name="dtp_end"  />
                 </BoxSizerHorizontal>
 
                 <Spacer />
@@ -62,9 +62,6 @@ class EraEditorDialog(Dialog):
     """
 
     def __init__(self, parent, title, time_type, config, era):
-        self.time_type = time_type
-        self.config = config
-        self.era = era
         Dialog.__init__(self, EraEditorDialogController, parent, {
             "groupbox_text": _("Era Properties"),
             "show_time_text": _("Show time"),
@@ -72,6 +69,8 @@ class EraEditorDialog(Dialog):
             "colour_text": _("Colour:"),
             "when_text": _("When:"),
             "to_text": _("to"),
+            "time_type": time_type,
+            "config": config,
         }, title=title)
         self.controller.on_init(era, time_type)
         self.dtp_start.SetFocus()
@@ -84,12 +83,6 @@ class EraEditorDialog(Dialog):
         except:
             # Not all TimePicker objects has a 'show_time' attribute
             pass
-
-    def GetEra(self):
-        return self.era
-
-    def GetTimeType(self):
-        return self.time_type
 
     def GetStart(self):
         return self.dtp_start.get_value()

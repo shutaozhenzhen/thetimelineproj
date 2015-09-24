@@ -98,7 +98,6 @@ class EraEditorTestCase(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(EraEditorDialog)
-        self.view.GetTimeType.return_value = MemoryDB().time_type
 
 
 class describe_era_editor_dialog_controller_add(UnitTestCase):

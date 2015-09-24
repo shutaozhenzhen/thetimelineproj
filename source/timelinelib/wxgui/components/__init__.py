@@ -32,3 +32,8 @@ from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.descriptioneditor imp
 from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.hyperlinkeditor import HyperlinkEditor
 from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.iconeditor import IconEditor
 from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.progresseditor import ProgressEditor
+
+
+def TimePicker(parent, time_type, name="", *args, **kwargs):
+    from timelinelib.wxgui.utils import time_picker_for
+    return time_picker_for(time_type)(parent, *args, **kwargs)
