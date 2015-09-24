@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import webbrowser
+
 from timelinelib.wxgui.framework import Controller
 from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialog import show_feedback_dialog
 
@@ -29,3 +31,11 @@ class FeatureDialogController(Controller):
 
     def on_give_feedback(self, evt):
         show_feedback_dialog("", self.feature.get_display_name(), "")
+
+    def on_text_url(self, evt):
+        if evt.MouseEvent.LeftUp():
+            start = evt.GetURLStart()
+            end = evt.GetURLEnd()
+            url = self.view.GetDescription()[start:end]
+            webbrowser.open(url)
+        evt.Skip()
