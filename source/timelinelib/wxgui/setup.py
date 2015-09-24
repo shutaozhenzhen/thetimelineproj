@@ -26,7 +26,7 @@ import wx
 
 from timelinelib.meta.version import get_version
 from timelinelib.wxgui.dialogs.mainframe.mainframe import MainFrame
-from timelinelib.wxgui.dialogs.feedback.feedbackdialog import show_feedback_dialog
+from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialog import show_feedback_dialog
 from timelinelib.features.experimental.experimentalfeaturedateformatting import create_locale_sample_date
 
 
