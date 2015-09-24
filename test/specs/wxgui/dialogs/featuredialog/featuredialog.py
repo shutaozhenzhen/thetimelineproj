@@ -31,6 +31,6 @@ class describe_FeatureDialog(UnitTestCase):
         self.controller = FeatureDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(FeatureDialog, None) as dialog:
+        with create_dialog(FeatureDialog, None, "Feature text test") as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()
