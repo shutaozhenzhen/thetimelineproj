@@ -58,7 +58,7 @@ from timelinelib.wxgui.dialogs.nowdateeditor.nowdateeditordialog import NowDateE
 from timelinelib.wxgui.dialogs.preferences.preferencesdialog import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialog import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditordialog.shortcutseditordialog import ShortcutsEditorDialog
-from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialog import TextDisplayDialog
+from timelinelib.wxgui.dialogs.textdisplaydialog.textdisplaydialog import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditordialog.timeeditordialog import TimeEditorDialog
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_error_message
