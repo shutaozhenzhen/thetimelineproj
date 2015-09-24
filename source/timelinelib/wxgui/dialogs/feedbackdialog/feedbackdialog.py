@@ -58,8 +58,9 @@ class FeedbackDialog(Dialog):
             "default_button_text": _("Default client"),
             "gmail_button_text": _("Gmail"),
             "other_button_text": _("Other"),
-        }, title=_("Email Feedback"), style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
+        }, title=_("Email Feedback"), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller.on_init(webbrowser, info, subject, body)
+        self.body_text.SetFocus()
 
     def SetInfoText(self, text):
         self.info.SetLabel(text)

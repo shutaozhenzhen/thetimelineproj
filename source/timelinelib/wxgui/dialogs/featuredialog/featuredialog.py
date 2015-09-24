@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.wxgui.dialogs.featuredialog.featuredialogcontroller import FeatureDialogController
 from timelinelib.wxgui.framework import Dialog
 
@@ -24,12 +26,42 @@ class FeatureDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+
+        <StaticText name="feature_name" label="" width="600" border="ALL" />
+
+        <TextCtrl name="feature_description" height="200" 
+            style="TE_MULTILINE|TE_READONLY|TE_RICH|TE_AUTO_URL" border="LEFT|RIGHT|BOTTOM"
+            event_EVT_TEXT_URL="on_text_url" 
+        />
+
+        <DialogButtonsGiveFeatureCloseSizer border="LEFT|RIGHT|BOTTOM"
+            event_EVT_BUTTON__ID_GIVE_FEEDBACK="on_give_feedback"
+        />
+
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
-        Dialog.__init__(self, FeatureDialogController, parent, {
-            "test_text": "Hello World",
-        }, title=_("New dialog title"))
-        self.controller.on_init()
+    def __init__(self, parent, feature):
+        Dialog.__init__(self, FeatureDialogController, parent, {}, title=_("Feedback On Feature"))
+        self._make_info_label_bold()
+        self.controller.on_init(feature)
+
+    def SetFeatureName(self, name):
+        self.feature_name.SetLabel(name)
+
+    def SetFeatureDescription(self, description):
+        self.feature_description.SetValue(description)
+
+    def GetDescription(self):
+        return self.feature_description.GetValue()
+
+    def _make_info_label_bold(self):
+        font = self.feature_name.GetFont()
+        font.SetWeight(wx.BOLD)
+        self.feature_name.SetFont(font)
+
+
+def show_feature_feedback_dialog(feature, parent=None):
+    dialog = FeatureDialog(parent, feature)
+    dialog.ShowModal()
+    dialog.Destroy()
