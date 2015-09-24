@@ -48,8 +48,8 @@ class PreferencesDialogController(Controller):
         self.config.set_week_start(self._index_week(event.GetSelection()))
 
     def on_experimental_changed(self, event):
-        self.experimental_features._set_active_state_on_feature_by_name(
-            event.GetString(), event.IsChecked())
+        self.experimental_features.set_active_state_on_feature_by_name(
+            event.GetEventObject().GetLabel(), event.IsChecked())
         self.config.experimental_features = str(self.experimental_features)
 
     def _week_index(self, week):
