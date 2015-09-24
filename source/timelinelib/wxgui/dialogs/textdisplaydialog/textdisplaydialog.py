@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.wxgui.dialogs.textdisplaydialog.textdisplaydialogcontroller import TextDisplayDialogController
 from timelinelib.wxgui.framework import Dialog
 
@@ -24,12 +26,17 @@ class TextDisplayDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+        <TextCtrl style="TE_MULTILINE" width="660" height="300" border="ALL" />
+        <BoxSizerHorizontal border="LEFT|BOTTOM|RIGHT">
+            <Button id="$(id_copy)" border="RIGHT" />
+            <StretchSpacer />
+            <DialogButtonsCloseSizer />
+        </BoxSizerHorizontal>
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, title, text, parent=None):
         Dialog.__init__(self, TextDisplayDialogController, parent, {
-            "test_text": "Hello World",
-        }, title=_("New dialog title"))
-        self.controller.on_init()
+            "id_copy": wx.ID_COPY,
+        }, title=title)
+        self.controller.on_init(text)
