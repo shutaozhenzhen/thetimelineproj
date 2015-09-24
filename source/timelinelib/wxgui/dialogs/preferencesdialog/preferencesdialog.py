@@ -19,6 +19,7 @@
 import wx
 
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
+from timelinelib.wxgui.dialogs.eventeditor.eventeditortabselectiondialog import SelectTabOrderDialog
 from timelinelib.wxgui.dialogs.preferencesdialog.preferencesdialogcontroller import PreferencesDialogController
 from timelinelib.wxgui.framework import Dialog
 
@@ -51,7 +52,11 @@ class PreferencesDialog(Dialog):
                             event_EVT_CHECKBOX="on_center_changed"
                             label="$(center_text)"
                         />
-                        <Button label="$(tab_order_text)" align="ALIGN_LEFT" />
+                        <Button
+                            event_EVT_BUTTON="on_tab_order_click"
+                            label="$(tab_order_text)"
+                            align="ALIGN_LEFT"
+                        />
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -133,3 +138,8 @@ class PreferencesDialog(Dialog):
             self.experimental_panel_sizer.Add(cb)
             self.Bind(wx.EVT_CHECKBOX, self.controller.on_experimental_changed, cb)
         self.Fit()
+
+    def ShowSelectTabOrderDialog(self, config):
+        dialog = SelectTabOrderDialog(self, config)
+        dialog.ShowModal()
+        dialog.Destroy()
