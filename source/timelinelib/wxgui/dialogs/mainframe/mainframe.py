@@ -45,6 +45,7 @@ from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.mainpanel import MainPanel
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.dialogs.categoryeditors.categorieseditordialog import CategoriesEditor
+from timelinelib.wxgui.dialogs.changenowdatedialog.changenowdatedialog import ChangeNowDateDialog
 from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialog import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.eraseditordialog.eraseditordialog import ErasEditorDialog
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_create_event_editor
@@ -54,7 +55,6 @@ from timelinelib.wxgui.dialogs.filenewdialog.filenewdialog import FileNewDialog
 from timelinelib.wxgui.dialogs.helpbrowser.helpbrowserframe import HelpBrowser
 from timelinelib.wxgui.dialogs.importeventsdialog.importeventsdialog import ImportEventsDialog
 from timelinelib.wxgui.dialogs.mainframe.mainframecontroller import MainFrameController
-from timelinelib.wxgui.dialogs.nowdateeditor.nowdateeditordialog import NowDateEditorDialog
 from timelinelib.wxgui.dialogs.preferencesdialog.preferencesdialog import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialog import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditordialog.shortcutseditordialog import ShortcutsEditorDialog
@@ -878,7 +878,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         dialog.Destroy()
 
     def display_now_date_editor_dialog(self, handle_new_time_fn, title):
-        dialog = NowDateEditorDialog(self, self.config, self.timeline, handle_new_time_fn, title)
+        dialog = ChangeNowDateDialog(self, self.config, self.timeline, handle_new_time_fn, title)
         dialog.Show()
 
     # Concurrent editing
