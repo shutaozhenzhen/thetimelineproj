@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 from timelinelib.wxgui.components.font import edit_font_data
-from timelinelib.wxgui.dialogs.eventeditor.eventeditortabselectiondialog import SelectTabOrderDialog
+from timelinelib.wxgui.dialogs.eventeditortabselectiondialog.eventeditortabselectiondialog import EventEditorTabSelectionDialog
 from timelinelib.wxgui.dialogs.preferencesdialog.preferencesdialogcontroller import PreferencesDialogController
 from timelinelib.wxgui.framework import Dialog
 
@@ -165,7 +165,7 @@ class PreferencesDialog(Dialog):
         self.Fit()
 
     def ShowSelectTabOrderDialog(self, config):
-        dialog = SelectTabOrderDialog(self, config)
+        dialog = EventEditorTabSelectionDialog(self, config)
         dialog.ShowModal()
         dialog.Destroy()
 
