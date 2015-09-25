@@ -75,6 +75,16 @@ def create_in_memory_tutorial_db():
           "Keep the Alt key down and find the drag point at the center of the container and drag it."),
         tutcreator.get_days_delta(12),
         tutcreator.get_days_delta(18))
+    tutcreator.add_subevent(
+        container,
+        _("View Container demo video"),
+        _("Container Subevent 3\n\n"
+          "Select hyperlink to show demo video.\n\n"
+          "Right-click in the event and select 'Goto URL' in the popup menu and select the first (and only) link"),
+        tutcreator.get_days_delta(19),
+        tutcreator.get_days_delta(24),
+        "http://www.youtube.com/watch?v=dBwEQ3vqB_I")
+
     tutcreator.add_event(
         _("Zoom"),
         _("Hold down Ctrl while scrolling the mouse wheel."
@@ -163,11 +173,13 @@ class TutorialTimelineCreator(object):
         self.db.save_event(container)
         return container
 
-    def add_subevent(self, container, text, description, start_add, end_add=None):
+    def add_subevent(self, container, text, description, start_add, end_add=None, hyperlink=None):
         start, end = self.calc_start_end(start_add, end_add)
         evt = Subevent(self.db.get_time_type(), start, end, text, self.last_cat)
         if description:
             evt.set_data("description", description)
+        if hyperlink:
+            evt.set_hyperlink(hyperlink)
         evt.set_container_id(self.next_cid - 1)
         self.db.save_event(evt)
         container.register_subevent(evt)
