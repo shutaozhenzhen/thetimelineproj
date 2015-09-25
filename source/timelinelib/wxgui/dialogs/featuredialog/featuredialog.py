@@ -29,20 +29,24 @@ class FeatureDialog(Dialog):
 
         <StaticText name="feature_name" label="" width="600" border="ALL" />
 
-        <TextCtrl name="feature_description" height="200" 
+        <TextCtrl name="feature_description" height="200"
             style="TE_MULTILINE|TE_READONLY|TE_RICH|TE_AUTO_URL" border="LEFT|RIGHT|BOTTOM"
-            event_EVT_TEXT_URL="on_text_url" 
+            event_EVT_TEXT_URL="on_text_url"
         />
 
-        <DialogButtonsGiveFeatureCloseSizer border="LEFT|RIGHT|BOTTOM"
-            event_EVT_BUTTON__ID_GIVE_FEEDBACK="on_give_feedback"
-        />
+        <BoxSizerHorizontal>
+            <Button label="$(give_feedback_button_text)" event_EVT_BUTTON="on_give_feedback" border="BOTTOM|LEFT" />
+            <StretchSpacer />
+            <DialogButtonsCloseSizer border="BOTTOM|RIGHT"/>
+        </BoxSizerHorizontal>
 
     </BoxSizerVertical>
     """
 
     def __init__(self, parent, feature):
-        Dialog.__init__(self, FeatureDialogController, parent, {}, title=_("Feedback On Feature"))
+        Dialog.__init__(self, FeatureDialogController, parent, {
+            "give_feedback_button_text": _("Give Feedback")
+        }, title=_("Feedback On Feature"))
         self._make_info_label_bold()
         self.controller.on_init(feature)
 
