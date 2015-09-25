@@ -20,13 +20,12 @@ import wx
 
 from timelinelib.db.utils import safe_locking
 from timelinelib.drawing.utils import darken_color
-from timelinelib.wxgui.components.font import Font
 from timelinelib.monitoring import monitoring
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.utilities.observer import Observable
-from timelinelib.wxgui.components.cattree import add_category
-from timelinelib.wxgui.components.cattree import delete_category
-from timelinelib.wxgui.components.cattree import edit_category
+from timelinelib.wxgui.components.font import Font
+from timelinelib.wxgui.dialogs.editcategorydialog.editcategorydialog import EditCategoryDialog
+import timelinelib.wxgui.utils as gui_utils
 
 
 class CustomCategoryTree(wx.ScrolledWindow):
@@ -465,3 +464,32 @@ class HitInfo(object):
 
     def is_on_checkbox(self):
         return self._is_on_checkbox
+
+
+def edit_category(parent_ctrl, db, cat, fn_handle_db_error):
+    def create_category_editor():
+        return EditCategoryDialog(parent_ctrl, _("Edit Category"), db, cat)
+    gui_utils.show_modal(create_category_editor, fn_handle_db_error)
+
+
+def add_category(parent_ctrl, db, fn_handle_db_error):
+    def create_category_editor():
+        return EditCategoryDialog(parent_ctrl, _("Add Category"), db, None)
+    gui_utils.show_modal(create_category_editor, fn_handle_db_error)
+
+
+def delete_category(parent_ctrl, db, cat, fn_handle_db_error):
+    delete_warning = _("Are you sure you want to "
+                       "delete category '%s'?") % cat.name
+    if cat.parent is None:
+        update_warning = _("Events belonging to '%s' will no longer "
+                           "belong to a category.") % cat.name
+    else:
+        update_warning = _("Events belonging to '%s' will now belong "
+                           "to '%s'.") % (cat.name, cat.parent.name)
+    question = "%s\n\n%s" % (delete_warning, update_warning)
+    if gui_utils._ask_question(question, parent_ctrl) == wx.YES:
+        try:
+            db.delete_category(cat)
+        except TimelineIOError, e:
+            fn_handle_db_error(e)
