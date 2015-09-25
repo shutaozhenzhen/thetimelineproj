@@ -24,10 +24,10 @@ import locale
 
 import wx
 
-from timelinelib.features.experimental.experimentalfeaturedateformatting import create_locale_sample_date
 from timelinelib.meta.version import get_version
-from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialog import show_feedback_dialog
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
+from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialog import show_feedback_dialog
+from timelinelib.features.experimental.experimentalfeaturedateformatting import create_locale_sample_date
 
 
 def start_wx_application(application_arguments, before_main_loop_hook=None):
