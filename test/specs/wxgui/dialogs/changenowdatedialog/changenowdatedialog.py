@@ -18,19 +18,24 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.changenowdatedialog.changenowdatedialog import ChangeNowDateDialog
+from timelinelib.db import db_open
 from timelinelib.wxgui.dialogs.changenowdatedialog.changenowdatedialogcontroller import ChangeNowDateDialogController
+from timelinelib.wxgui.dialogs.changenowdatedialog.changenowdatedialog import ChangeNowDateDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 
 
-class describe_ChangeNowDateDialog(UnitTestCase):
+class describe_change_now_date_dialog(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(ChangeNowDateDialog)
         self.controller = ChangeNowDateDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(ChangeNowDateDialog, None) as dialog:
+        config = Mock()
+        db = db_open(":tutorial:")
+        handle_new_time_fn = Mock()
+        title = "a dialog title"
+        with create_dialog(ChangeNowDateDialog, None, config, db, handle_new_time_fn, title) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()

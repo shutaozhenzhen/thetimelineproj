@@ -24,12 +24,25 @@ class ChangeNowDateDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="$(test_text)" />
+        <CheckBox
+            label="$(show_time_text)"
+            border="LEFT|TOP|RIGHT"
+        />
+        <TimePicker
+            time_type="$(time_type)"
+            config="$(config)"
+            border="LEFT|BOTTOM|RIGHT"
+        />
+        <DialogButtonsCloseSizer
+            border="LEFT|BOTTOM|RIGHT"
+        />
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, config, db, handle_new_time_fn, title):
         Dialog.__init__(self, ChangeNowDateDialogController, parent, {
-            "test_text": "Hello World",
-        }, title=_("New dialog title"))
+            "show_time_text": _("Show time"),
+            "time_type": db.get_time_type(),
+            "config": config,
+        }, title=title)
         self.controller.on_init()
