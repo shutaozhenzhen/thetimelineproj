@@ -130,11 +130,11 @@ class EditEventDialog(Dialog):
         <CheckBox
             name="add_more_checkbox"
             label="$(add_more_label)"
-            border="LEFT|RIGHT"
+            border="LEFT|RIGHT|BOTTOM"
         />
         <DialogButtonsOkCancelSizer
             event_EVT_BUTTON__ID_OK="on_ok_clicked"
-            border="ALL"
+            border="LEFT|RIGHT|BOTTOM"
         />
     </BoxSizerVertical>
     """
