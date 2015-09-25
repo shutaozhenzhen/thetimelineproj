@@ -175,7 +175,6 @@ class EditEventDialog(Dialog):
             start,
             end,
             event)
-        self.category_choice.Populate()
         self.SetMinSize((800, -1))
         self.Fit()
         self.SetMinSize(self.GetSize())
