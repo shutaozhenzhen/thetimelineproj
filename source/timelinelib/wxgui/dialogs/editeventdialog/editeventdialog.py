@@ -48,7 +48,13 @@ class EditEventDialog(Dialog):
                     />
                 </BoxSizerHorizontal>
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="" />
-                <Button />
+                <FlexGridSizer rows="1">
+                    <CheckBox label="$(period_checkbox_text)" />
+                    <CheckBox label="$(show_time_checkbox_text)" />
+                    <CheckBox label="$(fuzzy_checkbox_text)" />
+                    <CheckBox label="$(locked_checkbox_text)" />
+                    <CheckBox label="$(ends_today_checkbox_text)" />
+                </FlexGridSizer>
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(text_label)" />
                 <Button />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_label)" />
@@ -81,6 +87,11 @@ class EditEventDialog(Dialog):
             "config": config,
             "properties_label": _("Event Properties"),
             "when_label": _("When:"),
+            "period_checkbox_text": _("Period"),
+            "show_time_checkbox_text": _("Show time"),
+            "fuzzy_checkbox_text": _("Fuzzy"),
+            "locked_checkbox_text": _("Locked"),
+            "ends_today_checkbox_text": _("Ends today"),
             "to_label": _("to"),
             "text_label": _("Text:"),
             "category_label": _("Category:"),
