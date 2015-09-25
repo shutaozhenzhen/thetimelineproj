@@ -52,13 +52,13 @@ from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_create_
 from timelinelib.wxgui.dialogs.featuredialog.featuredialog import show_feature_feedback_dialog
 from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialog import show_feedback_dialog
 from timelinelib.wxgui.dialogs.filenewdialog.filenewdialog import FileNewDialog
-from timelinelib.wxgui.dialogs.helpbrowser.helpbrowserframe import HelpBrowser
 from timelinelib.wxgui.dialogs.importeventsdialog.importeventsdialog import ImportEventsDialog
 from timelinelib.wxgui.dialogs.preferencesdialog.preferencesdialog import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialog import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditordialog.shortcutseditordialog import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.textdisplaydialog.textdisplaydialog import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditordialog.timeeditordialog import TimeEditorDialog
+from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_error_message
@@ -849,7 +849,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         self.Bind(EVT_CATS_VIEW_CHANGED, self._on_cats_view_changed)
         # To enable translations of wx stock items.
         self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
-        self.help_browser = HelpBrowser(self)
+        self.help_browser = HelpBrowserFrame(self)
         self.controller = MainFrameController(self, db_open, self.config)
         self.menu_controller = MenuController()
         self._set_initial_values_to_member_variables()

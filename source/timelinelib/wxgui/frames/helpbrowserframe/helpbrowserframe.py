@@ -26,7 +26,7 @@ from timelinelib.config.paths import ICONS_DIR
 from timelinelib.wxgui.utils import display_error_message
 
 
-class HelpBrowser(wx.Frame):
+class HelpBrowserFrame(wx.Frame):
 
     HOME_ID = 10
     BACKWARD_ID = 20
@@ -101,23 +101,23 @@ class HelpBrowser(wx.Frame):
         self.toolbar.SetToolBitmapSize(size)
         # Home
         home_str = _("Go to home page")
-        self.toolbar.AddLabelTool(HelpBrowser.HOME_ID, home_str,
+        self.toolbar.AddLabelTool(HelpBrowserFrame.HOME_ID, home_str,
                                   home_bmp, shortHelp=home_str)
-        self.Bind(wx.EVT_TOOL, self._toolbar_on_click, id=HelpBrowser.HOME_ID)
+        self.Bind(wx.EVT_TOOL, self._toolbar_on_click, id=HelpBrowserFrame.HOME_ID)
         # Separator
         self.toolbar.AddSeparator()
         # Backward
         backward_str = _("Go back one page")
-        self.toolbar.AddLabelTool(HelpBrowser.BACKWARD_ID, backward_str,
+        self.toolbar.AddLabelTool(HelpBrowserFrame.BACKWARD_ID, backward_str,
                                   back_bmp, shortHelp=backward_str)
         self.Bind(wx.EVT_TOOL, self._toolbar_on_click,
-                  id=HelpBrowser.BACKWARD_ID)
+                  id=HelpBrowserFrame.BACKWARD_ID)
         # Forward
         forward_str = _("Go forward one page")
-        self.toolbar.AddLabelTool(HelpBrowser.FORWARD_ID, forward_str,
+        self.toolbar.AddLabelTool(HelpBrowserFrame.FORWARD_ID, forward_str,
                                   forward_bmp, shortHelp=forward_str)
         self.Bind(wx.EVT_TOOL, self._toolbar_on_click,
-                  id=HelpBrowser.FORWARD_ID)
+                  id=HelpBrowserFrame.FORWARD_ID)
         # Separator
         self.toolbar.AddSeparator()
         # Search
@@ -151,11 +151,11 @@ class HelpBrowser(wx.Frame):
         evt.Skip()
 
     def _toolbar_on_click(self, e):
-        if e.GetId() == HelpBrowser.HOME_ID:
+        if e.GetId() == HelpBrowserFrame.HOME_ID:
             self._go_home()
-        elif e.GetId() == HelpBrowser.BACKWARD_ID:
+        elif e.GetId() == HelpBrowserFrame.BACKWARD_ID:
             self._go_back()
-        elif e.GetId() == HelpBrowser.FORWARD_ID:
+        elif e.GetId() == HelpBrowserFrame.FORWARD_ID:
             self._go_forward()
 
     def _search_on_text_enter(self, e):
@@ -190,8 +190,8 @@ class HelpBrowser(wx.Frame):
         history_len = len(self.history)
         enable_backward = history_len > 1 and self.current_pos > 0
         enable_forward = history_len > 1 and self.current_pos < history_len - 1
-        self.toolbar.EnableTool(HelpBrowser.BACKWARD_ID, enable_backward)
-        self.toolbar.EnableTool(HelpBrowser.FORWARD_ID, enable_forward)
+        self.toolbar.EnableTool(HelpBrowserFrame.BACKWARD_ID, enable_backward)
+        self.toolbar.EnableTool(HelpBrowserFrame.FORWARD_ID, enable_forward)
 
     def _generate_page(self, page_id):
         page = self.help_system.get_page(page_id)
