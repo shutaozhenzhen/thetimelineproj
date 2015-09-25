@@ -171,6 +171,13 @@ def display_information_message(caption, message, parent=None):
     dialog.Destroy()
 
 
+def display_categories_editor_moved_message(parent):
+    display_information_message(
+        caption=_("Dialog moved"),
+        message=_("This dialog has been removed. Edit categories in the sidebar instead."),
+        parent=parent)
+
+
 def handle_db_error(e):
     try:
         display_error_message("\n\n".join([

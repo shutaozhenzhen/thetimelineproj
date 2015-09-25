@@ -29,6 +29,8 @@ Exporting:
 
 GUI:
 
+* Polished all dialogs to give them a more uniform look.
+
 * Replaced "file new" menu items with a single dialog that let's you choose
   what type of timeline you want to create.
   (`#97 <https://sourceforge.net/p/thetimelineproj/backlog/97/>`_)

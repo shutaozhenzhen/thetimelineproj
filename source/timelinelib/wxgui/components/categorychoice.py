@@ -20,7 +20,6 @@ import wx
 
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.repositories.dbwrapper import DbWrapperCategoryRepository
-from timelinelib.wxgui.dialogs.categoryeditors.categorieseditordialog import CategoriesEditor
 from timelinelib.wxgui.dialogs.editcategorydialog.editcategorydialog import EditCategoryDialog
 import timelinelib.wxgui.utils as gui_utils
 
@@ -117,16 +116,4 @@ class CategoryChoice(wx.Choice):
                              handle_success)
 
     def _edit_categories(self):
-        def create_categories_editor():
-            return CategoriesEditor(self, self.timeline)
-        def handle_success(dialog):
-            try:
-                prev_index = self.GetSelection()
-                prev_category = self.GetClientData(prev_index)
-                self.Populate(select=prev_category,
-                              exclude=self.exclude)
-            except TimelineIOError, e:
-                gui_utils.handle_db_error_in_dialog(self, e)
-        gui_utils.show_modal(create_categories_editor,
-                             gui_utils.create_dialog_db_error_handler(self),
-                             handle_success)
+        gui_utils.display_categories_editor_moved_message(self)
