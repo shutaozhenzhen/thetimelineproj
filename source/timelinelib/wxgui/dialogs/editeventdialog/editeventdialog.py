@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
 from timelinelib.wxgui.dialogs.editeventdialog.editeventdialogcontroller import EditEventDialogController
 from timelinelib.wxgui.framework import Dialog
 
@@ -111,8 +112,99 @@ class EditEventDialog(Dialog):
             "page_progress": _("Progress"),
             "add_more_label": _("Add more events after this one"),
         }, title=title, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
-        self.controller.on_init()
+        self.controller.on_init(
+            config,
+            db.get_time_type(),
+            DbWrapperEventRepository(db),
+            db,
+            start,
+            end,
+            event)
         self.category_choice.Populate()
         self.SetMinSize((800, -1))
         self.Fit()
         self.SetMinSize(self.GetSize())
+
+    def get_show_period(self):
+        pass
+
+    def get_name(self):
+        pass
+
+    def get_end(self):
+        pass
+
+    def get_ends_today(self):
+        pass
+
+    def display_invalid_start(self):
+        pass
+
+    def display_invalid_end(self):
+        pass
+
+    def get_fuzzy(self):
+        pass
+
+    def get_locked(self):
+        pass
+
+    def get_start(self):
+        pass
+
+    def get_category(self):
+        pass
+
+    def get_container(self):
+        pass
+
+    def get_event_data(self):
+        pass
+
+    def is_add_more_checked(self):
+        pass
+
+    def set_focus_on_first_control(self):
+        pass
+
+    def clear_event_data(self):
+        pass
+
+    def display_error_message(self, message):
+        pass
+
+    def set_locked(self, value):
+        pass
+
+    def set_container(self, value):
+        pass
+
+    def set_fuzzy(self, value):
+        pass
+
+    def set_name(self, value):
+        pass
+
+    def set_show_time(self, value):
+        pass
+
+    def set_show_period(self, value):
+        pass
+
+    def set_event_data(self, value):
+        pass
+
+    def set_ends_today(self, value):
+        pass
+
+    def set_category(self, value):
+        pass
+
+    def set_start(self, value):
+        pass
+
+    def set_end(self, value):
+        pass
+
+    def set_show_add_more(self, value):
+        pass
