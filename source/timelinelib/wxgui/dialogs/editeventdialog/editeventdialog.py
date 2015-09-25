@@ -125,86 +125,83 @@ class EditEventDialog(Dialog):
         self.Fit()
         self.SetMinSize(self.GetSize())
 
-    def get_show_period(self):
+    def GetStart(self):
         pass
 
-    def get_name(self):
+    def SetStart(self, value):
         pass
 
-    def get_end(self):
+    def GetEnd(self):
         pass
 
-    def get_ends_today(self):
+    def SetEnd(self, value):
         pass
 
-    def display_invalid_start(self):
+    def GetShowPeriod(self):
         pass
 
-    def display_invalid_end(self):
+    def SetShowPeriod(self, value):
         pass
 
-    def get_fuzzy(self):
+    def SetShowTime(self, value):
         pass
 
-    def get_locked(self):
+    def GetFuzzy(self):
         pass
 
-    def get_start(self):
+    def SetFuzzy(self, value):
         pass
 
-    def get_category(self):
+    def GetLocked(self):
         pass
 
-    def get_container(self):
+    def SetLocked(self, value):
         pass
 
-    def get_event_data(self):
+    def GetEndsToday(self):
         pass
 
-    def is_add_more_checked(self):
+    def SetEndsToday(self, value):
         pass
 
-    def set_focus_on_first_control(self):
+    def GetName(self):
         pass
 
-    def clear_event_data(self):
+    def SetName(self, value):
         pass
 
-    def display_error_message(self, message):
+    def GetCategory(self):
         pass
 
-    def set_locked(self, value):
+    def SetCategory(self, value):
         pass
 
-    def set_container(self, value):
+    def GetContainer(self):
         pass
 
-    def set_fuzzy(self, value):
+    def SetContainer(self, value):
         pass
 
-    def set_name(self, value):
+    def GetEventData(self):
         pass
 
-    def set_show_time(self, value):
+    def SetEventData(self, event_data):
         pass
 
-    def set_show_period(self, value):
+    def ClearEventData(self):
         pass
 
-    def set_event_data(self, value):
+    def IsAddMoreChecked(self):
         pass
 
-    def set_ends_today(self, value):
+    def SetShowAddMoreCheckbox(self, value):
         pass
 
-    def set_category(self, value):
+    def SetFocusOnFirstControl(self):
         pass
 
-    def set_start(self, value):
+    def DisplayInvalidStart(self, message):
         pass
 
-    def set_end(self, value):
-        pass
-
-    def set_show_add_more(self, value):
+    def DisplayInvalidEnd(self, message):
         pass
