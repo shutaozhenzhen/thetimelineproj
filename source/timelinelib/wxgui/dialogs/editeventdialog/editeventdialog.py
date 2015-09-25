@@ -56,11 +56,19 @@ class EditEventDialog(Dialog):
                     <CheckBox label="$(ends_today_checkbox_text)" />
                 </FlexGridSizer>
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(text_label)" />
-                <Button />
+                <TextCtrl />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_label)" />
-                <CategoryChoice name="category_choice" allow_add="True" allow_edit="True" timeline="$(db)" />
+                <CategoryChoice
+                    name="category_choice"
+                    allow_add="True"
+                    allow_edit="True"
+                    timeline="$(db)"
+                    align="ALIGN_LEFT"
+                />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(container_label)" />
-                <Button />
+                <Choice
+                    align="ALIGN_LEFT"
+                />
             </FlexGridSizer>
             <Notebook name="notebook" style="BK_DEFAULT" border="LEFT|RIGHT|BOTTOM" proportion="1">
                 <DescriptionEditor notebookLabel="$(page_description)" editor="$(self)" proportion="1" />
