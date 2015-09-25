@@ -25,12 +25,16 @@ class ChangeNowDateDialog(Dialog):
     """
     <BoxSizerVertical>
         <CheckBox
+            name="show_time_checkbox"
             label="$(show_time_text)"
+            event_EVT_CHECKBOX="on_show_time_changed"
             border="LEFT|TOP|RIGHT"
         />
         <TimePicker
+            name="time_picker"
             time_type="$(time_type)"
             config="$(config)"
+            on_change="$(time_picker_on_change)"
             border="LEFT|BOTTOM|RIGHT"
         />
         <DialogButtonsCloseSizer
@@ -44,5 +48,24 @@ class ChangeNowDateDialog(Dialog):
             "show_time_text": _("Show time"),
             "time_type": db.get_time_type(),
             "config": config,
+            "time_picker_on_change": self._time_picker_on_change,
         }, title=title)
-        self.controller.on_init()
+        self.controller.on_init(db, handle_new_time_fn)
+
+    def GetNowValue(self):
+        return self.time_picker.get_value()
+
+    def SetNowValue(self, value):
+        self.time_picker.set_value(value)
+
+    def ShowTime(self, value):
+        self.time_picker.show_time(value)
+
+    def IsShowTimeChecked(self):
+        return self.show_time_checkbox.GetValue()
+
+    def FocusTimePicker(self):
+        self.time_picker.SetFocus()
+
+    def _time_picker_on_change(self):
+        self.controller.on_time_changed()

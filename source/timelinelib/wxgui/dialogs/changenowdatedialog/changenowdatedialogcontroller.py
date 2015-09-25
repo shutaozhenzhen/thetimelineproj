@@ -21,5 +21,26 @@ from timelinelib.wxgui.framework import Controller
 
 class ChangeNowDateDialogController(Controller):
 
-    def on_init(self):
-        pass
+    def on_init(self, db, handle_new_time_fn):
+        self.db = db
+        self.handle_new_time_fn = handle_new_time_fn
+        self._set_initial_values()
+
+    def on_show_time_changed(self, event):
+        self.view.ShowTime(self.view.IsShowTimeChecked())
+
+    def on_time_changed(self):
+        try:
+            self.db.set_saved_now(self.view.GetNowValue())
+            self._trigger_new_time_callback()
+        except ValueError:
+            pass
+
+    def _set_initial_values(self):
+        self.view.SetNowValue(self.db.get_saved_now())
+        self.view.ShowTime(self.view.IsShowTimeChecked())
+        self.view.FocusTimePicker()
+        self._trigger_new_time_callback()
+
+    def _trigger_new_time_callback(self):
+        self.handle_new_time_fn(self.db.get_saved_now())
