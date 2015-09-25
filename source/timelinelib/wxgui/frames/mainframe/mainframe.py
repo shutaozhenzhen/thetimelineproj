@@ -44,7 +44,6 @@ from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.mainpanel import MainPanel
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
-from timelinelib.wxgui.dialogs.categoryeditors.categorieseditordialog import CategoriesEditor
 from timelinelib.wxgui.dialogs.changenowdatedialog.changenowdatedialog import ChangeNowDateDialog
 from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialog import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.eraseditordialog.eraseditordialog import ErasEditorDialog
@@ -61,6 +60,7 @@ from timelinelib.wxgui.dialogs.timeeditordialog.timeeditordialog import TimeEdit
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.timer import TimelineTimer
+from timelinelib.wxgui.utils import display_categories_editor_moved_message
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.utils import WildcardHelper
@@ -1063,9 +1063,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         self.main_panel.redraw_timeline()
 
     def _edit_categories(self):
-        def create_categories_editor():
-            return CategoriesEditor(self, self.timeline)
-        gui_utils.show_modal(create_categories_editor, self.handle_db_error)
+        display_categories_editor_moved_message(self)
 
     def _edit_eras(self):
         def create_eras_editor():
