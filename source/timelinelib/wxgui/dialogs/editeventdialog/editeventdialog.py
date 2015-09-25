@@ -29,7 +29,24 @@ class EditEventDialog(Dialog):
         <StaticBoxSizerVertical label="$(properties_label)" border="ALL" proportion="1">
             <FlexGridSizer columns="2" growableColumns="1" border="ALL">
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(when_label)" />
-                <Button />
+                <BoxSizerHorizontal>
+                    <TimePicker
+                        name="start_time"
+                        time_type="$(time_type)"
+                        config="$(config)"
+                    />
+                    <Spacer />
+                    <StaticText
+                        label="$(to_label)"
+                        align="ALIGN_CENTER_VERTICAL"
+                    />
+                    <Spacer />
+                    <TimePicker
+                        name="end_time"
+                        time_type="$(time_type)"
+                        config="$(config)"
+                    />
+                </BoxSizerHorizontal>
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="" />
                 <Button />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(text_label)" />
@@ -60,8 +77,11 @@ class EditEventDialog(Dialog):
         Dialog.__init__(self, EditEventDialogController, parent, {
             "self": self,
             "db": db,
+            "time_type": db.get_time_type(),
+            "config": config,
             "properties_label": _("Event Properties"),
             "when_label": _("When:"),
+            "to_label": _("to"),
             "text_label": _("Text:"),
             "category_label": _("Category:"),
             "container_label": _("Container:"),
