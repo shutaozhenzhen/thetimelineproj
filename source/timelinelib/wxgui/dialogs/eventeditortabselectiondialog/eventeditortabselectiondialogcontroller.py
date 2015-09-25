@@ -39,6 +39,18 @@ class EventEditorTabSelectionDialogController(Controller):
         self._save_tab_order()
         self.view.Close()
 
+    def on_selection_changed(self, evt):
+        print "on_selection_changed"
+        inx = self.view.GetSelection()
+        if inx == 1:
+            self.view.DisableBtnUp()
+        else:
+            self.view.EnableBtnUp()
+        if inx == len(CONTROL_ROWS_CREATORS) - 2:
+            self.view.DisableBtnDown()
+        else:
+            self.view.EnableBtnDown()
+
     def on_up(self, evt):
         inx = self.view.GetSelection()
         self.view.MoveSelectionUp(inx)

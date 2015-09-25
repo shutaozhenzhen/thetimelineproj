@@ -31,7 +31,8 @@ class EventEditorTabSelectionDialog(Dialog):
     <BoxSizerVertical>
         <StaticText label="$(header_text)" border="ALL"/>
         <BoxSizerHorizontal proportion="1" >
-            <ListBox name="lst_tab_order" width="120" height="150" border="LEFT|BOTTOM" proportion="1" />
+            <ListBox name="lst_tab_order" width="120" height="150" border="LEFT|BOTTOM" proportion="1"
+                event_EVT_LISTBOX="on_selection_changed" />
             <BoxSizerVertical>
                 <BitmapButton name="btn_up" bitmap="$(up_bitmap)" border="LEFT|RIGHT"
                     event_EVT_BUTTON="on_up" />
