@@ -48,7 +48,7 @@ class ProgressEditorGuiCreator(wx.Panel):
 
 class ProgressEditor(BaseEditor, ProgressEditorGuiCreator):
 
-    def __init__(self, parent, editor):
+    def __init__(self, parent, editor, name=""):
         BaseEditor.__init__(self, parent, editor)
         ProgressEditorGuiCreator.__init__(self, parent)
         self.create_gui()

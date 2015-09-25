@@ -55,7 +55,7 @@ class DescriptionEditorGuiCreator(wx.Panel):
 
 class DescriptionEditor(BaseEditor, DescriptionEditorGuiCreator):
 
-    def __init__(self, parent, editor):
+    def __init__(self, parent, editor, name=""):
         BaseEditor.__init__(self, parent, editor)
         DescriptionEditorGuiCreator.__init__(self, parent)
         self.create_gui()

@@ -20,6 +20,7 @@ from timelinelib.data import Event
 from timelinelib.data import PeriodTooLongError
 from timelinelib.data import Subevent
 from timelinelib.data import TimePeriod
+from timelinelib.time.timeline import delta_from_days
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.framework import Controller
 
@@ -34,6 +35,36 @@ class EditEventDialogController(Controller):
         self._set_values(start, end, event)
         self._set_view_content()
 
+    def on_container_changed(self, event):
+        self.view._lst_containers_on_choice(event)
+
+    def on_period_checkbox_changed(self, event):
+        end = self.view.GetEnd()
+        start = self.view.GetStart()
+        if start is not None and end is not None:
+            if (event.IsChecked() and start >= end):
+                if self.timeline.get_time_type().is_date_time_type():
+                    delta = delta_from_days(1)
+                else:
+                    delta = 1
+                try:
+                    self.view.SetEnd(start + delta)
+                except TypeError:
+                    pass
+        self.view.ShowToTime(event.IsChecked())
+
+    def on_show_time_checkbox_changed(self, event):
+        self.view.SetShowTime(event.IsChecked())
+
+    def on_locked_checkbox_changed(self, event):
+        self.view._enable_disable_ends_today()
+
+    def on_ok_clicked(self, event):
+        try:
+            self.create_or_update_event()
+        except ValueError:
+            self.view.DisplayErrorMessage(_("Invalid Date or Time"))
+
     def create_or_update_event(self):
         try:
             self._get_and_verify_input()
@@ -47,8 +78,8 @@ class EditEventDialogController(Controller):
             else:
                 if self.opened_from_menu:
                     self.config.event_editor_show_period = self.view.GetShowPeriod()
-                    self.config.event_editor_show_time = self.view.get_show_time()
-                self.view.EndModal(wx.ID_OK)
+                    self.config.event_editor_show_time = self.view.GetShowTime()
+                self.view.EndModalOk()
         except ValueError:
             pass
 

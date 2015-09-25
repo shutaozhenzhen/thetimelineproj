@@ -82,7 +82,7 @@ class HyperlinkEditorGuiCreator(wx.Panel):
 
 class HyperlinkEditor(BaseEditor, HyperlinkEditorGuiCreator):
 
-    def __init__(self, parent, editor):
+    def __init__(self, parent, editor, name=""):
         BaseEditor.__init__(self, parent, editor)
         HyperlinkEditorGuiCreator.__init__(self, parent)
         self.create_gui()

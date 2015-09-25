@@ -17,8 +17,11 @@
 
 
 from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
+from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialog import EditContainerDialog
 from timelinelib.wxgui.dialogs.editeventdialog.editeventdialogcontroller import EditEventDialogController
 from timelinelib.wxgui.framework import Dialog
+from timelinelib.wxgui.utils import _set_focus_and_select
+import timelinelib.wxgui.utils as gui_utils
 
 import wx
 
@@ -39,6 +42,7 @@ class EditEventDialog(Dialog):
                     <Spacer />
                     <StaticText
                         label="$(to_label)"
+                        name="to_label"
                         align="ALIGN_CENTER_VERTICAL"
                     />
                     <Spacer />
@@ -50,14 +54,31 @@ class EditEventDialog(Dialog):
                 </BoxSizerHorizontal>
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="" />
                 <FlexGridSizer rows="1">
-                    <CheckBox label="$(period_checkbox_text)" />
-                    <CheckBox label="$(show_time_checkbox_text)" />
-                    <CheckBox label="$(fuzzy_checkbox_text)" />
-                    <CheckBox label="$(locked_checkbox_text)" />
-                    <CheckBox label="$(ends_today_checkbox_text)" />
+                    <CheckBox
+                        name="period_checkbox"
+                        event_EVT_CHECKBOX="on_period_checkbox_changed"
+                        label="$(period_checkbox_text)" />
+                    <CheckBox
+                        name="show_time_checkbox"
+                        event_EVT_CHECKBOX="on_show_time_checkbox_changed"
+                        label="$(show_time_checkbox_text)"
+                    />
+                    <CheckBox
+                        name="fuzzy_checkbox"
+                        label="$(fuzzy_checkbox_text)"
+                    />
+                    <CheckBox
+                        name="locked_checkbox"
+                        event_EVT_CHECKBOX="on_locked_checkbox_changed"
+                        label="$(locked_checkbox_text)"
+                    />
+                    <CheckBox
+                        name="ends_today_checkbox"
+                        label="$(ends_today_checkbox_text)"
+                    />
                 </FlexGridSizer>
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(text_label)" />
-                <TextCtrl />
+                <TextCtrl name="name" />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_label)" />
                 <CategoryChoice
                     name="category_choice"
@@ -68,19 +89,53 @@ class EditEventDialog(Dialog):
                 />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(container_label)" />
                 <Choice
+                    name="containers_choice"
+                    event_EVT_CHOICE="on_container_changed"
                     align="ALIGN_LEFT"
                 />
             </FlexGridSizer>
             <Notebook name="notebook" style="BK_DEFAULT" border="LEFT|RIGHT|BOTTOM" proportion="1">
-                <DescriptionEditor notebookLabel="$(page_description)" editor="$(self)" proportion="1" />
-                <IconEditor notebookLabel="$(page_icon)" editor="$(self)" proportion="1" />
-                <AlertEditor notebookLabel="$(page_alert)" editor="$(self)" proportion="1" />
-                <HyperlinkEditor notebookLabel="$(page_hyperlink)" editor="$(self)" proportion="1" />
-                <ProgressEditor notebookLabel="$(page_progress)" editor="$(self)" proportion="1" />
+                <DescriptionEditor
+                    name="description"
+                    notebookLabel="$(page_description)"
+                    editor="$(self)"
+                    proportion="1"
+                />
+                <IconEditor
+                    name="icon"
+                    notebookLabel="$(page_icon)"
+                    editor="$(self)"
+                    proportion="1"
+                />
+                <AlertEditor
+                    name="alert"
+                    notebookLabel="$(page_alert)"
+                    editor="$(self)"
+                    proportion="1"
+                />
+                <HyperlinkEditor
+                    name="hyperlink"
+                    notebookLabel="$(page_hyperlink)"
+                    editor="$(self)"
+                    proportion="1"
+                />
+                <ProgressEditor
+                    name="progress"
+                    notebookLabel="$(page_progress)"
+                    editor="$(self)"
+                    proportion="1"
+                />
             </Notebook>
         </StaticBoxSizerVertical>
-        <CheckBox label="$(add_more_label)" border="LEFT|RIGHT" />
-        <DialogButtonsOkCancelSizer border="ALL" />
+        <CheckBox
+            name="add_more_checkbox"
+            label="$(add_more_label)"
+            border="LEFT|RIGHT"
+        />
+        <DialogButtonsOkCancelSizer
+            event_EVT_BUTTON__ID_OK="on_ok_clicked"
+            border="ALL"
+        />
     </BoxSizerVertical>
     """
 
@@ -126,82 +181,193 @@ class EditEventDialog(Dialog):
         self.SetMinSize(self.GetSize())
 
     def GetStart(self):
-        pass
+        return self.start_time.get_value()
 
     def SetStart(self, value):
-        pass
+        self.start_time.set_value(value)
 
     def GetEnd(self):
-        pass
+        return self.end_time.get_value()
 
     def SetEnd(self, value):
-        pass
+        self.end_time.set_value(value)
 
     def GetShowPeriod(self):
-        pass
+        return self.period_checkbox.GetValue()
 
     def SetShowPeriod(self, value):
-        pass
+        self.period_checkbox.SetValue(value)
+        self.ShowToTime(value)
+
+    def ShowToTime(self, show):
+        self.to_label.Show(show)
+        self.end_time.Show(show)
+
+    def GetShowTime(self):
+        return self.show_time_checkbox.GetValue()
 
     def SetShowTime(self, value):
-        pass
+        self.show_time_checkbox.SetValue(value)
+        self.start_time.show_time(value)
+        self.end_time.show_time(value)
 
     def GetFuzzy(self):
-        pass
+        return self.fuzzy_checkbox.GetValue()
 
     def SetFuzzy(self, value):
-        pass
+        self.fuzzy_checkbox.SetValue(value)
 
     def GetLocked(self):
-        pass
+        return self.locked_checkbox.GetValue()
 
     def SetLocked(self, value):
-        pass
+        self.locked_checkbox.SetValue(value)
 
     def GetEndsToday(self):
-        pass
+        return self.ends_today_checkbox.GetValue()
 
     def SetEndsToday(self, value):
-        pass
+        self.ends_today_checkbox.SetValue(value)
 
     def GetName(self):
-        pass
+        return self.name.GetValue().strip()
 
     def SetName(self, value):
-        pass
+        self.name.SetValue(value)
 
     def GetCategory(self):
-        pass
+        return self.category_choice.GetSelectedCategory()
 
     def SetCategory(self, value):
-        pass
+        self.category_choice.Populate(select=value)
 
     def GetContainer(self):
-        pass
+        selection = self.containers_choice.GetSelection()
+        if selection != -1:
+            container = self.containers_choice.GetClientData(selection)
+        else:
+            container = None
+        return container
 
     def SetContainer(self, value):
-        pass
+        self._fill_containers_listbox(value)
 
     def GetEventData(self):
-        pass
+        event_data = {}
+        for data_id, editor in self._get_event_data():
+            data = editor.get_data()
+            if data is not None:
+                event_data[data_id] = editor.get_data()
+        return event_data
 
     def SetEventData(self, event_data):
-        pass
+        for data_id, editor in self._get_event_data():
+            if data_id in event_data:
+                data = event_data[data_id]
+                if data is not None:
+                    editor.set_data(data)
 
     def ClearEventData(self):
-        pass
+        for _, editor in self._get_event_data():
+            editor.clear_data()
 
     def IsAddMoreChecked(self):
-        pass
+        return self.add_more_checkbox.GetValue()
 
     def SetShowAddMoreCheckbox(self, value):
-        pass
+        self.add_more_checkbox.Show(value)
+        self.add_more_checkbox.SetValue(False)
+        self.SetSizerAndFit(self.GetSizer())
 
     def SetFocusOnFirstControl(self):
-        pass
+        _set_focus_and_select(self.start_time)
 
     def DisplayInvalidStart(self, message):
-        pass
+        self._display_invalid_input(message, self.start_time)
 
     def DisplayInvalidEnd(self, message):
-        pass
+        self._display_invalid_input(message, self.end_time)
+
+    def _display_invalid_input(self, message, control):
+        self.DisplayErrorMessage(message)
+        _set_focus_and_select(control)
+
+    def _fill_containers_listbox(self, select_container):
+        # We can not do error handling here since this method is also called
+        # from the constructor (and then error handling is done by the code
+        # calling the constructor).
+        self.containers_choice.Clear()
+        self.containers_choice.Append("", None)  # The None-container
+        selection_set = False
+        current_item_index = 1
+        if select_container is not None and select_container not in self.timeline.get_containers():
+            self.containers_choice.Append(select_container.text, select_container)
+            self.containers_choice.SetSelection(current_item_index)
+            current_item_index += 1
+            selection_set = True
+        for container in self.timeline.get_containers():
+            self.containers_choice.Append(container.text, container)
+            if not selection_set:
+                if container == select_container:
+                    self.containers_choice.SetSelection(current_item_index)
+                    selection_set = True
+            current_item_index += 1
+        self.last_real_container_index = current_item_index - 1
+        self.add_container_item_index = self.last_real_container_index + 2
+        self.edit_container_item_index = self.last_real_container_index + 3
+        self.containers_choice.Append("", None)
+        self.containers_choice.Append(_("Add new"), None)
+        if not selection_set:
+            self.containers_choice.SetSelection(0)
+        self.current_container_selection = self.containers_choice.GetSelection()
+        self._enable_disable_checkboxes()
+
+    def _enable_disable_checkboxes(self):
+        self._enable_disable_ends_today()
+        self._enable_disable_locked()
+
+    def _enable_disable_ends_today(self):
+        enable = (self._container_not_selected() and
+                  not self.locked_checkbox.GetValue() and
+                  self.controller.start_is_in_history())
+        self.ends_today_checkbox.Enable(enable)
+
+    def _enable_disable_locked(self):
+        enable = self._container_not_selected()
+        self.locked_checkbox.Enable(enable)
+
+    def _container_not_selected(self):
+        index = self.containers_choice.GetSelection()
+        return (index == 0)
+
+    def _get_event_data(self):
+        return [
+            ("description", self.description),
+            ("alert", self.alert),
+            ("icon", self.icon),
+            ("hyperlink", self.hyperlink),
+            ("progress", self.progress),
+        ]
+
+    def _lst_containers_on_choice(self, e):
+        new_selection_index = e.GetSelection()
+        if new_selection_index > self.last_real_container_index:
+            self.containers_choice.SetSelection(self.current_container_selection)
+            if new_selection_index == self.add_container_item_index:
+                self._add_container()
+        else:
+            self.current_container_selection = new_selection_index
+        self._enable_disable_checkboxes()
+
+    def _add_container(self):
+        def create_container_editor():
+            return EditContainerDialog(self, _("Add Container"), self.timeline, None)
+        def handle_success(dialog):
+            if dialog.GetReturnCode() == wx.ID_OK:
+                try:
+                    self._fill_containers_listbox(dialog.GetEditedContainer())
+                except TimelineIOError, e:
+                    gui_utils.handle_db_error_in_dialog(self, e)
+        gui_utils.show_modal(create_container_editor,
+                             gui_utils.create_dialog_db_error_handler(self),
+                             handle_success)

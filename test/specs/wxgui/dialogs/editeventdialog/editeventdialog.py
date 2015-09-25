@@ -105,6 +105,8 @@ class describe_edit_event_dialog(EditEventDialogTestCase):
 
     def test_it_can_be_created(self):
         config = Mock()
+        config.event_editor_show_period = True
+        config.event_editor_show_time = False
         db = db_open(":tutorial:")
         categories = db.get_categories()
         categories[0].parent = categories[1]
