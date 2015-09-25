@@ -31,6 +31,8 @@ class describe_EventEditorTabSelectionDialog(UnitTestCase):
         self.controller = EventEditorTabSelectionDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(EventEditorTabSelectionDialog, None) as dialog:
+        config = Mock()
+        config.event_editor_tab_order = "01234:"
+        with create_dialog(EventEditorTabSelectionDialog, None, config) as dialog:
             if self.HALT_GUI:
                 dialog.ShowModal()

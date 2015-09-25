@@ -34,6 +34,7 @@ class EventEditorTabSelectionController(object):
 
     def _populate_view(self):
         for key in self.config.event_editor_tab_order:
+            print self.config.event_editor_tab_order
             self.view.append_tab_item(CONTROL_ROWS_CREATORS[key], key)
         self.view.Fit()
 

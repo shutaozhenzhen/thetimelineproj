@@ -31,25 +31,67 @@ class EventEditorTabSelectionDialog(Dialog):
     <BoxSizerVertical>
         <StaticText label="$(header_text)" border="ALL"/>
         <BoxSizerHorizontal proportion="1" >
-            <ListBox width="120" height="150" border="LEFT|BOTTOM" proportion="1" />
+            <ListBox name="lst_tab_order" width="120" height="150" border="LEFT|BOTTOM" proportion="1" />
             <BoxSizerVertical>
-                <BitmapButton bitmap="$(up_bitmap)" border="LEFT|RIGHT" />
+                <BitmapButton name="btn_up" bitmap="$(up_bitmap)" border="LEFT|RIGHT"
+                    event_EVT_BUTTON="on_up" />
                 <Spacer />
-                <BitmapButton bitmap="$(down_bitmap)"  border="LEFT|RIGHT" />
+                <BitmapButton name="btn_down" bitmap="$(down_bitmap)"  border="LEFT|RIGHT"
+                    event_EVT_BUTTON="on_down"/>
             </BoxSizerVertical>
         </BoxSizerHorizontal>
-        <DialogButtonsOkCancelSizer border="RIGHT|BOTTOM" />
+        <DialogButtonsOkCancelSizer border="RIGHT|BOTTOM"
+            event_EVT_BUTTON__ID_OK="on_ok" />
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, config):
         Dialog.__init__(self, EventEditorTabSelectionDialogController, parent, {
             "header_text": _("Select Tab Order:"),
             "up_bitmap": self._GetBitmap(wx.ART_GO_UP),
             "down_bitmap": self._GetBitmap(wx.ART_GO_DOWN)
         }, title=_("Event Editor Tab Order"),
             style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
-        self.controller.on_init()
+        self.controller.on_init(config)
+
+    def FillListbox(self, tab_items):
+        for text, key in tab_items:
+            self.lst_tab_order.Append(text, key)
+        self.lst_tab_order.Select(0)
+
+    def Close(self):
+        self.EndModalOk()
+
+    def GetSelection(self):
+        return self.lst_tab_order.GetSelection()
+
+    def GetClientData(self, inx):
+        return self.lst_tab_order.GetClientData(inx)
+
+    def DisableBtnDown(self):
+        self.btn_down.Disable()
+
+    def EnableBtnDown(self):
+        self.btn_down.Enable()
+
+    def DisableBtnUp(self):
+        self.btn_up.Disable()
+
+    def EnableBtnUp(self):
+        self.btn_up.Enable()
+
+    def MoveSelectionUp(self, inx):
+        self._MoveSelection(inx, -1)
+
+    def MoveSelectionDown(self, inx):
+        self._MoveSelection(inx, 1)
+
+    def _MoveSelection(self, inx, offset):
+        text = self.lst_tab_order.GetString(inx)
+        key = self.lst_tab_order.GetClientData(inx)
+        self.lst_tab_order.Delete(inx)
+        self.lst_tab_order.Insert(text, inx + offset, key)
+        self.lst_tab_order.Select(inx + offset)
 
     def _GetBitmap(self, bitmap_id):
         if 'wxMSW' in wx.PlatformInfo:

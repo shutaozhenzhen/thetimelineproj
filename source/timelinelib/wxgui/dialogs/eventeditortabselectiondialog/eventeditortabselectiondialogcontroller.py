@@ -19,7 +19,43 @@
 from timelinelib.wxgui.framework import Controller
 
 
+CONTROL_ROWS_CREATORS = {"0": "Time details", "1": "Checkboxes",
+                         "2": "Text Field", "3": "Categories listbox",
+                         "4": "Container listbox", ":": "Notebook"}
+
+
 class EventEditorTabSelectionDialogController(Controller):
 
-    def on_init(self):
-        pass
+    def on_init(self, config):
+        self.config = config
+        tab_items = []
+        for key in self.config.event_editor_tab_order:
+            tab_items.append((CONTROL_ROWS_CREATORS[key], key))
+        self.view.FillListbox(tab_items)
+        self.view.EnableBtnDown()
+        self.view.DisableBtnUp()
+
+    def on_ok(self, evt):
+        self._save_tab_order()
+        self.view.Close()
+
+    def on_up(self, evt):
+        inx = self.view.GetSelection()
+        self.view.MoveSelectionUp(inx)
+        if inx == 1:
+            self.view.DisableBtnUp()
+        self.view.EnableBtnDown()
+
+    def on_down(self, evt):
+        inx = self.view.GetSelection()
+        self.view.MoveSelectionDown(inx)
+        if inx == len(CONTROL_ROWS_CREATORS) - 2:
+            self.view.DisableBtnDown()
+        self.view.EnableBtnUp()
+
+    def _save_tab_order(self):
+        collector = []
+        for i in range(len(self.config.event_editor_tab_order)):
+            collector.append(self.view.GetClientData(i))
+        self.config.event_editor_tab_order = "".join(collector)
+        print self.config.event_editor_tab_order
