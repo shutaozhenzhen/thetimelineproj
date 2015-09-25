@@ -49,7 +49,7 @@ class Sidebar(wx.Panel):
         return self.main_frame.edit_ends()
 
     def _cbx_on_click(self, evt):
-        from timelinelib.wxgui.dialogs.mainframe.mainframe import CatsViewChangedEvent
+        from timelinelib.wxgui.frames.mainframe.mainframe import CatsViewChangedEvent
         event = CatsViewChangedEvent(self.GetId())
         event.ClientData = evt.GetEventObject().IsChecked()
         self.GetEventHandler().ProcessEvent(event)

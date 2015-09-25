@@ -19,7 +19,7 @@
 class DrawingAreaProxy():
 
     def __init__(self, creator):
-        from timelinelib.wxgui.dialogs.mainframe.mainframe import MainFrame
+        from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
         if isinstance(creator, MainFrame):
             self.timeline_canvas = creator.main_panel.timeline_panel.timeline_canvas
 

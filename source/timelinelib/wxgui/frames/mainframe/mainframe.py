@@ -54,12 +54,12 @@ from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialog import show_feedbac
 from timelinelib.wxgui.dialogs.filenewdialog.filenewdialog import FileNewDialog
 from timelinelib.wxgui.dialogs.helpbrowser.helpbrowserframe import HelpBrowser
 from timelinelib.wxgui.dialogs.importeventsdialog.importeventsdialog import ImportEventsDialog
-from timelinelib.wxgui.dialogs.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.dialogs.preferencesdialog.preferencesdialog import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategorydialog.setcategorydialog import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditordialog.shortcutseditordialog import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.textdisplaydialog.textdisplaydialog import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditordialog.timeeditordialog import TimeEditorDialog
+from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message

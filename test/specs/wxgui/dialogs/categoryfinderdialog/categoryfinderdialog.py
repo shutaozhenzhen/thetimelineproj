@@ -18,13 +18,13 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.categoryfinderdialog.categoryfinderdialog import CategoryFinderDialog
-from timelinelib.wxgui.dialogs.categoryfinderdialog.categoryfinderdialogcontroller import CategoryFinderDialogController
-from timelinelib.wxgui.dialogs.mainframe.mainframe import MainFrame
 from timelinelib.data.db import MemoryDB
+from timelinelib.wxgui.dialogs.categoryfinderdialog.categoryfinderdialogcontroller import CategoryFinderDialogController
+from timelinelib.wxgui.dialogs.categoryfinderdialog.categoryfinderdialog import CategoryFinderDialog
+from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
 from timelinetest.utils import a_category_with
+from timelinetest.utils import create_dialog
 
 
 class describe_CategoryFinderDialog(UnitTestCase):
