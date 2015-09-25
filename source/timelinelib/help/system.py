@@ -19,7 +19,7 @@
 """
 A wiki-like help system.
 
-Used by HelpBrowser in GUI.
+Used by HelpBrowserFrame in GUI.
 
 Usage:
 
