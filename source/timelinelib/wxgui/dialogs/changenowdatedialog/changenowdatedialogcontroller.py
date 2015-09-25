@@ -31,7 +31,7 @@ class ChangeNowDateDialogController(Controller):
 
     def on_time_changed(self):
         try:
-            self.db.set_saved_now(self.view.GetNowValue())
+            self.db.set_saved_now(self._get_timepicker_time())
             self._trigger_new_time_callback()
         except ValueError:
             pass
@@ -44,3 +44,9 @@ class ChangeNowDateDialogController(Controller):
 
     def _trigger_new_time_callback(self):
         self.handle_new_time_fn(self.db.get_saved_now())
+
+    def _get_timepicker_time(self):
+        time = self.view.GetNowValue()
+        if time is None:
+            raise ValueError()
+        return time
