@@ -80,7 +80,7 @@ class AlertEditorGuiCreator(wx.Panel):
 
 class AlertEditor(BaseEditor, AlertEditorGuiCreator):
 
-    def __init__(self, parent, editor):
+    def __init__(self, parent, editor, name=""):
         BaseEditor.__init__(self, parent, editor)
         AlertEditorGuiCreator.__init__(self, parent)
         self.create_gui()

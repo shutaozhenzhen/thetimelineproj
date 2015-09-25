@@ -66,7 +66,7 @@ class IconEditorGuiCreator(wx.Panel):
 
 class IconEditor(BaseEditor, IconEditorGuiCreator):
 
-    def __init__(self, parent, editor):
+    def __init__(self, parent, editor, name=""):
         BaseEditor.__init__(self, parent, editor)
         IconEditorGuiCreator.__init__(self, parent)
         self.create_gui()
