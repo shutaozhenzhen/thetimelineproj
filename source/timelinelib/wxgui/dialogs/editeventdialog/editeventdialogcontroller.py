@@ -35,9 +35,6 @@ class EditEventDialogController(Controller):
         self._set_values(start, end, event)
         self._set_view_content()
 
-    def on_container_changed(self, event):
-        self.view.EnableDisableCheckboxes()
-
     def on_period_checkbox_changed(self, event):
         end = self.view.GetEnd()
         start = self.view.GetStart()
@@ -58,6 +55,10 @@ class EditEventDialogController(Controller):
 
     def on_locked_checkbox_changed(self, event):
         self.view._enable_disable_ends_today()
+
+    def on_container_changed(self, event):
+        self._enable_disable_ends_today()
+        self._enable_disable_locked()
 
     def on_ok_clicked(self, event):
         try:
@@ -312,3 +313,16 @@ class EditEventDialogController(Controller):
             return time_period.has_nonzero_time()
         except Exception:
             return False
+
+    def _enable_disable_ends_today(self):
+        enable = (self._container_not_selected() and
+                  not self.view.GetLocked() and
+                  self.start_is_in_history())
+        self.view.EnableEndsToday(enable)
+
+    def _enable_disable_locked(self):
+        enable = self._container_not_selected()
+        self.view.EnableLocked(enable)
+
+    def _container_not_selected(self):
+        return self.view.GetContainer() is None
