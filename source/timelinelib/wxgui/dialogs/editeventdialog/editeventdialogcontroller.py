@@ -62,11 +62,11 @@ class EditEventDialogController(Controller):
 
     def on_ok_clicked(self, event):
         try:
-            self.create_or_update_event()
+            self._create_or_update_event()
         except ValueError:
             self.view.DisplayErrorMessage(_("Invalid Date or Time"))
 
-    def create_or_update_event(self):
+    def _create_or_update_event(self):
         try:
             self._get_and_verify_input()
             self._save_event()
@@ -83,11 +83,6 @@ class EditEventDialogController(Controller):
                 self.view.EndModalOk()
         except ValueError:
             pass
-
-    def start_is_in_history(self):
-        if self.start is None:
-            return False
-        return self.start < self.timeline.time_type.now()
 
     def _set_values(self, start, end, event):
         self.event = event
@@ -143,36 +138,36 @@ class EditEventDialogController(Controller):
         self.locked = self.view.GetLocked()
         self.ends_today = self.view.GetEndsToday()
         self.category = self.view.GetCategory()
-        start = self.get_start_from_view()
+        start = self._get_start_from_view()
         if self._dialog_has_signalled_invalid_input(start):
             self.view.DisplayInvalidStart(_("Invalid Start- date or time"))
             raise ValueError()
-        end = self.get_end_from_view()
+        end = self._get_end_from_view()
         if self._dialog_has_signalled_invalid_input(end):
             self.view.DisplayInvalidStart(_("Invalid End- date or time"))
             raise ValueError()
         if self.event is not None and self.locked:
             self._verify_that_time_has_not_been_changed(start, end)
-        self.start = self._validate_and_save_start(self.get_start_from_view())
-        self.end = self._validate_and_save_end(self.get_end_from_view())
+        self.start = self._validate_and_save_start(self._get_start_from_view())
+        self.end = self._validate_and_save_end(self._get_end_from_view())
         self._validate_period()
         self._validate_ends_today()
         self.container = self.view.GetContainer()
 
-    def get_start_from_view(self):
+    def _get_start_from_view(self):
         try:
             return self.view.GetStart()
         except ValueError, ex:
             self.view.DisplayInvalidStart("%s" % ex_msg(ex))
 
-    def get_end_from_view(self):
+    def _get_end_from_view(self):
         if self.view.GetShowPeriod():
             try:
                 return self.view.GetEnd()
             except ValueError, ex:
                 self.view.DisplayInvalidEnd("%s" % ex_msg(ex))
         else:
-            return self.get_start_from_view()
+            return self._get_start_from_view()
 
     def _dialog_has_signalled_invalid_input(self, time):
         return time is None
@@ -248,15 +243,15 @@ class EditEventDialogController(Controller):
                                self.ends_today)
 
     def _create_subevent(self):
-        if self.is_new_container(self.container):
-            self.add_new_container()
+        if self._is_new_container(self.container):
+            self._add_new_container()
         self.event = Subevent(self.time_type, self.start, self.end, self.name,
                               self.category, self.container)
 
-    def is_new_container(self, container):
+    def _is_new_container(self, container):
         return container not in self.timeline.get_containers()
 
-    def add_new_container(self):
+    def _add_new_container(self):
         max_id = 0
         for container in self.timeline.get_containers():
             if container.cid() > max_id:
@@ -317,7 +312,7 @@ class EditEventDialogController(Controller):
     def _enable_disable_ends_today(self):
         enable = (self._container_not_selected() and
                   not self.view.GetLocked() and
-                  self.start_is_in_history())
+                  self._start_is_in_history())
         self.view.EnableEndsToday(enable)
 
     def _enable_disable_locked(self):
@@ -326,3 +321,8 @@ class EditEventDialogController(Controller):
 
     def _container_not_selected(self):
         return self.view.GetContainer() is None
+
+    def _start_is_in_history(self):
+        if self.start is None:
+            return False
+        return self.start < self.timeline.time_type.now()
