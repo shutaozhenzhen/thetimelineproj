@@ -54,7 +54,7 @@ class EditEventDialogController(Controller):
         self.view.SetShowTime(event.IsChecked())
 
     def on_locked_checkbox_changed(self, event):
-        self.view._enable_disable_ends_today()
+        self._enable_disable_ends_today()
 
     def on_container_changed(self, event):
         self._enable_disable_ends_today()
