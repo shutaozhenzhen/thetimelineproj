@@ -18,6 +18,7 @@
 
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.components.colourselect import ColourSelect
+from timelinelib.wxgui.components.containerchoice import ContainerChoice
 from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsapplyclosesizer import DialogButtonsApplyCloseSizer
 from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsclosesizer import DialogButtonsCloseSizer
 from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonseditaddremoveclosesizer import DialogButtonsEditAddRemoveCloseSizer
