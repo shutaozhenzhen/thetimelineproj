@@ -17,11 +17,9 @@
 
 
 from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
-from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialog import EditContainerDialog
 from timelinelib.wxgui.dialogs.editeventdialog.editeventdialogcontroller import EditEventDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import _set_focus_and_select
-import timelinelib.wxgui.utils as gui_utils
 
 import wx
 
@@ -223,11 +221,17 @@ class EditEventDialog(Dialog):
     def SetLocked(self, value):
         self.locked_checkbox.SetValue(value)
 
+    def EnableLocked(self, value):
+        self.locked_checkbox.Enable(value)
+
     def GetEndsToday(self):
         return self.ends_today_checkbox.GetValue()
 
     def SetEndsToday(self, value):
         self.ends_today_checkbox.SetValue(value)
+
+    def EnableEndsToday(self, value):
+        self.ends_today_checkbox.Enable(value)
 
     def GetName(self):
         return self.name.GetValue().strip()
@@ -283,27 +287,9 @@ class EditEventDialog(Dialog):
     def DisplayInvalidEnd(self, message):
         self._display_invalid_input(message, self.end_time)
 
-    def EnableDisableCheckboxes(self):
-        self._enable_disable_ends_today()
-        self._enable_disable_locked()
-
     def _display_invalid_input(self, message, control):
         self.DisplayErrorMessage(message)
         _set_focus_and_select(control)
-
-    def _enable_disable_ends_today(self):
-        enable = (self._container_not_selected() and
-                  not self.locked_checkbox.GetValue() and
-                  self.controller.start_is_in_history())
-        self.ends_today_checkbox.Enable(enable)
-
-    def _enable_disable_locked(self):
-        enable = self._container_not_selected()
-        self.locked_checkbox.Enable(enable)
-
-    def _container_not_selected(self):
-        index = self.container_choice.GetSelection()
-        return (index == 0)
 
     def _get_event_data(self):
         return [
