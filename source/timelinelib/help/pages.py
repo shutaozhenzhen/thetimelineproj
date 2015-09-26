@@ -48,6 +48,7 @@ def install(help_system):
     - Help(events)
     - Help(categories)
     - Help(experimental_features)
+    - Help(event_containers)
 - **%s**
     - Help(create_event)
     - Help(edit_event)
@@ -381,6 +382,7 @@ First open a timeline and then select menu 'File -> Import timeline...' and sele
     help_system.install_page(
         page_id="event_containers",
         header=_("Event Containers"),
+        related_pages=["events", "experimental_features"],
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
         # Just write them as they are.
@@ -394,6 +396,9 @@ if you resize an event within the container.
 
 Have a look at this video for a demo.
     <http://www.youtube.com/watch?v=dBwEQ3vqB_I>
+
+From version 1.8 there is a second container strategy that let's events overlap in time within the container.
+This strategy is implemented as an experimental feature and can be selected in the preferences dialog.
 """))
 
     help_system.install_page(
