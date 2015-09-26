@@ -36,7 +36,7 @@ class EditEventDialogController(Controller):
         self._set_view_content()
 
     def on_container_changed(self, event):
-        self.view._lst_containers_on_choice(event)
+        self.view.EnableDisableCheckboxes()
 
     def on_period_checkbox_changed(self, event):
         end = self.view.GetEnd()

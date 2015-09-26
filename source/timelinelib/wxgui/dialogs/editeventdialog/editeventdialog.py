@@ -88,9 +88,10 @@ class EditEventDialog(Dialog):
                     align="ALIGN_LEFT"
                 />
                 <StaticText align="ALIGN_CENTER_VERTICAL" label="$(container_label)" />
-                <Choice
-                    name="containers_choice"
-                    event_EVT_CHOICE="on_container_changed"
+                <ContainerChoice
+                    name="container_choice"
+                    event_EVT_CONTAINER_CHANGED="on_container_changed"
+                    db="$(db)"
                     align="ALIGN_LEFT"
                 />
             </FlexGridSizer>
@@ -241,15 +242,10 @@ class EditEventDialog(Dialog):
         self.category_choice.Populate(select=value)
 
     def GetContainer(self):
-        selection = self.containers_choice.GetSelection()
-        if selection != -1:
-            container = self.containers_choice.GetClientData(selection)
-        else:
-            container = None
-        return container
+        return self.container_choice.GetSelectedContainer()
 
     def SetContainer(self, value):
-        self._fill_containers_listbox(value)
+        self.container_choice.Fill(value)
 
     def GetEventData(self):
         event_data = {}
@@ -287,43 +283,13 @@ class EditEventDialog(Dialog):
     def DisplayInvalidEnd(self, message):
         self._display_invalid_input(message, self.end_time)
 
+    def EnableDisableCheckboxes(self):
+        self._enable_disable_ends_today()
+        self._enable_disable_locked()
+
     def _display_invalid_input(self, message, control):
         self.DisplayErrorMessage(message)
         _set_focus_and_select(control)
-
-    def _fill_containers_listbox(self, select_container):
-        # We can not do error handling here since this method is also called
-        # from the constructor (and then error handling is done by the code
-        # calling the constructor).
-        self.containers_choice.Clear()
-        self.containers_choice.Append("", None)  # The None-container
-        selection_set = False
-        current_item_index = 1
-        if select_container is not None and select_container not in self.timeline.get_containers():
-            self.containers_choice.Append(select_container.text, select_container)
-            self.containers_choice.SetSelection(current_item_index)
-            current_item_index += 1
-            selection_set = True
-        for container in self.timeline.get_containers():
-            self.containers_choice.Append(container.text, container)
-            if not selection_set:
-                if container == select_container:
-                    self.containers_choice.SetSelection(current_item_index)
-                    selection_set = True
-            current_item_index += 1
-        self.last_real_container_index = current_item_index - 1
-        self.add_container_item_index = self.last_real_container_index + 2
-        self.edit_container_item_index = self.last_real_container_index + 3
-        self.containers_choice.Append("", None)
-        self.containers_choice.Append(_("Add new"), None)
-        if not selection_set:
-            self.containers_choice.SetSelection(0)
-        self.current_container_selection = self.containers_choice.GetSelection()
-        self._enable_disable_checkboxes()
-
-    def _enable_disable_checkboxes(self):
-        self._enable_disable_ends_today()
-        self._enable_disable_locked()
 
     def _enable_disable_ends_today(self):
         enable = (self._container_not_selected() and
@@ -336,7 +302,7 @@ class EditEventDialog(Dialog):
         self.locked_checkbox.Enable(enable)
 
     def _container_not_selected(self):
-        index = self.containers_choice.GetSelection()
+        index = self.container_choice.GetSelection()
         return (index == 0)
 
     def _get_event_data(self):
@@ -347,26 +313,3 @@ class EditEventDialog(Dialog):
             ("hyperlink", self.hyperlink),
             ("progress", self.progress),
         ]
-
-    def _lst_containers_on_choice(self, e):
-        new_selection_index = e.GetSelection()
-        if new_selection_index > self.last_real_container_index:
-            self.containers_choice.SetSelection(self.current_container_selection)
-            if new_selection_index == self.add_container_item_index:
-                self._add_container()
-        else:
-            self.current_container_selection = new_selection_index
-        self._enable_disable_checkboxes()
-
-    def _add_container(self):
-        def create_container_editor():
-            return EditContainerDialog(self, _("Add Container"), self.timeline, None)
-        def handle_success(dialog):
-            if dialog.GetReturnCode() == wx.ID_OK:
-                try:
-                    self._fill_containers_listbox(dialog.GetEditedContainer())
-                except TimelineIOError, e:
-                    gui_utils.handle_db_error_in_dialog(self, e)
-        gui_utils.show_modal(create_container_editor,
-                             gui_utils.create_dialog_db_error_handler(self),
-                             handle_success)
