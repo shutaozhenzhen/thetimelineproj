@@ -25,6 +25,7 @@ from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.components.feedbackbutton import FeedbackButton
 from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialog import EditContainerDialog
+from timelinelib.wxgui.dialogs.editeventdialog.editeventdialog import EditEventDialog
 from timelinelib.wxgui.dialogs.eventeditor.eventeditordialogcontroller import EventEditorDialogController
 from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.alerteditor import AlertEditor
 from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.descriptioneditor import DescriptionEditor
@@ -502,7 +503,7 @@ def open_event_editor_for(parent, config, db, handle_db_error, event):
             title = _("Edit Container")
             return EditContainerDialog(parent, title, db, event)
         else:
-            return EventEditorDialog(
+            return EditEventDialog(
                 parent, config, _("Edit Event"), db, event=event)
     def edit_function():
         gui_utils.show_modal(create_event_editor, handle_db_error)
@@ -512,7 +513,7 @@ def open_event_editor_for(parent, config, db, handle_db_error, event):
 def open_create_event_editor(parent, config, db, handle_db_error, start=None, end=None):
     def create_event_editor():
         label = _("Create Event")
-        return EventEditorDialog(parent, config, label, db, start, end)
+        return EditEventDialog(parent, config, label, db, start, end)
     def edit_function():
         gui_utils.show_modal(create_event_editor, handle_db_error)
     safe_locking(parent, edit_function)
