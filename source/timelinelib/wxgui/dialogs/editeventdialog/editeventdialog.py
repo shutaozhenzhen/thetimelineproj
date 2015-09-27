@@ -16,12 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
 from timelinelib.wxgui.dialogs.editeventdialog.editeventdialogcontroller import EditEventDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import _set_focus_and_select
-
-import wx
 
 
 class EditEventDialog(Dialog):
@@ -30,101 +30,8 @@ class EditEventDialog(Dialog):
     <BoxSizerVertical>
         <StaticBoxSizerVertical label="$(properties_label)" border="ALL" proportion="1">
             <FlexGridSizer columns="2" growableColumns="1" border="ALL">
-                <StaticText align="ALIGN_CENTER_VERTICAL" label="$(when_label)" />
-                <BoxSizerHorizontal>
-                    <TimePicker
-                        name="start_time"
-                        time_type="$(time_type)"
-                        config="$(config)"
-                    />
-                    <Spacer />
-                    <StaticText
-                        label="$(to_label)"
-                        name="to_label"
-                        align="ALIGN_CENTER_VERTICAL"
-                    />
-                    <Spacer />
-                    <TimePicker
-                        name="end_time"
-                        time_type="$(time_type)"
-                        config="$(config)"
-                    />
-                </BoxSizerHorizontal>
-                <StaticText align="ALIGN_CENTER_VERTICAL" label="" />
-                <FlexGridSizer rows="1">
-                    <CheckBox
-                        name="period_checkbox"
-                        event_EVT_CHECKBOX="on_period_checkbox_changed"
-                        label="$(period_checkbox_text)" />
-                    <CheckBox
-                        name="show_time_checkbox"
-                        event_EVT_CHECKBOX="on_show_time_checkbox_changed"
-                        label="$(show_time_checkbox_text)"
-                    />
-                    <CheckBox
-                        name="fuzzy_checkbox"
-                        label="$(fuzzy_checkbox_text)"
-                    />
-                    <CheckBox
-                        name="locked_checkbox"
-                        event_EVT_CHECKBOX="on_locked_checkbox_changed"
-                        label="$(locked_checkbox_text)"
-                    />
-                    <CheckBox
-                        name="ends_today_checkbox"
-                        label="$(ends_today_checkbox_text)"
-                    />
-                </FlexGridSizer>
-                <StaticText align="ALIGN_CENTER_VERTICAL" label="$(text_label)" />
-                <TextCtrl name="name" />
-                <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_label)" />
-                <CategoryChoice
-                    name="category_choice"
-                    allow_add="True"
-                    allow_edit="True"
-                    timeline="$(db)"
-                    align="ALIGN_LEFT"
-                />
-                <StaticText align="ALIGN_CENTER_VERTICAL" label="$(container_label)" />
-                <ContainerChoice
-                    name="container_choice"
-                    event_EVT_CONTAINER_CHANGED="on_container_changed"
-                    db="$(db)"
-                    align="ALIGN_LEFT"
-                />
+                %s
             </FlexGridSizer>
-            <Notebook name="notebook" style="BK_DEFAULT" border="LEFT|RIGHT|BOTTOM" proportion="1">
-                <DescriptionEditor
-                    name="description"
-                    notebookLabel="$(page_description)"
-                    editor="$(self)"
-                    proportion="1"
-                />
-                <IconEditor
-                    name="icon"
-                    notebookLabel="$(page_icon)"
-                    editor="$(self)"
-                    proportion="1"
-                />
-                <AlertEditor
-                    name="alert"
-                    notebookLabel="$(page_alert)"
-                    editor="$(self)"
-                    proportion="1"
-                />
-                <HyperlinkEditor
-                    name="hyperlink"
-                    notebookLabel="$(page_hyperlink)"
-                    editor="$(self)"
-                    proportion="1"
-                />
-                <ProgressEditor
-                    name="progress"
-                    notebookLabel="$(page_progress)"
-                    editor="$(self)"
-                    proportion="1"
-                />
-            </Notebook>
         </StaticBoxSizerVertical>
         <CheckBox
             name="add_more_checkbox"
@@ -138,7 +45,121 @@ class EditEventDialog(Dialog):
     </BoxSizerVertical>
     """
 
+    TIME_DETAILS_ROW = """
+        <StaticText align="ALIGN_CENTER_VERTICAL" label="$(when_label)" />
+        <BoxSizerHorizontal>
+            <TimePicker
+                name="start_time"
+                time_type="$(time_type)"
+                config="$(config)"
+            />
+            <Spacer />
+            <StaticText
+                label="$(to_label)"
+                name="to_label"
+                align="ALIGN_CENTER_VERTICAL"
+            />
+            <Spacer />
+            <TimePicker
+                name="end_time"
+                time_type="$(time_type)"
+                config="$(config)"
+            />
+        </BoxSizerHorizontal>
+    """
+
+    CHECKBOX_ROW = """
+        <Spacer />
+        <FlexGridSizer rows="1">
+            <CheckBox
+                name="period_checkbox"
+                event_EVT_CHECKBOX="on_period_checkbox_changed"
+                label="$(period_checkbox_text)" />
+            <CheckBox
+                name="show_time_checkbox"
+                event_EVT_CHECKBOX="on_show_time_checkbox_changed"
+                label="$(show_time_checkbox_text)"
+            />
+            <CheckBox
+                name="fuzzy_checkbox"
+                label="$(fuzzy_checkbox_text)"
+            />
+            <CheckBox
+                name="locked_checkbox"
+                event_EVT_CHECKBOX="on_locked_checkbox_changed"
+                label="$(locked_checkbox_text)"
+            />
+            <CheckBox
+                name="ends_today_checkbox"
+                label="$(ends_today_checkbox_text)"
+            />
+        </FlexGridSizer>
+    """
+
+    TEXT_FIELD_ROW = """
+        <StaticText align="ALIGN_CENTER_VERTICAL" label="$(text_label)" />
+        <TextCtrl name="name" />
+    """
+
+    CATEGORY_LISTBOX_ROW = """
+        <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_label)" />
+        <CategoryChoice
+            name="category_choice"
+            allow_add="True"
+            allow_edit="True"
+            timeline="$(db)"
+            align="ALIGN_LEFT"
+        />
+    """
+
+    CONTAINER_LISTBOX_ROW = """
+        <StaticText align="ALIGN_CENTER_VERTICAL" label="$(container_label)" />
+        <ContainerChoice
+            name="container_choice"
+            event_EVT_CONTAINER_CHANGED="on_container_changed"
+            db="$(db)"
+            align="ALIGN_LEFT"
+        />
+    """
+
+    NOTEBOOK_ROW = """
+        <Spacer />
+        <Notebook name="notebook" style="BK_DEFAULT" proportion="1">
+            <DescriptionEditor
+                name="description"
+                notebookLabel="$(page_description)"
+                editor="$(self)"
+                proportion="1"
+            />
+            <IconEditor
+                name="icon"
+                notebookLabel="$(page_icon)"
+                editor="$(self)"
+                proportion="1"
+            />
+            <AlertEditor
+                name="alert"
+                notebookLabel="$(page_alert)"
+                editor="$(self)"
+                proportion="1"
+            />
+            <HyperlinkEditor
+                name="hyperlink"
+                notebookLabel="$(page_hyperlink)"
+                editor="$(self)"
+                proportion="1"
+            />
+            <ProgressEditor
+                name="progress"
+                notebookLabel="$(page_progress)"
+                editor="$(self)"
+                proportion="1"
+            />
+        </Notebook>
+    """
+
     def __init__(self, parent, config, title, db, start=None, end=None, event=None):
+        self._insert_rows_in_correct_order_in_xml(config)
         self.timeline = db
         self.config = config
         self.start = start
@@ -299,3 +320,15 @@ class EditEventDialog(Dialog):
             ("hyperlink", self.hyperlink),
             ("progress", self.progress),
         ]
+
+    def _insert_rows_in_correct_order_in_xml(self, config):
+        rows_by_key = {
+            "0": self.TIME_DETAILS_ROW,
+            "1": self.CHECKBOX_ROW,
+            "2": self.TEXT_FIELD_ROW,
+            "3": self.CATEGORY_LISTBOX_ROW,
+            "4": self.CONTAINER_LISTBOX_ROW,
+            ":": self.NOTEBOOK_ROW,
+        }
+        placeholder_content = "".join(rows_by_key[key] for key in config.event_editor_tab_order)
+        self.__doc__ = self.__doc__ % placeholder_content
