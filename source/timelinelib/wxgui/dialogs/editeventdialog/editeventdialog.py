@@ -159,11 +159,11 @@ class EditEventDialog(Dialog):
     """
 
     def __init__(self, parent, config, title, db, start=None, end=None, event=None):
-        self._insert_rows_in_correct_order_in_xml(config)
         self.timeline = db
         self.config = config
         self.start = start
         self.event = event
+        self._insert_rows_in_correct_order_in_xml()
         Dialog.__init__(self, EditEventDialogController, parent, {
             "self": self,
             "db": db,
@@ -300,7 +300,15 @@ class EditEventDialog(Dialog):
         self.SetSizerAndFit(self.GetSizer())
 
     def SetFocusOnFirstControl(self):
-        _set_focus_and_select(self.start_time)
+        control = {
+            "0": self.start_time,
+            "1": self.period_checkbox,
+            "2": self.name,
+            "3": self.category_choice,
+            "4": self.container_choice,
+            ":": self.notebook,
+        }[self.config.event_editor_tab_order[0]]
+        _set_focus_and_select(control)
 
     def DisplayInvalidStart(self, message):
         self._display_invalid_input(message, self.start_time)
@@ -321,7 +329,7 @@ class EditEventDialog(Dialog):
             ("progress", self.progress),
         ]
 
-    def _insert_rows_in_correct_order_in_xml(self, config):
+    def _insert_rows_in_correct_order_in_xml(self):
         rows_by_key = {
             "0": self.TIME_DETAILS_ROW,
             "1": self.CHECKBOX_ROW,
@@ -330,5 +338,5 @@ class EditEventDialog(Dialog):
             "4": self.CONTAINER_LISTBOX_ROW,
             ":": self.NOTEBOOK_ROW,
         }
-        placeholder_content = "".join(rows_by_key[key] for key in config.event_editor_tab_order)
+        placeholder_content = "".join(rows_by_key[key] for key in self.config.event_editor_tab_order)
         self.__doc__ = self.__doc__ % placeholder_content
