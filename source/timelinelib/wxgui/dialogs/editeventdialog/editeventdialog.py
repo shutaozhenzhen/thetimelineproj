@@ -205,7 +205,7 @@ class EditEventDialog(Dialog):
             start,
             end,
             event)
-        self.grid_sizer.AddGrowableRow(self.config.event_editor_tab_order.index(":"))
+        self._make_row_with_notebook_growable()
         self.SetMinSize((800, -1))
         self.Fit()
         self.SetMinSize(self.GetSize())
@@ -351,3 +351,6 @@ class EditEventDialog(Dialog):
         }
         placeholder_content = "".join(rows_by_key[key] for key in self.config.event_editor_tab_order)
         self.__doc__ = self.__doc__ % placeholder_content
+
+    def _make_row_with_notebook_growable(self):
+        self.grid_sizer.AddGrowableRow(self.config.event_editor_tab_order.index(":"))
