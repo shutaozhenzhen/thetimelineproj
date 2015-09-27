@@ -18,10 +18,13 @@
 
 import wx
 
+from timelinelib.db.utils import safe_locking
 from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
+from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialog import EditContainerDialog
 from timelinelib.wxgui.dialogs.editeventdialog.editeventdialogcontroller import EditEventDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import _set_focus_and_select
+import timelinelib.wxgui.utils as gui_utils
 
 
 class EditEventDialog(Dialog):
@@ -354,3 +357,25 @@ class EditEventDialog(Dialog):
 
     def _make_row_with_notebook_growable(self):
         self.grid_sizer.AddGrowableRow(self.config.event_editor_tab_order.index(":"))
+
+
+def open_event_editor_for(parent, config, db, handle_db_error, event):
+    def create_event_editor():
+        if event.is_container():
+            title = _("Edit Container")
+            return EditContainerDialog(parent, title, db, event)
+        else:
+            return EditEventDialog(
+                parent, config, _("Edit Event"), db, event=event)
+    def edit_function():
+        gui_utils.show_modal(create_event_editor, handle_db_error)
+    safe_locking(parent, edit_function)
+
+
+def open_create_event_editor(parent, config, db, handle_db_error, start=None, end=None):
+    def create_event_editor():
+        label = _("Create Event")
+        return EditEventDialog(parent, config, label, db, start, end)
+    def edit_function():
+        gui_utils.show_modal(create_event_editor, handle_db_error)
+    safe_locking(parent, edit_function)

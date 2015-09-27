@@ -46,8 +46,8 @@ from timelinelib.wxgui.components.mainpanel import MainPanel
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.dialogs.changenowdatedialog.changenowdatedialog import ChangeNowDateDialog
 from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialog import open_duplicate_event_dialog_for_event
+from timelinelib.wxgui.dialogs.editeventdialog.editeventdialog import open_create_event_editor
 from timelinelib.wxgui.dialogs.eraseditordialog.eraseditordialog import ErasEditorDialog
-from timelinelib.wxgui.dialogs.eventeditor.eventeditordialog import open_create_event_editor
 from timelinelib.wxgui.dialogs.featuredialog.featuredialog import show_feature_feedback_dialog
 from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialog import show_feedback_dialog
 from timelinelib.wxgui.dialogs.filenewdialog.filenewdialog import FileNewDialog
