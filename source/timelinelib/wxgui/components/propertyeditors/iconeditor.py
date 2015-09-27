@@ -20,7 +20,7 @@ import os.path
 
 import wx
 
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.baseeditor import BaseEditor
+from timelinelib.wxgui.components.propertyeditors.baseeditor import BaseEditor
 
 
 class IconEditorGuiCreator(wx.Panel):
