@@ -29,7 +29,7 @@ class EditEventDialog(Dialog):
     """
     <BoxSizerVertical>
         <StaticBoxSizerVertical label="$(properties_label)" border="ALL" proportion="1">
-            <FlexGridSizer columns="2" growableColumns="1" border="ALL">
+            <FlexGridSizer name="grid_sizer" columns="2" growableColumns="1" border="ALL" proportion="1">
                 %s
             </FlexGridSizer>
         </StaticBoxSizerVertical>
@@ -132,7 +132,7 @@ class EditEventDialog(Dialog):
 
     NOTEBOOK_ROW = """
         <Spacer />
-        <Notebook name="notebook" style="BK_DEFAULT" proportion="1">
+        <Notebook name="notebook" style="BK_DEFAULT">
             <DescriptionEditor
                 name="description"
                 notebookLabel="$(page_description)"
@@ -205,6 +205,7 @@ class EditEventDialog(Dialog):
             start,
             end,
             event)
+        self.grid_sizer.AddGrowableRow(self.config.event_editor_tab_order.index(":"))
         self.SetMinSize((800, -1))
         self.Fit()
         self.SetMinSize(self.GetSize())
