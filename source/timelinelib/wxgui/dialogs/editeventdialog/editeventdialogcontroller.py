@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.data import Event
 from timelinelib.data import PeriodTooLongError
 from timelinelib.data import Subevent
@@ -60,6 +62,17 @@ class EditEventDialogController(Controller):
     def on_container_changed(self, event):
         self._enable_disable_ends_today()
         self._enable_disable_locked()
+
+    def on_enlarge_click(self, event):
+        self.reduced_size = self.view.GetSize()
+        self.reduced_pos = self.view.GetPosition()
+        screen_width, screen_height = wx.DisplaySize()
+        dialog_size = (screen_width * 0.9, screen_height * 0.8)
+        dialog_pos = (screen_width * 0.05, screen_height * 0.05)
+        self._set_position_and_size(dialog_pos, dialog_size)
+
+    def on_reduce_click(self, event):
+        self._set_position_and_size(self.reduced_pos, self.reduced_size)
 
     def on_ok_clicked(self, event):
         try:
@@ -327,3 +340,7 @@ class EditEventDialogController(Controller):
         if self.start is None:
             return False
         return self.start < self.timeline.time_type.now()
+
+    def _set_position_and_size(self, pos, size):
+        self.view.SetPosition(pos)
+        self.view.SetSize(size)
