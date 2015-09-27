@@ -38,10 +38,18 @@ class EditEventDialog(Dialog):
             label="$(add_more_label)"
             border="LEFT|RIGHT|BOTTOM"
         />
-        <DialogButtonsOkCancelSizer
-            event_EVT_BUTTON__ID_OK="on_ok_clicked"
-            border="LEFT|RIGHT|BOTTOM"
-        />
+        <BoxSizerHorizontal border="LEFT|RIGHT|BOTTOM">
+            <TwoStateButton
+                initial_state_label="$(enlarge)"
+                second_state_label="$(reduce)"
+                event_EVT_INITIAL_STATE_CLICKED="on_enlarge_click"
+                event_EVT_SECOND_STATE_CLICKED="on_reduce_click"
+            />
+            <StretchSpacer />
+            <DialogButtonsOkCancelSizer
+                event_EVT_BUTTON__ID_OK="on_ok_clicked"
+            />
+        </BoxSizerHorizontal>
     </BoxSizerVertical>
     """
 
@@ -186,6 +194,8 @@ class EditEventDialog(Dialog):
             "page_hyperlink": _("Hyperlink"),
             "page_progress": _("Progress"),
             "add_more_label": _("Add more events after this one"),
+            "enlarge": _("&Enlarge"),
+            "reduce": _("&Reduce"),
         }, title=title, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller.on_init(
             config,
