@@ -34,6 +34,7 @@ class EditEventDialogController(Controller):
         self.event_repository = event_repository
         self._set_values(start, end, event)
         self._set_view_content()
+        self.view.SetFocusOnFirstControl()
 
     def on_period_checkbox_changed(self, event):
         end = self.view.GetEnd()
@@ -74,8 +75,8 @@ class EditEventDialogController(Controller):
                 self.name = ""
                 self.event = None
                 self.view.SetName(self.name)
-                self.view.SetFocusOnFirstControl()
                 self.view.ClearEventData()
+                self.view.SetFocusOnFirstControl()
             else:
                 if self.opened_from_menu:
                     self.config.event_editor_show_period = self.view.GetShowPeriod()
