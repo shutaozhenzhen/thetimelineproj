@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.wxgui.utils import time_picker_for
 
-from timelinelib.wxgui.dialogs.eventeditor.propertyeditors.baseeditor import BaseEditor
+from timelinelib.wxgui.components.propertyeditors.baseeditor import BaseEditor
 
 
 class AlertEditorGuiCreator(wx.Panel):
