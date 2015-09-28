@@ -22,8 +22,8 @@ from timelinelib.repositories.dbwrapper import DbWrapperCategoryRepository
 from timelinelib.wxgui.dialogs.editcategory.controller import EditCategoryDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import display_error_message
+from timelinelib.wxgui.utils import handle_db_error
 from timelinelib.wxgui.utils import _set_focus_and_select
-import timelinelib.wxgui.utils as gui_utils
 
 
 class EditCategoryDialog(Dialog):
@@ -114,7 +114,7 @@ class EditCategoryDialog(Dialog):
         _set_focus_and_select(self.txt_name)
 
     def HandleDbError(self, e):
-        gui_utils.handle_db_error_in_dialog(self, e)
+        handle_db_error(e, self)
 
     def GetEditedCategory(self):
         return self.controller.get_edited_category()

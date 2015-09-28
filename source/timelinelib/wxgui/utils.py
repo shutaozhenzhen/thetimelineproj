@@ -178,13 +178,13 @@ def display_categories_editor_moved_message(parent):
         parent=parent)
 
 
-def handle_db_error(e):
+def handle_db_error(e, parent=None):
     try:
         display_error_message("\n\n".join([
             _("Timeline has encountered a fatal error:"),
             str(e),
-            _("To prevent you from loosing data, timeline will now crash."),
-        ]))
+            _("To prevent you from loosing data, Timeline will now crash."),
+        ]), parent=parent)
         (error_type, value, traceback) = sys.exc_info()
         from timelinelib.wxgui.setup import unhandled_exception_hook
         unhandled_exception_hook(error_type, value, traceback)
