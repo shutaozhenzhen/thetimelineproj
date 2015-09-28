@@ -23,8 +23,8 @@ from mock import sentinel
 
 from timelinelib.config.dotfile import Config
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
-from timelinelib.wxgui.dialogs.preferencesdialog.preferencesdialogcontroller import PreferencesDialogController
-from timelinelib.wxgui.dialogs.preferencesdialog.preferencesdialog import PreferencesDialog
+from timelinelib.wxgui.dialogs.preferences.preferencesdialogcontroller import PreferencesDialogController
+from timelinelib.wxgui.dialogs.preferences.preferencesdialog import PreferencesDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 

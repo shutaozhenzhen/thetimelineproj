@@ -24,8 +24,8 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.db import db_open
 from timelinelib.repositories.interface import EventRepository
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.wxgui.dialogs.editeventdialog.editeventdialogcontroller import EditEventDialogController
-from timelinelib.wxgui.dialogs.editeventdialog.editeventdialog import EditEventDialog
+from timelinelib.wxgui.dialogs.editevent.editeventdialogcontroller import EditEventDialogController
+from timelinelib.wxgui.dialogs.editevent.editeventdialog import EditEventDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import an_event_with
 from timelinetest.utils import create_dialog

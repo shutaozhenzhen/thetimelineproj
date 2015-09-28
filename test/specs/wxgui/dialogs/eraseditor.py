@@ -18,12 +18,12 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.eraseditordialog.eraseditordialog import ErasEditorDialog
-from timelinelib.wxgui.dialogs.eraseditordialog.eraseditordialogcontroller import ErasEditorDialogController
 from timelinelib.data.db import MemoryDB
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinetest.utils import a_gregorian_era_with
+from timelinelib.wxgui.dialogs.eraseditor.eraseditordialogcontroller import ErasEditorDialogController
+from timelinelib.wxgui.dialogs.eraseditor.eraseditordialog import ErasEditorDialog
 from timelinetest import UnitTestCase
+from timelinetest.utils import a_gregorian_era_with
 from timelinetest.utils import create_dialog
 
 
