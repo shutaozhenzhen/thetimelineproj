@@ -93,19 +93,14 @@ class CategoryChoice(wx.Choice):
             self.current_category_selection = new_selection_index
 
     def _add_category(self):
-        def create_category_editor():
-            return EditCategoryDialog(
-                self, _("Add Category"), self.timeline, None)
-        def handle_success(dialog):
-            if dialog.GetReturnCode() == wx.ID_OK:
-                try:
-                    self.Populate(select=dialog.GetEditedCategory(),
-                                  exclude=self.exclude)
-                except TimelineIOError, e:
-                    gui_utils.handle_db_error_in_dialog(self, e)
-        gui_utils.show_modal(create_category_editor,
-                             gui_utils.create_dialog_db_error_handler(self),
-                             handle_success)
+        dialog = EditCategoryDialog(self,
+                                    _("Add Category"),
+                                    self.timeline,
+                                    None)
+        if dialog.ShowModal() == wx.ID_OK:
+            self.Populate(select=dialog.GetEditedCategory(),
+                          exclude=self.exclude)
+        dialog.Destroy()
 
     def _edit_categories(self):
         gui_utils.display_categories_editor_moved_message(self)
