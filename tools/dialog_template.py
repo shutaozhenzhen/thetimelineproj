@@ -146,11 +146,21 @@ def create_test_files(path, file_name, class_name):
 
 
 def create_py_files(class_name):
-    file_name = class_name.lower()
-    file_name = file_name.replace("_", "")
+    file_name = base_file_name_from_class_name(class_name)
     path = os.path.join(os.getcwd(), "source", "timelinelib", "wxgui", "dialogs", file_name)
     create_source_files(path, file_name, class_name)
     create_test_files(path, file_name, class_name)
+
+
+def base_file_name_from_class_name(class_name):
+    return remove_postfix("dialog", class_name.lower().replace("_", ""))
+
+
+def remove_postfix(postfix, text):
+    if text.endswith(postfix):
+        return text[:-len(postfix)]
+    else:
+        return text
 
 
 def get_class_name():
