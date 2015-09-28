@@ -18,20 +18,20 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialog import DuplicateEventDialog
-from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import DuplicateEventDialogController
-from timelinetest import UnitTestCase
+from timelinelib.calendar.gregorian import GregorianUtils
 from timelinelib.data.db import MemoryDB
+from timelinelib.data import Event
+from timelinelib.data import TimePeriod
+from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import BACKWARD
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import BOTH
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import DuplicateEventDialogController
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import FORWARD
+from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialog import DuplicateEventDialog
+from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 from timelinetest.utils import select_language
-from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.data import TimePeriod
-from timelinelib.calendar.gregorian import GregorianUtils
-from timelinelib.data import Event
-from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import BACKWARD
-from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import BOTH
-from timelinelib.wxgui.dialogs.duplicateeventdialog.duplicateeventdialogcontroller import FORWARD
-from timelinelib.db.exceptions import TimelineIOError
 
 
 #select_language("sv")

@@ -19,8 +19,8 @@
 from mock import Mock
 
 from timelinelib.db import db_open
-from timelinelib.wxgui.dialogs.importeventsdialog.importeventsdialogcontroller import ImportEventsDialogController
-from timelinelib.wxgui.dialogs.importeventsdialog.importeventsdialog import ImportEventsDialog
+from timelinelib.wxgui.dialogs.importevents.importeventsdialogcontroller import ImportEventsDialogController
+from timelinelib.wxgui.dialogs.importevents.importeventsdialog import ImportEventsDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 

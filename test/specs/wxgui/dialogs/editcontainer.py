@@ -22,8 +22,8 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.data import Container
 from timelinelib.db import db_open
 from timelinelib.repositories.interface import EventRepository
-from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialogcontroller import EditContainerDialogController
-from timelinelib.wxgui.dialogs.editcontainerdialog.editcontainerdialog import EditContainerDialog
+from timelinelib.wxgui.dialogs.editcontainer.editcontainerdialogcontroller import EditContainerDialogController
+from timelinelib.wxgui.dialogs.editcontainer.editcontainerdialog import EditContainerDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 

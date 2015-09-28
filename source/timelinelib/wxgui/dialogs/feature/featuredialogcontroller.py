@@ -16,22 +16,26 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+import webbrowser
 
-from timelinelib.wxgui.dialogs.eventlist.eventlistdialogcontroller import EventListDialogController
-from timelinelib.wxgui.dialogs.eventlist.eventlistdialog import EventListDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
+from timelinelib.wxgui.framework import Controller
+from timelinelib.wxgui.dialogs.feedback.feedbackdialog import show_feedback_dialog
 
 
-class describe_EventListDialog(UnitTestCase):
+class FeatureDialogController(Controller):
 
-    def setUp(self):
-        self.view = Mock(EventListDialog)
-        self.controller = EventListDialogController(self.view)
+    def on_init(self, feature):
+        self.feature = feature
+        self.view.SetFeatureName(feature.get_display_name())
+        self.view.SetFeatureDescription(feature.get_description())
 
-    def test_it_can_be_created(self):
-        event_list = ["foo", "bar"]
-        with create_dialog(EventListDialog, None, event_list) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+    def on_give_feedback(self, evt):
+        show_feedback_dialog("", self.feature.get_display_name(), "")
+
+    def on_text_url(self, evt):
+        if evt.MouseEvent.LeftUp():
+            start = evt.GetURLStart()
+            end = evt.GetURLEnd()
+            url = self.view.GetDescription()[start:end]
+            webbrowser.open(url)
+        evt.Skip()

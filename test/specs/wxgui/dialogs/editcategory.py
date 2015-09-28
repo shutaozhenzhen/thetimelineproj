@@ -21,8 +21,8 @@ from mock import Mock
 from timelinelib.data.db import MemoryDB
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.repositories.interface import CategoryRepository
-from timelinelib.wxgui.dialogs.editcategorydialog.editcategorydialogcontroller import EditCategoryDialogController
-from timelinelib.wxgui.dialogs.editcategorydialog.editcategorydialog import EditCategoryDialog
+from timelinelib.wxgui.dialogs.editcategory.editcategorydialogcontroller import EditCategoryDialogController
+from timelinelib.wxgui.dialogs.editcategory.editcategorydialog import EditCategoryDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import a_category_with
 from timelinetest.utils import create_dialog

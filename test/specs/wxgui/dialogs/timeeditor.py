@@ -18,11 +18,11 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.timeeditordialog.timeeditordialog import TimeEditorDialog
-from timelinelib.wxgui.dialogs.timeeditordialog.timeeditordialogcontroller import TimeEditorDialogController
+from timelinelib.data.db import MemoryDB
+from timelinelib.wxgui.dialogs.timeeditor.timeeditordialogcontroller import TimeEditorDialogController
+from timelinelib.wxgui.dialogs.timeeditor.timeeditordialog import TimeEditorDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
-from timelinelib.data.db import MemoryDB
 from timelinetest.utils import human_time_to_gregorian
 
 

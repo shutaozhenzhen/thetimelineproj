@@ -16,25 +16,33 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+import wx
 
 from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialogcontroller import TextDisplayDialogController
-from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialog import TextDisplayDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
+from timelinelib.wxgui.framework import Dialog
 
 
-class describe_text_display_dialog(UnitTestCase):
+class TextDisplayDialog(Dialog):
 
-    def setUp(self):
-        self.view = Mock(TextDisplayDialog)
-        self.controller = TextDisplayDialogController(self.view)
+    """
+    <BoxSizerVertical>
+        <TextCtrl name="text" style="TE_MULTILINE" width="660" height="300" border="ALL" />
+        <BoxSizerHorizontal border="LEFT|BOTTOM|RIGHT">
+            <Button id="$(id_copy)" border="RIGHT" event_EVT_BUTTON="on_copy_click" />
+            <StretchSpacer />
+            <DialogButtonsCloseSizer />
+        </BoxSizerHorizontal>
+    </BoxSizerVertical>
+    """
 
-    def test_it_can_be_created(self):
-        with create_dialog(TextDisplayDialog, "title", "text", None) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+    def __init__(self, title, text, parent=None):
+        Dialog.__init__(self, TextDisplayDialogController, parent, {
+            "id_copy": wx.ID_COPY,
+        }, title=title)
+        self.controller.on_init(text)
 
-    def test_set_text_on_init(self):
-        self.controller.on_init("hello world")
-        self.view.SetText.assert_called_with("hello world")
+    def GetText(self):
+        return self.text.GetValue()
+
+    def SetText(self, text):
+        self.text.SetValue(text)

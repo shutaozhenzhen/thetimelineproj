@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.repositories.dbwrapper import DbWrapperCategoryRepository
-from timelinelib.wxgui.dialogs.editcategorydialog.editcategorydialog import EditCategoryDialog
+from timelinelib.wxgui.dialogs.editcategory.editcategorydialog import EditCategoryDialog
 import timelinelib.wxgui.utils as gui_utils
 
 

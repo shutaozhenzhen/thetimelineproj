@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.dialogs.feedbackdialog.feedbackdialog import show_feedback_dialog
+from timelinelib.wxgui.dialogs.feedback.feedbackdialog import show_feedback_dialog
 
 
 class FeatureDialogController(object):
