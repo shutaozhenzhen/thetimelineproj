@@ -21,7 +21,7 @@ import os.path
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db import db_open
 from timelinelib.wxgui.framework import Controller
-from timelinelib.wxgui.utils import handle_db_error
+from timelinelib.wxgui.utils import handle_db_error_by_crashing
 
 
 class ImportEventsDialogController(Controller):
@@ -40,7 +40,7 @@ class ImportEventsDialogController(Controller):
         try:
             self._db.import_db(self._db_to_import)
         except TimelineIOError, e:
-            handle_db_error(e)
+            handle_db_error_by_crashing(e)
         else:
             self.view.Close()
 
