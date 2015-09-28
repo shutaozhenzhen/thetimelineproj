@@ -20,7 +20,7 @@ import wx
 import wx.lib.newevent
 
 from timelinelib.db.exceptions import TimelineIOError
-from timelinelib.wxgui.dialogs.editcontainer.editcontainerdialog import EditContainerDialog
+from timelinelib.wxgui.dialogs.editcontainer.view import EditContainerDialog
 import timelinelib.wxgui.utils as gui_utils
 
 

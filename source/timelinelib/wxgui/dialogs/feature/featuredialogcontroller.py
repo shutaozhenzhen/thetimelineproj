@@ -18,8 +18,8 @@
 
 import webbrowser
 
+from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
 from timelinelib.wxgui.framework import Controller
-from timelinelib.wxgui.dialogs.feedback.feedbackdialog import show_feedback_dialog
 
 
 class FeatureDialogController(Controller):

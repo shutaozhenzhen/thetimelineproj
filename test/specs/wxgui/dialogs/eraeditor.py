@@ -20,7 +20,7 @@ from mock import Mock
 
 from timelinelib.data.db import MemoryDB
 from timelinelib.wxgui.dialogs.eraeditor.eraeditordialogcontroller import EraEditorDialogController
-from timelinelib.wxgui.dialogs.eraeditor.eraeditordialog import EraEditorDialog
+from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import a_gregorian_era_with
 from timelinetest.utils import create_dialog

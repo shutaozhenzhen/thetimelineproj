@@ -19,7 +19,7 @@
 from mock import Mock
 
 from timelinelib.wxgui.dialogs.filenew.filenewdialogcontroller import FileNewDialogController
-from timelinelib.wxgui.dialogs.filenew.filenewdialog import FileNewDialog
+from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 

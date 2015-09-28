@@ -20,7 +20,7 @@ from mock import Mock
 
 from timelinelib.wxgui.dialogs.export.exportdialogcontroller import ExportDialogController
 from timelinelib.wxgui.dialogs.export.exportdialogcontroller import TARGET_TYPES
-from timelinelib.wxgui.dialogs.export.exportdialog import ExportDialog
+from timelinelib.wxgui.dialogs.export.view import ExportDialog
 from timelinelib.wxgui.dialogs.fieldselection.fieldselectiondialogcontroller import FIELDS
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog

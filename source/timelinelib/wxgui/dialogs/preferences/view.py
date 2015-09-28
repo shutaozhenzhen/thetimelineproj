@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 from timelinelib.wxgui.components.font import edit_font_data
-from timelinelib.wxgui.dialogs.eventeditortabselection.eventeditortabselectiondialog import EventEditorTabSelectionDialog
+from timelinelib.wxgui.dialogs.eventeditortabselection.view import EventEditorTabSelectionDialog
 from timelinelib.wxgui.dialogs.preferences.preferencesdialogcontroller import PreferencesDialogController
 from timelinelib.wxgui.framework import Dialog
 

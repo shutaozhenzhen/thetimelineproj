@@ -24,7 +24,7 @@ from timelinelib.monitoring import monitoring
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.utilities.observer import Observable
 from timelinelib.wxgui.components.font import Font
-from timelinelib.wxgui.dialogs.editcategory.editcategorydialog import EditCategoryDialog
+from timelinelib.wxgui.dialogs.editcategory.view import EditCategoryDialog
 import timelinelib.wxgui.utils as gui_utils
 
 

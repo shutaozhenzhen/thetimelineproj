@@ -20,7 +20,7 @@ from mock import Mock
 
 from timelinelib.db import db_open
 from timelinelib.wxgui.dialogs.changenowdate.changenowdatedialogcontroller import ChangeNowDateDialogController
-from timelinelib.wxgui.dialogs.changenowdate.changenowdatedialog import ChangeNowDateDialog
+from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 
