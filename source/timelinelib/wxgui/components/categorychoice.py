@@ -36,18 +36,10 @@ class CategoryChoice(wx.Choice):
         self._clear()
 
     def Populate(self, exclude=None, select=None):
-        self._clear()
         self.exclude = exclude
-        try:
-            tree = self.category_repository.get_tree(remove=exclude)
-        except:
-            # We can not do error handling here since this method is also
-            # called from the constructor (and then error handling is done by
-            # the code calling the constructor).
-            raise
-        else:
-            self._populate_tree(tree)
-            self.SetSelectedCategory(select)
+        self._clear()
+        self._populate_tree(self.category_repository.get_tree(remove=exclude))
+        self.SetSelectedCategory(select)
 
     def GetSelectedCategory(self):
         if self.GetSelection() == wx.NOT_FOUND:
