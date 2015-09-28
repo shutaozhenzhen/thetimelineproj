@@ -178,7 +178,7 @@ def display_categories_editor_moved_message(parent):
         parent=parent)
 
 
-def handle_db_error(e, parent=None):
+def handle_db_error_by_crashing(e, parent=None):
     try:
         display_error_message("\n\n".join([
             _("Timeline has encountered a fatal error:"),
