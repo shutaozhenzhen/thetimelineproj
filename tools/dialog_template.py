@@ -26,7 +26,7 @@ COPYRIGHT = """\
 """
 
 IMPORTS = """\
-from timelinelib.wxgui.dialogs.%s.%scontroller import %sController
+from timelinelib.wxgui.dialogs.%s.controller import %sController
 from timelinelib.wxgui.framework import Dialog
 
 
@@ -35,8 +35,8 @@ from timelinelib.wxgui.framework import Dialog
 TEST_IMPORTS = """\
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.%s.%s import %s
-from timelinelib.wxgui.dialogs.%s.%scontroller import %sController
+from timelinelib.wxgui.dialogs.%s.controller import %sController
+from timelinelib.wxgui.dialogs.%s.view import %s
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 
@@ -115,7 +115,7 @@ def create_dialog_test_file(path, file_name, class_name):
         os.path.join(path, file_name + ".py"),
         "".join([
             COPYRIGHT,
-            TEST_IMPORTS % (file_name, file_name, class_name, file_name, file_name, class_name),
+            TEST_IMPORTS % (file_name, class_name, file_name, class_name),
             TEST % (class_name, class_name, class_name, class_name),
         ])
     )
@@ -123,7 +123,7 @@ def create_dialog_test_file(path, file_name, class_name):
 
 def create_dialog_controller_file(path, file_name, class_name):
     write_python_module(
-        os.path.join(path, file_name + "controller.py"),
+        os.path.join(path, "controller.py"),
         "".join([
             COPYRIGHT,
             CONTROLLER % class_name,
@@ -133,10 +133,10 @@ def create_dialog_controller_file(path, file_name, class_name):
 
 def create_dialog_view_file(path, file_name, class_name):
     write_python_module(
-        os.path.join(path, file_name + ".py"),
+        os.path.join(path, "view.py"),
         "".join([
             COPYRIGHT,
-            IMPORTS % (file_name, file_name, class_name),
+            IMPORTS % (file_name, class_name),
             DIALOG % (class_name, class_name),
         ])
     )
@@ -156,7 +156,7 @@ def base_file_name_from_class_name(class_name):
 def create_py_files(class_name):
     file_name = base_file_name_from_class_name(class_name)
     source_path = os.path.join(os.getcwd(), "source", "timelinelib", "wxgui", "dialogs", file_name)
-    test_path = os.path.join(os.getcwd(), "test", "specs", "wxgui", "dialogs", file_name)
+    test_path = os.path.join(os.getcwd(), "test", "specs", "wxgui", "dialogs")
     create_dialog_view_file(source_path, file_name, class_name)
     create_dialog_controller_file(source_path, file_name, class_name)
     create_dialog_test_file(test_path, file_name, class_name)
