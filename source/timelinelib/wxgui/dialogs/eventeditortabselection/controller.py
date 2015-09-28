@@ -40,12 +40,11 @@ class EventEditorTabSelectionDialogController(Controller):
         self.view.Close()
 
     def on_selection_changed(self, evt):
-        inx = self.view.GetSelection()
-        if inx == 1:
+        if self._is_first_selected():
             self.view.DisableBtnUp()
         else:
             self.view.EnableBtnUp()
-        if inx == len(CONTROL_ROWS_CREATORS) - 2:
+        if self._is_last_selected():
             self.view.DisableBtnDown()
         else:
             self.view.EnableBtnDown()
@@ -63,6 +62,12 @@ class EventEditorTabSelectionDialogController(Controller):
         if inx == len(CONTROL_ROWS_CREATORS) - 2:
             self.view.DisableBtnDown()
         self.view.EnableBtnUp()
+
+    def _is_first_selected(self):
+        return self.view.GetSelection() == 0
+
+    def _is_last_selected(self):
+        return self.view.GetSelection() == (len(CONTROL_ROWS_CREATORS) - 1)
 
     def _save_tab_order(self):
         collector = []
