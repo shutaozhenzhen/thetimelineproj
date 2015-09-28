@@ -20,7 +20,7 @@ from mock import Mock
 
 from timelinelib.data.db import MemoryDB
 from timelinelib.wxgui.dialogs.categoryfinder.categoryfinderdialogcontroller import CategoryFinderDialogController
-from timelinelib.wxgui.dialogs.categoryfinder.categoryfinderdialog import CategoryFinderDialog
+from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 from timelinetest import UnitTestCase
 from timelinetest.utils import a_category_with

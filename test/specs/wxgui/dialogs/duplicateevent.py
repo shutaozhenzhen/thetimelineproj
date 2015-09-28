@@ -28,7 +28,7 @@ from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller imp
 from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import BOTH
 from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import DuplicateEventDialogController
 from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import FORWARD
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialog import DuplicateEventDialog
+from timelinelib.wxgui.dialogs.duplicateevent.view import DuplicateEventDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 from timelinetest.utils import select_language

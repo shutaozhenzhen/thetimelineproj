@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.db.utils import safe_locking
 from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
-from timelinelib.wxgui.dialogs.editcontainer.editcontainerdialog import EditContainerDialog
+from timelinelib.wxgui.dialogs.editcontainer.view import EditContainerDialog
 from timelinelib.wxgui.dialogs.editevent.editeventdialogcontroller import EditEventDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import _set_focus_and_select

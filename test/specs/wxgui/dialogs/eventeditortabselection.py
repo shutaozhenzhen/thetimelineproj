@@ -19,7 +19,7 @@
 from mock import Mock
 
 from timelinelib.wxgui.dialogs.eventeditortabselection.eventeditortabselectiondialogcontroller import EventEditorTabSelectionDialogController
-from timelinelib.wxgui.dialogs.eventeditortabselection.eventeditortabselectiondialog import EventEditorTabSelectionDialog
+from timelinelib.wxgui.dialogs.eventeditortabselection.view import EventEditorTabSelectionDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 

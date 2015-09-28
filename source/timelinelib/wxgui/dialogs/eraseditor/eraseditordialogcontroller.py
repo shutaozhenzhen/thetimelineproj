@@ -19,9 +19,9 @@
 import time
 import wx
 
-from timelinelib.wxgui.framework import Controller
-from timelinelib.wxgui.dialogs.eraeditor.eraeditordialog import EraEditorDialog
 from timelinelib.data.era import Era
+from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
+from timelinelib.wxgui.framework import Controller
 
 
 class ErasEditorDialogController(Controller):

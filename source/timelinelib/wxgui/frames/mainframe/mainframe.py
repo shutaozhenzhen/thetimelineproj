@@ -44,19 +44,19 @@ from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.mainpanel import MainPanel
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
-from timelinelib.wxgui.dialogs.changenowdate.changenowdatedialog import ChangeNowDateDialog
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialog import open_duplicate_event_dialog_for_event
-from timelinelib.wxgui.dialogs.editevent.editeventdialog import open_create_event_editor
-from timelinelib.wxgui.dialogs.eraseditor.eraseditordialog import ErasEditorDialog
-from timelinelib.wxgui.dialogs.feature.featuredialog import show_feature_feedback_dialog
-from timelinelib.wxgui.dialogs.feedback.feedbackdialog import show_feedback_dialog
-from timelinelib.wxgui.dialogs.filenew.filenewdialog import FileNewDialog
-from timelinelib.wxgui.dialogs.importevents.importeventsdialog import ImportEventsDialog
-from timelinelib.wxgui.dialogs.preferences.preferencesdialog import PreferencesDialog
-from timelinelib.wxgui.dialogs.setcategory.setcategorydialog import SetCategoryDialog
-from timelinelib.wxgui.dialogs.shortcutseditor.shortcutseditordialog import ShortcutsEditorDialog
-from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialog import TextDisplayDialog
-from timelinelib.wxgui.dialogs.timeeditor.timeeditordialog import TimeEditorDialog
+from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
+from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
+from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
+from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
+from timelinelib.wxgui.dialogs.feature.view import show_feature_feedback_dialog
+from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
+from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
+from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
+from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
+from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
+from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
+from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
+from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.timer import TimelineTimer
@@ -224,7 +224,7 @@ class GuiCreator(object):
         self.Bind(wx.EVT_MENU, self._mnu_file_exit_on_click, id=wx.ID_EXIT)
 
     def _create_edit_menu(self, main_menu_bar):
-        from timelinelib.wxgui.dialogs.categoryfinder.categoryfinderdialog import CategoryFinderDialog
+        from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
 
         def create_category_find_dialog():
             return CategoryFinderDialog(self, self.timeline)

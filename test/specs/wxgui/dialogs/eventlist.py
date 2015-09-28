@@ -19,7 +19,7 @@
 from mock import Mock
 
 from timelinelib.wxgui.dialogs.eventlist.eventlistdialogcontroller import EventListDialogController
-from timelinelib.wxgui.dialogs.eventlist.eventlistdialog import EventListDialog
+from timelinelib.wxgui.dialogs.eventlist.view import EventListDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
 
