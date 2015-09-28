@@ -30,19 +30,33 @@ class EventEditorTabSelectionDialog(Dialog):
     """
     <BoxSizerVertical>
         <StaticText label="$(header_text)" border="ALL"/>
-        <BoxSizerHorizontal proportion="1" >
-            <ListBox name="lst_tab_order" width="120" height="150" border="LEFT|BOTTOM" proportion="1"
-                event_EVT_LISTBOX="on_selection_changed" />
-            <BoxSizerVertical>
-                <BitmapButton name="btn_up" bitmap="$(up_bitmap)" border="LEFT|RIGHT"
-                    event_EVT_BUTTON="on_up" />
+        <BoxSizerHorizontal border="LEFT|RIGHT" proportion="1">
+            <ListBox
+                name="lst_tab_order"
+                width="120"
+                height="150"
+                proportion="1"
+                event_EVT_LISTBOX="on_selection_changed"
+            />
+            <Spacer />
+            <BoxSizerVertical align="ALIGN_CENTER_VERTICAL">
+                <BitmapButton
+                    name="btn_up"
+                    bitmap="$(up_bitmap)"
+                    event_EVT_BUTTON="on_up"
+                />
                 <Spacer />
-                <BitmapButton name="btn_down" bitmap="$(down_bitmap)"  border="LEFT|RIGHT"
-                    event_EVT_BUTTON="on_down"/>
+                <BitmapButton
+                    name="btn_down"
+                    bitmap="$(down_bitmap)"
+                    event_EVT_BUTTON="on_down"
+                />
             </BoxSizerVertical>
         </BoxSizerHorizontal>
-        <DialogButtonsOkCancelSizer border="RIGHT|BOTTOM"
-            event_EVT_BUTTON__ID_OK="on_ok" />
+        <DialogButtonsOkCancelSizer
+            border="ALL"
+            event_EVT_BUTTON__ID_OK="on_ok"
+        />
     </BoxSizerVertical>
     """
 
