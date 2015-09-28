@@ -132,8 +132,6 @@ def create_source_files(path, file_name, class_name):
 
 
 def create_test_files(path, file_name, class_name):
-    path = path.replace("source", "test")
-    path = path.replace("timelinelib", "specs")
     exists = False
     if os.path.exists(path):
         exists = True
@@ -147,9 +145,10 @@ def create_test_files(path, file_name, class_name):
 
 def create_py_files(class_name):
     file_name = base_file_name_from_class_name(class_name)
-    path = os.path.join(os.getcwd(), "source", "timelinelib", "wxgui", "dialogs", file_name)
-    create_source_files(path, file_name, class_name)
-    create_test_files(path, file_name, class_name)
+    source_path = os.path.join(os.getcwd(), "source", "timelinelib", "wxgui", "dialogs", file_name)
+    test_path = os.path.join(os.getcwd(), "test", "specs", "wxgui", "dialogs", file_name)
+    create_source_files(source_path, file_name, class_name)
+    create_test_files(test_path, file_name, class_name)
 
 
 def base_file_name_from_class_name(class_name):
