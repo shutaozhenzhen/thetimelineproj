@@ -17,7 +17,7 @@
 
 
 from timelinelib.data import Container
-from timelinelib.repositories.dbwrapper import DbWrapperEventRepository
+from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.wxgui.framework import Controller
 
 
@@ -47,14 +47,17 @@ class EditContainerDialogController(Controller):
         self.name = self.view.GetName()
         self.category = self.view.GetCategory()
         try:
-            self._verify_name()
-            if self.container_exists:
-                self._update_container()
-            else:
-                self._create_container()
-            self.view.EndModalOk()
-        except ValueError:
-            pass
+            try:
+                self._verify_name()
+                if self.container_exists:
+                    self._update_container()
+                else:
+                    self._create_container()
+                self.view.EndModalOk()
+            except ValueError:
+                pass
+        except TimelineIOError, e:
+            self.view.HandleDbError(e)
 
     def get_container(self):
         return self.container
@@ -83,14 +86,7 @@ class EditContainerDialogController(Controller):
 
     def _update_container(self):
         self.container.update_properties(self.name, self.category)
-        self._save_to_db()
-
-    def _save_to_db(self):
-        try:
-            DbWrapperEventRepository(self.db).save(self.container)
-        except Exception, ex:
-            self.view.DisplayDbException(ex)
-            raise ex
+        self.db.save_event(self.container)
 
     def _create_container(self):
         time_type = self.db.get_time_type()

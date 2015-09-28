@@ -19,8 +19,8 @@
 from timelinelib.wxgui.dialogs.editcontainer.controller import EditContainerDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import display_error_message
+from timelinelib.wxgui.utils import handle_db_error_by_crashing
 from timelinelib.wxgui.utils import _set_focus_and_select
-import timelinelib.wxgui.utils as gui_utils
 
 
 class EditContainerDialog(Dialog):
@@ -68,8 +68,8 @@ class EditContainerDialog(Dialog):
         display_error_message(message, self)
         _set_focus_and_select(self.txt_name)
 
-    def DisplayDbException(self, e):
-        gui_utils.handle_db_error_in_dialog(self, e)
+    def HandleDbError(self, e):
+        handle_db_error_by_crashing(e, self)
 
     def GetEditedContainer(self):
         return self.controller.get_container()
