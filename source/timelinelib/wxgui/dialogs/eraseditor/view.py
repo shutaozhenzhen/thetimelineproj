@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.eraseditor.eraseditordialogcontroller import ErasEditorDialogController
+from timelinelib.wxgui.dialogs.eraseditor.controller import ErasEditorDialogController
 from timelinelib.wxgui.framework import Dialog
 
 

@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.textdisplay.textdisplaydialogcontroller import TextDisplayDialogController
+from timelinelib.wxgui.dialogs.textdisplay.controller import TextDisplayDialogController
 from timelinelib.wxgui.framework import Dialog
 
 

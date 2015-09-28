@@ -20,7 +20,7 @@ from mock import Mock
 
 from timelinelib.data.db import MemoryDB
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.wxgui.dialogs.eraseditor.eraseditordialogcontroller import ErasEditorDialogController
+from timelinelib.wxgui.dialogs.eraseditor.controller import ErasEditorDialogController
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import a_gregorian_era_with

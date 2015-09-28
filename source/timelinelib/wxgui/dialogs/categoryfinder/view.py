@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.categoryfinder.categoryfinderdialogcontroller import CategoryFinderDialogController
+from timelinelib.wxgui.dialogs.categoryfinder.controller import CategoryFinderDialogController
 from timelinelib.wxgui.framework import Dialog
 
 

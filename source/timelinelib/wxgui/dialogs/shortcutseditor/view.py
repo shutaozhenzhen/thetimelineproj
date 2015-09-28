@@ -16,10 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.dialogs.shortcutseditor.shortcutseditordialogcontroller import ShortcutsEditorDialogController
+from timelinelib.wxgui.dialogs.shortcutseditor.controller import ShortcutsEditorDialogController
 from timelinelib.wxgui.framework import Dialog
-from timelinelib.wxgui.utils import PopupTextWindow
 from timelinelib.wxgui.utils import display_warning_message
+from timelinelib.wxgui.utils import PopupTextWindow
 
 
 class ShortcutsEditorDialog(Dialog):

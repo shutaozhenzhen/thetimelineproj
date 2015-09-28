@@ -21,7 +21,7 @@ from mock import Mock
 from timelinelib.config.shortcut import FUNCTION_KEYS
 from timelinelib.config.shortcut import MODIFIERS
 from timelinelib.config.shortcut import SHORTCUT_KEYS
-from timelinelib.wxgui.dialogs.shortcutseditor.shortcutseditordialogcontroller import ShortcutsEditorDialogController
+from timelinelib.wxgui.dialogs.shortcutseditor.controller import ShortcutsEditorDialogController
 from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog

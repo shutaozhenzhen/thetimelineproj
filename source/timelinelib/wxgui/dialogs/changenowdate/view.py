@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.dialogs.changenowdate.changenowdatedialogcontroller import ChangeNowDateDialogController
+from timelinelib.wxgui.dialogs.changenowdate.controller import ChangeNowDateDialogController
 from timelinelib.wxgui.framework import Dialog
 
 

@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.eventlist.eventlistdialogcontroller import EventListDialogController
+from timelinelib.wxgui.dialogs.eventlist.controller import EventListDialogController
 from timelinelib.wxgui.framework import Dialog
 
 

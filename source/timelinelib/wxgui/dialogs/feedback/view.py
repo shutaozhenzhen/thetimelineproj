@@ -20,7 +20,7 @@ import webbrowser
 
 import wx
 
-from timelinelib.wxgui.dialogs.feedback.feedbackdialogcontroller import FeedbackDialogController
+from timelinelib.wxgui.dialogs.feedback.controller import FeedbackDialogController
 from timelinelib.wxgui.framework import Dialog
 
 
