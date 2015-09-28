@@ -40,7 +40,6 @@ class EventEditorTabSelectionDialogController(Controller):
         self.view.Close()
 
     def on_selection_changed(self, evt):
-        print "on_selection_changed"
         inx = self.view.GetSelection()
         if inx == 1:
             self.view.DisableBtnUp()
@@ -70,4 +69,3 @@ class EventEditorTabSelectionDialogController(Controller):
         for i in range(len(self.config.event_editor_tab_order)):
             collector.append(self.view.GetClientData(i))
         self.config.event_editor_tab_order = "".join(collector)
-        print self.config.event_editor_tab_order
