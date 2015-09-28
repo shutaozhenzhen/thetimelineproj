@@ -36,15 +36,7 @@ class ContainerChoice(wx.Choice):
 
     def Fill(self, select_container):
         self._clear()
-        try:
-            containers = self.db.get_containers()
-        except:
-            # We can not do error handling here since this method is also
-            # called from the constructor (and then error handling is done by
-            # the code calling the constructor).
-            raise
-        else:
-            self._fill(containers, select_container)
+        self._fill(self.db.get_containers(), select_container)
 
     def GetSelectedContainer(self):
         selection = self.GetSelection()
