@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.db.utils import safe_locking
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import DuplicateEventDialogController
+from timelinelib.wxgui.dialogs.duplicateevent.controller import DuplicateEventDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import display_error_message
 import timelinelib.wxgui.utils as gui_utils

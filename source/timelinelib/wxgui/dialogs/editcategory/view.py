@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.repositories.dbwrapper import DbWrapperCategoryRepository
-from timelinelib.wxgui.dialogs.editcategory.editcategorydialogcontroller import EditCategoryDialogController
+from timelinelib.wxgui.dialogs.editcategory.controller import EditCategoryDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import _set_focus_and_select

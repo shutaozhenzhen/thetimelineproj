@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.fieldselection.fieldselectiondialogcontroller import FieldSelectionDialogController
+from timelinelib.wxgui.dialogs.fieldselection.controller import FieldSelectionDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import BORDER
 

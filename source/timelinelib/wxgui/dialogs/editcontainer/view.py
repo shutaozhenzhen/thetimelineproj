@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.dialogs.editcontainer.editcontainerdialogcontroller import EditContainerDialogController
+from timelinelib.wxgui.dialogs.editcontainer.controller import EditContainerDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import _set_focus_and_select

@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.dialogs.importevents.importeventsdialogcontroller import ImportEventsDialogController
+from timelinelib.wxgui.dialogs.importevents.controller import ImportEventsDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import WildcardHelper
 

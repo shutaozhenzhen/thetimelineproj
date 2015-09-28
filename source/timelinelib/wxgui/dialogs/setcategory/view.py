@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.dialogs.setcategory.setcategorydialogcontroller import SetCategoryDialogController
+from timelinelib.wxgui.dialogs.setcategory.controller import SetCategoryDialogController
 from timelinelib.wxgui.framework import Dialog
 
 

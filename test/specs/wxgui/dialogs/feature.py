@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.feature.featuredialogcontroller import FeatureDialogController
+from timelinelib.wxgui.dialogs.feature.controller import FeatureDialogController
 from timelinelib.wxgui.dialogs.feature.view import FeatureDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog

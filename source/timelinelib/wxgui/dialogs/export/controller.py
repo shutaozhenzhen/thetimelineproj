@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.wxgui.dialogs.fieldselection.controller import FIELDS
 from timelinelib.wxgui.framework import Controller
-from timelinelib.wxgui.dialogs.fieldselection.fieldselectiondialogcontroller import FIELDS
 
 
 CSV_FILE = _("CSV File")

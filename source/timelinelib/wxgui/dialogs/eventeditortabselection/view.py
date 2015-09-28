@@ -20,9 +20,9 @@ import os
 
 import wx
 
-from timelinelib.wxgui.dialogs.eventeditortabselection.eventeditortabselectiondialogcontroller import EventEditorTabSelectionDialogController
-from timelinelib.wxgui.framework import Dialog
 from timelinelib.config.paths import ICONS_DIR
+from timelinelib.wxgui.dialogs.eventeditortabselection.controller import EventEditorTabSelectionDialogController
+from timelinelib.wxgui.framework import Dialog
 
 
 class EventEditorTabSelectionDialog(Dialog):

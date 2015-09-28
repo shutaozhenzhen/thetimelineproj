@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.dialogs.feature.featuredialogcontroller import FeatureDialogController
+from timelinelib.wxgui.dialogs.feature.controller import FeatureDialogController
 from timelinelib.wxgui.framework import Dialog
 
 

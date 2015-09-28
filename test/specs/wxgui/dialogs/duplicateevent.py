@@ -24,10 +24,10 @@ from timelinelib.data import Event
 from timelinelib.data import TimePeriod
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import BACKWARD
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import BOTH
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import DuplicateEventDialogController
-from timelinelib.wxgui.dialogs.duplicateevent.duplicateeventdialogcontroller import FORWARD
+from timelinelib.wxgui.dialogs.duplicateevent.controller import BACKWARD
+from timelinelib.wxgui.dialogs.duplicateevent.controller import BOTH
+from timelinelib.wxgui.dialogs.duplicateevent.controller import DuplicateEventDialogController
+from timelinelib.wxgui.dialogs.duplicateevent.controller import FORWARD
 from timelinelib.wxgui.dialogs.duplicateevent.view import DuplicateEventDialog
 from timelinetest import UnitTestCase
 from timelinetest.utils import create_dialog
