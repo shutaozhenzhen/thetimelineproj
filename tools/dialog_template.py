@@ -85,74 +85,61 @@ class describe_%s(UnitTestCase):
 """
 
 
-def get_user_ack(question, parent=None):
+def write_file(path, content):
+    f = open(path, "w")
+    f.write(content)
+    f.close()
+
+
+def ensure_package_exists(package_path):
+    if not os.path.exists(package_path):
+        os.makedirs(package_path)
+        write_file(os.path.join(package_path, "__init__.py"), "")
+
+
+def get_user_ack(question):
     return wx.MessageBox(question, "Question",
-                         wx.YES_NO | wx.CENTRE | wx.NO_DEFAULT, parent) == wx.YES
+                         wx.YES_NO | wx.CENTRE | wx.NO_DEFAULT) == wx.YES
 
 
-def create_init_file(path):
-    f = open(os.path.join(path, "__init__.py"), "w")
-    f.close()
-
-
-def create_dialog_source_file(path, file_name, class_name):
-    f = open(os.path.join(path, file_name + ".py"), "w")
-    f.write(COPYRIGHT)
-    f.write(IMPORTS % (file_name, file_name, class_name))
-    f.write(DIALOG % (class_name, class_name))
-    f.close()
-
-
-def create_dialog_controller_source_file(path, file_name, class_name):
-    f = open(os.path.join(path, file_name + "controller.py"), "w")
-    f.write(COPYRIGHT)
-    f.write(CONTROLLER % (class_name))
-    f.close()
-
-
-def create_test_source_file(path, file_name, class_name):
-    f = open(os.path.join(path, file_name + ".py"), "w")
-    f.write(COPYRIGHT)
-    f.write(TEST_IMPORTS % (file_name, file_name, class_name, file_name, file_name, class_name))
-    f.write(TEST % (class_name, class_name, class_name, class_name))
-    f.close()
-
-
-def create_source_files(path, file_name, class_name):
-    exists = False
+def write_python_module(path, content):
     if os.path.exists(path):
-        exists = True
-        if not get_user_ack("Module %s already exists\nOverwrite?" % path, None):
+        if not get_user_ack("Module %s already exists\nOverwrite?" % path):
             return
-    if not exists:
-        os.makedirs(path)
-    create_init_file(path)
-    create_dialog_source_file(path, file_name, class_name)
-    create_dialog_controller_source_file(path, file_name, class_name)
+    ensure_package_exists(os.path.dirname(path))
+    write_file(path, content)
 
 
-def create_test_files(path, file_name, class_name):
-    exists = False
-    if os.path.exists(path):
-        exists = True
-        if not get_user_ack("Module %s already exists\nOverwrite?" % path, None):
-            return
-    if not exists:
-        os.makedirs(path)
-    create_init_file(path)
-    create_test_source_file(path, file_name, class_name)
+def create_dialog_test_file(path, file_name, class_name):
+    write_python_module(
+        os.path.join(path, file_name + ".py"),
+        "".join([
+            COPYRIGHT,
+            TEST_IMPORTS % (file_name, file_name, class_name, file_name, file_name, class_name),
+            TEST % (class_name, class_name, class_name, class_name),
+        ])
+    )
 
 
-def create_py_files(class_name):
-    file_name = base_file_name_from_class_name(class_name)
-    source_path = os.path.join(os.getcwd(), "source", "timelinelib", "wxgui", "dialogs", file_name)
-    test_path = os.path.join(os.getcwd(), "test", "specs", "wxgui", "dialogs", file_name)
-    create_source_files(source_path, file_name, class_name)
-    create_test_files(test_path, file_name, class_name)
+def create_dialog_controller_file(path, file_name, class_name):
+    write_python_module(
+        os.path.join(path, file_name + "controller.py"),
+        "".join([
+            COPYRIGHT,
+            CONTROLLER % class_name,
+        ])
+    )
 
 
-def base_file_name_from_class_name(class_name):
-    return remove_postfix("dialog", class_name.lower().replace("_", ""))
+def create_dialog_view_file(path, file_name, class_name):
+    write_python_module(
+        os.path.join(path, file_name + ".py"),
+        "".join([
+            COPYRIGHT,
+            IMPORTS % (file_name, file_name, class_name),
+            DIALOG % (class_name, class_name),
+        ])
+    )
 
 
 def remove_postfix(postfix, text):
@@ -160,6 +147,19 @@ def remove_postfix(postfix, text):
         return text[:-len(postfix)]
     else:
         return text
+
+
+def base_file_name_from_class_name(class_name):
+    return remove_postfix("dialog", class_name.lower().replace("_", ""))
+
+
+def create_py_files(class_name):
+    file_name = base_file_name_from_class_name(class_name)
+    source_path = os.path.join(os.getcwd(), "source", "timelinelib", "wxgui", "dialogs", file_name)
+    test_path = os.path.join(os.getcwd(), "test", "specs", "wxgui", "dialogs", file_name)
+    create_dialog_view_file(source_path, file_name, class_name)
+    create_dialog_controller_file(source_path, file_name, class_name)
+    create_dialog_test_file(test_path, file_name, class_name)
 
 
 def get_class_name():
