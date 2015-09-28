@@ -56,17 +56,10 @@ class ContainerChoice(wx.Choice):
             wx.PostEvent(self, self.ContainerChangedEvent())
 
     def _add_container(self):
-        def create_container_editor():
-            return EditContainerDialog(self, _("Add Container"), self.db, None)
-        def handle_success(dialog):
-            if dialog.GetReturnCode() == wx.ID_OK:
-                try:
-                    self.Fill(dialog.GetEditedContainer())
-                except TimelineIOError, e:
-                    gui_utils.handle_db_error_in_dialog(self, e)
-        gui_utils.show_modal(create_container_editor,
-                             gui_utils.create_dialog_db_error_handler(self),
-                             handle_success)
+        dialog = EditContainerDialog(self, _("Add Container"), self.db, None)
+        if dialog.ShowModal() == wx.ID_OK:
+            self.Fill(dialog.GetEditedContainer())
+        dialog.Destroy()
 
     def _clear(self):
         self.last_real_container_index = None
