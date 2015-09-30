@@ -35,6 +35,7 @@ def execute_specs(args):
     setup_displayhook()
     setup_paths()
     install_gettext_in_builtin_namespace()
+    setup_humblewx()
     disable_monitoring()
     set_halt_gui_flag(args)
     suite = create_suite(create_include_test_function(args))
@@ -60,6 +61,7 @@ def setup_paths():
     sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "markdown-2.0.3"))
     sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "pysvg-0.2.1"))
     sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "pytz-2012j"))
+    sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "humblewx-master", "source"))
 
 
 def install_gettext_in_builtin_namespace():
@@ -67,6 +69,11 @@ def install_gettext_in_builtin_namespace():
         return "#%s#" % message
     import __builtin__
     __builtin__.__dict__["_"] = _
+
+
+def setup_humblewx():
+    import timelinelib.wxgui.setup
+    timelinelib.wxgui.setup.setup_humblewx()
 
 
 def disable_monitoring():
