@@ -30,6 +30,12 @@ from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
 from timelinelib.features.experimental.experimentalfeaturedateformatting import create_locale_sample_date
 
 
+def setup_humblewx():
+    import timelinelib.wxgui.components
+    import humblewx
+    humblewx.COMPONENT_MODULES.insert(0, timelinelib.wxgui.components)
+
+
 def start_wx_application(application_arguments, before_main_loop_hook=None):
     app = wx.App(False)
     main_frame = MainFrame(application_arguments)

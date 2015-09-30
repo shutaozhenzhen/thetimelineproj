@@ -37,6 +37,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies",
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies", "timelinelib", "icalendar-3.2"))
 # Make sure that we can import markdown
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies", "timelinelib", "markdown-2.0.3"))
+# Make sure that we can import humblewx
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies", "timelinelib", "humblewx-master", "source"))
 
 from timelinelib.config.paths import LOCALE_DIR
 from timelinelib.meta.about import APPLICATION_NAME
@@ -52,6 +54,10 @@ from timelinelib.config.arguments import ApplicationArguments
 
 application_arguments = ApplicationArguments()
 application_arguments.parse_from(sys.argv[1:])
+
+from timelinelib.wxgui.setup import setup_humblewx
+
+setup_humblewx()
 
 from timelinelib.wxgui.setup import start_wx_application
 
