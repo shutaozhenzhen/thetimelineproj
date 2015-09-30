@@ -19,6 +19,7 @@
 from humblewx import Controller
 from humblewx import SMALL_BORDER
 import humblewx
+import wx
 
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
