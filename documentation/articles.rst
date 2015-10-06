@@ -3,6 +3,10 @@ Articles
 
 Here are links to articles written by others about Timeline:
 
+* `(German) Ein Bild sagt mehr als 1000 Worte - Zeitleisten unter Linux
+  <http://linuxwelt.blogspot.de/2015/10/ein-bild-sagt-mehr-als-1000-worte.html>`_
+  (4 October 2015)
+
 * `Timeline release statistics
   <http://rickardlindberg.me/writing/timeline-release-stats/>`_
   (1 July 2015)
