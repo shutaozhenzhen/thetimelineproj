@@ -38,3 +38,7 @@ an email<support>`.
 
     An overwiew for all cinemas in our city for `this blog
     <http://heilbronnerkinos.wordpress.com>`_.
+
+.. figure:: /images/screenshots/painters.png
+
+    Famous painters.
