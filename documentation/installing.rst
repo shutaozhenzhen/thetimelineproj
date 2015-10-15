@@ -52,12 +52,17 @@ Get the source code here: |latest_zip|_.
 (:sfl:`Other downloads <files/thetimelineproj>`.)
 
 When you install from source, you have to install all required dependencies
-yourself. Timeline requires:
+yourself. The following dependencies have to be installed manually:
 
 * Python version 2.5 or greater (http://www.python.org)
 * wxPython version 2.8.9.2 or greater (http://www.wxpython.org)
 
 On Linux systems, you can often install these via the package manager.
+
+Timeline also depends on other Python packages that can be installed by running
+the following command from the repo root::
+
+    pip install --user -r requirements.txt
 
 Once you have extracted the Timeline zip and installed the required
 dependencies, you should be able to run the application with this command::
