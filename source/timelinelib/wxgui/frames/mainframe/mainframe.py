@@ -59,6 +59,7 @@ from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
+from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_categories_editor_moved_message
 from timelinelib.wxgui.utils import display_error_message
@@ -883,7 +884,10 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
 
     # Concurrent editing
     def ok_to_edit(self):
-        return self.controller.ok_to_edit()
+        try:
+            return self.controller.ok_to_edit()
+        except LockedException:
+            return False
 
     def edit_ends(self):
         self.controller.edit_ends()
