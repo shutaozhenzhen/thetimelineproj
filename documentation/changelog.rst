@@ -59,6 +59,9 @@ Fixed crash reports:
 * ``ValueError: julian_day must be >= 0``
   (`#79 <https://sourceforge.net/p/thetimelineproj/backlog/79/>`_)
 
+* ``LockedException: Unable to take lock on ...``
+  (`#105 <https://sourceforge.net/p/thetimelineproj/backlog/105/>`_)
+
 Version 1.7.1
 -------------
 
