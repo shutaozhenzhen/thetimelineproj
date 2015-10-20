@@ -153,9 +153,10 @@ class MainFrameController(object):
             path = self._get_lockpath()
             fp = open(path, "w")
             fp.write("%s\n%s\n%s" % (getpass.getuser(), ts, os.getpid()))
-        except Exception, ex:
-            print ex
-            raise LockedException("Unable to take lock on %s" % self.timelinepath)
+        except Exception:
+            msg = _("Unable to take lock on %s\nThis means you can't edit the timeline.\nCheck if you have write access to this directory.") % self.timelinepath
+            display_warning_message(msg, self.main_frame)
+            raise LockedException()
         finally:
             if fp is not None:
                 fp.close()
