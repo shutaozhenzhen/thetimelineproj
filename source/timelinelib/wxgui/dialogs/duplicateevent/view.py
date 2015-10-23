@@ -31,20 +31,44 @@ class DuplicateEventDialog(Dialog):
     <BoxSizerVertical>
 
         <BoxSizerHorizontal border="ALL" >
-            <StaticText label="$(nbr_of_duplicates_text)" />
+            <StaticText
+                label="$(nbr_of_duplicates_text)"
+                align="ALIGN_CENTER_VERTICAL"
+            />
             <Spacer />
-            <SpinCtrl width="50" name="sc_nbr_of_duplicates" />
+            <SpinCtrl
+                width="50"
+                name="sc_nbr_of_duplicates"
+                align="ALIGN_CENTER_VERTICAL"
+            />
         </BoxSizerHorizontal>
 
-        <RadioBox label="$(period_text)" name="rb_periods" choices="$(period_choices)" border="LEFT|RIGHT|BOTTOM" />
+        <RadioBox
+            label="$(period_text)"
+            name="rb_periods"
+            choices="$(period_choices)"
+            border="LEFT|RIGHT|BOTTOM"
+        />
 
         <BoxSizerHorizontal border="LEFT|RIGHT|BOTTOM" >
-            <StaticText label="$(frequency_text)" />
+            <StaticText
+                label="$(frequency_text)"
+                align="ALIGN_CENTER_VERTICAL"
+            />
             <Spacer />
-            <SpinCtrl width="50" name="sc_frequency" />
+            <SpinCtrl
+                width="50"
+                name="sc_frequency"
+                align="ALIGN_CENTER_VERTICAL"
+            />
         </BoxSizerHorizontal>
 
-        <RadioBox label="$(direction_text)" name="rb_direction" choices="$(direction_choices)" border="LEFT|RIGHT|BOTTOM" />
+        <RadioBox
+            label="$(direction_text)"
+            name="rb_direction"
+            choices="$(direction_choices)"
+            border="LEFT|RIGHT|BOTTOM"
+        />
 
         <DialogButtonsOkCancelSizer
             border="LEFT|RIGHT|BOTTOM"
