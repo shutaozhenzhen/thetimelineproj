@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.time.gregoriantime import GregorianTimeType
 import random
 import unittest
 
@@ -23,6 +24,15 @@ import unittest
 class UnitTestCase(unittest.TestCase):
 
     HALT_GUI = False
+
+    def assertPeriodsEqual(self, first, second, time_type=GregorianTimeType()):
+        message = "Periods not equal.\n  First:  %s \"%s\"\n  Second: %s \"%s\"" % (
+            first,
+            time_type.format_period(first),
+            second,
+            time_type.format_period(second),
+        )
+        self.assertEqual(first, second, message)
 
     def assertListIsCloneOf(self, cloned_list, original_list):
         self.assertEqual(cloned_list, original_list)

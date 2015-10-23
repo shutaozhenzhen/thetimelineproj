@@ -764,34 +764,23 @@ def move_period_num_weeks(period, num):
 
 
 def move_period_num_months(period, num):
+    def move_time(time):
+        gregorian_time = GregorianUtils.from_time(time)
+        new_month = gregorian_time.month + num
+        new_year = gregorian_time.year
+        while new_month < 1:
+            new_month += 12
+            new_year -= 1
+        while new_month > 12:
+            new_month -= 12
+            new_year += 1
+        return gregorian_time.replace(year=new_year, month=new_month).to_time()
     try:
-        delta = num
-        years = abs(delta) / 12
-        gregorian_start = GregorianUtils.from_time(period.start_time)
-        gregorian_end = GregorianUtils.from_time(period.end_time)
-        if num < 0:
-            years = -years
-        delta = delta - 12 * years
-        if delta < 0:
-            start_month = gregorian_start.month + 12 + delta
-            end_month = gregorian_end.month + 12 + delta
-            if start_month > 12:
-                start_month -= 12
-                end_month -= 12
-            if start_month > gregorian_start.month:
-                years -= 1
-        else:
-            start_month = gregorian_start.month + delta
-            end_month = gregorian_start.month + delta
-            if start_month > 12:
-                start_month -= 12
-                end_month -= 12
-                years += 1
-        start_year = gregorian_start.year + years
-        end_year = gregorian_start.year + years
-        start_time = gregorian_start.replace(year=start_year, month=start_month)
-        end_time = gregorian_end.replace(year=end_year, month=end_month)
-        return TimePeriod(period.time_type, start_time.to_time(), end_time.to_time())
+        return TimePeriod(
+            period.time_type,
+            move_time(period.start_time),
+            move_time(period.end_time)
+        )
     except ValueError:
         return None
 

@@ -42,6 +42,8 @@ GUI:
 * Event and era periods are no longer limited.
   (`#98 <https://sourceforge.net/p/thetimelineproj/backlog/98/>`_)
 
+* Fixed corner cases when duplicating event with period month.
+
 Fixed crash reports:
 
 * ``PyAssertionError: C++ assertion "wxAssertFailure" failed at ..\..\src\common\stockitem.cpp(166) in wxGetStockLabel(): invalid stock item ID``

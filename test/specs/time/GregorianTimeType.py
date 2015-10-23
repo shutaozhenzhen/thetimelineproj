@@ -744,6 +744,33 @@ class GregorianTimeDuplicateFunctionsSpec(UnitTestCase):
         new_period = move_period_num_months(self.period, 1)
         self.assertEqual(None, new_period)
 
+    def test_move_period_works_if_period_is_whole_month_case_1(self):
+        self.assertPeriodsEqual(
+            gregorian_period("1 Feb 2010", "1 Mar 2010"),
+            move_period_num_months(
+                gregorian_period("1 Jan 2010", "1 Feb 2010"),
+                1
+            )
+        )
+
+    def test_move_period_works_if_period_is_whole_month_case_2(self):
+        self.assertPeriodsEqual(
+            gregorian_period("1 Dec 2015", "1 Jan 2016"),
+            move_period_num_months(
+                gregorian_period("1 Nov 2015", "1 Dec 2015"),
+                1
+            )
+        )
+
+    def test_move_period_works_if_period_is_whole_year(self):
+        self.assertPeriodsEqual(
+            gregorian_period("1 Feb 2010", "1 Feb 2011"),
+            move_period_num_months(
+                gregorian_period("1 Jan 2010", "1 Jan 2011"),
+                1
+            )
+        )
+
     def test_move_period_num_years_adds_given_number_of_years(self):
         new_period = move_period_num_years(self.period, 1)
         self.assertEqual(
