@@ -37,7 +37,6 @@ class DuplicateEventDialog(Dialog):
             />
             <Spacer />
             <SpinCtrl
-                width="50"
                 name="sc_nbr_of_duplicates"
                 align="ALIGN_CENTER_VERTICAL"
             />
@@ -57,7 +56,6 @@ class DuplicateEventDialog(Dialog):
             />
             <Spacer />
             <SpinCtrl
-                width="50"
                 name="sc_frequency"
                 align="ALIGN_CENTER_VERTICAL"
             />
