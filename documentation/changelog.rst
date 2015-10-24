@@ -10,39 +10,42 @@ This is a periodic release.
 
 Calendar:
 
-* Added support for "The Dark Eye" (Das Schwarze Auge, DSA) official calender.
+* Timelines can be created using the "The Dark Eye" (Das Schwarze Auge, DSA)
+  official calender.
 
 Drawing:
 
-* Vertical scroll by drag is not proportional.
+* When you scroll vertically by dragging, the view moves proportionally.
   (`#88 <https://sourceforge.net/p/thetimelineproj/backlog/88/>`_)
 
-* Keep a group of events together.
-  Expand containers vertically when it contains overlapping subevents.
-  Implemented as an experimental feature.
+* Containers expand vertically when they contain overlapping events.
+  This is an experimental feature that must be enabled.
   (`#39 <https://sourceforge.net/p/thetimelineproj/backlog/39/>`_)
+
+* You can zoom out to a period longer than 1200 years. There is no longer a
+  limit.
+  (`#90 <https://sourceforge.net/p/thetimelineproj/backlog/90/>`_)
 
 Exporting:
 
-* Exporting to CSV with newline within description
+* Exporting to CSV behaves properly when there is a newline in the description
+  of an event.
   (`#92 <https://sourceforge.net/p/thetimelineproj/backlog/92/>`_)
 
 GUI:
 
-* Polished all dialogs to give them a more uniform look.
+* All dialogs have a polished and more uniform look.
 
-* Replaced "file new" menu items with a single dialog that let's you choose
-  what type of timeline you want to create.
+* When creating a new timeline, a dialog pops up that let's you choose what
+  type of timeline you want to create.
   (`#97 <https://sourceforge.net/p/thetimelineproj/backlog/97/>`_)
 
-* PeriodTooLongError: Can't zoom wider than 1200 years.
-  Limitation now removed.
-  (`#90 <https://sourceforge.net/p/thetimelineproj/backlog/90/>`_)
-
-* Event and era periods are no longer limited.
+* Event and eras can be created with a period longer than 1200 years. There is
+  no longer a limit.
   (`#98 <https://sourceforge.net/p/thetimelineproj/backlog/98/>`_)
 
-* Fixed corner cases when duplicating event with period month.
+* When duplicating an event with period month it behaves properly in edge
+  cases.
 
 Fixed crash reports:
 
