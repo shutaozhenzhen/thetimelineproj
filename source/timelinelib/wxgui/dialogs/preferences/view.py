@@ -162,6 +162,7 @@ class PreferencesDialog(Dialog):
             cb.SetValue(feature.enabled())
             self.experimental_panel_sizer.Add(cb)
             self.Bind(wx.EVT_CHECKBOX, self.controller.on_experimental_changed, cb)
+        self.experimental_panel_sizer.Fit(self)
         self.Fit()
 
     def ShowSelectTabOrderDialog(self, config):
