@@ -4,7 +4,7 @@ Changelog
 Version 1.8.0
 -------------
 
-**Planned Release on 31 October 2015.**
+**Released on 31 October 2015.**
 
 This is a periodic release.
 
