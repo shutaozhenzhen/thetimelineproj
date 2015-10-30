@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 1.9.0
+-------------
+
+**Planned Release on 31 January 2016.**
+
 Version 1.8.0
 -------------
 
