@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.7.1</version>
+  <version>1.8.0</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -793,7 +793,68 @@ Windows specific:
       <description>Version 1.8.0
 -------------
 
-**Planned Release on 31 October 2015.**</description>
+**Released on 31 October 2015.**
+
+This is a periodic release.
+
+Calendar:
+
+* Timelines can be created using the "The Dark Eye" (Das Schwarze Auge, DSA)
+  official calender.
+
+Drawing:
+
+* When you scroll vertically by dragging, the view moves proportionally.
+  (`#88 &lt;https://sourceforge.net/p/thetimelineproj/backlog/88/&gt;`_)
+
+* Containers expand vertically when they contain overlapping events.
+  This is an experimental feature that must be enabled.
+  (`#39 &lt;https://sourceforge.net/p/thetimelineproj/backlog/39/&gt;`_)
+
+* You can zoom out to a period longer than 1200 years. There is no longer a
+  limit.
+  (`#90 &lt;https://sourceforge.net/p/thetimelineproj/backlog/90/&gt;`_)
+
+Exporting:
+
+* Exporting to CSV behaves properly when there is a newline in the description
+  of an event.
+  (`#92 &lt;https://sourceforge.net/p/thetimelineproj/backlog/92/&gt;`_)
+
+GUI:
+
+* All dialogs have a polished and more uniform look.
+
+* When creating a new timeline, a dialog pops up that let's you choose what
+  type of timeline you want to create.
+  (`#97 &lt;https://sourceforge.net/p/thetimelineproj/backlog/97/&gt;`_)
+
+* Event and eras can be created with a period longer than 1200 years. There is
+  no longer a limit.
+  (`#98 &lt;https://sourceforge.net/p/thetimelineproj/backlog/98/&gt;`_)
+
+* When duplicating an event with period month it behaves properly in edge
+  cases.
+
+Fixed crash reports:
+
+* ``PyAssertionError: C++ assertion "wxAssertFailure" failed at ..\..\src\common\stockitem.cpp(166) in wxGetStockLabel(): invalid stock item ID``
+  (`#95 &lt;https://sourceforge.net/p/thetimelineproj/backlog/95/&gt;`_)
+
+* ``KeyError: &lt;bound method Font.Underlined of &lt;timelinelib.wxgui.components.font.Font; proxy of &lt;Swig Object of type 'wxFont *' at 0x8f240f0&gt; &gt;&gt;``
+  (`#83 &lt;https://sourceforge.net/p/thetimelineproj/backlog/83/&gt;`_)
+
+* ``string index out of range``
+  (`#85 &lt;https://sourceforge.net/p/thetimelineproj/backlog/85/&gt;`_)
+
+* ``AttributeError: 'NoneType' object has no attribute 'julian_day'``
+  (`#96 &lt;https://sourceforge.net/p/thetimelineproj/backlog/96/&gt;`_)
+
+* ``ValueError: julian_day must be &gt;= 0``
+  (`#79 &lt;https://sourceforge.net/p/thetimelineproj/backlog/79/&gt;`_)
+
+* ``LockedException: Unable to take lock on ...``
+  (`#105 &lt;https://sourceforge.net/p/thetimelineproj/backlog/105/&gt;`_)</description>
     </event>
     <event>
       <start>2015-08-17 00:00:00</start>
@@ -825,6 +886,20 @@ Fixed crash reports:
 
 * ``AttributeError: 'EventEditorDialog' object has no attribute 'set_focus'``
   (`#89 &lt;https://sourceforge.net/p/thetimelineproj/backlog/89/&gt;`_)</description>
+    </event>
+    <event>
+      <start>2016-01-31 06:38:00</start>
+      <end>2016-01-31 06:38:00</end>
+      <text>Timeline 1.8.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Future Release</category>
+      <description>Version 1.9.0
+-------------
+
+**Planned Release on 31 January 2016.**</description>
     </event>
   </events>
   <view>
