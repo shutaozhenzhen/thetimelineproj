@@ -6,6 +6,14 @@ Version 1.9.0
 
 **Planned Release on 31 January 2016.**
 
+GUI:
+
+* Ctrl-A selects all text in the event editor description field
+  (`#115 <https://sourceforge.net/p/thetimelineproj/backlog/115/>`_)
+
+* The ends-today checkbox is enabled when the event editor is started from the menu
+  (`#114 <https://sourceforge.net/p/thetimelineproj/backlog/114/>`_)
+
 Version 1.8.0
 -------------
 
