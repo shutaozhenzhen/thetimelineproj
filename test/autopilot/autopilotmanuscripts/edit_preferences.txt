@@ -1,0 +1,8 @@
+#
+# Edit -> Find Categories...
+#
+
+
+select menu(Edit|Redigera, "Inställningar")
+click checkbox(open_recent_checkbox)
+click button("Close|Stäng")

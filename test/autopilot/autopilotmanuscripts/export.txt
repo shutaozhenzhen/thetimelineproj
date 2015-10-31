@@ -1,0 +1,19 @@
+#
+# File / Export menu
+#
+
+select menu (File, Export, "Export Current view to Image...")
+click button ($Cancel$)
+
+select menu (File, Export, "Export Whole Timeline to Images...")
+click button ($Cancel$)
+
+select menu (File, Export, "Export to Listbox...")
+click button ($Close$)
+
+select menu (File, Export, "Export to SVG...")
+click button ($Cancel$)
+
+select menu (File, Export, "Export Timeline to File...")
+click button ($Cancel$)
+

@@ -1,0 +1,7 @@
+#
+# Timeline  - Create Event menu
+#
+
+
+select menu (Timeline, "Create Event...")
+click button ($Cancel$)

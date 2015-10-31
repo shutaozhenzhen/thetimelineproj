@@ -1,0 +1,6 @@
+#
+# File - Save As menu
+#
+
+select menu (File, "Save as...|Spara som...")
+click button ($Cancel$)

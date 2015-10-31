@@ -1,0 +1,36 @@
+include placeholders.txt
+
+#
+# File menu
+#
+include file.txt
+
+#
+# Edit menu
+#
+#include edit.txt
+
+#
+# View menu
+#
+#include view.txt
+
+#
+# Timeline menu
+#
+#include timeline.txt
+
+#
+# Navigate menu
+#
+#include navigate.txt
+
+#
+# Help menu
+#
+#include help.txt
+
+#
+# We are done
+#
+exit application

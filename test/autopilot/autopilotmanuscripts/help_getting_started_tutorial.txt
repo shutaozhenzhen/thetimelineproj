@@ -1,0 +1,5 @@
+#
+# Help -> Getting started tutorial
+#
+
+select menu(Help|Hjälp, "Getting started tutorial")

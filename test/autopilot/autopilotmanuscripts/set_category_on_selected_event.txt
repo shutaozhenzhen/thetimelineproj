@@ -1,0 +1,8 @@
+#
+# Timeline - Set Category on Selected Event 
+#
+
+
+click mouse (750, 500)
+select menu (Timeline, "Set Category on Selected Events...")
+click button ($Cancel$)

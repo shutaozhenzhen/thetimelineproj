@@ -1,0 +1,13 @@
+#
+# File menu
+#
+# The purpose of this test is to make a simple verification of that
+# menu items under the File Menu is working.
+#
+
+include new.txt
+#include open.txt
+#include open_recent.txt
+#include save_as.txt
+#include import.txt
+#include export.txt

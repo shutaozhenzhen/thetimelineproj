@@ -1,0 +1,7 @@
+#
+# Edit - Find Categories menu
+#
+
+select menu ($Edit$, "Find Categories...")
+click button ($Close$)
+
