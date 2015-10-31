@@ -337,6 +337,8 @@ class EditEventDialogController(Controller):
         return self.view.GetContainer() is None
 
     def _start_is_in_history(self):
+        if self.event is None:
+            return True
         if self.start is None:
             return False
         return self.start < self.timeline.time_type.now()
