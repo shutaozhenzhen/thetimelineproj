@@ -1,0 +1,7 @@
+#
+# Edit - Shortcuts menu
+#
+
+
+select menu($Edit$, Shortcuts...)
+click button ($Close$)

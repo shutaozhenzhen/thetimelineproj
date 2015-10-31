@@ -1,0 +1,6 @@
+#
+# Help -> Contents
+#
+
+select menu($Help$, "Contents|Innehåll")
+close dialog($Help$)

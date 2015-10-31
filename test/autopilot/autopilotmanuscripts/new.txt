@@ -1,0 +1,6 @@
+#
+# File - New menu
+#
+
+select menu ($File$, $New$)
+click button ($Cancel$)

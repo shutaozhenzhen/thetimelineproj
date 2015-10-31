@@ -1,0 +1,7 @@
+#
+# Timeline  - Set categories menu
+#
+
+
+select menu (Timeline, "Set Category on events without category...")
+click button ($Cancel$)

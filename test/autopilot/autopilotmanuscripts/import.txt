@@ -1,0 +1,6 @@
+#
+# File - Import menu
+#
+
+select menu (File, "Import events...")
+click button ($Cancel$)

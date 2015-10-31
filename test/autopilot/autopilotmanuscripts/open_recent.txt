@@ -1,0 +1,6 @@
+#
+# File - Open recent menu
+#
+
+include create_new_timeline.txt
+select menu ($File$, "Open Recent")

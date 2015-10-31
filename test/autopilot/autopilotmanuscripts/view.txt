@@ -1,0 +1,33 @@
+#
+# View menu
+#
+
+select menu ($View$, Sidebar)
+select menu ($View$, Sidebar)
+
+select menu ($View$, Legend)
+select menu ($View$, Legend)
+
+select menu ($View$, "Balloons on hover")
+select menu ($View$, "Balloons on hover")
+
+select menu ($View$, "Zoom In")
+select menu ($View$, "Zoom In")
+
+select menu ($View$, "Zoom Out")
+select menu ($View$, "Zoom Out")
+
+select menu ($View$, "Vertical Zoom In")
+select menu ($View$, "Vertical Zoom In")
+
+select menu ($View$, "Vertical Zoom Out")
+select menu ($View$, "Vertical Zoom Out")
+
+select menu ($View$, "Draw point event right of line")
+select menu ($View$, "Draw point event right of line")
+
+select menu ($View$, "Default Event box drawer")
+select menu ($View$, "Gradient Event box drawer")
+select menu ($View$, "Other Gradient Event box drawer")
+select menu ($View$, "Gradient Event box drawer")
+
