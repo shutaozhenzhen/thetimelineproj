@@ -210,9 +210,9 @@ class describe_locked_checkbox(EditEventDialogTestCase):
 
 class describe_start_is_in_history(EditEventDialogTestCase):
 
-    def test_new_event_not_starting_in_history(self):
+    def test_new_event_starts_in_history(self):
         self.when_editor_opened_with_time("1 Jan 3010")
-        self.assertFalse(self.controller._start_is_in_history())
+        self.assertTrue(self.controller._start_is_in_history())
 
     def test_new_event_starting_in_history(self):
         self.when_editor_opened_with_time("1 Jan 2010")
