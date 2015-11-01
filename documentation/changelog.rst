@@ -8,6 +8,9 @@ Version 1.9.0
 
 GUI:
 
+* The strip text 'century' is now translatable
+  (`#107 <https://sourceforge.net/p/thetimelineproj/backlog/107/>`_)
+
 * Ctrl-A selects all text in the event editor description field
   (`#115 <https://sourceforge.net/p/thetimelineproj/backlog/115/>`_)
 
