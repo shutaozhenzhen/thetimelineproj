@@ -528,9 +528,9 @@ class StripCentury(Strip):
             start_year = self._century_start_year(time.year)
             century = (start_year + 100) / 100
             if century <= 0:
-                return str(abs(century - 1)) + " century BC"
+                return "%s %s" % (str(abs(century - 1)), _("century BC"))
             else:
-                return str(century) + " century"
+                return "%s %s" % (str(century), _("century"))
         return ""
 
     def start(self, time):

@@ -292,7 +292,7 @@ class GregorianStripCenturySpec(UnitTestCase):
     def test_label_major(self):
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00"), True),
-            "21 century")
+            "21 #century#")
 
     def setUp(self):
         self.time_type = GregorianTimeType()
