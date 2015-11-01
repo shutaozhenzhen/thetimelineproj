@@ -8,6 +8,9 @@ Version 1.9.0
 
 GUI:
 
+* The events are sorted on start date when the 'export to listbox' dialog is opened
+  (`#106 <https://sourceforge.net/p/thetimelineproj/backlog/106/>`_)
+
 * The strip text 'century' is now translatable
   (`#107 <https://sourceforge.net/p/thetimelineproj/backlog/107/>`_)
 
