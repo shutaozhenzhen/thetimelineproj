@@ -1,0 +1,11 @@
+#
+# Edit -> Find Categories...
+#
+
+
+select menu(Edit|Redigera, "Shortcuts...")
+select combobox(cb_functions, 2)
+#select combobox(cb_modifiers, 3)
+#select combobox(cb_shortcut_keys, 3)
+click button (Close|Stäng)
+#close dialog("Edit Shortcuts")

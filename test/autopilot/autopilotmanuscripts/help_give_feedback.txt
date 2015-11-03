@@ -1,0 +1,9 @@
+#
+# Help -> Give Feedback
+#
+
+select menu($Help$, "Give Feedback...")
+click button("Give Feedback")
+enter text (3, "Hello feedback")
+click button (Close | Stäng)
+click button (Close | Stäng)

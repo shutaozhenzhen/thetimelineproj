@@ -1,0 +1,15 @@
+#
+# Help menu
+#
+
+#include help_contents.txt
+
+#include help_getting_started_tutorial.txt
+
+#include help_give_feedback.txt
+include help_give_feedback_on_features.txt
+include help_give_feedback_on_experimental_features.txt
+#include help_contact.txt
+
+#include help_about.txt
+

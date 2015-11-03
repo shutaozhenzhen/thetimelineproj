@@ -1,0 +1,9 @@
+#
+# Helper script for creating a new timeline from the tutorial timeline
+#
+
+select menu ($Help$, "Getting started tutorial")
+select menu ($File$, "Spara som...")
+enter text (1, a)
+click button ($Save$)
+click button ($Yes$)

@@ -1,0 +1,12 @@
+#
+# Timeline - Move event up and down 
+#
+
+
+click mouse (750, 500)
+
+select menu (Timeline, "Move event up")
+select menu (Timeline, "Move event up")
+
+select menu (Timeline, "Move event down")
+select menu (Timeline, "Move event down")

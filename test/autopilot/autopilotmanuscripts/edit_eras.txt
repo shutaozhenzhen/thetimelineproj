@@ -1,0 +1,7 @@
+#
+# Timeline  - Edit Era's menu
+#
+
+
+select menu (Timeline, "Edit Era's...")
+click button ($Close$)

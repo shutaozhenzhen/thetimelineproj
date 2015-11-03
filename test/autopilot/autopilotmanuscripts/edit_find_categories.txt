@@ -1,0 +1,11 @@
+#
+# Edit -> Find Categories...
+#
+
+
+select menu(Edit|Redigera, "Find Categories...")
+enter text (1, "S")
+select listbox(1, 1)
+click button (Check)
+click button (Uncheck)
+click button (Close|Stäng)

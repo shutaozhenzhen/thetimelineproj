@@ -1,0 +1,5 @@
+#
+# Edit - Find menu
+#
+
+select menu ($Edit$, $Find$)

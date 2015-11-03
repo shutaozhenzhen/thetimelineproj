@@ -1,0 +1,8 @@
+#
+# Timeline - Edit Selected Event 
+#
+
+
+click mouse (750, 500)
+select menu (Timeline, "Edit Selected Event...")
+click button ($Cancel$)

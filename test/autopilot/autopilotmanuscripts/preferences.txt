@@ -1,0 +1,6 @@
+#
+# Edit - Preferences menu
+#
+
+select menu($Edit$, $Preferences$)
+click button ($Close$)

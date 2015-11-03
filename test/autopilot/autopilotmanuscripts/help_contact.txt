@@ -1,0 +1,6 @@
+#
+# Help -> Contact
+#
+
+select menu(Help, Contact|Kontakt)
+close dialog(Help)
