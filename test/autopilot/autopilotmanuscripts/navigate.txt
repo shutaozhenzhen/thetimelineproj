@@ -1,0 +1,32 @@
+#
+# Navigate
+#
+
+#include create_new_timeline.txt
+
+select menu(Navigate, "Go to Today")
+select menu(Navigate, "Go to Date")
+click button (Avbryt|Cancel)
+
+select menu(Navigate, Forward)
+select menu(Navigate, Backward)
+select menu(Navigate, "Forward One Week")
+select menu(Navigate, "Back One Week")
+select menu(Navigate, "Forward One Month")
+select menu(Navigate, "Back One Month")
+select menu(Navigate, "Forward One Year")
+select menu(Navigate, "Back One Year")
+
+select menu(Navigate, "Fit Millennium")
+select menu(Navigate, "Fit Century")
+select menu(Navigate, "Fit Decade")
+select menu(Navigate, "Fit Year")
+select menu(Navigate, "Fit Month")
+select menu(Navigate, "Fit Week")
+select menu(Navigate, "Fit Day")
+
+select menu(Navigate, "Find First Event")
+select menu(Navigate, "Find Last Event")
+select menu(Navigate, "Fit All Events")
+
+

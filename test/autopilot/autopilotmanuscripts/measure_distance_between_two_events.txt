@@ -1,0 +1,9 @@
+#
+# Timeline - Measure distance between two events
+#
+
+add placeholder (Ok, "Ok|OK")
+click mouse (750, 450)
+click mouse (750, 500, ctrl)
+select menu (Timeline, "Measure Distance between two Events...")
+click button ($Ok$)

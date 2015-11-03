@@ -1,0 +1,27 @@
+#
+# Help -> Give Feedback on Experimental Features
+#
+
+select menu(Help, "Give Feedback on Features", "Exporting whole Timeline to images...")
+click button("Give Feedback")
+enter text (3, "Hello feedback")
+click button (Close | Stäng)
+click button (Close | Stäng)
+
+select menu(Help, "Give Feedback on Features", "Containers...")
+click button("Give Feedback")
+enter text (3, "Hello feedback")
+click button (Close | Stäng)
+click button (Close | Stäng)
+
+select menu(Help, "Give Feedback on Features", "Vertical Scrolling...")
+click button("Give Feedback")
+enter text (3, "Hello feedback")
+click button (Close | Stäng)
+click button (Close | Stäng)
+
+select menu(Help, "Give Feedback on Features", "Vertical Zooming...")
+click button("Give Feedback")
+enter text (3, "Hello feedback")
+click button (Close | Stäng)
+click button (Close | Stäng)

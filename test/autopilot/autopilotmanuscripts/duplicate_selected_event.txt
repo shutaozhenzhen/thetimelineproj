@@ -1,0 +1,8 @@
+#
+# Timeline - Duplicate Selected Event 
+#
+
+
+click mouse (750, 500)
+select menu (Timeline, "Duplicate Selected Event...")
+click button ($Cancel$)

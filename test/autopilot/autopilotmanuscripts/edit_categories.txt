@@ -1,0 +1,7 @@
+#
+# Timeline  - Edit Categories menu
+#
+
+
+select menu (Timeline, "Edit Categories")
+click button ($Ok$)

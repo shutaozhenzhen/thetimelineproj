@@ -1,0 +1,8 @@
+#
+# Edit menu
+#
+
+include find.txt
+include find_categories.txt
+include preferences.txt
+include shortcuts.txt
