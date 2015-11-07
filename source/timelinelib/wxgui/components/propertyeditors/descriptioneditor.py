@@ -24,7 +24,6 @@ from timelinelib.wxgui.components.propertyeditors.baseeditor import BaseEditor
 class DescriptionEditorGuiCreator(wx.Panel):
 
     def __init__(self, parent):
-        print "Creating"
         wx.Panel.__init__(self, parent)
 
     def create_sizer(self):
