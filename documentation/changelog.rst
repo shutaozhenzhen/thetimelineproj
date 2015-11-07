@@ -12,6 +12,12 @@ Translations:
   limit.
   (`#109 <https://sourceforge.net/p/thetimelineproj/backlog/109/>`_)
 
+* The strip text 'Century' is now translatable
+  limit.
+  (`#107 <https://sourceforge.net/p/thetimelineproj/backlog/107/>`_)
+
+GUI:
+
 * The description text in the event editor can now be selected with Ctrl+A
   limit.
   (`#115 <https://sourceforge.net/p/thetimelineproj/backlog/115/>`_)
@@ -19,6 +25,10 @@ Translations:
 * Ends-today checkbox in the event editor is now enabled when the editor is opened from the menu
   limit.
   (`#114 <https://sourceforge.net/p/thetimelineproj/backlog/114/>`_)
+
+* The events in the exported list is now sorted by start data
+  limit.
+  (`#106 <https://sourceforge.net/p/thetimelineproj/backlog/106/>`_)
 
 Version 1.8.0
 -------------
