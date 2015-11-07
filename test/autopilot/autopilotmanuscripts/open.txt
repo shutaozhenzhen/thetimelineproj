@@ -2,5 +2,5 @@
 # File - Open menu
 #
 
-select menu (File, $Open$)
+select menu ($File$, $Open$)
 click button ($Cancel$)
