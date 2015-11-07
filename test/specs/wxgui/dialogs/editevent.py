@@ -21,6 +21,7 @@ from mock import sentinel
 
 from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
+from timelinelib.data.event import Event
 from timelinelib.db import db_open
 from timelinelib.repositories.interface import EventRepository
 from timelinelib.time.gregoriantime import GregorianTimeType
@@ -59,9 +60,9 @@ class EditEventDialogTestCase(UnitTestCase):
     def when_editing_a_new_event(self):
         self.when_editor_opened_with_time("1 Jan 2010")
 
-    def when_editor_opened_with_time(self, time):
+    def when_editor_opened_with_time(self, time, event=None):
         self.when_editor_opened_with(
-            human_time_to_gregorian(time), human_time_to_gregorian(time), None)
+            human_time_to_gregorian(time), human_time_to_gregorian(time), event)
 
     def when_editor_opened_with_period(self, start, end):
         self.when_editor_opened_with(
@@ -211,7 +212,8 @@ class describe_locked_checkbox(EditEventDialogTestCase):
 class describe_start_is_in_history(EditEventDialogTestCase):
 
     def test_new_event_not_starting_in_history(self):
-        self.when_editor_opened_with_time("1 Jan 3010")
+        time = "1 Jan 3010"
+        self.when_editor_opened_with_time("1 Jan 3010", Event(GregorianTimeType(), human_time_to_gregorian(time), human_time_to_gregorian(time), ""))
         self.assertFalse(self.controller._start_is_in_history())
 
     def test_new_event_starting_in_history(self):
