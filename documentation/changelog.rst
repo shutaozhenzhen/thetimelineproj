@@ -6,6 +6,20 @@ Version 1.9.0
 
 **Planned Release on 31 January 2016.**
 
+Translations:
+
+* The wx stock items are nor translated correctly in the windows binary
+  limit.
+  (`#109 <https://sourceforge.net/p/thetimelineproj/backlog/109/>`_)
+
+* The description text in the event editor can now be selected with Ctrl+A
+  limit.
+  (`#115 <https://sourceforge.net/p/thetimelineproj/backlog/115/>`_)
+
+* Ends-today checkbox in the event editor is now enabled when the editor is opened from the menu
+  limit.
+  (`#114 <https://sourceforge.net/p/thetimelineproj/backlog/114/>`_)
+
 Version 1.8.0
 -------------
 
