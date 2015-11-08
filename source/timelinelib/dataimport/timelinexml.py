@@ -276,34 +276,34 @@ class Parser(object):
         str_id, text = text.split("]", 1)
         try:
             str_id = str_id[1:]
-            id = int(str_id)
+            cid = int(str_id)
         except:
-            id = -1
-        return id, text
+            cid = -1
+        return cid, text
 
     def _extract_subid(self, text):
-        id, text = text.split(")", 1)
+        cid, text = text.split(")", 1)
         try:
-            id = int(id[1:])
+            cid = int(cid[1:])
         except:
-            id = -1
-        return id, text
+            cid = -1
+        return cid, text
 
-    def _parse_optional_bool(self, tmp_dict, id):
-        if tmp_dict.has_key(id):
-            return tmp_dict.pop(id) == "True"
+    def _parse_optional_bool(self, tmp_dict, cid):
+        if tmp_dict.has_key(cid):
+            return tmp_dict.pop(cid) == "True"
         else:
             return False
 
-    def _parse_optional_int(self, tmp_dict, id):
-        if tmp_dict.has_key(id):
-            return int(tmp_dict.pop(id))
+    def _parse_optional_int(self, tmp_dict, cid):
+        if tmp_dict.has_key(cid):
+            return int(tmp_dict.pop(cid))
         else:
             return 0
 
-    def _parse_optional_color(self, tmp_dict, id, missing_value=(0, 0, 0)):
-        if tmp_dict.has_key(id):
-            return parse_color(tmp_dict.pop(id))
+    def _parse_optional_color(self, tmp_dict, cid, missing_value=(0, 0, 0)):
+        if tmp_dict.has_key(cid):
+            return parse_color(tmp_dict.pop(cid))
         else:
             return missing_value
 
