@@ -290,19 +290,19 @@ class Parser(object):
         return cid, text
 
     def _parse_optional_bool(self, tmp_dict, cid):
-        if tmp_dict.has_key(cid):
+        if cid in tmp_dict:
             return tmp_dict.pop(cid) == "True"
         else:
             return False
 
     def _parse_optional_int(self, tmp_dict, cid):
-        if tmp_dict.has_key(cid):
+        if cid in tmp_dict:
             return int(tmp_dict.pop(cid))
         else:
             return 0
 
     def _parse_optional_color(self, tmp_dict, cid, missing_value=(0, 0, 0)):
-        if tmp_dict.has_key(cid):
+        if cid in tmp_dict:
             return parse_color(tmp_dict.pop(cid))
         else:
             return missing_value
