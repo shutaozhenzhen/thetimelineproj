@@ -377,8 +377,8 @@ def parse_icon(string):
     Return a wx.Bitmap.
     """
     try:
-        input = StringIO.StringIO(base64.b64decode(string))
-        image = wx.ImageFromStream(input, wx.BITMAP_TYPE_PNG)
+        icon_string = StringIO.StringIO(base64.b64decode(string))
+        image = wx.ImageFromStream(icon_string, wx.BITMAP_TYPE_PNG)
         return image.ConvertToBitmap()
     except:
         raise ParseException("Could not parse icon from '%s'." % string)
