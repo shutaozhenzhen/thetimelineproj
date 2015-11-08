@@ -207,7 +207,7 @@ class Parser(object):
         old_category = self.db.get_category_by_name(name)
         if old_category is not None:
             category = old_category
-        if not tmp_dict["category_map"].has_key(name):
+        if name not in tmp_dict["category_map"]:
             tmp_dict["category_map"][name] = category
             self.db.save_category(category)
 
