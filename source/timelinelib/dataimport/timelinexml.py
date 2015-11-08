@@ -161,13 +161,13 @@ class Parser(object):
             Tag("view", SINGLE, None, [
                 Tag("displayed_period", OPTIONAL,
                     self._parse_displayed_period, [
-                    Tag("start", SINGLE, parse_fn_store("tmp_start")),
-                    Tag("end", SINGLE, parse_fn_store("tmp_end")),
-                ]),
+                        Tag("start", SINGLE, parse_fn_store("tmp_start")),
+                        Tag("end", SINGLE, parse_fn_store("tmp_end")),
+                    ]),
                 Tag("hidden_categories", OPTIONAL,
                     self._parse_hidden_categories, [
-                    Tag("name", ANY, self._parse_hidden_category),
-                ]),
+                        Tag("name", ANY, self._parse_hidden_category),
+                    ]),
             ]),
             Tag("now", OPTIONAL, self._parse_saved_now),
         ])
