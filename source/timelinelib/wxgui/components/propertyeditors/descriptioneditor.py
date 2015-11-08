@@ -39,12 +39,12 @@ class DescriptionEditorGuiCreator(wx.Panel):
 
     def _create_text_control(self):
         self.data = wx.TextCtrl(self, style=wx.TE_MULTILINE)
-        self.Bind(wx.EVT_CHAR, self._on_char)
+        self.data.Bind(wx.EVT_CHAR, self._on_char)
         return self.data
 
     def _on_char(self, evt):
         if self._ctrl_a(evt):
-            self.SelectAll()
+            self.data.SetSelection(-1, -1)
         else:
             evt.Skip()
 

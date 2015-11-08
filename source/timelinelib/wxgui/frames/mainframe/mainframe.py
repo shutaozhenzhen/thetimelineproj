@@ -66,6 +66,7 @@ from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.utils import WildcardHelper
 import timelinelib.wxgui.utils as gui_utils
+from timelinelib.config.paths import LOCALE_DIR
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -850,6 +851,8 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         self.Bind(EVT_CATS_VIEW_CHANGED, self._on_cats_view_changed)
         # To enable translations of wx stock items.
         self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        self.locale.AddCatalogLookupPathPrefix(LOCALE_DIR)
+        self.locale.AddCatalog("wxstd")
         self.help_browser = HelpBrowserFrame(self)
         self.controller = MainFrameController(self, db_open, self.config)
         self.menu_controller = MenuController()

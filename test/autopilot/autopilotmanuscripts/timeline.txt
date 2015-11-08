@@ -2,19 +2,23 @@
 # Timeline menu
 #
 
-include create_event.txt
-include edit_selected_event.txt
-include duplicate_selected_event.txt
-include set_category_on_selected_event.txt
-include move_event_up_and_down.txt
 
-include measure_distance_between_two_events.txt
+include placeholders.txt
 
-include set_categories.txt
-include edit_categories.txt
+include file.txt
 
-include edit_eras.txt
+#include edit_selected_event.txt
+#include duplicate_selected_event.txt
+#include set_category_on_selected_event.txt
+#include move_event_up_and_down.txt
 
-include read_only.txt
+#include measure_distance_between_two_events.txt
+
+#include set_categories.txt
+#include edit_categories.txt
+
+#include edit_eras.txt
+
+#include read_only.txt
 
 
