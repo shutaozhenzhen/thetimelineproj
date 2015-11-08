@@ -9,25 +9,23 @@ Version 1.9.0
 Translations:
 
 * The wx stock items are nor translated correctly in the windows binary
-  limit.
   (`#109 <https://sourceforge.net/p/thetimelineproj/backlog/109/>`_)
 
 * The strip text 'Century' is now translatable
-  limit.
   (`#107 <https://sourceforge.net/p/thetimelineproj/backlog/107/>`_)
 
 GUI:
 
+* Subevents in a container can be locked if the extended container startegy is used.
+  (`#110 <https://sourceforge.net/p/thetimelineproj/backlog/110/>`_)
+
 * The description text in the event editor can now be selected with Ctrl+A
-  limit.
   (`#115 <https://sourceforge.net/p/thetimelineproj/backlog/115/>`_)
 
 * Ends-today checkbox in the event editor is now enabled when the editor is opened from the menu
-  limit.
   (`#114 <https://sourceforge.net/p/thetimelineproj/backlog/114/>`_)
 
 * The events in the exported list is now sorted by start data
-  limit.
   (`#106 <https://sourceforge.net/p/thetimelineproj/backlog/106/>`_)
 
 Version 1.8.0
