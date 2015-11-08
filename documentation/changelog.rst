@@ -12,7 +12,7 @@ Calendar:
 
 GUI:
 
-* Subevents in a container can be locked if the extended container startegy is used.
+* Subevents in a container can be locked if the extended container strategy is used.
   (`#110 <https://sourceforge.net/p/thetimelineproj/backlog/110/>`_)
 
 * The description text in the event editor can now be selected with Ctrl+A
