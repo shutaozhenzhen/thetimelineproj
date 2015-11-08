@@ -6,13 +6,9 @@ Version 1.9.0
 
 **Planned Release on 31 January 2016.**
 
-Translations:
-
-* The wx stock items are nor translated correctly in the windows binary
-  (`#109 <https://sourceforge.net/p/thetimelineproj/backlog/109/>`_)
-
-* The strip text 'Century' is now translatable
-  (`#107 <https://sourceforge.net/p/thetimelineproj/backlog/107/>`_)
+Calendar:
+* Locale date formats correctly at start of timeline.
+  (`#116 <https://sourceforge.net/p/thetimelineproj/backlog/116/>`_)
 
 GUI:
 
@@ -27,6 +23,14 @@ GUI:
 
 * The events in the exported list is now sorted by start data
   (`#106 <https://sourceforge.net/p/thetimelineproj/backlog/106/>`_)
+
+Translations:
+
+* The wx stock items are nor translated correctly in the windows binary
+  (`#109 <https://sourceforge.net/p/thetimelineproj/backlog/109/>`_)
+
+* The strip text 'Century' is now translatable
+  (`#107 <https://sourceforge.net/p/thetimelineproj/backlog/107/>`_)
 
 Version 1.8.0
 -------------
