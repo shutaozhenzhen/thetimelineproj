@@ -45,6 +45,7 @@ from timelinelib.xml.parser import parse_fn_store
 from timelinelib.xml.parser import SINGLE
 from timelinelib.xml.parser import Tag
 from timelinelib.calendar import set_date_formatter
+from timelinelib.calendar import get_date_formatter
 from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.features.experimental.experimentalfeaturedateformatting import DAY
@@ -178,9 +179,9 @@ class Parser(object):
         for timetype in valid_time_types:
             if text == timetype.get_name():
                 self.db.set_time_type(timetype)
-                if timetype.get_name()==BosparanianTimeType().get_name():
+                if timetype.get_name() == BosparanianTimeType().get_name():
                     set_date_formatter(BosparanianDateFormatter())
-                else:
+                elif get_date_formatter is None:
                     set_date_formatter(DefaultDateFormatter())
                 break
         if self.db.get_time_type() is None:
