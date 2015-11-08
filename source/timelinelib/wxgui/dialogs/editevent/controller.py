@@ -25,6 +25,7 @@ from timelinelib.data import TimePeriod
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.framework import Controller
+from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_STRATEGY
 
 
 class EditEventDialogController(Controller):
@@ -330,7 +331,10 @@ class EditEventDialogController(Controller):
         self.view.EnableEndsToday(enable)
 
     def _enable_disable_locked(self):
-        enable = self._container_not_selected()
+        if EXTENDED_CONTAINER_STRATEGY.enabled():
+            enable = not self.event.is_container()
+        else:
+            enable = self._container_not_selected()
         self.view.EnableLocked(enable)
 
     def _container_not_selected(self):
