@@ -71,6 +71,8 @@ class MainFrameController(object):
             self.last_changed = self._get_modification_date()
         self.main_frame.update_navigation_menu_items()
         self.main_frame.enable_disable_menus()
+        if path == ":numtutorial:":
+            self.main_frame._fit_all_events()
 
     def set_no_timeline(self):
         self.timeline = None
