@@ -48,7 +48,6 @@ from timelinelib.calendar import set_date_formatter
 from timelinelib.calendar import get_date_formatter
 from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
-from timelinelib.features.experimental.experimentalfeaturedateformatting import DAY
 
 
 def import_db_from_timeline_xml(path):
