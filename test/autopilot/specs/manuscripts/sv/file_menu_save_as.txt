@@ -1,8 +1,0 @@
-Select Menu(Hjälp|Help, "Getting started tutorial") 
-Select Menu(Arkiv|File, "Save as...|Spara som...") 
-Enter text(1, "abc")
-Click Button(&Save)
-
-# File already exists
-Click Button(Yes)
-
