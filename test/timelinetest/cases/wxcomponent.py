@@ -63,10 +63,13 @@ class WxComponentTestCase(UnitTestCase):
             sizer.Add(component, flag=wx.ALL | wx.GROW, border=3)
         self._main_panel.SetSizer(sizer)
         self._main_frame.Show()
+        wx.CallLater(100, self._MainLoop)
+
+    def _MainLoop(self):
         if not self.HALT_GUI:
             wx.CallAfter(self._close)
         self._app.MainLoop()
-
+        
     def _main_frame_on_close(self, event):
         self._is_close_called = True
         self._main_frame.Destroy()
