@@ -344,7 +344,7 @@ class Parser(object):
                 container = containers[subevent.cid()]
                 container.register_subevent(subevent)
             except:
-                #TODO: Create container
+                # TODO: Create container
                 pass
 
 
