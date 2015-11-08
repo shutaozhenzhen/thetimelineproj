@@ -133,6 +133,109 @@ def create_in_memory_tutorial_db():
     return tutcreator.get_db()
 
 
+def create_in_memory_numeric_tutorial_db():
+    tutcreator = NumericTutorialTimelineCreator()
+    tutcreator.add_category(_("Welcome"), (255, 80, 80), (0, 0, 0))
+    tutcreator.add_event(_("Welcome to Timeline"), "",  4)
+    tutcreator.add_category(_("Intro"), (250, 250, 20), (0, 0, 0))
+    tutcreator.add_event(
+        _("This event has hyperlinks"),
+        _("Right-click for context menu where the hyperlinks can be accessed."),
+        11,
+        19,
+        "https://sourceforge.net/projects/thetimelineproj/;http://thetimelineproj.sourceforge.net/")
+    tutcreator.add_event(
+        _("Hover me!"),
+        _("Hovering events with a triangle shows the event description."),
+        5)
+    tutcreator.add_category(_("Features"), (100, 100, 250), (250, 250, 20))
+    tutcreator.add_event(
+        _("Scroll"),
+        _("Left click somewhere on the timeline and start dragging."
+          "\n\n"
+          "You can also use the mouse wheel."
+          "\n\n"
+          "You can also middle click with the mouse to center around that point."),
+        5,
+        10)
+    container = tutcreator.add_container(
+        _("Container"),
+        _("?"),
+        5,
+        10)
+    tutcreator.add_subevent(
+        container,
+        _("Resize me"),
+        _("Container Subevent 1\nClick on the event to get the resize handles"),
+        5,
+        10)
+    tutcreator.add_subevent(
+        container,
+        _("Drag me"),
+        _("Container Subevent 2\n\n"
+          "Click on the event to get the drag handle and drag it.\n\n"
+          "To drag the whole container, click on it while holding down the Alt key. "
+          "Keep the Alt key down and find the drag point at the center of the container and drag it."),
+        12,
+        18)
+    tutcreator.add_subevent(
+        container,
+        _("View Container demo video"),
+        _("Container Subevent 3\n\n"
+          "Select hyperlink to show demo video.\n\n"
+          "Right-click in the event and select 'Goto URL' in the popup menu and select the first (and only) link"),
+        19,
+        24,
+        "http://www.youtube.com/watch?v=dBwEQ3vqB_I")
+
+    tutcreator.add_event(
+        _("Zoom"),
+        _("Hold down Ctrl while scrolling the mouse wheel."
+          "\n\n"
+          "Hold down Shift while dragging with the mouse."),
+        6,
+        11)
+    tutcreator.add_event(
+        _("Create event"),
+        _("Double click somewhere on the timeline."
+          "\n\n"
+          "Hold down Ctrl while dragging the mouse to select a period."),
+        12,
+        18)
+    tutcreator.add_event(
+        _("Edit event"),
+        _("Double click on an event."),
+        12,
+        18)
+    tutcreator.add_event(
+        _("Select event"),
+        _("Click on it."
+          "\n\n"
+          "Hold down Ctrl while clicking events to select multiple."),
+        20,
+        25)
+    tutcreator.add_event(
+        _("Delete event"),
+        _("Select events to be deleted and press the Del key."),
+        19,
+        24)
+    tutcreator.add_event(
+        _("Resize and move me!"),
+        _("First select me and then drag the handles."),
+        11,
+        19)
+    tutcreator.add_category(_("Saving"), (50, 200, 50), (0, 0, 0))
+    tutcreator.add_event(
+        _("Saving"),
+        _("This timeline is stored in memory and modifications to it will not "
+          "be persisted between sessions."
+          "\n\n"
+          "Choose File/New/File Timeline to create a timeline that is saved on "
+          "disk."),
+        23)
+    return tutcreator.get_db()
+
+
 class TutorialTimelineCreator(object):
 
     def __init__(self):
@@ -201,3 +304,64 @@ class TutorialTimelineCreator(object):
     def get_time(self, year, month, day):
         if self.db.get_time_type().get_name() == u"gregoriantime":
             return Gregorian(year, month, day, 0, 0, 0).to_time()
+
+
+class NumericTutorialTimelineCreator(object):
+
+    def __init__(self):
+        self.db = MemoryDB()
+        from timelinelib.time.numtime import NumTimeType
+        self.db.time_type = NumTimeType()
+        self.start = self.db.time_type.now()
+        self.end = self.start + 30
+        self.db.set_displayed_period(TimePeriod(self.db.get_time_type(),
+                                                self.start, self.end))
+        self.last_cat = None
+        self.next_cid = 1
+
+    def add_category(self, name, color, font_color, make_last_added_parent=False):
+        if make_last_added_parent:
+            parent = self.last_cat
+        else:
+            parent = None
+        self.prev_cat = self.last_cat
+        self.last_cat = Category(name, color, font_color, parent)
+        self.db.save_category(self.last_cat)
+
+    def add_event(self, text, description, start_add, end_add=None, hyperlink=None):
+        start, end = self.calc_start_end(start_add, end_add)
+        evt = Event(self.db.get_time_type(), start, end, text, self.last_cat)
+        if description:
+            evt.set_data("description", description)
+        if hyperlink:
+            evt.set_hyperlink(hyperlink)
+        self.db.save_event(evt)
+
+    def add_container(self, text, description, start_add, end_add=None):
+        start, end = self.calc_start_end(start_add, end_add)
+        container = Container(self.db.get_time_type(), start, end, text, self.prev_cat)
+        container.set_cid(self.next_cid)
+        self.next_cid += 1
+        self.db.save_event(container)
+        return container
+
+    def add_subevent(self, container, text, description, start_add, end_add=None, hyperlink=None):
+        start, end = self.calc_start_end(start_add, end_add)
+        evt = Subevent(self.db.get_time_type(), start, end, text, self.last_cat)
+        if description:
+            evt.set_data("description", description)
+        if hyperlink:
+            evt.set_hyperlink(hyperlink)
+        evt.set_container_id(self.next_cid - 1)
+        self.db.save_event(evt)
+        container.register_subevent(evt)
+
+    def calc_start_end(self, start_add, end_add=None):
+        start = self.start + start_add
+        end = start
+        if end_add is not None:
+            end = self.start + end_add
+        return (start, end)
+
+    def get_db(self):
+        return self.db

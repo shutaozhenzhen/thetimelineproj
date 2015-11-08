@@ -43,6 +43,8 @@ def db_open(path, timetype=None):
     """
     if path == ":tutorial:":
         return open_tutorial_timeline(path)
+    elif path == ":numtutorial:":
+        return open_numeric_tutorial_timeline(path)
     elif os.path.isdir(path):
         return open_directory_timeline(path)
     elif path.endswith(".timeline"):
@@ -58,6 +60,13 @@ def db_open(path, timetype=None):
 def open_tutorial_timeline(path):
     from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
     db = create_in_memory_tutorial_db()
+    db.path = path
+    return db
+
+
+def open_numeric_tutorial_timeline(path):
+    from timelinelib.dataimport.tutorial import create_in_memory_numeric_tutorial_db
+    db = create_in_memory_numeric_tutorial_db()
     db.path = path
     return db
 
