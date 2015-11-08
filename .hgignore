@@ -25,3 +25,5 @@ main.pyproj
 _hgtags
 _hgignore
 _hgeol
+release/buildtool/target
+release/buildtool/*.exe

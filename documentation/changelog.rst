@@ -6,19 +6,29 @@ Version 1.9.0
 
 **Planned Release on 31 January 2016.**
 
-GUI:
+Translations:
 
-* The events are sorted on start date when the 'export to listbox' dialog is opened
-  (`#106 <https://sourceforge.net/p/thetimelineproj/backlog/106/>`_)
+* The wx stock items are nor translated correctly in the windows binary
+  limit.
+  (`#109 <https://sourceforge.net/p/thetimelineproj/backlog/109/>`_)
 
-* The strip text 'century' is now translatable
+* The strip text 'Century' is now translatable
+  limit.
   (`#107 <https://sourceforge.net/p/thetimelineproj/backlog/107/>`_)
 
-* Ctrl-A selects all text in the event editor description field
+GUI:
+
+* The description text in the event editor can now be selected with Ctrl+A
+  limit.
   (`#115 <https://sourceforge.net/p/thetimelineproj/backlog/115/>`_)
 
-* The ends-today checkbox is enabled when the event editor is started from the menu
+* Ends-today checkbox in the event editor is now enabled when the editor is opened from the menu
+  limit.
   (`#114 <https://sourceforge.net/p/thetimelineproj/backlog/114/>`_)
+
+* The events in the exported list is now sorted by start data
+  limit.
+  (`#106 <https://sourceforge.net/p/thetimelineproj/backlog/106/>`_)
 
 Version 1.8.0
 -------------
