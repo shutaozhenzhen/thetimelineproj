@@ -117,18 +117,18 @@ class describe_edit_event_dialog(EditEventDialogTestCase):
             if self.HALT_GUI:
                 dialog.ShowModal()
 
-#     def test_it_can_be_created_with_numeric_timeline(self):
-#         config = Mock()
-#         config.event_editor_show_period = True
-#         config.event_editor_show_time = False
-#         config.event_editor_tab_order = ["0", "1", "2", "3", "4", ":"]
-#         db = db_open(":numtutorial:")
-#         categories = db.get_categories()
-#         categories[0].parent = categories[1]
-#         db.save_category(categories[0])
-#         with create_dialog(EditEventDialog, None, config, "title", db) as dialog:
-#             if self.HALT_GUI:
-#                 dialog.ShowModal()
+    def test_it_can_be_created_with_numeric_timeline(self):
+        config = Mock()
+        config.event_editor_show_period = True
+        config.event_editor_show_time = False
+        config.event_editor_tab_order = ["0", "1", "2", "3", "4", ":"]
+        db = db_open(":numtutorial:")
+        categories = db.get_categories()
+        categories[0].parent = categories[1]
+        db.save_category(categories[0])
+        with create_dialog(EditEventDialog, None, config, "title", db) as dialog:
+            if self.HALT_GUI:
+                dialog.ShowModal()
 
 
 class describe_start_time_field(EditEventDialogTestCase):
