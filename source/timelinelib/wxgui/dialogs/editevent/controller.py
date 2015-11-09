@@ -331,7 +331,7 @@ class EditEventDialogController(Controller):
         self.view.EnableEndsToday(enable)
 
     def _enable_disable_locked(self):
-        if EXTENDED_CONTAINER_STRATEGY.enabled():
+        if self.event is not None and EXTENDED_CONTAINER_STRATEGY.enabled():
             enable = not self.event.is_container()
         else:
             enable = self._container_not_selected()
