@@ -61,6 +61,7 @@ EVENT_EDITOR_SHOW_PERIOD = "event_editor_show_period"
 EVENT_EDITOR_SHOW_TIME = "event_editor_show_time"
 EVENT_EDITOR_TAB_ORDER = "event_editor_tab_order"
 CENTER_EVENT_TEXTS = "center_event_texts"
+UNCHECK_TIME_FOR_NEW_EVENTS = "uncheck_time_for_new_events"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -84,6 +85,7 @@ DEFAULTS = {
     EVENT_EDITOR_SHOW_TIME: "False",
     EVENT_EDITOR_TAB_ORDER: "01234:",
     CENTER_EVENT_TEXTS: "False",
+    UNCHECK_TIME_FOR_NEW_EVENTS: "False",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -241,6 +243,13 @@ class Config(object):
     def set_balloon_on_hover(self, balloon_on_hover):
         self.config_parser.set(DEFAULTSECT, BALLOON_ON_HOVER, str(balloon_on_hover))
     balloon_on_hover = property(get_balloon_on_hover, set_balloon_on_hover)
+
+    def get_uncheck_time_for_new_events(self):
+        return self.config_parser.getboolean(DEFAULTSECT, UNCHECK_TIME_FOR_NEW_EVENTS)
+
+    def set_uncheck_time_for_new_events(self, value):
+        self.config_parser.set(DEFAULTSECT, UNCHECK_TIME_FOR_NEW_EVENTS, str(value))
+    uncheck_time_for_new_events = property(get_uncheck_time_for_new_events, set_uncheck_time_for_new_events)
 
     def get_week_start(self):
         return self.config_parser.get(DEFAULTSECT, WEEK_START)
