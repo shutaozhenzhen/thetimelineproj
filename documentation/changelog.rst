@@ -12,6 +12,9 @@ Calendar:
 
 GUI:
 
+* Images can now be dragged and dropped on an event, to change icon
+  (`#103 <https://sourceforge.net/p/thetimelineproj/backlog/103/>`_)
+
 * A new preference decides if the time checkbox is checked for new events.
   (`#119 <https://sourceforge.net/p/thetimelineproj/backlog/119/>`_)
 

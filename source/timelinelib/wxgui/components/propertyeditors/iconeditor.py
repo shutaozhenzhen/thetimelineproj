@@ -23,6 +23,34 @@ import wx
 from timelinelib.wxgui.components.propertyeditors.baseeditor import BaseEditor
 
 
+class FileToBitmapConverter(object):
+
+    def __init__(self):
+        self.MAX_SIZE = (128, 128)
+
+    def convert(self, path):
+        try:
+            image = wx.EmptyImage(0, 0)
+            success = image.LoadFile(path)
+            # LoadFile will show error popup if not successful
+            if success:
+                # Resize image if too large
+                (w, h) = image.GetSize()
+                (W, H) = self.MAX_SIZE
+                if w > W:
+                    factor = float(W) / float(w)
+                    w = w * factor
+                    h = h * factor
+                if h > H:
+                    factor = float(H) / float(h)
+                    w = w * factor
+                    h = h * factor
+                image = image.Scale(w, h, wx.IMAGE_QUALITY_HIGH)
+                return image.ConvertToBitmap()
+        except:
+            pass
+
+
 class IconEditorGuiCreator(wx.Panel):
 
     def __init__(self, parent):
@@ -99,25 +127,11 @@ class IconEditor(BaseEditor, IconEditorGuiCreator):
         dialog = wx.FileDialog(self, message=_("Select Icon"),
                                wildcard="*", style=wx.FD_OPEN)
         if dialog.ShowModal() == wx.ID_OK:
-            path = dialog.GetPath()
-            if os.path.exists(path):
-                image = wx.EmptyImage(0, 0)
-                success = image.LoadFile(path)
-                # LoadFile will show error popup if not successful
-                if success:
-                    # Resize image if too large
-                    (w, h) = image.GetSize()
-                    (W, H) = self.MAX_SIZE
-                    if w > W:
-                        factor = float(W) / float(w)
-                        w = w * factor
-                        h = h * factor
-                    if h > H:
-                        factor = float(H) / float(h)
-                        w = w * factor
-                        h = h * factor
-                    image = image.Scale(w, h, wx.IMAGE_QUALITY_HIGH)
-                    self.set_icon(image.ConvertToBitmap())
+            try:
+                bitmap = FileToBitmapConverter().convert(dialog.GetPath())
+                self.set_icon(bitmap)
+            except:
+                pass
         dialog.Destroy()
 
     def _btn_clear_on_click(self, evt):

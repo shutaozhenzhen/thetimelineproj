@@ -23,6 +23,21 @@ from timelinelib.wxgui.components.welcomepanel import WelcomePanel
 from timelinelib.wxgui.components.timelinepanel import TimelinePanel
 from timelinelib.wxgui.components.errorpanel import ErrorPanel
 from timelinelib.wxgui.components.search import SearchBar
+from timelinelib.wxgui.components.propertyeditors.iconeditor import FileToBitmapConverter
+
+
+class FileDropTarget(wx.FileDropTarget):
+
+    def __init__(self, obj):
+        wx.FileDropTarget.__init__(self)
+        self.obj = obj
+
+    def OnDropFiles(self, x, y, filenames):
+        try:
+            bitmap = FileToBitmapConverter().convert(filenames[0])
+            self.obj.controller.event_at(x, y).set_icon(bitmap)
+        except:
+            pass
 
 
 class MainPanel(wx.Panel):
@@ -113,6 +128,7 @@ class MainPanel(wx.Panel):
         self.category_tree.set_timeline_view(canvas.get_timeline(), canvas.get_view_properties())
         self.set_searchbar_timeline_canvas(canvas)
         self.show_timeline_panel()
+        canvas.SetDropTarget(FileDropTarget(canvas))
 
     def set_timeline(self, timeline):
         self.timeline_panel.set_timeline(timeline)
