@@ -53,6 +53,11 @@ class PreferencesDialog(Dialog):
                             event_EVT_CHECKBOX="on_center_text_changed"
                             label="$(center_text_text)"
                         />
+                        <CheckBox
+                            name="uncheck_time_for_new_events"
+                            event_EVT_CHECKBOX="on_uncheck_time_for_new_events"
+                            label="$(uncheck_time_for_new_events_text)"
+                        />
                         <Button
                             event_EVT_BUTTON="on_tab_order_click"
                             label="$(tab_order_text)"
@@ -127,6 +132,7 @@ class PreferencesDialog(Dialog):
             "inertial_scrolling_text": _("Use inertial scrolling"),
             "never_period_point_text": _("Never show period Events as point Events"),
             "center_text_text": _("Center Event texts"),
+            "uncheck_time_for_new_events_text": _("Uncheck time checkbox for new events"),
             "tab_order_text": _("Select Event Editor Tab Order"),
             "date_time_text": _("Date && Time"),
             "week_start_text": _("Week start on:"),
@@ -148,6 +154,9 @@ class PreferencesDialog(Dialog):
 
     def SetNeverPeriodPointCheckboxValue(self, value):
         self.never_period_point_checkbox.SetValue(value)
+
+    def SetUncheckTimeForNewEventsCheckboxValue(self, value):
+        self.uncheck_time_for_new_events.SetValue(value)
 
     def SetCenterTextCheckboxValue(self, value):
         self.center_text_checkbox.SetValue(value)
