@@ -240,9 +240,12 @@ class EditEventDialog(Dialog):
         return self.show_time_checkbox.GetValue()
 
     def SetShowTime(self, value):
-        self.show_time_checkbox.SetValue(value)
-        self.start_time.show_time(value)
-        self.end_time.show_time(value)
+        if self.timeline.get_time_type().is_date_time_type():
+            self.show_time_checkbox.SetValue(value)
+            self.start_time.show_time(value)
+            self.end_time.show_time(value)
+        else:
+            self.show_time_checkbox.Hide()
 
     def GetFuzzy(self):
         return self.fuzzy_checkbox.GetValue()
