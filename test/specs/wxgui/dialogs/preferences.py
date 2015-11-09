@@ -40,6 +40,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_use_inertial_scrolling.return_value = False
         self.config.get_never_show_period_events_as_point_events.return_value = True
         self.config.get_center_event_texts.return_value = True
+        self.config.uncheck_time_for_new_events = False
         self.experimental_features = Mock(ExperimentalFeatures)
 
     def test_it_can_be_created(self):
