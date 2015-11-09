@@ -1,6 +1,20 @@
 Changelog
 =========
 
+Version 1.8.1
+-------------
+
+**Released on 10 November 2015.**
+
+This is a bugfix release. It fixes a critical bug that disables editing numerical timelines.
+
+Fixed crash reports:
+
+* ``AttributeError: 'NumTimePicker' object has no attribute 'show_time'``
+  (`#117 <https://sourceforge.net/p/thetimelineproj/backlog/117/>`_)
+
+
+
 Version 1.8.0
 -------------
 
