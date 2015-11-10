@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.8.0</version>
+  <version>1.8.1</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -789,7 +789,7 @@ Windows specific:
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
+      <category>Planned Release</category>
       <description>Version 1.8.0
 -------------
 
@@ -888,9 +888,9 @@ Fixed crash reports:
   (`#89 &lt;https://sourceforge.net/p/thetimelineproj/backlog/89/&gt;`_)</description>
     </event>
     <event>
-      <start>2016-01-31 06:38:00</start>
-      <end>2016-01-31 06:38:00</end>
-      <text>Timeline 1.8.0</text>
+      <start>2016-01-31 00:00:00</start>
+      <end>2016-01-31 00:00:00</end>
+      <text>Timeline 1.9.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
@@ -901,11 +901,27 @@ Fixed crash reports:
 
 **Planned Release on 31 January 2016.**</description>
     </event>
+    <event>
+      <start>2015-11-10 00:00:00</start>
+      <end>2015-11-10 00:00:00</end>
+      <text>Timeline 1.8.1</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Correction Release</category>
+      <description>This is a bugfix release. It fixes a critical bug that disables editing numerical timelines.
+
+Fixed crash reports:
+
+* ``AttributeError: 'NumTimePicker' object has no attribute 'show_time'``
+  (`#117 &lt;https://sourceforge.net/p/thetimelineproj/backlog/117/&gt;`_)</description>
+    </event>
   </events>
   <view>
     <displayed_period>
-      <start>2014-02-14 00:51:29</start>
-      <end>2017-02-25 00:59:20</end>
+      <start>2014-10-15 22:32:45</start>
+      <end>2017-10-26 22:40:36</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
