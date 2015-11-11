@@ -27,24 +27,37 @@ REVISION_DATE = ""
 
 
 def get_version():
-    string = get_version_number_string()
+    parts = []
+    parts.append(get_version_number_string())
     if TYPE:
-        string += " %s" % TYPE
+        parts.append(TYPE)
     if (REVISION_HASH or REVISION_DATE):
-        parts = []
+        revision_parts = []
         if REVISION_HASH:
-            parts.append(REVISION_HASH)
+            revision_parts.append(REVISION_HASH)
         if REVISION_DATE:
-            parts.append(REVISION_DATE)
-        string += " (%s)" % " ".join(parts)
-    return string
+            revision_parts.append(REVISION_DATE)
+        parts.append("(%s)" % " ".join(revision_parts))
+    return " ".join(parts)
+
+
+def get_filename_version():
+    parts = []
+    parts.append("timeline")
+    parts.append(get_version_number_string())
+    if not is_final():
+        parts.append(TYPE)
+        parts.append(REVISION_HASH)
+        parts.append(REVISION_DATE)
+    return "-".join(parts)
 
 
 def get_readme_version():
-    string = get_version_number_string()
-    if TYPE:
-        string += " %s" % TYPE
-    return string
+    parts = []
+    parts.append(get_version_number_string())
+    if not is_final():
+        parts.append(TYPE)
+    return " ".join(parts)
 
 
 def get_version_number_string():
@@ -53,3 +66,7 @@ def get_version_number_string():
 
 def is_dev():
     return TYPE == TYPE_DEV
+
+
+def is_final():
+    return TYPE == TYPE_FINAL
