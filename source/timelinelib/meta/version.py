@@ -16,14 +16,20 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+TYPE_DEV = "development"
+TYPE_BETA = "beta"
+TYPE_FINAL = ""
+
 VERSION = (1, 9, 0)
-DEV = True
+TYPE = TYPE_DEV
 
 
 def get_version():
-    if DEV:
-        return ("%s.%s.%sdev" % VERSION) + DEV_REVISION
-    return "%s.%s.%s" % VERSION
+    string = get_version_number_string()
+    if TYPE:
+        string += " "
+        string += TYPE
+    return string
 
 
 def get_version_number_string():
@@ -31,20 +37,4 @@ def get_version_number_string():
 
 
 def is_dev():
-    return DEV
-
-
-def _get_revision():
-    try:
-        import os
-        from subprocess import Popen, PIPE
-        root = os.path.join(os.path.dirname(__file__), "..", "..", "..")
-        cmd = ["hg", "id", "-i", "-R", root]
-        rev = Popen(cmd, stdout=PIPE).communicate()[0].strip()
-        return rev
-    except:
-        return "0"
-
-
-if DEV:
-    DEV_REVISION = _get_revision()
+    return TYPE == TYPE_DEV
