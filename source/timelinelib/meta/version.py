@@ -22,10 +22,22 @@ TYPE_FINAL = ""
 
 VERSION = (1, 9, 0)
 TYPE = TYPE_DEV
+REVISION_HASH = ""
+REVISION_DATE = ""
 
 
 def get_version():
-    return get_readme_version()
+    string = get_version_number_string()
+    if TYPE:
+        string += " %s" % TYPE
+    if (REVISION_HASH or REVISION_DATE):
+        parts = []
+        if REVISION_HASH:
+            parts.append(REVISION_HASH)
+        if REVISION_DATE:
+            parts.append(REVISION_DATE)
+        string += " (%s)" % " ".join(parts)
+    return string
 
 
 def get_readme_version():
