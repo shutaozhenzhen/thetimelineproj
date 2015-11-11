@@ -25,10 +25,13 @@ TYPE = TYPE_DEV
 
 
 def get_version():
+    return get_readme_version()
+
+
+def get_readme_version():
     string = get_version_number_string()
     if TYPE:
-        string += " "
-        string += TYPE
+        string += " %s" % TYPE
     return string
 
 
