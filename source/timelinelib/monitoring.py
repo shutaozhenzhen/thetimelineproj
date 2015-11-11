@@ -19,12 +19,12 @@
 import sys
 import time
 
-from timelinelib.meta.version import DEV
+import timelinelib.meta.version
 
 
 class Monitoring(object):
 
-    IS_ENABLED = DEV
+    IS_ENABLED = timelinelib.meta.version.is_dev()
 
     def __init__(self):
         self.timeline_redraw_count = 0
