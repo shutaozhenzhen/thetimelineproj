@@ -38,7 +38,7 @@ class SourceCodeDistributionSpec(UnitTestCase):
 
     def test_version_number_in_changelog_should_match_that_in_version_module(self):
         self.assertTrue(
-            self.get_module_version_string() in
+            version.get_version_number_string() in
             self.read_first_version_line_from(self.changelog))
 
     def test_all_authors_mentioned_in_about_module_should_be_mentioned_in_AUTHORS(self):
@@ -87,9 +87,6 @@ class SourceCodeDistributionSpec(UnitTestCase):
 
     def is_header(self, possible_author):
         return ":" in possible_author
-
-    def get_module_version_string(self):
-        return "%s.%s.%s" % version.VERSION
 
     def read_first_version_line_from(self, path):
         f = open(path, "r")
