@@ -21,15 +21,20 @@ import os
 
 from timelinetest import UnitTestCase
 import timelinelib.meta.about
-import timelinelib.meta.version
+import timelinelib.meta.version as version
 
 
 class SourceCodeDistributionSpec(UnitTestCase):
 
-    def test_version_number_in_README_should_match_that_in_version_module(self):
-        self.assertTrue(
-            self.get_module_version_string() in
-            self.read_first_line_from(self.README))
+    def test_version_in_README_should_match_that_in_version_module(self):
+        if version.is_dev():
+            expected_version = "%s development" % version.get_version_number_string()
+        else:
+            expected_version = version.get_version_number_string()
+        self.assertEqual(
+            self.read_first_line_from(self.README),
+            "This directory contains the %s version of Timeline.\n" % expected_version
+        )
 
     def test_version_number_in_changelog_should_match_that_in_version_module(self):
         self.assertTrue(
@@ -84,7 +89,7 @@ class SourceCodeDistributionSpec(UnitTestCase):
         return ":" in possible_author
 
     def get_module_version_string(self):
-        return "%s.%s.%s" % timelinelib.meta.version.VERSION
+        return "%s.%s.%s" % version.VERSION
 
     def read_first_version_line_from(self, path):
         f = open(path, "r")
