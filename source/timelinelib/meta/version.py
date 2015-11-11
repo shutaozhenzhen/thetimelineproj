@@ -26,6 +26,14 @@ def get_version():
     return "%s.%s.%s" % VERSION
 
 
+def get_version_number_string():
+    return "%s.%s.%s" % VERSION
+
+
+def is_dev():
+    return DEV
+
+
 def _get_revision():
     try:
         import os
