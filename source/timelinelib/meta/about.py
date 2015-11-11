@@ -19,7 +19,7 @@
 
 import wx
 
-from timelinelib.meta.version import get_version
+from timelinelib.meta.version import get_full_version
 
 
 APPLICATION_NAME = "Timeline"
@@ -102,7 +102,7 @@ along with Timeline.  If not, see <http://www.gnu.org/licenses/>."""
 def display_about_dialog():
     info = wx.AboutDialogInfo()
     info.Name = APPLICATION_NAME
-    info.Version = get_version()
+    info.Version = get_full_version()
     info.Copyright = COPYRIGHT_TEXT
     info.Description = APPLICATION_DESCRIPTION
     info.WebSite = (WEBSITE, "%s Website" % APPLICATION_NAME)

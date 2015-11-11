@@ -33,7 +33,7 @@ sys.path.insert(0, SRC_DIR)
 import timelinelib.meta.version
 
 def make_source_release():
-    zip_file_name = "timeline-%s.zip" % timelinelib.meta.version.get_version()
+    zip_file_name = "%s.zip" % timelinelib.meta.version.get_filename_version()
     warn_if_file_exists(zip_file_name)
     warn_if_dev_version()
     warn_if_specs_fail()

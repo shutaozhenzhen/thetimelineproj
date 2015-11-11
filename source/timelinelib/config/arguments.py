@@ -19,7 +19,7 @@
 from optparse import OptionParser
 import os.path
 
-from timelinelib.meta.version import get_version
+from timelinelib.meta.version import get_full_version
 
 import wx
 
@@ -27,7 +27,7 @@ import wx
 class ApplicationArguments(object):
 
     def __init__(self):
-        version_string = "%prog " + get_version()
+        version_string = "%prog " + get_full_version()
         self.option_parser = OptionParser(
             usage="%prog [options] [filename]",
             version=version_string)

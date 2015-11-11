@@ -40,7 +40,7 @@ class describe_version_formatting(UnitTestCase):
 
     def test_full(self):
         self.assertEqual(
-            version.get_version(),
+            version.get_full_version(),
             "1.2.3 beta (abc123 2015-11-11)"
         )
 

@@ -24,7 +24,7 @@ import locale
 
 import wx
 
-from timelinelib.meta.version import get_version
+from timelinelib.meta.version import get_full_version
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
 from timelinelib.features.experimental.experimentalfeaturedateformatting import create_locale_sample_date
@@ -78,7 +78,7 @@ def create_error_message(exception_type, value, tb):
 
 def create_versions_message():
     return "\n".join([
-        "Timeline version: %s" % get_version(),
+        "Timeline version: %s" % get_full_version(),
         "System version: %s" % ", ".join(platform.uname()),
         "Python version: %s" % python_version.replace("\n", ""),
         "wxPython version: %s" % wx.version(),
