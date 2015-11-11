@@ -27,13 +27,9 @@ import timelinelib.meta.version as version
 class SourceCodeDistributionSpec(UnitTestCase):
 
     def test_version_in_README_should_match_that_in_version_module(self):
-        if version.is_dev():
-            expected_version = "%s development" % version.get_version_number_string()
-        else:
-            expected_version = version.get_version_number_string()
         self.assertEqual(
             self.read_first_line_from(self.README),
-            "This directory contains the %s version of Timeline.\n" % expected_version
+            "This directory contains the %s version of Timeline.\n" % version.get_readme_version()
         )
 
     def test_version_number_in_changelog_should_match_that_in_version_module(self):
