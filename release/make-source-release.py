@@ -44,7 +44,7 @@ def warn_if_file_exists(zip_file_name):
         continue_despite_warning("Archive '%s' already exists." % zip_file_name)
 
 def warn_if_dev_version():
-    if timelinelib.meta.version.DEV:
+    if timelinelib.meta.version.is_dev():
         continue_despite_warning("This is a development version.")
 
 def warn_if_specs_fail():
