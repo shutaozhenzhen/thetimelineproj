@@ -19,6 +19,7 @@
 
 import codecs
 
+from timelinelib.calendar.gregorian import GregorianUtils
 from timelinelib.dataexport.timelinexml import alert_string
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.data import Event
@@ -27,12 +28,11 @@ from timelinelib.dataimport.timelinexml import parse_alert_string
 from timelinelib.data import TimePeriod
 from timelinelib.db import db_open
 from timelinelib.drawing.viewproperties import ViewProperties
-from timelinelib.meta.version import get_version
+from timelinelib.meta.version import get_full_version
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
 from timelinetest import TmpDirTestCase
 from timelinetest.utils import a_category_with
-from timelinelib.calendar.gregorian import GregorianUtils
 
 
 class XmlTimelineSpec(TmpDirTestCase):
@@ -135,7 +135,7 @@ class XmlTimelineSpec(TmpDirTestCase):
     </hidden_categories>
   </view>
 </timeline>
-""" % get_version())
+""" % get_full_version())
 
     def testWriteReadCycle(self):
         self._create_db()

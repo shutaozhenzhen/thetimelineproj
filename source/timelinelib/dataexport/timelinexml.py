@@ -23,7 +23,7 @@ import StringIO
 import wx
 
 from timelinelib.db.utils import safe_write
-from timelinelib.meta.version import get_version
+from timelinelib.meta.version import get_full_version
 
 
 ENCODING = "utf-8"
@@ -67,7 +67,7 @@ class Exporter(object):
         self._write_timeline(xmlfile)
 
     def _write_timeline(self, xmlfile):
-        write_simple_tag(xmlfile, "version", get_version(), INDENT1)
+        write_simple_tag(xmlfile, "version", get_full_version(), INDENT1)
         write_simple_tag(xmlfile, "timetype", self.db.get_time_type().get_name(), INDENT1)
         if len(self.db.get_all_eras()) > 0:
             self._write_eras(xmlfile)

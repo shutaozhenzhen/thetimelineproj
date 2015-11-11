@@ -26,7 +26,7 @@ REVISION_HASH = ""
 REVISION_DATE = ""
 
 
-def get_version():
+def get_full_version():
     parts = []
     parts.append(get_version_number_string())
     if TYPE:
