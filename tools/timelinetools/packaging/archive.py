@@ -21,11 +21,11 @@ import re
 import subprocess
 import sys
 
-import timelinepackaging.path
-import timelinepackaging.zipfile
+import timelinetools.packaging.path
+import timelinetools.packaging.zipfile
 
 
-class Archive(timelinepackaging.path.Path):
+class Archive(timelinetools.packaging.path.Path):
 
     def change_revision(self, revision_hash, revision_date):
         self._change_version_constant("REVISION_HASH", "\"%s\"" % revision_hash)
@@ -71,7 +71,7 @@ class Archive(timelinepackaging.path.Path):
             zip_name,
             self.get_basename(),
         ], cwd=self.get_dirname())
-        return timelinepackaging.zipfile.ZipFile(self.get_dirname(), zip_name)
+        return timelinetools.packaging.zipfile.ZipFile(self.get_dirname(), zip_name)
 
     def _change_version_constant(self, constant, value):
         _change_constant(self._get_version_path(), constant, value)

@@ -23,7 +23,7 @@ import os
 import shutil
 import tempfile
 
-from timelinepackaging import open_repository
+import timelinetools.packaging.repository
 
 
 def main():
@@ -47,7 +47,7 @@ def package_source(arguments):
 
 
 def create_source_zip(arguments, tempdir):
-    repository = open_repository(arguments.repo)
+    repository = timelinetools.packaging.repository.Repository(arguments.repo)
     archive = repository.archive(arguments.revision, tempdir, "archive")
     if arguments.beta:
         archive.change_version_type("TYPE_BETA")

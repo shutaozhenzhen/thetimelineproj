@@ -16,8 +16,22 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import timelinepackaging.repository
+import os
+import subprocess
+
+import timelinetools.packaging.path
+import timelinetools.packaging.archive
 
 
-def open_repository(*args, **kwargs):
-    return timelinepackaging.repository.Repository(*args, **kwargs)
+class ZipFile(timelinetools.packaging.path.Path):
+
+    def extract_to(self, directory):
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        subprocess.check_call([
+            "unzip",
+            "-q",
+            "-d", directory,
+            self.get_path(),
+        ])
+        return timelinetools.packaging.archive.Archive(directory, self.get_basename()[:-4])

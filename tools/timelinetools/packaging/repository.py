@@ -19,7 +19,7 @@
 import os
 import subprocess
 
-import timelinepackaging.archive
+import timelinetools.packaging.archive
 
 
 class Repository(object):
@@ -38,7 +38,7 @@ class Repository(object):
         ])
         revision_hash = self._get_revision_hash(revision)
         revision_date = self._get_revision_date(revision_hash)
-        archive = timelinepackaging.archive.Archive(destination_dir, name)
+        archive = timelinetools.packaging.archive.Archive(destination_dir, name)
         archive.change_revision(revision_hash, revision_date)
         return archive
 
