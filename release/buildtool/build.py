@@ -52,7 +52,7 @@ ACTION_NAMES = {COPYFILE: "COPYFILE",
                 CPYDIR: "CPYDIR", }
 
 
-known_targets = ("win32", "win32py25", "source")
+known_targets = ("win32")
 
 
 win32_actions = ((ANNOTATE, "Modify some python files", ""),
@@ -99,52 +99,8 @@ win32_actions = ((ANNOTATE, "Modify some python files", ""),
                  (ANNOTATE, "Done", ""),
                  )
 
-win32py25_actions = (  # Modify some python files
-                     (COPYDIR, r"release\win\cmd", "cmd"),
-                     (COPYFILE, r"source\timeline.py", "timeline.py"),
-                     (RUNPYSCRIPT, r"cmd\mod2_timeline_py.py", ""),
-                     (COPYDIR, r"source\timelinelib", "timelinelib"),
-                     (RUNPYSCRIPT, r"cmd\mod2_paths_py.py", ""),
-                     (RUNPYSCRIPT, r"cmd\mod2_version_py.py", ""),
-                     (RUNPYSCRIPT, r"cmd\mod2_factory_py.py", ""),
-                     (MAKEDIR, None, "inno"),
-                     (COPYFILE, r"release\win\inno\timelineWin32_py25.iss", r"inno\timelineWin32_2.iss"),
-                     (RUNPYSCRIPT, r"cmd\mod2_timeline_iss_win32.py", ""),
-                     # Library dependencies
-                     (COPYDIR, r"dependencies\timelinelib\icalendar-3.2\icalendar", "icalendar"),
-                     (COPYDIR, r"dependencies\timelinelib\pytz-2012j\pytz", "pytz"),
-                     (COPYDIR, r"dependencies\timelinelib\pysvg-0.2.1\pysvg", "pysvg"),
-                     (COPYDIR, r"dependencies\timelinelib\markdown-2.0.3\markdown", "markdown"),
-                     # Create distribution directory
-                     (COPYFILE, r"release\win\inno\setup.py", "setup.py"),
-                     (MAKEDIR, None, "icons"),
-                     (COPYFILE, r"release\win\inno\Timeline.ico", r"icons\Timeline.ico"),
-                     (RUNPYSCRIPT, "setup.py", "py2exe"),
-                     # Create distribution executable
-                     (COPYDIR, "translations", "translations"),
-                     (RUNCMD, "python", r"translations\generate-mo-files.py"),
-                     (CPYDIR, "translations", r"dist\translations"),
-                     (COPYDIR, "icons", r"dist\icons"),
-                     (COPYFILE, r"release\win\inno\Timeline.ico", r"dist\icons\Timeline.ico"),
-                     (COPYFILE, "COPYING", "COPYING"),
-                     (COPYFILE, r"release\win\inno\WINSTALL", r"WINSTALL"),
-                     # Create setup executable
-                     (RUNCMD, "iscc.exe", r"inno\timelineWin32_2.iss"),
-)
 
-
-source_actions = (  # Change working dir to TIMELINE_DIR
-                    (PUSHD, TIMELINE_DIR, None),
-                    # Create source release artifact
-                    (RUNPYTEST, "release\make-source-release.py", ""),
-                    # Restore working dir
-                    (POPD, None, None),
-)
-
-
-actions = {"win32": win32_actions,
-           "win32py25": win32py25_actions,
-           "source": source_actions}
+actions = {"win32": win32_actions}
 
 
 class Target():
