@@ -6,36 +6,42 @@ Version 1.9.0
 
 **Planned Release on 31 January 2016.**
 
+*Don't want to wait for the final release? Try the beta version!*
+`Download source <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/>`_.
+
 Calendar:
+
 * Locale date formats correctly at start of timeline.
   (`#116 <https://sourceforge.net/p/thetimelineproj/backlog/116/>`_)
 
 GUI:
 
-* Images can now be dragged and dropped on an event, to change icon
+* Images can now be dragged and dropped on an event to change icon.
   (`#103 <https://sourceforge.net/p/thetimelineproj/backlog/103/>`_)
 
 * A new preference decides if the time checkbox is checked for new events.
   (`#119 <https://sourceforge.net/p/thetimelineproj/backlog/119/>`_)
 
-* Subevents in a container can be locked if the extended container strategy is used.
+* Subevents in a container can be locked if the extended container strategy is
+  used.
   (`#110 <https://sourceforge.net/p/thetimelineproj/backlog/110/>`_)
 
-* The description text in the event editor can now be selected with Ctrl+A
+* The description text in the event editor can now be selected with Ctrl+A.
   (`#115 <https://sourceforge.net/p/thetimelineproj/backlog/115/>`_)
 
-* Ends-today checkbox in the event editor is now enabled when the editor is opened from the menu
+* Ends-today checkbox in the event editor is now enabled when the editor is
+  opened from the menu.
   (`#114 <https://sourceforge.net/p/thetimelineproj/backlog/114/>`_)
 
-* The events in the exported list is now sorted by start data
+* The events in the exported list is now sorted by start data.
   (`#106 <https://sourceforge.net/p/thetimelineproj/backlog/106/>`_)
 
 Translations:
 
-* The wx stock items are nor translated correctly in the windows binary
+* The wx stock items are now translated correctly in the windows binary.
   (`#109 <https://sourceforge.net/p/thetimelineproj/backlog/109/>`_)
 
-* The strip text 'Century' is now translatable
+* The strip text 'Century' is now translatable.
   (`#107 <https://sourceforge.net/p/thetimelineproj/backlog/107/>`_)
 
 Version 1.8.1
