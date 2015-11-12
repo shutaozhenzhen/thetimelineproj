@@ -32,7 +32,6 @@ def main():
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--repo", default=os.path.join(os.path.dirname(__file__), ".."))
     parser.add_argument("--revision", default="tip")
     parser.add_argument("--beta", action="store_true", default=False)
     return parser.parse_args()
@@ -47,7 +46,7 @@ def package_source(arguments):
 
 
 def create_source_zip(arguments, tempdir):
-    repository = timelinetools.packaging.repository.Repository(arguments.repo)
+    repository = timelinetools.packaging.repository.Repository()
     archive = repository.archive(arguments.revision, tempdir, "archive")
     if arguments.beta:
         archive.change_version_type("TYPE_BETA")
