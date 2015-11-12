@@ -67,22 +67,13 @@ Source: "dist\translations\fr\LC_MESSAGES\*"; DestDir: "{app}\translations\fr\LC
 Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\locale\fr\LC_MESSAGES\*"; DestDir: "{app}\translations\fr\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\gl\LC_MESSAGES\*"; DestDir: "{app}\translations\gl\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\locale\gl\LC_MESSAGES\*"; DestDir: "{app}\translations\gl\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\he\LC_MESSAGES\*"; DestDir: "{app}\translations\he\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\locale\he\LC_MESSAGES\*"; DestDir: "{app}\translations\he\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\it\LC_MESSAGES\*"; DestDir: "{app}\translations\it\LC_MESSAGES"; Flags: ignoreversion
 Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\locale\it\LC_MESSAGES\*"; DestDir: "{app}\translations\it\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\lt\LC_MESSAGES\*"; DestDir: "{app}\translations\lt\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\locale\lt\LC_MESSAGES\*"; DestDir: "{app}\translations\lt\LC_MESSAGES"; Flags: ignoreversion
-
-Source: "dist\translations\ko\LC_MESSAGES\*"; DestDir: "{app}\translations\ko\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\locale\ko\LC_MESSAGES\*"; DestDir: "{app}\translations\ko\LC_MESSAGES"; Flags: ignoreversion
-
-Source: "dist\translations\nl\LC_MESSAGES\*"; DestDir: "{app}\translations\nl\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\locale\nl\LC_MESSAGES\*"; DestDir: "{app}\translations\nl\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\pl\LC_MESSAGES\*"; DestDir: "{app}\translations\pl\LC_MESSAGES"; Flags: ignoreversion
 Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\locale\pl\LC_MESSAGES\*"; DestDir: "{app}\translations\pl\LC_MESSAGES"; Flags: ignoreversion
