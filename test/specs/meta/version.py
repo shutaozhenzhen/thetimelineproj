@@ -49,9 +49,3 @@ class describe_version_formatting(UnitTestCase):
             version.get_filename_version(),
             "timeline-1.2.3-beta-abc123-2015-11-11"
         )
-
-    def test_readme(self):
-        self.assertEqual(
-            version.get_readme_version(),
-            "1.2.3 beta"
-        )
