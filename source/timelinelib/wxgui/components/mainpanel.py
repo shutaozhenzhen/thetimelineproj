@@ -39,6 +39,13 @@ class FileDropTarget(wx.FileDropTarget):
         except:
             pass
 
+    def OnDragOver(self, x, y, defResult):
+        if self.obj.controller.event_at(x, y):
+            return defResult
+        else:
+            return wx.DragNone
+
+
 
 class MainPanel(wx.Panel):
     """
