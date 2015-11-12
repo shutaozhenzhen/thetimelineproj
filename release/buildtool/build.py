@@ -199,6 +199,7 @@ class Target():
         except Exception, ex:
             print str(ex)
             print "BUILD FAILED"
+            sys.exit(1)
 
     def annotate(self, src, dst):
         self.print_header(src)
