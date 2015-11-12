@@ -52,14 +52,6 @@ def get_filename_version():
     return "-".join(parts)
 
 
-def get_readme_version():
-    parts = []
-    parts.append(get_version_number_string())
-    if not is_final():
-        parts.append(TYPE)
-    return " ".join(parts)
-
-
 def get_version_number_string():
     return "%s.%s.%s" % VERSION
 

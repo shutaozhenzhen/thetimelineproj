@@ -26,12 +26,6 @@ import timelinelib.meta.version as version
 
 class SourceCodeDistributionSpec(UnitTestCase):
 
-    def test_version_in_README_should_match_that_in_version_module(self):
-        self.assertEqual(
-            self.read_first_line_from(self.README),
-            "This directory contains the %s version of Timeline.\n" % version.get_readme_version()
-        )
-
     def test_version_number_in_changelog_should_match_that_in_version_module(self):
         self.assertTrue(
             version.get_version_number_string() in
@@ -92,12 +86,6 @@ class SourceCodeDistributionSpec(UnitTestCase):
                 break
         f.close()
         return first_version_line
-
-    def read_first_line_from(self, path):
-        f = open(path, "r")
-        first_line = f.readline()
-        f.close()
-        return first_line
 
     def read_utf8_encoded_text_from(self, path):
         f = codecs.open(path, "r", "utf-8")
