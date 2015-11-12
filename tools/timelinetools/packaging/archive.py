@@ -42,6 +42,14 @@ class Archive(timelinetools.packaging.path.Path):
                 "print(timelinelib.meta.version.get_filename_version());"
         ], cwd=self._get_source_path()).strip()
 
+    def get_version_number_string(self):
+        return subprocess.check_output([
+            sys.executable,
+            "-c",
+                "import timelinelib.meta.version;"
+                "print(timelinelib.meta.version.get_version_number_string());"
+        ], cwd=self._get_source_path()).strip()
+
     def run_tests(self):
         subprocess.check_call([
             sys.executable,

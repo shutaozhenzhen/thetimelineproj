@@ -39,19 +39,28 @@ class Repository(object):
             "--exclude", "%s/.hg*" % (self.root or "."),
             os.path.join(destination_dir, name)
         ])
-        revision_hash = self._get_revision_hash(revision)
+        (revision_hash, revision_tag) = self._get_revision_id(revision)
         revision_date = self._get_revision_date(revision_hash)
         archive = timelinetools.packaging.archive.Archive(destination_dir, name)
         archive.change_revision(revision_hash, revision_date)
+        if archive.get_version_number_string() == revision_tag:
+            archive.change_version_type("TYPE_FINAL")
+        else:
+            archive.change_version_type("TYPE_BETA")
         return archive
 
-    def _get_revision_hash(self, revision):
-        return subprocess.check_output([
+    def _get_revision_id(self, revision):
+        parts = subprocess.check_output([
             "hg", "id",
-            "-i",
             "-r", revision,
             "-R", self.root,
-        ]).strip()
+        ]).strip().split(" ")
+        if len(parts) == 1:
+            return (parts[0], None)
+        elif len(parts) == 2:
+            return (parts[0], parts[1])
+        else:
+            raise Exception("Unknown id %r" % (parts,))
 
     def _get_revision_date(self, revision):
         return subprocess.check_output([
