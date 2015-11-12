@@ -21,9 +21,9 @@ import re
 import subprocess
 import sys
 
+from timelinetools.run import run_python_script_and_exit_if_fails
 import timelinetools.packaging.path
 import timelinetools.packaging.zipfile
-from timelinetools.run import run_python_script_and_exit_if_fails
 
 
 class Archive(timelinetools.packaging.path.Path):
@@ -50,6 +50,15 @@ class Archive(timelinetools.packaging.path.Path):
                 "import timelinelib.meta.version;"
                 "print(timelinelib.meta.version.get_version_number_string());"
         ], cwd=self._get_source_path()).strip()
+
+    def generate_mo_files(self):
+        run_python_script_and_exit_if_fails(
+            os.path.join(
+                self.get_path(),
+                "translations",
+                "generate-mo-files.py"
+            )
+        )
 
     def run_extensive_tests(self):
         run_python_script_and_exit_if_fails(

@@ -48,6 +48,7 @@ def create_source_zip(arguments, tempdir):
     repository = timelinetools.packaging.repository.Repository()
     archive = repository.archive(arguments.revision, tempdir, "archive")
     archive.rename(archive.get_filename_version())
+    archive.generate_mo_files()
     zip_file = archive.create_zip_archive()
     extracted_archive = zip_file.extract_to(os.path.join(tempdir, "test"))
     extracted_archive.run_extensive_tests()
