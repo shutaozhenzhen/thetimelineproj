@@ -19,8 +19,6 @@
 import os
 import shutil
 
-import timelinetools.packaging.cmdline
-
 
 class Path(object):
 
@@ -43,6 +41,5 @@ class Path(object):
 
     def move_to_directory(self, directory):
         destination = os.path.join(directory, self.get_basename())
-        timelinetools.packaging.cmdline.warn_if_file_exists(destination)
         shutil.move(self.get_path(), destination)
         self.parent_dir = os.path.abspath(directory)
