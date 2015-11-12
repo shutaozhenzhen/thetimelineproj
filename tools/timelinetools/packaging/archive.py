@@ -109,7 +109,7 @@ def _make_one_sub(path, regex, replacement):
         raise ValueError("Expected 1 sub but got %d: %s %s" % (
             number_of_subs_made,
             path,
-            constant
+            regex
         ))
     with open(path, "w") as f:
         f.write(new_content)
