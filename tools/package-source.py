@@ -50,7 +50,7 @@ def create_source_zip(arguments, tempdir):
     archive.rename(archive.get_filename_version())
     zip_file = archive.create_zip_archive()
     extracted_archive = zip_file.extract_to(os.path.join(tempdir, "test"))
-    extracted_archive.run_tests()
+    extracted_archive.run_extensive_tests()
     zip_file.move_to_directory(".")
 
 

@@ -23,6 +23,7 @@ import sys
 
 import timelinetools.packaging.path
 import timelinetools.packaging.zipfile
+from timelinetools.run import run_python_script_and_exit_if_fails
 
 
 class Archive(timelinetools.packaging.path.Path):
@@ -50,11 +51,14 @@ class Archive(timelinetools.packaging.path.Path):
                 "print(timelinelib.meta.version.get_version_number_string());"
         ], cwd=self._get_source_path()).strip()
 
-    def run_tests(self):
-        subprocess.check_call([
-            sys.executable,
-            os.path.join("test", "execute-specs.py"),
-        ], cwd=self.get_path())
+    def run_extensive_tests(self):
+        run_python_script_and_exit_if_fails(
+            os.path.join(
+                self.get_path(),
+                "tools",
+                "run-extensive-tests.py"
+            )
+        )
 
     def create_zip_archive(self):
         self._clean_pyc_files()
