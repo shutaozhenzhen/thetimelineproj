@@ -33,11 +33,6 @@ class Archive(timelinetools.packaging.path.Path):
 
     def change_version_type(self, version_type):
         self._change_version_constant("TYPE", version_type)
-        _make_one_sub(
-            self._get_readme_path(),
-            r"^(This directory contains the ).*( version of Timeline.)$",
-            r"\g<1>%s\g<2>" % self.get_readme_version()
-        )
 
     def get_filename_version(self):
         return subprocess.check_output([
@@ -45,14 +40,6 @@ class Archive(timelinetools.packaging.path.Path):
             "-c",
                 "import timelinelib.meta.version;"
                 "print(timelinelib.meta.version.get_filename_version());"
-        ], cwd=self._get_source_path()).strip()
-
-    def get_readme_version(self):
-        return subprocess.check_output([
-            sys.executable,
-            "-c",
-                "import timelinelib.meta.version;"
-                "print(timelinelib.meta.version.get_readme_version());"
         ], cwd=self._get_source_path()).strip()
 
     def run_tests(self):
