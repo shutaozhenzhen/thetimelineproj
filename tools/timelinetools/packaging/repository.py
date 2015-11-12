@@ -22,9 +22,12 @@ import subprocess
 import timelinetools.packaging.archive
 
 
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+
+
 class Repository(object):
 
-    def __init__(self, root):
+    def __init__(self, root=REPO_ROOT):
         self.root = root
 
     def archive(self, revision, destination_dir, name):
