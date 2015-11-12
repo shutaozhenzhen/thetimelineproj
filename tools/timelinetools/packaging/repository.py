@@ -35,7 +35,6 @@ class Repository(object):
             "hg", "archive",
             "-r", revision,
             "-R", self.root,
-            "--no-decode",
             "--exclude", "%s/.hg*" % (self.root or "."),
             os.path.join(destination_dir, name)
         ])
