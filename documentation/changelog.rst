@@ -6,6 +6,9 @@ Version 1.9.0
 
 **Planned Release on 31 January 2016.**
 
+*Don't want to wait for the final release? Try the beta version!*
+`Download source <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/>`_.
+
 Calendar:
 
 * Locale date formats correctly at start of timeline.
