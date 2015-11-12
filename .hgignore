@@ -27,3 +27,4 @@ _hgignore
 _hgeol
 release/buildtool/target
 release/buildtool/*.exe
+venv
