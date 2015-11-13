@@ -65,7 +65,7 @@ class Archive(timelinetools.packaging.path.Path):
             os.path.join(
                 self.get_path(),
                 "tools",
-                "run-extensive-tests.py"
+                "execute-specs-repeat.py"
             )
         )
 
