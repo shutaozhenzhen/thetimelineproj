@@ -69,7 +69,7 @@ win32_actions = ((ANNOTATE, "Modify some python files", ""),
 
                  (ANNOTATE, "Run Tests", ""),
                  (PUSHD, "..\\..\\..\\", ""),
-                 (RUNPYTEST, r"test\execute-specs.py", ""),
+                 (RUNPYTEST, r"tools\execute-specs.py", ""),
                  (POPD, "", ""),
 
                  (ANNOTATE, "Library dependencies", ""),

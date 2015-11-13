@@ -65,7 +65,7 @@ Features for the next version (x.y+1) can continue to be developed in main.
     4. Commit "Updated about"
     5. Pull these changes into main.
 
-7. Run "python execute-specs.py" to find possible errors
+7. Run "python tools/execute-specs.py" to find possible errors
     1. Fix errors
     2. Commit
     3. Pull these changes into main.
@@ -104,7 +104,7 @@ Work on main
      1. version.py
      2. changelog.rst
      3. README
-     4. Run "python execute-specs.py" to find where else you need to modify
+     4. Run "python tools/execute-specs.py" to find where else you need to modify
 
 3. Commit and push
 

@@ -28,7 +28,7 @@ object.
 What the boiler plate code has given us is a way to test our dialog. Let's try
 the following command::
 
-    python test/execute-specs.py --halt-gui --only testdialog
+    python tools/execute-specs.py --halt-gui --only testdialog
 
 A dialog shows up with a hello world button.
 
@@ -38,7 +38,7 @@ needs manual inspection, but for quickly inspecting our dialog, it's perfect.
 
 Let's try without the ``--halt-gui`` flag just to ensure that it works::
 
-    python test/execute-specs.py --only testdialog
+    python tools/execute-specs.py --only testdialog
 
 Now let's look at how the GUI elements are created. Here is
 ``source/timelinelib/wxgui/dialogs/testdialog/testdialog.py`` without the
@@ -77,7 +77,7 @@ Let's try to change the XML to the following::
 
 And run the test again::
 
-    python test/execute-specs.py --halt-gui --only testdialog
+    python tools/execute-specs.py --halt-gui --only testdialog
 
 We see that the elements are laid out as described in the XML.
 
@@ -139,7 +139,7 @@ Let's try to add a test of this kind to
 
 Let's run the tests again (but this time there is no need to halt the gui)::
 
-    python test/execute-specs.py --only testdialog
+    python tools/execute-specs.py --only testdialog
 
 We see this::
 
