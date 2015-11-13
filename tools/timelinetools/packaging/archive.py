@@ -60,7 +60,7 @@ class Archive(timelinetools.packaging.path.Path):
             )
         )
 
-    def run_extensive_tests(self):
+    def execute_specs_repeat(self):
         run_python_script_and_exit_if_fails(
             os.path.join(
                 self.get_path(),
