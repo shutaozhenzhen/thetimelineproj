@@ -7,12 +7,14 @@ CODE = """\
         import sys
         import os
         path = os.path.join(os.path.split(sys.executable)[0], "library.zip")
-        file = zipfile.ZipFile(path, "r")
+        try:
+            file = zipfile.ZipFile(path, "r")
+        except:
+            return []
         names = []
         for name in file.namelist():
             if name.startswith("timelinelib/plugin/plugins/"):
                 name = name[27:]
-                #name = name.rsplit("/", 1)[1]
                 if name.endswith(".pyc") and not "__" in name:
                     name = name.split(".")[0]
                     name = name.replace("/", ".")
