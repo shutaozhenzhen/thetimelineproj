@@ -46,15 +46,12 @@ def build_documentation(arguments):
 
 
 def make(target):
-    run_cmd_and_exit_if_fails(
-        get_make_program() + [target],
-        cwd=DOCUMENTATION_DIR
-    )
+    run_cmd_and_exit_if_fails(get_make_program() + [target], cwd=DOCUMENTATION_DIR)
 
 
 def get_make_program():
     if is_windows():
-        return ["cmd.exe", "make.bat"]
+        return [os.path.join(DOCUMENTATION_DIR, "make.bat")]
     else:
         return ["make"]
 
