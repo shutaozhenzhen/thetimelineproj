@@ -16,16 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import subprocess
-import sys
+import platform
 
 
-def run_python_script_and_exit_if_fails(path, args=[], cwd=None):
-    run_cmd_and_exit_if_fails([sys.executable, path] + args, cwd=cwd)
-
-
-def run_cmd_and_exit_if_fails(cmd, cwd=None):
-    try:
-        subprocess.check_call(cmd, cwd=cwd)
-    except subprocess.CalledProcessError:
-        sys.exit(1)
+def is_windows():
+    return platform.system() == "Windows"
