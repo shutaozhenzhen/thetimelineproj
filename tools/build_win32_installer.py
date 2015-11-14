@@ -67,7 +67,7 @@ win32_actions = ((ANNOTATE, "Modify some python files", ""),
                  #(RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_iss_win32.py"], ""),
 
                  (ANNOTATE, "Run Tests", ""),
-                 #(RUNPYTEST, ["test", "execute-specs.py"], ""),
+                 #(RUNPYTEST, ["tools", "execute-specs.py"], ""),
 
                  (ANNOTATE, "Create distribution directory", ""),
                  (RUNPYSCRIPT, ["tools", "winbuildtools", "setup.py"], "py2exe"),
