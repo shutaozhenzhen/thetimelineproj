@@ -50,7 +50,7 @@ Work on stable
     O  Commit "Updated changes"
     
 6. Run tests
-    O  Run "python execute-specs.py
+    O  Run "python tools/execute-specs.py
     O  Fix errors
     O  Commit
     

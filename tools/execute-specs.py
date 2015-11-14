@@ -29,6 +29,7 @@ import unittest
 ONLY_FLAG = "--only"
 HALT_FLAG = "--halt-gui"
 ROOT_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..")
+TEST_DIR = os.path.join(ROOT_DIR, "test")
 
 
 def execute_specs(args):
@@ -136,15 +137,15 @@ def find_test_modules():
 
 
 def find_specs(subdir):
-     specs = []
-     for file in os.listdir(os.path.join(os.path.dirname(__file__), subdir)):
-         if os.path.isdir(os.path.join(os.path.dirname(__file__), subdir, file)):
-             specs.extend(find_specs(os.path.join(subdir, file)))
-         elif file.endswith(".py") and file != "__init__.py":
-             module_name = os.path.basename(file)[:-3]
-             abs_module_name = "%s.%s" % (subdir.replace(os.sep, "."), module_name)
-             specs.append(("spec", abs_module_name))
-     return specs
+    specs = []
+    for file in os.listdir(os.path.join(TEST_DIR, subdir)):
+        if os.path.isdir(os.path.join(TEST_DIR, subdir, file)):
+            specs.extend(find_specs(os.path.join(subdir, file)))
+        elif file.endswith(".py") and file != "__init__.py":
+            module_name = os.path.basename(file)[:-3]
+            abs_module_name = "%s.%s" % (subdir.replace(os.sep, "."), module_name)
+            specs.append(("spec", abs_module_name))
+    return specs
 
 
 def find_doctests():
