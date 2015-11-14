@@ -70,7 +70,7 @@ win32_actions = ((ANNOTATE, "Modify some python files", ""),
                  #(RUNPYTEST, ["test", "execute-specs.py"], ""),
 
                  (ANNOTATE, "Create distribution directory", ""),
-                 (RUNPYSCRIPT, ["release", "win", "inno", "setup.py"], "py2exe"),
+                 (RUNPYSCRIPT, ["tools", "winbuildtools", "setup.py"], "py2exe"),
 
                  #(ANNOTATE, "Create distribution executable", ""),
                  #(COPYDIR, "translations", "translations"),
