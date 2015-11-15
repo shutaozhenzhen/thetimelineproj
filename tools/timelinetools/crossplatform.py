@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -18,14 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
-
-from timelinetools.run import run_python_script_and_exit_if_fails
+import platform
 
 
-if __name__ == "__main__":
-    run_python_script_and_exit_if_fails(
-        os.path.join(
-            os.path.dirname(__file__), "..", "test", "execute-specs-repeat.py"
-        )
-    )
+def is_windows():
+    return platform.system() == "Windows"

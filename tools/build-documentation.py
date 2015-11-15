@@ -20,39 +20,40 @@
 
 import argparse
 import os
-import shutil
-import tempfile
 
-import timelinetools.packaging.repository
+from timelinetools.crossplatform import is_windows
+from timelinetools.run import run_cmd_and_exit_if_fails
+
+
+DOCUMENTATION_DIR = os.path.join(os.path.dirname(__file__), "..", "documentation")
 
 
 def main():
-    package_source(parse_arguments())
+    build_documentation(parse_arguments())
 
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--revision", default="tip")
+    parser.add_argument("--target", default="html")
+    parser.add_argument("--clean", action="store_true")
     return parser.parse_args()
 
 
-def package_source(arguments):
-    tempdir = tempfile.mkdtemp()
-    try:
-        create_source_zip(arguments, tempdir)
-    finally:
-        shutil.rmtree(tempdir)
+def build_documentation(arguments):
+    if arguments.clean:
+        make("clean")
+    make(arguments.target)
 
 
-def create_source_zip(arguments, tempdir):
-    repository = timelinetools.packaging.repository.Repository()
-    archive = repository.archive(arguments.revision, tempdir, "archive")
-    archive.rename(archive.get_filename_version())
-    archive.generate_mo_files()
-    zip_file = archive.create_zip_archive()
-    extracted_archive = zip_file.extract_to(os.path.join(tempdir, "test"))
-    extracted_archive.execute_specs_repeat()
-    zip_file.move_to_directory(".")
+def make(target):
+    run_cmd_and_exit_if_fails(get_make_program() + [target], cwd=DOCUMENTATION_DIR)
+
+
+def get_make_program():
+    if is_windows():
+        return [os.path.join(DOCUMENTATION_DIR, "make.bat")]
+    else:
+        return ["make"]
 
 
 if __name__ == '__main__':
