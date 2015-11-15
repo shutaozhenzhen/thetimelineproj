@@ -33,6 +33,7 @@ import timelinetools.packaging.repository
 TIMELINE_DIR = os.path.abspath("..\\..\\")
 BUILD_DIR = os.path.abspath(".\\target")
 ARCHIVE = "archive"
+ARTIFACT = "artifact"
 
 COPYFILE = 0
 COPYDIR = 1
@@ -59,30 +60,43 @@ ACTION_NAMES = {COPYFILE: "COPYFILE",
 known_targets = ("win32")
 
 
-win32_actions = ((ANNOTATE, "Modify some python files", ""),
-                 #(RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_py.py"], ""),
-                 #(RUNPYSCRIPT, ["tools", "winbuildtools", "mod_paths_py.py"], ""),
-                 #(RUNPYSCRIPT, ["tools", "winbuildtools", "mod_version_py.py"], ""),
-                 #(RUNPYSCRIPT, ["tools", "winbuildtools", "mod_factory_py.py"], ""),
-                 #(RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_iss_win32.py"], ""),
-
+win32_actions = (
                  (ANNOTATE, "Run Tests", ""),
-                 #(RUNPYTEST, ["test", "execute-specs.py"], ""),
+                 (RUNPYTEST, ["test", "execute-specs.py"], ""),
+                 
+                 (ANNOTATE, "Modify source files", ""),
+                 (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_py.py"], ""),
+                 (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_paths_py.py"], ""),
+                 (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_version_py.py"], ""),
+                 (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_factory_py.py"], ""),
+                 (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_iss_win32.py"], ""),
+
+                 (ANNOTATE, "Create a target directory for the build", ""),
+                 (COPYDIR, ["source", "timelinelib"], ["builddir", "timelinelib"]),
+                 (COPYDIR, ["dependencies", "timelinelib", "icalendar-3.2\icalendar"], ["builddir", "icalendar"]),
+                 (COPYDIR, ["dependencies", "timelinelib", "pytz-2012j\pytz"], ["builddir", "pytz"]),
+                 (COPYDIR, ["dependencies", "timelinelib", "pysvg-0.2.1\pysvg"], ["builddir", "pysvg"]),
+                 (COPYDIR, ["dependencies", "timelinelib", "markdown-2.0.3", "markdown"], ["builddir", "markdown"]),
+                 (COPYDIR, ["release", "win", "inno"], ["builddir", "inno"]),
+                 (COPYFILE, ["source", "timeline.py"], ["builddir", "timeline.py"]),
+                 (COPYFILE, ["tools", "winbuildtools", "setup.py"], ["builddir", "setup.py"]),
+                 (COPYFILE, ["COPYING"], ["builddir", "COPYING"]),
+                 (COPYFILE, ["release", "win", "inno", "WINSTALL"], ["builddir", "WINSTALL"]),
 
                  (ANNOTATE, "Create distribution directory", ""),
-                 (RUNPYSCRIPT, ["tools", "winbuildtools", "setup.py"], "py2exe"),
+                 (COPYDIR, ["icons"], ["builddir", "icons"]),
+                 (RUNPYSCRIPT, ["builddir", "setup.py"], "py2exe"),
+                 (COPYDIR, ["translations"], ["builddir", "dist", "translations"]),
+                 (COPYDIR, ["icons"], ["builddir", "dist", "icons"]),
+                 
+                 (ANNOTATE, "Create installer executable", ""),
+                 (RUNCMD, "python", ["builddir", "dist", "translations", "generate-mo-files.py"]),
 
-                 #(ANNOTATE, "Create distribution executable", ""),
-                 #(COPYDIR, "translations", "translations"),
-                 #(RUNCMD, "python", r"translations\generate-mo-files.py"),
-                 #(CPYDIR, "translations", r"dist\translations"),
-                 #(COPYDIR, "icons", r"dist\icons"),
-                 #(COPYFILE, r"release\win\inno\Timeline.ico", r"dist\icons\Timeline.ico"),
-                 #(COPYFILE, "COPYING", "COPYING"),
-                 #(COPYFILE, r"release\win\inno\WINSTALL", r"WINSTALL"),
+                 (ANNOTATE, "Create Setup executable", ""),
+                 (RUNCMD, "iscc.exe", ["builddir", "inno", "timelineWin32_2.iss"]),
 
-                 #(ANNOTATE, "Create Setup executable", ""),
-                 #(RUNCMD, "iscc.exe", r"inno\timelineWin32_2.iss"),
+                 (ANNOTATE, "Deliver executable artifact", ""),
+                 (COPYFILE, [ARTIFACT], [ARTIFACT]),
 
                  (ANNOTATE, "Done", ""),
                  )
@@ -117,11 +131,11 @@ class Target():
         print "Project dir:  %s" % self.project_dir
         print "Working dir:  %s" % os.getcwd()
         self.execute_actions()
-
+        
     def create_project_dir(self, arguments, temp_dir):
         print "Creating project directory"
         repository = timelinetools.packaging.repository.Repository()
-        archive = repository.archive(arguments.revision, temp_dir, ARCHIVE)
+        self.archive = repository.archive(arguments.revision, temp_dir, ARCHIVE)
         return os.path.join(temp_dir, ARCHIVE)
 
     def execute_actions(self):
@@ -143,12 +157,20 @@ class Target():
         self.print_header(src)
 
     def copyfile(self, src, dst):
-        self.print_src_dst(src, os.path.abspath(dst))
-        shutil.copyfile(os.path.join(self.timeline_dir, src), dst)
+        if src[0] == ARTIFACT:
+            f = os.path.join(self.project_dir, self.get_artifact_src_name())
+            t = os.path.join(self.artifact_dir, self.get_artifact_target_name())
+        else:
+            f = os.path.join(self.project_dir, *src)
+            t = os.path.join(self.project_dir, *dst)
+        self.print_src_dst(f, t)
+        shutil.copyfile(f, t)
 
     def copydir(self, src, dst):
-        self.print_src_dst(src, os.path.abspath(dst))
-        shutil.copytree(os.path.join(self.timeline_dir, src), os.path.join(dst))
+        f = os.path.join(self.project_dir, *src)
+        t = os.path.join(self.project_dir, *dst)
+        self.print_src_dst(f, t)
+        shutil.copytree(f, t)
 
     def cpydir(self, src, dst):
         self.print_src_dst(src, os.path.abspath(dst))
@@ -164,7 +186,7 @@ class Target():
             script_path = os.path.join(self.project_dir, *src)
             self.print_src_dst(script_path, arg)
             if src[-1] == "setup.py":
-                self.pushd(self.project_dir, None)
+                self.pushd(os.path.join(self.project_dir, "builddir"), None)
                 print os.getcwd()
                 success, msg = self.run_pyscript(script_path, [arg])
                 self.popd(None, None)
@@ -178,6 +200,7 @@ class Target():
     def runpytest(self, src, dst):
         script_path = os.path.join(self.project_dir, *src)
         self.pushd(os.path.dirname(script_path), None)
+        print os.getcwd()
         self.print_src_dst(src, os.path.abspath(dst))
         success, msg = self.run_pyscript(script_path, [dst], display_stderr=True)
         if not success:
@@ -185,8 +208,11 @@ class Target():
         self.popd(None, None)
 
     def runcmd(self, src, dst):
-        self.print_src_dst(src, dst)
-        success, msg = self.run_command([src, dst])
+        t = os.path.join(self.project_dir, *dst)
+        self.pushd(os.path.dirname(t), None)
+        self.print_src_dst(src, t)
+        success, msg = self.run_command([src, t])
+        self.popd(None, None)
         if not success:
             raise Exception(msg)
 
@@ -205,6 +231,7 @@ class Target():
 
     def run_command(self, cmd, display_stderr=False):
         if display_stderr:
+            print ">>>", os.getcwd()
             rc = subprocess.call(cmd)
             return rc == 0, ""
         else:
@@ -227,6 +254,23 @@ class Target():
         if dst is not None:
             print "    dst: %s" % dst
 
+    def get_artifact_src_name(self):
+        versionfile = os.path.join(self.project_dir, "source", "timelinelib", "meta", "version.py")
+        f = open(versionfile, "r")
+        text = f.read()
+        lines = text.split("\n")
+        for line in lines:
+            if line[0:7] == "VERSION":
+                break
+        f.close()
+        #VERSION = (0, 14, 0)
+        line = line.split("(", 1)[1]
+        line = line.split(")", 1)[0]
+        major, minor, bug = line. split(", ")
+        return "SetupTimeline%s%s%sPy2ExeWin32.exe" % (major, minor, bug)
+
+    def get_artifact_target_name(self):
+        return "%s-Win32.exe" % self.archive.get_filename_version()
 
 def main():
     artifactdir = os.path.join(sys.path[0], "..")
@@ -235,12 +279,16 @@ def main():
         Target("win32").build(parse_arguments(), artifactdir, tempdir)
     finally:
         shutil.rmtree(tempdir)
+        pass
 
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--revision", default="tip")
     return parser.parse_args()
+
+
+
 
 
 if __name__ == "__main__":
