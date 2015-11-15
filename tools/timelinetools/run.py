@@ -20,9 +20,12 @@ import subprocess
 import sys
 
 
-def run_python_script_and_exit_if_fails(path, args=[]):
-    cmd = [sys.executable, path] + args
+def run_python_script_and_exit_if_fails(path, args=[], cwd=None):
+    run_cmd_and_exit_if_fails([sys.executable, path] + args, cwd=cwd)
+
+
+def run_cmd_and_exit_if_fails(cmd, cwd=None):
     try:
-        subprocess.check_call(cmd)
+        subprocess.check_call(cmd, cwd=cwd)
     except subprocess.CalledProcessError:
         sys.exit(1)
