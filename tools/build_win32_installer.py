@@ -37,7 +37,6 @@ ARTIFACT = "artifact"
 
 COPYFILE = 0
 COPYDIR = 1
-MAKEDIR = 2
 PUSHD = 3
 POPD = 4
 RUNCMD = 5
@@ -47,7 +46,6 @@ RUNPYTEST = 9
 
 ACTION_NAMES = {COPYFILE: "COPYFILE",
                 COPYDIR: "COPYDIR",
-                MAKEDIR: "MAKEDIR",
                 PUSHD: "PUSHD",
                 POPD: "POPD",
                 RUNCMD: "RUNCMD",
@@ -114,7 +112,6 @@ class Target():
         self.actions = actions[target]
         self.ACTION_METHODS = {COPYFILE: self.copyfile,
                                COPYDIR: self.copydir,
-                               MAKEDIR: self.makedir,
                                PUSHD: self.pushd,
                                POPD: self.popd,
                                RUNCMD: self.runcmd,
@@ -169,11 +166,6 @@ class Target():
         t = os.path.join(self.project_dir, *dst)
         self.print_src_dst(f, t)
         shutil.copytree(f, t)
-
-    def makedir(self, src, dst):
-        self.print_src_dst(None, dst)
-        print "    dst: %s" % os.path.abspath(dst)
-        os.mkdir(os.path.join(self.target_dir, dst))
 
     def runpyscript(self, src, arg):
         try:
