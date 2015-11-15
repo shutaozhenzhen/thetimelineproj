@@ -119,20 +119,31 @@ class Target():
                                RUNPYTEST: self.runpytest,
                                ANNOTATE: self.annotate}
 
-    def build(self, arguments, artifact_dir, temp_dir):
+    def build(self, arguments, artifact_dir):
+        temp_dir = tempfile.mkdtemp()
+        try:
+            self.assert_that_target_is_known()
+            self.setup_and_create_directories(arguments, artifact_dir, temp_dir)
+            self.execute_actions()
+        finally:
+            shutil.rmtree(temp_dir)
+            
+        
+    def assert_that_target_is_known(self):
         if self.target not in known_targets:
             print "The target %s is unknown" % self.target
             print "BUILD FAILED"
             sys.exit(1)
+
+    def setup_and_create_directories(self, arguments, artifact_dir, temp_dir):
         self.artifact_dir = artifact_dir
-        self.project_dir = self.create_project_dir(arguments, temp_dir)
+        self.project_dir = self.create_project_directory(arguments, temp_dir)
         print "Artifact dir: %s" % self.artifact_dir
         print "Project dir:  %s" % self.project_dir
         print "Working dir:  %s" % os.getcwd()
-        self.execute_actions()
         
-    def create_project_dir(self, arguments, temp_dir):
-        print "Creating project directory"
+    def create_project_directory(self, arguments, temp_dir):
+        print "Create project directory"
         repository = timelinetools.packaging.repository.Repository()
         self.archive = repository.archive(arguments.revision, temp_dir, ARCHIVE)
         return os.path.join(temp_dir, ARCHIVE)
@@ -261,12 +272,7 @@ class Target():
 
 def main():
     artifactdir = os.path.join(sys.path[0], "..")
-    tempdir = tempfile.mkdtemp()
-    try:
-        Target("win32Installer").build(parse_arguments(), artifactdir, tempdir)
-    finally:
-        shutil.rmtree(tempdir)
-        pass
+    Target("win32Installer").build(parse_arguments(), artifactdir)
 
 
 def parse_arguments():
