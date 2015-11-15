@@ -200,7 +200,6 @@ class Target():
     def runpytest(self, src, dst):
         script_path = os.path.join(self.project_dir, *src)
         self.pushd(os.path.dirname(script_path), None)
-        print os.getcwd()
         self.print_src_dst(src, os.path.abspath(dst))
         success, msg = self.run_pyscript(script_path, [dst], display_stderr=True)
         if not success:
@@ -231,7 +230,6 @@ class Target():
 
     def run_command(self, cmd, display_stderr=False):
         if display_stderr:
-            print ">>>", os.getcwd()
             rc = subprocess.call(cmd)
             return rc == 0, ""
         else:
@@ -270,7 +268,7 @@ class Target():
         return "SetupTimeline%s%s%sPy2ExeWin32.exe" % (major, minor, bug)
 
     def get_artifact_target_name(self):
-        return "%s-Win32.exe" % self.archive.get_filename_version()
+        return "%s-Win32Setup.exe" % self.archive.get_filename_version()
 
 def main():
     artifactdir = os.path.join(sys.path[0], "..")
