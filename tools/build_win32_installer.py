@@ -42,7 +42,6 @@ PUSHD = 3
 POPD = 4
 RUNCMD = 5
 RUNPYSCRIPT = 6
-CPYDIR = 7
 ANNOTATE = 8
 RUNPYTEST = 9
 
@@ -53,8 +52,8 @@ ACTION_NAMES = {COPYFILE: "COPYFILE",
                 POPD: "POPD",
                 RUNCMD: "RUNCMD",
                 RUNPYSCRIPT: "RUNPYSCRIPT",
-                RUNPYTEST: "RUNPYTEST",
-                CPYDIR: "CPYDIR", }
+                RUNPYTEST: "RUNPYTEST"
+                }
 
 
 known_targets = ("win32")
@@ -121,7 +120,6 @@ class Target():
                                RUNCMD: self.runcmd,
                                RUNPYSCRIPT: self.runpyscript,
                                RUNPYTEST: self.runpytest,
-                               CPYDIR: self.cpydir,
                                ANNOTATE: self.annotate}
 
     def build(self, arguments, artifact_dir, temp_dir):
@@ -171,10 +169,6 @@ class Target():
         t = os.path.join(self.project_dir, *dst)
         self.print_src_dst(f, t)
         shutil.copytree(f, t)
-
-    def cpydir(self, src, dst):
-        self.print_src_dst(src, os.path.abspath(dst))
-        shutil.copytree(os.path.join(src), os.path.join(dst))
 
     def makedir(self, src, dst):
         self.print_src_dst(None, dst)
