@@ -62,7 +62,7 @@ known_targets = ("win32")
 
 win32_actions = (
                  (ANNOTATE, "Run Tests", ""),
-                 (RUNPYTEST, ["test", "execute-specs.py"], ""),
+                 (RUNPYTEST, ["tools", "execute-specs.py"], ""),
                  
                  (ANNOTATE, "Modify source files", ""),
                  (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_py.py"], ""),
