@@ -54,10 +54,10 @@ ACTION_NAMES = {COPYFILE: "COPYFILE",
                 }
 
 
-known_targets = ("win32")
+known_targets = ("win32Installer")
 
 
-win32_actions = (
+win32InstallerActions = (
                  (ANNOTATE, "Run Tests", ""),
                  (RUNPYTEST, ["tools", "execute-specs.py"], ""),
                  
@@ -99,7 +99,7 @@ win32_actions = (
                  )
 
 
-actions = {"win32": win32_actions}
+actions = {"win32Installer": win32InstallerActions}
 
 
 class Target():
@@ -120,6 +120,10 @@ class Target():
                                ANNOTATE: self.annotate}
 
     def build(self, arguments, artifact_dir, temp_dir):
+        if self.target not in known_targets:
+            print "The target %s is unknown" % self.target
+            print "BUILD FAILED"
+            sys.exit(1)
         self.artifact_dir = artifact_dir
         self.project_dir = self.create_project_dir(arguments, temp_dir)
         print "Artifact dir: %s" % self.artifact_dir
@@ -259,7 +263,7 @@ def main():
     artifactdir = os.path.join(sys.path[0], "..")
     tempdir = tempfile.mkdtemp()
     try:
-        Target("win32").build(parse_arguments(), artifactdir, tempdir)
+        Target("win32Installer").build(parse_arguments(), artifactdir, tempdir)
     finally:
         shutil.rmtree(tempdir)
         pass
@@ -269,9 +273,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--revision", default="tip")
     return parser.parse_args()
-
-
-
 
 
 if __name__ == "__main__":
