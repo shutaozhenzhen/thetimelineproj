@@ -187,7 +187,6 @@ class Target():
             self.print_src_dst(script_path, arg)
             if src[-1] == "setup.py":
                 self.pushd(os.path.join(self.project_dir, "builddir"), None)
-                print os.getcwd()
                 success, msg = self.run_pyscript(script_path, [arg])
                 self.popd(None, None)
             else:    
