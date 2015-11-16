@@ -90,7 +90,7 @@ win32InstallerActions = (
                  (RUNCMD, "python", ["builddir", "dist", "translations", "generate-mo-files.py"]),
 
                  (ANNOTATE, "Create Setup executable", ""),
-                 (RUNCMD, "iscc.exe", ["builddir", "inno", "timelineWin32_2.iss"]),
+                 (RUNCMD, "iscc.exe", ["builddir", "inno", "timelineWin32.iss"]),
 
                  (ANNOTATE, "Deliver executable artifact", ""),
                  (COPYFILE, [ARTIFACT], [ARTIFACT]),
