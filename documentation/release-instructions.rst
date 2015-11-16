@@ -38,7 +38,7 @@ Features for the next version (x.y+1) can continue to be developed in main.
     1. Request download from here (login required)
        http://translations.launchpad.net/thetimelineproj/trunk/+translations
        Format: PO format
-    2. Run "python import-po-from-launchpad-export.py /path/to/launchpad-export.tar.gz"
+    2. Run "python tools/import-po-from-launchpad-export.py /path/to/launchpad-export.tar.gz"
     3. This script updates the .po files
     4. Commit "import translations"
 
