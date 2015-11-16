@@ -27,3 +27,4 @@ def get_dir_relative_root(*args):
 
 
 TRANSLATION_DIR = get_dir_relative_root("translations")
+SOURCE_DIR = get_dir_relative_root("source")

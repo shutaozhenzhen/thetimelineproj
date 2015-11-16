@@ -22,19 +22,21 @@ from os.path import dirname, join, normpath
 import os
 import subprocess
 
+from timelinetools.paths import SOURCE_DIR
+from timelinetools.paths import TRANSLATION_DIR
+
 
 def generate_pot_file():
-    repo_root = normpath(join(dirname(__file__), ".."))
-    subprocess.check_call(build_xgettext_command(repo_root))
+    subprocess.check_call(build_xgettext_command())
 
 
-def build_xgettext_command(repo_root):
+def build_xgettext_command():
     command = []
     command.append("xgettext")
     command.append("-o")
-    command.append(join(repo_root, "translations", "timeline.pot"))
+    command.append(join(TRANSLATION_DIR, "timeline.pot"))
     command.append("--add-comments=TRANSLATORS")
-    command.extend(find_py_files_in(join(repo_root, "source")))
+    command.extend(find_py_files_in(SOURCE_DIR))
     return command
 
 
