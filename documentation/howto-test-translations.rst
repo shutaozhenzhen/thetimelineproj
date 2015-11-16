@@ -3,7 +3,7 @@ Run Timeline in a different language
 
 First you need to compile the translation files::
 
-    ./translations/generate-mo-files.py
+    ./tools/generate-mo-files.py
 
 It requires the ``msgfmt`` program to be on the path. See :ref:`label-gettext`
 for instructions how to install it.

@@ -87,7 +87,7 @@ win32InstallerActions = (
                  (COPYDIR, ["icons"], ["builddir", "dist", "icons"]),
                  
                  (ANNOTATE, "Create installer executable", ""),
-                 (RUNCMD, "python", ["builddir", "dist", "translations", "generate-mo-files.py"]),
+                 (RUNCMD, "python", ["builddir", "dist", "tools", "generate-mo-files.py"]),
 
                  (ANNOTATE, "Create Setup executable", ""),
                  (RUNCMD, "iscc.exe", ["builddir", "inno", "timelineWin32.iss"]),

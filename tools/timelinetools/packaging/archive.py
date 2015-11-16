@@ -52,22 +52,10 @@ class Archive(timelinetools.packaging.path.Path):
         ], cwd=self._get_source_path()).strip()
 
     def generate_mo_files(self):
-        run_python_script_and_exit_if_fails(
-            os.path.join(
-                self.get_path(),
-                "translations",
-                "generate-mo-files.py"
-            )
-        )
+        self._run_tool("generate-mo-files.py")
 
     def execute_specs_repeat(self):
-        run_python_script_and_exit_if_fails(
-            os.path.join(
-                self.get_path(),
-                "tools",
-                "execute-specs-repeat.py"
-            )
-        )
+        self._run_tool("execute-specs-repeat.py")
 
     def create_zip_archive(self):
         self._clean_pyc_files()
@@ -80,6 +68,15 @@ class Archive(timelinetools.packaging.path.Path):
             self.get_basename(),
         ], cwd=self.get_dirname())
         return timelinetools.packaging.zipfile.ZipFile(self.get_dirname(), zip_name)
+
+    def _run_tool(self, tool):
+        run_python_script_and_exit_if_fails(
+            os.path.join(
+                self.get_path(),
+                "tools",
+                tool
+            )
+        )
 
     def _change_version_constant(self, constant, value):
         _change_constant(self._get_version_path(), constant, value)
