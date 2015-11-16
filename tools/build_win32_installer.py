@@ -78,7 +78,7 @@ win32InstallerActions = (
                  (COPYFILE, ["source", "timeline.py"], ["builddir", "timeline.py"]),
                  (COPYFILE, ["tools", "winbuildtools", "setup.py"], ["builddir", "setup.py"]),
                  (COPYFILE, ["COPYING"], ["builddir", "COPYING"]),
-                 (COPYFILE, ["release", "win", "inno", "WINSTALL"], ["builddir", "WINSTALL"]),
+                 (COPYFILE, ["tools", "winbuildtools", "inno", "WINSTALL"], ["builddir", "WINSTALL"]),
 
                  (ANNOTATE, "Create distribution directory", ""),
                  (COPYDIR, ["icons"], ["builddir", "icons"]),
