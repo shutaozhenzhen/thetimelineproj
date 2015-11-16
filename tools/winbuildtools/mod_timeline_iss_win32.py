@@ -34,7 +34,7 @@ def modify_iss_file(target, app_ver_name, output_base_filename):
 
 def main():
     project_dir = sys.argv[1]
-    target = os.path.join(project_dir, "release", "win", "inno", "timelineWin32_2.iss")
+    target = os.path.join(project_dir, "tools", "winbuildtools", "inno", "timelineWin32_2.iss")
     version = os.path.join(project_dir, "source", "timelinelib", "meta", "version.py")
     print "Script: mod2_timeline_iss_win32.py"
     print "Target:", target
