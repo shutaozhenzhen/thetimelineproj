@@ -23,7 +23,7 @@ import os
 import subprocess
 
 from timelinetools.paths import SOURCE_DIR
-from timelinetools.paths import TRANSLATION_DIR
+from timelinetools.paths import TRANSLATIONS_DIR
 
 
 def generate_pot_file():
@@ -34,7 +34,7 @@ def build_xgettext_command():
     command = []
     command.append("xgettext")
     command.append("-o")
-    command.append(join(TRANSLATION_DIR, "timeline.pot"))
+    command.append(join(TRANSLATIONS_DIR, "timeline.pot"))
     command.append("--add-comments=TRANSLATORS")
     command.extend(find_py_files_in(SOURCE_DIR))
     return command

@@ -29,7 +29,7 @@ import glob
 import tempfile
 import sys
 
-from timelinetools.paths import TRANSLATION_DIR
+from timelinetools.paths import TRANSLATIONS_DIR
 
 if len(sys.argv) != 2:
     print("Usage: python import-po-from-launchpad-export.py /path/to/launchpad-export.tar.gz")
@@ -49,7 +49,7 @@ Popen(["tar", "xvvz", "-C", tmp_dir, "--file", archive_path]).wait()
 # copy po-files
 for pofile in glob.glob(os.path.join(tmp_dir, "timeline", "*.po")):
     dest_name = re.search(r".*-(.*.po)", pofile).group(1)
-    dest = os.path.join(os.path.join(TRANSLATION_DIR, dest_name))
+    dest = os.path.join(os.path.join(TRANSLATIONS_DIR, dest_name))
     shutil.copy(pofile, dest)
     print("Extracted %s" % dest)
 
