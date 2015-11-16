@@ -1,0 +1,173 @@
+============================================
+    CHECKLIST
+============================================
+
+
+Preparation on main
+===================
+
+1. Check the changelog
+    O  Is it complete?
+    O  Is it correct?
+    O  Commit any changes
+    
+2. Check about.py and AUTHORS 
+    O  Is developers ok
+    O  Is contributors ok
+    O  Is authors ok
+            Check in launchpad for contributors that has an e-mail address
+    O  Commit any changes
+    
+    
+Work on stable
+==============
+
+1. Move main repo to stable repo
+    O  cd stable
+    O  hg pull ../main
+    O  hg update
+    O  hg push
+    
+2. Import translations from Launchpad
+    O  Request download from here (login required)
+        http://translations.launchpad.net/thetimelineproj/trunk/+translations
+        Format: PO format
+    O  Updates th .po files
+        Run "python import-po-fromlaunchpad-export.py /path/to/launchpad-export.tar.gz"
+    O  Commit "Import translations"
+    
+3. Update timeline.iss
+    O  Check that all PO-files are mentioned in the iss file
+    O  Commit "Added po info to iss-file"
+    
+4. Check version number
+    O  Check version number in timelinelib/meta/version.py
+    O  Change to DEV = False
+    O  Commit "1.xx.0 Changed version for release"
+    
+5. Update changelog.rst
+    O  Change Planned -> Released
+    O  Commit "Updated changes"
+    
+6. Run tests
+    O  Run "python tools/execute-specs.py
+    O  Fix errors
+    O  Commit
+    
+7. Create and test the zip artifact
+    O  Run "python /relese/buildtool/build_source.py
+    O  Unzip the artifact
+    O  Run "python timeline.py" and make a basic check that it works
+    
+8. Tag the release
+    O  hg tag 1.xx.0
+    
+9. Update the repository
+    O  hg push
+    
+    
+
+Work on main
+============
+
+1. Pull changes into main
+    O  cd main
+    O  hg pull ../stable
+    O  hg update
+    O  hg push
+
+2. Change version number
+    O  Add Planned relase in changelog.rst
+    O  Change version number in README
+    O  Update timelinelib/meta/version.py
+        Change to DEV = True
+        Change version number to "1.xx+1.
+    O  Commit "Changed version number"
+    O  hg push
+
+
+Publish
+=======
+
+1. Publish /release/versions.py
+    O  Add release notes to old version
+    O  Change category to released
+    O  Add a new planned version
+    O  Commit "Updated versions.py"
+    O  Upload the file to SourceForge
+    
+2. Publish zip-file
+    O  Upload the 1.yy.0.zip file to SourceForge
+ 
+3. Publish the windows binary
+    O  Create the windows binary package
+        O  Copy the stable repo to a temp place
+        O  Run "python /release/buildtool/build_win32.py
+        O  Make a test installation
+        O  Make rudimentary tests that it works
+        O  Test openeing an ics file
+    O  Upload the binary to SourceForge
+
+4. Make release announcements
+    O  Post news to SorceForge (login required)
+        http://sourceforge.net/p/thetimelineproj/news/?source=navbar
+    O  Post a mail on the mailing list
+        thetimelineproj-user@lists.sourceforge.net
+    
+
+
+
+============================================
+    ANNOTATIONS
+============================================
+
+    
+Translations
+============
+
+Upload pot-file to Launchpad
+----------------------------
+
+- Generate the pot-file
+    Run the script \translations\generate-pot-file.py
+    
+- Upload the pot-file to Launchpad
+    Go to 
+        http://translations.launchpad.net/thetimelineproj/trunk/+translations
+    Log in
+    Click the Upload link
+    Select the pot-file
+    Click the Upload button
+    Check the translation import queuue at 
+        https://translations.launchpad.net/thetimelineproj/trunk/+imports
+    
+    
+The build process
+=================
+
+
+General
+-------
+We have two targets to build
+    - The source zip file
+    - The Windows installation exe
+    
+and the scripts for building these targets are found in the directory 
+/relese/buildtool.
+    - build_source.py
+    - build_win32.py
+
+    
+The source zip target
+---------------------
+The build_source.py performs the following steps
+    - Set cwd to the project root
+    - Run \release\make-source-release.py
+    - Restore cwd
+    
+The created zip-file ends up in the project root directory
+
+
+The Windows installation exe
+----------------------------
+The build_win32.py performs the following steps
