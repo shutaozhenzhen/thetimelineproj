@@ -3,7 +3,6 @@ syntax: glob
 mikado.png
 mikado.pdf
 make_mikado.cmd
-translations/timeline.pot
 *.pyc
 tags
 *.swp
