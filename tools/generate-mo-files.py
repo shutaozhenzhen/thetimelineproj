@@ -22,13 +22,13 @@ from os.path import dirname, join, normpath, exists
 import os
 import subprocess
 
-from timelinetools.paths import TRANSLATION_DIR
+from timelinetools.paths import TRANSLATIONS_DIR
 
 
 def generate_mo_files():
-    for file in os.listdir(TRANSLATION_DIR):
+    for file in os.listdir(TRANSLATIONS_DIR):
         if file.endswith(".po"):
-            generate_mo_file(TRANSLATION_DIR, file[:-3])
+            generate_mo_file(TRANSLATIONS_DIR, file[:-3])
 
 
 def generate_mo_file(po_directory, po_name):
