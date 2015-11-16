@@ -87,7 +87,7 @@ Launchpad
 ---------
 1. Upload new pot-file (So that new texts are found)
         1. Create new pot-file
-           Run the script translations/generate-pot-file.py
+           Run the script tools/generate-pot-file.py
         2. Request upload from here (login required)
              http://translations.launchpad.net/thetimelineproj/trunk/+translations
            Status of upload can be checked at

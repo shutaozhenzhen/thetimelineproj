@@ -129,7 +129,7 @@ Upload pot-file to Launchpad
 ----------------------------
 
 - Generate the pot-file
-    Run the script \translations\generate-pot-file.py
+    Run the script \tools\generate-pot-file.py
     
 - Upload the pot-file to Launchpad
     Go to 
