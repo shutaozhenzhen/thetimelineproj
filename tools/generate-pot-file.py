@@ -36,7 +36,7 @@ def build_xgettext_command():
     command.append("-o")
     command.append(join(TRANSLATIONS_DIR, "timeline.pot"))
     command.append("--add-comments=TRANSLATORS")
-    command.extend(find_py_files_in(SOURCE_DIR))
+    command.extend(sorted(find_py_files_in(SOURCE_DIR)))
     return command
 
 
