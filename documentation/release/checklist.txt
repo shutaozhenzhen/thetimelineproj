@@ -33,7 +33,7 @@ Work on stable
         http://translations.launchpad.net/thetimelineproj/trunk/+translations
         Format: PO format
     O  Updates th .po files
-        Run "python import-po-fromlaunchpad-export.py /path/to/launchpad-export.tar.gz"
+        Run "python tools/import-po-fromlaunchpad-export.py /path/to/launchpad-export.tar.gz"
     O  Commit "Import translations"
     
 3. Update timeline.iss
@@ -129,7 +129,7 @@ Upload pot-file to Launchpad
 ----------------------------
 
 - Generate the pot-file
-    Run the script \translations\generate-pot-file.py
+    Run the script \tools\generate-pot-file.py
     
 - Upload the pot-file to Launchpad
     Go to 
