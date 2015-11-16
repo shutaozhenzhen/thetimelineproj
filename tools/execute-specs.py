@@ -25,11 +25,12 @@ import random
 import sys
 import unittest
 
+from timelinetools.paths import ROOT_DIR
+from timelinetools.paths import TEST_DIR
+
 
 ONLY_FLAG = "--only"
 HALT_FLAG = "--halt-gui"
-ROOT_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..")
-TEST_DIR = os.path.join(ROOT_DIR, "test")
 
 
 def execute_specs(args):
