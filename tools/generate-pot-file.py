@@ -18,23 +18,24 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from os.path import join
+from os.path import join, relpath
 import os
 import subprocess
 
+from timelinetools.paths import ROOT_DIR
 from timelinetools.paths import SOURCE_DIR
 from timelinetools.paths import TRANSLATIONS_DIR
 
 
 def generate_pot_file():
-    subprocess.check_call(build_xgettext_command())
+    subprocess.check_call(build_xgettext_command(), cwd=ROOT_DIR)
 
 
 def build_xgettext_command():
     command = []
     command.append("xgettext")
     command.append("-o")
-    command.append(join(TRANSLATIONS_DIR, "timeline.pot"))
+    command.append(relpath(join(TRANSLATIONS_DIR, "timeline.pot"), ROOT_DIR))
     command.append("--add-comments=TRANSLATORS")
     command.extend(sorted(find_py_files_in(SOURCE_DIR)))
     return command
@@ -43,7 +44,7 @@ def build_xgettext_command():
 def find_py_files_in(directory):
     py_files = []
     for (root, dirs, files) in os.walk(directory):
-        py_files += [join(root, f) for f in files if f.endswith(".py")]
+        py_files += [relpath(join(root, f), ROOT_DIR) for f in files if f.endswith(".py")]
     return py_files
 
 
