@@ -74,11 +74,11 @@ win32InstallerActions = (
                  (COPYDIR, ["dependencies", "timelinelib", "pytz-2012j\pytz"], ["builddir", "pytz"]),
                  (COPYDIR, ["dependencies", "timelinelib", "pysvg-0.2.1\pysvg"], ["builddir", "pysvg"]),
                  (COPYDIR, ["dependencies", "timelinelib", "markdown-2.0.3", "markdown"], ["builddir", "markdown"]),
-                 (COPYDIR, ["release", "win", "inno"], ["builddir", "inno"]),
+                 (COPYDIR, ["tools", "winbuildtools", "inno"], ["builddir", "inno"]),
                  (COPYFILE, ["source", "timeline.py"], ["builddir", "timeline.py"]),
                  (COPYFILE, ["tools", "winbuildtools", "setup.py"], ["builddir", "setup.py"]),
                  (COPYFILE, ["COPYING"], ["builddir", "COPYING"]),
-                 (COPYFILE, ["release", "win", "inno", "WINSTALL"], ["builddir", "WINSTALL"]),
+                 (COPYFILE, ["tools", "winbuildtools", "inno", "WINSTALL"], ["builddir", "WINSTALL"]),
 
                  (ANNOTATE, "Create distribution directory", ""),
                  (COPYDIR, ["icons"], ["builddir", "icons"]),
@@ -90,7 +90,7 @@ win32InstallerActions = (
                  (RUNCMD, "python", ["builddir", "dist", "translations", "generate-mo-files.py"]),
 
                  (ANNOTATE, "Create Setup executable", ""),
-                 (RUNCMD, "iscc.exe", ["builddir", "inno", "timelineWin32_2.iss"]),
+                 (RUNCMD, "iscc.exe", ["builddir", "inno", "timelineWin32.iss"]),
 
                  (ANNOTATE, "Deliver executable artifact", ""),
                  (COPYFILE, [ARTIFACT], [ARTIFACT]),
