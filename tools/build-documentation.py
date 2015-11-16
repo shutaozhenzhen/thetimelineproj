@@ -22,10 +22,8 @@ import argparse
 import os
 
 from timelinetools.crossplatform import is_windows
+from timelinetools.paths import DOCUMENTATION_DIR
 from timelinetools.run import run_cmd_and_exit_if_fails
-
-
-DOCUMENTATION_DIR = os.path.join(os.path.dirname(__file__), "..", "documentation")
 
 
 def main():

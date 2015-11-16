@@ -19,12 +19,8 @@
 import os
 
 
-def get_dir_relative_root(*args):
-    return os.path.join(
-        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")),
-        os.path.join(*args)
-    )
-
-
-TRANSLATIONS_DIR = get_dir_relative_root("translations")
-SOURCE_DIR = get_dir_relative_root("source")
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+SOURCE_DIR = os.path.join(ROOT_DIR, "source")
+TRANSLATIONS_DIR = os.path.join(ROOT_DIR, "translations")
+DOCUMENTATION_DIR = os.path.join(ROOT_DIR, "documentation")
+TEST_DIR = os.path.join(ROOT_DIR, "test")

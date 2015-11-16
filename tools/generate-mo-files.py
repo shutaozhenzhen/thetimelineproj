@@ -18,7 +18,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from os.path import dirname, join, normpath, exists
+from os.path import join, exists
 import os
 import subprocess
 
