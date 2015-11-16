@@ -74,7 +74,7 @@ win32InstallerActions = (
                  (COPYDIR, ["dependencies", "timelinelib", "pytz-2012j\pytz"], ["builddir", "pytz"]),
                  (COPYDIR, ["dependencies", "timelinelib", "pysvg-0.2.1\pysvg"], ["builddir", "pysvg"]),
                  (COPYDIR, ["dependencies", "timelinelib", "markdown-2.0.3", "markdown"], ["builddir", "markdown"]),
-                 (COPYDIR, ["release", "win", "inno"], ["builddir", "inno"]),
+                 (COPYDIR, ["tools", "winbuildtools", "inno"], ["builddir", "inno"]),
                  (COPYFILE, ["source", "timeline.py"], ["builddir", "timeline.py"]),
                  (COPYFILE, ["tools", "winbuildtools", "setup.py"], ["builddir", "setup.py"]),
                  (COPYFILE, ["COPYING"], ["builddir", "COPYING"]),
