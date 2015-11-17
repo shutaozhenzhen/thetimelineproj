@@ -54,6 +54,7 @@ class SourceCodeDistributionSpec(UnitTestCase):
             "source",
             os.path.join("test", "specs"),
             os.path.join("test", "timelinetest"),
+            "tools",
         ]
         for subdir in subdirs:
             for (root, dirs, files) in os.walk(os.path.join(self.ROOT_DIR, subdir)):
