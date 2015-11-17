@@ -204,7 +204,7 @@ def execute_suite(suite, verbosity):
 
 
 def select_verbosity(args):
-    if ONLY_FLAG in args:
+    if ONLY_FLAG in args or "-v" in args:
         return 2
     else:
         return 1
