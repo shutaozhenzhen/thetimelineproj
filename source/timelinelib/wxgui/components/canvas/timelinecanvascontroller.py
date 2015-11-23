@@ -24,11 +24,12 @@ from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
+from timelinelib.debug import DEBUG_ENABLED
+from timelinelib.debug import Monitoring
 from timelinelib.drawing import get_drawer
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature
-from timelinelib.monitoring import monitoring
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
@@ -64,6 +65,7 @@ class TimelineCanvasController(object):
         mock a drawer and use the mock by sending it in the drawer argument.
         Normally the drawer is collected with the get_drawer() method.
         """
+        self.monitoring = Monitoring()
         self.plugin_factory = plugin_factory
         self.view = view
         self.status_bar_adapter = status_bar_adapter
@@ -508,21 +510,21 @@ class TimelineCanvasController(object):
 
         def display_monitor_result(dc):
             (width, height) = self.view.GetSizeTuple()
-            redraw_time = monitoring.timer_elapsed_ms()
-            monitoring.count_timeline_redraw()
+            redraw_time = self.monitoring.timer_elapsed_ms()
+            self.monitoring.count_timeline_redraw()
             dc.SetTextForeground((255, 0, 0))
             dc.SetFont(Font(12, weight=wx.FONTWEIGHT_BOLD))
             dc.DrawText("Undo buffer size: %d" % len(self.timeline._undo_handler._undo_buffer), width - 300, height - 100)
             dc.DrawText("Undo buffer pos: %d" % self.timeline._undo_handler._pos, width - 300, height - 80)
-            dc.DrawText("Redraw count: %d" % monitoring.timeline_redraw_count, width - 300, height - 60)
+            dc.DrawText("Redraw count: %d" % self.monitoring.timeline_redraw_count, width - 300, height - 60)
             dc.DrawText("Last redraw time: %.3f ms" % redraw_time, width - 300, height - 40)
 
         def fn_draw(dc):
             try:
-                monitoring.timer_start()
+                self.monitoring.timer_start()
                 self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.config)
-                monitoring.timer_end()
-                if monitoring.IS_ENABLED:
+                self.monitoring.timer_end()
+                if DEBUG_ENABLED:
                     display_monitor_result(dc)
             except TimelineIOError, e:
                 self.fn_handle_db_error(e)

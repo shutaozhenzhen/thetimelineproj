@@ -19,12 +19,11 @@
 import sys
 import time
 
-import timelinelib.meta.version
+
+DEBUG_ENABLED = False
 
 
 class Monitoring(object):
-
-    IS_ENABLED = timelinelib.meta.version.is_dev()
 
     def __init__(self):
         self.timeline_redraw_count = 0
@@ -66,6 +65,3 @@ class Timer(object):
 
     def elapsed_ms(self):
         return (self._end - self._start) * 1000
-
-
-monitoring = Monitoring()
