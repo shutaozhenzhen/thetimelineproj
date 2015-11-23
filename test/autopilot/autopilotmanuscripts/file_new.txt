@@ -1,0 +1,32 @@
+#
+# File - New menu
+#
+
+# Open the dialog and select different listbox choices
+select menu ($File$, $New$)
+select listbox(1, 1)
+assert text (description, "Alternativ text | This creates a timeline using the standard calendar.")
+select listbox(1, 2)
+assert text (description, "This creates a timeline that has numbers on the x-axis instead of dates.")
+select listbox(1, 3)
+assert text (description, "This creates a timeline where the modification date of files in a directory are shown as events.")
+select listbox(1, 4)
+assert text (description, "This creates a timeline using the fictuous Bosparanian calendar from the German pen-and-paper RPG ~The Dark Eye~ (~Das schwarze Auge~, DSA).")
+click button ($Cancel$)
+
+
+# Just open and close the dialog
+#select menu ($File$, $New$)
+#click button ($Cancel$)
+
+# Open the dialog and select a filename and cancel
+#select menu ($File$, $New$)
+#click button ($Ok$)
+#enter text(1, "autopilottest")
+#click button ($Cancel$)
+
+# Open the dialog and select a filename and create a new timeline
+#select menu ($File$, $New$)
+#click button ($Ok$)
+#enter text(1, "autopilottest")
+#click button ($Save$)
