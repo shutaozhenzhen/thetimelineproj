@@ -38,7 +38,6 @@ def execute_specs(args):
     setup_paths()
     install_gettext_in_builtin_namespace()
     setup_humblewx()
-    disable_monitoring()
     set_halt_gui_flag(args)
     suite = create_suite(create_include_test_function(args))
     all_pass = execute_suite(suite, select_verbosity(args))
@@ -76,11 +75,6 @@ def install_gettext_in_builtin_namespace():
 def setup_humblewx():
     import timelinelib.wxgui.setup
     timelinelib.wxgui.setup.setup_humblewx()
-
-
-def disable_monitoring():
-    from timelinelib.monitoring import monitoring
-    monitoring.IS_ENABLED = False
 
 
 def set_halt_gui_flag(args):
