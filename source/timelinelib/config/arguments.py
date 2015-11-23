@@ -34,6 +34,10 @@ class ApplicationArguments(object):
         self.option_parser.add_option(
             "-c", "--config-file", dest="config_file_path", default=None,
             help="Path to config file")
+        self.option_parser.add_option(
+            "--debug",
+            default=False, action="store_true",
+            help="Run Timeline with extra debug output")
 
     def parse_from(self, arguments):
         (self.options, self.arguments) = self.option_parser.parse_args(arguments)
@@ -46,6 +50,9 @@ class ApplicationArguments(object):
 
     def has_files(self):
         return len(self.arguments) > 0
+
+    def get_debug_flag(self):
+        return self.options.debug
 
     def get_config_file_path(self):
         if self.options.config_file_path:
