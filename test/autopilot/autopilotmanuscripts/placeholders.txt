@@ -1,4 +1,4 @@
-add placeholder(Help, "Help|Hjälp")
+add placeholder(Help, "Help|HjÃ¤lp")
 add placeholder(View, "View|Visa")
 add placeholder(About, "About|Om")
 add placeholder(Cancel, "Cancel|Avbryt")
@@ -8,9 +8,9 @@ add placeholder(Save, "Save|Spara")
 add placeholder(Yes, "Yes|Ja")
 add placeholder(No, "No|Nej")
 add placeholder(Edit, "Edit|Redigera")
-add placeholder(Find, "Find|Sök")
-add placeholder(Preferences, "Preferences|Inställningar")
-add placeholder(Open, "Open|Öppna")
+add placeholder(Find, "Find|SÃ¶k")
+add placeholder(Preferences, "Preferences|InstÃ¤llningar")
+add placeholder(Open, "Open|Ã–ppna")
 add placeholder(New, "New|Ny")
 
 #
