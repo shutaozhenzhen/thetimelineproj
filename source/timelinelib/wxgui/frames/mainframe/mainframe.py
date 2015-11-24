@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import collections
 import os.path
 
 import wx.lib.newevent
@@ -323,7 +324,7 @@ class GuiCreator(object):
                  (ID_VERT_ZOOMIN, vert_zoomin, _("Vertical Zoom &In\tAlt++"), NONE),
                  (ID_VERT_ZOOMOUT, vert_zoomout, _("Vertical Zoom &Out\tAlt+-"), NONE),
                  None,
-                 (ID_PT_EVENT_TO_RIGHT, draw_point_events_to_right, _("Draw point event right of line"), CHECKBOX),
+                 self._create_view_point_event_alignment_menu,
                  None,
                  ]
         for plugin in factory.get_plugins(EVENTBOX_DRAWER):
@@ -339,15 +340,32 @@ class GuiCreator(object):
         main_menu_bar.Append(view_menu, _("&View"))
         self.view_menu = view_menu
 
+    def _create_view_point_event_alignment_menu(self, view_menu):
+        sub_menu = wx.Menu()
+        left_item = sub_menu.Append(wx.ID_ANY, _("Left"), kind=wx.ITEM_RADIO)
+        center_item = sub_menu.Append(wx.ID_ANY, _("Center"), kind=wx.ITEM_RADIO)
+        view_menu.AppendMenu(wx.ID_ANY, _("Point event alignment"), sub_menu)
+        def on_left_click(event):
+            self.config.draw_period_events_to_right = True
+        def on_center_click(event):
+            self.config.draw_period_events_to_right = False
+        def check_item_corresponding_to_config():
+            if self.config.draw_period_events_to_right:
+                left_item.Check()
+            else:
+                center_item.Check()
+        self.Bind(wx.EVT_MENU, on_left_click, left_item)
+        self.Bind(wx.EVT_MENU, on_center_click, center_item)
+        self.config.listen_for_any(check_item_corresponding_to_config)
+        check_item_corresponding_to_config()
+
     def _check_view_menu_items(self, view_menu):
         sidebar_item = view_menu.FindItemById(ID_SIDEBAR)
         legend_item = view_menu.FindItemById(ID_LEGEND)
         balloons_item = view_menu.FindItemById(ID_BALLOONS)
-        pt_event_item = view_menu.FindItemById(ID_PT_EVENT_TO_RIGHT)
         sidebar_item.Check(self.config.get_show_sidebar())
         legend_item.Check(self.config.get_show_legend())
         balloons_item.Check(self.config.get_balloon_on_hover())
-        pt_event_item.Check(self.config.draw_period_events_to_right)
 
     def _add_view_menu_items_to_controller(self, view_menu):
         sidebar_item = view_menu.FindItemById(ID_SIDEBAR)
@@ -621,24 +639,27 @@ class GuiCreator(object):
                 menu.AppendSeparator()
 
     def _create_menu_item(self, menu, item_spec):
-        item_id, handler, label, checkbox = item_spec
-        if label is not None:
-            if checkbox == CHECKBOX:
-                item = menu.Append(item_id, label, kind=wx.ITEM_CHECK)
-            elif checkbox == CHECKED_RB:
-                item = menu.Append(item_id, label, kind=wx.ITEM_RADIO)
-                item.Check(True)
-            elif checkbox == UNCHECKED_RB:
-                item = menu.Append(item_id, label, kind=wx.ITEM_RADIO)
-            else:
-                if label is not None:
-                    item = menu.Append(item_id, label)
-                else:
-                    item = menu.Append(item_id)
+        if isinstance(item_spec, collections.Callable):
+            item_spec(menu)
         else:
-            item = menu.Append(item_id)
-        self.shortcut_items[item_id] = menu.FindItemById(item_id)
-        self.Bind(wx.EVT_MENU, handler, item)
+            item_id, handler, label, checkbox = item_spec
+            if label is not None:
+                if checkbox == CHECKBOX:
+                    item = menu.Append(item_id, label, kind=wx.ITEM_CHECK)
+                elif checkbox == CHECKED_RB:
+                    item = menu.Append(item_id, label, kind=wx.ITEM_RADIO)
+                    item.Check(True)
+                elif checkbox == UNCHECKED_RB:
+                    item = menu.Append(item_id, label, kind=wx.ITEM_RADIO)
+                else:
+                    if label is not None:
+                        item = menu.Append(item_id, label)
+                    else:
+                        item = menu.Append(item_id)
+            else:
+                item = menu.Append(item_id)
+            self.shortcut_items[item_id] = menu.FindItemById(item_id)
+            self.Bind(wx.EVT_MENU, handler, item)
 
     def _mnu_file_new_on_click(self, event):
         items = [
