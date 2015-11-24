@@ -614,14 +614,11 @@ class GuiCreator(object):
             return menu
 
     def _create_menu_items(self, menu, items):
-        menu_items = []
         for item in items:
             if item is not None:
                 menu_item = self._create_menu_item(menu, item)
-                menu_items.append(menu_item)
             else:
                 menu.AppendSeparator()
-        return menu_items
 
     def _create_menu_item(self, menu, item_spec):
         item_id, handler, label, checkbox = item_spec
