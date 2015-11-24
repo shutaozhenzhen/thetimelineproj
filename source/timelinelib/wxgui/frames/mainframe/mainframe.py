@@ -312,7 +312,6 @@ class GuiCreator(object):
 
         def draw_point_events_to_right(evt):
             self.config.draw_period_events_to_right = evt.IsChecked()
-            self.main_panel.redraw_timeline()
 
         items = [(ID_SIDEBAR, sidebar, _("&Sidebar\tCtrl+I"), CHECKBOX),
                  (ID_LEGEND, legend, _("&Legend"), CHECKBOX),

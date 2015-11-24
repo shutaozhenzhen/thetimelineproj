@@ -70,6 +70,7 @@ class TimelineCanvasController(object):
         self.view = view
         self.status_bar_adapter = status_bar_adapter
         self.config = config
+        self.config.listen_for_any(self._redraw_timeline)
         self.divider_line_slider = divider_line_slider
         self.fn_handle_db_error = fn_handle_db_error
         if drawer is not None:
