@@ -59,6 +59,7 @@ class PreferencesDialog(Dialog):
                             label="$(uncheck_time_for_new_events_text)"
                         />
                         <Button
+                            name="select_tab_order"
                             event_EVT_BUTTON="on_tab_order_click"
                             label="$(tab_order_text)"
                             align="ALIGN_LEFT"
@@ -89,6 +90,7 @@ class PreferencesDialog(Dialog):
                             align="ALIGN_CENTER_VERTICAL"
                         />
                         <Button
+                            name="select_major_strip"
                             event_EVT_BUTTON="on_major_strip_click"
                             label="$(edit_text)"
                         />
@@ -97,6 +99,7 @@ class PreferencesDialog(Dialog):
                             align="ALIGN_CENTER_VERTICAL"
                         />
                         <Button
+                            name="select_minor_strip"
                             event_EVT_BUTTON="on_minor_strip_click"
                             label="$(edit_text)"
                         />
@@ -105,6 +108,7 @@ class PreferencesDialog(Dialog):
                             align="ALIGN_CENTER_VERTICAL"
                         />
                         <Button
+                            name="select_legend"
                             event_EVT_BUTTON="on_legend_click"
                             label="$(edit_text)"
                         />
@@ -167,7 +171,7 @@ class PreferencesDialog(Dialog):
     def AddExperimentalFeatures(self, features):
         for feature in features:
             name = feature.get_display_name()
-            cb = wx.CheckBox(self.experimental_panel, label=name)
+            cb = wx.CheckBox(self.experimental_panel, label=name, name=name)
             cb.SetValue(feature.enabled())
             self.experimental_panel_sizer.Add(cb)
             self.Bind(wx.EVT_CHECKBOX, self.controller.on_experimental_changed, cb)

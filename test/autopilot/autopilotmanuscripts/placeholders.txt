@@ -12,6 +12,7 @@ add placeholder(Find, "Find|Sök")
 add placeholder(Preferences, "Preferences|Inställningar")
 add placeholder(Open, "Open|Öppna")
 add placeholder(New, "New|Ny")
+add placeholder(Close, "Close|Stäng")
 
 #
 # If the first real instruction contains the $New$ placeholder the following
