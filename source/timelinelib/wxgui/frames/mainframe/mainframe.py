@@ -616,7 +616,7 @@ class GuiCreator(object):
     def _create_menu_items(self, menu, items):
         for item in items:
             if item is not None:
-                menu_item = self._create_menu_item(menu, item)
+                self._create_menu_item(menu, item)
             else:
                 menu.AppendSeparator()
 
@@ -639,7 +639,6 @@ class GuiCreator(object):
             item = menu.Append(item_id)
         self.shortcut_items[item_id] = menu.FindItemById(item_id)
         self.Bind(wx.EVT_MENU, handler, item)
-        return item
 
     def _mnu_file_new_on_click(self, event):
         items = [
