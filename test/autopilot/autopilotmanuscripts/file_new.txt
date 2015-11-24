@@ -2,6 +2,21 @@
 # File - New menu
 #
 
+# Start with the tutorial
+select menu($Help$, "Getting started tutorial")
+
+# Just open and close the dialog
+select menu ($File$, $New$)
+assert text (staticText, "Välj den typ av timeline som du vill skapa|Select the type of timeline you want to create")
+assert text (groupBox, "Beskrivning|Description")
+click button ($Cancel$)
+
+# Open the dialog and select a filename and cancel
+select menu ($File$, $New$)
+click button ($Ok$)
+enter text(1, "autopilottest")
+click button ($Cancel$)
+
 # Open the dialog and select different listbox choices
 select menu ($File$, $New$)
 select listbox(1, 1)
@@ -14,19 +29,9 @@ select listbox(1, 4)
 assert text (description, "This creates a timeline using the fictuous Bosparanian calendar from the German pen-and-paper RPG ~The Dark Eye~ (~Das schwarze Auge~, DSA).")
 click button ($Cancel$)
 
-
-# Just open and close the dialog
-#select menu ($File$, $New$)
-#click button ($Cancel$)
-
-# Open the dialog and select a filename and cancel
-#select menu ($File$, $New$)
-#click button ($Ok$)
-#enter text(1, "autopilottest")
-#click button ($Cancel$)
-
 # Open the dialog and select a filename and create a new timeline
-#select menu ($File$, $New$)
-#click button ($Ok$)
-#enter text(1, "autopilottest")
-#click button ($Save$)
+select menu ($File$, $New$)
+click button ($Ok$)
+enter text(1, "autopilottest")
+click button ($Save$)
+
