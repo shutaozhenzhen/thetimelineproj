@@ -32,6 +32,7 @@ import os.path
 
 import wx
 
+from timelinelib.utilities.observer import Observable
 from timelinelib.wxgui.components.font import Font
 
 
@@ -98,7 +99,7 @@ def read_config(path):
     return config
 
 
-class Config(object):
+class Config(Observable):
     """
     Provide read and write access to application configuration settings.
 
@@ -108,6 +109,7 @@ class Config(object):
     """
 
     def __init__(self, path):
+        Observable.__init__(self)
         self.path = path
         self._set_default_fonts()
         self.config_parser = ConfigParser(DEFAULTS)
@@ -304,6 +306,7 @@ class Config(object):
 
     def set_draw_period_events_to_right(self, value):
         self.config_parser.set(DEFAULTSECT, DRAW_POINT_EVENTS_TO_RIGHT, str(value))
+        self._notify()
     draw_period_events_to_right = property(get_draw_period_events_to_right,
                                            set_draw_period_events_to_right)
 
