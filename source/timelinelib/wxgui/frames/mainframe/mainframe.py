@@ -26,6 +26,7 @@ from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.calendar import set_date_formatter
 from timelinelib.config.dotfile import read_config
 from timelinelib.config.paths import ICONS_DIR
+from timelinelib.config.paths import LOCALE_DIR
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.data import TimePeriod
 from timelinelib.db.exceptions import TimelineIOError
@@ -59,15 +60,14 @@ from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
-from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
+from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_categories_editor_moved_message
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.utils import WildcardHelper
 import timelinelib.wxgui.utils as gui_utils
-from timelinelib.config.paths import LOCALE_DIR
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -128,6 +128,7 @@ class GuiCreator(object):
         self._create_status_bar()
         self._create_main_panel()
         self._create_main_menu_bar()
+        self._create_toolbar()
         self._bind_frame_events()
 
     def _create_status_bar(self):
@@ -136,6 +137,33 @@ class GuiCreator(object):
 
     def _create_main_panel(self):
         self.main_panel = MainPanel(self, self.config, self)
+
+    def _create_toolbar(self):
+        toolbar = self.CreateToolBar()
+        left_tool = toolbar.AddRadioLabelTool(
+            wx.ID_ANY,
+            _("Left"),
+            wx.Bitmap(os.path.join(ICONS_DIR, "format-justify-left.png"))
+        )
+        center_tool = toolbar.AddRadioLabelTool(
+            wx.ID_ANY,
+            _("Center"),
+            wx.Bitmap(os.path.join(ICONS_DIR, "format-justify-center.png"))
+        )
+        def on_left_click(event):
+            self.config.draw_period_events_to_right = True
+        def on_center_click(event):
+            self.config.draw_period_events_to_right = False
+        def check_item_corresponding_to_config():
+            if self.config.draw_period_events_to_right:
+                toolbar.ToggleTool(left_tool.GetId(), True)
+            else:
+                toolbar.ToggleTool(center_tool.GetId(), True)
+        self.Bind(wx.EVT_TOOL, on_left_click, left_tool)
+        self.Bind(wx.EVT_TOOL, on_center_click, center_tool)
+        self.config.listen_for_any(check_item_corresponding_to_config)
+        check_item_corresponding_to_config()
+        toolbar.Realize()
 
     def _create_main_menu_bar(self):
         main_menu_bar = wx.MenuBar()
