@@ -1,8 +1,60 @@
 #
-# Edit -> Find Categories...
+# Edit -> Find Preferences
 #
 
 
-select menu(Edit|Redigera, "Inst‰llningar")
+select menu($Edit$, "Inst√§llningar|Preferences")
+
 click checkbox(open_recent_checkbox)
-click button("Close|St‰ng")
+click checkbox(open_recent_checkbox)
+click checkbox(inertial_scrolling_checkbox)
+click checkbox(inertial_scrolling_checkbox)
+click checkbox(never_period_point_checkbox)
+click checkbox(never_period_point_checkbox)
+click checkbox(center_text_checkbox)
+click checkbox(center_text_checkbox)
+click checkbox(uncheck_time_for_new_events)
+click checkbox(uncheck_time_for_new_events)
+
+click button(select_tab_order)
+click button(btn_down)
+click button(btn_down)
+click button(btn_down)
+click button(btn_down)
+click button(btn_down)
+click button(btn_up)
+click button(btn_up)
+click button(btn_up)
+click button(btn_up)
+click button(btn_up)
+
+click button($Cancel$)
+
+change tab (notebook, 2)
+select combobox("week_start_choice", 1)
+select combobox("week_start_choice", 2)
+select combobox("week_start_choice", 1)
+
+change tab (notebook, 3)
+click button(select_major_strip)
+click button($Cancel$)
+click button(select_minor_strip)
+click button($Cancel$)
+click button(select_legend)
+click button($Cancel$)
+
+change tab (notebook, 4)
+click checkbox("Mark Event as Done")
+click checkbox("Mark Event as Done")
+click checkbox("Extend Container height")
+click checkbox("Extend Container height")
+click checkbox("Locale date formats")
+click checkbox("Locale date formats")
+click checkbox("Accept negative Julian days")
+click checkbox("Accept negative Julian days")
+click checkbox("Use extended Container strategy")
+click checkbox("Use extended Container strategy")
+		 
+change tab (notebook, 1)
+
+click button($Close$)
