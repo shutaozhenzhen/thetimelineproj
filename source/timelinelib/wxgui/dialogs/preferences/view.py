@@ -115,6 +115,22 @@ class PreferencesDialog(Dialog):
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
+            <Panel notebookLabel="$(colours_text)">
+                <BoxSizerVertical>
+                    <FlexGridSizer columns="2" border="ALL">
+                        <StaticText
+                            label="$(minor_strip_colour_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <ColourSelect
+                            name="minor_strip_colorpicker"
+                            align="ALIGN_CENTER_VERTICAL"
+                            width="60"
+                            height="30"
+                        />
+                    </FlexGridSizer>
+                </BoxSizerVertical>
+            </Panel>
             <Panel name="experimental_panel" notebookLabel="$(experimental_text)">
                 <BoxSizerVertical>
                     <FlexGridSizer
@@ -142,13 +158,19 @@ class PreferencesDialog(Dialog):
             "week_start_text": _("Week start on:"),
             "week_start_choices": [_("Monday"), _("Sunday")],
             "fonts_text": _("Fonts"),
+            "colours_text": _("Colours"),
             "major_strip_text": _("Major Strips:"),
             "minor_strip_text": _("Minor Strips:"),
             "legends_text": _("Legends:"),
             "edit_text": _("Edit"),
             "experimental_text": _("Experimental Features"),
+            "minor_strip_colour_text": _("Minor strip divider line:"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
+
+    def Destroy(self):
+        self.controller.on_close()
+        super(PreferencesDialog, self).Destroy()
 
     def SetOpenRecentCheckboxValue(self, value):
         self.open_recent_checkbox.SetValue(value)
@@ -185,3 +207,9 @@ class PreferencesDialog(Dialog):
 
     def ShowEditFontDialog(self, font):
         return edit_font_data(self, font)
+
+    def GetMinorStripColor(self):
+        return self.minor_strip_colorpicker.GetValue()
+
+    def SetMinorStripColor(self, new_color):
+        self.minor_strip_colorpicker.SetValue(new_color)
