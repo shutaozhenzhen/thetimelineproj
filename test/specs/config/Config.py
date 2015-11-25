@@ -38,6 +38,7 @@ class ConfigSpec(UnitTestCase):
         self.assertEqual(self.config.week_start, "monday")
         self.assertEqual(self.config.get_use_inertial_scrolling(), False)
         self.assertEqual(self.config.center_event_texts, False)
+        self.assertEqual(self.config.minor_strip_divider_line_colour, (200, 200, 200))
 
     def test_window_size_can_be_read_after_stored(self):
         self.config.window_size = (3, 20)
@@ -83,6 +84,16 @@ class ConfigSpec(UnitTestCase):
         self.config.center_event_texts = True
         self.assertEqual(self.config.center_event_texts, True)
 
+    def test_minor_strip_divider_line_colour_can_be_read_after_set(self):
+        self.config.minor_strip_divider_line_colour = (100, 0, 0)
+        self.assertEqual(self.config.minor_strip_divider_line_colour, (100, 0, 0))
+
+    def test_minor_strip_divider_line_colour_can_be_read_after_stored(self):
+        self.config.minor_strip_divider_line_colour = (100, 0, 0)
+        self.config.write()
+        self.config.read()
+        self.assertEqual(self.config.minor_strip_divider_line_colour, (100, 0, 0))
+
     def test_config_returns_use_inertial_scrolling_is_true_when_set_to_true(self):
         self.config.set_use_inertial_scrolling(True)
         self.assertTrue(self.config.get_use_inertial_scrolling())
@@ -126,7 +137,7 @@ class ConfigSpec(UnitTestCase):
     def setUp(self):
         self.app = wx.App()
         self.app.MainLoop()
-        self.config = Config("")
+        self.config = Config("test.config")
 
     def tearDown(self):
         self.app.Destroy()
