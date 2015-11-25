@@ -17,85 +17,56 @@
 
 
 import os
-import sys
 
+from timelinelib.config.paths import LOCALE_DIR
 from timelinetest import UnitTestCase
 
 
-PO_DIR_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "translations")
-nbr_of_tested_files = 0
+class describe_po_files(UnitTestCase):
+
+    def test_message_strings_have_correct_number_of_placeholders(self):
+        for po_file in get_po_files():
+            for (msgid, msgstr) in get_po_entries(po_file):
+                if len(msgstr) > 0:
+                    self.assertEqual(
+                        msgid.count("%s"),
+                        msgstr.count("%s"),
+                        "Po file '%s' is missing placeholder for msgid '%s'" % (
+                            os.path.basename(po_file),
+                            msgid
+                        )
+                    )
 
 
-def get_po_files(path):
-    return [f for f in os.listdir(path) if f[-3:] == ".po"]
+def get_po_files():
+    for path in os.listdir(LOCALE_DIR):
+        if path.endswith(".po"):
+            yield os.path.join(LOCALE_DIR, path)
 
 
-def parse_translations(lines):
-    translations = []
-    BEFORE = 0
-    START = 1
-    MSGID = 2
-    MSGSTR = 3
-    state = BEFORE
-    sourceline = None
+def get_po_entries(path):
+    with open(path) as f:
+        return parse_po_entries(f.readlines())
+
+
+def parse_po_entries(lines):
     msgid = None
     msgstr = None
-    for line in lines:
-        line = line.strip()
-        if state == BEFORE:
-            if line.startswith("#: "):
-                state = START
-                sourceline = line
-        elif state == START:
-            if line.startswith("msgid "):
-                state = MSGID
-                msgid = line[7:-1]
-        elif state == MSGID:
-            if line.startswith("msgstr "):
-                state = MSGSTR
-                msgstr = line[8:-1]
-            else:
-                msgid = msgid + line[1:-1]
-        elif state == MSGSTR:
-            if len(line) == 0:
-                translations.append((sourceline, msgid, msgstr))
-                state = BEFORE
-                msgid = None
-                msgstr = None
-                sourceline = None
-    return translations
+    while len(lines) > 0:
+        line = lines.pop(0)
+        if line.startswith("msgid"):
+            lines.insert(0, line[6:])
+            msgid = parse_string(lines)
+        if line.startswith("msgstr"):
+            lines.insert(0, line[7:])
+            msgstr = parse_string(lines)
+            yield (msgid, msgstr)
 
 
-def get_translations(po_file):
-    f = open(po_file, "r")
-    lines = f.read().split("\n")
-    f.close()
-    return parse_translations(lines)
-
-
-def validate_translations(translations):
-    errors = []
-    for sourceline, msgid, msgstr in translations:
-        if len(msgstr) > 0:
-            if msgid.count("%s") != msgstr.count("%s"):
-                errors.append((sourceline, msgid, msgstr))
-    return errors
-
-
-def get_invalid_translations(path):
-    global nbr_of_tested_files
-    errors = []
-    po_files = get_po_files(path)
-    for po_file in po_files:
-        nbr_of_tested_files += 1
-        translations = get_translations(os.path.join(path, po_file))
-        err = validate_translations(translations)
-        if len(err) > 0:
-            errors.append((po_file, err))
-    return errors
-
-
-class TranslationsSpec(UnitTestCase):
-
-    def test_string_replacemnts_are_conserved(self):
-        self.assertEqual(0, len(get_invalid_translations(PO_DIR_PATH)))
+def parse_string(lines):
+    string = ""
+    while (len(lines) > 0 and
+           lines[0].startswith("\"") and
+           lines[0].rstrip().endswith("\"")):
+        string += lines.pop(0).rstrip()[1:-1]
+    return string.decode("string-escape").decode("utf-8")
