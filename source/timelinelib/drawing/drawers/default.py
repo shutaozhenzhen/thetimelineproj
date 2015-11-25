@@ -76,9 +76,9 @@ class DefaultDrawingAlgorithm(Drawer):
         self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.SOLID)
         self.black_solid_pen = wx.Pen(wx.Colour(0, 0, 0), 1, wx.SOLID)
         self.darkred_solid_pen = wx.Pen(wx.Colour(200, 0, 0), 1, wx.SOLID)
-        self.black_dashed_pen = wx.Pen(wx.Colour(200, 200, 200), 1, wx.USER_DASH)
-        self.black_dashed_pen.SetDashes([2, 2])
-        self.black_dashed_pen.SetCap(wx.CAP_BUTT)
+        self.minor_strip_pen = wx.Pen(wx.Colour(200, 200, 200), 1, wx.USER_DASH)
+        self.minor_strip_pen.SetDashes([2, 2])
+        self.minor_strip_pen.SetCap(wx.CAP_BUTT)
         self.grey_solid_pen = wx.Pen(wx.Colour(200, 200, 200), 1, wx.SOLID)
         self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.SOLID)
 
@@ -101,6 +101,7 @@ class DefaultDrawingAlgorithm(Drawer):
         return self.scene.get_closest_overlapping_event(event_to_move, up=up)
 
     def draw(self, dc, timeline, view_properties, config):
+        self.minor_strip_pen.SetColour(config.minor_strip_divider_line_colour)
         self.outer_padding = OUTER_PADDING
         if EXTENDED_CONTAINER_HEIGHT.enabled():
             self.outer_padding += EXTENDED_CONTAINER_HEIGHT.get_extra_outer_padding_to_avoid_vertical_overlapping()
@@ -264,7 +265,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_minor_strip_divider_line_at(self, time):
         x = self.scene.x_pos_for_time(time)
-        self.dc.SetPen(self.black_dashed_pen)
+        self.dc.SetPen(self.minor_strip_pen)
         self.dc.DrawLine(x, 0, x, self.scene.height)
 
     def _draw_minor_strip_label(self, strip_period):
