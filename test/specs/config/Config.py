@@ -94,6 +94,16 @@ class ConfigSpec(UnitTestCase):
         self.config.read()
         self.assertEqual(self.config.minor_strip_divider_line_colour, (100, 0, 0))
 
+    def test_major_strip_divider_line_colour_can_be_read_after_set(self):
+        self.config.major_strip_divider_line_colour = (100, 0, 0)
+        self.assertEqual(self.config.major_strip_divider_line_colour, (100, 0, 0))
+
+    def test_major_strip_divider_line_colour_can_be_read_after_stored(self):
+        self.config.major_strip_divider_line_colour = (100, 0, 0)
+        self.config.write()
+        self.config.read()
+        self.assertEqual(self.config.major_strip_divider_line_colour, (100, 0, 0))
+
     def test_config_returns_use_inertial_scrolling_is_true_when_set_to_true(self):
         self.config.set_use_inertial_scrolling(True)
         self.assertTrue(self.config.get_use_inertial_scrolling())

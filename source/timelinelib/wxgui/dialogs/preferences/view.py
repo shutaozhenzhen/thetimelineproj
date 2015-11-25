@@ -128,6 +128,16 @@ class PreferencesDialog(Dialog):
                             width="60"
                             height="30"
                         />
+                        <StaticText
+                            label="$(major_strip_colour_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <ColourSelect
+                            name="major_strip_colorpicker"
+                            align="ALIGN_CENTER_VERTICAL"
+                            width="60"
+                            height="30"
+                        />
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -165,6 +175,7 @@ class PreferencesDialog(Dialog):
             "edit_text": _("Edit"),
             "experimental_text": _("Experimental Features"),
             "minor_strip_colour_text": _("Minor strip divider line:"),
+            "major_strip_colour_text": _("Major strip divider line:"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
 
@@ -213,3 +224,9 @@ class PreferencesDialog(Dialog):
 
     def SetMinorStripColor(self, new_color):
         self.minor_strip_colorpicker.SetValue(new_color)
+
+    def GetMajorStripColor(self):
+        return self.major_strip_colorpicker.GetValue()
+
+    def SetMajorStripColor(self, new_color):
+        self.major_strip_colorpicker.SetValue(new_color)
