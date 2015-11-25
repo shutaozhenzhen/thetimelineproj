@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.wxgui.components.font import deserialize_font
 from timelinelib.wxgui.framework import Controller
 
@@ -27,6 +29,10 @@ class PreferencesDialogController(Controller):
         self.experimental_features = experimental_features
         self.weeks_map = ((0, "monday"), (1, "sunday"))
         self._set_initial_values()
+
+    def on_close(self):
+        self.config.minor_strip_divider_line_colour = str(self.view.GetMinorStripColor())
+        self.config.major_strip_divider_line_colour = str(self.view.GetMajorStripColor())
 
     def on_open_recent_change(self, event):
         self.config.set_open_recent_at_startup(event.IsChecked())
@@ -77,6 +83,8 @@ class PreferencesDialogController(Controller):
         self.view.SetWeekStartSelection(self._week_index(self.config.get_week_start()))
         self.view.AddExperimentalFeatures(self.experimental_features.get_all_features())
         self.view.SetUncheckTimeForNewEventsCheckboxValue(self.config.uncheck_time_for_new_events)
+        self.view.SetMinorStripColor(wx.Colour(*self.config.minor_strip_divider_line_colour))
+        self.view.SetMajorStripColor(wx.Colour(*self.config.major_strip_divider_line_colour))
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:

@@ -63,6 +63,8 @@ EVENT_EDITOR_SHOW_TIME = "event_editor_show_time"
 EVENT_EDITOR_TAB_ORDER = "event_editor_tab_order"
 CENTER_EVENT_TEXTS = "center_event_texts"
 UNCHECK_TIME_FOR_NEW_EVENTS = "uncheck_time_for_new_events"
+MINOR_STRIP_DIVIDER_LINE_COLOUR = "minor_strip_divider_line_colour"
+MAJOR_STRIP_DIVIDER_LINE_COLOUR = "major_strip_divider_line_colour"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -87,6 +89,8 @@ DEFAULTS = {
     EVENT_EDITOR_TAB_ORDER: "01234:",
     CENTER_EVENT_TEXTS: "False",
     UNCHECK_TIME_FOR_NEW_EVENTS: "False",
+    MINOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
+    MAJOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -356,3 +360,21 @@ class Config(Observable):
     def set_event_editor_tab_order(self, tab_order):
         self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_TAB_ORDER, tab_order)
     event_editor_tab_order = property(get_event_editor_tab_order, set_event_editor_tab_order)
+
+    def get_minor_strip_divider_line_colour(self):
+        return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR))
+    def set_minor_strip_divider_line_colour(self, colour):
+        self.config_parser.set(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
+    minor_strip_divider_line_colour = property(get_minor_strip_divider_line_colour, set_minor_strip_divider_line_colour)
+
+    def get_major_strip_divider_line_colour(self):
+        return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR))
+    def set_major_strip_divider_line_colour(self, colour):
+        self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
+    major_strip_divider_line_colour = property(get_major_strip_divider_line_colour, set_major_strip_divider_line_colour)
+
+    def _string_to_tuple(self, tuple_string):
+        return tuple([int(x.strip()) for x in tuple_string[1:-1].split(",")])
+
+    def _tuple_to_string(self, tuple):
+        return str(tuple)
