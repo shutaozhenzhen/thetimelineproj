@@ -17,8 +17,11 @@
 
 
 import os
+import subprocess
+import sys
 
 from timelinelib.config.paths import LOCALE_DIR
+from timelinetest import TmpDirTestCase
 from timelinetest import UnitTestCase
 
 
@@ -38,10 +41,40 @@ class describe_po_files(UnitTestCase):
                     )
 
 
+class describe_pot_file(TmpDirTestCase):
+
+    def test_it_is_up_to_date(self):
+        checked_in_msgids = get_msgids(os.path.join(LOCALE_DIR, "timeline.pot"))
+        generated_msgids = get_msgids(self.generate_pot_file())
+        missing_msgids = generated_msgids - checked_in_msgids
+        self.assertEqual(missing_msgids, set(), "\n".join([
+            "Pot file is not up to date.",
+            "Missing msgids: %s" % missing_msgids,
+            "Generate a new pot-file, commit it, and upload it to Launchpad",
+        ]))
+
+    def generate_pot_file(self):
+        path = self.get_tmp_path("generated_timeline.pot")
+        subprocess.check_output([
+            sys.executable,
+            os.path.join(os.path.dirname(__file__), "..", "..", "tools", "generate-pot-file.py"),
+            "--outfile",
+            path
+        ], stderr=subprocess.STDOUT)
+        return path
+
+
 def get_po_files():
     for path in os.listdir(LOCALE_DIR):
         if path.endswith(".po"):
             yield os.path.join(LOCALE_DIR, path)
+
+
+def get_msgids(pot_file):
+    msgids = set()
+    for (msgid, msgstr) in get_po_entries(pot_file):
+        msgids.add(msgid)
+    return msgids
 
 
 def get_po_entries(path):
