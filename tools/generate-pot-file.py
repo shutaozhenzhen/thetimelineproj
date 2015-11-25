@@ -19,6 +19,7 @@
 
 
 from os.path import join, relpath
+import argparse
 import os
 import subprocess
 
@@ -28,14 +29,20 @@ from timelinetools.paths import TRANSLATIONS_DIR
 
 
 def generate_pot_file():
-    subprocess.check_call(build_xgettext_command(), cwd=ROOT_DIR)
+    subprocess.check_call(build_xgettext_command(parse_arguments()), cwd=ROOT_DIR)
 
 
-def build_xgettext_command():
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--outfile", default=relpath(join(TRANSLATIONS_DIR, "timeline.pot"), ROOT_DIR))
+    return parser.parse_args()
+
+
+def build_xgettext_command(arguments):
     command = []
     command.append("xgettext")
     command.append("-o")
-    command.append(relpath(join(TRANSLATIONS_DIR, "timeline.pot"), ROOT_DIR))
+    command.append(arguments.outfile)
     command.append("--add-comments=TRANSLATORS")
     command.extend(sorted(find_py_files_in(SOURCE_DIR)))
     return command
