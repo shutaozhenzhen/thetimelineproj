@@ -333,12 +333,6 @@ class GuiCreator(object):
         def vert_zoomout(evt):
             DrawingAreaProxy(self).vert_zoom_out()
 
-        def create_click_handler(plugin):
-            def event_handler(evt):
-                self.main_panel.get_timeline_canvas().set_event_box_drawer(plugin)
-                self.config.selected_event_box_drawer = plugin.display_name()
-            return event_handler
-
         def draw_point_events_to_right(evt):
             self.config.draw_period_events_to_right = evt.IsChecked()
 
@@ -354,12 +348,8 @@ class GuiCreator(object):
                  None,
                  self._create_view_point_event_alignment_menu,
                  None,
+                 self._create_event_box_drawers_menu,
                  ]
-        for plugin in factory.get_plugins(EVENTBOX_DRAWER):
-            if (plugin.display_name() == self.config.selected_event_box_drawer):
-                items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), CHECKED_RB))
-            else:
-                items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), UNCHECKED_RB))
 
         view_menu = wx.Menu()
         self._create_menu_items(view_menu, items)
@@ -367,6 +357,24 @@ class GuiCreator(object):
         self._add_view_menu_items_to_controller(view_menu)
         main_menu_bar.Append(view_menu, _("&View"))
         self.view_menu = view_menu
+
+    def _create_event_box_drawers_menu(self, view_menu):
+
+        def create_click_handler(plugin):
+            def event_handler(evt):
+                self.main_panel.get_timeline_canvas().set_event_box_drawer(plugin)
+                self.config.selected_event_box_drawer = plugin.display_name()
+            return event_handler
+
+        items = []
+        for plugin in factory.get_plugins(EVENTBOX_DRAWER):
+            if (plugin.display_name() == self.config.selected_event_box_drawer):
+                items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), CHECKED_RB))
+            else:
+                items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), UNCHECKED_RB))
+        sub_menu = wx.Menu()
+        self._create_menu_items(sub_menu, items)
+        view_menu.AppendMenu(wx.ID_ANY, _("Event appearance"), sub_menu)
 
     def _create_view_point_event_alignment_menu(self, view_menu):
         sub_menu = wx.Menu()
