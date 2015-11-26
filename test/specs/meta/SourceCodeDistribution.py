@@ -43,6 +43,20 @@ class SourceCodeDistributionSpec(UnitTestCase):
                 if content:
                     self.assertIn(COPYRIGHT_HEADER, content, "%s lacks proper copyright notice." % py_file)
 
+    def test_unit_tests_have_corresponding_module(self):
+        unit_test_dir = os.path.join("test", "unit")
+        for unit_file in self.get_py_files([unit_test_dir]):
+            module_file = os.path.relpath(os.path.join(
+                self.ROOT_DIR,
+                "source",
+                "timelinelib",
+                os.path.relpath(unit_file, unit_test_dir)
+            ))
+            self.assertTrue(
+                os.path.exists(module_file),
+                "Fount unit test '%s', but not module '%s'" % (unit_file, module_file)
+            )
+
     def setUp(self):
         self.ROOT_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "..")
         self.README = os.path.join(self.ROOT_DIR, "README")
