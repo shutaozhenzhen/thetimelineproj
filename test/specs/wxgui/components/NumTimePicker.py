@@ -20,7 +20,7 @@ from mock import Mock
 
 from timelinelib.wxgui.components.numtimepicker import NumTimePicker
 from timelinelib.wxgui.components.numtimepicker import NumTimePickerController
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class desribe_NumTimePickerController(UnitTestCase):

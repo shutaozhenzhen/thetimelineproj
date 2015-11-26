@@ -18,12 +18,12 @@
 
 from timelinelib.data.eras import InvalidOperationError
 from timelinelib.data import Eras
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_gregorian_era
-from timelinetest.utils import a_gregorian_era_with
-from timelinetest.utils import a_numeric_era_with
-from timelinetest.utils import gregorian_period
-from timelinetest.utils import numeric_period
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_gregorian_era
+from timelinelib.test.utils import a_gregorian_era_with
+from timelinelib.test.utils import a_numeric_era_with
+from timelinelib.test.utils import gregorian_period
+from timelinelib.test.utils import numeric_period
 
 
 class ErasTestCase(UnitTestCase):

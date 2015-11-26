@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class WxComponentTestCase(UnitTestCase):

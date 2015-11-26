@@ -17,7 +17,7 @@
 
 
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 DISPLAY_NAME = "Display name"

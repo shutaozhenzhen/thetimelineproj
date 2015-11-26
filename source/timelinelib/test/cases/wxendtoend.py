@@ -16,16 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import traceback
 import sys
+import traceback
 
 import wx.lib.inspection
 
 from timelinelib.config.arguments import ApplicationArguments
 from timelinelib.config.dotfile import read_config
 from timelinelib.db import db_open
+from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.wxgui.setup import start_wx_application
-from timelinetest.cases.tmpdir import TmpDirTestCase
 
 
 class WxEndToEndTestCase(TmpDirTestCase):

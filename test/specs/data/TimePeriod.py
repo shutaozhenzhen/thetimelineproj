@@ -18,8 +18,8 @@
 
 from timelinelib.data import TimePeriod
 from timelinelib.time.typeinterface import TimeType
-from timelinetest import UnitTestCase
-from timelinetest.utils import TIME_PERIOD_MODIFIERS
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import TIME_PERIOD_MODIFIERS
 
 
 class ATime(object):

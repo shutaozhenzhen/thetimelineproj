@@ -21,7 +21,7 @@ from mock import Mock
 from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.wxgui.components.categorytree import CustomCategoryTree
-from timelinetest import WxComponentTestCase
+from timelinelib.test.cases.wxcomponent import WxComponentTestCase
 
 
 class CustomCategoryTreeComponentTest(WxComponentTestCase):

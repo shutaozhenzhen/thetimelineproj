@@ -19,7 +19,7 @@
 import codecs
 import os
 
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.meta.about
 import timelinelib.meta.version as version
 

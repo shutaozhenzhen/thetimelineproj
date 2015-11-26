@@ -19,7 +19,7 @@
 from timelinelib.features.experimental.experimentalfeaturedone import DESCRIPTION
 from timelinelib.features.experimental.experimentalfeaturedone import DISPLAY_NAME
 from timelinelib.features.experimental.experimentalfeaturedone import ExperimentalFeatureDone
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class describe_experimental_feature_done(UnitTestCase):

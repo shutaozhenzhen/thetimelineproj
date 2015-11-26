@@ -21,8 +21,8 @@ import wx
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.frames.mainframe.mainframe import AlertController
-from timelinetest import UnitTestCase
-from timelinetest.utils import an_event
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import an_event
 
 
 class AlertControllerSpec(UnitTestCase):

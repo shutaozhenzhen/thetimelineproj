@@ -21,7 +21,7 @@
 import os
 
 from timelinelib.utilities.encodings import to_unicode
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 TESTFILE = "testdata.txt"

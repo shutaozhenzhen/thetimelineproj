@@ -21,11 +21,11 @@ import subprocess
 
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
-from timelinetest import TmpDirTestCase
-from timelinetest.utils import a_category_with
-from timelinetest.utils import a_container
-from timelinetest.utils import an_event
-from timelinetest.utils import a_time_period
+from timelinelib.test.cases.tmpdir import TmpDirTestCase
+from timelinelib.test.utils import a_category_with
+from timelinelib.test.utils import a_container
+from timelinelib.test.utils import an_event
+from timelinelib.test.utils import a_time_period
 
 
 class describe_undo(TmpDirTestCase):

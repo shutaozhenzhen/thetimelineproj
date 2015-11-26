@@ -29,9 +29,9 @@ from timelinelib.wxgui.dialogs.duplicateevent.controller import BOTH
 from timelinelib.wxgui.dialogs.duplicateevent.controller import DuplicateEventDialogController
 from timelinelib.wxgui.dialogs.duplicateevent.controller import FORWARD
 from timelinelib.wxgui.dialogs.duplicateevent.view import DuplicateEventDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
-from timelinetest.utils import select_language
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import create_dialog
+from timelinelib.test.utils import select_language
 
 
 #select_language("sv")

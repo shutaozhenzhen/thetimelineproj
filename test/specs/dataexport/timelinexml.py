@@ -18,8 +18,8 @@
 
 from timelinelib.data.db import MemoryDB
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
-from timelinetest import TmpDirTestCase
-from timelinetest.utils import an_event_with
+from timelinelib.test.cases.tmpdir import TmpDirTestCase
+from timelinelib.test.utils import an_event_with
 
 
 class describe_export_db_to_timeline_xml(TmpDirTestCase):

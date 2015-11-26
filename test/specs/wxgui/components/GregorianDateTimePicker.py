@@ -28,7 +28,7 @@ from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDatePi
 from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDateTimePickerController
 from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianTimePicker
 from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianTimePickerController
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.calendar.gregorian as gregorian
 
 

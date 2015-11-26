@@ -51,8 +51,8 @@ from timelinelib.time.gregoriantime import StripYear
 from timelinelib.time.gregoriantime import TimeOutOfRangeLeftError
 from timelinelib.time.gregoriantime import TimeOutOfRangeRightError
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
-from timelinetest import UnitTestCase
-from timelinetest.utils import gregorian_period
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import gregorian_period
 import timelinelib.time.timeline as timeline
 
 

@@ -18,8 +18,8 @@
 
 from timelinelib.data.idnumber import get_process_unique_id
 from timelinelib.drawing.viewproperties import ViewProperties
-from timelinetest import UnitTestCase
-from timelinetest.utils import an_event_with, a_container, a_category_with
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import an_event_with, a_container, a_category_with
 
 
 class Base(UnitTestCase):

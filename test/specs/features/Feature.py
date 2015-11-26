@@ -22,7 +22,7 @@ from timelinelib.features.feature import Feature
 from timelinelib.features.installed.installedfeatures import InstalledFeatures
 from timelinelib.wxgui.dialogs.feature.view import FeatureDialog
 from timelinelib.wxgui.dialogs.feature.view import FeatureDialogController
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 DISPLAY_NAME = "Display name"

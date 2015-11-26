@@ -17,8 +17,8 @@
 
 
 from timelinelib.time.timeline import *
-from timelinetest import UnitTestCase
-from timelinetest.utils import TIME_MODIFIERS
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import TIME_MODIFIERS
 
 
 class testbase(UnitTestCase):

@@ -18,10 +18,10 @@
 
 from timelinelib.data.events import InvalidOperationError
 from timelinelib.data import Events
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_category_with
-from timelinetest.utils import an_event
-from timelinetest.utils import an_event_with
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_category_with
+from timelinelib.test.utils import an_event
+from timelinelib.test.utils import an_event_with
 
 
 class EventsTestCase(UnitTestCase):

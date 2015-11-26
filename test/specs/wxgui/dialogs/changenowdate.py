@@ -21,8 +21,8 @@ from mock import Mock
 from timelinelib.db import db_open
 from timelinelib.wxgui.dialogs.changenowdate.controller import ChangeNowDateDialogController
 from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import create_dialog
 
 
 class describe_change_now_date_dialog(UnitTestCase):

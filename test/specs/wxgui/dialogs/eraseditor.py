@@ -22,9 +22,9 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.eraseditor.controller import ErasEditorDialogController
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_gregorian_era_with
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_gregorian_era_with
+from timelinelib.test.utils import create_dialog
 
 
 class describe_ErasEditorDialog(UnitTestCase):

@@ -20,8 +20,8 @@ from mock import Mock
 
 from timelinelib.wxgui.dialogs.filenew.controller import FileNewDialogController
 from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import create_dialog
 
 
 class describe_file_new_dialog(UnitTestCase):

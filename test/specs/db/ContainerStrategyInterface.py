@@ -17,7 +17,7 @@
 
 
 from timelinelib.db.interface import ContainerStrategy
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class ContainerStrategyInterfaceSpec(UnitTestCase):

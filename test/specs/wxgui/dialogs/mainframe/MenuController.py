@@ -21,7 +21,7 @@ import wx
 
 from timelinelib.data.db import MemoryDB
 from timelinelib.wxgui.frames.mainframe.mainframe import MenuController
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class MenuControllerSpec(UnitTestCase):

@@ -22,8 +22,8 @@ from timelinelib.wxgui.dialogs.export.controller import ExportDialogController
 from timelinelib.wxgui.dialogs.export.controller import TARGET_TYPES
 from timelinelib.wxgui.dialogs.export.view import ExportDialog
 from timelinelib.wxgui.dialogs.fieldselection.controller import FIELDS
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import create_dialog
 
 
 class describe_ExportDialog(UnitTestCase):

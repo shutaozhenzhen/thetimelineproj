@@ -37,8 +37,8 @@ from mock import Mock
 
 from timelinelib.wxgui.dialogs.%s.controller import %sController
 from timelinelib.wxgui.dialogs.%s.view import %s
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import create_dialog
 
 
 """

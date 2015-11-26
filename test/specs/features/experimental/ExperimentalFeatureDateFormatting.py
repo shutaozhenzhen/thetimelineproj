@@ -17,7 +17,7 @@
 
 
 from timelinelib.features.experimental.experimentalfeatures import LOCALE_DATE
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 YEAR = "3333"

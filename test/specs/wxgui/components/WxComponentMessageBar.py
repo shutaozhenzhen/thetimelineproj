@@ -17,7 +17,7 @@
 
 
 from timelinelib.wxgui.components.messagebar import MessageBar
-from timelinetest import WxComponentTestCase
+from timelinelib.test.cases.wxcomponent import WxComponentTestCase
 
 
 class MessageBarComponentTest(WxComponentTestCase):

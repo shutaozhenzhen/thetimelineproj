@@ -22,9 +22,9 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.wxgui.dialogs.categoryfinder.controller import CategoryFinderDialogController
 from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_category_with
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_category_with
+from timelinelib.test.utils import create_dialog
 
 
 class describe_CategoryFinderDialog(UnitTestCase):

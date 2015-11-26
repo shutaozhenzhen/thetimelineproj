@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.wxgui.components.filechooser import FileChooser
-from timelinetest import WxComponentTestCase
+from timelinelib.test.cases.wxcomponent import WxComponentTestCase
 
 
 class FileChooserComponentTest(WxComponentTestCase):

@@ -21,10 +21,10 @@ from mock import Mock
 from timelinelib.data.db import MemoryDB
 from timelinelib.wxgui.dialogs.eraeditor.controller import EraEditorDialogController
 from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_gregorian_era_with
-from timelinetest.utils import create_dialog
-from timelinetest.utils import human_time_to_gregorian
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_gregorian_era_with
+from timelinelib.test.utils import create_dialog
+from timelinelib.test.utils import human_time_to_gregorian
 
 
 GREGORIAN_START = "11 Jul 2014 11:22"

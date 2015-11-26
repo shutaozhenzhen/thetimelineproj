@@ -22,8 +22,8 @@ from mock import Mock
 from timelinelib.utilities.encodings import to_unicode
 from timelinelib.wxgui.dialogs.feedback.controller import FeedbackDialogController
 from timelinelib.wxgui.dialogs.feedback.view import FeedbackDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import create_dialog
 
 
 class describe_feedback_dialog(UnitTestCase):

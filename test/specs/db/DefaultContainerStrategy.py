@@ -21,7 +21,7 @@ from timelinelib.data import Container
 from timelinelib.data import Subevent
 from timelinelib.db.strategies import DefaultContainerStrategy
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class DefaultContainerStartegySpec(UnitTestCase):
