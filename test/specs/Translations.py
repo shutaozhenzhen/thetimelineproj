@@ -49,8 +49,12 @@ class describe_pot_file(TmpDirTestCase):
         missing_msgids = generated_msgids - checked_in_msgids
         self.assertEqual(missing_msgids, set(), "\n".join([
             "Pot file is not up to date.",
-            "Missing msgids: %s" % missing_msgids,
-            "Generate a new pot-file, commit it, and upload it to Launchpad",
+            "Missing msgids:",
+        ] + ["- %s" % x for x in missing_msgids] + [
+            "Steps to fix:",
+            "1. Generate a new pot-file: python tools/generate-pot-file.py",
+            "2. Commit it (translations/timeline.pot)",
+            "3. Upload it to Launchpad: https://translations.launchpad.net/thetimelineproj/trunk/+translations-upload",
         ]))
 
     def generate_pot_file(self):
