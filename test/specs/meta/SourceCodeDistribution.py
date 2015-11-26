@@ -37,7 +37,7 @@ class SourceCodeDistributionSpec(UnitTestCase):
             self.assertTrue(author in authors_content)
 
     def test_py_files_should_have_copyright(self):
-        for py_file in self.get_py_files():
+        for py_file in self.get_py_files(["source", "test", "tools"]):
             with open(py_file) as f:
                 content = f.read()
                 if content:
@@ -49,13 +49,7 @@ class SourceCodeDistributionSpec(UnitTestCase):
         self.changelog = os.path.join(self.ROOT_DIR, "documentation", "changelog.rst")
         self.AUTHORS = os.path.join(self.ROOT_DIR, "AUTHORS")
 
-    def get_py_files(self):
-        subdirs = [
-            "source",
-            os.path.join("test", "specs"),
-            os.path.join("test", "timelinetest"),
-            "tools",
-        ]
+    def get_py_files(self, subdirs):
         for subdir in subdirs:
             for (root, dirs, files) in os.walk(os.path.join(self.ROOT_DIR, subdir)):
                 for file in files:
