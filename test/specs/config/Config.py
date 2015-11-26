@@ -21,10 +21,10 @@ from os.path import abspath
 import wx
 
 from timelinelib.config.dotfile import Config
-from timelinetest import UnitTestCase
+from timelinetest import TmpDirTestCase
 
 
-class ConfigSpec(UnitTestCase):
+class ConfigSpec(TmpDirTestCase):
 
     def test_should_have_default_values_before_config_has_been_read(self):
         self.assertEqual(self.config.window_size, (900, 500))
@@ -145,9 +145,11 @@ class ConfigSpec(UnitTestCase):
         self.assertRaises(ValueError, set_invalid_week)
 
     def setUp(self):
+        TmpDirTestCase.setUp(self)
         self.app = wx.App()
         self.app.MainLoop()
-        self.config = Config("test.config")
+        self.config = Config(self.get_tmp_path("test.config"))
 
     def tearDown(self):
+        TmpDirTestCase.tearDown(self)
         self.app.Destroy()
