@@ -50,11 +50,11 @@ class SourceCodeDistributionSpec(UnitTestCase):
                 self.ROOT_DIR,
                 "source",
                 "timelinelib",
-                os.path.relpath(unit_file, unit_test_dir)
+                os.path.relpath(unit_file, os.path.join(self.ROOT_DIR, unit_test_dir))
             ))
             self.assertTrue(
                 os.path.exists(module_file),
-                "Fount unit test '%s', but not module '%s'" % (unit_file, module_file)
+                "Found unit test '%s', but not module '%s'" % (unit_file, module_file)
             )
 
     def setUp(self):
