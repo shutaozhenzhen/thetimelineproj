@@ -126,7 +126,7 @@ def load_doc_tests_from_module_name(suite, module_name):
 
 
 def find_test_modules():
-    modules = find_specs("specs") + find_doctests()
+    modules = find_specs("specs") + find_specs("unit") + find_doctests()
     random.shuffle(modules)
     return modules
 
