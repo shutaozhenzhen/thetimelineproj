@@ -30,9 +30,9 @@ from timelinelib.wxgui.components.canvas.timelinecanvascontroller import HSCROLL
 from timelinelib.wxgui.components.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
 from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
-from timelinetest import UnitTestCase
-from timelinetest.utils import gregorian_period
-from timelinetest.utils import human_time_to_gregorian
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import gregorian_period
+from timelinelib.test.utils import human_time_to_gregorian
 
 
 # TODO: testSavesEventAfterMove

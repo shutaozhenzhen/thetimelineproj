@@ -18,7 +18,7 @@
 
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin import factory
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class describe_plugin_factory(UnitTestCase):

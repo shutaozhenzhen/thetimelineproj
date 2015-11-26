@@ -19,7 +19,7 @@
 from StringIO import StringIO
 import xml.sax
 
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.xml.parser as xmlparser
 
 

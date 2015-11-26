@@ -17,7 +17,7 @@
 
 
 from timelinelib.data.idnumber import get_process_unique_id
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class IdNumberSpec(UnitTestCase):

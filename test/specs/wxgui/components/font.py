@@ -17,7 +17,7 @@
 
 import wx
 
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.components.font import Font
 from timelinelib.wxgui.components.font import deserialize_font
 

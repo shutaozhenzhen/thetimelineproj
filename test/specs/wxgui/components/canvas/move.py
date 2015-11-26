@@ -21,8 +21,8 @@ from mock import Mock
 from timelinelib.wxgui.components.canvas.move import MoveByDragInputHandler
 from timelinelib.wxgui.components.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
-from timelinetest import UnitTestCase
-from timelinetest.utils import an_event_with, human_time_to_gregorian, gregorian_period
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import an_event_with, human_time_to_gregorian, gregorian_period
 
 
 class MoveByDragInputHandlerSpec(UnitTestCase):

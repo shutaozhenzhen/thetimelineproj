@@ -23,9 +23,9 @@ from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.repositories.interface import CategoryRepository
 from timelinelib.wxgui.dialogs.editcategory.controller import EditCategoryDialogController
 from timelinelib.wxgui.dialogs.editcategory.view import EditCategoryDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_category_with
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_category_with
+from timelinelib.test.utils import create_dialog
 
 
 class EditCategoryDialogTestCase(UnitTestCase):

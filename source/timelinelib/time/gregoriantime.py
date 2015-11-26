@@ -281,7 +281,7 @@ def _move_page_smart(current_period, navigation_fn, direction):
 
 def _whole_number_of_years(period):
     """
-    >>> from timelinetest.utils import gregorian_period
+    >>> from timelinelib.test.utils import gregorian_period
 
     >>> _whole_number_of_years(gregorian_period("1 Jan 2013", "1 Jan 2014"))
     True
@@ -330,7 +330,7 @@ def _calculate_year_diff(period):
 
 def _whole_number_of_months(period):
     """
-    >>> from timelinetest.utils import gregorian_period
+    >>> from timelinelib.test.utils import gregorian_period
 
     >>> _whole_number_of_months(gregorian_period("1 Jan 2013", "1 Jan 2014"))
     True

@@ -19,7 +19,7 @@
 import os.path
 
 from timelinelib.dataimport.dir import import_db_from_dir
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class describe_import_dir(UnitTestCase):

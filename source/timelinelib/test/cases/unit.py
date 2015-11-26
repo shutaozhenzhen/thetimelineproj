@@ -16,9 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.time.gregoriantime import GregorianTimeType
 import random
 import unittest
+
+from timelinelib.time.gregoriantime import GregorianTimeType
 
 
 class UnitTestCase(unittest.TestCase):

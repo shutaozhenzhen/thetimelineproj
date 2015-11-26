@@ -21,8 +21,8 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.fieldselection.controller import FIELDS
 from timelinelib.wxgui.dialogs.fieldselection.controller import FieldSelectionDialogController
 from timelinelib.wxgui.dialogs.fieldselection.view import FieldSelectionDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import create_dialog
 
 
 class describe_FieldSelectionDialog(UnitTestCase):

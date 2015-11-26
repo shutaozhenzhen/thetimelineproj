@@ -27,7 +27,7 @@ from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.calendar.gregorian import GregorianUtils
 
 

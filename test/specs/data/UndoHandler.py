@@ -18,8 +18,8 @@
 
 from timelinelib.data.db import MemoryDB
 from timelinelib.data.undohandler import UndoHandler
-from timelinetest import UnitTestCase
-from timelinetest.utils import an_event
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import an_event
 
 
 class UndoHandlerSpec(UnitTestCase):

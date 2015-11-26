@@ -17,10 +17,10 @@
 
 
 from timelinelib.data import Category
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_category
-from timelinetest.utils import a_category_with
-from timelinetest.utils import CATEGORY_MODIFIERS
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_category
+from timelinelib.test.utils import a_category_with
+from timelinelib.test.utils import CATEGORY_MODIFIERS
 
 
 class describe_category(UnitTestCase):

@@ -27,11 +27,11 @@ from timelinelib.repositories.interface import EventRepository
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.editevent.controller import EditEventDialogController
 from timelinelib.wxgui.dialogs.editevent.view import EditEventDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import an_event_with
-from timelinetest.utils import create_dialog
-from timelinetest.utils import human_time_to_gregorian
-from timelinetest.utils import ObjectWithTruthValue
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import an_event_with
+from timelinelib.test.utils import create_dialog
+from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.test.utils import ObjectWithTruthValue
 
 
 class EditEventDialogTestCase(UnitTestCase):

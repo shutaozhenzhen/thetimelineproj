@@ -17,8 +17,8 @@
 
 
 from timelinelib.data import sort_categories
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_category_with
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_category_with
 
 
 class CategorySorter(UnitTestCase):

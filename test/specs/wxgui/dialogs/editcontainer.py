@@ -26,9 +26,9 @@ from timelinelib.repositories.interface import EventRepository
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.editcontainer.controller import EditContainerDialogController
 from timelinelib.wxgui.dialogs.editcontainer.view import EditContainerDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
-from timelinetest.utils import human_time_to_gregorian
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import create_dialog
+from timelinelib.test.utils import human_time_to_gregorian
 
 
 class describe_edit_container_dialog(UnitTestCase):

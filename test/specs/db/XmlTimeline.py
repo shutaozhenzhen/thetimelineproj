@@ -31,8 +31,8 @@ from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.meta.version import get_full_version
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
-from timelinetest import TmpDirTestCase
-from timelinetest.utils import a_category_with
+from timelinelib.test.cases.tmpdir import TmpDirTestCase
+from timelinelib.test.utils import a_category_with
 
 
 class XmlTimelineSpec(TmpDirTestCase):

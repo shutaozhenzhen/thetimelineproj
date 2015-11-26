@@ -23,7 +23,7 @@ from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class MainFrameControllerTest(UnitTestCase):

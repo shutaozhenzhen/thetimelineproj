@@ -21,8 +21,8 @@ import subprocess
 import sys
 
 from timelinelib.config.paths import LOCALE_DIR
-from timelinetest import TmpDirTestCase
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.tmpdir import TmpDirTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class describe_po_files(UnitTestCase):

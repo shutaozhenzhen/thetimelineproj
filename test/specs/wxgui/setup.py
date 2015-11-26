@@ -20,7 +20,7 @@ import os
 import locale
 
 from timelinelib.wxgui.setup import create_locale_message
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class testbase(UnitTestCase):

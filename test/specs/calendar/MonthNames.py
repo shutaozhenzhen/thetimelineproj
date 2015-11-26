@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.calendar.monthnames
 
 

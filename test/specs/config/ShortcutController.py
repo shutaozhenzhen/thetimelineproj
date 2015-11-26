@@ -21,7 +21,7 @@ import wx
 
 from timelinelib.config.dotfile import Config
 from timelinelib.config.shortcut import ShortcutController
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.config.shortcut as sc
 import timelinelib.wxgui.frames.mainframe.mainframe as mf
 

@@ -18,7 +18,7 @@
 
 import sys
 
-from timelinetest import WxEndToEndTestCase
+from timelinelib.test.cases.wxendtoend import WxEndToEndTestCase
 
 
 class WxEndToEndSpec(WxEndToEndTestCase):

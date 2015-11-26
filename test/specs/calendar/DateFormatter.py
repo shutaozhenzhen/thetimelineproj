@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.dateformatter import DateFormatter
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class describe_date_formatter(UnitTestCase):

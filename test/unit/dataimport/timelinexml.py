@@ -17,7 +17,7 @@
 
 
 from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
-from timelinetest import TmpDirTestCase
+from timelinelib.test.cases.tmpdir import TmpDirTestCase
 
 
 class describe_import_timeline_xml(TmpDirTestCase):

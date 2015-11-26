@@ -19,7 +19,7 @@
 from random import random
 
 from timelinelib.drawing.utils import darken_color, lighten_color
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class drawing_utils(UnitTestCase):

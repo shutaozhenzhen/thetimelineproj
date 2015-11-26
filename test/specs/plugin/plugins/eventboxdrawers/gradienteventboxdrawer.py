@@ -18,7 +18,7 @@
 
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin.plugins.eventboxdrawers.gradienteventboxdrawer import GradientEventBoxDrawer
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class describe_gradient_event_box_drawer(UnitTestCase):

@@ -19,7 +19,7 @@
 from timelinelib.data import TimePeriod
 from timelinelib.time.numtime import move_period
 from timelinelib.time.numtime import NumTimeType
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class NumTimeDuplicateFunctionsSpec(UnitTestCase):

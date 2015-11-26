@@ -78,7 +78,7 @@ def setup_humblewx():
 
 
 def set_halt_gui_flag(args):
-    from timelinetest import UnitTestCase
+    from timelinelib.test.cases.unit import UnitTestCase
     UnitTestCase.HALT_GUI = HALT_FLAG in args
 
 

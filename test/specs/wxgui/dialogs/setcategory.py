@@ -25,9 +25,9 @@ from timelinelib.db import db_open
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.setcategory.controller import SetCategoryDialogController
 from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_category_with
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_category_with
+from timelinelib.test.utils import create_dialog
 
 
 class describe_set_category_dialog(UnitTestCase):

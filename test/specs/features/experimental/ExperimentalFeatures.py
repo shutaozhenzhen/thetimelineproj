@@ -17,7 +17,7 @@
 
 
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class describe_experimental_features(UnitTestCase):

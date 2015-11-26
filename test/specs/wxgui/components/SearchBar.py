@@ -20,7 +20,7 @@ from mock import Mock
 
 from timelinelib.wxgui.components.search import SearchBar
 from timelinelib.wxgui.components.search import SearchBarController
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class SearchBarTestCase(UnitTestCase):

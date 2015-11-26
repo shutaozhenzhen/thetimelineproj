@@ -16,11 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_category_with
-from timelinetest.utils import a_container_with
-from timelinetest.utils import a_subevent_with
-from timelinetest.utils import CONTAINER_MODIFIERS
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_category_with
+from timelinelib.test.utils import a_container_with
+from timelinelib.test.utils import a_subevent_with
+from timelinelib.test.utils import CONTAINER_MODIFIERS
 
 
 class describe_container(UnitTestCase):

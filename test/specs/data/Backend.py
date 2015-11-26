@@ -20,9 +20,9 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.data.events import clone_data
 from timelinelib.data import Event
 from timelinelib.dataimport.ics import import_db_from_ics
-from timelinetest import TmpDirTestCase
-from timelinetest import UnitTestCase
-from timelinetest.utils import a_category_with
+from timelinelib.test.cases.tmpdir import TmpDirTestCase
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_category_with
 
 
 class BackendTest(object):

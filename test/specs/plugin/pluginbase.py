@@ -17,7 +17,7 @@
 
 
 from timelinelib.plugin.pluginbase import PluginBase
-from timelinetest import UnitTestCase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
 class describe_plugin_base(UnitTestCase):

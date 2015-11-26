@@ -25,8 +25,8 @@ from timelinelib.config.dotfile import Config
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 from timelinelib.wxgui.dialogs.preferences.controller import PreferencesDialogController
 from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
-from timelinetest import UnitTestCase
-from timelinetest.utils import create_dialog
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import create_dialog
 
 
 class describe_preferences_dialog(UnitTestCase):
