@@ -31,8 +31,27 @@ class ToolbarCreator(object):
 
     def create(self):
         self.toolbar = self.frame.CreateToolBar()
+        self._add_event_text_alignment()
+        self.toolbar.AddSeparator()
         self._add_point_event_alignment()
         self.toolbar.Realize()
+
+    def _add_event_text_alignment(self):
+        left_tool = self._add_radio(_("Left"), "format-justify-left.png")
+        center_tool = self._add_radio(_("Center"), "format-justify-center.png")
+        def on_left_click(event):
+            self.config.center_event_texts = False
+        def on_center_click(event):
+            self.config.center_event_texts = True
+        def check_item_corresponding_to_config():
+            if self.config.center_event_texts:
+                self.toolbar.ToggleTool(center_tool.GetId(), True)
+            else:
+                self.toolbar.ToggleTool(left_tool.GetId(), True)
+        self.frame.Bind(wx.EVT_TOOL, on_left_click, left_tool)
+        self.frame.Bind(wx.EVT_TOOL, on_center_click, center_tool)
+        self.config.listen_for_any(check_item_corresponding_to_config)
+        check_item_corresponding_to_config()
 
     def _add_point_event_alignment(self):
         left_tool = self._add_radio(_("Left"), "event-line-left.png")
