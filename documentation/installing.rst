@@ -1,10 +1,9 @@
-Installation instructions
-=========================
+Installling
+===========
 
 Timeline runs on multiple platforms. If you can run `Python
 <http://www.python.org/>`_ and `wxPython <http://www.wxpython.org/>`_ you
-should be able to run Timeline. However, Timeline is only tested on Windows and
-Linux.
+should be able to run Timeline.
 
 The recommended way to install Timeline is with a binary package or installer.
 If that is not available for your platform, you have to install from source.
@@ -12,35 +11,36 @@ If that is not available for your platform, you have to install from source.
 If you have problems installing Timeline, please see the :doc:`support` page
 for ways to get help.
 
-Installing with a binary package or installer
----------------------------------------------
-
 Windows
-^^^^^^^
+-------
 
 .. image:: /images/logo-windows.png
     :align: right
 
 We provide a binary installer for Windows. It installs an executable version of
-Timeline built with `py2exe <http://www.py2exe.org/>`_. It is a self contained
-executable that doesn't need any other dependencies.
+Timeline that is self contained and doesn't need any other dependencies.
 
-Download |latest_exe|_ and execute it.
-(:sfl:`Other downloads <files/thetimelineproj>`.)
+Download one of the following installers:
+
+* Latest release: |latest_exe|_
+* Beta version: `latest build <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_
+
+The beta version is for users that want to try the latest features and give
+feedback on them before a release.
 
 Fedora
-^^^^^^
+------
 
 .. image:: /images/logo-fedora.png
     :align: right
 
-Someone else has packaged Timeline for Fedora. Install using::
+Timeline exists in the Fedora repositories. Install it with the following
+command::
 
-    su -c 'yum install timeline'
+    sudo dnf install timeline
 
-Note that the version included in Fedora is often not the latest.
-
-.. _label-installing-from-source:
+The version included in Fedora is often not the latest. If you want the latest
+version, you have to install from source.
 
 Installing from source
 ----------------------
@@ -48,25 +48,67 @@ Installing from source
 .. image:: /images/logo-source.png
     :align: right
 
-Get the source code here: |latest_zip|_.
-(:sfl:`Other downloads <files/thetimelineproj>`.)
+Download one of the following source packages:
 
-When you install from source, you have to install all required dependencies
-yourself. The following dependencies have to be installed manually:
+* Latest release: |latest_zip|_
+* Beta version: `latest build <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/>`_
 
-* Python version 2.5 or greater (http://www.python.org)
-* wxPython version 2.8.9.2 or greater (http://www.wxpython.org)
+The beta version is for users that want to try the latest features and give
+feedback on them before a release.
 
-On Linux systems, you can often install these via the package manager.
-
-Timeline also depends on other Python packages that can be installed by running
-the following command from the repo root::
-
-    pip install --user -r requirements.txt
-
-Once you have extracted the Timeline zip and installed the required
-dependencies, you should be able to run the application with this command::
+When you install from source, you have to install required dependencies
+yourself. See the next section for instructions how to do that. Once that is
+done, and you have extracted the zip file, you should be able to run Timeline
+with this command::
 
     python <path-to-timeline-directory>/source/timeline.py
 
-Preferable you create a shortcut on your platform that issues this command.
+.. HINT::
+
+    If you get an error similar to the one bellow, there is probably a
+    dependency missing::
+
+        $ python source/timeline.py
+        Traceback (most recent call last):
+          File "source/timeline.py", line 64, in <module>
+            setup_humblewx()
+          File "source/timelinelib/wxgui/setup.py", line 35, in setup_humblewx
+            import humblewx
+        ImportError: No module named humblewx
+
+.. _label-installing-dependencies:
+
+Installing dependencies
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This section describes how to install the software that Timeline depends on.
+
+Python
+######
+
+http://www.python.org
+
+There is most definitely a binary package or installer for your platform.
+
+Timeline requires version 2.5 or greater.
+
+wxPython
+########
+
+http://www.wxpython.org
+
+There is probably a binary package or installer for your platform.
+
+Timeline requires version 2.8.9.2 or greater.
+
+humblewx
+########
+
+https://github.com/thetimelineproj/humblewx
+
+A Python package that we extracted from the Timeline source code because it
+could be generally useful.
+
+The latest version can be installed with the following command::
+
+    pip install --user git+https://github.com/thetimelineproj/humblewx.git
