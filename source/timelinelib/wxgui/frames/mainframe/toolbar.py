@@ -35,8 +35,8 @@ class ToolbarCreator(object):
         self.toolbar.Realize()
 
     def _add_point_event_alignment(self):
-        left_tool = self._add_radio(_("Left"), "format-justify-left.png")
-        center_tool = self._add_radio(_("Center"), "format-justify-center.png")
+        left_tool = self._add_radio(_("Left"), "event-line-left.png")
+        center_tool = self._add_radio(_("Center"), "event-line-center.png")
         def on_left_click(event):
             self.config.draw_period_events_to_right = True
         def on_center_click(event):
