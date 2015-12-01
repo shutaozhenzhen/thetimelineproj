@@ -31,10 +31,10 @@ class ToolbarCreator(object):
 
     def create(self):
         self.toolbar = self.frame.CreateToolBar()
-        self._add_point_event_alignmnet()
+        self._add_point_event_alignment()
         self.toolbar.Realize()
 
-    def _add_point_event_alignmnet(self):
+    def _add_point_event_alignment(self):
         left_tool = self._add_radio(_("Left"), "format-justify-left.png")
         center_tool = self._add_radio(_("Center"), "format-justify-center.png")
         def on_left_click(event):
