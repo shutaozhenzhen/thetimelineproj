@@ -30,28 +30,30 @@ class ToolbarCreator(object):
         self.config = config
 
     def create(self):
-        toolbar = self.frame.CreateToolBar()
-        left_tool = toolbar.AddRadioLabelTool(
-            wx.ID_ANY,
-            _("Left"),
-            wx.Bitmap(os.path.join(ICONS_DIR, "format-justify-left.png"))
-        )
-        center_tool = toolbar.AddRadioLabelTool(
-            wx.ID_ANY,
-            _("Center"),
-            wx.Bitmap(os.path.join(ICONS_DIR, "format-justify-center.png"))
-        )
+        self.toolbar = self.frame.CreateToolBar()
+        self._add_point_event_alignmnet()
+        self.toolbar.Realize()
+
+    def _add_point_event_alignmnet(self):
+        left_tool = self._add_radio(_("Left"), "format-justify-left.png")
+        center_tool = self._add_radio(_("Center"), "format-justify-center.png")
         def on_left_click(event):
             self.config.draw_period_events_to_right = True
         def on_center_click(event):
             self.config.draw_period_events_to_right = False
         def check_item_corresponding_to_config():
             if self.config.draw_period_events_to_right:
-                toolbar.ToggleTool(left_tool.GetId(), True)
+                self.toolbar.ToggleTool(left_tool.GetId(), True)
             else:
-                toolbar.ToggleTool(center_tool.GetId(), True)
+                self.toolbar.ToggleTool(center_tool.GetId(), True)
         self.frame.Bind(wx.EVT_TOOL, on_left_click, left_tool)
         self.frame.Bind(wx.EVT_TOOL, on_center_click, center_tool)
         self.config.listen_for_any(check_item_corresponding_to_config)
         check_item_corresponding_to_config()
-        toolbar.Realize()
+
+    def _add_radio(self, text, icon):
+        return self.toolbar.AddRadioLabelTool(
+            wx.ID_ANY,
+            text,
+            wx.Bitmap(os.path.join(ICONS_DIR, icon))
+        )
