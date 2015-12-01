@@ -13,14 +13,14 @@ Example of enclosed string::
 
 To generate a pot file, run ::
 
-    ./tools/generate-pot-file.py
+    python tools/generate-pot-file.py
 
 It requires the ``xgettext`` program to be on the path. See :ref:`label-gettext`
 for instructions how to install it.
 
-You should now have a file ::
+You should now have a file::
 
-    ./translations/timeline.pot
+    translations/timeline.pot
 
 that contains an entry for your string looking something like this::
 
