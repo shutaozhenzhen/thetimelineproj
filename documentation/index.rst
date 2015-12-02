@@ -11,7 +11,7 @@ Welcome to Timeline
     status
     history
     articles
-    process
+    contributing
     guidelines
     howtos
     architecture
