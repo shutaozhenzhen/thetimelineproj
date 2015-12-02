@@ -22,6 +22,16 @@ Installing development tools
 This section describes how to install developments tools. Some tools are only
 needed in certain situations.
 
+mock (Python package)
+^^^^^^^^^^^^^^^^^^^^^
+
+http://pypi.python.org/pypi/mock
+
+This is used in some tests.
+
+At the moment, this is included in the Timeline repository and does not have to
+be installed.
+
 .. _label-gettext:
 
 gettext
