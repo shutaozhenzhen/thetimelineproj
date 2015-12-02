@@ -92,8 +92,8 @@ There is most definitely a binary package or installer for your platform.
 
 Timeline requires version 2.5 or greater.
 
-wxPython
-########
+wxPython (Python package)
+#########################
 
 http://www.wxpython.org
 
@@ -101,8 +101,8 @@ There is probably a binary package or installer for your platform.
 
 Timeline requires version 2.8.9.2 or greater.
 
-humblewx
-########
+humblewx (Python package)
+#########################
 
 https://github.com/thetimelineproj/humblewx
 
@@ -112,3 +112,27 @@ could be generally useful.
 The latest version can be installed with the following command::
 
     pip install --user git+https://github.com/thetimelineproj/humblewx.git
+
+icalendar (Python package)
+##########################
+
+http://pypi.python.org/pypi/icalendar
+
+At the moment, this is included in the Timeline repository and does not have to
+be installed.
+
+markdown (Python package)
+#########################
+
+http://pypi.python.org/pypi/Markdown
+
+At the moment, this is included in the Timeline repository and does not have to
+be installed.
+
+pysvg (Python package)
+######################
+
+http://code.google.com/p/pysvg/downloads/list
+
+At the moment, this is included in the Timeline repository and does not have to
+be installed.
