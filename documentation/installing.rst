@@ -23,7 +23,7 @@ Timeline that is self contained and doesn't need any other dependencies.
 Download one of the following installers:
 
 * Latest release: |latest_exe|_
-* Beta version: `latest build <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_
+* Beta version: `latest Windows build <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_
 
 The beta version is for users that want to try the latest features and give
 feedback on them before a release.
@@ -51,7 +51,7 @@ Installing from source
 Download one of the following source packages:
 
 * Latest release: |latest_zip|_
-* Beta version: `latest build <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/>`_
+* Beta version: `latest source build <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/>`_
 
 The beta version is for users that want to try the latest features and give
 feedback on them before a release.
