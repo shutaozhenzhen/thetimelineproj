@@ -12,6 +12,11 @@ useful thing you can do is to just use Timeline and tell us how it works for
 you. Send feedback and comments to the :ref:`label-mailing-list` and participate
 in discussions.
 
+Here is a blog post that might be useful that talks about ways to contribute to
+open source projects in general: `14 Ways to Contribute to Open Source without
+Being a Programming Genius or a Rock Star
+<http://blog.smartbear.com/programming/14-ways-to-contribute-to-open-source-without-being-a-programming-genius-or-a-rock-star/>`_.
+
 Process
 -------
 
