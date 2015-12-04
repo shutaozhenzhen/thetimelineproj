@@ -1,6 +1,15 @@
 Changelog
 =========
 
+Version 1.5.1
+-------------
+
+**Released on 4 December 2015.**
+
+Bug fixes:
+
+ * Application does not crash at startup if system has locale zh_CN (Chinese)
+
 Version 1.5.0
 -------------
 

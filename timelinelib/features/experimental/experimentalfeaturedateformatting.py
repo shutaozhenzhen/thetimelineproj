@@ -39,8 +39,11 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
     def __init__(self):
         ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION)
         self.century = 0
-        dt = self._create_locale_sample_date()
-        self._construct_format(dt)
+        try:
+            dt = self._create_locale_sample_date()
+            self._construct_format(dt)
+        except:
+            self._construct_format("%s-%s-%s" % (YEAR, MONTH, DAY))
 
     def set_active(self, value):
         self.active = value
