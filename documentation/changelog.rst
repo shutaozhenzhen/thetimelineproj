@@ -49,6 +49,11 @@ Translations:
 * The strip text 'Century' is translatable.
   (`#107 <https://sourceforge.net/p/thetimelineproj/backlog/107/>`_)
 
+Bug fixes:
+
+* Application does not crash at startup if system has locale zh_CN (Chinese)
+  (Merged from 1.5.1.)
+
 Version 1.8.1
 -------------
 
@@ -328,7 +333,7 @@ Solved problems:
 * Crash report: KeyError: '33'
   (`#26 <https://sourceforge.net/p/thetimelineproj/backlog/26>`_).
   This happened when using experimental feature 'locale date'.
-  
+
 * Added export function timeline -> CSV
 
 * Crash report: ValueError: to_julian_day only works for positive julian days, but was -32104
@@ -341,7 +346,7 @@ Version 1.5.1
 
 Bug fixes:
 
- * Application does not crash at startup if system has locale zh_CN (Chinese)
+* Application does not crash at startup if system has locale zh_CN (Chinese)
 
 Version 1.5.0
 -------------
