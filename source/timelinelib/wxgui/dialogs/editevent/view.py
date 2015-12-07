@@ -237,6 +237,7 @@ class EditEventDialog(Dialog):
     def ShowToTime(self, show):
         self.to_label.Show(show)
         self.end_time.Show(show)
+        self.Layout()
 
     def GetShowTime(self):
         return self.show_time_checkbox.GetValue()
