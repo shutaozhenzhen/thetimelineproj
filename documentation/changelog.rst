@@ -19,6 +19,8 @@ Calendar:
 
 GUI:
 
+* "To time" in event editor is correctly laid out when checking "Period".
+
 * Images can be dragged and dropped on an event to change icon.
   (`#103 <https://sourceforge.net/p/thetimelineproj/backlog/103/>`_)
 
