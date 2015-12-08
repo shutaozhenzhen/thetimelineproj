@@ -80,6 +80,7 @@ class DefaultDrawingAlgorithm(Drawer):
         self.minor_strip_pen.SetDashes([2, 2])
         self.minor_strip_pen.SetCap(wx.CAP_BUTT)
         self.major_strip_pen = wx.Pen(wx.Colour(200, 200, 200), 1, wx.SOLID)
+        self.now_pen = wx.Pen(wx.Colour(200, 0, 0), 1, wx.SOLID)
         self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.SOLID)
 
     def _create_brushes(self):
@@ -103,6 +104,7 @@ class DefaultDrawingAlgorithm(Drawer):
     def draw(self, dc, timeline, view_properties, config):
         self.minor_strip_pen.SetColour(config.minor_strip_divider_line_colour)
         self.major_strip_pen.SetColour(config.major_strip_divider_line_colour)
+        self.now_pen.SetColour(config.now_line_colour)
         self.outer_padding = OUTER_PADDING
         if EXTENDED_CONTAINER_HEIGHT.enabled():
             self.outer_padding += EXTENDED_CONTAINER_HEIGHT.get_extra_outer_padding_to_avoid_vertical_overlapping()
@@ -383,7 +385,7 @@ class DefaultDrawingAlgorithm(Drawer):
         now_time = self.time_type.now()
         x = self.scene.x_pos_for_time(now_time)
         if x > 0 and x < self.scene.width:
-            self.dc.SetPen(self.darkred_solid_pen)
+            self.dc.SetPen(self.now_pen)
             self.dc.DrawLine(x, 0, x, self.scene.height)
 
     def _extract_categories(self):

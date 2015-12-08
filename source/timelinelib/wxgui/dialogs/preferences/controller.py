@@ -33,6 +33,7 @@ class PreferencesDialogController(Controller):
     def on_close(self):
         self.config.minor_strip_divider_line_colour = str(self.view.GetMinorStripColor())
         self.config.major_strip_divider_line_colour = str(self.view.GetMajorStripColor())
+        self.config.now_line_colour = str(self.view.GetNowLineColor())
 
     def on_open_recent_change(self, event):
         self.config.set_open_recent_at_startup(event.IsChecked())
@@ -85,6 +86,7 @@ class PreferencesDialogController(Controller):
         self.view.SetUncheckTimeForNewEventsCheckboxValue(self.config.uncheck_time_for_new_events)
         self.view.SetMinorStripColor(wx.Colour(*self.config.minor_strip_divider_line_colour))
         self.view.SetMajorStripColor(wx.Colour(*self.config.major_strip_divider_line_colour))
+        self.view.SetNowLineColor(wx.Colour(*self.config.now_line_colour))
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:

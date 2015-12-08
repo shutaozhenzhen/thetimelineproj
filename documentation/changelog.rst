@@ -43,6 +43,9 @@ GUI:
 
 * Shortcuts to quickly toggle some settings are present in a toolbar.
 
+* Colors can be selected for major strip lines, minor strip lines and now line.
+  (`#111 <https://sourceforge.net/p/thetimelineproj/backlog/111/>`_)
+
 Translations:
 
 * The wx stock items are translated correctly in the Windows binary.

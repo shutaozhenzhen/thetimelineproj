@@ -43,6 +43,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.uncheck_time_for_new_events = False
         self.config.minor_strip_divider_line_colour = (100, 100, 100)
         self.config.major_strip_divider_line_colour = (100, 100, 100)
+        self.config.now_line_colour = (200, 0, 0)
         self.experimental_features = Mock(ExperimentalFeatures)
 
     def test_it_can_be_created(self):
