@@ -65,6 +65,7 @@ CENTER_EVENT_TEXTS = "center_event_texts"
 UNCHECK_TIME_FOR_NEW_EVENTS = "uncheck_time_for_new_events"
 MINOR_STRIP_DIVIDER_LINE_COLOUR = "minor_strip_divider_line_colour"
 MAJOR_STRIP_DIVIDER_LINE_COLOUR = "major_strip_divider_line_colour"
+NOW_LINE_COLOUR = "today_line_colour"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -91,6 +92,7 @@ DEFAULTS = {
     UNCHECK_TIME_FOR_NEW_EVENTS: "False",
     MINOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
     MAJOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
+    NOW_LINE_COLOUR: "(200, 0, 0)",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -374,8 +376,14 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
     major_strip_divider_line_colour = property(get_major_strip_divider_line_colour, set_major_strip_divider_line_colour)
 
+    def get_now_line_color(self):
+        return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, NOW_LINE_COLOUR))
+    def set_now_line_color(self, colour):
+        self.config_parser.set(DEFAULTSECT, NOW_LINE_COLOUR, self._tuple_to_string(colour))
+    now_line_colour = property(get_now_line_color, set_now_line_color)
+
     def _string_to_tuple(self, tuple_string):
         return tuple([int(x.strip()) for x in tuple_string[1:-1].split(",")])
 
-    def _tuple_to_string(self, tuple):
-        return str(tuple)
+    def _tuple_to_string(self, tuple_data):
+        return str(tuple_data)
