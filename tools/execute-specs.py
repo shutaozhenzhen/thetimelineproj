@@ -33,6 +33,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--only", default=[], nargs="*")
     parser.add_argument("--halt-gui", default=False, action="store_true")
+    parser.add_argument("--auto-close", default=False, action="store_true")
     parser.add_argument("-v", default=False, action="store_true")
     return parser.parse_args()
 
@@ -84,6 +85,7 @@ def setup_humblewx():
 def set_halt_gui_flag(arguments):
     from timelinelib.test.cases.unit import UnitTestCase
     UnitTestCase.HALT_GUI = arguments.halt_gui
+    UnitTestCase.AUTO_CLOSE = arguments.auto_close
 
 
 def create_include_test_function(arguments):
