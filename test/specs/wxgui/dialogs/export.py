@@ -23,7 +23,6 @@ from timelinelib.wxgui.dialogs.export.controller import TARGET_TYPES
 from timelinelib.wxgui.dialogs.export.view import ExportDialog
 from timelinelib.wxgui.dialogs.fieldselection.controller import FIELDS
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_ExportDialog(UnitTestCase):
@@ -35,9 +34,7 @@ class describe_ExportDialog(UnitTestCase):
         self.view.GetExportCategories.return_value = False
 
     def test_it_can_be_created(self):
-        with create_dialog(ExportDialog, None) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(ExportDialog, None)
 
     def when_event_type_selected(self):
         self.view.GetExportEvents.return_value = True

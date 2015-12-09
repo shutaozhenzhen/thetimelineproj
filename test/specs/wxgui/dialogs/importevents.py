@@ -22,7 +22,6 @@ from timelinelib.db import db_open
 from timelinelib.wxgui.dialogs.importevents.controller import ImportEventsDialogController
 from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_import_events_dialog(UnitTestCase):
@@ -32,6 +31,4 @@ class describe_import_events_dialog(UnitTestCase):
         self.controller = ImportEventsDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(ImportEventsDialog, db_open(":tutorial:")) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(ImportEventsDialog, db_open(":tutorial:"))

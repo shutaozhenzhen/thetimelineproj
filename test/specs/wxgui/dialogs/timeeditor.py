@@ -22,7 +22,6 @@ from timelinelib.data.db import MemoryDB
 from timelinelib.wxgui.dialogs.timeeditor.controller import TimeEditorDialogController
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 from timelinelib.test.utils import human_time_to_gregorian
 
 
@@ -35,9 +34,7 @@ class describe_TimeEditorDialog_for_gregorian_time(UnitTestCase):
 
     def test_it_can_be_created(self):
         tm = human_time_to_gregorian("31 Dec 2010 00:00")
-        with create_dialog(TimeEditorDialog, None, None, self.db.get_time_type(), tm, "Go to Date") as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(TimeEditorDialog, None, None, self.db.get_time_type(), tm, "Go to Date")
 
     def test_hours_set_to_midday_if_not_given_by_user(self):
         self.given_time_not_shown_in_dialog("31 Dec 2010 00:00")

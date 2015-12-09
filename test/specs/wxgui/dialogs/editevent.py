@@ -29,7 +29,6 @@ from timelinelib.wxgui.dialogs.editevent.controller import EditEventDialogContro
 from timelinelib.wxgui.dialogs.editevent.view import EditEventDialog
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with
-from timelinelib.test.utils import create_dialog
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.test.utils import ObjectWithTruthValue
 
@@ -113,9 +112,7 @@ class describe_edit_event_dialog(EditEventDialogTestCase):
         categories = db.get_categories()
         categories[0].parent = categories[1]
         db.save_category(categories[0])
-        with create_dialog(EditEventDialog, None, config, "title", db) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(EditEventDialog, None, config, "title", db)
 
     def test_it_can_be_created_with_numeric_timeline(self):
         config = Mock()
@@ -126,9 +123,7 @@ class describe_edit_event_dialog(EditEventDialogTestCase):
         categories = db.get_categories()
         categories[0].parent = categories[1]
         db.save_category(categories[0])
-        with create_dialog(EditEventDialog, None, config, "title", db) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(EditEventDialog, None, config, "title", db)
 
 
 class describe_start_time_field(EditEventDialogTestCase):

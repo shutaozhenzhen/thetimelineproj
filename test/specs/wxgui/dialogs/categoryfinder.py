@@ -24,7 +24,6 @@ from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
-from timelinelib.test.utils import create_dialog
 
 
 class describe_CategoryFinderDialog(UnitTestCase):
@@ -39,6 +38,4 @@ class describe_CategoryFinderDialog(UnitTestCase):
         self.controller = CategoryFinderDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(CategoryFinderDialog, None, self.db) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(CategoryFinderDialog, None, self.db)

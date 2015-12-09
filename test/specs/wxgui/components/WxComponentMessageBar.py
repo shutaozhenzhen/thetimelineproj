@@ -19,17 +19,14 @@
 import humblewx
 
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.framework import Dialog
 
 
-class MessageBarComponentTest(UnitTestCase):
+class describe_message_bar_component(UnitTestCase):
 
     def test_it_shows_in_dialog(self):
-        with create_dialog(TestDialog) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(TestDialog)
 
 
 class TestDialog(Dialog):

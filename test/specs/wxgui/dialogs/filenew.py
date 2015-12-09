@@ -21,7 +21,6 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.filenew.controller import FileNewDialogController
 from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_file_new_dialog(UnitTestCase):
@@ -42,10 +41,7 @@ class describe_file_new_dialog(UnitTestCase):
                                "long label\n\nand some newlines",
             },
         ]
-        with create_dialog(FileNewDialog, None, items) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
-                print(dialog.GetSelection())
+        self.show_dialog(FileNewDialog, None, items)
 
     def test_it_selects_the_first_item(self):
         self.controller.on_init([])

@@ -24,15 +24,12 @@ from timelinelib.wxgui.dialogs.eraseditor.controller import ErasEditorDialogCont
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
-from timelinelib.test.utils import create_dialog
 
 
 class describe_ErasEditorDialog(UnitTestCase):
 
     def test_it_can_be_created(self):
-        with create_dialog(ErasEditorDialog, None, self.db, None) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(ErasEditorDialog, None, self.db, None)
 
     def test_construction(self):
         self.assertEquals(2, len(self.controller.eras))

@@ -21,7 +21,6 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.feature.controller import FeatureDialogController
 from timelinelib.wxgui.dialogs.feature.view import FeatureDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_FeatureDialog(UnitTestCase):
@@ -34,6 +33,4 @@ class describe_FeatureDialog(UnitTestCase):
         self.feature.get_description.return_value = "Feature description"
 
     def test_it_can_be_created(self):
-        with create_dialog(FeatureDialog, None, self.feature) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(FeatureDialog, None, self.feature)

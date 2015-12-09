@@ -27,7 +27,6 @@ from timelinelib.wxgui.dialogs.setcategory.controller import SetCategoryDialogCo
 from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
-from timelinelib.test.utils import create_dialog
 
 
 class describe_set_category_dialog(UnitTestCase):
@@ -73,9 +72,7 @@ class describe_set_category_dialog(UnitTestCase):
 
     def test_it_can_be_created(self):
         db = db_open(":tutorial:")
-        with create_dialog(SetCategoryDialog, None, db) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(SetCategoryDialog, None, db)
 
     def test_category_can_be_set_on_all_events_without_category(self):
         self.controller.on_init(self.db, [])

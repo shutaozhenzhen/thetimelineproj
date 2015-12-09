@@ -21,7 +21,6 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.eventeditortabselection.controller import EventEditorTabSelectionDialogController
 from timelinelib.wxgui.dialogs.eventeditortabselection.view import EventEditorTabSelectionDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_EventEditorTabSelectionDialog(UnitTestCase):
@@ -33,6 +32,4 @@ class describe_EventEditorTabSelectionDialog(UnitTestCase):
     def test_it_can_be_created(self):
         config = Mock()
         config.event_editor_tab_order = "01234:"
-        with create_dialog(EventEditorTabSelectionDialog, None, config) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(EventEditorTabSelectionDialog, None, config)
