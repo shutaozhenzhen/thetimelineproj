@@ -18,7 +18,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import itertools
+import argparse
 import doctest
 import os.path
 import random
@@ -29,18 +29,22 @@ from timelinetools.paths import ROOT_DIR
 from timelinetools.paths import TEST_DIR
 
 
-ONLY_FLAG = "--only"
-HALT_FLAG = "--halt-gui"
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--only", default=[], nargs="*")
+    parser.add_argument("--halt-gui", default=False, action="store_true")
+    parser.add_argument("-v", default=False, action="store_true")
+    return parser.parse_args()
 
 
-def execute_specs(args):
+def execute_specs(arguments):
     setup_displayhook()
     setup_paths()
     install_gettext_in_builtin_namespace()
     setup_humblewx()
-    set_halt_gui_flag(args)
-    suite = create_suite(create_include_test_function(args))
-    all_pass = execute_suite(suite, select_verbosity(args))
+    set_halt_gui_flag(arguments)
+    suite = create_suite(create_include_test_function(arguments))
+    all_pass = execute_suite(suite, select_verbosity(arguments))
     return all_pass
 
 
@@ -77,14 +81,14 @@ def setup_humblewx():
     timelinelib.wxgui.setup.setup_humblewx()
 
 
-def set_halt_gui_flag(args):
+def set_halt_gui_flag(arguments):
     from timelinelib.test.cases.unit import UnitTestCase
-    UnitTestCase.HALT_GUI = HALT_FLAG in args
+    UnitTestCase.HALT_GUI = arguments.halt_gui
 
 
-def create_include_test_function(args):
-    if ONLY_FLAG in args:
-        patterns = args[args.index(ONLY_FLAG)+1:]
+def create_include_test_function(arguments):
+    if len(arguments.only) > 0:
+        patterns = arguments.only
         return lambda test: any([pattern in test.id() for pattern in patterns])
     else:
         return lambda test: True
@@ -197,15 +201,15 @@ def execute_suite(suite, verbosity):
     return res.wasSuccessful()
 
 
-def select_verbosity(args):
-    if ONLY_FLAG in args or "-v" in args:
+def select_verbosity(arguments):
+    if len(arguments.only) > 0 or arguments.v:
         return 2
     else:
         return 1
 
 
 if __name__ == '__main__':
-    all_pass = execute_specs(sys.argv)
+    all_pass = execute_specs(parse_arguments())
     if all_pass:
         sys.exit(0)
     else:
