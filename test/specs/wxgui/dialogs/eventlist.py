@@ -21,7 +21,6 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.eventlist.controller import EventListDialogController
 from timelinelib.wxgui.dialogs.eventlist.view import EventListDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_EventListDialog(UnitTestCase):
@@ -32,6 +31,4 @@ class describe_EventListDialog(UnitTestCase):
 
     def test_it_can_be_created(self):
         event_list = ["foo", "bar"]
-        with create_dialog(EventListDialog, None, event_list) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(EventListDialog, None, event_list)

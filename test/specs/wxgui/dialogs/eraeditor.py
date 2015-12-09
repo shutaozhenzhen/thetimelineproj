@@ -23,7 +23,6 @@ from timelinelib.wxgui.dialogs.eraeditor.controller import EraEditorDialogContro
 from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
-from timelinelib.test.utils import create_dialog
 from timelinelib.test.utils import human_time_to_gregorian
 
 
@@ -42,9 +41,7 @@ class describe_EraEditorDialog(UnitTestCase):
         self.era = a_gregorian_era_with(name=NAME, color=COLOR, start=GREGORIAN_START, end=GREGORIAN_END)
 
     def test_it_can_be_created(self):
-        with create_dialog(EraEditorDialog, None, "Title", self.db.time_type, None, self.era) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(EraEditorDialog, None, "Title", self.db.time_type, None, self.era)
 
 
 class EraEditorTestCase(UnitTestCase):

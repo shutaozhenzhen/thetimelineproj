@@ -22,7 +22,6 @@ from timelinelib.db import db_open
 from timelinelib.wxgui.dialogs.changenowdate.controller import ChangeNowDateDialogController
 from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_change_now_date_dialog(UnitTestCase):
@@ -36,6 +35,4 @@ class describe_change_now_date_dialog(UnitTestCase):
         db = db_open(":tutorial:")
         handle_new_time_fn = Mock()
         title = "a dialog title"
-        with create_dialog(ChangeNowDateDialog, None, config, db, handle_new_time_fn, title) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(ChangeNowDateDialog, None, config, db, handle_new_time_fn, title)

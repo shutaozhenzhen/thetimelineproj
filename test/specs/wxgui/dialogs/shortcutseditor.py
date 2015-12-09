@@ -24,7 +24,6 @@ from timelinelib.config.shortcut import SHORTCUT_KEYS
 from timelinelib.wxgui.dialogs.shortcutseditor.controller import ShortcutsEditorDialogController
 from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class ShortcutConfig(object):
@@ -78,9 +77,7 @@ class describe_ShortcutsEditorDialog(UnitTestCase):
         self.controller.shortcut_config = self.shortcut_config
 
     def test_it_can_be_created(self):
-        with create_dialog(ShortcutsEditorDialog, None, self.shortcut_config) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(ShortcutsEditorDialog, None, self.shortcut_config)
 
     def test_shortcut_is_modifier_plus_key(self):
         self.view.GetModifier.return_value = "Ctrl"

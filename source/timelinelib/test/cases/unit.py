@@ -19,6 +19,7 @@
 import random
 import unittest
 
+from timelinelib.test.utils import create_dialog
 from timelinelib.time.gregoriantime import GregorianTimeType
 
 
@@ -74,6 +75,11 @@ class UnitTestCase(unittest.TestCase):
         self.assertFalse(modified is one, fail_message_modified_one)
         self.assertTrue(modified != one, fail_message_modified_one)
         self.assertFalse(modified == one, fail_message_modified_one)
+
+    def show_dialog(self, dialog_class, *args, **kwargs):
+        with create_dialog(dialog_class, *args, **kwargs) as dialog:
+            if self.HALT_GUI:
+                dialog.ShowModal()
 
 
 def get_random_modifier(modifiers):

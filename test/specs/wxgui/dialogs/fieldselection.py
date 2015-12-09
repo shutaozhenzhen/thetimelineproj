@@ -22,7 +22,6 @@ from timelinelib.wxgui.dialogs.fieldselection.controller import FIELDS
 from timelinelib.wxgui.dialogs.fieldselection.controller import FieldSelectionDialogController
 from timelinelib.wxgui.dialogs.fieldselection.view import FieldSelectionDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_FieldSelectionDialog(UnitTestCase):
@@ -32,9 +31,8 @@ class describe_FieldSelectionDialog(UnitTestCase):
         self.controller = FieldSelectionDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(FieldSelectionDialog, None, "Field Selection", "Event", FIELDS["Event"]) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(FieldSelectionDialog, None, "Field Selection", "Event", FIELDS["Event"])
+
 
 class FieldSelectionEditorTestCase(UnitTestCase):
 

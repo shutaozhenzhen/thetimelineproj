@@ -30,7 +30,6 @@ from timelinelib.wxgui.dialogs.duplicateevent.controller import DuplicateEventDi
 from timelinelib.wxgui.dialogs.duplicateevent.controller import FORWARD
 from timelinelib.wxgui.dialogs.duplicateevent.view import DuplicateEventDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 from timelinelib.test.utils import select_language
 
 
@@ -43,9 +42,7 @@ class describe_DuplicateEventDialog(UnitTestCase):
     # Construction
     #
     def test_it_can_be_created(self):
-        with create_dialog(DuplicateEventDialog, None, MemoryDB(), None) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(DuplicateEventDialog, None, MemoryDB(), None)
 
     def test_number_of_duplicates_should_be_1(self):
         self.view.SetCount.assert_called_with(1)

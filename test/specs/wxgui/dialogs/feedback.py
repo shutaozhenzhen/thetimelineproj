@@ -23,7 +23,6 @@ from timelinelib.utilities.encodings import to_unicode
 from timelinelib.wxgui.dialogs.feedback.controller import FeedbackDialogController
 from timelinelib.wxgui.dialogs.feedback.view import FeedbackDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_feedback_dialog(UnitTestCase):
@@ -34,9 +33,7 @@ class describe_feedback_dialog(UnitTestCase):
         self.webbrowser = Mock()
 
     def test_it_can_be_created(self):
-        with create_dialog(FeedbackDialog, None, "info", "this was fun", "very fun") as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(FeedbackDialog, None, "info", "this was fun", "very fun")
 
     def test_shows_parts_in_dialog(self):
         self.controller.on_init(self.webbrowser, info="info text", subject="subject text", body="body text")

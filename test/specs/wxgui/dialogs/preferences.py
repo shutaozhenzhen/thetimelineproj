@@ -26,7 +26,6 @@ from timelinelib.features.experimental.experimentalfeatures import ExperimentalF
 from timelinelib.wxgui.dialogs.preferences.controller import PreferencesDialogController
 from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_preferences_dialog(UnitTestCase):
@@ -47,9 +46,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.experimental_features = Mock(ExperimentalFeatures)
 
     def test_it_can_be_created(self):
-        with create_dialog(PreferencesDialog, None, self.config) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(PreferencesDialog, None, self.config)
 
     def test_sets_open_recent_on_init(self):
         self.config.get_open_recent_at_startup.return_value = sentinel.OPEN_RECENT

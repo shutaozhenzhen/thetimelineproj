@@ -25,7 +25,6 @@ from timelinelib.wxgui.dialogs.editcategory.controller import EditCategoryDialog
 from timelinelib.wxgui.dialogs.editcategory.view import EditCategoryDialog
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
-from timelinelib.test.utils import create_dialog
 
 
 class EditCategoryDialogTestCase(UnitTestCase):
@@ -71,9 +70,7 @@ class describe_edit_category_dialog(UnitTestCase):
         db = MemoryDB()
         db.save_category(a_category_with(name="one"))
         db.save_category(a_category_with(name="two"))
-        with create_dialog(EditCategoryDialog, None, "title", db, category) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(EditCategoryDialog, None, "title", db, category)
 
 
 class describe_editing_a_new_category(EditCategoryDialogTestCase):

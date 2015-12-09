@@ -27,7 +27,6 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.editcontainer.controller import EditContainerDialogController
 from timelinelib.wxgui.dialogs.editcontainer.view import EditContainerDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 from timelinelib.test.utils import human_time_to_gregorian
 
 
@@ -40,9 +39,7 @@ class describe_edit_container_dialog(UnitTestCase):
         self.db.get_time_type.return_value = GregorianTimeType()
 
     def test_it_can_be_created(self):
-        with create_dialog(EditContainerDialog, None, "test title", db_open(":tutorial:")) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(EditContainerDialog, None, "test title", db_open(":tutorial:"))
 
     def test_it_sets_default_values_when_opend_without_container(self):
         self.given_editor_without_container()

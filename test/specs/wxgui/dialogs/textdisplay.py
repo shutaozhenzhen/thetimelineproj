@@ -21,7 +21,6 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.textdisplay.controller import TextDisplayDialogController
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 class describe_text_display_dialog(UnitTestCase):
@@ -31,9 +30,7 @@ class describe_text_display_dialog(UnitTestCase):
         self.controller = TextDisplayDialogController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(TextDisplayDialog, "title", "text", None) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(TextDisplayDialog, "title", "text", None)
 
     def test_set_text_on_init(self):
         self.controller.on_init("hello world")

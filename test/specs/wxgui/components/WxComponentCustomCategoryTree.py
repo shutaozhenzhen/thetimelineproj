@@ -22,7 +22,6 @@ import humblewx
 from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 from timelinelib.wxgui.components.categorytree import CustomCategoryTree
 from timelinelib.wxgui.framework import Dialog
 
@@ -30,9 +29,7 @@ from timelinelib.wxgui.framework import Dialog
 class describe_custom_category_tree_component_test(UnitTestCase):
 
     def test_it_shows_in_dialog(self):
-        with create_dialog(TestDialog, create_in_memory_tutorial_db(), ViewProperties(), Mock()) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(TestDialog, create_in_memory_tutorial_db(), ViewProperties(), Mock())
 
 
 class TestDialog(Dialog):
