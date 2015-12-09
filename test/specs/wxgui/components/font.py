@@ -26,7 +26,6 @@ class FontsTestCase(UnitTestCase):
 
     def setUp(self):
         self.app = wx.App()
-        self.app.MainLoop()
         self.font = Font()
         self.wx_default_font = wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
 

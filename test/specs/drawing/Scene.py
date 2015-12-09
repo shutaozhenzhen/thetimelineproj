@@ -107,7 +107,6 @@ class SceneSpec(UnitTestCase):
 
     def setUp(self):
         self.app = wx.App()
-        self.app.MainLoop()
         self.db = MemoryDB()
         self.view_properties = ViewProperties()
         self.given_number_of_events_stackable_is(5)

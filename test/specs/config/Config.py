@@ -147,7 +147,6 @@ class ConfigSpec(TmpDirTestCase):
     def setUp(self):
         TmpDirTestCase.setUp(self)
         self.app = wx.App()
-        self.app.MainLoop()
         self.config = Config(self.get_tmp_path("test.config"))
 
     def tearDown(self):
