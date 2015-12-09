@@ -19,7 +19,8 @@
 import random
 import unittest
 
-from timelinelib.test.utils import create_dialog
+import wx
+
 from timelinelib.time.gregoriantime import GregorianTimeType
 
 
@@ -77,9 +78,18 @@ class UnitTestCase(unittest.TestCase):
         self.assertFalse(modified == one, fail_message_modified_one)
 
     def show_dialog(self, dialog_class, *args, **kwargs):
-        with create_dialog(dialog_class, *args, **kwargs) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        app = wx.App(False)
+        try:
+            dialog = dialog_class(*args, **kwargs)
+            try:
+                if self.HALT_GUI:
+                    dialog.ShowModal()
+            finally:
+                dialog.Destroy()
+        finally:
+            if app.GetTopWindow():
+                app.GetTopWindow().Destroy()
+            app.Destroy()
 
 
 def get_random_modifier(modifiers):
