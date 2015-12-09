@@ -27,6 +27,7 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 class UnitTestCase(unittest.TestCase):
 
     HALT_GUI = False
+    AUTO_CLOSE = False
 
     def assertPeriodsEqual(self, first, second, time_type=GregorianTimeType()):
         message = "Periods not equal.\n  First:  %s \"%s\"\n  Second: %s \"%s\"" % (
@@ -83,6 +84,8 @@ class UnitTestCase(unittest.TestCase):
             dialog = dialog_class(*args, **kwargs)
             try:
                 if self.HALT_GUI:
+                    if self.AUTO_CLOSE:
+                        wx.CallLater(2000, dialog.Close)
                     dialog.ShowModal()
             finally:
                 dialog.Destroy()
