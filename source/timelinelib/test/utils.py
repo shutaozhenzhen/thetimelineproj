@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import contextlib
 import random
 
 from timelinelib.calendar.gregorian import Gregorian
@@ -31,8 +30,6 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.timeline import TimeDelta
-
-import wx
 
 
 ANY_TIME = "1 Jan 2010"
@@ -209,21 +206,6 @@ def modifier_change_ends_today(event):
     else:
         event.set_ends_today(not event.get_ends_today())
     return event
-
-
-@contextlib.contextmanager
-def create_dialog(dialog_class, *args, **kwargs):
-    app = wx.App(False)
-    try:
-        dialog = dialog_class(*args, **kwargs)
-        try:
-            yield dialog
-        finally:
-            dialog.Destroy()
-    finally:
-        if app.GetTopWindow():
-            app.GetTopWindow().Destroy()
-        app.Destroy()
 
 
 EVENT_MODIFIERS = [
