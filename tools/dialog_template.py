@@ -38,7 +38,6 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.%s.controller import %sController
 from timelinelib.wxgui.dialogs.%s.view import %s
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import create_dialog
 
 
 """
@@ -79,9 +78,7 @@ class describe_%s(UnitTestCase):
         self.controller = %sController(self.view)
 
     def test_it_can_be_created(self):
-        with create_dialog(%s, None) as dialog:
-            if self.HALT_GUI:
-                dialog.ShowModal()
+        self.show_dialog(%s, None)
 """
 
 
