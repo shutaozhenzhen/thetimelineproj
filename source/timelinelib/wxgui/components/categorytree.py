@@ -31,9 +31,9 @@ import timelinelib.wxgui.utils as gui_utils
 
 class CustomCategoryTree(wx.ScrolledWindow):
 
-    def __init__(self, parent, handle_db_error):
+    def __init__(self, parent, handle_db_error, name=None, size=(100, 100)):
         self.monitoring = Monitoring()
-        wx.ScrolledWindow.__init__(self, parent, size=(100, 100))
+        wx.ScrolledWindow.__init__(self, parent, size=size)
         self.parent = parent
         self.handle_db_error = handle_db_error
         self._create_context_menu()

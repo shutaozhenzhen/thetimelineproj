@@ -16,36 +16,68 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import humblewx
+
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import create_dialog
 from timelinelib.wxgui.components.messagebar import MessageBar
-from timelinelib.test.cases.wxcomponent import WxComponentTestCase
+from timelinelib.wxgui.framework import Dialog
 
 
-class MessageBarComponentTest(WxComponentTestCase):
+class MessageBarComponentTest(UnitTestCase):
 
-    INFORMATION_TEXT = "This is an\ninformation message."
-    WARNING_TEXT = "This is a\nwarning message!"
+    def test_it_shows_in_dialog(self):
+        with create_dialog(TestDialog) as dialog:
+            if self.HALT_GUI:
+                dialog.ShowModal()
 
-    def test_shows_up(self):
-        self.add_button("Hide",
-                        self._show_no_message, "information")
-        self.add_button("Show information",
-                        self._show_information_message, "information")
-        self.add_button("Show warning",
-                        self._show_warning_message, "information")
-        self.add_separator()
-        self.add_component("information", MessageBar)
-        self.add_separator()
-        self.add_component("warning", MessageBar)
-        self.add_separator()
-        self._show_information_message(self.get_component("information"))
-        self._show_warning_message(self.get_component("warning"))
-        self.show_test_window()
 
-    def _show_no_message(self, message_bar):
-        message_bar.ShowNoMessage()
+class TestDialog(Dialog):
 
-    def _show_information_message(self, message_bar):
-        message_bar.ShowInformationMessage(self.INFORMATION_TEXT)
+    """
+    <BoxSizerVertical>
+        <BoxSizerHorizontal>
+            <Button
+                label="Hide"
+                event_EVT_BUTTON="on_hide"
+            />
+            <Button
+                label="Show information"
+                event_EVT_BUTTON="on_show_information"
+            />
+            <Button
+                label="Show warning"
+                event_EVT_BUTTON="on_show_warning"
+            />
+        </BoxSizerHorizontal>
+        <StaticText label="---- separator ----" />
+        <MessageBar name="information" />
+        <StaticText label="---- separator ----" />
+        <MessageBar name="warning" />
+        <StaticText label="---- separator ----" />
+    </BoxSizerVertical>
+    """
 
-    def _show_warning_message(self, message_bar):
-        message_bar.ShowWarningMessage(self.WARNING_TEXT)
+    class Controller(humblewx.Controller):
+
+        INFORMATION_TEXT = "This is an\ninformation message."
+        WARNING_TEXT = "This is a\nwarning message!"
+
+        def on_init(self):
+            self.view.information.ShowInformationMessage(self.INFORMATION_TEXT)
+            self.view.warning.ShowWarningMessage(self.WARNING_TEXT)
+            self.view.SetSizerAndFit(self.view.GetSizer())
+
+        def on_hide(self, event):
+            self.view.information.ShowNoMessage()
+
+        def on_show_information(self, event):
+            self.view.information.ShowInformationMessage(self.INFORMATION_TEXT)
+
+        def on_show_warning(self, event):
+            self.view.information.ShowWarningMessage(self.WARNING_TEXT)
+
+    def __init__(self):
+        Dialog.__init__(self, self.Controller, None, {
+        })
+        self.controller.on_init()

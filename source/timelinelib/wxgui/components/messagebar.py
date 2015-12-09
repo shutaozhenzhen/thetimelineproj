@@ -23,7 +23,7 @@ from timelinelib.drawing.utils import darken_color
 
 class MessageBar(wx.Panel):
 
-    def __init__(self, parent):
+    def __init__(self, parent, name=None):
         wx.Panel.__init__(self, parent, style=wx.BORDER_NONE)
         self._create_gui()
 
