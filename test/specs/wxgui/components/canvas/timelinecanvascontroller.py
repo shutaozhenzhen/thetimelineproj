@@ -341,7 +341,6 @@ class TimelineViewSpec(UnitTestCase):
 
     def setUp(self):
         self.app = wx.App()
-        self.app.MainLoop()
         self.db = MemoryDB()
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSize.return_value = (200, 100)
