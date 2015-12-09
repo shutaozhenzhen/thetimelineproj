@@ -202,7 +202,7 @@ class Target():
         script_path = os.path.join(self.project_dir, *src)
         self.pushd(os.path.dirname(script_path), None)
         self.print_src_dst(src, os.path.abspath(dst))
-        success, msg = self.run_pyscript(script_path, [dst], display_stderr=True)
+        success, msg = self.run_pyscript(script_path, [], display_stderr=True)
         if not success:
             raise Exception(msg)
         self.popd(None, None)
