@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import datetime
+
 import humblewx
 
 from timelinelib.test.cases.unit import UnitTestCase
@@ -32,13 +34,60 @@ class TestDialog(Dialog):
 
     """
     <BoxSizerVertical>
+        <Button label="before" />
         <TextPatternControl name="date" />
+        <Button label="after" />
     </BoxSizerVertical>
     """
 
     class Controller(humblewx.Controller):
-        pass
+
+        def values_validator(self, view):
+            return self._values_to_date(view.GetValues()) is not None
+
+        def up_handler(self, view):
+            date = self._values_to_date(view.GetValues())
+            if view.GetSelectedGroup() == 0:
+                self._write_date(view, self._set_valid_day(date.year + 1, date.month, date.day))
+            elif view.GetSelectedGroup() == 1:
+                self._write_date(view, self._set_valid_day(date.year, date.month + 1, date.day))
+            elif view.GetSelectedGroup() == 2:
+                self._write_date(view, self._set_valid_day(date.year, date.month, date.day + 1))
+
+        def down_handler(self, view):
+            date = self._values_to_date(view.GetValues())
+            if view.GetSelectedGroup() == 0:
+                self._write_date(view, self._set_valid_day(date.year - 1, date.month, date.day))
+            elif view.GetSelectedGroup() == 1:
+                self._write_date(view, self._set_valid_day(date.year, date.month - 1, date.day))
+            elif view.GetSelectedGroup() == 2:
+                self._write_date(view, self._set_valid_day(date.year, date.month, date.day - 1))
+
+        def _values_to_date(self, values):
+            try:
+                [year_str, month_str, day_str] = values
+                return datetime.date(int(year_str), int(month_str), int(day_str))
+            except:
+                return None
+
+        def _write_date(self, view, date):
+            if date is not None:
+                view.SetValues(["%04d" % date.year, "%02d" % date.month, "%02d" % date.day])
+
+        def _set_valid_day(self, year, month, day):
+            while True:
+                if day <= 0:
+                    return None
+                try:
+                    return datetime.date(year, month, day)
+                except:
+                    day -= 1
 
     def __init__(self):
         Dialog.__init__(self, self.Controller, None, {
         })
+        self.date.SetSeparators(["-", "-"])
+        self.date.SetValues(["2015", "12", "05"])
+        self.date.SetValuesValidator(self.controller.values_validator)
+        self.date.SetUpHandler(self.controller.up_handler)
+        self.date.SetDownHandler(self.controller.down_handler)
