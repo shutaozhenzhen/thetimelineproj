@@ -535,6 +535,12 @@ class DefaultDrawingAlgorithm(Drawer):
                 self.dc.DrawText(line, x, ty)
                 ty += font_h
 
+        def adjust_text_x_pos_when_icon_is_present(x):
+            if icon is not None:
+                return x + iw + BALLOON_RADIUS
+            else:
+                return x
+
         # Constants
         MIN_WIDTH = 100
         # Icon
@@ -561,8 +567,8 @@ class DefaultDrawingAlgorithm(Drawer):
                                                     (event_rect.X + event_rect.Width / 2, event_rect.Y), True, sticky)
         if icon is not None:
             self.dc.DrawBitmap(icon, x, y, False)
-            x += iw + BALLOON_RADIUS
         if lines is not None:
+            x = adjust_text_x_pos_when_icon_is_present(x)
             draw_lines(lines, x, y)
         # Write data so we know where the balloon was drawn
         # Following two lines can be used when debugging the rectangle
