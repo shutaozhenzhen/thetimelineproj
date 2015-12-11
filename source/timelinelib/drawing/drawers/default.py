@@ -553,6 +553,11 @@ class DefaultDrawingAlgorithm(Drawer):
                 x = adjust_text_x_pos_when_icon_is_present(x)
                 draw_lines(lines, x, y)
 
+        def get_description_lines(max_text_width, iw):
+            description = event.get_data("description")
+            if description is not None:
+                return break_text(description, self.dc, max_text_width)
+
         # Constants
         MIN_WIDTH = 100
         # Icon
@@ -561,11 +566,9 @@ class DefaultDrawingAlgorithm(Drawer):
         # Text
         self.dc.SetFont(Font(8))
         (tw, th) = (0, 0)
-        description = event.get_data("description")
-        lines = None
-        if description is not None:
-            max_text_width = max_text_width(iw)
-            lines = break_text(description, self.dc, max_text_width)
+        max_text_width = max_text_width(iw)
+        lines = get_description_lines(max_text_width, iw)
+        if lines is not None:
             th = len(lines) * self.dc.GetCharHeight()
             for line in lines:
                 (lw, _) = self.dc.GetTextExtent(line)
