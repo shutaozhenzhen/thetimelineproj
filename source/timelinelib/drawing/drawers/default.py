@@ -548,7 +548,7 @@ class DefaultDrawingAlgorithm(Drawer):
             if icon is not None:
                 self.dc.DrawBitmap(icon, x, y, False)
 
-        def draw_description(x, y):
+        def draw_description(lines, x, y):
             if lines is not None:
                 x = adjust_text_x_pos_when_icon_is_present(x)
                 draw_lines(lines, x, y)
@@ -578,7 +578,7 @@ class DefaultDrawingAlgorithm(Drawer):
         bounding_rect, x, y = self._draw_balloon_bg(self.dc, (inner_rect_w, inner_rect_h),
                                                     (event_rect.X + event_rect.Width / 2, event_rect.Y), True, sticky)
         draw_icon(x, y)
-        draw_description(x, y)
+        draw_description(lines, x, y)
         # Write data so we know where the balloon was drawn
         # Following two lines can be used when debugging the rectangle
         # self.dc.SetBrush(wx.TRANSPARENT_BRUSH)
