@@ -510,7 +510,10 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_ballon(self, event, event_rect, sticky):
         """Draw one ballon on a selected event that has 'description' data."""
+
         def max_text_width(iw):
+            MIN_TEXT_WIDTH = 200
+            SLIDER_WIDTH = 20
             padding = 2 * BALLOON_RADIUS
             if iw > 0:
                 padding += BALLOON_RADIUS
@@ -526,9 +529,7 @@ class DefaultDrawingAlgorithm(Drawer):
             return (iw, ih)
 
         # Constants
-        MIN_TEXT_WIDTH = 200
         MIN_WIDTH = 100
-        SLIDER_WIDTH = 20
         # Icon
         (inner_rect_w, inner_rect_h) = (iw, ih) = get_icon_size()
         icon = event.get_data("icon")
