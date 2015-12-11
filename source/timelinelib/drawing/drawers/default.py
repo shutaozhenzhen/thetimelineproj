@@ -508,7 +508,7 @@ class DefaultDrawingAlgorithm(Drawer):
         if top_event is not None:
             self._draw_ballon(top_event, top_rect, False)
 
-    def _draw_ballon(self, event, event_rect, sticky):
+    def _draw_ballon(self, event, event_rect, sticky, text_under_icon=False):
         """Draw one ballon on a selected event that has 'description' data."""
 
         def max_text_width(iw):
@@ -549,6 +549,12 @@ class DefaultDrawingAlgorithm(Drawer):
                 self.dc.DrawBitmap(icon, x, y, False)
 
         def draw_description(lines, x, y):
+            if text_under_icon:
+                iw, ih = get_icon_size()
+                if ih > 0:
+                    ih += BALLOON_RADIUS / 2
+                x -= iw
+                y += ih
             if lines is not None:
                 x = adjust_text_x_pos_when_icon_is_present(x)
                 draw_lines(lines, x, y)
@@ -568,6 +574,10 @@ class DefaultDrawingAlgorithm(Drawer):
                 w += BALLOON_RADIUS
             w += min(tw, max_text_width)
             h = max(h, th)
+            if text_under_icon:
+                iw, ih = get_icon_size()
+                w -= iw
+                h = ih + th
             return w, h
 
         (inner_rect_w, inner_rect_h) = (iw, _) = get_icon_size()
