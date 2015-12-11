@@ -558,6 +558,18 @@ class DefaultDrawingAlgorithm(Drawer):
             if description is not None:
                 return break_text(description, self.dc, max_text_width)
 
+        def calc_inner_rect(w, h, max_text_width):
+            th = len(lines) * self.dc.GetCharHeight()
+            tw = 0
+            for line in lines:
+                (lw, _) = self.dc.GetTextExtent(line)
+                tw = max(lw, tw)
+            if event.get_data("icon") is not None:
+                w += BALLOON_RADIUS
+            w += min(tw, max_text_width)
+            h = max(h, th)
+            return w, h
+
         # Constants
         MIN_WIDTH = 100
         # Icon
@@ -569,14 +581,7 @@ class DefaultDrawingAlgorithm(Drawer):
         max_text_width = max_text_width(iw)
         lines = get_description_lines(max_text_width, iw)
         if lines is not None:
-            th = len(lines) * self.dc.GetCharHeight()
-            for line in lines:
-                (lw, _) = self.dc.GetTextExtent(line)
-                tw = max(lw, tw)
-            if icon is not None:
-                inner_rect_w += BALLOON_RADIUS
-            inner_rect_w += min(tw, max_text_width)
-            inner_rect_h = max(inner_rect_h, th)
+            inner_rect_w, inner_rect_h = calc_inner_rect(inner_rect_w, inner_rect_h, max_text_width)
         inner_rect_w = max(MIN_WIDTH, inner_rect_w)
         bounding_rect, x, y = self._draw_balloon_bg(self.dc, (inner_rect_w, inner_rect_h),
                                                     (event_rect.X + event_rect.Width / 2, event_rect.Y), True, sticky)
