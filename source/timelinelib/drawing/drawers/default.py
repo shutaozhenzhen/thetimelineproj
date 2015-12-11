@@ -536,12 +536,15 @@ class DefaultDrawingAlgorithm(Drawer):
                 ty += font_h
 
         def adjust_text_x_pos_when_icon_is_present(x):
+            icon = event.get_data("icon")
+            (iw, _) = get_icon_size()
             if icon is not None:
                 return x + iw + BALLOON_RADIUS
             else:
                 return x
 
         def draw_icon(x, y):
+            icon = event.get_data("icon")
             if icon is not None:
                 self.dc.DrawBitmap(icon, x, y, False)
 
