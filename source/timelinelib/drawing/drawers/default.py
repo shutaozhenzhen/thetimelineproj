@@ -528,6 +528,13 @@ class DefaultDrawingAlgorithm(Drawer):
                 (iw, ih) = icon.Size
             return (iw, ih)
 
+        def draw_lines(lines, x, y):
+            font_h = self.dc.GetCharHeight()
+            ty = y
+            for line in lines:
+                self.dc.DrawText(line, x, ty)
+                ty += font_h
+
         # Constants
         MIN_WIDTH = 100
         # Icon
@@ -556,11 +563,7 @@ class DefaultDrawingAlgorithm(Drawer):
             self.dc.DrawBitmap(icon, x, y, False)
             x += iw + BALLOON_RADIUS
         if lines is not None:
-            font_h = self.dc.GetCharHeight()
-            ty = y
-            for line in lines:
-                self.dc.DrawText(line, x, ty)
-                ty += font_h
+            draw_lines(lines, x, y)
         # Write data so we know where the balloon was drawn
         # Following two lines can be used when debugging the rectangle
         # self.dc.SetBrush(wx.TRANSPARENT_BRUSH)
