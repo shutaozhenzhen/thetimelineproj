@@ -26,17 +26,19 @@ from timelinelib.wxgui.framework import Dialog
 
 class describe_text_pattern_control(UnitTestCase):
 
-    def test_it_shows_in_dialog(self):
-        self.show_dialog(TestDialog)
+    def test_show_manual_test_dialog(self):
+        self.show_dialog(TextPatternControlManualTestDialog)
 
 
-class TestDialog(Dialog):
+class TextPatternControlManualTestDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <Button label="before" />
-        <TextPatternControl name="date" />
-        <Button label="after" />
+        <FlexGridSizer columns="1" border="ALL">
+            <Button label="before" />
+            <TextPatternControl name="date" />
+            <Button label="after" />
+        </FlexGridSizer>
     </BoxSizerVertical>
     """
 
@@ -47,21 +49,21 @@ class TestDialog(Dialog):
 
         def increment_date(self):
             date = self._get_date()
-            if self.view.date.GetSelectedGroup() == 0:
-                self._write_date(self.view.date, self._set_valid_day(date.year + 1, date.month, date.day))
-            elif self.view.date.GetSelectedGroup() == 1:
-                self._write_date(self.view.date, self._set_valid_day(date.year, date.month + 1, date.day))
-            elif self.view.date.GetSelectedGroup() == 2:
-                self._write_date(self.view.date, self._set_valid_day(date.year, date.month, date.day + 1))
+            if self._is_year_selected():
+                self._write_date(self._set_valid_day(date.year + 1, date.month, date.day))
+            elif self._is_month_selected():
+                self._write_date(self._set_valid_day(date.year, date.month + 1, date.day))
+            elif self._is_day_selected():
+                self._write_date(self._set_valid_day(date.year, date.month, date.day + 1))
 
         def decrement_date(self):
             date = self._get_date()
-            if self.view.date.GetSelectedGroup() == 0:
-                self._write_date(self.view.date, self._set_valid_day(date.year - 1, date.month, date.day))
-            elif self.view.date.GetSelectedGroup() == 1:
-                self._write_date(self.view.date, self._set_valid_day(date.year, date.month - 1, date.day))
-            elif self.view.date.GetSelectedGroup() == 2:
-                self._write_date(self.view.date, self._set_valid_day(date.year, date.month, date.day - 1))
+            if self._is_year_selected():
+                self._write_date(self._set_valid_day(date.year - 1, date.month, date.day))
+            elif self._is_month_selected():
+                self._write_date(self._set_valid_day(date.year, date.month - 1, date.day))
+            elif self._is_day_selected():
+                self._write_date(self._set_valid_day(date.year, date.month, date.day - 1))
 
         def _get_date(self):
             try:
@@ -70,9 +72,13 @@ class TestDialog(Dialog):
             except:
                 return None
 
-        def _write_date(self, view, date):
+        def _write_date(self, date):
             if date is not None:
-                view.SetValues(["%04d" % date.year, "%02d" % date.month, "%02d" % date.day])
+                self.view.date.SetValues([
+                    "%04d" % date.year,
+                    "%02d" % date.month,
+                    "%02d" % date.day,
+                ])
 
         def _set_valid_day(self, year, month, day):
             while True:
@@ -82,6 +88,15 @@ class TestDialog(Dialog):
                     return datetime.date(year, month, day)
                 except:
                     day -= 1
+
+        def _is_year_selected(self):
+            return self.view.date.GetSelectedGroup() == 0
+
+        def _is_month_selected(self):
+            return self.view.date.GetSelectedGroup() == 1
+
+        def _is_day_selected(self):
+            return self.view.date.GetSelectedGroup() == 2
 
     def __init__(self):
         Dialog.__init__(self, self.Controller, None, {
