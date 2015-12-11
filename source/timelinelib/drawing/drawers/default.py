@@ -517,20 +517,21 @@ class DefaultDrawingAlgorithm(Drawer):
             max_text_width = (self.scene.width - SLIDER_WIDTH - event_rect.X -
                               event_rect.width / 2 - iw - padding + ARROW_OFFSET)
             return max(MIN_TEXT_WIDTH, max_text_width)
+
+        def get_icon_size():
+            (iw, ih) = (0, 0)
+            icon = event.get_data("icon")
+            if icon is not None:
+                (iw, ih) = icon.Size
+            return (iw, ih)
+
         # Constants
         MIN_TEXT_WIDTH = 200
         MIN_WIDTH = 100
         SLIDER_WIDTH = 20
-
-        inner_rect_w = 0
-        inner_rect_h = 0
         # Icon
-        (iw, ih) = (0, 0)
+        (inner_rect_w, inner_rect_h) = (iw, ih) = get_icon_size()
         icon = event.get_data("icon")
-        if icon is not None:
-            (iw, ih) = icon.Size
-            inner_rect_w = iw
-            inner_rect_h = ih
         # Text
         self.dc.SetFont(Font(8))
         font_h = self.dc.GetCharHeight()
@@ -549,9 +550,8 @@ class DefaultDrawingAlgorithm(Drawer):
             inner_rect_w += min(tw, max_text_width)
             inner_rect_h = max(inner_rect_h, th)
         inner_rect_w = max(MIN_WIDTH, inner_rect_w)
-        bounding_rect, x, y = self._draw_balloon_bg(
-            self.dc, (inner_rect_w, inner_rect_h),
-            (event_rect.X + event_rect.Width / 2, event_rect.Y), True, sticky)
+        bounding_rect, x, y = self._draw_balloon_bg(self.dc, (inner_rect_w, inner_rect_h),
+                                                    (event_rect.X + event_rect.Width / 2, event_rect.Y), True, sticky)
         if icon is not None:
             self.dc.DrawBitmap(icon, x, y, False)
             x += iw + BALLOON_RADIUS
