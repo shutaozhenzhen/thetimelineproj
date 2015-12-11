@@ -535,7 +535,6 @@ class DefaultDrawingAlgorithm(Drawer):
         icon = event.get_data("icon")
         # Text
         self.dc.SetFont(Font(8))
-        font_h = self.dc.GetCharHeight()
         (tw, th) = (0, 0)
         description = event.get_data("description")
         lines = None
@@ -557,6 +556,7 @@ class DefaultDrawingAlgorithm(Drawer):
             self.dc.DrawBitmap(icon, x, y, False)
             x += iw + BALLOON_RADIUS
         if lines is not None:
+            font_h = self.dc.GetCharHeight()
             ty = y
             for line in lines:
                 self.dc.DrawText(line, x, ty)
