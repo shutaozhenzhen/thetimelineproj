@@ -571,7 +571,6 @@ class DefaultDrawingAlgorithm(Drawer):
             return w, h
 
         # Constants
-        MIN_WIDTH = 100
         # Icon
         (inner_rect_w, inner_rect_h) = (iw, ih) = get_icon_size()
         icon = event.get_data("icon")
@@ -582,6 +581,7 @@ class DefaultDrawingAlgorithm(Drawer):
         lines = get_description_lines(max_text_width, iw)
         if lines is not None:
             inner_rect_w, inner_rect_h = calc_inner_rect(inner_rect_w, inner_rect_h, max_text_width)
+        MIN_WIDTH = 100
         inner_rect_w = max(MIN_WIDTH, inner_rect_w)
         bounding_rect, x, y = self._draw_balloon_bg(self.dc, (inner_rect_w, inner_rect_h),
                                                     (event_rect.X + event_rect.Width / 2, event_rect.Y), True, sticky)
