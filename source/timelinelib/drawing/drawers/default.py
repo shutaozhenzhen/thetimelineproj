@@ -561,7 +561,6 @@ class DefaultDrawingAlgorithm(Drawer):
             for line in lines:
                 self.dc.DrawText(line, x, ty)
                 ty += font_h
-            x += tw
         # Write data so we know where the balloon was drawn
         # Following two lines can be used when debugging the rectangle
         # self.dc.SetBrush(wx.TRANSPARENT_BRUSH)
