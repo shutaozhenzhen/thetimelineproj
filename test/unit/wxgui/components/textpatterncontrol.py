@@ -42,30 +42,30 @@ class TestDialog(Dialog):
 
     class Controller(humblewx.Controller):
 
-        def values_validator(self, view):
-            return self._values_to_date(view.GetValues()) is not None
+        def is_date_valid(self):
+            return self._get_date() is not None
 
-        def up_handler(self, view):
-            date = self._values_to_date(view.GetValues())
-            if view.GetSelectedGroup() == 0:
-                self._write_date(view, self._set_valid_day(date.year + 1, date.month, date.day))
-            elif view.GetSelectedGroup() == 1:
-                self._write_date(view, self._set_valid_day(date.year, date.month + 1, date.day))
-            elif view.GetSelectedGroup() == 2:
-                self._write_date(view, self._set_valid_day(date.year, date.month, date.day + 1))
+        def increment_date(self):
+            date = self._get_date()
+            if self.view.date.GetSelectedGroup() == 0:
+                self._write_date(self.view.date, self._set_valid_day(date.year + 1, date.month, date.day))
+            elif self.view.date.GetSelectedGroup() == 1:
+                self._write_date(self.view.date, self._set_valid_day(date.year, date.month + 1, date.day))
+            elif self.view.date.GetSelectedGroup() == 2:
+                self._write_date(self.view.date, self._set_valid_day(date.year, date.month, date.day + 1))
 
-        def down_handler(self, view):
-            date = self._values_to_date(view.GetValues())
-            if view.GetSelectedGroup() == 0:
-                self._write_date(view, self._set_valid_day(date.year - 1, date.month, date.day))
-            elif view.GetSelectedGroup() == 1:
-                self._write_date(view, self._set_valid_day(date.year, date.month - 1, date.day))
-            elif view.GetSelectedGroup() == 2:
-                self._write_date(view, self._set_valid_day(date.year, date.month, date.day - 1))
+        def decrement_date(self):
+            date = self._get_date()
+            if self.view.date.GetSelectedGroup() == 0:
+                self._write_date(self.view.date, self._set_valid_day(date.year - 1, date.month, date.day))
+            elif self.view.date.GetSelectedGroup() == 1:
+                self._write_date(self.view.date, self._set_valid_day(date.year, date.month - 1, date.day))
+            elif self.view.date.GetSelectedGroup() == 2:
+                self._write_date(self.view.date, self._set_valid_day(date.year, date.month, date.day - 1))
 
-        def _values_to_date(self, values):
+        def _get_date(self):
             try:
-                [year_str, month_str, day_str] = values
+                [year_str, month_str, day_str] = self.view.date.GetValues()
                 return datetime.date(int(year_str), int(month_str), int(day_str))
             except:
                 return None
@@ -88,6 +88,6 @@ class TestDialog(Dialog):
         })
         self.date.SetSeparators(["-", "-"])
         self.date.SetValues(["2015", "12", "05"])
-        self.date.SetValuesValidator(self.controller.values_validator)
-        self.date.SetUpHandler(self.controller.up_handler)
-        self.date.SetDownHandler(self.controller.down_handler)
+        self.date.SetValuesValidator(self.controller.is_date_valid)
+        self.date.SetUpHandler(self.controller.increment_date)
+        self.date.SetDownHandler(self.controller.decrement_date)

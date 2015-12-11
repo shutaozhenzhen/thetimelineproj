@@ -94,12 +94,12 @@ class TextPatternControlController(humblewx.Controller):
         elif (event.GetKeyCode() == wx.WXK_UP and
               self.up_handler is not None and
               self._is_text_valid()):
-            self.up_handler(self.view)
+            self.up_handler()
             skip = False
         elif (event.GetKeyCode() == wx.WXK_DOWN and
               self.down_handler is not None and
               self._is_text_valid()):
-            self.down_handler(self.view)
+            self.down_handler()
             skip = False
         event.Skip(skip)
 
@@ -179,7 +179,7 @@ class TextPatternControlController(humblewx.Controller):
         if self.values_validator is None:
             return True
         else:
-            return self.values_validator(self.view)
+            return self.values_validator()
 
     def _select_group(self, section_to_focus):
         for (index, (_, start, end)) in enumerate(self._get_groups()):
