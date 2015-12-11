@@ -570,11 +570,8 @@ class DefaultDrawingAlgorithm(Drawer):
             h = max(h, th)
             return w, h
 
-        # Constants
-        # Icon
         (inner_rect_w, inner_rect_h) = (iw, ih) = get_icon_size()
         icon = event.get_data("icon")
-        # Text
         self.dc.SetFont(Font(8))
         (tw, th) = (0, 0)
         max_text_width = max_text_width(iw)
