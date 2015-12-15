@@ -36,19 +36,10 @@ class GregorianTimePicker(TextPatternControl):
         self._resize_to_fit_text()
 
     def GetGregorianTime(self):
-        [hour_str, minute_str] = self.GetParts()
-        hour = int(hour_str)
-        minute = int(minute_str)
-        if not GregorianUtils.is_valid_time(hour, minute, 0):
-            raise ValueError()
-        return (hour, minute, 0)
+        return parts_to_gregorian_time(self.GetParts())
 
     def SetGregorianTime(self, time):
-        (hour, minute, second) = time
-        self.SetParts([
-            "%02d" % hour,
-            "%02d" % minute,
-        ])
+        self.SetParts(gregorian_time_to_parts(time))
 
     def _is_time_valid(self):
         try:
@@ -74,6 +65,23 @@ class GregorianTimePicker(TextPatternControl):
         w, _ = self.GetTextExtent("00:00")
         width = w + 20
         self.SetMinSize((width, -1))
+
+
+def gregorian_time_to_parts(time):
+    (hour, minute, second) = time
+    return [
+        "%02d" % hour,
+        "%02d" % minute,
+    ]
+
+
+def parts_to_gregorian_time(parts):
+    [hour_str, minute_str] = parts
+    hour = int(hour_str)
+    minute = int(minute_str)
+    if not GregorianUtils.is_valid_time(hour, minute, 0):
+        raise ValueError()
+    return (hour, minute, 0)
 
 
 def increment_hour(time):
