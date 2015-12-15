@@ -88,14 +88,14 @@ class TextPatternControlManualTestDialog(Dialog):
 
         def _get_date(self):
             try:
-                [year_str, month_str, day_str] = self.view.date.GetValues()
+                [year_str, month_str, day_str] = self.view.date.GetParts()
                 return datetime.date(int(year_str), int(month_str), int(day_str))
             except:
                 return None
 
         def _write_date(self, date):
             if date is not None:
-                self.view.date.SetValues([
+                self.view.date.SetParts([
                     "%04d" % date.year,
                     "%02d" % date.month,
                     "%02d" % date.day,
@@ -123,7 +123,7 @@ class TextPatternControlManualTestDialog(Dialog):
         Dialog.__init__(self, self.Controller, None, {
         })
         self.date.SetSeparators(["-", "-"])
-        self.date.SetValues(["2015", "12", "05"])
+        self.date.SetParts(["2015", "12", "05"])
         self.date.SetValuesValidator(self.controller.is_date_valid)
         self.date.SetUpHandler(self.controller.increment_date)
         self.date.SetDownHandler(self.controller.decrement_date)
