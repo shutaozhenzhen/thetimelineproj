@@ -19,15 +19,15 @@
 from mock import Mock
 
 from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
+from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
+from timelinelib.wxgui.components.gregoriandatepicker import GregorianDatePicker
+from timelinelib.wxgui.components.gregoriandatepicker import GregorianDatePickerController
 from timelinelib.wxgui.components.gregoriandatetimepicker import CalendarPopup
 from timelinelib.wxgui.components.gregoriandatetimepicker import CalendarPopupController
-from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDatePicker
-from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDatePickerController
 from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDateTimePickerController
 from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianTimePicker
-from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.calendar.gregorian as gregorian
 
 
