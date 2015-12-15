@@ -63,67 +63,70 @@ class TextPatternControlManualTestDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    class Controller(humblewx.Controller):
-
-        def is_date_valid(self):
-            return self._get_date() is not None
-
-        def increment_date(self):
-            date = self._get_date()
-            if self._is_year_selected():
-                self._write_date(self._set_valid_day(date.year + 1, date.month, date.day))
-            elif self._is_month_selected():
-                self._write_date(self._set_valid_day(date.year, date.month + 1, date.day))
-            elif self._is_day_selected():
-                self._write_date(self._set_valid_day(date.year, date.month, date.day + 1))
-
-        def decrement_date(self):
-            date = self._get_date()
-            if self._is_year_selected():
-                self._write_date(self._set_valid_day(date.year - 1, date.month, date.day))
-            elif self._is_month_selected():
-                self._write_date(self._set_valid_day(date.year, date.month - 1, date.day))
-            elif self._is_day_selected():
-                self._write_date(self._set_valid_day(date.year, date.month, date.day - 1))
-
-        def _get_date(self):
-            try:
-                [year_str, month_str, day_str] = self.view.date.GetParts()
-                return datetime.date(int(year_str), int(month_str), int(day_str))
-            except:
-                return None
-
-        def _write_date(self, date):
-            if date is not None:
-                self.view.date.SetParts([
-                    "%04d" % date.year,
-                    "%02d" % date.month,
-                    "%02d" % date.day,
-                ])
-
-        def _set_valid_day(self, year, month, day):
-            while True:
-                if day <= 0:
-                    return None
-                try:
-                    return datetime.date(year, month, day)
-                except:
-                    day -= 1
-
-        def _is_year_selected(self):
-            return self.view.date.GetSelectedGroup() == 0
-
-        def _is_month_selected(self):
-            return self.view.date.GetSelectedGroup() == 1
-
-        def _is_day_selected(self):
-            return self.view.date.GetSelectedGroup() == 2
+    YEAR_GROUP = 0
+    MONTH_GROUP = 1
+    DAY_GROUP = 2
 
     def __init__(self):
-        Dialog.__init__(self, self.Controller, None, {
+        Dialog.__init__(self, humblewx.Controller, None, {
         })
         self.date.SetSeparators(["-", "-"])
         self.date.SetParts(["2015", "12", "05"])
-        self.date.SetValuesValidator(self.controller.is_date_valid)
-        self.date.SetUpHandler(self.controller.increment_date)
-        self.date.SetDownHandler(self.controller.decrement_date)
+        self.date.SetValuesValidator(self._is_date_valid)
+        self.date.SetUpHandler(self.YEAR_GROUP, self._increment_year)
+        self.date.SetUpHandler(self.MONTH_GROUP, self._increment_month)
+        self.date.SetUpHandler(self.DAY_GROUP, self._increment_day)
+        self.date.SetDownHandler(self.YEAR_GROUP, self._decrement_year)
+        self.date.SetDownHandler(self.MONTH_GROUP, self._decrement_month)
+        self.date.SetDownHandler(self.DAY_GROUP, self._decrement_day)
+
+    def _is_date_valid(self):
+        return self._get_date() is not None
+
+    def _increment_year(self):
+        date = self._get_date()
+        self._write_date(self._set_valid_day(date.year + 1, date.month, date.day))
+
+    def _increment_month(self):
+        date = self._get_date()
+        self._write_date(self._set_valid_day(date.year, date.month + 1, date.day))
+
+    def _increment_day(self):
+        date = self._get_date()
+        self._write_date(self._set_valid_day(date.year, date.month, date.day + 1))
+
+    def _decrement_year(self):
+        date = self._get_date()
+        self._write_date(self._set_valid_day(date.year - 1, date.month, date.day))
+
+    def _decrement_month(self):
+        date = self._get_date()
+        self._write_date(self._set_valid_day(date.year, date.month - 1, date.day))
+
+    def _decrement_day(self):
+        date = self._get_date()
+        self._write_date(self._set_valid_day(date.year, date.month, date.day - 1))
+
+    def _get_date(self):
+        try:
+            [year_str, month_str, day_str] = self.date.GetParts()
+            return datetime.date(int(year_str), int(month_str), int(day_str))
+        except:
+            return None
+
+    def _write_date(self, date):
+        if date is not None:
+            self.date.SetParts([
+                "%04d" % date.year,
+                "%02d" % date.month,
+                "%02d" % date.day,
+            ])
+
+    def _set_valid_day(self, year, month, day):
+        while True:
+            if day <= 0:
+                return None
+            try:
+                return datetime.date(year, month, day)
+            except:
+                day -= 1
