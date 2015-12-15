@@ -28,7 +28,7 @@ class TextPatternControl(wx.TextCtrl):
         self._bind_events()
         self.controller.on_init()
 
-    def GetValues(self):
+    def GetParts(self):
         return self.controller.get_values()
 
     def GetSelectedGroup(self):
@@ -37,7 +37,7 @@ class TextPatternControl(wx.TextCtrl):
     def SetSeparators(self, separators):
         self.controller.set_separators(separators)
 
-    def SetValues(self, values):
+    def SetParts(self, values):
         self.controller.set_values(values)
 
     def SetValuesValidator(self, values_validator):

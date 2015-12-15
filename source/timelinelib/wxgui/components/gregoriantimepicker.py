@@ -35,7 +35,7 @@ class GregorianTimePicker(TextPatternControl):
 
     def GetGregorianTime(self):
         try:
-            [hour_str, minute_str] = self.GetValues()
+            [hour_str, minute_str] = self.GetParts()
             hour = int(hour_str)
             minute = int(minute_str)
             if not GregorianUtils.is_valid_time(hour, minute, 0):
@@ -46,7 +46,7 @@ class GregorianTimePicker(TextPatternControl):
 
     def SetGregorianTime(self, value):
         (hour, minute, second) = value
-        self.SetValues(["%02d" % hour, "%02d" % minute])
+        self.SetParts(["%02d" % hour, "%02d" % minute])
 
     def _is_time_valid(self):
         try:
