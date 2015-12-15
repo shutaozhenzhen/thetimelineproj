@@ -43,11 +43,11 @@ class TextPatternControl(wx.TextCtrl):
     def SetValuesValidator(self, values_validator):
         self.controller.set_values_validator(values_validator)
 
-    def SetUpHandler(self, up_handler):
-        self.controller.set_up_handler(up_handler)
+    def SetUpHandler(self, group, up_handler):
+        self.controller.set_up_handler(group, up_handler)
 
-    def SetDownHandler(self, down_handler):
-        self.controller.set_down_handler(down_handler)
+    def SetDownHandler(self, group, down_handler):
+        self.controller.set_down_handler(group, down_handler)
 
     def _bind_events(self):
         self.Bind(wx.EVT_CHAR, self.controller.on_char)
@@ -66,8 +66,8 @@ class TextPatternControlController(humblewx.Controller):
         self.separators = []
         self.last_selected_group = None
         self.values_validator = None
-        self.up_handler = None
-        self.down_handler = None
+        self.up_handlers = {}
+        self.down_handlers = {}
 
     def on_after_set_focus(self):
         if self.view.GetSelection() != (0, len(self.view.GetValue())):
@@ -92,14 +92,14 @@ class TextPatternControlController(humblewx.Controller):
             else:
                 skip = self.on_tab()
         elif (event.GetKeyCode() == wx.WXK_UP and
-              self.up_handler is not None and
+              self.view.GetSelectedGroup() in self.up_handlers and
               self._is_text_valid()):
-            self.up_handler()
+            self.up_handlers[self.view.GetSelectedGroup()]()
             skip = False
         elif (event.GetKeyCode() == wx.WXK_DOWN and
-              self.down_handler is not None and
+              self.view.GetSelectedGroup() in self.down_handlers and
               self._is_text_valid()):
-            self.down_handler()
+            self.down_handlers[self.view.GetSelectedGroup()]()
             skip = False
         event.Skip(skip)
 
@@ -141,11 +141,11 @@ class TextPatternControlController(humblewx.Controller):
         self.values_validator = values_validator
         self._validate()
 
-    def set_up_handler(self, up_handler):
-        self.up_handler = up_handler
+    def set_up_handler(self, group, up_handler):
+        self.up_handlers[group] = up_handler
 
-    def set_down_handler(self, down_handler):
-        self.down_handler = down_handler
+    def set_down_handler(self, group, down_handler):
+        self.down_handlers[group] = down_handler
 
     def _get_groups(self):
         text = self.view.GetValue()

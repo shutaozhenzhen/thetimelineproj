@@ -29,8 +29,10 @@ class GregorianTimePicker(TextPatternControl):
         TextPatternControl.__init__(self, parent)
         self.SetSeparators([":"])
         self.SetValuesValidator(self._is_time_valid)
-        self.SetUpHandler(self._increment_time)
-        self.SetDownHandler(self._decrement_time)
+        self.SetUpHandler(self.HOUR_GROUP, self._increment_hour)
+        self.SetUpHandler(self.MINUTE_GROUP, self._increment_minute)
+        self.SetDownHandler(self.HOUR_GROUP, self._decrement_hour)
+        self.SetDownHandler(self.MINUTE_GROUP, self._decrement_minute)
         self._resize_to_fit_text()
 
     def GetGregorianTime(self):
@@ -56,17 +58,17 @@ class GregorianTimePicker(TextPatternControl):
         else:
             return True
 
-    def _increment_time(self):
-        if self.GetSelectedGroup() == self.HOUR_GROUP:
-            self.SetGregorianTime(increment_hour(self.GetGregorianTime()))
-        elif self.GetSelectedGroup() == self.MINUTE_GROUP:
-            self.SetGregorianTime(increment_minutes(self.GetGregorianTime()))
+    def _increment_hour(self):
+        self.SetGregorianTime(increment_hour(self.GetGregorianTime()))
 
-    def _decrement_time(self):
-        if self.GetSelectedGroup() == self.HOUR_GROUP:
-            self.SetGregorianTime(decrement_hour(self.GetGregorianTime()))
-        elif self.GetSelectedGroup() == self.MINUTE_GROUP:
-            self.SetGregorianTime(decrement_minutes(self.GetGregorianTime()))
+    def _increment_minute(self):
+        self.SetGregorianTime(increment_minute(self.GetGregorianTime()))
+
+    def _decrement_hour(self):
+        self.SetGregorianTime(decrement_hour(self.GetGregorianTime()))
+
+    def _decrement_minute(self):
+        self.SetGregorianTime(decrement_minute(self.GetGregorianTime()))
 
     def _resize_to_fit_text(self):
         w, _ = self.GetTextExtent("00:00")
@@ -82,7 +84,7 @@ def increment_hour(time):
     return (new_hour, minute, second)
 
 
-def increment_minutes(time):
+def increment_minute(time):
     hour, minute, second = time
     new_hour = hour
     new_minute = minute + 1
@@ -102,7 +104,7 @@ def decrement_hour(time):
     return (new_hour, minute, second)
 
 
-def decrement_minutes(time):
+def decrement_minute(time):
     hour, minute, second = time
     new_hour = hour
     new_minute = minute - 1
