@@ -29,7 +29,7 @@ class TextPatternControl(wx.TextCtrl):
         self.controller.on_init()
 
     def GetParts(self):
-        return self.controller.get_values()
+        return self.controller.get_parts()
 
     def GetSelectedGroup(self):
         return self.controller.get_selected_group()
@@ -37,11 +37,11 @@ class TextPatternControl(wx.TextCtrl):
     def SetSeparators(self, separators):
         self.controller.set_separators(separators)
 
-    def SetParts(self, values):
-        self.controller.set_values(values)
+    def SetParts(self, parts):
+        self.controller.set_parts(parts)
 
-    def SetValuesValidator(self, values_validator):
-        self.controller.set_values_validator(values_validator)
+    def SetValidator(self, validator):
+        self.controller.set_validator(validator)
 
     def SetUpHandler(self, group, up_handler):
         self.controller.set_up_handler(group, up_handler)
@@ -65,7 +65,7 @@ class TextPatternControlController(humblewx.Controller):
         self.original_background = self.view.GetBackgroundColour()
         self.separators = []
         self.last_selected_group = None
-        self.values_validator = None
+        self.validator = None
         self.up_handlers = {}
         self.down_handlers = {}
 
@@ -109,7 +109,7 @@ class TextPatternControlController(humblewx.Controller):
     def on_shift_tab(self):
         return not self._select_group(self.get_selected_group() - 1)
 
-    def get_values(self):
+    def get_parts(self):
         groups = self._get_groups()
         if groups is None:
             return None
@@ -126,10 +126,10 @@ class TextPatternControlController(humblewx.Controller):
         self.separators = separators
         self._validate()
 
-    def set_values(self, values):
+    def set_parts(self, parts):
         (start, end) = self.view.GetSelection()
         text = ""
-        for (index, value) in enumerate(values):
+        for (index, value) in enumerate(parts):
             if index > 0:
                 text += self.separators[index-1]
             text += value
@@ -137,8 +137,8 @@ class TextPatternControlController(humblewx.Controller):
         self._validate()
         self.view.SetSelection(start, end)
 
-    def set_values_validator(self, values_validator):
-        self.values_validator = values_validator
+    def set_validator(self, validator):
+        self.validator = validator
         self._validate()
 
     def set_up_handler(self, group, up_handler):
@@ -170,16 +170,12 @@ class TextPatternControlController(humblewx.Controller):
             self.view.SetBackgroundColour("pink")
 
     def _is_text_valid(self):
-        values = self.get_values()
-        if values is None:
+        if self.get_parts() is None:
             return False
-        return self._is_values_valid(values)
-
-    def _is_values_valid(self, values):
-        if self.values_validator is None:
+        elif self.validator is None:
             return True
         else:
-            return self.values_validator()
+            return self.validator()
 
     def _select_group(self, section_to_focus):
         for (index, (_, start, end)) in enumerate(self._get_groups()):

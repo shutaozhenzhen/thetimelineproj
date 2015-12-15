@@ -29,15 +29,15 @@ from timelinelib.wxgui.framework import Dialog
 
 class describe_text_pattern_control(UnitTestCase):
 
-    def test_it_sets_values_depending_on_separators_and_values(self):
+    def test_it_sets_value_depending_on_separators_and_parts(self):
         self.controller.set_separators(["a", "b"])
-        self.controller.set_values(["1", "2", "3"])
+        self.controller.set_parts(["1", "2", "3"])
         self.view.SetValue.assert_called_with("1a2b3")
 
-    def test_it_gets_values_depending_on_separators_and_values(self):
+    def test_it_gets_parts_depending_on_separators_and_value(self):
         self.controller.set_separators(["a", "b"])
         self.view.GetValue.return_value = "1a2b3"
-        self.assertEqual(self.controller.get_values(), ["1", "2", "3"])
+        self.assertEqual(self.controller.get_parts(), ["1", "2", "3"])
 
     def test_show_manual_test_dialog(self):
         self.show_dialog(TextPatternControlManualTestDialog)
@@ -72,7 +72,7 @@ class TextPatternControlManualTestDialog(Dialog):
         })
         self.date.SetSeparators(["-", "-"])
         self.date.SetParts(["2015", "12", "05"])
-        self.date.SetValuesValidator(self._is_date_valid)
+        self.date.SetValidator(self._is_date_valid)
         self.date.SetUpHandler(self.YEAR_GROUP, self._increment_year)
         self.date.SetUpHandler(self.MONTH_GROUP, self._increment_month)
         self.date.SetUpHandler(self.DAY_GROUP, self._increment_day)

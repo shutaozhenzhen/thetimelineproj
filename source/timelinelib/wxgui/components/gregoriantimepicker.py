@@ -28,7 +28,7 @@ class GregorianTimePicker(TextPatternControl):
     def __init__(self, parent):
         TextPatternControl.__init__(self, parent)
         self.SetSeparators([":"])
-        self.SetValuesValidator(self._is_time_valid)
+        self.SetValidator(self._is_time_valid)
         self.SetUpHandler(self.HOUR_GROUP, self._increment_hour)
         self.SetUpHandler(self.MINUTE_GROUP, self._increment_minute)
         self.SetDownHandler(self.HOUR_GROUP, self._decrement_hour)
