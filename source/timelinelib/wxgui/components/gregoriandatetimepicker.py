@@ -82,7 +82,7 @@ class GregorianDateTimePicker(wx.Panel):
 
     def _date_button_on_click(self, evt):
         try:
-            wx_date = self.controller.date_tuple_to_wx_date(self.date_picker.get_value())
+            wx_date = self.controller.date_tuple_to_wx_date(self.date_picker.GetGregorianDate())
         except ValueError:
             wx_date = wx.DateTime.Now()
         calendar_popup = CalendarPopup(self, wx_date, self.config)
@@ -100,7 +100,7 @@ class GregorianDateTimePicker(wx.Panel):
     def _calendar_on_date_changed(self, evt):
         wx_date = evt.GetEventObject().GetDate()
         date = self.controller.wx_date_to_date_tuple(wx_date)
-        self.date_picker.set_value(date)
+        self.date_picker.SetGregorianDate(date)
 
     def _calendar_on_date_changed_dclick(self, evt):
         self.time_picker.SetFocus()
@@ -120,13 +120,13 @@ class GregorianDateTimePickerController(object):
             hour, minute, second = self.time_picker.GetGregorianTime()
         else:
             hour, minute, second = (0, 0, 0)
-        year, month, day = self.date_picker.get_value()
+        year, month, day = self.date_picker.GetGregorianDate()
         return Gregorian(year, month, day, hour, minute, second).to_time()
 
     def set_value(self, time):
         if time is None:
             time = self.now_fn()
-        self.date_picker.set_value(GregorianUtils.from_time(time).to_date_tuple())
+        self.date_picker.SetGregorianDate(GregorianUtils.from_time(time).to_date_tuple())
         self.time_picker.SetGregorianTime(GregorianUtils.from_time(time).to_time_tuple())
         if not self.on_change is None:
             self.on_change()
