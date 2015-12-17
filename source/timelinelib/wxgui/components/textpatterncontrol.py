@@ -113,16 +113,16 @@ class TextPatternControlController(humblewx.Controller):
         return not self._select_group(self.get_selected_group() - 1)
 
     def get_parts(self):
-        groups = self._get_groups()
-        if groups is None:
-            return None
-        return [value for (value, start, end) in self._get_groups()]
+        if self._get_groups() is not None:
+            return [value for (value, start, end) in self._get_groups()]
+        return None
 
     def get_selected_group(self):
         (selection_start, _) = self.view.GetSelection()
-        for (index, (_, start, end)) in enumerate(self._get_groups()):
-            if selection_start >= start and selection_start <= end:
-                return index
+        if self._get_groups() is not None:
+            for (index, (_, start, end)) in enumerate(self._get_groups()):
+                if selection_start >= start and selection_start <= end:
+                    return index
         return 0
 
     def set_separators(self, separators):
@@ -181,8 +181,9 @@ class TextPatternControlController(humblewx.Controller):
             return self.validator()
 
     def _select_group(self, section_to_focus):
-        for (index, (_, start, end)) in enumerate(self._get_groups()):
-            if index == section_to_focus:
-                self.view.SetSelection(start, end)
-                return True
+        if self._get_groups() is not None:
+            for (index, (_, start, end)) in enumerate(self._get_groups()):
+                if index == section_to_focus:
+                    self.view.SetSelection(start, end)
+                    return True
         return False
