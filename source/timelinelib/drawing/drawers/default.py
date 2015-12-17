@@ -517,8 +517,11 @@ class DefaultDrawingAlgorithm(Drawer):
             padding = 2 * BALLOON_RADIUS
             if iw > 0:
                 padding += BALLOON_RADIUS
-            max_text_width = (self.scene.width - SLIDER_WIDTH - event_rect.X -
-                              event_rect.width / 2 - iw - padding + ARROW_OFFSET)
+            else:
+                iw = 0
+            visble_background = self.scene.width - SLIDER_WIDTH
+            offset_from_event_x = event_rect.X - event_rect.width / 2 + ARROW_OFFSET
+            max_text_width = (visble_background - offset_from_event_x - iw - padding)
             return max(MIN_TEXT_WIDTH, max_text_width)
 
         def get_icon_size():
