@@ -49,6 +49,9 @@ class TextPatternControl(wx.TextCtrl):
     def SetDownHandler(self, group, down_handler):
         self.controller.set_down_handler(group, down_handler)
 
+    def Validate(self):
+        self.controller.validate()
+
     def _bind_events(self):
         self.Bind(wx.EVT_CHAR, self.controller.on_char)
         self.Bind(wx.EVT_TEXT, self.controller.on_text)
@@ -82,7 +85,7 @@ class TextPatternControlController(humblewx.Controller):
         self.view.SetSelection(0, 0)
 
     def on_text(self, event):
-        self._validate()
+        self.validate()
 
     def on_char(self, event):
         skip = True
@@ -124,7 +127,7 @@ class TextPatternControlController(humblewx.Controller):
 
     def set_separators(self, separators):
         self.separators = separators
-        self._validate()
+        self.validate()
 
     def set_parts(self, parts):
         (start, end) = self.view.GetSelection()
@@ -134,18 +137,24 @@ class TextPatternControlController(humblewx.Controller):
                 text += self.separators[index-1]
             text += value
         self.view.SetValue(text)
-        self._validate()
+        self.validate()
         self.view.SetSelection(start, end)
 
     def set_validator(self, validator):
         self.validator = validator
-        self._validate()
+        self.validate()
 
     def set_up_handler(self, group, up_handler):
         self.up_handlers[group] = up_handler
 
     def set_down_handler(self, group, down_handler):
         self.down_handlers[group] = down_handler
+
+    def validate(self):
+        if self._is_text_valid():
+            self.view.SetBackgroundColour(self.original_background)
+        else:
+            self.view.SetBackgroundColour("pink")
 
     def _get_groups(self):
         text = self.view.GetValue()
@@ -162,12 +171,6 @@ class TextPatternControlController(humblewx.Controller):
 
     def _extract_section(self, start, end):
         return (self.view.GetValue()[start:end], start, end)
-
-    def _validate(self):
-        if self._is_text_valid():
-            self.view.SetBackgroundColour(self.original_background)
-        else:
-            self.view.SetBackgroundColour("pink")
 
     def _is_text_valid(self):
         if self.get_parts() is None:
