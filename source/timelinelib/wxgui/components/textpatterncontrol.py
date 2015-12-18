@@ -65,7 +65,6 @@ class TextPatternControl(wx.TextCtrl):
 class TextPatternControlController(humblewx.Controller):
 
     def on_init(self):
-        self.original_background = self.view.GetBackgroundColour()
         self.separators = []
         self.last_selected_group = None
         self.validator = None
@@ -152,7 +151,7 @@ class TextPatternControlController(humblewx.Controller):
 
     def validate(self):
         if self._is_text_valid():
-            self.view.SetBackgroundColour(self.original_background)
+            self.view.SetBackgroundColour(wx.NullColour)
         else:
             self.view.SetBackgroundColour("pink")
 
