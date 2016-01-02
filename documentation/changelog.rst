@@ -59,6 +59,9 @@ Bug fixes:
 * Application does not crash at startup if system has locale zh_CN (Chinese)
   (Merged from 1.5.1.)
 
+* Application does not crash when duplicating container events.
+  (`#125 <https://sourceforge.net/p/thetimelineproj/backlog/125/>`_)
+
 Version 1.8.1
 -------------
 
