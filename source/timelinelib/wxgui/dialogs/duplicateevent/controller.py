@@ -57,7 +57,7 @@ class DuplicateEventDialogController(Controller):
         For each cloned container (period) we calculate the periods of all subevents in this
         container. This makes it possible to create one container and all it's subevents for
         each container period.
-        The container must also get e unique id and the subevents has to be rgistered with
+        The container must also get a unique id and the subevents has to be registered with
         the container.
         """
         periods_with_subperiods, nbr_of_missing_dates = self._repeat_container_period(container)
@@ -97,10 +97,7 @@ class DuplicateEventDialogController(Controller):
 
     def _repeat_container_period(self, event):
         period = self.event.get_time_period()
-        move_period_fn = self.view.get_move_period_fn()
-        frequency = self.view.get_frequency()
-        repetitions = self.view.get_count()
-        direction = self.view.get_direction()
+        move_period_fn, frequency, repetitions, direction = self._get_view_selections()
         periods_with_subperiods = []
         nbr_of_missing_dates = 0
         for index in self._calc_indicies(direction, repetitions):
@@ -117,10 +114,7 @@ class DuplicateEventDialogController(Controller):
 
     def _repeat_event_period(self, event):
         period = event.get_time_period()
-        move_period_fn = self.view.GetMovePeriodFn()
-        frequency = self.view.GetFrequency()
-        repetitions = self.view.GetCount()
-        direction = self.view.GetDirection()
+        move_period_fn, frequency, repetitions, direction = self._get_view_selections()
         periods = []
         nbr_of_missing_dates = 0
         for index in self._calc_indicies(direction, repetitions):
@@ -130,6 +124,12 @@ class DuplicateEventDialogController(Controller):
             else:
                 periods.append(new_period)
         return (periods, nbr_of_missing_dates)
+
+    def _get_view_selections(self):
+        return (self.view.GetMovePeriodFn(),
+                self.view.GetFrequency(),
+                self.view.GetCount(),
+                self.view.GetDirection())
 
     def _calc_indicies(self, direction, repetitions):
         if direction == FORWARD:
