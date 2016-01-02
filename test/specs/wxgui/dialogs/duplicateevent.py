@@ -21,6 +21,7 @@ from mock import Mock
 from timelinelib.calendar.gregorian import GregorianUtils
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
+from timelinelib.data import Container
 from timelinelib.data import TimePeriod
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.time.gregoriantime import GregorianTimeType
@@ -161,6 +162,48 @@ class describe_DuplicateEventDialog(UnitTestCase):
         self.view = Mock(DuplicateEventDialog)
         self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
         self.event = Event(
+            self.db.get_time_type(),
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
+            GregorianUtils.from_date(2010, 1, 1).to_time(),
+            "foo",
+            category=None)
+        self.controller = DuplicateEventDialogController(self.view)
+        self.controller.on_init(self.db, self.event)
+
+    def _create_move_period_fn_mock(self):
+        self.move_period_fn = Mock()
+        self.move_period_fn.return_value = TimePeriod(
+            GregorianTimeType(),
+            GregorianUtils.from_date(2010, 8, 1).to_time(),
+            GregorianUtils.from_date(2010, 8, 1).to_time())
+        return self.move_period_fn
+
+    def _duplicate_with(self, count, freq, direction):
+        self.view.GetCount.return_value = count
+        self.view.GetFrequency.return_value = freq
+        self.view.GetDirection.return_value = direction
+        self.controller.create_duplicates_and_save()
+
+
+class describe_DuplicateEventDialogForContainers(UnitTestCase):
+
+    #
+    # when_duplicating_event_with_default_settings
+    #
+    def test_one_new_event_is_saved(self):
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        self.assertEqual(1, self.db.save_events.call_count)
+
+    #
+    # Setup
+    #
+    def setUp(self):
+        self.db = Mock(MemoryDB)
+        self.db.get_max_cid.return_value = 123
+        self.db.get_time_type.return_value = GregorianTimeType()
+        self.view = Mock(DuplicateEventDialog)
+        self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
+        self.event = Container(
             self.db.get_time_type(),
             GregorianUtils.from_date(2010, 1, 1).to_time(),
             GregorianUtils.from_date(2010, 1, 1).to_time(),
