@@ -103,3 +103,19 @@ class Era(object):
 
     def inside_period(self, time_period):
         return self.time_period.overlap(time_period)
+
+    def overlapping(self, era):
+        if era.get_time_period().start_time >= self.time_period.end_time:
+            return 0
+        if era.get_time_period().start_time == self.time_period.start_time:
+            if era.get_time_period().end_time == self.time_period.end_time:
+                return 4
+            if era.get_time_period().end_time > self.time_period.end_time:
+                return 2
+            else:
+                return 3
+        if era.get_time_period().end_time == self.time_period.end_time:
+            return 5
+        if era.get_time_period().end_time > self.time_period.end_time:
+            return 1
+        return 6

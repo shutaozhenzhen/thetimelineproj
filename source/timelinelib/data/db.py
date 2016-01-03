@@ -119,6 +119,9 @@ class MemoryDB(Observable):
     def get_all_eras(self):
         return self._eras.get_all()
 
+    def get_all_periods(self):
+        return self._eras.get_all_periods()
+
     def save_era(self, era):
         try:
             self._eras.save_era(era)
