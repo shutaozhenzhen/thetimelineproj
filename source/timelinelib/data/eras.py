@@ -41,7 +41,7 @@ class Eras(object):
         return Eras(clone_era_list(self._eras))
 
     def get_all(self):
-        return self._eras
+        return sorted(self._eras)
 
     def get_in_period(self, time_period):
         def include_era(era):

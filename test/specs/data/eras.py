@@ -64,6 +64,16 @@ class describe_saving_eras(ErasTestCase):
         self.assertRaises(InvalidOperationError, self.eras.save_era, era)
 
 
+class describe_overlapping_eras(ErasTestCase):
+
+    def test_eras_are_returned_sorted(self):
+        era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=(128, 255, 255))
+        era2 = a_gregorian_era_with(start="30 Dec 2015", end="1 Feb 2016", color=(255, 0, 255))
+        self.eras.save_era(era2)
+        self.eras.save_era(era1)
+        self.assertEqual(era1, self.eras.get_all()[0])
+
+
 class describe_numeric_era_sublisting(ErasTestCase):
 
     def test_can_return_eras_visible_in_a_period(self):
