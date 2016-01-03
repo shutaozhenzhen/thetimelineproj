@@ -46,6 +46,9 @@ GUI:
 * Colors can be selected for major strip lines, minor strip lines and now line.
   (`#111 <https://sourceforge.net/p/thetimelineproj/backlog/111/>`_)
 
+* Overlapping eras are now displayed in a mixed color.
+  (`#108 <https://sourceforge.net/p/thetimelineproj/backlog/109/>`_)
+
 Translations:
 
 * The wx stock items are translated correctly in the Windows binary.
