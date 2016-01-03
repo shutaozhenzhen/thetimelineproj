@@ -43,7 +43,7 @@ class DefaultBackgroundDrawer(PluginBase):
 
     def _draw_eras(self, dc, scene, timeline):
         _, h = dc.GetSizeTuple()
-        for era in timeline.get_all_eras():
+        for era in timeline.get_all_periods():
             if self.drawer.period_is_visible(era.get_time_period()):
                 self._draw_era(era, h)
 

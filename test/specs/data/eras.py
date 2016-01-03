@@ -24,6 +24,9 @@ from timelinelib.test.utils import a_gregorian_era_with
 from timelinelib.test.utils import a_numeric_era_with
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import numeric_period
+from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.data.timeperiod import TimePeriod
+from timelinelib.time.gregoriantime import GregorianTimeType
 
 
 class ErasTestCase(UnitTestCase):
@@ -65,14 +68,200 @@ class describe_saving_eras(ErasTestCase):
 
 
 class describe_overlapping_eras(ErasTestCase):
+    """
+    All Eras are sorted by start_time. That is...
+       Era(n).start_time <= Era(n+1).start_time.
+    Two adjacent Eras are overlapping if..
+        Era(n+1).start_time < Era(n).end_time
+    There are 6 different overlapping situations to handle:
+        1.  o---(e1)---o
+                o---(e2)---o
 
-    def test_eras_are_returned_sorted(self):
-        era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=(128, 255, 255))
-        era2 = a_gregorian_era_with(start="30 Dec 2015", end="1 Feb 2016", color=(255, 0, 255))
-        self.eras.save_era(era2)
-        self.eras.save_era(era1)
-        self.assertEqual(era1, self.eras.get_all()[0])
+        2.  o---(e1)---o
+            o---(e2)-------o
 
+        Total ecplise....
+
+        3.  o---(e1)-------o
+            o---(e2)----o
+
+        4.  o---(e1)----o
+            o---(e2)----o
+
+        5.  o------(e1)----o
+               o---(e2)----o
+
+        6.  o------(e1)----o
+               o---(e2)---o
+    """
+    def test_eras_are_returned_sorted_when_list_is_unsorted(self):
+        self.given_two_overlapping_eras_type_1()
+        self.assertEqual(self.era1, self.eras.get_all()[0])
+
+    def test_eras_can_detect_overlapping_type1(self):
+        self.given_two_overlapping_eras_type_1()
+        eras = self.eras.get_all()
+        self.assertEqual(1, eras[0].overlapping(eras[1]))
+
+    def test_eras_can_detect_overlapping_type2(self):
+        self.given_two_overlapping_eras_type_2()
+        eras = self.eras.get_all()
+        self.assertEquals(eras[0], self.era1)
+        self.assertEqual(2, eras[0].overlapping(eras[1]))
+
+    def test_eras_can_detect_overlapping_type3(self):
+        self.given_two_overlapping_eras_type_3()
+        eras = self.eras.get_all()
+        self.assertEquals(eras[0], self.era1)
+        self.assertEqual(3, eras[0].overlapping(eras[1]))
+
+    def test_eras_can_detect_overlapping_type4(self):
+        self.given_two_overlapping_eras_type_4()
+        eras = self.eras.get_all()
+        self.assertEquals(eras[0], self.era1)
+        self.assertEqual(4, eras[0].overlapping(eras[1]))
+
+    def test_eras_can_detect_overlapping_type5(self):
+        self.given_two_overlapping_eras_type_5()
+        eras = self.eras.get_all()
+        self.assertEquals(eras[0], self.era1)
+        self.assertEqual(5, eras[0].overlapping(eras[1]))
+
+    def test_eras_can_detect_overlapping_type6(self):
+        self.given_two_overlapping_eras_type_6()
+        eras = self.eras.get_all()
+        self.assertEquals(eras[0], self.era1)
+        self.assertEqual(6, eras[0].overlapping(eras[1]))
+
+    def test_eras_can_return_a_list_with_added_overlapping_type1_eras(self):
+        self.given_two_overlapping_eras_type_1()
+        periods = self.eras.get_all_periods()
+        self.assertEqual(3, len(periods))
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015"),
+                          human_time_to_gregorian("15 Dec 2015"),
+                          human_time_to_gregorian("1 Jan 2016")], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([(128, 255, 255),  (191, 127, 255), (255, 0, 255)], [e.color for e in periods])
+
+    def test_eras_can_return_a_list_with_added_overlapping_type2_eras(self):
+        self.given_two_overlapping_eras_type_2()
+        periods = self.eras.get_all_periods()
+        self.assertEqual(2, len(periods))
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015"),
+                          human_time_to_gregorian("1 Jan 2016")], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([(191, 127, 255), (255, 0, 255)], [e.color for e in periods])
+
+    def test_eras_can_return_a_list_with_added_overlapping_type3_eras(self):
+        self.given_two_overlapping_eras_type_3()
+        periods = self.eras.get_all_periods()
+        self.assertEqual(2, len(periods))
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015"),
+                          human_time_to_gregorian("15 Dec 2015")], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([(191, 127, 255), (128, 255, 255)], [e.color for e in periods])
+
+    def test_eras_can_return_a_list_with_added_overlapping_type4_eras(self):
+        self.given_two_overlapping_eras_type_4()
+        periods = self.eras.get_all_periods()
+        self.assertEqual(1, len(periods))
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015")], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([(191, 127, 255)], [e.color for e in periods])
+
+    def test_eras_can_return_a_list_with_added_overlapping_type5_eras(self):
+        self.given_two_overlapping_eras_type_5()
+        periods = self.eras.get_all_periods()
+        self.assertEqual(2, len(periods))
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015"),
+                          human_time_to_gregorian("15 Dec 2015")], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([(128, 255, 255), (191, 127, 255)], [e.color for e in periods])
+
+    def test_eras_can_return_a_list_with_added_overlapping_type6_eras(self):
+        self.given_two_overlapping_eras_type_6()
+        periods = self.eras.get_all_periods()
+        self.assertEqual(3, len(periods))
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015"),
+                          human_time_to_gregorian("15 Dec 2015"),
+                          human_time_to_gregorian("15 Jan 2016")], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([(128, 255, 255), (191, 127, 255),  (128, 255, 255)], [e.color for e in periods])
+
+    def test_eras_can_return_a_list_with_3_overlapping_eras(self):
+        self.given_three_overlapping_eras()
+        periods = self.eras.get_all_periods()
+        self.assertEqual(5, len(periods))
+        self.assertEqual([human_time_to_gregorian("1 Jan 2016"),
+                          human_time_to_gregorian("15 Jan 2016"),
+                          human_time_to_gregorian("1 Feb 2016"),
+                          human_time_to_gregorian("30 Mar 2016"),
+                          human_time_to_gregorian("15 Apr 2016")], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([(128, 255, 255),
+                          (191, 191, 255),
+                          (223, 95, 255),
+                          (255, 64, 255),
+                          (255, 0, 255)], [e.color for e in periods])
+
+    def given_two_overlapping_eras_type_1(self):
+        color1 = (128, 255, 255)
+        color2 = (255, 0, 255)
+        self.eras = Eras()
+        self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=color1)
+        self.era2 = a_gregorian_era_with(start="15 Dec 2015", end="1 Feb 2016", color=color2)
+        self.eras.save_era(self.era2)
+        self.eras.save_era(self.era1)
+
+    def given_two_overlapping_eras_type_2(self):
+        color1 = (128, 255, 255)
+        color2 = (255, 0, 255)
+        self.eras = Eras()
+        self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=color1)
+        self.era2 = a_gregorian_era_with(start="1 Dec 2015", end="1 Feb 2016", color=color2)
+        self.eras.save_era(self.era1)
+        self.eras.save_era(self.era2)
+
+    def given_two_overlapping_eras_type_3(self):
+        color1 = (128, 255, 255)
+        color2 = (255, 0, 255)
+        self.eras = Eras()
+        self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=color1)
+        self.era2 = a_gregorian_era_with(start="1 Dec 2015", end="15 Dec 2015", color=color2)
+        self.eras.save_era(self.era1)
+        self.eras.save_era(self.era2)
+
+    def given_two_overlapping_eras_type_4(self):
+        color1 = (128, 255, 255)
+        color2 = (255, 0, 255)
+        self.eras = Eras()
+        self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=color1)
+        self.era2 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=color2)
+        self.eras.save_era(self.era1)
+        self.eras.save_era(self.era2)
+
+    def given_two_overlapping_eras_type_5(self):
+        color1 = (128, 255, 255)
+        color2 = (255, 0, 255)
+        self.eras = Eras()
+        self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=color1)
+        self.era2 = a_gregorian_era_with(start="15 Dec 2015", end="1 Jan 2016", color=color2)
+        self.eras.save_era(self.era2)
+        self.eras.save_era(self.era1)
+
+    def given_two_overlapping_eras_type_6(self):
+        color1 = (128, 255, 255)
+        color2 = (255, 0, 255)
+        self.eras = Eras()
+        self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="30 Jan 2016", color=color1)
+        self.era2 = a_gregorian_era_with(start="15 Dec 2015", end="15 Jan 2016", color=color2)
+        self.eras.save_era(self.era2)
+        self.eras.save_era(self.era1)
+
+    def given_three_overlapping_eras(self):
+        color1 = (128, 255, 255)
+        color2 = (255, 0, 255)
+        color3 = (255, 128, 255)
+        self.eras = Eras()
+        self.era1 = a_gregorian_era_with(start="1 Jan 2016", end="30 Mar 2016", color=color1)
+        self.era2 = a_gregorian_era_with(start="1 Feb 2016", end="30 Apr 2016", color=color2)
+        self.era3 = a_gregorian_era_with(start="15 Jan 2016", end="15 Apr 2016", color=color3)
+        self.eras.save_era(self.era1)
+        self.eras.save_era(self.era2)
+        self.eras.save_era(self.era3)
 
 class describe_numeric_era_sublisting(ErasTestCase):
 
