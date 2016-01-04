@@ -24,6 +24,7 @@ from timelinelib.test.utils import a_gregorian_era_with
 from timelinelib.test.utils import a_numeric_era_with
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import numeric_period
+from timelinelib.test.utils import human_time_to_gregorian
 
 
 class ErasTestCase(UnitTestCase):
@@ -35,6 +36,7 @@ class ErasTestCase(UnitTestCase):
         self.color1 = (128, 255, 255)
         self.color2 = (255, 0, 255)
         self.color3 = (255, 128, 255)
+        self.Dec_1_2015 = human_time_to_gregorian("1 Dec 2015")
         self.eras = Eras()
 
 
@@ -137,9 +139,9 @@ class describe_overlapping_eras(ErasTestCase):
         self.given_two_overlapping_eras_type_1()
         periods = self.eras.get_all_periods()
         self.assertEqual(3, len(periods))
-        self.assertEqual([periods[0].get_time_period().start_time,
-                          periods[1].get_time_period().start_time,
-                          periods[2].get_time_period().start_time], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015"),
+                          human_time_to_gregorian("15 Dec 2015"),
+                          human_time_to_gregorian("1 Jan 2016")], [e.get_time_period().start_time for e in periods])
         self.assertEqual([self.color1,
                           self.mix_colors(self.color1, self.color2),
                           self.color2], [e.color for e in periods])
@@ -148,8 +150,8 @@ class describe_overlapping_eras(ErasTestCase):
         self.given_two_overlapping_eras_type_2()
         periods = self.eras.get_all_periods()
         self.assertEqual(2, len(periods))
-        self.assertEqual([periods[0].get_time_period().start_time,
-                          periods[1].get_time_period().start_time], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015"),
+                          human_time_to_gregorian("1 Jan 2016")], [e.get_time_period().start_time for e in periods])
         self.assertEqual([self.mix_colors(self.color1, self.color2),
                           self.color2], [e.color for e in periods])
 
@@ -157,8 +159,8 @@ class describe_overlapping_eras(ErasTestCase):
         self.given_two_overlapping_eras_type_3()
         periods = self.eras.get_all_periods()
         self.assertEqual(2, len(periods))
-        self.assertEqual([periods[0].get_time_period().start_time,
-                          periods[1].get_time_period().start_time], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015"),
+                          human_time_to_gregorian("15 Dec 2015")], [e.get_time_period().start_time for e in periods])
         self.assertEqual([self.mix_colors(self.color1, self.color2),
                           self.color1], [e.color for e in periods])
 
@@ -166,15 +168,15 @@ class describe_overlapping_eras(ErasTestCase):
         self.given_two_overlapping_eras_type_4()
         periods = self.eras.get_all_periods()
         self.assertEqual(1, len(periods))
-        self.assertEqual([periods[0].get_time_period().start_time], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015")], [e.get_time_period().start_time for e in periods])
         self.assertEqual([self.mix_colors(self.color1, self.color2)], [e.color for e in periods])
 
     def test_eras_can_return_a_list_with_added_overlapping_type5_eras(self):
         self.given_two_overlapping_eras_type_5()
         periods = self.eras.get_all_periods()
         self.assertEqual(2, len(periods))
-        self.assertEqual([periods[0].get_time_period().start_time,
-                          periods[1].get_time_period().start_time], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015"),
+                          human_time_to_gregorian("15 Dec 2015")], [e.get_time_period().start_time for e in periods])
         self.assertEqual([self.color1,
                           self.mix_colors(self.color1, self.color2)], [e.color for e in periods])
 
@@ -182,9 +184,9 @@ class describe_overlapping_eras(ErasTestCase):
         self.given_two_overlapping_eras_type_6()
         periods = self.eras.get_all_periods()
         self.assertEqual(3, len(periods))
-        self.assertEqual([periods[0].get_time_period().start_time,
-                          periods[1].get_time_period().start_time,
-                          periods[2].get_time_period().start_time], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([human_time_to_gregorian("1 Dec 2015"),
+                          human_time_to_gregorian("15 Dec 2015"),
+                          human_time_to_gregorian("15 Jan 2016")], [e.get_time_period().start_time for e in periods])
         self.assertEqual([self.color1,
                           self.mix_colors(self.color1, self.color2),
                           self.color1], [e.color for e in periods])
@@ -198,11 +200,11 @@ class describe_overlapping_eras(ErasTestCase):
         self.given_three_overlapping_eras()
         periods = self.eras.get_all_periods()
         self.assertEqual(5, len(periods))
-        self.assertEqual([periods[0].get_time_period().start_time,
-                          periods[1].get_time_period().start_time,
-                          periods[2].get_time_period().start_time,
-                          periods[3].get_time_period().start_time,
-                          periods[4].get_time_period().start_time], [e.get_time_period().start_time for e in periods])
+        self.assertEqual([human_time_to_gregorian("1 Jan 2016"),
+                          human_time_to_gregorian("15 Jan 2016"),
+                          human_time_to_gregorian("1 Feb 2016"),
+                          human_time_to_gregorian("30 Mar 2016"),
+                          human_time_to_gregorian("15 Apr 2016")], [e.get_time_period().start_time for e in periods])
         self.assertEqual([self.color1,
                           self.mix_colors(self.color1, self.color3),
                           self.mix_3colors(self.color3, self.color1, self.color2),
