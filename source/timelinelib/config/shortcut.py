@@ -18,11 +18,11 @@
 
 """
 Naming and other conventions:
-All data needed for configuration of shortcuts are collected in metadata 
+All data needed for configuration of shortcuts are collected in metadata
 objects wich are of type Metadata.
 The text in a menu item to the right of the \t character is called shortcut.
 Examples of shortcuts: Ctrl+N, PgUp, Shift+Ctrl+X
-The shortcut, if it exists, consists of an optional modifier and a shortcut 
+The shortcut, if it exists, consists of an optional modifier and a shortcut
 key. So the format of a shortcut is: [modifier +] shortcut_key.
 The text in a menu item describing the action is called function.
 wxid is the ID associated with the menu item.
@@ -79,9 +79,11 @@ METADATA = [  # File
               Metadata(mf.ID_CREATE_EVENT, "shortcut_create_event", LABEL_TIMELINE % _("Create Event"), NO_MODIFIER, ""),
               Metadata(mf.ID_EDIT_EVENT, "shortcut_edit_event", LABEL_TIMELINE % _("Edit Selected Event"), NO_MODIFIER, ""),
               Metadata(mf.ID_DUPLICATE_EVENT, "shortcut_duplicate_event", LABEL_TIMELINE % _("Duplicate Selected Event"), NO_MODIFIER, ""),
-              Metadata(mf.ID_SET_CATEGORY_ON_SELECTED, "shortcut_set_category_on_selected", LABEL_TIMELINE % _("Set Category on Selected Events"), NO_MODIFIER, ""),
+              Metadata(mf.ID_SET_CATEGORY_ON_SELECTED, "shortcut_set_category_on_selected",
+                       LABEL_TIMELINE % _("Set Category on Selected Events"), NO_MODIFIER, ""),
               Metadata(mf.ID_MEASURE_DISTANCE, "shortcut_measure_distance", LABEL_TIMELINE % _("Measure Distance between two Events"), NO_MODIFIER, ""),
-              Metadata(mf.ID_SET_CATEGORY_ON_WITHOUT, "shortcut_set_category_on_without", LABEL_TIMELINE % _("Set Category on events without category"), NO_MODIFIER, ""),
+              Metadata(mf.ID_SET_CATEGORY_ON_WITHOUT, "shortcut_set_category_on_without",
+                       LABEL_TIMELINE % _("Set Category on events without category"), NO_MODIFIER, ""),
               Metadata(mf.ID_EDIT_CATEGORIES, "shortcut_edit_categories", LABEL_TIMELINE % _("Edit Categories"), NO_MODIFIER, ""),
               Metadata(mf.ID_SET_READONLY, "shortcut_set_readonly", LABEL_TIMELINE % _("Read Only"), NO_MODIFIER, ""),
               Metadata(mf.ID_UNDO, "shortcut_undo", LABEL_TIMELINE % _("Undo"), CTRL_MODIFIER, "Z"),
@@ -100,61 +102,62 @@ METADATA = [  # File
 FUNCTION_KEYS = ["PgDn", "PgUp", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]
 SHORTCUT_KEYS = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
                  "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-                 "1", "2", "3", "4", "5", "6", "7", "8", "9", 
+                 "1", "2", "3", "4", "5", "6", "7", "8", "9",
                  "+", "-",
-                ] + FUNCTION_KEYS 
+                 ] + FUNCTION_KEYS
 NON_EMPTY_MODIFIERS = ["Ctrl", "Alt", "Shift+Ctrl", "Shift+Alt", "Alt+Ctrl", "Shift+Alt+Ctrl"]
 MODIFIERS = ["", ] + NON_EMPTY_MODIFIERS
 
 
 class ShortcutController(object):
+
     def __init__(self, shortcut_config, wxItems):
         self.shortcut_config = shortcut_config
         self.wxItems = wxItems
-        
+
     def load_config_settings(self):
         for metadata in METADATA:
             self._load_config_setting(metadata)
-    
+
     def get_functions(self):
         return [metadata.function for metadata in METADATA]
-        
+
     def get_modifiers(self):
         return MODIFIERS
 
     def get_shortcuts(self):
         return SHORTCUT_KEYS
-    
+
     def get_function(self, shortcut):
         for metadata in METADATA:
             if self._shortcut_from_metadata(metadata) == shortcut:
                 return metadata.function
-        
+
     def get_modifier_and_key(self, function):
         for metadata in METADATA:
             if metadata.function == function:
                 return metadata.modifier, metadata.key
-            
+
     def is_valid(self, modifier, shortcut_key):
         if modifier == "":
-            return shortcut_key in ["",] + FUNCTION_KEYS
+            return shortcut_key in [""] + FUNCTION_KEYS
         else:
             return modifier in MODIFIERS and shortcut_key in SHORTCUT_KEYS[1:]
-        
+
     def exists(self, shortcut):
         return shortcut in [self._shortcut_from_metadata(metadata) for metadata in METADATA
                             if self._shortcut_from_metadata(metadata) != ""]
-    
+
     def wxid_exists(self, wxid):
         return wxid in [shortcut.wxid for shortcut in METADATA]
 
     def is_function_key(self, shortcut):
         return shortcut in FUNCTION_KEYS
-    
+
     def add_navigation_functions(self):
         self._add_time_navigation_functions()
         self._add_numeric_navigation_functions()
-        
+
     def edit(self, function, new_shortcut):
         for metadata in METADATA:
             if metadata.function == function:
@@ -162,10 +165,10 @@ class ShortcutController(object):
                     self._edit(metadata.wxid, new_shortcut, self.wxItems[metadata.wxid])
                 except KeyError:
                     pass
-        
+
     #
     # Internals
-    #s
+    #
     def _add_time_navigation_functions(self):
         self._add_navigation_functions(0, LABEL_NAVIGATE_TIME)
 
@@ -182,7 +185,7 @@ class ShortcutController(object):
                 else:
                     self._set_menuitem_shortcut(wxid)
                 pos += 1
-        except KeyError, ex:
+        except KeyError:
             # We will end up here when there are no more navigation functions
             pass
 
@@ -192,14 +195,14 @@ class ShortcutController(object):
         metadata = Metadata(wxid, "shortcut_navigate_%s" % str(wxid), function_format % function, modifier, shortcut_key)
         METADATA.append(metadata)
         self._load_config_setting(metadata)
-        
+
     def _get_function_from_menuitem(self, wxid):
         menu_item = self.wxItems[wxid]
         label = menu_item.GetItemLabel()
         function = label.split("\t")[0]
         function = function.replace("&", "")
         return function
-    
+
     def _get_modifier_and_key_from_menuitem(self, wxid):
         menu_item = self.wxItems[wxid]
         label = menu_item.GetItemLabel()
@@ -214,12 +217,12 @@ class ShortcutController(object):
         if shortcut_key not in SHORTCUT_KEYS:
             modifier, shortcut_key = ("", "")
         return modifier, shortcut_key
-    
+
     def _load_config_setting(self, metadata):
         shortcut = self._shortcut_from_metadata(metadata)
         shortcut = self.shortcut_config.get_shortcut_key(metadata.cfgid, shortcut)
         self.edit(metadata.function, shortcut)
-    
+
     def _edit(self, wxid, new_shortcut, menu_item):
         if new_shortcut == "":
             new_shortcut = "+"
@@ -228,12 +231,12 @@ class ShortcutController(object):
                 if metadata.wxid == wxid:
                     self._edit_shortcut(metadata, new_shortcut, menu_item)
                     break
-    
+
     def _valid(self, shortcut):
         if shortcut == "+":
             return True
         return not self.exists(shortcut)
-            
+
     def _edit_shortcut(self, metadata, new_shortcut, menu_item):
         try:
             metadata.modifier, metadata.key = new_shortcut.rsplit("+", 1)
