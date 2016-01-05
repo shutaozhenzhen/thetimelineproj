@@ -266,6 +266,7 @@ class TutorialTimelineCreator(object):
             evt.set_data("description", description)
         if hyperlink:
             evt.set_hyperlink(hyperlink)
+        evt.set_default_color((200, 200, 200))
         self.db.save_event(evt)
 
     def add_container(self, text, description, start_add, end_add=None):

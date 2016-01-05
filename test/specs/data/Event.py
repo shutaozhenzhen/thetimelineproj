@@ -53,7 +53,7 @@ class describe_event(UnitTestCase):
         self.assertEqual(event.get_icon(), None)
         self.assertEqual(event.get_hyperlink(), None)
         self.assertEqual(event.get_progress(), None)
-        self.assertEqual(event.get_default_color(), None)
+        self.assertEqual(event.get_default_color(), (200, 200, 200))
 
     def test_can_set_values(self):
         self.assertEqual(
