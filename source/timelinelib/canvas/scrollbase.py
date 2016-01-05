@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.canvas.inputhandler import InputHandler
+from timelinelib.canvas.inputhandler import InputHandler
 
 
 # dragscroll timer interval in milliseconds
