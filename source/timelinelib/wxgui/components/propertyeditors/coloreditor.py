@@ -19,9 +19,10 @@
 import wx
 
 from timelinelib.wxgui.components.propertyeditors.baseeditor import BaseEditor
+from timelinelib.wxgui.components.colourselect import ColourSelect
 
 
-class ProgressEditorGuiCreator(wx.Panel):
+class ColorEditorGuiCreator(wx.Panel):
 
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
@@ -30,35 +31,33 @@ class ProgressEditorGuiCreator(wx.Panel):
         return wx.GridBagSizer(vgap=10, hgap=10)
 
     def create_controls(self):
-        label = wx.StaticText(self, label=_("Progress %:"))
+        description = wx.StaticText(self, label=_("Color used when the Event has no category associated with it."))
         self.data = self._create_color_chooser_control()
-        return (label, self.data)
+        return (description, self.data)
 
     def put_controls_in_sizer(self, sizer, controls):
-        label, spin_ctrl = controls
+        description, spin_ctrl = controls
         span = wx.GBSpan(rowspan=1, colspan=1)
-        sizer.Add(label, wx.GBPosition(row=1, col=0), span)
-        sizer.Add(spin_ctrl, wx.GBPosition(row=1, col=1), span)
+        sizer.Add(description, wx.GBPosition(row=1, col=1), span)
+        sizer.Add(spin_ctrl, wx.GBPosition(row=2, col=1), span)
 
     def _create_color_chooser_control(self):
-        progress = wx.SpinCtrl(self, size=(50, -1))
-        progress.SetRange(0, 100)
-        return progress
+        return ColourSelect(self)
 
 
-class ProgressEditor(BaseEditor, ProgressEditorGuiCreator):
+class ColorEditor(BaseEditor, ColorEditorGuiCreator):
 
     def __init__(self, parent, editor, name=""):
         BaseEditor.__init__(self, parent, editor)
-        ProgressEditorGuiCreator.__init__(self, parent)
+        ColorEditorGuiCreator.__init__(self, parent)
         self.create_gui()
 
     def focus(self):
-        super(ProgressEditor, self).focus()
-        self._select_all()
-
-    def _select_all(self):
-        self.data.SetSelection(0, -1)
+        super(ColorEditor, self).focus()
 
     def clear_data(self):
-        self.data.SetValue(0)
+        self.data.SetValue((200, 200, 200))
+
+    def get_data(self):
+        color = self.data.GetValue()
+        return color.Get()

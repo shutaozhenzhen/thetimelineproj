@@ -31,6 +31,7 @@ from timelinelib.wxgui.components.propertyeditors.descriptioneditor import Descr
 from timelinelib.wxgui.components.propertyeditors.hyperlinkeditor import HyperlinkEditor
 from timelinelib.wxgui.components.propertyeditors.iconeditor import IconEditor
 from timelinelib.wxgui.components.propertyeditors.progresseditor import ProgressEditor
+from timelinelib.wxgui.components.propertyeditors.coloreditor import ColorEditor
 from timelinelib.wxgui.components.textctrlselect import TextCtrlSelect
 from timelinelib.wxgui.components.twostatebutton import TwoStateButton
 from timelinelib.wxgui.components.categorytree import CustomCategoryTree
