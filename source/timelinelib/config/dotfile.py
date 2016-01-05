@@ -43,6 +43,7 @@ WINDOW_HEIGHT = "window_height"
 WINDOW_XPOS = "window xpos"
 WINDOW_YPOS = "window ypos"
 WINDOW_MAXIMIZED = "window_maximized"
+SHOW_TOOLBAR = "show_toolbar"
 SHOW_SIDEBAR = "show_sidebar"
 SHOW_LEGEND = "show_legend"
 SIDEBAR_WIDTH = "sidebar_width"
@@ -74,6 +75,7 @@ DEFAULTS = {
     WINDOW_XPOS: "-1",
     WINDOW_YPOS: "-1",
     WINDOW_MAXIMIZED: "False",
+    SHOW_TOOLBAR: "True",
     SHOW_SIDEBAR: "True",
     SIDEBAR_WIDTH: "200",
     SHOW_LEGEND: "True",
@@ -176,6 +178,13 @@ class Config(Observable):
     def set_window_maximized(self, maximized):
         self.config_parser.set(DEFAULTSECT, WINDOW_MAXIMIZED, str(maximized))
     window_maximized = property(get_window_maximized, set_window_maximized)
+
+    def get_show_toolbar(self):
+        return self.config_parser.getboolean(DEFAULTSECT, SHOW_TOOLBAR)
+
+    def set_show_toolbar(self, show):
+        self.config_parser.set(DEFAULTSECT, SHOW_TOOLBAR, str(show))
+        self._notify()
 
     def get_show_sidebar(self):
         return self.config_parser.getboolean(DEFAULTSECT, SHOW_SIDEBAR)
