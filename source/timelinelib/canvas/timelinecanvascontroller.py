@@ -20,6 +20,7 @@ import webbrowser
 
 import wx
 
+from timelinelib.canvas.events import create_mouse_moved_event
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.noop import NoOpInputHandler
 from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
@@ -532,9 +533,8 @@ class TimelineCanvasController(object):
         return event is not None
 
     def _display_eventinfo_in_statusbar(self, xpixelpos, ypixelpos, alt_down=False):
-        from timelinelib.canvas.timelinecanvas import TimelineCanvas
         self.view.PostEvent(
-            TimelineCanvas.MouseMovedEvent(
+            create_mouse_moved_event(
                 event=self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down),
                 time_string=self._format_current_pos_datetime_string(xpixelpos)
             )
