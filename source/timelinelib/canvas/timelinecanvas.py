@@ -33,6 +33,7 @@ class TimelineCanvas(wx.Panel):
     """
 
     DividerPositionChangedEvent, EVT_DIVIDER_POSITION_CHANGED = wx.lib.newevent.NewEvent()
+    MouseMovedEvent, EVT_MOUSE_MOVED = wx.lib.newevent.NewEvent()
 
     def __init__(self, parent, status_bar_adapter, fn_handle_db_error, config, main_frame):
         wx.Panel.__init__(self, parent, style=wx.NO_BORDER | wx.WANTS_CHARS)
@@ -50,8 +51,11 @@ class TimelineCanvas(wx.Panel):
 
     def SetDividerPosition(self, position):
         self._divider_position = int(min(100, max(0, position)))
-        wx.PostEvent(self, self.DividerPositionChangedEvent())
+        self.PostEvent(self.DividerPositionChangedEvent())
         self.controller.redraw_timeline()
+
+    def PostEvent(self, event):
+        wx.PostEvent(self, event)
 
     def MoveSelectedEventUp(self):
         self.controller.move_selected_event_up()

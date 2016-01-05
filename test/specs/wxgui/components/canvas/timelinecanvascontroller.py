@@ -152,12 +152,12 @@ class TimelineViewSpec(UnitTestCase):
         event = self.given_event_with(text="Period event", pos=(40, 60), size=(20, 10))
         self.init_view_with_db()
         self.simulate_mouse_move(50, 65)
-        self.assertTrue("Period event" in self.get_status_text())
+        self.assertTrue("Period event" in self.get_last_posted_event().event.get_text())
 
     def test_removes_event_info_from_status_bar_when_un_hovering_event(self):
         self.init_view_with_db()
         self.simulate_mouse_move(0, ANY_Y)
-        self.assertEqual("1999-09-19 00:00", self.get_status_text())
+        self.assertEqual("1999-09-19 00:00", self.get_last_posted_event().time_string)
 
     def test_displays_hidden_event_count_in_status_bar(self):
         self.mock_drawer.hidden_event_count = 3
@@ -423,6 +423,11 @@ class TimelineViewSpec(UnitTestCase):
         self.assertTrue(self.status_bar_adapter.set_text.called)
         text = self.status_bar_adapter.set_text.call_args[0][0]
         return text
+
+    def get_last_posted_event(self):
+        self.assertTrue(self.timeline_canvas.PostEvent.called)
+        last_event = self.timeline_canvas.PostEvent.call_args[0][0]
+        return last_event
 
     def get_hidden_event_count_text(self):
         self.assertTrue(self.status_bar_adapter.set_hidden_event_count_text.called)

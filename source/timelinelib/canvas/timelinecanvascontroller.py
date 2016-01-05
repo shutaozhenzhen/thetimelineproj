@@ -532,12 +532,13 @@ class TimelineCanvasController(object):
         return event is not None
 
     def _display_eventinfo_in_statusbar(self, xpixelpos, ypixelpos, alt_down=False):
-        event = self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down)
-        if event is not None:
-            label = event.get_label()
-        else:
-            label = self._format_current_pos_datetime_string(xpixelpos)
-        self.status_bar_adapter.set_text(label)
+        from timelinelib.canvas.timelinecanvas import TimelineCanvas
+        self.view.PostEvent(
+            TimelineCanvas.MouseMovedEvent(
+                event=self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down),
+                time_string=self._format_current_pos_datetime_string(xpixelpos)
+            )
+        )
 
     def _format_current_pos_datetime_string(self, xpos):
         tm = self.get_time(xpos)
