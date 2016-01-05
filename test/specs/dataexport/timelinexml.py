@@ -18,6 +18,7 @@
 
 from timelinelib.data.db import MemoryDB
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
+from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.utils import an_event_with
 
@@ -27,6 +28,16 @@ class describe_export_db_to_timeline_xml(TmpDirTestCase):
     def test_can_export_events_with_empty_text(self):
         self.empty_db.save_event(an_event_with(text=""))
         export_db_to_timeline_xml(self.empty_db, self.export_path)
+        db = import_db_from_timeline_xml(self.export_path)
+        self.assertEqual(len(db.get_all_events()), 1)
+        self.assertEqual(db.get_all_events()[0].get_default_color(), (200, 200, 200))
+
+    def test_can_export_events_with_default_color(self):
+        self.empty_db.save_event(an_event_with(default_color=(100, 100, 100)))
+        export_db_to_timeline_xml(self.empty_db, self.export_path)
+        db = import_db_from_timeline_xml(self.export_path)
+        self.assertEqual(len(db.get_all_events()), 1)
+        self.assertEqual(db.get_all_events()[0].get_default_color(), (100, 100, 100))
 
     def setUp(self):
         TmpDirTestCase.setUp(self)

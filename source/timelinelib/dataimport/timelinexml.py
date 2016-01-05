@@ -156,6 +156,8 @@ class Parser(object):
                         parse_fn_store("tmp_hyperlink")),
                     Tag("icon", OPTIONAL,
                         parse_fn_store("tmp_icon")),
+                    Tag("default_color", OPTIONAL,
+                        parse_fn_store("tmp_default_color")),
                 ])
             ]),
             Tag("view", SINGLE, None, [
@@ -245,11 +247,13 @@ class Parser(object):
             if self._text_starts_with_added_space(text):
                 text = self._remove_added_space(text)
             event = Event(self.db.get_time_type(), start, end, text, category, fuzzy, locked, ends_today)
+        default_color = tmp_dict.pop("tmp_default_color", "200,200,200")
         event.set_data("description", description)
         event.set_data("icon", icon)
         event.set_data("alert", alert)
         event.set_data("hyperlink", hyperlink)
         event.set_data("progress", int(progress))
+        event.set_data("default_color", parse_color(default_color))
         self.db.save_event(event)
 
     def _parse_era(self, text, tmp_dict):
