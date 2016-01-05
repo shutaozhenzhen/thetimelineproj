@@ -18,8 +18,8 @@
 
 import wx
 
+from timelinelib.canvas.scrollbase import ScrollViewInputHandler
 from timelinelib.data import PeriodTooLongError
-from timelinelib.wxgui.components.canvas.scrollbase import ScrollViewInputHandler
 
 
 class ResizeByDragInputHandler(ScrollViewInputHandler):
