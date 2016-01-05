@@ -50,7 +50,10 @@ GUI:
   (`#111 <https://sourceforge.net/p/thetimelineproj/backlog/111/>`_)
 
 * Overlapping eras are now displayed in a mixed color.
-  (`#108 <https://sourceforge.net/p/thetimelineproj/backlog/109/>`_)
+  (`#108 <https://sourceforge.net/p/thetimelineproj/backlog/108/>`_)
+
+* Colors can now be selected for events without an associated category.
+  (`#81 <https://sourceforge.net/p/thetimelineproj/backlog/81/>`_)
 
 Translations:
 

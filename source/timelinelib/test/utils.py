@@ -81,16 +81,18 @@ def an_event():
 
 
 def an_event_with(start=None, end=None, time=ANY_TIME, text="foo", fuzzy=False,
-                  locked=False, ends_today=False, category=None):
+                  locked=False, ends_today=False, category=None, default_color=(200, 200, 200)):
     if start and end:
         start = human_time_to_gregorian(start)
         end = human_time_to_gregorian(end)
     else:
         start = human_time_to_gregorian(time)
         end = human_time_to_gregorian(time)
-    return Event(
+    event = Event(
         GregorianTimeType(), start, end, text, category=category,
         fuzzy=fuzzy, locked=locked, ends_today=ends_today)
+    event.set_default_color(default_color)
+    return event
 
 
 def a_subevent():
