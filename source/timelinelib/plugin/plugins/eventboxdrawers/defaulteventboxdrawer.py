@@ -113,7 +113,7 @@ class DefaultEventBoxDrawer(PluginBase):
         try:
             return event.get_category().color
         except:
-            return GRAY
+            return event.get_default_color()
 
     def _draw_fuzzy_start(self, dc, rect, event):
         self._inflate_clipping_region(dc, rect)

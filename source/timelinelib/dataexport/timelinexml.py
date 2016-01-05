@@ -138,6 +138,9 @@ class Exporter(object):
         if evt.get_data("icon") is not None:
             icon_text = icon_string(evt.get_data("icon"))
             write_simple_tag(xmlfile, "icon", icon_text, INDENT3)
+        default_color = evt.get_data("default_color")
+        if default_color is not None:
+            write_simple_tag(xmlfile, "default_color", color_string(default_color), INDENT3)
     _write_event = wrap_in_tag(_write_event, "event", INDENT2)
 
     def _write_eras(self, xmlfile):

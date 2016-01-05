@@ -51,7 +51,8 @@ class Event(object):
                 self.get_hyperlink() == other.get_hyperlink() and
                 self.get_progress() == other.get_progress() and
                 self.get_alert() == other.get_alert() and
-                self.get_icon() == other.get_icon())
+                self.get_icon() == other.get_icon() and
+                self.get_default_color() == other.get_default_color())
 
     def __ne__(self, other):
         return not (self == other)
@@ -171,6 +172,13 @@ class Event(object):
 
     def set_progress(self, progress):
         self.set_data("progress", progress)
+        return self
+
+    def get_default_color(self):
+        return self.get_data("default_color")
+
+    def set_default_color(self, color):
+        self.set_data("default_color", color)
         return self
 
     def get_done_color(self):
@@ -300,6 +308,7 @@ class Event(object):
         new_event.set_fuzzy(self.get_fuzzy())
         new_event.set_ends_today(self.get_ends_today())
         new_event.set_locked(self.get_locked())
+        new_event.set_default_color(self.get_default_color())
         return new_event
 
     def is_container(self):

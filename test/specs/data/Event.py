@@ -53,6 +53,7 @@ class describe_event(UnitTestCase):
         self.assertEqual(event.get_icon(), None)
         self.assertEqual(event.get_hyperlink(), None)
         self.assertEqual(event.get_progress(), None)
+        self.assertEqual(event.get_default_color(), None)
 
     def test_can_set_values(self):
         self.assertEqual(
@@ -96,6 +97,8 @@ class describe_event(UnitTestCase):
         self.assertEqual(
             an_event().set_alert("2015-01-07 00:00:00;hoho").get_alert(),
             "2015-01-07 00:00:00;hoho")
+        self.assertEqual(
+            an_event().set_default_color((255, 0, 0)).get_default_color(), (255, 0, 0))
 
     def test_can_not_set_values(self):
         self.assertEqual(
@@ -293,6 +296,13 @@ class describe_event_cloning(UnitTestCase):
         event.set_time_period(time_period)
         clone = event.clone()
         self.assertTrue(time_period is not clone.get_time_period())
+
+    def test_cloning_copies_default_color_attribute(self):
+        event = an_event()
+        event.set_default_color((255, 0, 0))
+        clone = event.clone()
+        self.assertEqual(clone, event)
+        self.assertEqual(clone.get_default_color(), event.get_default_color())
 
 
 class describe_event_cloning_of_containers(UnitTestCase):
