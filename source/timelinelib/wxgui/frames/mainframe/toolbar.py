@@ -35,6 +35,8 @@ class ToolbarCreator(object):
         self.toolbar.AddSeparator()
         self._add_point_event_alignment()
         self.toolbar.Realize()
+        self._set_visibility()
+        self.config.listen_for_any(self._set_visibility)
 
     def _add_event_text_alignment(self):
         left_tool = self._add_radio(_("Left"), "format-justify-left.png")
@@ -76,3 +78,6 @@ class ToolbarCreator(object):
             text,
             wx.Bitmap(os.path.join(ICONS_DIR, icon))
         )
+
+    def _set_visibility(self):
+        self.toolbar.Show(self.config.get_show_toolbar())
