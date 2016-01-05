@@ -16,5 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.events import EVT_DIVIDER_POSITION_CHANGED
-from timelinelib.canvas.events import EVT_MOUSE_MOVED
+import wx
+
+
+DividerPositionChangedEvent, EVT_DIVIDER_POSITION_CHANGED = wx.lib.newevent.NewEvent()
+MouseMovedEvent, EVT_MOUSE_MOVED = wx.lib.newevent.NewEvent()
+
+
+def create_divider_position_changed_event():
+    return DividerPositionChangedEvent()
+
+
+def create_mouse_moved_event(event, time_string):
+    return MouseMovedEvent(event=event, time_string=time_string)
