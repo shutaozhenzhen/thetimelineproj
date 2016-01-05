@@ -166,6 +166,12 @@ class EditEventDialog(Dialog):
                 editor="$(self)"
                 proportion="1"
             />
+            <ColorEditor
+                name="default_color"
+                notebookLabel="$(color)"
+                editor="$(self)"
+                proportion="1"
+            />
         </Notebook>
     """
 
@@ -196,6 +202,7 @@ class EditEventDialog(Dialog):
             "page_alert": _("Alert"),
             "page_hyperlink": _("Hyperlink"),
             "page_progress": _("Progress"),
+            "color": _("Default color"),
             "add_more_label": _("Add more events after this one"),
             "enlarge": _("&Enlarge"),
             "reduce": _("&Reduce"),
@@ -347,6 +354,7 @@ class EditEventDialog(Dialog):
             ("icon", self.icon),
             ("hyperlink", self.hyperlink),
             ("progress", self.progress),
+            ("default_color", self.default_color)
         ]
 
     def _insert_rows_in_correct_order_in_xml(self):

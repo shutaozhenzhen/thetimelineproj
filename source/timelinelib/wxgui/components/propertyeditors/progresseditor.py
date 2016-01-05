@@ -31,7 +31,7 @@ class ProgressEditorGuiCreator(wx.Panel):
 
     def create_controls(self):
         label = wx.StaticText(self, label=_("Progress %:"))
-        self.data = self._create_spin_control()
+        self.data = self._create_color_chooser_control()
         return (label, self.data)
 
     def put_controls_in_sizer(self, sizer, controls):
@@ -40,7 +40,7 @@ class ProgressEditorGuiCreator(wx.Panel):
         sizer.Add(label, wx.GBPosition(row=1, col=0), span)
         sizer.Add(spin_ctrl, wx.GBPosition(row=1, col=1), span)
 
-    def _create_spin_control(self):
+    def _create_color_chooser_control(self):
         progress = wx.SpinCtrl(self, size=(50, -1))
         progress.SetRange(0, 100)
         return progress

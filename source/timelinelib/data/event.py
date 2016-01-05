@@ -175,7 +175,10 @@ class Event(object):
         return self
 
     def get_default_color(self):
-        return self.get_data("default_color")
+        color = self.get_data("default_color")
+        if color is None:
+            color = DEFAULT_COLOR
+        return color
 
     def set_default_color(self, color):
         self.set_data("default_color", color)
