@@ -51,9 +51,25 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.config.divider_line_slider_pos = evt.GetPosition()
 
         style = wx.SL_LEFT | wx.SL_VERTICAL
-        pos = self.config.divider_line_slider_pos
-        self.divider_line_slider = wx.Slider(self, value=pos, size=(20, -1), style=style)
+        self.divider_line_slider = wx.Slider(self, size=(20, -1), style=style)
         self.Bind(wx.EVT_SCROLL, on_slider, self.divider_line_slider)
+
+        self.divider_line_slider.Bind(wx.EVT_SLIDER, self._slider_on_slider)
+        self.divider_line_slider.Bind(wx.EVT_CONTEXT_MENU, self._slider_on_context_menu)
+
+    def _slider_on_slider(self, evt):
+        self.timeline_canvas.SetDividerPosition(self.divider_line_slider.GetValue())
+
+    def _slider_on_context_menu(self, evt):
+        menu = wx.Menu()
+        menu_item = wx.MenuItem(menu, wx.NewId(), _("Center"))
+        self.Bind(wx.EVT_MENU, self._context_menu_on_menu_center, id=menu_item.GetId())
+        menu.AppendItem(menu_item)
+        self.PopupMenu(menu)
+        menu.Destroy()
+
+    def _context_menu_on_menu_center(self, evt):
+        self.timeline_canvas.SetDividerPosition(50)
 
     def _create_splitter(self):
         self.splitter = wx.SplitterWindow(self, style=wx.SP_LIVE_UPDATE)
@@ -76,10 +92,15 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.timeline_canvas = TimelineCanvas(
             self.splitter,
             self.status_bar_adapter,
-            self.divider_line_slider,
             self.handle_db_error,
             self.config,
             self.main_frame)
+        def on_divider_position_changed(event):
+            self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
+            self.config.divider_line_slider_pos = self.timeline_canvas.GetDividerPosition()
+        self.timeline_canvas.Bind(TimelineCanvas.EVT_DIVIDER_POSITION_CHANGED,
+                                  on_divider_position_changed)
+        self.timeline_canvas.SetDividerPosition(self.config.divider_line_slider_pos)
 
     def _layout_components(self):
         hsizer = wx.BoxSizer(wx.HORIZONTAL)

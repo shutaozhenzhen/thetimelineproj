@@ -59,7 +59,7 @@ MOUSE_SCROLL_FACTOR = 1 / 10.0
 
 class TimelineCanvasController(object):
 
-    def __init__(self, view, status_bar_adapter, config, divider_line_slider, fn_handle_db_error, plugin_factory, drawer=None):
+    def __init__(self, view, status_bar_adapter, config, fn_handle_db_error, plugin_factory, drawer=None):
         """
         The purpose of the drawer argument is make testing easier. A test can
         mock a drawer and use the mock by sending it in the drawer argument.
@@ -71,7 +71,6 @@ class TimelineCanvasController(object):
         self.status_bar_adapter = status_bar_adapter
         self.config = config
         self.config.listen_for_any(self._redraw_timeline)
-        self.divider_line_slider = divider_line_slider
         self.fn_handle_db_error = fn_handle_db_error
         if drawer is not None:
             self.drawing_algorithm = drawer
@@ -82,20 +81,17 @@ class TimelineCanvasController(object):
         self.drawing_algorithm.use_fast_draw(False)
         self._set_initial_values_to_member_variables()
         self._set_colors_and_styles()
-        self.divider_line_slider.Bind(wx.EVT_SLIDER, self._slider_on_slider)
-        self.divider_line_slider.Bind(wx.EVT_CONTEXT_MENU, self._slider_on_context_menu)
         self.change_input_handler_to_no_op()
         self.timeline = None
 
     def start(self):
-        self.start_slider_pos = self.divider_line_slider.GetValue()
+        self.start_slider_pos = self.view.GetDividerPosition()
         self.start_mouse_pos = wx.GetMousePosition()[1]
         self.view_height = self.view.GetSize()[1]
 
     def scroll_vertical(self):
         percentage_distance = 100 * (wx.GetMousePosition()[1] - self.start_mouse_pos) / self.view_height
-        self.divider_line_slider.SetValue(self.start_slider_pos + percentage_distance)
-        self.config.divider_line_slider_pos = self.divider_line_slider.GetValue()
+        self.view.SetDividerPosition(self.start_slider_pos + percentage_distance)
 
     def get_saved_drawer(self):
         return self.plugin_factory.get_plugin(EVENTBOX_DRAWER, self.config.selected_event_box_drawer) or DefaultEventBoxDrawer()
@@ -398,7 +394,7 @@ class TimelineCanvasController(object):
             else:
                 self._zoom_timeline(direction, x)
         elif shift_down:
-            self.divider_line_slider.SetValue(self.divider_line_slider.GetValue() + direction)
+            self.view.SetDividerPosition(self.view.GetDividerPosition() + direction)
             self._redraw_timeline()
         elif alt_down:
             if direction > 0:
@@ -471,24 +467,6 @@ class TimelineCanvasController(object):
         if keycode == wx.WXK_CONTROL:
             self.view.set_default_cursor()
 
-    def _slider_on_slider(self, evt):
-        self._redraw_timeline()
-
-    def _slider_on_context_menu(self, evt):
-        """A right click has occured in the divider-line slider."""
-        menu = wx.Menu()
-        menu_item = wx.MenuItem(menu, wx.NewId(), _("Center"))
-        self.view.Bind(wx.EVT_MENU, self._context_menu_on_menu_center, id=menu_item.GetId())
-        menu.AppendItem(menu_item)
-        self.view.PopupMenu(menu)
-        menu.Destroy()
-
-    def _context_menu_on_menu_center(self, evt):
-        """The 'Center' context menu has been selected."""
-        self.divider_line_slider.SetValue(50)
-        self.config.divider_line_slider_pos = self.divider_line_slider.GetValue()
-        self._redraw_timeline()
-
     def _timeline_changed(self, state_change):
         if (state_change == STATE_CHANGE_ANY or state_change == STATE_CHANGE_CATEGORY):
             self._redraw_timeline()
@@ -533,8 +511,7 @@ class TimelineCanvasController(object):
                 self.drawing_algorithm.use_fast_draw(False)
 
         if self.timeline and self.view_properties.displayed_period:
-            self.view_properties.divider_position = (self.divider_line_slider.GetValue())
-            self.view_properties.divider_position = (float(self.divider_line_slider.GetValue()) / 100.0)
+            self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
             self.view.redraw_surface(fn_draw)
             self.view.enable_disable_menus()
             self._display_hidden_event_count()

@@ -32,15 +32,26 @@ class TimelineCanvas(wx.Panel):
     input events such as mouse and keyboard actions.
     """
 
-    def __init__(self, parent, status_bar_adapter, divider_line_slider, fn_handle_db_error, config, main_frame):
+    DividerPositionChangedEvent, EVT_DIVIDER_POSITION_CHANGED = wx.lib.newevent.NewEvent()
+
+    def __init__(self, parent, status_bar_adapter, fn_handle_db_error, config, main_frame):
         wx.Panel.__init__(self, parent, style=wx.NO_BORDER | wx.WANTS_CHARS)
         self.fn_handle_db_error = fn_handle_db_error
         self.config = config
         self.main_frame = main_frame
         self.controller = TimelineCanvasController(self, status_bar_adapter, config,
-                                                   divider_line_slider, fn_handle_db_error, factory)
+                                                   fn_handle_db_error, factory)
         self.surface_bitmap = None
         self._create_gui()
+        self.SetDividerPosition(50)
+
+    def GetDividerPosition(self):
+        return self._divider_position
+
+    def SetDividerPosition(self, position):
+        self._divider_position = int(min(100, max(0, position)))
+        wx.PostEvent(self, self.DividerPositionChangedEvent())
+        self.controller.redraw_timeline()
 
     def MoveSelectedEventUp(self):
         self.controller.move_selected_event_up()
