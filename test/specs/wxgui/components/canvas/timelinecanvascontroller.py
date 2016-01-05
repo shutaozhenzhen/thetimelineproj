@@ -332,7 +332,7 @@ class TimelineViewSpec(UnitTestCase):
         self.init_view_with_db()
         self.controller.mouse_wheel_moved(
             1, ctrl_down=False, shift_down=True, alt_down=False, x=self.middle_x)
-        self.assertTrue(self.divider_line_slider.SetValue.called)
+        self.assertTrue(self.timeline_canvas.SetDividerPosition.called)
         self.assert_timeline_redrawn()
 
     def test_disables_view_if_no_timeline_set(self):
@@ -347,18 +347,16 @@ class TimelineViewSpec(UnitTestCase):
         self.width = 10
         self.middle_x = self.width / 2
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
+        self.timeline_canvas.GetDividerPosition.return_value = 50
         self.status_bar_adapter = Mock(StatusBarAdapter)
         self.config = Mock(Config)
         self.mock_drawer = MockDrawer()
-        self.divider_line_slider = Mock()
-        self.divider_line_slider.GetValue.return_value = 50
         self.fn_handle_db_error = Mock()
         self.mock_plugin_factory = factory
         self.controller = TimelineCanvasController(
             self.timeline_canvas,
             self.status_bar_adapter,
             self.config,
-            self.divider_line_slider,
             self.fn_handle_db_error,
             self.mock_plugin_factory,
             drawer=self.mock_drawer)
@@ -589,13 +587,12 @@ class DrawingAreaSpec(UnitTestCase):
     def setUp(self):
         self.app = wx.App()  # a stored app is needed to create fonts
         self.timeline_canvas = Mock(TimelineCanvas)
+        self.timeline_canvas.GetDividerPosition.return_value = 1
         status_bar_adapter = Mock(StatusBarAdapter)
         config = Mock(Config)
         self.drawing_algorithm = DefaultDrawingAlgorithm()
-        divider_line_slider = Mock(wx.Slider)
-        divider_line_slider.GetValue.return_value = 1
         fn_handle_db_error = None
         plugin_factory = factory
         self.controller = TimelineCanvasController(
             self.timeline_canvas, status_bar_adapter, config,
-            divider_line_slider, fn_handle_db_error, plugin_factory, drawer=self.drawing_algorithm)
+            fn_handle_db_error, plugin_factory, drawer=self.drawing_algorithm)
