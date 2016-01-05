@@ -19,6 +19,9 @@ Calendar:
 
 GUI:
 
+* There is an optional tool bar that contains buttons for toggling some
+  settings.
+
 * "To time" in event editor is correctly laid out when checking "Period".
 
 * Images can be dragged and dropped on an event to change icon.
