@@ -95,12 +95,25 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.handle_db_error,
             self.config,
             self.main_frame)
-        def on_divider_position_changed(event):
-            self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
-            self.config.divider_line_slider_pos = self.timeline_canvas.GetDividerPosition()
-        self.timeline_canvas.Bind(TimelineCanvas.EVT_DIVIDER_POSITION_CHANGED,
-                                  on_divider_position_changed)
+        self.timeline_canvas.Bind(
+            TimelineCanvas.EVT_DIVIDER_POSITION_CHANGED,
+            self._timeline_canvas_on_divider_position_changed
+        )
+        self.timeline_canvas.Bind(
+            TimelineCanvas.EVT_MOUSE_MOVED,
+            self._timeline_canvas_on_mouse_moved
+        )
         self.timeline_canvas.SetDividerPosition(self.config.divider_line_slider_pos)
+
+    def _timeline_canvas_on_divider_position_changed(self, event):
+        self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
+        self.config.divider_line_slider_pos = self.timeline_canvas.GetDividerPosition()
+
+    def _timeline_canvas_on_mouse_moved(self, event):
+        if event.event is None:
+            self.status_bar_adapter.set_text(event.time_string)
+        else:
+            self.status_bar_adapter.set_text(event.event.get_label())
 
     def _layout_components(self):
         hsizer = wx.BoxSizer(wx.HORIZONTAL)
