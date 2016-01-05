@@ -395,7 +395,6 @@ class TimelineCanvasController(object):
                 self._zoom_timeline(direction, x)
         elif shift_down:
             self.view.SetDividerPosition(self.view.GetDividerPosition() + direction)
-            self._redraw_timeline()
         elif alt_down:
             if direction > 0:
                 self.drawing_algorithm.increment_font_size()
