@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.canvas.periodbase import SelectPeriodByDragInputHandler
+from timelinelib.canvas.periodbase import SelectPeriodByDragInputHandler
 
 
 class CreatePeriodEventByDragInputHandler(SelectPeriodByDragInputHandler):
