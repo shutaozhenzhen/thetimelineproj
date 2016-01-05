@@ -20,6 +20,12 @@ import webbrowser
 
 import wx
 
+from timelinelib.canvas.move import MoveByDragInputHandler
+from timelinelib.canvas.noop import NoOpInputHandler
+from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
+from timelinelib.canvas.resize import ResizeByDragInputHandler
+from timelinelib.canvas.scrolldrag import ScrollByDragInputHandler
+from timelinelib.canvas.zoom import ZoomByDragInputHandler
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.db.exceptions import TimelineIOError
@@ -37,12 +43,6 @@ from timelinelib.utilities.encodings import to_unicode
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
 from timelinelib.utils import ex_msg
-from timelinelib.wxgui.components.canvas.move import MoveByDragInputHandler
-from timelinelib.wxgui.components.canvas.noop import NoOpInputHandler
-from timelinelib.wxgui.components.canvas.periodevent import CreatePeriodEventByDragInputHandler
-from timelinelib.wxgui.components.canvas.resize import ResizeByDragInputHandler
-from timelinelib.wxgui.components.canvas.scrolldrag import ScrollByDragInputHandler
-from timelinelib.wxgui.components.canvas.zoom import ZoomByDragInputHandler
 from timelinelib.wxgui.components.font import Font
 
 

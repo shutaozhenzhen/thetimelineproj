@@ -19,6 +19,8 @@
 from mock import Mock
 import wx
 
+from timelinelib.canvas.timelinecanvascontroller import HSCROLL_STEP
+from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
@@ -26,13 +28,11 @@ from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.plugin import factory
-from timelinelib.wxgui.components.canvas.timelinecanvascontroller import HSCROLL_STEP
-from timelinelib.wxgui.components.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
-from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
+from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
 
 
 # TODO: testSavesEventAfterMove
