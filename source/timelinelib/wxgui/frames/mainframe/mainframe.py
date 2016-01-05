@@ -62,7 +62,6 @@ from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
-from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_categories_editor_moved_message
 from timelinelib.wxgui.utils import display_error_message
@@ -129,7 +128,6 @@ class GuiCreator(object):
         self._create_status_bar()
         self._create_main_panel()
         self._create_main_menu_bar()
-        ToolbarCreator(self, self.config).create()
         self._bind_frame_events()
 
     def _create_status_bar(self):
