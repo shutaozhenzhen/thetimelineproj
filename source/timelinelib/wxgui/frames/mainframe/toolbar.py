@@ -25,16 +25,19 @@ from timelinelib.config.paths import ICONS_DIR
 
 class ToolbarCreator(object):
 
-    def __init__(self, frame, config):
-        self.frame = frame
+    def __init__(self, parent, config):
+        self.parent = parent
         self.config = config
 
     def create(self):
-        self.toolbar = self.frame.CreateToolBar()
+        self.toolbar = wx.ToolBar(self.parent, wx.ID_ANY)
         self._add_event_text_alignment()
         self.toolbar.AddSeparator()
         self._add_point_event_alignment()
         self.toolbar.Realize()
+        self._set_visibility()
+        self.config.listen_for_any(self._set_visibility)
+        return self.toolbar
 
     def _add_event_text_alignment(self):
         left_tool = self._add_radio(_("Left"), "format-justify-left.png")
@@ -48,8 +51,8 @@ class ToolbarCreator(object):
                 self.toolbar.ToggleTool(center_tool.GetId(), True)
             else:
                 self.toolbar.ToggleTool(left_tool.GetId(), True)
-        self.frame.Bind(wx.EVT_TOOL, on_left_click, left_tool)
-        self.frame.Bind(wx.EVT_TOOL, on_center_click, center_tool)
+        self.parent.Bind(wx.EVT_TOOL, on_left_click, left_tool)
+        self.parent.Bind(wx.EVT_TOOL, on_center_click, center_tool)
         self.config.listen_for_any(check_item_corresponding_to_config)
         check_item_corresponding_to_config()
 
@@ -65,8 +68,8 @@ class ToolbarCreator(object):
                 self.toolbar.ToggleTool(left_tool.GetId(), True)
             else:
                 self.toolbar.ToggleTool(center_tool.GetId(), True)
-        self.frame.Bind(wx.EVT_TOOL, on_left_click, left_tool)
-        self.frame.Bind(wx.EVT_TOOL, on_center_click, center_tool)
+        self.parent.Bind(wx.EVT_TOOL, on_left_click, left_tool)
+        self.parent.Bind(wx.EVT_TOOL, on_center_click, center_tool)
         self.config.listen_for_any(check_item_corresponding_to_config)
         check_item_corresponding_to_config()
 
@@ -76,3 +79,7 @@ class ToolbarCreator(object):
             text,
             wx.Bitmap(os.path.join(ICONS_DIR, icon))
         )
+
+    def _set_visibility(self):
+        self.toolbar.Show(self.config.get_show_toolbar())
+        self.parent.Layout()

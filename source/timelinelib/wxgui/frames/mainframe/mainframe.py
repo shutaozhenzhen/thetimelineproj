@@ -62,7 +62,6 @@ from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
-from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_categories_editor_moved_message
 from timelinelib.wxgui.utils import display_error_message
@@ -129,7 +128,6 @@ class GuiCreator(object):
         self._create_status_bar()
         self._create_main_panel()
         self._create_main_menu_bar()
-        ToolbarCreator(self, self.config).create()
         self._bind_frame_events()
 
     def _create_status_bar(self):
@@ -310,7 +308,8 @@ class GuiCreator(object):
         def draw_point_events_to_right(evt):
             self.config.draw_period_events_to_right = evt.IsChecked()
 
-        items = [(ID_SIDEBAR, sidebar, _("&Sidebar\tCtrl+I"), CHECKBOX),
+        items = [self._create_view_toolbar_menu_item,
+                 (ID_SIDEBAR, sidebar, _("&Sidebar\tCtrl+I"), CHECKBOX),
                  (ID_LEGEND, legend, _("&Legend"), CHECKBOX),
                  None,
                  (ID_BALLOONS, balloons, _("&Balloons on hover"), CHECKBOX),
@@ -331,6 +330,16 @@ class GuiCreator(object):
         self._add_view_menu_items_to_controller(view_menu)
         main_menu_bar.Append(view_menu, _("&View"))
         self.view_menu = view_menu
+
+    def _create_view_toolbar_menu_item(self, view_menu):
+        item = view_menu.Append(wx.ID_ANY, _("Toolbar"), kind=wx.ITEM_CHECK)
+        def on_click(event):
+            self.config.set_show_toolbar(event.IsChecked())
+        def check_item_corresponding_to_config():
+            item.Check(self.config.get_show_toolbar())
+        self.Bind(wx.EVT_MENU, on_click, item)
+        self.config.listen_for_any(check_item_corresponding_to_config)
+        check_item_corresponding_to_config()
 
     def _create_event_box_drawers_menu(self, view_menu):
 
