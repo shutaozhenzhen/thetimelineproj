@@ -19,10 +19,10 @@
 import wx
 
 from timelinelib.utilities.observer import Listener
-
 from timelinelib.wxgui.components.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.components.sidebar import Sidebar
+from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 
 
 class TimelinePanelGuiCreator(wx.Panel):
@@ -33,10 +33,14 @@ class TimelinePanelGuiCreator(wx.Panel):
         self._create_gui()
 
     def _create_gui(self):
+        self._create_toolbar()
         self._create_warning_bar()
         self._create_divider_line_slider()
         self._create_splitter()
         self._layout_components()
+
+    def _create_toolbar(self):
+        self.tool_bar = ToolbarCreator(self, self.config).create()
 
     def _create_warning_bar(self):
         self.message_bar = MessageBar(self)
@@ -82,6 +86,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         hsizer.Add(self.splitter, proportion=1, flag=wx.EXPAND)
         hsizer.Add(self.divider_line_slider, proportion=0, flag=wx.EXPAND)
         vsizer = wx.BoxSizer(wx.VERTICAL)
+        vsizer.Add(self.tool_bar, proportion=0, flag=wx.EXPAND)
         vsizer.Add(self.message_bar, proportion=0, flag=wx.EXPAND)
         vsizer.Add(hsizer, proportion=1, flag=wx.EXPAND)
         self.SetSizer(vsizer)
