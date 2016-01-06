@@ -159,11 +159,6 @@ class TimelineViewSpec(UnitTestCase):
         self.simulate_mouse_move(0, ANY_Y)
         self.assertEqual("1999-09-19 00:00", self.get_last_posted_hint())
 
-    def test_displays_hidden_event_count_in_status_bar(self):
-        self.mock_drawer.hidden_event_count = 3
-        self.init_view_with_db()
-        self.assertTrue("3" in self.get_hidden_event_count_text())
-
     def test_sends_error_hint_wehn_scrolling_too_far_left(self):
         def navigate(time_period):
             raise TimeOutOfRangeLeftError()
@@ -348,14 +343,12 @@ class TimelineViewSpec(UnitTestCase):
         self.middle_x = self.width / 2
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
         self.timeline_canvas.GetDividerPosition.return_value = 50
-        self.status_bar_adapter = Mock(StatusBarAdapter)
         self.config = Mock(Config)
         self.mock_drawer = MockDrawer()
         self.fn_handle_db_error = Mock()
         self.mock_plugin_factory = factory
         self.controller = TimelineCanvasController(
             self.timeline_canvas,
-            self.status_bar_adapter,
             self.config,
             self.fn_handle_db_error,
             self.mock_plugin_factory,
@@ -424,11 +417,6 @@ class TimelineViewSpec(UnitTestCase):
         self.assertTrue(self.controller.post_hint_event.called)
         last_event = self.controller.post_hint_event.call_args[0][0]
         return last_event
-
-    def get_hidden_event_count_text(self):
-        self.assertTrue(self.status_bar_adapter.set_hidden_event_count_text.called)
-        text = self.status_bar_adapter.set_hidden_event_count_text.call_args[0][0]
-        return text
 
     def assert_event_has_period(self, event, start, end):
         self.assertEqual(gregorian_period(start, end), event.get_time_period())
@@ -589,11 +577,10 @@ class DrawingAreaSpec(UnitTestCase):
         self.app = wx.App()  # a stored app is needed to create fonts
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetDividerPosition.return_value = 1
-        status_bar_adapter = Mock(StatusBarAdapter)
         config = Mock(Config)
         self.drawing_algorithm = DefaultDrawingAlgorithm()
         fn_handle_db_error = None
         plugin_factory = factory
         self.controller = TimelineCanvasController(
-            self.timeline_canvas, status_bar_adapter, config,
+            self.timeline_canvas, config,
             fn_handle_db_error, plugin_factory, drawer=self.drawing_algorithm)
