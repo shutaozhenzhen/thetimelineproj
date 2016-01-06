@@ -23,6 +23,7 @@ import wx
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.canvas.events import create_event_double_clicked_event
 from timelinelib.canvas.events import create_hint_event
+from timelinelib.canvas.events import create_time_double_clicked_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.noop import NoOpInputHandler
@@ -338,8 +339,7 @@ class TimelineCanvasController(object):
         if event:
             self.view.PostEvent(create_event_double_clicked_event(event))
         else:
-            current_time = self.get_time(x)
-            self.view.open_create_event_editor(current_time, current_time)
+            self.view.PostEvent(create_time_double_clicked_event(self.get_time(x)))
 
     def get_time(self, x):
         return self.drawing_algorithm.get_time(x)
