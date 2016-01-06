@@ -20,7 +20,8 @@ import webbrowser
 
 import wx
 
-from timelinelib.canvas.events import create_mouse_moved_event
+from timelinelib.canvas.events import create_hint_event
+from timelinelib.canvas.events import create_timeline_redrawn_event
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.noop import NoOpInputHandler
 from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
@@ -60,7 +61,7 @@ MOUSE_SCROLL_FACTOR = 1 / 10.0
 
 class TimelineCanvasController(object):
 
-    def __init__(self, view, status_bar_adapter, config, fn_handle_db_error, plugin_factory, drawer=None):
+    def __init__(self, view, config, fn_handle_db_error, plugin_factory, drawer=None):
         """
         The purpose of the drawer argument is make testing easier. A test can
         mock a drawer and use the mock by sending it in the drawer argument.
@@ -69,7 +70,6 @@ class TimelineCanvasController(object):
         self.monitoring = Monitoring()
         self.plugin_factory = plugin_factory
         self.view = view
-        self.status_bar_adapter = status_bar_adapter
         self.config = config
         self.config.listen_for_any(self._redraw_timeline)
         self.fn_handle_db_error = fn_handle_db_error
@@ -84,6 +84,9 @@ class TimelineCanvasController(object):
         self._set_colors_and_styles()
         self.change_input_handler_to_no_op()
         self.timeline = None
+
+    def post_hint_event(self, text):
+        self.view.PostEvent(create_hint_event(text))
 
     def start(self):
         self.start_slider_pos = self.view.GetDividerPosition()
@@ -108,18 +111,18 @@ class TimelineCanvasController(object):
         self.drawing_algorithm.set_background_drawer(drawer)
 
     def change_input_handler_to_zoom_by_drag(self, start_time):
-        self.input_handler = ZoomByDragInputHandler(self, self.status_bar_adapter, start_time)
+        self.input_handler = ZoomByDragInputHandler(self, start_time)
 
     def change_input_handler_to_create_period_event_by_drag(self, initial_time):
         self.input_handler = CreatePeriodEventByDragInputHandler(self, self.view, initial_time)
 
     def change_input_handler_to_resize_by_drag(self, event, direction):
         self.input_handler = ResizeByDragInputHandler(
-            self, self.status_bar_adapter, event, direction)
+            self, event, direction)
 
     def change_input_handler_to_move_by_drag(self, event, start_drag_time):
         self.input_handler = MoveByDragInputHandler(
-            self, self.status_bar_adapter, event, start_drag_time)
+            self, event, start_drag_time)
 
     def change_input_handler_to_scroll_by_drag(self, start_time):
         self.input_handler = ScrollByDragInputHandler(self, start_time)
@@ -211,13 +214,13 @@ class TimelineCanvasController(object):
         try:
             self.view_properties.displayed_period = navigation_fn(self.view_properties.displayed_period)
             self._redraw_timeline()
-            self.status_bar_adapter.set_text("")
+            self.post_hint_event("")
         except (TimeOutOfRangeLeftError), e:
-            self.status_bar_adapter.set_text(_("Can't scroll more to the left"))
+            self.post_hint_event(_("Can't scroll more to the left"))
         except (TimeOutOfRangeRightError), e:
-            self.status_bar_adapter.set_text(_("Can't scroll more to the right"))
+            self.post_hint_event(_("Can't scroll more to the right"))
         except (ValueError, OverflowError), e:
-            self.status_bar_adapter.set_text(ex_msg(e))
+            self.post_hint_event(ex_msg(e))
 
     def redraw_timeline(self):
         self._redraw_timeline()
@@ -514,11 +517,7 @@ class TimelineCanvasController(object):
             self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
             self.view.redraw_surface(fn_draw)
             self.view.enable_disable_menus()
-            self._display_hidden_event_count()
-
-    def _display_hidden_event_count(self):
-        text = _("%s events hidden") % self.drawing_algorithm.get_hidden_event_count()
-        self.status_bar_adapter.set_hidden_event_count_text(text)
+            self.view.PostEvent(create_timeline_redrawn_event())
 
     def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
         event = self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down)
@@ -533,12 +532,12 @@ class TimelineCanvasController(object):
         return event is not None
 
     def _display_eventinfo_in_statusbar(self, xpixelpos, ypixelpos, alt_down=False):
-        self.view.PostEvent(
-            create_mouse_moved_event(
-                event=self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down),
-                time_string=self._format_current_pos_datetime_string(xpixelpos)
-            )
-        )
+        event = self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down)
+        time_string = self._format_current_pos_datetime_string(xpixelpos)
+        if event is None:
+            self.post_hint_event(time_string)
+        else:
+            self.post_hint_event(event.get_label())
 
     def _format_current_pos_datetime_string(self, xpos):
         tm = self.get_time(xpos)

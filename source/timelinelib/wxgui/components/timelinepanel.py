@@ -19,7 +19,8 @@
 import wx
 
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
-from timelinelib.canvas import EVT_MOUSE_MOVED
+from timelinelib.canvas import EVT_HINT
+from timelinelib.canvas import EVT_TIMELINE_REDRAWN
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.utilities.observer import Listener
 from timelinelib.wxgui.components.messagebar import MessageBar
@@ -93,7 +94,6 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _create_timeline_canvas(self):
         self.timeline_canvas = TimelineCanvas(
             self.splitter,
-            self.status_bar_adapter,
             self.handle_db_error,
             self.config,
             self.main_frame)
@@ -102,8 +102,12 @@ class TimelinePanelGuiCreator(wx.Panel):
             self._timeline_canvas_on_divider_position_changed
         )
         self.timeline_canvas.Bind(
-            EVT_MOUSE_MOVED,
-            self._timeline_canvas_on_mouse_moved
+            EVT_HINT,
+            self._timeline_canvas_on_hint
+        )
+        self.timeline_canvas.Bind(
+            EVT_TIMELINE_REDRAWN,
+            self._timeline_canvas_on_timeline_redrawn
         )
         self.timeline_canvas.SetDividerPosition(self.config.divider_line_slider_pos)
 
@@ -111,11 +115,12 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
         self.config.divider_line_slider_pos = self.timeline_canvas.GetDividerPosition()
 
-    def _timeline_canvas_on_mouse_moved(self, event):
-        if event.event is None:
-            self.status_bar_adapter.set_text(event.time_string)
-        else:
-            self.status_bar_adapter.set_text(event.event.get_label())
+    def _timeline_canvas_on_hint(self, event):
+        self.status_bar_adapter.set_text(event.text)
+
+    def _timeline_canvas_on_timeline_redrawn(self, event):
+        text = _("%s events hidden") % self.timeline_canvas.GetHiddenEventCount()
+        self.status_bar_adapter.set_hidden_event_count_text(text)
 
     def _layout_components(self):
         hsizer = wx.BoxSizer(wx.HORIZONTAL)
