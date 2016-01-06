@@ -179,11 +179,11 @@ class TimelineViewSpec(UnitTestCase):
         self.assert_created_event_with_period("3 Aug 2010", "3 Aug 2010")
         self.assert_timeline_redrawn()
 
-    def test_edits_event_when_double_clicking_it(self):
+    def test_sends_double_click_event_when_double_clicking_it(self):
         event = self.given_event_with(pos=(40, 60), size=(20, 10))
         self.init_view_with_db()
         self.simulate_mouse_double_click(50, 65)
-        self.timeline_canvas.open_event_editor_for.assert_called_with(event)
+        self.assert_event_double_clicked(event)
         self.assert_timeline_redrawn()
 
     def test_selects_and_deselects_event_when_clicking_on_it(self):
@@ -414,6 +414,9 @@ class TimelineViewSpec(UnitTestCase):
         self.assertTrue(self.controller.post_hint_event.called)
         last_event = self.controller.post_hint_event.call_args[0][0]
         return last_event
+
+    def assert_event_double_clicked(self, event):
+        self.assertEqual(self.timeline_canvas.PostEvent.call_args[0][0].event, event)
 
     def assert_event_has_period(self, event, start, end):
         self.assertEqual(gregorian_period(start, end), event.get_time_period())

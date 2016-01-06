@@ -66,6 +66,9 @@ class TimelineCanvas(wx.Panel):
         self.controller.set_event_box_drawer(event_box_drawer)
         self.redraw_timeline()
 
+    def GetDb(self):
+        return self.get_timeline()
+
     def get_drawer(self):
         return self.controller.get_drawer()
 

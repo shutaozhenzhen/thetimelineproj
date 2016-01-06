@@ -20,6 +20,8 @@ import webbrowser
 
 import wx
 
+from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.canvas.events import create_event_double_clicked_event
 from timelinelib.canvas.events import create_hint_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
 from timelinelib.canvas.move import MoveByDragInputHandler
@@ -39,7 +41,6 @@ from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature
 from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
-from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.utilities.encodings import to_unicode
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
@@ -335,7 +336,7 @@ class TimelineCanvasController(object):
         self._toggle_event_selection(x, y, ctrl_down, alt_down)
         event = self.drawing_algorithm.event_at(x, y, alt_down)
         if event:
-            self.view.open_event_editor_for(event)
+            self.view.PostEvent(create_event_double_clicked_event(event))
         else:
             current_time = self.get_time(x)
             self.view.open_create_event_editor(current_time, current_time)
