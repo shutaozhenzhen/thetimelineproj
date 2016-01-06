@@ -98,14 +98,14 @@ class TimelineCanvasController(object):
         self.view.SetDividerPosition(self.start_slider_pos + percentage_distance)
 
     def get_saved_drawer(self):
-        return self.plugin_factory.get_plugin(EVENTBOX_DRAWER, self.config.selected_event_box_drawer) or DefaultEventBoxDrawer()
-        raise Exception("No default Event Box Drawer plugin found")
+        plugin = self.plugin_factory.get_plugin(EVENTBOX_DRAWER, self.config.selected_event_box_drawer) or DefaultEventBoxDrawer()
+        return plugin.run()
 
     def get_saved_background_drawer(self):
         return DefaultBackgroundDrawer()
 
-    def set_event_box_drawer(self, drawer_plugin):
-        self.drawing_algorithm.set_event_box_drawer(drawer_plugin.run())
+    def set_event_box_drawer(self, event_box_drawer):
+        self.drawing_algorithm.set_event_box_drawer(event_box_drawer)
 
     def set_background_drawer(self, drawer):
         self.drawing_algorithm.set_background_drawer(drawer)
