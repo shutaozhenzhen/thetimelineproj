@@ -21,7 +21,6 @@ import webbrowser
 import wx
 
 from timelinelib.canvas.events import create_hint_event
-from timelinelib.canvas.events import create_mouse_moved_event
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.noop import NoOpInputHandler
 from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
@@ -537,12 +536,12 @@ class TimelineCanvasController(object):
         return event is not None
 
     def _display_eventinfo_in_statusbar(self, xpixelpos, ypixelpos, alt_down=False):
-        self.view.PostEvent(
-            create_mouse_moved_event(
-                event=self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down),
-                time_string=self._format_current_pos_datetime_string(xpixelpos)
-            )
-        )
+        event = self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down)
+        time_string = self._format_current_pos_datetime_string(xpixelpos)
+        if event is None:
+            self.post_hint_event(time_string)
+        else:
+            self.post_hint_event(event.get_label())
 
     def _format_current_pos_datetime_string(self, xpos):
         tm = self.get_time(xpos)

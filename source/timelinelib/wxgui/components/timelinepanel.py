@@ -20,7 +20,6 @@ import wx
 
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
 from timelinelib.canvas import EVT_HINT
-from timelinelib.canvas import EVT_MOUSE_MOVED
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.utilities.observer import Listener
 from timelinelib.wxgui.components.messagebar import MessageBar
@@ -103,10 +102,6 @@ class TimelinePanelGuiCreator(wx.Panel):
             self._timeline_canvas_on_divider_position_changed
         )
         self.timeline_canvas.Bind(
-            EVT_MOUSE_MOVED,
-            self._timeline_canvas_on_mouse_moved
-        )
-        self.timeline_canvas.Bind(
             EVT_HINT,
             self._timeline_canvas_on_hint
         )
@@ -115,12 +110,6 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _timeline_canvas_on_divider_position_changed(self, event):
         self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
         self.config.divider_line_slider_pos = self.timeline_canvas.GetDividerPosition()
-
-    def _timeline_canvas_on_mouse_moved(self, event):
-        if event.event is None:
-            self.status_bar_adapter.set_text(event.time_string)
-        else:
-            self.status_bar_adapter.set_text(event.event.get_label())
 
     def _timeline_canvas_on_hint(self, event):
         self.status_bar_adapter.set_text(event.text)

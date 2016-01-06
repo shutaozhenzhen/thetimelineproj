@@ -18,4 +18,3 @@
 
 from timelinelib.canvas.events import EVT_DIVIDER_POSITION_CHANGED
 from timelinelib.canvas.events import EVT_HINT
-from timelinelib.canvas.events import EVT_MOUSE_MOVED
