@@ -42,9 +42,7 @@ class ColorEditorGuiCreator(wx.Panel):
         sizer.Add(spin_ctrl, wx.GBPosition(row=2, col=1), span)
 
     def _create_color_chooser_control(self):
-        data = ColourSelect(self)
-        data.SetValue(wx.LIGHT_GREY)
-        return data
+        return ColourSelect(self)
 
 
 class ColorEditor(BaseEditor, ColorEditorGuiCreator):
@@ -53,12 +51,13 @@ class ColorEditor(BaseEditor, ColorEditorGuiCreator):
         BaseEditor.__init__(self, parent, editor)
         ColorEditorGuiCreator.__init__(self, parent)
         self.create_gui()
+        self.clear_data()
 
     def focus(self):
         super(ColorEditor, self).focus()
 
     def clear_data(self):
-        self.data.SetValue((200, 200, 200))
+        self.data.SetValue(wx.LIGHT_GREY)
 
     def get_data(self):
         color = self.data.GetValue()
