@@ -64,7 +64,7 @@ class TimelineCanvas(wx.Panel):
     def MoveSelectedEventDown(self):
         self.controller.move_selected_event_down()
 
-    def set_event_box_drawer(self, event_box_drawer):
+    def SetEventBoxDrawer(self, event_box_drawer):
         self.controller.set_event_box_drawer(event_box_drawer)
         self.redraw_timeline()
 
