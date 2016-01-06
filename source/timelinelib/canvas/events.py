@@ -22,6 +22,7 @@ import wx
 DividerPositionChangedEvent, EVT_DIVIDER_POSITION_CHANGED = wx.lib.newevent.NewEvent()
 EventDoubleClickedEvent, EVT_EVENT_DOUBLE_CLICKED = wx.lib.newevent.NewEvent()
 HintEvent, EVT_HINT = wx.lib.newevent.NewEvent()
+TimeDoubleClickedEvent, EVT_TIME_DOUBLE_CLICKED = wx.lib.newevent.NewEvent()
 TimelineRedrawnEvent, EVT_TIMELINE_REDRAWN = wx.lib.newevent.NewEvent()
 
 
@@ -35,6 +36,10 @@ def create_event_double_clicked_event(event):
 
 def create_hint_event(text):
     return HintEvent(text=text)
+
+
+def create_time_double_clicked_event(time):
+    return TimeDoubleClickedEvent(time=time)
 
 
 def create_timeline_redrawn_event():
