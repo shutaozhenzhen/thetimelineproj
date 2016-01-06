@@ -16,27 +16,18 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
-from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.drawing.utils import darken_color
-from timelinelib.drawing.utils import lighten_color
+from timelinelib.plugin.pluginbase import PluginBase
+from timelinelib.plugin.factory import EVENTBOX_DRAWER
 
 
-class GradientEventBoxDrawer(DefaultEventBoxDrawer):
+class GradientEventBoxDrawer(PluginBase):
+
+    def service(self):
+        return EVENTBOX_DRAWER
 
     def display_name(self):
         return _("Gradient Event box drawer")
 
-    def _draw_background(self, dc, rect, event):
-        dc.SetPen(self._get_border_pen(event))
-        dc.DrawRectangleRect(rect)
-        inner_rect = wx.Rect(*rect)
-        inner_rect.Deflate(1, 1)
-        dc.GradientFillLinear(inner_rect, self._get_light_color(event), self._get_dark_color(event), wx.SOUTH)
-
-    def _get_light_color(self, event):
-        return lighten_color(self._get_base_color(event))
-
-    def _get_dark_color(self, event):
-        return darken_color(self._get_base_color(event), factor=0.8)
+    def run(self):
+        from timelinelib.canvas.eventboxdrawers.gradienteventboxdrawer import GradientEventBoxDrawer
+        return GradientEventBoxDrawer()
