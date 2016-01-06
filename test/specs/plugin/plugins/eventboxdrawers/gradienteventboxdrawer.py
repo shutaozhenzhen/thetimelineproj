@@ -33,7 +33,7 @@ class describe_gradient_event_box_drawer(UnitTestCase):
         self.assertTrue(len(self.plugin.display_name()) > 0)
 
     def test_overrides_draw_background(self):
-        self.assertTrue(callable(getattr(self.plugin, "_draw_background")))
+        self.assertTrue(callable(getattr(self.plugin.run(), "_draw_background")))
 
     def setUp(self):
         self.plugin = GradientEventBoxDrawer()
