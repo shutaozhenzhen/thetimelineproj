@@ -17,5 +17,6 @@
 
 
 from timelinelib.canvas.events import EVT_DIVIDER_POSITION_CHANGED
+from timelinelib.canvas.events import EVT_EVENT_DOUBLE_CLICKED
 from timelinelib.canvas.events import EVT_HINT
 from timelinelib.canvas.events import EVT_TIMELINE_REDRAWN

@@ -19,12 +19,14 @@
 import wx
 
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
+from timelinelib.canvas import EVT_EVENT_DOUBLE_CLICKED
 from timelinelib.canvas import EVT_HINT
 from timelinelib.canvas import EVT_TIMELINE_REDRAWN
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.utilities.observer import Listener
 from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.components.sidebar import Sidebar
+from timelinelib.wxgui.dialogs.editevent.view import open_event_editor_for
 from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 
 
@@ -102,6 +104,10 @@ class TimelinePanelGuiCreator(wx.Panel):
             self._timeline_canvas_on_divider_position_changed
         )
         self.timeline_canvas.Bind(
+            EVT_EVENT_DOUBLE_CLICKED,
+            self._timeline_canvas_on_event_double_clicked
+        )
+        self.timeline_canvas.Bind(
             EVT_HINT,
             self._timeline_canvas_on_hint
         )
@@ -122,6 +128,14 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _timeline_canvas_on_divider_position_changed(self, event):
         self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
         self.config.divider_line_slider_pos = self.timeline_canvas.GetDividerPosition()
+
+    def _timeline_canvas_on_event_double_clicked(self, event):
+        open_event_editor_for(
+            self.main_frame,
+            self.config,
+            self.timeline_canvas.GetDb(),
+            self.handle_db_error,
+            event.event)
 
     def _timeline_canvas_on_hint(self, event):
         self.status_bar_adapter.set_text(event.text)
