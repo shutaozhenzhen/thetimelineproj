@@ -345,7 +345,7 @@ class GuiCreator(object):
 
         def create_click_handler(plugin):
             def event_handler(evt):
-                self.main_panel.get_timeline_canvas().set_event_box_drawer(plugin.run())
+                self.main_panel.get_timeline_canvas().SetEventBoxDrawer(plugin.run())
                 self.config.selected_event_box_drawer = plugin.display_name()
             return event_handler
 
