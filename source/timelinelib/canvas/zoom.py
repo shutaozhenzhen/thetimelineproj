@@ -21,26 +21,25 @@ from timelinelib.canvas.periodbase import SelectPeriodByDragInputHandler
 
 class ZoomByDragInputHandler(SelectPeriodByDragInputHandler):
 
-    def __init__(self, controller, status_bar_adapter, start_time):
+    def __init__(self, controller, start_time):
         SelectPeriodByDragInputHandler.__init__(self, controller, start_time)
         self.controller = controller
-        self.status_bar_adapter = status_bar_adapter
-        self.status_bar_adapter.set_text(_("Select region to zoom into"))
+        self.controller.post_hint_event(_("Select region to zoom into"))
 
     def mouse_moved(self, x, y, alt_down=False):
         SelectPeriodByDragInputHandler.mouse_moved(self, x, y, alt_down)
         try:
             p = self.get_current_period()
         except ValueError:
-            self.status_bar_adapter.set_text(_("Region too long"))
+            self.controller.post_hint_event(_("Region too long"))
         else:
             if p.delta() < p.time_type.get_min_zoom_delta()[0]:
-                self.status_bar_adapter.set_text(_("Region too short"))
+                self.controller.post_hint_event(_("Region too short"))
             else:
-                self.status_bar_adapter.set_text("")
+                self.controller.post_hint_event("")
 
     def end_action(self):
-        self.status_bar_adapter.set_text("")
+        self.controller.post_hint_event("")
         period = self.get_last_valid_period()
         start = period.start_time
         end = period.end_time

@@ -20,6 +20,7 @@ import webbrowser
 
 import wx
 
+from timelinelib.canvas.events import create_hint_event
 from timelinelib.canvas.events import create_mouse_moved_event
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.noop import NoOpInputHandler
@@ -85,6 +86,9 @@ class TimelineCanvasController(object):
         self.change_input_handler_to_no_op()
         self.timeline = None
 
+    def post_hint_event(self, text):
+        self.view.PostEvent(create_hint_event(text))
+
     def start(self):
         self.start_slider_pos = self.view.GetDividerPosition()
         self.start_mouse_pos = wx.GetMousePosition()[1]
@@ -108,18 +112,18 @@ class TimelineCanvasController(object):
         self.drawing_algorithm.set_background_drawer(drawer)
 
     def change_input_handler_to_zoom_by_drag(self, start_time):
-        self.input_handler = ZoomByDragInputHandler(self, self.status_bar_adapter, start_time)
+        self.input_handler = ZoomByDragInputHandler(self, start_time)
 
     def change_input_handler_to_create_period_event_by_drag(self, initial_time):
         self.input_handler = CreatePeriodEventByDragInputHandler(self, self.view, initial_time)
 
     def change_input_handler_to_resize_by_drag(self, event, direction):
         self.input_handler = ResizeByDragInputHandler(
-            self, self.status_bar_adapter, event, direction)
+            self, event, direction)
 
     def change_input_handler_to_move_by_drag(self, event, start_drag_time):
         self.input_handler = MoveByDragInputHandler(
-            self, self.status_bar_adapter, event, start_drag_time)
+            self, event, start_drag_time)
 
     def change_input_handler_to_scroll_by_drag(self, start_time):
         self.input_handler = ScrollByDragInputHandler(self, start_time)
@@ -211,13 +215,13 @@ class TimelineCanvasController(object):
         try:
             self.view_properties.displayed_period = navigation_fn(self.view_properties.displayed_period)
             self._redraw_timeline()
-            self.status_bar_adapter.set_text("")
+            self.post_hint_event("")
         except (TimeOutOfRangeLeftError), e:
-            self.status_bar_adapter.set_text(_("Can't scroll more to the left"))
+            self.post_hint_event(_("Can't scroll more to the left"))
         except (TimeOutOfRangeRightError), e:
-            self.status_bar_adapter.set_text(_("Can't scroll more to the right"))
+            self.post_hint_event(_("Can't scroll more to the right"))
         except (ValueError, OverflowError), e:
-            self.status_bar_adapter.set_text(ex_msg(e))
+            self.post_hint_event(ex_msg(e))
 
     def redraw_timeline(self):
         self._redraw_timeline()
