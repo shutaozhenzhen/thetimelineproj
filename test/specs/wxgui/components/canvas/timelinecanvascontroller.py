@@ -27,7 +27,6 @@ from timelinelib.data import Event
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
-from timelinelib.plugin import factory
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
@@ -346,12 +345,10 @@ class TimelineViewSpec(UnitTestCase):
         self.config = Mock(Config)
         self.mock_drawer = MockDrawer()
         self.fn_handle_db_error = Mock()
-        self.mock_plugin_factory = factory
         self.controller = TimelineCanvasController(
             self.timeline_canvas,
             self.config,
             self.fn_handle_db_error,
-            self.mock_plugin_factory,
             drawer=self.mock_drawer)
         self.controller.post_hint_event = Mock()
 
@@ -580,7 +577,6 @@ class DrawingAreaSpec(UnitTestCase):
         config = Mock(Config)
         self.drawing_algorithm = DefaultDrawingAlgorithm()
         fn_handle_db_error = None
-        plugin_factory = factory
         self.controller = TimelineCanvasController(
             self.timeline_canvas, config,
-            fn_handle_db_error, plugin_factory, drawer=self.drawing_algorithm)
+            fn_handle_db_error, drawer=self.drawing_algorithm)
