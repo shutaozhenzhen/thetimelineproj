@@ -20,7 +20,6 @@ import wx
 
 from timelinelib.canvas.events import create_divider_position_changed_event
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.plugin import factory
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 from timelinelib.wxgui.dialogs.editevent.view import open_event_editor_for
@@ -38,8 +37,7 @@ class TimelineCanvas(wx.Panel):
         self.fn_handle_db_error = fn_handle_db_error
         self.config = config
         self.main_frame = main_frame
-        self.controller = TimelineCanvasController(self, config,
-                                                   fn_handle_db_error, factory)
+        self.controller = TimelineCanvasController(self, config, fn_handle_db_error)
         self.surface_bitmap = None
         self._create_gui()
         self.SetDividerPosition(50)

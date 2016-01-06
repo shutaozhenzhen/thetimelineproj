@@ -110,6 +110,14 @@ class TimelinePanelGuiCreator(wx.Panel):
             self._timeline_canvas_on_timeline_redrawn
         )
         self.timeline_canvas.SetDividerPosition(self.config.divider_line_slider_pos)
+        self.timeline_canvas.SetEventBoxDrawer(self._get_saved_event_box_drawer())
+
+    def _get_saved_event_box_drawer(self):
+        from timelinelib.plugin import factory
+        from timelinelib.plugin.factory import EVENTBOX_DRAWER
+        from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
+        plugin = factory.get_plugin(EVENTBOX_DRAWER, self.config.selected_event_box_drawer) or DefaultEventBoxDrawer()
+        return plugin.run()
 
     def _timeline_canvas_on_divider_position_changed(self, event):
         self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())

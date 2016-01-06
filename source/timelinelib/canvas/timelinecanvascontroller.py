@@ -38,9 +38,8 @@ from timelinelib.drawing import get_drawer
 from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature
-from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
-from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
+from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.utilities.encodings import to_unicode
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
@@ -61,14 +60,13 @@ MOUSE_SCROLL_FACTOR = 1 / 10.0
 
 class TimelineCanvasController(object):
 
-    def __init__(self, view, config, fn_handle_db_error, plugin_factory, drawer=None):
+    def __init__(self, view, config, fn_handle_db_error, drawer=None):
         """
         The purpose of the drawer argument is make testing easier. A test can
         mock a drawer and use the mock by sending it in the drawer argument.
         Normally the drawer is collected with the get_drawer() method.
         """
         self.monitoring = Monitoring()
-        self.plugin_factory = plugin_factory
         self.view = view
         self.config = config
         self.config.listen_for_any(self._redraw_timeline)
@@ -77,7 +75,7 @@ class TimelineCanvasController(object):
             self.drawing_algorithm = drawer
         else:
             self.drawing_algorithm = get_drawer()
-        self.set_event_box_drawer(self.get_saved_drawer())
+        self.set_event_box_drawer(DefaultEventBoxDrawer())
         self.set_background_drawer(self.get_saved_background_drawer())
         self.drawing_algorithm.use_fast_draw(False)
         self._set_initial_values_to_member_variables()
@@ -96,10 +94,6 @@ class TimelineCanvasController(object):
     def scroll_vertical(self):
         percentage_distance = 100 * (wx.GetMousePosition()[1] - self.start_mouse_pos) / self.view_height
         self.view.SetDividerPosition(self.start_slider_pos + percentage_distance)
-
-    def get_saved_drawer(self):
-        plugin = self.plugin_factory.get_plugin(EVENTBOX_DRAWER, self.config.selected_event_box_drawer) or DefaultEventBoxDrawer()
-        return plugin.run()
 
     def get_saved_background_drawer(self):
         return DefaultBackgroundDrawer()
