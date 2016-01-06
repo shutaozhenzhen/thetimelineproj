@@ -19,6 +19,7 @@
 import wx
 
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
+from timelinelib.canvas import EVT_HINT
 from timelinelib.canvas import EVT_MOUSE_MOVED
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.utilities.observer import Listener
@@ -105,6 +106,10 @@ class TimelinePanelGuiCreator(wx.Panel):
             EVT_MOUSE_MOVED,
             self._timeline_canvas_on_mouse_moved
         )
+        self.timeline_canvas.Bind(
+            EVT_HINT,
+            self._timeline_canvas_on_hint
+        )
         self.timeline_canvas.SetDividerPosition(self.config.divider_line_slider_pos)
 
     def _timeline_canvas_on_divider_position_changed(self, event):
@@ -116,6 +121,9 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.status_bar_adapter.set_text(event.time_string)
         else:
             self.status_bar_adapter.set_text(event.event.get_label())
+
+    def _timeline_canvas_on_hint(self, event):
+        self.status_bar_adapter.set_text(event.text)
 
     def _layout_components(self):
         hsizer = wx.BoxSizer(wx.HORIZONTAL)

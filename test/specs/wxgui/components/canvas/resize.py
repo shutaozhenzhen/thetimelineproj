@@ -38,22 +38,22 @@ class ResizeEventSpec(UnitTestCase):
         self.and_moving_mouse_to_x(50)
         self.then_event_gets_period("1 Jan 2010", "31 Aug 2010")
 
-    def test_indicates_a_too_long_event_in_status_bar(self):
+    def test_indicates_a_too_long_event_in_hint(self):
         self.given_time_at_x_is(50, "1 Jan 5000")
         self.when_resizing(an_event_with(time="1 Jan 2000"), wx.RIGHT)
         self.and_moving_mouse_to_x(50)
-        self.assertEqual(1, self.status_bar.set_text.call_count)
+        self.assertEqual(1, self.controller.post_hint_event.call_count)
 
-    def test_clears_status_message_if_resize_is_valid(self):
+    def test_clears_hint_if_resize_is_valid(self):
         self.given_time_at_x_is(50, "2 Jan 2000")
         self.when_resizing(an_event_with(time="1 Jan 2000"), wx.RIGHT)
         self.and_moving_mouse_to_x(50)
-        self.status_bar.set_text.assert_called_with("")
+        self.controller.post_hint_event.assert_called_with("")
 
-    def test_clears_status_message_when_resize_is_done(self):
+    def test_clears_hint_when_resize_is_done(self):
         self.when_resizing(an_event(), wx.RIGHT)
         self.resizer.left_mouse_up()
-        self.status_bar.set_text.assert_called_with("")
+        self.controller.post_hint_event.assert_called_with("")
 
     def test_changes_input_handler_when_resize_is_done(self):
         self.when_resizing(an_event(), wx.RIGHT)
@@ -66,7 +66,6 @@ class ResizeEventSpec(UnitTestCase):
         self.controller.timeline = None
         self.controller.view = Mock(TimelineCanvas)
         self.controller.get_drawer.return_value = self.drawer
-        self.status_bar = Mock(StatusBarAdapter)
 
     def given_time_at_x_is(self, x, time):
         self.controller.get_time.return_value = human_time_to_gregorian(time)
@@ -75,7 +74,7 @@ class ResizeEventSpec(UnitTestCase):
     def when_resizing(self, event, direction):
         self.event_being_resized = event
         self.resizer = ResizeByDragInputHandler(
-            self.controller, self.status_bar, event, direction)
+            self.controller, event, direction)
 
     def and_moving_mouse_to_x(self, x):
         any_y = 10

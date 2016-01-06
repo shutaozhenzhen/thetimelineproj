@@ -62,39 +62,39 @@ class TimelineViewSpec(UnitTestCase):
         self.simulate_mouse_down_move_up((0, ANY_Y), (20, ANY_Y), shift_down=True)
         self.assert_displays_period("1 Aug 2010", "3 Aug 2010")
 
-    def test_displays_zoom_intstructions_in_status_bar(self):
+    def test_sends_hint_event_with_zoom_intstructions(self):
         self.init_view_with_db()
         self.controller.left_mouse_down(0, 0, ctrl_down=False, shift_down=True)
-        self.assert_displays_status_text(_("Select region to zoom into"))
+        self.assert_has_posted_hint(_("Select region to zoom into"))
 
-    def test_displays_period_to_short_message_when_zooming(self):
+    def test_sends_hint_event_with_period_to_short_message_when_zooming(self):
         self.given_time_at_x_is(0, "1 Aug 2010 00:00:00")
         self.given_time_at_x_is(1, "1 Aug 2010 00:00:01")
         self.init_view_with_db()
         self.start_shift_drag_at_x(0)
         self.move_mouse_to_x(1)
-        self.assert_displays_status_text(_("Region too short"))
+        self.assert_has_posted_hint(_("Region too short"))
 
-    def test_displays_nothing_if_period_ok_when_zooming(self):
+    def test_sends_hint_with_nothing_if_period_ok_when_zooming(self):
         self.given_time_at_x_is(0, "1 Aug 2010")
         self.given_time_at_x_is(1, "2 Aug 2010")
         self.init_view_with_db()
         self.start_shift_drag_at_x(0)
         self.move_mouse_to_x(1)
-        self.assert_displays_status_text("")
+        self.assert_has_posted_hint("")
 
-    def test_displays_nothing_for_long_period_zooming(self):
+    def test_sends_hint_with_nothing_for_long_period_zooming(self):
         self.given_time_at_x_is(0, "1 Aug 2000")
         self.given_time_at_x_is(200, "1 Aug 4000")
         self.init_view_with_db()
         self.start_shift_drag_at_x(0)
         self.move_mouse_to_x(200)
-        self.assert_displays_status_text("")
+        self.assert_has_posted_hint("")
 
     def test_removes_zoom_instructions_when_zoom_done(self):
         self.init_view_with_db()
         self.simulate_mouse_down_move_up((0, ANY_Y), (20, ANY_Y), shift_down=True)
-        self.assert_displays_status_text("")
+        self.assert_has_posted_hint("")
 
     def test_hightlights_selected_region_while_zooming(self):
         self.given_time_at_x_is(0, "1 Jan 2010")
@@ -164,19 +164,19 @@ class TimelineViewSpec(UnitTestCase):
         self.init_view_with_db()
         self.assertTrue("3" in self.get_hidden_event_count_text())
 
-    def test_displays_error_in_status_bar_when_scrolling_too_far_left(self):
+    def test_sends_error_hint_wehn_scrolling_too_far_left(self):
         def navigate(time_period):
             raise TimeOutOfRangeLeftError()
         self.init_view_with_db()
         self.controller.navigate_timeline(navigate)
-        self.assert_displays_status_text(_("Can't scroll more to the left"))
+        self.assert_has_posted_hint(_("Can't scroll more to the left"))
 
-    def test_displays_error_in_status_bar_when_scrolling_too_far_right(self):
+    def test_sends_error_hint_when_scrolling_too_far_right(self):
         def navigate(time_period):
             raise TimeOutOfRangeRightError()
         self.init_view_with_db()
         self.controller.navigate_timeline(navigate)
-        self.assert_displays_status_text(_("Can't scroll more to the right"))
+        self.assert_has_posted_hint(_("Can't scroll more to the right"))
 
     def test_creates_event_when_double_clicking_surface(self):
         self.given_time_at_x_is(30, "3 Aug 2010")
@@ -360,6 +360,7 @@ class TimelineViewSpec(UnitTestCase):
             self.fn_handle_db_error,
             self.mock_plugin_factory,
             drawer=self.mock_drawer)
+        self.controller.post_hint_event = Mock()
 
     def given_event_with(self, start="4 Aug 2010", end="10 Aug 2010",
                          text="Text", description=None,
@@ -419,11 +420,6 @@ class TimelineViewSpec(UnitTestCase):
     def release_mouse(self):
         self.controller.left_mouse_up()
 
-    def get_status_text(self):
-        self.assertTrue(self.status_bar_adapter.set_text.called)
-        text = self.status_bar_adapter.set_text.call_args[0][0]
-        return text
-
     def get_last_posted_event(self):
         self.assertTrue(self.timeline_canvas.PostEvent.called)
         last_event = self.timeline_canvas.PostEvent.call_args[0][0]
@@ -467,8 +463,8 @@ class TimelineViewSpec(UnitTestCase):
         view_properties = self.get_view_properties_used_when_drawing()
         self.assertFalse(view_properties.is_selected(event))
 
-    def assert_displays_status_text(self, text):
-        self.assertEqual(text, self.get_status_text())
+    def assert_has_posted_hint(self, text):
+        self.controller.post_hint_event.assert_called_with(text)
 
     def get_view_properties_used_when_drawing(self):
         self.assertTrue(self.timeline_canvas.redraw_surface.called)

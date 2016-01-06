@@ -21,6 +21,7 @@ import wx
 
 DividerPositionChangedEvent, EVT_DIVIDER_POSITION_CHANGED = wx.lib.newevent.NewEvent()
 MouseMovedEvent, EVT_MOUSE_MOVED = wx.lib.newevent.NewEvent()
+HintEvent, EVT_HINT = wx.lib.newevent.NewEvent()
 
 
 def create_divider_position_changed_event():
@@ -29,3 +30,7 @@ def create_divider_position_changed_event():
 
 def create_mouse_moved_event(event, time_string):
     return MouseMovedEvent(event=event, time_string=time_string)
+
+
+def create_hint_event(text):
+    return HintEvent(text=text)
