@@ -52,7 +52,7 @@ class DefaultDrawingAlgorithm(Drawer):
         self.fast_draw = False
 
     def set_event_box_drawer(self, event_box_drawer):
-        self.event_box_drawer = event_box_drawer.run()
+        self.event_box_drawer = event_box_drawer
 
     def set_background_drawer(self, background_drawer):
         self.background_drawer = background_drawer

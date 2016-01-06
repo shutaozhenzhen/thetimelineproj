@@ -104,8 +104,8 @@ class TimelineCanvasController(object):
     def get_saved_background_drawer(self):
         return DefaultBackgroundDrawer()
 
-    def set_event_box_drawer(self, drawer):
-        self.drawing_algorithm.set_event_box_drawer(drawer)
+    def set_event_box_drawer(self, drawer_plugin):
+        self.drawing_algorithm.set_event_box_drawer(drawer_plugin.run())
 
     def set_background_drawer(self, drawer):
         self.drawing_algorithm.set_background_drawer(drawer)
