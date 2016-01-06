@@ -21,6 +21,7 @@ import webbrowser
 import wx
 
 from timelinelib.canvas.events import create_hint_event
+from timelinelib.canvas.events import create_timeline_redrawn_event
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.noop import NoOpInputHandler
 from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
@@ -60,7 +61,7 @@ MOUSE_SCROLL_FACTOR = 1 / 10.0
 
 class TimelineCanvasController(object):
 
-    def __init__(self, view, status_bar_adapter, config, fn_handle_db_error, plugin_factory, drawer=None):
+    def __init__(self, view, config, fn_handle_db_error, plugin_factory, drawer=None):
         """
         The purpose of the drawer argument is make testing easier. A test can
         mock a drawer and use the mock by sending it in the drawer argument.
@@ -69,7 +70,6 @@ class TimelineCanvasController(object):
         self.monitoring = Monitoring()
         self.plugin_factory = plugin_factory
         self.view = view
-        self.status_bar_adapter = status_bar_adapter
         self.config = config
         self.config.listen_for_any(self._redraw_timeline)
         self.fn_handle_db_error = fn_handle_db_error
@@ -517,11 +517,7 @@ class TimelineCanvasController(object):
             self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
             self.view.redraw_surface(fn_draw)
             self.view.enable_disable_menus()
-            self._display_hidden_event_count()
-
-    def _display_hidden_event_count(self):
-        text = _("%s events hidden") % self.drawing_algorithm.get_hidden_event_count()
-        self.status_bar_adapter.set_hidden_event_count_text(text)
+            self.view.PostEvent(create_timeline_redrawn_event())
 
     def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
         event = self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down)
