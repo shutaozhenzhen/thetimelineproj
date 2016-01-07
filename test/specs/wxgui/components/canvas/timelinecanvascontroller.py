@@ -289,25 +289,6 @@ class TimelineViewSpec(UnitTestCase):
         self.assert_displays_period("1 Aug 2010", "21 Aug 2010")
         self.assert_timeline_redrawn()
 
-    def test_deletes_selected_events_when_pressing_del_and_answering_yes_in_dialog(self):
-        period_event = self.given_event_with(start="4 Aug 2010", end="10 Aug 2010", pos=(30, 60-5), size=(60, 10))
-        point_event = self.given_event_with(start="15 Aug 2010", end="15 Aug 2010", pos=(130, 30-5), size=(50, 10))
-        self.init_view_with_db()
-        self.timeline_canvas.ask_question.return_value = wx.YES
-        self.simulate_mouse_click(50, 60)
-        self.controller.key_down(wx.WXK_DELETE, False)
-        self.assertEqual([point_event], self.db.get_all_events())
-
-    def test_deletes_no_selected_events_when_pressing_del_and_answering_no_in_dialog(self):
-        period_event = self.given_event_with(start="4 Aug 2010", end="10 Aug 2010", pos=(30, 60-5), size=(60, 10))
-        point_event = self.given_event_with(start="15 Aug 2010", end="15 Aug 2010", pos=(130, 30-5), size=(50, 10))
-        self.init_view_with_db()
-        self.timeline_canvas.ask_question.return_value = wx.NO
-        self.simulate_mouse_click(50, 60)
-        self.controller.key_down(wx.WXK_DELETE, False)
-        self.assertTrue(period_event in self.db.get_all_events())
-        self.assertTrue(point_event in self.db.get_all_events())
-
     def test_shift_scroll_changes_divider_line_value_and_redraws(self):
         self.init_view_with_db()
         self.controller.mouse_wheel_moved(

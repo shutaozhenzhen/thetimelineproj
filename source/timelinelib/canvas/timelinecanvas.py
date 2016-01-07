@@ -23,7 +23,6 @@ from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 from timelinelib.wxgui.dialogs.editevent.view import open_event_editor_for
-from timelinelib.wxgui.utils import _ask_question
 
 
 class TimelineCanvas(wx.Panel):
@@ -192,9 +191,6 @@ class TimelineCanvas(wx.Panel):
 
     def set_default_cursor(self):
         self.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
-
-    def ask_question(self, question):
-        return _ask_question(question, self)
 
     def ok_to_edit(self):
         return self.main_frame.ok_to_edit()
