@@ -55,6 +55,8 @@ GUI:
 * Colors can now be selected for events without an associated category.
   (`#81 <https://sourceforge.net/p/thetimelineproj/backlog/81/>`_)
 
+* The Ends-today property can be set on subevents if the extended conatiner strategy is used
+
 Translations:
 
 * The wx stock items are translated correctly in the Windows binary.
