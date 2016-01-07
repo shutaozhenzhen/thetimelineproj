@@ -69,6 +69,12 @@ class TimelineCanvas(wx.Panel):
     def GetDb(self):
         return self.get_timeline()
 
+    def GetEventAt(self, x, y, prefer_container=False):
+        return self.controller.drawing_algorithm.event_at(x, y, prefer_container)
+
+    def GetTimeAt(self, x):
+        return self.controller.get_time(x)
+
     def get_drawer(self):
         return self.controller.get_drawer()
 

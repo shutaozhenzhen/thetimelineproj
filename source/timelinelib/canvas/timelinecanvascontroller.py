@@ -21,9 +21,7 @@ import webbrowser
 import wx
 
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.canvas.events import create_event_double_clicked_event
 from timelinelib.canvas.events import create_hint_event
-from timelinelib.canvas.events import create_time_double_clicked_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.noop import NoOpInputHandler
@@ -336,10 +334,6 @@ class TimelineCanvasController(object):
         # It doesn't look too god but I havent found any other way to do it.
         self._toggle_event_selection(x, y, ctrl_down, alt_down)
         event = self.drawing_algorithm.event_at(x, y, alt_down)
-        if event:
-            self.view.PostEvent(create_event_double_clicked_event(event))
-        else:
-            self.view.PostEvent(create_time_double_clicked_event(self.get_time(x)))
 
     def get_time(self, x):
         return self.drawing_algorithm.get_time(x)
