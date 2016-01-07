@@ -21,7 +21,7 @@ from timelinelib.db.strategies import DefaultContainerStrategy
 from timelinelib.db.strategies import ExtendedContainerStrategy
 
 
-class StrategiesTestCase(UnitTestCase):
+class ContainerStrategiesTestCase(UnitTestCase):
 
     def setUp(self):
         self.default_strategy = DefaultContainerStrategy(None)
@@ -31,13 +31,13 @@ class StrategiesTestCase(UnitTestCase):
         pass
 
 
-class describe_default_container_strategy(StrategiesTestCase):
+class describe_default_container_strategy(ContainerStrategiesTestCase):
 
     def test_disallsows_ends_today_subevents(self):
         self.assertFalse(self.default_strategy.allow_ends_today_on_subevents())
 
 
-class describe_extended_container_strategy(StrategiesTestCase):
+class describe_extended_container_strategy(ContainerStrategiesTestCase):
 
     def test_allsows_ends_today_subevents(self):
         self.assertTrue(self.extended_strategy.allow_ends_today_on_subevents())
