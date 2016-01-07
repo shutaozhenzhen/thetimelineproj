@@ -16,18 +16,27 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import webbrowser
+
 import wx
 
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
 from timelinelib.canvas import EVT_HINT
 from timelinelib.canvas import EVT_TIMELINE_REDRAWN
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
+from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.db.utils import safe_locking
+from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
+from timelinelib.features.experimental.experimentalfeatures import experimental_feature
+from timelinelib.utilities.encodings import to_unicode
 from timelinelib.utilities.observer import Listener
 from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.components.sidebar import Sidebar
+from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 from timelinelib.wxgui.dialogs.editevent.view import open_event_editor_for
 from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
+from timelinelib.wxgui.utils import _ask_question
 
 
 class TimelinePanelGuiCreator(wx.Panel):
@@ -104,6 +113,10 @@ class TimelinePanelGuiCreator(wx.Panel):
             self._timeline_canvas_on_double_clicked
         )
         self.timeline_canvas.Bind(
+            wx.EVT_RIGHT_DOWN,
+            self._timeline_canvas_on_right_down
+        )
+        self.timeline_canvas.Bind(
             EVT_DIVIDER_POSITION_CHANGED,
             self._timeline_canvas_on_divider_position_changed
         )
@@ -147,6 +160,121 @@ class TimelinePanelGuiCreator(wx.Panel):
                 time,
                 time)
         event.Skip()
+
+    def _timeline_canvas_on_right_down(self, event):
+        (x, y) = (event.GetX(), event.GetY())
+        timeline_event = self.timeline_canvas.GetEventAt(x, y)
+        if timeline_event is not None and not self.timeline_canvas.GetDb().is_read_only():
+            self.timeline_canvas.SetEventSelected(timeline_event, True)
+            self._display_event_context_menu()
+        event.Skip()
+
+    def _display_event_context_menu(self):
+        menu_definitions = [
+            (_("Delete"), self._context_menu_on_delete_event, None),
+        ]
+        nbr_of_selected_events = len(self.timeline_canvas.GetSelectedEvents())
+        if nbr_of_selected_events == 1:
+            menu_definitions.insert(0, (_("Edit"), self._context_menu_on_edit_event, None))
+            menu_definitions.insert(1, (_("Duplicate..."), self._context_menu_on_duplicate_event, None))
+        if EVENT_DONE.enabled():
+            menu_definitions.append((EVENT_DONE.get_display_name(), self._context_menu_on_done_event, None))
+        menu_definitions.append((_("Select Category..."), self._context_menu_on_select_category, None))
+        if nbr_of_selected_events == 1 and self.timeline_canvas.GetSelectedEvent().has_data():
+            menu_definitions.append((_("Sticky Balloon"), self._context_menu_on_sticky_balloon_event, None))
+        if nbr_of_selected_events == 1:
+            hyperlinks = self.timeline_canvas.GetSelectedEvent().get_data("hyperlink")
+            if hyperlinks is not None:
+                imp = wx.Menu()
+                menuid = 0
+                for hyperlink in hyperlinks.split(";"):
+                    imp.Append(menuid, hyperlink)
+                    menuid += 1
+                menu_definitions.append((_("Goto URL"), self._context_menu_on_goto_hyperlink_event, imp))
+        menu = wx.Menu()
+        for menu_definition in menu_definitions:
+            text, method, imp = menu_definition
+            menu_item = wx.MenuItem(menu, wx.NewId(), text)
+            if imp is not None:
+                for menu_item in imp.GetMenuItems():
+                    self.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
+                menu.AppendMenu(wx.ID_ANY, text, imp)
+            else:
+                self.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
+                menu.AppendItem(menu_item)
+        self.PopupMenu(menu)
+        menu.Destroy()
+
+    def _context_menu_on_delete_event(self, evt):
+        self._delete_selected_events()
+
+    def _delete_selected_events(self):
+        selected_events = self.timeline_canvas.GetSelectedEvents()
+        number_of_selected_events = len(selected_events)
+        def user_ack():
+            if number_of_selected_events > 1:
+                text = _("Are you sure you want to delete %d events?" %
+                         number_of_selected_events)
+            else:
+                text = _("Are you sure you want to delete this event?")
+            return _ask_question(text) == wx.YES
+        def exception_handler(ex):
+            if isinstance(ex, TimelineIOError):
+                self.handle_db_error(ex)
+            else:
+                raise(ex)
+        def _last_event(event):
+            return event.get_id() == selected_events[-1].get_id()
+        def _delete_events():
+            for event in selected_events:
+                self.timeline_canvas.GetDb().delete_event(event.get_id(), save=_last_event(event))
+        def edit_function():
+            if user_ack():
+                _delete_events()
+            self.timeline_canvas.ClearSelectedEvents()
+        safe_locking(self.main_frame, edit_function, exception_handler)
+
+    def _context_menu_on_edit_event(self, evt):
+        open_event_editor_for(
+            self.main_frame,
+            self.config,
+            self.timeline_canvas.GetDb(),
+            self.handle_db_error,
+            self.timeline_canvas.GetSelectedEvent())
+
+    def _context_menu_on_duplicate_event(self, evt):
+        open_duplicate_event_dialog_for_event(
+            self.main_frame,
+            self.timeline_canvas.GetDb(),
+            self.handle_db_error,
+            self.timeline_canvas.GetSelectedEvent())
+
+    @experimental_feature(EVENT_DONE)
+    def _context_menu_on_done_event(self, evt):
+        def exception_handler(ex):
+            if isinstance(ex, TimelineIOError):
+                self.handle_db_error(ex)
+            else:
+                raise(ex)
+        def _last_event(event):
+            return event.get_id() == selected_events[-1].get_id()
+        def edit_function():
+            for event in selected_events:
+                self.timeline_canvas.GetDb().mark_event_as_done(event.get_id(), save=_last_event(event))
+            self.timeline_canvas.ClearSelectedEvents()
+        selected_events = self.timeline_canvas.GetSelectedEvents()
+        safe_locking(self.main_frame, edit_function, exception_handler)
+
+    def _context_menu_on_select_category(self, evt):
+        self.main_frame.set_category_on_selected()
+
+    def _context_menu_on_sticky_balloon_event(self, evt):
+        self.timeline_canvas.SetEventStickyBalloon(self.timeline_canvas.GetSelectedEvent(), True)
+
+    def _context_menu_on_goto_hyperlink_event(self, evt):
+        hyperlinks = self.timeline_canvas.GetSelectedEvent().get_data("hyperlink")
+        hyperlink = hyperlinks.split(";")[evt.Id]
+        webbrowser.open(to_unicode(hyperlink))
 
     def _timeline_canvas_on_divider_position_changed(self, event):
         self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
