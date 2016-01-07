@@ -224,22 +224,6 @@ class TimelineCanvasController(object):
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
         self.input_handler.left_mouse_down(x, y, ctrl_down, shift_down, alt_down)
 
-    def right_mouse_down(self, x, y, alt_down=False):
-        """
-        Event handler used when the right mouse button has been pressed.
-
-        If the mouse hits an event and the timeline is not readonly, the
-        context menu for that event is displayed.
-        """
-        self.context_menu_event = self.drawing_algorithm.event_at(x, y, alt_down)
-        if self.context_menu_event is None:
-            self.display_timeline_context_menu()
-        if self.timeline.is_read_only():
-            return
-
-    def display_timeline_context_menu(self):
-        self.view.display_timeline_context_menu()
-
     def _one_and_only_one_event_selected(self):
         selected_event_ids = self.view_properties.get_selected_event_ids()
         nbr_of_selected_event_ids = len(selected_event_ids)
