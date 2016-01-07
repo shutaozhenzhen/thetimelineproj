@@ -77,6 +77,10 @@ class TimelineCanvasController(object):
         self._set_colors_and_styles()
         self.change_input_handler_to_no_op()
         self.timeline = None
+        self.ctrl_drag_handler = None
+
+    def set_ctrl_drag_handler(self, ctrl_drag_handler):
+        self.ctrl_drag_handler = ctrl_drag_handler
 
     def post_hint_event(self, text):
         self.view.PostEvent(create_hint_event(text))

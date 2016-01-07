@@ -20,7 +20,6 @@ import wx
 
 from timelinelib.canvas.events import create_divider_position_changed_event
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 
 
 class TimelineCanvas(wx.Panel):
@@ -82,6 +81,9 @@ class TimelineCanvas(wx.Panel):
     def GetSelectedEvents(self):
         return self.controller.get_selected_events()
 
+    def SetCtrlDragHandler(self, ctrl_drag_handler):
+        self.controller.set_ctrl_drag_handler(ctrl_drag_handler)
+
     def GetDb(self):
         return self.get_timeline()
 
@@ -141,15 +143,6 @@ class TimelineCanvas(wx.Panel):
 
     def enable_disable_menus(self):
         self.main_frame.enable_disable_menus()
-
-    def open_create_event_editor(self, start_time, end_time):
-        open_create_event_editor(
-            self,
-            self.config,
-            self.controller.get_timeline(),
-            self.fn_handle_db_error,
-            start_time,
-            end_time)
 
     def start_balloon_show_timer(self, milliseconds=-1, oneShot=False):
         self.balloon_show_timer.Start(milliseconds, oneShot)
