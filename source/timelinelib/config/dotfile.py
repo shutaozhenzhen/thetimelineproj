@@ -351,6 +351,7 @@ class Config(Observable):
 
     def set_legend_font(self, font):
         self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
+        self._notify()
     legend_font = property(get_legend_font, set_legend_font)
 
     def _set_default_fonts(self):
