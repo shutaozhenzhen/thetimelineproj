@@ -311,10 +311,8 @@ class TimelineViewSpec(UnitTestCase):
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
         self.timeline_canvas.GetDividerPosition.return_value = 50
         self.mock_drawer = MockDrawer()
-        self.fn_handle_db_error = Mock()
         self.controller = TimelineCanvasController(
-            self.timeline_canvas, self.fn_handle_db_error,
-            drawer=self.mock_drawer)
+            self.timeline_canvas, drawer=self.mock_drawer)
         self.controller.post_hint_event = Mock()
 
     def given_event_with(self, start="4 Aug 2010", end="10 Aug 2010",
@@ -538,7 +536,5 @@ class DrawingAreaSpec(UnitTestCase):
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetDividerPosition.return_value = 1
         self.drawing_algorithm = DefaultDrawingAlgorithm()
-        fn_handle_db_error = None
         self.controller = TimelineCanvasController(
-            self.timeline_canvas, fn_handle_db_error,
-            drawer=self.drawing_algorithm)
+            self.timeline_canvas, drawer=self.drawing_algorithm)
