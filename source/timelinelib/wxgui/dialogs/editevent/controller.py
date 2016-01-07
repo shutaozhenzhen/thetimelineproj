@@ -329,6 +329,7 @@ class EditEventDialogController(Controller):
                   not self.view.GetLocked() and
                   self._start_is_in_history())
         self.view.EnableEndsToday(enable)
+        self.view.EnableEndsToday(True)
 
     def _enable_disable_locked(self):
         if self.event is not None and EXTENDED_CONTAINER_STRATEGY.enabled():
