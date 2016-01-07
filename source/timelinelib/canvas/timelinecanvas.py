@@ -66,6 +66,25 @@ class TimelineCanvas(wx.Panel):
         self.controller.set_event_box_drawer(event_box_drawer)
         self.redraw_timeline()
 
+    def SetEventSelected(self, event, is_selected):
+        self.controller.view_properties.set_selected(event, is_selected)
+
+    def SetEventStickyBalloon(self, event, is_sticky):
+        self.controller.view_properties.set_event_has_sticky_balloon(event, is_sticky)
+        self.redraw_timeline()
+
+    def ClearSelectedEvents(self):
+        self.controller.view_properties.clear_selected()
+
+    def GetSelectedEvent(self):
+        selected_events = self.GetSelectedEvents()
+        if len(selected_events) == 1:
+            return selected_events[0]
+        return None
+
+    def GetSelectedEvents(self):
+        return self.controller.get_selected_events()
+
     def GetDb(self):
         return self.get_timeline()
 
