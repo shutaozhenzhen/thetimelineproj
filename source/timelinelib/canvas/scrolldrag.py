@@ -42,7 +42,7 @@ class ScrollByDragInputHandler(InputHandler):
 
     def left_mouse_up(self):
         self.controller.change_input_handler_to_no_op()
-        if self.controller.config.use_inertial_scrolling:
+        if self.controller.appearance.get_use_inertial_scrolling():
             if self.speed_px_per_sec > self.INERTIAL_SCROLLING_SPEED_THRESHOLD:
                 self._inertial_scrolling()
 
