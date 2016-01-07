@@ -20,6 +20,7 @@ import wx
 from mock import Mock
 
 from timelinelib.calendar.gregorian import GregorianUtils
+from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
@@ -60,7 +61,7 @@ class DrawerSpec(UnitTestCase):
 
     def when_timeline_is_drawn(self):
         config = Config(None)
-        appearance = Mock()
+        appearance = Appearance()
         self.drawer.draw(self.dc, self.timeline, self.view_properties, config, appearance)
 
     def assert_text_drawn_above(self, text, y_limit):

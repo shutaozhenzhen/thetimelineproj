@@ -139,6 +139,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance = self.timeline_canvas.GetAppearance()
             appearance.set_legend_visible(self.config.show_legend)
             appearance.set_balloons_visible(self.config.get_balloon_on_hover())
+            appearance.set_minor_strip_divider_line_colour(self.config.get_minor_strip_divider_line_colour())
         self.config.listen_for_any(update_appearance)
         update_appearance()
 
