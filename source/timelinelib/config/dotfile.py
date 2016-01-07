@@ -402,6 +402,7 @@ class Config(Observable):
         return self.config_parser.getboolean(DEFAULTSECT, TEXT_BELOW_ICON)
     def set_text_below_icon(self, value):
         self.config_parser.set(DEFAULTSECT, TEXT_BELOW_ICON, str(value))
+        self._notify()
     text_below_icon = property(get_text_below_icon, set_text_below_icon)
 
     def _string_to_tuple(self, tuple_string):

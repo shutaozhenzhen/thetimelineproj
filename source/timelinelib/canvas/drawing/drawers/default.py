@@ -553,7 +553,7 @@ class DefaultDrawingAlgorithm(Drawer):
                 self.dc.DrawBitmap(icon, x, y, False)
 
         def draw_description(lines, x, y):
-            if self.config.text_below_icon:
+            if self.appearance.get_text_below_icon():
                 iw, ih = get_icon_size()
                 if ih > 0:
                     ih += BALLOON_RADIUS / 2
@@ -578,7 +578,7 @@ class DefaultDrawingAlgorithm(Drawer):
                 w += BALLOON_RADIUS
             w += min(tw, max_text_width)
             h = max(h, th)
-            if self.config.text_below_icon:
+            if self.appearance.get_text_below_icon():
                 iw, ih = get_icon_size()
                 w -= iw
                 h = ih + th
