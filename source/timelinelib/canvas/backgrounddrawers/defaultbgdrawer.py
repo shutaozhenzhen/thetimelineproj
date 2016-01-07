@@ -18,18 +18,10 @@
 
 import wx
 
-from timelinelib.plugin.pluginbase import PluginBase
-from timelinelib.plugin.factory import BACKGROUND_DRAWER
 from timelinelib.wxgui.utils import get_colour
 
 
-class DefaultBackgroundDrawer(PluginBase):
-
-    def service(self):
-        return BACKGROUND_DRAWER
-
-    def display_name(self):
-        return _("Default background drawer")
+class DefaultBackgroundDrawer(object):
 
     def draw(self, drawer, dc, scene, timeline):
         self.drawer = drawer
