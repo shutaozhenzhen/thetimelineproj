@@ -18,18 +18,18 @@
 
 import re
 
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.calendar.bosparanian import Bosparanian, BosparanianUtils
-from timelinelib.calendar.bosparanian_monthnames import bosp_name_of_month
 from timelinelib.calendar.bosparanian_monthnames import bosp_abbreviated_name_of_month
+from timelinelib.calendar.bosparanian_monthnames import bosp_name_of_month
 from timelinelib.calendar.bosparanian_weekdaynames import bosp_abbreviated_name_of_weekday
+from timelinelib.calendar import get_date_formatter
+from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.data import TimePeriod
-from timelinelib.drawing.interface import Strip
+from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
 import timelinelib.time.timeline as timeline
-from timelinelib.calendar import get_date_formatter
 
 class BosparanianTimeType(GregorianTimeType):
 

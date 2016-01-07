@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.drawing.utils import get_colour
+from timelinelib.canvas.drawing.utils import get_colour
 
 
 class DefaultBackgroundDrawer(object):

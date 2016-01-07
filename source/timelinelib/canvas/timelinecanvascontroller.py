@@ -19,6 +19,8 @@
 import wx
 
 from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
+from timelinelib.canvas.drawing import get_drawer
+from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.canvas.events import create_hint_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
@@ -34,8 +36,6 @@ from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
 from timelinelib.debug import DEBUG_ENABLED
 from timelinelib.debug import Monitoring
-from timelinelib.drawing import get_drawer
-from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
 from timelinelib.utils import ex_msg
