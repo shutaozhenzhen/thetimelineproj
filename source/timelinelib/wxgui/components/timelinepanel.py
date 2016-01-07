@@ -134,6 +134,16 @@ class TimelinePanelGuiCreator(wx.Panel):
         )
         self.timeline_canvas.SetDividerPosition(self.config.divider_line_slider_pos)
         self.timeline_canvas.SetEventBoxDrawer(self._get_saved_event_box_drawer())
+        self.timeline_canvas.SetCtrlDragHandler(self._create_new_period_event)
+
+    def _create_new_period_event(self, period):
+        open_create_event_editor(
+            self.main_frame,
+            self.config,
+            self.timeline_canvas.GetDb(),
+            self.handle_db_error,
+            period.start_time,
+            period.end_time)
 
     def _get_saved_event_box_drawer(self):
         from timelinelib.plugin import factory

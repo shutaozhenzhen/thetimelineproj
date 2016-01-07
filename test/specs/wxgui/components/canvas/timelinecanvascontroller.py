@@ -139,12 +139,14 @@ class TimelineViewSpec(UnitTestCase):
         self.fire_balloon_hide_timer()
         self.assert_balloon_drawn_for_event(None)
 
-    def test_creates_event_when_ctrl_dragging_mouse(self):
+    def test_calls_handler_when_ctrl_dragging_mouse(self):
+        handler = Mock()
+        self.controller.set_ctrl_drag_handler(handler)
         self.given_time_at_x_is(10, "1 Aug 2010")
         self.given_time_at_x_is(30, "3 Aug 2010")
         self.init_view_with_db()
         self.simulate_mouse_down_move_up((10, ANY_Y), (30, ANY_Y), ctrl_down=True)
-        self.assert_created_event_with_period("1 Aug 2010", "3 Aug 2010")
+        self.assertTrue(handler.called)
         self.assert_timeline_redrawn()
 
     def test_posts_event_info_hint_when_hovering_event(self):
