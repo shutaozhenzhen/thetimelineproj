@@ -38,6 +38,12 @@ class TimelineCanvas(wx.Panel):
         self._create_gui()
         self.SetDividerPosition(50)
 
+    def GetAppearance(self):
+        return self.controller.get_appearance()
+
+    def SetAppearance(self, appearance):
+        self.controller.set_appearance(appearance)
+
     def GetDividerPosition(self):
         return self._divider_position
 

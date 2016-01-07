@@ -486,7 +486,7 @@ class MockDrawer(object):
     def event_is_period(self, event):
         return False
 
-    def draw(self, dc, timeline, view_properties, config):
+    def draw(self, dc, timeline, view_properties, config, appearance):
         self.draw_dc = dc
         self.draw_timeline = timeline
         self.draw_view_properties = view_properties
