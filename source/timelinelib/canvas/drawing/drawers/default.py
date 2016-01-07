@@ -104,7 +104,7 @@ class DefaultDrawingAlgorithm(Drawer):
     def draw(self, dc, timeline, view_properties, config, appearance):
         self.minor_strip_pen.SetColour(appearance.get_minor_strip_divider_line_colour())
         self.major_strip_pen.SetColour(appearance.get_major_strip_divider_line_colour())
-        self.now_pen.SetColour(config.now_line_colour)
+        self.now_pen.SetColour(appearance.get_now_line_colour())
         self.outer_padding = OUTER_PADDING
         if EXTENDED_CONTAINER_HEIGHT.enabled():
             self.outer_padding += EXTENDED_CONTAINER_HEIGHT.get_extra_outer_padding_to_avoid_vertical_overlapping()
