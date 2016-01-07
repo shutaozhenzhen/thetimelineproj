@@ -192,9 +192,6 @@ class TimelineCanvasController(object):
         if timeline is not None:
             timeline.unregister(self._timeline_changed)
 
-    def show_hide_legend(self, show):
-        self.view_properties.change_show_legend(show)
-
     def get_time_period(self):
         """Return currently displayed time period."""
         if self.timeline is None:

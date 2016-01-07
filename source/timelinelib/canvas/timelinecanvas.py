@@ -118,9 +118,6 @@ class TimelineCanvas(wx.Panel):
         events = self.get_timeline().search(search_target)
         return self.get_view_properties().filter_events(events)
 
-    def show_hide_legend(self, show):
-        self.controller.show_hide_legend(show)
-
     def get_time_period(self):
         return self.controller.get_time_period()
 

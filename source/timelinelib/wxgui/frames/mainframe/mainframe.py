@@ -286,7 +286,6 @@ class GuiCreator(object):
 
         def legend(evt):
             self.config.set_show_legend(evt.IsChecked())
-            DrawingAreaProxy(self).show_hide_legend(evt.IsChecked())
 
         def balloons(evt):
             self.config.set_balloon_on_hover(evt.IsChecked())
