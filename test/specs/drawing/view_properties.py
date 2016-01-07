@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.data.idnumber import get_process_unique_id
-from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with, a_container, a_category_with
 

@@ -18,11 +18,11 @@
 
 import wx
 
+from timelinelib.canvas.drawing.scene import TimelineScene
+from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
-from timelinelib.drawing.scene import TimelineScene
-from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import gregorian_period

@@ -20,17 +20,17 @@ from datetime import datetime
 import re
 
 from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar import get_date_formatter
 from timelinelib.calendar.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.weekdaynames import abbreviated_name_of_weekday
+from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
-from timelinelib.drawing.interface import Strip
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.typeinterface import TimeType
 import timelinelib.time.timeline as timeline
-from timelinelib.calendar import get_date_formatter
 
 
 class GregorianTimeType(TimeType):

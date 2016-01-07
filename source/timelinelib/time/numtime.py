@@ -18,9 +18,9 @@
 
 import re
 
+from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
-from timelinelib.drawing.interface import Strip
 from timelinelib.time.typeinterface import TimeType
 
 

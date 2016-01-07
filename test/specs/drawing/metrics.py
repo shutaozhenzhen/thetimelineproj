@@ -16,12 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.drawing.utils import Metrics
+from timelinelib.data.timeperiod import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.drawing.utils import Metrics
+from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
-from timelinelib.data.timeperiod import TimePeriod
-from timelinelib.test.utils import human_time_to_gregorian
 
 
 WIDTH = 200

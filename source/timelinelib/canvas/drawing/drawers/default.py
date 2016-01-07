@@ -21,15 +21,15 @@ import os.path
 
 import wx
 
+from timelinelib.canvas.drawing.interface import Drawer
+from timelinelib.canvas.drawing.scene import TimelineScene
+from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.data import sort_categories
-from timelinelib.drawing.interface import Drawer
-from timelinelib.drawing.scene import TimelineScene
-from timelinelib.drawing.utils import darken_color
-from timelinelib.wxgui.components.font import Font
-from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
-import timelinelib.wxgui.components.font as font
 from timelinelib.data.timeperiod import TimePeriod
+from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
+from timelinelib.wxgui.components.font import Font
+import timelinelib.wxgui.components.font as font
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)

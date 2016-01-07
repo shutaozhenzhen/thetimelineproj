@@ -18,9 +18,9 @@
 
 from mock import Mock
 
+from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.data.category import clone_categories_list
 from timelinelib.data.db import MemoryDB
-from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
