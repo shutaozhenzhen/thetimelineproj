@@ -310,6 +310,7 @@ class Config(Observable):
 
     def set_never_show_period_events_as_point_events(self, value):
         self.config_parser.set(DEFAULTSECT, NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS, str(value))
+        self._notify()
     never_show_period_events_as_point_events = property(get_never_show_period_events_as_point_events,
                                                         set_never_show_period_events_as_point_events)
 
