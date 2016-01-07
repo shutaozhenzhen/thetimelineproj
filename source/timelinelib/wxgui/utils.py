@@ -227,10 +227,6 @@ def time_picker_for(time_type):
         raise ValueError("Unsupported time type: %s" % time_type)
 
 
-def get_colour(rgb_tuple):
-    return wx.Colour(rgb_tuple[0], rgb_tuple[1], rgb_tuple[2])
-
-
 def set_focus(parent, name):
     for child in parent.GetChildren():
         if child.GetName() == name:
