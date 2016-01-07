@@ -142,6 +142,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_minor_strip_divider_line_colour(self.config.get_minor_strip_divider_line_colour())
             appearance.set_major_strip_divider_line_colour(self.config.get_major_strip_divider_line_colour())
             appearance.set_now_line_colour(self.config.get_now_line_color())
+            appearance.set_draw_period_events_to_right(self.config.get_draw_period_events_to_right())
         self.config.listen_for_any(update_appearance)
         update_appearance()
 

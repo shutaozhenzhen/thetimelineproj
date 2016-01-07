@@ -343,7 +343,7 @@ class DefaultDrawingAlgorithm(Drawer):
         return self.scene.divider_y > rect.Y
 
     def _draw_line(self, view_properties, event, rect):
-        if self.config.draw_period_events_to_right:
+        if self.appearance.get_draw_period_events_to_right():
             x = rect.X
         else:
             x = self.scene.x_pos_for_time(event.mean_time())
@@ -351,7 +351,7 @@ class DefaultDrawingAlgorithm(Drawer):
         y2 = self._get_end_of_line(event)
         self._set_line_color(view_properties, event)
         if event.is_period():
-            if self.config.draw_period_events_to_right:
+            if self.appearance.get_draw_period_events_to_right():
                 x += 1
             self.dc.DrawLine(x-1, y, x-1, y2)
             self.dc.DrawLine(x+1, y, x+1, y2)
