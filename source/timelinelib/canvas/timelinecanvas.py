@@ -141,9 +141,6 @@ class TimelineCanvas(wx.Panel):
         self.Refresh()
         self.Update()
 
-    def enable_disable_menus(self):
-        self.main_frame.enable_disable_menus()
-
     def start_balloon_show_timer(self, milliseconds=-1, oneShot=False):
         self.balloon_show_timer.Start(milliseconds, oneShot)
 
