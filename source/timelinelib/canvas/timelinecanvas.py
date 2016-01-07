@@ -198,7 +198,6 @@ class TimelineCanvas(wx.Panel):
         self.Bind(wx.EVT_PAINT, self._on_paint)
         self.Bind(wx.EVT_SIZE, self._on_size)
         self.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
-        self.Bind(wx.EVT_RIGHT_DOWN, self._on_right_down)
         self.Bind(wx.EVT_LEFT_DCLICK, self._on_left_dclick)
         self.Bind(wx.EVT_MIDDLE_UP, self._on_middle_up)
         self.Bind(wx.EVT_LEFT_UP, self._on_left_up)
@@ -238,9 +237,6 @@ class TimelineCanvas(wx.Panel):
                                         evt.ShiftDown(), evt.AltDown())
         evt.Skip()
 
-    def _on_right_down(self, evt):
-        self.controller.right_mouse_down(evt.GetX(), evt.GetY(), evt.AltDown())
-
     def _on_left_dclick(self, evt):
         self.controller.left_mouse_dclick(evt.GetX(), evt.GetY(), evt.ControlDown(),
                                           evt.AltDown())
@@ -267,6 +263,3 @@ class TimelineCanvas(wx.Panel):
     def _on_key_up(self, evt):
         self.controller.key_up(evt.GetKeyCode())
         evt.Skip()
-
-    def display_timeline_context_menu(self):
-        self.main_frame.display_timeline_context_menu()
