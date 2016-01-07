@@ -66,7 +66,6 @@ def main():
             else:
                 f.write(line + "\n")
     f.write("\n")        
-    f.write("import timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer\n")
     f.write("import timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer\n")
     f.write("import timelinelib.plugin.plugins.eventboxdrawers.gradienteventboxdrawer\n")
     f.write("import timelinelib.plugin.plugins.eventboxdrawers.othergradienteventboxdrawer\n")
