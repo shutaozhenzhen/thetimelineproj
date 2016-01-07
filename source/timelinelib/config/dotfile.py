@@ -381,6 +381,7 @@ class Config(Observable):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR))
     def set_minor_strip_divider_line_colour(self, colour):
         self.config_parser.set(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
+        self._notify()
     minor_strip_divider_line_colour = property(get_minor_strip_divider_line_colour, set_minor_strip_divider_line_colour)
 
     def get_major_strip_divider_line_colour(self):
