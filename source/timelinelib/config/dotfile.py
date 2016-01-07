@@ -262,6 +262,7 @@ class Config(Observable):
 
     def set_balloon_on_hover(self, balloon_on_hover):
         self.config_parser.set(DEFAULTSECT, BALLOON_ON_HOVER, str(balloon_on_hover))
+        self._notify()
     balloon_on_hover = property(get_balloon_on_hover, set_balloon_on_hover)
 
     def get_uncheck_time_for_new_events(self):

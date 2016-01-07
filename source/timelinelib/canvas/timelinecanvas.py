@@ -127,9 +127,6 @@ class TimelineCanvas(wx.Panel):
     def redraw_timeline(self):
         self.controller.redraw_timeline()
 
-    def balloon_visibility_changed(self, visible):
-        self.controller.balloon_visibility_changed(visible)
-
     def redraw_surface(self, fn_draw):
         width, height = self.GetSizeTuple()
         self.surface_bitmap = wx.EmptyBitmap(width, height)

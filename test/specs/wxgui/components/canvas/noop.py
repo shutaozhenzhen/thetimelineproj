@@ -67,6 +67,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.controller = Mock(TimelineCanvasController)
         self.controller.drawing_algorithm = Mock()
         self.controller.view_properties = Mock()
+        self.controller.appearance = Mock()
         self.controller.get_time.side_effect = lambda x: self.times_at[x]
         self.controller.event_with_rect_at.side_effect = lambda x, y, alt: self.events_at[(x, y)]
         self.controller.event_at.side_effect = lambda x, y, alt: self.events_at[(x, y)][0]

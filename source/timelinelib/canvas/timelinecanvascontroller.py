@@ -72,15 +72,15 @@ class TimelineCanvasController(object):
             self.drawing_algorithm = drawer
         else:
             self.drawing_algorithm = get_drawer()
+        self.timeline = None
+        self.ctrl_drag_handler = None
+        self.set_appearance(Appearance())
         self.set_event_box_drawer(DefaultEventBoxDrawer())
         self.set_background_drawer(self.get_saved_background_drawer())
         self.drawing_algorithm.use_fast_draw(False)
         self._set_initial_values_to_member_variables()
         self._set_colors_and_styles()
         self.change_input_handler_to_no_op()
-        self.timeline = None
-        self.ctrl_drag_handler = None
-        self.set_appearance(Appearance())
 
     def get_appearance(self):
         return self.appearance
@@ -393,7 +393,6 @@ class TimelineCanvasController(object):
     def _set_initial_values_to_member_variables(self):
         self.timeline = None
         self.view_properties = ViewProperties()
-        self.view_properties.show_balloons_on_hover = self.config.get_balloon_on_hover()
         self.dragscroll_timer_running = False
 
     def _set_colors_and_styles(self):
@@ -498,14 +497,6 @@ class TimelineCanvasController(object):
         width, _ = self.view.GetSizeTuple()
         x_percent_of_width = float(x) / width
         self.navigate_timeline(lambda tp: tp.zoom(direction, x_percent_of_width))
-
-    def balloon_visibility_changed(self, visible):
-        self.view_properties.show_balloons_on_hover = visible
-        # When display on hovering is disabled we have to make sure
-        # that any visible balloon is removed.
-        # TODO: Do we really need that?
-        if not visible:
-            self._redraw_timeline()
 
 
 def _step_function(x_value):
