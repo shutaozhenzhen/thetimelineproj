@@ -149,12 +149,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         timeline_event = self.timeline_canvas.GetEventAt(x, y)
         time = self.timeline_canvas.GetTimeAt(x)
         if timeline_event is not None:
-            open_event_editor_for(
-                self.main_frame,
-                self.config,
-                self.timeline_canvas.GetDb(),
-                self.handle_db_error,
-                timeline_event)
+            self.open_event_editor(timeline_event)
         else:
             open_create_event_editor(
                 self.main_frame,
@@ -244,12 +239,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         safe_locking(self.main_frame, edit_function, exception_handler)
 
     def _context_menu_on_edit_event(self, evt):
-        open_event_editor_for(
-            self.main_frame,
-            self.config,
-            self.timeline_canvas.GetDb(),
-            self.handle_db_error,
-            self.timeline_canvas.GetSelectedEvent())
+        self.open_event_editor(self.timeline_canvas.GetSelectedEvent())
 
     def _context_menu_on_duplicate_event(self, evt):
         open_duplicate_event_dialog_for_event(
@@ -331,7 +321,12 @@ class TimelinePanel(TimelinePanelGuiCreator):
         return self.timeline_canvas.get_time_period()
 
     def open_event_editor(self, event):
-        self.timeline_canvas.open_event_editor_for(event)
+        open_event_editor_for(
+            self.main_frame,
+            self.config,
+            self.timeline_canvas.GetDb(),
+            self.handle_db_error,
+            event)
 
     def redraw_timeline(self):
         self.timeline_canvas.redraw_timeline()
