@@ -26,6 +26,7 @@ class Appearance(Observable):
         self._build_property("legend_visible", True)
         self._build_property("balloons_visible", True)
         self._build_property("minor_strip_divider_line_colour", (200, 200, 200))
+        self._build_property("major_strip_divider_line_colour", (200, 200, 200))
 
     def _build_property(self, name, initial_value):
         def getter():

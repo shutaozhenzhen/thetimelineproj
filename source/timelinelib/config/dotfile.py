@@ -388,6 +388,7 @@ class Config(Observable):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR))
     def set_major_strip_divider_line_colour(self, colour):
         self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
+        self._notify()
     major_strip_divider_line_colour = property(get_major_strip_divider_line_colour, set_major_strip_divider_line_colour)
 
     def get_now_line_color(self):
