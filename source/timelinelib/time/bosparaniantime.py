@@ -114,7 +114,7 @@ class BosparanianTimeType(GregorianTimeType):
     def get_max_time(self):
         return (timeline.BosparanianTime(5369833, 0), _("can't be after year 7410"))
 
-    def choose_strip(self, metrics, config):
+    def choose_strip(self, metrics, appearance):
         """
         Return a tuple (major_strip, minor_strip) for current time period and
         window size.
@@ -131,7 +131,7 @@ class BosparanianTimeType(GregorianTimeType):
         elif one_day_width > 25:
             return (StripMonth(), StripDay())
         elif one_day_width > 10:
-            return (StripMonth(),StripWeek(config))
+            return (StripMonth(),StripWeek())
         elif one_day_width > 1.75:
             return (StripYear(), StripMonth())
         elif one_day_width > 0.5:
@@ -550,9 +550,8 @@ class StripDay(Strip):
 
 class StripWeek(Strip):
 
-    def __init__(self, config):
+    def __init__(self):
         Strip.__init__(self)
-        self.config = config
 
     def label(self, time, major=False):
         if major:

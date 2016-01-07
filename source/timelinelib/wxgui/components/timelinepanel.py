@@ -149,6 +149,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_legend_font(self.config.get_legend_font())
             appearance.set_center_event_texts(self.config.get_center_event_texts())
             appearance.set_never_show_period_events_as_point_events(self.config.get_never_show_period_events_as_point_events())
+            appearance.set_week_start(self.config.get_week_start())
         self.config.listen_for_any(update_appearance)
         update_appearance()
 

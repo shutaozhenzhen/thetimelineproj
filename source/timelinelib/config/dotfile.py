@@ -279,6 +279,7 @@ class Config(Observable):
         if week_start not in ["monday", "sunday"]:
             raise ValueError("Invalid week start.")
         self.config_parser.set(DEFAULTSECT, WEEK_START, week_start)
+        self._notify()
     week_start = property(get_week_start, set_week_start)
 
     def get_use_inertial_scrolling(self):
