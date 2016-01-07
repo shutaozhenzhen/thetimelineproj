@@ -325,11 +325,10 @@ class EditEventDialogController(Controller):
             return False
 
     def _enable_disable_ends_today(self):
-        enable = (self._container_not_selected() and
+        enable = ((self._container_not_selected() or self._container_allows_ends_today()) and
                   not self.view.GetLocked() and
                   self._start_is_in_history())
         self.view.EnableEndsToday(enable)
-        self.view.EnableEndsToday(True)
 
     def _enable_disable_locked(self):
         if self.event is not None and EXTENDED_CONTAINER_STRATEGY.enabled():
@@ -340,6 +339,13 @@ class EditEventDialogController(Controller):
 
     def _container_not_selected(self):
         return self.view.GetContainer() is None
+
+    def _container_allows_ends_today(self):
+        container = self.view.GetContainer()
+        if container is None:
+            return True
+        else:
+            return container.allow_ends_today_on_subevents()
 
     def _start_is_in_history(self):
         if self.event is None:
