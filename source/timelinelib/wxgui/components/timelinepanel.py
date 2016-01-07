@@ -19,9 +19,7 @@
 import wx
 
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
-from timelinelib.canvas import EVT_EVENT_DOUBLE_CLICKED
 from timelinelib.canvas import EVT_HINT
-from timelinelib.canvas import EVT_TIME_DOUBLE_CLICKED
 from timelinelib.canvas import EVT_TIMELINE_REDRAWN
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.utilities.observer import Listener
@@ -102,20 +100,16 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.config,
             self.main_frame)
         self.timeline_canvas.Bind(
+            wx.EVT_LEFT_DCLICK,
+            self._timeline_canvas_on_double_clicked
+        )
+        self.timeline_canvas.Bind(
             EVT_DIVIDER_POSITION_CHANGED,
             self._timeline_canvas_on_divider_position_changed
         )
         self.timeline_canvas.Bind(
-            EVT_EVENT_DOUBLE_CLICKED,
-            self._timeline_canvas_on_event_double_clicked
-        )
-        self.timeline_canvas.Bind(
             EVT_HINT,
             self._timeline_canvas_on_hint
-        )
-        self.timeline_canvas.Bind(
-            EVT_TIME_DOUBLE_CLICKED,
-            self._timeline_canvas_on_time_double_clicked
         )
         self.timeline_canvas.Bind(
             EVT_TIMELINE_REDRAWN,
@@ -131,29 +125,34 @@ class TimelinePanelGuiCreator(wx.Panel):
         plugin = factory.get_plugin(EVENTBOX_DRAWER, self.config.selected_event_box_drawer) or DefaultEventBoxDrawer()
         return plugin.run()
 
+    def _timeline_canvas_on_double_clicked(self, event):
+        if self.timeline_canvas.GetDb().is_read_only():
+            return
+        (x, y) = (event.GetX(), event.GetY())
+        event = self.timeline_canvas.GetEventAt(x, y)
+        time = self.timeline_canvas.GetTimeAt(x)
+        if event is not None:
+            open_event_editor_for(
+                self.main_frame,
+                self.config,
+                self.timeline_canvas.GetDb(),
+                self.handle_db_error,
+                event)
+        else:
+            open_create_event_editor(
+                self.main_frame,
+                self.config,
+                self.timeline_canvas.GetDb(),
+                self.handle_db_error,
+                time,
+                time)
+
     def _timeline_canvas_on_divider_position_changed(self, event):
         self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
         self.config.divider_line_slider_pos = self.timeline_canvas.GetDividerPosition()
 
-    def _timeline_canvas_on_event_double_clicked(self, event):
-        open_event_editor_for(
-            self.main_frame,
-            self.config,
-            self.timeline_canvas.GetDb(),
-            self.handle_db_error,
-            event.event)
-
     def _timeline_canvas_on_hint(self, event):
         self.status_bar_adapter.set_text(event.text)
-
-    def _timeline_canvas_on_time_double_clicked(self, event):
-        open_create_event_editor(
-            self.main_frame,
-            self.config,
-            self.timeline_canvas.GetDb(),
-            self.handle_db_error,
-            event.time,
-            event.time)
 
     def _timeline_canvas_on_timeline_redrawn(self, event):
         text = _("%s events hidden") % self.timeline_canvas.GetHiddenEventCount()

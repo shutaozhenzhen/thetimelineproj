@@ -172,20 +172,6 @@ class TimelineViewSpec(UnitTestCase):
         self.controller.navigate_timeline(navigate)
         self.assert_has_posted_hint(_("Can't scroll more to the right"))
 
-    def test_sends_double_click_event_when_double_clicking_surface(self):
-        self.given_time_at_x_is(30, "3 Aug 2010")
-        self.init_view_with_db()
-        self.simulate_mouse_double_click(30, ANY_Y)
-        self.assert_time_double_clicked(human_time_to_gregorian("3 Aug 2010"))
-        self.assert_timeline_redrawn()
-
-    def test_sends_double_click_event_when_double_clicking_event(self):
-        event = self.given_event_with(pos=(40, 60), size=(20, 10))
-        self.init_view_with_db()
-        self.simulate_mouse_double_click(50, 65)
-        self.assert_event_double_clicked(event)
-        self.assert_timeline_redrawn()
-
     def test_selects_and_deselects_event_when_clicking_on_it(self):
         event = self.given_event_with(pos=(30, 60), size=(50, 10))
         self.init_view_with_db()
@@ -414,12 +400,6 @@ class TimelineViewSpec(UnitTestCase):
         self.assertTrue(self.controller.post_hint_event.called)
         last_event = self.controller.post_hint_event.call_args[0][0]
         return last_event
-
-    def assert_time_double_clicked(self, time):
-        self.assertEqual(self.timeline_canvas.PostEvent.call_args[0][0].time, time)
-
-    def assert_event_double_clicked(self, event):
-        self.assertEqual(self.timeline_canvas.PostEvent.call_args[0][0].event, event)
 
     def assert_event_has_period(self, event, start, end):
         self.assertEqual(gregorian_period(start, end), event.get_time_period())
