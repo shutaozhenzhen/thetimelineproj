@@ -20,10 +20,6 @@ import wx
 
 from timelinelib.canvas.events import create_divider_position_changed_event
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
-from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
-from timelinelib.wxgui.dialogs.editevent.view import open_event_editor_for
-from timelinelib.wxgui.utils import _ask_question
 
 
 class TimelineCanvas(wx.Panel):
@@ -66,8 +62,36 @@ class TimelineCanvas(wx.Panel):
         self.controller.set_event_box_drawer(event_box_drawer)
         self.redraw_timeline()
 
+    def SetEventSelected(self, event, is_selected):
+        self.controller.view_properties.set_selected(event, is_selected)
+
+    def SetEventStickyBalloon(self, event, is_sticky):
+        self.controller.view_properties.set_event_has_sticky_balloon(event, is_sticky)
+        self.redraw_timeline()
+
+    def ClearSelectedEvents(self):
+        self.controller.view_properties.clear_selected()
+
+    def GetSelectedEvent(self):
+        selected_events = self.GetSelectedEvents()
+        if len(selected_events) == 1:
+            return selected_events[0]
+        return None
+
+    def GetSelectedEvents(self):
+        return self.controller.get_selected_events()
+
+    def SetCtrlDragHandler(self, ctrl_drag_handler):
+        self.controller.set_ctrl_drag_handler(ctrl_drag_handler)
+
     def GetDb(self):
         return self.get_timeline()
+
+    def GetEventAt(self, x, y, prefer_container=False):
+        return self.controller.drawing_algorithm.event_at(x, y, prefer_container)
+
+    def GetTimeAt(self, x):
+        return self.controller.get_time(x)
 
     def get_drawer(self):
         return self.controller.get_drawer()
@@ -120,30 +144,6 @@ class TimelineCanvas(wx.Panel):
     def enable_disable_menus(self):
         self.main_frame.enable_disable_menus()
 
-    def open_event_editor_for(self, event):
-        open_event_editor_for(
-            self,
-            self.config,
-            self.controller.get_timeline(),
-            self.fn_handle_db_error,
-            event)
-
-    def open_duplicate_event_dialog_for_event(self, event):
-        open_duplicate_event_dialog_for_event(
-            self,
-            self.controller.get_timeline(),
-            self.fn_handle_db_error,
-            event)
-
-    def open_create_event_editor(self, start_time, end_time):
-        open_create_event_editor(
-            self,
-            self.config,
-            self.controller.get_timeline(),
-            self.fn_handle_db_error,
-            start_time,
-            end_time)
-
     def start_balloon_show_timer(self, milliseconds=-1, oneShot=False):
         self.balloon_show_timer.Start(milliseconds, oneShot)
 
@@ -167,9 +167,6 @@ class TimelineCanvas(wx.Panel):
 
     def set_default_cursor(self):
         self.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
-
-    def ask_question(self, question):
-        return _ask_question(question, self)
 
     def ok_to_edit(self):
         return self.main_frame.ok_to_edit()
