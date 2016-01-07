@@ -117,6 +117,10 @@ class TimelinePanelGuiCreator(wx.Panel):
             self._timeline_canvas_on_right_down
         )
         self.timeline_canvas.Bind(
+            wx.EVT_KEY_DOWN,
+            self._timeline_canvas_on_key_down
+        )
+        self.timeline_canvas.Bind(
             EVT_DIVIDER_POSITION_CHANGED,
             self._timeline_canvas_on_divider_position_changed
         )
@@ -167,6 +171,11 @@ class TimelinePanelGuiCreator(wx.Panel):
         if timeline_event is not None and not self.timeline_canvas.GetDb().is_read_only():
             self.timeline_canvas.SetEventSelected(timeline_event, True)
             self._display_event_context_menu()
+        event.Skip()
+
+    def _timeline_canvas_on_key_down(self, event):
+        if event.GetKeyCode() == wx.WXK_DELETE:
+            self._delete_selected_events()
         event.Skip()
 
     def _display_event_context_menu(self):

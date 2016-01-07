@@ -344,9 +344,7 @@ class TimelineCanvasController(object):
         self.view_properties.hscroll_amount += HSCROLL_STEP
 
     def key_down(self, keycode, alt_down):
-        if keycode == wx.WXK_DELETE:
-            self._delete_selected_events()
-        elif alt_down:
+        if alt_down:
             if keycode == wx.WXK_UP:
                 self.move_selected_event_up()
             elif keycode == wx.WXK_DOWN:
@@ -504,38 +502,6 @@ class TimelineCanvasController(object):
         width, _ = self.view.GetSizeTuple()
         x_percent_of_width = float(x) / width
         self.navigate_timeline(lambda tp: tp.zoom(direction, x_percent_of_width))
-
-    def _delete_selected_events(self):
-        """After acknowledge from the user, delete all selected events."""
-        selected_event_ids = self.view_properties.get_selected_event_ids()
-        nbr_of_selected_event_ids = len(selected_event_ids)
-
-        def user_ack():
-            if nbr_of_selected_event_ids > 1:
-                text = _("Are you sure you want to delete %d events?" %
-                         nbr_of_selected_event_ids)
-            else:
-                text = _("Are you sure you want to delete this event?")
-            return self.view.ask_question(text) == wx.YES
-
-        def exception_handler(ex):
-            if isinstance(ex, TimelineIOError):
-                self.fn_handle_db_error(ex)
-            else:
-                raise(ex)
-
-        def _last_event(event_id):
-            return event_id == selected_event_ids[-1]
-
-        def _delete_events():
-            for event_id in selected_event_ids:
-                self.timeline.delete_event(event_id, save=_last_event(event_id))
-
-        def edit_function():
-            if user_ack():
-                _delete_events()
-            self.view_properties.clear_selected()
-        safe_locking(self.view, edit_function, exception_handler)
 
     def balloon_visibility_changed(self, visible):
         self.view_properties.show_balloons_on_hover = visible
