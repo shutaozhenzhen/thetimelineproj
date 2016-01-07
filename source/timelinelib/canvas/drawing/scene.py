@@ -28,11 +28,12 @@ BACKWARD = -1
 
 class TimelineScene(object):
 
-    def __init__(self, size, db, view_properties, get_text_size_fn, config):
+    def __init__(self, size, db, view_properties, get_text_size_fn, config, appearance):
         self._db = db
         self._view_properties = view_properties
         self._get_text_size_fn = get_text_size_fn
         self._config = config
+        self._appearance = appearance
         self._outer_padding = 5
         self._inner_padding = 3
         self._baseline_padding = 15
@@ -282,7 +283,7 @@ class TimelineScene(object):
         return rw, rh
 
     def _calc_x_pos_for_non_period_event(self, event, rw):
-        if self._config.draw_period_events_to_right:
+        if self._appearance.get_draw_period_events_to_right():
             return self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
         else:
             return self._metrics.calc_x(event.mean_time()) - rw / 2

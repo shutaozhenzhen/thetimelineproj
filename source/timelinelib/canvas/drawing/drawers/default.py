@@ -119,7 +119,7 @@ class DefaultDrawingAlgorithm(Drawer):
         del self.dc  # Program crashes if we don't delete the dc reference.
 
     def _create_scene(self, size, db, view_properties, get_text_extent_fn):
-        scene = TimelineScene(size, db, view_properties, get_text_extent_fn, self.config)
+        scene = TimelineScene(size, db, view_properties, get_text_extent_fn, self.config, self.appearance)
         scene.set_outer_padding(self.outer_padding)
         scene.set_inner_padding(INNER_PADDING)
         scene.set_period_threshold(PERIOD_THRESHOLD)
