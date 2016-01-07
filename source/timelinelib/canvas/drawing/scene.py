@@ -28,11 +28,10 @@ BACKWARD = -1
 
 class TimelineScene(object):
 
-    def __init__(self, size, db, view_properties, get_text_size_fn, config, appearance):
+    def __init__(self, size, db, view_properties, get_text_size_fn, appearance):
         self._db = db
         self._view_properties = view_properties
         self._get_text_size_fn = get_text_size_fn
-        self._config = config
         self._appearance = appearance
         self._outer_padding = 5
         self._inner_padding = 3
@@ -330,7 +329,7 @@ class TimelineScene(object):
                 pass
         major_strip_data = []  # List of time_period
         minor_strip_data = []  # List of time_period
-        self.major_strip, self.minor_strip = self._db.get_time_type().choose_strip(self._metrics, self._config)
+        self.major_strip, self.minor_strip = self._db.get_time_type().choose_strip(self._metrics, self._appearance)
         fill(major_strip_data, self.major_strip)
         fill(minor_strip_data, self.minor_strip)
         return (minor_strip_data, major_strip_data)

@@ -101,7 +101,7 @@ class DefaultDrawingAlgorithm(Drawer):
     def get_closest_overlapping_event(self, event_to_move, up=True):
         return self.scene.get_closest_overlapping_event(event_to_move, up=up)
 
-    def draw(self, dc, timeline, view_properties, config, appearance):
+    def draw(self, dc, timeline, view_properties, appearance):
         self.minor_strip_pen.SetColour(appearance.get_minor_strip_divider_line_colour())
         self.major_strip_pen.SetColour(appearance.get_major_strip_divider_line_colour())
         self.now_pen.SetColour(appearance.get_now_line_colour())
@@ -109,7 +109,6 @@ class DefaultDrawingAlgorithm(Drawer):
         if EXTENDED_CONTAINER_HEIGHT.enabled():
             self.outer_padding += EXTENDED_CONTAINER_HEIGHT.get_extra_outer_padding_to_avoid_vertical_overlapping()
         self.appearance = appearance
-        self.config = config
         self.dc = dc
         self.time_type = timeline.get_time_type()
         self.scene = self._create_scene(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
@@ -119,7 +118,7 @@ class DefaultDrawingAlgorithm(Drawer):
         del self.dc  # Program crashes if we don't delete the dc reference.
 
     def _create_scene(self, size, db, view_properties, get_text_extent_fn):
-        scene = TimelineScene(size, db, view_properties, get_text_extent_fn, self.config, self.appearance)
+        scene = TimelineScene(size, db, view_properties, get_text_extent_fn, self.appearance)
         scene.set_outer_padding(self.outer_padding)
         scene.set_inner_padding(INNER_PADDING)
         scene.set_period_threshold(PERIOD_THRESHOLD)

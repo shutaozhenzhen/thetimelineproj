@@ -56,7 +56,7 @@ MOUSE_SCROLL_FACTOR = 1 / 10.0
 
 class TimelineCanvasController(object):
 
-    def __init__(self, view, config, fn_handle_db_error, drawer=None):
+    def __init__(self, view, fn_handle_db_error, drawer=None):
         """
         The purpose of the drawer argument is make testing easier. A test can
         mock a drawer and use the mock by sending it in the drawer argument.
@@ -65,8 +65,6 @@ class TimelineCanvasController(object):
         self.appearance = None
         self.monitoring = Monitoring()
         self.view = view
-        self.config = config
-        self.config.listen_for_any(self._redraw_timeline)
         self.fn_handle_db_error = fn_handle_db_error
         if drawer is not None:
             self.drawing_algorithm = drawer
@@ -418,7 +416,7 @@ class TimelineCanvasController(object):
         def fn_draw(dc):
             try:
                 self.monitoring.timer_start()
-                self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.config, self.appearance)
+                self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.appearance)
                 self.monitoring.timer_end()
                 if DEBUG_ENABLED:
                     display_monitor_result(dc)

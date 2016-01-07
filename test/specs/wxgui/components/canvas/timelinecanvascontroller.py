@@ -22,7 +22,6 @@ import wx
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas.timelinecanvascontroller import HSCROLL_STEP
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
 from timelinelib.data import TimeOutOfRangeLeftError
@@ -311,13 +310,10 @@ class TimelineViewSpec(UnitTestCase):
         self.middle_x = self.width / 2
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
         self.timeline_canvas.GetDividerPosition.return_value = 50
-        self.config = Mock(Config)
         self.mock_drawer = MockDrawer()
         self.fn_handle_db_error = Mock()
         self.controller = TimelineCanvasController(
-            self.timeline_canvas,
-            self.config,
-            self.fn_handle_db_error,
+            self.timeline_canvas, self.fn_handle_db_error,
             drawer=self.mock_drawer)
         self.controller.post_hint_event = Mock()
 
@@ -367,7 +363,6 @@ class TimelineViewSpec(UnitTestCase):
         x2, y2 = to
         self.controller.left_mouse_down(x1, y1, ctrl_down, shift_down)
         self.controller.mouse_moved(x2, y2)
-        self.controller.config.use_inertial_scrolling = False
         self.controller.left_mouse_up()
 
     def simulate_mouse_move(self, x, y):
@@ -486,11 +481,10 @@ class MockDrawer(object):
     def event_is_period(self, event):
         return False
 
-    def draw(self, dc, timeline, view_properties, config, appearance):
+    def draw(self, dc, timeline, view_properties, appearance):
         self.draw_dc = dc
         self.draw_timeline = timeline
         self.draw_view_properties = view_properties
-        self.draw_config = config
 
 
 class DrawingAreaSpec(UnitTestCase):
@@ -543,9 +537,8 @@ class DrawingAreaSpec(UnitTestCase):
         self.app = wx.App()  # a stored app is needed to create fonts
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetDividerPosition.return_value = 1
-        config = Mock(Config)
         self.drawing_algorithm = DefaultDrawingAlgorithm()
         fn_handle_db_error = None
         self.controller = TimelineCanvasController(
-            self.timeline_canvas, config,
-            fn_handle_db_error, drawer=self.drawing_algorithm)
+            self.timeline_canvas, fn_handle_db_error,
+            drawer=self.drawing_algorithm)
