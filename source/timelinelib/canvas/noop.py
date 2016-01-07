@@ -32,6 +32,7 @@ class NoOpInputHandler(InputHandler):
         self.timeline_canvas = timeline_canvas
         self.drawer = timeline_canvas_controller.drawing_algorithm
         self.view_properties = timeline_canvas_controller.view_properties
+        self.appearance = timeline_canvas_controller.appearance
         self.show_timer_running = False
         self.hide_timer_running = False
         self.last_hovered_event = None
@@ -81,7 +82,7 @@ class NoOpInputHandler(InputHandler):
             if stick:
                 self.timeline_canvas_controller._redraw_timeline()
             else:
-                if self.view_properties.show_balloons_on_hover:
+                if self.appearance.get_balloons_visible():
                     self.timeline_canvas_controller._redraw_balloons(event_with_balloon)
                 else:
                     self.timeline_canvas_controller._redraw_balloons(None)
@@ -115,7 +116,7 @@ class NoOpInputHandler(InputHandler):
             self.hide_timer_running = True
 
     def _balloons_disabled(self):
-        return not self.view_properties.show_balloons_on_hover
+        return not self.appearance.get_balloons_visible()
 
     def _current_event_selected(self):
         return (self.last_hovered_event is not None and

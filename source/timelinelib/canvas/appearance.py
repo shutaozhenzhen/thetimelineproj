@@ -24,6 +24,7 @@ class Appearance(Observable):
     def __init__(self):
         Observable.__init__(self)
         self._build_property("legend_visible", True)
+        self._build_property("balloons_visible", True)
 
     def _build_property(self, name, initial_value):
         def getter():

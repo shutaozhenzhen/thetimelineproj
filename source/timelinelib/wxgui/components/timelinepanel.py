@@ -136,7 +136,9 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.timeline_canvas.SetEventBoxDrawer(self._get_saved_event_box_drawer())
         self.timeline_canvas.SetCtrlDragHandler(self._create_new_period_event)
         def update_appearance():
-            self.timeline_canvas.GetAppearance().set_legend_visible(self.config.show_legend)
+            appearance = self.timeline_canvas.GetAppearance()
+            appearance.set_legend_visible(self.config.show_legend)
+            appearance.set_balloons_visible(self.config.get_balloon_on_hover())
         self.config.listen_for_any(update_appearance)
         update_appearance()
 

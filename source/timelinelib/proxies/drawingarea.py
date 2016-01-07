@@ -34,6 +34,3 @@ class DrawingAreaProxy():
 
     def vert_zoom_out(self):
         self.timeline_canvas.vert_zoom_out()
-
-    def balloon_visibility_changed(self, checked):
-        self.timeline_canvas.balloon_visibility_changed(checked)

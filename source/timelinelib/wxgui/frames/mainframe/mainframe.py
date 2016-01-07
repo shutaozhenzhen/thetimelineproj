@@ -289,8 +289,6 @@ class GuiCreator(object):
 
         def balloons(evt):
             self.config.set_balloon_on_hover(evt.IsChecked())
-            # self.main_panel.balloon_visibility_changed(evt.IsChecked())
-            DrawingAreaProxy(self).balloon_visibility_changed(evt.IsChecked())
 
         def zoomin(evt):
             DrawingAreaProxy(self).zoom_in()
