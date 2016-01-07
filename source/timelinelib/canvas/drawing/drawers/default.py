@@ -399,7 +399,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_legend(self, view_properties, categories):
         if self._legend_should_be_drawn(categories):
-            font.set_legend_text_font(self.config, self.dc)
+            font.set_legend_text_font(self.appearance.get_legend_font(), self.dc)
             rect = self._calculate_legend_rect(categories)
             self._draw_legend_box(rect)
             self._draw_legend_items(rect, categories)
