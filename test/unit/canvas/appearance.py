@@ -17,6 +17,7 @@
 
 
 from mock import Mock
+import wx
 
 from timelinelib.canvas.appearance import Appearance
 from timelinelib.test.cases.unit import UnitTestCase
@@ -41,4 +42,5 @@ class describe_appearance(UnitTestCase):
         self.assertEqual(listener.call_count, 1)
 
     def setUp(self):
+        self.app = wx.App()
         self.appearance = Appearance()

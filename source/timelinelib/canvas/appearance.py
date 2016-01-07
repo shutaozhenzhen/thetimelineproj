@@ -17,6 +17,7 @@
 
 
 from timelinelib.utilities.observer import Observable
+from timelinelib.wxgui.components.font import Font
 
 
 class Appearance(Observable):
@@ -30,6 +31,7 @@ class Appearance(Observable):
         self._build_property("now_line_colour", (200, 0, 0))
         self._build_property("draw_period_events_to_right", False)
         self._build_property("text_below_icon", False)
+        self._build_property("minor_strip_font", Font(8).serialize())
 
     def _build_property(self, name, initial_value):
         def getter():

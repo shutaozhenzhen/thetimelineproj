@@ -100,8 +100,8 @@ def deserialize_font(serialized_font):
     return font_cache[serialized_font]
 
 
-def set_minor_strip_text_font(config, dc, force_bold=False, force_normal=False, force_italic=False, force_upright=False):
-    set_text_font(config.minor_strip_font, dc, force_bold, force_normal, force_italic, force_upright)
+def set_minor_strip_text_font(font, dc, force_bold=False, force_normal=False, force_italic=False, force_upright=False):
+    set_text_font(font, dc, force_bold, force_normal, force_italic, force_upright)
 
 
 def set_major_strip_text_font(config, dc, force_bold=False, force_normal=False, force_italic=False, force_upright=False):

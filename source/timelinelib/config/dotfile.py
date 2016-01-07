@@ -342,6 +342,7 @@ class Config(Observable):
 
     def set_minor_strip_font(self, font):
         self.config_parser.set(DEFAULTSECT, MINOR_STRIP_FONT, font)
+        self._notify()
     minor_strip_font = property(get_minor_strip_font, set_minor_strip_font)
 
     def get_legend_font(self):
