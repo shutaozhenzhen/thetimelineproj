@@ -32,3 +32,7 @@ class ContainerStrategy(object):
     def update(self, subevent):
         """Update container properties when adding a new sub-event."""
         raise NotImplementedError()
+
+    def allow_ends_today_on_subevents(self):
+        """Allow to set the ends-today attribute on container subevents"""
+        raise NotImplementedError()

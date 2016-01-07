@@ -44,6 +44,9 @@ class DefaultContainerStrategy(ContainerStrategy):
         self.register_subevent(subevent)
         self._set_time_period()
 
+    def allow_ends_today_on_subevents(self):
+        return False
+
     def _set_time_period(self):
         """
         The container time period starts where the subevent with the earliest
@@ -243,3 +246,6 @@ class ExtendedContainerStrategy(DefaultContainerStrategy):
             self.container.events.append(subevent)
             subevent.register_container(self.container)
             self._set_time_period()
+
+    def allow_ends_today_on_subevents(self):
+        return True
