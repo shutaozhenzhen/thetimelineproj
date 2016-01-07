@@ -145,6 +145,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_draw_period_events_to_right(self.config.get_draw_period_events_to_right())
             appearance.set_text_below_icon(self.config.get_text_below_icon())
             appearance.set_minor_strip_font(self.config.get_minor_strip_font())
+            appearance.set_major_strip_font(self.config.get_major_strip_font())
         self.config.listen_for_any(update_appearance)
         update_appearance()
 
