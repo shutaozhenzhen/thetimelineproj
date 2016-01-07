@@ -289,11 +289,11 @@ class DefaultDrawingAlgorithm(Drawer):
                     bold=True
                 if strip_period.start_time.is_special_day():
                     italic=True
-                font.set_minor_strip_text_font(self.config, self.dc, force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
+                font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc, force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
             else:
-                font.set_minor_strip_text_font(self.config, self.dc)
+                font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
         else:
-            font.set_minor_strip_text_font(self.config, self.dc)
+            font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
 
     def _draw_major_strips(self):
         font.set_major_strip_text_font(self.config, self.dc)
