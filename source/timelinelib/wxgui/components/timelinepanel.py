@@ -106,7 +106,6 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.timeline_canvas = TimelineCanvas(
             self.splitter,
             self.handle_db_error,
-            self.config,
             self.main_frame)
         self.timeline_canvas.Bind(
             wx.EVT_LEFT_DCLICK,
