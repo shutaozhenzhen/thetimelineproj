@@ -129,15 +129,15 @@ class TimelinePanelGuiCreator(wx.Panel):
         if self.timeline_canvas.GetDb().is_read_only():
             return
         (x, y) = (event.GetX(), event.GetY())
-        event = self.timeline_canvas.GetEventAt(x, y)
+        timeline_event = self.timeline_canvas.GetEventAt(x, y)
         time = self.timeline_canvas.GetTimeAt(x)
-        if event is not None:
+        if timeline_event is not None:
             open_event_editor_for(
                 self.main_frame,
                 self.config,
                 self.timeline_canvas.GetDb(),
                 self.handle_db_error,
-                event)
+                timeline_event)
         else:
             open_create_event_editor(
                 self.main_frame,
@@ -146,6 +146,7 @@ class TimelinePanelGuiCreator(wx.Panel):
                 self.handle_db_error,
                 time,
                 time)
+        event.Skip()
 
     def _timeline_canvas_on_divider_position_changed(self, event):
         self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
