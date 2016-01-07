@@ -296,7 +296,7 @@ class DefaultDrawingAlgorithm(Drawer):
             font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
 
     def _draw_major_strips(self):
-        font.set_major_strip_text_font(self.config, self.dc)
+        font.set_major_strip_text_font(self.appearance.get_major_strip_font(), self.dc)
         self.dc.SetPen(self.major_strip_pen)
         for time_period in self.scene.major_strip_data:
             self._draw_major_strip_end_line(time_period)
