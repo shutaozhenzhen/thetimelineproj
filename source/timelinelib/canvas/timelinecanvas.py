@@ -22,7 +22,6 @@ from timelinelib.canvas.events import create_divider_position_changed_event
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
-from timelinelib.wxgui.dialogs.editevent.view import open_event_editor_for
 
 
 class TimelineCanvas(wx.Panel):
@@ -143,14 +142,6 @@ class TimelineCanvas(wx.Panel):
 
     def enable_disable_menus(self):
         self.main_frame.enable_disable_menus()
-
-    def open_event_editor_for(self, event):
-        open_event_editor_for(
-            self,
-            self.config,
-            self.controller.get_timeline(),
-            self.fn_handle_db_error,
-            event)
 
     def open_duplicate_event_dialog_for_event(self, event):
         open_duplicate_event_dialog_for_event(
