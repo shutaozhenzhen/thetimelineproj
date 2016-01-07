@@ -395,6 +395,7 @@ class Config(Observable):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, NOW_LINE_COLOUR))
     def set_now_line_color(self, colour):
         self.config_parser.set(DEFAULTSECT, NOW_LINE_COLOUR, self._tuple_to_string(colour))
+        self._notify()
     now_line_colour = property(get_now_line_color, set_now_line_color)
 
     def get_text_below_icon(self):
