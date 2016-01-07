@@ -101,13 +101,14 @@ class DefaultDrawingAlgorithm(Drawer):
     def get_closest_overlapping_event(self, event_to_move, up=True):
         return self.scene.get_closest_overlapping_event(event_to_move, up=up)
 
-    def draw(self, dc, timeline, view_properties, config):
+    def draw(self, dc, timeline, view_properties, config, appearance):
         self.minor_strip_pen.SetColour(config.minor_strip_divider_line_colour)
         self.major_strip_pen.SetColour(config.major_strip_divider_line_colour)
         self.now_pen.SetColour(config.now_line_colour)
         self.outer_padding = OUTER_PADDING
         if EXTENDED_CONTAINER_HEIGHT.enabled():
             self.outer_padding += EXTENDED_CONTAINER_HEIGHT.get_extra_outer_padding_to_avoid_vertical_overlapping()
+        self.appearance = appearance
         self.config = config
         self.dc = dc
         self.time_type = timeline.get_time_type()
@@ -397,14 +398,14 @@ class DefaultDrawingAlgorithm(Drawer):
         return sort_categories(categories)
 
     def _draw_legend(self, view_properties, categories):
-        if self._legend_should_be_drawn(view_properties, categories):
+        if self._legend_should_be_drawn(categories):
             font.set_legend_text_font(self.config, self.dc)
             rect = self._calculate_legend_rect(categories)
             self._draw_legend_box(rect)
             self._draw_legend_items(rect, categories)
 
-    def _legend_should_be_drawn(self, view_properties, categories):
-        return view_properties.show_legend and len(categories) > 0
+    def _legend_should_be_drawn(self, categories):
+        return self.appearance.get_legend_visible() and len(categories) > 0
 
     def _calculate_legend_rect(self, categories):
         max_width = 0

@@ -18,6 +18,7 @@
 
 import wx
 
+from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.canvas.drawing import get_drawer
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
@@ -61,6 +62,7 @@ class TimelineCanvasController(object):
         mock a drawer and use the mock by sending it in the drawer argument.
         Normally the drawer is collected with the get_drawer() method.
         """
+        self.appearance = None
         self.monitoring = Monitoring()
         self.view = view
         self.config = config
@@ -78,6 +80,17 @@ class TimelineCanvasController(object):
         self.change_input_handler_to_no_op()
         self.timeline = None
         self.ctrl_drag_handler = None
+        self.set_appearance(Appearance())
+
+    def get_appearance(self):
+        return self.appearance
+
+    def set_appearance(self, appearance):
+        if self.appearance is not None:
+            self.appearance.unlisten(self._redraw_timeline)
+        self.appearance = appearance
+        self.appearance.listen_for_any(self._redraw_timeline)
+        self.redraw_timeline()
 
     def set_ctrl_drag_handler(self, ctrl_drag_handler):
         self.ctrl_drag_handler = ctrl_drag_handler
@@ -383,7 +396,6 @@ class TimelineCanvasController(object):
     def _set_initial_values_to_member_variables(self):
         self.timeline = None
         self.view_properties = ViewProperties()
-        self.view_properties.change_show_legend(self.config.get_show_legend())
         self.view_properties.show_balloons_on_hover = self.config.get_balloon_on_hover()
         self.dragscroll_timer_running = False
 
@@ -410,7 +422,7 @@ class TimelineCanvasController(object):
         def fn_draw(dc):
             try:
                 self.monitoring.timer_start()
-                self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.config)
+                self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.config, self.appearance)
                 self.monitoring.timer_end()
                 if DEBUG_ENABLED:
                     display_monitor_result(dc)

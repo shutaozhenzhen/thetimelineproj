@@ -198,6 +198,7 @@ class Config(Observable):
 
     def set_show_legend(self, show):
         self.config_parser.set(DEFAULTSECT, SHOW_LEGEND, str(show))
+        self._notify()
     show_legend = property(get_show_legend, set_show_legend)
 
     def get_sidebar_width(self):

@@ -60,7 +60,8 @@ class DrawerSpec(UnitTestCase):
 
     def when_timeline_is_drawn(self):
         config = Config(None)
-        self.drawer.draw(self.dc, self.timeline, self.view_properties, config)
+        appearance = Mock()
+        self.drawer.draw(self.dc, self.timeline, self.view_properties, config, appearance)
 
     def assert_text_drawn_above(self, text, y_limit):
         _, y = self.position_of_drawn_text(text)
