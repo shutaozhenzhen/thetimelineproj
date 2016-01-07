@@ -73,3 +73,6 @@ class Container(Event):
 
     def get_subevents(self):
         return self.events
+
+    def allow_ends_today_on_subevents(self):
+        return self.strategy.allow_ends_today_on_subevents()
