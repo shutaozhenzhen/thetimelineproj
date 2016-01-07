@@ -61,11 +61,6 @@ class ViewProperties(Observable):
             self.hovered_event = event
             self._notify()
 
-    def change_show_legend(self, show):
-        if self.show_legend != show:
-            self.show_legend = show
-            self._notify()
-
     def change_view_cats_individually(self, view_cats_individually):
         if self.view_cats_individually != view_cats_individually:
             self.view_cats_individually = view_cats_individually
