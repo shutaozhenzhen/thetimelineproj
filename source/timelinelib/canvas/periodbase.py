@@ -71,7 +71,10 @@ class SelectPeriodByDragInputHandler(ScrollViewInputHandler):
     def _end_action(self):
         self.end_action()
         self._remove_selection()
-        self.controller.change_input_handler_to_no_op()
+        from timelinelib.canvas.noop import NoOpInputHandler
+        self.timeline_canvas.SetInputHandler(NoOpInputHandler(
+            self.controller, self.timeline_canvas))
+        self.timeline_canvas.edit_ends()
 
     def _remove_selection(self):
         self.timeline_canvas.SetPeriodSelection(None)
