@@ -36,7 +36,7 @@ class ScrollViewInputHandler(InputHandler):
 
     def mouse_moved(self, x, y, alt_down=False):
         self.last_x = x
-        if self.controller._in_scroll_zone(x) and not self.timer_running:
+        if self._in_scroll_zone(x) and not self.timer_running:
             self.view.start_dragscroll_timer(milliseconds=DRAGSCROLL_TIMER_MSINTERVAL)
             self.timer_running = True
 
@@ -44,7 +44,7 @@ class ScrollViewInputHandler(InputHandler):
         self.view.stop_dragscroll_timer()
 
     def dragscroll_timer_fired(self):
-        if self.controller._in_scroll_zone(self.last_x):
+        if self._in_scroll_zone(self.last_x):
             if self.last_x < SCROLL_ZONE_WIDTH:
                 direction = 1
             else:
@@ -54,3 +54,14 @@ class ScrollViewInputHandler(InputHandler):
 
     def view_scrolled(self):
         raise Exception("view_scrolled not implemented in subclass.")
+
+    def _in_scroll_zone(self, x):
+        """
+        Return True if x is within the left hand or right hand area
+        where timed scrolling shall start/continue.
+        """
+        width, _ = self.timeline_canvas.GetSizeTuple()
+        if width - x < SCROLL_ZONE_WIDTH or x < SCROLL_ZONE_WIDTH:
+            return True
+        return False
+
