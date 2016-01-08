@@ -92,15 +92,15 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
             return moved_delta
 
     def _get_moved_delta(self):
-        current_time = self.timeline_canvas_controller.get_time(self.last_x)
+        current_time = self.timeline_canvas.GetTimeAt(self.last_x)
         delta = current_time - self.start_drag_time
         return delta
 
     def _snap(self, period):
         start = period.start_time
         end = period.end_time
-        start_snapped = self.timeline_canvas_controller.snap(start)
-        end_snapped = self.timeline_canvas_controller.snap(end)
+        start_snapped = self.timeline_canvas.Snap(start)
+        end_snapped = self.timeline_canvas.Snap(end)
         if start_snapped != start:
             return period.move_delta(start_snapped - start)
         elif end_snapped != end:
