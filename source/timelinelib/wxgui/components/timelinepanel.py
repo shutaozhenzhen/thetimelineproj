@@ -197,7 +197,35 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _timeline_canvas_on_key_down(self, event):
         if event.GetKeyCode() == wx.WXK_DELETE:
             self._delete_selected_events()
+        elif event.GetKeyCode() == wx.WXK_UP:
+            self.move_selected_event_up()
+        elif event.GetKeyCode() == wx.WXK_DOWN:
+            self.move_selected_event_down()
         event.Skip()
+
+    def move_selected_event_up(self):
+        self._try_move_event_vertically(True)
+
+    def move_selected_event_down(self):
+        self._try_move_event_vertically(False)
+
+    def _try_move_event_vertically(self, up=True):
+        event = self.timeline_canvas.GetSelectedEvent()
+        if event is not None:
+            self._move_event_vertically(event, up)
+
+    def _move_event_vertically(self, event, up=True):
+        def edit_function():
+            (overlapping_event, direction) = self.timeline_canvas.GetClosestOverlappingEvent(event, up=up)
+            if overlapping_event is None:
+                return
+            if direction > 0:
+                self.timeline_canvas.GetDb().place_event_after_event(
+                    event, overlapping_event)
+            else:
+                self.timeline_canvas.GetDb().place_event_before_event(
+                    event, overlapping_event)
+        safe_locking(self.main_frame, edit_function)
 
     def _display_event_context_menu(self):
         menu_definitions = [

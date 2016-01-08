@@ -34,7 +34,6 @@ from timelinelib.canvas.zoom import ZoomByDragInputHandler
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.db.exceptions import TimelineIOError
-from timelinelib.db.utils import safe_locking
 from timelinelib.debug import DEBUG_ENABLED
 from timelinelib.debug import Monitoring
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
@@ -339,44 +338,10 @@ class TimelineCanvasController(object):
 
     def key_down(self, keycode, alt_down):
         if alt_down:
-            if keycode == wx.WXK_UP:
-                self.move_selected_event_up()
-            elif keycode == wx.WXK_DOWN:
-                self.move_selected_event_down()
-            elif keycode in (wx.WXK_RIGHT, wx.WXK_NUMPAD_RIGHT):
+            if keycode in (wx.WXK_RIGHT, wx.WXK_NUMPAD_RIGHT):
                 self._scroll_timeline_view_by_factor(LEFT_RIGHT_SCROLL_FACTOR)
             elif keycode in (wx.WXK_LEFT, wx.WXK_NUMPAD_LEFT):
                 self._scroll_timeline_view_by_factor(-LEFT_RIGHT_SCROLL_FACTOR)
-        else:
-            if keycode == wx.WXK_UP:
-                self.move_selected_event_up()
-            elif keycode == wx.WXK_DOWN:
-                self.move_selected_event_down()
-
-    def move_selected_event_up(self):
-        self._try_move_event_vertically(True)
-
-    def move_selected_event_down(self):
-        self._try_move_event_vertically(False)
-
-    def _try_move_event_vertically(self, up=True):
-        if self._one_and_only_one_event_selected():
-            self._move_event_vertically(up)
-
-    def _move_event_vertically(self, up=True):
-        def edit_function():
-            selected_event = self._get_first_selected_event()
-            (overlapping_event, direction) = self.drawing_algorithm.get_closest_overlapping_event(selected_event,
-                                                                                                  up=up)
-            if overlapping_event is None:
-                return
-            if direction > 0:
-                self.timeline.place_event_after_event(selected_event,
-                                                      overlapping_event)
-            else:
-                self.timeline.place_event_before_event(selected_event,
-                                                       overlapping_event)
-        safe_locking(self.view, edit_function)
 
     def key_up(self, keycode):
         if keycode == wx.WXK_CONTROL:
