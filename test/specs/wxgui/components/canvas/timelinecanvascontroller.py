@@ -309,6 +309,8 @@ class TimelineViewSpec(UnitTestCase):
         self.timeline_canvas.GetSize.return_value = (200, 100)
         self.timeline_canvas.GetEventAt.side_effect = lambda x, y, alt_down: self.mock_drawer.event_at(x, y, alt_down)
         self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.mock_drawer.get_time(x)
+        self.timeline_canvas.Snap.side_effect = lambda x: self.mock_drawer.snap(x)
+        self.timeline_canvas.GetDb.return_value = self.db
         self.width = 10
         self.middle_x = self.width / 2
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
