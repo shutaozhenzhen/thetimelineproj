@@ -28,7 +28,8 @@ SCROLL_ZONE_WIDTH = 20
 
 class ScrollViewInputHandler(InputHandler):
 
-    def __init__(self, controller):
+    def __init__(self, timeline_canvas, controller):
+        self.timeline_canvas = timeline_canvas
         self.controller = controller
         self.view = controller.view
         self.timer_running = False

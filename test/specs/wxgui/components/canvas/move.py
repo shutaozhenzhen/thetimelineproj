@@ -134,11 +134,13 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         if event.is_period():
             self.period_events.append(event)
         handler = MoveByDragInputHandler(
+            Mock(),
             self.controller, event, human_time_to_gregorian(from_time))
         handler.mouse_moved(to_x, 10)
 
     def when_move_done(self):
         handler = MoveByDragInputHandler(
+            Mock(),
             self.controller, self.a_point_event("1 Jan 2011"), None)
         handler.left_mouse_up()
 

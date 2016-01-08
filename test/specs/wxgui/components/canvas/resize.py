@@ -74,7 +74,7 @@ class ResizeEventSpec(UnitTestCase):
     def when_resizing(self, event, direction):
         self.event_being_resized = event
         self.resizer = ResizeByDragInputHandler(
-            self.controller, event, direction)
+            Mock(), self.controller, event, direction)
 
     def and_moving_mouse_to_x(self, x):
         any_y = 10

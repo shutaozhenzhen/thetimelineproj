@@ -21,8 +21,9 @@ from timelinelib.canvas.scrollbase import ScrollViewInputHandler
 
 class MoveByDragInputHandler(ScrollViewInputHandler):
 
-    def __init__(self, timeline_canvas_controller, event, start_drag_time):
-        ScrollViewInputHandler.__init__(self, timeline_canvas_controller)
+    def __init__(self, timeline_canvas, timeline_canvas_controller, event, start_drag_time):
+        ScrollViewInputHandler.__init__(self, timeline_canvas, timeline_canvas_controller)
+        self.timeline_canvas = timeline_canvas
         self.timeline_canvas_controller = timeline_canvas_controller
         self.start_drag_time = start_drag_time
         self._store_event_periods(event)
