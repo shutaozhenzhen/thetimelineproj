@@ -465,10 +465,10 @@ class GuiCreator(object):
             self.main_panel.redraw_timeline()
 
         def move_up_handler(event):
-            self.main_panel.get_timeline_canvas().MoveSelectedEventUp()
+            self.main_panel.timeline_panel.move_selected_event_up()
 
         def move_down_handler(event):
-            self.main_panel.get_timeline_canvas().MoveSelectedEventDown()
+            self.main_panel.timeline_panel.move_selected_event_down()
 
         cbx = NONE
         items = ((ID_CREATE_EVENT, create_event, _("Create &Event..."), cbx),

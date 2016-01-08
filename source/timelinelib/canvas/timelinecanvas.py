@@ -56,12 +56,6 @@ class TimelineCanvas(wx.Panel):
     def PostEvent(self, event):
         wx.PostEvent(self, event)
 
-    def MoveSelectedEventUp(self):
-        self.controller.move_selected_event_up()
-
-    def MoveSelectedEventDown(self):
-        self.controller.move_selected_event_down()
-
     def SetEventBoxDrawer(self, event_box_drawer):
         self.controller.set_event_box_drawer(event_box_drawer)
         self.redraw_timeline()
@@ -84,6 +78,9 @@ class TimelineCanvas(wx.Panel):
 
     def GetSelectedEvents(self):
         return self.controller.get_selected_events()
+
+    def GetClosestOverlappingEvent(self, event, up):
+        return self.controller.drawing_algorithm.get_closest_overlapping_event(event, up=up)
 
     def SetCtrlDragHandler(self, ctrl_drag_handler):
         self.controller.set_ctrl_drag_handler(ctrl_drag_handler)
