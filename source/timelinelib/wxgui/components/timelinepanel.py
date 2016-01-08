@@ -39,6 +39,9 @@ from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 from timelinelib.wxgui.utils import _ask_question
 
 
+LEFT_RIGHT_SCROLL_FACTOR = 1 / 200.0
+
+
 class TimelinePanelGuiCreator(wx.Panel):
 
     def __init__(self, parent):
@@ -201,6 +204,10 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.move_selected_event_up()
         elif event.GetKeyCode() == wx.WXK_DOWN:
             self.move_selected_event_down()
+        elif event.AltDown() and event.GetKeyCode() in (wx.WXK_RIGHT, wx.WXK_NUMPAD_RIGHT):
+            self.timeline_canvas.ScrollByFactor(LEFT_RIGHT_SCROLL_FACTOR)
+        elif event.AltDown() and event.GetKeyCode() in (wx.WXK_LEFT, wx.WXK_NUMPAD_LEFT):
+            self.timeline_canvas.ScrollByFactor(-LEFT_RIGHT_SCROLL_FACTOR)
         event.Skip()
 
     def move_selected_event_up(self):

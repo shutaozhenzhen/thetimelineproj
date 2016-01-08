@@ -49,7 +49,6 @@ from timelinelib.wxgui.components.font import Font
 # end of the timeline.
 SCROLL_ZONE_WIDTH = 20
 HSCROLL_STEP = 25
-LEFT_RIGHT_SCROLL_FACTOR = 1 / 200.0
 MOUSE_SCROLL_FACTOR = 1 / 10.0
 
 
@@ -335,13 +334,6 @@ class TimelineCanvasController(object):
 
     def _scroll_down(self):
         self.view_properties.hscroll_amount += HSCROLL_STEP
-
-    def key_down(self, keycode, alt_down):
-        if alt_down:
-            if keycode in (wx.WXK_RIGHT, wx.WXK_NUMPAD_RIGHT):
-                self._scroll_timeline_view_by_factor(LEFT_RIGHT_SCROLL_FACTOR)
-            elif keycode in (wx.WXK_LEFT, wx.WXK_NUMPAD_LEFT):
-                self._scroll_timeline_view_by_factor(-LEFT_RIGHT_SCROLL_FACTOR)
 
     def key_up(self, keycode):
         if keycode == wx.WXK_CONTROL:
