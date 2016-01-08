@@ -52,8 +52,8 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
     def left_mouse_up(self):
         ScrollViewInputHandler.left_mouse_up(self)
         self.timeline_canvas_controller.post_hint_event("")
-        if self.timeline_canvas_controller.timeline is not None:
-            self.timeline_canvas_controller.timeline._save_if_not_disabled()
+        if self.timeline_canvas.GetDb() is not None:
+            self.timeline_canvas.GetDb()._save_if_not_disabled()
         self.timeline_canvas_controller.change_input_handler_to_no_op()
 
     def view_scrolled(self):
