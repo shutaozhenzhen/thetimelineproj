@@ -302,15 +302,17 @@ class TimelineViewSpec(UnitTestCase):
         self.timeline_canvas.Disable.assert_called_with()
 
     def setUp(self):
+        self.mock_drawer = MockDrawer()
         self.app = wx.App()
         self.db = MemoryDB()
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSize.return_value = (200, 100)
+        self.timeline_canvas.GetEventAt.side_effect = lambda x, y, alt_down: self.mock_drawer.event_at(x, y, alt_down)
+        self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.mock_drawer.get_time(x)
         self.width = 10
         self.middle_x = self.width / 2
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
         self.timeline_canvas.GetDividerPosition.return_value = 50
-        self.mock_drawer = MockDrawer()
         self.controller = TimelineCanvasController(
             self.timeline_canvas, drawer=self.mock_drawer)
         self.controller.post_hint_event = Mock()
