@@ -66,7 +66,7 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
             self.timeline_canvas_controller.post_hint_event(_("Can't move locked event"))
             return
         self._move_selected_events()
-        self.timeline_canvas_controller.redraw_timeline()
+        self.timeline_canvas.Redraw()
 
     def _any_event_locked(self):
         for (event, _) in self.event_periods:
