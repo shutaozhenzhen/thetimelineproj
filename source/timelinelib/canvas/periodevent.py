@@ -21,9 +21,9 @@ from timelinelib.canvas.periodbase import SelectPeriodByDragInputHandler
 
 class CreatePeriodEventByDragInputHandler(SelectPeriodByDragInputHandler):
 
-    def __init__(self, controller, view, initial_time):
+    def __init__(self, controller, view, initial_time, ctrl_drag_handler):
         SelectPeriodByDragInputHandler.__init__(self, view, controller, initial_time)
-        self.view = view
+        self.ctrl_drag_handler = ctrl_drag_handler
 
     def end_action(self):
-        self.controller.ctrl_drag_handler(self.get_last_valid_period())
+        self.ctrl_drag_handler(self.get_last_valid_period())
