@@ -242,7 +242,7 @@ class Parser(object):
             event = Container(self.db.get_time_type(), start, end, text, category, cid=cid)
         elif self._is_subevent(text):
             cid, text = self._extract_subid(text)
-            event = Subevent(self.db.get_time_type(), start, end, text, category, cid=cid, locked=locked)
+            event = Subevent(self.db.get_time_type(), start, end, text, category, cid=cid, locked=locked, ends_today=ends_today)
         else:
             if self._text_starts_with_added_space(text):
                 text = self._remove_added_space(text)

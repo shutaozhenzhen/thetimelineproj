@@ -18,9 +18,9 @@
 
 import re
 
+from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
-from timelinelib.drawing.interface import Strip
 from timelinelib.time.typeinterface import TimeType
 
 
@@ -75,7 +75,7 @@ class NumTimeType(TimeType):
     def get_max_time(self):
         return(None, None)
 
-    def choose_strip(self, metrics, config):
+    def choose_strip(self, metrics, appearance):
         start_time = 1
         end_time = 2
         limit = 30

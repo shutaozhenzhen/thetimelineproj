@@ -16,14 +16,14 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import webbrowser
-
 import wx
 
+from timelinelib.canvas.appearance import Appearance
+from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
+from timelinelib.canvas.drawing import get_drawer
+from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.canvas.events import create_event_double_clicked_event
 from timelinelib.canvas.events import create_hint_event
-from timelinelib.canvas.events import create_time_double_clicked_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.noop import NoOpInputHandler
@@ -37,12 +37,6 @@ from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
 from timelinelib.debug import DEBUG_ENABLED
 from timelinelib.debug import Monitoring
-from timelinelib.drawing import get_drawer
-from timelinelib.drawing.viewproperties import ViewProperties
-from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
-from timelinelib.features.experimental.experimentalfeatures import experimental_feature
-from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
-from timelinelib.utilities.encodings import to_unicode
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
 from timelinelib.utils import ex_msg
@@ -62,28 +56,42 @@ MOUSE_SCROLL_FACTOR = 1 / 10.0
 
 class TimelineCanvasController(object):
 
-    def __init__(self, view, config, fn_handle_db_error, drawer=None):
+    def __init__(self, view, fn_handle_db_error, drawer=None):
         """
         The purpose of the drawer argument is make testing easier. A test can
         mock a drawer and use the mock by sending it in the drawer argument.
         Normally the drawer is collected with the get_drawer() method.
         """
+        self.appearance = None
         self.monitoring = Monitoring()
         self.view = view
-        self.config = config
-        self.config.listen_for_any(self._redraw_timeline)
         self.fn_handle_db_error = fn_handle_db_error
         if drawer is not None:
             self.drawing_algorithm = drawer
         else:
             self.drawing_algorithm = get_drawer()
+        self.timeline = None
+        self.ctrl_drag_handler = None
+        self.set_appearance(Appearance())
         self.set_event_box_drawer(DefaultEventBoxDrawer())
         self.set_background_drawer(self.get_saved_background_drawer())
         self.drawing_algorithm.use_fast_draw(False)
         self._set_initial_values_to_member_variables()
         self._set_colors_and_styles()
         self.change_input_handler_to_no_op()
-        self.timeline = None
+
+    def get_appearance(self):
+        return self.appearance
+
+    def set_appearance(self, appearance):
+        if self.appearance is not None:
+            self.appearance.unlisten(self._redraw_timeline)
+        self.appearance = appearance
+        self.appearance.listen_for_any(self._redraw_timeline)
+        self.redraw_timeline()
+
+    def set_ctrl_drag_handler(self, ctrl_drag_handler):
+        self.ctrl_drag_handler = ctrl_drag_handler
 
     def post_hint_event(self, text):
         self.view.PostEvent(create_hint_event(text))
@@ -182,9 +190,6 @@ class TimelineCanvasController(object):
         if timeline is not None:
             timeline.unregister(self._timeline_changed)
 
-    def show_hide_legend(self, show):
-        self.view_properties.change_show_legend(show)
-
     def get_time_period(self):
         """Return currently displayed time period."""
         if self.timeline is None:
@@ -227,61 +232,6 @@ class TimelineCanvasController(object):
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
         self.input_handler.left_mouse_down(x, y, ctrl_down, shift_down, alt_down)
 
-    def right_mouse_down(self, x, y, alt_down=False):
-        """
-        Event handler used when the right mouse button has been pressed.
-
-        If the mouse hits an event and the timeline is not readonly, the
-        context menu for that event is displayed.
-        """
-        self.context_menu_event = self.drawing_algorithm.event_at(x, y, alt_down)
-        if self.context_menu_event is None:
-            self.display_timeline_context_menu()
-        if self.timeline.is_read_only():
-            return
-        if self.context_menu_event is not None:
-            self.display_event_context_menu()
-
-    def display_event_context_menu(self):
-        self.view_properties.set_selected(self.context_menu_event, True)
-        menu_definitions = [
-            (_("Delete"), self._context_menu_on_delete_event, None),
-        ]
-        nbr_of_selected_events = len(self.view_properties.get_selected_event_ids())
-        if nbr_of_selected_events == 1:
-            menu_definitions.insert(0, (_("Edit"), self._context_menu_on_edit_event, None))
-            menu_definitions.insert(1, (_("Duplicate..."), self._context_menu_on_duplicate_event, None))
-        if EVENT_DONE.enabled():
-            menu_definitions.append((EVENT_DONE.get_display_name(), self._context_menu_on_done_event, None))
-        menu_definitions.append((_("Select Category..."), self._context_menu_on_select_category, None))
-        if nbr_of_selected_events == 1 and self.context_menu_event.has_data():
-            menu_definitions.append((_("Sticky Balloon"), self._context_menu_on_sticky_balloon_event, None))
-        if nbr_of_selected_events == 1:
-            hyperlinks = self.context_menu_event.get_data("hyperlink")
-            if hyperlinks is not None:
-                imp = wx.Menu()
-                menuid = 0
-                for hyperlink in hyperlinks.split(";"):
-                    imp.Append(menuid, hyperlink)
-                    menuid += 1
-                menu_definitions.append((_("Goto URL"), self._context_menu_on_goto_hyperlink_event, imp))
-        menu = wx.Menu()
-        for menu_definition in menu_definitions:
-            text, method, imp = menu_definition
-            menu_item = wx.MenuItem(menu, wx.NewId(), text)
-            if imp is not None:
-                for menu_item in imp.GetMenuItems():
-                    self.view.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
-                menu.AppendMenu(wx.ID_ANY, text, imp)
-            else:
-                self.view.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
-                menu.AppendItem(menu_item)
-        self.view.PopupMenu(menu)
-        menu.Destroy()
-
-    def display_timeline_context_menu(self):
-        self.view.display_timeline_context_menu()
-
     def _one_and_only_one_event_selected(self):
         selected_event_ids = self.view_properties.get_selected_event_ids()
         nbr_of_selected_event_ids = len(selected_event_ids)
@@ -293,31 +243,6 @@ class TimelineCanvasController(object):
             event_id = selected_event_ids[0]
             return self.timeline.find_event_with_id(event_id)
         return None
-
-    def _context_menu_on_edit_event(self, evt):
-        self.view.open_event_editor_for(self.context_menu_event)
-
-    def _context_menu_on_duplicate_event(self, evt):
-        self.view.open_duplicate_event_dialog_for_event(self.context_menu_event)
-
-    def _context_menu_on_delete_event(self, evt):
-        self._delete_selected_events()
-
-    def _context_menu_on_sticky_balloon_event(self, evt):
-        self.view_properties.set_event_has_sticky_balloon(self.context_menu_event, has_sticky=True)
-        self._redraw_timeline()
-
-    def _context_menu_on_goto_hyperlink_event(self, evt):
-        hyperlinks = self.context_menu_event.get_data("hyperlink")
-        hyperlink = hyperlinks.split(";")[evt.Id]
-        webbrowser.open(to_unicode(hyperlink))
-
-    @experimental_feature(EVENT_DONE)
-    def _context_menu_on_done_event(self, evt):
-        self._mark_selected_events_as_done()
-
-    def _context_menu_on_select_category(self, evt):
-        self.view.set_category_to_selected_events()
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """
@@ -336,10 +261,6 @@ class TimelineCanvasController(object):
         # It doesn't look too god but I havent found any other way to do it.
         self._toggle_event_selection(x, y, ctrl_down, alt_down)
         event = self.drawing_algorithm.event_at(x, y, alt_down)
-        if event:
-            self.view.PostEvent(create_event_double_clicked_event(event))
-        else:
-            self.view.PostEvent(create_time_double_clicked_event(self.get_time(x)))
 
     def get_time(self, x):
         return self.drawing_algorithm.get_time(x)
@@ -419,9 +340,7 @@ class TimelineCanvasController(object):
         self.view_properties.hscroll_amount += HSCROLL_STEP
 
     def key_down(self, keycode, alt_down):
-        if keycode == wx.WXK_DELETE:
-            self._delete_selected_events()
-        elif alt_down:
+        if alt_down:
             if keycode == wx.WXK_UP:
                 self.move_selected_event_up()
             elif keycode == wx.WXK_DOWN:
@@ -472,8 +391,6 @@ class TimelineCanvasController(object):
     def _set_initial_values_to_member_variables(self):
         self.timeline = None
         self.view_properties = ViewProperties()
-        self.view_properties.change_show_legend(self.config.get_show_legend())
-        self.view_properties.show_balloons_on_hover = self.config.get_balloon_on_hover()
         self.dragscroll_timer_running = False
 
     def _set_colors_and_styles(self):
@@ -499,7 +416,7 @@ class TimelineCanvasController(object):
         def fn_draw(dc):
             try:
                 self.monitoring.timer_start()
-                self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.config)
+                self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.appearance)
                 self.monitoring.timer_end()
                 if DEBUG_ENABLED:
                     display_monitor_result(dc)
@@ -511,7 +428,6 @@ class TimelineCanvasController(object):
         if self.timeline and self.view_properties.displayed_period:
             self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
             self.view.redraw_surface(fn_draw)
-            self.view.enable_disable_menus()
             self.view.PostEvent(create_timeline_redrawn_event())
 
     def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
@@ -579,64 +495,6 @@ class TimelineCanvasController(object):
         width, _ = self.view.GetSizeTuple()
         x_percent_of_width = float(x) / width
         self.navigate_timeline(lambda tp: tp.zoom(direction, x_percent_of_width))
-
-    def _delete_selected_events(self):
-        """After acknowledge from the user, delete all selected events."""
-        selected_event_ids = self.view_properties.get_selected_event_ids()
-        nbr_of_selected_event_ids = len(selected_event_ids)
-
-        def user_ack():
-            if nbr_of_selected_event_ids > 1:
-                text = _("Are you sure you want to delete %d events?" %
-                         nbr_of_selected_event_ids)
-            else:
-                text = _("Are you sure you want to delete this event?")
-            return self.view.ask_question(text) == wx.YES
-
-        def exception_handler(ex):
-            if isinstance(ex, TimelineIOError):
-                self.fn_handle_db_error(ex)
-            else:
-                raise(ex)
-
-        def _last_event(event_id):
-            return event_id == selected_event_ids[-1]
-
-        def _delete_events():
-            for event_id in selected_event_ids:
-                self.timeline.delete_event(event_id, save=_last_event(event_id))
-
-        def edit_function():
-            if user_ack():
-                _delete_events()
-            self.view_properties.clear_selected()
-        safe_locking(self.view, edit_function, exception_handler)
-
-    @experimental_feature(EVENT_DONE)
-    def _mark_selected_events_as_done(self):
-        def exception_handler(ex):
-            if isinstance(ex, TimelineIOError):
-                self.fn_handle_db_error(ex)
-            else:
-                raise(ex)
-
-        def _last_event(event_id):
-            return event_id == selected_event_ids[-1]
-
-        def edit_function():
-            for event_id in selected_event_ids:
-                self.timeline.mark_event_as_done(event_id, save=_last_event(event_id))
-            self.view_properties.clear_selected()
-        selected_event_ids = self.view_properties.get_selected_event_ids()
-        safe_locking(self.view, edit_function, exception_handler)
-
-    def balloon_visibility_changed(self, visible):
-        self.view_properties.show_balloons_on_hover = visible
-        # When display on hovering is disabled we have to make sure
-        # that any visible balloon is removed.
-        # TODO: Do we really need that?
-        if not visible:
-            self._redraw_timeline()
 
 
 def _step_function(x_value):

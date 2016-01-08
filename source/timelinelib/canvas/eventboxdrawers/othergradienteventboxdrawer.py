@@ -18,9 +18,9 @@
 
 import wx
 
+from timelinelib.canvas.drawing.utils import darken_color
+from timelinelib.canvas.drawing.utils import lighten_color
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.drawing.utils import darken_color
-from timelinelib.drawing.utils import lighten_color
 
 
 class OtherGradientEventBoxDrawer(DefaultEventBoxDrawer):

@@ -18,7 +18,7 @@
 
 from random import random
 
-from timelinelib.drawing.utils import darken_color, lighten_color
+from timelinelib.canvas.drawing.utils import darken_color, lighten_color
 from timelinelib.test.cases.unit import UnitTestCase
 
 

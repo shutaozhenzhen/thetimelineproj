@@ -28,13 +28,13 @@ from pysvg.shape import *
 from pysvg.builders import *
 from pysvg.filter import *
 
-from timelinelib.plugin.pluginbase import PluginBase
+from timelinelib.canvas.drawing.utils import darken_color
+from timelinelib.data import sort_categories
 from timelinelib.plugin.factory import EXPORTER
+from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.wxgui.utils import _ask_question
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import WildcardHelper
-from timelinelib.data import sort_categories
-from timelinelib.drawing.utils import darken_color
 
 
 OUTER_PADDING = 5      # Space between event boxes (pixels)

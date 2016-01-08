@@ -20,17 +20,17 @@ from datetime import datetime
 import re
 
 from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar import get_date_formatter
 from timelinelib.calendar.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.weekdaynames import abbreviated_name_of_weekday
+from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.data import TimePeriod
 from timelinelib.data import time_period_center
-from timelinelib.drawing.interface import Strip
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.typeinterface import TimeType
 import timelinelib.time.timeline as timeline
-from timelinelib.calendar import get_date_formatter
 
 
 class GregorianTimeType(TimeType):
@@ -142,7 +142,7 @@ class GregorianTimeType(TimeType):
     def get_max_time(self):
         return (timeline.Time(5369833, 0), _("can't be after year 9989"))
 
-    def choose_strip(self, metrics, config):
+    def choose_strip(self, metrics, appearance):
         """
         Return a tuple (major_strip, minor_strip) for current time period and
         window size.
@@ -155,7 +155,7 @@ class GregorianTimeType(TimeType):
         elif one_day_width > 600:
             return (StripDay(), StripHour())
         elif one_day_width > 45:
-            return (StripWeek(config), StripWeekday())
+            return (StripWeek(appearance), StripWeekday())
         elif one_day_width > 25:
             return (StripMonth(), StripDay())
         elif one_day_width > 1.5:
@@ -626,9 +626,9 @@ class StripDay(Strip):
 
 class StripWeek(Strip):
 
-    def __init__(self, config):
+    def __init__(self, appearance):
         Strip.__init__(self)
-        self.config = config
+        self.appearance = appearance
 
     def label(self, time, major=False):
         if major:
@@ -636,7 +636,7 @@ class StripWeek(Strip):
             next_first_weekday = self.increment(first_weekday)
             last_weekday = next_first_weekday - delta_from_days(1)
             range_string = self._time_range_string(first_weekday, last_weekday)
-            if self.config.week_start == "monday":
+            if self.appearance.get_week_start() == "monday":
                 return (_("Week") + " %s (%s)") % (GregorianUtils.calendar_week(time), range_string)
             else:
                 # It is sunday (don't know what to do about week numbers here)
@@ -665,7 +665,7 @@ class StripWeek(Strip):
                                       format_year(end.year))
 
     def start(self, time):
-        if self.config.week_start == "monday":
+        if self.appearance.get_week_start() == "monday":
             days_to_subtract = time.get_day_of_week()
         else:
             # It is sunday

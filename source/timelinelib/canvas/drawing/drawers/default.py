@@ -21,15 +21,15 @@ import os.path
 
 import wx
 
+from timelinelib.canvas.drawing.interface import Drawer
+from timelinelib.canvas.drawing.scene import TimelineScene
+from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.data import sort_categories
-from timelinelib.drawing.interface import Drawer
-from timelinelib.drawing.scene import TimelineScene
-from timelinelib.drawing.utils import darken_color
-from timelinelib.wxgui.components.font import Font
-from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
-import timelinelib.wxgui.components.font as font
 from timelinelib.data.timeperiod import TimePeriod
+from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
+from timelinelib.wxgui.components.font import Font
+import timelinelib.wxgui.components.font as font
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -101,14 +101,14 @@ class DefaultDrawingAlgorithm(Drawer):
     def get_closest_overlapping_event(self, event_to_move, up=True):
         return self.scene.get_closest_overlapping_event(event_to_move, up=up)
 
-    def draw(self, dc, timeline, view_properties, config):
-        self.minor_strip_pen.SetColour(config.minor_strip_divider_line_colour)
-        self.major_strip_pen.SetColour(config.major_strip_divider_line_colour)
-        self.now_pen.SetColour(config.now_line_colour)
+    def draw(self, dc, timeline, view_properties, appearance):
+        self.minor_strip_pen.SetColour(appearance.get_minor_strip_divider_line_colour())
+        self.major_strip_pen.SetColour(appearance.get_major_strip_divider_line_colour())
+        self.now_pen.SetColour(appearance.get_now_line_colour())
         self.outer_padding = OUTER_PADDING
         if EXTENDED_CONTAINER_HEIGHT.enabled():
             self.outer_padding += EXTENDED_CONTAINER_HEIGHT.get_extra_outer_padding_to_avoid_vertical_overlapping()
-        self.config = config
+        self.appearance = appearance
         self.dc = dc
         self.time_type = timeline.get_time_type()
         self.scene = self._create_scene(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
@@ -118,7 +118,7 @@ class DefaultDrawingAlgorithm(Drawer):
         del self.dc  # Program crashes if we don't delete the dc reference.
 
     def _create_scene(self, size, db, view_properties, get_text_extent_fn):
-        scene = TimelineScene(size, db, view_properties, get_text_extent_fn, self.config)
+        scene = TimelineScene(size, db, view_properties, get_text_extent_fn, self.appearance)
         scene.set_outer_padding(self.outer_padding)
         scene.set_inner_padding(INNER_PADDING)
         scene.set_period_threshold(PERIOD_THRESHOLD)
@@ -288,14 +288,14 @@ class DefaultDrawingAlgorithm(Drawer):
                     bold=True
                 if strip_period.start_time.is_special_day():
                     italic=True
-                font.set_minor_strip_text_font(self.config, self.dc, force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
+                font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc, force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
             else:
-                font.set_minor_strip_text_font(self.config, self.dc)
+                font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
         else:
-            font.set_minor_strip_text_font(self.config, self.dc)
+            font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
 
     def _draw_major_strips(self):
-        font.set_major_strip_text_font(self.config, self.dc)
+        font.set_major_strip_text_font(self.appearance.get_major_strip_font(), self.dc)
         self.dc.SetPen(self.major_strip_pen)
         for time_period in self.scene.major_strip_data:
             self._draw_major_strip_end_line(time_period)
@@ -342,7 +342,7 @@ class DefaultDrawingAlgorithm(Drawer):
         return self.scene.divider_y > rect.Y
 
     def _draw_line(self, view_properties, event, rect):
-        if self.config.draw_period_events_to_right:
+        if self.appearance.get_draw_period_events_to_right():
             x = rect.X
         else:
             x = self.scene.x_pos_for_time(event.mean_time())
@@ -350,7 +350,7 @@ class DefaultDrawingAlgorithm(Drawer):
         y2 = self._get_end_of_line(event)
         self._set_line_color(view_properties, event)
         if event.is_period():
-            if self.config.draw_period_events_to_right:
+            if self.appearance.get_draw_period_events_to_right():
                 x += 1
             self.dc.DrawLine(x-1, y, x-1, y2)
             self.dc.DrawLine(x+1, y, x+1, y2)
@@ -397,14 +397,14 @@ class DefaultDrawingAlgorithm(Drawer):
         return sort_categories(categories)
 
     def _draw_legend(self, view_properties, categories):
-        if self._legend_should_be_drawn(view_properties, categories):
-            font.set_legend_text_font(self.config, self.dc)
+        if self._legend_should_be_drawn(categories):
+            font.set_legend_text_font(self.appearance.get_legend_font(), self.dc)
             rect = self._calculate_legend_rect(categories)
             self._draw_legend_box(rect)
             self._draw_legend_items(rect, categories)
 
-    def _legend_should_be_drawn(self, view_properties, categories):
-        return view_properties.show_legend and len(categories) > 0
+    def _legend_should_be_drawn(self, categories):
+        return self.appearance.get_legend_visible() and len(categories) > 0
 
     def _calculate_legend_rect(self, categories):
         max_width = 0
@@ -552,7 +552,7 @@ class DefaultDrawingAlgorithm(Drawer):
                 self.dc.DrawBitmap(icon, x, y, False)
 
         def draw_description(lines, x, y):
-            if self.config.text_below_icon:
+            if self.appearance.get_text_below_icon():
                 iw, ih = get_icon_size()
                 if ih > 0:
                     ih += BALLOON_RADIUS / 2
@@ -577,7 +577,7 @@ class DefaultDrawingAlgorithm(Drawer):
                 w += BALLOON_RADIUS
             w += min(tw, max_text_width)
             h = max(h, th)
-            if self.config.text_below_icon:
+            if self.appearance.get_text_below_icon():
                 iw, ih = get_icon_size()
                 w -= iw
                 h = ih + th

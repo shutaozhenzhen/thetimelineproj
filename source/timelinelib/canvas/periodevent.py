@@ -26,5 +26,4 @@ class CreatePeriodEventByDragInputHandler(SelectPeriodByDragInputHandler):
         self.view = view
 
     def end_action(self):
-        period = self.get_last_valid_period()
-        self.view.open_create_event_editor(period.start_time, period.end_time)
+        self.controller.ctrl_drag_handler(self.get_last_valid_period())

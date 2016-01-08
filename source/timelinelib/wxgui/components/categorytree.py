@@ -18,10 +18,10 @@
 
 import wx
 
+from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.db.utils import safe_locking
 from timelinelib.debug import DEBUG_ENABLED
 from timelinelib.debug import Monitoring
-from timelinelib.drawing.utils import darken_color
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.utilities.observer import Observable
 from timelinelib.wxgui.components.font import Font

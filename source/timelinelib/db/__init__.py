@@ -19,11 +19,11 @@
 import tempfile
 import os.path
 
+from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.data import Category
 from timelinelib.data import Event
 from timelinelib.data import TimePeriod
 from timelinelib.db.exceptions import TimelineIOError
-from timelinelib.drawing.viewproperties import ViewProperties
 from timelinelib.time.gregoriantime import GregorianTimeType
 
 
