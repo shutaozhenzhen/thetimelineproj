@@ -138,6 +138,9 @@ class TimelineCanvas(wx.Panel):
     def Redraw(self):
         self.redraw_timeline()
 
+    def EventIsPeriod(self, event):
+        return self.controller.event_is_period(event)
+
     def redraw_timeline(self):
         self.controller.redraw_timeline()
 
