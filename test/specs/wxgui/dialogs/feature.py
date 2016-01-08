@@ -23,14 +23,23 @@ from timelinelib.wxgui.dialogs.feature.view import FeatureDialog
 from timelinelib.test.cases.unit import UnitTestCase
 
 
+DISPLAY_NAME = "Feature display name"
+FEATURE_DESCRIPTION = "Feature description"
+
+
 class describe_FeatureDialog(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(FeatureDialog)
         self.controller = FeatureDialogController(self.view)
         self.feature = Mock()
-        self.feature.get_display_name.return_value = "Feature display name"
-        self.feature.get_description.return_value = "Feature description"
+        self.feature.get_display_name.return_value = DISPLAY_NAME
+        self.feature.get_description.return_value = FEATURE_DESCRIPTION
 
     def test_it_can_be_created(self):
-        self.show_dialog(FeatureDialog, None, self.feature)
+        pass
+
+    def test_view_is_populated_when_controller_inits(self):
+        self.controller.on_init(self.feature)
+        self.view.SetFeatureName.assert_called_with(DISPLAY_NAME)
+        self.view.SetFeatureDescription.assert_called_with(FEATURE_DESCRIPTION)
