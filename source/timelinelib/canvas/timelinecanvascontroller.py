@@ -27,7 +27,6 @@ from timelinelib.canvas.events import create_hint_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.noop import NoOpInputHandler
-from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
 from timelinelib.canvas.resize import ResizeByDragInputHandler
 from timelinelib.canvas.scrolldrag import ScrollByDragInputHandler
 from timelinelib.data import TimeOutOfRangeLeftError
@@ -103,9 +102,6 @@ class TimelineCanvasController(object):
 
     def set_background_drawer(self, drawer):
         self.drawing_algorithm.set_background_drawer(drawer)
-
-    def change_input_handler_to_create_period_event_by_drag(self, initial_time, ctrl_drag_handler):
-        self.input_handler = CreatePeriodEventByDragInputHandler(self, self.view, initial_time, ctrl_drag_handler)
 
     def change_input_handler_to_resize_by_drag(self, event, direction):
         self.input_handler = ResizeByDragInputHandler(
