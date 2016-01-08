@@ -19,6 +19,7 @@
 import wx
 
 from timelinelib.canvas.inputhandler import InputHandler
+from timelinelib.canvas.zoom import ZoomByDragInputHandler
 
 
 # Used by Sizer and Mover classes to detect when to go into action
@@ -70,7 +71,11 @@ class NoOpInputHandler(InputHandler):
             return
         if (event is None and shift_down is True):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
-            self.timeline_canvas_controller.change_input_handler_to_zoom_by_drag(time_at_x)
+            self.timeline_canvas.SetInputHandler(ZoomByDragInputHandler(
+                self.timeline_canvas,
+                self.timeline_canvas_controller,
+                time_at_x))
+
             return
         self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down, alt_down)
 
