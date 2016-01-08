@@ -107,11 +107,10 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.controller.view = Mock()
         self.controller.get_time.side_effect = lambda x: self.times_at[x]
         self.controller.event_is_period.side_effect = lambda event: event in self.period_events
-        # self.controller.snap.side_effect = lambda time: self.snap_times[time]
         self.controller.snap.side_effect = x
-        self.controller.get_selected_events.return_value = self.selected_events
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSizeTuple.return_value = (0, 0)
+        self.timeline_canvas.GetSelectedEvents.return_value = self.selected_events
 
     def a_point_event(self, time):
         event = an_event_with(time=time)
@@ -143,7 +142,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
 
     def when_move_done(self):
         handler = MoveByDragInputHandler(
-            self.timeline_canvas(),
+            self.timeline_canvas,
             self.controller, self.a_point_event("1 Jan 2011"), None)
         handler.left_mouse_up()
 

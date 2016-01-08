@@ -315,6 +315,7 @@ class TimelineViewSpec(UnitTestCase):
         self.middle_x = self.width / 2
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
         self.timeline_canvas.GetDividerPosition.return_value = 50
+        self.timeline_canvas.GetSelectedEvents.return_value = []
         self.controller = TimelineCanvasController(
             self.timeline_canvas, drawer=self.mock_drawer)
         self.controller.post_hint_event = Mock()
