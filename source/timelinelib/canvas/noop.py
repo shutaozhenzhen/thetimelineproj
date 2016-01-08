@@ -40,8 +40,8 @@ class NoOpInputHandler(InputHandler):
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
         self._toggle_balloon_stickyness(x, y)
-        event = self.timeline_canvas_controller.event_at(x, y, alt_down)
-        time_at_x = self.timeline_canvas_controller.get_time(x)
+        event = self.timeline_canvas.GetEventAt(x, y, alt_down)
+        time_at_x = self.timeline_canvas.GetTimeAt(x)
         if self._hit_resize_handle(x, y, alt_down) is not None:
             if self.timeline_canvas.ok_to_edit():
                 try:
@@ -88,7 +88,7 @@ class NoOpInputHandler(InputHandler):
                     self.timeline_canvas_controller._redraw_balloons(None)
 
     def mouse_moved(self, x, y, alt_down=False):
-        self.last_hovered_event = self.timeline_canvas_controller.event_at(x, y, alt_down)
+        self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
         self.last_hovered_balloon_event = self.drawer.balloon_at(x, y)
         self._start_balloon_timers()
         self.timeline_canvas_controller._display_eventinfo_in_statusbar(x, y, alt_down)
