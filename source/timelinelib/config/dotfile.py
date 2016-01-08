@@ -198,6 +198,7 @@ class Config(Observable):
 
     def set_show_legend(self, show):
         self.config_parser.set(DEFAULTSECT, SHOW_LEGEND, str(show))
+        self._notify()
     show_legend = property(get_show_legend, set_show_legend)
 
     def get_sidebar_width(self):
@@ -261,6 +262,7 @@ class Config(Observable):
 
     def set_balloon_on_hover(self, balloon_on_hover):
         self.config_parser.set(DEFAULTSECT, BALLOON_ON_HOVER, str(balloon_on_hover))
+        self._notify()
     balloon_on_hover = property(get_balloon_on_hover, set_balloon_on_hover)
 
     def get_uncheck_time_for_new_events(self):
@@ -277,6 +279,7 @@ class Config(Observable):
         if week_start not in ["monday", "sunday"]:
             raise ValueError("Invalid week start.")
         self.config_parser.set(DEFAULTSECT, WEEK_START, week_start)
+        self._notify()
     week_start = property(get_week_start, set_week_start)
 
     def get_use_inertial_scrolling(self):
@@ -284,6 +287,7 @@ class Config(Observable):
 
     def set_use_inertial_scrolling(self, value):
         self.config_parser.set(DEFAULTSECT, USE_INERTIAL_SCROLLING, str(value))
+        self._notify()
     use_inertial_scrolling = property(get_use_inertial_scrolling, set_use_inertial_scrolling)
 
     def get_shortcut_key(self, cfgid, default):
@@ -308,6 +312,7 @@ class Config(Observable):
 
     def set_never_show_period_events_as_point_events(self, value):
         self.config_parser.set(DEFAULTSECT, NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS, str(value))
+        self._notify()
     never_show_period_events_as_point_events = property(get_never_show_period_events_as_point_events,
                                                         set_never_show_period_events_as_point_events)
 
@@ -333,6 +338,7 @@ class Config(Observable):
 
     def set_major_strip_font(self, font):
         self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_FONT, font)
+        self._notify()
     major_strip_font = property(get_major_strip_font, set_major_strip_font)
 
     def get_minor_strip_font(self):
@@ -340,6 +346,7 @@ class Config(Observable):
 
     def set_minor_strip_font(self, font):
         self.config_parser.set(DEFAULTSECT, MINOR_STRIP_FONT, font)
+        self._notify()
     minor_strip_font = property(get_minor_strip_font, set_minor_strip_font)
 
     def get_legend_font(self):
@@ -347,6 +354,7 @@ class Config(Observable):
 
     def set_legend_font(self, font):
         self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
+        self._notify()
     legend_font = property(get_legend_font, set_legend_font)
 
     def _set_default_fonts(self):
@@ -379,24 +387,28 @@ class Config(Observable):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR))
     def set_minor_strip_divider_line_colour(self, colour):
         self.config_parser.set(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
+        self._notify()
     minor_strip_divider_line_colour = property(get_minor_strip_divider_line_colour, set_minor_strip_divider_line_colour)
 
     def get_major_strip_divider_line_colour(self):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR))
     def set_major_strip_divider_line_colour(self, colour):
         self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
+        self._notify()
     major_strip_divider_line_colour = property(get_major_strip_divider_line_colour, set_major_strip_divider_line_colour)
 
     def get_now_line_color(self):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, NOW_LINE_COLOUR))
     def set_now_line_color(self, colour):
         self.config_parser.set(DEFAULTSECT, NOW_LINE_COLOUR, self._tuple_to_string(colour))
+        self._notify()
     now_line_colour = property(get_now_line_color, set_now_line_color)
 
     def get_text_below_icon(self):
         return self.config_parser.getboolean(DEFAULTSECT, TEXT_BELOW_ICON)
     def set_text_below_icon(self, value):
         self.config_parser.set(DEFAULTSECT, TEXT_BELOW_ICON, str(value))
+        self._notify()
     text_below_icon = property(get_text_below_icon, set_text_below_icon)
 
     def _string_to_tuple(self, tuple_string):

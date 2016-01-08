@@ -21,10 +21,10 @@ import math
 
 import wx
 
-from timelinelib.drawing.utils import darken_color
-from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
-from timelinelib.wxgui.utils import get_colour
+from timelinelib.canvas.drawing.utils import darken_color
+from timelinelib.canvas.drawing.utils import get_colour
 from timelinelib.config.paths import ICONS_DIR
+from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
 
 
 HANDLE_SIZE = 4

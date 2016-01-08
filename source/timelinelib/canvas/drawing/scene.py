@@ -18,8 +18,8 @@
 
 import wx
 
+from timelinelib.canvas.drawing.utils import Metrics
 from timelinelib.data import TimePeriod
-from timelinelib.drawing.utils import Metrics
 
 
 FORWARD = 1
@@ -28,11 +28,11 @@ BACKWARD = -1
 
 class TimelineScene(object):
 
-    def __init__(self, size, db, view_properties, get_text_size_fn, config):
+    def __init__(self, size, db, view_properties, get_text_size_fn, appearance):
         self._db = db
         self._view_properties = view_properties
         self._get_text_size_fn = get_text_size_fn
-        self._config = config
+        self._appearance = appearance
         self._outer_padding = 5
         self._inner_padding = 3
         self._baseline_padding = 15
@@ -100,7 +100,7 @@ class TimelineScene(object):
         return (evt, direction)
 
     def center_text(self):
-        return self._config.center_event_texts
+        return self._appearance.get_center_event_texts()
 
     def _inflate_event_rects_to_get_right_dimensions_for_overlap_calculations(self):
         for (_, rect) in self.event_data:
@@ -282,7 +282,7 @@ class TimelineScene(object):
         return rw, rh
 
     def _calc_x_pos_for_non_period_event(self, event, rw):
-        if self._config.draw_period_events_to_right:
+        if self._appearance.get_draw_period_events_to_right():
             return self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
         else:
             return self._metrics.calc_x(event.mean_time()) - rw / 2
@@ -297,7 +297,7 @@ class TimelineScene(object):
             return self._get_text_size_fn(" ")
 
     def never_show_period_events_as_point_events(self):
-        return self._config.get_never_show_period_events_as_point_events()
+        return self._appearance.get_never_show_period_events_as_point_events()
 
     def _calc_ideal_wx_rect(self, rx, ry, rw, rh):
         # Drawing stuff on huge x-coordinates causes drawing to fail.
@@ -329,7 +329,7 @@ class TimelineScene(object):
                 pass
         major_strip_data = []  # List of time_period
         minor_strip_data = []  # List of time_period
-        self.major_strip, self.minor_strip = self._db.get_time_type().choose_strip(self._metrics, self._config)
+        self.major_strip, self.minor_strip = self._db.get_time_type().choose_strip(self._metrics, self._appearance)
         fill(major_strip_data, self.major_strip)
         fill(minor_strip_data, self.minor_strip)
         return (minor_strip_data, major_strip_data)

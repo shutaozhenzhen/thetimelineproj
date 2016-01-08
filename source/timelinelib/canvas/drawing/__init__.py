@@ -17,5 +17,5 @@
 
 
 def get_drawer():
-    from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
+    from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
     return DefaultDrawingAlgorithm()

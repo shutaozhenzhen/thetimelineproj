@@ -20,13 +20,14 @@ import wx
 from mock import Mock
 
 from timelinelib.calendar.gregorian import GregorianUtils
+from timelinelib.canvas.appearance import Appearance
+from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
+from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
+from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event, TimePeriod
-from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
-from timelinelib.drawing.viewproperties import ViewProperties
-from timelinelib.plugin.plugins.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.time.gregoriantime import GregorianTimeType
 
@@ -59,8 +60,8 @@ class DrawerSpec(UnitTestCase):
         self.timeline.save_event(event)
 
     def when_timeline_is_drawn(self):
-        config = Config(None)
-        self.drawer.draw(self.dc, self.timeline, self.view_properties, config)
+        appearance = Appearance()
+        self.drawer.draw(self.dc, self.timeline, self.view_properties, appearance)
 
     def assert_text_drawn_above(self, text, y_limit):
         _, y = self.position_of_drawn_text(text)

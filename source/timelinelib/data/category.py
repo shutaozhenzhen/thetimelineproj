@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.drawing.drawers import get_progress_color
+from timelinelib.canvas.drawing.drawers import get_progress_color
 
 
 EXPORTABLE_FIELDS = FIELDS = ("Name", "Color", "Progress Color", "Done Color", "Parent")

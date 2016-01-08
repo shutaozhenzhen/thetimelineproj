@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.drawing.drawers import get_progress_color
 from timelinelib.data.timeperiod import TimePeriod
-from timelinelib.drawing.drawers import get_progress_color
 
 
 DEFAULT_COLOR = (200, 200, 200)

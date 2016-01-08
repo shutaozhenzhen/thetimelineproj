@@ -23,11 +23,11 @@ from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONT
 class Subevent(Event):
 
     def __init__(self, time_type, start_time, end_time, text, category=None,
-                 container=None, cid=-1, locked=False):
+                 container=None, cid=-1, locked=False, ends_today=False):
         if not EXTENDED_CONTAINER_STRATEGY.enabled():
             locked = False
         Event.__init__(self, time_type, start_time, end_time, text, category,
-                       False, locked, False)
+                       False, locked, ends_today)
         self.container = container
         if self.container is not None:
             self.container_id = self.container.cid()

@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.drawing.utils import darken_color
+from timelinelib.canvas.drawing.utils import darken_color
 
 
 class MessageBar(wx.Panel):

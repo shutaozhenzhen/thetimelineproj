@@ -16,9 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-"""
-Utilities used by drawers.
-"""
+import wx
 
 
 class Metrics(object):
@@ -82,3 +80,7 @@ def lighten_color(color, factor=1.5):
     if (color == (0, 0, 0)):
         color = (1, 1, 1)  # avoid multiplying factor by zero
     return tuple([min(int(x * factor), 255) for x in color])
+
+
+def get_colour(rgb_tuple):
+    return wx.Colour(rgb_tuple[0], rgb_tuple[1], rgb_tuple[2])

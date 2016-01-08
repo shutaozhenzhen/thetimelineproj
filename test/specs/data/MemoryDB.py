@@ -18,14 +18,14 @@
 
 from mock import Mock
 
+from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.data.db import MemoryDB
 from timelinelib.db.exceptions import TimelineIOError
-from timelinelib.drawing.viewproperties import ViewProperties
-from timelinelib.wxgui.utils import category_tree
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import gregorian_period
+from timelinelib.wxgui.utils import category_tree
 
 
 class describe_memory_db(UnitTestCase):

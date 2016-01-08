@@ -19,14 +19,13 @@
 from mock import Mock
 import wx
 
+from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas.timelinecanvascontroller import HSCROLL_STEP
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.config.dotfile import Config
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
-from timelinelib.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
@@ -139,12 +138,14 @@ class TimelineViewSpec(UnitTestCase):
         self.fire_balloon_hide_timer()
         self.assert_balloon_drawn_for_event(None)
 
-    def test_creates_event_when_ctrl_dragging_mouse(self):
+    def test_calls_handler_when_ctrl_dragging_mouse(self):
+        handler = Mock()
+        self.controller.set_ctrl_drag_handler(handler)
         self.given_time_at_x_is(10, "1 Aug 2010")
         self.given_time_at_x_is(30, "3 Aug 2010")
         self.init_view_with_db()
         self.simulate_mouse_down_move_up((10, ANY_Y), (30, ANY_Y), ctrl_down=True)
-        self.assert_created_event_with_period("1 Aug 2010", "3 Aug 2010")
+        self.assertTrue(handler.called)
         self.assert_timeline_redrawn()
 
     def test_posts_event_info_hint_when_hovering_event(self):
@@ -171,20 +172,6 @@ class TimelineViewSpec(UnitTestCase):
         self.init_view_with_db()
         self.controller.navigate_timeline(navigate)
         self.assert_has_posted_hint(_("Can't scroll more to the right"))
-
-    def test_sends_double_click_event_when_double_clicking_surface(self):
-        self.given_time_at_x_is(30, "3 Aug 2010")
-        self.init_view_with_db()
-        self.simulate_mouse_double_click(30, ANY_Y)
-        self.assert_time_double_clicked(human_time_to_gregorian("3 Aug 2010"))
-        self.assert_timeline_redrawn()
-
-    def test_sends_double_click_event_when_double_clicking_event(self):
-        event = self.given_event_with(pos=(40, 60), size=(20, 10))
-        self.init_view_with_db()
-        self.simulate_mouse_double_click(50, 65)
-        self.assert_event_double_clicked(event)
-        self.assert_timeline_redrawn()
 
     def test_selects_and_deselects_event_when_clicking_on_it(self):
         event = self.given_event_with(pos=(30, 60), size=(50, 10))
@@ -303,25 +290,6 @@ class TimelineViewSpec(UnitTestCase):
         self.assert_displays_period("1 Aug 2010", "21 Aug 2010")
         self.assert_timeline_redrawn()
 
-    def test_deletes_selected_events_when_pressing_del_and_answering_yes_in_dialog(self):
-        period_event = self.given_event_with(start="4 Aug 2010", end="10 Aug 2010", pos=(30, 60-5), size=(60, 10))
-        point_event = self.given_event_with(start="15 Aug 2010", end="15 Aug 2010", pos=(130, 30-5), size=(50, 10))
-        self.init_view_with_db()
-        self.timeline_canvas.ask_question.return_value = wx.YES
-        self.simulate_mouse_click(50, 60)
-        self.controller.key_down(wx.WXK_DELETE, False)
-        self.assertEqual([point_event], self.db.get_all_events())
-
-    def test_deletes_no_selected_events_when_pressing_del_and_answering_no_in_dialog(self):
-        period_event = self.given_event_with(start="4 Aug 2010", end="10 Aug 2010", pos=(30, 60-5), size=(60, 10))
-        point_event = self.given_event_with(start="15 Aug 2010", end="15 Aug 2010", pos=(130, 30-5), size=(50, 10))
-        self.init_view_with_db()
-        self.timeline_canvas.ask_question.return_value = wx.NO
-        self.simulate_mouse_click(50, 60)
-        self.controller.key_down(wx.WXK_DELETE, False)
-        self.assertTrue(period_event in self.db.get_all_events())
-        self.assertTrue(point_event in self.db.get_all_events())
-
     def test_shift_scroll_changes_divider_line_value_and_redraws(self):
         self.init_view_with_db()
         self.controller.mouse_wheel_moved(
@@ -342,13 +310,10 @@ class TimelineViewSpec(UnitTestCase):
         self.middle_x = self.width / 2
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
         self.timeline_canvas.GetDividerPosition.return_value = 50
-        self.config = Mock(Config)
         self.mock_drawer = MockDrawer()
         self.fn_handle_db_error = Mock()
         self.controller = TimelineCanvasController(
-            self.timeline_canvas,
-            self.config,
-            self.fn_handle_db_error,
+            self.timeline_canvas, self.fn_handle_db_error,
             drawer=self.mock_drawer)
         self.controller.post_hint_event = Mock()
 
@@ -398,7 +363,6 @@ class TimelineViewSpec(UnitTestCase):
         x2, y2 = to
         self.controller.left_mouse_down(x1, y1, ctrl_down, shift_down)
         self.controller.mouse_moved(x2, y2)
-        self.controller.config.use_inertial_scrolling = False
         self.controller.left_mouse_up()
 
     def simulate_mouse_move(self, x, y):
@@ -414,12 +378,6 @@ class TimelineViewSpec(UnitTestCase):
         self.assertTrue(self.controller.post_hint_event.called)
         last_event = self.controller.post_hint_event.call_args[0][0]
         return last_event
-
-    def assert_time_double_clicked(self, time):
-        self.assertEqual(self.timeline_canvas.PostEvent.call_args[0][0].time, time)
-
-    def assert_event_double_clicked(self, event):
-        self.assertEqual(self.timeline_canvas.PostEvent.call_args[0][0].event, event)
 
     def assert_event_has_period(self, event, start, end):
         self.assertEqual(gregorian_period(start, end), event.get_time_period())
@@ -523,11 +481,10 @@ class MockDrawer(object):
     def event_is_period(self, event):
         return False
 
-    def draw(self, dc, timeline, view_properties, config):
+    def draw(self, dc, timeline, view_properties, appearance):
         self.draw_dc = dc
         self.draw_timeline = timeline
         self.draw_view_properties = view_properties
-        self.draw_config = config
 
 
 class DrawingAreaSpec(UnitTestCase):
@@ -580,9 +537,8 @@ class DrawingAreaSpec(UnitTestCase):
         self.app = wx.App()  # a stored app is needed to create fonts
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetDividerPosition.return_value = 1
-        config = Mock(Config)
         self.drawing_algorithm = DefaultDrawingAlgorithm()
         fn_handle_db_error = None
         self.controller = TimelineCanvasController(
-            self.timeline_canvas, config,
-            fn_handle_db_error, drawer=self.drawing_algorithm)
+            self.timeline_canvas, fn_handle_db_error,
+            drawer=self.drawing_algorithm)

@@ -42,7 +42,7 @@ class TimeType(object):
     def get_max_time(self):
         raise NotImplementedError("return the max time for this time type.")
 
-    def choose_strip(self, metrics, config):
+    def choose_strip(self, metrics, appearance):
         raise NotImplementedError("choose_strip not implemented.")
 
     def mult_timedelta(self, delta, num):
