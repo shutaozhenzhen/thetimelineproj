@@ -28,11 +28,10 @@ class TimelineCanvas(wx.Panel):
     input events such as mouse and keyboard actions.
     """
 
-    def __init__(self, parent, fn_handle_db_error, main_frame):
+    def __init__(self, parent, main_frame):
         wx.Panel.__init__(self, parent, style=wx.NO_BORDER | wx.WANTS_CHARS)
-        self.fn_handle_db_error = fn_handle_db_error
         self.main_frame = main_frame
-        self.controller = TimelineCanvasController(self, fn_handle_db_error)
+        self.controller = TimelineCanvasController(self)
         self.surface_bitmap = None
         self._create_gui()
         self.SetDividerPosition(50)
