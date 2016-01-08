@@ -108,8 +108,8 @@ class TimelineCanvasController(object):
     def change_input_handler_to_zoom_by_drag(self, start_time):
         self.input_handler = ZoomByDragInputHandler(self.view, self, start_time)
 
-    def change_input_handler_to_create_period_event_by_drag(self, initial_time):
-        self.input_handler = CreatePeriodEventByDragInputHandler(self, self.view, initial_time)
+    def change_input_handler_to_create_period_event_by_drag(self, initial_time, ctrl_drag_handler):
+        self.input_handler = CreatePeriodEventByDragInputHandler(self, self.view, initial_time, ctrl_drag_handler)
 
     def change_input_handler_to_resize_by_drag(self, event, direction):
         self.input_handler = ResizeByDragInputHandler(

@@ -66,7 +66,7 @@ class NoOpInputHandler(InputHandler):
         if (event is None and ctrl_down is True):
             if self.timeline_canvas_controller.ctrl_drag_handler:
                 self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
-                self.timeline_canvas_controller.change_input_handler_to_create_period_event_by_drag(time_at_x)
+                self.timeline_canvas_controller.change_input_handler_to_create_period_event_by_drag(time_at_x, self.timeline_canvas_controller.ctrl_drag_handler)
             return
         if (event is None and shift_down is True):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
