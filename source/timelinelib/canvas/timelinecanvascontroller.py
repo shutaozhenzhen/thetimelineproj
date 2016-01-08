@@ -56,7 +56,7 @@ MOUSE_SCROLL_FACTOR = 1 / 10.0
 
 class TimelineCanvasController(object):
 
-    def __init__(self, view, fn_handle_db_error, drawer=None):
+    def __init__(self, view, drawer=None):
         """
         The purpose of the drawer argument is make testing easier. A test can
         mock a drawer and use the mock by sending it in the drawer argument.
@@ -65,7 +65,6 @@ class TimelineCanvasController(object):
         self.appearance = None
         self.monitoring = Monitoring()
         self.view = view
-        self.fn_handle_db_error = fn_handle_db_error
         if drawer is not None:
             self.drawing_algorithm = drawer
         else:
@@ -181,8 +180,7 @@ class TimelineCanvasController(object):
                 default_tp = self.time_type.get_default_time_period()
                 self.view_properties.displayed_period = default_tp
             self.view_properties.hscroll_amount = 0
-        except TimelineIOError, e:
-            self.fn_handle_db_error(e)
+        except Exception:
             properties_loaded = False
         return properties_loaded
 
@@ -414,16 +412,12 @@ class TimelineCanvasController(object):
             dc.DrawText("Last redraw time: %.3f ms" % redraw_time, width - 300, height - 40)
 
         def fn_draw(dc):
-            try:
-                self.monitoring.timer_start()
-                self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.appearance)
-                self.monitoring.timer_end()
-                if DEBUG_ENABLED:
-                    display_monitor_result(dc)
-            except TimelineIOError, e:
-                self.fn_handle_db_error(e)
-            finally:
-                self.drawing_algorithm.use_fast_draw(False)
+            self.monitoring.timer_start()
+            self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.appearance)
+            self.monitoring.timer_end()
+            if DEBUG_ENABLED:
+                display_monitor_result(dc)
+            self.drawing_algorithm.use_fast_draw(False)
 
         if self.timeline and self.view_properties.displayed_period:
             self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
