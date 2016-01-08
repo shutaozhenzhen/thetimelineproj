@@ -34,8 +34,10 @@ class FeatureDialogController(Controller):
 
     def on_text_url(self, evt):
         if evt.MouseEvent.LeftUp():
-            start = evt.GetURLStart()
-            end = evt.GetURLEnd()
-            url = self.view.GetDescription()[start:end]
-            webbrowser.open(url)
+            webbrowser.open(self._get_url(evt))
         evt.Skip()
+
+    def _get_url(self, evt):
+        start = evt.GetURLStart()
+        end = evt.GetURLEnd()
+        return self.view.GetDescription()[start:end]
