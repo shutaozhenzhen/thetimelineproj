@@ -90,7 +90,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.given_time_at_x_is(50, "5 Jan 2011")
         self.when_moving(self.a_point_event("1 Jan 2011"),
                          from_time="1 Jan 2011", to_x=50)
-        self.assertTrue(self.controller.redraw_timeline.called)
+        self.assertTrue(self.timeline_canvas.Redraw.called)
 
     def setUp(self):
         def x(time):

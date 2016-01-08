@@ -135,6 +135,9 @@ class TimelineCanvas(wx.Panel):
     def navigate_timeline(self, navigation_fn):
         self.controller.navigate_timeline(navigation_fn)
 
+    def Redraw(self):
+        self.redraw_timeline()
+
     def redraw_timeline(self):
         self.controller.redraw_timeline()
 
