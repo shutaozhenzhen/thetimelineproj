@@ -41,7 +41,10 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
         self._clear_status_text()
         if self.controller.timeline is not None:
             self.controller.timeline._save_if_not_disabled()
-        self.controller.change_input_handler_to_no_op()
+        from timelinelib.canvas.noop import NoOpInputHandler
+        self.timeline_canvas.SetInputHandler(NoOpInputHandler(
+            self.controller, self.timeline_canvas))
+        self.timeline_canvas.edit_ends()
 
     def view_scrolled(self):
         self._resize_event()
