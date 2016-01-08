@@ -112,21 +112,21 @@ class TimelineCanvasController(object):
         self.drawing_algorithm.set_background_drawer(drawer)
 
     def change_input_handler_to_zoom_by_drag(self, start_time):
-        self.input_handler = ZoomByDragInputHandler(self, start_time)
+        self.input_handler = ZoomByDragInputHandler(self.view, self, start_time)
 
     def change_input_handler_to_create_period_event_by_drag(self, initial_time):
         self.input_handler = CreatePeriodEventByDragInputHandler(self, self.view, initial_time)
 
     def change_input_handler_to_resize_by_drag(self, event, direction):
         self.input_handler = ResizeByDragInputHandler(
-            self, event, direction)
+            self.view, self, event, direction)
 
     def change_input_handler_to_move_by_drag(self, event, start_drag_time):
         self.input_handler = MoveByDragInputHandler(
-            self, event, start_drag_time)
+            self.view, self, event, start_drag_time)
 
     def change_input_handler_to_scroll_by_drag(self, start_time):
-        self.input_handler = ScrollByDragInputHandler(self, start_time)
+        self.input_handler = ScrollByDragInputHandler(self.view, self, start_time)
 
     def change_input_handler_to_no_op(self):
         self.input_handler = NoOpInputHandler(self, self.view)

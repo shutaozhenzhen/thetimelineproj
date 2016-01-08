@@ -41,7 +41,7 @@ class SelectperiodByDragInputHandler(UnitTestCase):
         controller = RaiseValueErrorController()
         controller.get_timeline.return_value = TutorialTimelineCreator().db
         controller.get_drawer.return_value = Snap()
-        self.handler = SelectPeriodByDragInputHandler(controller, GregorianUtils.from_date(2013, 12, 31))
+        self.handler = SelectPeriodByDragInputHandler(mock.Mock(), controller, GregorianUtils.from_date(2013, 12, 31))
 
     def setUp(self):
         pass
