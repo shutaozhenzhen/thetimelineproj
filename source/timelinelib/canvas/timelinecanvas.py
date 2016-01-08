@@ -53,6 +53,9 @@ class TimelineCanvas(wx.Panel):
     def GetHiddenEventCount(self):
         return self.controller.drawing_algorithm.get_hidden_event_count()
 
+    def ScrollByFactor(self, factor):
+        self.controller._scroll_timeline_view_by_factor(factor)
+
     def PostEvent(self, event):
         wx.PostEvent(self, event)
 
@@ -199,7 +202,6 @@ class TimelineCanvas(wx.Panel):
         self.Bind(wx.EVT_ENTER_WINDOW, self._on_enter)
         self.Bind(wx.EVT_MOTION, self._on_motion)
         self.Bind(wx.EVT_MOUSEWHEEL, self._on_mousewheel)
-        self.Bind(wx.EVT_KEY_DOWN, self._on_key_down)
         self.Bind(wx.EVT_KEY_UP, self._on_key_up)
 
     def _on_balloon_show_timer(self, evt):
@@ -250,10 +252,6 @@ class TimelineCanvas(wx.Panel):
 
     def _on_mousewheel(self, evt):
         self.controller.mouse_wheel_moved(evt.GetWheelRotation(), evt.ControlDown(), evt.ShiftDown(), evt.AltDown(), evt.GetX())
-
-    def _on_key_down(self, evt):
-        self.controller.key_down(evt.GetKeyCode(), evt.AltDown())
-        evt.Skip()
 
     def _on_key_up(self, evt):
         self.controller.key_up(evt.GetKeyCode())
