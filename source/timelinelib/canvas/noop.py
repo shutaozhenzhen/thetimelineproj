@@ -28,8 +28,8 @@ HIT_REGION_PX_WITH = 5
 class NoOpInputHandler(InputHandler):
 
     def __init__(self, timeline_canvas_controller, timeline_canvas):
+        InputHandler.__init__(self, timeline_canvas)
         self.timeline_canvas_controller = timeline_canvas_controller
-        self.timeline_canvas = timeline_canvas
         self.drawer = timeline_canvas_controller.drawing_algorithm
         self.view_properties = timeline_canvas_controller.view_properties
         self.appearance = timeline_canvas_controller.appearance
