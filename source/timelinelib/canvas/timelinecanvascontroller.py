@@ -42,12 +42,6 @@ from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.font import Font
 
 
-# The width in pixels of the vertical scroll zones.
-# When the mouse reaches the any of the two scroll zone areas, scrolling
-# of the timeline will take place if there is an ongoing selection of the
-# timeline. The scroll zone areas are found at the beginning and at the
-# end of the timeline.
-SCROLL_ZONE_WIDTH = 20
 HSCROLL_STEP = 25
 MOUSE_SCROLL_FACTOR = 1 / 10.0
 
@@ -415,16 +409,6 @@ class TimelineCanvasController(object):
 
     def _redraw_balloons(self, event):
         self.view_properties.change_hovered_event(event)
-
-    def _in_scroll_zone(self, x):
-        """
-        Return True if x is within the left hand or right hand area
-        where timed scrolling shall start/continue.
-        """
-        width, _ = self.view.GetSizeTuple()
-        if width - x < SCROLL_ZONE_WIDTH or x < SCROLL_ZONE_WIDTH:
-            return True
-        return False
 
     def dragscroll_timer_fired(self):
         self.input_handler.dragscroll_timer_fired()

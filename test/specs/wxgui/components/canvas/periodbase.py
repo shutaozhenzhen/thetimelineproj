@@ -16,10 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import mock
+from mock import Mock
 
 from timelinelib.calendar.gregorian import GregorianUtils
 from timelinelib.canvas.periodbase import SelectPeriodByDragInputHandler
+from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.dataimport.tutorial import TutorialTimelineCreator
 from timelinelib.test.cases.unit import UnitTestCase
 
@@ -41,7 +42,9 @@ class SelectperiodByDragInputHandler(UnitTestCase):
         controller = RaiseValueErrorController()
         controller.get_timeline.return_value = TutorialTimelineCreator().db
         controller.get_drawer.return_value = Snap()
-        self.handler = SelectPeriodByDragInputHandler(mock.Mock(), controller, GregorianUtils.from_date(2013, 12, 31))
+        timeline_canvas = Mock(TimelineCanvas)
+        timeline_canvas.GetSizeTuple.return_value = (0, 0)
+        self.handler = SelectPeriodByDragInputHandler(timeline_canvas, controller, GregorianUtils.from_date(2013, 12, 31))
 
     def setUp(self):
         pass
@@ -53,7 +56,7 @@ class Snap(object):
         return GregorianUtils.from_date(2013, 12, 1).to_time()
 
 
-class RaiseValueErrorController(mock.Mock):
+class RaiseValueErrorController(Mock):
 
     def get_time(self, x):
         raise ValueError()

@@ -20,6 +20,7 @@ from mock import Mock
 
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with, human_time_to_gregorian, gregorian_period
 from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
@@ -109,6 +110,8 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         # self.controller.snap.side_effect = lambda time: self.snap_times[time]
         self.controller.snap.side_effect = x
         self.controller.get_selected_events.return_value = self.selected_events
+        self.timeline_canvas = Mock(TimelineCanvas)
+        self.timeline_canvas.GetSizeTuple.return_value = (0, 0)
 
     def a_point_event(self, time):
         event = an_event_with(time=time)
@@ -134,13 +137,13 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         if event.is_period():
             self.period_events.append(event)
         handler = MoveByDragInputHandler(
-            Mock(),
+            self.timeline_canvas,
             self.controller, event, human_time_to_gregorian(from_time))
         handler.mouse_moved(to_x, 10)
 
     def when_move_done(self):
         handler = MoveByDragInputHandler(
-            Mock(),
+            self.timeline_canvas(),
             self.controller, self.a_point_event("1 Jan 2011"), None)
         handler.left_mouse_up()
 

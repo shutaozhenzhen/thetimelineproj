@@ -21,6 +21,7 @@ import wx
 
 from timelinelib.canvas.resize import ResizeByDragInputHandler
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event
 from timelinelib.test.utils import an_event_with
@@ -66,6 +67,8 @@ class ResizeEventSpec(UnitTestCase):
         self.controller.timeline = None
         self.controller.view = Mock(TimelineCanvas)
         self.controller.get_drawer.return_value = self.drawer
+        self.timeline_canvas = Mock(TimelineCanvas)
+        self.timeline_canvas.GetSizeTuple.return_value = (0, 0)
 
     def given_time_at_x_is(self, x, time):
         self.controller.get_time.return_value = human_time_to_gregorian(time)
@@ -74,7 +77,7 @@ class ResizeEventSpec(UnitTestCase):
     def when_resizing(self, event, direction):
         self.event_being_resized = event
         self.resizer = ResizeByDragInputHandler(
-            Mock(), self.controller, event, direction)
+            self.timeline_canvas, self.controller, event, direction)
 
     def and_moving_mouse_to_x(self, x):
         any_y = 10
