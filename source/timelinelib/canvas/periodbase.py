@@ -44,8 +44,7 @@ class SelectPeriodByDragInputHandler(ScrollViewInputHandler):
             self.last_valid_time = self.current_time
         except ValueError:
             period = self.get_last_valid_period()
-        self.controller.view_properties.period_selection = (period.start_time, period.end_time)
-        self.controller._redraw_timeline()
+        self.timeline_canvas.SetPeriodSelection(period)
 
     def get_last_valid_period(self):
         return self._get_period(self.initial_time, self.last_valid_time)
@@ -75,8 +74,7 @@ class SelectPeriodByDragInputHandler(ScrollViewInputHandler):
         self.controller.change_input_handler_to_no_op()
 
     def _remove_selection(self):
-        self.controller.view_properties.period_selection = None
-        self.controller.redraw_timeline()
+        self.timeline_canvas.SetPeriodSelection(None)
 
     def end_action(self):
         raise Exception("end_action not implemented in subclass.")
