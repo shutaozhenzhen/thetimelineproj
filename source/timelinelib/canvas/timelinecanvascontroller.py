@@ -387,20 +387,6 @@ class TimelineCanvasController(object):
             self.view_properties.clear_selected()
         return event is not None
 
-    def _display_eventinfo_in_statusbar(self, xpixelpos, ypixelpos, alt_down=False):
-        event = self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down)
-        time_string = self._format_current_pos_datetime_string(xpixelpos)
-        if event is None:
-            self.post_hint_event(time_string)
-        else:
-            self.post_hint_event(event.get_label())
-
-    def _format_current_pos_datetime_string(self, xpos):
-        tm = self.get_time(xpos)
-        dt = self.time_type.event_date_string(tm)
-        tm = self.time_type.event_time_string(tm)
-        return "%s %s" % (dt, tm)
-
     def balloon_show_timer_fired(self):
         self.input_handler.balloon_show_timer_fired()
 

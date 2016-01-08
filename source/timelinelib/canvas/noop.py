@@ -91,13 +91,27 @@ class NoOpInputHandler(InputHandler):
         self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
         self.last_hovered_balloon_event = self.drawer.balloon_at(x, y)
         self._start_balloon_timers()
-        self.timeline_canvas_controller._display_eventinfo_in_statusbar(x, y, alt_down)
+        self._display_eventinfo_in_statusbar(x, y, alt_down)
         if self._hit_resize_handle(x, y, alt_down) is not None:
             self.timeline_canvas.set_size_cursor()
         elif self._hit_move_handle(x, y, alt_down) and not self.last_hovered_event.get_ends_today():
             self.timeline_canvas.set_move_cursor()
         else:
             self.timeline_canvas.set_default_cursor()
+
+    def _display_eventinfo_in_statusbar(self, xpixelpos, ypixelpos, alt_down=False):
+        event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
+        time_string = self._format_current_pos_datetime_string(xpixelpos)
+        if event is None:
+            self.timeline_canvas_controller.post_hint_event(time_string)
+        else:
+            self.timeline_canvas_controller.post_hint_event(event.get_label())
+
+    def _format_current_pos_datetime_string(self, xpos):
+        tm = self.timeline_canvas.GetTimeAt(xpos)
+        dt = self.timeline_canvas.GetDb().get_time_type().event_date_string(tm)
+        tm = self.timeline_canvas.GetDb().get_time_type().event_time_string(tm)
+        return "%s %s" % (dt, tm)
 
     def _start_balloon_timers(self):
         if self._balloons_disabled():
