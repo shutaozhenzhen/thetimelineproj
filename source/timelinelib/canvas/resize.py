@@ -49,8 +49,8 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
     def _resize_event(self):
         if self.event.get_locked():
             return
-        new_time = self.controller.get_time(self.last_x)
-        new_snapped_time = self.controller.get_drawer().snap(new_time)
+        new_time = self.timeline_canvas.GetTimeAt(self.last_x)
+        new_snapped_time = self.timeline_canvas.Snap(new_time)
         if self.direction == wx.LEFT:
             new_start = new_snapped_time
             new_end = self.event.get_time_period().end_time

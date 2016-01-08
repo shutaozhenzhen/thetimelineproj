@@ -62,17 +62,15 @@ class ResizeEventSpec(UnitTestCase):
         self.assertEqual(1, self.controller.change_input_handler_to_no_op.call_count)
 
     def setUp(self):
-        self.drawer = Mock()
         self.controller = Mock(TimelineCanvasController)
         self.controller.timeline = None
         self.controller.view = Mock(TimelineCanvas)
-        self.controller.get_drawer.return_value = self.drawer
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSizeTuple.return_value = (0, 0)
 
     def given_time_at_x_is(self, x, time):
-        self.controller.get_time.return_value = human_time_to_gregorian(time)
-        self.drawer.snap.return_value = human_time_to_gregorian(time)
+        self.timeline_canvas.GetTimeAt.return_value = human_time_to_gregorian(time)
+        self.timeline_canvas.Snap.return_value = human_time_to_gregorian(time)
 
     def when_resizing(self, event, direction):
         self.event_being_resized = event
