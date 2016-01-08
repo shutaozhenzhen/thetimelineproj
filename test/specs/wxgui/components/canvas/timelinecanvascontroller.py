@@ -387,10 +387,12 @@ class TimelineViewSpec(UnitTestCase):
         self.assertEqual(event, view_properties.hovered_event)
 
     def assert_highlights_region(self, start_end):
-        if start_end is not None:
-            start_end = (human_time_to_gregorian(start_end[0]), human_time_to_gregorian(start_end[1]))
-        view_properties = self.get_view_properties_used_when_drawing()
-        self.assertEqual(start_end, view_properties.period_selection)
+        if start_end is None:
+            self.timeline_canvas.SetPeriodSelection.assert_called_with((None))
+        else:
+            (start, end) = start_end
+            period = gregorian_period(start, end)
+            self.timeline_canvas.SetPeriodSelection.assert_called_with(period)
 
     def assert_displays_period(self, start, end):
         view_properties = self.get_view_properties_used_when_drawing()
