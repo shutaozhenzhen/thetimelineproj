@@ -20,6 +20,7 @@ import wx
 
 from timelinelib.canvas.inputhandler import InputHandler
 from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
+from timelinelib.canvas.resize import ResizeByDragInputHandler
 from timelinelib.canvas.zoom import ZoomByDragInputHandler
 
 
@@ -48,7 +49,9 @@ class NoOpInputHandler(InputHandler):
             if self.timeline_canvas.ok_to_edit():
                 try:
                     direction = self._hit_resize_handle(x, y, alt_down)
-                    self.timeline_canvas_controller.change_input_handler_to_resize_by_drag(event, direction)
+                    self.timeline_canvas.SetInputHandler(ResizeByDragInputHandler(
+                        self.timeline_canvas, self.timeline_canvas_controller,
+                        event, direction))
                 except:
                     self.timeline_canvas.edit_ends()
                     raise
