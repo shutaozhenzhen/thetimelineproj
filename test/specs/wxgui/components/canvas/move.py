@@ -105,6 +105,9 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.controller = Mock(TimelineCanvasController)
         self.controller.timeline = None
         self.controller.view = Mock()
+        self.controller.drawing_algorithm = Mock()
+        self.controller.view_properties = Mock()
+        self.controller.appearance = Mock()
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSizeTuple.return_value = (0, 0)
         self.timeline_canvas.GetSelectedEvents.return_value = self.selected_events

@@ -54,7 +54,10 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
         self.timeline_canvas_controller.post_hint_event("")
         if self.timeline_canvas.GetDb() is not None:
             self.timeline_canvas.GetDb()._save_if_not_disabled()
-        self.timeline_canvas_controller.change_input_handler_to_no_op()
+        from timelinelib.canvas.noop import NoOpInputHandler
+        self.timeline_canvas.SetInputHandler(NoOpInputHandler(
+            self.timeline_canvas_controller, self.timeline_canvas))
+        self.timeline_canvas.edit_ends()
 
     def view_scrolled(self):
         self._move_event()
