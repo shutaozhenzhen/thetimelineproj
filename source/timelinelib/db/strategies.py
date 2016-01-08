@@ -245,6 +245,8 @@ class DefaultContainerStrategy(ContainerStrategy):
 class ExtendedContainerStrategy(DefaultContainerStrategy):
 
     def register_subevent(self, subevent):
+        if not isinstance(subevent, Subevent):
+            raise TypeError("Expected Subevent object")
         if subevent not in self.container.events:
             self.container.events.append(subevent)
             subevent.register_container(self.container)

@@ -30,33 +30,27 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.test.utils import human_time_to_gregorian
 
 
+CONTAINER_ID = 9
+
+
 class ContainerStrategiesTestCase(UnitTestCase):
-    """
-    To be tested:
-        Rgeistering a None object
-        Time periods when registering 2 subevents with overlapping time period.
-           The result depends on strategy.
-        The Update method
-    """
 
     def setUp(self):
         container = Mock(Container)
         container.events = []
+        container.cid.return_value = CONTAINER_ID
         container.get_time_period.return_value = TimePeriod(GregorianTimeType(),
                                                             human_time_to_gregorian("1 Jul 2014"),
                                                             human_time_to_gregorian("1 Jul 2014"))
         self.default_strategy = DefaultContainerStrategy(container)
         self.extended_strategy = ExtendedContainerStrategy(container)
 
-    def tearDown(self):
-        pass
-
     def _a_subevent_can_be_registred(self, strategy):
         subevent = self.a_subevent(time_period=gregorian_period("1 Jan 2014", "1 Jan 2015"))
         strategy.register_subevent(subevent)
         self.assertEqual(1, len(strategy.container.events))
-        self.assertEqual(subevent, strategy.container.events[0])
-        subevent.register_container.assert_called_with(strategy.container)
+        self.assertTrue(subevent in strategy.container.events)
+        self.assertEqual(CONTAINER_ID, subevent.cid())
         self.assertEqual(subevent.get_time_period(), strategy.container.get_time_period())
 
     def _two_nonoverlapping_subevents_can_be_registred(self, strategy):
@@ -67,9 +61,20 @@ class ContainerStrategiesTestCase(UnitTestCase):
         self.assertEqual(2, len(strategy.container.events))
         self.assertTrue(subevent1 in strategy.container.events)
         self.assertTrue(subevent2 in strategy.container.events)
-        subevent1.register_container.assert_called_with(strategy.container)
-        subevent2.register_container.assert_called_with(strategy.container)
+        self.assertEqual(CONTAINER_ID, subevent1.cid())
+        self.assertEqual(CONTAINER_ID, subevent2.cid())
         self.assertEqual(gregorian_period("1 Jan 2014", "30 Jan 2014"), strategy.container.get_time_period())
+
+    def _two_overlapping_subevents_can_be_registred(self, strategy):
+        subevent1 = self.a_subevent(time_period=gregorian_period("10 Jan 2014", "12 Jan 2014"))
+        subevent2 = self.a_subevent(time_period=gregorian_period("11 Jan 2014", "16 Jan 2014"))
+        strategy.register_subevent(subevent1)
+        strategy.register_subevent(subevent2)
+        self.assertEqual(2, len(strategy.container.events))
+        self.assertTrue(subevent1 in strategy.container.events)
+        self.assertTrue(subevent2 in strategy.container.events)
+        self.assertEqual(CONTAINER_ID, subevent1.cid())
+        self.assertEqual(CONTAINER_ID, subevent2.cid())
 
     def _a_subevent_is_only_registered_once(self, strategy):
         subevent = self.a_subevent()
@@ -77,11 +82,15 @@ class ContainerStrategiesTestCase(UnitTestCase):
         strategy.register_subevent(subevent)
         self.assertEqual(1, len(strategy.container.events))
         self.assertEqual(subevent, strategy.container.events[0])
-        subevent.register_container.assert_called_with(strategy.container)
+        self.assertEqual(CONTAINER_ID, subevent.cid())
 
     def _an_event_cannot_be_registred(self, strategy):
         subevent = Mock(Event)
         self.assertRaises(TypeError, strategy.register_subevent, subevent)
+        self.assertEqual(0, len(strategy.container.events))
+
+    def _none_cannot_be_registred(self, strategy):
+        self.assertRaises(TypeError, strategy.register_subevent, None)
         self.assertEqual(0, len(strategy.container.events))
 
     def _a_subevent_can_be_unregistred(self, strategy):
@@ -91,7 +100,7 @@ class ContainerStrategiesTestCase(UnitTestCase):
         self.assertEqual(0, len(strategy.container.events))
         self.assertEqual(subevent.get_time_period(), strategy.container.get_time_period())
 
-    def _a_second_subevent_cn_be_unregistred(self, strategy):
+    def _a_second_subevent_can_be_unregistred(self, strategy):
         subevent1 = self.a_subevent(time_period=gregorian_period("1 Jan 2014", "10 Jan 2014"))
         subevent2 = self.a_subevent(time_period=gregorian_period("20 Jan 2014", "30 Jan 2014"))
         strategy.register_subevent(subevent1)
@@ -106,10 +115,16 @@ class ContainerStrategiesTestCase(UnitTestCase):
         strategy.unregister_subevent(subevent)
         self.assertEqual(0, len(strategy.container.events))
 
+    def _the_timeperiod_is_updated_when_the_subevent_time_period_changes(self, strategy):
+        subevent = self.a_subevent(time_period=gregorian_period("1 Jan 2014", "10 Jan 2014"))
+        strategy.register_subevent(subevent)
+        self.assertEqual(subevent.get_time_period(), strategy.container.get_time_period())
+        subevent.update_period_o(gregorian_period("1 Jan 2015", "10 Jan 2015"))
+        strategy.update(subevent)
+        self.assertEqual(subevent.get_time_period(), strategy.container.get_time_period())
+
     def a_subevent(self, time_period=gregorian_period("1 Jan 2014", "10 Jan 2014")):
-        subevent = Mock(Subevent)
-        subevent.get_time_period.return_value = time_period
-        return subevent
+        return Subevent(GregorianTimeType(), time_period.start_time, time_period.end_time, "")
 
 
 class describe_default_container_strategy(ContainerStrategiesTestCase):
@@ -123,8 +138,16 @@ class describe_default_container_strategy(ContainerStrategiesTestCase):
     def test_two_nonoverlapping_subevents_can_be_registred(self):
         self._two_nonoverlapping_subevents_can_be_registred(self.default_strategy)
 
+    def test_two_overlapping_subevents_can_be_registred(self):
+        self._two_overlapping_subevents_can_be_registred(self.default_strategy)
+        self.assertEqual(gregorian_period("9 Jan 2014", "16 Jan 2014"),
+                         self.default_strategy.container.get_time_period())
+
     def test_an_event_cannot_be_registred(self):
         self._an_event_cannot_be_registred(self.default_strategy)
+
+    def test_none_cannot_be_registred(self):
+        self._none_cannot_be_registred(self.default_strategy)
 
     def test_a_subevent_is_only_registered_once(self):
         self._a_subevent_is_only_registered_once(self.default_strategy)
@@ -133,10 +156,13 @@ class describe_default_container_strategy(ContainerStrategiesTestCase):
         self._a_subevent_can_be_unregistred(self.default_strategy)
 
     def test_a_second_subevent_cn_be_unregistred(self):
-        self._a_second_subevent_cn_be_unregistred(self.default_strategy)
+        self._a_second_subevent_can_be_unregistred(self.default_strategy)
 
     def test_an_object_not_registered_is_ignored_when_unregistred(self):
         self._an_object_not_registered_is_ignored_when_unregistred(self.default_strategy)
+
+    def test_the_timeperiod_is_updated_when_the_subevent_time_period_changes(self):
+        self._the_timeperiod_is_updated_when_the_subevent_time_period_changes(self.default_strategy)
 
 
 class describe_extended_container_strategy(ContainerStrategiesTestCase):
@@ -148,10 +174,18 @@ class describe_extended_container_strategy(ContainerStrategiesTestCase):
         self._a_subevent_can_be_registred(self.extended_strategy)
 
     def test_two_nonoverlapping_subevents_can_be_registred(self):
-        self._two_nonoverlapping_subevents_can_be_registred(self.default_strategy)
+        self._two_nonoverlapping_subevents_can_be_registred(self.extended_strategy)
+
+    def test_two_overlapping_subevents_can_be_registred(self):
+        self._two_overlapping_subevents_can_be_registred(self.extended_strategy)
+        self.assertEqual(gregorian_period("10 Jan 2014", "16 Jan 2014"),
+                         self.extended_strategy.container.get_time_period())
 
     def test_an_event_cannot_be_registred(self):
-        self._an_event_cannot_be_registred(self.default_strategy)
+        self._an_event_cannot_be_registred(self.extended_strategy)
+
+    def test_none_cannot_be_registred(self):
+        self._none_cannot_be_registred(self.extended_strategy)
 
     def test_a_subevent_is_only_registered_once(self):
         self._a_subevent_is_only_registered_once(self.extended_strategy)
@@ -159,8 +193,11 @@ class describe_extended_container_strategy(ContainerStrategiesTestCase):
     def test_a_subevent_can_be_unregistred(self):
         self._a_subevent_can_be_unregistred(self.extended_strategy)
 
-    def test_a_second_subevent_cn_be_unregistred(self):
-        self._a_second_subevent_cn_be_unregistred(self.extended_strategy)
+    def test_a_second_subevent_can_be_unregistred(self):
+        self._a_second_subevent_can_be_unregistred(self.extended_strategy)
 
     def test_an_object_not_registered_is_ignored_when_unregistred(self):
         self._an_object_not_registered_is_ignored_when_unregistred(self.extended_strategy)
+
+    def test_the_timeperiod_is_updated_when_the_subevent_time_period_changes(self):
+        self._the_timeperiod_is_updated_when_the_subevent_time_period_changes(self.extended_strategy)
