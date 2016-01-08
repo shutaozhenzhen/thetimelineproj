@@ -28,10 +28,9 @@ SCROLL_ZONE_WIDTH = 20
 
 class ScrollViewInputHandler(InputHandler):
 
-    def __init__(self, timeline_canvas, controller):
+    def __init__(self, timeline_canvas):
         self.timeline_canvas = timeline_canvas
-        self.controller = controller
-        self.view = controller.view
+        self.view = timeline_canvas
         self.timer_running = False
 
     def mouse_moved(self, x, y, alt_down=False):
@@ -49,7 +48,7 @@ class ScrollViewInputHandler(InputHandler):
                 direction = 1
             else:
                 direction = -1
-            self.controller._scroll_timeline_view(direction)
+            self.timeline_canvas.Scroll(direction)
             self.view_scrolled()
 
     def view_scrolled(self):
