@@ -24,7 +24,7 @@ from timelinelib.canvas.inputhandler import InputHandler
 class ScrollByDragInputHandler(InputHandler):
 
     def __init__(self, timeline_canvas, controller, start_time):
-        self.timeline_canvas = timeline_canvas
+        InputHandler.__init__(self, timeline_canvas)
         self.controller = controller
         self.controller.start()
         self.start_time = start_time
