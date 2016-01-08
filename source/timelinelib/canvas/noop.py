@@ -19,6 +19,7 @@
 import wx
 
 from timelinelib.canvas.inputhandler import InputHandler
+from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
 from timelinelib.canvas.resize import ResizeByDragInputHandler
 from timelinelib.canvas.zoom import ZoomByDragInputHandler
@@ -59,7 +60,9 @@ class NoOpInputHandler(InputHandler):
         if self._hit_move_handle(x, y, alt_down) and not event.get_ends_today():
             if self.timeline_canvas.ok_to_edit():
                 try:
-                    self.timeline_canvas_controller.change_input_handler_to_move_by_drag(event, time_at_x)
+                    self.timeline_canvas.SetInputHandler(MoveByDragInputHandler(
+                        self.timeline_canvas, self.timeline_canvas_controller,
+                        event, time_at_x))
                 except:
                     self.timeline_canvas.edit_ends()
                     raise
