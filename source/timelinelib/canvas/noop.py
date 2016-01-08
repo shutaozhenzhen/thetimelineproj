@@ -22,6 +22,7 @@ from timelinelib.canvas.inputhandler import InputHandler
 from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
 from timelinelib.canvas.resize import ResizeByDragInputHandler
+from timelinelib.canvas.scrolldrag import ScrollByDragInputHandler
 from timelinelib.canvas.zoom import ZoomByDragInputHandler
 
 
@@ -69,7 +70,9 @@ class NoOpInputHandler(InputHandler):
             return
         if (event is None and ctrl_down is False and shift_down is False):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
-            self.timeline_canvas_controller.change_input_handler_to_scroll_by_drag(time_at_x)
+            self.timeline_canvas.SetInputHandler(ScrollByDragInputHandler(
+                self.timeline_canvas, self.timeline_canvas_controller,
+                time_at_x))
             return
         if (event is None and ctrl_down is True):
             if self.timeline_canvas_controller.ctrl_drag_handler:
