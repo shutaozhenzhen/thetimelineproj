@@ -105,12 +105,12 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.controller = Mock(TimelineCanvasController)
         self.controller.timeline = None
         self.controller.view = Mock()
-        self.controller.event_is_period.side_effect = lambda event: event in self.period_events
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSizeTuple.return_value = (0, 0)
         self.timeline_canvas.GetSelectedEvents.return_value = self.selected_events
         self.timeline_canvas.Snap.side_effect = x
         self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
+        self.timeline_canvas.EventIsPeriod.side_effect = lambda event: event in self.period_events
 
     def a_point_event(self, time):
         event = an_event_with(time=time)
