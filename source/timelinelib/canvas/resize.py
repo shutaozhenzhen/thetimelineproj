@@ -25,7 +25,7 @@ from timelinelib.data import PeriodTooLongError
 class ResizeByDragInputHandler(ScrollViewInputHandler):
 
     def __init__(self, timeline_canvas, controller, event, direction):
-        ScrollViewInputHandler.__init__(self, timeline_canvas, controller)
+        ScrollViewInputHandler.__init__(self, timeline_canvas)
         self.timeline_canvas = timeline_canvas
         self.controller = controller
         self.event = event
