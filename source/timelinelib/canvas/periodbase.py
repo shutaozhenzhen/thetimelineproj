@@ -60,9 +60,9 @@ class SelectPeriodByDragInputHandler(ScrollViewInputHandler):
             start = t1
             end = t2
         return TimePeriod(
-            self.controller.get_timeline().get_time_type(),
-            self.controller.get_drawer().snap(start),
-            self.controller.get_drawer().snap(end))
+            self.timeline_canvas.GetDb().get_time_type(),
+            self.timeline_canvas.Snap(start),
+            self.timeline_canvas.Snap(end))
 
     def left_mouse_up(self):
         ScrollViewInputHandler.left_mouse_up(self)
