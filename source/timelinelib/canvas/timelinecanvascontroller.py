@@ -25,7 +25,7 @@ from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.canvas.events import create_hint_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
-from timelinelib.canvas.noop import NoOpInputHandler
+from timelinelib.canvas.inputhandler import InputHandler
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.db.exceptions import TimelineIOError
@@ -58,13 +58,13 @@ class TimelineCanvasController(object):
             self.drawing_algorithm = get_drawer()
         self.timeline = None
         self.ctrl_drag_handler = None
+        self.input_handler = InputHandler(view)
         self.set_appearance(Appearance())
         self.set_event_box_drawer(DefaultEventBoxDrawer())
         self.set_background_drawer(self.get_saved_background_drawer())
         self.drawing_algorithm.use_fast_draw(False)
         self._set_initial_values_to_member_variables()
         self._set_colors_and_styles()
-        self.change_input_handler_to_no_op()
 
     def get_appearance(self):
         return self.appearance
@@ -99,10 +99,6 @@ class TimelineCanvasController(object):
 
     def set_background_drawer(self, drawer):
         self.drawing_algorithm.set_background_drawer(drawer)
-
-    def change_input_handler_to_no_op(self):
-        self.input_handler = NoOpInputHandler(self, self.view)
-        self.view.edit_ends()
 
     def get_drawer(self):
         return self.drawing_algorithm
