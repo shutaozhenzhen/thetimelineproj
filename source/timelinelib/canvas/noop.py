@@ -19,11 +19,6 @@
 import wx
 
 from timelinelib.canvas.inputhandler import InputHandler
-from timelinelib.canvas.move import MoveByDragInputHandler
-from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
-from timelinelib.canvas.resize import ResizeByDragInputHandler
-from timelinelib.canvas.scrolldrag import ScrollByDragInputHandler
-from timelinelib.canvas.zoom import ZoomByDragInputHandler
 
 
 # Used by Sizer and Mover classes to detect when to go into action
