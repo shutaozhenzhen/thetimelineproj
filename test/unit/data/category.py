@@ -19,6 +19,7 @@
 from timelinelib.data import Category
 from timelinelib.data.category import EXPORTABLE_FIELDS
 from timelinelib.data.category import sort_categories
+from timelinelib.data.category import clone_categories_list
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category
 from timelinelib.test.utils import a_category_with
@@ -57,11 +58,23 @@ class describe_category(UnitTestCase):
         self.assertIsCloneOf(clone, original)
 
 
-class describe_category_sorting(UnitTestCase):
+class describe_category_list_sorting(UnitTestCase):
 
-    def test_can_be_sorted(self):
+    def test_list_of_categories_can_be_sorted(self):
         cat_a = a_category_with(name="aaa")
         cat_b = a_category_with(name="bbb")
         categories = [cat_b, cat_a]
         sorted_categories = sort_categories(categories)
         self.assertEqual(sorted_categories, [cat_a, cat_b])
+
+
+class describe_category_list_cloning(UnitTestCase):
+
+    def test_list_of_categories_can_be_cloned(self):
+        cat_a = a_category_with(name="aaa")
+        cat_b = a_category_with(name="bbb")
+        categories = [cat_b, cat_a]
+        cloned_categories = clone_categories_list(categories)
+        self.assertEqual(len(categories), len(cloned_categories))
+        self.assertTrue(cat_a not in cloned_categories)
+        self.assertTrue(cat_b not in cloned_categories)
