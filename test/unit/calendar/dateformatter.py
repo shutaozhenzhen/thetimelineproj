@@ -35,4 +35,5 @@ class describe_date_formatter(UnitTestCase):
         self.assertRaises(NotImplementedError, self.formatter.get_regions)
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.formatter = DateFormatter()
