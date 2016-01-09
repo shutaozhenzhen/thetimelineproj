@@ -58,9 +58,10 @@ from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 import timelinelib.time.timeline as timeline
 
 
-class GregorianTimeTypeSpec(UnitTestCase):
+class describe_gregoriantimetype(UnitTestCase):
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.time_type = GregorianTimeType()
 
     def test_converts_time_to_string(self):
@@ -148,7 +149,7 @@ class GregorianTimeTypeSpec(UnitTestCase):
         self.assertEqual(timeline.TimeDelta(60), self.time_type.get_min_zoom_delta()[0])
 
 
-class GregorianStripWeekSpec(UnitTestCase):
+class describe_gregorian_strip_week(UnitTestCase):
 
     def test_start_when_week_starts_on_sunday(self):
         self.appearance.set_week_start("sunday")
@@ -200,13 +201,14 @@ class GregorianStripWeekSpec(UnitTestCase):
             "#Week# 1 (30 #Dec# 5 BC-5 #Jan# 4 BC)")
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.app = wx.App()
         self.time_type = GregorianTimeType()
         self.appearance = Appearance()
         self.strip = StripWeek(self.appearance)
 
 
-class GregorianStripWeekdaySpec(UnitTestCase):
+class describe_gregorian_strip_weekday(UnitTestCase):
 
     def test_start(self):
         self.assertEqual(
@@ -232,11 +234,12 @@ class GregorianStripWeekdaySpec(UnitTestCase):
             "#Fri# 7 #Jul# 6 BC")
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.time_type = GregorianTimeType()
         self.strip = StripWeekday()
 
 
-class GregorianStripHourSpec(UnitTestCase):
+class describe_gregorian_strip_hour(UnitTestCase):
 
     def test_start(self):
         self.assertEqual(
@@ -262,11 +265,12 @@ class GregorianStripHourSpec(UnitTestCase):
             "7 #Jul# 6 BC: 12h")
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.time_type = GregorianTimeType()
         self.strip = StripHour()
 
 
-class GregorianStripCenturySpec(UnitTestCase):
+class describe_gregorian_strip_century(UnitTestCase):
 
     def test_start(self):
         self.assertEqual(
@@ -298,11 +302,12 @@ class GregorianStripCenturySpec(UnitTestCase):
             "21 #century#")
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.time_type = GregorianTimeType()
         self.strip = StripCentury()
 
 
-class GregorianStripDaySpec(UnitTestCase):
+class describe_gregorian_strip_day(UnitTestCase):
 
     def test_start(self):
         self.assertEqual(
@@ -328,11 +333,12 @@ class GregorianStripDaySpec(UnitTestCase):
             "7 #Jul# 6 BC")
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.time_type = GregorianTimeType()
         self.strip = StripDay()
 
 
-class GregorianStripMonthSpec(UnitTestCase):
+class describe_gregorian_strip_month(UnitTestCase):
 
     def test_start(self):
         self.assertEqual(
@@ -358,11 +364,12 @@ class GregorianStripMonthSpec(UnitTestCase):
             "#Jul# 6 BC")
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.time_type = GregorianTimeType()
         self.strip = StripMonth()
 
 
-class GregorianStripYearSpec(UnitTestCase):
+class describe_gregorian_strip_year(UnitTestCase):
 
     def test_start(self):
         self.assertEqual(
@@ -391,11 +398,12 @@ class GregorianStripYearSpec(UnitTestCase):
             "6 BC")
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.time_type = GregorianTimeType()
         self.strip = StripYear()
 
 
-class GregorianStripDecadeSpec(UnitTestCase):
+class describe_gregorian_strip_decade(UnitTestCase):
 
     def test_start(self):
         self.assertEqual(
@@ -425,13 +433,15 @@ class GregorianStripDecadeSpec(UnitTestCase):
             "0s BC")
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.time_type = GregorianTimeType()
         self.strip = StripDecade()
 
 
-class GregorianTimeTypeDeltaFormattingSpec(UnitTestCase):
+class describe_gregorian_time_type_delta_formatting(UnitTestCase):
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.time_type = GregorianTimeType()
 
     def test_format_delta_method(self):
@@ -524,7 +534,7 @@ class GregorianTimeTypeDeltaFormattingSpec(UnitTestCase):
         return timeline.TimeDelta(days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60)
 
 
-class GregorianTimeNavigationFunctionsSpec(UnitTestCase):
+class describe_gregorian_time_navigation_functions(UnitTestCase):
 
     def test_fit_week_should_display_the_week_of_the_day_that_is_in_the_center(self):
         self.when_navigating(fit_week_fn, "30 Oct 2012", "13 Nov 2012")
@@ -692,7 +702,7 @@ class GregorianTimeNavigationFunctionsSpec(UnitTestCase):
         self.assertEqual(gregorian_period(start, end), self.new_period)
 
 
-class GregorianTimeDuplicateFunctionsSpec(UnitTestCase):
+class describe_gregorian_time_duplicate_function(UnitTestCase):
 
     def test_move_period_num_days_adds_given_number_of_days(self):
         new_period = move_period_num_days(self.period, 6)
@@ -792,6 +802,7 @@ class GregorianTimeDuplicateFunctionsSpec(UnitTestCase):
         self.assertEqual(None, new_period)
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.period = TimePeriod(
             GregorianTimeType(),
             Gregorian(2010, 1, 1, 12, 0, 0).to_time(),
