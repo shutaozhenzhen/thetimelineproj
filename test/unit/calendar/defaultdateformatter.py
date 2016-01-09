@@ -20,6 +20,10 @@ from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.test.cases.unit import UnitTestCase
 
 
+DEFAULT_SEPERATOR = "-"
+DEFAULT_REGIONS = (0, 1, 2)
+
+
 class describe_date_formatter(UnitTestCase):
 
     def test_format_return_yyyy_mm_dd(self):
@@ -27,6 +31,12 @@ class describe_date_formatter(UnitTestCase):
 
     def test_parse_return_year_mont_day(self):
         self.assertEquals((2014, 11, 30), self.formatter.parse("2014-11-30"))
+
+    def test_separator_return_default_separator(self):
+        self.assertEquals(DEFAULT_SEPERATOR, self.formatter.separator())
+
+    def test_get_regions_return_default_regions(self):
+        self.assertEquals(DEFAULT_REGIONS, self.formatter.get_regions())
 
     def setUp(self):
         UnitTestCase.setUp(self)
