@@ -24,8 +24,9 @@ from timelinelib.data import PeriodTooLongError
 
 class ResizeByDragInputHandler(ScrollViewInputHandler):
 
-    def __init__(self, timeline_canvas, controller, event, direction):
+    def __init__(self, state, timeline_canvas, controller, event, direction):
         ScrollViewInputHandler.__init__(self, timeline_canvas)
+        self._state = state
         self.timeline_canvas = timeline_canvas
         self.controller = controller
         self.event = event
@@ -41,9 +42,7 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
         self._clear_status_text()
         if self.controller.timeline is not None:
             self.controller.timeline._save_if_not_disabled()
-        from timelinelib.canvas.noop import NoOpInputHandler
-        self.timeline_canvas.SetInputHandler(NoOpInputHandler(
-            self.controller, self.timeline_canvas))
+        self._state.change_to_no_op()
         self.timeline_canvas.edit_ends()
 
     def view_scrolled(self):

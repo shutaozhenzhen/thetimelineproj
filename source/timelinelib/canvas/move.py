@@ -21,8 +21,9 @@ from timelinelib.canvas.scrollbase import ScrollViewInputHandler
 
 class MoveByDragInputHandler(ScrollViewInputHandler):
 
-    def __init__(self, timeline_canvas, timeline_canvas_controller, event, start_drag_time):
+    def __init__(self, state, timeline_canvas, timeline_canvas_controller, event, start_drag_time):
         ScrollViewInputHandler.__init__(self, timeline_canvas)
+        self._state = state
         self.timeline_canvas = timeline_canvas
         self.timeline_canvas_controller = timeline_canvas_controller
         self.start_drag_time = start_drag_time
@@ -54,9 +55,7 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
         self.timeline_canvas_controller.post_hint_event("")
         if self.timeline_canvas.GetDb() is not None:
             self.timeline_canvas.GetDb()._save_if_not_disabled()
-        from timelinelib.canvas.noop import NoOpInputHandler
-        self.timeline_canvas.SetInputHandler(NoOpInputHandler(
-            self.timeline_canvas_controller, self.timeline_canvas))
+        self._state.change_to_no_op()
         self.timeline_canvas.edit_ends()
 
     def view_scrolled(self):

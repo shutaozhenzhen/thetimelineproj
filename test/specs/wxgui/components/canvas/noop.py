@@ -19,7 +19,6 @@
 from mock import Mock
 import wx
 
-from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.noop import NoOpInputHandler
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.test.cases.unit import UnitTestCase
@@ -36,9 +35,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.given_event_with_rect_at(10, 10, event, wx.Rect(0, 0, 20, 20))
         self.given_event_selected(event)
         self.handler.left_mouse_down(10, 10, False, False)
-        self.assertTrue(isinstance(
-            self.timeline_canvas.SetInputHandler.call_args[0][0],
-            MoveByDragInputHandler))
+        self.state.change_to_move_by_drag.assert_called_with(event, time)
 
     def test_disables_move_handler_when_event_ends_today(self):
         event = an_event_with(ends_today=True)
@@ -64,7 +61,8 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.timeline_canvas.GetEventAt.side_effect = lambda x, y, alt: self.events_at[(x, y)][0]
         self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
         self.timeline_canvas.GetSelectedEvents.return_value = []
-        self.handler = NoOpInputHandler(self.controller, self.timeline_canvas)
+        self.state = Mock()
+        self.handler = NoOpInputHandler(self.state, self.controller, self.timeline_canvas)
 
     def setup_timeline_canvas_controller_mock(self):
         self.times_at = {}

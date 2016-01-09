@@ -23,8 +23,9 @@ from timelinelib.canvas.inputhandler import InputHandler
 
 class ScrollByDragInputHandler(InputHandler):
 
-    def __init__(self, timeline_canvas, controller, start_time):
+    def __init__(self, state, timeline_canvas, controller, start_time):
         InputHandler.__init__(self, timeline_canvas)
+        self._state = state
         self.controller = controller
         self.controller.start()
         self.start_time = start_time
@@ -42,9 +43,7 @@ class ScrollByDragInputHandler(InputHandler):
         self.controller.scroll_vertical()
 
     def left_mouse_up(self):
-        from timelinelib.canvas.noop import NoOpInputHandler
-        self.timeline_canvas.SetInputHandler(NoOpInputHandler(
-            self.controller, self.timeline_canvas))
+        self._state.change_to_no_op()
         self.timeline_canvas.edit_ends()
         if self.controller.appearance.get_use_inertial_scrolling():
             if self.speed_px_per_sec > self.INERTIAL_SCROLLING_SPEED_THRESHOLD:
