@@ -141,7 +141,8 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.timeline_canvas.SetEventBoxDrawer(self._get_saved_event_box_drawer())
         self.timeline_canvas.SetCtrlDragHandler(self._create_new_period_event)
         self.timeline_canvas.SetInputHandler(NoOpInputHandler(
-            InputHandlerState(self.timeline_canvas, self.timeline_canvas.controller),
+            InputHandlerState(self.timeline_canvas,
+                self.timeline_canvas.controller, self.status_bar_adapter),
             self.timeline_canvas.controller, self.timeline_canvas))
         def update_appearance():
             appearance = self.timeline_canvas.GetAppearance()
@@ -441,9 +442,10 @@ class TimelinePanel(TimelinePanelGuiCreator):
 
 class InputHandlerState(object):
 
-    def __init__(self, timeline_canvas, controller):
+    def __init__(self, timeline_canvas, controller, status_bar):
         self._timeline_canvas = timeline_canvas
         self._controller = controller
+        self._status_bar = status_bar
 
     def change_to_no_op(self):
         self._timeline_canvas.SetInputHandler(NoOpInputHandler(
@@ -453,7 +455,7 @@ class InputHandlerState(object):
     def change_to_move_by_drag(self, event, start_drag_time):
         self._timeline_canvas.SetInputHandler(MoveByDragInputHandler(
             self,
-            self._timeline_canvas, self._controller, event,
+            self._timeline_canvas, self._status_bar, event,
             start_drag_time))
 
     def change_to_zoom_by_drag(self, start_time):
