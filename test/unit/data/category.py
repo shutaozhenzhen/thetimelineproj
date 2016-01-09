@@ -34,22 +34,12 @@ class describe_category(UnitTestCase):
         self.assertEqual(category._get_parent(), None)
 
     def test_can_set_values(self):
-        self.assertEqual(
-            a_category().set_id(15).get_id(),
-            15)
-        self.assertEqual(
-            a_category().set_name("fun").get_name(),
-            "fun")
-        self.assertEqual(
-            a_category().set_color((33, 66, 99)).get_color(),
-            (33, 66, 99))
-        self.assertEqual(
-            a_category().set_font_color((11, 12, 13)).get_font_color(),
-            (11, 12, 13))
+        self.assertEqual(a_category().set_id(15).get_id(), 15)
+        self.assertEqual(a_category().set_name("fun").get_name(), "fun")
+        self.assertEqual(a_category().set_color((33, 66, 99)).get_color(), (33, 66, 99))
+        self.assertEqual(a_category().set_font_color((11, 12, 13)).get_font_color(), (11, 12, 13))
         a_parent = a_category_with(name="parent")
-        self.assertEqual(
-            a_category().set_parent(a_parent)._get_parent(),
-            a_parent)
+        self.assertEqual(a_category().set_parent(a_parent)._get_parent(), a_parent)
 
     def test_can_be_compared(self):
         self.assertEqNeImplementationIsCorrect(a_category, CATEGORY_MODIFIERS)
