@@ -17,7 +17,7 @@
 
 
 """\
-Defines properties common to all types of Timeleine features.
+Defines properties common to all types of Timeline features.
 
 All types of Timeline features must inherit from this bas class
 """
