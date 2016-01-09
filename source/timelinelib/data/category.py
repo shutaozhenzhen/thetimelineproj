@@ -56,19 +56,19 @@ class Category(object):
     def get_color(self):
         return self.color
 
-    def get_progress_color(self):
-        return self.progress_color
-
-    def get_done_color(self):
-        return self.done_color
-
     def set_color(self, color):
         self.color = color
         return self
 
+    def get_progress_color(self):
+        return self.progress_color
+
     def set_progress_color(self, color):
         self.progress_color = color
         return self
+
+    def get_done_color(self):
+        return self.done_color
 
     def set_done_color(self, color):
         self.done_color = color
@@ -120,9 +120,7 @@ class Category(object):
 
 
 def sort_categories(categories):
-    sorted_categories = list(categories)
-    sorted_categories.sort(cmp, lambda category: category.get_name().lower())
-    return sorted_categories
+    return sorted(list(categories), key=lambda category: category.get_name().lower())
 
 
 def clone_categories_list(categories):
