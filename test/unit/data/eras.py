@@ -33,6 +33,7 @@ class ErasTestCase(UnitTestCase):
         self.assertEqual([], self.eras.get_all())
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.color1 = (128, 255, 255)
         self.color2 = (255, 0, 255)
         self.color3 = (255, 128, 255)
