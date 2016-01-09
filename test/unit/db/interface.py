@@ -42,4 +42,4 @@ class ContainerStrategyInterfaceSpec(UnitTestCase):
         self.strategy = ContainerStrategy(None)
 
     def setUp(self):
-        pass
+        UnitTestCase.setUp(self)
