@@ -479,7 +479,6 @@ class InputHandlerState(object):
     def change_to_create_period_event_by_drag(self, time_at_x, ctrl_drag_handler):
         self._timeline_canvas.SetInputHandler(CreatePeriodEventByDragInputHandler(
             self,
-            self._controller,
             self._timeline_canvas,
             time_at_x,
             ctrl_drag_handler))
