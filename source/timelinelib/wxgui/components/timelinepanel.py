@@ -134,6 +134,9 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.timeline_canvas.SetDividerPosition(self.config.divider_line_slider_pos)
         self.timeline_canvas.SetEventBoxDrawer(self._get_saved_event_box_drawer())
         self.timeline_canvas.SetCtrlDragHandler(self._create_new_period_event)
+        from timelinelib.canvas.noop import NoOpInputHandler
+        self.timeline_canvas.SetInputHandler(NoOpInputHandler(
+            self.timeline_canvas.controller, self.timeline_canvas))
         def update_appearance():
             appearance = self.timeline_canvas.GetAppearance()
             appearance.set_legend_visible(self.config.show_legend)

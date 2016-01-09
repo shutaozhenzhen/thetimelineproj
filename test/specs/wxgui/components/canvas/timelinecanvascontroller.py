@@ -322,6 +322,8 @@ class TimelineViewSpec(UnitTestCase):
         self.controller = TimelineCanvasController(
             self.timeline_canvas, drawer=self.mock_drawer)
         self.controller.post_hint_event = Mock()
+        from timelinelib.canvas.noop import NoOpInputHandler
+        set_input_handler(NoOpInputHandler(self.controller, self.timeline_canvas))
 
     def given_event_with(self, start="4 Aug 2010", end="10 Aug 2010",
                          text="Text", description=None,
