@@ -40,12 +40,14 @@ NUM_END = 20
 class GregorianEraTestCase(UnitTestCase):
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.era = a_gregorian_era_with(name=NAME, color=COLOR, start=GREGORIAN_START, end=GREGORIAN_END)
 
 
 class NumericEraTestCase(UnitTestCase):
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.era = a_numeric_era_with(name=NAME, color=COLOR, start=NUM_START, end=NUM_END)
 
 
