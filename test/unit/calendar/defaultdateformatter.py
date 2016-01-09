@@ -29,4 +29,5 @@ class describe_date_formatter(UnitTestCase):
         self.assertEquals((2014, 11, 30), self.formatter.parse("2014-11-30"))
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.formatter = DefaultDateFormatter()
