@@ -28,5 +28,11 @@ class describe_date_formatter(UnitTestCase):
     def test_parse_is_not_implemented(self):
         self.assertRaises(NotImplementedError, self.formatter.parse, "")
 
+    def test_separator_is_not_implemented(self):
+        self.assertRaises(NotImplementedError, self.formatter.separator)
+
+    def test_get_regions_is_not_implemented(self):
+        self.assertRaises(NotImplementedError, self.formatter.get_regions)
+
     def setUp(self):
         self.formatter = DateFormatter()
