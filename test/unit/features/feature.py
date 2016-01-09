@@ -16,22 +16,21 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
-
-from timelinelib.features.installed.installedfeatures import InstalledFeatures
-from timelinelib.wxgui.dialogs.feature.view import FeatureDialog
-from timelinelib.wxgui.dialogs.feature.view import FeatureDialogController
+from timelinelib.features.feature import Feature
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class FeedbackFormSpec(UnitTestCase):
+DISPLAY_NAME = "Display name"
+DESCRIPTION = "Display description"
 
-    def test_shows_parts_in_dialog(self):
-        self.dialog.SetFeatureName.assert_called_with(self.key.get_display_name())
-        self.dialog.SetFeatureDescription.assert_called_with(self.key.get_description())
+
+class describe_feature(UnitTestCase):
+
+    def test_has_a_display_name(self):
+        self.assertEqual(DISPLAY_NAME, self.feature.get_display_name())
+
+    def test_has_a_description(self):
+        self.assertEqual(DESCRIPTION, self.feature.get_description())
 
     def setUp(self):
-        self.key = InstalledFeatures().get_all_features()[0]
-        self.dialog = Mock(FeatureDialog)
-        self.controller = FeatureDialogController(self.dialog)
-        self.controller.on_init(self.key)
+        self.feature = Feature(DISPLAY_NAME, DESCRIPTION)
