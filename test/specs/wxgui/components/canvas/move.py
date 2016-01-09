@@ -114,6 +114,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.timeline_canvas.Snap.side_effect = x
         self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
         self.timeline_canvas.EventIsPeriod.side_effect = lambda event: event in self.period_events
+        self.state = Mock()
 
     def a_point_event(self, time):
         event = an_event_with(time=time)
@@ -139,12 +140,14 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         if event.is_period():
             self.period_events.append(event)
         handler = MoveByDragInputHandler(
+            self.state,
             self.timeline_canvas,
             self.controller, event, human_time_to_gregorian(from_time))
         handler.mouse_moved(to_x, 10)
 
     def when_move_done(self):
         handler = MoveByDragInputHandler(
+            self.state,
             self.timeline_canvas,
             self.controller, self.a_point_event("1 Jan 2011"), None)
         handler.left_mouse_up()

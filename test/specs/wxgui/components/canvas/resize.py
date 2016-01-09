@@ -19,7 +19,6 @@
 from mock import Mock
 import wx
 
-from timelinelib.canvas.noop import NoOpInputHandler
 from timelinelib.canvas.resize import ResizeByDragInputHandler
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
@@ -60,9 +59,7 @@ class ResizeEventSpec(UnitTestCase):
     def test_changes_input_handler_when_resize_is_done(self):
         self.when_resizing(an_event(), wx.RIGHT)
         self.resizer.left_mouse_up()
-        self.assertTrue(isinstance(
-            self.timeline_canvas.SetInputHandler.call_args[0][0],
-            NoOpInputHandler))
+        self.state.change_to_no_op.assert_called_with()
 
     def setUp(self):
         self.controller = Mock(TimelineCanvasController)
@@ -80,8 +77,9 @@ class ResizeEventSpec(UnitTestCase):
 
     def when_resizing(self, event, direction):
         self.event_being_resized = event
+        self.state = Mock()
         self.resizer = ResizeByDragInputHandler(
-            self.timeline_canvas, self.controller, event, direction)
+            self.state, self.timeline_canvas, self.controller, event, direction)
 
     def and_moving_mouse_to_x(self, x):
         any_y = 10

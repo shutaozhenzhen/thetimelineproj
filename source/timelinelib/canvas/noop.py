@@ -32,8 +32,9 @@ HIT_REGION_PX_WITH = 5
 
 class NoOpInputHandler(InputHandler):
 
-    def __init__(self, timeline_canvas_controller, timeline_canvas):
+    def __init__(self, state, timeline_canvas_controller, timeline_canvas):
         InputHandler.__init__(self, timeline_canvas)
+        self._state = state
         self.timeline_canvas_controller = timeline_canvas_controller
         self.drawer = timeline_canvas_controller.drawing_algorithm
         self.view_properties = timeline_canvas_controller.view_properties
@@ -51,9 +52,7 @@ class NoOpInputHandler(InputHandler):
             if self.timeline_canvas.ok_to_edit():
                 try:
                     direction = self._hit_resize_handle(x, y, alt_down)
-                    self.timeline_canvas.SetInputHandler(ResizeByDragInputHandler(
-                        self.timeline_canvas, self.timeline_canvas_controller,
-                        event, direction))
+                    self._state.change_to_resize_by_drag(event, direction)
                 except:
                     self.timeline_canvas.edit_ends()
                     raise
@@ -61,35 +60,25 @@ class NoOpInputHandler(InputHandler):
         if self._hit_move_handle(x, y, alt_down) and not event.get_ends_today():
             if self.timeline_canvas.ok_to_edit():
                 try:
-                    self.timeline_canvas.SetInputHandler(MoveByDragInputHandler(
-                        self.timeline_canvas, self.timeline_canvas_controller,
-                        event, time_at_x))
+                    self._state.change_to_move_by_drag(event, time_at_x)
                 except:
                     self.timeline_canvas.edit_ends()
                     raise
             return
         if (event is None and ctrl_down is False and shift_down is False):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
-            self.timeline_canvas.SetInputHandler(ScrollByDragInputHandler(
-                self.timeline_canvas, self.timeline_canvas_controller,
-                time_at_x))
+            self._state.change_to_scroll_by_drag(time_at_x)
             return
         if (event is None and ctrl_down is True):
             if self.timeline_canvas_controller.ctrl_drag_handler:
                 self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
-                self.timeline_canvas.SetInputHandler(CreatePeriodEventByDragInputHandler(
-                    self.timeline_canvas_controller,
-                    self.timeline_canvas,
+                self._state.change_to_create_period_event_by_drag(
                     time_at_x,
-                    self.timeline_canvas_controller.ctrl_drag_handler))
+                    self.timeline_canvas_controller.ctrl_drag_handler)
             return
         if (event is None and shift_down is True):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
-            self.timeline_canvas.SetInputHandler(ZoomByDragInputHandler(
-                self.timeline_canvas,
-                self.timeline_canvas_controller,
-                time_at_x))
-
+            self._state.change_to_zoom_by_drag(time_at_x)
             return
         self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down, alt_down)
 
