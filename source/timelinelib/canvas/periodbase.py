@@ -22,11 +22,10 @@ from timelinelib.data import TimePeriod
 
 class SelectPeriodByDragInputHandler(ScrollViewInputHandler):
 
-    def __init__(self, state, timeline_canvas, controller, initial_time):
+    def __init__(self, state, timeline_canvas, initial_time):
         ScrollViewInputHandler.__init__(self, timeline_canvas)
         self._state = state
         self.timeline_canvas = timeline_canvas
-        self.controller = controller
         self.initial_time = initial_time
         self.last_valid_time = initial_time
         self.current_time = initial_time

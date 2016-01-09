@@ -22,7 +22,7 @@ from timelinelib.canvas.periodbase import SelectPeriodByDragInputHandler
 class ZoomByDragInputHandler(SelectPeriodByDragInputHandler):
 
     def __init__(self, state, timeline_canvas, controller, start_time):
-        SelectPeriodByDragInputHandler.__init__(self, state, timeline_canvas, controller, start_time)
+        SelectPeriodByDragInputHandler.__init__(self, state, timeline_canvas, start_time)
         self.timeline_canvas = timeline_canvas
         self.controller = controller
         self.controller.post_hint_event(_("Select region to zoom into"))
