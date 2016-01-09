@@ -20,25 +20,25 @@ from timelinelib.db.interface import ContainerStrategy
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class ContainerStrategyInterfaceSpec(UnitTestCase):
+class describe_container_strategy_interface(UnitTestCase):
 
-    def testConstruction(self):
+    def test_construction(self):
         self.given_strategy_with_none_container()
         self.assertEqual(None, self.strategy.container)
 
-    def testRegisterSubeventNotImplemented(self):
+    def test_register_subevent_NotImplemented(self):
         self.given_strategy_with_none_container()
         self.assertRaises(NotImplementedError, self.strategy.register_subevent, None)
 
-    def testUnregisterSubeventNotImplemented(self):
+    def test_unregister_subevent_NotImplemented(self):
         self.given_strategy_with_none_container()
         self.assertRaises(NotImplementedError, self.strategy.unregister_subevent, None)
 
-    def testUpdateSubeventNotImplemented(self):
+    def test_update_subevent_NotImplemented(self):
         self.given_strategy_with_none_container()
         self.assertRaises(NotImplementedError, self.strategy.update, None)
 
-    def testAllowEndsTodayNotImplemented(self):
+    def test_allow_ends_today_NotImplemented(self):
         self.given_strategy_with_none_container()
         self.assertRaises(NotImplementedError, self.strategy.allow_ends_today_on_subevents)
 
