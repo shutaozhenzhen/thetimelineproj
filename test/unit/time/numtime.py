@@ -21,9 +21,10 @@ from timelinelib.time.numtime import NumTimeType
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class NumTimeTypeSpec(UnitTestCase):
+class describe_numtimetype(UnitTestCase):
 
     def setUp(self):
+        UnitTestCase.setUp(self)
         self.time_type = NumTimeType()
 
     def test_returns_half_delta(self):
