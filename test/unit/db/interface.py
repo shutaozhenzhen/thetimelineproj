@@ -38,6 +38,10 @@ class ContainerStrategyInterfaceSpec(UnitTestCase):
         self.given_strategy_with_none_container()
         self.assertRaises(NotImplementedError, self.strategy.update, None)
 
+    def testAllowEndsTodayNotImplemented(self):
+        self.given_strategy_with_none_container()
+        self.assertRaises(NotImplementedError, self.strategy.allow_ends_today_on_subevents)
+
     def given_strategy_with_none_container(self):
         self.strategy = ContainerStrategy(None)
 
