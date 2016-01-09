@@ -48,6 +48,7 @@ class CalendarBase(object):
 
 
 class CalendarUtilsBase(object):
+
     @classmethod
     def is_valid(self, year, month, day):
         raise NotImplementedError("is_valid not implemented.")
