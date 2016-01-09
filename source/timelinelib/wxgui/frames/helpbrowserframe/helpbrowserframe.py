@@ -47,9 +47,9 @@ class HelpBrowserFrame(wx.Frame):
         except ImportError:
             self.help_system = None
         else:
-            import timelinelib.help.system as help
+            import timelinelib.help.helppagerepository as help
             import timelinelib.help.pages as help_pages
-            self.help_system = help.HelpSystem(
+            self.help_system = help.HelpPageRepository(
                 "contents", HELP_RESOURCES_DIR + "/", "page:")
             help_pages.install(self.help_system)
 
