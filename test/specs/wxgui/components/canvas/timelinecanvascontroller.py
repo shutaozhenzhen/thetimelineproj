@@ -20,6 +20,7 @@ from mock import Mock
 import wx
 
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
+from timelinelib.canvas.noop import NoOpInputHandler
 from timelinelib.canvas.timelinecanvascontroller import HSCROLL_STEP
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.data.db import MemoryDB
@@ -29,6 +30,7 @@ from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.wxgui.components.timelinepanel import InputHandlerState
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
 from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
 
@@ -316,9 +318,14 @@ class TimelineViewSpec(UnitTestCase):
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
         self.timeline_canvas.GetDividerPosition.return_value = 50
         self.timeline_canvas.GetSelectedEvents.return_value = []
+        def set_input_handler(input_handler):
+            self.controller.input_handler = input_handler
+        self.timeline_canvas.SetInputHandler.side_effect = set_input_handler
         self.controller = TimelineCanvasController(
             self.timeline_canvas, drawer=self.mock_drawer)
         self.controller.post_hint_event = Mock()
+        state = InputHandlerState(self.timeline_canvas, self.controller)
+        set_input_handler(NoOpInputHandler(state, self.controller, self.timeline_canvas))
 
     def given_event_with(self, start="4 Aug 2010", end="10 Aug 2010",
                          text="Text", description=None,
