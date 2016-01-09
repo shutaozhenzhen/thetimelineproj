@@ -60,12 +60,25 @@ class describe_category(UnitTestCase):
 
 class describe_category_list_sorting(UnitTestCase):
 
-    def test_list_of_categories_can_be_sorted(self):
-        cat_a = a_category_with(name="aaa")
-        cat_b = a_category_with(name="bbb")
-        categories = [cat_b, cat_a]
-        sorted_categories = sort_categories(categories)
-        self.assertEqual(sorted_categories, [cat_a, cat_b])
+    def test_sorts_categories_by_name(self):
+        self.sort([
+            a_category_with(name="b"),
+            a_category_with(name="a")])
+        self.assert_sorted_in_order(["a", "b"])
+
+    def test_ignores_case(self):
+        self.sort([
+            a_category_with(name="Foo"),
+            a_category_with(name="bar")])
+        self.assert_sorted_in_order(["bar", "Foo"])
+
+    def sort(self, categories):
+        self.sorted_categories = sort_categories(categories)
+
+    def assert_sorted_in_order(self, names):
+        self.assertEqual(
+            names,
+            [category.get_name() for category in self.sorted_categories])
 
 
 class describe_category_list_cloning(UnitTestCase):
