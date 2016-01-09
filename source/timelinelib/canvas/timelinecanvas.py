@@ -36,6 +36,9 @@ class TimelineCanvas(wx.Panel):
         self._create_gui()
         self.SetDividerPosition(50)
 
+    def SetInputHandler(self, input_handler):
+        self.controller.input_handler = input_handler
+
     def GetAppearance(self):
         return self.controller.get_appearance()
 

@@ -23,7 +23,13 @@ import wx
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
 from timelinelib.canvas import EVT_HINT
 from timelinelib.canvas import EVT_TIMELINE_REDRAWN
+from timelinelib.canvas.move import MoveByDragInputHandler
+from timelinelib.canvas.noop import NoOpInputHandler
+from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
+from timelinelib.canvas.resize import ResizeByDragInputHandler
+from timelinelib.canvas.scrolldrag import ScrollByDragInputHandler
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
+from timelinelib.canvas.zoom import ZoomByDragInputHandler
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
@@ -134,6 +140,9 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.timeline_canvas.SetDividerPosition(self.config.divider_line_slider_pos)
         self.timeline_canvas.SetEventBoxDrawer(self._get_saved_event_box_drawer())
         self.timeline_canvas.SetCtrlDragHandler(self._create_new_period_event)
+        self.timeline_canvas.SetInputHandler(NoOpInputHandler(
+            InputHandlerState(self.timeline_canvas, self.timeline_canvas.controller),
+            self.timeline_canvas.controller, self.timeline_canvas))
         def update_appearance():
             appearance = self.timeline_canvas.GetAppearance()
             appearance.set_legend_visible(self.config.show_legend)
@@ -428,3 +437,47 @@ class TimelinePanel(TimelinePanelGuiCreator):
             self.message_bar.ShowWarningMessage("%s\n%s" % (header, body))
         else:
             self.message_bar.ShowNoMessage()
+
+
+class InputHandlerState(object):
+
+    def __init__(self, timeline_canvas, controller):
+        self._timeline_canvas = timeline_canvas
+        self._controller = controller
+
+    def change_to_no_op(self):
+        self._timeline_canvas.SetInputHandler(NoOpInputHandler(
+            self,
+            self._controller, self._timeline_canvas))
+
+    def change_to_move_by_drag(self, event, start_drag_time):
+        self._timeline_canvas.SetInputHandler(MoveByDragInputHandler(
+            self,
+            self._timeline_canvas, self._controller, event,
+            start_drag_time))
+
+    def change_to_zoom_by_drag(self, start_time):
+        self._timeline_canvas.SetInputHandler(ZoomByDragInputHandler(
+            self,
+            self._timeline_canvas, self._controller,
+            start_time))
+
+    def change_to_resize_by_drag(self, event, direction):
+        self._timeline_canvas.SetInputHandler(ResizeByDragInputHandler(
+            self,
+            self._timeline_canvas, self._controller,
+            event, direction))
+
+    def change_to_scroll_by_drag(self, start_time):
+        self._timeline_canvas.SetInputHandler(ScrollByDragInputHandler(
+            self,
+            self._timeline_canvas, self._controller,
+            start_time))
+
+    def change_to_create_period_event_by_drag(self, time_at_x, ctrl_drag_handler):
+        self._timeline_canvas.SetInputHandler(CreatePeriodEventByDragInputHandler(
+            self,
+            self._controller,
+            self._timeline_canvas,
+            time_at_x,
+            ctrl_drag_handler))
