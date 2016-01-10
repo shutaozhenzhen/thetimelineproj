@@ -205,22 +205,7 @@ class TimelineCanvasController(object):
         return None
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
-        """
-        Event handler used when the left mouse button has been double clicked.
-
-        If the timeline is readonly, no action is taken.
-        If the mouse hits an event, a dialog opens for editing this event.
-        Otherwise a dialog for creating a new event is opened.
-        """
-        if self.timeline.is_read_only():
-            return
-        # Since the event sequence is, 1. EVT_LEFT_DOWN  2. EVT_LEFT_UP
-        # 3. EVT_LEFT_DCLICK we must compensate for the toggle_event_selection
-        # that occurs in the handling of EVT_LEFT_DOWN, since we still want
-        # the event(s) selected or deselected after a left doubleclick
-        # It doesn't look too god but I havent found any other way to do it.
-        self._toggle_event_selection(x, y, ctrl_down, alt_down)
-        event = self.drawing_algorithm.event_at(x, y, alt_down)
+        self.input_handler.left_mouse_dclick(x, y, ctrl_down, alt_down)
 
     def get_time(self, x):
         return self.drawing_algorithm.get_time(x)
@@ -344,18 +329,6 @@ class TimelineCanvasController(object):
             self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
             self.view.redraw_surface(fn_draw)
             self.view.PostEvent(create_timeline_redrawn_event())
-
-    def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
-        event = self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down)
-        if event:
-            selected = not self.view_properties.is_selected(event)
-            if control_down:
-                self.view_properties.set_selected(event, selected)
-            else:
-                self.view_properties.set_only_selected(event, selected)
-        else:
-            self.view_properties.clear_selected()
-        return event is not None
 
     def balloon_show_timer_fired(self):
         self.input_handler.balloon_show_timer_fired()
