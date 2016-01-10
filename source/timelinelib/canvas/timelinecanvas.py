@@ -101,9 +101,6 @@ class TimelineCanvas(wx.Panel):
     def GetClosestOverlappingEvent(self, event, up):
         return self.controller.drawing_algorithm.get_closest_overlapping_event(event, up=up)
 
-    def SetCtrlDragHandler(self, ctrl_drag_handler):
-        self.controller.set_ctrl_drag_handler(ctrl_drag_handler)
-
     def GetDb(self):
         return self.get_timeline()
 

@@ -139,10 +139,10 @@ class TimelinePanelGuiCreator(wx.Panel):
         )
         self.timeline_canvas.SetDividerPosition(self.config.divider_line_slider_pos)
         self.timeline_canvas.SetEventBoxDrawer(self._get_saved_event_box_drawer())
-        self.timeline_canvas.SetCtrlDragHandler(self._create_new_period_event)
         self.timeline_canvas.SetInputHandler(NoOpInputHandler(
             InputHandlerState(self.timeline_canvas,
-                self.timeline_canvas.controller, self.status_bar_adapter),
+                self.timeline_canvas.controller, self.status_bar_adapter,
+                self.main_frame, self.config, self.handle_db_error),
             self.timeline_canvas.controller, self.timeline_canvas))
         def update_appearance():
             appearance = self.timeline_canvas.GetAppearance()
@@ -162,15 +162,6 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_use_inertial_scrolling(self.config.get_use_inertial_scrolling())
         self.config.listen_for_any(update_appearance)
         update_appearance()
-
-    def _create_new_period_event(self, period):
-        open_create_event_editor(
-            self.main_frame,
-            self.config,
-            self.timeline_canvas.GetDb(),
-            self.handle_db_error,
-            period.start_time,
-            period.end_time)
 
     def _get_saved_event_box_drawer(self):
         from timelinelib.plugin import factory
@@ -442,10 +433,13 @@ class TimelinePanel(TimelinePanelGuiCreator):
 
 class InputHandlerState(object):
 
-    def __init__(self, timeline_canvas, controller, status_bar):
+    def __init__(self, timeline_canvas, controller, status_bar, main_frame, config, handle_db_error):
         self._timeline_canvas = timeline_canvas
         self._controller = controller
         self._status_bar = status_bar
+        self._main_frame = main_frame
+        self._config = config
+        self._handle_db_error = handle_db_error
 
     def change_to_no_op(self):
         self._timeline_canvas.SetInputHandler(NoOpInputHandler(
@@ -476,9 +470,11 @@ class InputHandlerState(object):
             self._timeline_canvas, self._controller,
             start_time))
 
-    def change_to_create_period_event_by_drag(self, time_at_x, ctrl_drag_handler):
+    def change_to_create_period_event_by_drag(self, time_at_x):
         self._timeline_canvas.SetInputHandler(CreatePeriodEventByDragInputHandler(
             self,
             self._timeline_canvas,
-            time_at_x,
-            ctrl_drag_handler))
+            self._main_frame,
+            self._config,
+            self._handle_db_error,
+            time_at_x))

@@ -65,11 +65,8 @@ class NoOpInputHandler(InputHandler):
             self._state.change_to_scroll_by_drag(time_at_x)
             return
         if (event is None and ctrl_down is True):
-            if self.timeline_canvas_controller.ctrl_drag_handler:
-                self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
-                self._state.change_to_create_period_event_by_drag(
-                    time_at_x,
-                    self.timeline_canvas_controller.ctrl_drag_handler)
+            self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
+            self._state.change_to_create_period_event_by_drag(time_at_x)
             return
         if (event is None and shift_down is True):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
