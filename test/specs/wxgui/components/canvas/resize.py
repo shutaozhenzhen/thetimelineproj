@@ -43,18 +43,18 @@ class ResizeEventSpec(UnitTestCase):
         self.given_time_at_x_is(50, "1 Jan 5000")
         self.when_resizing(an_event_with(time="1 Jan 2000"), wx.RIGHT)
         self.and_moving_mouse_to_x(50)
-        self.assertEqual(1, self.controller.post_hint_event.call_count)
+        self.assertEqual(1, self.status_bar.set_text.call_count)
 
     def test_clears_hint_if_resize_is_valid(self):
         self.given_time_at_x_is(50, "2 Jan 2000")
         self.when_resizing(an_event_with(time="1 Jan 2000"), wx.RIGHT)
         self.and_moving_mouse_to_x(50)
-        self.controller.post_hint_event.assert_called_with("")
+        self.status_bar.set_text.assert_called_with("")
 
     def test_clears_hint_when_resize_is_done(self):
         self.when_resizing(an_event(), wx.RIGHT)
         self.resizer.left_mouse_up()
-        self.controller.post_hint_event.assert_called_with("")
+        self.status_bar.set_text.assert_called_with("")
 
     def test_changes_input_handler_when_resize_is_done(self):
         self.when_resizing(an_event(), wx.RIGHT)
@@ -62,14 +62,10 @@ class ResizeEventSpec(UnitTestCase):
         self.state.change_to_no_op.assert_called_with()
 
     def setUp(self):
-        self.controller = Mock(TimelineCanvasController)
-        self.controller.timeline = None
-        self.controller.view = Mock(TimelineCanvas)
-        self.controller.drawing_algorithm = Mock()
-        self.controller.view_properties = Mock()
-        self.controller.appearance = Mock()
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSizeTuple.return_value = (0, 0)
+        self.state = Mock()
+        self.status_bar = Mock()
 
     def given_time_at_x_is(self, x, time):
         self.timeline_canvas.GetTimeAt.return_value = human_time_to_gregorian(time)
@@ -77,9 +73,8 @@ class ResizeEventSpec(UnitTestCase):
 
     def when_resizing(self, event, direction):
         self.event_being_resized = event
-        self.state = Mock()
         self.resizer = ResizeByDragInputHandler(
-            self.state, self.timeline_canvas, self.controller, event, direction)
+            self.state, self.timeline_canvas, self.status_bar, event, direction)
 
     def and_moving_mouse_to_x(self, x):
         any_y = 10
