@@ -16,16 +16,17 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.time.timeline import *
+from timelinelib.time.timeline import Time
+from timelinelib.time.timeline import TimeDelta
+from timelinelib.time.timeline import delta_from_seconds
+from timelinelib.time.timeline import delta_from_days
+from timelinelib.time.timeline import get_min_time
+from timelinelib.time.timeline import MIN_JULIAN_DAY
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import TIME_MODIFIERS
 
 
-class testbase(UnitTestCase):
-    pass
-
-
-class timeproperties(testbase):
+class describe_time_properties(UnitTestCase):
 
     def test_can_return_time_of_day(self):
         self.assertEqual((0, 0, 0), Time(0, 0).get_time_of_day())
@@ -60,11 +61,11 @@ class timeproperties(testbase):
         self.assertEqual(Time(MIN_JULIAN_DAY, 0), get_min_time())
 
 
-class timedeltaproperties(testbase):
+class describe_time_delta_properties(UnitTestCase):
 
     def test_can_create(self):
         self.assertEqual(delta_from_seconds(5), TimeDelta(5))
-        self.assertEqual(delta_from_days(5), TimeDelta(5*24*60*60))
+        self.assertEqual(delta_from_days(5), TimeDelta(5 * 24 * 60 * 60))
 
     def test_div(self):
         self.assertEqual(2.5, TimeDelta(5) / TimeDelta(2))
