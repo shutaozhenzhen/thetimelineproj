@@ -59,12 +59,15 @@ class ResizeEventSpec(UnitTestCase):
     def test_changes_input_handler_when_resize_is_done(self):
         self.when_resizing(an_event(), wx.RIGHT)
         self.resizer.left_mouse_up()
-        self.assertEqual(1, self.controller.change_input_handler_to_no_op.call_count)
+        self.state.change_to_no_op.assert_called_with()
 
     def setUp(self):
         self.controller = Mock(TimelineCanvasController)
         self.controller.timeline = None
         self.controller.view = Mock(TimelineCanvas)
+        self.controller.drawing_algorithm = Mock()
+        self.controller.view_properties = Mock()
+        self.controller.appearance = Mock()
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSizeTuple.return_value = (0, 0)
 
@@ -74,8 +77,9 @@ class ResizeEventSpec(UnitTestCase):
 
     def when_resizing(self, event, direction):
         self.event_being_resized = event
+        self.state = Mock()
         self.resizer = ResizeByDragInputHandler(
-            self.timeline_canvas, self.controller, event, direction)
+            self.state, self.timeline_canvas, self.controller, event, direction)
 
     def and_moving_mouse_to_x(self, x):
         any_y = 10
