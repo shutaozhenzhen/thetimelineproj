@@ -17,6 +17,7 @@
 
 
 from timelinelib.time.timeline import Time
+from timelinelib.time.timeline import BosparanianTime
 from timelinelib.time.timeline import TimeDelta
 from timelinelib.time.timeline import delta_from_seconds
 from timelinelib.time.timeline import delta_from_days
@@ -24,6 +25,7 @@ from timelinelib.time.timeline import get_min_time
 from timelinelib.time.timeline import MIN_JULIAN_DAY
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import TIME_MODIFIERS
+from timelinelib.test.utils import human_time_to_gregorian
 
 
 class describe_time_properties(UnitTestCase):
@@ -60,6 +62,19 @@ class describe_time_properties(UnitTestCase):
     def test_can_return_min_time(self):
         self.assertEqual(Time(MIN_JULIAN_DAY, 0), get_min_time())
 
+    def test_is_weekend_day(self):
+        self.assertFalse(human_time_to_gregorian("11 Jan 2016").is_weekend_day())  # Monday
+        self.assertFalse(human_time_to_gregorian("12 Jan 2016").is_weekend_day())
+        self.assertFalse(human_time_to_gregorian("13 Jan 2016").is_weekend_day())
+        self.assertFalse(human_time_to_gregorian("14 Jan 2016").is_weekend_day())
+        self.assertFalse(human_time_to_gregorian("15 Jan 2016").is_weekend_day())
+        self.assertTrue(human_time_to_gregorian("16 Jan 2016").is_weekend_day())
+        self.assertTrue(human_time_to_gregorian("17 Jan 2016").is_weekend_day())
+
+    def test_is_special_day(self):
+        for i in range(30):
+            self.assertFalse(human_time_to_gregorian("%d Jan 2016" % (i + 1)).is_special_day())
+
 
 class describe_time_delta_properties(UnitTestCase):
 
@@ -79,3 +94,28 @@ class describe_time_delta_properties(UnitTestCase):
 
     def test_negate(self):
         self.assertEqual(TimeDelta(-2), -TimeDelta(2))
+
+
+class describe_bosparanian_time(UnitTestCase):
+
+    def test_is_weekend_day(self):
+        self.assertTrue(self.a_time("11 Jan 2016").is_weekend_day())  # Monday
+        self.assertFalse(self.a_time("12 Jan 2016").is_weekend_day())
+        self.assertFalse(self.a_time("13 Jan 2016").is_weekend_day())
+        self.assertTrue(self.a_time("14 Jan 2016").is_weekend_day())  # Thursday
+        self.assertFalse(self.a_time("15 Jan 2016").is_weekend_day())
+        self.assertFalse(self.a_time("16 Jan 2016").is_weekend_day())
+        self.assertFalse(self.a_time("17 Jan 2016").is_weekend_day())
+
+    def test_is_special_day(self):
+        self.assertFalse(self.a_time("11 Jan 2016").is_special_day())
+        self.assertFalse(self.a_time("12 Jan 2016").is_special_day())
+        self.assertFalse(self.a_time("13 Jan 2016").is_special_day())
+        self.assertTrue(self.a_time("14 Jan 2016").is_special_day())  # Thursday
+        self.assertFalse(self.a_time("15 Jan 2016").is_special_day())
+        self.assertFalse(self.a_time("16 Jan 2016").is_special_day())
+        self.assertFalse(self.a_time("17 Jan 2016").is_special_day())
+
+    def a_time(self, time_spec):
+        time = human_time_to_gregorian(time_spec)
+        return BosparanianTime(time.julian_day, time.seconds)
