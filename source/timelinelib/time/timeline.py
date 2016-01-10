@@ -85,20 +85,18 @@ class Time(object):
 
     def is_weekend_day(self):
         return self.get_day_of_week() in (5, 6)
-    
+
     def is_special_day(self):
         return False
 
 
 class BosparanianTime(Time):
-    
+
     def is_weekend_day(self):
-        return self.get_day_of_week() in (0,3)
+        return self.get_day_of_week() in (0, 3)
 
     def is_special_day(self):
-        return self.get_day_of_week()==3
-    
-    
+        return self.get_day_of_week() == 3
 
 
 class TimeDelta(object):
