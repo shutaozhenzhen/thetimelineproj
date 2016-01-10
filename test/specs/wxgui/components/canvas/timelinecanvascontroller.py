@@ -140,16 +140,16 @@ class TimelineViewSpec(UnitTestCase):
         self.fire_balloon_hide_timer()
         self.assert_balloon_drawn_for_event(None)
 
-    def test_posts_event_info_hint_when_hovering_event(self):
+    def test_sets_event_info_in_status_bar_when_hovering_event(self):
         event = self.given_event_with(text="Period event", pos=(40, 60), size=(20, 10))
         self.init_view_with_db()
         self.simulate_mouse_move(50, 65)
-        self.assertTrue("Period event" in self.get_last_posted_hint())
+        self.assertTrue("Period event" in self.status_bar.set_text.call_args[0][0])
 
     def test_removes_event_info_from_status_bar_when_un_hovering_event(self):
         self.init_view_with_db()
         self.simulate_mouse_move(0, ANY_Y)
-        self.assertEqual("1999-09-19 00:00", self.get_last_posted_hint())
+        self.assertEqual("1999-09-19 00:00", self.status_bar.set_text.call_args[0][0])
 
     def test_sends_error_hint_wehn_scrolling_too_far_left(self):
         def navigate(time_period):
@@ -318,7 +318,8 @@ class TimelineViewSpec(UnitTestCase):
         state = InputHandlerState(
             self.timeline_canvas, self.controller, self.status_bar, Mock(),
             Mock(), Mock())
-        set_input_handler(NoOpInputHandler(state, self.controller, self.timeline_canvas))
+        set_input_handler(NoOpInputHandler(state, self.status_bar,
+            self.controller, self.timeline_canvas))
 
     def given_event_with(self, start="4 Aug 2010", end="10 Aug 2010",
                          text="Text", description=None,
@@ -376,11 +377,6 @@ class TimelineViewSpec(UnitTestCase):
 
     def release_mouse(self):
         self.controller.left_mouse_up()
-
-    def get_last_posted_hint(self):
-        self.assertTrue(self.controller.post_hint_event.called)
-        last_event = self.controller.post_hint_event.call_args[0][0]
-        return last_event
 
     def assert_event_has_period(self, event, start, end):
         self.assertEqual(gregorian_period(start, end), event.get_time_period())
