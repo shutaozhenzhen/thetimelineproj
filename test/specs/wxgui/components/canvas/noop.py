@@ -62,7 +62,9 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
         self.timeline_canvas.GetSelectedEvents.return_value = []
         self.state = Mock()
-        self.handler = NoOpInputHandler(self.state, self.controller, self.timeline_canvas)
+        self.status_bar = Mock()
+        self.handler = NoOpInputHandler(self.state, self.status_bar,
+            self.controller, self.timeline_canvas)
 
     def setup_timeline_canvas_controller_mock(self):
         self.times_at = {}

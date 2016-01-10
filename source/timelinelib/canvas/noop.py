@@ -27,9 +27,10 @@ HIT_REGION_PX_WITH = 5
 
 class NoOpInputHandler(InputHandler):
 
-    def __init__(self, state, timeline_canvas_controller, timeline_canvas):
+    def __init__(self, state, status_bar, timeline_canvas_controller, timeline_canvas):
         InputHandler.__init__(self, timeline_canvas)
         self._state = state
+        self._status_bar = status_bar
         self.timeline_canvas_controller = timeline_canvas_controller
         self.drawer = timeline_canvas_controller.drawing_algorithm
         self.view_properties = timeline_canvas_controller.view_properties
@@ -103,9 +104,9 @@ class NoOpInputHandler(InputHandler):
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
         time_string = self._format_current_pos_datetime_string(xpixelpos)
         if event is None:
-            self.timeline_canvas_controller.post_hint_event(time_string)
+            self._status_bar.set_text(time_string)
         else:
-            self.timeline_canvas_controller.post_hint_event(event.get_label())
+            self._status_bar.set_text(event.get_label())
 
     def _format_current_pos_datetime_string(self, xpos):
         tm = self.timeline_canvas.GetTimeAt(xpos)
