@@ -92,6 +92,12 @@ class TimelineCanvas(wx.Panel):
     def IsEventSelected(self, event):
         return self.controller.is_selected(event)
 
+    def SetHoveredEvent(self, event):
+        self.controller.view_properties.change_hovered_event(event)
+
+    def GetHoveredEvent(self):
+        return self.controller.view_properties.hovered_event
+
     def GetSelectedEvent(self):
         selected_events = self.GetSelectedEvents()
         if len(selected_events) == 1:

@@ -336,9 +336,6 @@ class TimelineCanvasController(object):
     def balloon_hide_timer_fired(self):
         self.input_handler.balloon_hide_timer_fired()
 
-    def _redraw_balloons(self, event):
-        self.view_properties.change_hovered_event(event)
-
     def dragscroll_timer_fired(self):
         self.input_handler.dragscroll_timer_fired()
 
