@@ -81,7 +81,7 @@ class NoOpInputHandler(InputHandler):
             stick = not self.view_properties.event_has_sticky_balloon(event_with_balloon)
             self.view_properties.set_event_has_sticky_balloon(event_with_balloon, has_sticky=stick)
             if stick:
-                self.timeline_canvas_controller._redraw_timeline()
+                self.timeline_canvas.Redraw()
             else:
                 if self.appearance.get_balloons_visible():
                     self.timeline_canvas_controller._redraw_balloons(event_with_balloon)
