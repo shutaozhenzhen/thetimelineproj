@@ -18,7 +18,9 @@
 
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
+from timelinelib.time.numtime import move_period
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.data import TimePeriod
 
 
 class describe_numtimetype(UnitTestCase):
@@ -48,3 +50,13 @@ class describe_numtimetype(UnitTestCase):
     def test_equality(self):
         self.assertEqual(NumTimeType(), NumTimeType())
         self.assertNotEqual(NumTimeType(), GregorianTimeType())
+
+
+class decribe_num_time_duplicate_functions(UnitTestCase):
+
+    def setUp(self):
+        self.period = TimePeriod(NumTimeType(), 1, 2)
+
+    def test_move_period_adds_given_number_of_delta(self):
+        new_period = move_period(self.period, 6)
+        self.assertEqual(TimePeriod(NumTimeType(), 7, 8), new_period)
