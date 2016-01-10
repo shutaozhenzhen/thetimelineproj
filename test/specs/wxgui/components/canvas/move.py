@@ -80,11 +80,11 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         event_2.set_locked(True)
         self.given_time_at_x_is(50, "5 Jan 2011")
         self.when_moving(event_1, from_time="1 Jan 2011", to_x=50)
-        self.assertTrue(self.controller.post_hint_event.called)
+        self.assertTrue(self.status_bar.set_text.called)
 
     def test_clears_hint_when_done_moving(self):
         self.when_move_done()
-        self.controller.post_hint_event.assert_called_with("")
+        self.status_bar.set_text.assert_called_with("")
 
     def test_redraws_timeline_after_move(self):
         self.given_time_at_x_is(50, "5 Jan 2011")
@@ -102,15 +102,14 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.period_events = []
         self.snap_times = {}
         self.selected_events = []
-        self.controller = Mock(TimelineCanvasController)
-        self.controller.timeline = None
-        self.controller.view = Mock()
+        self.status_bar = Mock()
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSizeTuple.return_value = (0, 0)
         self.timeline_canvas.GetSelectedEvents.return_value = self.selected_events
         self.timeline_canvas.Snap.side_effect = x
         self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
         self.timeline_canvas.EventIsPeriod.side_effect = lambda event: event in self.period_events
+        self.state = Mock()
 
     def a_point_event(self, time):
         event = an_event_with(time=time)
@@ -136,14 +135,16 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         if event.is_period():
             self.period_events.append(event)
         handler = MoveByDragInputHandler(
+            self.state,
             self.timeline_canvas,
-            self.controller, event, human_time_to_gregorian(from_time))
+            self.status_bar, event, human_time_to_gregorian(from_time))
         handler.mouse_moved(to_x, 10)
 
     def when_move_done(self):
         handler = MoveByDragInputHandler(
+            self.state,
             self.timeline_canvas,
-            self.controller, self.a_point_event("1 Jan 2011"), None)
+            self.status_bar, self.a_point_event("1 Jan 2011"), None)
         handler.left_mouse_up()
 
     def assert_event_has_period(self, start, end, event=None):

@@ -27,9 +27,10 @@ HIT_REGION_PX_WITH = 5
 
 class NoOpInputHandler(InputHandler):
 
-    def __init__(self, timeline_canvas_controller, timeline_canvas):
+    def __init__(self, state, timeline_canvas_controller, timeline_canvas):
+        InputHandler.__init__(self, timeline_canvas)
+        self._state = state
         self.timeline_canvas_controller = timeline_canvas_controller
-        self.timeline_canvas = timeline_canvas
         self.drawer = timeline_canvas_controller.drawing_algorithm
         self.view_properties = timeline_canvas_controller.view_properties
         self.appearance = timeline_canvas_controller.appearance
@@ -46,7 +47,7 @@ class NoOpInputHandler(InputHandler):
             if self.timeline_canvas.ok_to_edit():
                 try:
                     direction = self._hit_resize_handle(x, y, alt_down)
-                    self.timeline_canvas_controller.change_input_handler_to_resize_by_drag(event, direction)
+                    self._state.change_to_resize_by_drag(event, direction)
                 except:
                     self.timeline_canvas.edit_ends()
                     raise
@@ -54,23 +55,25 @@ class NoOpInputHandler(InputHandler):
         if self._hit_move_handle(x, y, alt_down) and not event.get_ends_today():
             if self.timeline_canvas.ok_to_edit():
                 try:
-                    self.timeline_canvas_controller.change_input_handler_to_move_by_drag(event, time_at_x)
+                    self._state.change_to_move_by_drag(event, time_at_x)
                 except:
                     self.timeline_canvas.edit_ends()
                     raise
             return
         if (event is None and ctrl_down is False and shift_down is False):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
-            self.timeline_canvas_controller.change_input_handler_to_scroll_by_drag(time_at_x)
+            self._state.change_to_scroll_by_drag(time_at_x)
             return
         if (event is None and ctrl_down is True):
             if self.timeline_canvas_controller.ctrl_drag_handler:
                 self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
-                self.timeline_canvas_controller.change_input_handler_to_create_period_event_by_drag(time_at_x, self.timeline_canvas_controller.ctrl_drag_handler)
+                self._state.change_to_create_period_event_by_drag(
+                    time_at_x,
+                    self.timeline_canvas_controller.ctrl_drag_handler)
             return
         if (event is None and shift_down is True):
             self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
-            self.timeline_canvas_controller.change_input_handler_to_zoom_by_drag(time_at_x)
+            self._state.change_to_zoom_by_drag(time_at_x)
             return
         self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down, alt_down)
 
@@ -91,13 +94,27 @@ class NoOpInputHandler(InputHandler):
         self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
         self.last_hovered_balloon_event = self.drawer.balloon_at(x, y)
         self._start_balloon_timers()
-        self.timeline_canvas_controller._display_eventinfo_in_statusbar(x, y, alt_down)
+        self._display_eventinfo_in_statusbar(x, y, alt_down)
         if self._hit_resize_handle(x, y, alt_down) is not None:
             self.timeline_canvas.set_size_cursor()
         elif self._hit_move_handle(x, y, alt_down) and not self.last_hovered_event.get_ends_today():
             self.timeline_canvas.set_move_cursor()
         else:
             self.timeline_canvas.set_default_cursor()
+
+    def _display_eventinfo_in_statusbar(self, xpixelpos, ypixelpos, alt_down=False):
+        event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
+        time_string = self._format_current_pos_datetime_string(xpixelpos)
+        if event is None:
+            self.timeline_canvas_controller.post_hint_event(time_string)
+        else:
+            self.timeline_canvas_controller.post_hint_event(event.get_label())
+
+    def _format_current_pos_datetime_string(self, xpos):
+        tm = self.timeline_canvas.GetTimeAt(xpos)
+        dt = self.timeline_canvas.GetDb().get_time_type().event_date_string(tm)
+        tm = self.timeline_canvas.GetDb().get_time_type().event_time_string(tm)
+        return "%s %s" % (dt, tm)
 
     def _start_balloon_timers(self):
         if self._balloons_disabled():

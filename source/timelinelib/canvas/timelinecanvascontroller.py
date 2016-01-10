@@ -25,12 +25,7 @@ from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.canvas.events import create_hint_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
-from timelinelib.canvas.move import MoveByDragInputHandler
-from timelinelib.canvas.noop import NoOpInputHandler
-from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
-from timelinelib.canvas.resize import ResizeByDragInputHandler
-from timelinelib.canvas.scrolldrag import ScrollByDragInputHandler
-from timelinelib.canvas.zoom import ZoomByDragInputHandler
+from timelinelib.canvas.inputhandler import InputHandler
 from timelinelib.data import TimeOutOfRangeLeftError
 from timelinelib.data import TimeOutOfRangeRightError
 from timelinelib.db.exceptions import TimelineIOError
@@ -63,13 +58,13 @@ class TimelineCanvasController(object):
             self.drawing_algorithm = get_drawer()
         self.timeline = None
         self.ctrl_drag_handler = None
+        self.input_handler = InputHandler(view)
         self.set_appearance(Appearance())
         self.set_event_box_drawer(DefaultEventBoxDrawer())
         self.set_background_drawer(self.get_saved_background_drawer())
         self.drawing_algorithm.use_fast_draw(False)
         self._set_initial_values_to_member_variables()
         self._set_colors_and_styles()
-        self.change_input_handler_to_no_op()
 
     def get_appearance(self):
         return self.appearance
@@ -104,27 +99,6 @@ class TimelineCanvasController(object):
 
     def set_background_drawer(self, drawer):
         self.drawing_algorithm.set_background_drawer(drawer)
-
-    def change_input_handler_to_zoom_by_drag(self, start_time):
-        self.input_handler = ZoomByDragInputHandler(self.view, self, start_time)
-
-    def change_input_handler_to_create_period_event_by_drag(self, initial_time, ctrl_drag_handler):
-        self.input_handler = CreatePeriodEventByDragInputHandler(self, self.view, initial_time, ctrl_drag_handler)
-
-    def change_input_handler_to_resize_by_drag(self, event, direction):
-        self.input_handler = ResizeByDragInputHandler(
-            self.view, self, event, direction)
-
-    def change_input_handler_to_move_by_drag(self, event, start_drag_time):
-        self.input_handler = MoveByDragInputHandler(
-            self.view, self, event, start_drag_time)
-
-    def change_input_handler_to_scroll_by_drag(self, start_time):
-        self.input_handler = ScrollByDragInputHandler(self.view, self, start_time)
-
-    def change_input_handler_to_no_op(self):
-        self.input_handler = NoOpInputHandler(self, self.view)
-        self.view.edit_ends()
 
     def get_drawer(self):
         return self.drawing_algorithm
@@ -386,20 +360,6 @@ class TimelineCanvasController(object):
         else:
             self.view_properties.clear_selected()
         return event is not None
-
-    def _display_eventinfo_in_statusbar(self, xpixelpos, ypixelpos, alt_down=False):
-        event = self.drawing_algorithm.event_at(xpixelpos, ypixelpos, alt_down)
-        time_string = self._format_current_pos_datetime_string(xpixelpos)
-        if event is None:
-            self.post_hint_event(time_string)
-        else:
-            self.post_hint_event(event.get_label())
-
-    def _format_current_pos_datetime_string(self, xpos):
-        tm = self.get_time(xpos)
-        dt = self.time_type.event_date_string(tm)
-        tm = self.time_type.event_time_string(tm)
-        return "%s %s" % (dt, tm)
 
     def balloon_show_timer_fired(self):
         self.input_handler.balloon_show_timer_fired()
