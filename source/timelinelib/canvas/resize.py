@@ -24,11 +24,11 @@ from timelinelib.data import PeriodTooLongError
 
 class ResizeByDragInputHandler(ScrollViewInputHandler):
 
-    def __init__(self, state, timeline_canvas, controller, event, direction):
+    def __init__(self, state, timeline_canvas, status_bar, event, direction):
         ScrollViewInputHandler.__init__(self, timeline_canvas)
         self._state = state
         self.timeline_canvas = timeline_canvas
-        self.controller = controller
+        self.status_bar = status_bar
         self.event = event
         self.direction = direction
         self.timer_running = False
@@ -66,7 +66,7 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
         try:
             self.event.update_period(new_start, new_end)
         except PeriodTooLongError:
-            self.controller.post_hint_event(_("Period is too long"))
+            self.status_bar.set_text(_("Period is too long"))
         else:
             self._clear_status_text()
             if self.event.is_container():
@@ -77,4 +77,4 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
         self.event.strategy._set_time_period()
 
     def _clear_status_text(self):
-        self.controller.post_hint_event("")
+        self.status_bar.set_text("")
