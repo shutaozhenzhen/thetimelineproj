@@ -140,16 +140,6 @@ class TimelineViewSpec(UnitTestCase):
         self.fire_balloon_hide_timer()
         self.assert_balloon_drawn_for_event(None)
 
-    def test_calls_handler_when_ctrl_dragging_mouse(self):
-        handler = Mock()
-        self.controller.set_ctrl_drag_handler(handler)
-        self.given_time_at_x_is(10, "1 Aug 2010")
-        self.given_time_at_x_is(30, "3 Aug 2010")
-        self.init_view_with_db()
-        self.simulate_mouse_down_move_up((10, ANY_Y), (30, ANY_Y), ctrl_down=True)
-        self.assertTrue(handler.called)
-        self.assert_timeline_redrawn()
-
     def test_posts_event_info_hint_when_hovering_event(self):
         event = self.given_event_with(text="Period event", pos=(40, 60), size=(20, 10))
         self.init_view_with_db()
@@ -326,7 +316,8 @@ class TimelineViewSpec(UnitTestCase):
         self.controller.post_hint_event = Mock()
         self.status_bar = Mock()
         state = InputHandlerState(
-            self.timeline_canvas, self.controller, self.status_bar)
+            self.timeline_canvas, self.controller, self.status_bar, Mock(),
+            Mock(), Mock())
         set_input_handler(NoOpInputHandler(state, self.controller, self.timeline_canvas))
 
     def given_event_with(self, start="4 Aug 2010", end="10 Aug 2010",

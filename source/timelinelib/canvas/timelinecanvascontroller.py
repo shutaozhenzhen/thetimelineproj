@@ -57,7 +57,6 @@ class TimelineCanvasController(object):
         else:
             self.drawing_algorithm = get_drawer()
         self.timeline = None
-        self.ctrl_drag_handler = None
         self.input_handler = InputHandler(view)
         self.set_appearance(Appearance())
         self.set_event_box_drawer(DefaultEventBoxDrawer())
@@ -75,9 +74,6 @@ class TimelineCanvasController(object):
         self.appearance = appearance
         self.appearance.listen_for_any(self._redraw_timeline)
         self.redraw_timeline()
-
-    def set_ctrl_drag_handler(self, ctrl_drag_handler):
-        self.ctrl_drag_handler = ctrl_drag_handler
 
     def post_hint_event(self, text):
         self.view.PostEvent(create_hint_event(text))

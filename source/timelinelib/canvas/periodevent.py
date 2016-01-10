@@ -17,13 +17,24 @@
 
 
 from timelinelib.canvas.periodbase import SelectPeriodByDragInputHandler
+from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 
 
 class CreatePeriodEventByDragInputHandler(SelectPeriodByDragInputHandler):
 
-    def __init__(self, state, view, initial_time, ctrl_drag_handler):
+    def __init__(self, state, view, main_frame, config, handle_db_error, initial_time):
         SelectPeriodByDragInputHandler.__init__(self, state, view, initial_time)
-        self.ctrl_drag_handler = ctrl_drag_handler
+        self._main_frame = main_frame
+        self._config = config
+        self._timeline_canvas = view
+        self._handle_db_error = handle_db_error
 
     def end_action(self):
-        self.ctrl_drag_handler(self.get_last_valid_period())
+        period = self.get_last_valid_period()
+        open_create_event_editor(
+            self._main_frame,
+            self._config,
+            self._timeline_canvas.GetDb(),
+            self._handle_db_error,
+            period.start_time,
+            period.end_time)
