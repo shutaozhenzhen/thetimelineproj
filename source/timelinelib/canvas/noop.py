@@ -84,9 +84,9 @@ class NoOpInputHandler(InputHandler):
                 self.timeline_canvas.Redraw()
             else:
                 if self.appearance.get_balloons_visible():
-                    self.timeline_canvas_controller._redraw_balloons(event_with_balloon)
+                    self._redraw_balloons(event_with_balloon)
                 else:
-                    self.timeline_canvas_controller._redraw_balloons(None)
+                    self._redraw_balloons(None)
 
     def mouse_moved(self, x, y, alt_down=False):
         self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
@@ -154,18 +154,18 @@ class NoOpInputHandler(InputHandler):
         return self.last_hovered_balloon_event is not None
 
     def _balloon_is_shown(self):
-        return self.view_properties.hovered_event is not None
+        return self.timeline_canvas.GetHoveredEvent() is not None
 
     def _balloon_shown_for_event(self, event):
-        return self.view_properties.hovered_event == event
+        return self.timeline_canvas.GetHoveredEvent() == event
 
     def balloon_show_timer_fired(self):
         self.show_timer_running = False
-        self.timeline_canvas_controller._redraw_balloons(self.last_hovered_event)
+        self._redraw_balloons(self.last_hovered_event)
 
     def balloon_hide_timer_fired(self):
         self.hide_timer_running = False
-        hevt = self.view_properties.hovered_event
+        hevt = self.timeline_canvas.GetHoveredEvent()
         # If there is no balloon visible we don't have to do anything
         if hevt is None:
             return
@@ -174,7 +174,7 @@ class NoOpInputHandler(InputHandler):
         # If the visible balloon doesn't belong to the event pointed to
         # we remove the ballloon.
         if hevt != cevt and hevt != bevt:
-            self.timeline_canvas_controller._redraw_balloons(None)
+            self._redraw_balloons(None)
 
     def _hit_move_handle(self, x, y, alt_down=False):
         event_and_rect = self.timeline_canvas_controller.event_with_rect_at(x, y, alt_down)
@@ -233,3 +233,6 @@ class NoOpInputHandler(InputHandler):
         else:
             self.view_properties.clear_selected()
         return event is not None
+
+    def _redraw_balloons(self, event):
+        self.timeline_canvas.SetHoveredEvent(event)
