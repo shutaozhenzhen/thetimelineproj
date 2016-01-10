@@ -135,7 +135,7 @@ class NoOpInputHandler(InputHandler):
 
     def _current_event_selected(self):
         return (self.last_hovered_event is not None and
-                self.timeline_canvas_controller.is_selected(self.last_hovered_event))
+                self.timeline_canvas.IsEventSelected(self.last_hovered_event))
 
     def _should_start_balloon_show_timer(self):
         return (self._mouse_is_over_event() and
@@ -183,7 +183,7 @@ class NoOpInputHandler(InputHandler):
         event, rect = event_and_rect
         if event.get_locked():
             return None
-        if not self.timeline_canvas_controller.is_selected(event):
+        if not self.timeline_canvas.IsEventSelected(event):
             return False
         center = rect.X + rect.Width / 2
         if abs(x - center) <= HIT_REGION_PX_WITH:
@@ -197,7 +197,7 @@ class NoOpInputHandler(InputHandler):
         event, rect = event_and_rect
         if event.get_locked():
             return None
-        if not self.timeline_canvas_controller.is_selected(event):
+        if not self.timeline_canvas.IsEventSelected(event):
             return None
         if abs(x - rect.X) < HIT_REGION_PX_WITH:
             return wx.LEFT
@@ -225,7 +225,7 @@ class NoOpInputHandler(InputHandler):
     def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
         if event:
-            selected = not self.view_properties.is_selected(event)
+            selected = not self.timeline_canvas.IsEventSelected(event)
             if control_down:
                 self.view_properties.set_selected(event, selected)
             else:
