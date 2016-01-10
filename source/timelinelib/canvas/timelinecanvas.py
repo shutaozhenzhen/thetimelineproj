@@ -89,6 +89,9 @@ class TimelineCanvas(wx.Panel):
     def ClearSelectedEvents(self):
         self.controller.view_properties.clear_selected()
 
+    def IsEventSelected(self, event):
+        return self.controller.is_selected(event)
+
     def GetSelectedEvent(self):
         selected_events = self.GetSelectedEvents()
         if len(selected_events) == 1:
