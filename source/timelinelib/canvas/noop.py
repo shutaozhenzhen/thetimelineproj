@@ -62,18 +62,18 @@ class NoOpInputHandler(InputHandler):
                     raise
             return
         if (event is None and ctrl_down is False and shift_down is False):
-            self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
+            self._toggle_event_selection(x, y, ctrl_down)
             self._state.change_to_scroll_by_drag(time_at_x)
             return
         if (event is None and ctrl_down is True):
-            self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
+            self._toggle_event_selection(x, y, ctrl_down)
             self._state.change_to_create_period_event_by_drag(time_at_x)
             return
         if (event is None and shift_down is True):
-            self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down)
+            self._toggle_event_selection(x, y, ctrl_down)
             self._state.change_to_zoom_by_drag(time_at_x)
             return
-        self.timeline_canvas_controller._toggle_event_selection(x, y, ctrl_down, alt_down)
+        self._toggle_event_selection(x, y, ctrl_down, alt_down)
 
     def _toggle_balloon_stickyness(self, x, y):
         event_with_balloon = self.drawer.balloon_at(x, y)
@@ -204,3 +204,32 @@ class NoOpInputHandler(InputHandler):
         elif abs(rect.X + rect.Width - x) < HIT_REGION_PX_WITH:
             return wx.RIGHT
         return None
+
+    def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
+        """
+        Event handler used when the left mouse button has been double clicked.
+
+        If the timeline is readonly, no action is taken.
+        If the mouse hits an event, a dialog opens for editing this event.
+        Otherwise a dialog for creating a new event is opened.
+        """
+        if self.timeline_canvas.GetDb().is_read_only():
+            return
+        # Since the event sequence is, 1. EVT_LEFT_DOWN  2. EVT_LEFT_UP
+        # 3. EVT_LEFT_DCLICK we must compensate for the toggle_event_selection
+        # that occurs in the handling of EVT_LEFT_DOWN, since we still want
+        # the event(s) selected or deselected after a left doubleclick
+        # It doesn't look too god but I havent found any other way to do it.
+        self._toggle_event_selection(x, y, ctrl_down, alt_down)
+
+    def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
+        event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
+        if event:
+            selected = not self.view_properties.is_selected(event)
+            if control_down:
+                self.view_properties.set_selected(event, selected)
+            else:
+                self.view_properties.set_only_selected(event, selected)
+        else:
+            self.view_properties.clear_selected()
+        return event is not None
