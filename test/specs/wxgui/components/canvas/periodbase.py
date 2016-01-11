@@ -20,9 +20,9 @@ from mock import Mock
 
 from timelinelib.calendar.gregorian import GregorianUtils
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.dataimport.tutorial import TutorialTimelineCreator
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.maincanvas.periodbase import SelectPeriodByDragInputHandler
 
 
@@ -40,10 +40,9 @@ class SelectperiodByDragInputHandler(UnitTestCase):
         self.handler.mouse_moved(10, 10)
 
     def simulate_drag_where_julian_day_becomes_lt_zero(self):
-        controller = Mock(TimelineCanvasController)
-        timeline_canvas = Mock(TimelineCanvas)
-        timeline_canvas.GetSizeTuple.return_value = (0, 0)
-        timeline_canvas.Snap.return_value = GregorianUtils.from_date(2013, 12, 1).to_time()
-        timeline_canvas.GetDb.return_value = TutorialTimelineCreator().db
+        canvas = Mock(MainCanvas)
+        canvas.GetSizeTuple.return_value = (0, 0)
+        canvas.Snap.return_value = GregorianUtils.from_date(2013, 12, 1).to_time()
+        canvas.GetDb.return_value = TutorialTimelineCreator().db
         state = Mock()
-        self.handler = SelectPeriodByDragInputHandler(state, timeline_canvas, GregorianUtils.from_date(2013, 12, 31))
+        self.handler = SelectPeriodByDragInputHandler(state, canvas, GregorianUtils.from_date(2013, 12, 31))

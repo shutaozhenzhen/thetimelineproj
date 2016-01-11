@@ -48,21 +48,6 @@ class TimelineViewSpec(UnitTestCase):
         self.init_view_with_db_with_period("1 Aug 2010", "2 Aug 2010")
         self.assert_displays_period("1 Aug 2010", "2 Aug 2010")
 
-    def test_hightlights_selected_region_while_zooming(self):
-        self.given_time_at_x_is(0, "1 Jan 2010")
-        self.given_time_at_x_is(1, "1 Jan 2011")
-        self.init_view_with_db()
-        self.start_shift_drag_at_x(0)
-        self.move_mouse_to_x(1)
-        self.assert_highlights_region(("1 Jan 2010", "1 Jan 2011"))
-
-    def test_highlights_no_region_when_zooming_is_completed(self):
-        self.given_time_at_x_is(0, "1 Aug 2010")
-        self.given_time_at_x_is(20, "3 Aug 2010")
-        self.init_view_with_db()
-        self.simulate_mouse_down_move_up((0, ANY_Y), (20, ANY_Y), shift_down=True)
-        self.assert_highlights_region(None)
-
     def test_centers_displayed_period_around_middle_click_position(self):
         self.given_time_at_x_is(150, "15 Aug 2010")
         self.init_view_with_db_with_period("1 Aug 2010", "11 Aug 2010")
@@ -74,17 +59,6 @@ class TimelineViewSpec(UnitTestCase):
         self.controller.mouse_wheel_moved(
             1, ctrl_down=True, shift_down=False, alt_down=False, x=self.middle_x)
         self.assert_displays_period("3 Aug 2010", "19 Aug 2010")
-
-    def test_sets_event_info_in_status_bar_when_hovering_event(self):
-        event = self.given_event_with(text="Period event", pos=(40, 60), size=(20, 10))
-        self.init_view_with_db()
-        self.simulate_mouse_move(50, 65)
-        self.assertTrue("Period event" in self.status_bar.set_text.call_args[0][0])
-
-    def test_removes_event_info_from_status_bar_when_un_hovering_event(self):
-        self.init_view_with_db()
-        self.simulate_mouse_move(0, ANY_Y)
-        self.assertEqual("1999-09-19 00:00", self.status_bar.set_text.call_args[0][0])
 
     def test_sends_error_hint_wehn_scrolling_too_far_left(self):
         def navigate(time_period):
@@ -140,17 +114,12 @@ class TimelineViewSpec(UnitTestCase):
         self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
         self.timeline_canvas.GetDividerPosition.return_value = 50
         self.timeline_canvas.GetSelectedEvents.return_value = []
-        def set_input_handler(input_handler):
-            self.controller.input_handler = input_handler
-        self.timeline_canvas.SetInputHandler.side_effect = set_input_handler
         self.controller = TimelineCanvasController(
             self.timeline_canvas, drawer=self.mock_drawer)
         self.controller.post_hint_event = Mock()
         self.status_bar = Mock()
         state = InputHandlerState(
             self.timeline_canvas, self.status_bar, Mock(), Mock(), Mock())
-        set_input_handler(NoOpInputHandler(state, self.status_bar,
-            self.timeline_canvas))
 
     def given_event_with(self, start="4 Aug 2010", end="10 Aug 2010",
                          text="Text", description=None,

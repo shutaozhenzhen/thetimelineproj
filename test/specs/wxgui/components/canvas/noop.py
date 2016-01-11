@@ -21,9 +21,9 @@ import wx
 
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
-from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event, an_event_with, human_time_to_gregorian
+from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.maincanvas.noop import NoOpInputHandler
 
 
@@ -45,7 +45,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.given_event_with_rect_at(10, 10, event, wx.Rect(0, 0, 20, 20))
         self.given_event_selected(event)
         self.handler.left_mouse_down(10, 10, False, False)
-        self.assertEqual(0, self.timeline_canvas.SetInputHandler.call_count)
+        self.assertEqual(0, self.canvas.SetInputHandler.call_count)
 
     def test_disables_mouse_cursor_when_event_ends_today(self):
         event = an_event_with(ends_today=True)
@@ -54,19 +54,19 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.given_event_with_rect_at(10, 10, event, wx.Rect(0, 0, 20, 20))
         self.given_event_selected(event)
         self.handler.mouse_moved(10, 10)
-        self.assertEqual(0, self.timeline_canvas.set_move_cursor.call_count)
+        self.assertEqual(0, self.canvas.set_move_cursor.call_count)
 
     def setUp(self):
         self.setup_timeline_canvas_controller_mock()
-        self.timeline_canvas = Mock(TimelineCanvas)
-        self.timeline_canvas.GetEventAt.side_effect = lambda x, y, alt: self.events_at[(x, y)][0]
-        self.timeline_canvas.GetEventWithHitInfoAt.side_effect = lambda x, y, alt: (self.events_at[(x, y)][0], MOVE_HANDLE)
-        self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
-        self.timeline_canvas.GetSelectedEvents.return_value = []
+        self.canvas = Mock(MainCanvas)
+        self.canvas.GetEventAt.side_effect = lambda x, y, alt: self.events_at[(x, y)][0]
+        self.canvas.GetEventWithHitInfoAt.side_effect = lambda x, y, alt: (self.events_at[(x, y)][0], MOVE_HANDLE)
+        self.canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
+        self.canvas.GetSelectedEvents.return_value = []
         self.state = Mock()
         self.status_bar = Mock()
         self.handler = NoOpInputHandler(self.state, self.status_bar,
-            self.timeline_canvas)
+            self.canvas)
 
     def setup_timeline_canvas_controller_mock(self):
         self.times_at = {}

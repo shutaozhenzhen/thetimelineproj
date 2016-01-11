@@ -16,8 +16,63 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
+from timelinelib.canvas.inputhandler import InputHandler
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
 
 
 class MainCanvas(TimelineCanvas):
-    pass
+
+    def __init__(self, parent, main_frame):
+        TimelineCanvas.__init__(self, parent, main_frame)
+        self.SetInputHandler(InputHandler(self))
+        self.balloon_show_timer = wx.Timer(self, -1)
+        self.balloon_hide_timer = wx.Timer(self, -1)
+        self.dragscroll_timer = wx.Timer(self, -1)
+        self.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
+        self.Bind(wx.EVT_LEFT_DCLICK, self._on_left_dclick)
+        self.Bind(wx.EVT_LEFT_UP, self._on_left_up)
+        self.Bind(wx.EVT_MOTION, self._on_motion)
+        self.Bind(wx.EVT_TIMER, self._on_balloon_show_timer, self.balloon_show_timer)
+        self.Bind(wx.EVT_TIMER, self._on_balloon_hide_timer, self.balloon_hide_timer)
+        self.Bind(wx.EVT_TIMER, self._on_dragscroll, self.dragscroll_timer)
+
+    def SetInputHandler(self, input_handler):
+        self._input_handler = input_handler
+
+    def _on_left_down(self, event):
+        self._input_handler.left_mouse_down(
+            event.GetX(), event.GetY(), event.ControlDown(), event.ShiftDown(),
+            event.AltDown())
+
+    def _on_left_dclick(self, event):
+        self._input_handler.left_mouse_dclick(
+            event.GetX(), event.GetY(), event.ControlDown(), event.AltDown())
+
+    def _on_left_up(self, event):
+        self._input_handler.left_mouse_up()
+
+    def _on_motion(self, event):
+        self._input_handler.mouse_moved(event.GetX(), event.GetY(), event.AltDown())
+
+    def _on_balloon_show_timer(self, event):
+        self._input_handler.balloon_show_timer_fired()
+
+    def _on_balloon_hide_timer(self, event):
+        self._input_handler.balloon_hide_timer_fired()
+
+    def _on_dragscroll(self, event):
+        self._input_handler.dragscroll_timer_fired()
+
+    def start_balloon_show_timer(self, milliseconds=-1, oneShot=False):
+        self.balloon_show_timer.Start(milliseconds, oneShot)
+
+    def start_balloon_hide_timer(self, milliseconds=-1, oneShot=False):
+        self.balloon_hide_timer.Start(milliseconds, oneShot)
+
+    def start_dragscroll_timer(self, milliseconds=-1, oneShot=False):
+        self.dragscroll_timer.Start(milliseconds, oneShot)
+
+    def stop_dragscroll_timer(self):
+        self.dragscroll_timer.Stop()

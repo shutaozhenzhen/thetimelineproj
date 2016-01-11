@@ -57,7 +57,6 @@ class TimelineCanvasController(object):
         else:
             self.drawing_algorithm = get_drawer()
         self.timeline = None
-        self.input_handler = InputHandler(view)
         self.set_appearance(Appearance())
         self.set_event_box_drawer(DefaultEventBoxDrawer())
         self.set_background_drawer(self.get_saved_background_drawer())
