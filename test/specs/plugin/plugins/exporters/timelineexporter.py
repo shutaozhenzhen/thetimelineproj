@@ -19,7 +19,7 @@ import os
 
 from mock import Mock
 
-from timelinelib.data.db import MemoryDB
+from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.plugin.plugins.exporters.timelineexporter import CsvExporter
 from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExporter
 from timelinelib.test.cases.unit import UnitTestCase

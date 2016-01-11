@@ -23,8 +23,8 @@ from os.path import abspath
 from icalendar import Calendar
 
 from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
-from timelinelib.data.db import MemoryDB
-from timelinelib.data import Event
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data import Event
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.utils import ex_msg
 import timelinelib.calendar.gregorian as gregorian

@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.data.db import MemoryDB
+from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.repositories.interface import CategoryRepository
 from timelinelib.wxgui.dialogs.editcategory.controller import EditCategoryDialogController

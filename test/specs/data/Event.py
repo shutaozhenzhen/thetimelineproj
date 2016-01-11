@@ -16,10 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data.db import MemoryDB
-from timelinelib.data.event import clone_event_list
-from timelinelib.data import Container
-from timelinelib.data import Subevent
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.event import clone_event_list
+from timelinelib.canvas.data import Container
+from timelinelib.canvas.data import Subevent
 from timelinelib.test.cases.unit import UnitTestCase
 
 

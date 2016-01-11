@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.data import PeriodTooLongError
+from timelinelib.canvas.data import PeriodTooLongError
 from timelinelib.wxgui.components.maincanvas.scrollbase import ScrollViewInputHandler
 
 

@@ -17,8 +17,8 @@
 
 
 from timelinelib.wxgui.framework import Controller
-from timelinelib.data.event import EXPORTABLE_FIELDS as EVENT_EXPORTABLE_FIELDS
-from timelinelib.data.category import EXPORTABLE_FIELDS as CATEGORY_EXPORTABLE_FIELDS
+from timelinelib.canvas.data.event import EXPORTABLE_FIELDS as EVENT_EXPORTABLE_FIELDS
+from timelinelib.canvas.data.category import EXPORTABLE_FIELDS as CATEGORY_EXPORTABLE_FIELDS
 
 
 FIELDS = {"Event": EVENT_EXPORTABLE_FIELDS, "Category": CATEGORY_EXPORTABLE_FIELDS}

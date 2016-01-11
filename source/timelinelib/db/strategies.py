@@ -17,7 +17,7 @@
 
 
 from timelinelib.db.interface import ContainerStrategy
-from timelinelib.data.subevent import Subevent
+from timelinelib.canvas.data.subevent import Subevent
 
 
 class DefaultContainerStrategy(ContainerStrategy):

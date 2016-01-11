@@ -20,7 +20,7 @@ import sys
 
 import wx
 
-from timelinelib.data import sort_categories
+from timelinelib.canvas.data import sort_categories
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.time.bosparaniantime import BosparanianTimeType
 

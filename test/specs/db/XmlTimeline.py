@@ -23,10 +23,10 @@ from timelinelib.calendar.gregorian import GregorianUtils
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.dataexport.timelinexml import alert_string
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
-from timelinelib.data import Event
+from timelinelib.canvas.data import Event
 from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
 from timelinelib.dataimport.timelinexml import parse_alert_string
-from timelinelib.data import TimePeriod
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.db import db_open
 from timelinelib.meta.version import get_full_version
 from timelinelib.test.cases.tmpdir import TmpDirTestCase

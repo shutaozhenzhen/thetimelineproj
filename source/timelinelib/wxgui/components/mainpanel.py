@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.data import TimePeriod
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.wxgui.components.welcomepanel import WelcomePanel
 from timelinelib.wxgui.components.timelinepanel import TimelinePanel
 from timelinelib.wxgui.components.errorpanel import ErrorPanel

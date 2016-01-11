@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data.eras import InvalidOperationError
-from timelinelib.data import Eras
+from timelinelib.canvas.data.eras import InvalidOperationError
+from timelinelib.canvas.data import Eras
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era
 from timelinelib.test.utils import a_gregorian_era_with

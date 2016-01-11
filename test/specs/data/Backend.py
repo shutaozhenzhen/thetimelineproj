@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data.db import MemoryDB
-from timelinelib.data.events import clone_data
-from timelinelib.data import Event
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.events import clone_data
+from timelinelib.canvas.data import Event
 from timelinelib.dataimport.ics import import_db_from_ics
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.cases.unit import UnitTestCase

@@ -17,12 +17,12 @@
 
 
 from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
-from timelinelib.data.db import MemoryDB
-from timelinelib.data import Category
-from timelinelib.data import Container
-from timelinelib.data import Event
-from timelinelib.data import Subevent
-from timelinelib.data import TimePeriod
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data import Category
+from timelinelib.canvas.data import Container
+from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import Subevent
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.time.timeline import delta_from_days
 import timelinelib.calendar.gregorian as gregorian
 

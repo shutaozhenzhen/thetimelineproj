@@ -16,16 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data.category import Category
-from timelinelib.data.category import sort_categories
-from timelinelib.data.container import Container
-from timelinelib.data.event import Event
-from timelinelib.data.events import Events
-from timelinelib.data.subevent import Subevent
-from timelinelib.data.era import Era
-from timelinelib.data.eras import Eras
-from timelinelib.data.timeperiod import PeriodTooLongError
-from timelinelib.data.timeperiod import TimeOutOfRangeLeftError
-from timelinelib.data.timeperiod import TimeOutOfRangeRightError
-from timelinelib.data.timeperiod import TimePeriod
-from timelinelib.data.timeperiod import time_period_center
+from timelinelib.canvas.data.category import Category
+from timelinelib.canvas.data.category import sort_categories
+from timelinelib.canvas.data.container import Container
+from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data.events import Events
+from timelinelib.canvas.data.subevent import Subevent
+from timelinelib.canvas.data.era import Era
+from timelinelib.canvas.data.eras import Eras
+from timelinelib.canvas.data.timeperiod import PeriodTooLongError
+from timelinelib.canvas.data.timeperiod import TimeOutOfRangeLeftError
+from timelinelib.canvas.data.timeperiod import TimeOutOfRangeRightError
+from timelinelib.canvas.data.timeperiod import TimePeriod
+from timelinelib.canvas.data.timeperiod import time_period_center

@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data.db import MemoryDB
-from timelinelib.data.undohandler import UndoHandler
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.undohandler import UndoHandler
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event
 

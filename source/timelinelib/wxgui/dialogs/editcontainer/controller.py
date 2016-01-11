@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data import Container
+from timelinelib.canvas.data import Container
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.wxgui.framework import Controller
 

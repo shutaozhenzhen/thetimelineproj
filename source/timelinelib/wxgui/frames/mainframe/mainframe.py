@@ -28,7 +28,7 @@ from timelinelib.config.dotfile import read_config
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.config.paths import LOCALE_DIR
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
-from timelinelib.data import TimePeriod
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db import db_open
 from timelinelib.db.utils import safe_locking

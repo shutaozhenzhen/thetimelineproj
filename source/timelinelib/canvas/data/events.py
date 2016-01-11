@@ -18,10 +18,10 @@
 
 import collections
 
-from timelinelib.data.category import clone_categories_list
-from timelinelib.data.event import clone_event_list
-from timelinelib.data.idnumber import get_process_unique_id
-from timelinelib.data.container import Container
+from timelinelib.canvas.data.category import clone_categories_list
+from timelinelib.canvas.data.event import clone_event_list
+from timelinelib.canvas.data.idnumber import get_process_unique_id
+from timelinelib.canvas.data.container import Container
 
 
 class InvalidOperationError(Exception):

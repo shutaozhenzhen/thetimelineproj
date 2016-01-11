@@ -21,12 +21,12 @@ from mock import Mock
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.db.strategies import DefaultContainerStrategy
 from timelinelib.db.strategies import ExtendedContainerStrategy
-from timelinelib.data.event import Event
-from timelinelib.data.subevent import Subevent
-from timelinelib.data.container import Container
-from timelinelib.data.idnumber import get_process_unique_id
+from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data.subevent import Subevent
+from timelinelib.canvas.data.container import Container
+from timelinelib.canvas.data.idnumber import get_process_unique_id
 from timelinelib.test.utils import gregorian_period
-from timelinelib.data.timeperiod import TimePeriod
+from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.test.utils import human_time_to_gregorian
 

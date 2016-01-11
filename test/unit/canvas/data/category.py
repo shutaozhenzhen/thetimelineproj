@@ -16,10 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data import Category
-from timelinelib.data.category import EXPORTABLE_FIELDS
-from timelinelib.data.category import sort_categories
-from timelinelib.data.category import clone_categories_list
+from timelinelib.canvas.data import Category
+from timelinelib.canvas.data.category import EXPORTABLE_FIELDS
+from timelinelib.canvas.data.category import sort_categories
+from timelinelib.canvas.data.category import clone_categories_list
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category
 from timelinelib.test.utils import a_category_with

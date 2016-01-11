@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data.timeperiod import TimePeriod
+from timelinelib.canvas.data.timeperiod import TimePeriod
 
 
 DEFAULT_ERA_COLOR = (200, 200, 200)

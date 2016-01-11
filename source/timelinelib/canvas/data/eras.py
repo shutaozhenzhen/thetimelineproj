@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data.idnumber import get_process_unique_id
-from timelinelib.data.timeperiod import TimePeriod
+from timelinelib.canvas.data.idnumber import get_process_unique_id
+from timelinelib.canvas.data.timeperiod import TimePeriod
 
 
 class InvalidOperationError(Exception):

@@ -21,7 +21,7 @@ import wx
 
 from timelinelib.calendar.gregorian import Gregorian
 from timelinelib.canvas.appearance import Appearance
-from timelinelib.data import TimePeriod
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.time.gregoriantime import backward_fn

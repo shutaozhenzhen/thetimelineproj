@@ -17,8 +17,8 @@
 
 
 from timelinelib.wxgui.framework import Controller
-from timelinelib.data import TimePeriod
-from timelinelib.data import PeriodTooLongError
+from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.data import PeriodTooLongError
 
 
 class EraEditorDialogController(Controller):

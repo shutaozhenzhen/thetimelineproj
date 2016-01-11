@@ -24,10 +24,10 @@ from timelinelib.calendar import get_date_formatter
 from timelinelib.calendar.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.weekdaynames import abbreviated_name_of_weekday
 from timelinelib.canvas.drawing.interface import Strip
-from timelinelib.data import TimeOutOfRangeLeftError
-from timelinelib.data import TimeOutOfRangeRightError
-from timelinelib.data import TimePeriod
-from timelinelib.data import time_period_center
+from timelinelib.canvas.data import TimeOutOfRangeLeftError
+from timelinelib.canvas.data import TimeOutOfRangeRightError
+from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.data import time_period_center
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.typeinterface import TimeType
 import timelinelib.time.timeline as timeline

@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.data.db import MemoryDB
+from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.wxgui.dialogs.eraeditor.controller import EraEditorDialogController
 from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
 from timelinelib.test.cases.unit import UnitTestCase

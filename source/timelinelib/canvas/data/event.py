@@ -17,7 +17,7 @@
 
 
 from timelinelib.canvas.drawing.drawers import get_progress_color
-from timelinelib.data.timeperiod import TimePeriod
+from timelinelib.canvas.data.timeperiod import TimePeriod
 
 
 DEFAULT_COLOR = (200, 200, 200)
@@ -332,8 +332,8 @@ class Event(object):
 
 
 def clone_event_list(eventlist):
-    from timelinelib.data.container import Container
-    from timelinelib.data.subevent import Subevent
+    from timelinelib.canvas.data.container import Container
+    from timelinelib.canvas.data.subevent import Subevent
 
     def clone_events():
         events = []
