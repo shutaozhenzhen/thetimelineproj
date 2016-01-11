@@ -69,6 +69,9 @@ class TimelineCanvas(wx.Panel):
     def ScrollByFactor(self, factor):
         self.controller._scroll_timeline_view_by_factor(factor)
 
+    def ScrollByDelta(self, delta):
+        self.controller._scroll_timeline(delta)
+
     def SetPeriodSelection(self, period):
         if period is None:
             self.controller.view_properties.period_selection = None

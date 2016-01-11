@@ -45,7 +45,7 @@ class ScrollByDragInputHandler(InputHandler):
     def left_mouse_up(self):
         self._state.change_to_no_op()
         self.timeline_canvas.edit_ends()
-        if self.controller.appearance.get_use_inertial_scrolling():
+        if self.timeline_canvas.GetAppearance().get_use_inertial_scrolling():
             if self.speed_px_per_sec > self.INERTIAL_SCROLLING_SPEED_THRESHOLD:
                 self._inertial_scrolling()
 
@@ -63,9 +63,9 @@ class ScrollByDragInputHandler(InputHandler):
         self.last_clock_time = current_clock_time
 
     def _scroll_timeline(self, x):
-        self.current_time = self.controller.get_time(x)
+        self.current_time = self.timeline_canvas.GetTimeAt(x)
         delta = (self.current_time - self.start_time)
-        self.controller._scroll_timeline(delta)
+        self.timeline_canvas.ScrollByDelta(delta)
 
     def _inertial_scrolling(self):
         frame_time = self._calculate_frame_time()
@@ -74,13 +74,13 @@ class ScrollByDragInputHandler(InputHandler):
         self.controller.use_fast_draw(True)
         next_frame_time = time.clock()
         for value in inertial_func:
-            self.controller._scroll_timeline_view(value * value_factor)
+            self.timeline_canvas.Scroll(value * value_factor)
             next_frame_time += frame_time
             sleep_time = next_frame_time - time.clock()
             if sleep_time >= 0:
                 time.sleep(sleep_time)
         self.controller.use_fast_draw(False)
-        self.controller._redraw_timeline()
+        self.timeline_canvas.Redraw()
 
     def _calculate_frame_time(self):
         MAX_FRAME_RATE = 26.0
