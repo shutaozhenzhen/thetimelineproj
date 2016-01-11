@@ -23,11 +23,12 @@ from timelinelib.canvas.inputhandler import InputHandler
 
 class ScrollByDragInputHandler(InputHandler):
 
-    def __init__(self, state, timeline_canvas, controller, start_time):
+    def __init__(self, state, timeline_canvas, start_time, y):
         InputHandler.__init__(self, timeline_canvas)
         self._state = state
-        self.controller = controller
-        self.controller.start()
+        self.start_slider_pos = self.timeline_canvas.GetDividerPosition()
+        self.start_mouse_pos = y
+        self.view_height = self.timeline_canvas.GetSize()[1]
         self.start_time = start_time
         self.last_clock_time = time.clock()
         self.last_x = 0
@@ -40,7 +41,8 @@ class ScrollByDragInputHandler(InputHandler):
     def mouse_moved(self, x, y, alt_down=False):
         self._calculate_sped(x)
         self._scroll_timeline(x)
-        self.controller.scroll_vertical()
+        percentage_distance = 100 * (y - self.start_mouse_pos) / self.view_height
+        self.timeline_canvas.SetDividerPosition(self.start_slider_pos + percentage_distance)
 
     def left_mouse_up(self):
         self._state.change_to_no_op()
