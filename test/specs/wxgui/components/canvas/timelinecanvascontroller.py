@@ -190,87 +190,6 @@ class TimelineViewSpec(UnitTestCase):
         self.assert_is_selected(period_event)
         self.assert_is_selected(point_event)
 
-    def test_displays_move_cursor_when_hovering_move_icon_on_event(self):
-        event = self.given_event_with(pos=(0, 60), size=(30, 10))
-        self.init_view_with_db()
-        self.simulate_mouse_click(10, 65)
-        self.simulate_mouse_move(10, 65)
-        self.assertTrue(self.timeline_canvas.set_move_cursor.called)
-
-    def test_displays_resize_cursor_when_hovering_resize_icons_on_event(self):
-        event = self.given_event_with(pos=(30, 60), size=(60, 10))
-        self.init_view_with_db()
-        self.simulate_mouse_click(50, 65)
-        self.simulate_mouse_move(31, 65)
-        self.simulate_mouse_move(89, 65)
-        self.assertEqual(2, self.timeline_canvas.set_size_cursor.call_count)
-
-    def test_resizes_event_when_dragging_right_drag_icon_on_event(self):
-        event = self.given_event_with(start="4 Aug 2010", end="10 Aug 2010", pos=(30, 55), size=(60, 10))
-        self.given_time_at_x_is(89, "4 Aug 2010")
-        self.given_time_at_x_is(109, "11 Aug 2010")
-        self.init_view_with_db()
-        self.simulate_mouse_click(50, 60)
-        self.simulate_mouse_down_move_up((89, 60), (109, 60))
-        self.assert_event_has_period(event, "4 Aug 2010", "11 Aug 2010")
-        self.assert_timeline_redrawn()
-
-    def test_resizes_event_when_dragging_left_drag_icon_on_event(self):
-        event = self.given_event_with(start="4 Aug 2010", end="10 Aug 2010", pos=(30, 55), size=(60, 10))
-        self.given_time_at_x_is(31, "4 Aug 2010")
-        self.given_time_at_x_is(20, "3 Aug 2010")
-        self.init_view_with_db()
-        self.simulate_mouse_click(50, 60)
-        self.simulate_mouse_down_move_up((31, 60), (20, 60))
-        self.assert_event_has_period(event, "3 Aug 2010", "10 Aug 2010")
-        self.assert_timeline_redrawn()
-
-    def test_snaps_event_edge_when_resizing_event(self):
-        self.given_time_at_x_is(89, "10 Aug 2010")
-        self.given_time_at_x_is(120, "13 Aug 2010")
-        self.mock_drawer.setup_snap("13 Aug 2010", "27 Aug 2010")
-        event = self.given_event_with(start="4 Aug 2010", end="10 Aug 2010", pos=(30, 55), size=(60, 10))
-        self.init_view_with_db()
-        self.simulate_mouse_click(50, 60)
-        self.simulate_mouse_down_move_up((89, 60), (120, 60))
-        self.assert_event_has_period(event, "4 Aug 2010", "27 Aug 2010")
-        self.assert_timeline_redrawn()
-
-    def test_snaps_event_when_moving_event(self):
-        self.given_time_at_x_is(31, "4 Aug 2010")
-        self.given_time_at_x_is(10, "2 Aug 2010")
-        self.mock_drawer.setup_snap("2 Aug 2010", "28 Jul 2010")
-        event = self.given_event_with(start="4 Aug 2010", end="10 Aug 2010", pos=(30, 55), size=(60, 10))
-        self.init_view_with_db()
-        self.simulate_mouse_click(55, 60)
-        self.simulate_mouse_down_move_up((31, 60), (10, 60))
-        self.assert_event_has_period(event, "28 Jul 2010", "10 Aug 2010")
-        self.assert_timeline_redrawn()
-
-    def test_scrolls_timeline_when_moving_event(self):
-        event = self.given_event_with(start="4 Aug 2010", end="10 Aug 2010", pos=(30, 55), size=(60, 10))
-        self.init_view_with_db_with_period("1 Aug 2010", "21 Aug 2010")
-        self.simulate_mouse_click(50, 60)
-        self.controller.left_mouse_down(65, 60, ctrl_down=False, shift_down=False)
-        self.controller.mouse_moved(199, 60)
-        self.assertTrue(self.timeline_canvas.start_dragscroll_timer.called)
-        self.controller.dragscroll_timer_fired()
-        self.controller.left_mouse_up()
-        self.timeline_canvas.Scroll.assert_called_with(-1)
-        self.assert_timeline_redrawn()
-
-    def test_scrolls_timeline_when_resizing_event(self):
-        event = self.given_event_with(start="4 Aug 2010", end="10 Aug 2010", pos=(30, 55), size=(60, 10))
-        self.init_view_with_db_with_period("1 Aug 2010", "21 Aug 2010")
-        self.simulate_mouse_click(50, 60)
-        self.controller.left_mouse_down(89, 60, ctrl_down=False, shift_down=False)
-        self.controller.mouse_moved(199, 60)
-        self.assertTrue(self.timeline_canvas.start_dragscroll_timer.called)
-        self.controller.dragscroll_timer_fired()
-        self.controller.left_mouse_up()
-        self.timeline_canvas.Scroll.assert_called_with(-1)
-        self.assert_timeline_redrawn()
-
     def test_scrolls_with_10_percent_when_using_mouse_wheel(self):
         self.init_view_with_db_with_period("1 Aug 2010", "21 Aug 2010")
         self.controller.mouse_wheel_moved(
@@ -299,6 +218,8 @@ class TimelineViewSpec(UnitTestCase):
         self.db = MemoryDB()
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSize.return_value = (200, 100)
+        self.timeline_canvas.GetEventAt.side_effect = lambda x, y, alt_down: self.mock_drawer.event_at(x, y, alt_down)
+        self.timeline_canvas.GetEventWithHitInfoAt.return_value = None
         self.timeline_canvas.GetEventAt.side_effect = lambda x, y, alt_down: self.mock_drawer.event_at(x, y, alt_down)
         self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.mock_drawer.get_time(x)
         self.timeline_canvas.Snap.side_effect = lambda x: self.mock_drawer.snap(x)

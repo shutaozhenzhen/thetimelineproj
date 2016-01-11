@@ -19,10 +19,9 @@
 import wx
 
 from timelinelib.canvas.inputhandler import InputHandler
-
-
-# Used by Sizer and Mover classes to detect when to go into action
-HIT_REGION_PX_WITH = 5
+from timelinelib.canvas.timelinecanvas import LEFT_RESIZE_HANDLE
+from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
+from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
 
 
 class NoOpInputHandler(InputHandler):
@@ -177,31 +176,28 @@ class NoOpInputHandler(InputHandler):
             self._redraw_balloons(None)
 
     def _hit_move_handle(self, x, y, alt_down=False):
-        event_and_rect = self.timeline_canvas_controller.event_with_rect_at(x, y, alt_down)
-        if event_and_rect is None:
+        event_and_hit_info = self.timeline_canvas.GetEventWithHitInfoAt(x, y, alt_down)
+        if event_and_hit_info is None:
             return False
-        event, rect = event_and_rect
+        (event, hit_info) = event_and_hit_info
         if event.get_locked():
-            return None
+            return False
         if not self.timeline_canvas.IsEventSelected(event):
             return False
-        center = rect.X + rect.Width / 2
-        if abs(x - center) <= HIT_REGION_PX_WITH:
-            return True
-        return False
+        return hit_info == MOVE_HANDLE
 
     def _hit_resize_handle(self, x, y, alt_down=False):
-        event_and_rect = self.timeline_canvas_controller.event_with_rect_at(x, y, alt_down)
-        if event_and_rect is None:
+        event_and_hit_info = self.timeline_canvas.GetEventWithHitInfoAt(x, y, alt_down)
+        if event_and_hit_info is None:
             return None
-        event, rect = event_and_rect
+        (event, hit_info) = event_and_hit_info
         if event.get_locked():
             return None
         if not self.timeline_canvas.IsEventSelected(event):
             return None
-        if abs(x - rect.X) < HIT_REGION_PX_WITH:
+        if hit_info == LEFT_RESIZE_HANDLE:
             return wx.LEFT
-        elif abs(rect.X + rect.Width - x) < HIT_REGION_PX_WITH:
+        if hit_info == RIGHT_RESIZE_HANDLE:
             return wx.RIGHT
         return None
 
