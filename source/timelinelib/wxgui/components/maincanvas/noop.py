@@ -26,10 +26,11 @@ from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 
 class NoOpInputHandler(InputHandler):
 
-    def __init__(self, state, status_bar, timeline_canvas):
+    def __init__(self, state, status_bar, main_frame, timeline_canvas):
         InputHandler.__init__(self, timeline_canvas)
         self._state = state
         self._status_bar = status_bar
+        self._main_frame = main_frame
         self.show_timer_running = False
         self.hide_timer_running = False
         self.last_hovered_event = None
@@ -40,20 +41,20 @@ class NoOpInputHandler(InputHandler):
         event = self.timeline_canvas.GetEventAt(x, y, alt_down)
         time_at_x = self.timeline_canvas.GetTimeAt(x)
         if self._hit_resize_handle(x, y, alt_down) is not None:
-            if self.timeline_canvas.ok_to_edit():
+            if self._main_frame.ok_to_edit():
                 try:
                     direction = self._hit_resize_handle(x, y, alt_down)
                     self._state.change_to_resize_by_drag(event, direction)
                 except:
-                    self.timeline_canvas.edit_ends()
+                    self._main_frame.edit_ends()
                     raise
             return
         if self._hit_move_handle(x, y, alt_down) and not event.get_ends_today():
-            if self.timeline_canvas.ok_to_edit():
+            if self._main_frame.ok_to_edit():
                 try:
                     self._state.change_to_move_by_drag(event, time_at_x)
                 except:
-                    self.timeline_canvas.edit_ends()
+                    self._main_frame.edit_ends()
                     raise
             return
         if (event is None and ctrl_down is False and shift_down is False):

@@ -143,7 +143,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             InputHandlerState(
                 self.timeline_canvas, self.status_bar_adapter,
                 self.main_frame, self.config, self.handle_db_error),
-            self.status_bar_adapter, self.timeline_canvas))
+            self.status_bar_adapter, self.main_frame, self.timeline_canvas))
         def update_appearance():
             appearance = self.timeline_canvas.GetAppearance()
             appearance.set_legend_visible(self.config.show_legend)
@@ -442,7 +442,7 @@ class InputHandlerState(object):
 
     def change_to_no_op(self):
         self._timeline_canvas.SetInputHandler(NoOpInputHandler(
-            self, self._status_bar, self._timeline_canvas))
+            self, self._status_bar, self._main_frame, self._timeline_canvas))
 
     def change_to_move_by_drag(self, event, start_drag_time):
         self._timeline_canvas.SetInputHandler(MoveByDragInputHandler(
