@@ -293,7 +293,6 @@ class DrawingAreaSpec(UnitTestCase):
         self.timeline_canvas.SetBackgroundStyle.assert_called_with(wx.BG_STYLE_CUSTOM)
         self.timeline_canvas.set_default_cursor.assert_called()
         self.timeline_canvas.Disable.assert_called()
-        self.timeline_canvas.edit_ends.assert_called()
 
     def test_get_drawer_returns_default_drawing_algorithm(self):
         self.assertEqual(self.drawing_algorithm, self.controller.get_drawer())

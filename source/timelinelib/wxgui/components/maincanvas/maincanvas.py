@@ -25,7 +25,7 @@ from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 class MainCanvas(TimelineCanvas):
 
     def __init__(self, parent, main_frame):
-        TimelineCanvas.__init__(self, parent, main_frame)
+        TimelineCanvas.__init__(self, parent)
         self.SetInputHandler(InputHandler(self))
         self.balloon_show_timer = wx.Timer(self, -1)
         self.balloon_hide_timer = wx.Timer(self, -1)

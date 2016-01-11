@@ -35,9 +35,8 @@ class TimelineCanvas(wx.Panel):
     input events such as mouse and keyboard actions.
     """
 
-    def __init__(self, parent, main_frame):
+    def __init__(self, parent):
         wx.Panel.__init__(self, parent, style=wx.NO_BORDER | wx.WANTS_CHARS)
-        self.main_frame = main_frame
         self.controller = TimelineCanvasController(self)
         self.surface_bitmap = None
         self._create_gui()
@@ -208,13 +207,6 @@ class TimelineCanvas(wx.Panel):
 
     def set_default_cursor(self):
         self.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
-
-    def ok_to_edit(self):
-        return self.main_frame.ok_to_edit()
-
-    def edit_ends(self):
-        self.SetFocusIgnoringChildren()
-        return self.main_frame.edit_ends()
 
     def zoom_in(self):
         self.controller.mouse_wheel_moved(120, True, False, False, self._get_half_width())
