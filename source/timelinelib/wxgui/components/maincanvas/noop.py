@@ -215,6 +215,10 @@ class NoOpInputHandler(InputHandler):
         # It doesn't look too god but I havent found any other way to do it.
         self._toggle_event_selection(x, y, ctrl_down, alt_down)
 
+    def middle_mouse_down(self, x):
+        time = self.timeline_canvas.GetTimeAt(x)
+        self.timeline_canvas.navigate_timeline(lambda tp: tp.center(time))
+
     def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
         if event:
