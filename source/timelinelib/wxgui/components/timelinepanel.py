@@ -400,9 +400,6 @@ class TimelinePanel(TimelinePanelGuiCreator):
     def get_view_properties(self):
         return self.timeline_canvas.get_view_properties()
 
-    def get_current_image(self):
-        return self.timeline_canvas.get_current_image()
-
     def get_sidebar_width(self):
         return self.sidebar_width
 

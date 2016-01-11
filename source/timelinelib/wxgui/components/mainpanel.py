@@ -113,9 +113,6 @@ class MainPanel(wx.Panel):
             self.searchbar.set_focus()
         self.GetSizer().Layout()
 
-    def get_current_image(self):
-        return self.timeline_panel.get_current_image()
-
     def _remove_timeline_and_show_welcome_panel(self):
         self.category_tree.set_no_timeline_view()
         self.set_searchbar_timeline_canvas(None)

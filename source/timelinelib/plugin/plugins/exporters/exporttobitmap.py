@@ -60,15 +60,13 @@ class MultiBitmapExporter(PluginBase):
 
 
 def export_to_image(main_frame):
-    path, image_type = get_image_path(main_frame)
+    path = get_image_path(main_frame)
     if path is not None and overwrite_existing_path(main_frame, path):
-        bitmap = main_frame.main_panel.get_current_image()
-        image = wx.ImageFromBitmap(bitmap)
-        image.SaveFile(path, image_type)
+        main_frame.main_panel.timeline_panel.timeline_canvas.SaveAsPng(path)
 
 
 def export_to_images(main_frame):
-    path, image_type = get_image_path(main_frame)
+    path = get_image_path(main_frame)
     if path is not None:
         try:
             periods, current_period = main_frame.get_export_periods()
@@ -87,9 +85,7 @@ def export_to_images(main_frame):
             if overwrite_existing_path(main_frame, path):
                 main_frame.main_panel.timeline_panel.timeline_canvas.controller.view_properties.displayed_period = period
                 main_frame.main_panel.redraw_timeline()
-                bitmap = main_frame.main_panel.get_current_image()
-                image = wx.ImageFromBitmap(bitmap)
-                image.SaveFile(path, image_type)
+                main_frame.main_panel.timeline_panel.timeline_canvas.SaveAsPng(path)
             count += 1
         view_properties.set_use_fixed_event_vertical_pos(False)
         main_frame.main_panel.timeline_panel.timeline_canvas.controller.view_properties.displayed_period = current_period
@@ -97,7 +93,6 @@ def export_to_images(main_frame):
 
 
 def get_image_path(main_frame):
-    image_type = None
     path = None
     file_info = _("Image files")
     file_types = [("png", wx.BITMAP_TYPE_PNG)]
@@ -106,9 +101,8 @@ def get_image_path(main_frame):
     dialog = wx.FileDialog(main_frame, message=_("Export to Image"), wildcard=wildcard, style=wx.FD_SAVE)
     if dialog.ShowModal() == wx.ID_OK:
         path = images_wildcard_helper.get_path(dialog)
-        image_type = images_wildcard_helper.get_extension_data(path)
     dialog.Destroy()
-    return path, image_type
+    return path
 
 
 def overwrite_existing_path(main_frame, path):
