@@ -89,10 +89,6 @@ class TimelineCanvas(wx.Panel):
     def SetEventSelected(self, event, is_selected):
         self.controller.view_properties.set_selected(event, is_selected)
 
-    def SetEventStickyBalloon(self, event, is_sticky):
-        self.controller.view_properties.set_event_has_sticky_balloon(event, is_sticky)
-        self.redraw_timeline()
-
     def ClearSelectedEvents(self):
         self.controller.view_properties.clear_selected()
 
@@ -138,6 +134,13 @@ class TimelineCanvas(wx.Panel):
 
     def GetBalloonAt(self, x, y):
         return self.controller.drawing_algorithm.balloon_at(x, y)
+
+    def EventHasStickyBalloon(self, event):
+        return self.controller.view_properties.event_has_sticky_balloon(event)
+
+    def SetEventStickyBalloon(self, event, is_sticky):
+        self.controller.view_properties.set_event_has_sticky_balloon(event, is_sticky)
+        self.redraw_timeline()
 
     def GetTimeAt(self, x):
         return self.controller.get_time(x)
