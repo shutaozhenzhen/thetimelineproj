@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.canvas.timelinecanvas import TimelineCanvas
+from timelinelib.canvas import TimelineCanvas
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 
 
