@@ -229,7 +229,6 @@ class TimelineCanvas(wx.Panel):
         self.Bind(wx.EVT_SIZE, self._on_size)
         self.Bind(wx.EVT_ENTER_WINDOW, self._on_enter)
         self.Bind(wx.EVT_MOUSEWHEEL, self._on_mousewheel)
-        self.Bind(wx.EVT_KEY_UP, self._on_key_up)
 
     def _on_erase_background(self, event):
         # For double buffering
@@ -252,7 +251,3 @@ class TimelineCanvas(wx.Panel):
 
     def _on_mousewheel(self, evt):
         self.controller.mouse_wheel_moved(evt.GetWheelRotation(), evt.ControlDown(), evt.ShiftDown(), evt.AltDown(), evt.GetX())
-
-    def _on_key_up(self, evt):
-        self.controller.key_up(evt.GetKeyCode())
-        evt.Skip()
