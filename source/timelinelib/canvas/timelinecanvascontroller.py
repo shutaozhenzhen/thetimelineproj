@@ -30,8 +30,6 @@ from timelinelib.canvas.events import create_hint_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
 from timelinelib.debug import DEBUG_ENABLED
 from timelinelib.debug import Monitoring
-from timelinelib.utilities.observer import STATE_CHANGE_ANY
-from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.font import Font
 
@@ -212,8 +210,7 @@ class TimelineCanvasController(object):
                 self.view_properties.get_selected_event_ids()]
 
     def _timeline_changed(self, state_change):
-        if (state_change == STATE_CHANGE_ANY or state_change == STATE_CHANGE_CATEGORY):
-            self._redraw_timeline()
+        self._redraw_timeline()
 
     def _set_initial_values_to_member_variables(self):
         self.timeline = None
