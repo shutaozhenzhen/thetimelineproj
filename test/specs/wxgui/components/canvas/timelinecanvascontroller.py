@@ -47,12 +47,6 @@ class TimelineViewSpec(UnitTestCase):
         self.init_view_with_db_with_period("1 Aug 2010", "2 Aug 2010")
         self.assert_displays_period("1 Aug 2010", "2 Aug 2010")
 
-    def test_centers_displayed_period_around_middle_click_position(self):
-        self.given_time_at_x_is(150, "15 Aug 2010")
-        self.init_view_with_db_with_period("1 Aug 2010", "11 Aug 2010")
-        self.controller.middle_mouse_clicked(150)
-        self.assert_displays_period("10 Aug 2010", "20 Aug 2010")
-
     def test_zooms_timeline_by_10_percent_on_each_side_when_scrolling_while_holding_down_ctrl(self):
         self.init_view_with_db_with_period("1 Aug 2010", "21 Aug 2010")
         self.controller.mouse_wheel_moved(

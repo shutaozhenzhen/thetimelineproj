@@ -227,7 +227,6 @@ class TimelineCanvas(wx.Panel):
         self.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
         self.Bind(wx.EVT_PAINT, self._on_paint)
         self.Bind(wx.EVT_SIZE, self._on_size)
-        self.Bind(wx.EVT_MIDDLE_UP, self._on_middle_up)
         self.Bind(wx.EVT_ENTER_WINDOW, self._on_enter)
         self.Bind(wx.EVT_MOUSEWHEEL, self._on_mousewheel)
         self.Bind(wx.EVT_KEY_UP, self._on_key_up)
@@ -247,9 +246,6 @@ class TimelineCanvas(wx.Panel):
 
     def _on_size(self, evt):
         self.controller.window_resized()
-
-    def _on_middle_up(self, evt):
-        self.controller.middle_mouse_clicked(evt.GetX())
 
     def _on_enter(self, evt):
         self.controller.mouse_enter(evt.GetX(), evt.LeftIsDown())
