@@ -31,7 +31,6 @@ class NoOpInputHandler(InputHandler):
         self._state = state
         self._status_bar = status_bar
         self.timeline_canvas_controller = timeline_canvas_controller
-        self.drawer = timeline_canvas_controller.drawing_algorithm
         self.view_properties = timeline_canvas_controller.view_properties
         self.appearance = timeline_canvas_controller.appearance
         self.show_timer_running = False
@@ -75,7 +74,7 @@ class NoOpInputHandler(InputHandler):
         self._toggle_event_selection(x, y, ctrl_down, alt_down)
 
     def _toggle_balloon_stickyness(self, x, y):
-        event_with_balloon = self.drawer.balloon_at(x, y)
+        event_with_balloon = self.timeline_canvas.GetBalloonAt(x, y)
         if event_with_balloon:
             stick = not self.view_properties.event_has_sticky_balloon(event_with_balloon)
             self.view_properties.set_event_has_sticky_balloon(event_with_balloon, has_sticky=stick)
@@ -89,7 +88,7 @@ class NoOpInputHandler(InputHandler):
 
     def mouse_moved(self, x, y, alt_down=False):
         self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
-        self.last_hovered_balloon_event = self.drawer.balloon_at(x, y)
+        self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(x, y)
         self._start_balloon_timers()
         self._display_eventinfo_in_statusbar(x, y, alt_down)
         if self._hit_resize_handle(x, y, alt_down) is not None:
