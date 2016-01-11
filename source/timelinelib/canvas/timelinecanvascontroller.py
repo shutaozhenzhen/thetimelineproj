@@ -258,10 +258,6 @@ class TimelineCanvasController(object):
     def _scroll_down(self):
         self.view_properties.hscroll_amount += HSCROLL_STEP
 
-    def key_up(self, keycode):
-        if keycode == wx.WXK_CONTROL:
-            self.view.set_default_cursor()
-
     def _timeline_changed(self, state_change):
         if (state_change == STATE_CHANGE_ANY or state_change == STATE_CHANGE_CATEGORY):
             self._redraw_timeline()
