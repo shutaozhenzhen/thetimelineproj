@@ -28,17 +28,18 @@ if platform.system() != "Windows":
     wxversion.ensureMinimal('2.8')
 
 # Make sure that we can import timelinelib
-sys.path.insert(0, os.path.dirname(__file__))
+here = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, here)
 # Make sure that we can import pysvg
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies", "timelinelib", "pysvg-0.2.1"))
+sys.path.insert(0, os.path.join(here, "..", "dependencies", "timelinelib", "pysvg-0.2.1"))
 # Make sure that we can import pytz which icalendar is dependant on
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies", "timelinelib", "pytz-2012j"))
+sys.path.insert(0, os.path.join(here, "..", "dependencies", "timelinelib", "pytz-2012j"))
 # Make sure that we can import icalendar
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies", "timelinelib", "icalendar-3.2"))
+sys.path.insert(0, os.path.join(here, "..", "dependencies", "timelinelib", "icalendar-3.2"))
 # Make sure that we can import markdown
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies", "timelinelib", "markdown-2.0.3"))
+sys.path.insert(0, os.path.join(here, "..", "dependencies", "timelinelib", "markdown-2.0.3"))
 # Make sure that we can import humblewx
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies", "timelinelib", "humblewx-master", "source"))
+sys.path.insert(0, os.path.join(here, "..", "dependencies", "timelinelib", "humblewx-master", "source"))
 
 from timelinelib.config.paths import LOCALE_DIR
 from timelinelib.meta.about import APPLICATION_NAME
