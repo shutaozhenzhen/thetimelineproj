@@ -148,8 +148,7 @@ class TimelineViewSpec(UnitTestCase):
         self.controller.post_hint_event = Mock()
         self.status_bar = Mock()
         state = InputHandlerState(
-            self.timeline_canvas, self.controller, self.status_bar, Mock(),
-            Mock(), Mock())
+            self.timeline_canvas, self.status_bar, Mock(), Mock(), Mock())
         set_input_handler(NoOpInputHandler(state, self.status_bar,
             self.timeline_canvas))
 
