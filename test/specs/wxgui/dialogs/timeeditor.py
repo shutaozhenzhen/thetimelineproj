@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.data.db import MemoryDB
+from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.wxgui.dialogs.timeeditor.controller import TimeEditorDialogController
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.test.cases.unit import UnitTestCase

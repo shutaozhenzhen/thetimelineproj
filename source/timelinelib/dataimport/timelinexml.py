@@ -24,14 +24,14 @@ import StringIO
 
 import wx
 
-from timelinelib.data.db import MemoryDB
-from timelinelib.data import Category
-from timelinelib.data import Container
-from timelinelib.data import Event
-from timelinelib.data import Era
-from timelinelib.data import Subevent
-from timelinelib.data import TimePeriod
-from timelinelib.data.timeperiod import PeriodTooLongError
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data import Category
+from timelinelib.canvas.data import Container
+from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import Era
+from timelinelib.canvas.data import Subevent
+from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.data.timeperiod import PeriodTooLongError
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import create_non_exising_path
 from timelinelib.time.gregoriantime import GregorianTimeType

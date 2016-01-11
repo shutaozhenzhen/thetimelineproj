@@ -18,10 +18,10 @@
 
 import wx
 
-from timelinelib.data import Event
-from timelinelib.data import PeriodTooLongError
-from timelinelib.data import Subevent
-from timelinelib.data import TimePeriod
+from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import PeriodTooLongError
+from timelinelib.canvas.data import Subevent
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.framework import Controller

@@ -22,10 +22,10 @@ import wx
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
-from timelinelib.data.db import MemoryDB
-from timelinelib.data import Event
-from timelinelib.data import TimeOutOfRangeLeftError
-from timelinelib.data import TimeOutOfRangeRightError
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import TimeOutOfRangeLeftError
+from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian

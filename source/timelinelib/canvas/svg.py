@@ -27,7 +27,7 @@ from pysvg.builders import *
 from pysvg.filter import *
 
 from timelinelib.canvas.drawing.utils import darken_color
-from timelinelib.data import sort_categories
+from timelinelib.canvas.data import sort_categories
 
 
 OUTER_PADDING = 5      # Space between event boxes (pixels)

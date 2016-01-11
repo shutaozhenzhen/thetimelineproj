@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data.db import MemoryDB
+from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
 from timelinelib.test.cases.tmpdir import TmpDirTestCase

@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.data.idnumber import get_process_unique_id
+from timelinelib.canvas.data.idnumber import get_process_unique_id
 from timelinelib.wxgui.components.categorytree import CategoriesFacade
 from timelinelib.wxgui.components.categorytree import CustomCategoryTreeModel
 from timelinelib.test.cases.unit import UnitTestCase

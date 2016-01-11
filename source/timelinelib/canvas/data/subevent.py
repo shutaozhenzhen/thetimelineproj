@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data.event import Event
+from timelinelib.canvas.data.event import Event
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_STRATEGY
 
 

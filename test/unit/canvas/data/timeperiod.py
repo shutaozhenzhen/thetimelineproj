@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data import TimePeriod
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.time.typeinterface import TimeType
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import TIME_PERIOD_MODIFIERS

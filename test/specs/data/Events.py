@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data.events import InvalidOperationError
-from timelinelib.data import Events
+from timelinelib.canvas.data.events import InvalidOperationError
+from timelinelib.canvas.data import Events
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import an_event

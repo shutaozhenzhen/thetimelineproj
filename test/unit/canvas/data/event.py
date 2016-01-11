@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data import Event
-from timelinelib.data.timeperiod import TimePeriod
+from timelinelib.canvas.data import Event
+from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.test.cases.unit import UnitTestCase

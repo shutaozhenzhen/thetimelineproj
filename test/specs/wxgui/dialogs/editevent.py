@@ -20,8 +20,8 @@ from mock import Mock
 from mock import sentinel
 
 from timelinelib.config.dotfile import Config
-from timelinelib.data.db import MemoryDB
-from timelinelib.data.event import Event
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.event import Event
 from timelinelib.db import db_open
 from timelinelib.repositories.interface import EventRepository
 from timelinelib.time.gregoriantime import GregorianTimeType

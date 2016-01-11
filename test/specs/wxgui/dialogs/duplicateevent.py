@@ -19,10 +19,10 @@
 from mock import Mock
 
 from timelinelib.calendar.gregorian import GregorianUtils
-from timelinelib.data.db import MemoryDB
-from timelinelib.data import Event
-from timelinelib.data import Container
-from timelinelib.data import TimePeriod
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import Container
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.duplicateevent.controller import BACKWARD

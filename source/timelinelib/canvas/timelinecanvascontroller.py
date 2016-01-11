@@ -25,8 +25,8 @@ from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.canvas.events import create_hint_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
-from timelinelib.data import TimeOutOfRangeLeftError
-from timelinelib.data import TimeOutOfRangeRightError
+from timelinelib.canvas.data import TimeOutOfRangeLeftError
+from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.debug import DEBUG_ENABLED
 from timelinelib.debug import Monitoring

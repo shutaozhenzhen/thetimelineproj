@@ -16,11 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.data import Category
-from timelinelib.data import Event
-from timelinelib.data import Events
-from timelinelib.data import Eras
-from timelinelib.data.undohandler import UndoHandler
+from timelinelib.canvas.data import Category
+from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import Events
+from timelinelib.canvas.data import Eras
+from timelinelib.canvas.data.undohandler import UndoHandler
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.utilities.observer import Observable

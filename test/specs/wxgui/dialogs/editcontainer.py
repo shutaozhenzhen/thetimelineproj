@@ -18,8 +18,8 @@
 
 from mock import Mock
 
-from timelinelib.data.db import MemoryDB
-from timelinelib.data import Container
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data import Container
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db import db_open
 from timelinelib.repositories.interface import EventRepository

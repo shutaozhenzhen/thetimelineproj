@@ -19,7 +19,7 @@
 from mock import Mock
 import wx
 
-from timelinelib.data.db import MemoryDB
+from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.wxgui.frames.mainframe.mainframe import MenuController
 from timelinelib.test.cases.unit import UnitTestCase
 

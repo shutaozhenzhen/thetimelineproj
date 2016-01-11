@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.canvas.drawing.utils import Metrics
-from timelinelib.data import TimePeriod
+from timelinelib.canvas.data import TimePeriod
 
 
 FORWARD = 1
