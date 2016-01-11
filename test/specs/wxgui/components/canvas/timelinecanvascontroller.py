@@ -148,31 +148,6 @@ class TimelineViewSpec(UnitTestCase):
         self.controller.navigate_timeline(navigate)
         self.assert_has_posted_hint(_("Can't scroll more to the right"))
 
-    def test_selects_and_deselects_event_when_clicking_on_it(self):
-        event = self.given_event_with(pos=(30, 60), size=(50, 10))
-        self.init_view_with_db()
-        self.simulate_mouse_click(40, 65)
-        self.assert_is_selected(event)
-        self.simulate_mouse_click(40, 65)
-        self.assert_is_not_selected(event)
-
-    def test_deselects_event_when_clicking_outside_of_it(self):
-        event = self.given_event_with(pos=(30, 60), size=(50, 10))
-        self.init_view_with_db()
-        self.simulate_mouse_click(50, 65)
-        self.assert_is_selected(event)
-        self.simulate_mouse_click(0, ANY_Y)
-        self.assert_is_not_selected(event)
-
-    def test_selects_multiple_events_when_clicked_if_ctrl_is_pressed(self):
-        period_event = self.given_event_with(pos=(30, 60), size=(50, 10))
-        point_event = self.given_event_with(pos=(130, 30), size=(50, 10))
-        self.init_view_with_db()
-        self.simulate_mouse_click(50, 65)
-        self.simulate_mouse_click(140, 35, ctrl_down=True)
-        self.assert_is_selected(period_event)
-        self.assert_is_selected(point_event)
-
     def test_scrolls_with_10_percent_when_using_mouse_wheel(self):
         self.init_view_with_db_with_period("1 Aug 2010", "21 Aug 2010")
         self.controller.mouse_wheel_moved(

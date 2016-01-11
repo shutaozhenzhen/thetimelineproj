@@ -31,7 +31,6 @@ class NoOpInputHandler(InputHandler):
         self._state = state
         self._status_bar = status_bar
         self.timeline_canvas_controller = timeline_canvas_controller
-        self.view_properties = timeline_canvas_controller.view_properties
         self.appearance = timeline_canvas_controller.appearance
         self.show_timer_running = False
         self.hide_timer_running = False
@@ -76,8 +75,8 @@ class NoOpInputHandler(InputHandler):
     def _toggle_balloon_stickyness(self, x, y):
         event_with_balloon = self.timeline_canvas.GetBalloonAt(x, y)
         if event_with_balloon:
-            stick = not self.view_properties.event_has_sticky_balloon(event_with_balloon)
-            self.view_properties.set_event_has_sticky_balloon(event_with_balloon, has_sticky=stick)
+            stick = not self.timeline_canvas.EventHasStickyBalloon(event_with_balloon)
+            self.timeline_canvas.SetEventStickyBalloon(event_with_balloon, stick)
             if stick:
                 self.timeline_canvas.Redraw()
             else:
@@ -222,11 +221,12 @@ class NoOpInputHandler(InputHandler):
         if event:
             selected = not self.timeline_canvas.IsEventSelected(event)
             if control_down:
-                self.view_properties.set_selected(event, selected)
+                self.timeline_canvas.SetEventSelected(event, selected)
             else:
-                self.view_properties.set_only_selected(event, selected)
+                self.timeline_canvas.ClearSelectedEvents()
+                self.timeline_canvas.SetEventSelected(event, selected)
         else:
-            self.view_properties.clear_selected()
+            self.timeline_canvas.ClearSelectedEvents()
         return event is not None
 
     def _redraw_balloons(self, event):
