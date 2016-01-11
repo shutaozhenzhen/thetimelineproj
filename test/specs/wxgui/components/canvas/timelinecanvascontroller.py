@@ -55,40 +55,6 @@ class TimelineViewSpec(UnitTestCase):
         self.simulate_mouse_down_move_up((0, ANY_Y), (10, ANY_Y))
         self.assert_displays_period("10 Aug 2010", "30 Aug 2010")
 
-    def test_sends_hint_event_with_zoom_intstructions(self):
-        self.init_view_with_db()
-        self.controller.left_mouse_down(0, 0, ctrl_down=False, shift_down=True)
-        self.assert_has_posted_hint(_("Select region to zoom into"))
-
-    def test_sends_hint_event_with_period_to_short_message_when_zooming(self):
-        self.given_time_at_x_is(0, "1 Aug 2010 00:00:00")
-        self.given_time_at_x_is(1, "1 Aug 2010 00:00:01")
-        self.init_view_with_db()
-        self.start_shift_drag_at_x(0)
-        self.move_mouse_to_x(1)
-        self.assert_has_posted_hint(_("Region too short"))
-
-    def test_sends_hint_with_nothing_if_period_ok_when_zooming(self):
-        self.given_time_at_x_is(0, "1 Aug 2010")
-        self.given_time_at_x_is(1, "2 Aug 2010")
-        self.init_view_with_db()
-        self.start_shift_drag_at_x(0)
-        self.move_mouse_to_x(1)
-        self.assert_has_posted_hint("")
-
-    def test_sends_hint_with_nothing_for_long_period_zooming(self):
-        self.given_time_at_x_is(0, "1 Aug 2000")
-        self.given_time_at_x_is(200, "1 Aug 4000")
-        self.init_view_with_db()
-        self.start_shift_drag_at_x(0)
-        self.move_mouse_to_x(200)
-        self.assert_has_posted_hint("")
-
-    def test_removes_zoom_instructions_when_zoom_done(self):
-        self.init_view_with_db()
-        self.simulate_mouse_down_move_up((0, ANY_Y), (20, ANY_Y), shift_down=True)
-        self.assert_has_posted_hint("")
-
     def test_hightlights_selected_region_while_zooming(self):
         self.given_time_at_x_is(0, "1 Jan 2010")
         self.given_time_at_x_is(1, "1 Jan 2011")
