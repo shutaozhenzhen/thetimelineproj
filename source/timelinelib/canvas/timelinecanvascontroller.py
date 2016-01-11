@@ -20,14 +20,14 @@ import wx
 
 from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
+from timelinelib.canvas.data.exceptions import TimelineIOError
+from timelinelib.canvas.data import TimeOutOfRangeLeftError
+from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.drawing import get_drawer
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.canvas.events import create_hint_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
-from timelinelib.canvas.data import TimeOutOfRangeLeftError
-from timelinelib.canvas.data import TimeOutOfRangeRightError
-from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.debug import DEBUG_ENABLED
 from timelinelib.debug import Monitoring
 from timelinelib.utilities.observer import STATE_CHANGE_ANY

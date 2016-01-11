@@ -24,18 +24,22 @@ import StringIO
 
 import wx
 
+from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.calendar import get_date_formatter
+from timelinelib.calendar import set_date_formatter
 from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
-from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Era
+from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.timeperiod import PeriodTooLongError
-from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import create_non_exising_path
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.bosparaniantime import BosparanianTimeType
+from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
 from timelinelib.xml.parser import ANY
@@ -44,10 +48,6 @@ from timelinelib.xml.parser import parse
 from timelinelib.xml.parser import parse_fn_store
 from timelinelib.xml.parser import SINGLE
 from timelinelib.xml.parser import Tag
-from timelinelib.calendar import set_date_formatter
-from timelinelib.calendar import get_date_formatter
-from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 
 
 def import_db_from_timeline_xml(path):

@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.drawing.drawers import get_progress_color
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
-from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.canvas.drawing.drawers import get_progress_color
 from timelinelib.wxgui.framework import Controller
 
 

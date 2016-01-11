@@ -16,19 +16,19 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
+from timelinelib.canvas.data import Eras
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Events
-from timelinelib.canvas.data import Eras
 from timelinelib.canvas.data.undohandler import UndoHandler
-from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
+from timelinelib.features.experimental.experimentalfeatures import experimental_feature
 from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.time.timeline import Time
 from timelinelib.utilities.observer import Observable
 from timelinelib.utilities.observer import STATE_CHANGE_ANY
 from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
-from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
-from timelinelib.features.experimental.experimentalfeatures import experimental_feature
-from timelinelib.time.timeline import Time
 
 
 class MemoryDB(Observable):

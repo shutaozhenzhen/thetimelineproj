@@ -17,11 +17,4 @@
 
 
 class TimelineIOError(Exception):
-    """
-    Raised from a backend if a read/write error occurs.
-
-    The constructor and any of the public methods can raise this exception.
-
-    Also raised by the get_timeline method if loading of a timeline failed.
-    """
     pass

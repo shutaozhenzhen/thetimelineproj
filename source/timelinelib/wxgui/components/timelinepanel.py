@@ -20,10 +20,10 @@ import webbrowser
 
 import wx
 
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
 from timelinelib.canvas import EVT_HINT
 from timelinelib.canvas import EVT_TIMELINE_REDRAWN
-from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature

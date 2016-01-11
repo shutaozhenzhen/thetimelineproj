@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.repositories.dbwrapper import DbWrapperCategoryRepository
 from timelinelib.wxgui.dialogs.editcategory.view import EditCategoryDialog
 import timelinelib.wxgui.utils as gui_utils
