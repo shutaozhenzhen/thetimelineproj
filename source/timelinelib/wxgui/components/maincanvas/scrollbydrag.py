@@ -23,9 +23,10 @@ from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 
 class ScrollByDragInputHandler(InputHandler):
 
-    def __init__(self, state, timeline_canvas, start_time, y):
+    def __init__(self, state, timeline_canvas, main_frame, start_time, y):
         InputHandler.__init__(self, timeline_canvas)
         self._state = state
+        self._main_frame = main_frame
         self.start_slider_pos = self.timeline_canvas.GetDividerPosition()
         self.start_mouse_pos = y
         self.view_height = self.timeline_canvas.GetSize()[1]
@@ -46,7 +47,7 @@ class ScrollByDragInputHandler(InputHandler):
 
     def left_mouse_up(self):
         self._state.change_to_no_op()
-        self.timeline_canvas.edit_ends()
+        self._main_frame.edit_ends()
         if self.timeline_canvas.GetAppearance().get_use_inertial_scrolling():
             if self.speed_px_per_sec > self.INERTIAL_SCROLLING_SPEED_THRESHOLD:
                 self._inertial_scrolling()

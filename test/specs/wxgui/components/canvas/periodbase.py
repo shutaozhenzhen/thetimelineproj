@@ -45,4 +45,5 @@ class SelectperiodByDragInputHandler(UnitTestCase):
         canvas.Snap.return_value = GregorianUtils.from_date(2013, 12, 1).to_time()
         canvas.GetDb.return_value = TutorialTimelineCreator().db
         state = Mock()
-        self.handler = SelectPeriodByDragInputHandler(state, canvas, GregorianUtils.from_date(2013, 12, 31))
+        self.handler = SelectPeriodByDragInputHandler(
+            state, canvas, Mock(), GregorianUtils.from_date(2013, 12, 31))
