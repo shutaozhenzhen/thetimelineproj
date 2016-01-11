@@ -28,7 +28,6 @@ from timelinelib.canvas.noop import NoOpInputHandler
 from timelinelib.canvas.periodevent import CreatePeriodEventByDragInputHandler
 from timelinelib.canvas.resize import ResizeByDragInputHandler
 from timelinelib.canvas.scrolldrag import ScrollByDragInputHandler
-from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.canvas.zoom import ZoomByDragInputHandler
 from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db.utils import safe_locking
@@ -36,6 +35,7 @@ from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature
 from timelinelib.utilities.encodings import to_unicode
 from timelinelib.utilities.observer import Listener
+from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.components.sidebar import Sidebar
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
@@ -112,7 +112,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.sidebar = Sidebar(self.main_frame, self.splitter, self.handle_db_error)
 
     def _create_timeline_canvas(self):
-        self.timeline_canvas = TimelineCanvas(self.splitter, self.main_frame)
+        self.timeline_canvas = MainCanvas(self.splitter, self.main_frame)
         self.timeline_canvas.Bind(
             wx.EVT_LEFT_DCLICK,
             self._timeline_canvas_on_double_clicked
