@@ -36,7 +36,6 @@ from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.font import Font
 
 
-HSCROLL_STEP = 25
 MOUSE_SCROLL_FACTOR = 1 / 10.0
 
 
@@ -212,39 +211,6 @@ class TimelineCanvasController(object):
         return [self.timeline.find_event_with_id(id_) for id_ in
                 self.view_properties.get_selected_event_ids()]
 
-    def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
-        direction = _step_function(rotation)
-        if ctrl_down:
-            if shift_down:
-                self._scroll_horizontal(direction)
-            else:
-                self._zoom_timeline(direction, x)
-        elif shift_down:
-            self.view.SetDividerPosition(self.view.GetDividerPosition() + direction)
-        elif alt_down:
-            if direction > 0:
-                self.drawing_algorithm.increment_font_size()
-            else:
-                self.drawing_algorithm.decrement_font_size()
-            self._redraw_timeline()
-        else:
-            self._scroll_timeline_view(direction)
-
-    def _scroll_horizontal(self, direction):
-        if direction > 0:
-            self._scroll_up()
-        else:
-            self._scroll_down()
-        self._redraw_timeline()
-
-    def _scroll_up(self):
-        self.view_properties.hscroll_amount -= HSCROLL_STEP
-        if self.view_properties.hscroll_amount < 0:
-            self.view_properties.hscroll_amount = 0
-
-    def _scroll_down(self):
-        self.view_properties.hscroll_amount += HSCROLL_STEP
-
     def _timeline_changed(self, state_change):
         if (state_change == STATE_CHANGE_ANY or state_change == STATE_CHANGE_CATEGORY):
             self._redraw_timeline()
@@ -298,18 +264,3 @@ class TimelineCanvasController(object):
 
     def _scroll_timeline(self, delta):
         self.navigate_timeline(lambda tp: tp.move_delta(-delta))
-
-    def _zoom_timeline(self, direction, x):
-        """ zoom time line at position x """
-        width, _ = self.view.GetSizeTuple()
-        x_percent_of_width = float(x) / width
-        self.navigate_timeline(lambda tp: tp.zoom(direction, x_percent_of_width))
-
-
-def _step_function(x_value):
-    y_value = 0
-    if x_value < 0:
-        y_value = -1
-    elif x_value > 0:
-        y_value = 1
-    return y_value

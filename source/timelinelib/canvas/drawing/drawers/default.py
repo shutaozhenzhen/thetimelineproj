@@ -469,10 +469,10 @@ class DefaultDrawingAlgorithm(Drawer):
     def _draw_events(self, view_properties):
         """Draw all event boxes and the text inside them."""
         self._scroll_events_vertically(view_properties)
-        self.dc.SetFont(self.event_text_font)
         self.dc.DestroyClippingRegion()
         self._draw_lines_to_non_period_events(view_properties)
         for (event, rect) in self.scene.event_data:
+            self.dc.SetFont(self.event_text_font)
             if view_properties.use_fixed_event_vertical_pos():
                 rect.SetY(event.fixed_y)
             if event.is_container():

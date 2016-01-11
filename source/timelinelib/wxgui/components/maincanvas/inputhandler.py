@@ -36,6 +36,9 @@ class InputHandler(object):
     def middle_mouse_down(self, x):
         pass
 
+    def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
+        pass
+
     def dragscroll_timer_fired(self):
         pass
 

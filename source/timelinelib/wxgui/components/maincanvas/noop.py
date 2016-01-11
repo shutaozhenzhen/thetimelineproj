@@ -24,6 +24,9 @@ from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 
 
+HSCROLL_STEP = 25
+
+
 class NoOpInputHandler(InputHandler):
 
     def __init__(self, state, status_bar, main_frame, timeline_canvas):
@@ -219,6 +222,43 @@ class NoOpInputHandler(InputHandler):
         time = self.timeline_canvas.GetTimeAt(x)
         self.timeline_canvas.navigate_timeline(lambda tp: tp.center(time))
 
+    def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
+        direction = _step_function(rotation)
+        if ctrl_down:
+            if shift_down:
+                self._scroll_horizontal(direction)
+            else:
+                self._zoom_timeline(direction, x)
+        elif shift_down:
+            self.timeline_canvas.SetDividerPosition(self.timeline_canvas.GetDividerPosition() + direction)
+        elif alt_down:
+            if direction > 0:
+                self.timeline_canvas.IncrementEventTextFont()
+            else:
+                self.timeline_canvas.DecrementEventTextFont()
+            self.timeline_canvas.Redraw()
+        else:
+            self.timeline_canvas.Scroll(direction)
+
+    def _scroll_horizontal(self, direction):
+        if direction > 0:
+            self._scroll_up()
+        else:
+            self._scroll_down()
+        self.timeline_canvas.Redraw()
+
+    def _scroll_up(self):
+        self.timeline_canvas.SetHScrollAmount(max(0, self.timeline_canvas.GetHScrollAmount() - HSCROLL_STEP))
+
+    def _scroll_down(self):
+        self.timeline_canvas.SetHScrollAmount(self.timeline_canvas.GetHScrollAmount() + HSCROLL_STEP)
+
+    def _zoom_timeline(self, direction, x):
+        """ zoom time line at position x """
+        width, _ = self.timeline_canvas.GetSizeTuple()
+        x_percent_of_width = float(x) / width
+        self.timeline_canvas.navigate_timeline(lambda tp: tp.zoom(direction, x_percent_of_width))
+
     def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
         if event:
@@ -234,3 +274,12 @@ class NoOpInputHandler(InputHandler):
 
     def _redraw_balloons(self, event):
         self.timeline_canvas.SetHoveredEvent(event)
+
+
+def _step_function(x_value):
+    y_value = 0
+    if x_value < 0:
+        y_value = -1
+    elif x_value > 0:
+        y_value = 1
+    return y_value

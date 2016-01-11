@@ -72,6 +72,18 @@ class TimelineCanvas(wx.Panel):
         self.controller.use_fast_draw(use)
         self.Redraw()
 
+    def GetHScrollAmount(self):
+        return self.controller.view_properties.hscroll_amount
+
+    def SetHScrollAmount(self, amount):
+        self.controller.view_properties.hscroll_amount = amount
+
+    def IncrementEventTextFont(self):
+        self.controller.drawing_algorithm.increment_font_size()
+
+    def DecrementEventTextFont(self):
+        self.controller.drawing_algorithm.decrement_font_size()
+
     def SetPeriodSelection(self, period):
         if period is None:
             self.controller.view_properties.period_selection = None
@@ -227,7 +239,6 @@ class TimelineCanvas(wx.Panel):
         self.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
         self.Bind(wx.EVT_PAINT, self._on_paint)
         self.Bind(wx.EVT_SIZE, self._on_size)
-        self.Bind(wx.EVT_MOUSEWHEEL, self._on_mousewheel)
 
     def _on_erase_background(self, event):
         # For double buffering
@@ -244,6 +255,3 @@ class TimelineCanvas(wx.Panel):
 
     def _on_size(self, evt):
         self.controller.window_resized()
-
-    def _on_mousewheel(self, evt):
-        self.controller.mouse_wheel_moved(evt.GetWheelRotation(), evt.ControlDown(), evt.ShiftDown(), evt.AltDown(), evt.GetX())
