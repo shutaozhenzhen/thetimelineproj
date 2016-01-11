@@ -162,9 +162,6 @@ class TimelineCanvas(wx.Panel):
     def GetTimeAt(self, x):
         return self.controller.get_time(x)
 
-    def get_drawer(self):
-        return self.controller.get_drawer()
-
     def get_timeline(self):
         return self.controller.get_timeline()
 
