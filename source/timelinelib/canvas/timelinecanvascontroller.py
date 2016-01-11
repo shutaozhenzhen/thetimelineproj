@@ -212,19 +212,6 @@ class TimelineCanvasController(object):
         return [self.timeline.find_event_with_id(id_) for id_ in
                 self.view_properties.get_selected_event_ids()]
 
-    def mouse_enter(self, x, left_is_down):
-        """
-        Mouse event handler, when the mouse is entering the window.
-
-        If there is an ongoing selection-marking (dragscroll timer running)
-        and the left mouse button is not down when we enter the window, we
-        want to simulate a 'mouse left up'-event, so that the dialog for
-        creating an event will be opened or sizing, moving stops.
-        """
-        if self.dragscroll_timer_running:
-            if not left_is_down:
-                self.left_mouse_up()
-
     def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
         direction = _step_function(rotation)
         if ctrl_down:
