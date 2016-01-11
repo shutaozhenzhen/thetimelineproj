@@ -58,7 +58,7 @@ class NoOpInputHandler(InputHandler):
             return
         if (event is None and ctrl_down is False and shift_down is False):
             self._toggle_event_selection(x, y, ctrl_down)
-            self._state.change_to_scroll_by_drag(time_at_x)
+            self._state.change_to_scroll_by_drag(time_at_x, y)
             return
         if (event is None and ctrl_down is True):
             self._toggle_event_selection(x, y, ctrl_down)

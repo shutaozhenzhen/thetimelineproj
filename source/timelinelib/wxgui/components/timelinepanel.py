@@ -461,11 +461,9 @@ class InputHandlerState(object):
             self._timeline_canvas, self._status_bar,
             event, direction))
 
-    def change_to_scroll_by_drag(self, start_time):
+    def change_to_scroll_by_drag(self, start_time, y):
         self._timeline_canvas.SetInputHandler(ScrollByDragInputHandler(
-            self,
-            self._timeline_canvas, self._controller,
-            start_time))
+            self, self._timeline_canvas, start_time, y))
 
     def change_to_create_period_event_by_drag(self, time_at_x):
         self._timeline_canvas.SetInputHandler(CreatePeriodEventByDragInputHandler(

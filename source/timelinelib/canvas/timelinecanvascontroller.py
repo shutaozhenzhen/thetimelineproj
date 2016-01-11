@@ -78,15 +78,6 @@ class TimelineCanvasController(object):
     def post_hint_event(self, text):
         self.view.PostEvent(create_hint_event(text))
 
-    def start(self):
-        self.start_slider_pos = self.view.GetDividerPosition()
-        self.start_mouse_pos = wx.GetMousePosition()[1]
-        self.view_height = self.view.GetSize()[1]
-
-    def scroll_vertical(self):
-        percentage_distance = 100 * (wx.GetMousePosition()[1] - self.start_mouse_pos) / self.view_height
-        self.view.SetDividerPosition(self.start_slider_pos + percentage_distance)
-
     def get_saved_background_drawer(self):
         return DefaultBackgroundDrawer()
 
