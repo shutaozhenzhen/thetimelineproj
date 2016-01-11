@@ -55,13 +55,6 @@ class TimelineViewSpec(UnitTestCase):
         self.simulate_mouse_down_move_up((0, ANY_Y), (10, ANY_Y))
         self.assert_displays_period("10 Aug 2010", "30 Aug 2010")
 
-    def test_zooms_timeline_when_shift_dragging_mouse(self):
-        self.given_time_at_x_is(0, "1 Aug 2010")
-        self.given_time_at_x_is(20, "3 Aug 2010")
-        self.init_view_with_db()
-        self.simulate_mouse_down_move_up((0, ANY_Y), (20, ANY_Y), shift_down=True)
-        self.assert_displays_period("1 Aug 2010", "3 Aug 2010")
-
     def test_sends_hint_event_with_zoom_intstructions(self):
         self.init_view_with_db()
         self.controller.left_mouse_down(0, 0, ctrl_down=False, shift_down=True)
