@@ -140,9 +140,6 @@ class MainPanel(wx.Panel):
     def get_timeline_canvas(self):
         return self.timeline_panel.get_timeline_canvas()
 
-    def get_scene(self):
-        return self.timeline_panel.get_scene()
-
     def save_view_properties(self, timeline):
         timeline.save_view_properties(self.get_view_properties())
 
