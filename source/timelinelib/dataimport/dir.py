@@ -22,9 +22,9 @@ import os.path
 
 from timelinelib.calendar.gregorian import Gregorian
 from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Event
-from timelinelib.db.exceptions import TimelineIOError
 
 
 def import_db_from_dir(path):

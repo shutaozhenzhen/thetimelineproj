@@ -18,7 +18,7 @@
 
 import os.path
 
-from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.db import db_open
 from timelinelib.wxgui.framework import Controller
 from timelinelib.wxgui.utils import handle_db_error_by_crashing

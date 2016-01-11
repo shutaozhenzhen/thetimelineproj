@@ -19,7 +19,7 @@
 import codecs
 import os.path
 
-from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.canvas.data.exceptions import TimelineIOError
 
 
 def safe_write(path, encoding, write_fn):

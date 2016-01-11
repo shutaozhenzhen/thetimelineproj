@@ -19,15 +19,15 @@
 from mock import Mock
 
 from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Container
-from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db import db_open
 from timelinelib.repositories.interface import EventRepository
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.editcontainer.controller import EditContainerDialogController
 from timelinelib.wxgui.dialogs.editcontainer.view import EditContainerDialog
-from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import human_time_to_gregorian
 
 
 class describe_edit_container_dialog(UnitTestCase):

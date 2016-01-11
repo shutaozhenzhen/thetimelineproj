@@ -24,12 +24,12 @@ import wx.lib.newevent
 from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.calendar import set_date_formatter
+from timelinelib.canvas.data.exceptions import TimelineIOError
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.config.dotfile import read_config
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.config.paths import LOCALE_DIR
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
-from timelinelib.canvas.data import TimePeriod
-from timelinelib.db.exceptions import TimelineIOError
 from timelinelib.db import db_open
 from timelinelib.db.utils import safe_locking
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
@@ -57,9 +57,9 @@ from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
 from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
+from timelinelib.wxgui.dialogs.systeminfo.view import SystemInfoDialog
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
-from timelinelib.wxgui.dialogs.systeminfo.view import SystemInfoDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController

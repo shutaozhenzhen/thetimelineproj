@@ -18,9 +18,9 @@
 
 from mock import Mock
 
-from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.canvas.data.exceptions import TimelineIOError
+from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import an_event_with

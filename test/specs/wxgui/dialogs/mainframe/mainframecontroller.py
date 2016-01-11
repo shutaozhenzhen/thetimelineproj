@@ -18,12 +18,12 @@
 
 from mock import Mock
 
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.config.dotfile import Config
-from timelinelib.db.exceptions import TimelineIOError
+from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
-from timelinelib.test.cases.unit import UnitTestCase
 
 
 class MainFrameControllerTest(UnitTestCase):
