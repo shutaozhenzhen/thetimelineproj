@@ -73,7 +73,7 @@ class ResizeEventSpec(UnitTestCase):
     def when_resizing(self, event, direction):
         self.event_being_resized = event
         self.resizer = ResizeByDragInputHandler(
-            self.state, self.canvas, self.status_bar, event, direction)
+            self.state, self.canvas, self.status_bar, Mock(), event, direction)
 
     def and_moving_mouse_to_x(self, x):
         any_y = 10

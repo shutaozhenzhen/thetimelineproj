@@ -446,23 +446,22 @@ class InputHandlerState(object):
 
     def change_to_move_by_drag(self, event, start_drag_time):
         self._timeline_canvas.SetInputHandler(MoveByDragInputHandler(
-            self,
-            self._timeline_canvas, self._status_bar, event,
-            start_drag_time))
+            self, self._timeline_canvas, self._status_bar, self._main_frame,
+            event, start_drag_time))
 
     def change_to_zoom_by_drag(self, start_time):
         self._timeline_canvas.SetInputHandler(ZoomByDragInputHandler(
-            self, self._timeline_canvas, self._status_bar, start_time))
+            self, self._timeline_canvas, self._main_frame, self._status_bar,
+            start_time))
 
     def change_to_resize_by_drag(self, event, direction):
         self._timeline_canvas.SetInputHandler(ResizeByDragInputHandler(
-            self,
-            self._timeline_canvas, self._status_bar,
+            self, self._timeline_canvas, self._status_bar, self._main_frame,
             event, direction))
 
     def change_to_scroll_by_drag(self, start_time, y):
         self._timeline_canvas.SetInputHandler(ScrollByDragInputHandler(
-            self, self._timeline_canvas, start_time, y))
+            self, self._timeline_canvas, self._main_frame, start_time, y))
 
     def change_to_create_period_event_by_drag(self, time_at_x):
         self._timeline_canvas.SetInputHandler(CreatePeriodEventByDragInputHandler(
