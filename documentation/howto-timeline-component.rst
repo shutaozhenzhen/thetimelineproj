@@ -1,43 +1,45 @@
 How to use Timeline component in your wxPython application
 ==========================================================
 
-Example code::
+**Note: This is a work in progress.**
 
-    #!/usr/bin/env python
+The core component in Timeline, the canvas where events are drawn, is a
+reusable component that any wxPython application can use. It might be extracted
+to its own project. This page documents how to use the component.
 
+Importing
+---------
 
-    # Make sure timelinelib can be imported
-    import os.path
-    import sys
-    root_dir = os.path.abspath(os.path.dirname(__file__))
-    sys.path.insert(0, os.path.join(root_dir, ".."))
+All code related to the timeline canvas is located in ``timelinelib.canvas``.
+We must obtain the source code and make sure that the ``source/timelinelib``
+folder is on our Python path.
 
+For the time being, we also need to install gettext. The canvas currently
+depends on gettext, but it should not in the future. We can use this function
+to install gettext:
 
-    import wx
+.. literalinclude:: timeline_canvas_examples.py
+    :language: python
+    :pyobject: install_gettext_in_builtin_namespace
 
-    from timelinelib.wxgui.component import TimelineComponent
+Now we should be able to import the ``TimelineCanvas`` like this:
 
+.. literalinclude:: timeline_canvas_examples.py
+    :language: python
+    :lines: 36
 
-    class MainFrame(wx.Frame):
+The canvas
+----------
 
-        def __init__(self):
-            wx.Frame.__init__(self, None, style=wx.DEFAULT_FRAME_STYLE)
-            timeline_component = TimelineComponent(self)
-            timeline_component.open_timeline(
-                os.path.join(root_dir, "example.timeline"))
+The ``TimelineCanvas`` is a wx control that takes a single argument: the parent
+control:
 
+.. py:class:: timelinelib.canvas.TimelineCanvas
 
-    def install_gettext_in_builtin_namespace():
-        def _(message):
-            return message
-        import __builtin__
-        if not "_" in __builtin__.__dict__:
-            __builtin__.__dict__["_"] = _
+    .. py:method:: __init__(parent)
 
+It can be used in a frame like this:
 
-    if __name__ == "__main__":
-        install_gettext_in_builtin_namespace()
-        app = wx.PySimpleApp()
-        main_frame = MainFrame()
-        main_frame.Show()
-        app.MainLoop()
+.. literalinclude:: timeline_canvas_examples.py
+    :language: python
+    :pyobject: EmptyCanvas
