@@ -43,9 +43,6 @@ class TimelineCanvas(wx.Panel):
         self._create_gui()
         self.SetDividerPosition(50)
 
-    def SetInputHandler(self, input_handler):
-        self.controller.input_handler = input_handler
-
     def GetAppearance(self):
         return self.controller.get_appearance()
 
@@ -200,18 +197,6 @@ class TimelineCanvas(wx.Panel):
         self.Refresh()
         self.Update()
 
-    def start_balloon_show_timer(self, milliseconds=-1, oneShot=False):
-        self.balloon_show_timer.Start(milliseconds, oneShot)
-
-    def start_balloon_hide_timer(self, milliseconds=-1, oneShot=False):
-        self.balloon_hide_timer.Start(milliseconds, oneShot)
-
-    def start_dragscroll_timer(self, milliseconds=-1, oneShot=False):
-        self.dragscroll_timer.Start(milliseconds, oneShot)
-
-    def stop_dragscroll_timer(self):
-        self.dragscroll_timer.Stop()
-
     def set_select_period_cursor(self):
         self.SetCursor(wx.StockCursor(wx.CURSOR_IBEAM))
 
@@ -247,32 +232,13 @@ class TimelineCanvas(wx.Panel):
         return self.GetSize()[0] / 2
 
     def _create_gui(self):
-        self.balloon_show_timer = wx.Timer(self, -1)
-        self.balloon_hide_timer = wx.Timer(self, -1)
-        self.dragscroll_timer = wx.Timer(self, -1)
-        self.Bind(wx.EVT_TIMER, self._on_balloon_show_timer, self.balloon_show_timer)
-        self.Bind(wx.EVT_TIMER, self._on_balloon_hide_timer, self.balloon_hide_timer)
-        self.Bind(wx.EVT_TIMER, self._on_dragscroll, self.dragscroll_timer)
         self.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
         self.Bind(wx.EVT_PAINT, self._on_paint)
         self.Bind(wx.EVT_SIZE, self._on_size)
-        self.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
-        self.Bind(wx.EVT_LEFT_DCLICK, self._on_left_dclick)
         self.Bind(wx.EVT_MIDDLE_UP, self._on_middle_up)
-        self.Bind(wx.EVT_LEFT_UP, self._on_left_up)
         self.Bind(wx.EVT_ENTER_WINDOW, self._on_enter)
-        self.Bind(wx.EVT_MOTION, self._on_motion)
         self.Bind(wx.EVT_MOUSEWHEEL, self._on_mousewheel)
         self.Bind(wx.EVT_KEY_UP, self._on_key_up)
-
-    def _on_balloon_show_timer(self, evt):
-        self.controller.balloon_show_timer_fired()
-
-    def _on_balloon_hide_timer(self, evt):
-        self.controller.balloon_hide_timer_fired()
-
-    def _on_dragscroll(self, evt):
-        self.controller.dragscroll_timer_fired()
 
     def _on_erase_background(self, event):
         # For double buffering
@@ -290,26 +256,11 @@ class TimelineCanvas(wx.Panel):
     def _on_size(self, evt):
         self.controller.window_resized()
 
-    def _on_left_down(self, evt):
-        self.controller.left_mouse_down(evt.GetX(), evt.GetY(), evt.ControlDown(),
-                                        evt.ShiftDown(), evt.AltDown())
-        evt.Skip()
-
-    def _on_left_dclick(self, evt):
-        self.controller.left_mouse_dclick(evt.GetX(), evt.GetY(), evt.ControlDown(),
-                                          evt.AltDown())
-
     def _on_middle_up(self, evt):
         self.controller.middle_mouse_clicked(evt.GetX())
 
-    def _on_left_up(self, evt):
-        self.controller.left_mouse_up()
-
     def _on_enter(self, evt):
         self.controller.mouse_enter(evt.GetX(), evt.LeftIsDown())
-
-    def _on_motion(self, evt):
-        self.controller.mouse_moved(evt.GetX(), evt.GetY(), evt.AltDown())
 
     def _on_mousewheel(self, evt):
         self.controller.mouse_wheel_moved(evt.GetWheelRotation(), evt.ControlDown(), evt.ShiftDown(), evt.AltDown(), evt.GetX())

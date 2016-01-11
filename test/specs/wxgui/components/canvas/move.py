@@ -19,9 +19,9 @@
 from mock import Mock
 
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with, human_time_to_gregorian, gregorian_period
+from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.maincanvas.movebydrag import MoveByDragInputHandler
 from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
 
@@ -90,7 +90,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.given_time_at_x_is(50, "5 Jan 2011")
         self.when_moving(self.a_point_event("1 Jan 2011"),
                          from_time="1 Jan 2011", to_x=50)
-        self.assertTrue(self.timeline_canvas.Redraw.called)
+        self.assertTrue(self.canvas.Redraw.called)
 
     def setUp(self):
         def x(time):
@@ -103,12 +103,12 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.snap_times = {}
         self.selected_events = []
         self.status_bar = Mock()
-        self.timeline_canvas = Mock(TimelineCanvas)
-        self.timeline_canvas.GetSizeTuple.return_value = (0, 0)
-        self.timeline_canvas.GetSelectedEvents.return_value = self.selected_events
-        self.timeline_canvas.Snap.side_effect = x
-        self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
-        self.timeline_canvas.EventIsPeriod.side_effect = lambda event: event in self.period_events
+        self.canvas = Mock(MainCanvas)
+        self.canvas.GetSizeTuple.return_value = (0, 0)
+        self.canvas.GetSelectedEvents.return_value = self.selected_events
+        self.canvas.Snap.side_effect = x
+        self.canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
+        self.canvas.EventIsPeriod.side_effect = lambda event: event in self.period_events
         self.state = Mock()
 
     def a_point_event(self, time):
@@ -125,7 +125,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.snap_times[human_time_to_gregorian(from_)] = human_time_to_gregorian(to)
 
     def given_no_snap(self):
-        self.timeline_canvas.Snap.side_effect = lambda x: x
+        self.canvas.Snap.side_effect = lambda x: x
 
     def given_time_at_x_is(self, x, time):
         self.times_at[x] = human_time_to_gregorian(time)
@@ -136,14 +136,14 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
             self.period_events.append(event)
         handler = MoveByDragInputHandler(
             self.state,
-            self.timeline_canvas,
+            self.canvas,
             self.status_bar, event, human_time_to_gregorian(from_time))
         handler.mouse_moved(to_x, 10)
 
     def when_move_done(self):
         handler = MoveByDragInputHandler(
             self.state,
-            self.timeline_canvas,
+            self.canvas,
             self.status_bar, self.a_point_event("1 Jan 2011"), None)
         handler.left_mouse_up()
 
