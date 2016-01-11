@@ -221,16 +221,22 @@ class TimelineCanvas(wx.Panel):
         self.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
 
     def zoom_in(self):
-        self.controller.mouse_wheel_moved(120, True, False, False, self._get_half_width())
+        self.Zoom(1, self._get_half_width())
 
     def zoom_out(self):
-        self.controller.mouse_wheel_moved(-120, True, False, False, self._get_half_width())
+        self.Zoom(-1, self._get_half_width())
 
     def vert_zoom_in(self):
         self.controller.mouse_wheel_moved(120, False, False, True, self._get_half_width())
 
     def vert_zoom_out(self):
         self.controller.mouse_wheel_moved(-120, False, False, True, self._get_half_width())
+
+    def Zoom(self, direction, x):
+        """ zoom time line at position x """
+        width, _ = self.GetSizeTuple()
+        x_percent_of_width = float(x) / width
+        self.navigate_timeline(lambda tp: tp.zoom(direction, x_percent_of_width))
 
     def _get_half_width(self):
         return self.GetSize()[0] / 2
