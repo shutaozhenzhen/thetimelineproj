@@ -48,13 +48,6 @@ class TimelineViewSpec(UnitTestCase):
         self.init_view_with_db_with_period("1 Aug 2010", "2 Aug 2010")
         self.assert_displays_period("1 Aug 2010", "2 Aug 2010")
 
-    def test_scrolls_timeline_when_dragging_mouse(self):
-        self.given_time_at_x_is(0, "1 Aug 2010")
-        self.given_time_at_x_is(10, "2 Aug 2010")
-        self.init_view_with_db_with_period("11 Aug 2010", "31 Aug 2010")
-        self.simulate_mouse_down_move_up((0, ANY_Y), (10, ANY_Y))
-        self.assert_displays_period("10 Aug 2010", "30 Aug 2010")
-
     def test_hightlights_selected_region_while_zooming(self):
         self.given_time_at_x_is(0, "1 Jan 2010")
         self.given_time_at_x_is(1, "1 Jan 2011")
