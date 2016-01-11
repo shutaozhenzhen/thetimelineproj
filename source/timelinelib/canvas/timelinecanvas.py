@@ -22,6 +22,13 @@ from timelinelib.canvas.events import create_divider_position_changed_event
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 
 
+MOVE_HANDLE = 0
+LEFT_RESIZE_HANDLE = 1
+RIGHT_RESIZE_HANDLE = 2
+# Used by Sizer and Mover classes to detect when to go into action
+HIT_REGION_PX_WITH = 5
+
+
 class TimelineCanvas(wx.Panel):
     """
     This is the surface on which a timeline is drawn. It is also the object that handles user
@@ -115,6 +122,19 @@ class TimelineCanvas(wx.Panel):
 
     def GetEventAt(self, x, y, prefer_container=False):
         return self.controller.drawing_algorithm.event_at(x, y, prefer_container)
+
+    def GetEventWithHitInfoAt(self, x, y, prefer_container=False):
+        event_and_rect = self.controller.event_with_rect_at(x, y, prefer_container)
+        if event_and_rect is not None:
+            event, rect = event_and_rect
+            center = rect.X + rect.Width / 2
+            if abs(x - center) <= HIT_REGION_PX_WITH:
+                return (event, MOVE_HANDLE)
+            elif abs(x - rect.X) < HIT_REGION_PX_WITH:
+                return (event, LEFT_RESIZE_HANDLE)
+            elif abs(rect.X + rect.Width - x) < HIT_REGION_PX_WITH:
+                return (event, RIGHT_RESIZE_HANDLE)
+        return None
 
     def GetTimeAt(self, x):
         return self.controller.get_time(x)

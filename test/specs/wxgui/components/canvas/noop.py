@@ -21,6 +21,7 @@ import wx
 
 from timelinelib.canvas.noop import NoOpInputHandler
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event, an_event_with, human_time_to_gregorian
 from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
@@ -59,6 +60,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.setup_timeline_canvas_controller_mock()
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetEventAt.side_effect = lambda x, y, alt: self.events_at[(x, y)][0]
+        self.timeline_canvas.GetEventWithHitInfoAt.side_effect = lambda x, y, alt: (self.events_at[(x, y)][0], MOVE_HANDLE)
         self.timeline_canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
         self.timeline_canvas.GetSelectedEvents.return_value = []
         self.state = Mock()
