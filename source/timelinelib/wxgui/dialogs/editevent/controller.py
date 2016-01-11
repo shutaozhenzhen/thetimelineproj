@@ -261,7 +261,7 @@ class EditEventDialogController(Controller):
         if self._is_new_container(self.container):
             self._add_new_container()
         self.event = Subevent(self.time_type, self.start, self.end, self.name,
-                              self.category, self.container)
+                              self.category, self.container, ends_today=self.ends_today)
 
     def _is_new_container(self, container):
         return container not in self.timeline.get_containers()
