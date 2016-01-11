@@ -212,9 +212,6 @@ class TimelineCanvasController(object):
         return [self.timeline.find_event_with_id(id_) for id_ in
                 self.view_properties.get_selected_event_ids()]
 
-    def middle_mouse_clicked(self, x):
-        self.navigate_timeline(lambda tp: tp.center(self.get_time(x)))
-
     def mouse_enter(self, x, left_is_down):
         """
         Mouse event handler, when the mouse is entering the window.
