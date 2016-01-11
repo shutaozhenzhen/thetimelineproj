@@ -38,6 +38,7 @@ class MainCanvas(TimelineCanvas):
         self.Bind(wx.EVT_TIMER, self._on_balloon_hide_timer, self.balloon_hide_timer)
         self.Bind(wx.EVT_TIMER, self._on_dragscroll, self.dragscroll_timer)
         self.Bind(wx.EVT_MIDDLE_DOWN, self._on_middle_down)
+        self.Bind(wx.EVT_MOUSEWHEEL, self._on_mousewheel)
 
     def SetInputHandler(self, input_handler):
         self._input_handler = input_handler
@@ -68,6 +69,11 @@ class MainCanvas(TimelineCanvas):
 
     def _on_middle_down(self, event):
         self._input_handler.middle_mouse_down(event.GetX())
+
+    def _on_mousewheel(self, evt):
+        self._input_handler.mouse_wheel_moved(
+            evt.GetWheelRotation(), evt.ControlDown(), evt.ShiftDown(),
+            evt.AltDown(), evt.GetX())
 
     def start_balloon_show_timer(self, milliseconds=-1, oneShot=False):
         self.balloon_show_timer.Start(milliseconds, oneShot)

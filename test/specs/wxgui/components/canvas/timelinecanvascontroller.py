@@ -20,7 +20,6 @@ from mock import Mock
 import wx
 
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
-from timelinelib.canvas.timelinecanvascontroller import HSCROLL_STEP
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.data.db import MemoryDB
@@ -47,12 +46,6 @@ class TimelineViewSpec(UnitTestCase):
         self.init_view_with_db_with_period("1 Aug 2010", "2 Aug 2010")
         self.assert_displays_period("1 Aug 2010", "2 Aug 2010")
 
-    def test_zooms_timeline_by_10_percent_on_each_side_when_scrolling_while_holding_down_ctrl(self):
-        self.init_view_with_db_with_period("1 Aug 2010", "21 Aug 2010")
-        self.controller.mouse_wheel_moved(
-            1, ctrl_down=True, shift_down=False, alt_down=False, x=self.middle_x)
-        self.assert_displays_period("3 Aug 2010", "19 Aug 2010")
-
     def test_sends_error_hint_wehn_scrolling_too_far_left(self):
         def navigate(time_period):
             raise TimeOutOfRangeLeftError()
@@ -66,24 +59,6 @@ class TimelineViewSpec(UnitTestCase):
         self.init_view_with_db()
         self.controller.navigate_timeline(navigate)
         self.assert_has_posted_hint(_("Can't scroll more to the right"))
-
-    def test_scrolls_with_10_percent_when_using_mouse_wheel(self):
-        self.init_view_with_db_with_period("1 Aug 2010", "21 Aug 2010")
-        self.controller.mouse_wheel_moved(
-            -1, ctrl_down=False, shift_down=False, alt_down=False, x=self.middle_x)
-        self.assert_displays_period("3 Aug 2010", "23 Aug 2010")
-        self.assert_timeline_redrawn()
-        self.controller.mouse_wheel_moved(
-            1, ctrl_down=False, shift_down=False, alt_down=False, x=self.middle_x)
-        self.assert_displays_period("1 Aug 2010", "21 Aug 2010")
-        self.assert_timeline_redrawn()
-
-    def test_shift_scroll_changes_divider_line_value_and_redraws(self):
-        self.init_view_with_db()
-        self.controller.mouse_wheel_moved(
-            1, ctrl_down=False, shift_down=True, alt_down=False, x=self.middle_x)
-        self.assertTrue(self.timeline_canvas.SetDividerPosition.called)
-        self.assert_timeline_redrawn()
 
     def test_disables_view_if_no_timeline_set(self):
         self.controller.set_timeline(None)
@@ -299,31 +274,6 @@ class DrawingAreaSpec(UnitTestCase):
         db = MemoryDB()
         self.controller.set_timeline(db)
         self.assertEqual(db, self.controller.get_timeline())
-
-    def test_scroll_horizontal_down_increases_scroll_amount(self):
-        self.when_scrolling_down_with(1)
-        self.assertEqual(HSCROLL_STEP, self.controller.view_properties.hscroll_amount)
-
-    def test_scroll_horizontal_up_decreases_scroll_amount(self):
-        self.when_scrolling_down_with(2)
-        self.when_scrolling_up_with(1)
-        self.assertEqual(HSCROLL_STEP, self.controller.view_properties.hscroll_amount)
-
-    def test_scroll_horizontal_amount_always_ge_zero(self):
-        self.when_scrolling_down_with(2)
-        self.when_scrolling_up_with(4)
-        self.assertEqual(0, self.controller.view_properties.hscroll_amount)
-
-    def when_scrolling_down_with(self, amount):
-        for _ in xrange(amount):
-            self.when_mouse_wheel_moved(-1)
-
-    def when_scrolling_up_with(self, amount):
-        for _ in xrange(amount):
-            self.when_mouse_wheel_moved(1)
-
-    def when_mouse_wheel_moved(self, rotation):
-        self.controller.mouse_wheel_moved(rotation, True, True, False, 0)
 
     def setUp(self):
         self.app = wx.App()  # a stored app is needed to create fonts
