@@ -178,9 +178,6 @@ class TimelineCanvasController(object):
     def window_resized(self):
         self._redraw_timeline()
 
-    def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
-        self.input_handler.left_mouse_down(x, y, ctrl_down, shift_down, alt_down)
-
     def _one_and_only_one_event_selected(self):
         selected_event_ids = self.view_properties.get_selected_event_ids()
         nbr_of_selected_event_ids = len(selected_event_ids)
@@ -192,9 +189,6 @@ class TimelineCanvasController(object):
             event_id = selected_event_ids[0]
             return self.timeline.find_event_with_id(event_id)
         return None
-
-    def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
-        self.input_handler.left_mouse_dclick(x, y, ctrl_down, alt_down)
 
     def get_time(self, x):
         return self.drawing_algorithm.get_time(x)
@@ -221,9 +215,6 @@ class TimelineCanvasController(object):
     def middle_mouse_clicked(self, x):
         self.navigate_timeline(lambda tp: tp.center(self.get_time(x)))
 
-    def left_mouse_up(self):
-        self.input_handler.left_mouse_up()
-
     def mouse_enter(self, x, left_is_down):
         """
         Mouse event handler, when the mouse is entering the window.
@@ -236,9 +227,6 @@ class TimelineCanvasController(object):
         if self.dragscroll_timer_running:
             if not left_is_down:
                 self.left_mouse_up()
-
-    def mouse_moved(self, x, y, alt_down=False):
-        self.input_handler.mouse_moved(x, y, alt_down)
 
     def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
         direction = _step_function(rotation)
@@ -318,15 +306,6 @@ class TimelineCanvasController(object):
             self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
             self.view.redraw_surface(fn_draw)
             self.view.PostEvent(create_timeline_redrawn_event())
-
-    def balloon_show_timer_fired(self):
-        self.input_handler.balloon_show_timer_fired()
-
-    def balloon_hide_timer_fired(self):
-        self.input_handler.balloon_hide_timer_fired()
-
-    def dragscroll_timer_fired(self):
-        self.input_handler.dragscroll_timer_fired()
 
     def _scroll_timeline_view(self, direction):
         factor = direction * MOUSE_SCROLL_FACTOR
