@@ -173,8 +173,8 @@ class TimelineCanvas(wx.Panel):
     def get_view_properties(self):
         return self.controller.get_view_properties()
 
-    def get_current_image(self):
-        return self.surface_bitmap
+    def SaveAsPng(self, path):
+        wx.ImageFromBitmap(self.surface_bitmap).SaveFile(path, wx.BITMAP_TYPE_PNG)
 
     def get_filtered_events(self, search_target):
         events = self.get_timeline().search(search_target)
