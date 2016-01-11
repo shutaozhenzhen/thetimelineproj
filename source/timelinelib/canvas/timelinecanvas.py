@@ -19,6 +19,7 @@
 import wx
 
 from timelinelib.canvas.events import create_divider_position_changed_event
+from timelinelib.canvas.svg import export
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 
 
@@ -175,6 +176,9 @@ class TimelineCanvas(wx.Panel):
 
     def SaveAsPng(self, path):
         wx.ImageFromBitmap(self.surface_bitmap).SaveFile(path, wx.BITMAP_TYPE_PNG)
+
+    def SaveAsSvg(self, path):
+        export(path, self.controller.get_drawer().scene, self.controller.view_properties)
 
     def get_filtered_events(self, search_target):
         events = self.get_timeline().search(search_target)

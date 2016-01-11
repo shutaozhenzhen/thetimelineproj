@@ -377,9 +377,6 @@ class TimelinePanel(TimelinePanelGuiCreator):
     def get_timeline_canvas(self):
         return self.timeline_canvas
 
-    def get_scene(self):
-        return self.timeline_canvas.get_drawer().scene
-
     def get_time_period(self):
         return self.timeline_canvas.get_time_period()
 
