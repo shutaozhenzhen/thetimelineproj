@@ -24,9 +24,6 @@ from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 
 
-HSCROLL_STEP = 25
-
-
 class NoOpInputHandler(InputHandler):
 
     def __init__(self, state, status_bar, main_frame, timeline_canvas):
@@ -226,7 +223,7 @@ class NoOpInputHandler(InputHandler):
         direction = _step_function(rotation)
         if ctrl_down:
             if shift_down:
-                self._scroll_horizontal(direction)
+                self.timeline_canvas.ZoomVertically(direction)
             else:
                 self.timeline_canvas.Zoom(direction, x)
         elif shift_down:
@@ -239,19 +236,6 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.Redraw()
         else:
             self.timeline_canvas.Scroll(direction)
-
-    def _scroll_horizontal(self, direction):
-        if direction > 0:
-            self._scroll_up()
-        else:
-            self._scroll_down()
-        self.timeline_canvas.Redraw()
-
-    def _scroll_up(self):
-        self.timeline_canvas.SetHScrollAmount(max(0, self.timeline_canvas.GetHScrollAmount() - HSCROLL_STEP))
-
-    def _scroll_down(self):
-        self.timeline_canvas.SetHScrollAmount(self.timeline_canvas.GetHScrollAmount() + HSCROLL_STEP)
 
     def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)

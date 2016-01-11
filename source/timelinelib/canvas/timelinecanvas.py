@@ -27,6 +27,7 @@ LEFT_RESIZE_HANDLE = 1
 RIGHT_RESIZE_HANDLE = 2
 # Used by Sizer and Mover classes to detect when to go into action
 HIT_REGION_PX_WITH = 5
+HSCROLL_STEP = 25
 
 
 class TimelineCanvas(wx.Panel):
@@ -227,16 +228,29 @@ class TimelineCanvas(wx.Panel):
         self.Zoom(-1, self._get_half_width())
 
     def vert_zoom_in(self):
-        self.controller.mouse_wheel_moved(120, False, False, True, self._get_half_width())
+        self.ZoomVertically(1)
 
     def vert_zoom_out(self):
-        self.controller.mouse_wheel_moved(-120, False, False, True, self._get_half_width())
+        self.ZoomVertically(-1)
 
     def Zoom(self, direction, x):
         """ zoom time line at position x """
         width, _ = self.GetSizeTuple()
         x_percent_of_width = float(x) / width
         self.navigate_timeline(lambda tp: tp.zoom(direction, x_percent_of_width))
+
+    def ZoomVertically(self, direction):
+        if direction > 0:
+            self._scroll_up()
+        else:
+            self._scroll_down()
+        self.Redraw()
+
+    def _scroll_up(self):
+        self.SetHScrollAmount(max(0, self.GetHScrollAmount() - HSCROLL_STEP))
+
+    def _scroll_down(self):
+        self.SetHScrollAmount(self.GetHScrollAmount() + HSCROLL_STEP)
 
     def _get_half_width(self):
         return self.GetSize()[0] / 2
