@@ -18,10 +18,10 @@
 
 import wx
 
-from timelinelib.canvas.inputhandler import InputHandler
 from timelinelib.canvas.timelinecanvas import LEFT_RESIZE_HANDLE
 from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
 from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
+from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 
 
 class NoOpInputHandler(InputHandler):
