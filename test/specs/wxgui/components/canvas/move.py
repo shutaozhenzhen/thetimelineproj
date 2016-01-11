@@ -18,11 +18,11 @@
 
 from mock import Mock
 
-from timelinelib.canvas.move import MoveByDragInputHandler
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with, human_time_to_gregorian, gregorian_period
+from timelinelib.wxgui.components.maincanvas.movebydrag import MoveByDragInputHandler
 from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
 
 

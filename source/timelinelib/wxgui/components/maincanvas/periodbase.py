@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.scrollbase import ScrollViewInputHandler
 from timelinelib.data import TimePeriod
+from timelinelib.wxgui.components.maincanvas.scrollbase import ScrollViewInputHandler
 
 
 class SelectPeriodByDragInputHandler(ScrollViewInputHandler):
