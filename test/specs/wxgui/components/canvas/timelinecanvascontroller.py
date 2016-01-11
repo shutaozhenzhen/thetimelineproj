@@ -123,23 +123,6 @@ class TimelineViewSpec(UnitTestCase):
             1, ctrl_down=True, shift_down=False, alt_down=False, x=self.middle_x)
         self.assert_displays_period("3 Aug 2010", "19 Aug 2010")
 
-    def test_displays_balloon_for_event_with_description(self):
-        event = self.given_event_with(description="any description", pos=(40, 60), size=(20, 10))
-        self.init_view_with_db()
-        self.controller.mouse_moved(50, 65)
-        self.fire_balloon_show_timer()
-        self.assert_balloon_drawn_for_event(event)
-
-    def test_hides_balloon_when_leaving_event(self):
-        event = self.given_event_with(description="any description", pos=(40, 60), size=(20, 10))
-        self.init_view_with_db()
-        self.controller.mouse_moved(50, 65)
-        self.fire_balloon_show_timer()
-        self.assert_balloon_drawn_for_event(event)
-        self.controller.mouse_moved(0, ANY_Y)
-        self.fire_balloon_hide_timer()
-        self.assert_balloon_drawn_for_event(None)
-
     def test_sets_event_info_in_status_bar_when_hovering_event(self):
         event = self.given_event_with(text="Period event", pos=(40, 60), size=(20, 10))
         self.init_view_with_db()
