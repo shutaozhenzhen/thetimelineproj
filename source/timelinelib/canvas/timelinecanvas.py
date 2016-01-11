@@ -72,6 +72,10 @@ class TimelineCanvas(wx.Panel):
     def ScrollByDelta(self, delta):
         self.controller._scroll_timeline(delta)
 
+    def UseFastDraw(self, use):
+        self.controller.use_fast_draw(use)
+        self.Redraw()
+
     def SetPeriodSelection(self, period):
         if period is None:
             self.controller.view_properties.period_selection = None

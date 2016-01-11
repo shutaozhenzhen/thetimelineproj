@@ -71,7 +71,7 @@ class ScrollByDragInputHandler(InputHandler):
         frame_time = self._calculate_frame_time()
         value_factor = self._calculate_scroll_factor()
         inertial_func = (0.20, 0.15, 0.10, 0.10, 0.10, 0.08, 0.06, 0.06, 0.05)
-        self.controller.use_fast_draw(True)
+        self.timeline_canvas.UseFastDraw(True)
         next_frame_time = time.clock()
         for value in inertial_func:
             self.timeline_canvas.Scroll(value * value_factor)
@@ -79,8 +79,7 @@ class ScrollByDragInputHandler(InputHandler):
             sleep_time = next_frame_time - time.clock()
             if sleep_time >= 0:
                 time.sleep(sleep_time)
-        self.controller.use_fast_draw(False)
-        self.timeline_canvas.Redraw()
+        self.timeline_canvas.UseFastDraw(False)
 
     def _calculate_frame_time(self):
         MAX_FRAME_RATE = 26.0
