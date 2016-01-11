@@ -199,7 +199,7 @@ class TimelineViewSpec(UnitTestCase):
             self.timeline_canvas, self.controller, self.status_bar, Mock(),
             Mock(), Mock())
         set_input_handler(NoOpInputHandler(state, self.status_bar,
-            self.controller, self.timeline_canvas))
+            self.timeline_canvas))
 
     def given_event_with(self, start="4 Aug 2010", end="10 Aug 2010",
                          text="Text", description=None,

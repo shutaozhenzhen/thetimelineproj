@@ -26,12 +26,10 @@ from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
 
 class NoOpInputHandler(InputHandler):
 
-    def __init__(self, state, status_bar, timeline_canvas_controller, timeline_canvas):
+    def __init__(self, state, status_bar, timeline_canvas):
         InputHandler.__init__(self, timeline_canvas)
         self._state = state
         self._status_bar = status_bar
-        self.timeline_canvas_controller = timeline_canvas_controller
-        self.appearance = timeline_canvas_controller.appearance
         self.show_timer_running = False
         self.hide_timer_running = False
         self.last_hovered_event = None
@@ -80,7 +78,7 @@ class NoOpInputHandler(InputHandler):
             if stick:
                 self.timeline_canvas.Redraw()
             else:
-                if self.appearance.get_balloons_visible():
+                if self.timeline_canvas.GetAppearance().get_balloons_visible():
                     self._redraw_balloons(event_with_balloon)
                 else:
                     self._redraw_balloons(None)
@@ -128,7 +126,7 @@ class NoOpInputHandler(InputHandler):
             self.hide_timer_running = True
 
     def _balloons_disabled(self):
-        return not self.appearance.get_balloons_visible()
+        return not self.timeline_canvas.GetAppearance().get_balloons_visible()
 
     def _current_event_selected(self):
         return (self.last_hovered_event is not None and
