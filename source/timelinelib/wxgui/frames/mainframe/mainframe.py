@@ -59,6 +59,7 @@ from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
+from timelinelib.wxgui.dialogs.systeminfo.view import SystemInfoDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
@@ -102,6 +103,7 @@ ID_EDIT_SHORTCUTS = wx.NewId()
 ID_TUTORIAL = wx.NewId()
 ID_FEEDBACK = wx.NewId()
 ID_CONTACT = wx.NewId()
+ID_SYSTEM_INFO = wx.NewId()
 ID_IMPORT = wx.NewId()
 ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
@@ -579,6 +581,13 @@ class GuiCreator(object):
         def contact(e):
             self.help_browser.show_page("contact")
 
+        def system_info(e):
+            dialog = SystemInfoDialog(self)
+            try:
+                dialog.ShowModal()
+            finally:
+                dialog.Destroy()
+
         def about(e):
             display_about_dialog()
 
@@ -589,6 +598,8 @@ class GuiCreator(object):
                  None,
                  (ID_FEEDBACK, feedback, _("Give &Feedback..."), cbx),
                  (ID_CONTACT, contact, _("Co&ntact"), cbx),
+                 None,
+                 (ID_SYSTEM_INFO, system_info, _("System information"), cbx),
                  None,
                  (wx.ID_ABOUT, about, None, cbx)]
         help_menu = wx.Menu()
