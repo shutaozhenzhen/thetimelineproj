@@ -228,7 +228,7 @@ class NoOpInputHandler(InputHandler):
             if shift_down:
                 self._scroll_horizontal(direction)
             else:
-                self._zoom_timeline(direction, x)
+                self.timeline_canvas.Zoom(direction, x)
         elif shift_down:
             self.timeline_canvas.SetDividerPosition(self.timeline_canvas.GetDividerPosition() + direction)
         elif alt_down:
@@ -252,12 +252,6 @@ class NoOpInputHandler(InputHandler):
 
     def _scroll_down(self):
         self.timeline_canvas.SetHScrollAmount(self.timeline_canvas.GetHScrollAmount() + HSCROLL_STEP)
-
-    def _zoom_timeline(self, direction, x):
-        """ zoom time line at position x """
-        width, _ = self.timeline_canvas.GetSizeTuple()
-        x_percent_of_width = float(x) / width
-        self.timeline_canvas.navigate_timeline(lambda tp: tp.zoom(direction, x_percent_of_width))
 
     def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
