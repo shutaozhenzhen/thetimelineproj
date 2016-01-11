@@ -23,6 +23,7 @@ from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas.noop import NoOpInputHandler
 from timelinelib.canvas.timelinecanvascontroller import HSCROLL_STEP
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.canvas.timelinecanvas import TimelineCanvas
 from timelinelib.data.db import MemoryDB
 from timelinelib.data import Event
 from timelinelib.data import TimeOutOfRangeLeftError
@@ -31,7 +32,6 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.components.timelinepanel import InputHandlerState
-from timelinelib.wxgui.components.timelinepanel import TimelineCanvas
 from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
 
 
