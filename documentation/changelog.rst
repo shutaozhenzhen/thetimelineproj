@@ -57,6 +57,8 @@ GUI:
 
 * The Ends-today property can be set on subevents if the extended conatiner strategy is used
 
+* A new dialog in the help menu displays System information.
+
 Translations:
 
 * The wx stock items are translated correctly in the Windows binary.
