@@ -235,7 +235,7 @@ class NoOpInputHandler(InputHandler):
                 self.timeline_canvas.DecrementEventTextFont()
             self.timeline_canvas.Redraw()
         else:
-            self.timeline_canvas.Scroll(direction)
+            self.timeline_canvas.Scroll(direction * 0.1)
 
     def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)

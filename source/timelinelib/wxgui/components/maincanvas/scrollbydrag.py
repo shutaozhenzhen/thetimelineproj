@@ -67,8 +67,8 @@ class ScrollByDragInputHandler(InputHandler):
 
     def _scroll_timeline(self, x):
         self.current_time = self.timeline_canvas.GetTimeAt(x)
-        delta = (self.current_time - self.start_time)
-        self.timeline_canvas.ScrollByDelta(delta)
+        self.timeline_canvas.Navigate(lambda tp:
+            tp.move_delta(self.start_time - self.current_time))
 
     def _inertial_scrolling(self):
         frame_time = self._calculate_frame_time()
@@ -77,7 +77,7 @@ class ScrollByDragInputHandler(InputHandler):
         self.timeline_canvas.UseFastDraw(True)
         next_frame_time = time.clock()
         for value in inertial_func:
-            self.timeline_canvas.Scroll(value * value_factor)
+            self.timeline_canvas.Scroll(value * value_factor * 0.1)
             next_frame_time += frame_time
             sleep_time = next_frame_time - time.clock()
             if sleep_time >= 0:

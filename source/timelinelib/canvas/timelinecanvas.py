@@ -60,14 +60,9 @@ class TimelineCanvas(wx.Panel):
     def GetHiddenEventCount(self):
         return self.controller.drawing_algorithm.get_hidden_event_count()
 
-    def Scroll(self, direction):
-        self.controller._scroll_timeline_view(direction)
-
-    def ScrollByFactor(self, factor):
-        self.controller._scroll_timeline_view_by_factor(factor)
-
-    def ScrollByDelta(self, delta):
-        self.controller._scroll_timeline(delta)
+    def Scroll(self, factor):
+        self.Navigate(lambda tp:
+            tp.move_delta(-tp.time_type.mult_timedelta(tp.delta(), factor)))
 
     def UseFastDraw(self, use):
         self.controller.use_fast_draw(use)
