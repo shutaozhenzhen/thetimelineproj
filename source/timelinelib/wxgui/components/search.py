@@ -153,7 +153,7 @@ class SearchBarController(object):
     def navigate_to_match(self):
         if (self.timeline_canvas is not None and self.result_index in range(len(self.result))):
             event = self.result[self.result_index]
-            self.timeline_canvas.navigate_timeline(lambda tp: tp.center(event.mean_time()))
+            self.timeline_canvas.Navigate(lambda tp: tp.center(event.mean_time()))
 
     def enable_backward(self):
         return bool(self.result and self.result_index > 0)

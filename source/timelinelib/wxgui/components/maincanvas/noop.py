@@ -217,7 +217,7 @@ class NoOpInputHandler(InputHandler):
 
     def middle_mouse_down(self, x):
         time = self.timeline_canvas.GetTimeAt(x)
-        self.timeline_canvas.navigate_timeline(lambda tp: tp.center(time))
+        self.timeline_canvas.Navigate(lambda tp: tp.center(time))
 
     def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
         direction = _step_function(rotation)

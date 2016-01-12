@@ -184,8 +184,11 @@ class TimelineCanvas(wx.Panel):
     def get_time_period(self):
         return self.controller.get_time_period()
 
-    def navigate_timeline(self, navigation_fn):
-        self.controller.navigate_timeline(navigation_fn)
+    def Navigate(self, navigation_fn):
+        old_period = self.controller.view_properties.displayed_period
+        new_period = navigation_fn(old_period)
+        self.controller.view_properties.displayed_period = new_period
+        self.Redraw()
 
     def Redraw(self):
         self.redraw_timeline()
@@ -238,7 +241,7 @@ class TimelineCanvas(wx.Panel):
         """ zoom time line at position x """
         width, _ = self.GetSizeTuple()
         x_percent_of_width = float(x) / width
-        self.navigate_timeline(lambda tp: tp.zoom(direction, x_percent_of_width))
+        self.Navigate(lambda tp: tp.zoom(direction, x_percent_of_width))
 
     def ZoomVertically(self, direction):
         if direction > 0:

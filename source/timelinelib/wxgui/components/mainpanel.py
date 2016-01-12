@@ -169,8 +169,8 @@ class MainPanel(wx.Panel):
     def redraw_timeline(self):
         self.timeline_panel.redraw_timeline()
 
-    def navigate_timeline(self, navigation_fn):
-        return self.timeline_panel.navigate_timeline(navigation_fn)
+    def Navigate(self, navigation_fn):
+        return self.timeline_panel.Navigate(navigation_fn)
 
     def get_visible_events(self, all_events):
         view_properties = self.get_view_properties()

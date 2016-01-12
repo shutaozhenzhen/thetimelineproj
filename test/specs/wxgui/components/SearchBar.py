@@ -109,5 +109,5 @@ class TimelineCanvas():
         elif search == "three":
             return [1, 2, 3]
 
-    def navigate_timeline(self, fn):
+    def Navigate(self, fn):
         self.navigate = True

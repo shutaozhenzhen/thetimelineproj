@@ -47,4 +47,4 @@ class ZoomByDragInputHandler(SelectPeriodByDragInputHandler):
         delta = end - start
         if period.time_type.zoom_is_ok(delta):
             # Don't zoom in to less than an hour which upsets things.
-            self.timeline_canvas.navigate_timeline(lambda tp: tp.update(start, end))
+            self.timeline_canvas.Navigate(lambda tp: tp.update(start, end))

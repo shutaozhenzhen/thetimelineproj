@@ -18,14 +18,18 @@
 
 import wx
 
+from timelinelib.canvas.data import TimeOutOfRangeLeftError
+from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas import TimelineCanvas
+from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 
 
 class MainCanvas(TimelineCanvas):
 
-    def __init__(self, parent, main_frame):
+    def __init__(self, parent, main_frame, status_bar):
         TimelineCanvas.__init__(self, parent)
+        self._status_bar = status_bar
         self.SetInputHandler(InputHandler(self))
         self.balloon_show_timer = wx.Timer(self, -1)
         self.balloon_hide_timer = wx.Timer(self, -1)
@@ -39,6 +43,18 @@ class MainCanvas(TimelineCanvas):
         self.Bind(wx.EVT_TIMER, self._on_dragscroll, self.dragscroll_timer)
         self.Bind(wx.EVT_MIDDLE_DOWN, self._on_middle_down)
         self.Bind(wx.EVT_MOUSEWHEEL, self._on_mousewheel)
+
+    def Navigate(self, navigation_fn):
+        try:
+            TimelineCanvas.Navigate(self, navigation_fn)
+        except (TimeOutOfRangeLeftError), e:
+            self._status_bar.set_text(_("Can't scroll more to the left"))
+        except (TimeOutOfRangeRightError), e:
+            self._status_bar.set_text(_("Can't scroll more to the right"))
+        except (ValueError, OverflowError), e:
+            self._status_bar.set_text(ex_msg(e))
+        else:
+            self._status_bar.set_text("")
 
     def SetInputHandler(self, input_handler):
         self._input_handler = input_handler

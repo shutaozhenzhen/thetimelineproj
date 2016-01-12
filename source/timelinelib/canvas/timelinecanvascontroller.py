@@ -21,16 +21,12 @@ import wx
 from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.canvas.data.exceptions import TimelineIOError
-from timelinelib.canvas.data import TimeOutOfRangeLeftError
-from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.drawing import get_drawer
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.canvas.events import create_hint_event
 from timelinelib.canvas.events import create_timeline_redrawn_event
 from timelinelib.debug import DEBUG_ENABLED
 from timelinelib.debug import Monitoring
-from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.font import Font
 
 
@@ -69,9 +65,6 @@ class TimelineCanvasController(object):
         self.appearance = appearance
         self.appearance.listen_for_any(self._redraw_timeline)
         self.redraw_timeline()
-
-    def post_hint_event(self, text):
-        self.view.PostEvent(create_hint_event(text))
 
     def get_saved_background_drawer(self):
         return DefaultBackgroundDrawer()
@@ -141,33 +134,6 @@ class TimelineCanvasController(object):
         if self.timeline is None:
             raise Exception(_("No timeline set"))
         return self.view_properties.displayed_period
-
-    def navigate_timeline(self, navigation_fn):
-        """
-        Perform a navigation operation followed by a redraw.
-
-        The navigation_fn should take one argument which is the time period
-        that should be manipulated in order to carry out the navigation
-        operation.
-
-        Should the navigation operation fail (max zoom level reached, etc) a
-        message will be displayed in the statusbar.
-
-        Note: The time period should never be modified directly. This method
-        should always be used instead.
-        """
-        if self.timeline is None:
-            raise Exception(_("No timeline set"))
-        try:
-            self.view_properties.displayed_period = navigation_fn(self.view_properties.displayed_period)
-            self._redraw_timeline()
-            self.post_hint_event("")
-        except (TimeOutOfRangeLeftError), e:
-            self.post_hint_event(_("Can't scroll more to the left"))
-        except (TimeOutOfRangeRightError), e:
-            self.post_hint_event(_("Can't scroll more to the right"))
-        except (ValueError, OverflowError), e:
-            self.post_hint_event(ex_msg(e))
 
     def redraw_timeline(self):
         self._redraw_timeline()
@@ -260,4 +226,4 @@ class TimelineCanvasController(object):
         self._scroll_timeline(delta)
 
     def _scroll_timeline(self, delta):
-        self.navigate_timeline(lambda tp: tp.move_delta(-delta))
+        self.view.Navigate(lambda tp: tp.move_delta(-delta))
