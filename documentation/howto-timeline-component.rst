@@ -43,3 +43,15 @@ It can be used in a frame like this:
 .. literalinclude:: timeline_canvas_examples.py
     :language: python
     :pyobject: EmptyCanvas
+
+Navigation
+----------
+
+The following functions change the time period that is displayed in the canvas.
+
+.. py:method:: timelinelib.canvas.TimelineCanvas.Navigate(navigation_fn)
+
+    This is the most generic navigation function. It is used by all the other
+    navigation functions. It takes a function that is called with one argument,
+    the time period, and should return a new time period. The return value is
+    the new time period that is displayed.
