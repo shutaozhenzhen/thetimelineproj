@@ -46,20 +46,6 @@ class TimelineViewSpec(UnitTestCase):
         self.init_view_with_db_with_period("1 Aug 2010", "2 Aug 2010")
         self.assert_displays_period("1 Aug 2010", "2 Aug 2010")
 
-    def test_sends_error_hint_wehn_scrolling_too_far_left(self):
-        def navigate(time_period):
-            raise TimeOutOfRangeLeftError()
-        self.init_view_with_db()
-        self.controller.navigate_timeline(navigate)
-        self.assert_has_posted_hint(_("Can't scroll more to the left"))
-
-    def test_sends_error_hint_when_scrolling_too_far_right(self):
-        def navigate(time_period):
-            raise TimeOutOfRangeRightError()
-        self.init_view_with_db()
-        self.controller.navigate_timeline(navigate)
-        self.assert_has_posted_hint(_("Can't scroll more to the right"))
-
     def test_disables_view_if_no_timeline_set(self):
         self.controller.set_timeline(None)
         self.timeline_canvas.Disable.assert_called_with()

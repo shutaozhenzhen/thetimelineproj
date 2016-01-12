@@ -22,7 +22,6 @@ import wx
 
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
-from timelinelib.canvas import EVT_HINT
 from timelinelib.canvas import EVT_TIMELINE_REDRAWN
 from timelinelib.db.utils import safe_locking
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
@@ -112,7 +111,8 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.sidebar = Sidebar(self.main_frame, self.splitter, self.handle_db_error)
 
     def _create_timeline_canvas(self):
-        self.timeline_canvas = MainCanvas(self.splitter, self.main_frame)
+        self.timeline_canvas = MainCanvas(
+            self.splitter, self.main_frame, self.status_bar_adapter)
         self.timeline_canvas.Bind(
             wx.EVT_LEFT_DCLICK,
             self._timeline_canvas_on_double_clicked
@@ -128,10 +128,6 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.timeline_canvas.Bind(
             EVT_DIVIDER_POSITION_CHANGED,
             self._timeline_canvas_on_divider_position_changed
-        )
-        self.timeline_canvas.Bind(
-            EVT_HINT,
-            self._timeline_canvas_on_hint
         )
         self.timeline_canvas.Bind(
             EVT_TIMELINE_REDRAWN,
@@ -341,9 +337,6 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
         self.config.divider_line_slider_pos = self.timeline_canvas.GetDividerPosition()
 
-    def _timeline_canvas_on_hint(self, event):
-        self.status_bar_adapter.set_text(event.text)
-
     def _timeline_canvas_on_timeline_redrawn(self, event):
         text = _("%s events hidden") % self.timeline_canvas.GetHiddenEventCount()
         self.status_bar_adapter.set_hidden_event_count_text(text)
@@ -391,8 +384,8 @@ class TimelinePanel(TimelinePanelGuiCreator):
     def redraw_timeline(self):
         self.timeline_canvas.redraw_timeline()
 
-    def navigate_timeline(self, navigation_fn):
-        return self.timeline_canvas.navigate_timeline(navigation_fn)
+    def Navigate(self, navigation_fn):
+        return self.timeline_canvas.Navigate(navigation_fn)
 
     def get_view_properties(self):
         return self.timeline_canvas.get_view_properties()

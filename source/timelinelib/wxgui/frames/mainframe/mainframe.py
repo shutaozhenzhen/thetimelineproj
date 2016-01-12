@@ -520,7 +520,7 @@ class GuiCreator(object):
                 delta = self.main_panel.get_displayed_period_delta()
                 end = start + delta
                 margin_delta = self.timeline.get_time_type().margin_delta(delta)
-                self._navigate_timeline(lambda tp: tp.update(start, end, -margin_delta))
+                self.main_panel.Navigate(lambda tp: tp.update(start, end, -margin_delta))
 
         def find_last(evt):
             event = self.timeline.get_last_event()
@@ -532,7 +532,7 @@ class GuiCreator(object):
                 except ValueError:
                     start = self.timeline.get_time_type().get_min_time()[0]
                 margin_delta = self.timeline.get_time_type().margin_delta(delta)
-                self._navigate_timeline(lambda tp: tp.update(start, end, end_delta=margin_delta))
+                self.main_panel.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
 
         def fit_all(evt):
             self._fit_all_events()
@@ -824,7 +824,7 @@ class MainFrameApiUsedByController(object):
     def _navigation_menu_item_on_click(self, evt):
         fn = self._navigation_functions_by_menu_item_id[evt.GetId()]
         time_period = self.main_panel.get_time_period()
-        fn(self, time_period, self._navigate_timeline)
+        fn(self, time_period, self.main_panel.Navigate)
 
     def _clear_recent_menu_items(self):
         for item in self.mnu_file_open_recent_submenu.GetMenuItems():
@@ -1121,18 +1121,14 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         gui_utils.show_modal(create_eras_editor, self.handle_db_error)
         self.main_panel.redraw_timeline()
 
-    # Navigate Menu action handlers
-    def _navigate_timeline(self, navigation_fn):
-        return self.main_panel.navigate_timeline(navigation_fn)
-
     def _fit_all_events(self):
         all_period = self._period_for_all_visible_events()
         if all_period is None:
             return
         if all_period.is_period():
-            self._navigate_timeline(lambda tp: tp.update(all_period.start_time, all_period.end_time))
+            self.main_panel.Navigate(lambda tp: tp.update(all_period.start_time, all_period.end_time))
         else:
-            self._navigate_timeline(lambda tp: tp.center(all_period.mean_time()))
+            self.main_panel.Navigate(lambda tp: tp.center(all_period.mean_time()))
 
     def _period_for_all_visible_events(self):
         try:
