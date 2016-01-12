@@ -55,3 +55,12 @@ The following functions change the time period that is displayed in the canvas.
     navigation functions. It takes a function that is called with one argument,
     the time period, and should return a new time period. The return value is
     the new time period that is displayed.
+
+.. py:method:: timelinelib.canvas.TimelineCanvas.Scroll(factor)
+
+Exporting
+---------
+
+.. py:method:: timelinelib.canvas.TimelineCanvas.SaveAsPng(path)
+
+.. py:method:: timelinelib.canvas.TimelineCanvas.SaveAsSvg(path)
