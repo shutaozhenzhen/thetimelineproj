@@ -30,9 +30,6 @@ from timelinelib.debug import Monitoring
 from timelinelib.wxgui.components.font import Font
 
 
-MOUSE_SCROLL_FACTOR = 1 / 10.0
-
-
 class TimelineCanvasController(object):
 
     def __init__(self, view, drawer=None):
@@ -215,15 +212,3 @@ class TimelineCanvasController(object):
             self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
             self.view.redraw_surface(fn_draw)
             self.view.PostEvent(create_timeline_redrawn_event())
-
-    def _scroll_timeline_view(self, direction):
-        factor = direction * MOUSE_SCROLL_FACTOR
-        self._scroll_timeline_view_by_factor(factor)
-
-    def _scroll_timeline_view_by_factor(self, factor):
-        time_period = self.view_properties.displayed_period
-        delta = self.time_type.mult_timedelta(time_period.delta(), factor)
-        self._scroll_timeline(delta)
-
-    def _scroll_timeline(self, delta):
-        self.view.Navigate(lambda tp: tp.move_delta(-delta))

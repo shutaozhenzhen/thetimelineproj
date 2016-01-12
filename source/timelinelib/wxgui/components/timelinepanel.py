@@ -202,9 +202,9 @@ class TimelinePanelGuiCreator(wx.Panel):
         elif event.GetKeyCode() == wx.WXK_DOWN:
             self.move_selected_event_down()
         elif event.AltDown() and event.GetKeyCode() in (wx.WXK_RIGHT, wx.WXK_NUMPAD_RIGHT):
-            self.timeline_canvas.ScrollByFactor(LEFT_RIGHT_SCROLL_FACTOR)
+            self.timeline_canvas.Scroll(LEFT_RIGHT_SCROLL_FACTOR)
         elif event.AltDown() and event.GetKeyCode() in (wx.WXK_LEFT, wx.WXK_NUMPAD_LEFT):
-            self.timeline_canvas.ScrollByFactor(-LEFT_RIGHT_SCROLL_FACTOR)
+            self.timeline_canvas.Scroll(-LEFT_RIGHT_SCROLL_FACTOR)
         event.Skip()
 
     def move_selected_event_up(self):

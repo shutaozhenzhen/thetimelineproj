@@ -47,7 +47,7 @@ class ScrollViewInputHandler(InputHandler):
                 direction = 1
             else:
                 direction = -1
-            self.timeline_canvas.Scroll(direction)
+            self.timeline_canvas.Scroll(direction * 0.1)
             self.view_scrolled()
 
     def view_scrolled(self):
