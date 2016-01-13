@@ -247,7 +247,9 @@ class EditEventDialogController(Controller):
         self._create_subevent()
 
     def _change_container(self):
-        self.event.container.unregister_subevent(self.event)
+        if self._is_new_container(self.container):
+            self._add_new_container()
+        self._remove_event_from_container()
         self.container.register_subevent(self.event)
 
     def _create_new_event(self):
