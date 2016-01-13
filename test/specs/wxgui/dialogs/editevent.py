@@ -22,6 +22,8 @@ from mock import sentinel
 from timelinelib.config.dotfile import Config
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data.container import Container
+from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.db import db_open
 from timelinelib.repositories.interface import EventRepository
 from timelinelib.time.gregoriantime import GregorianTimeType
@@ -88,6 +90,14 @@ class EditEventDialogTestCase(UnitTestCase):
 
     def simulate_user_clicks_ok(self):
         self.controller.on_ok_clicked(None)
+
+    def simulate_user_selects_a_container(self, subevent):
+        container = Container(GregorianTimeType(), subevent.time_period.start_time, subevent.time_period.start_time, "container")
+        container.register_subevent(subevent)
+        self.controller.container = container
+
+    def simulate_ends_today_checked(self, today):
+        self.controller.end = today
 
     def assert_start_time_set_to(self, time):
         self.view.SetStart.assert_called_with(human_time_to_gregorian(time))
@@ -431,3 +441,16 @@ class describe_validation(EditEventDialogTestCase):
         self.view.DisplayInvalidStart.assert_called_with(
             _("You can't change time when the Event is locked"))
         self.assert_no_event_saved()
+
+
+class describe_ends_today_in_container(EditEventDialogTestCase):
+
+    def test_set_ends_today_on_subevent_extends_container_period(self):
+        start = human_time_to_gregorian("1 Jan 2010")
+        today = human_time_to_gregorian("1 Jan 2015")
+        subevent = Subevent(GregorianTimeType(), start, start, "subevent")
+        self.when_editor_opened_with_event(subevent)
+        self.simulate_user_selects_a_container(subevent)
+        self.simulate_ends_today_checked(today)
+        self.controller._update_event()
+        self.assertEqual(self.controller.container.time_period.end_time, today)

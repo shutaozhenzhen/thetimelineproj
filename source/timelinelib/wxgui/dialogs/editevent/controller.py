@@ -223,6 +223,7 @@ class EditEventDialogController(Controller):
                     self.event.update(self.start, self.end, self.name,
                                       self.category, self.fuzzy, self.locked,
                                       self.ends_today)
+                    self.container.update_container(self.event)
                 else:
                     self._change_container()
             else:
