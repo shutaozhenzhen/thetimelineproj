@@ -44,6 +44,9 @@ class MainCanvas(TimelineCanvas):
         self.Bind(wx.EVT_MIDDLE_DOWN, self._on_middle_down)
         self.Bind(wx.EVT_MOUSEWHEEL, self._on_mousewheel)
 
+    def SetDb(self, db):
+        db.display_in_canvas(self)
+
     def Navigate(self, navigation_fn):
         try:
             TimelineCanvas.Navigate(self, navigation_fn)

@@ -50,6 +50,9 @@ class MemoryDB(Observable):
         self._undo_enabled = False
         self._redo_enabled = False
 
+    def display_in_canvas(self, canvas):
+        canvas.set_timeline(self)
+
     def is_saved(self):
         return self._save_callback is not None
 

@@ -363,9 +363,9 @@ class TimelinePanel(TimelinePanelGuiCreator):
         TimelinePanelGuiCreator.__init__(self, parent)
         self._db_listener = Listener(self._on_db_changed)
 
-    def set_timeline(self, timeline):
-        self.timeline_canvas.set_timeline(timeline)
-        self._db_listener.set_observable(timeline)
+    def SetDb(self, db):
+        self.timeline_canvas.SetDb(db)
+        self._db_listener.set_observable(db)
 
     def get_timeline_canvas(self):
         return self.timeline_canvas
