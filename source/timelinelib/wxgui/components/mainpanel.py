@@ -116,7 +116,7 @@ class MainPanel(wx.Panel):
     def _remove_timeline_and_show_welcome_panel(self):
         self.category_tree.set_no_timeline_view()
         self.set_searchbar_timeline_canvas(None)
-        self.set_timeline(None)
+        self.timeline_panel.SetDb(None)
         self.show_welcome_panel()
 
     def display_timeline(self, timeline):
@@ -127,15 +127,12 @@ class MainPanel(wx.Panel):
             self._show_new_timeline(timeline)
 
     def _show_new_timeline(self, timeline):
-        self.set_timeline(timeline)
+        self.timeline_panel.SetDb(timeline)
         canvas = self.get_timeline_canvas()
         self.category_tree.set_timeline_view(canvas.get_timeline(), canvas.get_view_properties())
         self.set_searchbar_timeline_canvas(canvas)
         self.show_timeline_panel()
         canvas.SetDropTarget(FileDropTarget(canvas))
-
-    def set_timeline(self, timeline):
-        self.timeline_panel.set_timeline(timeline)
 
     def get_timeline_canvas(self):
         return self.timeline_panel.get_timeline_canvas()
