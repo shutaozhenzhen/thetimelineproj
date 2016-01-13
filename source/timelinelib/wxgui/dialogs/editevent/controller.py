@@ -223,6 +223,7 @@ class EditEventDialogController(Controller):
                     self.event.update(self.start, self.end, self.name,
                                       self.category, self.fuzzy, self.locked,
                                       self.ends_today)
+                    self.container.update_container(self.event)
                 else:
                     self._change_container()
             else:
@@ -246,7 +247,9 @@ class EditEventDialogController(Controller):
         self._create_subevent()
 
     def _change_container(self):
-        self.event.container.unregister_subevent(self.event)
+        if self._is_new_container(self.container):
+            self._add_new_container()
+        self._remove_event_from_container()
         self.container.register_subevent(self.event)
 
     def _create_new_event(self):
