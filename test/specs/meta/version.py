@@ -20,23 +20,7 @@ from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.meta.version as version
 
 
-class describe_version_formatting(UnitTestCase):
-
-    def setUp(self):
-        self.VERSION = version.VERSION
-        self.TYPE = version.TYPE
-        self.REVISION_HASH = version.REVISION_HASH
-        self.REVISION_DATE = version.REVISION_DATE
-        version.VERSION = (1, 2, 3)
-        version.TYPE = version.TYPE_BETA
-        version.REVISION_HASH = "abc123"
-        version.REVISION_DATE = "2015-11-11"
-
-    def tearDown(self):
-        version.VERSION = self.VERSION
-        version.TYPE = self.TYPE
-        version.REVISION_HASH = self.REVISION_HASH
-        version.REVISION_DATE = self.REVISION_DATE
+class describe_beta_version_formatting(UnitTestCase):
 
     def test_full(self):
         self.assertEqual(
@@ -49,3 +33,135 @@ class describe_version_formatting(UnitTestCase):
             version.get_filename_version(),
             "timeline-1.2.3-beta-abc123-2015-11-11"
         )
+
+    def test_version_numer_string(self):
+        self.assertEqual(
+            version.get_version_number_string(),
+            "1.2.3"
+        )
+
+    def test_is_dev(self):
+        self.assertFalse(version.is_dev())
+
+    def test_is_final(self):
+        self.assertFalse(version.is_final())
+
+    def setUp(self):
+        self._save_version_values()
+        version.VERSION = (1, 2, 3)
+        version.TYPE = version.TYPE_BETA
+        version.REVISION_HASH = "abc123"
+        version.REVISION_DATE = "2015-11-11"
+
+    def tearDown(self):
+        self._restore_version_values()
+
+    def _save_version_values(self):
+        self.VERSION = version.VERSION
+        self.TYPE = version.TYPE
+        self.REVISION_HASH = version.REVISION_HASH
+        self.REVISION_DATE = version.REVISION_DATE
+
+    def _restore_version_values(self):
+        version.VERSION = self.VERSION
+        version.TYPE = self.TYPE
+        version.REVISION_HASH = self.REVISION_HASH
+        version.REVISION_DATE = self.REVISION_DATE
+
+
+class describe_development_version_formatting(UnitTestCase):
+
+    def test_full(self):
+        self.assertEqual(
+            version.get_full_version(),
+            "1.2.3 development (abc123 2015-11-11)"
+        )
+
+    def test_filename(self):
+        self.assertEqual(
+            version.get_filename_version(),
+            "timeline-1.2.3-development-abc123-2015-11-11"
+        )
+
+    def test_version_numer_string(self):
+        self.assertEqual(
+            version.get_version_number_string(),
+            "1.2.3"
+        )
+
+    def test_is_dev(self):
+        self.assertTrue(version.is_dev())
+
+    def test_is_final(self):
+        self.assertFalse(version.is_final())
+
+    def setUp(self):
+        self._save_version_values()
+        version.VERSION = (1, 2, 3)
+        version.TYPE = version.TYPE_DEV
+        version.REVISION_HASH = "abc123"
+        version.REVISION_DATE = "2015-11-11"
+
+    def tearDown(self):
+        self._restore_version_values()
+
+    def _save_version_values(self):
+        self.VERSION = version.VERSION
+        self.TYPE = version.TYPE
+        self.REVISION_HASH = version.REVISION_HASH
+        self.REVISION_DATE = version.REVISION_DATE
+
+    def _restore_version_values(self):
+        version.VERSION = self.VERSION
+        version.TYPE = self.TYPE
+        version.REVISION_HASH = self.REVISION_HASH
+        version.REVISION_DATE = self.REVISION_DATE
+
+
+class describe_final_version_formatting(UnitTestCase):
+
+    def test_full(self):
+        self.assertEqual(
+            version.get_full_version(),
+            "1.2.3 (abc123 2015-11-11)"
+        )
+
+    def test_filename(self):
+        self.assertEqual(
+            version.get_filename_version(),
+            "timeline-1.2.3"
+        )
+
+    def test_version_numer_string(self):
+        self.assertEqual(
+            version.get_version_number_string(),
+            "1.2.3"
+        )
+
+    def test_is_dev(self):
+        self.assertFalse(version.is_dev())
+
+    def test_is_final(self):
+        self.assertTrue(version.is_final())
+
+    def setUp(self):
+        self._save_version_values()
+        version.VERSION = (1, 2, 3)
+        version.TYPE = version.TYPE_FINAL
+        version.REVISION_HASH = "abc123"
+        version.REVISION_DATE = "2015-11-11"
+
+    def tearDown(self):
+        self._restore_version_values()
+
+    def _save_version_values(self):
+        self.VERSION = version.VERSION
+        self.TYPE = version.TYPE
+        self.REVISION_HASH = version.REVISION_HASH
+        self.REVISION_DATE = version.REVISION_DATE
+
+    def _restore_version_values(self):
+        version.VERSION = self.VERSION
+        version.TYPE = self.TYPE
+        version.REVISION_HASH = self.REVISION_HASH
+        version.REVISION_DATE = self.REVISION_DATE
