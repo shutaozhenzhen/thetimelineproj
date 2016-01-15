@@ -311,13 +311,13 @@ class EditEventDialogController(Controller):
         try:
             self.event_repository.save(self.event)
         except Exception, e:
-            self.view.display_db_exception(e)
+            self.view.HandleDbError(e)
 
     def _save_container_to_db(self):
         try:
             self.event_repository.save(self.container)
         except Exception, e:
-            self.view.display_db_exception(e)
+            self.view.HandleDbError(e)
 
     def _event_has_nonzero_time(self):
         try:

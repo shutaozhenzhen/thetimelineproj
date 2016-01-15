@@ -179,7 +179,6 @@ class TimelinePanelGuiCreator(wx.Panel):
                 self.main_frame,
                 self.config,
                 self.timeline_canvas.GetDb(),
-                self.handle_db_error,
                 time,
                 time)
         event.Skip()
@@ -378,7 +377,6 @@ class TimelinePanel(TimelinePanelGuiCreator):
             self.main_frame,
             self.config,
             self.timeline_canvas.GetDb(),
-            self.handle_db_error,
             event)
 
     def redraw_timeline(self):
@@ -456,5 +454,4 @@ class InputHandlerState(object):
             self._timeline_canvas,
             self._main_frame,
             self._config,
-            self._handle_db_error,
             time_at_x))

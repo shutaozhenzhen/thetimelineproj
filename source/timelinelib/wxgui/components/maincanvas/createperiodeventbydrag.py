@@ -22,12 +22,11 @@ from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 
 class CreatePeriodEventByDragInputHandler(SelectPeriodByDragInputHandler):
 
-    def __init__(self, state, view, main_frame, config, handle_db_error, initial_time):
+    def __init__(self, state, view, main_frame, config, initial_time):
         SelectPeriodByDragInputHandler.__init__(self, state, view, main_frame, initial_time)
         self._main_frame = main_frame
         self._config = config
         self._timeline_canvas = view
-        self._handle_db_error = handle_db_error
 
     def end_action(self):
         period = self.get_last_valid_period()
@@ -35,6 +34,5 @@ class CreatePeriodEventByDragInputHandler(SelectPeriodByDragInputHandler):
             self._main_frame,
             self._config,
             self._timeline_canvas.GetDb(),
-            self._handle_db_error,
             period.start_time,
             period.end_time)
