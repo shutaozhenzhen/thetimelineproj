@@ -254,7 +254,6 @@ class GuiCreator(object):
                 dialog.ShowModal()
                 dialog.Destroy()
             safe_locking(self, edit_function)
-            self.main_panel.redraw_timeline()
 
         def edit_shortcuts(evt):
 
