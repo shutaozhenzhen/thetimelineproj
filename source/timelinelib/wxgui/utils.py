@@ -28,8 +28,6 @@ from timelinelib.time.bosparaniantime import BosparanianTimeType
 # Border, in pixels, between controls in a window (should always be used when
 # border is needed)
 BORDER = 5
-# Used by dialogs as a return code when a TimelineIOError has been raised
-ID_ERROR = wx.NewId()
 
 
 class WildcardHelper(object):
@@ -111,40 +109,6 @@ def category_tree(category_list, parent=None, remove=None):
     tree = [(x, category_tree(category_list, x, remove))
             for x in sorted_children]
     return tree
-
-
-def show_modal(fn_create_dialog, fn_handle_db_error, fn_success=None):
-    """Show a modal dialog using error handling pattern."""
-    try:
-        dialog = fn_create_dialog()
-    except TimelineIOError, e:
-        fn_handle_db_error(e)
-    else:
-        dialog_result = dialog.ShowModal()
-        if dialog_result == ID_ERROR:
-            fn_handle_db_error(dialog.error)
-        elif fn_success:
-            fn_success(dialog)
-        dialog.Destroy()
-
-
-def create_dialog_db_error_handler(dialog):
-    def handler(error):
-        handle_db_error_in_dialog(dialog, error)
-    return handler
-
-
-def handle_db_error_in_dialog(dialog, error):
-    if dialog.IsShown():
-        # Close the dialog and let the code that created it handle the error.
-        # Eventually this error will end up in the main frame (which is the
-        # only object which can handle the error properly).
-        dialog.error = error
-        dialog.EndModal(ID_ERROR)
-    else:
-        # Re-raise the TimelineIOError exception and let the code that created
-        # the dialog handle the error.
-        raise error
 
 
 def _set_focus_and_select(ctrl):
