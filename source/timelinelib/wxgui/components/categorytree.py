@@ -495,4 +495,4 @@ def delete_category(parent_ctrl, db, cat):
         try:
             db.delete_category(cat)
         except TimelineIOError, e:
-            handle_db_error_by_crashing(e)
+            handle_db_error_by_crashing(e, parent_ctrl)
