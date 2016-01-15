@@ -238,7 +238,9 @@ class GuiCreator(object):
             self.main_panel.show_searchbar(True)
 
         def find_categories(evt):
-            gui_utils.show_modal(create_category_find_dialog, self.handle_db_error)
+            dialog = create_category_find_dialog()
+            dialog.ShowModal()
+            dialog.Destroy()
 
         def mouse_in_sidebar():
             if not self.config.show_sidebar:
