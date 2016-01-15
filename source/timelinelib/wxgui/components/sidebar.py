@@ -30,7 +30,7 @@ class Sidebar(wx.Panel):
         self._create_gui(handle_db_error)
 
     def _create_gui(self, handle_db_error):
-        self.category_tree = CustomCategoryTree(self, handle_db_error)
+        self.category_tree = CustomCategoryTree(self)
         label = _("View Categories Individually")
         self.cbx_toggle_cat_view = wx.CheckBox(self, -1, label)
         # Layout

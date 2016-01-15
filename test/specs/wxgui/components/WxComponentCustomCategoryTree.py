@@ -29,7 +29,7 @@ from timelinelib.wxgui.framework import Dialog
 class describe_custom_category_tree_component_test(UnitTestCase):
 
     def test_it_shows_in_dialog(self):
-        self.show_dialog(TestDialog, create_in_memory_tutorial_db(), ViewProperties(), Mock())
+        self.show_dialog(TestDialog, create_in_memory_tutorial_db(), ViewProperties())
 
 
 class TestDialog(Dialog):
@@ -38,15 +38,13 @@ class TestDialog(Dialog):
     <BoxSizerVertical>
         <CustomCategoryTree
             name="tree"
-            handle_db_error="$(handle_db_error)"
             width="300"
             height="300"
         />
     </BoxSizerVertical>
     """
 
-    def __init__(self, db, view_properties, handle_db_error):
+    def __init__(self, db, view_properties):
         Dialog.__init__(self, humblewx.Controller, None, {
-            "handle_db_error": handle_db_error,
         })
         self.tree.set_timeline_view(db, view_properties)
