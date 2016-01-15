@@ -26,16 +26,16 @@ from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.utilities.observer import Observable
 from timelinelib.wxgui.components.font import Font
 from timelinelib.wxgui.dialogs.editcategory.view import EditCategoryDialog
+from timelinelib.wxgui.utils import handle_db_error_by_crashing
 import timelinelib.wxgui.utils as gui_utils
 
 
 class CustomCategoryTree(wx.ScrolledWindow):
 
-    def __init__(self, parent, handle_db_error, name=None, size=(100, 100)):
+    def __init__(self, parent, name=None, size=(100, 100)):
         self.monitoring = Monitoring()
         wx.ScrolledWindow.__init__(self, parent, size=size)
         self.parent = parent
-        self.handle_db_error = handle_db_error
         self._create_context_menu()
         self.Bind(wx.EVT_PAINT, self._on_paint)
         self.Bind(wx.EVT_SIZE, self._on_size)
@@ -105,7 +105,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
     def _on_menu_delete(self, e):
         hit_category = self.last_hit_info.get_category()
         if hit_category:
-            delete_category(self, self.db, hit_category, self.handle_db_error)
+            delete_category(self, self.db, hit_category)
 
     def _on_menu_check_all(self, e):
         self.view_properties.set_categories_visible(
@@ -480,7 +480,7 @@ def add_category(parent_ctrl, db):
     dialog.Destroy()
 
 
-def delete_category(parent_ctrl, db, cat, fn_handle_db_error):
+def delete_category(parent_ctrl, db, cat):
     delete_warning = _("Are you sure you want to "
                        "delete category '%s'?") % cat.name
     if cat.parent is None:
@@ -494,4 +494,4 @@ def delete_category(parent_ctrl, db, cat, fn_handle_db_error):
         try:
             db.delete_category(cat)
         except TimelineIOError, e:
-            fn_handle_db_error(e)
+            handle_db_error_by_crashing(e)
