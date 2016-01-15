@@ -100,7 +100,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
         self._edit_category()
 
     def _on_menu_add(self, e):
-        add_category(self, self.db, self.handle_db_error)
+        add_category(self, self.db)
 
     def _on_menu_delete(self, e):
         hit_category = self.last_hit_info.get_category()
@@ -146,7 +146,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
     def _edit_category(self):
         hit_category = self.last_hit_info.get_category()
         if hit_category:
-            edit_category(self, self.db, hit_category, self.handle_db_error)
+            edit_category(self, self.db, hit_category)
 
     def _store_hit_info(self, event):
         (x, y) = self.CalcUnscrolledPosition(event.GetX(), event.GetY())
@@ -468,16 +468,16 @@ class HitInfo(object):
         return self._is_on_checkbox
 
 
-def edit_category(parent_ctrl, db, cat, fn_handle_db_error):
-    def create_category_editor():
-        return EditCategoryDialog(parent_ctrl, _("Edit Category"), db, cat)
-    gui_utils.show_modal(create_category_editor, fn_handle_db_error)
+def edit_category(parent_ctrl, db, cat):
+    dialog = EditCategoryDialog(parent_ctrl, _("Edit Category"), db, cat)
+    dialog.ShowModal()
+    dialog.Destroy()
 
 
-def add_category(parent_ctrl, db, fn_handle_db_error):
-    def create_category_editor():
-        return EditCategoryDialog(parent_ctrl, _("Add Category"), db, None)
-    gui_utils.show_modal(create_category_editor, fn_handle_db_error)
+def add_category(parent_ctrl, db):
+    dialog = EditCategoryDialog(parent_ctrl, _("Add Category"), db, None)
+    dialog.ShowModal()
+    dialog.Destroy()
 
 
 def delete_category(parent_ctrl, db, cat, fn_handle_db_error):
