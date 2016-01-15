@@ -138,7 +138,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.timeline_canvas.SetInputHandler(NoOpInputHandler(
             InputHandlerState(
                 self.timeline_canvas, self.status_bar_adapter,
-                self.main_frame, self.config, self.handle_db_error),
+                self.main_frame, self.config),
             self.status_bar_adapter, self.main_frame, self.timeline_canvas))
         def update_appearance():
             appearance = self.timeline_canvas.GetAppearance()
@@ -417,12 +417,11 @@ class TimelinePanel(TimelinePanelGuiCreator):
 
 class InputHandlerState(object):
 
-    def __init__(self, timeline_canvas, status_bar, main_frame, config, handle_db_error):
+    def __init__(self, timeline_canvas, status_bar, main_frame, config):
         self._timeline_canvas = timeline_canvas
         self._status_bar = status_bar
         self._main_frame = main_frame
         self._config = config
-        self._handle_db_error = handle_db_error
 
     def change_to_no_op(self):
         self._timeline_canvas.SetInputHandler(NoOpInputHandler(
