@@ -23,13 +23,13 @@ from timelinelib.wxgui.components.categorytree import CustomCategoryTree
 
 class Sidebar(wx.Panel):
 
-    def __init__(self, main_frame, parent, handle_db_error):
+    def __init__(self, main_frame, parent):
         self.main_frame = main_frame
         wx.Panel.__init__(self, parent, style=wx.BORDER_NONE)
         self.Hide()
-        self._create_gui(handle_db_error)
+        self._create_gui()
 
-    def _create_gui(self, handle_db_error):
+    def _create_gui(self):
         self.category_tree = CustomCategoryTree(self)
         label = _("View Categories Individually")
         self.cbx_toggle_cat_view = wx.CheckBox(self, -1, label)
