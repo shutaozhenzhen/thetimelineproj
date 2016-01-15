@@ -187,8 +187,8 @@ class MainPanel(wx.Panel):
         # Panels
         self.welcome_panel = WelcomePanel(self, self.main_frame)
         self.timeline_panel = TimelinePanel(
-            self, self.config, self.main_frame.handle_db_error,
-            self.main_frame.status_bar_adapter, self.main_frame)
+            self, self.config, self.main_frame.status_bar_adapter,
+            self.main_frame)
         self.error_panel = ErrorPanel(self, self.main_frame)
         # Layout
         self.sizerOuter = wx.BoxSizer(wx.VERTICAL)
