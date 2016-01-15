@@ -425,7 +425,7 @@ class GuiCreator(object):
             except IndexError:
                 # No event selected so do nothing!
                 return
-            open_duplicate_event_dialog_for_event(self, self.timeline, self.handle_db_error, event)
+            open_duplicate_event_dialog_for_event(self, self.timeline, event)
 
         def set_categoryon_selected(evt):
 
