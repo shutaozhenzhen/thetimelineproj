@@ -1100,16 +1100,16 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         display_information_message(caption, distance_text)
 
     def _set_category(self):
-        def create_set_category_editor():
-            return SetCategoryDialog(self, self.timeline)
-        gui_utils.show_modal(create_set_category_editor, self.handle_db_error)
+        dialog = SetCategoryDialog(self, self.timeline)
+        dialog.ShowModal()
+        dialog.Destroy()
         self.main_panel.redraw_timeline()
 
     def _set_category_to_selected_events(self):
         selected_event_ids = self.main_panel.get_selected_event_ids()
-        def create_set_category_editor():
-            return SetCategoryDialog(self, self.timeline, selected_event_ids)
-        gui_utils.show_modal(create_set_category_editor, self.handle_db_error)
+        dialog = SetCategoryDialog(self, self.timeline, selected_event_ids)
+        dialog.ShowModal()
+        dialog.Destroy()
         self.main_panel.redraw_timeline()
 
     def _edit_categories(self):
