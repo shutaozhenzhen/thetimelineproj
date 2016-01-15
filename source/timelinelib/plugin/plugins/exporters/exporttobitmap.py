@@ -83,13 +83,11 @@ def export_to_images(main_frame):
         for period in periods:
             path = "%s_%d.%s" % (path_without_extension, count, extension)
             if overwrite_existing_path(main_frame, path):
-                main_frame.main_panel.timeline_panel.timeline_canvas.controller.view_properties.displayed_period = period
-                main_frame.main_panel.redraw_timeline()
+                main_frame.main_panel.timeline_panel.timeline_canvas.Navigate(lambda tp: period)
                 main_frame.main_panel.timeline_panel.timeline_canvas.SaveAsPng(path)
             count += 1
         view_properties.set_use_fixed_event_vertical_pos(False)
-        main_frame.main_panel.timeline_panel.timeline_canvas.controller.view_properties.displayed_period = current_period
-        main_frame.main_panel.redraw_timeline()
+        main_frame.main_panel.timeline_panel.timeline_canvas.Navigate(lambda tp: current_period)
 
 
 def get_image_path(main_frame):
