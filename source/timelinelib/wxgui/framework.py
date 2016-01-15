@@ -23,6 +23,7 @@ import wx
 
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
+from timelinelib.wxgui.utils import handle_db_error_by_crashing
 
 
 class Dialog(humblewx.Dialog):
@@ -35,3 +36,6 @@ class Dialog(humblewx.Dialog):
 
     def DisplayInformationMessage(self, caption, message):
         display_information_message(caption, message, parent=self)
+
+    def HandleDbError(self, e):
+        handle_db_error_by_crashing(e, self)

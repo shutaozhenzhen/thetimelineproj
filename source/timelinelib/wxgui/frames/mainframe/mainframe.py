@@ -407,7 +407,7 @@ class GuiCreator(object):
 
     def _create_timeline_menu(self, main_menu_bar):
         def create_event(evt):
-            open_create_event_editor(self, self.config, self.timeline, self.handle_db_error)
+            open_create_event_editor(self, self.config, self.timeline)
 
         def edit_event(evt):
             try:

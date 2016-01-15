@@ -373,7 +373,7 @@ class EditEventDialog(Dialog):
         self.grid_sizer.AddGrowableRow(self.config.event_editor_tab_order.index(":"))
 
 
-def open_event_editor_for(parent, config, db, handle_db_error, event):
+def open_event_editor_for(parent, config, db, event):
     def create_event_editor():
         if event.is_container():
             title = _("Edit Container")
@@ -382,14 +382,18 @@ def open_event_editor_for(parent, config, db, handle_db_error, event):
             return EditEventDialog(
                 parent, config, _("Edit Event"), db, event=event)
     def edit_function():
-        gui_utils.show_modal(create_event_editor, handle_db_error)
+        dialog = create_event_editor()
+        dialog.ShowModal()
+        dialog.Destroy()
     safe_locking(parent, edit_function)
 
 
-def open_create_event_editor(parent, config, db, handle_db_error, start=None, end=None):
+def open_create_event_editor(parent, config, db, start=None, end=None):
     def create_event_editor():
         label = _("Create Event")
         return EditEventDialog(parent, config, label, db, start, end)
     def edit_function():
-        gui_utils.show_modal(create_event_editor, handle_db_error)
+        dialog = create_event_editor()
+        dialog.ShowModal()
+        dialog.Destroy()
     safe_locking(parent, edit_function)
