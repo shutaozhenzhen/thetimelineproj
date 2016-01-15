@@ -464,7 +464,6 @@ class GuiCreator(object):
 
         def compress(evt):
             safe_locking(self, self.timeline.compress)
-            self.main_panel.redraw_timeline()
 
         def move_up_handler(event):
             self.main_panel.timeline_panel.move_selected_event_up()
