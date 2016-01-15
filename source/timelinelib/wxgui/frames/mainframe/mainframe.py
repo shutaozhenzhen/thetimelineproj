@@ -1116,9 +1116,9 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
         display_categories_editor_moved_message(self)
 
     def _edit_eras(self):
-        def create_eras_editor():
-            return ErasEditorDialog(self, self.timeline, self.config)
-        gui_utils.show_modal(create_eras_editor, self.handle_db_error)
+        dialog = ErasEditorDialog(self, self.timeline, self.config)
+        dialog.ShowModal()
+        dialog.Destroy()
         self.main_panel.redraw_timeline()
 
     def _fit_all_events(self):
