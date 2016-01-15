@@ -74,10 +74,6 @@ class MainFrameController(object):
         if path == ":numtutorial:":
             self.main_frame._fit_all_events()
 
-    def set_no_timeline(self):
-        self.timeline = None
-        self.main_frame.display_timeline(None)
-
     def set_timeline_in_readonly_mode(self):
         try:
             self.timeline.set_readonly()

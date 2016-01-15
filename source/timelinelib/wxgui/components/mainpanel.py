@@ -21,7 +21,6 @@ import wx
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.wxgui.components.welcomepanel import WelcomePanel
 from timelinelib.wxgui.components.timelinepanel import TimelinePanel
-from timelinelib.wxgui.components.errorpanel import ErrorPanel
 from timelinelib.wxgui.components.search import SearchBar
 from timelinelib.wxgui.components.propertyeditors.iconeditor import FileToBitmapConverter
 
@@ -55,7 +54,6 @@ class MainPanel(wx.Panel):
 
       * The welcome panel (show_welcome_panel)
       * The timeline panel (show_timeline_panel)
-      * The error panel (show_error_panel)
 
     Also displays the search bar.
     """
@@ -103,9 +101,6 @@ class MainPanel(wx.Panel):
 
     def show_timeline_panel(self):
         self._show_panel(self.timeline_panel)
-
-    def show_error_panel(self):
-        self._show_panel(self.error_panel)
 
     def show_searchbar(self, show=True):
         self.searchbar.Show(show)
@@ -189,13 +184,11 @@ class MainPanel(wx.Panel):
         self.timeline_panel = TimelinePanel(
             self, self.config, self.main_frame.status_bar_adapter,
             self.main_frame)
-        self.error_panel = ErrorPanel(self, self.main_frame)
         # Layout
         self.sizerOuter = wx.BoxSizer(wx.VERTICAL)
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.sizer.Add(self.welcome_panel, flag=wx.GROW, proportion=1)
         self.sizer.Add(self.timeline_panel, flag=wx.GROW, proportion=1)
-        self.sizer.Add(self.error_panel, flag=wx.GROW, proportion=1)
         self.sizerOuter.Add(self.sizer, flag=wx.GROW, proportion=1)
         self.sizerOuter.Add(self.searchbar, flag=wx.GROW, proportion=0)
         self.SetSizer(self.sizerOuter)
@@ -207,5 +200,5 @@ class MainPanel(wx.Panel):
         panel.activated()
 
     def _hide_all_panels(self):
-        for panel_to_hide in [self.welcome_panel, self.timeline_panel, self.error_panel]:
+        for panel_to_hide in [self.welcome_panel, self.timeline_panel]:
             panel_to_hide.Show(False)

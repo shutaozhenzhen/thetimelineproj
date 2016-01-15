@@ -1162,13 +1162,6 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         last_time = self._last_time(events)
         return self.main_panel.get_export_periods(first_time, last_time)
 
-    # Error handling
-    def _switch_to_error_view(self, error):
-        self.controller.set_no_timeline()
-        self.main_panel.error_panel.populate(error)
-        self.main_panel.show_error_panel()
-        self.enable_disable_menus()
-
     # Timer event handlers
     def _handle_event_alerts(self):
         if self.timeline is None:
