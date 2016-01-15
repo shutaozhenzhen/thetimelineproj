@@ -18,6 +18,7 @@
 
 import wx
 
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.db.utils import safe_locking
 from timelinelib.debug import DEBUG_ENABLED
