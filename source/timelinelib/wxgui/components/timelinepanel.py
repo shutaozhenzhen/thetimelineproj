@@ -42,6 +42,7 @@ from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 from timelinelib.wxgui.dialogs.editevent.view import open_event_editor_for
 from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 from timelinelib.wxgui.utils import _ask_question
+from timelinelib.wxgui.utils import handle_db_error_by_crashing
 
 
 LEFT_RIGHT_SCROLL_FACTOR = 1 / 200.0
@@ -281,7 +282,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             return _ask_question(text) == wx.YES
         def exception_handler(ex):
             if isinstance(ex, TimelineIOError):
-                self.handle_db_error(ex)
+                handle_db_error_by_crashing(ex, self)
             else:
                 raise(ex)
         def _last_event(event):
@@ -308,7 +309,7 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _context_menu_on_done_event(self, evt):
         def exception_handler(ex):
             if isinstance(ex, TimelineIOError):
-                self.handle_db_error(ex)
+                handle_db_error_by_crashing(ex, self)
             else:
                 raise(ex)
         def _last_event(event):
@@ -353,9 +354,8 @@ class TimelinePanelGuiCreator(wx.Panel):
 
 class TimelinePanel(TimelinePanelGuiCreator):
 
-    def __init__(self, parent, config, handle_db_error, status_bar_adapter, main_frame):
+    def __init__(self, parent, config, status_bar_adapter, main_frame):
         self.config = config
-        self.handle_db_error = handle_db_error
         self.status_bar_adapter = status_bar_adapter
         self.main_frame = main_frame
         TimelinePanelGuiCreator.__init__(self, parent)
