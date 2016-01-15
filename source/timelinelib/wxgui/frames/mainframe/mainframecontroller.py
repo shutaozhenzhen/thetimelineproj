@@ -60,7 +60,7 @@ class MainFrameController(object):
             self.timeline = new_db
             self.timeline.loaded()
         except TimelineIOError, e:
-            self.main_frame.handle_db_error(e)
+            self.main_frame.HandleDbError(e)
             self.timelinepath = None
         else:
             self.config.append_recently_opened(path)

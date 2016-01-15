@@ -66,7 +66,7 @@ class MainFrameControllerTest(UnitTestCase):
         error = TimelineIOError("")
         self.db_open.side_effect = error
         self.controller.open_timeline("foo.timeline")
-        self.main_frame.handle_db_error.assert_called_with(error)
+        self.main_frame.HandleDbError.assert_called_with(error)
 
     def setUp(self):
         self.main_frame = Mock(MainFrame)

@@ -26,7 +26,14 @@ from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.utils import handle_db_error_by_crashing
 
 
-class Dialog(humblewx.Dialog):
+class HandleDbErrorMixin(object):
+
+    def HandleDbError(self, e):
+        assert isinstance(self, wx.Window)
+        handle_db_error_by_crashing(e, self)
+
+
+class Dialog(humblewx.Dialog, HandleDbErrorMixin):
 
     def EndModalOk(self):
         self.EndModal(wx.ID_OK)
@@ -36,6 +43,3 @@ class Dialog(humblewx.Dialog):
 
     def DisplayInformationMessage(self, caption, message):
         display_information_message(caption, message, parent=self)
-
-    def HandleDbError(self, e):
-        handle_db_error_by_crashing(e, self)

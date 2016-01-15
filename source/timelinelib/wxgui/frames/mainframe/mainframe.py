@@ -63,6 +63,7 @@ from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
+from timelinelib.wxgui.framework import HandleDbErrorMixin
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_categories_editor_moved_message
 from timelinelib.wxgui.utils import display_error_message
@@ -750,10 +751,6 @@ class MainFrameApiUsedByController(object):
         self._set_readonly_text_in_status_bar()
         self.enable_disable_menus()
 
-    def handle_db_error(self, error):
-        display_error_message(ex_msg(error), self)
-        self._switch_to_error_view(error)
-
     def update_open_recent_submenu(self):
         self._clear_recent_menu_items()
         self._create_recent_menu_items()
@@ -886,7 +883,8 @@ class MainFrameApiUsedByController(object):
             mnu_redo.Enable(False)
 
 
-class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
+class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
+                HandleDbErrorMixin):
 
     def __init__(self, application_arguments):
         self.config = read_config(application_arguments.get_config_file_path())
@@ -1080,7 +1078,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
             try:
                 self.main_panel.save_view_properties(self.timeline)
             except TimelineIOError, e:
-                self.handle_db_error(e)
+                self.HandleDbError(e)
 
     # Timeline Menu action handlers
     def _measure_distance_between_events(self):
