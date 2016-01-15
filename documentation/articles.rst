@@ -18,3 +18,8 @@ Here are links to articles written by others about Timeline:
 * `TimeLine: a Python-Based Timeline Creator for Linux
   <http://www.maketecheasier.com/python-timeline-creator-linux/>`_
   (4 June 2015)
+
+Here are links to sites writing about Timeline:
+
+* `(German) Timeline – Das OpenSource-Programm
+  <https://timelinedeutsch.wordpress.com/>`_
