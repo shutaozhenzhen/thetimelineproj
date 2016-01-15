@@ -43,10 +43,6 @@ class MainFrameControllerTest(UnitTestCase):
         self.controller.open_timeline("foo.timeline")
         self.main_frame.display_timeline.assert_called_with(timeline)
 
-    def test_can_set_no_timeline(self):
-        self.controller.set_no_timeline()
-        self.main_frame.display_timeline.assert_called_with(None)
-
     def test_saves_current_timeline_data_when_opening_new_timeline(self):
         self.controller.open_timeline("foo.timeline")
         self.main_frame.save_current_timeline_data.assert_called_with()
