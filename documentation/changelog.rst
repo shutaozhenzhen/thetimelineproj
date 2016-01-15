@@ -55,7 +55,8 @@ GUI:
 * Colors can now be selected for events without an associated category.
   (`#81 <https://sourceforge.net/p/thetimelineproj/backlog/81/>`_)
 
-* The Ends-today property can be set on subevents if the extended conatiner strategy is used
+* The Ends-today property can be set on subevents if the extended container
+  strategy is used.
 
 * A new dialog in the help menu displays System information.
 
@@ -72,7 +73,7 @@ Bug fixes:
 * Edit event dialog does not crash when there is a db error.
   (`#127 <https://sourceforge.net/p/thetimelineproj/backlog/127/>`_)
 
-* Application does not crash at startup if system has locale zh_CN (Chinese)
+* Application does not crash at startup if system has locale zh_CN (Chinese).
   (Merged from 1.5.1.)
 
 * Application does not crash when duplicating container events.
