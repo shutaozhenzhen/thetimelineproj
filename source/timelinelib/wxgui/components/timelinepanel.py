@@ -302,7 +302,6 @@ class TimelinePanelGuiCreator(wx.Panel):
         open_duplicate_event_dialog_for_event(
             self.main_frame,
             self.timeline_canvas.GetDb(),
-            self.handle_db_error,
             self.timeline_canvas.GetSelectedEvent())
 
     @experimental_feature(EVENT_DONE)

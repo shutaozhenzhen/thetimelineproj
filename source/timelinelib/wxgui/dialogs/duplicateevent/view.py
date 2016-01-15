@@ -119,9 +119,6 @@ class DuplicateEventDialog(Dialog):
     def Close(self):
         self.EndModal(wx.ID_OK)
 
-    def HandleDbError(self, e):
-        gui_utils.handle_db_error_in_dialog(self, e)
-
     def HandleDateErrors(self, error_count):
         display_error_message(
             _("%d Events not duplicated due to missing dates.")
@@ -134,10 +131,11 @@ class DuplicateEventDialog(Dialog):
         gui_utils.set_default_cursor(self)
 
 
-def open_duplicate_event_dialog_for_event(parent, db, handle_db_error, event):
+def open_duplicate_event_dialog_for_event(parent, db, event):
     def create_dialog():
         return DuplicateEventDialog(parent, db, event)
-
     def edit_function():
-        gui_utils.show_modal(create_dialog, handle_db_error)
+        dialog = create_dialog()
+        dialog.ShowModal()
+        dialog.Destroy()
     safe_locking(parent, edit_function)
