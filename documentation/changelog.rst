@@ -69,6 +69,9 @@ Translations:
 
 Bug fixes:
 
+* Edit event dialog does not crash when there is a db error.
+  (`#127 <https://sourceforge.net/p/thetimelineproj/backlog/127/>`_)
+
 * Application does not crash at startup if system has locale zh_CN (Chinese)
   (Merged from 1.5.1.)
 
