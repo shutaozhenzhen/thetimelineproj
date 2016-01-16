@@ -254,7 +254,6 @@ class GuiCreator(object):
                 dialog.ShowModal()
                 dialog.Destroy()
             safe_locking(self, edit_function)
-            self.main_panel.redraw_timeline()
 
         def edit_shortcuts(evt):
 
@@ -459,15 +458,12 @@ class GuiCreator(object):
 
         def undo(evt):
             safe_locking(self, self.timeline.undo)
-            self.main_panel.redraw_timeline()
 
         def redo(evt):
             safe_locking(self, self.timeline.redo)
-            self.main_panel.redraw_timeline()
 
         def compress(evt):
             safe_locking(self, self.timeline.compress)
-            self.main_panel.redraw_timeline()
 
         def move_up_handler(event):
             self.main_panel.timeline_panel.move_selected_event_up()
