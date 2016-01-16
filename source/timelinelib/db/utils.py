@@ -20,6 +20,7 @@ import codecs
 import os.path
 
 from timelinelib.canvas.data.exceptions import TimelineIOError
+from timelinelib.wxgui.utils import register_unlock_function
 
 
 def safe_write(path, encoding, write_fn):
@@ -83,6 +84,7 @@ def create_non_exising_path(base, suffix):
 def safe_locking(controller, edit_function, exception_handler=None):
     if controller.ok_to_edit():
         try:
+            register_unlock_function(controller.edit_ends)
             edit_function()
         except Exception, e:
             if exception_handler is not None:

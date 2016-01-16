@@ -935,6 +935,9 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         except LockedException:
             return False
 
+    def get_lockfile_path(self):
+        return self.controller._get_lockpath()
+
     def edit_ends(self):
         self.controller.edit_ends()
 
