@@ -120,10 +120,9 @@ class MainFrameController(object):
         return not os.path.exists(self.timelinepath)
 
     def edit_ends(self):
-        if self.timeline is not None:
-            if self._the_lock_is_mine():
-                self.last_changed = self._get_modification_date()
-                self._unlock()
+        if self._the_lock_is_mine():
+            self.last_changed = self._get_modification_date()
+            self._unlock()
 
     def timeline_is_readonly(self):
         return self.timeline is not None and self.timeline.is_read_only()

@@ -20,7 +20,6 @@ import sys
 
 import wx
 
-from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import sort_categories
 from timelinelib.time.bosparaniantime import BosparanianTimeType
 
@@ -28,6 +27,7 @@ from timelinelib.time.bosparaniantime import BosparanianTimeType
 # Border, in pixels, between controls in a window (should always be used when
 # border is needed)
 BORDER = 5
+unlock_function = None
 
 
 class WildcardHelper(object):
@@ -153,6 +153,8 @@ def handle_db_error_by_crashing(e, parent=None):
         from timelinelib.wxgui.setup import unhandled_exception_hook
         unhandled_exception_hook(error_type, value, traceback)
     finally:
+        if unlock_function is not None:
+            unlock_function()
         sys.exit(1)
 
 
@@ -196,3 +198,8 @@ def set_focus(parent, name):
         if child.GetName() == name:
             child.SetFocus()
             break
+
+
+def register_unlock_function(function):
+    global unlock_function
+    unlock_function = function
