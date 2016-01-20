@@ -93,7 +93,7 @@ class Parser(object):
             raise TimelineIOError(whole_msg)
 
     def _parse_version(self, text, tmp_dict):
-        match = re.search(r"^(\d+).(\d+).(\d+)(.*)?$", text)
+        match = re.search(r"^(\d+).(\d+).(\d+)(.*)$", text)
         if match:
             (x, y, z) = (int(match.group(1)), int(match.group(2)),
                          int(match.group(3)))
