@@ -1,10 +1,15 @@
 Changelog
 =========
 
+Version 1.10.0
+-------------
+
+**Planned Release on 30 April 2016.**
+
 Version 1.9.0
 -------------
 
-**Planned Release on 31 January 2016.**
+**Released on 31 January 2016.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
