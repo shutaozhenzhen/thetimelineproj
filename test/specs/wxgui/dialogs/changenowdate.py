@@ -18,10 +18,12 @@
 
 from mock import Mock
 
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.config.dotfile import Config
 from timelinelib.db import db_open
+from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.changenowdate.controller import ChangeNowDateDialogController
 from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
-from timelinelib.test.cases.unit import UnitTestCase
 
 
 class describe_change_now_date_dialog(UnitTestCase):
@@ -31,8 +33,10 @@ class describe_change_now_date_dialog(UnitTestCase):
         self.controller = ChangeNowDateDialogController(self.view)
 
     def test_it_can_be_created(self):
-        config = Mock()
+        config = Mock(Config)
+        config.get_gregorian_date_formatter.return_value = DefaultDateFormatter()
         db = db_open(":tutorial:")
         handle_new_time_fn = Mock()
         title = "a dialog title"
-        self.show_dialog(ChangeNowDateDialog, None, config, db, handle_new_time_fn, title)
+        self.show_dialog(
+            ChangeNowDateDialog, None, config, db, handle_new_time_fn, title)

@@ -19,7 +19,6 @@
 import wx
 
 from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
-from timelinelib.calendar import get_date_formatter
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.components import TextPatternControl
@@ -32,8 +31,9 @@ DAY_INDEX = 2
 
 class GregorianDatePicker(wx.Panel):
 
-    def __init__(self, parent):
+    def __init__(self, parent, gregorian_date_formatter):
         wx.Panel.__init__(self, parent)
+        self._gregorian_date_formatter = gregorian_date_formatter
         self._create_date_text()
         self._create_bc_button()
         self._layout()
@@ -108,19 +108,19 @@ class GregorianDatePicker(wx.Panel):
         self.SetGregorianDate(decrement_day(self.GetGregorianDate()))
 
     def _get_separator(self):
-        return get_date_formatter().separator()
+        return self._gregorian_date_formatter.separator()
 
     def _get_regions(self):
-        return get_date_formatter().get_regions()
+        return self._gregorian_date_formatter.get_regions()
 
     def _get_year_group(self):
-        return get_date_formatter().get_regions().index(YEAR_INDEX)
+        return self._gregorian_date_formatter.get_regions().index(YEAR_INDEX)
 
     def _get_month_group(self):
-        return get_date_formatter().get_regions().index(MONTH_INDEX)
+        return self._gregorian_date_formatter.get_regions().index(MONTH_INDEX)
 
     def _get_day_group(self):
-        return get_date_formatter().get_regions().index(DAY_INDEX)
+        return self._gregorian_date_formatter.get_regions().index(DAY_INDEX)
 
 
 def parts_to_gregorian_date(regions, parts, is_bc):

@@ -18,11 +18,13 @@
 
 from mock import Mock
 
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.wxgui.dialogs.timeeditor.controller import TimeEditorDialogController
-from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
+from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.wxgui.dialogs.timeeditor.controller import TimeEditorDialogController
+from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 
 
 class describe_TimeEditorDialog_for_gregorian_time(UnitTestCase):
@@ -34,7 +36,10 @@ class describe_TimeEditorDialog_for_gregorian_time(UnitTestCase):
 
     def test_it_can_be_created(self):
         tm = human_time_to_gregorian("31 Dec 2010 00:00")
-        self.show_dialog(TimeEditorDialog, None, None, self.db.get_time_type(), tm, "Go to Date")
+        config = Mock(Config)
+        config.get_gregorian_date_formatter.return_value = DefaultDateFormatter()
+        self.show_dialog(
+            TimeEditorDialog, None, config, self.db.get_time_type(), tm, "Go to Date")
 
     def test_hours_set_to_midday_if_not_given_by_user(self):
         self.given_time_not_shown_in_dialog("31 Dec 2010 00:00")
