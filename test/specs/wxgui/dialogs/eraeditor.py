@@ -18,12 +18,14 @@
 
 from mock import Mock
 
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.wxgui.dialogs.eraeditor.controller import EraEditorDialogController
-from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
+from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.wxgui.dialogs.eraeditor.controller import EraEditorDialogController
+from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
 
 
 GREGORIAN_START = "11 Jul 2014 11:22"
@@ -37,11 +39,15 @@ class describe_EraEditorDialog(UnitTestCase):
     def setUp(self):
         self.db = MemoryDB()
         self.view = Mock(EraEditorDialog)
+        self.config = Mock(Config)
+        self.config.get_gregorian_date_formatter.return_value = DefaultDateFormatter()
         self.controller = EraEditorDialogController(self.view)
         self.era = a_gregorian_era_with(name=NAME, color=COLOR, start=GREGORIAN_START, end=GREGORIAN_END)
 
     def test_it_can_be_created(self):
-        self.show_dialog(EraEditorDialog, None, "Title", self.db.time_type, None, self.era)
+        self.show_dialog(
+            EraEditorDialog, None, "Title", self.db.time_type, self.config,
+            self.era)
 
 
 class EraEditorTestCase(UnitTestCase):

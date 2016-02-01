@@ -65,7 +65,7 @@ class GregorianDateTimePicker(wx.Panel):
         self.controller.set_value(value)
 
     def _create_gui(self):
-        self.date_picker = GregorianDatePicker(self)
+        self.date_picker = GregorianDatePicker(self, self.config.get_gregorian_date_formatter())
         image = wx.Bitmap(os.path.join(ICONS_DIR, "calendar.png"))
         self.date_button = wx.BitmapButton(self, bitmap=image)
         self.Bind(wx.EVT_BUTTON, self._date_button_on_click, self.date_button)
