@@ -122,7 +122,7 @@ class ExperimentalFeatureDateFormatting(ExperimentalFeature, DateFormatter):
 
 def create_locale_sample_date():
     _set_default_time_locale()
-    return _create_sample_datestring_using_locale_formatting()
+    return _create_sample_datestring_using_locale_formatting().replace("Nov", "11")
 
 
 def _set_default_time_locale():
