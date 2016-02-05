@@ -38,6 +38,7 @@ Name: "startmenu";   Description: "Create a start menu"; GroupDescription: "{cm:
 [Files]
 Source: "dist\*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "dist\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
+Source: "dist\icons\event_icons\*"; DestDir: "{app}\icons\event_icons"; Flags: ignoreversion
 Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\MSVCP90.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\gdiplus.dll"; DestDir: "{app}"; Flags: ignoreversion
 
