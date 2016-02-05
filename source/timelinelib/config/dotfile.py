@@ -103,7 +103,7 @@ DEFAULTS = {
     NOW_LINE_COLOUR: "(200, 0, 0)",
     TEXT_BELOW_ICON: "False",
     FUZZY_ICON: "fuzzy.png",
-    LOCKED_ICON: "lock.png",
+    LOCKED_ICON: "locked.png",
     HYPERLINK_ICON: "hyperlink.png",
 }
 # Some settings
