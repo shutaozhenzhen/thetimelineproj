@@ -41,7 +41,7 @@ class ViewProperties(Observable):
         self.view_cats_individually = False
         self.fixed_event_vertical_pos = False
         self.lock_icon = "lock.png"
-        self.fuzzy_icon = "appx.png"
+        self.fuzzy_icon = "fuzzy.png"
         self.hyperlink_icon = "hyperlink.png"
 
     def get_lock_icon(self):
