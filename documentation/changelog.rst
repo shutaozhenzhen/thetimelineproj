@@ -16,6 +16,11 @@ Calendar:
 
 * Locale date formatter can now handle Abbreviated month names in locale format pattern..
   (`#133 <https://sourceforge.net/p/thetimelineproj/backlog/133/>`_)
+
+GUI:
+
+* Users can now design and use their own icons for fuzzy, locked and hyperlink.
+  (`#93 <https://sourceforge.net/p/thetimelineproj/backlog/93/>`_)
   
 Version 1.9.0
 -------------
