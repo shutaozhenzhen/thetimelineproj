@@ -240,6 +240,13 @@ class TimelineCanvas(wx.Panel):
 
     def ZoomVertically(self, direction):
         if direction > 0:
+            self.IncrementEventTextFont()
+        else:
+            self.DecrementEventTextFont()
+        self.Redraw()
+
+    def Scrollvertically(self, direction):
+        if direction > 0:
             self._scroll_up()
         else:
             self._scroll_down()
