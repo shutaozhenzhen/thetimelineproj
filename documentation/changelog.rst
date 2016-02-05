@@ -21,6 +21,10 @@ GUI:
 
 * Users can now design and use their own icons for fuzzy, locked and hyperlink.
   (`#93 <https://sourceforge.net/p/thetimelineproj/backlog/93/>`_)
+
+* The vertical zoom (menu or Alt +/-) now zoom's instead of scrolling.
+
+* Ctrl+SHift+MouseWheel now scrolls vertically instead of zooming.
   
 Version 1.9.0
 -------------

@@ -223,7 +223,7 @@ class NoOpInputHandler(InputHandler):
         direction = _step_function(rotation)
         if ctrl_down:
             if shift_down:
-                self.timeline_canvas.ZoomVertically(direction)
+                self.timeline_canvas.Scrollvertically(direction)
             else:
                 self.timeline_canvas.Zoom(direction, x)
         elif shift_down:
