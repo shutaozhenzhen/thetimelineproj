@@ -36,7 +36,9 @@ GRAY = (200, 200, 200)
 
 class DefaultEventBoxDrawer(object):
 
-    def draw(self, dc, scene, rect, event, selected=False):
+    def draw(self, dc, scene, rect, event, view_properties):
+        self.view_properties = view_properties
+        selected = view_properties.is_selected(event)
         self.center_text = scene.center_text()
         if scene.never_show_period_events_as_point_events() and rect.y < scene.divider_y and event.is_period():
             self._draw_period_event_as_symbol_below_divider_line(dc, scene, event)
@@ -298,7 +300,7 @@ class DefaultEventBoxDrawer(object):
             dc.DrawBitmap(self._get_hyperlink_bitmap(), rect.x + rect.width - 14, rect.y + 4, True)
 
     def _get_hyperlink_bitmap(self):
-        return wx.Bitmap(os.path.join(ICONS_DIR, "hyperlink.png"))
+        return wx.Bitmap(os.path.join(ICONS_DIR, self.view_properties.get_hyperlink_icon()))
 
     def _inflate_clipping_region(self, dc, rect):
         copy = wx.Rect(*rect)
@@ -307,7 +309,7 @@ class DefaultEventBoxDrawer(object):
         dc.SetClippingRect(copy)
 
     def _get_lock_bitmap(self):
-        return wx.Bitmap(os.path.join(ICONS_DIR, "lock.png"))
+        return wx.Bitmap(os.path.join(ICONS_DIR, self.view_properties.get_lock_icon()))
 
     def _get_fuzzy_bitmap(self):
-        return wx.Bitmap(os.path.join(ICONS_DIR, "appx.png"))
+        return wx.Bitmap(os.path.join(ICONS_DIR, self.view_properties.get_fuzzy_icon()))
