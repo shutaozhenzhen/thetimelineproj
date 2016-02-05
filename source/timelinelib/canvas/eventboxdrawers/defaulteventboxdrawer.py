@@ -299,17 +299,20 @@ class DefaultEventBoxDrawer(object):
         if event.get_hyperlink():
             dc.DrawBitmap(self._get_hyperlink_bitmap(), rect.x + rect.width - 14, rect.y + 4, True)
 
-    def _get_hyperlink_bitmap(self):
-        return wx.Bitmap(os.path.join(ICONS_DIR, self.view_properties.get_hyperlink_icon()))
-
     def _inflate_clipping_region(self, dc, rect):
         copy = wx.Rect(*rect)
         copy.Inflate(10, 0)
         dc.DestroyClippingRegion()
         dc.SetClippingRect(copy)
 
+    def _get_hyperlink_bitmap(self):
+        return self._get_bitmap(self.view_properties.get_hyperlink_icon())
+
     def _get_lock_bitmap(self):
-        return wx.Bitmap(os.path.join(ICONS_DIR, self.view_properties.get_lock_icon()))
+        return self._get_bitmap(self.view_properties.get_lock_icon())
 
     def _get_fuzzy_bitmap(self):
-        return wx.Bitmap(os.path.join(ICONS_DIR, self.view_properties.get_fuzzy_icon()))
+        return self._get_bitmap(self.view_properties.get_fuzzy_icon())
+
+    def _get_bitmap(self, name):
+        return wx.Bitmap(os.path.join(ICONS_DIR, name))
