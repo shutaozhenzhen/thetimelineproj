@@ -40,6 +40,9 @@ class Appearance(Observable):
         self._build_property("never_show_period_events_as_point_events", False)
         self._build_property("week_start", "monday")
         self._build_property("use_inertial_scrolling", False)
+        self._build_property("fuzzy_icon", "fuzzy.png")
+        self._build_property("locked_icon", "lock.png")
+        self._build_property("hyperlink_icon", "hyperlink.png")
 
     def _build_property(self, name, initial_value):
         def getter():

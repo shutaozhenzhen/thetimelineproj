@@ -102,6 +102,9 @@ class DefaultDrawingAlgorithm(Drawer):
         return self.scene.get_closest_overlapping_event(event_to_move, up=up)
 
     def draw(self, dc, timeline, view_properties, appearance):
+        view_properties.set_fuzzy_icon(appearance.get_fuzzy_icon())
+        view_properties.set_locked_icon(appearance.get_locked_icon())
+        view_properties.set_hyperlink_icon(appearance.get_hyperlink_icon())
         self.minor_strip_pen.SetColour(appearance.get_minor_strip_divider_line_colour())
         self.major_strip_pen.SetColour(appearance.get_major_strip_divider_line_colour())
         self.now_pen.SetColour(appearance.get_now_line_colour())
