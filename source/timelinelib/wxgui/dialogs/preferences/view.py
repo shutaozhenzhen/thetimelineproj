@@ -24,7 +24,7 @@ from timelinelib.wxgui.components.font import edit_font_data
 from timelinelib.wxgui.dialogs.eventeditortabselection.view import EventEditorTabSelectionDialog
 from timelinelib.wxgui.dialogs.preferences.controller import PreferencesDialogController
 from timelinelib.wxgui.framework import Dialog
-from timelinelib.config.paths import ICONS_DIR
+from timelinelib.config.paths import EVENT_ICONS_DIR
 
 
 class PreferencesDialog(Dialog):
@@ -227,8 +227,7 @@ class PreferencesDialog(Dialog):
         self.controller.on_init(config, ExperimentalFeatures())
 
     def SetIcons(self, fuzzy_icon_name, locked_icon_name, hyperlink_icon_name):
-        path = os.path.join(ICONS_DIR, "event_icons")
-        choices = [f for f in os.listdir(path) if f.endswith(".png")]
+        choices = [f for f in os.listdir(EVENT_ICONS_DIR) if f.endswith(".png")]
         self.fuzzy_icon_choice.SetItems(choices)
         if not self.fuzzy_icon_choice.SetStringSelection(fuzzy_icon_name):
             self.fuzzy_icon_choice.Select(0)

@@ -23,7 +23,7 @@ import wx
 
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.drawing.utils import get_colour
-from timelinelib.config.paths import ICONS_DIR
+from timelinelib.config.paths import EVENT_ICONS_DIR
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
 
 
@@ -315,4 +315,4 @@ class DefaultEventBoxDrawer(object):
         return self._get_bitmap(self.view_properties.get_fuzzy_icon())
 
     def _get_bitmap(self, name):
-        return wx.Bitmap(os.path.join(ICONS_DIR, "event_icons", name))
+        return wx.Bitmap(os.path.join(EVENT_ICONS_DIR, name))
