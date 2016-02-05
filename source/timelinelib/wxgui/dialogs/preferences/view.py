@@ -227,7 +227,8 @@ class PreferencesDialog(Dialog):
         self.controller.on_init(config, ExperimentalFeatures())
 
     def SetIcons(self, fuzzy_icon_name, locked_icon_name, hyperlink_icon_name):
-        choices = [f for f in os.listdir(ICONS_DIR) if f.endswith(".png")]
+        path = os.path.join(ICONS_DIR, "event_icons")
+        choices = [f for f in os.listdir(path) if f.endswith(".png")]
         self.fuzzy_icon_choice.SetItems(choices)
         if not self.fuzzy_icon_choice.SetStringSelection(fuzzy_icon_name):
             self.fuzzy_icon_choice.Select(0)

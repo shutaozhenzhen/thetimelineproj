@@ -315,4 +315,4 @@ class DefaultEventBoxDrawer(object):
         return self._get_bitmap(self.view_properties.get_fuzzy_icon())
 
     def _get_bitmap(self, name):
-        return wx.Bitmap(os.path.join(ICONS_DIR, name))
+        return wx.Bitmap(os.path.join(ICONS_DIR, "event_icons", name))
