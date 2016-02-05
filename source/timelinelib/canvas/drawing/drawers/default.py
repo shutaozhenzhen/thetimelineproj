@@ -488,7 +488,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_box(self, rect, event, view_properties):
         self.dc.SetClippingRect(rect)
-        self.event_box_drawer.draw(self.dc, self.scene, rect, event, view_properties.is_selected(event))
+        self.event_box_drawer.draw(self.dc, self.scene, rect, event, view_properties)
         self.dc.DestroyClippingRegion()
 
     def _draw_ballons(self, view_properties):
