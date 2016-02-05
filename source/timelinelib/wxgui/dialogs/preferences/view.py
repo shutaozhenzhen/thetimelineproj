@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
 import wx
 
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
@@ -23,6 +24,7 @@ from timelinelib.wxgui.components.font import edit_font_data
 from timelinelib.wxgui.dialogs.eventeditortabselection.view import EventEditorTabSelectionDialog
 from timelinelib.wxgui.dialogs.preferences.controller import PreferencesDialogController
 from timelinelib.wxgui.framework import Dialog
+from timelinelib.config.paths import ICONS_DIR
 
 
 class PreferencesDialog(Dialog):
@@ -151,6 +153,36 @@ class PreferencesDialog(Dialog):
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
+            <Panel notebookLabel="$(icons_text)">
+                <BoxSizerVertical>
+                    <FlexGridSizer columns="2" border="ALL">
+                        <StaticText
+                            label="$(fuzzy_icon_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <Choice
+                            name="fuzzy_icon_choice"
+                            event_EVT_CHOICE="on_fuzzy_icon_changed"
+                        />
+                        <StaticText
+                            label="$(locked_icon_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <Choice
+                            name="locked_icon_choice"
+                            event_EVT_CHOICE="on_locked_icon_changed"
+                        />
+                        <StaticText
+                            label="$(hyperlink_icon_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <Choice
+                            name="hyperlink_icon_choice"
+                            event_EVT_CHOICE="on_hyperlink_icon_changed"
+                        />
+                    </FlexGridSizer>
+                </BoxSizerVertical>
+            </Panel>
             <Panel name="experimental_panel" notebookLabel="$(experimental_text)">
                 <BoxSizerVertical>
                     <FlexGridSizer
@@ -181,6 +213,10 @@ class PreferencesDialog(Dialog):
             "colours_text": _("Colours"),
             "major_strip_text": _("Major Strips:"),
             "minor_strip_text": _("Minor Strips:"),
+            "icons_text": _("Icons"),
+            "fuzzy_icon_text": _("Fuzzy icon"),
+            "locked_icon_text": _("Locked icon"),
+            "hyperlink_icon_text": _("Hyperlink icon"),
             "legends_text": _("Legends:"),
             "edit_text": _("Edit"),
             "experimental_text": _("Experimental Features"),
@@ -189,6 +225,18 @@ class PreferencesDialog(Dialog):
             "now_line_colour_text": _("Now line:"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
+
+    def SetIcons(self, fuzzy_icon_name, locked_icon_name, hyperlink_icon_name):
+        choices = [f for f in os.listdir(ICONS_DIR) if f.endswith(".png")]
+        self.fuzzy_icon_choice.SetItems(choices)
+        if not self.fuzzy_icon_choice.SetStringSelection(fuzzy_icon_name):
+            self.fuzzy_icon_choice.Select(0)
+        self.locked_icon_choice.SetItems(choices)
+        if not self.locked_icon_choice.SetStringSelection(locked_icon_name):
+            self.locked_icon_choice.Select(0)
+        self.hyperlink_icon_choice.SetItems(choices)
+        if not self.hyperlink_icon_choice.SetStringSelection(hyperlink_icon_name):
+            self.hyperlink_icon_choice.Select(0)
 
     def Destroy(self):
         self.controller.on_close()

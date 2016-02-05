@@ -70,6 +70,9 @@ MINOR_STRIP_DIVIDER_LINE_COLOUR = "minor_strip_divider_line_colour"
 MAJOR_STRIP_DIVIDER_LINE_COLOUR = "major_strip_divider_line_colour"
 NOW_LINE_COLOUR = "today_line_colour"
 TEXT_BELOW_ICON = "text_below_icon"
+FUZZY_ICON = "fuzzy_icon"
+LOCKED_ICON = "locked_icon"
+HYPERLINK_ICON = "hyperlink_icon"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -98,7 +101,10 @@ DEFAULTS = {
     MINOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
     MAJOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
     NOW_LINE_COLOUR: "(200, 0, 0)",
-    TEXT_BELOW_ICON: "False"
+    TEXT_BELOW_ICON: "False",
+    FUZZY_ICON: "fuzzy.png",
+    LOCKED_ICON: "lock.png",
+    HYPERLINK_ICON: "hyperlink.png",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -423,3 +429,24 @@ class Config(Observable):
 
     def _tuple_to_string(self, tuple_data):
         return str(tuple_data)
+
+    def get_fuzzy_icon(self):
+        return self.config_parser.get(DEFAULTSECT, FUZZY_ICON)
+
+    def set_fuzzy_icon(self, value):
+        self.config_parser.set(DEFAULTSECT, FUZZY_ICON, value)
+        self._notify()
+
+    def get_locked_icon(self):
+        return self.config_parser.get(DEFAULTSECT, LOCKED_ICON)
+
+    def set_locked_icon(self, value):
+        self.config_parser.set(DEFAULTSECT, LOCKED_ICON, value)
+        self._notify()
+
+    def get_hyperlink_icon(self):
+        return self.config_parser.get(DEFAULTSECT, HYPERLINK_ICON)
+
+    def set_hyperlink_icon(self, value):
+        self.config_parser.set(DEFAULTSECT, HYPERLINK_ICON, value)
+        self._notify()

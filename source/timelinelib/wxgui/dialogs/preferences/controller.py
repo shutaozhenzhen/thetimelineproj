@@ -76,6 +76,15 @@ class PreferencesDialogController(Controller):
             event.GetEventObject().GetLabel(), event.IsChecked())
         self.config.experimental_features = str(self.experimental_features)
 
+    def on_fuzzy_icon_changed(self, event):
+        self.config.set_fuzzy_icon(event.GetString())
+
+    def on_locked_icon_changed(self, event):
+        self.config.set_locked_icon(event.GetString())
+
+    def on_hyperlink_icon_changed(self, event):
+        self.config.set_hyperlink_icon(event.GetString())
+
     def _set_initial_values(self):
         self.view.SetOpenRecentCheckboxValue(self.config.get_open_recent_at_startup())
         self.view.SetInertialScrollingCheckboxValue(self.config.get_use_inertial_scrolling())
@@ -87,6 +96,7 @@ class PreferencesDialogController(Controller):
         self.view.SetMinorStripColor(wx.Colour(*self.config.minor_strip_divider_line_colour))
         self.view.SetMajorStripColor(wx.Colour(*self.config.major_strip_divider_line_colour))
         self.view.SetNowLineColor(wx.Colour(*self.config.now_line_colour))
+        self.view.SetIcons(self.config.get_fuzzy_icon(), self.config.get_locked_icon(), self.config.get_hyperlink_icon())
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:

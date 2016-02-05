@@ -309,7 +309,7 @@ class DefaultEventBoxDrawer(object):
         return self._get_bitmap(self.view_properties.get_hyperlink_icon())
 
     def _get_lock_bitmap(self):
-        return self._get_bitmap(self.view_properties.get_lock_icon())
+        return self._get_bitmap(self.view_properties.get_locked_icon())
 
     def _get_fuzzy_bitmap(self):
         return self._get_bitmap(self.view_properties.get_fuzzy_icon())

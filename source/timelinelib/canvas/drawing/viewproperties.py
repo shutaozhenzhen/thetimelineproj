@@ -40,18 +40,27 @@ class ViewProperties(Observable):
         self.hscroll_amount = 0
         self.view_cats_individually = False
         self.fixed_event_vertical_pos = False
-        self.lock_icon = "lock.png"
+        self.locked_icon = "lock.png"
         self.fuzzy_icon = "fuzzy.png"
         self.hyperlink_icon = "hyperlink.png"
-
-    def get_lock_icon(self):
-        return self.lock_icon
 
     def get_fuzzy_icon(self):
         return self.fuzzy_icon
 
+    def set_fuzzy_icon(self, name):
+        self.fuzzy_icon = name
+
+    def get_locked_icon(self):
+        return self.locked_icon
+
+    def set_locked_icon(self, name):
+        self.locked_icon = name
+
     def get_hyperlink_icon(self):
         return self.hyperlink_icon
+
+    def set_hyperlink_icon(self, name):
+        self.hyperlink_icon = name
 
     def set_use_fixed_event_vertical_pos(self, value):
         self.fixed_event_vertical_pos = value
