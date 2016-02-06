@@ -25,6 +25,8 @@ GUI:
 * The vertical zoom (menu or Alt +/-) now zoom's instead of scrolling.
 
 * Ctrl+SHift+MouseWheel now scrolls vertically instead of zooming.
+
+* Marking invalid dates with pink background now works correctly even in Windows
   
 Version 1.9.0
 -------------
