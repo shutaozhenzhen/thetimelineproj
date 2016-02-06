@@ -205,7 +205,7 @@ An Era is displayed as a background with the color defined for the Era. The Era 
     help_system.install_page(
         page_id="event_properties",
         header=_("Event Properties"),
-        related_pages=["events", "event_containers"],
+        related_pages=["events", "event_containers", "add_icon"],
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
         # Just write them as they are.
@@ -424,6 +424,29 @@ To delete an event, select it and press the *Del* key. Multiple events can be de
         # Dashes produce bullet lists. DON'T remove them.
         body=_("""
 No. The events will still be there but they will not belong to a category.
+"""))
+
+    help_system.install_page(
+        page_id="add_icon",
+        header=_("Add a user defined icon"),
+        related_pages=["event_properties"],
+        # TRANSLATORS: This text uses special markup.
+        # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
+        # Just write them as they are.
+        # Stars produce emphasized text. DON'T remove them.
+        # Dashes produce bullet lists. DON'T remove them.
+        body=_("""
+Icons used for the event properties
+
+ - Fuzzy
+ - Locked
+ - Hyperlink
+
+can be user defined.
+
+To use an icon of your own you create a png image file and place it in
+the subdirectory icons/event_icons.
+Now the icon can be selected in the event properties dialog.
 """))
 
     help_system.install_page(
