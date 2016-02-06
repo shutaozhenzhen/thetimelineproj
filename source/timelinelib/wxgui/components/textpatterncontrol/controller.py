@@ -20,48 +20,6 @@ import humblewx
 import wx
 
 
-class TextPatternControl(wx.TextCtrl):
-
-    def __init__(self, parent, name=None):
-        wx.TextCtrl.__init__(self, parent)
-        self.controller = TextPatternControlController(self)
-        self._bind_events()
-        self.controller.on_init()
-
-    def GetParts(self):
-        return self.controller.get_parts()
-
-    def GetSelectedGroup(self):
-        return self.controller.get_selected_group()
-
-    def SetSeparators(self, separators):
-        self.controller.set_separators(separators)
-
-    def SetParts(self, parts):
-        self.controller.set_parts(parts)
-
-    def SetValidator(self, validator):
-        self.controller.set_validator(validator)
-
-    def SetUpHandler(self, group, up_handler):
-        self.controller.set_up_handler(group, up_handler)
-
-    def SetDownHandler(self, group, down_handler):
-        self.controller.set_down_handler(group, down_handler)
-
-    def Validate(self):
-        self.controller.validate()
-
-    def _bind_events(self):
-        self.Bind(wx.EVT_CHAR, self.controller.on_char)
-        self.Bind(wx.EVT_TEXT, self.controller.on_text)
-        self.Bind(wx.EVT_SET_FOCUS, self._on_set_focus)
-        self.Bind(wx.EVT_KILL_FOCUS, self.controller.on_kill_focus)
-
-    def _on_set_focus(self, event):
-        wx.CallAfter(self.controller.on_after_set_focus)
-
-
 class TextPatternControlController(humblewx.Controller):
 
     def on_init(self):
@@ -113,7 +71,7 @@ class TextPatternControlController(humblewx.Controller):
 
     def get_parts(self):
         if self._get_groups() is not None:
-            return [value for (value, start, end) in self._get_groups()]
+            return [value for (value, _, _) in self._get_groups()]
         return None
 
     def get_selected_group(self):
