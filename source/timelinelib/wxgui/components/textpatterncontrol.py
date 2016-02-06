@@ -154,6 +154,7 @@ class TextPatternControlController(humblewx.Controller):
             self.view.SetBackgroundColour(wx.NullColour)
         else:
             self.view.SetBackgroundColour("pink")
+        self.view.Refresh()
 
     def _get_groups(self):
         text = self.view.GetValue()
