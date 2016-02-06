@@ -154,8 +154,8 @@ class PreferencesDialog(Dialog):
                 </BoxSizerVertical>
             </Panel>
             <Panel notebookLabel="$(icons_text)">
-                <BoxSizerVertical>
-                    <FlexGridSizer columns="2" border="ALL">
+                <BoxSizerVertical name="x">
+                    <FlexGridSizer columns="3" border="ALL">
                         <StaticText
                             label="$(fuzzy_icon_text)"
                             align="ALIGN_CENTER_VERTICAL"
@@ -163,6 +163,9 @@ class PreferencesDialog(Dialog):
                         <Choice
                             name="fuzzy_icon_choice"
                             event_EVT_CHOICE="on_fuzzy_icon_changed"
+                        />
+                        <StaticBitmap
+                            name="fuzzy_icon"
                         />
                         <StaticText
                             label="$(locked_icon_text)"
@@ -172,6 +175,9 @@ class PreferencesDialog(Dialog):
                             name="locked_icon_choice"
                             event_EVT_CHOICE="on_locked_icon_changed"
                         />
+                        <StaticBitmap
+                            name="locked_icon"
+                        />
                         <StaticText
                             label="$(hyperlink_icon_text)"
                             align="ALIGN_CENTER_VERTICAL"
@@ -179,6 +185,9 @@ class PreferencesDialog(Dialog):
                         <Choice
                             name="hyperlink_icon_choice"
                             event_EVT_CHOICE="on_hyperlink_icon_changed"
+                        />
+                        <StaticBitmap
+                            name="hyperlink_icon"
                         />
                     </FlexGridSizer>
                 </BoxSizerVertical>
@@ -237,6 +246,13 @@ class PreferencesDialog(Dialog):
         self.hyperlink_icon_choice.SetItems(choices)
         if not self.hyperlink_icon_choice.SetStringSelection(hyperlink_icon_name):
             self.hyperlink_icon_choice.Select(0)
+        self.fuzzy_icon.SetBitmap(wx.Bitmap(os.path.join(EVENT_ICONS_DIR, self.fuzzy_icon_choice.GetStringSelection())))
+
+    def DisplayIcons(self):
+        self.fuzzy_icon.SetBitmap(wx.Bitmap(os.path.join(EVENT_ICONS_DIR, self.fuzzy_icon_choice.GetStringSelection())))
+        self.locked_icon.SetBitmap(wx.Bitmap(os.path.join(EVENT_ICONS_DIR, self.locked_icon_choice.GetStringSelection())))
+        self.hyperlink_icon.SetBitmap(wx.Bitmap(os.path.join(EVENT_ICONS_DIR, self.hyperlink_icon_choice.GetStringSelection())))
+        self.Refresh()
 
     def Destroy(self):
         self.controller.on_close()

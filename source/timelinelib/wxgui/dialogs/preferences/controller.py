@@ -78,12 +78,15 @@ class PreferencesDialogController(Controller):
 
     def on_fuzzy_icon_changed(self, event):
         self.config.set_fuzzy_icon(event.GetString())
+        self.view.DisplayIcons()
 
     def on_locked_icon_changed(self, event):
         self.config.set_locked_icon(event.GetString())
+        self.view.DisplayIcons()
 
     def on_hyperlink_icon_changed(self, event):
         self.config.set_hyperlink_icon(event.GetString())
+        self.view.DisplayIcons()
 
     def _set_initial_values(self):
         self.view.SetOpenRecentCheckboxValue(self.config.get_open_recent_at_startup())
@@ -97,6 +100,7 @@ class PreferencesDialogController(Controller):
         self.view.SetMajorStripColor(wx.Colour(*self.config.major_strip_divider_line_colour))
         self.view.SetNowLineColor(wx.Colour(*self.config.now_line_colour))
         self.view.SetIcons(self.config.get_fuzzy_icon(), self.config.get_locked_icon(), self.config.get_hyperlink_icon())
+        self.view.DisplayIcons()
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:
