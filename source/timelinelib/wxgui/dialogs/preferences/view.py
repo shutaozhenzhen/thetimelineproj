@@ -246,7 +246,6 @@ class PreferencesDialog(Dialog):
         self.hyperlink_icon_choice.SetItems(choices)
         if not self.hyperlink_icon_choice.SetStringSelection(hyperlink_icon_name):
             self.hyperlink_icon_choice.Select(0)
-        self.fuzzy_icon.SetBitmap(wx.Bitmap(os.path.join(EVENT_ICONS_DIR, self.fuzzy_icon_choice.GetStringSelection())))
 
     def DisplayIcons(self):
         self.fuzzy_icon.SetBitmap(wx.Bitmap(os.path.join(EVENT_ICONS_DIR, self.fuzzy_icon_choice.GetStringSelection())))
