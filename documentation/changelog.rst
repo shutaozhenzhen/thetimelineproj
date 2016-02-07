@@ -30,6 +30,8 @@ GUI:
 * Marking invalid dates with pink background now works correctly even in
   Windows.
 
+* The date controls should now follow the locale date formatting setting.
+
 Version 1.9.0
 -------------
 
