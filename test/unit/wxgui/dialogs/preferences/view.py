@@ -16,12 +16,19 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
+import os
+import wx
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.config.dotfile import Config
+from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 
 
-_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-_ROOT = _ROOT.decode("utf-8")
-ICONS_DIR = os.path.join(_ROOT, u"icons")
-EVENT_ICONS_DIR = os.path.join(_ROOT, u"icons", u"event_icons")
-LOCALE_DIR = os.path.join(_ROOT, u"translations")
-HELP_RESOURCES_DIR = os.path.join(_ROOT, u"help_resources")
+class _describe_preferences_dialog(UnitTestCase):
+
+    def test_it_can_be_created(self):
+        app = wx.App()
+        path = os.path.join(
+                wx.StandardPaths.Get().GetUserConfigDir(),
+                ".thetimelineproj.cfg")
+        config = Config(path)
+        self.show_dialog(PreferencesDialog, None, config)
