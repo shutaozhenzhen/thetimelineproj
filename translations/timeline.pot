@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-06 09:32+0100\n"
+"POT-Creation-Date: 2016-02-07 15:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -243,6 +243,15 @@ msgstr ""
 
 #: source\timelinelib\canvas\timelinecanvascontroller.py:132
 msgid "No timeline set"
+msgstr ""
+
+#: source\timelinelib\config\dotfile.py:462
+#: source\timelinelib\wxgui\utils.py:127
+msgid "Warning"
+msgstr ""
+
+#: source\timelinelib\config\dotfile.py:462
+msgid "The selected value contains invalid characters and can't be saved"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:49
@@ -2654,10 +2663,6 @@ msgstr ""
 
 #: source\timelinelib\wxgui\utils.py:122
 msgid "Error"
-msgstr ""
-
-#: source\timelinelib\wxgui\utils.py:127
-msgid "Warning"
 msgstr ""
 
 #: source\timelinelib\wxgui\utils.py:140

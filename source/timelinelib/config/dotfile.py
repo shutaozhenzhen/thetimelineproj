@@ -36,6 +36,7 @@ from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.features.experimental.experimentalfeatures import LOCALE_DATE
 from timelinelib.utilities.observer import Observable
 from timelinelib.wxgui.components.font import Font
+from timelinelib.wxgui.utils import display_information_message
 
 
 # Name used in ConfigParser
@@ -350,24 +351,27 @@ class Config(Observable):
         return self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_FONT)
 
     def set_major_strip_font(self, font):
-        self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_FONT, font)
-        self._notify()
+        if self._toStr(font) is not None:
+            self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_FONT, font)
+            self._notify()
     major_strip_font = property(get_major_strip_font, set_major_strip_font)
 
     def get_minor_strip_font(self):
         return self.config_parser.get(DEFAULTSECT, MINOR_STRIP_FONT)
 
     def set_minor_strip_font(self, font):
-        self.config_parser.set(DEFAULTSECT, MINOR_STRIP_FONT, font)
-        self._notify()
+        if self._toStr(font) is not None:
+            self.config_parser.set(DEFAULTSECT, MINOR_STRIP_FONT, font)
+            self._notify()
     minor_strip_font = property(get_minor_strip_font, set_minor_strip_font)
 
     def get_legend_font(self):
         return self.config_parser.get(DEFAULTSECT, LEGEND_FONT)
 
     def set_legend_font(self, font):
-        self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
-        self._notify()
+        if self._toStr(font) is not None:
+            self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
+            self._notify()
     legend_font = property(get_legend_font, set_legend_font)
 
     def _set_default_fonts(self):
@@ -450,3 +454,9 @@ class Config(Observable):
     def set_hyperlink_icon(self, value):
         self.config_parser.set(DEFAULTSECT, HYPERLINK_ICON, value)
         self._notify()
+
+    def _toStr(self, value):
+        try:
+            return str(value)
+        except UnicodeEncodeError:
+            display_information_message(_("Warning"), _("The selected value contains invalid characters and can't be saved"))
