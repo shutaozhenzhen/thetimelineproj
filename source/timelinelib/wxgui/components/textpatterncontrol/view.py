@@ -24,7 +24,7 @@ from timelinelib.wxgui.components.textpatterncontrol.controller import TextPatte
 class TextPatternControl(wx.TextCtrl):
 
     def __init__(self, parent, name=None):
-        wx.TextCtrl.__init__(self, parent)
+        wx.TextCtrl.__init__(self, parent, style=wx.TE_PROCESS_TAB)
         self.controller = TextPatternControlController(self)
         self._bind_events()
         self.controller.on_init()

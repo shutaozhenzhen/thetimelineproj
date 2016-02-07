@@ -49,8 +49,13 @@ class TextPatternControlController(humblewx.Controller):
         if event.GetKeyCode() == wx.WXK_TAB:
             if event.ShiftDown():
                 skip = self.on_shift_tab()
+                flag = wx.NavigationKeyEvent.IsBackward
             else:
                 skip = self.on_tab()
+                flag = wx.NavigationKeyEvent.IsForward
+            if skip:
+                event.EventObject.Navigate(flags=flag)
+            skip = False
         elif (event.GetKeyCode() == wx.WXK_UP and
               self.view.GetSelectedGroup() in self.up_handlers and
               self._is_text_valid()):
