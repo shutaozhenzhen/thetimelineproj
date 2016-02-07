@@ -65,8 +65,6 @@ GUI:
 * The events in the exported list are sorted by start date.
   (`#106 <https://sourceforge.net/p/thetimelineproj/backlog/106/>`_)
 
-* Shortcuts to quickly toggle some settings are present in a toolbar.
-
 * Colors can be selected for major strip lines, minor strip lines and now line.
   (`#111 <https://sourceforge.net/p/thetimelineproj/backlog/111/>`_)
 
