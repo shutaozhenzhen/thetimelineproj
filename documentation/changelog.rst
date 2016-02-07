@@ -2,7 +2,7 @@ Changelog
 =========
 
 Version 1.10.0
--------------
+--------------
 
 **Planned release on 30 April 2016.**
 
@@ -14,20 +14,24 @@ Version 1.10.0
 
 Calendar:
 
-* Locale date formatter can now handle Abbreviated month names in locale format pattern..
+* Locale date formatter can now handle abbreviated month names in locale format
+  pattern.
   (`#133 <https://sourceforge.net/p/thetimelineproj/backlog/133/>`_)
 
 GUI:
 
-* Users can now design and use their own icons for fuzzy, locked and hyperlink.
+* Users can now design and use their own icons for fuzzy, locked, and hyperlink.
   (`#93 <https://sourceforge.net/p/thetimelineproj/backlog/93/>`_)
 
-* The vertical zoom (menu or Alt +/-) now zoom's instead of scrolling.
+* The vertical zoom (menu or Alt +/-) now zooms instead of scrolling.
 
-* Ctrl+SHift+MouseWheel now scrolls vertically instead of zooming.
+* Ctrl+Shift+MouseWheel now scrolls vertically instead of zooming.
 
-* Marking invalid dates with pink background now works correctly even in Windows
-  
+* Marking invalid dates with pink background now works correctly even in
+  Windows.
+
+* The date controls should now follow the locale date formatting setting.
+
 Version 1.9.0
 -------------
 
@@ -64,8 +68,6 @@ GUI:
 
 * The events in the exported list are sorted by start date.
   (`#106 <https://sourceforge.net/p/thetimelineproj/backlog/106/>`_)
-
-* Shortcuts to quickly toggle some settings are present in a toolbar.
 
 * Colors can be selected for major strip lines, minor strip lines and now line.
   (`#111 <https://sourceforge.net/p/thetimelineproj/backlog/111/>`_)
