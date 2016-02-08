@@ -235,17 +235,23 @@ class PreferencesDialog(Dialog):
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
 
-    def SetIcons(self, fuzzy_icon_name, locked_icon_name, hyperlink_icon_name):
-        choices = [f for f in os.listdir(EVENT_ICONS_DIR) if f.endswith(".png")]
+    def SetIconsChoices(self, choices):
         self.fuzzy_icon_choice.SetItems(choices)
-        if not self.fuzzy_icon_choice.SetStringSelection(fuzzy_icon_name):
-            self.fuzzy_icon_choice.Select(0)
         self.locked_icon_choice.SetItems(choices)
-        if not self.locked_icon_choice.SetStringSelection(locked_icon_name):
-            self.locked_icon_choice.Select(0)
         self.hyperlink_icon_choice.SetItems(choices)
-        if not self.hyperlink_icon_choice.SetStringSelection(hyperlink_icon_name):
-            self.hyperlink_icon_choice.Select(0)
+
+    def SetFuzzyIcon(self, icon_name):
+        self._setIcon(self.fuzzy_icon_choice, icon_name)
+
+    def SetLockedIcon(self, icon_name):
+        self._setIcon(self.locked_icon_choice, icon_name)
+
+    def SetHyperlinkIcon(self, icon_name):
+        self._setIcon(self.hyperlink_icon_choice, icon_name)
+
+    def _setIcon(self, icon_ctrl, icon_name):
+        if not icon_ctrl.SetStringSelection(icon_name):
+            icon_ctrl.Select(0)
 
     def DisplayIcons(self):
         self.fuzzy_icon.SetBitmap(wx.Bitmap(os.path.join(EVENT_ICONS_DIR, self.fuzzy_icon_choice.GetStringSelection())))
