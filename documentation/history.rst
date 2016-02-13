@@ -87,3 +87,8 @@ it might solve:
   the mailing list and then transfered to the backlog.
 * It is easier to see the history of discussions compared to the mailing list
   archive.
+
+Refactoring goals:
+
+* Rename timeline to db.
+* Move test/specs to test/unit and test/something-else.
