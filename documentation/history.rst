@@ -59,3 +59,31 @@ Summary:
     * We documented the process we should try to follow
     * In this process, all users' problems are entered in the backlog
     * We try to solve problems from the backlog that most users have faced
+
+Conference 2016
+---------------
+
+The second Timeline conference took place at Trosa stadshotell on the 12-14
+February 2016.
+
+Review of past year:
+
+* We have continued to develop Timeline. We are happy with that and will
+  continue.
+* More people are involved in discussions about Timeline. We are happy about
+  that. Although there have been no contributions of code.
+
+We discussed if extracting the canvas component would be a good project to work
+on. Reasons for doing it:
+
+* More developers might contribute code to the canvas component if they use it
+  themselves in their own project.
+* The canvas is used today but is not supported by us.
+
+We discussed having a forum instead of the mailing list and backlog. Problems
+it might solve:
+
+* The discussion happens in one place: in the forum thread instead of first on
+  the mailing list and then transfered to the backlog.
+* It is easier to see the history of discussions compared to the mailing list
+  archive.

@@ -115,3 +115,15 @@ Person interested in developing Timeline::
     * We're here on the mailing list to help you with any questions you have :-)
 
     /The Timeline Team
+
+Person writes to the mailing list but we would like the discussion to happen in
+the forum instead::
+
+    Thanks for writing to the mailing list.
+
+    We are experimenting with using a forum for discussions instead of the
+    mailing list.
+
+    Please continue the discussion here: http://...
+
+    /The Timeline Team
