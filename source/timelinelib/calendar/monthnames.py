@@ -61,3 +61,10 @@ def english_name_of_month(month):
 
 def abbreviated_name_of_month(month):
     return _(ABBREVIATED_ENGLISH_MONTH_NAMES[month - 1])
+
+
+def month_of_abbreviated_name(name):
+    for month in range(1, 13):
+        if abbreviated_name_of_month(month) == name:
+            return month
+    raise ValueError("Could not find month name %s." % name)

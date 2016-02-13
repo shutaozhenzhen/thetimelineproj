@@ -1,0 +1,138 @@
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
+#
+# This file is part of Timeline.
+#
+# Timeline is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Timeline is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
+
+
+from timelinelib.calendar.newdateformatter import NewDateFormatter
+from timelinelib.test.cases.unit import UnitTestCase
+
+
+class describe_new_date_formatter(UnitTestCase):
+
+    def test_can_format_and_parse_date(self):
+        self.assert_format_parse((2016, 2, 13), ("2016-02-13", False))
+        self.assert_format_parse((12345, 2, 13), ("12345-02-13", False))
+
+    def test_can_format_and_parse_bc_date(self):
+        self.assert_format_parse((-2015, 2, 13), ("2016-02-13", True))
+
+    def test_can_format_and_parse_using_different_separators(self):
+        self.formatter.set_separators("%", "*")
+        self.assert_format_parse((2016, 2, 13), ("2016%02*13", False))
+
+    def test_can_format_and_parse_with_different_ordering(self):
+        self.formatter.set_region_order(year=1, month=0, day=2)
+        self.assert_format_parse((2016, 2, 13), ("02-2016-13", False))
+
+    def test_can_format_and_parse_with_month_name(self):
+        self.formatter.use_abbreviated_name_for_month(True)
+        self.assert_format_parse((2016, 2, 13), ("2016-#Feb#-13", False))
+
+    def test_can_get_next_region(self):
+        self.assertEqual(
+            self.formatter.get_next_region("2016-02-13", 0),
+            (5, 2)
+        )
+        self.assertEqual(
+            self.formatter.get_next_region("2016-02-13", 2),
+            (5, 2)
+        )
+        self.assertEqual(
+            self.formatter.get_next_region("2016-02-13", 4),
+            (5, 2)
+        )
+        self.assertEqual(
+            self.formatter.get_next_region("2016-02-13", 5),
+            (8, 2)
+        )
+        self.assertEqual(
+            self.formatter.get_next_region("2016-02-13", 8),
+            None
+        )
+        self.assertEqual(
+            self.formatter.get_next_region("2016-02-13", 42),
+            None
+        )
+
+    def test_can_get_previous_region(self):
+        self.assertEqual(
+            self.formatter.get_previous_region("2016-02-13", 42),
+            (5, 2)
+        )
+        self.assertEqual(
+            self.formatter.get_previous_region("2016-02-13", 8),
+            (5, 2)
+        )
+        self.assertEqual(
+            self.formatter.get_previous_region("2016-02-13", 7),
+            (0, 4)
+        )
+
+    def test_can_get_region_type(self):
+        self.assertEqual(
+            self.formatter.get_region_type("2016-02-13", 0),
+            NewDateFormatter.YEAR
+        )
+        self.assertEqual(
+            self.formatter.get_region_type("2016-02-13", 4),
+            NewDateFormatter.YEAR
+        )
+        self.assertEqual(
+            self.formatter.get_region_type("2016-02-13", 5),
+            NewDateFormatter.MONTH
+        )
+        self.assertEqual(
+            self.formatter.get_region_type("2016-02-13", 7),
+            NewDateFormatter.MONTH
+        )
+        self.assertEqual(
+            self.formatter.get_region_type("2016-02-13", 8),
+            NewDateFormatter.DAY
+        )
+
+    def test_can_get_region_type_for_different_order(self):
+        self.formatter.set_region_order(year=2, month=0, day=1)
+        self.assertEqual(
+            self.formatter.get_region_type("02-13-2015", 0),
+            NewDateFormatter.MONTH
+        )
+        self.assertEqual(
+            self.formatter.get_region_type("02-13-2015", 3),
+            NewDateFormatter.DAY
+        )
+        self.assertEqual(
+            self.formatter.get_region_type("02-13-2015", 6),
+            NewDateFormatter.YEAR
+        )
+
+    def test_can_get_region_type_for_abbreviated_month_name(self):
+        self.formatter.use_abbreviated_name_for_month(True)
+        self.assertEqual(
+            self.formatter.get_region_type("2015-#Feb#-10", 11),
+            NewDateFormatter.DAY
+        )
+
+    def test_fails_if_region_order_is_incorrect(self):
+        self.assertRaises(ValueError, self.formatter.set_region_order,
+                          year=1, month=2, day=12)
+
+    def assert_format_parse(self, parsed, formatted):
+        self.assertEqual(self.formatter.format(parsed), formatted)
+        self.assertEqual(self.formatter.parse(formatted), parsed)
+
+    def setUp(self):
+        UnitTestCase.setUp(self)
+        self.formatter = NewDateFormatter()
