@@ -16,10 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
 import wx
 
 from timelinelib.wxgui.components.font import deserialize_font
 from timelinelib.wxgui.framework import Controller
+from timelinelib.config.paths import EVENT_ICONS_DIR
 
 
 class PreferencesDialogController(Controller):
@@ -99,7 +102,11 @@ class PreferencesDialogController(Controller):
         self.view.SetMinorStripColor(wx.Colour(*self.config.minor_strip_divider_line_colour))
         self.view.SetMajorStripColor(wx.Colour(*self.config.major_strip_divider_line_colour))
         self.view.SetNowLineColor(wx.Colour(*self.config.now_line_colour))
-        self.view.SetIcons(self.config.get_fuzzy_icon(), self.config.get_locked_icon(), self.config.get_hyperlink_icon())
+        choices = [f for f in os.listdir(EVENT_ICONS_DIR) if f.endswith(".png")]
+        self.view.SetIconsChoices(choices)
+        self.view.SetFuzzyIcon(self.config.get_fuzzy_icon())
+        self.view.SetLockedIcon(self.config.get_locked_icon())
+        self.view.SetHyperlinkIcon(self.config.get_hyperlink_icon())
         self.view.DisplayIcons()
 
     def _week_index(self, week):

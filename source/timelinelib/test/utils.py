@@ -317,3 +317,9 @@ def select_language(language):
         import os
         os.environ['LANG'] = language
         gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR, unicode=True)
+
+
+class _ANY(object):
+    def __eq__(self, other):
+        return True
+ANY = _ANY()
