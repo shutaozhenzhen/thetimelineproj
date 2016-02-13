@@ -29,10 +29,11 @@ If we find better ways of working we can change this process to reflect that.
 General workflow
 ^^^^^^^^^^^^^^^^
 
-* We continuously collect problems to be included in the backlog
+* We continuously collect problems to be solved
 * We work in sprints that are around 3 months long
-* In each sprint we work on items from the backlog with highest priority
-* At the end of each sprint a new release is made
+* In each sprint we work on the most interesting problems
+* After each commit a beta release is built automatically
+* At the end of each sprint a final release is made
 
 Backlog
 ^^^^^^^
@@ -44,6 +45,8 @@ The backlog contains problems that have been identified by users of Timeline.
 Collecting problems
 ~~~~~~~~~~~~~~~~~~~
 
+The old way of collecting problems looks like this:
+
 * The main way users of Timeline interact with the project is via the
   :ref:`label-mailing-list`.
 * Requests that users make are transformed into problem descriptions
@@ -51,21 +54,28 @@ Collecting problems
 * Crash reports are already clear problem descriptions
 * Problems are stored in the backlog
 
+The new experimental way of collecting problems looks like this:
+
+* Users discuss Timeline on the forum
+* Some discussions will result in problems being identified
+* Discussions with identified problems might be tagged so that they can be
+  easily found
+
 Prioritization
 ~~~~~~~~~~~~~~
 
 * A problem is prioritized higher if more users have experienced it
-* Anyone is allowed to comment on problems in the backlog to indicate its
-  importance to them
+* Anyone is allowed to comment on problems to indicate its importance to them
 
 Sprints
 ^^^^^^^
 
-* A developer picks a problem from the backlog (preferably a problem with high
+* A developer picks an identified problem (preferably a problem with high
   priority) and works on it
 * To be accepted for inclusion in Timeline, each patch must
     * follow guidelines
     * pass tests
+    * have an entry in the changelog if major user visible changes was made
 * A patch is delivered by pushing to the repo (if the developer has
   push-access)
 * A patch is delivered by sending it to the mailing list (if the developer
