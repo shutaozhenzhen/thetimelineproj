@@ -26,6 +26,9 @@ class NewGregorianDatePickerController(humblewx.Controller):
         self._date_formatter = date_formatter
         self._date_modifier = date_modifier
 
+    def on_text(self, event):
+        self._validate()
+
     def on_char(self, event):
         skip = True
         if event.GetKeyCode() == wx.WXK_UP:
@@ -35,6 +38,14 @@ class NewGregorianDatePickerController(humblewx.Controller):
             self.on_key_down()
             skip = False
         event.Skip(skip)
+
+    def _validate(self):
+        try:
+            self.get_gregorian_date()
+        except ValueError:
+            self.view.SetBackgroundColour("pink")
+        else:
+            self.view.SetBackgroundColour(wx.NullColour)
 
     def on_key_up(self):
         try:

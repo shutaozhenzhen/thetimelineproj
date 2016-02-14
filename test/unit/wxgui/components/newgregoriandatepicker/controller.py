@@ -18,6 +18,7 @@
 
 from mock import Mock
 from mock import sentinel
+import wx
 
 from timelinelib.calendar.newdateformatter import NewDateFormatter
 from timelinelib.test.cases.unit import UnitTestCase
@@ -89,6 +90,15 @@ class describe_new_gregorian_date_picker(UnitTestCase):
         self.date_formatter.parse.side_effect = ValueError
         self.controller.on_key_down()
         self.assertFalse(self.view.SetText.called)
+
+    def test_sets_error_color_when_date_is_invalid(self):
+        self.date_formatter.parse.side_effect = ValueError
+        self.controller.on_text(Mock())
+        self.view.SetBackgroundColour.assert_called_with("pink")
+
+    def test_sets_ok_color_when_date_invalid(self):
+        self.controller.on_text(Mock())
+        self.view.SetBackgroundColour.assert_called_with(wx.NullColour)
 
     def set_up_region_type(self, region_type):
         self.date_formatter.get_region_type.return_value = region_type
