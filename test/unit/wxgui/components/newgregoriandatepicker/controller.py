@@ -100,6 +100,24 @@ class describe_new_gregorian_date_picker(UnitTestCase):
         self.controller.on_text(Mock())
         self.view.SetBackgroundColour.assert_called_with(wx.NullColour)
 
+    def test_tab_moves_to_next_region_if_exists(self):
+        self.date_formatter.get_next_region.return_value = sentinel.SELECTION
+        self.assertTrue(self.controller.on_tab())
+        self.view.SetSelection.assert_called_with(sentinel.SELECTION)
+        self.date_formatter.get_next_region.assert_called_with(
+            sentinel.TEXT,
+            sentinel.CURSOR_POSITION
+        )
+
+    def test_tab_returns_false_if_no_next_region(self):
+        self.date_formatter.get_next_region.return_value = None
+        self.assertFalse(self.controller.on_tab())
+        self.assertFalse(self.view.SetSelection.called)
+        self.date_formatter.get_next_region.assert_called_with(
+            sentinel.TEXT,
+            sentinel.CURSOR_POSITION
+        )
+
     def set_up_region_type(self, region_type):
         self.date_formatter.get_region_type.return_value = region_type
         self.date_formatter.format.return_value = (

@@ -31,7 +31,15 @@ class NewGregorianDatePickerController(humblewx.Controller):
 
     def on_char(self, event):
         skip = True
-        if event.GetKeyCode() == wx.WXK_UP:
+        if event.GetKeyCode() == wx.WXK_TAB:
+            if event.ShiftDown():
+                tab_handled = self.on_shift_tab()
+                flag = wx.NavigationKeyEvent.IsBackward
+            else:
+                tab_handled = self.on_tab()
+                flag = wx.NavigationKeyEvent.IsForward
+            skip = not tab_handled
+        elif event.GetKeyCode() == wx.WXK_UP:
             self.on_key_up()
             skip = False
         elif event.GetKeyCode() == wx.WXK_DOWN:
@@ -46,6 +54,20 @@ class NewGregorianDatePickerController(humblewx.Controller):
             self.view.SetBackgroundColour("pink")
         else:
             self.view.SetBackgroundColour(wx.NullColour)
+
+    def on_tab(self):
+        region = self._date_formatter.get_next_region(
+            self.view.GetText(),
+            self.view.GetCursorPosition()
+        )
+        if region is None:
+            return False
+        else:
+            self.view.SetSelection(region)
+            return True
+
+    def on_shift_tab(self):
+        pass
 
     def on_key_up(self):
         try:
