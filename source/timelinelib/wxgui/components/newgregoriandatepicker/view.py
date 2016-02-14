@@ -38,7 +38,7 @@ class NewGregorianDatePicker(wx.Panel):
         self._layout()
 
     def _create_date_text(self):
-        self.date_text = wx.TextCtrl(self, style=wx.TE_PROCESS_TAB)
+        self.date_text = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
         self.date_text.Bind(wx.EVT_CHAR, self.controller.on_char)
         self.date_text.Bind(wx.EVT_TEXT, self.controller.on_text)
 
