@@ -118,6 +118,24 @@ class describe_new_gregorian_date_picker(UnitTestCase):
             sentinel.CURSOR_POSITION
         )
 
+    def test_shift_tab_moves_to_previous_region_if_exists(self):
+        self.date_formatter.get_previous_region.return_value = sentinel.SELECTION
+        self.assertTrue(self.controller.on_shift_tab())
+        self.view.SetSelection.assert_called_with(sentinel.SELECTION)
+        self.date_formatter.get_previous_region.assert_called_with(
+            sentinel.TEXT,
+            sentinel.CURSOR_POSITION
+        )
+
+    def test_shift_tab_returns_false_if_no_next_region(self):
+        self.date_formatter.get_previous_region.return_value = None
+        self.assertFalse(self.controller.on_shift_tab())
+        self.assertFalse(self.view.SetSelection.called)
+        self.date_formatter.get_previous_region.assert_called_with(
+            sentinel.TEXT,
+            sentinel.CURSOR_POSITION
+        )
+
     def set_up_region_type(self, region_type):
         self.date_formatter.get_region_type.return_value = region_type
         self.date_formatter.format.return_value = (

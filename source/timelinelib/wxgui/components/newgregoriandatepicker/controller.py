@@ -56,7 +56,13 @@ class NewGregorianDatePickerController(humblewx.Controller):
             self.view.SetBackgroundColour(wx.NullColour)
 
     def on_tab(self):
-        region = self._date_formatter.get_next_region(
+        return self._select_region(self._date_formatter.get_next_region)
+
+    def on_shift_tab(self):
+        return self._select_region(self._date_formatter.get_previous_region)
+
+    def _select_region(self, get_region_fn):
+        region = get_region_fn(
             self.view.GetText(),
             self.view.GetCursorPosition()
         )
@@ -65,9 +71,6 @@ class NewGregorianDatePickerController(humblewx.Controller):
         else:
             self.view.SetSelection(region)
             return True
-
-    def on_shift_tab(self):
-        pass
 
     def on_key_up(self):
         try:
