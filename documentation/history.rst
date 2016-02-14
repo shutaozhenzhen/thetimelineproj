@@ -92,3 +92,14 @@ Refactoring goals:
 
 * Rename timeline to db.
 * Move test/specs to test/unit and test/something-else.
+
+Future plans:
+
+* We would like to find a conference where we can meet people interested in
+  Timeline. Perhaps FOSDEM?
+
+* We are interested in creating an Android app that displays timelines. It will
+  be a totally different project, but it will use concepts from Timeline and
+  will try to preserve the look and feel. One idea is to focus on the Canvas
+  component and try to implement such component in Java as well. It will still
+  be separate projects, but they can use similar concepts.
