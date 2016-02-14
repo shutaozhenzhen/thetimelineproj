@@ -1,0 +1,84 @@
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
+#
+# This file is part of Timeline.
+#
+# Timeline is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Timeline is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
+
+
+import humblewx
+import wx
+
+
+class NewGregorianDatePickerController(humblewx.Controller):
+
+    def on_init(self, date_formatter, date_modifier):
+        self._date_formatter = date_formatter
+        self._date_modifier = date_modifier
+
+    def on_char(self, event):
+        skip = True
+        if event.GetKeyCode() == wx.WXK_UP:
+            self.on_key_up()
+            skip = False
+        elif event.GetKeyCode() == wx.WXK_DOWN:
+            self.on_key_down()
+            skip = False
+        event.Skip(skip)
+
+    def on_key_up(self):
+        try:
+            date = self.get_gregorian_date()
+        except ValueError:
+            pass
+        else:
+            self.set_gregorian_date(self._get_incrementer()(date))
+
+    def on_key_down(self):
+        try:
+            date = self.get_gregorian_date()
+        except ValueError:
+            pass
+        else:
+            self.set_gregorian_date(self._get_decrementer()(date))
+
+    def set_gregorian_date(self, date):
+        (formatted_date, is_bc) = self._date_formatter.format(date)
+        self.view.SetText(formatted_date)
+        self.view.SetIsBc(is_bc)
+
+    def get_gregorian_date(self):
+        return self._date_formatter.parse((
+            self.view.GetText(),
+            self.view.GetIsBc(),
+        ))
+
+    def _get_incrementer(self):
+        return {
+            self._date_formatter.YEAR: self._date_modifier.increment_year,
+            self._date_formatter.MONTH: self._date_modifier.increment_month,
+            self._date_formatter.DAY: self._date_modifier.increment_day,
+        }[self._get_region_type()]
+
+    def _get_decrementer(self):
+        return {
+            self._date_formatter.YEAR: self._date_modifier.decrement_year,
+            self._date_formatter.MONTH: self._date_modifier.decrement_month,
+            self._date_formatter.DAY: self._date_modifier.decrement_day,
+        }[self._get_region_type()]
+
+    def _get_region_type(self):
+        return self._date_formatter.get_region_type(
+            self.view.GetText(),
+            self.view.GetCursorPosition()
+        )

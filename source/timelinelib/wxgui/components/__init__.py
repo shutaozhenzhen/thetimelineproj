@@ -37,6 +37,7 @@ from timelinelib.wxgui.components.twostatebutton import TwoStateButton
 from timelinelib.wxgui.components.categorytree import CustomCategoryTree
 from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.components.textpatterncontrol.view import TextPatternControl
+from timelinelib.wxgui.components.newgregoriandatepicker.view import NewGregorianDatePicker
 
 
 def TimePicker(parent, time_type, name="", *args, **kwargs):
