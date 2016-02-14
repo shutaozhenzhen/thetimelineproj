@@ -79,6 +79,12 @@ class describe_new_date_formatter(UnitTestCase):
         self.assertRaises(ValueError, self.formatter.set_region_order,
                           year=1, month=2, day=12)
 
+    def test_fails_to_parse_if_date_is_invalid(self):
+        self.assertRaises(
+            ValueError,
+            self.formatter.parse, ("20151211", False)
+        )
+
     def assert_format_parse(self, parsed, formatted):
         self.assertEqual(self.formatter.format(parsed), formatted)
         self.assertEqual(self.formatter.parse(formatted), parsed)
