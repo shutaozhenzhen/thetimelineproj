@@ -40,6 +40,7 @@ class NewGregorianDatePicker(wx.Panel):
     def _create_date_text(self):
         self.date_text = wx.TextCtrl(self, style=wx.TE_PROCESS_TAB)
         self.date_text.Bind(wx.EVT_CHAR, self.controller.on_char)
+        self.date_text.Bind(wx.EVT_TEXT, self.controller.on_text)
 
     def _create_bc_button(self):
         label = _("BC")
@@ -75,6 +76,10 @@ class NewGregorianDatePicker(wx.Panel):
 
     def SetIsBc(self, is_bc):
         self.bc_button.SetValue(is_bc)
+
+    def SetBackgroundColour(self, colour):
+        self.date_text.SetBackgroundColour(colour)
+        self.date_text.Refresh()
 
 
 class DateModifier(object):
