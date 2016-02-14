@@ -35,6 +35,8 @@ class NewDateFormatter(object):
         self._use_abbreviated_name_for_month = value
 
     def set_separators(self, first, second):
+        if not first or not second:
+            raise ValueError("Can not set empty separator.")
         self._first_separator = first
         self._second_separator = second
 

@@ -85,6 +85,12 @@ class describe_new_date_formatter(UnitTestCase):
             self.formatter.parse, ("20151211", False)
         )
 
+    def test_fails_if_trying_to_set_empty_separators(self):
+        self.assertRaises(
+            ValueError,
+            self.formatter.set_separators, "", ""
+        )
+
     def assert_format_parse(self, parsed, formatted):
         self.assertEqual(self.formatter.format(parsed), formatted)
         self.assertEqual(self.formatter.parse(formatted), parsed)
