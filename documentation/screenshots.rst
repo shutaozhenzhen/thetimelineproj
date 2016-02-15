@@ -42,3 +42,7 @@ an email<support>`.
 .. figure:: /images/screenshots/painters.png
 
     Famous painters.
+
+.. figure:: /images/screenshots/chaplin-films.png
+
+    The films of Charles Chaplin.
