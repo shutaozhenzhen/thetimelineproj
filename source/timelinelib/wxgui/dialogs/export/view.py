@@ -80,14 +80,14 @@ class ExportDialog(Dialog):
         self.cbx_categories.SetValue(state)
 
     def EditEventFields(self):
-        dlg = FieldSelectionDialog(self, _("Select Event Fields"), _("Event"),
+        dlg = FieldSelectionDialog(self, _("Select Event Fields"), "Event",
                                    self.controller.get_event_fields())
         if dlg.ShowModal() == wx.ID_OK:
             self.controller.set_event_fields(dlg.GetSelectedFields())
         dlg.Destroy()
 
     def EditCategoryFields(self):
-        dlg = FieldSelectionDialog(self, _("Select Category Fields"), _("Category"),
+        dlg = FieldSelectionDialog(self, _("Select Category Fields"), "Category",
                                    self.controller.get_category_fields())
         if dlg.ShowModal() == wx.ID_OK:
             self.controller.set_category_fields(dlg.GetSelectedFields())
