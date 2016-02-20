@@ -63,6 +63,7 @@ class MainCanvas(TimelineCanvas):
         self._input_handler = input_handler
 
     def _on_left_down(self, event):
+        self.SetFocus()
         self._input_handler.left_mouse_down(
             event.GetX(), event.GetY(), event.ControlDown(), event.ShiftDown(),
             event.AltDown())
