@@ -108,6 +108,7 @@ class DefaultDrawingAlgorithm(Drawer):
         self.minor_strip_pen.SetColour(appearance.get_minor_strip_divider_line_colour())
         self.major_strip_pen.SetColour(appearance.get_major_strip_divider_line_colour())
         self.now_pen.SetColour(appearance.get_now_line_colour())
+        self.weekend_color = appearance.get_weekend_colour()
         self.outer_padding = OUTER_PADDING
         if EXTENDED_CONTAINER_HEIGHT.enabled():
             self.outer_padding += EXTENDED_CONTAINER_HEIGHT.get_extra_outer_padding_to_avoid_vertical_overlapping()
@@ -138,7 +139,7 @@ class DefaultDrawingAlgorithm(Drawer):
             evt.fixed_y = rect.GetY()
 
     def _perform_drawing(self, timeline, view_properties):
-        self.background_drawer.draw(self, self.dc, self.scene, timeline)
+        self.background_drawer.draw(self, self.dc, self.scene, timeline, self.weekend_color)
         if self.fast_draw:
             self._perform_fast_drawing(view_properties)
         else:
