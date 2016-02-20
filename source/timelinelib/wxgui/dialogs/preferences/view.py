@@ -150,6 +150,16 @@ class PreferencesDialog(Dialog):
                             width="60"
                             height="30"
                         />
+                        <StaticText
+                            label="$(weekend_colour_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <ColourSelect
+                            name="weekend_colorpicker"
+                            align="ALIGN_CENTER_VERTICAL"
+                            width="60"
+                            height="30"
+                        />
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -232,6 +242,7 @@ class PreferencesDialog(Dialog):
             "minor_strip_colour_text": _("Minor strip divider line:"),
             "major_strip_colour_text": _("Major strip divider line:"),
             "now_line_colour_text": _("Now line:"),
+            "weekend_colour_text": _("Weekends:"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
 
@@ -316,3 +327,9 @@ class PreferencesDialog(Dialog):
 
     def SetNowLineColor(self, new_color):
         self.now_line_colorpicker.SetValue(new_color)
+
+    def GetWeekendColor(self):
+        return self.weekend_colorpicker.GetValue()
+
+    def SetWeekendColor(self, new_color):
+        self.weekend_colorpicker.SetValue(new_color)

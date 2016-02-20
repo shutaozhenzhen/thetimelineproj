@@ -37,6 +37,7 @@ class PreferencesDialogController(Controller):
         self.config.minor_strip_divider_line_colour = str(self.view.GetMinorStripColor())
         self.config.major_strip_divider_line_colour = str(self.view.GetMajorStripColor())
         self.config.now_line_colour = str(self.view.GetNowLineColor())
+        self.config.weekend_colour = str(self.view.GetWeekendColor())
 
     def on_open_recent_change(self, event):
         self.config.set_open_recent_at_startup(event.IsChecked())
@@ -102,6 +103,7 @@ class PreferencesDialogController(Controller):
         self.view.SetMinorStripColor(wx.Colour(*self.config.minor_strip_divider_line_colour))
         self.view.SetMajorStripColor(wx.Colour(*self.config.major_strip_divider_line_colour))
         self.view.SetNowLineColor(wx.Colour(*self.config.now_line_colour))
+        self.view.SetWeekendColor(wx.Colour(*self.config.weekend_colour))
         choices = [f for f in os.listdir(EVENT_ICONS_DIR) if f.endswith(".png")]
         self.view.SetIconsChoices(choices)
         self.view.SetFuzzyIcon(self.config.get_fuzzy_icon())
