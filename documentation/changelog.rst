@@ -32,6 +32,12 @@ GUI:
 
 * The date controls should now follow the locale date formatting setting.
 
+* Weekdays can now have a colour different from the background.
+
+* Scrolling timeline after regaining focus now works properly even in
+  Windows.
+  (`#138 <https://sourceforge.net/p/thetimelineproj/backlog/138/>`_)
+
 Version 1.9.0
 -------------
 
