@@ -19,6 +19,10 @@
 from timelinelib.calendar.newdateformatter import NewDateFormatter
 
 
+REGION_START_POS = 0
+REGION_LENGTH = 1
+REGION_SEPARATOR = 2
+REGION_TYPE = 3
 YEAR = NewDateFormatter.YEAR
 MONTH = NewDateFormatter.MONTH
 DAY = NewDateFormatter.DAY
@@ -57,14 +61,20 @@ class DateFormatParser(object):
         return self
 
     def get_separators(self):
-        return self.regions[1][2], self.regions[2][2]
+        return self.regions[1][REGION_SEPARATOR], self.regions[2][REGION_SEPARATOR]
 
     def get_region_order(self):
         return (self._get_region_type_index(YEAR), self._get_region_type_index(MONTH), self._get_region_type_index(DAY))
 
+    def use_abbreviated_month_names(self):
+        for i in range(len(self.regions)):
+            if self.regions[i][REGION_TYPE] == MONTH:
+                return self.regions[i][REGION_LENGTH] == 3
+        return False
+
     def _get_region_type_index(self, region_type):
         for i in range(len(self.regions)):
-            if self.regions[i][3] == region_type:
+            if self.regions[i][REGION_TYPE] == region_type:
                 return i
 
     def _to_regions(self, date_format):
@@ -84,9 +94,9 @@ class DateFormatParser(object):
             raise ValueError()
 
     def _get_separators_placeholders(self, fmt, regions):
-        separator1_length = regions[1][0] - regions[0][1]
-        regions[1][2] = fmt[:separator1_length]
-        regions[2][2] = fmt[separator1_length:]
+        separator1_length = regions[1][REGION_START_POS] - regions[0][REGION_LENGTH]
+        regions[1][REGION_SEPARATOR] = fmt[:separator1_length]
+        regions[2][REGION_SEPARATOR] = fmt[separator1_length:]
 
     def _get_regions(self, fmt, date_format):
         def getKey(item):
