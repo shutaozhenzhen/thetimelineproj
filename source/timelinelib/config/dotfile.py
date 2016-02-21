@@ -75,6 +75,7 @@ TEXT_BELOW_ICON = "text_below_icon"
 FUZZY_ICON = "fuzzy_icon"
 LOCKED_ICON = "locked_icon"
 HYPERLINK_ICON = "hyperlink_icon"
+DATE_FORMAT = "date_format"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -108,6 +109,7 @@ DEFAULTS = {
     FUZZY_ICON: "fuzzy.png",
     LOCKED_ICON: "locked.png",
     HYPERLINK_ICON: "hyperlink.png",
+    DATE_FORMAT: "yyyy-mm-dd"
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -463,6 +465,14 @@ class Config(Observable):
     def set_hyperlink_icon(self, value):
         self.config_parser.set(DEFAULTSECT, HYPERLINK_ICON, value)
         self._notify()
+
+    def get_date_format(self):
+        return self.config_parser.get(DEFAULTSECT, DATE_FORMAT)
+
+    def set_date_format(self, date_format):
+        self.config_parser.set(DEFAULTSECT, DATE_FORMAT, date_format)
+        self._notify()
+    date_format = property(get_date_format, set_date_format)
 
     def _toStr(self, value):
         try:
