@@ -24,8 +24,10 @@ from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import Time
-from timelinelib.wxgui.components.gregoriandatepicker import GregorianDatePicker
 from timelinelib.wxgui.components.gregoriantimepicker import GregorianTimePicker
+from timelinelib.wxgui.components.newgregoriandatepicker.view import NewGregorianDatePicker
+from timelinelib.calendar.newdateformatter import NewDateFormatter
+from timelinelib.calendar.dateformatparser import DateFormatParser
 
 
 class GregorianDateTimePicker(wx.Panel):
@@ -43,7 +45,7 @@ class GregorianDateTimePicker(wx.Panel):
         try:
             self.parent.on_return()
         except AttributeError:
-            pass            
+            pass
 
     def on_escape(self):
         try:
@@ -65,7 +67,7 @@ class GregorianDateTimePicker(wx.Panel):
         self.controller.set_value(value)
 
     def _create_gui(self):
-        self.date_picker = GregorianDatePicker(self, self.config.get_gregorian_date_formatter())
+        self.date_picker = self._create_date_picker()
         image = wx.Bitmap(os.path.join(ICONS_DIR, "calendar.png"))
         self.date_button = wx.BitmapButton(self, bitmap=image)
         self.Bind(wx.EVT_BUTTON, self._date_button_on_click, self.date_button)
@@ -79,6 +81,13 @@ class GregorianDateTimePicker(wx.Panel):
         sizer.Add(self.time_picker, proportion=0,
                   flag=wx.ALIGN_CENTER_VERTICAL)
         self.SetSizerAndFit(sizer)
+
+    def _create_date_picker(self):
+        parser = DateFormatParser().parse(self.config.get_date_format())
+        date_formatter = NewDateFormatter()
+        date_formatter.set_separators(*parser.get_separators())
+        date_formatter.set_region_order(*parser.get_region_order())
+        return NewGregorianDatePicker(self, date_formatter)
 
     def _date_button_on_click(self, evt):
         try:
@@ -128,7 +137,7 @@ class GregorianDateTimePickerController(object):
             time = self.now_fn()
         self.date_picker.SetGregorianDate(GregorianUtils.from_time(time).to_date_tuple())
         self.time_picker.SetGregorianTime(GregorianUtils.from_time(time).to_time_tuple())
-        if not self.on_change is None:
+        if self.on_change is not None:
             self.on_change()
 
     def date_tuple_to_wx_date(self, date):
@@ -189,8 +198,10 @@ class CalendarPopup(wx.PopupTransientWindow):
     def _bind_events(self):
         def on_month(evt):
             self.controller.on_month()
+
         def on_day(evt):
             self.controller.on_day()
+
         self.cal.Bind(wx.calendar.EVT_CALENDAR_MONTH, on_month)
         self.cal.Bind(wx.calendar.EVT_CALENDAR_DAY, on_day)
 
