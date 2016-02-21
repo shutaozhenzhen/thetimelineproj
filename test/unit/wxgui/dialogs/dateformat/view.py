@@ -23,4 +23,4 @@ from timelinelib.wxgui.dialogs.dateformat.view import DateFormatDialog
 class describe_date_format_dialog(UnitTestCase):
 
     def test_it_can_be_created(self):
-        self.show_dialog(DateFormatDialog, None)
+        self.show_dialog(DateFormatDialog, None, None)
