@@ -59,6 +59,14 @@ class DateFormatParser(object):
     def get_separators(self):
         return self.regions[1][2], self.regions[2][2]
 
+    def get_region_order(self):
+        return (self._get_region_type_index(YEAR), self._get_region_type_index(MONTH), self._get_region_type_index(DAY))
+
+    def _get_region_type_index(self, region_type):
+        for i in range(len(self.regions)):
+            if self.regions[i][3] == region_type:
+                return i
+
     def _to_regions(self, date_format):
         fmt = date_format.lower()
         self._assert_leading_char_is_a_date_placeholder(date_format)

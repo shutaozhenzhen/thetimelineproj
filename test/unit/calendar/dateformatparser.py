@@ -79,6 +79,14 @@ class describe_date_fromat_parser(UnitTestCase):
         self.parser.parse("yyyy-mm-dd")
         self.assertEqual(self.parser.regions, [[0, 4, "", YEAR], [5, 2, "-", MONTH], [8, 2, "-", DAY]])
 
+    def test_can_parse_region_order(self):
+        self.parser.parse("yyyy-mm-dd")
+        self.assertEqual(self.parser.get_region_order(), (0, 1, 2))
+
+    def test_can_parse_different_region_order(self):
+        self.parser.parse("dd-yyyy-mm")
+        self.assertEqual(self.parser.get_region_order(), (1, 2, 0))
+
     def setUp(self):
         UnitTestCase.setUp(self)
         self.parser = DateFormatParser()
