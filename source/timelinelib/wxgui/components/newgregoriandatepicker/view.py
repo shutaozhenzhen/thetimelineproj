@@ -54,7 +54,7 @@ class NewGregorianDatePicker(wx.Panel):
         sizer.Add(self.bc_button, flag=wx.EXPAND)
         self.SetSizer(sizer)
 
-    def GetGregorianDate(self, date):
+    def GetGregorianDate(self):
         return self.controller.get_gregorian_date()
 
     def SetGregorianDate(self, date):
