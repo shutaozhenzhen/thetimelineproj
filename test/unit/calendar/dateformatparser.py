@@ -18,32 +18,32 @@
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.calendar.dateformatparser import DateFormatParser
+from timelinelib.calendar.dateformatparser import YEAR, MONTH, DAY
 
 
 class describe_date_fromat_parser(UnitTestCase):
 
     def test_valid_parse_returns_separator_tuple(self):
-        self.assertEqual(self.parser.parse("yyyy-mm/dd"), ("-", "/"))
-        self.assertEqual(self.parser.parse("yyyy-dd/mm"), ("-", "/"))
-        self.assertEqual(self.parser.parse("dd-yyyy/mm"), ("-", "/"))
-        self.assertEqual(self.parser.parse("dd-mm/yyyy"), ("-", "/"))
-        self.assertEqual(self.parser.parse("mm-yyyy/dd"), ("-", "/"))
-        self.assertEqual(self.parser.parse("mm-dd/yyyy"), ("-", "/"))
-        self.assertEqual(self.parser.parse("yyyy-mmm/dd"), ("-", "/"))
-        self.assertEqual(self.parser.parse("yyyy-dd/mmm"), ("-", "/"))
-        self.assertEqual(self.parser.parse("dd-yyyy/mmm"), ("-", "/"))
-        self.assertEqual(self.parser.parse("dd-mmm/yyyy"), ("-", "/"))
-        self.assertEqual(self.parser.parse("mmm-yyyy/dd"), ("-", "/"))
-        self.assertEqual(self.parser.parse("mmm-dd/yyyy"), ("-", "/"))
+        self.assertEqual(self.parser.parse("yyyy-mm/dd").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("yyyy-dd/mm").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("dd-yyyy/mm").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("dd-mm/yyyy").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("mm-yyyy/dd").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("mm-dd/yyyy").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("yyyy-mmm/dd").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("yyyy-dd/mmm").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("dd-yyyy/mmm").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("dd-mmm/yyyy").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("mmm-yyyy/dd").get_separators(), ("-", "/"))
+        self.assertEqual(self.parser.parse("mmm-dd/yyyy").get_separators(), ("-", "/"))
 
     def test_parse_recognizes_muliple_char_separators(self):
-        self.assertEqual(self.parser.parse("yyyy-mm-xx-dd"), ("-", "-xx-"))
+        self.parser.parse("yyyy-mm-xx-dd")
+        self.assertEqual(self.parser.get_separators(), ("-", "-xx-"))
 
     def test_parse_recognizes_month_names_format(self):
-        self.assertEqual(self.parser.parse("yyyy-mmm-dd"), ("-", "-"))
-
-    def test_invalid_parse_returns_none(self):
-        self.assertEqual(self.parser.parse("yyyy-/dd"), None)
+        self.parser.parse("yyyy-mmm-dd")
+        self.assertEqual(self.parser.get_separators(), ("-", "-"))
 
     def test_valid_formats(self):
         formats = ("yyyy-mm-dd",
@@ -70,9 +70,14 @@ class describe_date_fromat_parser(UnitTestCase):
                    "yyyy-mm-xx",
                    "yyyy-mm-mm-dd",
                    "-yyyy-xx-mm-dd",
+                   "yyyy-mm-dd-",
                    )
         for fmt in formats:
             self.assertFalse(self.parser.is_valid(fmt))
+
+    def test_parse_regions(self):
+        self.parser.parse("yyyy-mm-dd")
+        self.assertEqual(self.parser.regions, [[0, 4, "", YEAR], [5, 2, "-", MONTH], [8, 2, "-", DAY]])
 
     def setUp(self):
         UnitTestCase.setUp(self)
