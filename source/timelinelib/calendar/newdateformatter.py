@@ -18,6 +18,7 @@
 
 from timelinelib.calendar.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.monthnames import month_of_abbreviated_name
+from timelinelib.calendar.gregorian import GregorianUtils
 
 
 class NewDateFormatter(object):
@@ -56,7 +57,7 @@ class NewDateFormatter(object):
         regions = self._split(date)
         year = self._parse_year(regions[self._year_position], is_bc)
         month = self._parse_month(regions[self._month_position])
-        day = self._parse_day(regions[self._day_position])
+        day = self._parse_day(regions[self._day_position], year, month)
         return (year, month, day)
 
     def get_region_type(self, date_string, cursor_position):
@@ -168,10 +169,18 @@ class NewDateFormatter(object):
         if self._use_abbreviated_name_for_month:
             return month_of_abbreviated_name(month_string)
         else:
-            return int(month_string)
+            month = int(month_string)
+            if month - 1 in range(12):
+                return month
+            else:
+                raise ValueError("Invalid month")
 
     def _format_day(self, day):
         return "%02d" % day
 
-    def _parse_day(self, day_string):
-        return int(day_string)
+    def _parse_day(self, day_string, year, month):
+        day = int(day_string)
+        if day - 1 in range(GregorianUtils.days_in_month(year, month)):
+            return day
+        else:
+            raise ValueError("Invalid day")

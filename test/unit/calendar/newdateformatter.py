@@ -80,10 +80,11 @@ class describe_new_date_formatter(UnitTestCase):
                           year=1, month=2, day=12)
 
     def test_fails_to_parse_if_date_is_invalid(self):
-        self.assertRaises(
-            ValueError,
-            self.formatter.parse, ("20151211", False)
-        )
+        self.assertRaises(ValueError, self.formatter.parse, ("20151211", False))
+        self.assertRaises(ValueError, self.formatter.parse, ("2015-0-20", False))
+        self.assertRaises(ValueError, self.formatter.parse, ("2015-13-20", False))
+        self.assertRaises(ValueError, self.formatter.parse, ("2015-10-0", False))
+        self.assertRaises(ValueError, self.formatter.parse, ("2015-02-29", False))
 
     def test_fails_if_trying_to_set_empty_separators(self):
         self.assertRaises(
