@@ -16,6 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from mock import Mock
+
+from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.dateformat.view import DateFormatDialog
 
@@ -23,4 +26,6 @@ from timelinelib.wxgui.dialogs.dateformat.view import DateFormatDialog
 class describe_date_format_dialog(UnitTestCase):
 
     def test_it_can_be_created(self):
-        self.show_dialog(DateFormatDialog, None, None)
+        config = Mock(Config)
+        config.get_date_format.return_value = ""
+        self.show_dialog(DateFormatDialog, None, config)
