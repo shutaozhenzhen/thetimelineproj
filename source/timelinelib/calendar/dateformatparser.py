@@ -16,9 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-YEAR = 0
-MONTH = 1
-DAY = 2
+from timelinelib.calendar.newdateformatter import NewDateFormatter
+
+
+YEAR = NewDateFormatter.YEAR
+MONTH = NewDateFormatter.MONTH
+DAY = NewDateFormatter.DAY
 ERROR_TEXT = _("""\
 Invalid Date Format:
 
