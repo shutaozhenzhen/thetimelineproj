@@ -34,6 +34,7 @@ class describe_change_now_date_dialog(UnitTestCase):
 
     def test_it_can_be_created(self):
         config = Mock(Config)
+        config.get_date_format.return_value = "yyyy-mm-dd"
         config.get_gregorian_date_formatter.return_value = DefaultDateFormatter()
         db = db_open(":tutorial:")
         handle_new_time_fn = Mock()
