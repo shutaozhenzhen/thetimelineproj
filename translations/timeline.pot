@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-21 11:16+0100\n"
+"POT-Creation-Date: 2016-02-21 12:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,6 +143,25 @@ msgstr ""
 
 #: source\timelinelib\calendar\bosparanian_weekdaynames.py:28
 msgid "Water"
+msgstr ""
+
+#: source\timelinelib\calendar\dateformatparser.py:28
+msgid ""
+"Invalid Date Format:\n"
+"\n"
+"The format should contain\n"
+"    one year placeholder  = yyyy\n"
+"    one month placeholder = mmm or mm\n"
+"    one day placeholder   = dd\n"
+"    two placeholders for separators between year, mont and day\n"
+"\n"
+"Separators can't contain the lsetters y, m or d\n"
+"\n"
+"Example of valid formats:\n"
+"    yyyy-mm-dd\n"
+"    dd/mm/yyyy\n"
+"    mmm/dd-yyyy\n"
+"        "
 msgstr ""
 
 #: source\timelinelib\calendar\monthnames.py:38
@@ -1784,10 +1803,6 @@ msgstr ""
 #: source\timelinelib\wxgui\dialogs\eraeditor\view.py:67
 #: source\timelinelib\wxgui\dialogs\timeeditor\view.py:42
 msgid "Show time"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\dateformat\controller.py:34
-msgid "Invalid date format"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\dateformat\view.py:45
