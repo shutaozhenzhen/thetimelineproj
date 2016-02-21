@@ -40,13 +40,13 @@ class DateFormatDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent, config):
         Dialog.__init__(self, DateFormatDialogController, parent, {
             "date_format_text": _("Date format:"),
             "locale_date_format_text": _("Locale Date format:"),
             "date_format_text": _("Date format:"),
         }, title=_("Set Date format"))
-        self.controller.on_init()
+        self.controller.on_init(config)
 
     def SetDateFormat(self, value):
         self.date_format.SetValue(value)

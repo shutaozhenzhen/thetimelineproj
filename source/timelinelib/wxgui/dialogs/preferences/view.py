@@ -22,6 +22,7 @@ import wx
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 from timelinelib.wxgui.components.font import edit_font_data
 from timelinelib.wxgui.dialogs.eventeditortabselection.view import EventEditorTabSelectionDialog
+from timelinelib.wxgui.dialogs.dateformat.view import DateFormatDialog
 from timelinelib.wxgui.dialogs.preferences.controller import PreferencesDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.config.paths import EVENT_ICONS_DIR
@@ -311,6 +312,11 @@ class PreferencesDialog(Dialog):
 
     def ShowSelectTabOrderDialog(self, config):
         dialog = EventEditorTabSelectionDialog(self, config)
+        dialog.ShowModal()
+        dialog.Destroy()
+
+    def ShowSelectDateFormatDialog(self, config):
+        dialog = DateFormatDialog(self, config)
         dialog.ShowModal()
         dialog.Destroy()
 

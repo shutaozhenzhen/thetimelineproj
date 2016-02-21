@@ -21,7 +21,7 @@ from timelinelib.wxgui.framework import Controller
 
 class DateFormatDialogController(Controller):
 
-    def on_init(self):
+    def on_init(self, config):
         pass
 
     def on_ok(self, event):
