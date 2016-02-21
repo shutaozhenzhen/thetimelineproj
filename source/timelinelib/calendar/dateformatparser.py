@@ -25,7 +25,7 @@ class DateFormatParser(object):
             return None
 
     def get_error_text(self):
-        return """\
+        return _("""\
 Invalid Date Format:
 
 The format should contain
@@ -34,11 +34,13 @@ The format should contain
     one day placeholder   = dd
     two placeholders for separators between year, mont and day
 
+Separators can't contain the lsetters y, m or d
+
 Example of valid formats:
     yyyy-mm-dd
     dd/mm/yyyy
     mmm/dd-yyyy
-        """
+        """)
 
     def is_valid(self, date_format):
         monthname = False
