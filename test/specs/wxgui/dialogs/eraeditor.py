@@ -40,6 +40,7 @@ class describe_EraEditorDialog(UnitTestCase):
         self.db = MemoryDB()
         self.view = Mock(EraEditorDialog)
         self.config = Mock(Config)
+        self.config.get_date_format.return_value = "yyyy-mm-dd"
         self.config.get_gregorian_date_formatter.return_value = DefaultDateFormatter()
         self.controller = EraEditorDialogController(self.view)
         self.era = a_gregorian_era_with(name=NAME, color=COLOR, start=GREGORIAN_START, end=GREGORIAN_END)

@@ -37,6 +37,7 @@ class describe_TimeEditorDialog_for_gregorian_time(UnitTestCase):
     def test_it_can_be_created(self):
         tm = human_time_to_gregorian("31 Dec 2010 00:00")
         config = Mock(Config)
+        config.get_date_format.return_value = "yyyy-mm-dd"
         config.get_gregorian_date_formatter.return_value = DefaultDateFormatter()
         self.show_dialog(
             TimeEditorDialog, None, config, self.db.get_time_type(), tm, "Go to Date")

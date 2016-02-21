@@ -116,6 +116,7 @@ class describe_edit_event_dialog(EditEventDialogTestCase):
 
     def test_it_can_be_created(self):
         config = Mock(Config)
+        config.get_date_format.return_value = "yyyy-mm-dd"
         config.event_editor_show_period = True
         config.event_editor_show_time = False
         config.event_editor_tab_order = ["0", "1", "2", "3", "4", ":"]
@@ -128,6 +129,7 @@ class describe_edit_event_dialog(EditEventDialogTestCase):
 
     def test_it_can_be_created_with_numeric_timeline(self):
         config = Mock(Config)
+        config.get_date_format.return_value = "yyyy-mm-dd"
         config.event_editor_show_period = True
         config.event_editor_show_time = False
         config.event_editor_tab_order = ["0", "1", "2", "3", "4", ":"]
