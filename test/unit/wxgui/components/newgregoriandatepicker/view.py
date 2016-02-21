@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import datetime
-
 import humblewx
 
 from timelinelib.calendar.newdateformatter import NewDateFormatter
