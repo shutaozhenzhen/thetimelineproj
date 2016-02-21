@@ -16,16 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class DateFormatParser(object):
-
-    def parse(self, date_format):
-        if self.is_valid(date_format):
-            return (self.separator1, self.separator2)
-        else:
-            return None
-
-    def get_error_text(self):
-        return _("""\
+YEAR = 0
+MONTH = 1
+DAY = 2
+ERROR_TEXT = _("""\
 Invalid Date Format:
 
 The format should contain
@@ -42,70 +36,77 @@ Example of valid formats:
     mmm/dd-yyyy
         """)
 
+
+class DateFormatParser(object):
+
+    def get_error_text(self):
+        return ERROR_TEXT
+
     def is_valid(self, date_format):
         try:
-            fmt, monthname = self._remove_regions_placeholders(date_format)
-            year_index = date_format.lower().index("yyyy")
-            year_lenght = 4
-            if monthname:
-                month_index = date_format.lower().index("mmm")
-                month_length = 3
-            else:
-                month_index = date_format.lower().index("mm")
-                month_length = 2
-            day_index = date_format.lower().index("dd")
-            day_length = 2
-            self.separator1 = ""
-            self.separator2 = ""
-            if year_index == 0:
-                if month_index < day_index:
-                    self.separator1 = date_format[year_lenght:month_index]
-                    self.separator2 = date_format[month_index + month_length:day_index]
-                else:
-                    self.separator1 = date_format[year_lenght:day_index]
-                    self.separator2 = date_format[day_index + day_length:month_index]
-            elif month_index == 0:
-                if year_index < day_index:
-                    self.separator1 = date_format[month_length:year_index]
-                    self.separator2 = date_format[year_index + year_lenght:day_index]
-                else:
-                    self.separator1 = date_format[month_length:day_index]
-                    self.separator2 = date_format[day_index + day_length:year_index]
-            elif day_index == 0:
-                if month_index < year_index:
-                    self.separator1 = date_format[day_length:month_index]
-                    self.separator2 = date_format[month_index + month_length:year_index]
-                else:
-                    self.separator1 = date_format[day_length:year_index]
-                    self.separator2 = date_format[year_index + year_lenght:month_index]
-            else:
-                return False
-            fmt = fmt.replace(self.separator1, "", 1)
-            fmt = fmt.replace(self.separator2, "", 1)
-            if len(fmt) > 0:
-                return False
+            self.parse(date_format)
+            return True
         except ValueError:
             return False
-        return True
 
-    def _remove_regions_placeholders(self, date_format):
-        monthname = False
+    def parse(self, date_format):
+        self.regions = self._to_regions(date_format)
+        return self
+
+    def get_separators(self):
+        return self.regions[1][2], self.regions[2][2]
+
+    def _to_regions(self, date_format):
         fmt = date_format.lower()
-        if "yyyy" in fmt:
-            fmt = fmt.replace("yyyy", "", 1)
-        else:
+        self._assert_leading_char_is_a_date_placeholder(date_format)
+        self._assert_trailing_char_is_a_date_placeholder(date_format)
+        fmt, regions = self._get_regions(fmt, date_format)
+        self._get_separators_placeholders(fmt, regions)
+        return regions
+
+    def _assert_leading_char_is_a_date_placeholder(self, date_format):
+        if date_format[0] not in ("y", "m", "d"):
             raise ValueError()
-        if "mmm" in fmt:
-            fmt = fmt.replace("mmm", "", 1)
-            monthname = True
-        elif "mm" in fmt:
-            fmt = fmt.replace("mm", "", 1)
-        else:
+
+    def _assert_trailing_char_is_a_date_placeholder(self, date_format):
+        if date_format[-1] not in ("y", "m", "d"):
             raise ValueError()
-        if "dd" in fmt:
-            fmt = fmt.replace("dd", "", 1)
-        else:
-            raise ValueError()
+
+    def _get_separators_placeholders(self, fmt, regions):
+        separator1_length = regions[1][0] - regions[0][1]
+        regions[1][2] = fmt[:separator1_length]
+        regions[2][2] = fmt[separator1_length:]
+
+    def _get_regions(self, fmt, date_format):
+        def getKey(item):
+            return item[0]
+        fmt, region0 = self._get_and_remove_year_region(fmt, date_format)
+        fmt, region1 = self._get_and_remove_month_region(fmt, date_format)
+        fmt, region2 = self._get_and_remove_day_region(fmt, date_format)
+        regions = [region0, region1, region2]
         if "y" in fmt or "m" in fmt or "d" in fmt:
             raise ValueError()
-        return fmt, monthname
+        regions.sort(key=getKey)
+        return fmt, regions
+
+    def _get_and_remove_year_region(self, fmt, date_format):
+        return self._get_and_remove_region(fmt, date_format, "yyyy", YEAR)
+
+    def _get_and_remove_month_region(self, fmt, date_format):
+        if "mmm" in fmt:
+            return self._get_and_remove_region(fmt, date_format, "mmm", MONTH)
+        elif "mm" in fmt:
+            return self._get_and_remove_region(fmt, date_format, "mm", MONTH)
+        else:
+            raise ValueError()
+
+    def _get_and_remove_day_region(self, fmt, date_format):
+        return self._get_and_remove_region(fmt, date_format, "dd", DAY)
+
+    def _get_and_remove_region(self, fmt, date_format, placeholder, region_type):
+        if placeholder in fmt:
+            fmt = fmt.replace(placeholder, "", 1)
+            index = date_format.lower().index(placeholder)
+            return fmt, [index, len(placeholder), "", region_type]
+        else:
+            raise ValueError()
