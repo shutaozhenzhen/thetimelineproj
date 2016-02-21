@@ -87,6 +87,7 @@ class GregorianDateTimePicker(wx.Panel):
         date_formatter = NewDateFormatter()
         date_formatter.set_separators(*parser.get_separators())
         date_formatter.set_region_order(*parser.get_region_order())
+        date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())
         return NewGregorianDatePicker(self, date_formatter)
 
     def _date_button_on_click(self, evt):
