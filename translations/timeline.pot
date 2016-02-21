@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-21 08:48+0100\n"
+"POT-Creation-Date: 2016-02-21 11:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -245,12 +245,12 @@ msgstr ""
 msgid "No timeline set"
 msgstr ""
 
-#: source\timelinelib\config\dotfile.py:471
+#: source\timelinelib\config\dotfile.py:481
 #: source\timelinelib\wxgui\utils.py:127
 msgid "Warning"
 msgstr ""
 
-#: source\timelinelib\config\dotfile.py:471
+#: source\timelinelib\config\dotfile.py:481
 msgid "The selected value contains invalid characters and can't be saved"
 msgstr ""
 
@@ -1784,6 +1784,10 @@ msgstr ""
 #: source\timelinelib\wxgui\dialogs\eraeditor\view.py:67
 #: source\timelinelib\wxgui\dialogs\timeeditor\view.py:42
 msgid "Show time"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\dateformat\controller.py:34
+msgid "Invalid date format"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\dateformat\view.py:45

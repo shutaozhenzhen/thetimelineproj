@@ -17,12 +17,23 @@
 
 
 from timelinelib.wxgui.framework import Controller
+from timelinelib.calendar.dateformatparser import DateFormatParser
 
 
 class DateFormatDialogController(Controller):
 
     def on_init(self, config):
+        self.config = config
         self.view.SetDateFormat(config.get_date_format())
+        self.dateformat_parser = DateFormatParser()
 
     def on_ok(self, event):
-        pass
+        date_format = self.view.GetDateFormat()
+        if self._is_valid_format(date_format):
+            self.config.set_date_format(date_format)
+            self.view.EndModalOk()
+        else:
+            self.view.DisplayErrorMessage(self.dateformat_parser.get_error_text())
+
+    def _is_valid_format(self, date_format):
+        return self.dateformat_parser.is_valid(date_format)

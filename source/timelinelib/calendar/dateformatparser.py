@@ -24,6 +24,22 @@ class DateFormatParser(object):
         else:
             return None
 
+    def get_error_text(self):
+        return """\
+Invalid Date Format:
+
+The format should contain
+    one year placeholder  = yyyy
+    one month placeholder = mmm or mm
+    one day placeholder   = dd
+    two placeholders for separators between year, mont and day
+
+Example of valid formats:
+    yyyy-mm-dd
+    dd/mm/yyyy
+    mmm/dd-yyyy
+        """
+
     def is_valid(self, date_format):
         monthname = False
         fmt = date_format.lower()
