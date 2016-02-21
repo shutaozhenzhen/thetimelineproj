@@ -87,6 +87,10 @@ class describe_date_fromat_parser(UnitTestCase):
         self.parser.parse("dd-yyyy-mm")
         self.assertEqual(self.parser.get_region_order(), (1, 2, 0))
 
+    def test_can_detect_usage_of_abbreviated_month_names(self):
+        self.parser.parse("dd-yyyy-mmm")
+        self.assertEqual(self.parser.use_abbreviated_month_names(), True)
+
     def setUp(self):
         UnitTestCase.setUp(self)
         self.parser = DateFormatParser()
