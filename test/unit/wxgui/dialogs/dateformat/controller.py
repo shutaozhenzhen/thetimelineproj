@@ -17,7 +17,9 @@
 
 
 from mock import Mock
+from mock import sentinel
 
+from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.dateformat.view import DateFormatDialog
 from timelinelib.wxgui.dialogs.dateformat.controller import DateFormatDialogController
@@ -29,9 +31,12 @@ class describe_date_fromat_dialog_controller(UnitTestCase):
         pass
 
     def test_initiation(self):
-        self.view.SetDateFormat.assert_called()
+        self.view.SetDateFormat.assert_called_with(sentinel.DATE_TEXT)
 
     def setUp(self):
         UnitTestCase.setUp(self)
         self.view = Mock(DateFormatDialog)
+        self.config = Mock(Config)
+        self.config.get_date_format.return_value = sentinel.DATE_TEXT
         self.controller = DateFormatDialogController(self.view)
+        self.controller.on_init(self.config)
