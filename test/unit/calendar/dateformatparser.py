@@ -29,6 +29,12 @@ class describe_date_fromat_parser(UnitTestCase):
         self.assertEqual(self.parser.parse("dd-mm/yyyy"), ("-", "/"))
         self.assertEqual(self.parser.parse("mm-yyyy/dd"), ("-", "/"))
         self.assertEqual(self.parser.parse("mm-dd/yyyy"), ("-", "/"))
+        self.assertEqual(self.parser.parse("yyyy-mmm/dd"), ("-", "/"))
+        self.assertEqual(self.parser.parse("yyyy-dd/mmm"), ("-", "/"))
+        self.assertEqual(self.parser.parse("dd-yyyy/mmm"), ("-", "/"))
+        self.assertEqual(self.parser.parse("dd-mmm/yyyy"), ("-", "/"))
+        self.assertEqual(self.parser.parse("mmm-yyyy/dd"), ("-", "/"))
+        self.assertEqual(self.parser.parse("mmm-dd/yyyy"), ("-", "/"))
 
     def test_parse_recognizes_muliple_char_separators(self):
         self.assertEqual(self.parser.parse("yyyy-mm-xx-dd"), ("-", "-xx-"))
