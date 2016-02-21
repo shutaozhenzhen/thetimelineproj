@@ -22,7 +22,7 @@ from timelinelib.wxgui.framework import Controller
 class DateFormatDialogController(Controller):
 
     def on_init(self, config):
-        pass
+        self.view.SetDateFormat(config.get_date_format())
 
     def on_ok(self, event):
         pass
