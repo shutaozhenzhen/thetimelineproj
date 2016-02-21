@@ -16,6 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import locale
+import datetime
+
 from timelinelib.wxgui.framework import Controller
 from timelinelib.calendar.dateformatparser import DateFormatParser
 
@@ -25,6 +28,7 @@ class DateFormatDialogController(Controller):
     def on_init(self, config):
         self.config = config
         self.view.SetDateFormat(config.get_date_format())
+        self.view.SetLocaleDateFormat(self._create_locale_sample_date())
         self.dateformat_parser = DateFormatParser()
 
     def on_ok(self, event):
@@ -37,3 +41,11 @@ class DateFormatDialogController(Controller):
 
     def _is_valid_format(self, date_format):
         return self.dateformat_parser.is_valid(date_format)
+
+    def _create_locale_sample_date(self):
+        locale.setlocale(locale.LC_TIME, "")
+        sample = datetime.datetime(3333, 11, 22).strftime('%x')
+        sample = sample.replace("3", "y")
+        sample = sample.replace("2", "d")
+        sample = sample.replace("1", "m")
+        return sample

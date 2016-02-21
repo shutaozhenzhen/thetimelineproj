@@ -32,6 +32,7 @@ class describe_date_fromat_dialog_controller(UnitTestCase):
 
     def test_initiation(self):
         self.view.SetDateFormat.assert_called_with(sentinel.DATE_TEXT)
+        self.assertTrue(self.view.SetLocaleDateFormat.called)
 
     def test_closing_ok(self):
         self._simulate_user_entry("yyyy-mm-dd")
