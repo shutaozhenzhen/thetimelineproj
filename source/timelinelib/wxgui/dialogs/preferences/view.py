@@ -82,6 +82,12 @@ class PreferencesDialog(Dialog):
                             choices="$(week_start_choices)"
                         />
                     </FlexGridSizer>
+                    <Button
+                        name="select_date_formatter"
+                        event_EVT_BUTTON="on_date_formatter_click"
+                        label="$(date_formatter_text)"
+                        align="ALIGN_LEFT"
+                    />
                 </BoxSizerVertical>
             </Panel>
             <Panel notebookLabel="$(fonts_text)">
@@ -225,6 +231,7 @@ class PreferencesDialog(Dialog):
             "center_text_text": _("Center Event texts"),
             "uncheck_time_for_new_events_text": _("Uncheck time checkbox for new events"),
             "tab_order_text": _("Select Event Editor Tab Order"),
+            "date_formatter_text": _("Select Date format"),
             "date_time_text": _("Date && Time"),
             "week_start_text": _("Week start on:"),
             "week_start_choices": [_("Monday"), _("Sunday")],

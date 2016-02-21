@@ -54,6 +54,9 @@ class PreferencesDialogController(Controller):
     def on_week_start_changed(self, event):
         self.config.set_week_start(self._index_week(event.GetSelection()))
 
+    def on_date_formatter_click(self, event):
+        pass
+
     def on_uncheck_time_for_new_events(self, event):
         self.config.uncheck_time_for_new_events = event.IsChecked()
 
