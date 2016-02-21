@@ -56,3 +56,7 @@ class DateFormatDialog(Dialog):
 
     def SetLocaleDateFormat(self, value):
         self.locale_date_format.SetLabel(value)
+
+    def DisplayErrorMessage(self, message):
+        Dialog.DisplayErrorMessage(self, message)
+        self.date_format.SetFocus()

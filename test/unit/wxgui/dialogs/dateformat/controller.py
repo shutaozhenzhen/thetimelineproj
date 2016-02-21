@@ -33,6 +33,26 @@ class describe_date_fromat_dialog_controller(UnitTestCase):
     def test_initiation(self):
         self.view.SetDateFormat.assert_called_with(sentinel.DATE_TEXT)
 
+    def test_closing_ok(self):
+        self._simulate_user_entry("yyyy-mm-dd")
+        self._simulate_ok_clicked()
+        self.assertTrue(self.view.GetDateFormat.called)
+        self.config.set_date_format.assert_called_with("yyyy-mm-dd")
+        self.assertTrue(self.view.EndModalOk.called)
+
+    def test_closing_error(self):
+        self._simulate_user_entry("-mm-dd")
+        self._simulate_ok_clicked()
+        self.assertTrue(self.view.GetDateFormat.called)
+        self.assertFalse(self.view.EndModalOk.called)
+        self.assertTrue(self.view.DisplayErrorMessage.called)
+
+    def _simulate_user_entry(self, date_format):
+        self.view.GetDateFormat.return_value = date_format
+
+    def _simulate_ok_clicked(self):
+        self.controller.on_ok(None)
+
     def setUp(self):
         UnitTestCase.setUp(self)
         self.view = Mock(DateFormatDialog)
