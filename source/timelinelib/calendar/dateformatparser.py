@@ -63,6 +63,7 @@ Example of valid formats:
         if "y" in fmt or "m" in fmt or "d" in fmt:
             return False
         year_index = date_format.lower().index("yyyy")
+        year_lenght = 4
         if monthname:
             month_index = date_format.lower().index("mmm")
             month_length = 3
@@ -70,41 +71,34 @@ Example of valid formats:
             month_index = date_format.lower().index("mm")
             month_length = 2
         day_index = date_format.lower().index("dd")
+        day_length = 2
         self.separator1 = ""
         self.separator2 = ""
         if year_index == 0:
             if month_index < day_index:
-                self.separator1 = date_format[4:month_index]
+                self.separator1 = date_format[year_lenght:month_index]
                 self.separator2 = date_format[month_index + month_length:day_index]
             else:
-                self.separator1 = date_format[4:day_index]
-                self.separator2 = date_format[day_index + 2:month_index]
-            fmt = fmt.replace(self.separator1, "", 1)
-            fmt = fmt.replace(self.separator2, "", 1)
-            if len(fmt) > 0:
-                return False
+                self.separator1 = date_format[year_lenght:day_index]
+                self.separator2 = date_format[day_index + day_length:month_index]
         elif month_index == 0:
             if year_index < day_index:
-                self.separator1 = date_format[2:year_index]
-                self.separator2 = date_format[year_index + 4:day_index]
+                self.separator1 = date_format[month_length:year_index]
+                self.separator2 = date_format[year_index + year_lenght:day_index]
             else:
-                self.separator1 = date_format[2:day_index]
-                self.separator2 = date_format[day_index + 2:year_index]
-            fmt = fmt.replace(self.separator1, "", 1)
-            fmt = fmt.replace(self.separator2, "", 1)
-            if len(fmt) > 0:
-                return False
+                self.separator1 = date_format[month_length:day_index]
+                self.separator2 = date_format[day_index + day_length:year_index]
         elif day_index == 0:
             if month_index < year_index:
-                self.separator1 = date_format[2:month_index]
+                self.separator1 = date_format[day_length:month_index]
                 self.separator2 = date_format[month_index + month_length:year_index]
             else:
-                self.separator1 = date_format[2:year_index]
-                self.separator2 = date_format[year_index + 4:month_index]
-            fmt = fmt.replace(self.separator1, "", 1)
-            fmt = fmt.replace(self.separator2, "", 1)
-            if len(fmt) > 0:
-                return False
+                self.separator1 = date_format[day_length:year_index]
+                self.separator2 = date_format[year_index + year_lenght:month_index]
         else:
+            return False
+        fmt = fmt.replace(self.separator1, "", 1)
+        fmt = fmt.replace(self.separator2, "", 1)
+        if len(fmt) > 0:
             return False
         return True
