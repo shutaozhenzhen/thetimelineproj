@@ -56,6 +56,7 @@ class PreferencesDialogController(Controller):
 
     def on_date_formatter_click(self, event):
         self.view.ShowSelectDateFormatDialog(self.config)
+        self.view.SetCurrentDateFormat("%s: %s" % (_("Current"), self.config.date_format))
 
     def on_uncheck_time_for_new_events(self, event):
         self.config.uncheck_time_for_new_events = event.IsChecked()
@@ -112,6 +113,7 @@ class PreferencesDialogController(Controller):
         self.view.SetFuzzyIcon(self.config.get_fuzzy_icon())
         self.view.SetLockedIcon(self.config.get_locked_icon())
         self.view.SetHyperlinkIcon(self.config.get_hyperlink_icon())
+        self.view.SetCurrentDateFormat("%s: %s" % (_("Current"), self.config.date_format))
         self.view.DisplayIcons()
 
     def _week_index(self, week):
