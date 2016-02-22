@@ -27,7 +27,6 @@ import wx
 from timelinelib.meta.version import get_full_version
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
-from timelinelib.features.experimental.experimentalfeaturedateformatting import create_locale_sample_date
 
 
 def setup_humblewx():
@@ -88,7 +87,7 @@ def create_versions_message():
 def create_locale_message():
     return "\n".join([
         "Locale setting: %s" % " ".join(locale.getlocale(locale.LC_TIME)),
-        "Locale sample date: %s" % create_locale_sample_date(),
+        "Locale sample date: 3333-11-22",
     ])
 
 

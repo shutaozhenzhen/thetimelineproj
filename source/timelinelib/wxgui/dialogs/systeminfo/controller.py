@@ -22,7 +22,6 @@ import platform
 import wx
 
 from timelinelib.wxgui.framework import Controller
-from timelinelib.features.experimental.experimentalfeaturedateformatting import create_locale_sample_date
 
 
 class SystemInfoDialogController(Controller):
@@ -45,7 +44,7 @@ class SystemInfoDialogController(Controller):
         return wx.version()
 
     def _create_locale_sample_date(self):
-        sample = create_locale_sample_date()
+        sample = "3333-11-22"
         sample = sample.replace("3", "y")
         sample = sample.replace("2", "d")
         sample = sample.replace("1", "m")
