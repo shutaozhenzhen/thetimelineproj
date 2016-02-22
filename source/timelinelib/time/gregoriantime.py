@@ -226,7 +226,11 @@ class GregorianTimeType(TimeType):
 
     def event_date_string(self, time):
         gregorian_time = self.get_utils().from_time(time)
-        return get_date_formatter().format((gregorian_time.year, gregorian_time.month, gregorian_time.day))
+        (date, bc) = get_date_formatter().format((gregorian_time.year, gregorian_time.month, gregorian_time.day))
+        if bc:
+            return "%s BC" % date
+        else:
+            return date
 
     def event_time_string(self, time):
         gregorian_time = self.get_utils().from_time(time)
