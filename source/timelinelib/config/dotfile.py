@@ -482,9 +482,10 @@ class Config(Observable):
             display_information_message(_("Warning"), _("The selected value contains invalid characters and can't be saved"))
 
 
-class NewConfig(object):
+class NewConfig(Observable):
 
     def __init__(self, item_dicts):
+        Observable.__init__(self)
         self._config_parser = SafeConfigParser()
         self._build(item_dicts)
 
@@ -511,6 +512,7 @@ class NewConfig(object):
                 item.get_name(),
                 item.get_encoder()(value)
             )
+            self._notify()
         setattr(self, "get_%s" % item.get_name(), getter)
         setattr(self, "set_%s" % item.get_name(), setter)
         setter(item.get_default())

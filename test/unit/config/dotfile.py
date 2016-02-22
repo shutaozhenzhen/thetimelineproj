@@ -17,11 +17,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from mock import Mock
+
 from timelinelib.config.dotfile import NewConfig
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
 
 
-class decribe_new_config(TmpDirTestCase):
+class describe_new_config(TmpDirTestCase):
 
     def setUp(self):
         TmpDirTestCase.setUp(self)
@@ -65,3 +67,9 @@ class decribe_new_config(TmpDirTestCase):
         self.config.read(self.get_tmp_path("test.cfg"))
         self.assertEqual(self.config.get_name(), u"Göran")
         self.assertEqual(self.config.get_age(), 3)
+
+    def test_calls_notify_when_set(self):
+        self._notify = Mock()
+        self.config.listen_for_any(self._notify)
+        self.config.set_is_old(True)
+        self._notify.assert_called_with()
