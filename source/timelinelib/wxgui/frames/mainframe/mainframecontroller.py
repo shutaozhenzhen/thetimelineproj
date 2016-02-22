@@ -23,6 +23,9 @@ from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_warning_message
 from timelinelib.wxgui.utils import get_user_ack
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.calendar.dateformatparser import DateFormatParser
+from timelinelib.calendar import set_date_formatter
 
 
 class LockedException(Exception):
@@ -205,9 +208,6 @@ The lockfile is found at: %s""") % lockpath
 
     def _set_date_formatter(self, time_type):
         if time_type is not None and time_type.is_date_time_type():
-            from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
-            from timelinelib.calendar.dateformatparser import DateFormatParser
-            from timelinelib.calendar import set_date_formatter
             parser = DateFormatParser().parse(self.config.get_date_format())
             date_formatter = DefaultDateFormatter()
             date_formatter.set_separators(*parser.get_separators())
