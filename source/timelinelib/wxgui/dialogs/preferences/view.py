@@ -82,13 +82,17 @@ class PreferencesDialog(Dialog):
                             event_EVT_CHOICE="on_week_start_changed"
                             choices="$(week_start_choices)"
                         />
+                        <Button
+                            name="select_date_formatter"
+                            event_EVT_BUTTON="on_date_formatter_click"
+                            label="$(date_formatter_text)"
+                            align="ALIGN_LEFT"
+                        />
+                        <StaticText
+                            name="current_date_format"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
                     </FlexGridSizer>
-                    <Button
-                        name="select_date_formatter"
-                        event_EVT_BUTTON="on_date_formatter_click"
-                        label="$(date_formatter_text)"
-                        align="ALIGN_LEFT"
-                    />
                 </BoxSizerVertical>
             </Panel>
             <Panel notebookLabel="$(fonts_text)">
@@ -267,6 +271,9 @@ class PreferencesDialog(Dialog):
 
     def SetHyperlinkIcon(self, icon_name):
         self._setIcon(self.hyperlink_icon_choice, icon_name)
+
+    def SetCurrentDateFormat(self, current_date_format):
+        self.current_date_format.SetLabel(current_date_format)
 
     def _setIcon(self, icon_ctrl, icon_name):
         if not icon_ctrl.SetStringSelection(icon_name):
