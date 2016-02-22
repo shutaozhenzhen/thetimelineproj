@@ -16,16 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.newdateformatter import NewDateFormatter
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 
 
 REGION_START_POS = 0
 REGION_LENGTH = 1
 REGION_SEPARATOR = 2
 REGION_TYPE = 3
-YEAR = NewDateFormatter.YEAR
-MONTH = NewDateFormatter.MONTH
-DAY = NewDateFormatter.DAY
+YEAR = DefaultDateFormatter.YEAR
+MONTH = DefaultDateFormatter.MONTH
+DAY = DefaultDateFormatter.DAY
 ERROR_TEXT = _("""\
 Invalid Date Format:
 
