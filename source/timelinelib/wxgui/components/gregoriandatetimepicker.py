@@ -26,7 +26,7 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import Time
 from timelinelib.wxgui.components.gregoriantimepicker import GregorianTimePicker
 from timelinelib.wxgui.components.newgregoriandatepicker.view import NewGregorianDatePicker
-from timelinelib.calendar.newdateformatter import NewDateFormatter
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.calendar.dateformatparser import DateFormatParser
 
 
@@ -84,7 +84,7 @@ class GregorianDateTimePicker(wx.Panel):
 
     def _create_date_picker(self):
         parser = DateFormatParser().parse(self.config.get_date_format())
-        date_formatter = NewDateFormatter()
+        date_formatter = DefaultDateFormatter()
         date_formatter.set_separators(*parser.get_separators())
         date_formatter.set_region_order(*parser.get_region_order())
         date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())

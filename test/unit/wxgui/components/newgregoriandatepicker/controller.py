@@ -20,7 +20,7 @@ from mock import Mock
 from mock import sentinel
 import wx
 
-from timelinelib.calendar.newdateformatter import NewDateFormatter
+from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.components.newgregoriandatepicker.controller import NewGregorianDatePickerController
 from timelinelib.wxgui.components.newgregoriandatepicker.view import NewGregorianDatePicker
@@ -52,17 +52,17 @@ class describe_new_gregorian_date_picker(UnitTestCase):
         ))
 
     def test_can_increment_year(self):
-        self.set_up_region_type(NewDateFormatter.YEAR)
+        self.set_up_region_type(DefaultDateFormatter.YEAR)
         self.controller.on_key_up()
         self.assert_modifier_called(self.date_modifier.increment_year)
 
     def test_can_increment_month(self):
-        self.set_up_region_type(NewDateFormatter.MONTH)
+        self.set_up_region_type(DefaultDateFormatter.MONTH)
         self.controller.on_key_up()
         self.assert_modifier_called(self.date_modifier.increment_month)
 
     def test_can_increment_day(self):
-        self.set_up_region_type(NewDateFormatter.DAY)
+        self.set_up_region_type(DefaultDateFormatter.DAY)
         self.controller.on_key_up()
         self.assert_modifier_called(self.date_modifier.increment_day)
 
@@ -72,17 +72,17 @@ class describe_new_gregorian_date_picker(UnitTestCase):
         self.assertFalse(self.view.SetText.called)
 
     def test_can_decrement_year(self):
-        self.set_up_region_type(NewDateFormatter.YEAR)
+        self.set_up_region_type(DefaultDateFormatter.YEAR)
         self.controller.on_key_down()
         self.assert_modifier_called(self.date_modifier.decrement_year)
 
     def test_can_decrement_month(self):
-        self.set_up_region_type(NewDateFormatter.MONTH)
+        self.set_up_region_type(DefaultDateFormatter.MONTH)
         self.controller.on_key_down()
         self.assert_modifier_called(self.date_modifier.decrement_month)
 
     def test_can_decrement_day(self):
-        self.set_up_region_type(NewDateFormatter.DAY)
+        self.set_up_region_type(DefaultDateFormatter.DAY)
         self.controller.on_key_down()
         self.assert_modifier_called(self.date_modifier.decrement_day)
 
@@ -145,10 +145,10 @@ class describe_new_gregorian_date_picker(UnitTestCase):
 
     def setUp(self):
         UnitTestCase.setUp(self)
-        self.date_formatter = Mock(NewDateFormatter)
-        self.date_formatter.YEAR = NewDateFormatter.YEAR
-        self.date_formatter.MONTH = NewDateFormatter.MONTH
-        self.date_formatter.DAY = NewDateFormatter.DAY
+        self.date_formatter = Mock(DefaultDateFormatter)
+        self.date_formatter.YEAR = DefaultDateFormatter.YEAR
+        self.date_formatter.MONTH = DefaultDateFormatter.MONTH
+        self.date_formatter.DAY = DefaultDateFormatter.DAY
         self.date_formatter.parse.return_value = sentinel.PARSED_DATE
         self.date_modifier = Mock()
         modifier_result = sentinel.NEW_DATE
