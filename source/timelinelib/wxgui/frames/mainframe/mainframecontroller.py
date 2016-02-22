@@ -207,10 +207,14 @@ The lockfile is found at: %s""") % lockpath
                 fp.close()
 
     def _set_date_formatter(self, time_type):
-        if time_type is not None and time_type.is_date_time_type():
+        def set_date_formatter_to_use():
             parser = DateFormatParser().parse(self.config.get_date_format())
             date_formatter = DefaultDateFormatter()
             date_formatter.set_separators(*parser.get_separators())
             date_formatter.set_region_order(*parser.get_region_order())
             date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())
             set_date_formatter(date_formatter)
+
+        if time_type is not None and time_type.is_date_time_type():
+            set_date_formatter_to_use()
+            self.config.listen_for_any(set_date_formatter_to_use)
