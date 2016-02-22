@@ -504,12 +504,12 @@ class NewConfig(Observable):
         def getter():
             return item.get_decoder()(self._config_parser.get(
                 item.get_section(),
-                item.get_name()
+                item.get_config_name()
             ))
         def setter(value):
             self._config_parser.set(
                 item.get_section(),
-                item.get_name(),
+                item.get_config_name(),
                 item.get_encoder()(value)
             )
             self._notify()
@@ -525,6 +525,9 @@ class Item(object):
 
     def get_name(self):
         return self._item_dict["name"]
+
+    def get_config_name(self):
+        return self._item_dict.get("config_name", self.get_name())
 
     def get_section(self):
         return DEFAULTSECT
