@@ -255,6 +255,7 @@ class GregorianTimeType(TimeType):
     def get_utils(self):
         return GregorianUtils
 
+
 def go_to_today_fn(main_frame, current_period, navigation_fn):
     navigation_fn(lambda tp: tp.center(current_period.time_type.now()))
 
