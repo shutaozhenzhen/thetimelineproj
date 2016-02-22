@@ -18,6 +18,8 @@ Calendar:
   pattern.
   (`#133 <https://sourceforge.net/p/thetimelineproj/backlog/133/>`_)
 
+* The locale date format is now replaced with a user defined format
+
 GUI:
 
 * Users can now design and use their own icons for fuzzy, locked, and hyperlink.
