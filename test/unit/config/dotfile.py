@@ -42,6 +42,11 @@ class describe_new_config(TmpDirTestCase):
                 default=False,
                 data_type="boolean",
             ),
+            dict(
+                name="other_name",
+                config_name="deprecated other name",
+                default="",
+            ),
         ])
 
     def test_can_get_and_set_text(self):
@@ -67,6 +72,13 @@ class describe_new_config(TmpDirTestCase):
         self.config.read(self.get_tmp_path("test.cfg"))
         self.assertEqual(self.config.get_name(), u"Göran")
         self.assertEqual(self.config.get_age(), 3)
+
+    def test_specify_different_name_in_config_file(self):
+        with open(self.get_tmp_path("test.cfg"), "wb") as f:
+            f.write("[DEFAULT]\n")
+            f.write("deprecated other name = George\n")
+        self.config.read(self.get_tmp_path("test.cfg"))
+        self.assertEqual(self.config.get_other_name(), "George")
 
     def test_calls_notify_when_set(self):
         self._notify = Mock()
