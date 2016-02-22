@@ -120,7 +120,6 @@ class describe_edit_event_dialog(EditEventDialogTestCase):
         config.event_editor_show_period = True
         config.event_editor_show_time = False
         config.event_editor_tab_order = ["0", "1", "2", "3", "4", ":"]
-        config.get_gregorian_date_formatter.return_value = DefaultDateFormatter()
         db = db_open(":tutorial:")
         categories = db.get_categories()
         categories[0].parent = categories[1]
