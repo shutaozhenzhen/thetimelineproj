@@ -71,5 +71,6 @@ class MainFrameControllerTest(UnitTestCase):
         self.main_frame.main_panel.timeline_panel.timeline_canvas = Mock()
         self.db_open = Mock()
         self.config = Mock(Config)
+        self.config.get_date_format.return_value = "yyyy-mm-dd"
         self.controller = MainFrameController(self.main_frame, self.db_open,
                                               self.config)
