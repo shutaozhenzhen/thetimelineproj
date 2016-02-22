@@ -33,7 +33,6 @@ import os.path
 import wx
 
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
-from timelinelib.features.experimental.experimentalfeatures import LOCALE_DATE
 from timelinelib.utilities.observer import Observable
 from timelinelib.wxgui.components.font import Font
 from timelinelib.wxgui.utils import display_information_message
@@ -321,8 +320,6 @@ class Config(Observable):
     experimental_features = property(get_experimental_features, set_experimental_features)
 
     def get_gregorian_date_formatter(self):
-        if LOCALE_DATE.enabled():
-            return LOCALE_DATE
         return DefaultDateFormatter()
 
     def get_never_show_period_events_as_point_events(self):
@@ -406,6 +403,7 @@ class Config(Observable):
 
     def get_minor_strip_divider_line_colour(self):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR))
+
     def set_minor_strip_divider_line_colour(self, colour):
         self.config_parser.set(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
         self._notify()
@@ -413,6 +411,7 @@ class Config(Observable):
 
     def get_major_strip_divider_line_colour(self):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR))
+
     def set_major_strip_divider_line_colour(self, colour):
         self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
         self._notify()
@@ -420,6 +419,7 @@ class Config(Observable):
 
     def get_now_line_color(self):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, NOW_LINE_COLOUR))
+
     def set_now_line_color(self, colour):
         self.config_parser.set(DEFAULTSECT, NOW_LINE_COLOUR, self._tuple_to_string(colour))
         self._notify()
@@ -427,6 +427,7 @@ class Config(Observable):
 
     def get_weekend_color(self):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, WEEKEND_COLOUR))
+
     def set_weekend_color(self, colour):
         self.config_parser.set(DEFAULTSECT, WEEKEND_COLOUR, self._tuple_to_string(colour))
         self._notify()
@@ -434,6 +435,7 @@ class Config(Observable):
 
     def get_text_below_icon(self):
         return self.config_parser.getboolean(DEFAULTSECT, TEXT_BELOW_ICON)
+
     def set_text_below_icon(self, value):
         self.config_parser.set(DEFAULTSECT, TEXT_BELOW_ICON, str(value))
         self._notify()
