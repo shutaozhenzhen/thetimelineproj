@@ -23,7 +23,7 @@ from timelinelib.wxgui.dialogs.eventlist.view import EventListDialog
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class describe_EventListDialog(UnitTestCase):
+class describe_event_list_dialog(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(EventListDialog)
