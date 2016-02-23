@@ -28,7 +28,7 @@ DISPLAY_NAME = "Feature display name"
 FEATURE_DESCRIPTION = "Feature description"
 
 
-class describe_FeatureDialog(UnitTestCase):
+class describe_feature_dialog(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(FeatureDialog)
