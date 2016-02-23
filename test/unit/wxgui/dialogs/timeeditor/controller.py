@@ -18,7 +18,6 @@
 
 from mock import Mock
 
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
@@ -27,7 +26,7 @@ from timelinelib.wxgui.dialogs.timeeditor.controller import TimeEditorDialogCont
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 
 
-class describe_TimeEditorDialog_for_gregorian_time(UnitTestCase):
+class describe_time_editor_dialog_for_gregorian_time(UnitTestCase):
 
     def setUp(self):
         self.db = MemoryDB()
@@ -54,4 +53,3 @@ class describe_TimeEditorDialog_for_gregorian_time(UnitTestCase):
 
     def when_ok_button_clikced(self):
         self.controller.ok_button_clicked(None)
-
