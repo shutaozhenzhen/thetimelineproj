@@ -25,7 +25,7 @@ import timelinelib.calendar.gregorian as gregorian
 import timelinelib.time.timeline as timeline
 
 
-class GregorianSpec(UnitTestCase):
+class describe_gregorian(UnitTestCase):
 
     def test_rejects_invalid_dates(self):
         self.assertRaises(ValueError, gregorian.Gregorian, 2013, 0, 1, 0, 0, 0)
@@ -97,7 +97,7 @@ class GregorianConversionsSpec(UnitTestCase):
             self.assertEqual(tm1, tm2)
 
 
-class GregorianPrimitivesSpec(UnitTestCase):
+class describe_gregorian_primitives(UnitTestCase):
 
     def test_is_valid(self):
         self.assertTrue(gregorian.GregorianUtils.is_valid(2013, 1, 1))
@@ -143,7 +143,7 @@ class GregorianPrimitivesSpec(UnitTestCase):
     def test_week_number_against_python(self):
         self.longMessage = True
         time = datetime.date(1900, 1, 1)
-        for _ in range(365*50):
+        for _ in range(365 * 50):
             y = time.year
             m = time.month
             d = time.day
