@@ -26,7 +26,7 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
 
 
-class describe_ErasEditorDialog(UnitTestCase):
+class describe_eras_editor_dialog(UnitTestCase):
 
     def test_it_can_be_created(self):
         self.show_dialog(ErasEditorDialog, None, self.db, None)
