@@ -26,7 +26,7 @@ from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameCont
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 
 
-class MainFrameControllerTest(UnitTestCase):
+class describe_mainframe_controller(UnitTestCase):
 
     def test_uses_db_open_function_to_create_timeline(self):
         self.controller.open_timeline("foo.timeline")
