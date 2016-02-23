@@ -22,6 +22,7 @@ from mock import Mock
 from timelinelib.wxgui.dialogs.feature.controller import FeatureDialogController
 from timelinelib.wxgui.dialogs.feature.view import FeatureDialog
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.features.installed.installedfeatures import InstalledFeatures
 
 
 DISPLAY_NAME = "Feature display name"
@@ -51,3 +52,16 @@ class describe_feature_dialog(UnitTestCase):
         evt.GetURLEnd.return_value = 19
         self.view.GetDescription.return_value = "  http://www.xxx.se  "
         self.assertEqual("http://www.xxx.se", self.controller._get_url(evt))
+
+
+class decribe_featue_dialog_(UnitTestCase):
+
+    def test_shows_parts_in_dialog(self):
+        self.dialog.SetFeatureName.assert_called_with(self.key.get_display_name())
+        self.dialog.SetFeatureDescription.assert_called_with(self.key.get_description())
+
+    def setUp(self):
+        self.key = InstalledFeatures().get_all_features()[0]
+        self.dialog = Mock(FeatureDialog)
+        self.controller = FeatureDialogController(self.dialog)
+        self.controller.on_init(self.key)
