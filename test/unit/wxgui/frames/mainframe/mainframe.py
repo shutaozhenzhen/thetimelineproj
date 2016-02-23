@@ -24,7 +24,7 @@ from timelinelib.wxgui.frames.mainframe.mainframe import MenuController
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class MenuControllerSpec(UnitTestCase):
+class describe_menu_controller(UnitTestCase):
 
     def test_menu_requiering_update_is_disabled_when_no_timeline_exists(self):
         self.given_menu_item_requires_update()
