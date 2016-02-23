@@ -63,12 +63,12 @@ class ShortcutConfig(object):
 
     def is_valid(self, modifier, shortcut_key):
         if modifier == "":
-            return shortcut_key in ["",] + FUNCTION_KEYS
+            return shortcut_key in ["", ] + FUNCTION_KEYS
         else:
             return modifier in MODIFIERS and shortcut_key in SHORTCUT_KEYS[1:]
 
 
-class describe_ShortcutsEditorDialog(UnitTestCase):
+class describe_shortcuts_editor_dialog(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(ShortcutsEditorDialog)
