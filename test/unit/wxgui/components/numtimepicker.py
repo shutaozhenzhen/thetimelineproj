@@ -23,7 +23,7 @@ from timelinelib.wxgui.components.numtimepicker import NumTimePickerController
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class desribe_NumTimePickerController(UnitTestCase):
+class desribe_num_time_picker(UnitTestCase):
 
     def test_time_control_is_assigned_time_from_set_value(self):
         self.controller.set_value(5)
