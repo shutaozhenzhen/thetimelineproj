@@ -16,13 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
 import humblewx
 
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.wxgui.components.categorytree import CustomCategoryTree
 from timelinelib.wxgui.framework import Dialog
 
 
