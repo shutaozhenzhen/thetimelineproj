@@ -27,7 +27,6 @@ from timelinelib.wxgui.components.gregoriandatetimepicker import CalendarPopupCo
 from timelinelib.wxgui.components.gregoriandatepicker import GregorianDatePicker
 from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDateTimePickerController
 from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianTimePicker
-import timelinelib.calendar.gregorian as gregorian
 
 
 class AGregorianDateTimePicker(UnitTestCase):
