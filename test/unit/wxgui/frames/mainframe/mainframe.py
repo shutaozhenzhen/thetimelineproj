@@ -22,6 +22,10 @@ import wx
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.wxgui.frames.mainframe.mainframe import MenuController
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.time.timeline import delta_from_days
+from timelinelib.wxgui.frames.mainframe.mainframe import AlertController
+from timelinelib.test.utils import an_event
 
 
 class describe_menu_controller(UnitTestCase):
@@ -115,3 +119,58 @@ class describe_menu_controller(UnitTestCase):
 
     def when_menu_state_possibly_has_changed(self):
         self.menu_controller.enable_disable_menus(self.timeline_panel_visible)
+
+
+class describe_alert_controller(UnitTestCase):
+
+    def test_alert_text_formatting(self):
+        text = self.controller._format_alert_text(self.alert, self.event)
+        expected_text = "Trigger time: %s\n\nEvent: %s\n\nTime to go" % (self.now, self.event.get_label())
+        self.assertEqual(expected_text, text)
+
+    def test_pytime_has_expired(self):
+        self.given_early_pytimes()
+        self.given_controller_time_type(GregorianTimeType())
+        expired = self.controller._time_has_expired(self.tm)
+        self.assertTrue(expired)
+
+    def test_pytime_has_not_expired(self):
+        self.given_late_pytimes()
+        expired = self.controller._time_has_expired(self.tm)
+        self.assertFalse(expired)
+
+    def given_early_pytimes(self):
+        self.given_pytime_now()
+        self.given_pytime_earlier()
+        self.given_controller_time_type(GregorianTimeType())
+        self.alert = (self.now, "Time to go")
+
+    def given_late_pytimes(self):
+        self.given_pytime_now()
+        self.given_pytime_later()
+        self.given_controller_time_type(GregorianTimeType())
+        self.alert = (self.now, "Time to go")
+
+    def given_wxtime_later(self):
+        self.tm = self.now + wx.TimeSpan(hours=12)
+
+    def given_wxtime_earlier(self):
+        self.tm = self.now - wx.TimeSpan(hours=12)
+
+    def given_pytime_now(self):
+        self.now = GregorianTimeType().now()
+
+    def given_pytime_later(self):
+        self.tm = self.now + delta_from_days(1)
+
+    def given_pytime_earlier(self):
+        self.tm = self.now + delta_from_days(-1)
+
+    def given_controller_time_type(self, time_type):
+        self.controller.time_type = time_type
+
+    def setUp(self):
+        self.now = GregorianTimeType().now()
+        self.alert = (self.now, "Time to go")
+        self.event = an_event()
+        self.controller = AlertController()
