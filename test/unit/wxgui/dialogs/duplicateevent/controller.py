@@ -25,7 +25,6 @@ from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import select_language
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.duplicateevent.controller import BACKWARD
 from timelinelib.wxgui.dialogs.duplicateevent.controller import BOTH
@@ -34,10 +33,7 @@ from timelinelib.wxgui.dialogs.duplicateevent.controller import FORWARD
 from timelinelib.wxgui.dialogs.duplicateevent.view import DuplicateEventDialog
 
 
-#select_language("sv")
-
-
-class describe_DuplicateEventDialog(UnitTestCase):
+class describe_duplicate_event_dialog(UnitTestCase):
 
     #
     # Construction
@@ -128,7 +124,7 @@ class describe_DuplicateEventDialog(UnitTestCase):
     def test_count_1_freq_1_direction_both(self):
         self._duplicate_with(count=1, freq=1, direction=BOTH)
         self._assert_move_period_called_with([-1, 1])
- 
+
     def test_count_2_freq_1_direction_forward(self):
         self._duplicate_with(count=2, freq=1, direction=FORWARD)
         self._assert_move_period_called_with([1, 2])
@@ -185,7 +181,7 @@ class describe_DuplicateEventDialog(UnitTestCase):
         self.controller.create_duplicates_and_save()
 
 
-class describe_DuplicateEventDialogForContainers(UnitTestCase):
+class describe_duplicate_event_dialog_for_containers(UnitTestCase):
 
     #
     # when_duplicating_event_with_default_settings
