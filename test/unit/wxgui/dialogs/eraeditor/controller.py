@@ -18,7 +18,6 @@
 
 from mock import Mock
 
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
@@ -34,7 +33,7 @@ NAME = "New Era"
 COLOR = (1, 2, 3)
 
 
-class describe_EraEditorDialog(UnitTestCase):
+class describe_era_editor_dialog(UnitTestCase):
 
     def setUp(self):
         self.db = MemoryDB()
