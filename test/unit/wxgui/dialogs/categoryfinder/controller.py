@@ -26,7 +26,7 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 
 
-class describe_CategoryFinderDialog(UnitTestCase):
+class describe_category_finder_dialog(UnitTestCase):
 
     def setUp(self):
         self.mainframe = Mock(MainFrame)
