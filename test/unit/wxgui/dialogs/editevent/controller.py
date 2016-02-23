@@ -19,7 +19,6 @@
 from mock import Mock
 from mock import sentinel
 
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.event import Event
