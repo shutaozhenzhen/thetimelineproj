@@ -23,7 +23,7 @@ from timelinelib.wxgui.utils import WildcardHelper
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class TestWildcardHelper(UnitTestCase):
+class describe_wildcard_helper(UnitTestCase):
 
     def testGeneratesWildcardStringForUseInFileDialog(self):
         helper = WildcardHelper("Source code files", ["cpp", "py"])
