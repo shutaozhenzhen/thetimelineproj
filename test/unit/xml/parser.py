@@ -23,7 +23,7 @@ from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.xml.parser as xmlparser
 
 
-class TestXmlParser(UnitTestCase):
+class describe_xml_parser(UnitTestCase):
 
     def testIllFormedXml(self):
         xml_stream = StringIO("""
