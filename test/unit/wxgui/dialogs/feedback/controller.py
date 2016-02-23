@@ -52,10 +52,10 @@ class describe_feedback_dialog(UnitTestCase):
     def test_can_send_unicode_characters(self):
         self.view.GetToText.return_value = "foo@example.com"
         self.view.GetSubjectText.return_value = "subject"
-        self.view.GetBodyText.return_value = to_unicode("åäöÅÄÖ")
+        self.view.GetBodyText.return_value = to_unicode("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
         self.controller.on_init(self.webbrowser, info="", subject="", body="")
         self.controller.on_default_click(None)
-        self.webbrowser.open.assert_called_with("mailto:foo%40example.com?subject=subject&body=%C3%A5%C3%A4%C3%B6%C3%85%C3%84%C3%96")
+        self.webbrowser.open.assert_called_with("mailto:foo%40example.com?subject=subject&body=%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD")
 
     def test_can_send_with_gmail(self):
         self.view.GetToText.return_value = "foo@example.com"
