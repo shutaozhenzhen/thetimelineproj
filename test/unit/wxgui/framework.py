@@ -19,7 +19,6 @@
 import humblewx
 
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.framework import Dialog
 
 
