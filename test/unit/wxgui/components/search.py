@@ -23,7 +23,7 @@ from timelinelib.wxgui.components.search import SearchBarController
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class SearchBarTestCase(UnitTestCase):
+class describe_search_bar(UnitTestCase):
 
     def test_no_events_found_displays_nomatch_label(self):
         self.view.get_value.return_value = ""
