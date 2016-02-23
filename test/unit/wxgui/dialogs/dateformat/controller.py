@@ -25,7 +25,7 @@ from timelinelib.wxgui.dialogs.dateformat.view import DateFormatDialog
 from timelinelib.wxgui.dialogs.dateformat.controller import DateFormatDialogController
 
 
-class describe_date_fromat_dialog_controller(UnitTestCase):
+class describe_date_format_dialog_controller(UnitTestCase):
 
     def test_instantiation(self):
         pass
