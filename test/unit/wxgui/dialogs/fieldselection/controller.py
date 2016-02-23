@@ -24,7 +24,7 @@ from timelinelib.wxgui.dialogs.fieldselection.view import FieldSelectionDialog
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class describe_FieldSelectionDialog(UnitTestCase):
+class describe_field_selection_dialog(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(FieldSelectionDialog)
