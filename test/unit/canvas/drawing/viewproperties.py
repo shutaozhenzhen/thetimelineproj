@@ -33,7 +33,7 @@ class Base(UnitTestCase):
         return category
 
 
-class category_visibility(Base):
+class describe_category_visibility(Base):
 
     def test_visible_by_default(self):
         work = self.create_category("Work", parent=None)
@@ -47,7 +47,7 @@ class category_visibility(Base):
         self.assertFalse(self.view_properties.is_category_visible(work))
 
 
-class event_visiblity(Base):
+class describe_event_visiblity(Base):
 
     def setUp(self):
         Base.setUp(self)
@@ -82,7 +82,7 @@ class event_visiblity(Base):
         self.assertEventWithCategoryVisible(self.boring_meetings)
 
 
-class event_filtering(Base):
+class describe_event_filtering(Base):
 
     def setUp(self):
         Base.setUp(self)
