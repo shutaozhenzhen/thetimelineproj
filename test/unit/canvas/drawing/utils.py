@@ -16,12 +16,17 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from random import random
+
+
 from timelinelib.canvas.drawing.utils import Metrics
 from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
+from timelinelib.canvas.drawing.utils import darken_color
+from timelinelib.canvas.drawing.utils import lighten_color
 
 
 WIDTH = 200
@@ -91,3 +96,37 @@ class describe_numeric_overflow_error(MetricsTestCase):
         self.given_a_numeric_scene_period()
         time = 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
         self.assertEquals(WIDTH + 1, self.metrics.calc_x(time))
+
+
+class describe_drawing_utils(UnitTestCase):
+
+    def test_darken_color_good_factor(self):
+        randColor = self.random_color()
+        randFactor = random()
+        newColor = darken_color(randColor, randFactor)
+        for x in newColor:
+            self.assertTrue(x >= 0 and x <= 255)
+
+    def test_darken_color_bad_factor(self):
+        lowFactor = random() * 256 - 256  # -256 < factor < 0
+        highFactor = 1 + random() * 255  # 1 < factor < 256
+        randColor = self.random_color()
+        self.assertEqual(randColor, darken_color(randColor, lowFactor))
+        self.assertEqual(randColor, darken_color(randColor, highFactor))
+
+    def test_lighten_color_good_factor(self):
+        randColor = self.random_color()
+        randFactor = 1 + random() * 254  # 1 < factor < 255
+        newColor = lighten_color(randColor, randFactor)
+        for x in newColor:
+            self.assertTrue(x >= 0 and x <= 255)
+
+    def test_lighten_color_bad_factor(self):
+        lowFactor = random() * 257 - 256  # -256 < factor < 1
+        highFactor = 255 + random()  # 255 < factor < 256
+        randColor = self.random_color()
+        self.assertEqual(randColor, lighten_color(randColor, lowFactor))
+        self.assertEqual(randColor, lighten_color(randColor, highFactor))
+
+    def random_color(self):
+        return tuple([int(random() * 256) for _ in (1, 2, 3)])
