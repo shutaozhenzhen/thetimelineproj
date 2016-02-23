@@ -27,6 +27,10 @@ from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import EVENT_MODIFIERS
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.event import clone_event_list
+from timelinelib.canvas.data import Container
+from timelinelib.canvas.data import Subevent
 
 
 class describe_event(UnitTestCase):
@@ -299,3 +303,30 @@ class describe_event_cloning(UnitTestCase):
         clone = event.clone()
         self.assertEqual(clone, event)
         self.assertEqual(clone.get_default_color(), event.get_default_color())
+
+
+class describe_event_cloning_of_containers(UnitTestCase):
+
+    def test_container_relationships_are_maintained_when_cloning(self):
+        self.given_container_with_subevents()
+        cloned_event_list = clone_event_list(self.events)
+        self.assertListIsCloneOf(cloned_event_list, self.events)
+        self.assertTrue(isinstance(cloned_event_list[0], Container))
+        self.assertTrue(isinstance(cloned_event_list[1], Subevent))
+        self.assertTrue(isinstance(cloned_event_list[2], Subevent))
+        self.assertTrue(cloned_event_list[1] in cloned_event_list[0].events)
+        self.assertTrue(cloned_event_list[2] in cloned_event_list[0].events)
+        self.assertEquals(cloned_event_list[1].container_id, cloned_event_list[0].container_id)
+        self.assertEquals(cloned_event_list[2].container_id, cloned_event_list[0].container_id)
+
+    def given_container_with_subevents(self):
+        self.container = Container(self.db.get_time_type(), self.now, self.now, "container", category=None, cid=1)
+        self.subevent1 = Subevent(self.db.get_time_type(), self.now, self.now, "sub1", category=None, container=self.container, cid=1)
+        self.subevent2 = Subevent(self.db.get_time_type(), self.now, self.now, "sub2", category=None, container=self.container)
+        self.container.register_subevent(self.subevent1)
+        self.container.register_subevent(self.subevent2)
+        self.events = [self.container, self.subevent1, self.subevent2]
+
+    def setUp(self):
+        self.db = MemoryDB()
+        self.now = self.db.get_time_type().now()
