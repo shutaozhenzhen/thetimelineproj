@@ -23,7 +23,7 @@ from timelinelib.wxgui.dialogs.eventeditortabselection.view import EventEditorTa
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class describe_EventEditorTabSelectionDialog(UnitTestCase):
+class describe_event_editor_tab_selection_dialog(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(EventEditorTabSelectionDialog)
