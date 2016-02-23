@@ -38,7 +38,7 @@ BASELINE_Y_POS = IMAGE_HEIGHT / 2
 TEXT_SIZE = (50, 10)
 
 
-class DrawerSpec(UnitTestCase):
+class describe_default_drawer(UnitTestCase):
 
     def test_draws_period_event_below_baseline(self):
         self.given_event(name="vacation",
