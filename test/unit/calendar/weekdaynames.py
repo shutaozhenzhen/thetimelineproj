@@ -20,7 +20,7 @@ from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.calendar.weekdaynames
 
 
-class WeekdayNamesSpec(UnitTestCase):
+class describe_weekday_names(UnitTestCase):
 
     def test_abbreviated_weekday_name_for_0_should_be_mon_translated(self):
         self.assertEqual(
