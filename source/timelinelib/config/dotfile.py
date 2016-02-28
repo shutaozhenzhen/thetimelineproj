@@ -211,7 +211,6 @@ class Config(Observable):
 
     def set_sidebar_width(self, width):
         self.config_parser.set(DEFAULTSECT, SIDEBAR_WIDTH, str(width))
-    sidebar_width = property(get_sidebar_width, set_sidebar_width)
 
     def get_divider_line_slider_pos(self):
         return self.config_parser.getint(DEFAULTSECT, DIVIDER_LINE_SLIDER_POS)
