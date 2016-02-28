@@ -164,7 +164,6 @@ class Config(Observable):
         width, height = size
         self.config_parser.set(DEFAULTSECT, WINDOW_WIDTH, str(width))
         self.config_parser.set(DEFAULTSECT, WINDOW_HEIGHT, str(height))
-    window_size = property(get_window_size, set_window_size)
 
     def get_window_pos(self):
         width, _ = self.get_window_size()
