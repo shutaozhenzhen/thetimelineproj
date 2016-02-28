@@ -217,7 +217,6 @@ class Config(Observable):
 
     def set_divider_line_slider_pos(self, pos):
         self.config_parser.set(DEFAULTSECT, DIVIDER_LINE_SLIDER_POS, str(pos))
-    divider_line_slider_pos = property(get_divider_line_slider_pos, set_divider_line_slider_pos)
 
     def get_recently_opened(self):
         ro = self.config_parser.get(DEFAULTSECT, RECENT_FILES).decode(ENCODING).split(",")
