@@ -346,7 +346,6 @@ class Config(Observable):
         if self._toStr(font) is not None:
             self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
             self._notify()
-    legend_font = property(get_legend_font, set_legend_font)
 
     def _set_default_fonts(self):
         DEFAULTS[MAJOR_STRIP_FONT] = Font(12, weight=wx.FONTWEIGHT_BOLD).serialize()
