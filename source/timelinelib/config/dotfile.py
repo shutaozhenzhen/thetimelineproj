@@ -269,7 +269,6 @@ class Config(Observable):
 
     def set_uncheck_time_for_new_events(self, value):
         self.config_parser.set(DEFAULTSECT, UNCHECK_TIME_FOR_NEW_EVENTS, str(value))
-    uncheck_time_for_new_events = property(get_uncheck_time_for_new_events, set_uncheck_time_for_new_events)
 
     def get_week_start(self):
         return self.config_parser.get(DEFAULTSECT, WEEK_START)
