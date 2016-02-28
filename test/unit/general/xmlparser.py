@@ -20,7 +20,7 @@ from StringIO import StringIO
 import xml.sax
 
 from timelinelib.test.cases.unit import UnitTestCase
-import timelinelib.xml.parser as xmlparser
+import timelinelib.general.xmlparser as xmlparser
 
 
 class describe_xml_parser(UnitTestCase):
