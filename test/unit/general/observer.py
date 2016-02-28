@@ -18,8 +18,8 @@
 
 from mock import Mock
 
-from timelinelib.utilities.observer import Listener
-from timelinelib.utilities.observer import Observable
+from timelinelib.general.observer import Listener
+from timelinelib.general.observer import Observable
 from timelinelib.test.cases.unit import UnitTestCase
 
 

@@ -19,7 +19,7 @@
 from ConfigParser import DEFAULTSECT
 from ConfigParser import SafeConfigParser
 
-from timelinelib.utilities.observer import Observable
+from timelinelib.general.observer import Observable
 
 
 class NewConfig(Observable):

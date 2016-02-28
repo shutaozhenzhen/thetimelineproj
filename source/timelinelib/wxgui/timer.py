@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.utilities.observer import Observable
+from timelinelib.general.observer import Observable
 
 
 # A timer ticked

@@ -32,7 +32,7 @@ import sys
 
 import wx
 
-from timelinelib.utilities.observer import Observable
+from timelinelib.general.observer import Observable
 from timelinelib.wxgui.components.font import Font
 from timelinelib.wxgui.utils import display_information_message
 
