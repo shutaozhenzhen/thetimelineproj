@@ -36,7 +36,7 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_recently_opened(), [])
         self.assertEqual(self.config.get_open_recent_at_startup(), True)
         self.assertEqual(self.config.get_balloon_on_hover(), True)
-        self.assertEqual(self.config.week_start, "monday")
+        self.assertEqual(self.config.get_week_start(), "monday")
         self.assertEqual(self.config.get_use_inertial_scrolling(), False)
         self.assertEqual(self.config.center_event_texts, False)
         self.assertEqual(self.config.minor_strip_divider_line_colour, (200, 200, 200))
@@ -74,8 +74,8 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_balloon_on_hover(), False)
 
     def test_week_start_can_be_read_after_stored(self):
-        self.config.week_start = "sunday"
-        self.assertEqual(self.config.week_start, "sunday")
+        self.config.set_week_start("sunday")
+        self.assertEqual(self.config.get_week_start(), "sunday")
 
     def test_inertial_scrolling_can_be_read_after_stored(self):
         self.config.use_inertial_scrolling = False
@@ -142,7 +142,7 @@ class describe_config(TmpDirTestCase):
 
     def test_setting_invalid_week_start_raises_value_error(self):
         def set_invalid_week():
-            self.config.week_start = "friday"
+            self.config.set_week_start("friday")
         self.assertRaises(ValueError, set_invalid_week)
 
     def setUp(self):

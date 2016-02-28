@@ -86,7 +86,7 @@ class MainFrameController(object):
             pass
 
     def week_starts_on_monday(self):
-        return self.config.week_start == "monday"
+        return self.config.get_week_start() == "monday"
 
     def ok_to_edit(self):
         if self.timeline is None:
