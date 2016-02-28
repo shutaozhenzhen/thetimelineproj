@@ -168,7 +168,7 @@ class CalendarPopup(wx.PopupTransientWindow):
     def _get_cal_style(self):
         style = (wx.calendar.CAL_SHOW_HOLIDAYS |
                  wx.calendar.CAL_SEQUENTIAL_MONTH_SELECTION)
-        if self.config.week_start == "monday":
+        if self.config.get_week_start() == "monday":
             style |= wx.calendar.CAL_MONDAY_FIRST
         else:
             style |= wx.calendar.CAL_SUNDAY_FIRST

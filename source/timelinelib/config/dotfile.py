@@ -278,7 +278,6 @@ class Config(Observable):
             raise ValueError("Invalid week start.")
         self.config_parser.set(DEFAULTSECT, WEEK_START, week_start)
         self._notify()
-    week_start = property(get_week_start, set_week_start)
 
     def get_use_inertial_scrolling(self):
         return self.config_parser.getboolean(DEFAULTSECT, USE_INERTIAL_SCROLLING)
