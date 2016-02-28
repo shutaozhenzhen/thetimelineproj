@@ -322,8 +322,6 @@ class Config(Observable):
     def set_draw_period_events_to_right(self, value):
         self.config_parser.set(DEFAULTSECT, DRAW_POINT_EVENTS_TO_RIGHT, str(value))
         self._notify()
-    draw_period_events_to_right = property(get_draw_period_events_to_right,
-                                           set_draw_period_events_to_right)
 
     def get_major_strip_font(self):
         return self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_FONT)

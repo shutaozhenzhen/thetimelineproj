@@ -301,9 +301,6 @@ class GuiCreator(object):
         def vert_zoomout(evt):
             DrawingAreaProxy(self).vert_zoom_out()
 
-        def draw_point_events_to_right(evt):
-            self.config.draw_period_events_to_right = evt.IsChecked()
-
         items = [self._create_view_toolbar_menu_item,
                  (ID_SIDEBAR, sidebar, _("&Sidebar\tCtrl+I"), CHECKBOX),
                  (ID_LEGEND, legend, _("&Legend"), CHECKBOX),
@@ -361,11 +358,11 @@ class GuiCreator(object):
         center_item = sub_menu.Append(wx.ID_ANY, _("Center"), kind=wx.ITEM_RADIO)
         view_menu.AppendMenu(wx.ID_ANY, _("Point event alignment"), sub_menu)
         def on_left_click(event):
-            self.config.draw_period_events_to_right = True
+            self.config.set_draw_period_events_to_right(True)
         def on_center_click(event):
-            self.config.draw_period_events_to_right = False
+            self.config.set_draw_period_events_to_right(False)
         def check_item_corresponding_to_config():
-            if self.config.draw_period_events_to_right:
+            if self.config.get_draw_period_events_to_right():
                 left_item.Check()
             else:
                 center_item.Check()
