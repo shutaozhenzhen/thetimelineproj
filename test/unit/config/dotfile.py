@@ -31,7 +31,7 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_window_size(), (900, 500))
         self.assertEqual(self.config.get_window_maximized(), False)
         self.assertEqual(self.config.get_show_sidebar(), True)
-        self.assertEqual(self.config.show_legend, True)
+        self.assertEqual(self.config.get_show_legend(), True)
         self.assertEqual(self.config.sidebar_width, 200)
         self.assertEqual(self.config.recently_opened, [])
         self.assertEqual(self.config.open_recent_at_startup, True)
@@ -54,8 +54,8 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_show_sidebar(), False)
 
     def test_show_legend_can_be_read_after_stored(self):
-        self.config.show_legend = False
-        self.assertEqual(self.config.show_legend, False)
+        self.config.set_show_legend(False)
+        self.assertEqual(self.config.get_show_legend(), False)
 
     def test_sidebar_width_can_be_read_after_stored(self):
         self.config.sidebar_width = 20
