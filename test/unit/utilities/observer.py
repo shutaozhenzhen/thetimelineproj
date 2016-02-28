@@ -20,8 +20,6 @@ from mock import Mock
 
 from timelinelib.utilities.observer import Listener
 from timelinelib.utilities.observer import Observable
-from timelinelib.utilities.observer import STATE_CHANGE_ANY
-from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
 from timelinelib.test.cases.unit import UnitTestCase
 
 
@@ -41,11 +39,11 @@ class describe_observable(UnitTestCase):
 
     def test_an_observer_gets_notifications(self):
         self.registerObserver()
-        self.observable._notify(STATE_CHANGE_ANY)
-        self.observable._notify(STATE_CHANGE_CATEGORY)
+        self.observable._notify("bar")
+        self.observable._notify("foo")
         self.assertTrue(len(self.observer.events) == 2)
-        self.assertTrue(self.observer.events[0] == STATE_CHANGE_ANY)
-        self.assertTrue(self.observer.events[1] == STATE_CHANGE_CATEGORY)
+        self.assertTrue(self.observer.events[0] == "bar")
+        self.assertTrue(self.observer.events[1] == "foo")
 
     def test_can_listen_for_specific_events(self):
         observer = Observer()
