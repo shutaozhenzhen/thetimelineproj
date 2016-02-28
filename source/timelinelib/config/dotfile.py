@@ -179,7 +179,6 @@ class Config(Observable):
         xpos, ypos = pos
         self.config_parser.set(DEFAULTSECT, WINDOW_XPOS, str(xpos))
         self.config_parser.set(DEFAULTSECT, WINDOW_YPOS, str(ypos))
-    window_pos = property(get_window_pos, set_window_pos)
 
     def get_window_maximized(self):
         return self.config_parser.getboolean(DEFAULTSECT, WINDOW_MAXIMIZED)
