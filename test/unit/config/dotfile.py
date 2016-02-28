@@ -38,7 +38,7 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_balloon_on_hover(), True)
         self.assertEqual(self.config.get_week_start(), "monday")
         self.assertEqual(self.config.get_use_inertial_scrolling(), False)
-        self.assertEqual(self.config.center_event_texts, False)
+        self.assertEqual(self.config.get_center_event_texts(), False)
         self.assertEqual(self.config.minor_strip_divider_line_colour, (200, 200, 200))
 
     def test_window_size_can_be_read_after_stored(self):
@@ -82,8 +82,8 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_use_inertial_scrolling(), False)
 
     def test_center_event_texts_can_be_read_after_stored(self):
-        self.config.center_event_texts = True
-        self.assertEqual(self.config.center_event_texts, True)
+        self.config.set_center_event_texts(True)
+        self.assertEqual(self.config.get_center_event_texts(), True)
 
     def test_minor_strip_divider_line_colour_can_be_read_after_set(self):
         self.config.minor_strip_divider_line_colour = (100, 0, 0)

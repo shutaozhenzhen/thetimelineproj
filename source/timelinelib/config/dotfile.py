@@ -315,7 +315,6 @@ class Config(Observable):
     def set_center_event_texts(self, value):
         self.config_parser.set(DEFAULTSECT, CENTER_EVENT_TEXTS, str(value))
         self._notify()
-    center_event_texts = property(get_center_event_texts, set_center_event_texts)
 
     def get_draw_period_events_to_right(self):
         return self.config_parser.getboolean(DEFAULTSECT, DRAW_POINT_EVENTS_TO_RIGHT)
