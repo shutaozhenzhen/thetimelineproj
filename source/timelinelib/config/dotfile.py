@@ -330,7 +330,6 @@ class Config(Observable):
         if self._toStr(font) is not None:
             self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_FONT, font)
             self._notify()
-    major_strip_font = property(get_major_strip_font, set_major_strip_font)
 
     def get_minor_strip_font(self):
         return self.config_parser.get(DEFAULTSECT, MINOR_STRIP_FONT)

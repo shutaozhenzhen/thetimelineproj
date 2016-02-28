@@ -65,9 +65,9 @@ class PreferencesDialogController(Controller):
         self.view.ShowSelectTabOrderDialog(self.config)
 
     def on_major_strip_click(self, event):
-        font = deserialize_font(self.config.major_strip_font)
+        font = deserialize_font(self.config.get_major_strip_font())
         if self.view.ShowEditFontDialog(font):
-            self.config.major_strip_font = font.serialize()
+            self.config.set_major_strip_font(font.serialize())
 
     def on_minor_strip_click(self, event):
         font = deserialize_font(self.config.minor_strip_font)
