@@ -185,7 +185,6 @@ class Config(Observable):
 
     def set_window_maximized(self, maximized):
         self.config_parser.set(DEFAULTSECT, WINDOW_MAXIMIZED, str(maximized))
-    window_maximized = property(get_window_maximized, set_window_maximized)
 
     def get_show_toolbar(self):
         return self.config_parser.getboolean(DEFAULTSECT, SHOW_TOOLBAR)
