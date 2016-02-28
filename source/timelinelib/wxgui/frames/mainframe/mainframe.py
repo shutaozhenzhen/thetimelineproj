@@ -243,11 +243,6 @@ class GuiCreator(object):
             dialog.ShowModal()
             dialog.Destroy()
 
-        def mouse_in_sidebar():
-            if not self.config.show_sidebar:
-                return False
-            return SidebarProxy(self).mouse_over_sidebar()
-
         def preferences(evt):
             def edit_function():
                 dialog = PreferencesDialog(self, self.config)

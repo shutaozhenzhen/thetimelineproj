@@ -198,7 +198,6 @@ class Config(Observable):
 
     def set_show_sidebar(self, show):
         self.config_parser.set(DEFAULTSECT, SHOW_SIDEBAR, str(show))
-    show_sidebar = property(get_show_sidebar, set_show_sidebar)
 
     def get_show_legend(self):
         return self.config_parser.getboolean(DEFAULTSECT, SHOW_LEGEND)
