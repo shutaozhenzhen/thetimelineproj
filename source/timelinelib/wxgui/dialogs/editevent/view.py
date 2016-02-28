@@ -215,7 +215,7 @@ class EditEventDialog(Dialog):
             start,
             end,
             event)
-        if event is None and self.config.uncheck_time_for_new_events:
+        if event is None and self.config.get_uncheck_time_for_new_events():
             self.SetShowTime(False)
         self._make_row_with_notebook_growable()
         self.SetMinSize((800, -1))
