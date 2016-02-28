@@ -26,12 +26,6 @@ class SidebarProxy():
         if isinstance(creator, MainFrame):
             self.sidebar = creator.main_panel.timeline_panel.sidebar
 
-    def mouse_over_sidebar(self):
-        pos = wx.GetMousePosition()
-        panel_pos = self.sidebar.ScreenToClient(pos)
-        size = self.sidebar.Size
-        return panel_pos.x <= size.width and panel_pos.y < size.height
-
     def check_categories(self, categories):
         self.sidebar.category_tree.check_categories(categories)
 
