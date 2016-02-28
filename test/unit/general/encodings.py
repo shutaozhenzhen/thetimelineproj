@@ -20,7 +20,7 @@
 
 import os
 
-from timelinelib.utilities.encodings import to_unicode
+from timelinelib.general.encodings import to_unicode
 from timelinelib.test.cases.unit import UnitTestCase
 
 
