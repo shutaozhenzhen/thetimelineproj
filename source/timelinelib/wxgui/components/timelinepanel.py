@@ -26,7 +26,7 @@ from timelinelib.canvas import EVT_TIMELINE_REDRAWN
 from timelinelib.db.utils import safe_locking
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature
-from timelinelib.utilities.encodings import to_unicode
+from timelinelib.general.encodings import to_unicode
 from timelinelib.utilities.observer import Listener
 from timelinelib.wxgui.components.maincanvas.createperiodeventbydrag import CreatePeriodEventByDragInputHandler
 from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
