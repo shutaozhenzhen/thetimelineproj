@@ -168,7 +168,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         from timelinelib.plugin import factory
         from timelinelib.plugin.factory import EVENTBOX_DRAWER
         from timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-        plugin = factory.get_plugin(EVENTBOX_DRAWER, self.config.selected_event_box_drawer) or DefaultEventBoxDrawer()
+        plugin = factory.get_plugin(EVENTBOX_DRAWER, self.config.get_selected_event_box_drawer()) or DefaultEventBoxDrawer()
         return plugin.run()
 
     def _timeline_canvas_on_double_clicked(self, event):
