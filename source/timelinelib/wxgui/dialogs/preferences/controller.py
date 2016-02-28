@@ -75,9 +75,9 @@ class PreferencesDialogController(Controller):
             self.config.set_minor_strip_font(font.serialize())
 
     def on_legend_click(self, event):
-        font = deserialize_font(self.config.legend_font)
+        font = deserialize_font(self.config.get_legend_font())
         if self.view.ShowEditFontDialog(font):
-            self.config.legend_font = font.serialize()
+            self.config.set_legend_font(font.serialize())
 
     def on_experimental_changed(self, event):
         self.experimental_features.set_active_state_on_feature_by_name(
