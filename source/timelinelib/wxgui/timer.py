@@ -19,7 +19,10 @@
 import wx
 
 from timelinelib.utilities.observer import Observable
-from timelinelib.utilities.observer import TIMER_TICK
+
+
+# A timer ticked
+TIMER_TICK = 3
 
 
 class TimelineTimer(Observable):

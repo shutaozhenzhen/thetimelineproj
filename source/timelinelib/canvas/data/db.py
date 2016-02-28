@@ -27,8 +27,12 @@ from timelinelib.features.experimental.experimentalfeatures import experimental_
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import Time
 from timelinelib.utilities.observer import Observable
-from timelinelib.utilities.observer import STATE_CHANGE_ANY
-from timelinelib.utilities.observer import STATE_CHANGE_CATEGORY
+
+
+# A category was added, edited, or deleted
+STATE_CHANGE_CATEGORY = 1
+# Something happened that changed the state of the timeline
+STATE_CHANGE_ANY = 2
 
 
 class MemoryDB(Observable):
