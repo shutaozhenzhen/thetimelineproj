@@ -38,16 +38,16 @@ from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.timeperiod import PeriodTooLongError
 from timelinelib.db.utils import create_non_exising_path
+from timelinelib.general.xmlparser import ANY
+from timelinelib.general.xmlparser import OPTIONAL
+from timelinelib.general.xmlparser import parse
+from timelinelib.general.xmlparser import parse_fn_store
+from timelinelib.general.xmlparser import SINGLE
+from timelinelib.general.xmlparser import Tag
 from timelinelib.time.bosparaniantime import BosparanianTimeType
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
-from timelinelib.xml.parser import ANY
-from timelinelib.xml.parser import OPTIONAL
-from timelinelib.xml.parser import parse
-from timelinelib.xml.parser import parse_fn_store
-from timelinelib.xml.parser import SINGLE
-from timelinelib.xml.parser import Tag
 
 
 def import_db_from_timeline_xml(path):
