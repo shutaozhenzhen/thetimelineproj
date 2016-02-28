@@ -256,8 +256,6 @@ class Config(Observable):
 
     def set_open_recent_at_startup(self, value):
         self.config_parser.set(DEFAULTSECT, OPEN_RECENT_AT_STARTUP, str(value))
-    open_recent_at_startup = property(get_open_recent_at_startup,
-                                      set_open_recent_at_startup)
 
     def get_balloon_on_hover(self):
         return self.config_parser.getboolean(DEFAULTSECT, BALLOON_ON_HOVER)
