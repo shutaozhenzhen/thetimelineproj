@@ -35,7 +35,7 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_sidebar_width(), 200)
         self.assertEqual(self.config.get_recently_opened(), [])
         self.assertEqual(self.config.get_open_recent_at_startup(), True)
-        self.assertEqual(self.config.balloon_on_hover, True)
+        self.assertEqual(self.config.get_balloon_on_hover(), True)
         self.assertEqual(self.config.week_start, "monday")
         self.assertEqual(self.config.get_use_inertial_scrolling(), False)
         self.assertEqual(self.config.center_event_texts, False)
@@ -70,8 +70,8 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_open_recent_at_startup(), False)
 
     def test_balloon_on_hover_can_be_read_after_stored(self):
-        self.config.balloon_on_hover = False
-        self.assertEqual(self.config.balloon_on_hover, False)
+        self.config.set_balloon_on_hover(False)
+        self.assertEqual(self.config.get_balloon_on_hover(), False)
 
     def test_week_start_can_be_read_after_stored(self):
         self.config.week_start = "sunday"
