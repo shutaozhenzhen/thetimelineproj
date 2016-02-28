@@ -60,11 +60,11 @@ class ToolbarCreator(object):
         left_tool = self._add_radio(_("Left"), "event-line-left.png")
         center_tool = self._add_radio(_("Center"), "event-line-center.png")
         def on_left_click(event):
-            self.config.draw_period_events_to_right = True
+            self.config.set_draw_period_events_to_right(True)
         def on_center_click(event):
-            self.config.draw_period_events_to_right = False
+            self.config.set_draw_period_events_to_right(False)
         def check_item_corresponding_to_config():
-            if self.config.draw_period_events_to_right:
+            if self.config.get_draw_period_events_to_right():
                 self.toolbar.ToggleTool(left_tool.GetId(), True)
             else:
                 self.toolbar.ToggleTool(center_tool.GetId(), True)
