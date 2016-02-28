@@ -78,8 +78,8 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_week_start(), "sunday")
 
     def test_inertial_scrolling_can_be_read_after_stored(self):
-        self.config.use_inertial_scrolling = False
-        self.assertEqual(self.config.use_inertial_scrolling, False)
+        self.config.set_use_inertial_scrolling(False)
+        self.assertEqual(self.config.get_use_inertial_scrolling(), False)
 
     def test_center_event_texts_can_be_read_after_stored(self):
         self.config.center_event_texts = True
