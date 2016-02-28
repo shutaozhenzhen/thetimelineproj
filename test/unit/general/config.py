@@ -19,15 +19,15 @@
 
 from mock import Mock
 
-from timelinelib.general.config import NewConfig
+from timelinelib.general.config import Config
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
 
 
-class describe_new_config(TmpDirTestCase):
+class describe_config(TmpDirTestCase):
 
     def setUp(self):
         TmpDirTestCase.setUp(self)
-        self.config = NewConfig([
+        self.config = Config([
             dict(
                 name="name",
                 default="Rickard",

@@ -22,7 +22,7 @@ from ConfigParser import SafeConfigParser
 from timelinelib.general.observer import Observable
 
 
-class NewConfig(Observable):
+class Config(Observable):
 
     def __init__(self, item_dicts):
         Observable.__init__(self)
