@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.utilities.observer import Observable
+from timelinelib.general.observer import Observable
 from timelinelib.wxgui.components.font import Font
 
 

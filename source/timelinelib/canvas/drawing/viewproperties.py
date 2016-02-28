@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.utilities.observer import Observable
+from timelinelib.general.observer import Observable
 
 
 class ViewProperties(Observable):

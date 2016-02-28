@@ -24,9 +24,9 @@ from timelinelib.canvas.data import Events
 from timelinelib.canvas.data.undohandler import UndoHandler
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature
+from timelinelib.general.observer import Observable
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import Time
-from timelinelib.utilities.observer import Observable
 
 
 # A category was added, edited, or deleted
