@@ -347,12 +347,12 @@ class GuiCreator(object):
         def create_click_handler(plugin):
             def event_handler(evt):
                 self.main_panel.get_timeline_canvas().SetEventBoxDrawer(plugin.run())
-                self.config.selected_event_box_drawer = plugin.display_name()
+                self.config.set_selected_event_box_drawer(plugin.display_name())
             return event_handler
 
         items = []
         for plugin in factory.get_plugins(EVENTBOX_DRAWER):
-            if (plugin.display_name() == self.config.selected_event_box_drawer):
+            if (plugin.display_name() == self.config.get_selected_event_box_drawer()):
                 items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), CHECKED_RB))
             else:
                 items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), UNCHECKED_RB))
