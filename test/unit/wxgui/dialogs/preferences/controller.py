@@ -96,6 +96,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_fuzzy_icon.return_value = "fuzzy.png"
         self.config.get_locked_icon.return_value = "locked.png"
         self.config.get_hyperlink_icon.return_value = "hyperlink.png"
+        self.config.get_vertical_space_between_events.return_value = 5
         self.experimental_features = Mock(ExperimentalFeatures)
 
     def test_it_can_be_created(self):

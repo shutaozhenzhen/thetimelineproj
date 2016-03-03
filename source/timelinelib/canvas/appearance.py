@@ -44,6 +44,7 @@ class Appearance(Observable):
         self._build_property("fuzzy_icon", "fuzzy.png")
         self._build_property("locked_icon", "lock.png")
         self._build_property("hyperlink_icon", "hyperlink.png")
+        self._build_property("vertical_space_between_events", 5)
 
     def _build_property(self, name, initial_value):
         def getter():

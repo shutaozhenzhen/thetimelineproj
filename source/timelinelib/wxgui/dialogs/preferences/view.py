@@ -67,6 +67,19 @@ class PreferencesDialog(Dialog):
                             label="$(tab_order_text)"
                             align="ALIGN_LEFT"
                         />
+                        <BoxSizerHorizontal>
+                            <StaticText
+                                name="vertical_space_between_events_text"
+                                label="$(vertical_space_between_events_text)"
+                                align="ALIGN_CENTER_VERTICAL"
+                            />
+                            <SpinCtrl
+                                name="vertical_space_between_events"
+                                event_EVT_SPINCTRL="on_vertical_space_between_events_click"
+                                align="ALIGN_LEFT"
+                                width="50"
+                            />
+                        </BoxSizerHorizontal>
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -255,6 +268,7 @@ class PreferencesDialog(Dialog):
             "major_strip_colour_text": _("Major strip divider line:"),
             "now_line_colour_text": _("Now line:"),
             "weekend_colour_text": _("Weekends:"),
+            "vertical_space_between_events_text": _("Vertical space between Events (px)"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
 
@@ -353,3 +367,9 @@ class PreferencesDialog(Dialog):
 
     def SetWeekendColor(self, new_color):
         self.weekend_colorpicker.SetValue(new_color)
+
+    def SetVerticalSpaceBetweenEvents(self, value):
+        self.vertical_space_between_events.SetValue(value)
+
+    def GetVerticalSpaceBetweenEvents(self):
+        return self.vertical_space_between_events.GetValue()

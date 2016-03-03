@@ -161,6 +161,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_fuzzy_icon(self.config.get_fuzzy_icon())
             appearance.set_locked_icon(self.config.get_locked_icon())
             appearance.set_hyperlink_icon(self.config.get_hyperlink_icon())
+            appearance.set_vertical_space_between_events(self.config.get_vertical_space_between_events())
         self.config.listen_for_any(update_appearance)
         update_appearance()
 

@@ -110,6 +110,7 @@ class DefaultDrawingAlgorithm(Drawer):
         self.now_pen.SetColour(appearance.get_now_line_colour())
         self.weekend_color = appearance.get_weekend_colour()
         self.outer_padding = OUTER_PADDING
+        self.outer_padding = appearance.get_vertical_space_between_events()
         if EXTENDED_CONTAINER_HEIGHT.enabled():
             self.outer_padding += EXTENDED_CONTAINER_HEIGHT.get_extra_outer_padding_to_avoid_vertical_overlapping()
         self.appearance = appearance

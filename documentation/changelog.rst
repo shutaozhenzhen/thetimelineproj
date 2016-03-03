@@ -40,6 +40,8 @@ GUI:
   Windows.
   (`#138 <https://sourceforge.net/p/thetimelineproj/backlog/138/>`_)
 
+* The vertical space between events is now a user settable preference.
+
 Version 1.9.0
 -------------
 
