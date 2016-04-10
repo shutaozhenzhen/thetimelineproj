@@ -42,6 +42,16 @@ GUI:
 
 * The vertical space between events is now a user settable preference.
 
+Translations:
+
+* The BC string in strips is now translatable
+
+Fixed crash reports:
+
+* The Timeline xml file is updated when an Era is deleted
+  (`#139 <https://sourceforge.net/p/thetimelineproj/backlog/139/>`_)
+
+
 Version 1.9.0
 -------------
 
