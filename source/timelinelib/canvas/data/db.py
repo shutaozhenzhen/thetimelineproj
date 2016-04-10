@@ -137,6 +137,14 @@ class MemoryDB(Observable):
         else:
             self._save_if_not_disabled(STATE_CHANGE_CATEGORY)
 
+    def delete_era(self, era):
+        try:
+            self._eras.delete_era(era)
+        except Exception, e:
+            raise TimelineIOError("Deleting Era failed: %s" % e)
+        else:
+            self._save_if_not_disabled(STATE_CHANGE_CATEGORY)
+
     def get_max_cid(self):
         max_cid = 0
         for event in self.get_all_events():
