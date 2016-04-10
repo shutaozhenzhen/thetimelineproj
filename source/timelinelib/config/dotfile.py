@@ -75,6 +75,7 @@ LOCKED_ICON = "locked_icon"
 HYPERLINK_ICON = "hyperlink_icon"
 DATE_FORMAT = "date_format"
 VERTCAL_SPACE_BETWEEN_EVENTS = "vertical_space_between_events"
+COLORIZE_WEEKENDS = "colorize_weekens"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -110,6 +111,7 @@ DEFAULTS = {
     HYPERLINK_ICON: "hyperlink.png",
     DATE_FORMAT: "yyyy-mm-dd",
     VERTCAL_SPACE_BETWEEN_EVENTS: "5",
+    COLORIZE_WEEKENDS: "False",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -455,6 +457,13 @@ class Config(Observable):
 
     def set_vertical_space_between_events(self, value):
         self.config_parser.set(DEFAULTSECT, VERTCAL_SPACE_BETWEEN_EVENTS, str(max(0, value)))
+        self._notify()
+
+    def get_colorize_weekends(self):
+        return self.config_parser.getboolean(DEFAULTSECT, COLORIZE_WEEKENDS)
+
+    def set_colorize_weekends(self, value):
+        self.config_parser.set(DEFAULTSECT, COLORIZE_WEEKENDS, str(value))
         self._notify()
 
     def _toStr(self, value):

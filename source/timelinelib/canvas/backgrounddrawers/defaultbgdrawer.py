@@ -21,21 +21,21 @@ import wx
 
 class DefaultBackgroundDrawer(object):
 
-    def draw(self, drawer, dc, scene, timeline, weekend_colour):
+    def draw(self, drawer, dc, scene, timeline, colorize_weekends, weekend_colour):
         self.drawer = drawer
         self._erase_background(dc)
         self._draw_eras(dc, scene, timeline)
-        self._draw_weekend_days(dc, drawer, scene, weekend_colour)
+        self._draw_weekend_days(dc, drawer, scene, colorize_weekends, weekend_colour)
 
     def _erase_background(self, dc):
         w, h = dc.GetSizeTuple()
         self._set_color(dc, wx.WHITE)
         dc.DrawRectangle(0, 0, w, h)
 
-    def _draw_weekend_days(self, dc, drawer, scene, weekend_colour):
+    def _draw_weekend_days(self, dc, drawer, scene, colorize_weekends, weekend_colour):
         def draw_day_backgrounds(h):
             for strip_period in scene.minor_strip_data:
-                if strip_period.start_time.is_weekend_day():
+                if colorize_weekends and strip_period.start_time.is_weekend_day():
                     self._draw_weekend_rect(strip_period, h, weekend_colour)
 
         _, h = dc.GetSizeTuple()
