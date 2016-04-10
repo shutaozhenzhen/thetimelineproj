@@ -53,6 +53,7 @@ class ErasEditorDialogController(Controller):
         if era in self.eras:
             self.eras.remove(era)
             self.view.RemoveEra(era)
+        self.db.delete_era(era)
 
     def on_dclick(self, evt):
         self._edit(self.view.GetSelectedEra())
