@@ -76,6 +76,7 @@ HYPERLINK_ICON = "hyperlink_icon"
 DATE_FORMAT = "date_format"
 VERTCAL_SPACE_BETWEEN_EVENTS = "vertical_space_between_events"
 COLORIZE_WEEKENDS = "colorize_weekens"
+SKIP_S_IN_DECADE_TEXT = "skip_s_in_decade_text"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -112,6 +113,7 @@ DEFAULTS = {
     DATE_FORMAT: "yyyy-mm-dd",
     VERTCAL_SPACE_BETWEEN_EVENTS: "5",
     COLORIZE_WEEKENDS: "False",
+    SKIP_S_IN_DECADE_TEXT: "False",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -464,6 +466,13 @@ class Config(Observable):
 
     def set_colorize_weekends(self, value):
         self.config_parser.set(DEFAULTSECT, COLORIZE_WEEKENDS, str(value))
+        self._notify()
+
+    def get_skip_s_in_decade_text(self):
+        return self.config_parser.getboolean(DEFAULTSECT, SKIP_S_IN_DECADE_TEXT)
+
+    def set_skip_s_in_decade_text(self, value):
+        self.config_parser.set(DEFAULTSECT, SKIP_S_IN_DECADE_TEXT, str(value))
         self._notify()
 
     def _toStr(self, value):

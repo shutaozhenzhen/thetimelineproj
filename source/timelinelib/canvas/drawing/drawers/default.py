@@ -105,6 +105,7 @@ class DefaultDrawingAlgorithm(Drawer):
         view_properties.set_fuzzy_icon(appearance.get_fuzzy_icon())
         view_properties.set_locked_icon(appearance.get_locked_icon())
         view_properties.set_hyperlink_icon(appearance.get_hyperlink_icon())
+        view_properties.set_skip_s_in_decade_text(appearance.get_skip_s_in_decade_text())
         self.minor_strip_pen.SetColour(appearance.get_minor_strip_divider_line_colour())
         self.major_strip_pen.SetColour(appearance.get_major_strip_divider_line_colour())
         self.now_pen.SetColour(appearance.get_now_line_colour())
@@ -148,12 +149,12 @@ class DefaultDrawingAlgorithm(Drawer):
             self._perform_normal_drawing(view_properties)
 
     def _perform_fast_drawing(self, view_properties):
-        self._draw_bg(view_properties)
+        self._draw_bg()
         self._draw_events(view_properties)
 
     def _perform_normal_drawing(self, view_properties):
         self._draw_period_selection(view_properties)
-        self._draw_bg(view_properties)
+        self._draw_bg()
         self._draw_events(view_properties)
         self._draw_legend(view_properties, self._extract_categories())
         self._draw_ballons(view_properties)
@@ -251,17 +252,17 @@ class DefaultDrawingAlgorithm(Drawer):
         self.dc.SetPen(wx.TRANSPARENT_PEN)
         self.dc.DrawRectangle(start_x, 0, end_x - start_x + 1, self.scene.height)
 
-    def _draw_bg(self, view_properties):
+    def _draw_bg(self):
         if self.fast_draw:
             self._draw_fast_bg()
         else:
-            self._draw_normal_bg(view_properties)
+            self._draw_normal_bg()
 
     def _draw_fast_bg(self):
         self._draw_minor_strips()
         self._draw_divider_line()
 
-    def _draw_normal_bg(self, view_properties):
+    def _draw_normal_bg(self):
         self._draw_minor_strips()
         self._draw_major_strips()
         self._draw_divider_line()
@@ -288,12 +289,12 @@ class DefaultDrawingAlgorithm(Drawer):
     def _set_minor_strip_font(self, strip_period):
         if self.time_type.is_date_time_type():
             if self.scene.minor_strip_is_day():
-                bold=False
-                italic=False
+                bold = False
+                italic = False
                 if strip_period.start_time.is_weekend_day():
-                    bold=True
+                    bold = True
                 if strip_period.start_time.is_special_day():
-                    italic=True
+                    italic = True
                 font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc, force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
             else:
                 font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
