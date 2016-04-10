@@ -102,6 +102,9 @@ class PreferencesDialogController(Controller):
     def on_colorize_weekends(self, event):
         self.config.set_colorize_weekends(self.view.GetColorizeWeekends())
 
+    def on_skip_s_in_decade_text(self, event):
+        self.config.set_skip_s_in_decade_text(self.view.GetSkipSInDecadeText())
+
     def _set_initial_values(self):
         self.view.SetOpenRecentCheckboxValue(self.config.get_open_recent_at_startup())
         self.view.SetInertialScrollingCheckboxValue(self.config.get_use_inertial_scrolling())
@@ -123,6 +126,7 @@ class PreferencesDialogController(Controller):
         self.view.DisplayIcons()
         self.view.SetVerticalSpaceBetweenEvents(self.config.get_vertical_space_between_events())
         self.view.SetColorizeWeekends(self.config.get_colorize_weekends())
+        self.view.SetSkipSInDecadeText(self.config.get_skip_s_in_decade_text())
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:

@@ -556,9 +556,12 @@ class StripCentury(Strip):
 
 class StripDecade(Strip):
 
+    def __init__(self):
+        self.skip_s_in_decade_text = False
+
     def label(self, time, major=False):
         time = GregorianUtils.from_time(time)
-        return format_decade(self._decade_start_year(time.year))
+        return format_decade(self._decade_start_year(time.year), self.skip_s_in_decade_text)
 
     def start(self, time):
         gregorian_time = GregorianUtils.from_time(time)
@@ -568,6 +571,9 @@ class StripDecade(Strip):
     def increment(self, time):
         gregorian_time = GregorianUtils.from_time(time)
         return gregorian_time.replace(year=gregorian_time.year + 10).to_time()
+
+    def set_skip_s_in_decade_text(self, value):
+        self.skip_s_in_decade_text = value
 
     def _decade_start_year(self, year):
         # The first start year must be to the left of the first visible
@@ -750,12 +756,17 @@ def format_year(year):
         return str(year)
 
 
-def format_decade(start_year):
-    if start_year >= -10:
-        return str(start_year + 10) + "s"
+def format_decade(start_year, skip_s=False):
+    if skip_s:
+        if start_year >= -10:
+            return str(start_year + 10)
+        else:
+            return "%d %s" % ((abs(start_year) - 20), BC)
     else:
-        return "%ds %s" % ((abs(start_year) - 20), BC)
-
+        if start_year >= -10:
+            return str(start_year + 10) + "s"
+        else:
+            return "%ds %s" % ((abs(start_year) - 20), BC)
 
 def move_period_num_days(period, num):
     delta = delta_from_days(1) * num

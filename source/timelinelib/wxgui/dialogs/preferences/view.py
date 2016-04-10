@@ -105,6 +105,12 @@ class PreferencesDialog(Dialog):
                             name="current_date_format"
                             align="ALIGN_CENTER_VERTICAL"
                         />
+                        <CheckBox
+                            name="skip_s_in_decade_text"
+                            event_EVT_CHECKBOX="on_skip_s_in_decade_text"
+                            label="$(skip_s_in_decade_text_text)"
+                        />
+                        <Spacer />
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -278,6 +284,7 @@ class PreferencesDialog(Dialog):
             "weekend_colour_text": _("Weekends:"),
             "vertical_space_between_events_text": _("Vertical space between Events (px)"),
             "colorize_weekends_text": _("Colorize weekends"),
+            "skip_s_in_decade_text_text": _("Skip s in decade text"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
 
@@ -388,3 +395,9 @@ class PreferencesDialog(Dialog):
 
     def GetColorizeWeekends(self):
         return self.colorize_weekends.IsChecked()
+
+    def SetSkipSInDecadeText(self, value):
+        return self.skip_s_in_decade_text.SetValue(value)
+
+    def GetSkipSInDecadeText(self):
+        return self.skip_s_in_decade_text.IsChecked()

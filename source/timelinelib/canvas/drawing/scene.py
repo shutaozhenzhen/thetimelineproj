@@ -330,6 +330,11 @@ class TimelineScene(object):
         major_strip_data = []  # List of time_period
         minor_strip_data = []  # List of time_period
         self.major_strip, self.minor_strip = self._db.get_time_type().choose_strip(self._metrics, self._appearance)
+        if hasattr(self.major_strip, 'set_skip_s_in_decade_text'):
+            skip = self._view_properties.get_skip_s_in_decade_text()
+            self.major_strip.set_skip_s_in_decade_text(self._view_properties.get_skip_s_in_decade_text())
+        if hasattr(self.minor_strip, 'set_skip_s_in_decade_text'):
+            self.minor_strip.set_skip_s_in_decade_text(self._view_properties.get_skip_s_in_decade_text())
         fill(major_strip_data, self.major_strip)
         fill(minor_strip_data, self.minor_strip)
         return (minor_strip_data, major_strip_data)

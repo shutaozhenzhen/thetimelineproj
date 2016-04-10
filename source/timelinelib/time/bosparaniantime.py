@@ -31,6 +31,7 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
 import timelinelib.time.timeline as timeline
 
+
 class BosparanianTimeType(GregorianTimeType):
 
     def __init__(self):
@@ -539,7 +540,7 @@ class StripDay(Strip):
 
     def increment(self, time):
         return time + delta_from_days(1)
-    
+
     def is_day(self):
         return True
 
