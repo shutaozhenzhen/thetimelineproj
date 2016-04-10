@@ -186,19 +186,19 @@ class describe_gregorian_strip_week(UnitTestCase):
             "#Week# 27 (1-7 #Jul# 2013)")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-4-07-07 00:00:00"), True),
-            "#Week# 27 (1-7 #Jul# 5 BC)")
+            "#Week# 27 (1-7 #Jul# 5 #BC#)")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-11-25 00:00:00"), True),
             "#Week# 48 (25 #Nov#-1 #Dec# 2013)")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-4-11-25 00:00:00"), True),
-            "#Week# 48 (25 #Nov#-1 #Dec# 5 BC)")
+            "#Week# 48 (25 #Nov#-1 #Dec# 5 #BC#)")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-12-30 00:00:00"), True),
             "#Week# 1 (30 #Dec# 2013-5 #Jan# 2014)")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-4-12-30 00:00:00"), True),
-            "#Week# 1 (30 #Dec# 5 BC-5 #Jan# 4 BC)")
+            "#Week# 1 (30 #Dec# 5 #BC#-5 #Jan# 4 #BC#)")
 
     def setUp(self):
         UnitTestCase.setUp(self)
@@ -231,7 +231,7 @@ class describe_gregorian_strip_weekday(UnitTestCase):
             "#Sun# 7 #Jul# 2013")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00"), True),
-            "#Fri# 7 #Jul# 6 BC")
+            "#Fri# 7 #Jul# 6 #BC#")
 
     def setUp(self):
         UnitTestCase.setUp(self)
@@ -262,7 +262,7 @@ class describe_gregorian_strip_hour(UnitTestCase):
             "7 #Jul# 2013: 12h")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 12:00:00"), True),
-            "7 #Jul# 6 BC: 12h")
+            "7 #Jul# 6 #BC#: 12h")
 
     def setUp(self):
         UnitTestCase.setUp(self)
@@ -330,7 +330,7 @@ class describe_gregorian_strip_day(UnitTestCase):
             "7 #Jul# 2013")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00"), True),
-            "7 #Jul# 6 BC")
+            "7 #Jul# 6 #BC#")
 
     def setUp(self):
         UnitTestCase.setUp(self)
@@ -361,7 +361,7 @@ class describe_gregorian_strip_month(UnitTestCase):
             "#Jul# 2013")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00"), True),
-            "#Jul# 6 BC")
+            "#Jul# 6 #BC#")
 
     def setUp(self):
         UnitTestCase.setUp(self)
@@ -387,7 +387,7 @@ class describe_gregorian_strip_year(UnitTestCase):
             "2013")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00")),
-            "6 BC")
+            "6 #BC#")
 
     def test_label_major(self):
         self.assertEqual(
@@ -395,7 +395,7 @@ class describe_gregorian_strip_year(UnitTestCase):
             "2013")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00"), True),
-            "6 BC")
+            "6 #BC#")
 
     def setUp(self):
         UnitTestCase.setUp(self)
@@ -430,7 +430,7 @@ class describe_gregorian_strip_decade(UnitTestCase):
             "2010s")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00")),
-            "0s BC")
+            "0s #BC#")
 
     def setUp(self):
         UnitTestCase.setUp(self)
