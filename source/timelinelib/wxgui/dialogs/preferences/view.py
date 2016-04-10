@@ -178,12 +178,20 @@ class PreferencesDialog(Dialog):
                             label="$(weekend_colour_text)"
                             align="ALIGN_CENTER_VERTICAL"
                         />
-                        <ColourSelect
-                            name="weekend_colorpicker"
-                            align="ALIGN_CENTER_VERTICAL"
-                            width="60"
-                            height="30"
-                        />
+                        <BoxSizerHorizontal>
+                            <ColourSelect
+                                name="weekend_colorpicker"
+                                align="ALIGN_CENTER_VERTICAL"
+                                width="60"
+                                height="30"
+                            />
+                            <Spacer />
+                            <CheckBox
+                                name="colorize_weekends"
+                                event_EVT_CHECKBOX="on_colorize_weekends"
+                                label="$(colorize_weekends_text)"
+                            />
+                        </BoxSizerHorizontal>
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -269,6 +277,7 @@ class PreferencesDialog(Dialog):
             "now_line_colour_text": _("Now line:"),
             "weekend_colour_text": _("Weekends:"),
             "vertical_space_between_events_text": _("Vertical space between Events (px)"),
+            "colorize_weekends_text": _("Colorize weekends"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
 
@@ -373,3 +382,9 @@ class PreferencesDialog(Dialog):
 
     def GetVerticalSpaceBetweenEvents(self):
         return self.vertical_space_between_events.GetValue()
+
+    def SetColorizeWeekends(self, value):
+        return self.colorize_weekends.SetValue(value)
+
+    def GetColorizeWeekends(self):
+        return self.colorize_weekends.IsChecked()
