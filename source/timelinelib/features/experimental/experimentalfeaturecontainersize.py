@@ -21,15 +21,15 @@ from timelinelib.features.experimental.experimentalfeature import ExperimentalFe
 from timelinelib.wxgui.components.font import Font
 
 
-DISPLAY_NAME = "Extend Container height"
-DESCRIPTION = """
+DISPLAY_NAME = _("Extend Container height")
+DESCRIPTION = _("""
               Extend the height of a container so that the container name becomes visible.
 
               This also has the side effect that ordinary events come farther apart in
               the vertical direction.
 
               The font for the container name has a fixed size when you zoom vertically (Alt + Mouse wheel)
-              """
+              """)
 Y_OFFSET = -16
 PADDING = 12
 OUTER_PAADING = 4
