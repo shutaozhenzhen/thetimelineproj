@@ -19,14 +19,14 @@
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
 
 
-DISPLAY_NAME = "Use extended Container strategy"
-DESCRIPTION = """
+DISPLAY_NAME = _("Use extended Container strategy")
+DESCRIPTION = _("""
               This strategy makes it possible to hav overlapping suevents
               in a container.
 
               The container expands in the vertical direction if it has
               overlapping subevents.
-              """
+              """)
 
 
 class ExperimentalFeatureExtendedContainerStrategy(ExperimentalFeature):

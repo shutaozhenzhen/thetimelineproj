@@ -20,8 +20,8 @@ from timelinelib.features.experimental.experimentalfeature import ExperimentalFe
 from timelinelib.time.timeline import set_min_julian_day
 
 
-DISPLAY_NAME = "Accept negative Julian days"
-DESCRIPTION = """
+DISPLAY_NAME = _("Accept negative Julian days")
+DESCRIPTION = _("""
               Enables the use of dates before Julian day = 0 (4713 BC)
 
               This means that prehistorical dates can be used.
@@ -30,7 +30,7 @@ DESCRIPTION = """
 
               Be aware of the fact that a timeline created with this feature active,
               may not be readable with Timeline if the feature is switched off.
-              """
+              """)
 
 
 class ExperimentalFeatureNegativeJulianDays(ExperimentalFeature):
