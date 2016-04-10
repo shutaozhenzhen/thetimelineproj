@@ -162,7 +162,7 @@ class BosparanianTimeType(GregorianTimeType):
         bosparanian_time = self.get_utils().from_time(time)
         (date, bc) = get_date_formatter().format(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
         if bc:
-            return "%s BC" % date
+            return "%s %s" % (date, _("BC"))
         else:
             return date
 
