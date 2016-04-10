@@ -33,6 +33,9 @@ from timelinelib.time.typeinterface import TimeType
 import timelinelib.time.timeline as timeline
 
 
+BC = _("BC")
+
+
 class GregorianTimeType(TimeType):
 
     def __init__(self):
@@ -228,7 +231,7 @@ class GregorianTimeType(TimeType):
         gregorian_time = self.get_utils().from_time(time)
         (date, bc) = get_date_formatter().format((gregorian_time.year, gregorian_time.month, gregorian_time.day))
         if bc:
-            return "%s BC" % date
+            return "%s %s" % (date, BC)
         else:
             return date
 
@@ -742,7 +745,7 @@ class StripMinute(Strip):
 
 def format_year(year):
     if year <= 0:
-        return "%d BC" % (1 - year)
+        return "%d %s" % ((1 - year), BC)
     else:
         return str(year)
 
@@ -751,7 +754,7 @@ def format_decade(start_year):
     if start_year >= -10:
         return str(start_year + 10) + "s"
     else:
-        return "%ds BC" % (abs(start_year) - 20)
+        return "%ds %s" % ((abs(start_year) - 20), BC)
 
 
 def move_period_num_days(period, num):
