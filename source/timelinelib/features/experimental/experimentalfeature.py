@@ -37,4 +37,4 @@ class ExperimentalFeature(Feature):
         return self.active
 
     def get_config(self):
-        return "%s=%s;" % (self.display_name, str(self.active))
+        return "%s=%s;" % (self.display_name.encode("utf-8"), str(self.active))
