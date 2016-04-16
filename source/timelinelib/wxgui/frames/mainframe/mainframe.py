@@ -553,9 +553,6 @@ class GuiCreator(object):
 
     def _create_help_menu(self, main_menu_bar):
 
-        def tutorial(e):
-            self.controller.open_timeline(":tutorial:")
-
         def feedback(e):
             show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body="")
 
@@ -572,7 +569,7 @@ class GuiCreator(object):
         cbx = NONE
         items = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents\tF1"), cbx),
                  None,
-                 (ID_TUTORIAL, tutorial, _("Getting started &tutorial"), cbx),
+                 (ID_TUTORIAL, self.controller.open_tutorial_timeline, _("Getting started &tutorial"), cbx),
                  None,
                  (ID_FEEDBACK, feedback, _("Give &Feedback..."), cbx),
                  (ID_CONTACT, self.help_browser.show_contact_page, _("Co&ntact"), cbx),
