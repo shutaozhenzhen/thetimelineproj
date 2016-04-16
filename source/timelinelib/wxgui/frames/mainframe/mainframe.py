@@ -589,10 +589,9 @@ class GuiCreator(object):
                  (ID_SYSTEM_INFO, system_info, _("System information"), cbx),
                  None,
                  (wx.ID_ABOUT, about, None, cbx)]
-        help_menu = wx.Menu()
-        self._create_menu_items(help_menu, items)
-        main_menu_bar.Append(help_menu, _("&Help"))
-        self.help_menu = help_menu
+        self.help_menu = wx.Menu()
+        self._create_menu_items(self.help_menu, items)
+        main_menu_bar.Append(self.help_menu, _("&Help"))
 
     def display_timeline_context_menu(self):
         try:
