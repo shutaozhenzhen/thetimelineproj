@@ -53,6 +53,12 @@ class HelpBrowserFrame(wx.Frame):
                 "contents", HELP_RESOURCES_DIR + "/", "page:")
             help_pages.install(self.help_system)
 
+    def show_contents_page(self, e):
+        self.show_page("contents")
+
+    def show_contact_page(self, e):
+        self.show_page("contact")
+
     def show_page(self, id, type="page", change_history=True):
         """
         Where which is a tuple (type, id):
