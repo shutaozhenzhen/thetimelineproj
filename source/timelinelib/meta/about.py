@@ -99,7 +99,7 @@ You should have received a copy of the GNU General Public License
 along with Timeline.  If not, see <http://www.gnu.org/licenses/>."""
 
 
-def display_about_dialog():
+def display_about_dialog(args, *kwargs):
     info = wx.AboutDialogInfo()
     info.Name = APPLICATION_NAME
     info.Version = get_full_version()
