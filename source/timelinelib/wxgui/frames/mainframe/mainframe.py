@@ -58,6 +58,7 @@ from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.systeminfo.view import SystemInfoDialog
+from timelinelib.wxgui.dialogs.systeminfo.view import show_system_info_dialog
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
@@ -556,13 +557,6 @@ class GuiCreator(object):
         def feedback(e):
             show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body="")
 
-        def system_info(e):
-            dialog = SystemInfoDialog(self)
-            try:
-                dialog.ShowModal()
-            finally:
-                dialog.Destroy()
-
         cbx = NONE
         items = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents\tF1"), cbx),
                  None,
@@ -571,7 +565,7 @@ class GuiCreator(object):
                  (ID_FEEDBACK, feedback, _("Give &Feedback..."), cbx),
                  (ID_CONTACT, self.help_browser.show_contact_page, _("Co&ntact"), cbx),
                  None,
-                 (ID_SYSTEM_INFO, system_info, _("System information"), cbx),
+                 (ID_SYSTEM_INFO, show_system_info_dialog, _("System information"), cbx),
                  None,
                  (wx.ID_ABOUT, display_about_dialog, None, cbx)]
         self.help_menu = wx.Menu()
