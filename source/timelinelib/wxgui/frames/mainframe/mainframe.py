@@ -552,17 +552,12 @@ class GuiCreator(object):
         self.menu_controller.add_menu_requiring_timeline(mnu_item)
 
     def _create_help_menu(self, main_menu_bar):
-        def contents(e):
-            self.help_browser.show_page("contents")
 
         def tutorial(e):
             self.controller.open_timeline(":tutorial:")
 
         def feedback(e):
             show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body="")
-
-        def contact(e):
-            self.help_browser.show_page("contact")
 
         def system_info(e):
             dialog = SystemInfoDialog(self)
@@ -575,12 +570,12 @@ class GuiCreator(object):
             display_about_dialog()
 
         cbx = NONE
-        items = [(wx.ID_HELP, contents, _("&Contents\tF1"), cbx),
+        items = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents\tF1"), cbx),
                  None,
                  (ID_TUTORIAL, tutorial, _("Getting started &tutorial"), cbx),
                  None,
                  (ID_FEEDBACK, feedback, _("Give &Feedback..."), cbx),
-                 (ID_CONTACT, contact, _("Co&ntact"), cbx),
+                 (ID_CONTACT, self.help_browser.show_contact_page, _("Co&ntact"), cbx),
                  None,
                  (ID_SYSTEM_INFO, system_info, _("System information"), cbx),
                  None,
