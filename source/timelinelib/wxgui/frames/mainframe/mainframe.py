@@ -563,9 +563,6 @@ class GuiCreator(object):
             finally:
                 dialog.Destroy()
 
-        def about(e):
-            display_about_dialog()
-
         cbx = NONE
         items = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents\tF1"), cbx),
                  None,
@@ -576,7 +573,7 @@ class GuiCreator(object):
                  None,
                  (ID_SYSTEM_INFO, system_info, _("System information"), cbx),
                  None,
-                 (wx.ID_ABOUT, about, None, cbx)]
+                 (wx.ID_ABOUT, display_about_dialog, None, cbx)]
         self.help_menu = wx.Menu()
         self._create_menu_items(self.help_menu, items)
         main_menu_bar.Append(self.help_menu, _("&Help"))
