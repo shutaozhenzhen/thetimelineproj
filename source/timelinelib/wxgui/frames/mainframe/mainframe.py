@@ -559,11 +559,7 @@ class GuiCreator(object):
             self.controller.open_timeline(":tutorial:")
 
         def feedback(e):
-            show_feedback_dialog(
-                parent=None,
-                info="",
-                subject=_("Feedback"),
-                body="")
+            show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body="")
 
         def contact(e):
             self.help_browser.show_page("contact")
