@@ -55,6 +55,9 @@ class MainFrameController(object):
         else:
             display_error_message(_("File '%s' does not exist.") % path, self.main_frame)
 
+    def open_tutorial_timeline(self, args, *kwargs):
+        self.open_timeline(":tutorial:")
+
     def open_timeline(self, path, timetype=None, save_current_data=True):
         if save_current_data:
             self.main_frame.save_current_timeline_data()
