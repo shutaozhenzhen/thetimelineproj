@@ -67,3 +67,11 @@ class SystemInfoDialog(Dialog):
 
     def SetDateFormat(self, value):
         self.date_format.SetLabel(value)
+
+
+def show_system_info_dialog(*args, **kwargs):
+    dialog = SystemInfoDialog(None)
+    try:
+        dialog.ShowModal()
+    finally:
+        dialog.Destroy()
