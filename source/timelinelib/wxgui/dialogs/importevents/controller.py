@@ -20,6 +20,7 @@ import os.path
 
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.db import db_open
+from timelinelib.utils import ex_msg
 from timelinelib.wxgui.framework import Controller
 
 
@@ -50,7 +51,7 @@ class ImportEventsDialogController(Controller):
             try:
                 db_to_import = db_open(self.view.GetFilePath())
             except Exception, e:
-                self._set_error(_("Unable to load events: %s.") % str(e))
+                self._set_error(_("Unable to load events: %s.") % ex_msg(e))
             else:
                 if db_to_import.get_time_type() != self._db.get_time_type():
                     self._set_error(_("The selected timeline has a different time type."))
