@@ -51,6 +51,8 @@ Fixed crash reports:
 * The Timeline xml file is updated when an Era is deleted
   (`#139 <https://sourceforge.net/p/thetimelineproj/backlog/139/>`_)
 
+* Import events dialog gives UnicodeEncodeError if exceptions contain unicode
+  messages.
 
 Version 1.9.0
 -------------
