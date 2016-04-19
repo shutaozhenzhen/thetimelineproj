@@ -21,7 +21,7 @@ from timelinelib.features.experimental.experimentalfeature import ExperimentalFe
 
 DISPLAY_NAME = _("Use extended Container strategy")
 DESCRIPTION = _("""
-              This strategy makes it possible to hav overlapping suevents
+              This strategy makes it possible to have overlapping subevents
               in a container.
 
               The container expands in the vertical direction if it has

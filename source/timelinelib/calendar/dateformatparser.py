@@ -35,7 +35,7 @@ The format should contain
     one day placeholder   = dd
     two placeholders for separators between year, mont and day
 
-Separators can't contain the lsetters y, m or d
+Separators can't contain the letters y, m or d
 
 Example of valid formats:
     yyyy-mm-dd
