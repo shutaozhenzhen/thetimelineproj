@@ -177,7 +177,7 @@ To zoom vertically, hold down the Alt-key and scroll the mouse wheel.
     help_system.install_page(
         page_id="events",
         header=_("Events"),
-        related_pages=["event_properties", "create_event", "select_events", "edit_event", "delete_event", "move_event_vertically", "duplicate_event", "categories"],
+        related_pages=["event_properties", "add_icon", "create_event", "select_events", "edit_event", "delete_event", "move_event_vertically", "duplicate_event", "categories"],
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
         # Just write them as they are.
@@ -446,7 +446,7 @@ can be user defined.
 
 To use an icon of your own you create a png image file and place it in
 the subdirectory icons/event_icons.
-Now the icon can be selected in the event properties dialog.
+Now the icon can be selected in the properties dialog on the Icons tab.
 """))
 
     help_system.install_page(
