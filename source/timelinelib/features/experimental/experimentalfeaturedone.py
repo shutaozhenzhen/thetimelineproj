@@ -24,7 +24,7 @@ DESCRIPTION = _("""
               Mark an Event as Done by setting progress=100%
 
               A menu item 'Mark as Done' appears in the context menu,
-              displayed when you righ-click on one or more selected Events.
+              displayed when you right-click on one or more selected Events.
               """)
 
 
