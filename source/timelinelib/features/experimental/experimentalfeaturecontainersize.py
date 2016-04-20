@@ -21,6 +21,7 @@ from timelinelib.features.experimental.experimentalfeature import ExperimentalFe
 from timelinelib.wxgui.components.font import Font
 
 
+CONFIG_NAME = "Extend Container height"
 DISPLAY_NAME = _("Extend Container height")
 DESCRIPTION = _("""
               Extend the height of a container so that the container name becomes visible.
@@ -41,7 +42,7 @@ FONT_SIZE = 8
 class ExperimentalFeatureContainerSize(ExperimentalFeature):
 
     def __init__(self):
-        ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION)
+        ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION, CONFIG_NAME)
 
     def get_extra_outer_padding_to_avoid_vertical_overlapping(self):
         return OUTER_PAADING

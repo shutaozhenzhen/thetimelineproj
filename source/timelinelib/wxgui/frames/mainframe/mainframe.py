@@ -990,8 +990,8 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
 
     def _window_on_close(self, event):
         self.timer.stop()
-        self.save_current_timeline_data()
         self._save_application_config()
+        self.save_current_timeline_data()
         self.Destroy()
 
     def _save_application_config(self):

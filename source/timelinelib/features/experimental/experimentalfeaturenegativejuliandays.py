@@ -20,6 +20,7 @@ from timelinelib.features.experimental.experimentalfeature import ExperimentalFe
 from timelinelib.time.timeline import set_min_julian_day
 
 
+CONFIG_NAME = "Accept negative Julian days"
 DISPLAY_NAME = _("Accept negative Julian days")
 DESCRIPTION = _("""
               Enables the use of dates before Julian day = 0 (4713 BC)
@@ -36,7 +37,7 @@ DESCRIPTION = _("""
 class ExperimentalFeatureNegativeJulianDays(ExperimentalFeature):
 
     def __init__(self):
-        ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION)
+        ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION, CONFIG_NAME)
 
     def set_active(self, value):
         self.active = value
