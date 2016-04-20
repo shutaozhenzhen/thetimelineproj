@@ -26,8 +26,8 @@ from timelinelib.features.feature import Feature
 
 class ExperimentalFeature(Feature):
 
-    def __init__(self, display_name, description):
-        Feature.__init__(self, display_name, description)
+    def __init__(self, display_name, description, config_name=""):
+        Feature.__init__(self, display_name, description, config_name)
         self.active = False
 
     def set_active(self, value):
@@ -37,4 +37,4 @@ class ExperimentalFeature(Feature):
         return self.active
 
     def get_config(self):
-        return "%s=%s;" % (self.display_name.encode("utf-8"), str(self.active))
+        return "%s=%s;" % (self.config_name.encode("utf-8"), str(self.active))

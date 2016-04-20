@@ -20,6 +20,7 @@ from timelinelib.features.experimental.experimentalfeature import ExperimentalFe
 from timelinelib.test.cases.unit import UnitTestCase
 
 
+CONFIG_NAME = "Config name"
 DISPLAY_NAME = "Display name"
 DESCRIPTION = "Display description"
 
@@ -28,6 +29,9 @@ class describe_experimental_feature(UnitTestCase):
 
     def test_has_a_display_name(self):
         self.assertEqual(DISPLAY_NAME, self.feature.get_display_name())
+
+    def test_has_a_config_name(self):
+        self.assertEqual(CONFIG_NAME, self.feature.get_config_name())
 
     def test_has_a_description(self):
         self.assertEqual(DESCRIPTION, self.feature.get_description())
@@ -45,7 +49,7 @@ class describe_experimental_feature(UnitTestCase):
         self.assertFalse(self.feature.enabled())
 
     def test_can_format_config_string(self):
-        self.assertEqual("%s=False;" % DISPLAY_NAME, self.feature.get_config())
+        self.assertEqual("%s=False;" % CONFIG_NAME, self.feature.get_config())
 
     def setUp(self):
-        self.feature = ExperimentalFeature(DISPLAY_NAME, DESCRIPTION)
+        self.feature = ExperimentalFeature(DISPLAY_NAME, DESCRIPTION, CONFIG_NAME)

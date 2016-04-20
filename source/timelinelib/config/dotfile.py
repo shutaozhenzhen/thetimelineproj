@@ -307,6 +307,7 @@ class Config(Observable):
 
     def set_experimental_features(self, value):
         self.config_parser.set(DEFAULTSECT, EXPERIMENTAL_FEATURES, value)
+        self._notify()
 
     def get_never_show_period_events_as_point_events(self):
         return self.config_parser.getboolean(DEFAULTSECT, NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS)

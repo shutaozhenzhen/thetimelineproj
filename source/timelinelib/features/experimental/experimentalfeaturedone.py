@@ -19,6 +19,7 @@
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
 
 
+CONFIG_NAME = "Mark Event as Done"
 DISPLAY_NAME = _("Mark Event as Done")
 DESCRIPTION = _("""
               Mark an Event as Done by setting progress=100%
@@ -31,4 +32,4 @@ DESCRIPTION = _("""
 class ExperimentalFeatureDone(ExperimentalFeature):
 
     def __init__(self):
-        ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION)
+        ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION, CONFIG_NAME)

@@ -19,6 +19,7 @@
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
 
 
+CONFIG_NAME = "Use extended Container strategy"
 DISPLAY_NAME = _("Use extended Container strategy")
 DESCRIPTION = _("""
               This strategy makes it possible to have overlapping subevents
@@ -32,4 +33,4 @@ DESCRIPTION = _("""
 class ExperimentalFeatureExtendedContainerStrategy(ExperimentalFeature):
 
     def __init__(self):
-        ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION)
+        ExperimentalFeature.__init__(self, DISPLAY_NAME, DESCRIPTION, CONFIG_NAME)

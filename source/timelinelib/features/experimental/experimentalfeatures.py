@@ -83,7 +83,10 @@ class ExperimentalFeatures(object):
         for feature in FEATURES:
             if isinstance(name, str):
                 name = name.decode("utf-8")
-            if feature.get_display_name() == name:
+            if feature.get_config_name() == name:
+                feature.set_active(value)
+                return
+            elif feature.get_display_name() == name:
                 feature.set_active(value)
                 return
 

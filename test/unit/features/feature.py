@@ -20,6 +20,7 @@ from timelinelib.features.feature import Feature
 from timelinelib.test.cases.unit import UnitTestCase
 
 
+CONFIG_NAME = "Config name"
 DISPLAY_NAME = "Display name"
 DESCRIPTION = "Display description"
 
@@ -32,5 +33,8 @@ class describe_feature(UnitTestCase):
     def test_has_a_description(self):
         self.assertEqual(DESCRIPTION, self.feature.get_description())
 
+    def test_has_a_config_name(self):
+        self.assertEqual(CONFIG_NAME, self.feature.get_config_name())
+
     def setUp(self):
-        self.feature = Feature(DISPLAY_NAME, DESCRIPTION)
+        self.feature = Feature(DISPLAY_NAME, DESCRIPTION, CONFIG_NAME)
