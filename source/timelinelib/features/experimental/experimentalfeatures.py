@@ -81,7 +81,7 @@ class ExperimentalFeatures(object):
 
     def set_active_state_on_feature_by_name(self, name, value):
         for feature in FEATURES:
-            if feature.get_display_name() == name:
+            if feature.get_display_name() == name.decode("utf-8"):
                 feature.set_active(value)
                 return
 
