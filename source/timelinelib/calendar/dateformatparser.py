@@ -33,7 +33,7 @@ The format should contain
     one year placeholder  = yyyy
     one month placeholder = mmm or mm
     one day placeholder   = dd
-    two placeholders for separators between year, mont and day
+    two placeholders for separators between year, month and day
 
 Separators can't contain the letters y, m or d
 
