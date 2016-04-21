@@ -20,10 +20,12 @@ from mock import Mock
 
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.time.numtime import NumTimeType
 from timelinelib.wxgui.dialogs.eraseditor.controller import ErasEditorDialogController
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
+from timelinelib.canvas.data.era import Era
 
 
 class describe_eras_editor_dialog(UnitTestCase):
@@ -43,6 +45,23 @@ class describe_eras_editor_dialog(UnitTestCase):
         self._simulate_delete_button_clicked_on(era)
         self.view.RemoveEra.assert_called_with(era)
         self.assertEquals(self.db.get_all_eras(), self.controller.eras)
+
+    def test_an_era_can_be_added(self):
+        count = len(self.db.get_all_eras.return_value)
+        era = Mock(Era)
+        self.controller._add(era)
+        self.view.AppendEra.assert_called_with(era)
+        self.db.save_era.assert_called_with(era)
+        self.assertEqual(count + 1, len(self.db.get_all_eras.return_value))
+
+    def test_a_date_era_can_be_created(self):
+        era = self.controller._create_era()
+        self.assertTrue(isinstance(era.get_time_type(), GregorianTimeType))
+
+    def test_a_numeric_era_can_be_created(self):
+        self.db.time_type = NumTimeType()
+        era = self.controller._create_era()
+        self.assertTrue(isinstance(era.get_time_type(), NumTimeType))
 
     def _simulate_delete_button_clicked_on(self, era):
         self.view.GetSelectedEra.return_value = era
