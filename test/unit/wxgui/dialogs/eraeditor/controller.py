@@ -33,6 +33,15 @@ NAME = "New Era"
 COLOR = (1, 2, 3)
 
 
+class CommandEvent(object):
+
+    def __init__(self, checked):
+        self.checked = checked
+
+    def IsChecked(self):
+        return self.checked
+
+
 class describe_era_editor_dialog(UnitTestCase):
 
     def setUp(self):
@@ -97,6 +106,9 @@ class EraEditorTestCase(UnitTestCase):
 
     def simulate_user_clicks_ok(self):
         self.controller.on_ok(None)
+
+    def simulate_user_clicks_time_checkbox(self, checked):
+        self.controller.show_time_checkbox_on_checked(CommandEvent(checked))
 
     def setUp(self):
         self.view = Mock(EraEditorDialog)
@@ -215,3 +227,24 @@ class describe_era_editor__validation(EraEditorTestCase):
         self.simulate_user_enters_end_time("1 Jan 5000")
         self.simulate_user_clicks_ok()
         self.assertEqual(0, self.view.DisplayInvalidPeriod.call_count)
+
+
+class describe_era_editor_time_checkbox(EraEditorTestCase):
+
+    def test_check(self):
+        self.when_editing_an_era()
+        self.simulate_user_clicks_time_checkbox(True)
+        self.view.SetShowTime.assert_called_with(True)
+
+    def test_uncheck(self):
+        self.when_editing_an_era()
+        self.simulate_user_clicks_time_checkbox(False)
+        self.view.SetShowTime.assert_called_with(False)
+
+
+class describe_era_editor_exceptions(EraEditorTestCase):
+
+    def test_era_with_none_time_period_hasent_nonzero_time(self):
+        self.when_editing_an_era()
+        self.era.time_period = None
+        self.assertFalse(self.controller._era_has_nonzero_time())
