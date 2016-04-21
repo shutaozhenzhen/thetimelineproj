@@ -33,20 +33,13 @@ class ErasEditorDialogController(Controller):
         self.view.SetEras(self.eras)
 
     def on_edit(self, evt):
-        era = self.view.GetSelectedEra()
-        dlg = EraEditorDialog(self.view, _("Edit an Era"), self.db.time_type, self.config, era)
-        if dlg.ShowModal() == wx.ID_OK:
-            self.view.UpdateEra(era)
-        dlg.Destroy()
+        self._edit(self.view.GetSelectedEra())
+
+    def on_dclick(self, evt):
+        self._edit(self.view.GetSelectedEra())
 
     def on_add(self, evt):
-        era = self._create_era()
-        dlg = EraEditorDialog(self.view, _("Add an Era"), self.db.time_type, self.config, era)
-        if dlg.ShowModal() == wx.ID_OK:
-            self.eras.append(era)
-            self.view.AppendEra(era)
-            self.db.save_era(era)
-        dlg.Destroy()
+        self._operate_with_modal_dialog(_("Add an Era"), self._create_era(), self._add)
 
     def on_remove(self, evt):
         era = self.view.GetSelectedEra()
@@ -55,14 +48,13 @@ class ErasEditorDialogController(Controller):
             self.view.RemoveEra(era)
         self.db.delete_era(era)
 
-    def on_dclick(self, evt):
-        self._edit(self.view.GetSelectedEra())
+    def _add(self, era):
+        self.eras.append(era)
+        self.view.AppendEra(era)
+        self.db.save_era(era)
 
     def _edit(self, era):
-        dlg = EraEditorDialog(self.view, _("Edit an Era"), self.db.time_type, self.config, era)
-        if dlg.ShowModal() == wx.ID_OK:
-            self.view.UpdateEra(era)
-        dlg.Destroy()
+        self._operate_with_modal_dialog(_("Edit an Era"), era, self.view.UpdateEra)
 
     def _create_era(self):
         if self.db.time_type.is_date_time_type():
@@ -71,3 +63,9 @@ class ErasEditorDialogController(Controller):
             start = self.db.time_type.now()
         end = start
         return Era(self.db.time_type, start, end, "New Era")
+
+    def _operate_with_modal_dialog(self, label, era, operation):
+        dlg = EraEditorDialog(self.view, label, self.db.time_type, self.config, era)
+        if dlg.ShowModal() == wx.ID_OK:
+            operation(era)
+        dlg.Destroy()
