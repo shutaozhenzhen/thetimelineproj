@@ -31,6 +31,7 @@ class ErasEditorDialogController(Controller):
         self.config = config
         self.eras = db.get_all_eras()
         self.view.SetEras(self.eras)
+        self.editor_dialog = None
 
     def on_edit(self, evt):
         self._edit(self.view.GetSelectedEra())
@@ -65,7 +66,17 @@ class ErasEditorDialogController(Controller):
         return Era(self.db.time_type, start, end, "New Era")
 
     def _operate_with_modal_dialog(self, label, era, operation):
-        dlg = EraEditorDialog(self.view, label, self.db.time_type, self.config, era)
+        if self.editor_dialog is None:
+            self.set_editor_dialog(EraEditorDialog(self.view, label, self.db.time_type, self.config, era))
+        dlg = self.editor_dialog
         if dlg.ShowModal() == wx.ID_OK:
             operation(era)
         dlg.Destroy()
+        self.editor_dialog = None
+
+    def set_editor_dialog(self, dialog):
+        """
+        This function is used for test purposes only
+        """
+        self.editor_dialog = dialog
+
