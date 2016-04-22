@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from mock import Mock
 
 from timelinelib.canvas.data.db import MemoryDB
@@ -23,15 +25,13 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.wxgui.dialogs.eraseditor.controller import ErasEditorDialogController
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
+from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
 from timelinelib.canvas.data.era import Era
 
 
 class describe_eras_editor_dialog(UnitTestCase):
-
-    def test_it_can_be_created(self):
-        self.show_dialog(ErasEditorDialog, None, self.db, None)
 
     def test_construction(self):
         self.assertEquals(2, len(self.controller.eras))
@@ -46,14 +46,6 @@ class describe_eras_editor_dialog(UnitTestCase):
         self.view.RemoveEra.assert_called_with(era)
         self.assertEquals(self.db.get_all_eras(), self.controller.eras)
 
-    def test_an_era_can_be_added(self):
-        count = len(self.db.get_all_eras.return_value)
-        era = Mock(Era)
-        self.controller._add(era)
-        self.view.AppendEra.assert_called_with(era)
-        self.db.save_era.assert_called_with(era)
-        self.assertEqual(count + 1, len(self.db.get_all_eras.return_value))
-
     def test_a_date_era_can_be_created(self):
         era = self.controller._create_era()
         self.assertTrue(isinstance(era.get_time_type(), GregorianTimeType))
@@ -62,6 +54,34 @@ class describe_eras_editor_dialog(UnitTestCase):
         self.db.time_type = NumTimeType()
         era = self.controller._create_era()
         self.assertTrue(isinstance(era.get_time_type(), NumTimeType))
+
+    def test_when_added_the_add_operation_function_is_called(self):
+        count = len(self.db.get_all_eras.return_value)
+        dlg = Mock(EraEditorDialog)
+        dlg.ShowModal.return_value = wx.ID_OK
+        self.controller.set_editor_dialog(dlg)
+        self.controller.on_add(None)
+        self.assertTrue(isinstance(self.view.AppendEra.call_args[0][0], Era))
+        self.assertTrue(isinstance(self.db.save_era.call_args[0][0], Era))
+        self.assertEqual(count + 1, len(self.db.get_all_eras.return_value))
+
+    def test_when_edited_the_edit_operation_function_is_called(self):
+        era = Mock(Era)
+        self.view.GetSelectedEra.return_value = era
+        dlg = Mock(EraEditorDialog)
+        dlg.ShowModal.return_value = wx.ID_OK
+        self.controller.set_editor_dialog(dlg)
+        self.controller.on_edit(None)
+        self.view.UpdateEra.assert_called_with(era)
+
+    def test_doubleclick_acts_as_edit(self):
+        era = Mock(Era)
+        self.view.GetSelectedEra.return_value = era
+        dlg = Mock(EraEditorDialog)
+        dlg.ShowModal.return_value = wx.ID_OK
+        self.controller.set_editor_dialog(dlg)
+        self.controller.on_dclick(None)
+        self.view.UpdateEra.assert_called_with(era)
 
     def _simulate_delete_button_clicked_on(self, era):
         self.view.GetSelectedEra.return_value = era
