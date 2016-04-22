@@ -18,7 +18,6 @@
 
 from timelinelib.wxgui.framework import Controller
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data import PeriodTooLongError
 
 
 class EraEditorDialogController(Controller):
@@ -88,14 +87,9 @@ class EraEditorDialogController(Controller):
             raise ValueError(msg)
 
     def _validate_period_length(self):
-        try:
-            start = self.view.GetStart()
-            end = self.view.GetEnd()
-            TimePeriod(self.time_type, start, end)
-        except PeriodTooLongError:
-            msg = _("Entered period is too long.")
-            self.view.DisplayInvalidPeriod(msg)
-            raise ValueError(msg)
+        start = self.view.GetStart()
+        end = self.view.GetEnd()
+        TimePeriod(self.time_type, start, end)
 
     def _update_era(self):
         w = self.view

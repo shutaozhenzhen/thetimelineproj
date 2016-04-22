@@ -18,7 +18,6 @@
 
 import wx
 
-from timelinelib.canvas.data import PeriodTooLongError
 from timelinelib.wxgui.components.maincanvas.scrollbase import ScrollViewInputHandler
 
 
@@ -64,15 +63,11 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
             new_end = new_snapped_time
             if new_end < new_start:
                 new_end = new_start
-        try:
-            self.event.update_period(new_start, new_end)
-        except PeriodTooLongError:
-            self.status_bar.set_text(_("Period is too long"))
-        else:
-            self._clear_status_text()
-            if self.event.is_container():
-                self._adjust_container_edges()
-            self.timeline_canvas.Redraw()
+        self.event.update_period(new_start, new_end)
+        self._clear_status_text()
+        if self.event.is_container():
+            self._adjust_container_edges()
+        self.timeline_canvas.Redraw()
 
     def _adjust_container_edges(self):
         self.event.strategy._set_time_period()

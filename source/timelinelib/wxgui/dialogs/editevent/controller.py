@@ -19,7 +19,6 @@
 import wx
 
 from timelinelib.canvas.data import Event
-from timelinelib.canvas.data import PeriodTooLongError
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.time.timeline import delta_from_days
@@ -296,11 +295,7 @@ class EditEventDialogController(Controller):
         return end_time
 
     def _validate_period(self):
-        try:
-            TimePeriod(self.time_type, self.start, self.end)
-        except PeriodTooLongError:
-            self.view.DisplayErrorMessage(_("Entered period is too long."))
-            raise ValueError()
+        TimePeriod(self.time_type, self.start, self.end)
 
     def _validate_ends_today(self):
         if self.ends_today and self.start > self.time_type.now():
