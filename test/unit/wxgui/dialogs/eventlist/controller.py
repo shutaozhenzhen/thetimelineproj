@@ -32,3 +32,7 @@ class describe_event_list_dialog(UnitTestCase):
     def test_it_can_be_created(self):
         event_list = ["foo", "bar"]
         self.show_dialog(EventListDialog, None, event_list)
+
+    def test_on_ok_click_the_view_is_closed(self):
+        self.controller.on_ok(None)
+        self.view.Close.assert_called_once_with()
