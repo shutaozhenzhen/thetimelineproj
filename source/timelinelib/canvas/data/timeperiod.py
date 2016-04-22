@@ -204,10 +204,6 @@ class TimeOutOfRangeRightError(ValueError):
     pass
 
 
-class PeriodTooLongError(ValueError):
-    pass
-
-
 def time_period_center(time_type, time, length):
     """
     TimePeriod factory method.

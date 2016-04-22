@@ -24,7 +24,6 @@ from timelinelib.canvas.data.events import Events
 from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.canvas.data.era import Era
 from timelinelib.canvas.data.eras import Eras
-from timelinelib.canvas.data.timeperiod import PeriodTooLongError
 from timelinelib.canvas.data.timeperiod import TimeOutOfRangeLeftError
 from timelinelib.canvas.data.timeperiod import TimeOutOfRangeRightError
 from timelinelib.canvas.data.timeperiod import TimePeriod
