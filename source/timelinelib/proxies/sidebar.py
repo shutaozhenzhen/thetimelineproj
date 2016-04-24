@@ -16,9 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
-
 class SidebarProxy():
 
     def __init__(self, creator):
