@@ -55,29 +55,29 @@ class EditCategoryDialogController(Controller):
                 self.view.SetParent(self._category._get_parent())
 
     def on_ok_clicked(self, event):
+        if self._category_name_is_valid():
+            if self._category is None:
+                self._category = Category("", DEFAULT_COLOR, DEFAULT_FONT_COLOR)
+            self._update_category_properties()
+            self._save()
+
+    def _category_name_is_valid(self):
         new_name = self.view.GetName()
-        new_color = self.view.GetColor()
-        new_progress_color = self.view.GetProgressColor()
-        new_done_color = self.view.GetDoneColor()
-        new_font_color = self.view.GetFontColor()
-        new_parent = self.view.GetParent()
         if not self._is_name_valid(new_name):
             self.view.HandleInvalidName(new_name)
-            return
+            return False
         if self._is_name_in_use(new_name):
             self.view.HandleUsedName(new_name)
-            return
-        if self._category is None:
-            self._category = Category(
-                new_name, new_color, new_font_color, parent=new_parent)
-        else:
-            self._category.name = new_name
-            self._category.color = new_color
-            self._category.progress_color = new_progress_color
-            self._category.done_color = new_done_color
-            self._category.font_color = new_font_color
-            self._category.parent = new_parent
-        self._save()
+            return False
+        return True
+
+    def _update_category_properties(self):
+        self._category.name = self.view.GetName()
+        self._category.color = self.view.GetColor()
+        self._category.progress_color = self.view.GetProgressColor()
+        self._category.done_color = self.view.GetDoneColor()
+        self._category.font_color = self.view.GetFontColor()
+        self._category.parent = self.view.GetParent()
 
     def _is_name_valid(self, name):
         return len(name) > 0
