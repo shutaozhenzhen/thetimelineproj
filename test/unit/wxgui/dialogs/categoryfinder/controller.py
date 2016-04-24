@@ -24,6 +24,13 @@ from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
+from timelinelib.proxies.sidebar import SidebarProxy
+
+
+A_CATEGORIES = [a_category_with("Aaaa"),
+                a_category_with("Abc"), ]
+
+CATEGORIES = A_CATEGORIES + [a_category_with("xxx")]
 
 
 class describe_category_finder_dialog(UnitTestCase):
@@ -31,11 +38,25 @@ class describe_category_finder_dialog(UnitTestCase):
     def setUp(self):
         self.mainframe = Mock(MainFrame)
         self.db = Mock(MemoryDB)
-        self.db.get_categories.return_value = [a_category_with("Aaaa"),
-                                               a_category_with("Abc"),
-                                               a_category_with("xxx")]
+        self.db.get_categories.return_value = CATEGORIES
         self.view = Mock(CategoryFinderDialog)
+        self.view.GetTarget.return_value = "A"
         self.controller = CategoryFinderDialogController(self.view)
+        self.controller.on_init(self.db, None)
+        self.proxy = Mock(SidebarProxy)
+        self.controller.set_sidebar_proxy(self.proxy)
 
-    def test_it_can_be_created(self):
+    def test_dialog_can_be_created(self):
         self.show_dialog(CategoryFinderDialog, None, self.db)
+
+    def test_handles_char_entries(self):
+        self.controller.on_char(None)
+        self.view.SetCategories.assert_called_with([category.name for category in A_CATEGORIES])
+
+    def test_categories_can_be_checked(self):
+        self.controller.on_check(None)
+        self.proxy.check_categories.assert_called_with(A_CATEGORIES)
+
+    def test_categories_can_be_unchecked(self):
+        self.controller.on_uncheck(None)
+        self.proxy.uncheck_categories.assert_called_with(A_CATEGORIES)
