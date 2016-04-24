@@ -26,15 +26,19 @@ class CategoryFinderDialogController(Controller):
         self.db = db
         self.mainframe = mainframe
         self.view.SetCategories(self._get_categories_names())
+        self.set_sidebar_proxy(SidebarProxy(self.mainframe))
+
+    def set_sidebar_proxy(self, sidebar_proxy):
+        self.sidebar_proxy = sidebar_proxy
 
     def on_char(self, evt):
         self.view.SetCategories(self._get_categories_names())
 
     def on_check(self, evt):
-        SidebarProxy(self.mainframe).check_categories(self._get_categories())
+        self.sidebar_proxy.check_categories(self._get_categories())
 
     def on_uncheck(self, evt):
-        SidebarProxy(self.mainframe).uncheck_categories(self._get_categories())
+        self.sidebar_proxy.uncheck_categories(self._get_categories())
 
     def _get_categories_names(self):
         target = self.view.GetTarget()
