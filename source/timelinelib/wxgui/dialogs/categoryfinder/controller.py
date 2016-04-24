@@ -45,5 +45,5 @@ class CategoryFinderDialogController(Controller):
 
     def _get_categories(self):
         target = self.view.GetTarget()
-        return sorted([category for category in self.db.get_categories()
-                      if category.name.upper().startswith(target.upper())])
+        return [category for category in self.db.get_categories()
+                if category.name.upper().startswith(target.upper())]
