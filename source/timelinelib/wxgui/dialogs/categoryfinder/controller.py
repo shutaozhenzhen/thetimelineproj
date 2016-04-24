@@ -28,7 +28,6 @@ class CategoryFinderDialogController(Controller):
         self.view.SetCategories(self._get_categories_names())
 
     def on_char(self, evt):
-        target = self.view.GetTarget()
         self.view.SetCategories(self._get_categories_names())
 
     def on_check(self, evt):
