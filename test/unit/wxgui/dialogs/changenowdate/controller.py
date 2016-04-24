@@ -18,7 +18,6 @@
 
 from mock import Mock
 
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.config.dotfile import Config
 from timelinelib.db import db_open
 from timelinelib.test.cases.unit import UnitTestCase
@@ -31,6 +30,9 @@ class describe_change_now_date_dialog(UnitTestCase):
     def setUp(self):
         self.view = Mock(ChangeNowDateDialog)
         self.controller = ChangeNowDateDialogController(self.view)
+        self.db = Mock()
+        self.callback_function = Mock()
+        self.controller.on_init(self.db, self.callback_function)
 
     def test_it_can_be_created(self):
         config = Mock(Config)
@@ -40,3 +42,18 @@ class describe_change_now_date_dialog(UnitTestCase):
         title = "a dialog title"
         self.show_dialog(
             ChangeNowDateDialog, None, config, db, handle_new_time_fn, title)
+
+    def test_can_check_show_time(self):
+        self.view.IsShowTimeChecked.return_value = True
+        self.controller.on_show_time_changed(None)
+        self.view.ShowTime.assert_called_with(True)
+
+    def test_can_uncheck_show_time(self):
+        self.view.IsShowTimeChecked.return_value = False
+        self.controller.on_show_time_changed(None)
+        self.view.ShowTime.assert_called_with(False)
+
+    def test_invalid_time_raises_value_error(self):
+        self.view.GetNowValue.return_value = None
+        self.controller.on_time_changed()
+        self.assertEqual(self.callback_function.call_count, 1)
