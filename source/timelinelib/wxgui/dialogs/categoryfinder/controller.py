@@ -41,9 +41,7 @@ class CategoryFinderDialogController(Controller):
         self.sidebar_proxy.uncheck_categories(self._get_categories())
 
     def _get_categories_names(self):
-        target = self.view.GetTarget()
-        return sorted([category.name for category in self.db.get_categories()
-                      if category.name.upper().startswith(target.upper())])
+        return sorted([category.name for category in self._get_categories()])
 
     def _get_categories(self):
         target = self.view.GetTarget()
