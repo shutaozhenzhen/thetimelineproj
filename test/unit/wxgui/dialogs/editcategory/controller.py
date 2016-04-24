@@ -25,6 +25,7 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.wxgui.dialogs.editcategory.controller import EditCategoryDialogController
 from timelinelib.wxgui.dialogs.editcategory.view import EditCategoryDialog
+from timelinelib.canvas.data import Category
 
 
 class EditCategoryDialogTestCase(UnitTestCase):
@@ -102,6 +103,9 @@ class describe_editing_an_existing_category(EditCategoryDialogTestCase):
         EditCategoryDialogTestCase.setUp(self)
         self._initializeControllerWith(self.foofoo)
 
+    def test_category_can_be_retrieved(self):
+        self.assertEqual(self.controller.get_edited_category(), self.foofoo)
+
     def test_categories_are_populated(self):
         self.view.PopulateCategories.assert_called_with(exclude=self.foofoo)
 
@@ -132,7 +136,7 @@ class describe_editing_a_category_and_db_raises_exception(EditCategoryDialogTest
         self.assertFalse(self.view.EndModalOk.called)
 
 
-class describe_saving_a_category(EditCategoryDialogTestCase):
+class describe_saving_a_new_category(EditCategoryDialogTestCase):
 
     def setUp(self):
         EditCategoryDialogTestCase.setUp(self)
@@ -141,6 +145,40 @@ class describe_saving_a_category(EditCategoryDialogTestCase):
         self.view.GetColor.return_value = (255, 44, 0)
         self.view.GetFontColor.return_value = (0, 44, 255)
         self.view.GetParent.return_value = self.foo
+        self.controller.on_ok_clicked(None)
+
+    def _getSavedCategory(self):
+        if not self.category_repository.save.called:
+            self.fail("No category was saved.")
+        return self.category_repository.save.call_args_list[0][0][0]
+
+    def test_saved_category_has_name_from_view(self):
+        self.assertEqual("new_cat", self._getSavedCategory().get_name())
+
+    def test_saved_category_has_color_from_view(self):
+        self.assertEqual((255, 44, 0), self._getSavedCategory().get_color())
+
+    def test_saved_category_has_font_color_from_view(self):
+        self.assertEqual((0, 44, 255),
+                         self._getSavedCategory().get_font_color())
+
+    def test_saved_category_has_parent_from_view(self):
+        self.assertEqual(self.foo, self._getSavedCategory()._get_parent())
+
+    def test_the_dialog_is_closed(self):
+        self.assertTrue(self.view.EndModalOk.called)
+
+
+class describe_saving_an_old_category(EditCategoryDialogTestCase):
+
+    def setUp(self):
+        EditCategoryDialogTestCase.setUp(self)
+        self._initializeControllerWith(None)
+        self.view.GetName.return_value = "new_cat"
+        self.view.GetColor.return_value = (255, 44, 0)
+        self.view.GetFontColor.return_value = (0, 44, 255)
+        self.view.GetParent.return_value = self.foo
+        self.controller._category = Category(None, (0, 0, 0), None, parent=None)
         self.controller.on_ok_clicked(None)
 
     def _getSavedCategory(self):
