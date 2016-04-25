@@ -73,6 +73,15 @@ class describe_edit_container_dialog(UnitTestCase):
         self.assertTrue(self.view.HandleDbError.called)
         self.assertFalse(self.view.EndModalOk.called)
 
+    def test_detects_invalid_names(self):
+        self.controller.name = ""
+        self.assertRaises(ValueError, self.controller._verify_name)
+
+    def test_the_dialog_is_not_closed_when_an_invalid_name_is_entered(self):
+        self.view.GetName.return_value = ""
+        self.controller.on_ok_clicked(None)
+        self.assertFalse(self.view.EndModalOk.called)
+
     def given_editor_without_container(self):
         self.controller.on_init(self.db, None)
 
