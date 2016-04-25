@@ -194,6 +194,13 @@ class describe_duplicate_event_dialog_for_containers(UnitTestCase):
         self._duplicate_with(count=1, freq=1, direction=FORWARD)
         self.assertEqual(1, self.db.save_events.call_count)
 
+    def test_one_new_event_is_saved_when_date_errors(self):
+        self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock_returning_none()
+        self._duplicate_with(count=1, freq=1, direction=FORWARD)
+        self.assertEqual(self.db.save_events.call_count, 1)
+        self.assertEqual(self.view.HandleDateErrors.call_count, 1)
+        self.view.HandleDateErrors.assert_called_with(1)
+
     #
     # Setup
     #
@@ -219,6 +226,11 @@ class describe_duplicate_event_dialog_for_containers(UnitTestCase):
             GregorianTimeType(),
             GregorianUtils.from_date(2010, 8, 1).to_time(),
             GregorianUtils.from_date(2010, 8, 1).to_time())
+        return self.move_period_fn
+
+    def _create_move_period_fn_mock_returning_none(self):
+        self.move_period_fn = Mock()
+        self.move_period_fn.return_value = None
         return self.move_period_fn
 
     def _duplicate_with(self, count, freq, direction):
