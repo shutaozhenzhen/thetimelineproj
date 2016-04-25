@@ -21,8 +21,10 @@ from timelinelib.canvas.data.timeperiod import TimePeriod
 
 
 DEFAULT_COLOR = (200, 200, 200)
-EXPORTABLE_FIELDS = ("Text", "Description", "Start", "End", "Category", "Fuzzy", "Locked", "Ends Today",
-                     "Hyperlink", "Progress", "Progress Color", "Done Color", "Alert", "Is Container", "Is Subevent")
+EXPORTABLE_FIELDS = (_("Text"), _("Description"), _("Start"), _("End"), _("Category"),
+                     _("Fuzzy"), _("Locked"), _("Ends Today"), _("Hyperlink"),
+                     _("Progress"), _("Progress Color"), _("Done Color"), _("Alert"),
+                     _("Is Container"), _("Is Subevent"))
 
 
 class Event(object):

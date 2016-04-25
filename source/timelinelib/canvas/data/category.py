@@ -19,7 +19,7 @@
 from timelinelib.canvas.drawing.drawers import get_progress_color
 
 
-EXPORTABLE_FIELDS = FIELDS = ("Name", "Color", "Progress Color", "Done Color", "Parent")
+EXPORTABLE_FIELDS = FIELDS = (_("Name"), _("Color"), _("Progress Color"), _("Done Color"), _("Parent"))
 
 
 class Category(object):
