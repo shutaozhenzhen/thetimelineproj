@@ -17,6 +17,7 @@
 
 
 from mock import Mock
+from mock import sentinel
 
 from timelinelib.wxgui.dialogs.export.controller import ExportDialogController
 from timelinelib.wxgui.dialogs.export.controller import TARGET_TYPES
@@ -51,6 +52,12 @@ class describe_export_dialog(UnitTestCase):
     def simulate_ok_button_clicked(self):
         self.controller.on_ok(None)
 
+    def simulate_edit_event_button_clicked(self):
+        self.controller.on_edit_event_fields(None)
+
+    def simulate_edit_category_button_clicked(self):
+        self.controller.on_edit_categories_fields(None)
+
     def test_controller_populates_dialog_when_constructed(self):
         self.controller.on_init()
         self.view.SetTargetTypes.assert_called_with(TARGET_TYPES)
@@ -80,3 +87,26 @@ class describe_export_dialog(UnitTestCase):
         self.when_category_fields_selected(["Name"])
         self.simulate_ok_button_clicked()
         self.assertTrue(self.view.Close.called)
+
+    def test_on_edit_event_fields_triggers_view(self):
+        self.simulate_edit_event_button_clicked()
+        self.assertEqual(self.view.EditEventFields.call_count, 1)
+
+    def test_on_edit_category_fields_triggers_view(self):
+        self.simulate_edit_category_button_clicked()
+        self.assertEqual(self.view.EditCategoryFields.call_count, 1)
+
+    def test_event_fields_can_be_set(self):
+        self.controller.set_event_fields(sentinel.FIELDS)
+        self.assertEqual(self.controller.get_event_fields(), sentinel.FIELDS)
+
+    def test_category_fields_can_be_set(self):
+        self.controller.set_category_fields(sentinel.FIELDS)
+        self.assertEqual(self.controller.get_category_fields(), sentinel.FIELDS)
+
+    def test(self):
+        self.view.GetExportEvents.side_effect = ValueError()
+        self.when_event_type_selected()
+        self.when_event_fields_selected([])
+        self.simulate_ok_button_clicked()
+        self.assertEqual(self.view.Close.call_count, 0)
