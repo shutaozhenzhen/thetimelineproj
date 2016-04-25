@@ -64,6 +64,10 @@ class describe_event_field_selection_editor_dialog_controller(FieldSelectionEdit
         self.controller = self.a_controller_with("Event", ["Description"])
         self.view.CreateFieldCheckboxes.assert_called_with(FIELDS[self.controller.data], ["Description"])
 
+    def test_construction_when_data_is_a_translatable_text(self):
+        self.controller = self.a_controller_with("#Event#", ["Description"])
+        self.view.CreateFieldCheckboxes.assert_called_with(FIELDS[self.controller.data], ["Description"])
+
     def test_selected_fields_are_returned(self):
         self.controller = self.a_controller_with("Event", ["Description"])
         self.simulate_select_field("Text")
