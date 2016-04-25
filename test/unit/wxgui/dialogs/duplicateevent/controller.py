@@ -23,6 +23,7 @@ from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.time.gregoriantime import GregorianTimeType
@@ -149,6 +150,9 @@ class describe_duplicate_event_dialog(UnitTestCase):
         self._duplicate_with(count=1, freq=2, direction=BOTH)
         self._assert_move_period_called_with([-2, 2])
 
+    def test_invalid_direction_raises_exception(self):
+        self.assertRaises(Exception, self.controller._calc_indicies, None, None)
+
     #
     # Setup
     #
@@ -178,7 +182,7 @@ class describe_duplicate_event_dialog(UnitTestCase):
         self.view.GetCount.return_value = count
         self.view.GetFrequency.return_value = freq
         self.view.GetDirection.return_value = direction
-        self.controller.create_duplicates_and_save()
+        self.controller.on_ok(None)
 
 
 class describe_duplicate_event_dialog_for_containers(UnitTestCase):
@@ -205,6 +209,7 @@ class describe_duplicate_event_dialog_for_containers(UnitTestCase):
             GregorianUtils.from_date(2010, 1, 1).to_time(),
             "foo",
             category=None)
+        self.event.events = [Subevent(self.db.get_time_type(), GregorianUtils.from_date(2010, 1, 1).to_time(), GregorianUtils.from_date(2010, 1, 1).to_time(), "")]
         self.controller = DuplicateEventDialogController(self.view)
         self.controller.on_init(self.db, self.event)
 
