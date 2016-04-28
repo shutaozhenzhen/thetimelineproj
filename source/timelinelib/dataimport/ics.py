@@ -27,67 +27,72 @@ from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Event
 from timelinelib.utils import ex_msg
-import timelinelib.calendar.gregorian as gregorian
+
+
+class IcsLoader(object):
+
+    def __init__(self):
+        self.events = []
+
+    def load(self, db, path):
+        try:
+            ics_file = open(path, "rb")
+            try:
+                file_contents = ics_file.read()
+                try:
+                    cal = Calendar.from_ical(file_contents)
+                    for event in cal.walk("VEVENT"):
+                        self._load_event(db, event)
+                except Exception, pe:
+                    msg1 = _("Unable to read timeline data from '%s'.")
+                    msg2 = "\n\n" + ex_msg(pe)
+                    raise TimelineIOError((msg1 % abspath(path)) + msg2)
+            finally:
+                ics_file.close()
+        except IOError, e:
+            msg = _("Unable to read from file '%s'.")
+            whole_msg = (msg + "\n\n%s") % (abspath(path), e)
+            raise TimelineIOError(whole_msg)
+        for event in self.events:
+            db.save_event(event)
+
+    def _load_event(self, db, vevent):
+        start, end = self._extract_start_end(vevent)
+        txt = ""
+        if "summary" in vevent:
+            txt = vevent["summary"]
+        elif "description" in vevent:
+            txt = vevent["description"]
+        else:
+            txt = "Unknown"
+        e = Event(db.get_time_type(), start, end, txt)
+        if "description" in vevent:
+            e.set_data("description", vevent["description"])
+        self.events.append(e)
+
+    def _extract_start_end(self, vevent):
+        start = self._convert_to_datetime(vevent.decoded("dtstart"))
+        if "dtend" in vevent:
+            end = self._convert_to_datetime(vevent.decoded("dtend"))
+        elif "duration" in vevent:
+            end = start + vevent.decoded("duration")
+        else:
+            end = self._convert_to_datetime(vevent.decoded("dtstart"))
+        return (start, end)
+
+    def _convert_to_datetime(self, d):
+        if isinstance(d, datetime):
+            return Gregorian(d.year, d.month, d.day, d.hour, d.minute, d.second).to_time()
+        elif isinstance(d, date):
+            return GregorianUtils.from_date(d.year, d.month, d.day).to_time()
+        else:
+            raise TimelineIOError("Unknown date.")
 
 
 def import_db_from_ics(path):
+    global events
+    events = []
     db = MemoryDB()
     db.set_readonly()
-    _load(db, path)
+    IcsLoader().load(db, path)
     return db
-
-
-def _load(db, path):
-    try:
-        ics_file = open(path, "rb")
-        try:
-            file_contents = ics_file.read()
-            try:
-                cal = Calendar.from_ical(file_contents)
-                for event in cal.walk("VEVENT"):
-                    _load_event(db, event)
-            except Exception, pe:
-                msg1 = _("Unable to read timeline data from '%s'.")
-                msg2 = "\n\n" + ex_msg(pe)
-                raise TimelineIOError((msg1 % abspath(path)) + msg2)
-        finally:
-            ics_file.close()
-    except IOError, e:
-        msg = _("Unable to read from file '%s'.")
-        whole_msg = (msg + "\n\n%s") % (abspath(path), e)
-        raise TimelineIOError(whole_msg)
-
-
-def _load_event(db, vevent):
-    start, end = _extract_start_end(vevent)
-    txt = ""
-    if "summary" in vevent:
-        txt = vevent["summary"]
-    elif "description" in vevent:
-        txt = vevent["description"]
-    else:
-        txt = "Unknown"
-    e = Event(db.get_time_type(), start, end, txt)
-    if "description" in vevent:
-        e.set_data("description", vevent["description"])
-    db.save_event(e)
-
-
-def _extract_start_end(vevent):
-    start = _convert_to_datetime(vevent.decoded("dtstart"))
-    if "dtend" in vevent:
-        end = _convert_to_datetime(vevent.decoded("dtend"))
-    elif "duration" in vevent:
-        end = start + vevent.decoded("duration")
-    else:
-        end = _convert_to_datetime(vevent.decoded("dtstart"))
-    return (start, end)
-
-
-def _convert_to_datetime(d):
-    if isinstance(d, datetime):
-        return Gregorian(d.year, d.month, d.day, d.hour, d.minute, d.second).to_time()
-    elif isinstance(d, date):
-        return GregorianUtils.from_date(d.year, d.month, d.day).to_time()
-    else:
-        raise TimelineIOError("Unknown date.")
