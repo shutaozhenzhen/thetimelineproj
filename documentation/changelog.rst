@@ -53,6 +53,11 @@ Fixed crash reports:
 
 * Import events dialog gives UnicodeEncodeError if exceptions contain unicode
   messages.
+  
+Import:
+
+* Categories are now created when importing ics data
+  (`#141 <https://sourceforge.net/p/thetimelineproj/backlog/141/>`_)
 
 Version 1.9.0
 -------------
