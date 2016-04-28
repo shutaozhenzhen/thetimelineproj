@@ -43,15 +43,20 @@ class EditEventDialogController(Controller):
         start = self.view.GetStart()
         if start is not None and end is not None:
             if (event.IsChecked() and start >= end):
-                if self.timeline.get_time_type().is_date_time_type():
-                    delta = delta_from_days(1)
-                else:
-                    delta = 1
-                try:
-                    self.view.SetEnd(start + delta)
-                except TypeError:
-                    pass
+                self._set_inital_period_end_time(start)
         self.view.ShowToTime(event.IsChecked())
+
+    def _set_inital_period_end_time(self, start):
+        try:
+            self.view.SetEnd(start + self._get_period_initial_delta())
+        except TypeError:
+            pass
+
+    def _get_period_initial_delta(self):
+        if self.timeline.get_time_type().is_date_time_type():
+            return delta_from_days(1)
+        else:
+            return 1
 
     def on_show_time_checkbox_changed(self, event):
         self.view.SetShowTime(event.IsChecked())
