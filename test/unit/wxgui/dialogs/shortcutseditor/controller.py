@@ -70,58 +70,58 @@ class ShortcutConfig(object):
 
 class describe_shortcuts_editor_dialog(UnitTestCase):
 
+    def test_it_can_be_created(self):
+        self.show_dialog(ShortcutsEditorDialog, None, self.shortcut_config)
+
+    def test_shortcut_is_modifier_plus_key(self):
+        self.given_a_view_with(None, "Ctrl", "X")
+        self.assertEquals("Ctrl+X", self.controller._get_shortcut())
+
+    def test_shortcut_is_key_only(self):
+        self.given_a_view_with(None, "", "X")
+        self.assertEquals("X", self.controller._get_shortcut())
+
+    def test_shortcut_is_saved(self):
+        self.given_a_view_with("Func", "Ctrl", "X")
+        self.controller.on_apply_clicked(None)
+        self.assertEquals("Func", self.shortcut_config.function)
+        self.assertEquals("Ctrl+X", self.shortcut_config.shortcut)
+
+    def test_shortcut_cant_be_used_for_more_than_one_function(self):
+        self.given_a_view_with("Func", "Ctrl", "N")
+        self.controller.on_apply_clicked(None)
+        self.view.DisplayWarningMessage.assert_called_with(u"#The shortcut Ctrl+N is already bound to function 'File->New...'!#")
+
+    def test_modifier_must_be_given_for_simple_key(self):
+        self.given_a_view_with("Func", "", "N")
+        self.controller.on_apply_clicked(None)
+        self.view.DisplayWarningMessage.assert_called_with("#Both Modifier and Shortcut key must be given!#")
+
+    def test_modifier_not_needed_for_function_keys(self):
+        self.given_a_view_with("Func", "", "F1")
+        self.controller.on_apply_clicked(None)
+        self.assertEquals("Func", self.shortcut_config.function)
+        self.assertEquals("F1", self.shortcut_config.shortcut)
+
+    def test_modifier_must_be_known(self):
+        self.given_a_view_with("Func", "xxx", "N")
+        self.controller.on_apply_clicked(None)
+        self.view.DisplayWarningMessage.assert_called_with("#Both Modifier and Shortcut key must be given!#")
+
+    def test_selection_changes_are_handled(self):
+        self.given_a_view_with(u'File->New...', None, None)
+        self.controller.on_selection_changed(None)
+        self.view.SetModifier.assert_called_once_with("Ctrl")
+        self.view.SetShortcutKey.assert_called_once_with("N")
+
+    def given_a_view_with(self, func, modifier, key):
+        self.view.GetFunction.return_value = func
+        self.view.GetModifier.return_value = modifier
+        self.view.GetShortcutKey.return_value = key
+
     def setUp(self):
         self.view = Mock(ShortcutsEditorDialog)
         self.shortcut_config = ShortcutConfig()
         self.controller = ShortcutsEditorDialogController(self.view)
         self.controller.shortcut_config = self.shortcut_config
 
-    def test_it_can_be_created(self):
-        self.show_dialog(ShortcutsEditorDialog, None, self.shortcut_config)
-
-    def test_shortcut_is_modifier_plus_key(self):
-        self.view.GetModifier.return_value = "Ctrl"
-        self.view.GetShortcutKey.return_value = "X"
-        self.assertEquals("Ctrl+X", self.controller._get_shortcut())
-
-    def test_shortcut_is_key_only(self):
-        self.view.GetModifier.return_value = ""
-        self.view.GetShortcutKey.return_value = "X"
-        self.assertEquals("X", self.controller._get_shortcut())
-
-    def test_shortcut_is_saved(self):
-        self.view.GetFunction.return_value = "Func"
-        self.view.GetModifier.return_value = "Ctrl"
-        self.view.GetShortcutKey.return_value = "X"
-        self.controller.on_apply_clicked(None)
-        self.assertEquals("Func", self.shortcut_config.function)
-        self.assertEquals("Ctrl+X", self.shortcut_config.shortcut)
-
-    def test_shortcut_cant_be_used_for_more_than_one_function(self):
-        self.view.GetFunction.return_value = "Func"
-        self.view.GetModifier.return_value = "Ctrl"
-        self.view.GetShortcutKey.return_value = "N"
-        self.controller.on_apply_clicked(None)
-        self.view.DisplayWarningMessage.assert_called_with(u"#The shortcut Ctrl+N is already bound to function 'File->New...'!#")
-
-    def test_modifier_must_be_given_for_simple_key(self):
-        self.view.GetFunction.return_value = "Func"
-        self.view.GetModifier.return_value = ""
-        self.view.GetShortcutKey.return_value = "N"
-        self.controller.on_apply_clicked(None)
-        self.view.DisplayWarningMessage.assert_called_with("#Both Modifier and Shortcut key must be given!#")
-
-    def test_modifier_not_needed_for_function_keys(self):
-        self.view.GetFunction.return_value = "Func"
-        self.view.GetModifier.return_value = ""
-        self.view.GetShortcutKey.return_value = "F1"
-        self.controller.on_apply_clicked(None)
-        self.assertEquals("Func", self.shortcut_config.function)
-        self.assertEquals("F1", self.shortcut_config.shortcut)
-
-    def test_modifier_must_be_known(self):
-        self.view.GetFunction.return_value = "Func"
-        self.view.GetModifier.return_value = "xxx"
-        self.view.GetShortcutKey.return_value = "N"
-        self.controller.on_apply_clicked(None)
-        self.view.DisplayWarningMessage.assert_called_with("#Both Modifier and Shortcut key must be given!#")
