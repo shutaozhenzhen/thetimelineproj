@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-25 06:43+0200\n"
+"POT-Creation-Date: 2016-04-28 22:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -542,15 +542,18 @@ msgstr ""
 msgid "Unable to read from filename '%s'."
 msgstr ""
 
-#: source\timelinelib\dataimport\ics.py:50
+#: source\timelinelib\dataimport\ics.py:49
+msgid "Unable to read calendar data."
+msgstr ""
+
+#: source\timelinelib\dataimport\ics.py:59
+#, python-format
+msgid "Unable to read from file '%s'."
+msgstr ""
+
 #: source\timelinelib\dataimport\timelinexml.py:90
 #, python-format
 msgid "Unable to read timeline data from '%s'."
-msgstr ""
-
-#: source\timelinelib\dataimport\ics.py:56
-#, python-format
-msgid "Unable to read from file '%s'."
 msgstr ""
 
 #: source\timelinelib\dataimport\tutorial.py:32
@@ -2054,28 +2057,28 @@ msgstr ""
 msgid "Category:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:81
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:86
 msgid "Invalid Date or Time"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:157
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:162
 msgid "Invalid Start- date or time"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:161
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:166
 msgid "Invalid End- date or time"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:205
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:210
 msgid "You can't change time when the Event is locked"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:293
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:298
 #: source\timelinelib\wxgui\dialogs\eraeditor\controller.py:85
 msgid "End must be > Start"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:302
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:307
 msgid "Start time > Now."
 msgstr ""
 
