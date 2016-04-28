@@ -26,6 +26,7 @@ from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import Category
 from timelinelib.utils import ex_msg
 
 
@@ -33,6 +34,7 @@ class IcsLoader(object):
 
     def __init__(self):
         self.events = []
+        self.categories = []
 
     def load(self, db, path):
         try:
@@ -55,6 +57,8 @@ class IcsLoader(object):
             raise TimelineIOError(whole_msg)
         for event in self.events:
             db.save_event(event)
+        for category in self.categories:
+            db.save_category(category)
 
     def _load_event(self, db, vevent):
         start, end = self._extract_start_end(vevent)
@@ -68,7 +72,12 @@ class IcsLoader(object):
         e = Event(db.get_time_type(), start, end, txt)
         if "description" in vevent:
             e.set_data("description", vevent["description"])
+        if "categories" in vevent:
+            categories_names = [cat.strip() for cat in vevent["categories"].split(",") if len(cat.strip()) > 0]
+            for category_name in categories_names:
+                self.categories.append(Category(category_name, (127, 127, 127), None))
         self.events.append(e)
+
 
     def _extract_start_end(self, vevent):
         start = self._convert_to_datetime(vevent.decoded("dtstart"))
