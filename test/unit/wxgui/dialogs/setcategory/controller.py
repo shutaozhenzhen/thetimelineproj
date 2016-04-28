@@ -58,9 +58,11 @@ class describe_set_category_dialog(UnitTestCase):
 
     def _create_event1(self):
         self.event1 = self._create_event(None)
+        self.event1.set_id(1)
 
     def _create_event2(self):
         self.event2 = self._create_event(self.category2)
+        self.event1.set_id(2)
 
     def _create_event(self, category):
         return Event(
@@ -75,7 +77,17 @@ class describe_set_category_dialog(UnitTestCase):
         self.show_dialog(SetCategoryDialog, None, db)
 
     def test_category_can_be_set_on_all_events_without_category(self):
+        self.view.GetSelectedCategory.return_value = self.category2
         self.controller.on_init(self.db, [])
+        self.controller.on_ok_clicked(None)
+        self.view.EndModalOk.assert_called_with()
+        self.assertEqual(self.event1.get_category(), self.category2)
+        self.assertEqual(self.event2.get_category(), self.category2)
+
+    def test_category_can_be_set_on_selected_events(self):
+        self.view.GetSelectedCategory.return_value = self.category1
+        self.db.find_event_with_id.return_value = self.event1
+        self.controller.on_init(self.db, [1])
         self.controller.on_ok_clicked(None)
         self.view.EndModalOk.assert_called_with()
         self.assertEqual(self.event1.get_category(), self.category1)
@@ -94,3 +106,11 @@ class describe_set_category_dialog(UnitTestCase):
         self.view.GetSelectedCategory.return_value = None
         self.controller.on_ok_clicked(None)
         self.view.DisplayErrorMessage.assert_called_with("#You must select a category!#")
+
+    def test_title_set_for_no_selected_events(self):
+        self.controller.on_init(self.db, [])
+        self.view.SetTitle.assert_called_with("#Set Category on events without category#")
+
+    def test_title_set_for_selected_events(self):
+        self.controller.on_init(self.db, [1])
+        self.view.SetTitle.assert_called_with("#Set Category on selected events#")
