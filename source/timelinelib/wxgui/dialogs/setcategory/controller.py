@@ -59,9 +59,3 @@ class SetCategoryDialogController(Controller):
         for event in self._db.get_all_events():
             if event.get_category() is None:
                 event.set_category(category)
-
-    def _events_without_category_exists(self):
-        for event in self._db.get_all_events():
-            if event.category is None:
-                return True
-        return False
