@@ -29,7 +29,7 @@ VERSION:2.0
 PRODID:-//hacksw/handcal//NONSGML v1.0//EN
 
 BEGIN:VEVENT
-CATEGORIES:MEETING
+CATEGORIES:MEETING 1, MEETING 2
 UID:uid1@example.com
 DTSTAMP:19970714T170000Z
 ORGANIZER;CN=John Doe:MAILTO:john.doe@example.com
@@ -48,7 +48,7 @@ VERSION:2.0
 PRODID:-//hacksw/handcal//NONSGML v1.0//EN
 
 BEGIN:VEVENT
-CATEGORIES:MEETING
+CATEGORIES:MEETING1
 UID:uid1@example.com
 DTSTAMP:19970714T170000Z
 ORGANIZER;CN=John Doe:MAILTO:john.doe@example.com
@@ -63,11 +63,18 @@ END:VCA
 
 class describe_import_ics(UnitTestCase):
 
-    def test_can_import_ics_file(self):
+    def test_can_import_events_from_ics_file(self):
         db = import_db_from_ics(self.ics_file_path)
         event_names = [event.get_text() for event in db.get_all_events()]
         self.assertEqual(len(event_names), 1)
         self.assertEqual(event_names[0], "Bastille Day Party")
+
+    def test_can_import_categories_from_ics_file(self):
+        db = import_db_from_ics(self.ics_file_path)
+        category_names = [category.get_name() for category in db.get_categories()]
+        self.assertEqual(len(category_names), 2)
+        self.assertEqual(category_names[0], "MEETING 1")
+        self.assertEqual(category_names[1], "MEETING 2")
 
     def test_invalid_file_raises_exception(self):
         self.assertRaises(TimelineIOError, import_db_from_ics, "...")
