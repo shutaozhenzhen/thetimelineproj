@@ -20,6 +20,7 @@ import random
 
 from datetime import date
 from datetime import datetime
+from datetime import timedelta
 from os.path import abspath
 
 from icalendar import Calendar
@@ -30,6 +31,7 @@ from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Category
 from timelinelib.utils import ex_msg
+from timelinelib.time.timeline import TimeDelta
 
 
 class IcsLoader(object):
@@ -108,10 +110,16 @@ class IcsLoader(object):
         if "dtend" in vevent:
             end = self._convert_to_datetime(vevent.decoded("dtend"))
         elif "duration" in vevent:
-            end = start + vevent.decoded("duration")
+            end = start + self._convert_to_timedelta(vevent.decoded("duration"))
         else:
             end = self._convert_to_datetime(vevent.decoded("dtstart"))
         return (start, end)
+
+    def _convert_to_timedelta(self, t):
+        if isinstance(t, timedelta):
+            return TimeDelta(t.seconds)
+        else:
+            return TimeDelta(0)
 
     def _convert_to_datetime(self, d):
         if isinstance(d, datetime):
