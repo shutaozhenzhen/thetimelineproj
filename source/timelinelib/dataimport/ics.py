@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import random
+
 from datetime import date
 from datetime import datetime
 from os.path import abspath
@@ -80,7 +82,12 @@ class IcsLoader(object):
         if "categories" in vevent:
             categories_names = [cat.strip() for cat in vevent["categories"].split(",") if len(cat.strip()) > 0]
             for category_name in categories_names:
-                self.categories.append(Category(category_name, (127, 127, 127), None))
+                self.categories.append(Category(category_name, self._get_random_color(), None))
+
+    def _get_random_color(self):
+        return (random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255))
 
     def _get_event_name(self, vevent):
         if "summary" in vevent:
