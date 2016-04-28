@@ -32,29 +32,38 @@ from timelinelib.utils import ex_msg
 
 class IcsLoader(object):
 
-    def __init__(self):
+    def load(self, db, path):
         self.events = []
         self.categories = []
+        file_contents = self._read_file_content(path)
+        cal = self._read_calendar_object(file_contents)
+        for vevent in cal.walk("VEVENT"):
+            self._load_event(db, vevent)
+            self._load_categories(vevent)
+        self._save_data_in_db(db)
 
-    def load(self, db, path):
+    def _read_calendar_object(self, file_contents):
+        try:
+            return Calendar.from_ical(file_contents)
+        except Exception, pe:
+            msg1 = _("Unable to read calendar data.")
+            msg2 = "\n\n" + ex_msg(pe)
+            raise TimelineIOError(msg1 + msg2)
+
+    def _read_file_content(self, path):
+        ics_file = None
         try:
             ics_file = open(path, "rb")
-            try:
-                file_contents = ics_file.read()
-                try:
-                    cal = Calendar.from_ical(file_contents)
-                    for event in cal.walk("VEVENT"):
-                        self._load_event(db, event)
-                except Exception, pe:
-                    msg1 = _("Unable to read timeline data from '%s'.")
-                    msg2 = "\n\n" + ex_msg(pe)
-                    raise TimelineIOError((msg1 % abspath(path)) + msg2)
-            finally:
-                ics_file.close()
+            return ics_file.read()
         except IOError, e:
             msg = _("Unable to read from file '%s'.")
             whole_msg = (msg + "\n\n%s") % (abspath(path), e)
             raise TimelineIOError(whole_msg)
+        finally:
+            if ics_file is not None:
+                ics_file.close()
+
+    def _save_data_in_db(self, db):
         for event in self.events:
             db.save_event(event)
         for category in self.categories:
@@ -62,22 +71,30 @@ class IcsLoader(object):
 
     def _load_event(self, db, vevent):
         start, end = self._extract_start_end(vevent)
-        txt = ""
-        if "summary" in vevent:
-            txt = vevent["summary"]
-        elif "description" in vevent:
-            txt = vevent["description"]
-        else:
-            txt = "Unknown"
-        e = Event(db.get_time_type(), start, end, txt)
-        if "description" in vevent:
-            e.set_data("description", vevent["description"])
+        txt = self._get_event_name(vevent)
+        event = Event(db.get_time_type(), start, end, txt)
+        event.set_data("description", self._get_description(vevent))
+        self.events.append(event)
+
+    def _load_categories(self, vevent):
         if "categories" in vevent:
             categories_names = [cat.strip() for cat in vevent["categories"].split(",") if len(cat.strip()) > 0]
             for category_name in categories_names:
                 self.categories.append(Category(category_name, (127, 127, 127), None))
-        self.events.append(e)
 
+    def _get_event_name(self, vevent):
+        if "summary" in vevent:
+            return vevent["summary"]
+        elif "description" in vevent:
+            return vevent["description"]
+        else:
+            return "Unknown"
+
+    def _get_description(self, vevent):
+        if "description" in vevent:
+            return vevent["description"]
+        else:
+            return ""
 
     def _extract_start_end(self, vevent):
         start = self._convert_to_datetime(vevent.decoded("dtstart"))
