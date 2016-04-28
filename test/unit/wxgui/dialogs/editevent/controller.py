@@ -31,8 +31,10 @@ from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.test.utils import ObjectWithTruthValue
 from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.time.numtime import NumTimeType
 from timelinelib.wxgui.dialogs.editevent.controller import EditEventDialogController
 from timelinelib.wxgui.dialogs.editevent.view import EditEventDialog
+from timelinelib.time.timeline import delta_from_days
 
 
 class EditEventDialogTestCase(UnitTestCase):
@@ -42,6 +44,8 @@ class EditEventDialogTestCase(UnitTestCase):
         self.controller = EditEventDialogController(self.view)
         self.event_repository = Mock(EventRepository)
         self.db = MemoryDB()
+        self.num_db = MemoryDB()
+        self.num_db.time_type = NumTimeType()
         self.config = Mock(Config)
         self.config.event_editor_show_period = False
         self.config.event_editor_show_time = False
@@ -72,6 +76,9 @@ class EditEventDialogTestCase(UnitTestCase):
     def when_editor_opened_with_event(self, event):
         self.when_editor_opened_with(None, None, event)
 
+    def when_editor_opened_with_num_event(self, event):
+        self.when_editor_opened_with_num(None, None, event)
+
     def when_editor_opened_with(self, start, end, event):
         self.controller.on_init(
             self.config,
@@ -82,14 +89,35 @@ class EditEventDialogTestCase(UnitTestCase):
             end,
             event)
 
+    def when_editor_opened_with_num(self, start, end, event):
+        self.controller.on_init(
+            self.config,
+            NumTimeType(),
+            self.event_repository,
+            self.num_db,
+            start,
+            end,
+            event)
+
     def simulate_user_enters_start_time(self, time):
         self.view.GetStart.return_value = human_time_to_gregorian(time)
 
     def simulate_user_enters_end_time(self, time):
         self.view.GetEnd.return_value = human_time_to_gregorian(time)
 
+    def simulate_user_enters_num_start_time(self, time):
+        self.view.GetStart.return_value = time
+
+    def simulate_user_enters_num_end_time(self, time):
+        self.view.GetEnd.return_value = time
+
     def simulate_user_clicks_ok(self):
         self.controller.on_ok_clicked(None)
+
+    def simulate_user_clicks_period_checkbox(self, checked=True):
+        event = Mock()
+        event.IsChecked.return_value = checked
+        self.controller.on_period_checkbox_changed(event)
 
     def simulate_user_selects_a_container(self, subevent):
         container = Container(GregorianTimeType(), subevent.time_period.start_time, subevent.time_period.start_time, "container")
@@ -456,3 +484,24 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         self.simulate_ends_today_checked(today)
         self.controller._update_event()
         self.assertEqual(self.controller.container.time_period.end_time, today)
+
+
+class describe_period_selection(EditEventDialogTestCase):
+
+    def test_period_can_be_turned_on_for_datetime_timeline(self):
+        event = Mock()
+        self.when_editor_opened_with_event(event)
+        self.simulate_user_enters_start_time("1 Jan 2010")
+        self.simulate_user_enters_end_time("1 Jan 2010")
+        self.simulate_user_clicks_period_checkbox(sentinel.STATE)
+        self.view.ShowToTime.assert_called_with(sentinel.STATE)
+        self.view.SetEnd.assert_called_with(self.view.GetStart() + delta_from_days(1))
+
+    def test_period_can_be_turned_on_for_numtime_timeline(self):
+        event = Mock()
+        self.when_editor_opened_with_num_event(event)
+        self.simulate_user_enters_num_start_time(1)
+        self.simulate_user_enters_num_end_time(1)
+        self.simulate_user_clicks_period_checkbox(sentinel.STATE)
+        self.view.ShowToTime.assert_called_with(sentinel.STATE)
+        self.view.SetEnd.assert_called_with(2)
