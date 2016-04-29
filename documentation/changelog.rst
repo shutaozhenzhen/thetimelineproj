@@ -59,6 +59,11 @@ Import:
 * Categories are now created when importing ics data
   (`#141 <https://sourceforge.net/p/thetimelineproj/backlog/141/>`_)
 
+Export:
+
+* Data in Export to Listbox can now be copied to clip board
+  (`#146 <https://sourceforge.net/p/thetimelineproj/backlog/146/>`_)
+
 Version 1.9.0
 -------------
 
