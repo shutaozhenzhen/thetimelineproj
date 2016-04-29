@@ -34,33 +34,60 @@ class ListExporter(PluginBase):
         return _("Export to Listbox...")
 
     def run(self, main_frame):
-        dlg = ListboxDialox(self.display_name()[:-3])
-        dlg.populate(self.get_events(main_frame.timeline))
+        dlg = ListboxDialog(self.display_name()[:-3])
+        dlg.populate(self._get_events(main_frame.timeline))
         dlg.ShowModal()
         dlg.Destroy()
 
-    def get_events(self, timeline):
+    def _get_events(self, timeline):
         return [(event.get_time_period().get_label(), event.get_text()) for event in sorted(timeline.get_all_events())]
 
 
-class ListboxDialox(wx.Dialog):
+class ListboxDialog(wx.Dialog):
 
-    def __init__(self, title, parent=None):
-        wx.Dialog.__init__(self, parent, title=title, style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
+    def __init__(self, title, parent=None, events=None):
+        wx.Dialog.__init__(self, parent, title=title, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self._create_gui()
+        if events is not None:
+            self.populate(events)
 
     def populate(self, events):
         self.list.populate(events)
 
     def _create_gui(self):
         self.list = TestListCtrl(self)
-        vbox = self._create_vbox(self.list, DialogButtonsCloseSizer(self))
+        self.btn_copy = self._create_copy_button()
+        vbox = self._create_vbox(self.list, self.btn_copy, DialogButtonsCloseSizer(self))
         self.SetSizerAndFit(vbox)
 
-    def _create_vbox(self, ctrl, btn_box):
+    def _create_copy_button(self):
+        btn_copy = wx.Button(self, wx.ID_COPY)
+        self.Bind(wx.EVT_BUTTON, self.on_copy, btn_copy)
+        return btn_copy
+
+    def on_copy(self, evt):
+        if wx.TheClipboard.Open():
+            self._copy_text_to_clipboard()
+        else:
+            self.view.DisplayErrorMessage(_("Unable to copy to clipboard."))
+
+    def _copy_text_to_clipboard(self):
+        obj = wx.TextDataObject(self.GetText())
+        wx.TheClipboard.SetData(obj)
+        wx.TheClipboard.Close()
+
+    def GetText(self):
+        text = self.list.GetText()
+        return self.list.GetText()
+
+    def _create_vbox(self, ctrl, btn_copy, btn_box):
+        hbox = wx.BoxSizer(wx.HORIZONTAL)
+        hbox.Add(btn_copy, 0, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        hbox.Add(btn_box, 1, flag=wx.ALL, border=BORDER)
+
         vbox = wx.BoxSizer(wx.VERTICAL)
         vbox.Add(ctrl, 1, flag=wx.ALL | wx.EXPAND, border=BORDER)
-        vbox.Add(btn_box, 0, flag=wx.ALL | wx.EXPAND, border=BORDER)
+        vbox.Add(hbox, 0, flag=wx.ALL | wx.EXPAND, border=BORDER)
         return vbox
 
 
@@ -79,3 +106,14 @@ class TestListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
             self.SetStringItem(index, 1, event)
         self.SetColumnWidth(0, wx.LIST_AUTOSIZE)
         self.SetColumnWidth(1, wx.LIST_AUTOSIZE)
+
+    def GetText(self):
+        collector = []
+        for i in range(self.GetItemCount()):
+            item = self.GetItem(i, 0)
+            collector.append(item.GetText())
+            collector.append("\t")
+            item = self.GetItem(i, 1)
+            collector.append(item.GetText())
+            collector.append("\n")
+        return "".join(collector)
