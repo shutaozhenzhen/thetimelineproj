@@ -47,7 +47,7 @@
 
 1. Edit the changelog
 	O  Change Planned -> Released
-    O  Commit any changes
+    O  Commit
     
 2. Tag the release
     O  hg tag 1.xx.0
