@@ -91,7 +91,6 @@
 
 1. Change version number to "1.xx+1
     O  Add Planned relase in changelog.rst
-    O  Change version number in README
     O  Change version number in timelinelib/meta/version.py
     O  Commit "Changed version number"
     O  hg push
