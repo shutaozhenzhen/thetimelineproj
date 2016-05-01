@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.10.0 development</version>
+  <version>1.10.0 (1043763d680f 2016-04-30)</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -1125,8 +1125,8 @@ Fixed crash reports:
   </events>
   <view>
     <displayed_period>
-      <start>2014-02-17 13:52:12</start>
-      <end>2017-02-28 14:00:03</end>
+      <start>2009-12-02 03:31:39</start>
+      <end>2018-12-20 15:32:18</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
