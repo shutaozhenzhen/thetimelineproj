@@ -930,6 +930,79 @@ Fixed crash reports:
       <default_color>200,200,200</default_color>
     </event>
     <event>
+      <start>2016-04-30 00:00:00</start>
+      <end>2016-04-30 00:00:00</end>
+      <text>Timeline 1.10.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Version 1.10.0 (5130 downloads)
+----------------------------------------
+
+**Released on 30 April 2016.**
+
+*Don't want to wait for the final release? Try the beta version!*
+
+* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+
+* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.
+
+Calendar:
+
+* Locale date formatter can now handle abbreviated month names in locale format
+  pattern.
+  (`#133 &lt;https://sourceforge.net/p/thetimelineproj/backlog/133/&gt;`_)
+
+* The locale date format is now replaced with a user defined format
+
+GUI:
+
+* Users can now design and use their own icons for fuzzy, locked, and hyperlink.
+  (`#93 &lt;https://sourceforge.net/p/thetimelineproj/backlog/93/&gt;`_)
+
+* The vertical zoom (menu or Alt +/-) now zooms instead of scrolling.
+
+* Ctrl+Shift+MouseWheel now scrolls vertically instead of zooming.
+
+* Marking invalid dates with pink background now works correctly even in
+  Windows.
+
+* The date controls should now follow the locale date formatting setting.
+
+* Weekdays can now have a colour different from the background.
+
+* Scrolling timeline after regaining focus now works properly even in
+  Windows.
+  (`#138 &lt;https://sourceforge.net/p/thetimelineproj/backlog/138/&gt;`_)
+
+* The vertical space between events is now a user settable preference.
+
+Translations:
+
+* The BC string in strips is now translatable
+
+Fixed crash reports:
+
+* The Timeline xml file is updated when an Era is deleted
+  (`#139 &lt;https://sourceforge.net/p/thetimelineproj/backlog/139/&gt;`_)
+
+* Import events dialog gives UnicodeEncodeError if exceptions contain unicode
+  messages.
+  
+Import:
+
+* Categories are now created when importing ics data
+  (`#141 &lt;https://sourceforge.net/p/thetimelineproj/backlog/141/&gt;`_)
+
+Export:
+
+* Data in Export to Listbox can now be copied to clip board
+  (`#146 &lt;https://sourceforge.net/p/thetimelineproj/backlog/146/&gt;`_)</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
       <start>2016-01-31 00:00:00</start>
       <end>2016-01-31 00:00:00</end>
       <text>Timeline 1.9.0</text>
@@ -1029,18 +1102,18 @@ Fixed crash reports:
       <default_color>200,200,200</default_color>
     </event>
     <event>
-      <start>2016-04-30 00:00:00</start>
-      <end>2016-04-30 00:00:00</end>
-      <text>Timeline 1.10.0</text>
+      <start>2016-07-31 00:00:00</start>
+      <end>2016-07-31 00:00:00</end>
+      <text>Timeline 1.11.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
       <category>Future Release</category>
-      <description>Version 1.10.0
+      <description>Version 1.11.0
 -------------
 
-**Planned release on 30 April 2016.**
+**Planned release on 31 Julyl 2016.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
@@ -1052,8 +1125,8 @@ Fixed crash reports:
   </events>
   <view>
     <displayed_period>
-      <start>2014-02-15 18:46:02</start>
-      <end>2017-02-26 18:53:53</end>
+      <start>2014-02-17 13:52:12</start>
+      <end>2017-02-28 14:00:03</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
