@@ -12,6 +12,11 @@ Version 1.11.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Data import:
+
+* VTODO elements are now imported, as events, from ics files.
+  (`#142 <https://sourceforge.net/p/thetimelineproj/backlog/142/>`_)
+
 Translations:
 
 * Made label texts in 'Export to Listbox', translatable.
