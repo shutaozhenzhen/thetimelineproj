@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-28 22:48+0200\n"
+"POT-Creation-Date: 2016-05-02 18:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -542,11 +542,11 @@ msgstr ""
 msgid "Unable to read from filename '%s'."
 msgstr ""
 
-#: source\timelinelib\dataimport\ics.py:49
+#: source\timelinelib\dataimport\ics.py:53
 msgid "Unable to read calendar data."
 msgstr ""
 
-#: source\timelinelib\dataimport\ics.py:59
+#: source\timelinelib\dataimport\ics.py:63
 #, python-format
 msgid "Unable to read from file '%s'."
 msgstr ""
@@ -1472,6 +1472,19 @@ msgstr ""
 
 #: source\timelinelib\plugin\plugins\exporters\exporttolist.py:34
 msgid "Export to Listbox..."
+msgstr ""
+
+#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:72
+#: source\timelinelib\wxgui\dialogs\textdisplay\controller.py:33
+msgid "Unable to copy to clipboard."
+msgstr ""
+
+#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:101
+msgid "Time period"
+msgstr ""
+
+#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:102
+msgid "Event"
 msgstr ""
 
 #: source\timelinelib\plugin\plugins\exporters\exporttosvg.py:44
@@ -2484,10 +2497,6 @@ msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\systeminfo\view.py:53
 msgid "System Information"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\textdisplay\controller.py:33
-msgid "Unable to copy to clipboard."
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\timeeditor\controller.py:38
