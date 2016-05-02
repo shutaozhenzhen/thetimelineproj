@@ -12,6 +12,11 @@ Version 1.11.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Translations:
+
+* Made label texts in 'Export to Listbox', translatable.
+  (`#147 <https://sourceforge.net/p/thetimelineproj/backlog/147/>`_)
+
 Version 1.10.0
 --------------
 
