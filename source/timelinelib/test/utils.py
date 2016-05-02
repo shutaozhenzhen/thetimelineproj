@@ -45,8 +45,8 @@ def numeric_period(start, end):
 
 
 def human_time_to_gregorian(human_time):
-    (year, month, day, hour, minute) = human_time_to_ymdhm(human_time)
-    return Gregorian(year, month, day, hour, minute, 0).to_time()
+    (year, month, day, hour, minute, seconds) = human_time_to_ymdhm(human_time)
+    return Gregorian(year, month, day, hour, minute, seconds).to_time()
 
 
 def a_time_period():
@@ -70,10 +70,15 @@ def human_time_to_ymdhm(human_time):
     if len(parts) == 4:
         hour = int(parts[3][:2])
         minute = int(parts[3][3:5])
+        if len(parts[3]) == 8:
+            seconds = int(parts[3][6:8])
+        else:
+            seconds = 0
     else:
         hour = 0
         minute = 0
-    return (year, month, day, hour, minute)
+        seconds = 0
+    return (year, month, day, hour, minute, seconds)
 
 
 def an_event():
