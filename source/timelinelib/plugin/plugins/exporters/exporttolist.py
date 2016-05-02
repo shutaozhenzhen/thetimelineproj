@@ -77,7 +77,6 @@ class ListboxDialog(wx.Dialog):
         wx.TheClipboard.Close()
 
     def GetText(self):
-        text = self.list.GetText()
         return self.list.GetText()
 
     def _create_vbox(self, ctrl, btn_copy, btn_box):
