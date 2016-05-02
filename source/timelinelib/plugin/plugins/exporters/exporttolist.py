@@ -98,8 +98,8 @@ class TestListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 
     def populate(self, items):
         import sys
-        self.InsertColumn(0, "Time period")
-        self.InsertColumn(1, "Event")
+        self.InsertColumn(0, _("Time period"))
+        self.InsertColumn(1, _("Event"))
         for period, event in items:
             index = self.InsertStringItem(sys.maxint, period, 0)
             self.SetStringItem(index, 1, event)
