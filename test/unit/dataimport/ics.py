@@ -22,6 +22,7 @@ from timelinelib.dataimport.ics import import_db_from_ics
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.time.timeline import TimeDelta
+from timelinelib.test.utils import human_time_to_gregorian
 
 
 ICS_CONTENT = """
@@ -39,6 +40,82 @@ DTEND:19970715T035959Z
 SUMMARY:Bastille Day Party
 DESCRIPTION:Steve and John to review newest proposal material
 END:VEVENT
+
+END:VCALENDAR
+"""
+
+ICS_WITH_TODO_CONTENT = """
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ABC Corporation//NONSGML My Product//EN
+
+BEGIN:VTODO
+DTSTAMP:19980130T134500Z
+SEQUENCE:2
+UID:uid4@example.com
+DUE:19980415T235959
+STATUS:NEEDS-ACTION
+SUMMARY:Submit Income Taxes
+
+BEGIN:VALARM
+ACTION:AUDIO
+TRIGGER:19980414T120000
+ATTACH;FMTTYPE=audio/basic:http://example.com/pub/audio-
+ files/ssbanner.aud
+REPEAT:4
+DURATION:PT1H
+END:VALARM
+
+END:VTODO
+
+END:VCALENDAR
+"""
+
+ICS_WITH_TODO_CONTENT_NO_ALARM = """
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ABC Corporation//NONSGML My Product//EN
+
+BEGIN:VTODO
+DTSTAMP:19980130T134500Z
+SEQUENCE:2
+UID:uid4@example.com
+DUE:19980415T235959
+STATUS:NEEDS-ACTION
+SUMMARY:Submit Income Taxes
+END:VTODO
+
+END:VCALENDAR
+"""
+
+ICS_WITH_TODO_CONTENT_NO_DUE_NO_ALARM = """
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ABC Corporation//NONSGML My Product//EN
+
+BEGIN:VTODO
+DTSTAMP:19980130T134500Z
+SEQUENCE:2
+UID:uid4@example.com
+STATUS:NEEDS-ACTION
+SUMMARY:Submit Income Taxes
+END:VTODO
+
+END:VCALENDAR
+"""
+
+ICS_WITH_TODO_CONTENT_NO_SUMMARY = """
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ABC Corporation//NONSGML My Product//EN
+
+BEGIN:VTODO
+DTSTAMP:19980130T134500Z
+SEQUENCE:2
+UID:uid4@example.com
+DUE:19980415T235959
+STATUS:NEEDS-ACTION
+END:VTODO
 
 END:VCALENDAR
 """
@@ -101,12 +178,42 @@ END:VCA
 
 class describe_import_ics(UnitTestCase):
 
+    def given_ics_file(self, name):
+        self.ics_file_path = "ics_file.txt"
+        with open(self.ics_file_path, "w") as f:
+            f.write(name)
+
+    def when_ics_file_imported(self):
+        return import_db_from_ics(self.ics_file_path)
+
+    def setUp(self):
+        self.ics_file_path = "ics_file.txt"
+
+    def tearDown(self):
+        try:
+            os.remove(self.ics_file_path)
+        except:
+            pass
+
+
+class describe_import_vevent_from_ics(describe_import_ics):
+
     def test_can_import_events_from_ics_file(self):
         self.given_ics_file(ICS_CONTENT)
         db = self.when_ics_file_imported()
         event_names = [event.get_text() for event in db.get_all_events()]
         self.assertEqual(len(event_names), 1)
         self.assertEqual(event_names[0], "Bastille Day Party")
+
+    def test_can_import_todo_events_from_ics_file(self):
+        self.given_ics_file(ICS_WITH_TODO_CONTENT)
+        db = self.when_ics_file_imported()
+        self.assertEqual(len(db.get_all_events()), 1)
+        event = db.get_first_event()
+        self.assertEqual(event.get_text(), "Submit Income Taxes")
+        self.assertEqual(event.get_description(), "")
+        self.assertEqual(event.get_time_period().start_time, human_time_to_gregorian("14 Apr 1998 12:00:00"))
+        self.assertEqual(event.get_time_period().end_time, human_time_to_gregorian("15 Apr 1998 23:59:59"))
 
     def test_can_import_events_from_ics_file_with_no_dtend(self):
         self.given_ics_file(ICS_CONTENT_WITHOUT_DTEND)
@@ -135,19 +242,37 @@ class describe_import_ics(UnitTestCase):
         self.given_ics_file(INVALID_ICS_CONTENT)
         self.assertRaises(TimelineIOError, import_db_from_ics, self.ics_file_path)
 
-    def given_ics_file(self, name):
-        self.ics_file_path = "ics_file.txt"
-        with open(self.ics_file_path, "w") as f:
-            f.write(name)
 
-    def when_ics_file_imported(self):
-        return import_db_from_ics(self.ics_file_path)
+class describe_import_vtodo_from_ics(describe_import_ics):
 
-    def setUp(self):
-        self.ics_file_path = "ics_file.txt"
+    def test_can_import_todo_events_from_ics_file(self):
+        self.given_ics_file(ICS_WITH_TODO_CONTENT)
+        db = self.when_ics_file_imported()
+        self.assertEqual(len(db.get_all_events()), 1)
+        event = db.get_first_event()
+        self.assertEqual(event.get_text(), "Submit Income Taxes")
+        self.assertEqual(event.get_description(), "")
+        self.assertEqual(event.get_time_period().start_time, human_time_to_gregorian("14 Apr 1998 12:00:00"))
+        self.assertEqual(event.get_time_period().end_time, human_time_to_gregorian("15 Apr 1998 23:59:59"))
 
-    def tearDown(self):
-        try:
-            os.remove(self.ics_file_path)
-        except:
-            pass
+    def test_can_import_todo_events_without_alarm_from_ics_file(self):
+        self.given_ics_file(ICS_WITH_TODO_CONTENT_NO_ALARM)
+        db = self.when_ics_file_imported()
+        self.assertEqual(len(db.get_all_events()), 1)
+        event = db.get_first_event()
+        self.assertEqual(event.get_text(), "Submit Income Taxes")
+        self.assertEqual(event.get_description(), "")
+        self.assertEqual(event.get_time_period().start_time, human_time_to_gregorian("15 Apr 1998 23:59:59"))
+        self.assertEqual(event.get_time_period().end_time, human_time_to_gregorian("15 Apr 1998 23:59:59"))
+
+    def test_cant_import_todo_events_without_due_ics_file(self):
+        self.given_ics_file(ICS_WITH_TODO_CONTENT_NO_DUE_NO_ALARM)
+        db = self.when_ics_file_imported()
+        self.assertEqual(len(db.get_all_events()), 0)
+
+    def test_can_import_todo_events_without_summary(self):
+        self.given_ics_file(ICS_WITH_TODO_CONTENT_NO_SUMMARY)
+        db = self.when_ics_file_imported()
+        self.assertEqual(len(db.get_all_events()), 1)
+        event = db.get_first_event()
+        self.assertEqual(event.get_text(), "")

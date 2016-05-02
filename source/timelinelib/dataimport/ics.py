@@ -41,10 +41,50 @@ class IcsLoader(object):
         self.categories = []
         file_contents = self._read_file_content(path)
         cal = self._read_calendar_object(file_contents)
-        for vevent in cal.walk("VEVENT"):
-            self._load_event(db, vevent)
-            self._load_categories(vevent)
+        self._load_events(cal, db)
+        self._load_todos(cal, db)
         self._save_data_in_db(db)
+
+    def _load_events(self, cal, db):
+        for vevent in cal.walk("VEVENT"):
+            self._load_vevent(db, vevent)
+            self._load_categories(vevent)
+
+    def _load_todos(self, cal, db):
+        for vtodo in cal.walk("VTODO"):
+            self._load_vtodo(db, vtodo)
+            self._load_categories(vtodo)
+
+    def _load_vtodo(self, db, vtodo):
+        try:
+            start, end = self._extract_todo_start_end(vtodo)
+            txt = self._get_event_name(vtodo)
+            event = Event(db.get_time_type(), start, end, txt)
+            event.set_description("")
+            self.events.append(event)
+        except KeyError:
+            pass
+
+    def _extract_todo_start_end(self, vtodo):
+        end = self._extract_todo_end(vtodo)
+        start = self._extract_todo_start(vtodo)
+        if start is None:
+            start = end
+        return start, end
+
+    def _extract_todo_end(self, vtodo):
+        end = self._get_value(vtodo, "due")
+        if end:
+            return self._convert_to_datetime(end)
+        else:
+            raise KeyError("Start time not found")
+
+    def _extract_todo_start(self, vtodo):
+        valarm = self._get_first_subelement(vtodo, "VALARM")
+        if valarm:
+            start = self._get_value(valarm, "trigger")
+            if start:
+                return self._convert_to_datetime(start)
 
     def _read_calendar_object(self, file_contents):
         try:
@@ -73,7 +113,7 @@ class IcsLoader(object):
         for category in self.categories:
             db.save_category(category)
 
-    def _load_event(self, db, vevent):
+    def _load_vevent(self, db, vevent):
         start, end = self._extract_start_end(vevent)
         txt = self._get_event_name(vevent)
         event = Event(db.get_time_type(), start, end, txt)
@@ -92,18 +132,21 @@ class IcsLoader(object):
                 random.randint(0, 255))
 
     def _get_event_name(self, vevent):
-        if "summary" in vevent:
-            return vevent["summary"]
-        elif "description" in vevent:
-            return vevent["description"]
-        else:
-            return "Unknown"
+        return self._get_first_value(vevent, ["summary", "description"], "")
 
     def _get_description(self, vevent):
-        if "description" in vevent:
-            return vevent["description"]
-        else:
-            return ""
+        return self._get_value(vevent, "description", "")
+
+    def _get_first_value(self, element, key_list, not_found_value=None):
+        for key in key_list:
+            if key in element:
+                return element[key]
+        return not_found_value
+
+    def _get_value(self, element, key, not_found_value=None):
+        if key in element:
+            return element.decoded(key)
+        return not_found_value
 
     def _extract_start_end(self, vevent):
         start = self._convert_to_datetime(vevent.decoded("dtstart"))
@@ -128,6 +171,14 @@ class IcsLoader(object):
             return GregorianUtils.from_date(d.year, d.month, d.day).to_time()
         else:
             raise TimelineIOError("Unknown date.")
+
+    def _get_first_subelement(self, parent, subelement_name):
+        subelements = self._get_subelements(parent, subelement_name)
+        if len(subelements) > 0:
+            return subelements[0]
+
+    def _get_subelements(self, parent, subelement_name):
+        return parent.walk(subelement_name)
 
 
 def import_db_from_ics(path):
