@@ -23,6 +23,3 @@ class ImportIcsDialogController(Controller):
 
     def on_init(self):
         pass
-
-    def on_close_clicked(self, evt):
-        pass
