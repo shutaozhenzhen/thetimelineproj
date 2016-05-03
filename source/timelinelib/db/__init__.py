@@ -123,11 +123,12 @@ def dir_is_read_only(path):
 def db_open_ics(path):
     try:
         import icalendar
+        from timelinelib.wxgui.dialogs.importics.view import ImportIcsDialog
     except ImportError:
         raise TimelineIOError(_("Could not find iCalendar Python package. It is required for working with ICS files."))
     else:
         from timelinelib.dataimport.ics import import_db_from_ics
-        return import_db_from_ics(path)
+        return import_db_from_ics(path, ImportIcsDialog)
 
 
 def file_starts_with(path, start):
