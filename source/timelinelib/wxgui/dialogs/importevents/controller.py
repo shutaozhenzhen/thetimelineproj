@@ -45,19 +45,34 @@ class ImportEventsDialogController(Controller):
             self.view.Close()
 
     def _show_preview(self):
-        path = self.view.GetFilePath()
-        if path not in [":tutorial:", ":numtutorial:"] and not os.path.exists(self.view.GetFilePath()):
-            self._set_error(_("File does not exist."))
+        if self._path_exists():
+            self._handle_valid_path()
         else:
-            try:
-                db_to_import = db_open(path)
-            except Exception, e:
-                self._set_error(_("Unable to load events: %s.") % ex_msg(e))
-            else:
-                if db_to_import.get_time_type() != self._db.get_time_type():
-                    self._set_error(_("The selected timeline has a different time type."))
-                else:
-                    self._set_success(db_to_import, _("%d events will be imported." % len(db_to_import.get_all_events())))
+            self._handle_invalid_path()
+
+    def _path_exists(self):
+        path = self.view.GetFilePath()
+        return path in [":tutorial:", ":numtutorial:"] or os.path.exists(path)
+
+    def _handle_invalid_path(self):
+        self._set_error(_("File does not exist."))
+
+    def _handle_valid_path(self):
+        try:
+            db_to_import = db_open(self.view.GetFilePath())
+        except Exception, e:
+            self._set_error(_("Unable to load events: %s.") % ex_msg(e))
+        else:
+            self._report_nbr_of_events_in_db(db_to_import)
+
+    def _report_nbr_of_events_in_db(self, db_to_import):
+        if self._is_same_timetype(db_to_import):
+            self._set_success(db_to_import, _("%d events will be imported." % len(db_to_import.get_all_events())))
+        else:
+            self._set_error(_("The selected timeline has a different time type."))
+
+    def _is_same_timetype(self, db_to_import):
+        return db_to_import.get_time_type() == self._db.get_time_type()
 
     def _set_success(self, db_to_import, text):
         self._db_to_import = db_to_import
