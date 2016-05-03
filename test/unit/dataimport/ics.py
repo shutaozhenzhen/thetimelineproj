@@ -183,8 +183,8 @@ class describe_import_ics(UnitTestCase):
         with open(self.ics_file_path, "w") as f:
             f.write(name)
 
-    def when_ics_file_imported(self):
-        return import_db_from_ics(self.ics_file_path)
+    def when_ics_file_imported(self, options=None):
+        return import_db_from_ics(self.ics_file_path, options=options)
 
     def setUp(self):
         self.ics_file_path = "ics_file.txt"
@@ -207,11 +207,11 @@ class describe_import_vevent_from_ics(describe_import_ics):
 
     def test_can_import_todo_events_from_ics_file(self):
         self.given_ics_file(ICS_WITH_TODO_CONTENT)
-        db = self.when_ics_file_imported()
+        db = self.when_ics_file_imported(options=[False, True, False])
         self.assertEqual(len(db.get_all_events()), 1)
         event = db.get_first_event()
         self.assertEqual(event.get_text(), "Submit Income Taxes")
-        self.assertEqual(event.get_description(), "")
+        self.assertEqual(event.get_description(), None)
         self.assertEqual(event.get_time_period().start_time, human_time_to_gregorian("14 Apr 1998 12:00:00"))
         self.assertEqual(event.get_time_period().end_time, human_time_to_gregorian("15 Apr 1998 23:59:59"))
 
@@ -247,11 +247,11 @@ class describe_import_vtodo_from_ics(describe_import_ics):
 
     def test_can_import_todo_events_from_ics_file(self):
         self.given_ics_file(ICS_WITH_TODO_CONTENT)
-        db = self.when_ics_file_imported()
+        db = self.when_ics_file_imported(options=[False, True, False])
         self.assertEqual(len(db.get_all_events()), 1)
         event = db.get_first_event()
         self.assertEqual(event.get_text(), "Submit Income Taxes")
-        self.assertEqual(event.get_description(), "")
+        self.assertEqual(event.get_description(), None)
         self.assertEqual(event.get_time_period().start_time, human_time_to_gregorian("14 Apr 1998 12:00:00"))
         self.assertEqual(event.get_time_period().end_time, human_time_to_gregorian("15 Apr 1998 23:59:59"))
 
@@ -261,7 +261,7 @@ class describe_import_vtodo_from_ics(describe_import_ics):
         self.assertEqual(len(db.get_all_events()), 1)
         event = db.get_first_event()
         self.assertEqual(event.get_text(), "Submit Income Taxes")
-        self.assertEqual(event.get_description(), "")
+        self.assertEqual(event.get_description(), None)
         self.assertEqual(event.get_time_period().start_time, human_time_to_gregorian("15 Apr 1998 23:59:59"))
         self.assertEqual(event.get_time_period().end_time, human_time_to_gregorian("15 Apr 1998 23:59:59"))
 

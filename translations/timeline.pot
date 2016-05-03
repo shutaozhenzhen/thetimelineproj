@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-02 18:20+0200\n"
+"POT-Creation-Date: 2016-05-03 07:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -542,11 +542,16 @@ msgstr ""
 msgid "Unable to read from filename '%s'."
 msgstr ""
 
-#: source\timelinelib\dataimport\ics.py:53
+#: source\timelinelib\dataimport\ics.py:98
+#: source\timelinelib\dataimport\ics.py:160
+msgid "Location"
+msgstr ""
+
+#: source\timelinelib\dataimport\ics.py:108
 msgid "Unable to read calendar data."
 msgstr ""
 
-#: source\timelinelib\dataimport\ics.py:63
+#: source\timelinelib\dataimport\ics.py:118
 #, python-format
 msgid "Unable to read from file '%s'."
 msgstr ""
@@ -775,7 +780,7 @@ msgid ""
 "the timeline is opened in read-only mode"
 msgstr ""
 
-#: source\timelinelib\db\__init__.py:127
+#: source\timelinelib\db\__init__.py:128
 msgid ""
 "Could not find iCalendar Python package. It is required for working with ICS "
 "files."
@@ -2315,6 +2320,22 @@ msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importevents\view.py:55
 msgid "Import events"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\importics\view.py:61
+msgid "Import in event description"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\importics\view.py:62
+msgid "Use as start date of event"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\importics\view.py:63
+msgid "Use as event alarm time"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\importics\view.py:64
+msgid "Options for ICS import"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\preferences\controller.py:59

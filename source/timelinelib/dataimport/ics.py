@@ -36,7 +36,10 @@ from timelinelib.time.timeline import TimeDelta
 
 class IcsLoader(object):
 
-    def load(self, db, path):
+    def load(self, db, path, options):
+        (self.add_location_to_description,
+         self.use_trigger_as_start_date,
+         self.use_trigger_as_alert) = options
         self.events = []
         self.categories = []
         file_contents = self._read_file_content(path)
@@ -60,15 +63,19 @@ class IcsLoader(object):
             start, end = self._extract_todo_start_end(vtodo)
             txt = self._get_event_name(vtodo)
             event = Event(db.get_time_type(), start, end, txt)
-            event.set_description("")
+            event.set_description(self._extract_todo_description(vtodo))
+            event.set_alert(self._extract_todo_alert(vtodo))
             self.events.append(event)
         except KeyError:
             pass
 
     def _extract_todo_start_end(self, vtodo):
         end = self._extract_todo_end(vtodo)
-        start = self._extract_todo_start(vtodo)
-        if start is None:
+        if self.use_trigger_as_start_date:
+            start = self._extract_todo_start(vtodo)
+            if start is None:
+                start = end
+        else:
             start = end
         return start, end
 
@@ -85,6 +92,21 @@ class IcsLoader(object):
             start = self._get_value(valarm, "trigger")
             if start:
                 return self._convert_to_datetime(start)
+
+    def _extract_todo_description(self, vtodo):
+        if self.add_location_to_description:
+            if "location" in vtodo:
+                return "%s: %s" % (_("Location"), vtodo["location"])
+            else:
+                return None
+        else:
+            return None
+
+    def _extract_todo_alert(self, vtodo):
+        if self.use_trigger_as_alert:
+            start = self._extract_todo_start(vtodo)
+            if start is not None:
+                return (start, "")
 
     def _read_calendar_object(self, file_contents):
         try:
@@ -117,7 +139,7 @@ class IcsLoader(object):
         start, end = self._extract_start_end(vevent)
         txt = self._get_event_name(vevent)
         event = Event(db.get_time_type(), start, end, txt)
-        event.set_data("description", self._get_description(vevent))
+        event.set_description(self._get_description(vevent))
         self.events.append(event)
 
     def _load_categories(self, vevent):
@@ -135,7 +157,19 @@ class IcsLoader(object):
         return self._get_first_value(vevent, ["summary", "description"], "")
 
     def _get_description(self, vevent):
-        return self._get_value(vevent, "description", "")
+        if self.add_location_to_description:
+            if "location" in vevent:
+                sep = ""
+                if "description" in vevent:
+                    sep = "\n\n"
+                return "%s%s%s: %s" % (self._get_value(vevent, "description", ""),
+                                      sep,
+                                      _("Location"),
+                                      self._get_value(vevent, "location", ""))
+            else:
+                return self._get_value(vevent, "description", None)
+        else:
+            return self._get_value(vevent, "description", None)
 
     def _get_first_value(self, element, key_list, not_found_value=None):
         for key in key_list:
@@ -181,10 +215,19 @@ class IcsLoader(object):
         return parent.walk(subelement_name)
 
 
-def import_db_from_ics(path):
+def import_db_from_ics(path, options_dialog=None, options=None):
     global events
     events = []
+    if options is None:
+        options = [False, False, False]
     db = MemoryDB()
     db.set_readonly()
-    IcsLoader().load(db, path)
+    if options_dialog is not None:
+        dlg = options_dialog()
+        dlg.ShowModal()
+        options = (dlg.get_import_location(),
+                   dlg.get_trigger_as_start_time(),
+                   dlg.get_trigger_as_alarm())
+        dlg.Destroy()
+    IcsLoader().load(db, path, options)
     return db
