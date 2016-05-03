@@ -45,11 +45,12 @@ class ImportEventsDialogController(Controller):
             self.view.Close()
 
     def _show_preview(self):
-        if not os.path.exists(self.view.GetFilePath()):
+        path = self.view.GetFilePath()
+        if path not in [":tutorial:", ":numtutorial:"] and not os.path.exists(self.view.GetFilePath()):
             self._set_error(_("File does not exist."))
         else:
             try:
-                db_to_import = db_open(self.view.GetFilePath())
+                db_to_import = db_open(path)
             except Exception, e:
                 self._set_error(_("Unable to load events: %s.") % ex_msg(e))
             else:
