@@ -99,6 +99,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_vertical_space_between_events.return_value = 5
         self.config.get_colorize_weekends.return_value = False
         self.config.get_skip_s_in_decade_text.return_value = False
+        self.config.date_format = "yyyy-mm-dd"
         self.experimental_features = Mock(ExperimentalFeatures)
 
     def test_it_can_be_created(self):
@@ -179,8 +180,24 @@ class describe_preferences_dialog(UnitTestCase):
         self.controller.on_tab_order_click(None)
         self.view.ShowSelectTabOrderDialog.assert_called_with(self.config)
 
+    def test_opens_date_format_dialog_on_click(self):
+        self.controller.config = self.config
+        self.simulate_on_date_formatter_click()
+        self.view.ShowSelectDateFormatDialog.assert_called_with(self.config)
+        self.view.SetCurrentDateFormat.assert_called_with("#Current#: %s" % self.config.date_format)
+
+    def test_uncheck_time_for_new_events(self):
+        evt = Mock()
+        evt.IsChecked.return_value = True
+        self.controller.config = self.config
+        self.controller.on_uncheck_time_for_new_events(evt)
+        self.config.set_uncheck_time_for_new_events.assert_called_with(evt.IsChecked.return_value)
+
     def simulate_dialog_opens(self):
         self.controller.on_init(self.config, self.experimental_features)
+
+    def simulate_on_date_formatter_click(self):
+        self.controller.on_date_formatter_click(None)
 
 
 def event_is_checked(value):
