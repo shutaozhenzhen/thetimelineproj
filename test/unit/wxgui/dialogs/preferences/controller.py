@@ -31,6 +31,7 @@ from timelinelib.test.utils import ANY
 CONFIG_FUZZY_ICON_NAME = "fuzzy.png"
 CONFIG_LOCKED_ICON_NAME = "locked.png"
 CONFIG_HYPERINK_ICON_NAME = "hyperlink.png"
+FONT = u"12:74:90:92:False:MS Shell Dlg 2:-1:(0, 0, 0, 255)"
 
 
 class describe_preferences_dialog_controller(UnitTestCase):
@@ -80,6 +81,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
 class describe_preferences_dialog(UnitTestCase):
 
     def setUp(self):
+        self.app = wx.App()
         self.view = Mock(PreferencesDialog)
         self.controller = PreferencesDialogController(self.view)
         self.config = Mock(Config)
@@ -101,6 +103,10 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_skip_s_in_decade_text.return_value = False
         self.config.date_format = "yyyy-mm-dd"
         self.experimental_features = Mock(ExperimentalFeatures)
+        self.evt = Mock()
+
+    def tearDown(self):
+        self.app.Destroy()
 
     def test_it_can_be_created(self):
         self.show_dialog(PreferencesDialog, None, self.config)
@@ -187,11 +193,82 @@ class describe_preferences_dialog(UnitTestCase):
         self.view.SetCurrentDateFormat.assert_called_with("#Current#: %s" % self.config.date_format)
 
     def test_uncheck_time_for_new_events(self):
-        evt = Mock()
-        evt.IsChecked.return_value = True
+        self.evt.IsChecked.return_value = True
         self.controller.config = self.config
-        self.controller.on_uncheck_time_for_new_events(evt)
-        self.config.set_uncheck_time_for_new_events.assert_called_with(evt.IsChecked.return_value)
+        self.controller.on_uncheck_time_for_new_events(self.evt)
+        self.config.set_uncheck_time_for_new_events.assert_called_with(self.evt.IsChecked.return_value)
+
+    def test_on_major_strip_click(self):
+        font = Mock()
+        font.serialize.return_value = FONT
+        self.config.get_major_strip_font.return_value = FONT
+        self.controller.config = self.config
+        self.view.ShowEditFontDialog.return_value = True
+        self.controller.on_major_strip_click(None)
+        self.config.set_major_strip_font.assert_called_with(FONT)
+
+    def test_on_major_minor_click(self):
+        font = Mock()
+        font.serialize.return_value = FONT
+        self.config.get_minor_strip_font.return_value = FONT
+        self.controller.config = self.config
+        self.view.ShowEditFontDialog.return_value = True
+        self.controller.on_minor_strip_click(None)
+        self.config.set_minor_strip_font.assert_called_with(FONT)
+
+    def test_on_fuzzy_icon_changed(self):
+        self.evt.GetString.return_value = sentinel.STRING
+        self.controller.config = self.config
+        self.controller.on_fuzzy_icon_changed(self.evt)
+        self.config.set_fuzzy_icon.assert_called_with(sentinel.STRING)
+        self.view.DisplayIcons.assert_called_with()
+
+    def test_on_locked_icon_changed(self):
+        self.evt.GetString.return_value = sentinel.STRING
+        self.controller.config = self.config
+        self.controller.on_locked_icon_changed(self.evt)
+        self.config.set_locked_icon.assert_called_with(sentinel.STRING)
+        self.view.DisplayIcons.assert_called_with()
+
+    def test_on_hyperlink_icon_changed(self):
+        self.evt.GetString.return_value = sentinel.STRING
+        self.controller.config = self.config
+        self.controller.on_hyperlink_icon_changed(self.evt)
+        self.config.set_hyperlink_icon.assert_called_with(sentinel.STRING)
+        self.view.DisplayIcons.assert_called_with()
+
+    def test_on_vertical_space_between_events_click(self):
+        self.controller.config = self.config
+        self.view.GetVerticalSpaceBetweenEvents.return_value = sentinel.SPACE
+        self.controller.on_vertical_space_between_events_click(self.evt)
+        self.config.set_vertical_space_between_events.assert_called_with(sentinel.SPACE)
+
+    def test_on_colorize_weekends(self):
+        self.controller.config = self.config
+        self.view.GetColorizeWeekends.return_value = sentinel.COLORICE_WEEKENDS
+        self.controller.on_colorize_weekends(self.evt)
+        self.config.set_colorize_weekends.assert_called_with(sentinel.COLORICE_WEEKENDS)
+
+    def test_on_skip_s_in_decade_text(self):
+        self.controller.config = self.config
+        self.view.GetSkipSInDecadeText.return_value = sentinel.SKIP_S
+        self.controller.on_skip_s_in_decade_text(self.evt)
+        self.config.set_skip_s_in_decade_text.assert_called_with(sentinel.SKIP_S)
+
+    def test_on_legend_click_ok(self):
+        self.controller.config = self.config
+        self.config.get_legend_font.return_value = FONT
+        self.view.ShowEditFontDialog.return_value = True
+        self.controller.on_legend_click(self.evt)
+        self.config.set_legend_font.assert_called_with(FONT)
+
+    def test_on_legend_click_cancel(self):
+        evt = Mock()
+        self.controller.config = self.config
+        self.config.get_legend_font.return_value = FONT
+        self.view.ShowEditFontDialog.return_value = False
+        self.controller.on_legend_click(evt)
+        self.assertEqual(self.config.set_legend_font.call_count, 0)
 
     def simulate_dialog_opens(self):
         self.controller.on_init(self.config, self.experimental_features)
