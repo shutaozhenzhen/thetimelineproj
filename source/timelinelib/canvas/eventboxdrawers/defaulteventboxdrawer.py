@@ -221,8 +221,6 @@ class DefaultEventBoxDrawer(object):
         if event.get_fuzzy() or event.get_locked():
             text_x += rect.Height / 2
         text_y = rect.Y + INNER_PADDING
-        if text_x < INNER_PADDING:
-            text_x = INNER_PADDING
         self._set_text_foreground_color(dc, event)
         if event.is_container() and EXTENDED_CONTAINER_HEIGHT.enabled():
             EXTENDED_CONTAINER_HEIGHT.draw_container_text_top_adjusted(event.get_text(), dc, rect)
