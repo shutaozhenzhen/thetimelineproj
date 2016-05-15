@@ -210,33 +210,34 @@ class DefaultEventBoxDrawer(object):
     def _draw_text(self, dc, rect, event):
         # Ensure that we can't draw content outside inner rectangle
         if self._there_is_room_for_the_text(rect):
-            # Draw the text (if there is room for it)
-            text_x = rect.X + INNER_PADDING
-            if event.get_fuzzy() or event.get_locked():
-                text_x += rect.Height / 2
-            text_y = rect.Y + INNER_PADDING
-            if text_x < INNER_PADDING:
-                text_x = INNER_PADDING
-            self._set_text_foreground_color(dc, event)
-            if event.is_container() and EXTENDED_CONTAINER_HEIGHT.enabled():
-                EXTENDED_CONTAINER_HEIGHT.draw_container_text_top_adjusted(event.get_text(), dc, rect)
-            else:
-                if self.center_text:
-                    text_x = self._center_text(dc, event, self._get_inner_rect(rect), text_x)
-                dc.SetClippingRect(self._get_inner_rect(rect))
-                dc.DrawText(event.get_text(), text_x, text_y)
-            dc.DestroyClippingRegion()
-
-    def _get_inner_rect(self, rect):
-        return wx.Rect(*rect).Deflate(INNER_PADDING, INNER_PADDING)
+            self._draw_the_text(dc, rect, event)
 
     def _there_is_room_for_the_text(self, rect):
         return self._get_inner_rect(rect).Width > 0
 
+    def _draw_the_text(self, dc, rect, event):
+        text_x = rect.X + INNER_PADDING
+        if event.get_fuzzy() or event.get_locked():
+            text_x += rect.Height / 2
+        text_y = rect.Y + INNER_PADDING
+        if text_x < INNER_PADDING:
+            text_x = INNER_PADDING
+        self._set_text_foreground_color(dc, event)
+        if event.is_container() and EXTENDED_CONTAINER_HEIGHT.enabled():
+            EXTENDED_CONTAINER_HEIGHT.draw_container_text_top_adjusted(event.get_text(), dc, rect)
+        else:
+            if self.center_text:
+                text_x = self._center_text(dc, event, self._get_inner_rect(rect), text_x)
+            dc.SetClippingRect(self._get_inner_rect(rect))
+            dc.DrawText(event.get_text(), text_x, text_y)
+        dc.DestroyClippingRegion()
+
+    def _get_inner_rect(self, rect):
+        return wx.Rect(*rect).Deflate(INNER_PADDING, INNER_PADDING)
+
     def _center_text(self, dc, event, inner_rect, text_x):
         width, _ = dc.GetTextExtent(event.get_text())
         return max(text_x, text_x + (inner_rect.width - width) / 2)
-
 
     def _set_text_foreground_color(self, dc, event):
         try:
