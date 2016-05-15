@@ -225,7 +225,7 @@ class DefaultEventBoxDrawer(object):
     def _draw_normal_text(self, dc, rect, event):
         self._set_text_foreground_color(dc, event)
         self._set_clipping_rect(dc, rect)
-        dc.DrawText(event.get_text(), self._calculate_text_x_pos(dc, rect, event), self._calculate_text_y_pos(rect))
+        dc.DrawText(event.get_text(), self._calc_x_pos(dc, rect, event), self._calc_y_pos(rect))
 
     def _get_inner_rect(self, rect):
         return wx.Rect(*rect).Deflate(INNER_PADDING, INNER_PADDING)
@@ -233,7 +233,7 @@ class DefaultEventBoxDrawer(object):
     def _set_clipping_rect(self, dc, rect):
         dc.SetClippingRect(self._get_inner_rect(rect))
 
-    def _calculate_text_x_pos(self, dc, rect, event):
+    def _calc_x_pos(self, dc, rect, event):
         inner_rect = self._get_inner_rect(rect)
         text_x = inner_rect.X
         if event.get_fuzzy() or event.get_locked():
@@ -242,7 +242,7 @@ class DefaultEventBoxDrawer(object):
             text_x = self._center_text(dc, event, inner_rect, text_x)
         return text_x
 
-    def _calculate_text_y_pos(self, rect):
+    def _calc_y_pos(self, rect):
         return self._get_inner_rect(rect).Y
 
     def _center_text(self, dc, event, inner_rect, text_x):
