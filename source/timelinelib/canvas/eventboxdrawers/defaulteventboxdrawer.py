@@ -216,7 +216,8 @@ class DefaultEventBoxDrawer(object):
         return self._get_inner_rect(rect).Width > 0
 
     def _draw_the_text(self, dc, rect, event):
-        text_x = rect.X + INNER_PADDING
+        inner_rect = self._get_inner_rect(rect)
+        text_x = inner_rect.X
         if event.get_fuzzy() or event.get_locked():
             text_x += rect.Height / 2
         text_y = rect.Y + INNER_PADDING
@@ -227,8 +228,8 @@ class DefaultEventBoxDrawer(object):
             EXTENDED_CONTAINER_HEIGHT.draw_container_text_top_adjusted(event.get_text(), dc, rect)
         else:
             if self.center_text:
-                text_x = self._center_text(dc, event, self._get_inner_rect(rect), text_x)
-            dc.SetClippingRect(self._get_inner_rect(rect))
+                text_x = self._center_text(dc, event, inner_rect, text_x)
+            dc.SetClippingRect(inner_rect)
             dc.DrawText(event.get_text(), text_x, text_y)
         dc.DestroyClippingRegion()
 
