@@ -209,13 +209,6 @@ class DefaultEventBoxDrawer(object):
 
     def _draw_text(self, dc, rect, event):
 
-        def center_text():
-            width, _ = dc.GetTextExtent(event.get_text())
-            if width < inner_rect.width:
-                return text_x + (inner_rect.width - width) / 2
-            else:
-                return text_x
-
         # Ensure that we can't draw content outside inner rectangle
         inner_rect = wx.Rect(*rect)
         inner_rect.Deflate(INNER_PADDING, INNER_PADDING)
@@ -232,10 +225,15 @@ class DefaultEventBoxDrawer(object):
                 EXTENDED_CONTAINER_HEIGHT.draw_container_text_top_adjusted(event.get_text(), dc, rect)
             else:
                 if self.center_text:
-                    text_x = center_text()
+                    text_x = self._center_text(dc, event, inner_rect, text_x)
                 dc.SetClippingRect(inner_rect)
                 dc.DrawText(event.get_text(), text_x, text_y)
             dc.DestroyClippingRegion()
+
+    def _center_text(self, dc, event, inner_rect, text_x):
+        width, _ = dc.GetTextExtent(event.get_text())
+        return max(text_x, text_x + (inner_rect.width - width) / 2)
+
 
     def _set_text_foreground_color(self, dc, event):
         try:
