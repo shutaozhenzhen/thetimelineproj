@@ -211,15 +211,15 @@ class DefaultEventBoxDrawer(object):
 
         def center_text():
             width, _ = dc.GetTextExtent(event.get_text())
-            if width < rect_copy.width:
-                return text_x + (rect_copy.width - width) / 2
+            if width < inner_rect.width:
+                return text_x + (inner_rect.width - width) / 2
             else:
                 return text_x
 
         # Ensure that we can't draw content outside inner rectangle
-        rect_copy = wx.Rect(*rect)
-        rect_copy.Deflate(INNER_PADDING, INNER_PADDING)
-        if rect_copy.Width > 0:
+        inner_rect = wx.Rect(*rect)
+        inner_rect.Deflate(INNER_PADDING, INNER_PADDING)
+        if inner_rect.Width > 0:
             # Draw the text (if there is room for it)
             text_x = rect.X + INNER_PADDING
             if event.get_fuzzy() or event.get_locked():
@@ -233,7 +233,7 @@ class DefaultEventBoxDrawer(object):
             else:
                 if self.center_text:
                     text_x = center_text()
-                dc.SetClippingRect(rect_copy)
+                dc.SetClippingRect(inner_rect)
                 dc.DrawText(event.get_text(), text_x, text_y)
             dc.DestroyClippingRegion()
 
