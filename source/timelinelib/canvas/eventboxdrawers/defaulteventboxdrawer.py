@@ -216,6 +216,7 @@ class DefaultEventBoxDrawer(object):
         return self._get_inner_rect(rect).Width > 0
 
     def _draw_the_text(self, dc, rect, event):
+        self._set_text_foreground_color(dc, event)
         if event.is_container() and EXTENDED_CONTAINER_HEIGHT.enabled():
             EXTENDED_CONTAINER_HEIGHT.draw_container_text_top_adjusted(event.get_text(), dc, rect)
         else:
@@ -223,7 +224,6 @@ class DefaultEventBoxDrawer(object):
         dc.DestroyClippingRegion()
 
     def _draw_normal_text(self, dc, rect, event):
-        self._set_text_foreground_color(dc, event)
         self._set_clipping_rect(dc, rect)
         dc.DrawText(event.get_text(), self._calc_x_pos(dc, rect, event), self._calc_y_pos(rect))
 
@@ -339,3 +339,4 @@ class DefaultEventBoxDrawer(object):
 
     def _get_bitmap(self, name):
         return wx.Bitmap(os.path.join(EVENT_ICONS_DIR, name))
+    
