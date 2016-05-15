@@ -224,10 +224,9 @@ class DefaultEventBoxDrawer(object):
 
     def _draw_normal_text(self, dc, rect, event):
         inner_rect = self._get_inner_rect(rect)
-        text_x = self._calculate_text_x_pos(dc, rect, event)
         self._set_text_foreground_color(dc, event)
         dc.SetClippingRect(inner_rect)
-        dc.DrawText(event.get_text(), text_x, inner_rect.Y)
+        dc.DrawText(event.get_text(), self._calculate_text_x_pos(dc, rect, event), inner_rect.Y)
 
     def _calculate_text_x_pos(self, dc, rect, event):
         inner_rect = self._get_inner_rect(rect)
