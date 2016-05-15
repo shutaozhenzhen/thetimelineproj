@@ -223,10 +223,9 @@ class DefaultEventBoxDrawer(object):
         dc.DestroyClippingRegion()
 
     def _draw_normal_text(self, dc, rect, event):
-        inner_rect = self._get_inner_rect(rect)
         self._set_text_foreground_color(dc, event)
         self._set_clipping_rect(dc, rect)
-        dc.DrawText(event.get_text(), self._calculate_text_x_pos(dc, rect, event), inner_rect.Y)
+        dc.DrawText(event.get_text(), self._calculate_text_x_pos(dc, rect, event), self._calculate_text_y_pos(rect))
 
     def _get_inner_rect(self, rect):
         return wx.Rect(*rect).Deflate(INNER_PADDING, INNER_PADDING)
@@ -243,8 +242,8 @@ class DefaultEventBoxDrawer(object):
             text_x = self._center_text(dc, event, inner_rect, text_x)
         return text_x
 
-    def _get_inner_rect(self, rect):
-        return wx.Rect(*rect).Deflate(INNER_PADDING, INNER_PADDING)
+    def _calculate_text_y_pos(self, rect):
+        return self._get_inner_rect(rect).Y
 
     def _center_text(self, dc, event, inner_rect, text_x):
         width, _ = dc.GetTextExtent(event.get_text())
