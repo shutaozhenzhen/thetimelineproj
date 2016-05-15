@@ -225,8 +225,14 @@ class DefaultEventBoxDrawer(object):
     def _draw_normal_text(self, dc, rect, event):
         inner_rect = self._get_inner_rect(rect)
         self._set_text_foreground_color(dc, event)
-        dc.SetClippingRect(inner_rect)
+        self._set_clipping_rect(dc, rect)
         dc.DrawText(event.get_text(), self._calculate_text_x_pos(dc, rect, event), inner_rect.Y)
+
+    def _get_inner_rect(self, rect):
+        return wx.Rect(*rect).Deflate(INNER_PADDING, INNER_PADDING)
+
+    def _set_clipping_rect(self, dc, rect):
+        dc.SetClippingRect(self._get_inner_rect(rect))
 
     def _calculate_text_x_pos(self, dc, rect, event):
         inner_rect = self._get_inner_rect(rect)
