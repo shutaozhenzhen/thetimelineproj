@@ -29,6 +29,10 @@ GUI:
 * A checkmark can now be displayed in front of the event text when the event is done (100% progress).
   (`#134 <https://sourceforge.net/p/thetimelineproj/backlog/134/>`_)
 
+Bug fixes:
+
+* Bosparanian date format craches.
+
 Version 1.10.0
 --------------
 
