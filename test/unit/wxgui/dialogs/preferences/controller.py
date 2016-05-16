@@ -90,6 +90,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_use_inertial_scrolling.return_value = False
         self.config.get_never_show_period_events_as_point_events.return_value = True
         self.config.get_center_event_texts.return_value = True
+        self.config.get_display_checkmark_on_events_done.return_value = False
         self.config.get_uncheck_time_for_new_events.return_value = False
         self.config.minor_strip_divider_line_colour = (100, 100, 100)
         self.config.major_strip_divider_line_colour = (100, 100, 100)
