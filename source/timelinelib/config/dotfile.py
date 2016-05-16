@@ -77,6 +77,7 @@ DATE_FORMAT = "date_format"
 VERTCAL_SPACE_BETWEEN_EVENTS = "vertical_space_between_events"
 COLORIZE_WEEKENDS = "colorize_weekens"
 SKIP_S_IN_DECADE_TEXT = "skip_s_in_decade_text"
+DISPLAY_CHECKMARK_ON_EVENTS_DONE = "display_checkmark_on_events-done"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -114,6 +115,7 @@ DEFAULTS = {
     VERTCAL_SPACE_BETWEEN_EVENTS: "5",
     COLORIZE_WEEKENDS: "False",
     SKIP_S_IN_DECADE_TEXT: "False",
+    DISPLAY_CHECKMARK_ON_EVENTS_DONE: "False"
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -474,6 +476,13 @@ class Config(Observable):
 
     def set_skip_s_in_decade_text(self, value):
         self.config_parser.set(DEFAULTSECT, SKIP_S_IN_DECADE_TEXT, str(value))
+        self._notify()
+
+    def get_display_checkmark_on_events_done(self):
+        return self.config_parser.getboolean(DEFAULTSECT, DISPLAY_CHECKMARK_ON_EVENTS_DONE)
+
+    def set_display_checkmark_on_events_done(self, value):
+        self.config_parser.set(DEFAULTSECT, DISPLAY_CHECKMARK_ON_EVENTS_DONE, str(value))
         self._notify()
 
     def _toStr(self, value):

@@ -44,6 +44,7 @@ class ViewProperties(Observable):
         self.locked_icon = None
         self.hyperlink_icon = None
         self.skip_s_in_decade_text = False
+        self.display_checkmark_on_events_done = False
 
     def get_fuzzy_icon(self):
         return self.fuzzy_icon
@@ -68,6 +69,12 @@ class ViewProperties(Observable):
 
     def set_skip_s_in_decade_text(self, value):
         self.skip_s_in_decade_text = value
+
+    def get_display_checkmark_on_events_done(self):
+        return self.display_checkmark_on_events_done
+
+    def set_display_checkmark_on_events_done(self, value):
+        self.display_checkmark_on_events_done = value
 
     def set_use_fixed_event_vertical_pos(self, value):
         self.fixed_event_vertical_pos = value

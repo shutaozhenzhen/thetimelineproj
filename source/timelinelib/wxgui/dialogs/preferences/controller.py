@@ -51,6 +51,9 @@ class PreferencesDialogController(Controller):
     def on_center_text_changed(self, event):
         self.config.set_center_event_texts(event.IsChecked())
 
+    def on_display_checkmark_on_events_done_changed(self, event):
+        self.config.set_display_checkmark_on_events_done(event.IsChecked())
+
     def on_week_start_changed(self, event):
         self.config.set_week_start(self._index_week(event.GetSelection()))
 
@@ -127,6 +130,7 @@ class PreferencesDialogController(Controller):
         self.view.SetVerticalSpaceBetweenEvents(self.config.get_vertical_space_between_events())
         self.view.SetColorizeWeekends(self.config.get_colorize_weekends())
         self.view.SetSkipSInDecadeText(self.config.get_skip_s_in_decade_text())
+        self.view.SetDisplayCheckmarkOnEventsDone(self.config.get_display_checkmark_on_events_done())
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:
