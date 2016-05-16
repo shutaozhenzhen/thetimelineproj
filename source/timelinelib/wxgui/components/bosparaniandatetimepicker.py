@@ -114,7 +114,8 @@ class BosparanianDatePicker(wx.TextCtrl):
         return self.GetValue()
 
     def set_date_string(self, date_string):
-        return self.SetValue(date_string)
+        date_str, bc_year = date_string
+        return self.SetValue(date_str)
 
     def _bind_events(self):
         def on_set_focus(evt):

@@ -148,7 +148,7 @@ class BosparanianTimeType(GregorianTimeType):
     def supports_saved_now(self):
         return True
 
-    def set_saved_now(self,time):
+    def set_saved_now(self, time):
         self.saved_now = time
 
     def now(self):

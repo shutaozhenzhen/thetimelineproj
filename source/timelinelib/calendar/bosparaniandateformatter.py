@@ -20,21 +20,22 @@ from timelinelib.calendar.dateformatter import DateFormatter
 from timelinelib.calendar.bosparanian_monthnames import bosp_abbreviated_name_of_month
 from timelinelib.calendar.bosparanian_monthnames import bosp_month_from_abbreviated_name
 
+
 class BosparanianDateFormatter(DateFormatter):
 
     def __init__(self):
         self._separator = "-"
 
     def format(self, year, month, day):
-        mstr=bosp_abbreviated_name_of_month(month)
-        return "%4d-%3s-%02d" % (year, mstr, day)
+        mstr = bosp_abbreviated_name_of_month(month)
+        return ("%4d-%3s-%02d" % (year, mstr, day), self._is_bc_year(year))
 
     def parse(self, dt):
         try:
             year, mstr, day = dt.rsplit(self._separator, 2)
         except:
             raise ValueError()
-        month=bosp_month_from_abbreviated_name(mstr)
+        month = bosp_month_from_abbreviated_name(mstr)
         return int(year), int(month), int(day)
 
     def separator(self):
@@ -45,3 +46,6 @@ class BosparanianDateFormatter(DateFormatter):
         month = 1
         day = 2
         return year, month, day
+
+    def _is_bc_year(self, year):
+        return year <= 0

@@ -26,6 +26,8 @@ from timelinelib.wxgui.utils import get_user_ack
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.calendar.dateformatparser import DateFormatParser
 from timelinelib.calendar import set_date_formatter
+from timelinelib.time.bosparaniantime import BosparanianTimeType
+from timelinelib.calendar import BosparanianDateFormatter
 
 
 class LockedException(Exception):
@@ -211,12 +213,15 @@ The lockfile is found at: %s""") % lockpath
 
     def _set_date_formatter(self, time_type):
         def set_date_formatter_to_use():
-            parser = DateFormatParser().parse(self.config.get_date_format())
-            date_formatter = DefaultDateFormatter()
-            date_formatter.set_separators(*parser.get_separators())
-            date_formatter.set_region_order(*parser.get_region_order())
-            date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())
-            set_date_formatter(date_formatter)
+            if time_type.get_name() == BosparanianTimeType().get_name():
+                set_date_formatter(BosparanianDateFormatter())
+            else:
+                parser = DateFormatParser().parse(self.config.get_date_format())
+                date_formatter = DefaultDateFormatter()
+                date_formatter.set_separators(*parser.get_separators())
+                date_formatter.set_region_order(*parser.get_region_order())
+                date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())
+                set_date_formatter(date_formatter)
 
         if time_type is not None and time_type.is_date_time_type():
             set_date_formatter_to_use()
