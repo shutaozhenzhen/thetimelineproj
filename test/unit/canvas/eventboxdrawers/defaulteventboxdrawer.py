@@ -94,13 +94,14 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.event.get_progress.return_value = 100
         rect = wx.Rect(0, 0, WIDTH, HEIGHT)
         self.drawer.center_text = False
-        self.drawer.use_checkmark_when_done = True
+        self.drawer.view_properties.get_display_checkmark_on_events_done.return_value = True
         self.drawer._draw_text(self.dc, rect, self.event)
         self.dc.SetClippingRect.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
         self.dc.DrawText.assert_called_with(u"\u2714" + DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
 
     def setUp(self):
         self.drawer = DefaultEventBoxDrawer()
+        self.drawer.view_properties = Mock()
         self.dc = Mock()
         self.dc.GetTextExtent.return_value = (50, 0)
         self.event = Mock()
