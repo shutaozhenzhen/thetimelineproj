@@ -37,6 +37,7 @@ GRAY = (200, 200, 200)
 class DefaultEventBoxDrawer(object):
 
     def draw(self, dc, scene, rect, event, view_properties):
+        self.use_checkmark_when_done = True
         self.view_properties = view_properties
         selected = view_properties.is_selected(event)
         self.center_text = scene.center_text()
@@ -225,7 +226,13 @@ class DefaultEventBoxDrawer(object):
 
     def _draw_normal_text(self, dc, rect, event):
         self._set_clipping_rect(dc, rect)
-        dc.DrawText(event.get_text(), self._calc_x_pos(dc, rect, event), self._calc_y_pos(rect))
+        dc.DrawText(self._get_text(event), self._calc_x_pos(dc, rect, event), self._calc_y_pos(rect))
+
+    def _get_text(self, event):
+        if event.get_progress() == 100 and self.use_checkmark_when_done:
+            return u"\u2714" + event.get_text()
+        else:
+            return event.get_text()
 
     def _get_inner_rect(self, rect):
         return wx.Rect(*rect).Deflate(INNER_PADDING, INNER_PADDING)
@@ -257,7 +264,7 @@ class DefaultEventBoxDrawer(object):
         return self._get_inner_rect(rect).Y
 
     def _center_text(self, dc, event, inner_rect, text_x):
-        width, _ = dc.GetTextExtent(event.get_text())
+        width, _ = dc.GetTextExtent(self._get_text(event))
         return max(text_x, text_x + (inner_rect.width - width) / 2)
 
     def _set_text_foreground_color(self, dc, event):
