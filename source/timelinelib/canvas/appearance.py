@@ -47,6 +47,7 @@ class Appearance(Observable):
         self._build_property("hyperlink_icon", "hyperlink.png")
         self._build_property("vertical_space_between_events", 5)
         self._build_property("skip_s_in_decade_text", False)
+        self._build_property("display_checkmark_on_events_done", False)
 
     def _build_property(self, name, initial_value):
         def getter():

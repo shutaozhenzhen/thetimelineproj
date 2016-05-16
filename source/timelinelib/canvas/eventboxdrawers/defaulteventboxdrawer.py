@@ -37,7 +37,6 @@ GRAY = (200, 200, 200)
 class DefaultEventBoxDrawer(object):
 
     def draw(self, dc, scene, rect, event, view_properties):
-        self.use_checkmark_when_done = True
         self.view_properties = view_properties
         selected = view_properties.is_selected(event)
         self.center_text = scene.center_text()
@@ -229,7 +228,7 @@ class DefaultEventBoxDrawer(object):
         dc.DrawText(self._get_text(event), self._calc_x_pos(dc, rect, event), self._calc_y_pos(rect))
 
     def _get_text(self, event):
-        if event.get_progress() == 100 and self.use_checkmark_when_done:
+        if event.get_progress() == 100 and self.view_properties.get_display_checkmark_on_events_done():
             return u"\u2714" + event.get_text()
         else:
             return event.get_text()

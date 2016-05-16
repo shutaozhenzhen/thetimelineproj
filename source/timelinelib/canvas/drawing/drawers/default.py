@@ -106,6 +106,7 @@ class DefaultDrawingAlgorithm(Drawer):
         view_properties.set_locked_icon(appearance.get_locked_icon())
         view_properties.set_hyperlink_icon(appearance.get_hyperlink_icon())
         view_properties.set_skip_s_in_decade_text(appearance.get_skip_s_in_decade_text())
+        view_properties.set_display_checkmark_on_events_done(appearance.get_display_checkmark_on_events_done())
         self.minor_strip_pen.SetColour(appearance.get_minor_strip_divider_line_colour())
         self.major_strip_pen.SetColour(appearance.get_major_strip_divider_line_colour())
         self.now_pen.SetColour(appearance.get_now_line_colour())

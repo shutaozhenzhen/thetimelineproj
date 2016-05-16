@@ -57,6 +57,11 @@ class PreferencesDialog(Dialog):
                             label="$(center_text_text)"
                         />
                         <CheckBox
+                            name="display_checkmark_on_events_done_checkbox"
+                            event_EVT_CHECKBOX="on_display_checkmark_on_events_done_changed"
+                            label="$(display_checkmark_on_events_done_text)"
+                        />
+                        <CheckBox
                             name="uncheck_time_for_new_events"
                             event_EVT_CHECKBOX="on_uncheck_time_for_new_events"
                             label="$(uncheck_time_for_new_events_text)"
@@ -285,6 +290,7 @@ class PreferencesDialog(Dialog):
             "vertical_space_between_events_text": _("Vertical space between Events (px)"),
             "colorize_weekends_text": _("Colorize weekends"),
             "skip_s_in_decade_text_text": _("Skip s in decade text"),
+            "display_checkmark_on_events_done_text": _("Display checkmark when events are done"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
 
@@ -333,6 +339,9 @@ class PreferencesDialog(Dialog):
 
     def SetCenterTextCheckboxValue(self, value):
         self.center_text_checkbox.SetValue(value)
+
+    def SetDisplayCheckmarkOnEventsDone(self, value):
+        self.display_checkmark_on_events_done_checkbox.SetValue(value)
 
     def SetWeekStartSelection(self, value):
         self.week_start_choice.Select(value)
