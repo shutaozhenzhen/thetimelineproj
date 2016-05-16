@@ -20,11 +20,14 @@ Data import:
 * Import options can now be specified when importing events, from ics files.
   (`#141 <https://sourceforge.net/p/thetimelineproj/backlog/141/>`_)
 
-
 Translations:
 
 * Made label texts in 'Export to Listbox', translatable.
   (`#147 <https://sourceforge.net/p/thetimelineproj/backlog/147/>`_)
+
+GUI:
+* A checkmark can now be displayed in front of the event text when the event is done (100% progress).
+  (`#134 <https://sourceforge.net/p/thetimelineproj/backlog/134/>`_)
 
 Version 1.10.0
 --------------
