@@ -87,6 +87,18 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.dc.SetClippingRect.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
         self.dc.DrawText.assert_called_with(DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
 
+    def test_if_checkmark_is_to_be_used_it_is_placed_as_first_char_in_text(self):
+        WIDTH = 100
+        HEIGHT = 20
+        self.event.get_locked.return_value = True
+        self.event.get_progress.return_value = 100
+        rect = wx.Rect(0, 0, WIDTH, HEIGHT)
+        self.drawer.center_text = False
+        self.drawer.use_checkmark_when_done = True
+        self.drawer._draw_text(self.dc, rect, self.event)
+        self.dc.SetClippingRect.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
+        self.dc.DrawText.assert_called_with(u"\u2714" + DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
+
     def setUp(self):
         self.drawer = DefaultEventBoxDrawer()
         self.dc = Mock()
