@@ -26,12 +26,16 @@ Translations:
   (`#147 <https://sourceforge.net/p/thetimelineproj/backlog/147/>`_)
 
 GUI:
+
 * A checkmark can now be displayed in front of the event text when the event is done (100% progress).
   (`#134 <https://sourceforge.net/p/thetimelineproj/backlog/134/>`_)
 
 Bug fixes:
 
 * Bosparanian date format craches.
+
+* Timeline menu items are now disabled when no timeline is opened.
+  (`#148 <https://sourceforge.net/p/thetimelineproj/backlog/148/>`_)
 
 Version 1.10.0
 --------------
