@@ -499,6 +499,8 @@ class GuiCreator(object):
         self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_CATEGORY_ON_WITHOUT)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_EDIT_CATEGORIES)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_READONLY)
+        self._add_to_controller_requiring_writeable_timeline(menu, ID_EDIT_ERAS)
+        self._add_to_controller_requiring_writeable_timeline(menu, ID_COMPRESS)
 
     def _add_to_controller_requiring_writeable_timeline(self, menu, item_id):
         mnu_item = menu.FindItemById(item_id)
