@@ -45,18 +45,6 @@ class describe_config(TmpDirTestCase):
         self.config.set_window_size((3, 20))
         self.assertEqual(self.config.get_window_size(), (3, 20))
 
-    def test_window_maximized_can_be_read_after_stored(self):
-        self.config.set_window_maximized(True)
-        self.assertEqual(self.config.get_window_maximized(), True)
-
-    def test_show_sidebar_can_be_read_after_stored(self):
-        self.config.set_show_sidebar(False)
-        self.assertEqual(self.config.get_show_sidebar(), False)
-
-    def test_show_legend_can_be_read_after_stored(self):
-        self.config.set_show_legend(False)
-        self.assertEqual(self.config.get_show_legend(), False)
-
     def test_sidebar_width_can_be_read_after_stored(self):
         self.config.set_sidebar_width(20)
         self.assertEqual(self.config.get_sidebar_width(), 20)
@@ -65,25 +53,9 @@ class describe_config(TmpDirTestCase):
         self.config.append_recently_opened(u"foo")
         self.assertEqual(self.config.get_recently_opened(), [abspath(u"foo")])
 
-    def test_open_recent_at_startup_can_be_read_after_stored(self):
-        self.config.set_open_recent_at_startup(False)
-        self.assertEqual(self.config.get_open_recent_at_startup(), False)
-
-    def test_balloon_on_hover_can_be_read_after_stored(self):
-        self.config.set_balloon_on_hover(False)
-        self.assertEqual(self.config.get_balloon_on_hover(), False)
-
     def test_week_start_can_be_read_after_stored(self):
         self.config.set_week_start("sunday")
         self.assertEqual(self.config.get_week_start(), "sunday")
-
-    def test_inertial_scrolling_can_be_read_after_stored(self):
-        self.config.set_use_inertial_scrolling(False)
-        self.assertEqual(self.config.get_use_inertial_scrolling(), False)
-
-    def test_center_event_texts_can_be_read_after_stored(self):
-        self.config.set_center_event_texts(True)
-        self.assertEqual(self.config.get_center_event_texts(), True)
 
     def test_minor_strip_divider_line_colour_can_be_read_after_set(self):
         self.config.minor_strip_divider_line_colour = (100, 0, 0)
@@ -144,6 +116,32 @@ class describe_config(TmpDirTestCase):
         def set_invalid_week():
             self.config.set_week_start("friday")
         self.assertRaises(ValueError, set_invalid_week)
+
+    def test_boolean_settings_can_be_set_and_reset(self):
+        settings = ["window_maximized",
+                    "show_toolbar",
+                    "show_sidebar",
+                    "show_legend",
+                    "open_recent_at_startup",
+                    "balloon_on_hover",
+                    "use_inertial_scrolling",
+                    "never_show_period_events_as_point_events",
+                    "draw_period_events_to_right",
+                    "event_editor_show_period",
+                    "event_editor_show_time",
+                    "uncheck_time_for_new_events",
+                    "center_event_texts",
+                    "text_below_icon",
+                    "colorize_weekends",
+                    "skip_s_in_decade_text",
+                    "display_checkmark_on_events_done"]
+        for setting in settings:
+            getter = getattr(self.config, "get_%s" % setting)
+            setter = getattr(self.config, "set_%s" % setting)
+            setter(True)
+            self.assertTrue(getter())
+            setter(False)
+            self.assertFalse(getter())
 
     def setUp(self):
         TmpDirTestCase.setUp(self)
