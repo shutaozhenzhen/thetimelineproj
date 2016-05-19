@@ -234,7 +234,12 @@ class DefaultEventBoxDrawer(object):
             return event.get_text()
 
     def _get_inner_rect(self, rect):
-        return wx.Rect(*rect).Deflate(INNER_PADDING, INNER_PADDING)
+        # Under windows with wx 3.0 the following lined doesn't work !!!
+        # return wx.Rect(*rect).Deflate(INNER_PADDING, INNER_PADDING)
+        # The x-coordinate is corrupted
+        r = wx.Rect(*rect)
+        r.Deflate(INNER_PADDING, INNER_PADDING)
+        return r
 
     def _set_clipping_rect(self, dc, rect):
         dc.SetClippingRect(self._get_inner_rect(rect))
@@ -345,4 +350,3 @@ class DefaultEventBoxDrawer(object):
 
     def _get_bitmap(self, name):
         return wx.Bitmap(os.path.join(EVENT_ICONS_DIR, name))
-    
