@@ -80,10 +80,7 @@ class EditEventDialogController(Controller):
         self._set_position_and_size(self.reduced_pos, self.reduced_size)
 
     def on_ok_clicked(self, event):
-        try:
-            self._create_or_update_event()
-        except ValueError:
-            self.view.DisplayErrorMessage(_("Invalid Date or Time"))
+        self._create_or_update_event()
 
     def _create_or_update_event(self):
         try:
