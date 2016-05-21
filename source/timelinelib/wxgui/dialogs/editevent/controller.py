@@ -219,23 +219,29 @@ class EditEventDialogController(Controller):
     def _update_event(self):
         container_selected = (self.container is not None)
         if container_selected:
-            if self.event.is_subevent():
-                if self.event.container == self.container:
-                    self.event.update(self.start, self.end, self.name,
-                                      self.category, self.fuzzy, self.locked,
-                                      self.ends_today)
-                    self.container.update_container(self.event)
-                else:
-                    self._change_container()
-            else:
-                self._add_event_to_container()
+            self._update_event_when_container_selected()
         else:
-            if self.event.is_subevent():
-                self._remove_event_from_container()
-            else:
+            self._update_event_when_container_not_selected()
+
+    def _update_event_when_container_selected(self):
+        if self.event.is_subevent():
+            if self.event.container == self.container:
                 self.event.update(self.start, self.end, self.name,
                                   self.category, self.fuzzy, self.locked,
                                   self.ends_today)
+                self.container.update_container(self.event)
+            else:
+                self._change_container()
+        else:
+            self._add_event_to_container()
+
+    def _update_event_when_container_not_selected(self):
+        if self.event.is_subevent():
+            self._remove_event_from_container()
+        else:
+            self.event.update(self.start, self.end, self.name,
+                              self.category, self.fuzzy, self.locked,
+                              self.ends_today)
 
     def _remove_event_from_container(self):
         self.event.container.unregister_subevent(self.event)
