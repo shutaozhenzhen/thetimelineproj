@@ -232,7 +232,6 @@ class EditEventDialogController(Controller):
         else:
             if self.event.is_subevent():
                 self._remove_event_from_container()
-                pass
             else:
                 self.event.update(self.start, self.end, self.name,
                                   self.category, self.fuzzy, self.locked,
