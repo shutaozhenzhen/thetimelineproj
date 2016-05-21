@@ -66,7 +66,7 @@ class EditEventDialogController(Controller):
 
     def on_container_changed(self, event):
         self._enable_disable_ends_today()
-        self._enable_disable_locked()
+        self._enable_disable_locked(EXTENDED_CONTAINER_STRATEGY.enabled())
 
     def on_enlarge_click(self, event):
         self.reduced_size = self.view.GetSize()
@@ -329,8 +329,8 @@ class EditEventDialogController(Controller):
                   self._start_is_in_history())
         self.view.EnableEndsToday(enable)
 
-    def _enable_disable_locked(self):
-        if self.event is not None and EXTENDED_CONTAINER_STRATEGY.enabled():
+    def _enable_disable_locked(self, extended_container_strategy_enabled):
+        if self.event is not None and extended_container_strategy_enabled:
             enable = not self.event.is_container()
         else:
             enable = self._container_not_selected()
