@@ -88,6 +88,8 @@ class EditEventDialogTestCase(UnitTestCase):
             start,
             end,
             event)
+        self.view.GetStart.return_value = start
+        self.view.GetEnd.return_value = end
 
     def when_editor_opened_with_num(self, start, end, event):
         self.controller.on_init(
@@ -469,6 +471,21 @@ class describe_saving_new(EditEventDialogTestCase, describe_saving):
         EditEventDialogTestCase.setUp(self)
         self.when_editing_a_new_event()
 
+    def test_dialog_closes_after_saving(self):
+        self.when_editor_opened_with_time("1 Jan 2010")
+        self.view.IsAddMoreChecked.return_value = False
+        self.controller.opened_from_menu = False
+        self.simulate_user_clicks_ok()
+        self.view.EndModalOk.assert_called_with()
+
+    def test_dialog_closes_after_saving_and_pos_size_data_saved_to_config(self):
+        self.when_editor_opened_with_time("1 Jan 2010")
+        self.view.IsAddMoreChecked.return_value = False
+        self.controller.opened_from_menu = True
+        self.simulate_user_clicks_ok()
+        self.view.GetShowPeriod.assert_called_with()
+        self.view.GetShowTime.assert_called_with()
+        self.view.EndModalOk.assert_called_with()
 
 class describe_saving_existing(EditEventDialogTestCase, describe_saving):
 
@@ -536,6 +553,15 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         self.controller._update_event()
         self.assertEqual(self.controller.container.time_period.end_time, today)
 
+    def test_container_allows_ends_today(self):
+        self.view.GetContainer.return_value = None
+        self.assertTrue(self.controller._container_allows_ends_today())
+
+    def test_start_is_in_history(self):
+        self.controller.event = Mock()
+        self.controller.start = None
+        self.assertFalse(self.controller._start_is_in_history())
+
 
 class describe_period_selection(EditEventDialogTestCase):
 
@@ -589,3 +615,81 @@ class describe_changing_container(EditEventDialogTestCase):
         self.simulate_container_changed()
         self.assertEqual(1, self.view.EnableEndsToday.call_count)
         self.assertEqual(1, self.view.EnableLocked.call_count)
+
+    def test_max_cid(self):
+        MAX_CID = 99
+        container = Mock()
+        container.cid.return_value = MAX_CID - 1
+        self.controller.timeline = Mock()
+        self.controller.timeline.get_containers.return_value = [container]
+        self.controller.container = container
+        self.controller._add_new_container()
+        container.set_cid.assert_called_with(MAX_CID)
+
+
+class describe_exceptions(EditEventDialogTestCase):
+
+    def test_start_changed(self):
+        self.when_editing_a_new_event()
+        self.controller.start = human_time_to_gregorian("1 Jan 2010")
+        self.controller.end = human_time_to_gregorian("1 Jan 2010")
+        start = human_time_to_gregorian("1 Jan 2009")
+        try:
+            self.controller._verify_that_time_has_not_been_changed(start, self.controller.end)
+            self.fail("Unexpected ok")
+        except ValueError:
+            self.view.SetStart.assert_called_with(self.controller.start)
+            self.view.DisplayInvalidStart.assert_called_with("#You can't change time when the Event is locked#")
+
+    def test_end_changed(self):
+        self.when_editing_a_new_event()
+        self.controller.start = human_time_to_gregorian("1 Jan 2010")
+        self.controller.end = human_time_to_gregorian("1 Jan 2010")
+        end = human_time_to_gregorian("1 Jan 2011")
+        try:
+            self.controller._verify_that_time_has_not_been_changed(self.controller.start, end)
+            self.fail("Unexpected ok")
+        except ValueError:
+            self.view.SetStart.assert_called_with(self.controller.start)
+            self.view.DisplayInvalidStart.assert_called_with("#You can't change time when the Event is locked#")
+
+    def test_invalid_start(self):
+        try:
+            self.controller._validate_and_save_start(None)
+            self.fail("Unexpected ok")
+        except ValueError:
+            pass
+
+    def test_invalid_end(self):
+        try:
+            self.controller._validate_and_save_end(None)
+            self.fail("Unexpected ok")
+        except ValueError:
+            pass
+
+    def test_ends_today(self):
+        self.controller.time_type = Mock()
+        self.controller.time_type.now.return_value = 0
+        self.controller.ends_today = True
+        self.controller.start = 1
+        try:
+            self.controller._validate_ends_today()
+            self.fail("Unexpected ok")
+        except ValueError:
+            self.view.DisplayErrorMessage.assert_called_with("#Start time > Now.#")
+
+    def test_save_to_db(self):
+        e = Exception("")
+        self.controller.event_repository = Mock()
+        self.controller.event_repository.save.side_effect = e
+        self.controller.event = Mock()
+        self.controller._save_event_to_db()
+        self.view.HandleDbError.assert_called_with(e)
+
+    def test_save_container_to_db(self):
+        e = Exception("")
+        self.controller.event_repository = Mock()
+        self.controller.event_repository.save.side_effect = e
+        self.controller.container = Mock()
+        self.controller._save_container_to_db()
+        self.view.HandleDbError.assert_called_with(e)
