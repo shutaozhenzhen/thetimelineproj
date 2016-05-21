@@ -309,6 +309,12 @@ class describe_locked_checkbox(EditEventDialogTestCase):
         self.simulate_user_uncheckes_locked_checkbox()
         self.view.EnableEndsToday.assert_called_with(False)
 
+    def test_enable_disable_locked(self):
+        self.controller.event = Mock()
+        self.controller.event.is_container.return_value = False
+        self.controller._enable_disable_locked(True)
+        self.view.EnableLocked.assert_called_with(True)
+
 
 class describe_start_is_in_history(EditEventDialogTestCase):
 
@@ -561,6 +567,36 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         self.controller.event = Mock()
         self.controller.start = None
         self.assertFalse(self.controller._start_is_in_history())
+
+    def test_update_event_delete(self):
+        self.when_editing_a_new_event()
+        self.controller.container = Mock()
+        self.controller.event = Mock()
+        self.controller.timeline = Mock()
+        self.controller.timeline.get_containers.return_value = []
+        self.controller.event.is_subevent.return_value = False
+        self.controller._update_event()
+        self.assertEqual(1, self.controller.timeline.delete_event.call_count)
+
+    def test_update_event_register(self):
+        self.when_editing_a_new_event()
+        self.controller.container = Mock()
+        self.controller.event = Mock()
+        self.controller.event.container = Mock()
+        self.controller.timeline = Mock()
+        self.controller.timeline.get_containers.return_value = []
+        self.controller.event.is_subevent.return_value = True
+        self.controller._update_event()
+        self.controller.container.register_subevent.asert_called_with(self.controller.event)
+
+    def test_update_event_(self):
+        self.when_editing_a_new_event()
+        self.controller.container = None
+        self.controller.event = Mock()
+        self.controller.timeline = Mock()
+        self.controller.event.is_subevent.return_value = True
+        self.controller._update_event()
+        self.assertEqual(1, self.controller.timeline.delete_event.call_count)
 
 
 class describe_period_selection(EditEventDialogTestCase):
