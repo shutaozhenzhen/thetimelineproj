@@ -114,6 +114,32 @@ class EditEventDialogTestCase(UnitTestCase):
     def simulate_user_clicks_ok(self):
         self.controller.on_ok_clicked(None)
 
+    def simulate_user_checkes_locked_checkbox(self):
+        evt = Mock()
+        self.view.GetContainer.return_value = None
+        self.view.GetLocked.return_value = False
+        self.controller.on_locked_checkbox_changed(evt)
+
+    def simulate_user_uncheckes_locked_checkbox(self):
+        evt = Mock()
+        self.view.GetContainer.return_value = None
+        self.view.GetLocked.return_value = True
+        self.controller.on_locked_checkbox_changed(evt)
+
+    def simulate_user_checkes_show_time_checkbox(self):
+        event = Mock()
+        event.IsChecked.return_value = True
+        self.controller.on_show_time_checkbox_changed(event)
+
+    def simulate_user_uncheckes_show_time_checkbox(self):
+        event = Mock()
+        event.IsChecked.return_value = False
+        self.controller.on_show_time_checkbox_changed(event)
+
+    def simulate_container_changed(self):
+        evt = Mock()
+        self.controller.on_container_changed(evt)
+
     def simulate_user_clicks_period_checkbox(self, checked=True):
         event = Mock()
         event.IsChecked.return_value = checked
@@ -126,6 +152,18 @@ class EditEventDialogTestCase(UnitTestCase):
 
     def simulate_ends_today_checked(self, today):
         self.controller.end = today
+
+    def simulate_user_clicks_enlarge_button(self, enlarged=True):
+        import wx
+        app = wx.App()
+        app.MainLoop()
+        evt = Mock()
+        if enlarged:
+            self.controller.reduced_size = sentinel.REDUCE_SIZE
+            self.controller.reduced_pos = sentinel.REDUCE_POS
+            self.controller.on_reduce_click(evt)
+        else:
+            self.controller.on_enlarge_click(evt)
 
     def assert_start_time_set_to(self, time):
         self.view.SetStart.assert_called_with(human_time_to_gregorian(time))
@@ -230,6 +268,12 @@ class describe_time_fields(EditEventDialogTestCase):
         self.when_editor_opened_with_time("1 Jan 2010 15:30")
         self.view.SetShowTime.assert_called_with(True)
 
+    def test_show_time_click_changes_view(self):
+        self.simulate_user_checkes_show_time_checkbox()
+        self.view.SetShowTime.assert_called_with(True)
+        self.simulate_user_uncheckes_show_time_checkbox()
+        self.view.SetShowTime.assert_called_with(False)
+
 
 class describe_fuzzy_checkbox(EditEventDialogTestCase):
 
@@ -255,6 +299,13 @@ class describe_locked_checkbox(EditEventDialogTestCase):
         event.get_locked.return_value = sentinel.LOCKED
         self.when_editor_opened_with_event(event)
         self.view.SetLocked.assert_called_with(sentinel.LOCKED)
+
+    def test_when_locked_checked_view_changes(self):
+        self.when_editing_a_new_event()
+        self.simulate_user_checkes_locked_checkbox()
+        self.view.EnableEndsToday.assert_called_with(True)
+        self.simulate_user_uncheckes_locked_checkbox()
+        self.view.EnableEndsToday.assert_called_with(False)
 
 
 class describe_start_is_in_history(EditEventDialogTestCase):
@@ -497,6 +548,15 @@ class describe_period_selection(EditEventDialogTestCase):
         self.view.ShowToTime.assert_called_with(sentinel.STATE)
         self.view.SetEnd.assert_called_with(self.view.GetStart() + delta_from_days(1))
 
+    def test_period_can_be_turned_on_even_when_end_time_type_is_unexpected(self):
+        event = Mock()
+        self.when_editor_opened_with_event(event)
+        self.simulate_user_enters_start_time("1 Jan 2010")
+        self.simulate_user_enters_end_time("1 Jan 2010")
+        self.view.SetEnd.side_effect = TypeError()
+        self.simulate_user_clicks_period_checkbox(sentinel.STATE)
+        self.view.ShowToTime.assert_called_with(sentinel.STATE)
+
     def test_period_can_be_turned_on_for_numtime_timeline(self):
         event = Mock()
         self.when_editor_opened_with_num_event(event)
@@ -505,3 +565,27 @@ class describe_period_selection(EditEventDialogTestCase):
         self.simulate_user_clicks_period_checkbox(sentinel.STATE)
         self.view.ShowToTime.assert_called_with(sentinel.STATE)
         self.view.SetEnd.assert_called_with(2)
+
+
+class describe_enlarging(EditEventDialogTestCase):
+
+    def test_enlarging_click_changes_pos_and_size(self):
+        self.when_editing_a_new_event()
+        self.simulate_user_clicks_enlarge_button(enlarged=False)
+        self.assertEqual(1, self.view.SetPosition.call_count)
+        self.assertEqual(1, self.view.SetSize.call_count)
+
+    def test_reduce_click_changes_pos_and_size(self):
+        self.when_editing_a_new_event()
+        self.simulate_user_clicks_enlarge_button(enlarged=True)
+        self.view.SetPosition.assert_called_with(sentinel.REDUCE_POS)
+        self.view.SetSize.assert_called_with(sentinel.REDUCE_SIZE)
+
+
+class describe_changing_container(EditEventDialogTestCase):
+
+    def test(self):
+        self.when_editing_a_new_event()
+        self.simulate_container_changed()
+        self.assertEqual(1, self.view.EnableEndsToday.call_count)
+        self.assertEqual(1, self.view.EnableLocked.call_count)
