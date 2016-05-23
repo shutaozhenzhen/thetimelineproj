@@ -90,6 +90,8 @@ class EditEventDialogTestCase(UnitTestCase):
             event)
         self.view.GetStart.return_value = start
         self.view.GetEnd.return_value = end
+        self.view.GetContainer.return_value = None
+        self.view.IsAddMoreChecked.return_value = False
 
     def when_editor_opened_with_num(self, start, end, event):
         self.controller.on_init(
@@ -115,6 +117,9 @@ class EditEventDialogTestCase(UnitTestCase):
 
     def simulate_user_clicks_ok(self):
         self.controller.on_ok_clicked(None)
+
+    def simulate_user_clicks_save_and_duplicate(self):
+        self.controller.on_duplicate(Mock())
 
     def simulate_user_checkes_locked_checkbox(self):
         evt = Mock()
@@ -493,6 +498,7 @@ class describe_saving_new(EditEventDialogTestCase, describe_saving):
         self.view.GetShowTime.assert_called_with()
         self.view.EndModalOk.assert_called_with()
 
+
 class describe_saving_existing(EditEventDialogTestCase, describe_saving):
 
     def setUp(self):
@@ -729,3 +735,11 @@ class describe_exceptions(EditEventDialogTestCase):
         self.controller.container = Mock()
         self.controller._save_container_to_db()
         self.view.HandleDbError.assert_called_with(e)
+
+
+class describe_save_and_duplicate(EditEventDialogTestCase):
+
+    def test_on_duplicate(self):
+        self.when_editing_a_new_event()
+        self.simulate_user_clicks_save_and_duplicate()
+        self.view.GetDuplicateEventDialog.assert_called_with(self.controller.timeline, self.controller.event)

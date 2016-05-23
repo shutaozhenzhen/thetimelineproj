@@ -82,6 +82,16 @@ class EditEventDialogController(Controller):
     def on_ok_clicked(self, event):
         self._create_or_update_event()
 
+    def on_duplicate(self, evt):
+        self._create_or_update_event()
+        if self._done:
+            self._duplicate_event()
+
+    def _duplicate_event(self):
+        dlg = self.view.GetDuplicateEventDialog(self.timeline, self.event)
+        dlg.ShowModal()
+        dlg.Destroy()
+
     def _create_or_update_event(self):
         try:
             self._get_and_verify_input()
@@ -92,13 +102,15 @@ class EditEventDialogController(Controller):
                 self.view.SetName(self.name)
                 self.view.ClearEventData()
                 self.view.SetFocusOnFirstControl()
+                self._done = False
             else:
                 if self.opened_from_menu:
                     self.config.event_editor_show_period = self.view.GetShowPeriod()
                     self.config.event_editor_show_time = self.view.GetShowTime()
                 self.view.EndModalOk()
+                self._done = True
         except ValueError:
-            pass
+            self._done = True
 
     def _set_values(self, start, end, event):
         self.event = event
