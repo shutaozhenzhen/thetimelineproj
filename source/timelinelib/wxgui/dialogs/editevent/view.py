@@ -24,7 +24,7 @@ from timelinelib.wxgui.dialogs.editcontainer.view import EditContainerDialog
 from timelinelib.wxgui.dialogs.editevent.controller import EditEventDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import _set_focus_and_select
-import timelinelib.wxgui.utils as gui_utils
+from timelinelib.wxgui.dialogs.duplicateevent.view import DuplicateEventDialog
 
 
 class EditEventDialog(Dialog):
@@ -47,6 +47,12 @@ class EditEventDialog(Dialog):
                 second_state_label="$(reduce)"
                 event_EVT_INITIAL_STATE_CLICKED="on_enlarge_click"
                 event_EVT_SECOND_STATE_CLICKED="on_reduce_click"
+            />
+            <Spacer />
+            <Button
+                name="duplicate"
+                label="$(duplicate_label)"
+                event_EVT_BUTTON="on_duplicate"
             />
             <StretchSpacer />
             <DialogButtonsOkCancelSizer
@@ -176,6 +182,7 @@ class EditEventDialog(Dialog):
     """
 
     def __init__(self, parent, config, title, db, start=None, end=None, event=None):
+        self.parent = parent
         self.timeline = db
         self.config = config
         self.start = start
@@ -206,6 +213,7 @@ class EditEventDialog(Dialog):
             "add_more_label": _("Add more events after this one"),
             "enlarge": _("&Enlarge"),
             "reduce": _("&Reduce"),
+            "duplicate_label": _("Save and Duplicate"),
         }, title=title, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.controller.on_init(
             config,
@@ -221,6 +229,9 @@ class EditEventDialog(Dialog):
         self.SetMinSize((800, -1))
         self.Fit()
         self.SetMinSize(self.GetSize())
+
+    def GetDuplicateEventDialog(self, timeline, event):
+        return DuplicateEventDialog(self.parent, timeline, event)
 
     def GetStart(self):
         return self.start_time.get_value()
