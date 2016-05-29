@@ -60,7 +60,7 @@ known_targets = ("win32Installer")
 win32InstallerActions = (
                  (ANNOTATE, "Run Tests", ""),
                  (RUNPYTEST, ["tools", "execute-specs.py"], ""),
-                 
+
                  (ANNOTATE, "Modify source files", ""),
                  (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_py.py"], ""),
                  (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_paths_py.py"], ""),
@@ -74,6 +74,7 @@ win32InstallerActions = (
                  (COPYDIR, ["dependencies", "timelinelib", "pytz-2012j\pytz"], ["builddir", "pytz"]),
                  (COPYDIR, ["dependencies", "timelinelib", "pysvg-0.2.1\pysvg"], ["builddir", "pysvg"]),
                  (COPYDIR, ["dependencies", "timelinelib", "markdown-2.0.3", "markdown"], ["builddir", "markdown"]),
+                 (COPYDIR, ["dependencies", "timelinelib", "Pillow-3.2.0", "PIL"], ["builddir", "pillow"]),
                  (COPYDIR, ["tools", "winbuildtools", "inno"], ["builddir", "inno"]),
                  (COPYFILE, ["source", "timeline.py"], ["builddir", "timeline.py"]),
                  (COPYFILE, ["tools", "winbuildtools", "setup.py"], ["builddir", "setup.py"]),
@@ -86,7 +87,7 @@ win32InstallerActions = (
                  (COPYDIR, ["translations"], ["builddir", "dist", "translations"]),
                  (COPYDIR, ["icons"], ["builddir", "dist", "icons"]),
                  (COPYDIR, ["tools"], ["builddir", "dist", "tools"]),
-                 
+
                  (ANNOTATE, "Create installer executable", ""),
                  (RUNCMD, "python", ["builddir", "dist", "tools", "generate-mo-files.py"]),
 
@@ -128,8 +129,7 @@ class Target():
             self.execute_actions()
         finally:
             shutil.rmtree(temp_dir)
-            
-        
+
     def assert_that_target_is_known(self):
         if self.target not in known_targets:
             print "The target %s is unknown" % self.target
@@ -142,7 +142,7 @@ class Target():
         print "Artifact dir: %s" % self.artifact_dir
         print "Project dir:  %s" % self.project_dir
         print "Working dir:  %s" % os.getcwd()
-        
+
     def create_project_directory(self, arguments, temp_dir):
         print "Create project directory"
         repository = timelinetools.packaging.repository.Repository()
@@ -191,7 +191,7 @@ class Target():
                 self.pushd(os.path.join(self.project_dir, "builddir"), None)
                 success, msg = self.run_pyscript(script_path, [arg])
                 self.popd(None, None)
-            else:    
+            else:
                 success, msg = self.run_pyscript(script_path, [self.project_dir, arg])
             if not success:
                 raise Exception(msg)
@@ -262,7 +262,7 @@ class Target():
             if line[0:7] == "VERSION":
                 break
         f.close()
-        #VERSION = (0, 14, 0)
+        # VERSION = (0, 14, 0)
         line = line.split("(", 1)[1]
         line = line.split(")", 1)[0]
         major, minor, bug = line. split(", ")
