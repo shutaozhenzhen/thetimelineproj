@@ -19,6 +19,7 @@
 import os.path
 
 import wx
+from PIL import Image
 
 from timelinelib.wxgui.utils import _ask_question
 from timelinelib.wxgui.utils import WildcardHelper
@@ -80,14 +81,19 @@ def export_to_images(main_frame):
         view_properties.set_use_fixed_event_vertical_pos(True)
         view_properties.periods = periods
         count = 1
+        paths = []
         for period in periods:
             path = "%s_%d.%s" % (path_without_extension, count, extension)
             if overwrite_existing_path(main_frame, path):
                 main_frame.main_panel.timeline_panel.timeline_canvas.Navigate(lambda tp: period)
                 main_frame.main_panel.timeline_panel.timeline_canvas.SaveAsPng(path)
             count += 1
+            paths.append(path)
         view_properties.set_use_fixed_event_vertical_pos(False)
         main_frame.main_panel.timeline_panel.timeline_canvas.Navigate(lambda tp: current_period)
+        display_warning_message("Merging")
+        merged_image_path = "%s_merged.%s" % (path_without_extension, extension)
+        merge_images(paths, merged_image_path)
 
 
 def get_image_path(main_frame):
@@ -108,3 +114,16 @@ def overwrite_existing_path(main_frame, path):
         overwrite_question = _("File '%s' exists. Overwrite?") % path
         return _ask_question(overwrite_question, main_frame) == wx.YES
     return True
+
+
+def merge_images(images_paths, merged_image_path):
+    images = map(Image.open, images_paths)
+    widths, heights = zip(*(i.size for i in images))
+    total_width = sum(widths)
+    max_height = max(heights)
+    new_image = Image.new('RGB', (total_width, max_height))
+    x_offset = 0
+    for image in images:
+        new_image.paste(image, (x_offset, 0))
+        x_offset += image.size[0]
+    new_image.save(merged_image_path)
