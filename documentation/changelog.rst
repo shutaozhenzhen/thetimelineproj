@@ -20,6 +20,10 @@ Data import:
 * Import options can now be specified when importing events, from ics files.
   (`#141 <https://sourceforge.net/p/thetimelineproj/backlog/141/>`_)
 
+Data export:
+
+* When exporting a timeline to images a merged image is also created.
+
 Translations:
 
 * Made label texts in 'Export to Listbox', translatable.
