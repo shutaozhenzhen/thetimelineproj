@@ -91,7 +91,6 @@ def export_to_images(main_frame):
             paths.append(path)
         view_properties.set_use_fixed_event_vertical_pos(False)
         main_frame.main_panel.timeline_panel.timeline_canvas.Navigate(lambda tp: current_period)
-        display_warning_message("Merging")
         merged_image_path = "%s_merged.%s" % (path_without_extension, extension)
         merge_images(paths, merged_image_path)
 
