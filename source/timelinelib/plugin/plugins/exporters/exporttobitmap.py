@@ -19,7 +19,6 @@
 import os.path
 
 import wx
-from PIL import Image
 
 from timelinelib.wxgui.utils import _ask_question
 from timelinelib.wxgui.utils import WildcardHelper
@@ -116,6 +115,7 @@ def overwrite_existing_path(main_frame, path):
 
 
 def merge_images(images_paths, merged_image_path):
+    from PIL import Image
     images = map(Image.open, images_paths)
     widths, heights = zip(*(i.size for i in images))
     total_width = sum(widths)
