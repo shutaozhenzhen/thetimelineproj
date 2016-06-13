@@ -68,8 +68,17 @@ class DefaultEventBoxDrawer(object):
 
     def _draw_background(self, dc, rect, event):
         dc.SetBrush(wx.Brush(self._get_base_color(event), wx.SOLID))
-        dc.SetPen(self._get_border_pen(event))
+        dc.SetPen(self._get_pen(dc, event))
         dc.DrawRectangleRect(rect)
+
+    def _get_pen(self, dc, event):
+        pen = self._get_thin_border_pen(event)
+        if event.is_highlighted():
+            if event.get_highlight_count() % 2 == 0:
+                dc.DestroyClippingRegion()
+                pen = self._get_thick_border_pen(event)
+            event.increment_highlight_count()
+        return pen
 
     def _draw_fuzzy_edges(self, dc, rect, event):
         if event.get_fuzzy():
@@ -92,8 +101,14 @@ class DefaultEventBoxDrawer(object):
         if not event.locked and selected:
             self._draw_handles(dc, event, rect)
 
-    def _get_border_pen(self, event):
-        return wx.Pen(self._get_border_color(event), 1, wx.SOLID)
+    def _get_thin_border_pen(self, event):
+        return self._get_border_pen(event)
+
+    def _get_thick_border_pen(self, event):
+        return self._get_border_pen(event, thickness=8)
+
+    def _get_border_pen(self, event, thickness=1):
+        return wx.Pen(self._get_border_color(event), thickness, wx.SOLID)
 
     def _get_balloon_indicator_brush(self, event):
         base_color = self._get_base_color(event)
@@ -134,7 +149,7 @@ class DefaultEventBoxDrawer(object):
         path.MoveToPoint(p1.x, p1.y)
         path.AddLineToPoint(p2.x, p2.y)
         path.AddLineToPoint(p3.x, p3.y)
-        gc.SetPen(self._get_border_pen(event))
+        gc.SetPen(self._get_thin_border_pen(event))
         gc.StrokePath(path)
 
     def _draw_locked_start(self, dc, event, rect):
@@ -151,7 +166,7 @@ class DefaultEventBoxDrawer(object):
         dc.SetBrush(wx.WHITE_BRUSH)
         dc.SetPen(wx.WHITE_PEN)
         dc.DrawCircle(x, y, r)
-        dc.SetPen(self._get_border_pen(event))
+        dc.SetPen(self._get_thin_border_pen(event))
         self.draw_segment(dc, event, x, y, r, start_angle, end_angle)
 
     def draw_segment(self, dc, event, x0, y0, r, start_angle, end_angle):
@@ -172,7 +187,7 @@ class DefaultEventBoxDrawer(object):
             path.AddLineToPoint(x2, y2)
             x1 = x2
             y1 = y2
-        gc.SetPen(self._get_border_pen(event))
+        gc.SetPen(self._get_thin_border_pen(event))
         gc.StrokePath(path)
 
     def _draw_progress_box(self, dc, rect, event):
