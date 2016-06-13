@@ -42,6 +42,8 @@ class TimelineCanvas(wx.Panel):
         self.surface_bitmap = None
         self._create_gui()
         self.SetDividerPosition(50)
+        self._highlight_timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self._on_highlight_timer, self._highlight_timer)
 
     def GetAppearance(self):
         return self.controller.get_appearance()
@@ -281,3 +283,20 @@ class TimelineCanvas(wx.Panel):
 
     def _on_size(self, evt):
         self.controller.window_resized()
+
+    def highligt_event(self, event):
+        TIMER_ID = 100
+        TIMER_INTERVAL_MS = 180
+        event.highlight(True)
+        self._highlight_count = 0
+        self.highlight_event = event
+        self._highlight_timer.Start(TIMER_INTERVAL_MS)
+        wx.EVT_TIMER(self, TIMER_ID, self._on_highlight_timer)
+
+    def _on_highlight_timer(self, evt):
+        MAX_NBR_OF_TIMER_INTERVALS = 15
+        self._highlight_count += 1
+        if self._highlight_count > MAX_NBR_OF_TIMER_INTERVALS:
+            self._highlight_timer.Stop()
+            self.highlight_event.highlight(False)
+        self.redraw_timeline()

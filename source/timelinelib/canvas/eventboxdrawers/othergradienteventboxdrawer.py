@@ -26,7 +26,7 @@ from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEven
 class OtherGradientEventBoxDrawer(DefaultEventBoxDrawer):
 
     def _draw_background(self, dc, rect, event):
-        dc.SetPen(self._get_border_pen(event))
+        dc.SetPen(self._get_pen(dc, event))
         dc.DrawRectangleRect(rect)
         inner_rect = wx.Rect(*rect)
         inner_rect.Deflate(1, 1)
