@@ -4,7 +4,7 @@ Changelog
 Version 1.11.0
 --------------
 
-**Planned release on 31 Julyl 2016.**
+**Planned release on 31 July 2016.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
@@ -36,6 +36,8 @@ GUI:
 
 * The duplicate event dialog can be opened from the event editor dialog
   (`#131 <https://sourceforge.net/p/thetimelineproj/backlog/131/>`_)
+  
+* Atfer a search match the found event is highlighted
 
 Bug fixes:
 
