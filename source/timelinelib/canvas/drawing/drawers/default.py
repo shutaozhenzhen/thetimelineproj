@@ -363,7 +363,18 @@ class DefaultDrawingAlgorithm(Drawer):
             self.dc.DrawLine(x-1, y, x-1, y2)
             self.dc.DrawLine(x+1, y, x+1, y2)
         self.dc.DrawLine(x, y, x, y2)
-        self.dc.DrawCircle(x, y2, 2)
+        self._draw_endpoint(event, x, y2)
+
+    def _draw_endpoint(self, event, x, y):
+        if event.get_milestone():
+            size = 8
+            self.dc.SetBrush(wx.BLUE_BRUSH)
+            self.dc.DrawPolygon([wx.Point(-size),
+                                 wx.Point(0, -size),
+                                 wx.Point(size, 0),
+                                 wx.Point(0, size)], x, y)
+        else:
+            self.dc.DrawCircle(x, y, 2)
 
     def _get_end_of_line(self, event):
         # Lines are only drawn for events shown as point events and the line length
