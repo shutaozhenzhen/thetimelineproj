@@ -37,6 +37,7 @@ class Event(object):
         self.ends_today = ends_today
         self.id = None
         self.update(start_time, end_time, text, category)
+        self._milestone = False
         self.data = {}
 
     def __eq__(self, other):
@@ -331,6 +332,12 @@ class Event(object):
 
     def get_exportable_fields(self):
         return EXPORTABLE_FIELDS
+
+    def set_milestone(self, value):
+        self._milestone = value
+
+    def get_milestone(self):
+        return self._milestone
 
 
 def clone_event_list(eventlist):
