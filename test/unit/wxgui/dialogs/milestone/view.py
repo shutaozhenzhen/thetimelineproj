@@ -16,11 +16,21 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from mock import Mock
+
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.milestone.view import EditMilestoneDialog
+from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.canvas.data.milestone import Milestone
+from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.config.dotfile import Config
 
 
 class describe_milestone_editor_dialog(UnitTestCase):
 
     def test_layout(self):
-        self.show_dialog(EditMilestoneDialog, None, "Milestone")
+        milestone = Milestone(time_type=GregorianTimeType(),
+                              start_time=human_time_to_gregorian("11 Jul 2014"),
+                              text="a milestone")
+        config = Mock(Config)
+        self.show_dialog(EditMilestoneDialog, None, "Milestone", GregorianTimeType(), config, milestone)

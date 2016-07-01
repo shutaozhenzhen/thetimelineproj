@@ -23,3 +23,6 @@ class EditMilestoneDialogController(object):
 
     def on_ok_clicked(self, evt):
         pass
+
+    def show_time_checkbox_on_checked(self, evt):
+        pass
