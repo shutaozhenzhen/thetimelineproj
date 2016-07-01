@@ -24,6 +24,28 @@ class EditMilestoneDialog(Dialog):
 
     """
     <BoxSizerVertical>
+
+        <StaticBoxSizerVertical label="$(groupbox_text)" border="ALL" >
+
+            <FlexGridSizer rows="0" columns="2" border="ALL">
+
+                <StaticText label="$(when_text)" align="ALIGN_LEFT" />
+                <TimePicker time_type="$(time_type)" config="$(config)" name="dtp_start" />
+
+                <Spacer />
+                <CheckBox align="ALIGN_CENTER_VERTICAL" label="$(show_time_text)" name="cbx_show_time"
+                     event_EVT_CHECKBOX="show_time_checkbox_on_checked" />
+
+                <StaticText label="$(name_text)" align="ALIGN_CENTER_VERTICAL" />
+                <TextCtrl name="txt_name" />
+
+                <StaticText label="$(colour_text)" align="ALIGN_CENTER_VERTICAL" />
+                <ColourSelect name="colorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
+
+            </FlexGridSizer>
+
+        </StaticBoxSizerVertical>
+
         <DialogButtonsOkCancelSizer
             border="LEFT|BOTTOM|RIGHT"
             event_EVT_BUTTON__ID_OK="on_ok_clicked"
@@ -31,7 +53,15 @@ class EditMilestoneDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent, title):
+    def __init__(self, parent, title, time_type, config, milestone):
         Dialog.__init__(self, EditMilestoneDialogController, parent, {
+            "groupbox_text": _("Milestone Properties"),
+            "when_text": _("When:"),
+            "time_type": time_type,
+            "show_time_text": _("Show time"),
+            "name_text": _("Description:"),
+            "colour_text": _("Colour:"),
+            "config": config,
         }, title=title)
         self._controller = EditMilestoneDialogController(self)
+        self._milestone = milestone
