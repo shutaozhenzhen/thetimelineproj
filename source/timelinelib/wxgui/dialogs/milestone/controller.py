@@ -24,10 +24,13 @@ from timelinelib.canvas.data.milestone import Milestone
 class EditMilestoneDialogController(Controller):
 
     def on_init(self, db, milestone):
+        self._db = db
         self._time_type = db.time_type
         if milestone is None:
+            self._new_milestone = True
             self._milestone = Milestone(db, self._time_type.now(), "")
         else:
+            self._new_milestone = False
             self._milestone = milestone
         self.view.PopulateControls(self._milestone.time_period.start_time, self._milestone.get_text(),
                                    self._milestone.get_default_color())
@@ -41,5 +44,14 @@ class EditMilestoneDialogController(Controller):
 
     def _update_milestone(self):
         self._milestone.set_description(self.view.GetDescription())
-        self._milestone.set_default_color(self.view.GetColour())
+        c = self.view.GetColour()[:3]
+        self._milestone.set_default_color(self.view.GetColour()[:3])
         self._milestone.set_time_period(TimePeriod(self._time_type, self.view.GetTime(), self.view.GetTime()))
+        if self._new_milestone:
+            self._save_milestone_to_db()
+
+    def _save_milestone_to_db(self):
+        try:
+            self._db.save_event(self._milestone)
+        except Exception, e:
+            self.view.HandleDbError(e)
