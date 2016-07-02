@@ -18,12 +18,19 @@
 
 from timelinelib.wxgui.framework import Controller
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.data.milestone import Milestone
+
 
 class EditMilestoneDialogController(Controller):
 
     def on_init(self, time_type, milestone):
         self._time_type = time_type
-        self._milestone = milestone
+        if milestone is None:
+            self._milestone = Milestone(time_type, time_type.now(), "")
+        else:
+            self._milestone = milestone
+        self.view.PopulateControls(self._milestone.time_period.start_time, self._milestone.get_text(),
+                                   self._milestone.get_default_color())
 
     def on_ok_clicked(self, evt):
         self._update_milestone()

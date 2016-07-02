@@ -49,6 +49,7 @@ from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
+from timelinelib.wxgui.dialogs.milestone.view import open_create_milestone_editor
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
 from timelinelib.wxgui.dialogs.feature.view import show_feature_feedback_dialog
 from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
@@ -88,6 +89,7 @@ ID_ZOOMOUT = wx.NewId()
 ID_VERT_ZOOMIN = wx.NewId()
 ID_VERT_ZOOMOUT = wx.NewId()
 ID_CREATE_EVENT = wx.NewId()
+ID_CREATE_MILESTONE = wx.NewId()
 ID_PT_EVENT_TO_RIGHT = wx.NewId()
 ID_EDIT_EVENT = wx.NewId()
 ID_DUPLICATE_EVENT = wx.NewId()
@@ -401,6 +403,7 @@ class GuiCreator(object):
         safe_locking(self, edit_function)
 
     def _create_timeline_menu(self, main_menu_bar):
+
         def create_event(evt):
             open_create_event_editor(self, self.config, self.timeline)
 
@@ -421,6 +424,9 @@ class GuiCreator(object):
                 # No event selected so do nothing!
                 return
             open_duplicate_event_dialog_for_event(self, self.timeline, event)
+
+        def create_milestone(evt):
+            open_create_milestone_editor(self, self.config, self.timeline)
 
         def set_categoryon_selected(evt):
 
@@ -471,6 +477,8 @@ class GuiCreator(object):
                  (ID_SET_CATEGORY_ON_SELECTED, set_categoryon_selected, _("Set Category on Selected Events..."), cbx),
                  (ID_MOVE_EVENT_UP, move_up_handler, _("Move event up\tAlt+Up"), cbx),
                  (ID_MOVE_EVENT_DOWN, move_down_handler, _("Move event down\tAlt+Down"), cbx),
+                 None,
+                 (ID_CREATE_MILESTONE, create_milestone, _("Create &Milestone..."), cbx),
                  None,
                  (ID_COMPRESS, compress, _("&Compress timeline Events"), cbx),
                  None,

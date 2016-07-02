@@ -23,9 +23,9 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.milestone.view import EditMilestoneDialog
 from timelinelib.wxgui.dialogs.milestone.controller import EditMilestoneDialogController
 from timelinelib.canvas.data.milestone import Milestone
-from timelinelib.canvas.data import TimePeriod
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.canvas.data.timeperiod import TimePeriod
 
 
 class describe_edit_milestone_dialog_controller(UnitTestCase):
@@ -34,6 +34,9 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.simulate_dialog_init(self.time_type, self.milestone)
         self.assertEqual(GregorianTimeType(), self.controller._time_type)
         self.assertEqual(self.milestone, self.controller._milestone)
+        self.view.PopulateControls.assert_called_with(self.milestone.time_period.start_time,
+                                                      self.milestone.get_text(),
+                                                      self.milestone.get_default_color())
 
     def test_can_get_time_from_view(self):
         self.view.GetTime.return_value = self.start_time
@@ -80,6 +83,9 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.time_type = GregorianTimeType()
         self.start_time = human_time_to_gregorian("1 Jan 2010")
         self.milestone = Mock(Milestone)
+        self.milestone.get_default_color.return_value = (0, 0, 255)
+        self.milestone.get_text.return_value = ""
+        self.milestone.time_period = TimePeriod(self.time_type, self.start_time, self.start_time)
         self.view = Mock(EditMilestoneDialog)
         self.controller = EditMilestoneDialogController(self.view)
         self.simulate_dialog_init(self.time_type, self.milestone)
