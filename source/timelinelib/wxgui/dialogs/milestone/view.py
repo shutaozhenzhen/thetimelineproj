@@ -18,6 +18,7 @@
 
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.dialogs.milestone.controller import EditMilestoneDialogController
+from timelinelib.db.utils import safe_locking
 
 
 class EditMilestoneDialog(Dialog):
@@ -63,8 +64,13 @@ class EditMilestoneDialog(Dialog):
             "colour_text": _("Colour:"),
             "config": config,
         }, title=title)
-        self.controller.on_init(milestone, time_type)
+        self.controller.on_init(time_type, milestone)
         self._milestone = milestone
+
+    def PopulateControls(self, start_time, description, colour):
+        self.dtp_time.set_value(start_time)
+        self.txt_description.SetValue(description)
+        self.colorpicker.SetValue(colour)
 
     def GetTime(self):
         return self.dtp_time.get_value()
@@ -74,3 +80,16 @@ class EditMilestoneDialog(Dialog):
 
     def GetColour(self):
         return self.colorpicker.GetValue()
+
+
+def open_create_milestone_editor(parent, config, db):
+
+    def create_milestone_editor():
+        label = _("Create Milestone")
+        return EditMilestoneDialog(parent, label, db.get_time_type(), config, None)
+
+    def edit_function():
+        dialog = create_milestone_editor()
+        dialog.ShowModal()
+        dialog.Destroy()
+    safe_locking(parent, edit_function)
