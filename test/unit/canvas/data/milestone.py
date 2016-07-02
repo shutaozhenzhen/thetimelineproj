@@ -16,22 +16,26 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from mock import Mock
+
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.canvas.data.milestone import Milestone
+from timelinelib.canvas.data.db import MemoryDB
 
 
 class describe_milestone(UnitTestCase):
 
     def test_can_be_created(self):
-        milestone = Milestone(time_type=GregorianTimeType(),
-                              start_time=human_time_to_gregorian("11 Jul 2014"),
-                              text="a day in my life")
-        self.assertTrue(milestone is not None)
+        self.assertTrue(self.milestone is not None)
 
     def test_has_a_default_color(self):
-        milestone = Milestone(time_type=GregorianTimeType(),
-                              start_time=human_time_to_gregorian("11 Jul 2014"),
-                              text="a day in my life")
-        self.assertEqual(milestone.get_default_color(), (0, 0, 255))
+        self.assertEqual(self.milestone.get_default_color(), (0, 0, 255))
+
+    def setUp(self):
+        self.db = Mock(MemoryDB)
+        self.db.time_type = GregorianTimeType()
+        self.milestone = Milestone(self.db,
+                                   human_time_to_gregorian("11 Jul 2014"),
+                                   "a day in my life")

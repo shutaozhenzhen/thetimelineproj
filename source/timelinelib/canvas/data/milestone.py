@@ -30,6 +30,6 @@ DEFAULT_COLOR = (0, 0, 255)
 
 class Milestone(Event):
 
-    def __init__(self, time_type, start_time, text):
-        Event.__init__(self, time_type, start_time, start_time, text)
+    def __init__(self, db, start_time, text):
+        Event.__init__(self, db.time_type, start_time, start_time, text)
         self.set_default_color(DEFAULT_COLOR)

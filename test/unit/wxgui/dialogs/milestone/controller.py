@@ -26,12 +26,13 @@ from timelinelib.canvas.data.milestone import Milestone
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.canvas.data.timeperiod import TimePeriod
+from timelinelib.canvas.data.db import MemoryDB
 
 
 class describe_edit_milestone_dialog_controller(UnitTestCase):
 
     def test_is_initialized(self):
-        self.simulate_dialog_init(self.time_type, self.milestone)
+        self.simulate_dialog_init(self.db, self.milestone)
         self.assertEqual(GregorianTimeType(), self.controller._time_type)
         self.assertEqual(self.milestone, self.controller._milestone)
         self.view.PopulateControls.assert_called_with(self.milestone.time_period.start_time,
@@ -80,12 +81,13 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.controller.on_init(time_type, milestone)
 
     def setUp(self):
-        self.time_type = GregorianTimeType()
+        self.db = Mock(MemoryDB)
+        self.db.time_type = GregorianTimeType()
         self.start_time = human_time_to_gregorian("1 Jan 2010")
         self.milestone = Mock(Milestone)
         self.milestone.get_default_color.return_value = (0, 0, 255)
         self.milestone.get_text.return_value = ""
-        self.milestone.time_period = TimePeriod(self.time_type, self.start_time, self.start_time)
+        self.milestone.time_period = TimePeriod(self.db.time_type, self.start_time, self.start_time)
         self.view = Mock(EditMilestoneDialog)
         self.controller = EditMilestoneDialogController(self.view)
-        self.simulate_dialog_init(self.time_type, self.milestone)
+        self.simulate_dialog_init(self.db, self.milestone)

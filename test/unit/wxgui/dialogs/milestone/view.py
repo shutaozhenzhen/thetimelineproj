@@ -24,13 +24,16 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.canvas.data.milestone import Milestone
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.config.dotfile import Config
+from timelinelib.canvas.data.db import MemoryDB
 
 
 class describe_milestone_editor_dialog(UnitTestCase):
 
     def test_layout(self):
-        milestone = Milestone(time_type=GregorianTimeType(),
-                              start_time=human_time_to_gregorian("11 Jul 2014"),
-                              text="a milestone")
+        db = Mock(MemoryDB)
+        db.time_type = GregorianTimeType()
+        milestone = Milestone(db,
+                              human_time_to_gregorian("11 Jul 2014"),
+                              "a milestone")
         config = Mock(Config)
-        self.show_dialog(EditMilestoneDialog, None, "Milestone", GregorianTimeType(), config, milestone)
+        self.show_dialog(EditMilestoneDialog, None, "Milestone", db, config, milestone)

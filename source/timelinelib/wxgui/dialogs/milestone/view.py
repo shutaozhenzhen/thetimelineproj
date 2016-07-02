@@ -54,17 +54,17 @@ class EditMilestoneDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent, title, time_type, config, milestone):
+    def __init__(self, parent, title, db, config, milestone):
         Dialog.__init__(self, EditMilestoneDialogController, parent, {
             "groupbox_text": _("Milestone Properties"),
             "when_text": _("When:"),
-            "time_type": time_type,
+            "time_type": db.time_type,
             "show_time_text": _("Show time"),
             "description_text": _("Description:"),
             "colour_text": _("Colour:"),
             "config": config,
         }, title=title)
-        self.controller.on_init(time_type, milestone)
+        self.controller.on_init(db, milestone)
         self._milestone = milestone
 
     def PopulateControls(self, start_time, description, colour):
@@ -86,7 +86,7 @@ def open_create_milestone_editor(parent, config, db):
 
     def create_milestone_editor():
         label = _("Create Milestone")
-        return EditMilestoneDialog(parent, label, db.get_time_type(), config, None)
+        return EditMilestoneDialog(parent, label, db, config, None)
 
     def edit_function():
         dialog = create_milestone_editor()
