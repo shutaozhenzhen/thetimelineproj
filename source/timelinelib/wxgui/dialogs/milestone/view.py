@@ -30,14 +30,14 @@ class EditMilestoneDialog(Dialog):
             <FlexGridSizer rows="0" columns="2" border="ALL">
 
                 <StaticText label="$(when_text)" align="ALIGN_LEFT" />
-                <TimePicker time_type="$(time_type)" config="$(config)" name="dtp_start" />
+                <TimePicker time_type="$(time_type)" config="$(config)" name="dtp_time" />
 
                 <Spacer />
                 <CheckBox align="ALIGN_CENTER_VERTICAL" label="$(show_time_text)" name="cbx_show_time"
                      event_EVT_CHECKBOX="show_time_checkbox_on_checked" />
 
-                <StaticText label="$(name_text)" align="ALIGN_CENTER_VERTICAL" />
-                <TextCtrl name="txt_name" />
+                <StaticText label="$(description_text)" align="ALIGN_CENTER_VERTICAL" />
+                <TextCtrl name="txt_description" />
 
                 <StaticText label="$(colour_text)" align="ALIGN_CENTER_VERTICAL" />
                 <ColourSelect name="colorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
@@ -59,9 +59,18 @@ class EditMilestoneDialog(Dialog):
             "when_text": _("When:"),
             "time_type": time_type,
             "show_time_text": _("Show time"),
-            "name_text": _("Description:"),
+            "description_text": _("Description:"),
             "colour_text": _("Colour:"),
             "config": config,
         }, title=title)
-        self._controller = EditMilestoneDialogController(self)
+        self.controller.on_init(milestone, time_type)
         self._milestone = milestone
+
+    def GetTime(self):
+        return self.dtp_time.get_value()
+
+    def GetDescription(self):
+        return self.txt_description.GetValue()
+
+    def GetColour(self):
+        return self.colorpicker.GetValue()
