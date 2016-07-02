@@ -23,10 +23,10 @@ from timelinelib.canvas.data.milestone import Milestone
 
 class EditMilestoneDialogController(Controller):
 
-    def on_init(self, time_type, milestone):
-        self._time_type = time_type
+    def on_init(self, db, milestone):
+        self._time_type = db.time_type
         if milestone is None:
-            self._milestone = Milestone(time_type, time_type.now(), "")
+            self._milestone = Milestone(db, self._time_type.now(), "")
         else:
             self._milestone = milestone
         self.view.PopulateControls(self._milestone.time_period.start_time, self._milestone.get_text(),
