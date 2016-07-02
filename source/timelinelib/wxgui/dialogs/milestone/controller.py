@@ -16,13 +16,23 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class EditMilestoneDialogController(object):
+from timelinelib.wxgui.framework import Controller
+from timelinelib.canvas.data import TimePeriod
 
-    def __init__(self, view):
-        self._view = view
+class EditMilestoneDialogController(Controller):
+
+    def on_init(self, time_type, milestone):
+        self._time_type = time_type
+        self._milestone = milestone
 
     def on_ok_clicked(self, evt):
-        pass
+        self._update_milestone()
+        self.view.Close()
 
     def show_time_checkbox_on_checked(self, evt):
         pass
+
+    def _update_milestone(self):
+        self._milestone.set_description(self.view.GetDescription())
+        self._milestone.set_default_color(self.view.GetColour())
+        self._milestone.set_time_period(TimePeriod(self._time_type, self.view.GetTime(), self.view.GetTime()))
