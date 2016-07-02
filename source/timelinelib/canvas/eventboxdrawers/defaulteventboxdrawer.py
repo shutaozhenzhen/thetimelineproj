@@ -40,7 +40,9 @@ class DefaultEventBoxDrawer(object):
         self.view_properties = view_properties
         selected = view_properties.is_selected(event)
         self.center_text = scene.center_text()
-        if scene.never_show_period_events_as_point_events() and rect.y < scene.divider_y and event.is_period():
+        if event.is_milestone():
+            self._draw_milestone_event(dc, scene, event)
+        elif scene.never_show_period_events_as_point_events() and rect.y < scene.divider_y and event.is_period():
             self._draw_period_event_as_symbol_below_divider_line(dc, scene, event)
         else:
             self._draw_event_box(dc, rect, event, selected)
@@ -365,3 +367,16 @@ class DefaultEventBoxDrawer(object):
 
     def _get_bitmap(self, name):
         return wx.Bitmap(os.path.join(EVENT_ICONS_DIR, name))
+
+    def _draw_milestone_event(self, dc, scene, event):
+        SIZE = 10
+        x = scene.x_pos_for_time(event.mean_time())
+        y = scene.divider_y
+        points = (wx.Point(x - SIZE, y),
+                  wx.Point(x, y - SIZE),
+                  wx.Point(x + SIZE, y),
+                  wx.Point(x, y + SIZE))
+        dc.DestroyClippingRegion()
+        dc.SetPen(wx.BLACK_PEN)
+        dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
+        dc.DrawPolygon(points)
