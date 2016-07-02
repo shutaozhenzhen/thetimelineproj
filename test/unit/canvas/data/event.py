@@ -304,6 +304,10 @@ class describe_event_cloning(UnitTestCase):
         self.assertEqual(clone, event)
         self.assertEqual(clone.get_default_color(), event.get_default_color())
 
+    def test_event_is_not_a_milestone(self):
+        event = an_event()
+        self.assertFalse(event.is_milestone())
+
 
 class describe_event_cloning_of_containers(UnitTestCase):
 

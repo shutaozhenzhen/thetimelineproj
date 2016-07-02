@@ -100,6 +100,9 @@ class describe_subevent(UnitTestCase):
     def test_can_be_compared(self):
         self.assertEqNeImplementationIsCorrect(a_subevent, SUBEVENT_MODIFIERS)
 
+    def test_is_not_a_milestone(self):
+        self.assertFalse(a_subevent().is_milestone())
+
     def test_can_be_cloned(self):
         original = a_subevent()
         clone = original.clone()

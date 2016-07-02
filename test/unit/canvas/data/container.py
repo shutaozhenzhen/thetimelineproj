@@ -64,6 +64,9 @@ class describe_container(UnitTestCase):
     def test_can_be_compared(self):
         self.assertEqNeImplementationIsCorrect(a_container_with, CONTAINER_MODIFIERS)
 
+    def test_is_not_a_milestone(self):
+        self.assertFalse(a_container_with(text="container").is_milestone())
+
 
 class describe_container_construction(UnitTestCase):
 
@@ -88,4 +91,4 @@ class describe_container_cloning(UnitTestCase):
         container = a_container_with(text="container", cid=99)
         cloned_container = container.clone()
         self.assertTrue(container is not cloned_container)
-        self.assertEqual(cloned_container,  container)
+        self.assertEqual(cloned_container, container)
