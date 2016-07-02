@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-23 21:06+0200\n"
+"POT-Creation-Date: 2016-07-02 07:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -273,7 +273,7 @@ msgid "Text"
 msgstr ""
 
 #: source\timelinelib\canvas\data\event.py:24
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:206
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:207
 #: source\timelinelib\wxgui\dialogs\filenew\view.py:66
 msgid "Description"
 msgstr ""
@@ -291,12 +291,12 @@ msgid "Category"
 msgstr ""
 
 #: source\timelinelib\canvas\data\event.py:25
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:199
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:200
 msgid "Fuzzy"
 msgstr ""
 
 #: source\timelinelib\canvas\data\event.py:25
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:200
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:201
 msgid "Locked"
 msgstr ""
 
@@ -305,17 +305,17 @@ msgid "Ends Today"
 msgstr ""
 
 #: source\timelinelib\canvas\data\event.py:25
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:209
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:210
 msgid "Hyperlink"
 msgstr ""
 
 #: source\timelinelib\canvas\data\event.py:26
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:210
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:211
 msgid "Progress"
 msgstr ""
 
 #: source\timelinelib\canvas\data\event.py:26
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:208
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:209
 msgid "Alert"
 msgstr ""
 
@@ -327,7 +327,7 @@ msgstr ""
 msgid "Is Subevent"
 msgstr ""
 
-#: source\timelinelib\canvas\data\event.py:290
+#: source\timelinelib\canvas\data\event.py:293
 msgid "Duration"
 msgstr ""
 
@@ -461,7 +461,7 @@ msgid "Vertical Zoom Out"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:79
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:403
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:404
 msgid "Create Event"
 msgstr ""
 
@@ -1098,7 +1098,7 @@ msgid ""
 msgstr ""
 
 #: source\timelinelib\help\pages.py:207
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:195
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:196
 msgid "Event Properties"
 msgstr ""
 
@@ -1460,15 +1460,15 @@ msgid ""
 "Use the feature 'Accept negative Julian days'"
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:95
+#: source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:99
 msgid "Image files"
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:99
+#: source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:103
 msgid "Export to Image"
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:108
+#: source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:112
 #: source\timelinelib\plugin\plugins\exporters\exporttosvg.py:51
 #: source\timelinelib\plugin\plugins\exporters\timelineexporter.py:223
 #, python-format
@@ -1842,13 +1842,14 @@ msgid "Region too short"
 msgstr ""
 
 #: source\timelinelib\wxgui\components\propertyeditors\alerteditor.py:71
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:196
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:197
 #: source\timelinelib\wxgui\dialogs\eraeditor\view.py:70
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:59
 msgid "When:"
 msgstr ""
 
 #: source\timelinelib\wxgui\components\propertyeditors\alerteditor.py:72
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:203
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:204
 msgid "Text:"
 msgstr ""
 
@@ -1971,8 +1972,9 @@ msgid "Category Finder"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\changenowdate\view.py:48
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:198
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:199
 #: source\timelinelib\wxgui\dialogs\eraeditor\view.py:67
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:61
 #: source\timelinelib\wxgui\dialogs\timeeditor\view.py:42
 msgid "Show time"
 msgstr ""
@@ -1995,7 +1997,7 @@ msgid "Number of duplicates:"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\duplicateevent\view.py:85
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:197
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:198
 msgid "Period"
 msgstr ""
 
@@ -2071,73 +2073,73 @@ msgid "Field '%s' can't be empty."
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\editcontainer\view.py:46
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:204
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:205
 msgid "Category:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:168
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:171
 msgid "Invalid Start- date or time"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:172
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:175
 msgid "Invalid End- date or time"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:216
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:219
 msgid "You can't change time when the Event is locked"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:312
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:315
 #: source\timelinelib\wxgui\dialogs\eraeditor\controller.py:85
 msgid "End must be > Start"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\controller.py:321
+#: source\timelinelib\wxgui\dialogs\editevent\controller.py:324
 msgid "Start time > Now."
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:201
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:202
 msgid "Ends today"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:202
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:203
 #: source\timelinelib\wxgui\dialogs\eraeditor\view.py:71
 msgid "to"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:205
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:206
 msgid "Container:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:207
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:208
 msgid "Icon"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:211
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:212
 msgid "Default color"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:212
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:213
 msgid "Add more events after this one"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:213
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:214
 msgid "&Enlarge"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:214
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:215
 msgid "&Reduce"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:215
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:216
 msgid "Save and Duplicate"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:389
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:390
 msgid "Edit Container"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\editevent\view.py:393
+#: source\timelinelib\wxgui\dialogs\editevent\view.py:394
 msgid "Edit Event"
 msgstr ""
 
@@ -2154,6 +2156,7 @@ msgid "Era Properties"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\eraeditor\view.py:69
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:63
 msgid "Colour:"
 msgstr ""
 
@@ -2336,6 +2339,14 @@ msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importics\view.py:64
 msgid "Options for ICS import"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:58
+msgid "Milestone Properties"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:62
+msgid "Description:"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\preferences\controller.py:62
