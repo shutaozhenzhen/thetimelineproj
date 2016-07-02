@@ -33,6 +33,9 @@ class describe_milestone(UnitTestCase):
     def test_has_a_default_color(self):
         self.assertEqual(self.milestone.get_default_color(), (0, 0, 255))
 
+    def test_is_milestone(self):
+        self.assertTrue(self.milestone.is_milestone())
+
     def setUp(self):
         self.db = Mock(MemoryDB)
         self.db.time_type = GregorianTimeType()
