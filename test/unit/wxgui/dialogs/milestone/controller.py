@@ -65,6 +65,14 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.milestone.set_time_period.assert_called_with(time_period)
         self.assertEqual(self.view.Close.call_count, 1)
 
+    def test_db_updated_on_ok(self):
+        self.simulate_dialog_init(self.db, None)
+        self.simulate_user_enters_description("Aha")
+        self.simulate_user_enters_colour((127, 127, 127))
+        self.simulate_user_enters_time(self.start_time)
+        self.simulate_ok_clicked()
+        self.assertEqual(self.db.save_event.call_count, 1)
+
     def simulate_user_enters_description(self, description):
         self.view.GetDescription.return_value = description
 
