@@ -85,7 +85,10 @@ class EditMilestoneDialog(Dialog):
 def open_milestone_editor_for(parent, config, db, event=None):
 
     def create_milestone_editor():
-        label = _("Create Milestone")
+        if event is None:
+            label = _("Create Milestone")
+        else:
+            label = _("Edit Milestone")
         return EditMilestoneDialog(parent, label, db, config, event)
 
     def edit_function():
