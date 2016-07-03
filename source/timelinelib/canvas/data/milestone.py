@@ -20,7 +20,7 @@ from timelinelib.canvas.data.event import Event
 
 
 DEFAULT_COLOR = (0, 0, 255)
-
+MILESTONE_TEXT = "milestone"
 
 """
  A milestone is a special case of a point event. It is normally rendered directly

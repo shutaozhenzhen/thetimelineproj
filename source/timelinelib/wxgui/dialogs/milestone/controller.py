@@ -19,6 +19,7 @@
 from timelinelib.wxgui.framework import Controller
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.milestone import Milestone
+from timelinelib.canvas.data.milestone import MILESTONE_TEXT
 
 
 class EditMilestoneDialogController(Controller):
@@ -44,7 +45,7 @@ class EditMilestoneDialogController(Controller):
 
     def _update_milestone(self):
         self._milestone.set_description(self.view.GetDescription())
-        self._milestone.set_text("milestone")
+        self._milestone.set_text(MILESTONE_TEXT)
         self._milestone.set_default_color(self.view.GetColour()[:3])
         self._milestone.set_time_period(TimePeriod(self._time_type, self.view.GetTime(), self.view.GetTime()))
         if self._new_milestone:

@@ -47,6 +47,8 @@ from timelinelib.time.bosparaniantime import BosparanianTimeType
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
+from timelinelib.canvas.data.milestone import Milestone
+from timelinelib.canvas.data.milestone import MILESTONE_TEXT
 
 
 def import_db_from_timeline_xml(path):
@@ -242,6 +244,8 @@ class Parser(object):
         elif self._is_subevent(text):
             cid, text = self._extract_subid(text)
             event = Subevent(self.db.get_time_type(), start, end, text, category, cid=cid, locked=locked, ends_today=ends_today)
+        elif text == MILESTONE_TEXT:
+            event = Milestone(self.db, start, text)
         else:
             if self._text_starts_with_added_space(text):
                 text = self._remove_added_space(text)
