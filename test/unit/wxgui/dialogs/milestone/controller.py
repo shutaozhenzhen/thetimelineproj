@@ -72,6 +72,7 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.simulate_user_enters_time(self.start_time)
         self.simulate_ok_clicked()
         self.assertEqual(self.db.save_event.call_count, 1)
+        self.assertEqual(self.controller.get_milestone().get_text(), "milestone")
 
     def simulate_user_enters_description(self, description):
         self.view.GetDescription.return_value = description
