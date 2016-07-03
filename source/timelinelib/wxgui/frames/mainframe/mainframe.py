@@ -49,7 +49,7 @@ from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
-from timelinelib.wxgui.dialogs.milestone.view import open_create_milestone_editor
+from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
 from timelinelib.wxgui.dialogs.feature.view import show_feature_feedback_dialog
 from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
@@ -426,7 +426,7 @@ class GuiCreator(object):
             open_duplicate_event_dialog_for_event(self, self.timeline, event)
 
         def create_milestone(evt):
-            open_create_milestone_editor(self, self.config, self.timeline)
+            open_milestone_editor_for(self, self.config, self.timeline)
 
         def set_categoryon_selected(evt):
 

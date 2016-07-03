@@ -40,6 +40,7 @@ from timelinelib.wxgui.components.sidebar import Sidebar
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 from timelinelib.wxgui.dialogs.editevent.view import open_event_editor_for
+from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 from timelinelib.wxgui.utils import _ask_question
 from timelinelib.wxgui.utils import handle_db_error_by_crashing
@@ -182,7 +183,10 @@ class TimelinePanelGuiCreator(wx.Panel):
         timeline_event = self.timeline_canvas.GetEventAt(x, y)
         time = self.timeline_canvas.GetTimeAt(x)
         if timeline_event is not None:
-            self.open_event_editor(timeline_event)
+            if timeline_event.is_milestone():
+                self.open_milestone_editor(timeline_event)
+            else:
+                self.open_event_editor(timeline_event)
         else:
             open_create_event_editor(
                 self.main_frame,
@@ -381,6 +385,13 @@ class TimelinePanel(TimelinePanelGuiCreator):
 
     def open_event_editor(self, event):
         open_event_editor_for(
+            self.main_frame,
+            self.config,
+            self.timeline_canvas.GetDb(),
+            event)
+
+    def open_milestone_editor(self, event):
+        open_milestone_editor_for(
             self.main_frame,
             self.config,
             self.timeline_canvas.GetDb(),

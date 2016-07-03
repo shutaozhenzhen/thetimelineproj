@@ -82,11 +82,11 @@ class EditMilestoneDialog(Dialog):
         return self.colorpicker.GetValue()
 
 
-def open_create_milestone_editor(parent, config, db):
+def open_milestone_editor_for(parent, config, db, event=None):
 
     def create_milestone_editor():
         label = _("Create Milestone")
-        return EditMilestoneDialog(parent, label, db, config, None)
+        return EditMilestoneDialog(parent, label, db, config, event)
 
     def edit_function():
         dialog = create_milestone_editor()
