@@ -41,7 +41,7 @@ class DefaultEventBoxDrawer(object):
         selected = view_properties.is_selected(event)
         self.center_text = scene.center_text()
         if event.is_milestone():
-            self._draw_milestone_event(dc, scene, event)
+            self._draw_milestone_event(dc, rect, scene, event)
         elif scene.never_show_period_events_as_point_events() and rect.y < scene.divider_y and event.is_period():
             self._draw_period_event_as_symbol_below_divider_line(dc, scene, event)
         else:
@@ -368,15 +368,16 @@ class DefaultEventBoxDrawer(object):
     def _get_bitmap(self, name):
         return wx.Bitmap(os.path.join(EVENT_ICONS_DIR, name))
 
-    def _draw_milestone_event(self, dc, scene, event):
-        SIZE = 10
-        x = scene.x_pos_for_time(event.mean_time())
-        y = scene.divider_y
-        points = (wx.Point(x - SIZE, y),
-                  wx.Point(x, y - SIZE),
-                  wx.Point(x + SIZE, y),
-                  wx.Point(x, y + SIZE))
+    def _draw_milestone_event(self, dc, rect, scene, event):
+        SIZE = 2
+        x = rect.x
+        y = rect.y
+        half_size = rect.width / 2
+        points = (wx.Point(x - SIZE, y + half_size),
+                  wx.Point(x + half_size, y - SIZE),
+                  wx.Point(x + rect.width + SIZE, y + half_size),
+                  wx.Point(x + half_size, y + rect.width + SIZE))
         dc.DestroyClippingRegion()
-        dc.SetPen(wx.BLACK_PEN)
+        dc.SetPen(wx.Pen(wx.Colour(0, 0, 0), 1, wx.SOLID))
         dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
         dc.DrawPolygon(points)
