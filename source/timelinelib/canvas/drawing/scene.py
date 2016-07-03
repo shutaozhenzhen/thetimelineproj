@@ -266,6 +266,9 @@ class TimelineScene(object):
             rw, rh = self._calc_width_and_height_for_non_period_event(event)
             rx = self._calc_x_pos_for_non_period_event(event, rw)
             ry = self._calc_y_pos_for_non_period_event(event, rh)
+            if event.is_milestone():
+                rw = rh
+                rx -= rw / 4
             return self._calc_ideal_wx_rect(rx, ry, rw, rh)
 
     def _calc_invisible_wx_rect(self):
@@ -288,7 +291,10 @@ class TimelineScene(object):
             return self._metrics.calc_x(event.mean_time()) - rw / 2
 
     def _calc_y_pos_for_non_period_event(self, event, rh):
-        return self._metrics.half_height - rh - self._baseline_padding
+        if event.is_milestone():
+            return self._metrics.half_height - rh / 2
+        else:
+            return self._metrics.half_height - rh - self._baseline_padding
 
     def _get_text_size(self, text):
         if len(text) > 0:
@@ -353,6 +359,8 @@ class TimelineScene(object):
         return num_visible
 
     def _prevent_overlapping_by_adjusting_rect_y(self, event, event_rect):
+        if event.is_milestone():
+            return
         if event.is_subevent() and self._display_as_period(event):
             self._adjust_subevent_rect(event, event_rect)
         else:
