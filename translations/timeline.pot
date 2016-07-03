@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-02 07:48+0200\n"
+"POT-Creation-Date: 2016-07-03 12:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -361,7 +361,7 @@ msgid "File"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:50
-#: source\timelinelib\wxgui\components\timelinepanel.py:248
+#: source\timelinelib\wxgui\components\timelinepanel.py:252
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:284
 msgid "Edit"
 msgstr ""
@@ -1746,7 +1746,7 @@ msgid "Add..."
 msgstr ""
 
 #: source\timelinelib\wxgui\components\categorytree.py:206
-#: source\timelinelib\wxgui\components\timelinepanel.py:244
+#: source\timelinelib\wxgui\components\timelinepanel.py:248
 msgid "Delete"
 msgstr ""
 
@@ -1898,56 +1898,56 @@ msgstr ""
 msgid "View Categories Individually"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:88
+#: source\timelinelib\wxgui\components\timelinepanel.py:89
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:361
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:44
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:61
 msgid "Center"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:249
+#: source\timelinelib\wxgui\components\timelinepanel.py:253
 msgid "Duplicate..."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:252
+#: source\timelinelib\wxgui\components\timelinepanel.py:256
 msgid "Select Category..."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:254
+#: source\timelinelib\wxgui\components\timelinepanel.py:258
 msgid "Sticky Balloon"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:263
+#: source\timelinelib\wxgui\components\timelinepanel.py:267
 msgid "Goto URL"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:286
+#: source\timelinelib\wxgui\components\timelinepanel.py:290
 #, python-format
 msgid "Are you sure you want to delete %d events?"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:289
+#: source\timelinelib\wxgui\components\timelinepanel.py:293
 msgid "Are you sure you want to delete this event?"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:348
+#: source\timelinelib\wxgui\components\timelinepanel.py:352
 #, python-format
 msgid "%s events hidden"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:415
+#: source\timelinelib\wxgui\components\timelinepanel.py:426
 msgid "This timeline is read-only."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:416
+#: source\timelinelib\wxgui\components\timelinepanel.py:427
 msgid "To edit this timeline, save it to a new file: File -> Save As."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:419
+#: source\timelinelib\wxgui\components\timelinepanel.py:430
 msgid "This timeline is not being saved."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:420
+#: source\timelinelib\wxgui\components\timelinepanel.py:431
 msgid "To save this timeline, save it to a new file: File -> Save As."
 msgstr ""
 
@@ -2349,8 +2349,12 @@ msgstr ""
 msgid "Description:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\milestone\view.py:83
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:89
 msgid "Create Milestone"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:91
+msgid "Edit Milestone"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\preferences\controller.py:62
