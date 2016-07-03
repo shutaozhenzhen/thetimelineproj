@@ -53,7 +53,7 @@ class DefaultEventBoxDrawer(object):
         y0 = scene.divider_y
         y1 = y0 + 10
         dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0), wx.SOLID))
-        dc.SetPen(wx.Pen(wx.Colour(0, 0, 0), 1, wx.SOLID))
+        dc.SetPen(self._black_solid_pen(1))
         dc.DrawLine(x, y0, x, y1)
         dc.DrawCircle(x, y1, 2)
 
@@ -378,6 +378,9 @@ class DefaultEventBoxDrawer(object):
                   wx.Point(x + rect.width + SIZE, y + half_size),
                   wx.Point(x + half_size, y + rect.width + SIZE))
         dc.DestroyClippingRegion()
-        dc.SetPen(wx.Pen(wx.Colour(0, 0, 0), 1, wx.SOLID))
+        dc.SetPen(self._black_solid_pen(1))
         dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
         dc.DrawPolygon(points)
+
+    def _black_solid_pen(self, size):
+        return wx.Pen(wx.Colour(0, 0, 0), size, wx.SOLID)
