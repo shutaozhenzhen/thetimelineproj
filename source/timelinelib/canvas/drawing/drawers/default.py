@@ -341,6 +341,8 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_lines_to_non_period_events(self, view_properties):
         for (event, rect) in self.scene.event_data:
+            if event.is_milestone():
+                continue
             if not event.is_period():
                 self._draw_line(view_properties, event, rect)
             elif not self.scene.never_show_period_events_as_point_events() and self._event_displayed_as_point_event(rect):
@@ -360,8 +362,8 @@ class DefaultDrawingAlgorithm(Drawer):
         if event.is_period():
             if self.appearance.get_draw_period_events_to_right():
                 x += 1
-            self.dc.DrawLine(x-1, y, x-1, y2)
-            self.dc.DrawLine(x+1, y, x+1, y2)
+            self.dc.DrawLine(x - 1, y, x - 1, y2)
+            self.dc.DrawLine(x + 1, y, x + 1, y2)
         self.dc.DrawLine(x, y, x, y2)
         self._draw_endpoint(event, x, y2)
 
@@ -512,7 +514,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_ballons(self, view_properties):
         """Draw ballons on selected events that has 'description' data."""
-        self.balloon_data = []     # List of (event, rect)
+        self.balloon_data = []  # List of (event, rect)
         top_event = None
         top_rect = None
         self.dc.SetTextForeground(BLACK)
