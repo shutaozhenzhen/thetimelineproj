@@ -369,28 +369,64 @@ class DefaultEventBoxDrawer(object):
         return wx.Bitmap(os.path.join(EVENT_ICONS_DIR, name))
 
     def _draw_milestone_event(self, dc, rect, scene, event, selected):
+
         def create_handle_rect():
             HALF_EVENT_HEIGHT = rect.Height / 2
             y = rect.Y + HALF_EVENT_HEIGHT - HALF_HANDLE_SIZE
             x = rect.X - HALF_HANDLE_SIZE + 1
             return wx.Rect(x, y, HANDLE_SIZE, HANDLE_SIZE)
-        SIZE = 2
-        x = rect.x
-        y = rect.y
-        half_size = rect.width / 2
-        points = (wx.Point(x - SIZE, y + half_size),
-                  wx.Point(x + half_size, y - SIZE),
-                  wx.Point(x + rect.width + SIZE, y + half_size),
-                  wx.Point(x + half_size, y + rect.width + SIZE))
-        dc.DestroyClippingRegion()
-        dc.SetPen(self._black_solid_pen(1))
-        dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
-        dc.DrawPolygon(points)
-        if selected:
+
+        def draw_shape():
+            # draw_diamond_shape()
+            draw_rectangle_shape()
+            # draw_circle_shape()
+
+        def draw_rectangle_shape():
+            dc.DestroyClippingRegion()
+            dc.SetPen(self._black_solid_pen(1))
+            dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
+            dc.DrawRectangleRect(rect)
+
+        def draw_circle_shape():
+            half_size = rect.width / 2
+            dc.DestroyClippingRegion()
+            dc.SetPen(self._black_solid_pen(1))
+            dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
+            dc.DrawCircle(rect.x + half_size, rect.y + half_size, 2 * rect.width / 3)
+
+        def draw_diamond_shape():
+            SIZE = 2
+            x = rect.x
+            y = rect.y
+            half_size = rect.width / 2
+            points = (wx.Point(x - SIZE, y + half_size),
+                      wx.Point(x + half_size, y - SIZE),
+                      wx.Point(x + rect.width + SIZE, y + half_size),
+                      wx.Point(x + half_size, y + rect.width + SIZE))
+            dc.DestroyClippingRegion()
+            dc.SetPen(self._black_solid_pen(1))
+            dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
+            dc.DrawPolygon(points)
+
+        def draw_label():
+            x_offset = 6
+            y_offset = 2
+            try:
+                label = event.get_text().split(":")[1][0]
+            except:
+                label = ""
+            dc.DrawText(label, rect.x + x_offset, rect.y + y_offset)
+
+        def draw_move_handle():
             dc.SetBrush(self._black_solid_brush())
             handle_rect = create_handle_rect()
             handle_rect.OffsetXY(rect.Width / 2, 0)
             dc.DrawRectangleRect(handle_rect)
+
+        draw_shape()
+        draw_label()
+        if selected:
+            draw_move_handle()
 
     def _black_solid_pen(self, size):
         return wx.Pen(wx.Colour(0, 0, 0), size, wx.SOLID)
