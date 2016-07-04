@@ -52,7 +52,7 @@ class DefaultEventBoxDrawer(object):
         x = scene.x_pos_for_time(event.mean_time())
         y0 = scene.divider_y
         y1 = y0 + 10
-        dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0), wx.SOLID))
+        dc.SetBrush(self._black_solid_brush())
         dc.SetPen(self._black_solid_pen(1))
         dc.DrawLine(x, y0, x, y1)
         dc.DrawCircle(x, y1, 2)
@@ -387,10 +387,13 @@ class DefaultEventBoxDrawer(object):
         dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
         dc.DrawPolygon(points)
         if selected:
-            dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0), wx.SOLID))
+            dc.SetBrush(self._black_solid_brush())
             handle_rect = create_handle_rect()
             handle_rect.OffsetXY(rect.Width / 2, 0)
             dc.DrawRectangleRect(handle_rect)
 
     def _black_solid_pen(self, size):
         return wx.Pen(wx.Colour(0, 0, 0), size, wx.SOLID)
+
+    def _black_solid_brush(self):
+        return wx.Brush(wx.Colour(0, 0, 0), wx.SOLID)
