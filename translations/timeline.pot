@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-03 12:06+0200\n"
+"POT-Creation-Date: 2016-07-04 21:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -556,7 +556,7 @@ msgstr ""
 msgid "Unable to read from file '%s'."
 msgstr ""
 
-#: source\timelinelib\dataimport\timelinexml.py:90
+#: source\timelinelib\dataimport\timelinexml.py:92
 #, python-format
 msgid "Unable to read timeline data from '%s'."
 msgstr ""
@@ -1844,7 +1844,7 @@ msgstr ""
 #: source\timelinelib\wxgui\components\propertyeditors\alerteditor.py:71
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:197
 #: source\timelinelib\wxgui\dialogs\eraeditor\view.py:70
-#: source\timelinelib\wxgui\dialogs\milestone\view.py:60
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:63
 msgid "When:"
 msgstr ""
 
@@ -1974,7 +1974,7 @@ msgstr ""
 #: source\timelinelib\wxgui\dialogs\changenowdate\view.py:48
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:199
 #: source\timelinelib\wxgui\dialogs\eraeditor\view.py:67
-#: source\timelinelib\wxgui\dialogs\milestone\view.py:62
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:65
 #: source\timelinelib\wxgui\dialogs\timeeditor\view.py:42
 msgid "Show time"
 msgstr ""
@@ -2156,7 +2156,7 @@ msgid "Era Properties"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\eraeditor\view.py:69
-#: source\timelinelib\wxgui\dialogs\milestone\view.py:64
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:68
 msgid "Colour:"
 msgstr ""
 
@@ -2341,19 +2341,23 @@ msgstr ""
 msgid "Options for ICS import"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\milestone\view.py:59
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:62
 msgid "Milestone Properties"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\milestone\view.py:63
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:66
 msgid "Description:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\milestone\view.py:89
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:67
+msgid "Label:"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:107
 msgid "Create Milestone"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\milestone\view.py:91
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:109
 msgid "Edit Milestone"
 msgstr ""
 
