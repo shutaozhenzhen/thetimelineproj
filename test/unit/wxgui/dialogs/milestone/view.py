@@ -34,6 +34,7 @@ class describe_milestone_editor_dialog(UnitTestCase):
         db.time_type = GregorianTimeType()
         milestone = Milestone(db,
                               human_time_to_gregorian("11 Jul 2014"),
-                              "a milestone")
+                              "Milestone:1")
+        milestone.set_description("a milestone")
         config = Mock(Config)
         self.show_dialog(EditMilestoneDialog, None, "Milestone", db, config, milestone)
