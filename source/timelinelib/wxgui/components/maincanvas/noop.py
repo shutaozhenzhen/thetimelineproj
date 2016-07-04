@@ -190,6 +190,8 @@ class NoOpInputHandler(InputHandler):
         (event, hit_info) = event_and_hit_info
         if event.get_locked():
             return None
+        if event.is_milestone():
+            return None
         if not self.timeline_canvas.IsEventSelected(event):
             return None
         if hit_info == LEFT_RESIZE_HANDLE:
