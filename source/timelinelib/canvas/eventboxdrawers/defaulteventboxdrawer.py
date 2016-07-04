@@ -41,7 +41,7 @@ class DefaultEventBoxDrawer(object):
         selected = view_properties.is_selected(event)
         self.center_text = scene.center_text()
         if event.is_milestone():
-            self._draw_milestone_event(dc, rect, scene, event)
+            self._draw_milestone_event(dc, rect, scene, event, selected)
         elif scene.never_show_period_events_as_point_events() and rect.y < scene.divider_y and event.is_period():
             self._draw_period_event_as_symbol_below_divider_line(dc, scene, event)
         else:
@@ -368,7 +368,12 @@ class DefaultEventBoxDrawer(object):
     def _get_bitmap(self, name):
         return wx.Bitmap(os.path.join(EVENT_ICONS_DIR, name))
 
-    def _draw_milestone_event(self, dc, rect, scene, event):
+    def _draw_milestone_event(self, dc, rect, scene, event, selected):
+        def create_handle_rect():
+            HALF_EVENT_HEIGHT = rect.Height / 2
+            y = rect.Y + HALF_EVENT_HEIGHT - HALF_HANDLE_SIZE
+            x = rect.X - HALF_HANDLE_SIZE + 1
+            return wx.Rect(x, y, HANDLE_SIZE, HANDLE_SIZE)
         SIZE = 2
         x = rect.x
         y = rect.y
@@ -381,6 +386,11 @@ class DefaultEventBoxDrawer(object):
         dc.SetPen(self._black_solid_pen(1))
         dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
         dc.DrawPolygon(points)
+        if selected:
+            dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0), wx.SOLID))
+            handle_rect = create_handle_rect()
+            handle_rect.OffsetXY(rect.Width / 2, 0)
+            dc.DrawRectangleRect(handle_rect)
 
     def _black_solid_pen(self, size):
         return wx.Pen(wx.Colour(0, 0, 0), size, wx.SOLID)
