@@ -30,6 +30,7 @@ class EditMilestoneDialogController(Controller):
         if milestone is None:
             self._new_milestone = True
             self._milestone = Milestone(db, self._time_type.now(), "")
+            self._milestone.set_description("")
         else:
             self._new_milestone = False
             self._milestone = milestone
