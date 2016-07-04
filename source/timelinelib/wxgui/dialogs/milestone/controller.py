@@ -33,9 +33,15 @@ class EditMilestoneDialogController(Controller):
         else:
             self._new_milestone = False
             self._milestone = milestone
-        self.view.PopulateControls(self._milestone.time_period.start_time, self._milestone.get_text(),
+        self.view.PopulateControls(self._milestone.time_period.start_time, self._milestone.get_description(),
                                    self._milestone.get_default_color())
         self.view.SetShowTime(self._milestone_has_nonzero_time())
+        try:
+            label = self._milestone.get_text()
+            label = label.split(":")[1]
+            self.view.SetLable(label)
+        except:
+            pass
 
     def _milestone_has_nonzero_time(self):
         try:
@@ -52,7 +58,7 @@ class EditMilestoneDialogController(Controller):
 
     def _update_milestone(self):
         self._milestone.set_description(self.view.GetDescription())
-        self._milestone.set_text(MILESTONE_TEXT)
+        self._milestone.set_text(MILESTONE_TEXT + "%s" % self.view.GetLabel())
         self._milestone.set_default_color(self.view.GetColour()[:3])
         self._milestone.set_time_period(TimePeriod(self._time_type, self.view.GetTime(), self.view.GetTime()))
         if self._new_milestone:

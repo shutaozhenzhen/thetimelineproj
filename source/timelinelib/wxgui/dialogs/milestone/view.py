@@ -40,6 +40,9 @@ class EditMilestoneDialog(Dialog):
                 <StaticText label="$(description_text)" align="ALIGN_CENTER_VERTICAL" />
                 <TextCtrl name="txt_description" />
 
+                <StaticText label="$(description_label)" align="ALIGN_CENTER_VERTICAL" />
+                <TextCtrl name="txt_label" />
+
                 <StaticText label="$(colour_text)" align="ALIGN_CENTER_VERTICAL" />
                 <ColourSelect name="colorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
 
@@ -61,6 +64,7 @@ class EditMilestoneDialog(Dialog):
             "time_type": db.time_type,
             "show_time_text": _("Show time"),
             "description_text": _("Description:"),
+            "description_label": _("Label:"),
             "colour_text": _("Colour:"),
             "config": config,
         }, title=title)
@@ -77,6 +81,12 @@ class EditMilestoneDialog(Dialog):
 
     def GetDescription(self):
         return self.txt_description.GetValue()
+
+    def GetLabel(self):
+        return self.txt_label.GetValue()
+
+    def SetLable(self, label):
+        self.txt_label.SetValue(label)
 
     def GetColour(self):
         return self.colorpicker.GetValue()
