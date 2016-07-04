@@ -81,6 +81,14 @@ class EditMilestoneDialog(Dialog):
     def GetColour(self):
         return self.colorpicker.GetValue()
 
+    def SetShowTime(self, value):
+        try:
+            self.cbx_show_time.SetValue(value)
+            self.dtp_time.show_time(value)
+        except:
+            # Not all TimePicker objects has a 'show_time' attribute
+            pass
+
 
 def open_milestone_editor_for(parent, config, db, event=None):
 
