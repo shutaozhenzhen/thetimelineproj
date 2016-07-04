@@ -38,7 +38,10 @@ class EditMilestoneDialogController(Controller):
         self.view.SetShowTime(self._milestone_has_nonzero_time())
         try:
             label = self._milestone.get_text()
-            label = label.split(":")[1]
+            try:
+                label = label.split(":")[1]
+            except:
+                label = ""
             self.view.SetLable(label)
         except:
             pass
