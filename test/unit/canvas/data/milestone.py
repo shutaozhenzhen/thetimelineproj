@@ -31,7 +31,7 @@ class describe_milestone(UnitTestCase):
         self.assertTrue(self.milestone is not None)
 
     def test_has_a_default_color(self):
-        self.assertEqual(self.milestone.get_default_color(), (0, 0, 255))
+        self.assertEqual(self.milestone.get_default_color(), (255, 255, 128))
 
     def test_is_milestone(self):
         self.assertTrue(self.milestone.is_milestone())
