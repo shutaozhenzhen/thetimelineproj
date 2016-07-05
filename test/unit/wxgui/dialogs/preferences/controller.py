@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
+
 import wx
 
 from mock import Mock
@@ -31,7 +33,11 @@ from timelinelib.test.utils import ANY
 CONFIG_FUZZY_ICON_NAME = "fuzzy.png"
 CONFIG_LOCKED_ICON_NAME = "locked.png"
 CONFIG_HYPERINK_ICON_NAME = "hyperlink.png"
-FONT = u"12:74:90:92:False:MS Shell Dlg 2:33:(0, 0, 0, 255)"
+
+if sys.platform == "win32":
+    FONT = u"12:74:90:92:False:MS Shell Dlg 2:-1:(0, 0, 0, 255)"
+else:
+    FONT = u"12:74:90:92:False:MS Shell Dlg 2:41:(0, 0, 0, 255)"
 
 
 class describe_preferences_dialog_controller(UnitTestCase):
