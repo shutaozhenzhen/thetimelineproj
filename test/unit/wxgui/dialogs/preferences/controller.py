@@ -37,7 +37,7 @@ CONFIG_HYPERINK_ICON_NAME = "hyperlink.png"
 if sys.platform == "win32":
     FONT = u"12:74:90:92:False:MS Shell Dlg 2:-1:(0, 0, 0, 255)"
 else:
-    FONT = u"12:74:90:92:False:MS Shell Dlg 2:43:(0, 0, 0, 255)"
+    FONT = u"12:70:90:92:False:MS Shell Dlg 2:43:(0, 0, 0, 255)"
 
 
 class describe_preferences_dialog_controller(UnitTestCase):
