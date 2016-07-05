@@ -19,7 +19,7 @@
 from timelinelib.canvas.data.event import Event
 
 
-DEFAULT_COLOR = (0, 0, 255)
+DEFAULT_COLOR = (255, 255, 128)
 MILESTONE_TEXT = "Milestone:"
 
 """
