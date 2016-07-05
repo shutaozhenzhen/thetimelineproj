@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-04 21:17+0200\n"
+"POT-Creation-Date: 2016-07-05 11:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -371,7 +371,7 @@ msgid "View"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:52
-#: source\timelinelib\help\pages.py:126
+#: source\timelinelib\help\pages.py:127
 msgid "Timeline"
 msgstr ""
 
@@ -517,7 +517,7 @@ msgid "Give Feedback"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:95
-#: source\timelinelib\help\pages.py:469
+#: source\timelinelib\help\pages.py:494
 msgid "Contact"
 msgstr ""
 
@@ -686,7 +686,7 @@ msgstr ""
 
 #: source\timelinelib\dataimport\tutorial.py:96
 #: source\timelinelib\dataimport\tutorial.py:199
-#: source\timelinelib\help\pages.py:264
+#: source\timelinelib\help\pages.py:289
 msgid "Create event"
 msgstr ""
 
@@ -700,7 +700,7 @@ msgstr ""
 
 #: source\timelinelib\dataimport\tutorial.py:103
 #: source\timelinelib\dataimport\tutorial.py:206
-#: source\timelinelib\help\pages.py:308
+#: source\timelinelib\help\pages.py:333
 msgid "Edit event"
 msgstr ""
 
@@ -724,7 +724,7 @@ msgstr ""
 
 #: source\timelinelib\dataimport\tutorial.py:115
 #: source\timelinelib\dataimport\tutorial.py:218
-#: source\timelinelib\help\pages.py:406
+#: source\timelinelib\help\pages.py:431
 msgid "Delete event"
 msgstr ""
 
@@ -898,19 +898,19 @@ msgstr ""
 msgid "Help contents"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:62
+#: source\timelinelib\help\pages.py:63
 msgid "Questions and answers"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:62
+#: source\timelinelib\help\pages.py:63
 msgid "Concepts"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:62
+#: source\timelinelib\help\pages.py:63
 msgid "Tasks"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:66
+#: source\timelinelib\help\pages.py:67
 msgid "Where is the save button?"
 msgstr ""
 
@@ -919,14 +919,14 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:72
+#: source\timelinelib\help\pages.py:73
 msgid ""
 "\n"
 "There is no save button. Timeline will automatically save your data whenever "
 "needed.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:78
+#: source\timelinelib\help\pages.py:79
 msgid "Where do the week numbers go if I start my weeks on Sunday?"
 msgstr ""
 
@@ -935,7 +935,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:84
+#: source\timelinelib\help\pages.py:85
 msgid ""
 "\n"
 "The date data object used does not support week numbers for weeks that start "
@@ -943,7 +943,7 @@ msgid ""
 "support this in future versions.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:90
+#: source\timelinelib\help\pages.py:91
 msgid "Can multiple users work with the same timeline?"
 msgstr ""
 
@@ -952,7 +952,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:96
+#: source\timelinelib\help\pages.py:97
 msgid ""
 "\n"
 "There are some support for multiple users to work on the same timeline "
@@ -969,7 +969,7 @@ msgid ""
 "notified about this situation.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:109
+#: source\timelinelib\help\pages.py:110
 msgid "Can I Check or Uncheck all categories?"
 msgstr ""
 
@@ -978,7 +978,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:116
+#: source\timelinelib\help\pages.py:117
 msgid ""
 "\n"
 "Yes you can check or uncheck all categories as well as a lot of other "
@@ -996,7 +996,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:133
+#: source\timelinelib\help\pages.py:134
 msgid ""
 "\n"
 "The timeline shows dates according to the Gregorian calendar on the x-axis. "
@@ -1012,7 +1012,7 @@ msgid ""
 "displayed above the line.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:143
+#: source\timelinelib\help\pages.py:144
 msgid "Scrolling Timeline"
 msgstr ""
 
@@ -1021,7 +1021,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:150
+#: source\timelinelib\help\pages.py:151
 msgid ""
 "\n"
 "A Timeline can be scrolled both horizontal (along time axis) and vertically "
@@ -1038,7 +1038,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:162
+#: source\timelinelib\help\pages.py:163
 msgid "Zooming Timeline"
 msgstr ""
 
@@ -1047,7 +1047,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:169
+#: source\timelinelib\help\pages.py:170
 msgid ""
 "\n"
 "A Timeline can be Zoomed both horizontal (along time axis) and vertically "
@@ -1058,7 +1058,7 @@ msgid ""
 "To zoom vertically, hold down the Alt-key and scroll the mouse wheel.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:179
+#: source\timelinelib\help\pages.py:180
 #: source\timelinelib\plugin\plugins\exporters\timelineexporter.py:78
 #: source\timelinelib\wxgui\dialogs\export\view.py:62
 msgid "Events"
@@ -1069,7 +1069,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:186
+#: source\timelinelib\help\pages.py:187
 msgid ""
 "\n"
 "An event is the basic data type for representing information on the "
@@ -1078,7 +1078,7 @@ msgid ""
 "period.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:192
+#: source\timelinelib\help\pages.py:193
 msgid "Era"
 msgstr ""
 
@@ -1087,7 +1087,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:199
+#: source\timelinelib\help\pages.py:200
 msgid ""
 "\n"
 "An Era is A clearly defined period of time of arbitrary but well-defined "
@@ -1097,7 +1097,7 @@ msgid ""
 "Era name is written att the bottom of the timeline.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:207
+#: source\timelinelib\help\pages.py:208
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:196
 msgid "Event Properties"
 msgstr ""
@@ -1107,7 +1107,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:214
+#: source\timelinelib\help\pages.py:215
 msgid ""
 "\n"
 "For an event the following properties can be defined.\n"
@@ -1127,7 +1127,36 @@ msgid ""
 " - Hyperlink - A hyperlink that can be reached in the event context menu.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:233
+#: source\timelinelib\help\pages.py:234
+msgid "Milestones"
+msgstr ""
+
+#. TRANSLATORS: This text uses special markup.
+#. DON'T translate 'HelpFigure(..)' or 'Help(..)'.
+#. Just write them as they are.
+#. Stars produce emphasized text. DON'T remove them.
+#. Dashes produce bullet lists. DON'T remove them.
+#: source\timelinelib\help\pages.py:241
+msgid ""
+"\n"
+"A milestone is a special case of a point event. It is rendered on the "
+"timescale of a timeline and it can have a desciption shown when hooverd "
+"over. It can also have a one character label that is displayed in the "
+"milestone box.\n"
+"\n"
+"A milestone ...\n"
+"\n"
+"* is created by selecting the menu alternative Timeline -> Create "
+"milestone.\n"
+"\n"
+"* is edited by doubleclicking on it.\n"
+"\n"
+"* is deleted by clicking on it and thereafter click the delete button.\n"
+"\n"
+"* can be dragged to a new position.\n"
+msgstr ""
+
+#: source\timelinelib\help\pages.py:258
 #: source\timelinelib\plugin\plugins\exporters\timelineexporter.py:84
 #: source\timelinelib\wxgui\dialogs\export\view.py:63
 msgid "Categories"
@@ -1138,7 +1167,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:240
+#: source\timelinelib\help\pages.py:265
 msgid ""
 "\n"
 "Categories are used to group events. An event can only belong to one "
@@ -1146,7 +1175,7 @@ msgid ""
 "same background color.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:246
+#: source\timelinelib\help\pages.py:271
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:285
 msgid "Experimental Features"
 msgstr ""
@@ -1156,7 +1185,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:252
+#: source\timelinelib\help\pages.py:277
 msgid ""
 "\n"
 "Experimental features are features implemented in Timeline but not yet "
@@ -1177,7 +1206,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:271
+#: source\timelinelib\help\pages.py:296
 msgid ""
 "\n"
 "The *Create Event* dialog can be opened in the following ways:\n"
@@ -1188,7 +1217,7 @@ msgid ""
 "timeline, drag the mouse and release it.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:281
+#: source\timelinelib\help\pages.py:306
 msgid "Undo/Redo"
 msgstr ""
 
@@ -1197,7 +1226,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:288
+#: source\timelinelib\help\pages.py:313
 msgid ""
 "\n"
 "The *Undo* function can revert an action such as creating an event, editing "
@@ -1224,7 +1253,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:315
+#: source\timelinelib\help\pages.py:340
 msgid ""
 "\n"
 "The *Edit Event* dialog can be opened by double clicking on an event or by "
@@ -1232,7 +1261,7 @@ msgid ""
 "menu.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:321
+#: source\timelinelib\help\pages.py:346
 msgid "Move event vertically"
 msgstr ""
 
@@ -1241,14 +1270,14 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:328
+#: source\timelinelib\help\pages.py:353
 msgid ""
 "\n"
 "An event can be moved vertically. This is done by first selecting the event "
 "and thereafter using the Up or Down keys.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:334
+#: source\timelinelib\help\pages.py:359
 msgid "Duplicate event"
 msgstr ""
 
@@ -1257,7 +1286,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:341
+#: source\timelinelib\help\pages.py:366
 msgid ""
 "\n"
 "An event can be duplicated. Select the event you want to duplicate and "
@@ -1277,7 +1306,7 @@ msgid ""
 "wich appears if you right-click an event with the mouse.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:357
+#: source\timelinelib\help\pages.py:382
 msgid "Selecting events"
 msgstr ""
 
@@ -1286,14 +1315,14 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:363
+#: source\timelinelib\help\pages.py:388
 msgid ""
 "\n"
 "To select an event, click on it. To select multiple events, hold down the "
 "*Ctrl* key while clicking events.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:369
+#: source\timelinelib\help\pages.py:394
 msgid "Import timeline"
 msgstr ""
 
@@ -1302,7 +1331,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:376
+#: source\timelinelib\help\pages.py:401
 msgid ""
 "\n"
 "This feature can be used to merge two timelines into one.\n"
@@ -1311,7 +1340,7 @@ msgid ""
 "select the timeline to be imported.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:384
+#: source\timelinelib\help\pages.py:409
 msgid "Event Containers"
 msgstr ""
 
@@ -1320,7 +1349,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:391
+#: source\timelinelib\help\pages.py:416
 msgid ""
 "\n"
 "Containers are a way to group events together.\n"
@@ -1344,14 +1373,14 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:413
+#: source\timelinelib\help\pages.py:438
 msgid ""
 "\n"
 "To delete an event, select it and press the *Del* key. Multiple events can "
 "be deleted at the same time.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:419
+#: source\timelinelib\help\pages.py:444
 msgid "Will associated events be deleted when I delete a category?"
 msgstr ""
 
@@ -1360,13 +1389,13 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:425
+#: source\timelinelib\help\pages.py:450
 msgid ""
 "\n"
 "No. The events will still be there but they will not belong to a category.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:431
+#: source\timelinelib\help\pages.py:456
 msgid "Add a user defined icon"
 msgstr ""
 
@@ -1375,7 +1404,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:438
+#: source\timelinelib\help\pages.py:463
 msgid ""
 "\n"
 "Icons used for the event properties\n"
@@ -1391,7 +1420,7 @@ msgid ""
 "Now the icon can be selected in the properties dialog on the Icons tab.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:454
+#: source\timelinelib\help\pages.py:479
 #: source\timelinelib\wxgui\components\categorychoice.py:77
 msgid "Edit categories"
 msgstr ""
@@ -1401,7 +1430,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:461
+#: source\timelinelib\help\pages.py:486
 msgid ""
 "\n"
 "Categories can be managed in the *Edit Categories* dialog (*Timeline* > "
@@ -1416,7 +1445,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:475
+#: source\timelinelib\help\pages.py:500
 msgid ""
 "\n"
 "If you have more questions about Timeline, or if you want to get in contact "
@@ -1424,7 +1453,7 @@ msgid ""
 "list: <thetimelineproj-user@lists.sourceforge.net>. (Please use English.)\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:481
+#: source\timelinelib\help\pages.py:506
 msgid "Why is Timeline not available in my language?"
 msgstr ""
 
@@ -1433,7 +1462,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:488
+#: source\timelinelib\help\pages.py:513
 msgid ""
 "\n"
 "Timeline is developed and translated by volunteers. If you would like to "
@@ -2353,11 +2382,11 @@ msgstr ""
 msgid "Label:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\milestone\view.py:107
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:114
 msgid "Create Milestone"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\milestone\view.py:109
+#: source\timelinelib\wxgui\dialogs\milestone\view.py:116
 msgid "Edit Milestone"
 msgstr ""
 

@@ -39,6 +39,9 @@ GUI:
   
 * Atfer a search match the found event is highlighted
 
+Data:
+* Introduced the special event type, Milestone.
+
 Bug fixes:
 
 * Bosparanian date format craches.

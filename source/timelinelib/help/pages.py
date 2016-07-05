@@ -46,6 +46,7 @@ def install(help_system):
     - Help(timeline)
     - Help(era)
     - Help(events)
+    - Help(milestones)
     - Help(categories)
     - Help(experimental_features)
     - Help(event_containers)
@@ -227,6 +228,30 @@ For an event the following properties can be defined.
  - Alert - An alert dialog is opened at the specified alert time.
  - Hyperlink - A hyperlink that can be reached in the event context menu.
 """))
+
+    help_system.install_page(
+        page_id="milestones",
+        header=_("Milestones"),
+        related_pages=["events"],
+        # TRANSLATORS: This text uses special markup.
+        # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
+        # Just write them as they are.
+        # Stars produce emphasized text. DON'T remove them.
+        # Dashes produce bullet lists. DON'T remove them.
+        body=_("""
+A milestone is a special case of a point event. It is rendered on the timescale of a timeline and it can have a desciption shown when hooverd over. It can also have a one character label that is displayed in the milestone box.
+
+A milestone ...
+
+* is created by selecting the menu alternative Timeline -> Create milestone.
+
+* is edited by doubleclicking on it.
+
+* is deleted by clicking on it and thereafter click the delete button.
+
+* can be dragged to a new position.
+"""))
+
 
     help_system.install_page(
         page_id="categories",
