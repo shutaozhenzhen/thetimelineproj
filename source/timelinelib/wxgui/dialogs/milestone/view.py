@@ -71,10 +71,17 @@ class EditMilestoneDialog(Dialog):
         self.controller.on_init(db, milestone)
         self._milestone = milestone
 
-    def PopulateControls(self, start_time, description, colour):
+    def SetStartTime(self, start_time):
         self.dtp_time.set_value(start_time)
-        self.txt_description.SetValue(description)
-        self.colorpicker.SetValue(colour)
+
+    def SetColor(self, color):
+        self.colorpicker.SetValue(color)
+        
+    def SetDescription(self, description):
+        if description is None:
+            self.txt_description.SetValue("")
+        else:
+            self.txt_description.SetValue(description)
 
     def GetTime(self):
         return self.dtp_time.get_value()
