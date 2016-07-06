@@ -501,6 +501,7 @@ class GuiCreator(object):
     def _add_timeline_menu_items_to_controller(self, menu):
         self._add_to_controller_requiring_writeable_timeline(menu, ID_CREATE_EVENT)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_EDIT_EVENT)
+        self._add_to_controller_requiring_writeable_timeline(menu, ID_CREATE_MILESTONE)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_DUPLICATE_EVENT)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_CATEGORY_ON_SELECTED)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_MEASURE_DISTANCE)
