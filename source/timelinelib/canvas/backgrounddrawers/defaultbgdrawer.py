@@ -21,15 +21,15 @@ import wx
 
 class DefaultBackgroundDrawer(object):
 
-    def draw(self, drawer, dc, scene, timeline, colorize_weekends, weekend_colour):
+    def draw(self, drawer, dc, scene, timeline, colorize_weekends, weekend_colour, bg_colour):
         self.drawer = drawer
-        self._erase_background(dc)
+        self._erase_background(dc, bg_colour)
         self._draw_eras(dc, scene, timeline)
         self._draw_weekend_days(dc, drawer, scene, colorize_weekends, weekend_colour)
 
-    def _erase_background(self, dc):
+    def _erase_background(self, dc, bg_colour):
         w, h = dc.GetSizeTuple()
-        self._set_color(dc, wx.WHITE)
+        self._set_color(dc, bg_colour)
         dc.DrawRectangle(0, 0, w, h)
 
     def _draw_weekend_days(self, dc, drawer, scene, colorize_weekends, weekend_colour):
