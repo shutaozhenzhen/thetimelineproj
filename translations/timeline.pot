@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-05 11:42+0200\n"
+"POT-Creation-Date: 2016-07-06 17:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -347,12 +347,12 @@ msgstr ""
 msgid "No timeline set"
 msgstr ""
 
-#: source\timelinelib\config\dotfile.py:492
+#: source\timelinelib\config\dotfile.py:501
 #: source\timelinelib\wxgui\utils.py:127
 msgid "Warning"
 msgstr ""
 
-#: source\timelinelib\config\dotfile.py:492
+#: source\timelinelib\config\dotfile.py:501
 msgid "The selected value contains invalid characters and can't be saved"
 msgstr ""
 
@@ -361,8 +361,8 @@ msgid "File"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:50
-#: source\timelinelib\wxgui\components\timelinepanel.py:252
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:284
+#: source\timelinelib\wxgui\components\timelinepanel.py:253
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:294
 msgid "Edit"
 msgstr ""
 
@@ -424,7 +424,7 @@ msgid "Find"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:68
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:294
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:305
 msgid "Preferences"
 msgstr ""
 
@@ -1176,7 +1176,7 @@ msgid ""
 msgstr ""
 
 #: source\timelinelib\help\pages.py:271
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:285
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:295
 msgid "Experimental Features"
 msgstr ""
 
@@ -1526,7 +1526,7 @@ msgid "Could not find pysvg Python package. It is needed to export to SVG."
 msgstr ""
 
 #: source\timelinelib\plugin\plugins\exporters\exporttosvg.py:46
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:893
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:894
 msgid "SVG files"
 msgstr ""
 
@@ -1775,7 +1775,7 @@ msgid "Add..."
 msgstr ""
 
 #: source\timelinelib\wxgui\components\categorytree.py:206
-#: source\timelinelib\wxgui\components\timelinepanel.py:248
+#: source\timelinelib\wxgui\components\timelinepanel.py:249
 msgid "Delete"
 msgstr ""
 
@@ -1934,49 +1934,49 @@ msgstr ""
 msgid "Center"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:253
+#: source\timelinelib\wxgui\components\timelinepanel.py:254
 msgid "Duplicate..."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:256
+#: source\timelinelib\wxgui\components\timelinepanel.py:257
 msgid "Select Category..."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:258
+#: source\timelinelib\wxgui\components\timelinepanel.py:259
 msgid "Sticky Balloon"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:267
+#: source\timelinelib\wxgui\components\timelinepanel.py:268
 msgid "Goto URL"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:290
+#: source\timelinelib\wxgui\components\timelinepanel.py:291
 #, python-format
 msgid "Are you sure you want to delete %d events?"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:293
+#: source\timelinelib\wxgui\components\timelinepanel.py:294
 msgid "Are you sure you want to delete this event?"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:352
+#: source\timelinelib\wxgui\components\timelinepanel.py:353
 #, python-format
 msgid "%s events hidden"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:426
+#: source\timelinelib\wxgui\components\timelinepanel.py:427
 msgid "This timeline is read-only."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:427
+#: source\timelinelib\wxgui\components\timelinepanel.py:428
 msgid "To edit this timeline, save it to a new file: File -> Save As."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:430
+#: source\timelinelib\wxgui\components\timelinepanel.py:431
 msgid "This timeline is not being saved."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:431
+#: source\timelinelib\wxgui\components\timelinepanel.py:432
 msgid "To save this timeline, save it to a new file: File -> Save As."
 msgstr ""
 
@@ -2345,8 +2345,8 @@ msgid "Select timeline to import from:"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importevents\view.py:54
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:891
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:982
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:892
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:983
 msgid "Timeline files"
 msgstr ""
 
@@ -2390,124 +2390,128 @@ msgstr ""
 msgid "Edit Milestone"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\controller.py:62
-#: source\timelinelib\wxgui\dialogs\preferences\controller.py:128
+#: source\timelinelib\wxgui\dialogs\preferences\controller.py:63
+#: source\timelinelib\wxgui\dialogs\preferences\controller.py:130
 msgid "Current"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:264
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:274
 msgid "General"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:265
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:275
 msgid "Open most recent timeline on startup"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:266
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:276
 msgid "Use inertial scrolling"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:267
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:277
 msgid "Never show period Events as point Events"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:268
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:278
 msgid "Center Event texts"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:269
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:279
 msgid "Uncheck time checkbox for new events"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:270
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:280
 msgid "Select Event Editor Tab Order"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:271
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:281
 msgid "Select Date format"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:272
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:282
 msgid "Date && Time"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:273
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:283
 msgid "Week start on:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:274
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:284
 msgid "Monday"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:274
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:284
 msgid "Sunday"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:275
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:285
 msgid "Fonts"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:276
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:286
 msgid "Colours"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:277
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:287
 msgid "Major Strips:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:278
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:288
 msgid "Minor Strips:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:279
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:289
 msgid "Icons"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:280
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:290
 msgid "Fuzzy icon"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:281
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:291
 msgid "Locked icon"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:282
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:292
 msgid "Hyperlink icon"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:283
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:293
 msgid "Legends:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:286
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:296
 msgid "Minor strip divider line:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:287
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:297
 msgid "Major strip divider line:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:288
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:298
 msgid "Now line:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:289
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:299
 msgid "Weekends:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:290
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:300
+msgid "Background"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:301
 msgid "Vertical space between Events (px)"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:291
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:302
 msgid "Colorize weekends"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:292
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:303
 msgid "Skip s in decade text"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:293
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:304
 msgid "Display checkmark when events are done"
 msgstr ""
 
@@ -2756,125 +2760,125 @@ msgstr ""
 msgid "&Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:543
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:544
 msgid "Find &First Event"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:544
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:545
 msgid "Find &Last Event"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:545
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:546
 msgid "Fit &All Events"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:553
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:554
 msgid "&Navigate"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:568
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:569
 msgid "Feedback"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:571
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:572
 msgid "&Contents\tF1"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:573
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:574
 msgid "Getting started &tutorial"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:575
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:576
 msgid "Give &Feedback..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:576
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:577
 msgid "Co&ntact"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:578
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:579
 msgid "System information"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:583
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:584
 msgid "&Help"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:637
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:638
 msgid "Gregorian"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:638
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:639
 msgid "This creates a timeline using the standard calendar."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:642
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:643
 msgid "Numeric"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:643
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:644
 msgid ""
 "This creates a timeline that has numbers on the x-axis instead of dates."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:647
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:648
 msgid "Directory"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:648
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:649
 msgid ""
 "This creates a timeline where the modification date of files in a directory "
 "are shown as events."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:652
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:653
 msgid "Bosparanian"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:653
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:654
 msgid ""
 "This creates a timeline using the fictuous Bosparanian calendar from the "
 "German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:730
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:731
 msgid "read-only"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:945
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:959
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:946
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:960
 msgid "Create Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:950
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:951
 msgid "The specified timeline already exists."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:951
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:952
 msgid "Opening timeline instead of creating new."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:953
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:954
 msgid "Information"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:969
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:970
 msgid "Open Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:985
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:986
 msgid "Save Timeline As"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:1015
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:1016
 msgid "Unable to write configuration file."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:1039
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:1040
 msgid "Distance between selected events"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:1042
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:1043
 msgid "Events are overlapping or distance is 0"
 msgstr ""
 

@@ -156,6 +156,16 @@ class PreferencesDialog(Dialog):
                 <BoxSizerVertical>
                     <FlexGridSizer columns="2" border="ALL">
                         <StaticText
+                            label="$(bg_colour_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <ColourSelect
+                            name="bg_colorpicker"
+                            align="ALIGN_CENTER_VERTICAL"
+                            width="60"
+                            height="30"
+                        />
+                        <StaticText
                             label="$(minor_strip_colour_text)"
                             align="ALIGN_CENTER_VERTICAL"
                         />
@@ -287,6 +297,7 @@ class PreferencesDialog(Dialog):
             "major_strip_colour_text": _("Major strip divider line:"),
             "now_line_colour_text": _("Now line:"),
             "weekend_colour_text": _("Weekends:"),
+            "bg_colour_text": _("Background"),
             "vertical_space_between_events_text": _("Vertical space between Events (px)"),
             "colorize_weekends_text": _("Colorize weekends"),
             "skip_s_in_decade_text_text": _("Skip s in decade text"),
@@ -386,6 +397,12 @@ class PreferencesDialog(Dialog):
 
     def SetNowLineColor(self, new_color):
         self.now_line_colorpicker.SetValue(new_color)
+
+    def GetBgColor(self):
+        return self.bg_colorpicker.GetValue()
+
+    def SetBgColor(self, new_color):
+        self.bg_colorpicker.SetValue(new_color)
 
     def GetWeekendColor(self):
         return self.weekend_colorpicker.GetValue()
