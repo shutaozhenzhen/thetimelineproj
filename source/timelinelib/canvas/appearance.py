@@ -32,6 +32,7 @@ class Appearance(Observable):
         self._build_property("major_strip_divider_line_colour", (200, 200, 200))
         self._build_property("now_line_colour", (200, 0, 0))
         self._build_property("weekend_colour", (255, 255, 255))
+        self._build_property("bg_colour", (255, 255, 255))
         self._build_property("colorize_weekends", False)
         self._build_property("draw_period_events_to_right", False)
         self._build_property("text_below_icon", False)
