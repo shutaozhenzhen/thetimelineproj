@@ -73,6 +73,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
         config.major_strip_divider_line_colour = (100, 100, 100)
         config.now_line_colour = (100, 100, 100)
         config.weekend_colour = (255, 255, 255)
+        config.get_bg_color.return_value = (255, 255, 255)
         config.get_fuzzy_icon.return_value = CONFIG_FUZZY_ICON_NAME
         config.get_locked_icon.return_value = CONFIG_LOCKED_ICON_NAME
         config.get_hyperlink_icon.return_value = CONFIG_HYPERINK_ICON_NAME
@@ -102,6 +103,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.major_strip_divider_line_colour = (100, 100, 100)
         self.config.now_line_colour = (200, 0, 0)
         self.config.weekend_colour = (255, 255, 255)
+        self.config.get_bg_color.return_value = (255, 255, 255)
         self.config.get_fuzzy_icon.return_value = "fuzzy.png"
         self.config.get_locked_icon.return_value = "locked.png"
         self.config.get_hyperlink_icon.return_value = "hyperlink.png"

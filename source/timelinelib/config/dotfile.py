@@ -69,6 +69,7 @@ MINOR_STRIP_DIVIDER_LINE_COLOUR = "minor_strip_divider_line_colour"
 MAJOR_STRIP_DIVIDER_LINE_COLOUR = "major_strip_divider_line_colour"
 NOW_LINE_COLOUR = "today_line_colour"
 WEEKEND_COLOUR = "weekend_colour"
+BG_COLOUR = "bg_colour"
 TEXT_BELOW_ICON = "text_below_icon"
 FUZZY_ICON = "fuzzy_icon"
 LOCKED_ICON = "locked_icon"
@@ -107,6 +108,7 @@ DEFAULTS = {
     MAJOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
     NOW_LINE_COLOUR: "(200, 0, 0)",
     WEEKEND_COLOUR: "(255, 255, 255)",
+    BG_COLOUR: "(255, 255, 255)",
     TEXT_BELOW_ICON: "False",
     FUZZY_ICON: "fuzzy.png",
     LOCKED_ICON: "locked.png",
@@ -413,6 +415,13 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, WEEKEND_COLOUR, self._tuple_to_string(colour))
         self._notify()
     weekend_colour = property(get_weekend_color, set_weekend_color)
+
+    def get_bg_color(self):
+        return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, BG_COLOUR))
+
+    def set_bg_color(self, colour):
+        self.config_parser.set(DEFAULTSECT, BG_COLOUR, self._tuple_to_string(colour))
+        self._notify()
 
     def get_text_below_icon(self):
         return self.config_parser.getboolean(DEFAULTSECT, TEXT_BELOW_ICON)
