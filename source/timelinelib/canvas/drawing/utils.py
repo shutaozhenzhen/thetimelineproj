@@ -61,7 +61,10 @@ class Metrics(object):
 
     def get_time(self, x):
         """Return the time at pixel `x`."""
-        return self.time_type.get_time_at_x(self.time_period, float(x) / self.width)
+        if self.width == 0:
+            return self.time_type.get_time_at_x(self.time_period, 0)
+        else:
+            return self.time_type.get_time_at_x(self.time_period, float(x) / self.width)
 
     def get_difftime(self, x1, x2):
         """Return the time length between two x positions."""
