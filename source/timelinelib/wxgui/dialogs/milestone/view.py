@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.dialogs.milestone.controller import EditMilestoneDialogController
 from timelinelib.db.utils import safe_locking
@@ -70,13 +72,14 @@ class EditMilestoneDialog(Dialog):
         }, title=title)
         self.controller.on_init(db, milestone)
         self._milestone = milestone
+        self.txt_label.Bind(wx.EVT_CHAR, self.handle_keypress)
 
     def SetStartTime(self, start_time):
         self.dtp_time.set_value(start_time)
 
     def SetColor(self, color):
         self.colorpicker.SetValue(color)
-        
+
     def SetDescription(self, description):
         if description is None:
             self.txt_description.SetValue("")
@@ -105,6 +108,10 @@ class EditMilestoneDialog(Dialog):
         except:
             # Not all TimePicker objects has a 'show_time' attribute
             pass
+
+    def handle_keypress(self, evt):
+        self.txt_label.Clear()
+        evt.Skip()
 
 
 def open_milestone_editor_for(parent, config, db, event=None):
