@@ -49,10 +49,7 @@ class EditMilestoneDialogController(Controller):
         self.view.SetLable(label)
 
     def _milestone_has_nonzero_time(self):
-        try:
-            return self._milestone.get_time_period().has_nonzero_time()
-        except Exception, ex:
-            return False
+        return self._milestone.get_time_period().has_nonzero_time()
 
     def on_ok_clicked(self, evt):
         self._update_milestone()
