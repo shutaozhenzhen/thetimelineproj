@@ -44,6 +44,12 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         time = self.controller.view.GetTime()
         self.assertEqual(time, self.start_time)
 
+    def test_can_toggle_time_view(self):
+        evt = Mock()
+        evt.IsChecked.return_value = True
+        self.controller.show_time_checkbox_on_checked(evt)
+        self.assertEqual(self.view.SetShowTime.call_count, 2)
+
     def test_can_get_description_from_view(self):
         self.view.GetDescription.return_value = sentinel.DESCRIPTION
         description = self.controller.view.GetDescription()
@@ -73,6 +79,26 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.simulate_ok_clicked()
         self.assertEqual(self.db.save_event.call_count, 1)
         self.assertEqual(self.controller.get_milestone().get_description(), "Aha")
+
+    def test_db_updated_when_no_description_on_ok(self):
+        self.simulate_dialog_init(self.db, None)
+        self.simulate_user_enters_description("")
+        self.simulate_user_enters_colour((127, 127, 127))
+        self.simulate_user_enters_time(self.start_time)
+        self.simulate_ok_clicked()
+        self.assertEqual(self.db.save_event.call_count, 1)
+        self.assertEqual(self.controller.get_milestone().get_description(), None)
+
+    def test_db_update_fails_on_ok(self):
+        exception = Exception("test")
+        self.db.save_event.side_effect = exception
+        self.simulate_dialog_init(self.db, None)
+        self.simulate_user_enters_description("")
+        self.simulate_user_enters_colour((127, 127, 127))
+        self.simulate_user_enters_time(self.start_time)
+        self.simulate_ok_clicked()
+        self.assertEqual(self.db.save_event.call_count, 1)
+        self.view.HandleDbError.called_with(exception)
 
     def simulate_user_enters_description(self, description):
         self.view.GetDescription.return_value = description
