@@ -52,6 +52,9 @@ Bug fixes:
 * Timeline menu items are now disabled when no timeline is opened.
   (`#148 <https://sourceforge.net/p/thetimelineproj/backlog/148/>`_)
 
+*  Float division by zero when mouse moved..
+  (`#150 <https://sourceforge.net/p/thetimelineproj/backlog/150/>`_)
+
 Version 1.10.0
 --------------
 
