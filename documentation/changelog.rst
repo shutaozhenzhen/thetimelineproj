@@ -39,6 +39,9 @@ GUI:
   
 * Atfer a search match the found event is highlighted
 
+* The backgound colour can now be user defined.
+  (`#151 <https://sourceforge.net/p/thetimelineproj/backlog/151/>`_)
+
 Data:
 * Introduced the special event type, Milestone.
 
