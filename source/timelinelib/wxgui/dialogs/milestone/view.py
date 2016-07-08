@@ -89,7 +89,7 @@ class EditMilestoneDialog(Dialog):
     def GetTime(self):
         return self.dtp_time.get_value()
 
-    def SetStartTime(self, start_time):
+    def SetTime(self, start_time):
         self.dtp_time.set_value(start_time)
 
     def GetDescription(self):
