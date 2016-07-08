@@ -384,7 +384,10 @@ class DefaultEventBoxDrawer(object):
         def draw_rectangle_shape():
             dc.DestroyClippingRegion()
             dc.SetPen(self._black_solid_pen(1))
-            dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
+            if event.get_category() is None:
+                dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.SOLID))
+            else:
+                dc.SetBrush(wx.Brush(wx.Colour(*event.get_category().get_color()), wx.SOLID))
             dc.DrawRectangleRect(rect)
 
         def draw_circle_shape():

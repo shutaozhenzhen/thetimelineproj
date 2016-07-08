@@ -45,6 +45,15 @@ class EditMilestoneDialog(Dialog):
                 <StaticText label="$(description_label)" align="ALIGN_CENTER_VERTICAL" />
                 <TextCtrl name="txt_label" />
 
+                <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_label)" />
+                <CategoryChoice
+                    name="category_choice"
+                    allow_add="True"
+                    allow_edit="True"
+                    timeline="$(db)"
+                    align="ALIGN_LEFT"
+                />
+
                 <StaticText label="$(colour_text)" align="ALIGN_CENTER_VERTICAL" />
                 <ColourSelect name="colorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
 
@@ -59,6 +68,7 @@ class EditMilestoneDialog(Dialog):
     </BoxSizerVertical>
     """
 
+
     def __init__(self, parent, title, db, config, milestone):
         Dialog.__init__(self, EditMilestoneDialogController, parent, {
             "groupbox_text": _("Milestone Properties"),
@@ -67,18 +77,23 @@ class EditMilestoneDialog(Dialog):
             "show_time_text": _("Show time"),
             "description_text": _("Description:"),
             "description_label": _("Label:"),
+            "category_label": _("Category:"),
             "colour_text": _("Colour:"),
             "config": config,
+            "db": db,
         }, title=title)
         self.controller.on_init(db, milestone)
         self._milestone = milestone
         self.txt_label.Bind(wx.EVT_CHAR, self.handle_keypress)
 
+    def GetTime(self):
+        return self.dtp_time.get_value()
+
     def SetStartTime(self, start_time):
         self.dtp_time.set_value(start_time)
 
-    def SetColor(self, color):
-        self.colorpicker.SetValue(color)
+    def GetDescription(self):
+        return self.txt_description.GetValue()
 
     def SetDescription(self, description):
         if description is None:
@@ -86,20 +101,23 @@ class EditMilestoneDialog(Dialog):
         else:
             self.txt_description.SetValue(description)
 
-    def GetTime(self):
-        return self.dtp_time.get_value()
-
-    def GetDescription(self):
-        return self.txt_description.GetValue()
-
     def GetLabel(self):
         return self.txt_label.GetValue()
 
     def SetLable(self, label):
         self.txt_label.SetValue(label)
 
+    def GetCategory(self):
+        return self.category_choice.GetSelectedCategory()
+
+    def SetCategory(self, value):
+        self.category_choice.Populate(select=value)
+
     def GetColour(self):
         return self.colorpicker.GetValue()
+
+    def SetColor(self, color):
+        self.colorpicker.SetValue(color)
 
     def SetShowTime(self, value):
         try:
