@@ -41,9 +41,7 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.view.SetCategory.assert_called_with(self.milestone.get_category())
 
     def test_can_get_time_from_view(self):
-        self.view.GetTime.return_value = self.start_time
-        time = self.controller.view.GetTime()
-        self.assertEqual(time, self.start_time)
+        self.assertEqual(self.controller.view.GetTime(), self.start_time)
 
     def test_can_toggle_time_view(self):
         self.simuate_user_selects_view_time()
@@ -132,4 +130,5 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
     def _mock_view(self):
         view = Mock(EditMilestoneDialog)
         view.GetDescription.return_value = sentinel.DESCRIPTION
+        view.GetTime.return_value = self.start_time
         return view
