@@ -43,10 +43,6 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
     def test_can_get_time_from_view(self):
         self.assertEqual(self.controller.view.GetTime(), self.start_time)
 
-    def test_can_toggle_time_view(self):
-        self.simuate_user_selects_view_time()
-        self.assertEqual(self.view.SetShowTime.call_count, 2)
-
     def test_can_get_description_from_view(self):
         self.assertEqual(self.controller.view.GetDescription(), sentinel.DESCRIPTION)
 
@@ -54,6 +50,10 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.view.GetColour.return_value = sentinel.COLOUR
         colour = self.controller.view.GetColour()
         self.assertEqual(colour, sentinel.COLOUR)
+
+    def test_can_toggle_time_view(self):
+        self.simuate_user_selects_view_time()
+        self.assertEqual(self.view.SetShowTime.call_count, 2)
 
     def test_milestone_updated_on_ok(self):
         time_period = TimePeriod(GregorianTimeType(), self.start_time, self.start_time)
