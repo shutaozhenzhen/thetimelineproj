@@ -35,7 +35,7 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.simulate_dialog_init(self.db, self.milestone)
         self.assertEqual(GregorianTimeType(), self.controller._time_type)
         self.assertEqual(self.milestone, self.controller._milestone)
-        self.view.SetStartTime.assert_called_with(self.milestone.time_period.start_time)
+        self.view.SetTime.assert_called_with(self.milestone.time_period.start_time)
         self.view.SetColor.assert_called_with(self.milestone.get_default_color())
         self.view.SetDescription.assert_called_with(self.milestone.get_description())
         self.view.SetCategory.assert_called_with(self.milestone.get_category())
