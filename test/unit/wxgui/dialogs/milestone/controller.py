@@ -46,9 +46,7 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.assertEqual(time, self.start_time)
 
     def test_can_toggle_time_view(self):
-        evt = Mock()
-        evt.IsChecked.return_value = True
-        self.controller.show_time_checkbox_on_checked(evt)
+        self.simuate_user_selects_view_time()
         self.assertEqual(self.view.SetShowTime.call_count, 2)
 
     def test_can_get_description_from_view(self):
@@ -115,6 +113,11 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
 
     def simulate_dialog_init(self, time_type, milestone):
         self.controller.on_init(time_type, milestone)
+
+    def simuate_user_selects_view_time(self):
+        evt = Mock()
+        evt.IsChecked.return_value = True
+        self.controller.show_time_checkbox_on_checked(evt)
 
     def setUp(self):
         self.db = Mock(MemoryDB)
