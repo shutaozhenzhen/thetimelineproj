@@ -38,6 +38,7 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.view.SetStartTime.assert_called_with(self.milestone.time_period.start_time)
         self.view.SetColor.assert_called_with(self.milestone.get_default_color())
         self.view.SetDescription.assert_called_with(self.milestone.get_description())
+        self.view.SetCategory.assert_called_with(self.milestone.get_category())
 
     def test_can_get_time_from_view(self):
         self.view.GetTime.return_value = self.start_time

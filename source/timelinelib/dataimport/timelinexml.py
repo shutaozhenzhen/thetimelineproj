@@ -246,6 +246,7 @@ class Parser(object):
             event = Subevent(self.db.get_time_type(), start, end, text, category, cid=cid, locked=locked, ends_today=ends_today)
         elif text.startswith(MILESTONE_TEXT):
             event = Milestone(self.db, start, text)
+            event.set_category(category)
         else:
             if self._text_starts_with_added_space(text):
                 text = self._remove_added_space(text)
