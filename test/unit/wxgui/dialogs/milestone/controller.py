@@ -50,9 +50,7 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.assertEqual(self.view.SetShowTime.call_count, 2)
 
     def test_can_get_description_from_view(self):
-        self.view.GetDescription.return_value = sentinel.DESCRIPTION
-        description = self.controller.view.GetDescription()
-        self.assertEqual(description, sentinel.DESCRIPTION)
+        self.assertEqual(self.controller.view.GetDescription(), sentinel.DESCRIPTION)
 
     def test_can_get_colour_from_view(self):
         self.view.GetColour.return_value = sentinel.COLOUR
@@ -127,6 +125,11 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.milestone.get_default_color.return_value = (0, 0, 255)
         self.milestone.get_text.return_value = ""
         self.milestone.time_period = TimePeriod(self.db.time_type, self.start_time, self.start_time)
-        self.view = Mock(EditMilestoneDialog)
+        self.view = self._mock_view()
         self.controller = EditMilestoneDialogController(self.view)
         self.simulate_dialog_init(self.db, self.milestone)
+
+    def _mock_view(self):
+        view = Mock(EditMilestoneDialog)
+        view.GetDescription.return_value = sentinel.DESCRIPTION
+        return view
