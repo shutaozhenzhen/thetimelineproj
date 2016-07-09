@@ -45,6 +45,11 @@ GUI:
 Data:
 * Introduced the special event type, Milestone.
 
+Navigation:
+
+* Now it´s possible to return to the previous time period after a navigation.
+  (`#153 <https://sourceforge.net/p/thetimelineproj/backlog/153/>`_)
+
 Bug fixes:
 
 * Bosparanian date format craches.
