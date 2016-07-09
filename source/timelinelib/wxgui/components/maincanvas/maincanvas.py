@@ -29,6 +29,7 @@ class MainCanvas(TimelineCanvas):
 
     def __init__(self, parent, main_frame, status_bar):
         TimelineCanvas.__init__(self, parent)
+        self.main_frame = main_frame
         self._status_bar = status_bar
         self.SetInputHandler(InputHandler(self))
         self.balloon_show_timer = wx.Timer(self, -1)
@@ -63,6 +64,7 @@ class MainCanvas(TimelineCanvas):
         self._input_handler = input_handler
 
     def _on_left_down(self, event):
+        self.main_frame.save_time_period()
         self.SetFocus()
         self._input_handler.left_mouse_down(
             event.GetX(), event.GetY(), event.ControlDown(), event.ShiftDown(),
@@ -91,6 +93,7 @@ class MainCanvas(TimelineCanvas):
         self._input_handler.middle_mouse_down(event.GetX())
 
     def _on_mousewheel(self, evt):
+        self.main_frame.save_time_period()
         self._input_handler.mouse_wheel_moved(
             evt.GetWheelRotation(), evt.ControlDown(), evt.ShiftDown(),
             evt.AltDown(), evt.GetX())

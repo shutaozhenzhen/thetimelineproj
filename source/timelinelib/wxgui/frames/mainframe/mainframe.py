@@ -113,6 +113,7 @@ ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
 ID_FIND_CATEGORIES = wx.NewId()
+ID_RESTORE_TIME_PERIOD = wx.NewId()
 ID_NEW = wx.ID_NEW
 ID_FIND = wx.ID_FIND
 ID_UNDO = wx.NewId()
@@ -537,13 +538,19 @@ class GuiCreator(object):
                 margin_delta = self.timeline.get_time_type().margin_delta(delta)
                 self.main_panel.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
 
+        def restore_time_period(evt):
+            if self.prev_time_period:
+                self.main_panel.Navigate(lambda tp: self.prev_time_period)
+
         def fit_all(evt):
             self._fit_all_events()
 
         cbx = NONE
         items = ((ID_FIND_FIRST, find_first, _("Find &First Event"), cbx),
                  (ID_FIND_LAST, find_last, _("Find &Last Event"), cbx),
-                 (ID_FIT_ALL, fit_all, _("Fit &All Events"), cbx))
+                 (ID_FIT_ALL, fit_all, _("Fit &All Events"), cbx),
+                 None,
+                 (ID_RESTORE_TIME_PERIOD, restore_time_period, _("Go to previous time period"), cbx),)
         navigate_menu = wx.Menu()
         self._navigation_menu_items = []
         self._navigation_functions_by_menu_item_id = {}
@@ -762,6 +769,7 @@ class MainFrameApiUsedByController(object):
         return id_offset
 
     def _navigation_menu_item_on_click(self, evt):
+        self.save_time_period()
         fn = self._navigation_functions_by_menu_item_id[evt.GetId()]
         time_period = self.main_panel.get_time_period()
         fn(self, time_period, self.main_panel.Navigate)
@@ -851,6 +859,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         self.enable_disable_menus()
         self.controller.on_started(application_arguments)
         self._create_and_start_timer()
+        self.prev_time_period = None
 
     # API:s used by time types
     def week_starts_on_monday(self):
@@ -868,6 +877,9 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
     def display_now_date_editor_dialog(self, handle_new_time_fn, title):
         dialog = ChangeNowDateDialog(self, self.config, self.timeline, handle_new_time_fn, title)
         dialog.Show()
+
+    def save_time_period(self):
+        self.prev_time_period = self.main_panel.get_time_period()
 
     # Concurrent editing
     def ok_to_edit(self):
