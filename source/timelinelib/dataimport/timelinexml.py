@@ -48,7 +48,6 @@ from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
 from timelinelib.canvas.data.milestone import Milestone
-from timelinelib.canvas.data.milestone import MILESTONE_TEXT
 
 
 def import_db_from_timeline_xml(path):
@@ -159,6 +158,8 @@ class Parser(object):
                         parse_fn_store("tmp_icon")),
                     Tag("default_color", OPTIONAL,
                         parse_fn_store("tmp_default_color")),
+                    Tag("milestone", OPTIONAL, parse_fn_store("tmp_milestone")),
+
                 ])
             ]),
             Tag("view", SINGLE, None, [
@@ -238,13 +239,14 @@ class Parser(object):
         else:
             icon = parse_icon(icon_text)
         hyperlink = tmp_dict.pop("tmp_hyperlink", None)
+        milestone = self._parse_optional_bool(tmp_dict, "tmp_milestone")
         if self._is_container_event(text):
             cid, text = self._extract_container_id(text)
             event = Container(self.db.get_time_type(), start, end, text, category, cid=cid)
         elif self._is_subevent(text):
             cid, text = self._extract_subid(text)
             event = Subevent(self.db.get_time_type(), start, end, text, category, cid=cid, locked=locked, ends_today=ends_today)
-        elif text.startswith(MILESTONE_TEXT):
+        elif milestone:
             event = Milestone(self.db, start, text)
             event.set_category(category)
         else:

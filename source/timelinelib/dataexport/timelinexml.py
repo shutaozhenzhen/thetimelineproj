@@ -141,6 +141,8 @@ class Exporter(object):
         default_color = evt.get_data("default_color")
         if default_color is not None:
             write_simple_tag(xmlfile, "default_color", color_string(default_color), INDENT3)
+        if evt.is_milestone():
+            write_simple_tag(xmlfile, "milestone", "True", INDENT3)
     _write_event = wrap_in_tag(_write_event, "event", INDENT2)
 
     def _write_eras(self, xmlfile):
