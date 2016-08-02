@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.11.0 development</version>
+  <version>1.11.0 (daa97e9c765e 2016-08-02)</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -1102,18 +1102,87 @@ Fixed crash reports:
       <default_color>200,200,200</default_color>
     </event>
     <event>
-      <start>2016-07-31 00:00:00</start>
-      <end>2016-07-31 00:00:00</end>
+      <start>2016-08-02 00:00:00</start>
+      <end>2016-08-02 00:00:00</end>
       <text>Timeline 1.11.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
+      <category>Planned Release</category>
       <description>Version 1.11.0
+--------------
+
+**Release on 2 August 2016.**
+
+*Don't want to wait for the final release? Try the beta version!*
+
+* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+
+* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.
+
+Data import:
+
+* VTODO elements are now imported, as events, from ics files.
+  (`#142 &lt;https://sourceforge.net/p/thetimelineproj/backlog/142/&gt;`_)
+
+* Import options can now be specified when importing events, from ics files.
+  (`#141 &lt;https://sourceforge.net/p/thetimelineproj/backlog/141/&gt;`_)
+
+Data export:
+
+* When exporting a timeline to images a merged image is also created.
+
+Translations:
+
+* Made label texts in 'Export to Listbox', translatable.
+  (`#147 &lt;https://sourceforge.net/p/thetimelineproj/backlog/147/&gt;`_)
+
+GUI:
+
+* A checkmark can now be displayed in front of the event text when the event is done (100% progress).
+  (`#134 &lt;https://sourceforge.net/p/thetimelineproj/backlog/134/&gt;`_)
+
+* The duplicate event dialog can be opened from the event editor dialog
+  (`#131 &lt;https://sourceforge.net/p/thetimelineproj/backlog/131/&gt;`_)
+  
+* Atfer a search match the found event is highlighted
+
+* The backgound colour can now be user defined.
+  (`#151 &lt;https://sourceforge.net/p/thetimelineproj/backlog/151/&gt;`_)
+
+Data:
+* Introduced the special event type, Milestone.
+
+Navigation:
+
+* Now it´s possible to return to the previous time period after a navigation.
+  (`#153 &lt;https://sourceforge.net/p/thetimelineproj/backlog/153/&gt;`_)
+
+Bug fixes:
+
+* Bosparanian date format craches.
+
+* Timeline menu items are now disabled when no timeline is opened.
+  (`#148 &lt;https://sourceforge.net/p/thetimelineproj/backlog/148/&gt;`_)
+
+*  Float division by zero when mouse moved..
+  (`#150 &lt;https://sourceforge.net/p/thetimelineproj/backlog/150/&gt;`_)</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2016-10-31 00:00:00</start>
+      <end>2016-10-31 00:00:00</end>
+      <text>Timeline 1.12.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Future Release</category>
+      <description>Version 1.12.0
 -------------
 
-**Planned release on 31 Julyl 2016.**
+**Planned release on 31 October 2016.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
