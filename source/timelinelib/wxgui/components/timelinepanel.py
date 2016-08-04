@@ -167,6 +167,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_vertical_space_between_events(self.config.get_vertical_space_between_events())
             appearance.set_skip_s_in_decade_text(self.config.get_skip_s_in_decade_text())
             appearance.set_display_checkmark_on_events_done(self.config.get_display_checkmark_on_events_done())
+            appearance.set_use_time(self.config.get_use_time())
         self.config.listen_for_any(update_appearance)
         update_appearance()
 

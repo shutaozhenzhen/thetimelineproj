@@ -40,6 +40,7 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_use_inertial_scrolling(), False)
         self.assertEqual(self.config.get_center_event_texts(), False)
         self.assertEqual(self.config.minor_strip_divider_line_colour, (200, 200, 200))
+        self.assertEqual(self.config.get_use_time(), True)
 
     def test_window_size_can_be_read_after_stored(self):
         self.config.set_window_size((3, 20))
@@ -134,7 +135,8 @@ class describe_config(TmpDirTestCase):
                     "text_below_icon",
                     "colorize_weekends",
                     "skip_s_in_decade_text",
-                    "display_checkmark_on_events_done"]
+                    "display_checkmark_on_events_done",
+                    "use_time"]
         for setting in settings:
             getter = getattr(self.config, "get_%s" % setting)
             setter = getattr(self.config, "set_%s" % setting)
