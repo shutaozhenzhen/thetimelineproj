@@ -226,7 +226,7 @@ For an event the following properties can be defined.
  - Description - Event description that is shown i the balloon.
  - Icon - Image icon shown in balloon.
  - Alert - An alert dialog is opened at the specified alert time.
- - Hyperlink - A hyperlink that can be reached in the event context menu.
+ - Hyperlinks - A list of hyperlink that can be reached in the event context menu.
 """))
 
     help_system.install_page(
@@ -339,6 +339,8 @@ An action that is Undone can also be Redone if you:
         # Dashes produce bullet lists. DON'T remove them.
         body=_("""
 The *Edit Event* dialog can be opened by double clicking on an event or by selecting one event and select the 'Timeline -> Edit Selected Event...' menu.
+
+An image icon can be associated with an event by dragging the image file and dropping it on an event.
 """))
 
     help_system.install_page(
