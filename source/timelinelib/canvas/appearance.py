@@ -49,15 +49,19 @@ class Appearance(Observable):
         self._build_property("vertical_space_between_events", 5)
         self._build_property("skip_s_in_decade_text", False)
         self._build_property("display_checkmark_on_events_done", False)
+        self._build_property("use_time", True)
 
     def _build_property(self, name, initial_value):
+
         def getter():
             return getattr(self, "_%s" % name)
+
         def setter(new_value):
             old_value = getter()
             if new_value != old_value:
                 setattr(self, "_%s" % name, new_value)
                 self._notify()
+
         setattr(self, "get_%s" % name, getter)
         setattr(self, "set_%s" % name, setter)
         setattr(self, "_%s" % name, initial_value)
