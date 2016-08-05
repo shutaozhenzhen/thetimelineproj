@@ -16,6 +16,11 @@ Documentation:
 
 * Help pages updated.
 
+Data:
+
+* Option to switch off time for entire project.
+  (`#157 <https://sourceforge.net/p/thetimelineproj/backlog/157/>`_)
+
 Version 1.11.0
 --------------
 
