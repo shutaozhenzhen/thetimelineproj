@@ -281,6 +281,18 @@ class describe_preferences_dialog(UnitTestCase):
         self.controller.on_legend_click(evt)
         self.assertEqual(self.config.set_legend_font.call_count, 0)
 
+    def test_sets_never_use_time(self):
+        self.config.get_never_use_time.return_value = sentinel.NEVER_USE_TIME
+        self.simulate_dialog_opens()
+        self.view.SetNeverUseTime.assert_called_with(sentinel.NEVER_USE_TIME)
+
+    def test_on_never_use_time(self):
+        evt = Mock()
+        self.controller.config = self.config
+        self.view.GetNeverUseTime.return_value = sentinel.NEVER_USE_TIME
+        self.controller.on_never_use_time_change(evt)
+        self.config.set_never_use_time.assert__with(sentinel.NEVER_USE_TIME)
+
     def simulate_dialog_opens(self):
         self.controller.on_init(self.config, self.experimental_features)
 
