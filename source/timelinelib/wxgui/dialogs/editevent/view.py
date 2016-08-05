@@ -223,7 +223,7 @@ class EditEventDialog(Dialog):
             start,
             end,
             event)
-        if not self.config.get_use_time():
+        if self.config.get_never_use_time():
             self.SetShowTime(False)
             self.show_time_checkbox.Disable()
         elif event is None and self.config.get_uncheck_time_for_new_events():
