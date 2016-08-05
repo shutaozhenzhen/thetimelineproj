@@ -38,8 +38,8 @@ class describe_appearance(UnitTestCase):
         self.appearance.listen_for_any(listener)
         self.appearance.set_legend_visible(False)
         self.appearance.set_legend_visible(False)
-        self.appearance.set_use_time(True)
-        self.assertEqual(listener.call_count, 1)
+        self.appearance.set_never_use_time(True)
+        self.assertEqual(listener.call_count, 2)
 
     def setUp(self):
         self.app = wx.App()

@@ -117,9 +117,9 @@ class PreferencesDialog(Dialog):
                         />
                         <Spacer />
                         <CheckBox
-                            name="use_time_checkbox"
-                            event_EVT_CHECKBOX="on_use_time_change"
-                            label="$(use_time_text)"
+                            name="never_use_time_checkbox"
+                            event_EVT_CHECKBOX="on_never_use_time_change"
+                            label="$(never_use_time_text)"
                         />
                         <Spacer />
                     </FlexGridSizer>
@@ -308,7 +308,7 @@ class PreferencesDialog(Dialog):
             "colorize_weekends_text": _("Colorize weekends"),
             "skip_s_in_decade_text_text": _("Skip s in decade text"),
             "display_checkmark_on_events_done_text": _("Display checkmark when events are done"),
-            "use_time_text": _("Never use time precision for events"),
+            "never_use_time_text": _("Never use time precision for events"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
 
@@ -364,11 +364,11 @@ class PreferencesDialog(Dialog):
     def SetWeekStartSelection(self, value):
         self.week_start_choice.Select(value)
 
-    def SetUseTime(self, value):
-        self.use_time_checkbox.SetValue(value)
+    def SetNeverUseTime(self, value):
+        self.never_use_time_checkbox.SetValue(value)
 
-    def GetUseTime(self):
-        return not self.use_time_checkbox.GetValue()
+    def GetNeverUseTime(self):
+        return self.never_use_time_checkbox.GetValue()
 
     def AddExperimentalFeatures(self, features):
         for feature in features:

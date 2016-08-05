@@ -49,7 +49,7 @@ class Appearance(Observable):
         self._build_property("vertical_space_between_events", 5)
         self._build_property("skip_s_in_decade_text", False)
         self._build_property("display_checkmark_on_events_done", False)
-        self._build_property("use_time", True)
+        self._build_property("never_use_time", False)
 
     def _build_property(self, name, initial_value):
 

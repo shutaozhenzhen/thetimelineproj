@@ -79,7 +79,7 @@ VERTCAL_SPACE_BETWEEN_EVENTS = "vertical_space_between_events"
 COLORIZE_WEEKENDS = "colorize_weekens"
 SKIP_S_IN_DECADE_TEXT = "skip_s_in_decade_text"
 DISPLAY_CHECKMARK_ON_EVENTS_DONE = "display_checkmark_on_events-done"
-USE_TIME = "use_time"
+NEVER_USE_TIME = "never_use_time"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -119,7 +119,7 @@ DEFAULTS = {
     COLORIZE_WEEKENDS: "False",
     SKIP_S_IN_DECADE_TEXT: "False",
     DISPLAY_CHECKMARK_ON_EVENTS_DONE: "False",
-    USE_TIME: "True",
+    NEVER_USE_TIME: "False",
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -218,11 +218,11 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, SHOW_LEGEND, str(show))
         self._notify()
 
-    def get_use_time(self):
-        return self.config_parser.getboolean(DEFAULTSECT, USE_TIME)
+    def get_never_use_time(self):
+        return self.config_parser.getboolean(DEFAULTSECT, NEVER_USE_TIME)
 
-    def set_use_time(self, value):
-        self.config_parser.set(DEFAULTSECT, USE_TIME, str(value))
+    def set_never_use_time(self, value):
+        self.config_parser.set(DEFAULTSECT, NEVER_USE_TIME, str(value))
         self._notify()
 
     def get_sidebar_width(self):

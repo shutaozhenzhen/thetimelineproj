@@ -77,6 +77,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
         config.get_fuzzy_icon.return_value = CONFIG_FUZZY_ICON_NAME
         config.get_locked_icon.return_value = CONFIG_LOCKED_ICON_NAME
         config.get_hyperlink_icon.return_value = CONFIG_HYPERINK_ICON_NAME
+        config.get_never_use_time.return_value = False
         return config
 
     def _mock_features(self):
@@ -111,6 +112,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_colorize_weekends.return_value = False
         self.config.get_skip_s_in_decade_text.return_value = False
         self.config.date_format = "yyyy-mm-dd"
+        self.config.get_never_use_time.return_value = False
         self.experimental_features = Mock(ExperimentalFeatures)
         self.evt = Mock()
 
