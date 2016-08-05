@@ -17,6 +17,7 @@
 
 
 from mock import Mock
+from mock import sentinel
 import wx
 
 from timelinelib.canvas.appearance import Appearance
@@ -40,6 +41,10 @@ class describe_appearance(UnitTestCase):
         self.appearance.set_legend_visible(False)
         self.appearance.set_never_use_time(True)
         self.assertEqual(listener.call_count, 2)
+
+    def test_has_properties(self):
+        self.appearance.get_never_use_time()
+        self.appearance.set_never_use_time(sentinel.VALUE)
 
     def setUp(self):
         self.app = wx.App()
