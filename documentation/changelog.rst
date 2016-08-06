@@ -50,13 +50,14 @@ GUI:
 
 * The duplicate event dialog can be opened from the event editor dialog
   (`#131 <https://sourceforge.net/p/thetimelineproj/backlog/131/>`_)
-  
-* Atfer a search match the found event is highlighted
 
-* The backgound colour can now be user defined.
+* After a search match the found event is highlighted
+
+* The background colour can now be user defined.
   (`#151 <https://sourceforge.net/p/thetimelineproj/backlog/151/>`_)
 
 Data:
+
 * Introduced the special event type, Milestone.
 
 Navigation:
@@ -66,12 +67,12 @@ Navigation:
 
 Bug fixes:
 
-* Bosparanian date format craches.
+* Bosparanian date format crashes.
 
 * Timeline menu items are now disabled when no timeline is opened.
   (`#148 <https://sourceforge.net/p/thetimelineproj/backlog/148/>`_)
 
-*  Float division by zero when mouse moved..
+* Float division by zero when mouse moved.
   (`#150 <https://sourceforge.net/p/thetimelineproj/backlog/150/>`_)
 
 Version 1.10.0
