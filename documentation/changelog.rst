@@ -21,6 +21,8 @@ Data:
 * Option to switch off time for entire project.
   (`#157 <https://sourceforge.net/p/thetimelineproj/backlog/157/>`_)
 
+* Sample text is displayed for fonts in the preference dialog
+
 Version 1.11.0
 --------------
 
