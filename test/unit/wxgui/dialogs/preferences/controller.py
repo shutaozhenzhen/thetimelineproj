@@ -78,6 +78,9 @@ class describe_preferences_dialog_controller(UnitTestCase):
         config.get_locked_icon.return_value = CONFIG_LOCKED_ICON_NAME
         config.get_hyperlink_icon.return_value = CONFIG_HYPERINK_ICON_NAME
         config.get_never_use_time.return_value = False
+        config.get_major_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
+        config.get_minor_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
+        config.get_legend_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         return config
 
     def _mock_features(self):
@@ -111,6 +114,9 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_vertical_space_between_events.return_value = 5
         self.config.get_colorize_weekends.return_value = False
         self.config.get_skip_s_in_decade_text.return_value = False
+        self.config.get_major_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
+        self.config.get_minor_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
+        self.config.get_legend_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.date_format = "yyyy-mm-dd"
         self.config.get_never_use_time.return_value = False
         self.experimental_features = Mock(ExperimentalFeatures)
