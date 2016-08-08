@@ -72,16 +72,19 @@ class PreferencesDialogController(Controller):
         font = deserialize_font(self.config.get_major_strip_font())
         if self.view.ShowEditFontDialog(font):
             self.config.set_major_strip_font(font.serialize())
+            self.view.SetMajorStripFont(font)
 
     def on_minor_strip_click(self, event):
         font = deserialize_font(self.config.get_minor_strip_font())
         if self.view.ShowEditFontDialog(font):
             self.config.set_minor_strip_font(font.serialize())
+            self.view.SetMinorStripFont(font)
 
     def on_legend_click(self, event):
         font = deserialize_font(self.config.get_legend_font())
         if self.view.ShowEditFontDialog(font):
             self.config.set_legend_font(font.serialize())
+            self.view.SetLegendFont(font)
 
     def on_experimental_changed(self, event):
         self.experimental_features.set_active_state_on_feature_by_name(
@@ -133,6 +136,9 @@ class PreferencesDialogController(Controller):
         self.view.SetColorizeWeekends(self.config.get_colorize_weekends())
         self.view.SetSkipSInDecadeText(self.config.get_skip_s_in_decade_text())
         self.view.SetDisplayCheckmarkOnEventsDone(self.config.get_display_checkmark_on_events_done())
+        self.view.SetMajorStripFont(deserialize_font(self.config.get_major_strip_font()))
+        self.view.SetMinorStripFont(deserialize_font(self.config.get_minor_strip_font()))
+        self.view.SetLegendFont(deserialize_font(self.config.get_legend_font()))
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:

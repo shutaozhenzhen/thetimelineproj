@@ -120,8 +120,8 @@ class PreferencesDialog(Dialog):
                 </BoxSizerVertical>
             </Panel>
             <Panel notebookLabel="$(fonts_text)">
-                <BoxSizerVertical>
-                    <FlexGridSizer columns="2" border="ALL">
+                <BoxSizerVertical name="font_sizer">
+                    <FlexGridSizer columns="3" border="ALL">
                         <StaticText
                             label="$(major_strip_text)"
                             align="ALIGN_CENTER_VERTICAL"
@@ -130,6 +130,10 @@ class PreferencesDialog(Dialog):
                             name="select_major_strip"
                             event_EVT_BUTTON="on_major_strip_click"
                             label="$(edit_text)"
+                        />
+                        <StaticText
+                            name="major_strip_font_sample"
+                            label="Timeline"
                         />
                         <StaticText
                             label="$(minor_strip_text)"
@@ -141,6 +145,11 @@ class PreferencesDialog(Dialog):
                             label="$(edit_text)"
                         />
                         <StaticText
+                            name="minor_strip_font_sample"
+                            label="Timeline"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                       <StaticText
                             label="$(legends_text)"
                             align="ALIGN_CENTER_VERTICAL"
                         />
@@ -148,6 +157,11 @@ class PreferencesDialog(Dialog):
                             name="select_legend"
                             event_EVT_BUTTON="on_legend_click"
                             label="$(edit_text)"
+                        />
+                        <StaticText
+                            name="legend_font_sample"
+                            label="Timeline"
+                            align="ALIGN_CENTER_VERTICAL"
                         />
                     </FlexGridSizer>
                 </BoxSizerVertical>
@@ -304,6 +318,7 @@ class PreferencesDialog(Dialog):
             "display_checkmark_on_events_done_text": _("Display checkmark when events are done"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
+        self.font_sizer.Layout()
 
     def SetIconsChoices(self, choices):
         self.fuzzy_icon_choice.SetItems(choices)
@@ -427,3 +442,15 @@ class PreferencesDialog(Dialog):
 
     def GetSkipSInDecadeText(self):
         return self.skip_s_in_decade_text.IsChecked()
+
+    def SetMajorStripFont(self, font):
+        self.major_strip_font_sample.SetFont(font)
+        self.font_sizer.Layout()
+
+    def SetMinorStripFont(self, font):
+        self.minor_strip_font_sample.SetFont(font)
+        self.font_sizer.Layout()
+
+    def SetLegendFont(self, font):
+        self.legend_font_sample.SetFont(font)
+        self.font_sizer.Layout()
