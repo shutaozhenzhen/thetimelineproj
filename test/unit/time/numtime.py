@@ -29,11 +29,6 @@ class describe_numtimetype(UnitTestCase):
         UnitTestCase.setUp(self)
         self.time_type = NumTimeType()
 
-    def test_returns_half_delta(self):
-        delta = 126
-        half_delta = self.time_type.half_delta(delta)
-        self.assertEqual(63, half_delta)
-
     def test_returns_margin_delta(self):
         delta = 24 * 12345
         margin_delta = self.time_type.margin_delta(delta)

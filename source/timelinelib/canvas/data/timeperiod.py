@@ -106,7 +106,7 @@ class TimePeriod(object):
         Return the time in the middle if this time period is longer than just a
         point in time, otherwise the point in time for this time period.
         """
-        return self.start_time + self.time_type.half_delta(self.delta())
+        return self.start_time + (self.delta() / 2)
 
     def zoom(self, times, ratio=0.5):
         MIN_ZOOM_DELTA, min_zoom_error_text = self.time_type.get_min_zoom_delta()

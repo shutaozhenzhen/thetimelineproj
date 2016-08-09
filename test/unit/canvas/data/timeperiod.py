@@ -220,9 +220,6 @@ class ATimeType(TimeType):
     def get_min_zoom_delta(self):
         return (ADelta(1), "")
 
-    def half_delta(self, delta):
-        return delta / 2
-
     def __eq__(self, other):
         return isinstance(other, ATimeType)
 
