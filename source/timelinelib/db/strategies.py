@@ -150,8 +150,7 @@ class DefaultContainerStrategy(ContainerStrategy):
             self._adjust_events_starting_in_new_event(new_event, earliest_start)
 
     def _calc_threshold_time(self, new_event):
-        td = new_event.time_span()
-        td = new_event.get_time_type().mult_timedelta(td, 0.2)
+        td = new_event.time_span() * 0.2
         threshold_time = new_event.get_time_period().start_time + td
         return threshold_time
 
