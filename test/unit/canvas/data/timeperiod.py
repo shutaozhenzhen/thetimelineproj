@@ -189,10 +189,11 @@ class ADelta(object):
             return ADelta(self.num - other.num)
         raise Exception("Only delta-delta supported")
 
+    def __mul__(self, other):
+        return ADelta(int(self.num*other))
+
     def __rmul__(self, other):
-        if isinstance(other, int):
-            return ADelta(self.num*other)
-        raise Exception("Only int*delta supported")
+        return self * other
 
     def __div__(self, other):
         if isinstance(other, int):
@@ -213,9 +214,6 @@ class ATimeType(TimeType):
 
     def format_period(self, period):
         return "%s to %s" % (period.start_time.num, period.end_time.num)
-
-    def mult_timedelta(self, delta, times):
-        return ADelta(int(delta.num * times))
 
     def get_min_zoom_delta(self):
         return (ADelta(1), "")

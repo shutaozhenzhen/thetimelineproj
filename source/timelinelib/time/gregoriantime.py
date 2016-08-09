@@ -171,9 +171,6 @@ class GregorianTimeType(TimeType):
         else:
             return (StripCentury(), StripCentury())
 
-    def mult_timedelta(self, delta, num):
-        return delta * num
-
     def get_default_time_period(self):
         return time_period_center(self, self.now(), delta_from_days(30))
 

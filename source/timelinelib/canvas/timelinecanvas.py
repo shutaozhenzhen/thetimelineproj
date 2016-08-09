@@ -63,8 +63,7 @@ class TimelineCanvas(wx.Panel):
         return self.controller.drawing_algorithm.get_hidden_event_count()
 
     def Scroll(self, factor):
-        self.Navigate(lambda tp:
-            tp.move_delta(-tp.time_type.mult_timedelta(tp.delta(), factor)))
+        self.Navigate(lambda tp: tp.move_delta(-tp.delta() * factor))
 
     def UseFastDraw(self, use):
         self.controller.use_fast_draw(use)

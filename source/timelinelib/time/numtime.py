@@ -94,9 +94,6 @@ class NumTimeType(TimeType):
             nbr_of_units /= 10
         return (NumStrip(size * 10), NumStrip(size))
 
-    def mult_timedelta(self, delta, num):
-        return delta * num
-
     def get_default_time_period(self):
         return time_period_center(self, 0, 100)
 

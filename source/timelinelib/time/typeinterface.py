@@ -45,9 +45,6 @@ class TimeType(object):
     def choose_strip(self, metrics, appearance):
         raise NotImplementedError("choose_strip not implemented.")
 
-    def mult_timedelta(self, delta, num):
-        raise NotImplementedError("mult_timedelta not implemented.")
-
     def get_default_time_period(self):
         raise NotImplementedError("get_default_time_period not implemented.")
 

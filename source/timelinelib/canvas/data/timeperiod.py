@@ -110,8 +110,8 @@ class TimePeriod(object):
 
     def zoom(self, times, ratio=0.5):
         MIN_ZOOM_DELTA, min_zoom_error_text = self.time_type.get_min_zoom_delta()
-        start_delta = self.time_type.mult_timedelta(self.delta(), times * ratio / 5.0)
-        end_delta = self.time_type.mult_timedelta(self.delta(), -times * (1.0 - ratio) / 5.0)
+        start_delta = self.delta() * (times * ratio / 5.0)
+        end_delta = self.delta() * (-times * (1.0 - ratio) / 5.0)
         new_delta = self.delta() - 2 * start_delta
         if new_delta < MIN_ZOOM_DELTA:
             raise ValueError(min_zoom_error_text)
@@ -124,7 +124,7 @@ class TimePeriod(object):
         Direction should be -1 for moving to the left or 1 for moving to the
         right.
         """
-        delta = self.time_type.mult_timedelta(self.delta(), direction / 10.0)
+        delta = self.delta() * (direction / 10.0)
         return self.move_delta(delta)
 
     def move_delta(self, delta):
@@ -211,7 +211,7 @@ def time_period_center(time_type, time, length):
     Return a time period with the given length (represented as a timedelta)
     centered around `time`.
     """
-    half_length = time_type.mult_timedelta(length, 0.5)
+    half_length = length * 0.5
     start_time = time - half_length
     end_time = time + half_length
     return TimePeriod(time_type, start_time, end_time)
