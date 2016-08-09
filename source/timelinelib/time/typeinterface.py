@@ -82,9 +82,6 @@ class TimeType(object):
     def get_duplicate_functions(self):
         raise NotImplementedError("get_duplicate_functions not implemented.")
 
-    def half_delta(self, delta):
-        raise NotImplementedError("half_delta not implemented.")
-
     def margin_delta(self, delta):
         raise NotImplementedError("margin_delta not implemented.")
 

@@ -99,11 +99,6 @@ class describe_gregoriantimetype(UnitTestCase):
         self.assertEqual(self.time_type.parse_time("9990-01-01 00:00:00"),
                          self.time_type.get_max_time()[0])
 
-    def test_returns_half_delta(self):
-        self.assertEqual(
-            self.time_type.half_delta(timeline.TimeDelta(4)),
-            timeline.TimeDelta(2))
-
     def test_returns_margin_delta(self):
         self.assertEqual(
             self.time_type.margin_delta(timeline.TimeDelta(48)),
