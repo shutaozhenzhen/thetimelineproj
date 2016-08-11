@@ -181,10 +181,7 @@ class TimelineCanvas(wx.Panel):
         return self.controller.get_time_period()
 
     def Navigate(self, navigation_fn):
-        old_period = self.controller.view_properties.displayed_period
-        new_period = navigation_fn(old_period)
-        self.controller.view_properties.displayed_period = new_period
-        self.Redraw()
+        self.controller.navigate(navigation_fn)
 
     def Redraw(self):
         self.redraw_timeline()
