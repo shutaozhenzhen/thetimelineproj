@@ -109,12 +109,8 @@ class TimePeriod(object):
         return self.start_time + (self.delta() / 2)
 
     def zoom(self, times, ratio=0.5):
-        MIN_ZOOM_DELTA, min_zoom_error_text = self.time_type.get_min_zoom_delta()
         start_delta = self.delta() * (times * ratio / 5.0)
         end_delta = self.delta() * (-times * (1.0 - ratio) / 5.0)
-        new_delta = self.delta() - 2 * start_delta
-        if new_delta < MIN_ZOOM_DELTA:
-            raise ValueError(min_zoom_error_text)
         return self.update(self.start_time, self.end_time, start_delta, end_delta)
 
     def move(self, direction):

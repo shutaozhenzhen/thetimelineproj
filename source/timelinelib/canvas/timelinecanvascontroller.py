@@ -92,6 +92,15 @@ class TimelineCanvasController(object):
     def use_fast_draw(self, value):
         self.drawing_algorithm.use_fast_draw(value)
 
+    def navigate(self, navigation_fn):
+        old_period = self.view_properties.displayed_period
+        new_period = navigation_fn(old_period)
+        MIN_ZOOM_DELTA, min_zoom_error_text = self.time_type.get_min_zoom_delta()
+        if new_period.delta() < MIN_ZOOM_DELTA:
+            raise ValueError(min_zoom_error_text)
+        self.view_properties.displayed_period = new_period
+        self.redraw_timeline()
+
     def _set_null_timeline(self):
         self.timeline = None
         self.time_type = None
