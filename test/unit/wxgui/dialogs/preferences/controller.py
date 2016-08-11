@@ -55,6 +55,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
 
     def setUp(self):
         UnitTestCase.setUp(self)
+        self.app = wx.App()
         self.view = Mock(PreferencesDialog)
         self.controller = PreferencesDialogController(self.view)
         self.config = self._mock_config()
