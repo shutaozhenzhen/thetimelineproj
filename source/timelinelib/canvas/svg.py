@@ -30,8 +30,8 @@ from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.data import sort_categories
 
 
-OUTER_PADDING = 5      # Space between event boxes (pixels)
-INNER_PADDING = 3      # Space inside event box to text (pixels)
+OUTER_PADDING = 5  # Space between event boxes (pixels)
+INNER_PADDING = 3  # Space inside event box to text (pixels)
 DATA_INDICATOR_SIZE = 10
 SMALL_FONT_SIZE = 9
 MAJOR_STRIP_FONT_SIZE = 6
@@ -45,7 +45,7 @@ def export(path, scene, view_properties):
 
 
 class SVGDrawingAlgorithm(object):
- 
+
     # options:  shadow=True|False
     def __init__(self, path, scene, view_properties, **kwargs):
         # store important data references
@@ -58,7 +58,7 @@ class SVGDrawingAlgorithm(object):
         self.svg = svg(width="%dpx" % self.metrics['widthpx'], height="%dpx" % self.metrics['heightpx'])
         # Fonts and pens we use when drawing
         # SVG Text style
-        filterShadow = filter(x="-.3",y="-.5", width=1.9, height=1.9)
+        filterShadow = filter(x="-.3", y="-.5", width=1.9, height=1.9)
         filtBlur = feGaussianBlur(stdDeviation="4")
         filtBlur.set_in("SourceAlpha")
         filtBlur.set_result("out1")
@@ -74,11 +74,11 @@ class SVGDrawingAlgorithm(object):
         filtMerge = feMerge()
         filtMerge.addElement(filtMergeNode1)
         filtMerge.addElement(filtMergeNode2)
-        filterShadow.addElement(filtBlur) # here i get an error from python. It is not allowed to add a primitive filter
+        filterShadow.addElement(filtBlur)  # here i get an error from python. It is not allowed to add a primitive filter
         filterShadow.addElement(filtOffset)
         filterShadow.addElement(filtMerge)
         filterShadow.set_id("filterShadow")
-        d=defs()
+        d = defs()
         d.addElement(filterShadow)
         self.svg.addElement(d)
         # local flags
@@ -87,26 +87,26 @@ class SVGDrawingAlgorithm(object):
         for key in kwargs:
             if key == 'shadow':
                 self.shadowFlag = kwargs[key]
- 
+
     def write(self, path):
         """
         write the SVG code into the file with filename path. No
         checking is done if file/path exists
         """
         self.svg.save(path, encoding=ENCODING)
- 
+
     def draw(self):
         self._draw_bg()
         self._draw_events(self.view_properties)
         self._draw_legend(self.view_properties, self._extract_categories())
- 
+
     def _draw_bg(self):
         """
         Draw major and minor strips, lines to all event boxes and baseline.
         Both major and minor strips have divider lines and labels.
         """
         myStyle = StyleBuilder()
-        myStyle.setStrokeDashArray((2,2))
+        myStyle.setStrokeDashArray((2, 2))
         myStyle.setFontFamily(fontfamily="Verdana")
         myStyle.setFontSize("2em")
         myStyle.setTextAnchor('left')
@@ -117,18 +117,18 @@ class SVGDrawingAlgorithm(object):
         self._draw_lines_to_non_period_events(svgGroup, self.view_properties)
         self._draw_now_line(svgGroup)
         self.svg.addElement(svgGroup)
- 
+
     def _draw_minor_strips(self, group, style):
         for strip_period in self.scene.minor_strip_data:
-            self._draw_minor_strip_divider_line_at(group,strip_period.end_time)
+            self._draw_minor_strip_divider_line_at(group, strip_period.end_time)
             self._draw_minor_strip_label(group, style, strip_period)
- 
+
     def _draw_minor_strip_divider_line_at(self, group, time):
         x = self.scene.x_pos_for_time(time)
         oh = ShapeBuilder()
-        line = oh.createLine(x,0,x,self.scene.height, strokewidth=0.5, stroke="lightgrey")
+        line = oh.createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="lightgrey")
         group.addElement(line)
- 
+
     def _draw_minor_strip_label(self, group, style, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
         middle = self.scene.x_pos_for_time(strip_period.start_time) + INNER_PADDING
@@ -140,7 +140,7 @@ class SVGDrawingAlgorithm(object):
         myText = self._text(label, middle, middley)
         myText.set_style(style)
         group.addElement(myText)
- 
+
     def _draw_major_strips(self, group, style):
         oh = ShapeBuilder()
         style.setStrokeDashArray("")
@@ -149,7 +149,7 @@ class SVGDrawingAlgorithm(object):
         for tp in self.scene.major_strip_data:
             # Divider line
             x = self.scene.x_pos_for_time(tp.end_time)
-            line = oh.createLine(x,0,x,self.scene.height,strokewidth=0.5, stroke="grey")
+            line = oh.createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="grey")
             # Label
             label = self.scene.major_strip.label(tp.start_time, True)
             x = self.scene.x_pos_for_time(tp.start_time) + INNER_PADDING
@@ -163,77 +163,77 @@ class SVGDrawingAlgorithm(object):
                 extra_vertical_padding = fontSize * 4
                 # since there is no function like textwidth() for SVG, just take into account that text can be overwritten
                 # do not perform a special handling for right border, SVG is unlimited
-            myText = self._text(label, x, fontSize*4+INNER_PADDING+extra_vertical_padding)
+            myText = self._text(label, x, fontSize * 4 + INNER_PADDING + extra_vertical_padding)
             myText.set_style(style)
             group.addElement(myText)
- 
+
     def _draw_divider_line(self, group):
         oh = ShapeBuilder()
         line = oh.createLine(0, self.scene.divider_y, self.scene.width,
                              self.scene.divider_y, strokewidth=0.5, stroke="grey")
         group.addElement(line)
- 
+
     def _draw_lines_to_non_period_events(self, group, view_properties):
         for (event, rect) in self.scene.event_data:
             if rect.Y < self.scene.divider_y:
                 x = self.scene.x_pos_for_time(event.mean_time())
                 y = rect.Y + rect.Height / 2
                 if view_properties.is_selected(event):
-                    myStroke="red"
+                    myStroke = "red"
                 else:
-                    myStroke="black"
+                    myStroke = "black"
                 oh = ShapeBuilder()
                 line = oh.createLine(x, y, x, self.scene.divider_y, stroke=myStroke)
                 group.addElement(line)
                 circle = oh.createCircle(x, self.scene.divider_y, 2)
                 group.addElement(circle)
- 
+
     def _draw_now_line(self, group):
         x = self.scene.x_pos_for_now()
         if x > 0 and x < self.scene.width:
             oh = ShapeBuilder()
             line = oh.createLine(x, 0, x, self.scene.height, stroke="darkred")
             group.addElement(line)
- 
+
     def _get_base_color(self, event):
         if event.category:
             base_color = event.category.color
         else:
             base_color = (200, 200, 200)
         return base_color
- 
+
     def _get_border_color(self, event):
         base_color = self._get_base_color(event)
         border_color = darken_color(base_color)
         return border_color
- 
+
     def _map_svg_color(self, color):
         """
         map (r,g,b) color to svg string
         """
         sColor = "#%02X%02X%02X" % color
         return sColor
- 
+
     def _get_box_border_color(self, event):
         border_color = self._get_border_color(event)
         sColor = self._map_svg_color(border_color)
         return sColor
- 
+
     def _get_box_color(self, event):
         """ get the color of the event box """
         base_color = self._get_base_color(event)
         sColor = self._map_svg_color(base_color)
         return sColor
- 
+
     def _get_box_indicator_color(self, event):
         base_color = self._get_base_color(event)
         darker_color = darken_color(base_color, 0.6)
         sColor = self._map_svg_color(darker_color)
         return sColor
- 
+
     def _legend_should_be_drawn(self, view_properties, categories):
         return view_properties.show_legend and len(categories) > 0
- 
+
     def _extract_categories(self):
         categories = []
         for (event, rect) in self.scene.event_data:
@@ -241,7 +241,7 @@ class SVGDrawingAlgorithm(object):
             if cat and not cat in categories:
                 categories.append(cat)
         return sort_categories(categories)
- 
+
     def _draw_legend(self, view_properties, categories):
         """
         Draw legend for the given categories.
@@ -272,14 +272,14 @@ class SVGDrawingAlgorithm(object):
             # reserve 15% for the legend
             width = int(self.metrics['widthpx'] * 0.15)
             item_height = font_size + OUTER_PADDING
-            height = num_categories *(item_height+INNER_PADDING)+2*OUTER_PADDING
+            height = num_categories * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
             # Draw big box
             builder = ShapeBuilder()
             x = self.metrics['widthpx'] - width - OUTER_PADDING
             svgGroup = g()
             box_rect = builder.createRect(x,
                                                self.metrics['heightpx'] - height - OUTER_PADDING,
-                                               width, height,fill='white')
+                                               width, height, fill='white')
             svgGroup.addElement(box_rect)
             # Draw text and color boxes
             cur_y = self.metrics['heightpx'] - height - OUTER_PADDING + INNER_PADDING
@@ -291,14 +291,14 @@ class SVGDrawingAlgorithm(object):
                                   stroke=border_color)
                 svgGroup.addElement(color_box_rect)
                 myText = self._svg_clipped_text(cat.name,
-                                       (x + OUTER_PADDING + INNER_PADDING+item_height,
-                                        cur_y, width-OUTER_PADDING-INNER_PADDING-item_height,
-                                        item_height ),
+                                       (x + OUTER_PADDING + INNER_PADDING + item_height,
+                                        cur_y, width - OUTER_PADDING - INNER_PADDING - item_height,
+                                        item_height),
                                         myStyle)
                 svgGroup.addElement(myText)
                 cur_y = cur_y + item_height + INNER_PADDING
             self.svg.addElement(svgGroup)
- 
+
     def _draw_events(self, view_properties):
         """Draw all event boxes and the text inside them."""
         myStyle = StyleBuilder()
@@ -316,7 +316,7 @@ class SVGDrawingAlgorithm(object):
             svgRect = oh.createRect(rect.X, rect.Y,
                                          rect.GetWidth(), rect.GetHeight(),
                                          stroke=boxBorderColor,
-                                         fill=boxColor )
+                                         fill=boxColor)
             if self.shadowFlag:
                 svgRect.set_filter("url(#filterShadow)")
             svgGroup.addElement(svgRect)
@@ -327,7 +327,7 @@ class SVGDrawingAlgorithm(object):
             if event.has_data():
                 svgGroup.addElement(self._draw_contents_indicator(event, rect))
             self.svg.addElement(svgGroup)
- 
+
     def _draw_contents_indicator(self, event, rect):
         """
         The data contents indicator is a small triangle drawn in the upper
@@ -340,14 +340,14 @@ class SVGDrawingAlgorithm(object):
              corner_x, rect.Y + DATA_INDICATOR_SIZE)
         polyColor = self._get_box_indicator_color(event)
         oh = ShapeBuilder()
-        indicator = oh.createPolygon(polyPoints,fill=polyColor,stroke=polyColor)
+        indicator = oh.createPolygon(polyPoints, fill=polyColor, stroke=polyColor)
         # TODO (low): Transparency ?
         return indicator
- 
+
     def _svg_clipped_text(self, myString, rectTuple, myStyle):
         myString = self._encode_text(myString)
         # Put text,clipping into a SVG group
-        group=g()
+        group = g()
         rx, ry, width, height = rectTuple
         text_x = rx + INNER_PADDING
         text_y = ry + height - INNER_PADDING
@@ -356,35 +356,34 @@ class SVGDrawingAlgorithm(object):
         # however the root cause is the layout function for the recs
         # which should be fixed not to have values < 0
         if text_x < INNER_PADDING:
-            width = width - (INNER_PADDING-text_x)
+            width = width - (INNER_PADDING - text_x)
             text_x = INNER_PADDING
         pathId = "path%d_%d" % (text_x, text_y)
-        p = path(pathData= "M %d %d H %d V %d H %d" % \
+        p = path(pathData="M %d %d H %d V %d H %d" % \
                                (rx, ry + height,
-                                text_x+width-INNER_PADDING,
+                                text_x + width - INNER_PADDING,
                                 ry, rx))
         clip = clipPath()
         clip.addElement(p)
         clip.set_id(pathId)
-        d=defs()
+        d = defs()
         d.addElement(clip)
         self.svg.addElement(d)
-        myText = text( myString, text_x, text_y )
+        myText = text(myString, text_x, text_y)
         myText.set_style(myStyle.getStyle())
-        myText.set_textLength(width-2*INNER_PADDING)
         myText.set_lengthAdjust("spacingAndGlyphs")
         group.set_clip_path("url(#%s)" % pathId)
- 
+
         group.addElement(myText)
         return group
- 
+
     def _text(self, the_text, x, y):
         encoded_text = self._encode_text(the_text)
         return text(encoded_text, x, y)
- 
+
     def _encode_text(self, text):
         return self._encode_unicode_text(xmlescape(text))
- 
+
     def _encode_unicode_text(self, text):
         if type(text) is UnicodeType:
             return text.encode(ENCODING)
