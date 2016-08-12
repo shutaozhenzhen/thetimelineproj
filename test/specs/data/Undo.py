@@ -214,7 +214,7 @@ class DBOperations(object):
         event = self._get_random_event(db, container=False)
         event.set_time_period(a_time_period())
         db.save_event(event)
-        return "changed time_period to %s %r" % (event.get_time_period().get_label(), event)
+        return "changed time_period to %s %r" % (db.get_time_type().format_period(event.get_time_period()), event)
 
     def _operation_add_container_with_subevents(self, db):
         all_events = a_container("Container", None, [("sub1", None), ("sub2", None)])

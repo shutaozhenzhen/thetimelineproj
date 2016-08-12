@@ -287,7 +287,10 @@ class Event(object):
 
     def get_label(self):
         """Returns a unicode label describing the event."""
-        event_label = u"%s (%s)" % (self.text, self.time_period.get_label())
+        event_label = u"%s (%s)" % (
+            self.text,
+            self.time_type.format_period(self.time_period),
+        )
         duration_label = self._get_duration_label()
         if duration_label != "":
             return u"%s  %s: %s" % (event_label, _("Duration"), duration_label)
