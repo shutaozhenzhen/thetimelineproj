@@ -188,9 +188,6 @@ class TimePeriod(object):
         """Returns a unicode string describing the time period."""
         return self.time_type.format_period(self)
 
-    def has_nonzero_time(self):
-        return self.time_type.time_period_has_nonzero_time(self)
-
 
 class TimeOutOfRangeLeftError(ValueError):
     pass

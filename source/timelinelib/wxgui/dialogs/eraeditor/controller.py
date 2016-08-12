@@ -47,7 +47,9 @@ class EraEditorDialogController(Controller):
 
     def _era_has_nonzero_time(self):
         try:
-            return self.era.get_time_period().has_nonzero_time()
+            return self.time_type.time_period_has_nonzero_time(
+                self.era.get_time_period()
+            )
         except Exception:
             return False
 
