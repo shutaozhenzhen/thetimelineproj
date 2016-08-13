@@ -241,7 +241,7 @@ class SVGDrawingAlgorithm(object):
 
     def _extract_categories(self):
         categories = []
-        for (event, rect) in self.scene.event_data:
+        for (event, _) in self.scene.event_data:
             cat = event.category
             if cat and not cat in categories:
                 categories.append(cat)
