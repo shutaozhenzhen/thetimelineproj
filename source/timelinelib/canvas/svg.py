@@ -60,7 +60,7 @@ class SVGDrawingAlgorithm(object):
         self.scene = scene
         self.view_properties = view_properties
         # SVG document size, maybe TODO
-        self.metrics = dict({'widthpx':1052, 'heightpx':744});
+        self.metrics = dict({'widthpx': 1052, 'heightpx': 744})
         # SVG document handle
         self.svg = svg(width="%dpx" % self.metrics['widthpx'], height="%dpx" % self.metrics['heightpx'])
         # Fonts and pens we use when drawing
@@ -252,7 +252,7 @@ class SVGDrawingAlgorithm(object):
     def _draw_legend(self, view_properties, categories):
         """
         Draw legend for the given categories.
- 
+
         Box in lower right corner
             Motivation for positioning in right corner:
             SVG text cannot be centered since the text width cannot be calculated
@@ -261,7 +261,7 @@ class SVGDrawingAlgorithm(object):
                   But then the probability is high that a lot of text is at the left
                   bottom
                   ergo: put the legend to the right.
- 
+
           +----------+
           | Name   O |
           | Name   O |
@@ -285,8 +285,8 @@ class SVGDrawingAlgorithm(object):
             x = self.metrics['widthpx'] - width - OUTER_PADDING
             svgGroup = g()
             box_rect = builder.createRect(x,
-                                               self.metrics['heightpx'] - height - OUTER_PADDING,
-                                               width, height, fill='white')
+                                          self.metrics['heightpx'] - height - OUTER_PADDING,
+                                          width, height, fill='white')
             svgGroup.addElement(box_rect)
             # Draw text and color boxes
             cur_y = self.metrics['heightpx'] - height - OUTER_PADDING + INNER_PADDING
@@ -294,14 +294,14 @@ class SVGDrawingAlgorithm(object):
                 base_color = self._map_svg_color(cat.color)
                 border_color = self._map_svg_color(darken_color(cat.color))
                 color_box_rect = builder.createRect(x + OUTER_PADDING,
-                                  cur_y, item_height, item_height, fill=base_color,
-                                  stroke=border_color)
+                                                    cur_y, item_height, item_height, fill=base_color,
+                                                    stroke=border_color)
                 svgGroup.addElement(color_box_rect)
                 myText = self._svg_clipped_text(cat.name,
-                                       (x + OUTER_PADDING + INNER_PADDING + item_height,
-                                        cur_y, width - OUTER_PADDING - INNER_PADDING - item_height,
-                                        item_height),
-                                        myStyle)
+                                                (x + OUTER_PADDING + INNER_PADDING + item_height,
+                                                 cur_y, width - OUTER_PADDING - INNER_PADDING - item_height,
+                                                 item_height),
+                                                myStyle)
                 svgGroup.addElement(myText)
                 cur_y = cur_y + item_height + INNER_PADDING
             self.svg.addElement(svgGroup)
@@ -321,9 +321,9 @@ class SVGDrawingAlgorithm(object):
             boxColor = self._get_box_color(event)
             boxBorderColor = self._get_box_border_color(event)
             svgRect = oh.createRect(rect.X, rect.Y,
-                                         rect.GetWidth(), rect.GetHeight(),
-                                         stroke=boxBorderColor,
-                                         fill=boxColor)
+                                    rect.GetWidth(), rect.GetHeight(),
+                                    stroke=boxBorderColor,
+                                    fill=boxColor)
             if self.shadowFlag:
                 svgRect.set_filter("url(#filterShadow)")
             svgGroup.addElement(svgRect)
@@ -366,10 +366,10 @@ class SVGDrawingAlgorithm(object):
             width = width - (INNER_PADDING - text_x)
             text_x = INNER_PADDING
         pathId = "path%d_%d" % (text_x, text_y)
-        p = path(pathData="M %d %d H %d V %d H %d" % \
-                               (rx, ry + height,
-                                text_x + width - INNER_PADDING,
-                                ry, rx))
+        p = path(pathData="M %d %d H %d V %d H %d" %
+                 (rx, ry + height,
+                  text_x + width - INNER_PADDING,
+                  ry, rx))
         clip = clipPath()
         clip.addElement(p)
         clip.set_id(pathId)
