@@ -149,7 +149,6 @@ class SVGDrawingAlgorithm(object):
         group.addElement(myText)
 
     def _draw_major_strips(self, group, style):
-        oh = ShapeBuilder()
         style.setStrokeDashArray("")
         fontSize = MAJOR_STRIP_FONT_SIZE
         style.setFontSize("%dem" % fontSize)
