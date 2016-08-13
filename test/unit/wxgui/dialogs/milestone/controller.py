@@ -95,6 +95,24 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.assertEqual(self.db.save_event.call_count, 1)
         self.view.HandleDbError.called_with(exception)
 
+    def test_show_time_when_false(self):
+        self.milestone.get_time_period.return_value = TimePeriod(
+            self.db.time_type,
+            human_time_to_gregorian("1 Jan 2010"),
+            human_time_to_gregorian("1 Jan 2010")
+        )
+        self.simulate_dialog_init(self.db, self.milestone)
+        self.view.SetShowTime.assert_called_with(False)
+
+    def test_show_time_when_true(self):
+        self.milestone.get_time_period.return_value = TimePeriod(
+            self.db.time_type,
+            human_time_to_gregorian("1 Jan 2010 13:00"),
+            human_time_to_gregorian("1 Jan 2010 13:00")
+        )
+        self.simulate_dialog_init(self.db, self.milestone)
+        self.view.SetShowTime.assert_called_with(True)
+
     def simulate_user_enters_description(self, description):
         self.view.GetDescription.return_value = description
 
