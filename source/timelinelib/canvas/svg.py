@@ -243,7 +243,7 @@ class SVGDrawingAlgorithm(object):
         categories = []
         for (event, _) in self.scene.event_data:
             cat = event.category
-            if cat and not cat in categories:
+            if cat and cat not in categories:
                 categories.append(cat)
         return sort_categories(categories)
 
