@@ -50,7 +50,7 @@ class EditMilestoneDialogController(Controller):
         self.view.SetCategory(self._milestone.get_category())
 
     def _milestone_has_nonzero_time(self):
-        return self._milestone.get_time_period().has_nonzero_time()
+        return self._time_type.time_period_has_nonzero_time(self._milestone.get_time_period())
 
     def on_ok_clicked(self, evt):
         self._update_milestone()

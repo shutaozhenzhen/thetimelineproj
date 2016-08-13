@@ -40,7 +40,7 @@ class ListExporter(PluginBase):
         dlg.Destroy()
 
     def _get_events(self, timeline):
-        return [(event.get_time_period().get_label(), event.get_text()) for event in sorted(timeline.get_all_events())]
+        return [(timeline.get_time_type().format_period(event.get_time_period()), event.get_text()) for event in sorted(timeline.get_all_events())]
 
 
 class ListboxDialog(wx.Dialog):

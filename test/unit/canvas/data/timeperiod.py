@@ -78,10 +78,6 @@ class time_period_spec(UnitTestCase):
             tp.center(ATime(200)),
             TimePeriod(ATimeType(), ATime(96), ATime(100)))
 
-    def test_formats_period_using_time_type(self):
-        time_period = TimePeriod(ATimeType(), ATime(5), ATime(9))
-        self.assertEqual("5 to 9", time_period.get_label())
-
     def test_move_moves_1_10th_forward(self):
         time_period = TimePeriod(ATimeType(), ATime(0), ATime(10))
         self.assertEqual(

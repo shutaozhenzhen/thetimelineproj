@@ -338,9 +338,9 @@ class EditEventDialogController(Controller):
 
     def _event_has_nonzero_time(self):
         try:
-            time_type = self.time_type
-            time_period = TimePeriod(time_type, self.start, self.end)
-            return time_period.has_nonzero_time()
+            return self.time_type.time_period_has_nonzero_time(
+                TimePeriod(self.time_type, self.start, self.end)
+            )
         except Exception:
             return False
 
