@@ -156,7 +156,6 @@ class SVGDrawingAlgorithm(object):
         for tp in self.scene.major_strip_data:
             # Divider line
             x = self.scene.x_pos_for_time(tp.end_time)
-            line = oh.createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="grey")
             # Label
             label = self.scene.major_strip.label(tp.start_time, True)
             x = self.scene.x_pos_for_time(tp.start_time) + INNER_PADDING
