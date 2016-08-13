@@ -19,12 +19,19 @@
 from types import UnicodeType
 from xml.sax.saxutils import escape as xmlescape
 
-from pysvg.structure import *
-from pysvg.core import *
-from pysvg.text import *
-from pysvg.shape import *
-from pysvg.builders import *
-from pysvg.filter import *
+from pysvg.filter import feGaussianBlur
+from pysvg.filter import feOffset
+from pysvg.filter import feMerge
+from pysvg.filter import feMergeNode
+from pysvg.filter import filter
+from pysvg.builders import StyleBuilder
+from pysvg.builders import ShapeBuilder
+from pysvg.structure import g
+from pysvg.structure import svg
+from pysvg.structure import defs
+from pysvg.shape import path
+from pysvg.structure import clipPath
+from pysvg.text import text
 
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.data import sort_categories
