@@ -62,13 +62,16 @@ class SVGDrawingAlgorithm(object):
         self.scene = scene
         self.view_properties = view_properties
         self.svg = svg(width=WIDTH, height=HEIGHT)
-        d = defs()
-        d.addElement(self._get_shadow_filter())
-        self.svg.addElement(d)
         try:
             self.shadowFlag = kwargs["shadow"]
         except KeyError:
             self.shadowFlag = False
+        self._define_shadow_filter()
+
+    def _define_shadow_filter(self):
+        d = defs()
+        d.addElement(self._get_shadow_filter())
+        self.svg.addElement(d)
 
     def _get_shadow_filter(self):
         filterShadow = filter(x="-.3", y="-.5", width=1.9, height=1.9)
