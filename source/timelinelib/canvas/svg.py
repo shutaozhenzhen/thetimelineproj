@@ -58,19 +58,13 @@ class SVGDrawingAlgorithm(object):
     # options:  shadow=True|False
 
     def __init__(self, path, scene, view_properties, **kwargs):
-        # store important data references
         self.path = path
         self.scene = scene
         self.view_properties = view_properties
-        # SVG document handle
         self.svg = svg(width="%dpx" % WIDTH, height="%dpx" % HEIGHT)
-        # Fonts and pens we use when drawing
-        # SVG Text style
         d = defs()
         d.addElement(self._get_shadow_filter())
         self.svg.addElement(d)
-        # local flags
-        # flag handling
         try:
             self.shadowFlag = kwargs["shadow"]
         except KeyError:
