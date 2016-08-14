@@ -89,11 +89,11 @@ class SVGDrawingAlgorithm(object):
         d.addElement(filterShadow)
         self.svg.addElement(d)
         # local flags
-        self.shadowFlag = False
         # flag handling
-        for key in kwargs:
-            if key == 'shadow':
-                self.shadowFlag = kwargs[key]
+        try:
+            self.shadowFlag = kwargs["shadow"]
+        except KeyError:
+            self.shadowFlag = False
 
     def write(self, path):
         """
