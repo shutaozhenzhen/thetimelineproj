@@ -43,6 +43,8 @@ DATA_INDICATOR_SIZE = 10
 SMALL_FONT_SIZE = 9
 MAJOR_STRIP_FONT_SIZE = 6
 ENCODING = "utf-8"
+WIDTH = 1052
+HEIGHT = 744
 
 
 def export(path, scene, view_properties):
@@ -60,10 +62,8 @@ class SVGDrawingAlgorithm(object):
         self.path = path
         self.scene = scene
         self.view_properties = view_properties
-        # SVG document size, maybe TODO
-        self.metrics = dict({'widthpx': 1052, 'heightpx': 744})
         # SVG document handle
-        self.svg = svg(width="%dpx" % self.metrics['widthpx'], height="%dpx" % self.metrics['heightpx'])
+        self.svg = svg(width="%dpx" % WIDTH, height="%dpx" % HEIGHT)
         # Fonts and pens we use when drawing
         # SVG Text style
         d = defs()
@@ -279,19 +279,19 @@ class SVGDrawingAlgorithm(object):
             myStyle.setFontSize(font_size)
             myStyle.setTextAnchor('left')
             # reserve 15% for the legend
-            width = int(self.metrics['widthpx'] * 0.15)
+            width = int(WIDTH * 0.15)
             item_height = font_size + OUTER_PADDING
             height = num_categories * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
             # Draw big box
             builder = ShapeBuilder()
-            x = self.metrics['widthpx'] - width - OUTER_PADDING
+            x = WIDTH - width - OUTER_PADDING
             svgGroup = g()
             box_rect = builder.createRect(x,
-                                          self.metrics['heightpx'] - height - OUTER_PADDING,
+                                          HEIGHT - height - OUTER_PADDING,
                                           width, height, fill='white')
             svgGroup.addElement(box_rect)
             # Draw text and color boxes
-            cur_y = self.metrics['heightpx'] - height - OUTER_PADDING + INNER_PADDING
+            cur_y = HEIGHT - height - OUTER_PADDING + INNER_PADDING
             for cat in categories:
                 base_color = self._map_svg_color(cat.color)
                 border_color = self._map_svg_color(darken_color(cat.color))
