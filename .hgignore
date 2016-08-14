@@ -27,3 +27,8 @@ _hgeol
 release/buildtool/target
 release/buildtool/*.exe
 venv
+*Win32Setup.exe
+dependencies/timelinelib/Pillow-3.2.0/PIL/*
+launchpad-export.tar.gz
+profiling/*
+icons/event_icons/48.png
