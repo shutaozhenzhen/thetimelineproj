@@ -113,11 +113,7 @@ class SVGDrawingAlgorithm(object):
         Draw major and minor strips, lines to all event boxes and baseline.
         Both major and minor strips have divider lines and labels.
         """
-        myStyle = StyleBuilder()
-        myStyle.setStrokeDashArray((2, 2))
-        myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize("2em")
-        myStyle.setTextAnchor('left')
+        myStyle = self._get_my_style()
         svgGroup = g()
         self._draw_minor_strips(svgGroup, myStyle)
         self._draw_major_strips(svgGroup, myStyle)
@@ -125,6 +121,14 @@ class SVGDrawingAlgorithm(object):
         self._draw_lines_to_non_period_events(svgGroup, self.view_properties)
         self._draw_now_line(svgGroup)
         self.svg.addElement(svgGroup)
+
+    def _get_my_style(self):
+        myStyle = StyleBuilder()
+        myStyle.setStrokeDashArray((2, 2))
+        myStyle.setFontFamily(fontfamily="Verdana")
+        myStyle.setFontSize(SMALL_FONT_SIZE)
+        myStyle.setTextAnchor('left')
+        return myStyle
 
     def _draw_minor_strips(self, group, style):
         for strip_period in self.scene.minor_strip_data:
@@ -271,10 +275,7 @@ class SVGDrawingAlgorithm(object):
             num_categories = len(categories)
             if num_categories == 0:
                 return
-            myStyle = StyleBuilder()
-            myStyle.setFontFamily(fontfamily="Verdana")
-            myStyle.setFontSize(SMALL_FONT_SIZE)
-            myStyle.setTextAnchor('left')
+            myStyle = self._get_my_style()
             # reserve 15% for the legend
             width = int(WIDTH * 0.15)
             item_height = SMALL_FONT_SIZE + OUTER_PADDING
@@ -307,10 +308,7 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_events(self, view_properties):
         """Draw all event boxes and the text inside them."""
-        myStyle = StyleBuilder()
-        myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize(SMALL_FONT_SIZE)
-        myStyle.setTextAnchor('left')
+        myStyle = self._get_my_style()
         oh = ShapeBuilder()
         for (event, rect) in self.scene.event_data:
             # Ensure that we can't draw outside rectangle
