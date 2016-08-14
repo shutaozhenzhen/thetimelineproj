@@ -270,14 +270,13 @@ class SVGDrawingAlgorithm(object):
             num_categories = len(categories)
             if num_categories == 0:
                 return
-            font_size = SMALL_FONT_SIZE
             myStyle = StyleBuilder()
             myStyle.setFontFamily(fontfamily="Verdana")
-            myStyle.setFontSize(font_size)
+            myStyle.setFontSize(SMALL_FONT_SIZE)
             myStyle.setTextAnchor('left')
             # reserve 15% for the legend
             width = int(WIDTH * 0.15)
-            item_height = font_size + OUTER_PADDING
+            item_height = SMALL_FONT_SIZE + OUTER_PADDING
             height = num_categories * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
             # Draw big box
             builder = ShapeBuilder()
@@ -309,7 +308,7 @@ class SVGDrawingAlgorithm(object):
         """Draw all event boxes and the text inside them."""
         myStyle = StyleBuilder()
         myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize("%d" % SMALL_FONT_SIZE)
+        myStyle.setFontSize(SMALL_FONT_SIZE)
         myStyle.setTextAnchor('left')
         oh = ShapeBuilder()
         for (event, rect) in self.scene.event_data:
