@@ -54,6 +54,7 @@ def export(path, scene, view_properties):
 class SVGDrawingAlgorithm(object):
 
     # options:  shadow=True|False
+
     def __init__(self, path, scene, view_properties, **kwargs):
         # store important data references
         self.path = path
@@ -65,6 +66,17 @@ class SVGDrawingAlgorithm(object):
         self.svg = svg(width="%dpx" % self.metrics['widthpx'], height="%dpx" % self.metrics['heightpx'])
         # Fonts and pens we use when drawing
         # SVG Text style
+        d = defs()
+        d.addElement(self._get_shadow_filter())
+        self.svg.addElement(d)
+        # local flags
+        # flag handling
+        try:
+            self.shadowFlag = kwargs["shadow"]
+        except KeyError:
+            self.shadowFlag = False
+
+    def _get_shadow_filter(self):
         filterShadow = filter(x="-.3", y="-.5", width=1.9, height=1.9)
         filtBlur = feGaussianBlur(stdDeviation="4")
         filtBlur.set_in("SourceAlpha")
@@ -85,15 +97,7 @@ class SVGDrawingAlgorithm(object):
         filterShadow.addElement(filtOffset)
         filterShadow.addElement(filtMerge)
         filterShadow.set_id("filterShadow")
-        d = defs()
-        d.addElement(filterShadow)
-        self.svg.addElement(d)
-        # local flags
-        # flag handling
-        try:
-            self.shadowFlag = kwargs["shadow"]
-        except KeyError:
-            self.shadowFlag = False
+        return filterShadow
 
     def write(self, path):
         """
