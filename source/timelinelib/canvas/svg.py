@@ -61,7 +61,7 @@ class SVGDrawingAlgorithm(object):
         self.path = path
         self.scene = scene
         self.view_properties = view_properties
-        self.svg = svg(width="%dpx" % WIDTH, height="%dpx" % HEIGHT)
+        self.svg = svg(width=WIDTH, height=HEIGHT)
         d = defs()
         d.addElement(self._get_shadow_filter())
         self.svg.addElement(d)
