@@ -41,7 +41,7 @@ OUTER_PADDING = 5  # Space between event boxes (pixels)
 INNER_PADDING = 3  # Space inside event box to text (pixels)
 DATA_INDICATOR_SIZE = 10
 SMALL_FONT_SIZE_PX = 12
-MAJOR_STRIP_FONT_SIZE = 6
+LARGER_FONT_SIZE_PX = 14
 ENCODING = "utf-8"
 
 
@@ -105,7 +105,7 @@ class SVGDrawingAlgorithm(object):
         myStyle = StyleBuilder()
         myStyle.setStrokeDashArray("")
         myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize("%d" % MAJOR_STRIP_FONT_SIZE)
+        myStyle.setFontSize("%dpx" % LARGER_FONT_SIZE_PX)
         myStyle.setTextAnchor('left')
         return myStyle
 
@@ -135,7 +135,7 @@ class SVGDrawingAlgorithm(object):
         group.addElement(myText)
 
     def _draw_major_strips(self, group):
-        fontSize = MAJOR_STRIP_FONT_SIZE
+        fontSize = LARGER_FONT_SIZE_PX
         for tp in self.scene.major_strip_data:
             # Divider line
             x = self.scene.x_pos_for_time(tp.end_time)
@@ -146,13 +146,11 @@ class SVGDrawingAlgorithm(object):
             # If the label is not visible when it is positioned in the middle
             # of the period, we move it so that as much of it as possible is
             # visible without crossing strip borders.
-            extra_vertical_padding = 0
             if x - INNER_PADDING < 0:
                 x = INNER_PADDING
-                extra_vertical_padding = fontSize * 4
                 # since there is no function like textwidth() for SVG, just take into account that text can be overwritten
                 # do not perform a special handling for right border, SVG is unlimited
-            myText = self._text(label, x, fontSize * 4 + INNER_PADDING + extra_vertical_padding)
+            myText = self._text(label, x, fontSize + OUTER_PADDING)
             myText.set_style(self._larger_font_style.getStyle())
             group.addElement(myText)
 
