@@ -114,20 +114,21 @@ class SVGDrawingAlgorithm(object):
     def _draw_minor_strip_label(self, group, style, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
         middle = (self.scene.x_pos_for_time(strip_period.start_time) +
-                 self.scene.x_pos_for_time(strip_period.end_time)) / 2
+                  self.scene.x_pos_for_time(strip_period.end_time)) / 2
         # check for negative values
         if middle < INNER_PADDING:
             return
         middley = self.scene.divider_y
         # Label
+        label = self._encode_text(label)
         myText = self._text(label, middle, middley)
-        myText.set_style(style)
+        myText.set_style(style.getStyle())
         group.addElement(myText)
 
     def _draw_major_strips(self, group, style):
         style.setStrokeDashArray("")
         fontSize = MAJOR_STRIP_FONT_SIZE
-        style.setFontSize("%dem" % fontSize)
+        style.setFontSize("%d" % fontSize)
         for tp in self.scene.major_strip_data:
             # Divider line
             x = self.scene.x_pos_for_time(tp.end_time)
@@ -145,7 +146,7 @@ class SVGDrawingAlgorithm(object):
                 # since there is no function like textwidth() for SVG, just take into account that text can be overwritten
                 # do not perform a special handling for right border, SVG is unlimited
             myText = self._text(label, x, fontSize * 4 + INNER_PADDING + extra_vertical_padding)
-            myText.set_style(style)
+            myText.set_style(style.getStyle())
             group.addElement(myText)
 
     def _draw_divider_line(self, group):
