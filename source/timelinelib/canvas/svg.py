@@ -40,7 +40,7 @@ from timelinelib.canvas.data import sort_categories
 OUTER_PADDING = 5  # Space between event boxes (pixels)
 INNER_PADDING = 3  # Space inside event box to text (pixels)
 DATA_INDICATOR_SIZE = 10
-SMALL_FONT_SIZE = 9
+SMALL_FONT_SIZE_PX = 12
 MAJOR_STRIP_FONT_SIZE = 6
 ENCODING = "utf-8"
 
@@ -96,7 +96,7 @@ class SVGDrawingAlgorithm(object):
         myStyle = StyleBuilder()
         myStyle.setStrokeDashArray((2, 2))
         myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize(SMALL_FONT_SIZE)
+        myStyle.setFontSize("%dpx" % SMALL_FONT_SIZE_PX)
         myStyle.setTextAnchor('left')
         return myStyle
 
@@ -249,7 +249,7 @@ class SVGDrawingAlgorithm(object):
             myStyle = self._get_my_style()
             # reserve 15% for the legend
             width = int(self.scene.width * 0.15)
-            item_height = SMALL_FONT_SIZE + OUTER_PADDING
+            item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
             height = num_categories * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
             # Draw big box
             builder = ShapeBuilder()
