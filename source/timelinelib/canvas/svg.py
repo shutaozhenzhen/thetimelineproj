@@ -66,35 +66,6 @@ class SVGDrawingAlgorithm(object):
             self.shadowFlag = kwargs["shadow"]
         except KeyError:
             self.shadowFlag = False
-        self._define_shadow_filter()
-
-    def _define_shadow_filter(self):
-        d = defs()
-        d.addElement(self._get_shadow_filter())
-        self.svg.addElement(d)
-
-    def _get_shadow_filter(self):
-        filterShadow = filter(x="-.3", y="-.5", width=1.9, height=1.9)
-        filtBlur = feGaussianBlur(stdDeviation="4")
-        filtBlur.set_in("SourceAlpha")
-        filtBlur.set_result("out1")
-        filtOffset = feOffset()
-        filtOffset.set_in("out1")
-        filtOffset.set_dx(4)
-        filtOffset.set_dy(-4)
-        filtOffset.set_result("out2")
-        filtMergeNode1 = feMergeNode()
-        filtMergeNode1.set_in("out2")
-        filtMergeNode2 = feMergeNode()
-        filtMergeNode2.set_in("SourceGraphic")
-        filtMerge = feMerge()
-        filtMerge.addElement(filtMergeNode1)
-        filtMerge.addElement(filtMergeNode2)
-        filterShadow.addElement(filtBlur)  # here i get an error from python. It is not allowed to add a primitive filter
-        filterShadow.addElement(filtOffset)
-        filterShadow.addElement(filtMerge)
-        filterShadow.set_id("filterShadow")
-        return filterShadow
 
     def write(self, path):
         """
@@ -104,6 +75,7 @@ class SVGDrawingAlgorithm(object):
         self.svg.save(path, encoding=ENCODING)
 
     def draw(self):
+        self._define_shadow_filter()
         self._draw_bg()
         self._draw_events(self.view_properties)
         self._draw_legend(self.view_properties, self._extract_categories())
@@ -393,3 +365,31 @@ class SVGDrawingAlgorithm(object):
             return text.encode(ENCODING)
         else:
             return text
+
+    def _define_shadow_filter(self):
+        d = defs()
+        d.addElement(self._get_shadow_filter())
+        self.svg.addElement(d)
+
+    def _get_shadow_filter(self):
+        filterShadow = filter(x="-.3", y="-.5", width=1.9, height=1.9)
+        filtBlur = feGaussianBlur(stdDeviation="4")
+        filtBlur.set_in("SourceAlpha")
+        filtBlur.set_result("out1")
+        filtOffset = feOffset()
+        filtOffset.set_in("out1")
+        filtOffset.set_dx(4)
+        filtOffset.set_dy(-4)
+        filtOffset.set_result("out2")
+        filtMergeNode1 = feMergeNode()
+        filtMergeNode1.set_in("out2")
+        filtMergeNode2 = feMergeNode()
+        filtMergeNode2.set_in("SourceGraphic")
+        filtMerge = feMerge()
+        filtMerge.addElement(filtMergeNode1)
+        filtMerge.addElement(filtMergeNode2)
+        filterShadow.addElement(filtBlur)  # here i get an error from python. It is not allowed to add a primitive filter
+        filterShadow.addElement(filtOffset)
+        filterShadow.addElement(filtMerge)
+        filterShadow.set_id("filterShadow")
+        return filterShadow
