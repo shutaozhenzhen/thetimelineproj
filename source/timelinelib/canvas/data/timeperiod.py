@@ -126,48 +126,12 @@ class TimePeriod(object):
         return self.end_time - self.start_time
 
     def center(self, time):
-        """
-        Center time period around time keeping the length.
-
-        If we can't center because we are on the edge, we do as good as we can.
-        """
-        delta = time - self.mean_time()
-        start_overflow = self._calculate_overflow(self.start_time, delta)[1]
-        end_overflow = self._calculate_overflow(self.end_time, delta)[1]
-        if start_overflow == -1:
-            delta = self.time_type.get_min_time()[0] - self.start_time
-        elif end_overflow == 1:
-            delta = self.time_type.get_max_time()[0] - self.end_time
-        return self.move_delta(delta)
+        return self.move_delta(time - self.mean_time())
 
     def _calc_new_time(self, time, delta):
         if delta is None:
             return time
         return time + delta
-
-    def _calculate_overflow(self, time, delta):
-        """
-        Return a tuple (new time, overflow flag).
-
-        Overflow flag can be -1 (overflow to the left), 0 (no overflow), or 1
-        (overflow to the right).
-
-        If overflow flag is 0 new time is time + delta, otherwise None.
-        """
-        try:
-            min_time, min_error_text = self.time_type.get_min_time()
-            max_time, max_error_text = self.time_type.get_max_time()
-            new_time = time + delta
-            if min_time and new_time < min_time:
-                return (None, -1, min_error_text)
-            if max_time and new_time > max_time:
-                return (None, 1, max_error_text)
-            return (new_time, 0, "")
-        except OverflowError:
-            if delta > self.time_type.get_zero_delta():
-                return (None, 1, max_error_text)
-            else:
-                return (None, -1, min_error_text)
 
 
 class TimeOutOfRangeLeftError(ValueError):
