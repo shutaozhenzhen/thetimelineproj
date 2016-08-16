@@ -24,8 +24,7 @@ class TimePeriod(object):
     currently displayed time period in the GUI.
     """
 
-    def __init__(self, start_time, end_time, assert_period_length=True):
-        self.assert_period_length = assert_period_length
+    def __init__(self, start_time, end_time):
         self.start_time, self.end_time = self._update(start_time, end_time)
 
     def clone(self):
