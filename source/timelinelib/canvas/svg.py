@@ -136,10 +136,10 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_major_strips(self, group):
         for tp in self.scene.major_strip_data:
-            text = self._draw_major_strip(tp)
+            text = self._draw_major_strip_label(tp)
             group.addElement(text)
 
-    def _draw_major_strip(self, tp):
+    def _draw_major_strip_label(self, tp):
         label = self.scene.major_strip.label(tp.start_time, True)
         x = (max(0, self.scene.x_pos_for_time(tp.start_time)) + min(self.scene.width, self.scene.x_pos_for_time(tp.end_time))) / 2
         # If the label is not visible when it is positioned in the middle
