@@ -141,14 +141,12 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_major_strip_label(self, tp):
         label = self.scene.major_strip.label(tp.start_time, True)
-        x = (max(0, self.scene.x_pos_for_time(tp.start_time)) + min(self.scene.width, self.scene.x_pos_for_time(tp.end_time))) / 2
         # If the label is not visible when it is positioned in the middle
         # of the period, we move it so that as much of it as possible is
         # visible without crossing strip borders.
-        if x - INNER_PADDING < 0:
-            x = INNER_PADDING
         # since there is no function like textwidth() for SVG, just take into account that text can be overwritten
         # do not perform a special handling for right border, SVG is unlimited
+        x = (max(0, self.scene.x_pos_for_time(tp.start_time)) + min(self.scene.width, self.scene.x_pos_for_time(tp.end_time))) / 2
         text = self._text(label, x, LARGER_FONT_SIZE_PX + OUTER_PADDING)
         text.set_style(self._larger_font_style.getStyle())
         return text
