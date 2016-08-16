@@ -137,7 +137,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _calc_fixed_event_rect_y(self, size, db, view_properties, get_text_extent_fn):
         periods = view_properties.periods
-        view_properties.set_displayed_period(TimePeriod(periods[0].start_time, periods[-1].end_time, assert_period_length=False), False)
+        view_properties.set_displayed_period(TimePeriod(periods[0].start_time, periods[-1].end_time), False)
         large_size = (size[0] * len(periods), size[1])
         scene = self._create_scene(large_size, db, view_properties, get_text_extent_fn)
         for (evt, rect) in scene.event_data:
