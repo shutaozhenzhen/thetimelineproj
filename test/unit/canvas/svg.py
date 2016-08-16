@@ -68,6 +68,15 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         text = self.svg._draw_minor_strip_label(strip_period)
         self.assertEqual(text, None)
 
+    def test_can_draw_major_strip_label(self):
+        strip = Mock()
+        strip.label.return_value = "2016"
+        strip_period = Mock()
+        self.scene.x_pos_for_time.return_value = 100
+        self.scene.major_strip = strip
+        text = self.svg._draw_major_strip_label(strip_period)
+        self.assertEqual(text.getXML(), '<text style="font-size:14px; font-family:Verdana; text-anchor:left; " y="19" x="100"  >\n2016</text>\n')
+
     def test_now_line_is_visible(self):
         self.scene.x_pos_for_now.return_value = 100
         self.assertTrue(self.svg._now_line_is_visible())
