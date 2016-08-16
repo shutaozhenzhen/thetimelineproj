@@ -88,9 +88,10 @@ class SVGDrawingAlgorithm(object):
         svgGroup = g()
         self._draw_minor_strips(svgGroup)
         self._draw_major_strips(svgGroup)
-        self._draw_divider_line(svgGroup)
+        svgGroup.addElement(self._draw_divider_line())
         self._draw_lines_to_non_period_events(svgGroup, self.view_properties)
-        self._draw_now_line(svgGroup)
+        if self._now_line_is_visible():
+            svgGroup.addElement(self._draw_now_line())
         self.svg.addElement(svgGroup)
 
     def _get_small_font_style(self):
@@ -154,11 +155,9 @@ class SVGDrawingAlgorithm(object):
             myText.set_style(self._larger_font_style.getStyle())
             group.addElement(myText)
 
-    def _draw_divider_line(self, group):
-        oh = ShapeBuilder()
-        line = oh.createLine(0, self.scene.divider_y, self.scene.width,
-                             self.scene.divider_y, strokewidth=0.5, stroke="grey")
-        group.addElement(line)
+    def _draw_divider_line(self):
+        return ShapeBuilder().createLine(0, self.scene.divider_y, self.scene.width,
+                                         self.scene.divider_y, strokewidth=0.5, stroke="grey")
 
     def _draw_lines_to_non_period_events(self, group, view_properties):
         for (event, rect) in self.scene.event_data:
@@ -175,12 +174,13 @@ class SVGDrawingAlgorithm(object):
                 circle = oh.createCircle(x, self.scene.divider_y, 2)
                 group.addElement(circle)
 
-    def _draw_now_line(self, group):
+    def _draw_now_line(self):
         x = self.scene.x_pos_for_now()
-        if x > 0 and x < self.scene.width:
-            oh = ShapeBuilder()
-            line = oh.createLine(x, 0, x, self.scene.height, stroke="darkred")
-            group.addElement(line)
+        return ShapeBuilder().createLine(x, 0, x, self.scene.height, stroke="darkred")
+
+    def _now_line_is_visible(self):
+        x = self.scene.x_pos_for_now()
+        return x > 0 and x < self.scene.width
 
     def _get_base_color(self, event):
         if event.category:
