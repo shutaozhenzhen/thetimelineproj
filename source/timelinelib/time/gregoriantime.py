@@ -254,7 +254,7 @@ class GregorianTimeType(TimeType):
 
 
 def go_to_today_fn(main_frame, current_period, navigation_fn):
-    navigation_fn(lambda tp: tp.center(current_period.time_type.now()))
+    navigation_fn(lambda tp: tp.center(GregorianTimeType().now()))
 
 
 def go_to_date_fn(main_frame, current_period, navigation_fn):
@@ -312,9 +312,9 @@ def _move_page_years(curret_period, navigation_fn, direction):
         try:
             new_start = gregorian_start.replace(year=new_start_year).to_time()
             new_end = gregorian_end.replace(year=new_end_year).to_time()
-            if new_end > curret_period.time_type.get_max_time()[0]:
+            if new_end > GregorianTimeType().get_max_time()[0]:
                 raise ValueError()
-            if new_start < curret_period.time_type.get_min_time()[0]:
+            if new_start < GregorianTimeType().get_min_time()[0]:
                 raise ValueError()
         except ValueError:
             if direction < 0:
@@ -370,9 +370,9 @@ def _move_page_months(curret_period, navigation_fn, direction):
             new_end = end.replace(year=new_end_year, month=new_end_month)
             start = new_start.to_time()
             end = new_end.to_time()
-            if end > curret_period.time_type.get_max_time()[0]:
+            if end > GregorianTimeType().get_max_time()[0]:
                 raise ValueError()
-            if start < curret_period.time_type.get_min_time()[0]:
+            if start < GregorianTimeType().get_min_time()[0]:
                 raise ValueError()
         except ValueError:
             if direction < 0:
