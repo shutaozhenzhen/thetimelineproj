@@ -41,7 +41,7 @@ OUTER_PADDING = 5  # Space between event boxes (pixels)
 INNER_PADDING = 3  # Space inside event box to text (pixels)
 DATA_INDICATOR_SIZE = 10
 SMALL_FONT_SIZE_PX = 12
-MAJOR_STRIP_FONT_SIZE = 6
+LARGER_FONT_SIZE_PX = 14
 ENCODING = "utf-8"
 
 
@@ -60,6 +60,8 @@ class SVGDrawingAlgorithm(object):
         self.scene = scene
         self.view_properties = view_properties
         self.svg = svg(width=scene.width, height=scene.height)
+        self._small_font_style = self._get_small_font_style()
+        self._larger_font_style = self._get_larger_font_style()
         try:
             self.shadowFlag = kwargs["shadow"]
         except KeyError:
@@ -83,16 +85,16 @@ class SVGDrawingAlgorithm(object):
         Draw major and minor strips, lines to all event boxes and baseline.
         Both major and minor strips have divider lines and labels.
         """
-        myStyle = self._get_my_style()
-        svgGroup = g()
-        self._draw_minor_strips(svgGroup, myStyle)
-        self._draw_major_strips(svgGroup, myStyle)
-        self._draw_divider_line(svgGroup)
-        self._draw_lines_to_non_period_events(svgGroup, self.view_properties)
-        self._draw_now_line(svgGroup)
-        self.svg.addElement(svgGroup)
+        group = g()
+        self._draw_minor_strips(group)
+        self._draw_major_strips(group)
+        group.addElement(self._draw_divider_line())
+        self._draw_lines_to_non_period_events(group, self.view_properties)
+        if self._now_line_is_visible():
+            group.addElement(self._draw_now_line())
+        self.svg.addElement(group)
 
-    def _get_my_style(self):
+    def _get_small_font_style(self):
         myStyle = StyleBuilder()
         myStyle.setStrokeDashArray((2, 2))
         myStyle.setFontFamily(fontfamily="Verdana")
@@ -100,10 +102,20 @@ class SVGDrawingAlgorithm(object):
         myStyle.setTextAnchor('left')
         return myStyle
 
-    def _draw_minor_strips(self, group, style):
+    def _get_larger_font_style(self):
+        myStyle = StyleBuilder()
+        myStyle.setStrokeDashArray("")
+        myStyle.setFontFamily(fontfamily="Verdana")
+        myStyle.setFontSize("%dpx" % LARGER_FONT_SIZE_PX)
+        myStyle.setTextAnchor('left')
+        return myStyle
+
+    def _draw_minor_strips(self, group):
         for strip_period in self.scene.minor_strip_data:
             self._draw_minor_strip_divider_line_at(group, strip_period.end_time)
-            self._draw_minor_strip_label(group, style, strip_period)
+            label = self._draw_minor_strip_label(strip_period)
+            if label:
+                group.addElement(self._draw_minor_strip_label(strip_period))
 
     def _draw_minor_strip_divider_line_at(self, group, time):
         x = self.scene.x_pos_for_time(time)
@@ -111,71 +123,64 @@ class SVGDrawingAlgorithm(object):
         line = oh.createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="lightgrey")
         group.addElement(line)
 
-    def _draw_minor_strip_label(self, group, style, strip_period):
+    def _draw_minor_strip_label(self, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
-        middle = (self.scene.x_pos_for_time(strip_period.start_time) +
-                  self.scene.x_pos_for_time(strip_period.end_time)) / 2
-        # check for negative values
-        if middle < INNER_PADDING:
+        x = (self.scene.x_pos_for_time(strip_period.start_time) +
+             self.scene.x_pos_for_time(strip_period.end_time)) / 2
+        if x < INNER_PADDING:
             return
-        middley = self.scene.divider_y
-        # Label
-        label = self._encode_text(label)
-        myText = self._text(label, middle, middley)
-        myText.set_style(style.getStyle())
-        group.addElement(myText)
+        y = self.scene.divider_y - OUTER_PADDING
+        text = self._text(label, x, y)
+        text.set_style(self._small_font_style.getStyle())
+        return text
 
-    def _draw_major_strips(self, group, style):
-        style.setStrokeDashArray("")
-        fontSize = MAJOR_STRIP_FONT_SIZE
-        style.setFontSize("%d" % fontSize)
+    def _draw_major_strips(self, group):
         for tp in self.scene.major_strip_data:
-            # Divider line
-            x = self.scene.x_pos_for_time(tp.end_time)
-            # Label
-            label = self.scene.major_strip.label(tp.start_time, True)
-            x = self.scene.x_pos_for_time(tp.start_time) + INNER_PADDING
-            #            x = self.scene.x_pos_for_time(tp.mean_time()) - tw / 2
-            # If the label is not visible when it is positioned in the middle
-            # of the period, we move it so that as much of it as possible is
-            # visible without crossing strip borders.
-            extra_vertical_padding = 0
-            if x - INNER_PADDING < 0:
-                x = INNER_PADDING
-                extra_vertical_padding = fontSize * 4
-                # since there is no function like textwidth() for SVG, just take into account that text can be overwritten
-                # do not perform a special handling for right border, SVG is unlimited
-            myText = self._text(label, x, fontSize * 4 + INNER_PADDING + extra_vertical_padding)
-            myText.set_style(style.getStyle())
-            group.addElement(myText)
+            text = self._draw_major_strip_label(tp)
+            group.addElement(text)
 
-    def _draw_divider_line(self, group):
-        oh = ShapeBuilder()
-        line = oh.createLine(0, self.scene.divider_y, self.scene.width,
-                             self.scene.divider_y, strokewidth=0.5, stroke="grey")
-        group.addElement(line)
+    def _draw_major_strip_label(self, tp):
+        label = self.scene.major_strip.label(tp.start_time, True)
+        # If the label is not visible when it is positioned in the middle
+        # of the period, we move it so that as much of it as possible is
+        # visible without crossing strip borders.
+        # since there is no function like textwidth() for SVG, just take into account that text can be overwritten
+        # do not perform a special handling for right border, SVG is unlimited
+        x = (max(0, self.scene.x_pos_for_time(tp.start_time)) + min(self.scene.width, self.scene.x_pos_for_time(tp.end_time))) / 2
+        text = self._text(label, x, LARGER_FONT_SIZE_PX + OUTER_PADDING)
+        text.set_style(self._larger_font_style.getStyle())
+        return text
+
+    def _draw_divider_line(self):
+        return ShapeBuilder().createLine(0, self.scene.divider_y, self.scene.width,
+                                         self.scene.divider_y, strokewidth=0.5, stroke="grey")
 
     def _draw_lines_to_non_period_events(self, group, view_properties):
         for (event, rect) in self.scene.event_data:
             if rect.Y < self.scene.divider_y:
-                x = self.scene.x_pos_for_time(event.mean_time())
-                y = rect.Y + rect.Height / 2
-                if view_properties.is_selected(event):
-                    myStroke = "red"
-                else:
-                    myStroke = "black"
-                oh = ShapeBuilder()
-                line = oh.createLine(x, y, x, self.scene.divider_y, stroke=myStroke)
+                line, circle = self._draw_line_to_non_period_event(view_properties, event, rect)
                 group.addElement(line)
-                circle = oh.createCircle(x, self.scene.divider_y, 2)
                 group.addElement(circle)
 
-    def _draw_now_line(self, group):
+    def _draw_line_to_non_period_event(self, view_properties, event, rect):
+        x = self.scene.x_pos_for_time(event.mean_time())
+        y = rect.Y + rect.Height / 2
+        if view_properties.is_selected(event):
+            stroke = "red"
+        else:
+            stroke = "black"
+        oh = ShapeBuilder()
+        line = oh.createLine(x, y, x, self.scene.divider_y, stroke=stroke)
+        circle = oh.createCircle(x, self.scene.divider_y, 2)
+        return line, circle
+
+    def _draw_now_line(self):
         x = self.scene.x_pos_for_now()
-        if x > 0 and x < self.scene.width:
-            oh = ShapeBuilder()
-            line = oh.createLine(x, 0, x, self.scene.height, stroke="darkred")
-            group.addElement(line)
+        return ShapeBuilder().createLine(x, 0, x, self.scene.height, stroke="darkred")
+
+    def _now_line_is_visible(self):
+        x = self.scene.x_pos_for_now()
+        return x > 0 and x < self.scene.width
 
     def _get_base_color(self, event):
         if event.category:
@@ -246,7 +251,7 @@ class SVGDrawingAlgorithm(object):
             num_categories = len(categories)
             if num_categories == 0:
                 return
-            myStyle = self._get_my_style()
+            myStyle = self._get_small_font_style()
             # reserve 15% for the legend
             width = int(self.scene.width * 0.15)
             item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
@@ -279,7 +284,7 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_events(self, view_properties):
         """Draw all event boxes and the text inside them."""
-        myStyle = self._get_my_style()
+        myStyle = self._get_small_font_style()
         oh = ShapeBuilder()
         for (event, rect) in self.scene.event_data:
             # Ensure that we can't draw outside rectangle
