@@ -126,12 +126,10 @@ class SVGDrawingAlgorithm(object):
     def _draw_minor_strip_label(self, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
         x = (self.scene.x_pos_for_time(strip_period.start_time) +
-                  self.scene.x_pos_for_time(strip_period.end_time)) / 2
-        # check for negative values
+             self.scene.x_pos_for_time(strip_period.end_time)) / 2
         if x < INNER_PADDING:
             return
         y = self.scene.divider_y
-        # Label
         text = self._text(label, x, y)
         text.set_style(self._small_font_style.getStyle())
         return text
