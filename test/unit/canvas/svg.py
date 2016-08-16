@@ -46,6 +46,16 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.assertEqual(line.getXML(), '<line y1="106" x2="200" style="stroke:black; stroke-width:1; " x1="200" y2="200"  />\n')
         self.assertEqual(circle.getXML(), '<circle cy="200" cx="200" r="2" style="stroke:black; stroke-width:1; fill:none; "  />\n')
 
+    def test_now_line_is_visible(self):
+        self.scene.x_pos_for_now.return_value = 100
+        self.assertTrue(self.svg._now_line_is_visible())
+
+    def test_now_line_is_not_visible(self):
+        self.scene.x_pos_for_now.return_value = 2000
+        self.assertFalse(self.svg._now_line_is_visible())
+        self.scene.x_pos_for_now.return_value = -100
+        self.assertFalse(self.svg._now_line_is_visible())
+
     def setUp(self):
         path = Mock()
         self.view_properties = self.setup_view_properties()
