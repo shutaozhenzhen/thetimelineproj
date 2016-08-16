@@ -162,17 +162,21 @@ class SVGDrawingAlgorithm(object):
     def _draw_lines_to_non_period_events(self, group, view_properties):
         for (event, rect) in self.scene.event_data:
             if rect.Y < self.scene.divider_y:
-                x = self.scene.x_pos_for_time(event.mean_time())
-                y = rect.Y + rect.Height / 2
-                if view_properties.is_selected(event):
-                    myStroke = "red"
-                else:
-                    myStroke = "black"
-                oh = ShapeBuilder()
-                line = oh.createLine(x, y, x, self.scene.divider_y, stroke=myStroke)
+                line, circle = self._draw_line_to_non_period_event(view_properties, event, rect)
                 group.addElement(line)
-                circle = oh.createCircle(x, self.scene.divider_y, 2)
                 group.addElement(circle)
+
+    def _draw_line_to_non_period_event(self, view_properties, event, rect):
+        x = self.scene.x_pos_for_time(event.mean_time())
+        y = rect.Y + rect.Height / 2
+        if view_properties.is_selected(event):
+            myStroke = "red"
+        else:
+            myStroke = "black"
+        oh = ShapeBuilder()
+        line = oh.createLine(x, y, x, self.scene.divider_y, stroke=myStroke)
+        circle = oh.createCircle(x, self.scene.divider_y, 2)
+        return line, circle
 
     def _draw_now_line(self):
         x = self.scene.x_pos_for_now()
