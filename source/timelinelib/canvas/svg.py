@@ -113,7 +113,9 @@ class SVGDrawingAlgorithm(object):
     def _draw_minor_strips(self, group):
         for strip_period in self.scene.minor_strip_data:
             self._draw_minor_strip_divider_line_at(group, strip_period.end_time)
-            self._draw_minor_strip_label(group, strip_period)
+            label = self._draw_minor_strip_label(strip_period)
+            if label:
+                group.addElement(self._draw_minor_strip_label(strip_period))
 
     def _draw_minor_strip_divider_line_at(self, group, time):
         x = self.scene.x_pos_for_time(time)
@@ -121,19 +123,19 @@ class SVGDrawingAlgorithm(object):
         line = oh.createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="lightgrey")
         group.addElement(line)
 
-    def _draw_minor_strip_label(self, group, strip_period):
+    def _draw_minor_strip_label(self, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
-        middle = (self.scene.x_pos_for_time(strip_period.start_time) +
+        x = (self.scene.x_pos_for_time(strip_period.start_time) +
                   self.scene.x_pos_for_time(strip_period.end_time)) / 2
         # check for negative values
-        if middle < INNER_PADDING:
+        if x < INNER_PADDING:
             return
-        middley = self.scene.divider_y
+        y = self.scene.divider_y
         # Label
         label = self._encode_text(label)
-        myText = self._text(label, middle, middley)
+        myText = self._text(label, x, y)
         myText.set_style(self._small_font_style.getStyle())
-        group.addElement(myText)
+        return myText
 
     def _draw_major_strips(self, group):
         fontSize = LARGER_FONT_SIZE_PX
@@ -170,11 +172,11 @@ class SVGDrawingAlgorithm(object):
         x = self.scene.x_pos_for_time(event.mean_time())
         y = rect.Y + rect.Height / 2
         if view_properties.is_selected(event):
-            myStroke = "red"
+            stroke = "red"
         else:
-            myStroke = "black"
+            stroke = "black"
         oh = ShapeBuilder()
-        line = oh.createLine(x, y, x, self.scene.divider_y, stroke=myStroke)
+        line = oh.createLine(x, y, x, self.scene.divider_y, stroke=stroke)
         circle = oh.createCircle(x, self.scene.divider_y, 2)
         return line, circle
 
