@@ -129,7 +129,7 @@ class SVGDrawingAlgorithm(object):
              self.scene.x_pos_for_time(strip_period.end_time)) / 2
         if x < INNER_PADDING:
             return
-        y = self.scene.divider_y
+        y = self.scene.divider_y - OUTER_PADDING
         text = self._text(label, x, y)
         text.set_style(self._small_font_style.getStyle())
         return text
