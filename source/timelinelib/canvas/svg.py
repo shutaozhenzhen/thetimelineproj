@@ -137,11 +137,8 @@ class SVGDrawingAlgorithm(object):
     def _draw_major_strips(self, group):
         fontSize = LARGER_FONT_SIZE_PX
         for tp in self.scene.major_strip_data:
-            # Divider line
-            # Label
             label = self.scene.major_strip.label(tp.start_time, True)
             x = (max(0, self.scene.x_pos_for_time(tp.start_time)) + min(self.scene.width, self.scene.x_pos_for_time(tp.end_time))) / 2
-            #            x = self.scene.x_pos_for_time(tp.mean_time()) - tw / 2
             # If the label is not visible when it is positioned in the middle
             # of the period, we move it so that as much of it as possible is
             # visible without crossing strip borders.
