@@ -61,7 +61,6 @@ class SelectPeriodByDragInputHandler(ScrollViewInputHandler):
             start = t1
             end = t2
         return TimePeriod(
-            self.timeline_canvas.GetDb().get_time_type(),
             self.timeline_canvas.Snap(start),
             self.timeline_canvas.Snap(end))
 

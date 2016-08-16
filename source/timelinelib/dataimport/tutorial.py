@@ -245,8 +245,7 @@ class TutorialTimelineCreator(object):
         now = GregorianUtils.from_time(self.db.time_type.now())
         self.start = self.get_time(now.year, now.month, 1)
         self.end = self.start + self.get_days_delta(30)
-        self.db.set_displayed_period(TimePeriod(self.db.get_time_type(),
-                                                self.start, self.end))
+        self.db.set_displayed_period(TimePeriod(self.start, self.end))
         self.last_cat = None
         self.next_cid = 1
 
@@ -315,8 +314,7 @@ class NumericTutorialTimelineCreator(object):
         self.db.time_type = NumTimeType()
         self.start = self.db.time_type.now()
         self.end = self.start + 30
-        self.db.set_displayed_period(TimePeriod(self.db.get_time_type(),
-                                                self.start, self.end))
+        self.db.set_displayed_period(TimePeriod(self.start, self.end))
         self.last_cat = None
         self.next_cid = 1
 

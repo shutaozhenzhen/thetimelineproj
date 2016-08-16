@@ -208,7 +208,7 @@ class Event(object):
     def update(self, start_time, end_time, text, category=None, fuzzy=None,
                locked=None, ends_today=None):
         """Change the event data."""
-        self.time_period = TimePeriod(self.time_type, start_time, end_time, not self.is_container())
+        self.time_period = TimePeriod(start_time, end_time, not self.is_container())
         self.text = text.strip()
         self.category = category
         if ends_today is not None:
@@ -221,7 +221,7 @@ class Event(object):
 
     def update_period(self, start_time, end_time):
         """Change the event period."""
-        self.time_period = TimePeriod(self.time_type, start_time, end_time)
+        self.time_period = TimePeriod(start_time, end_time)
 
     def update_period_o(self, new_period):
         self.update_period(new_period.start_time, new_period.end_time)
@@ -230,7 +230,7 @@ class Event(object):
         """Change the event data."""
         if start_time <= self.time_period.end_time:
             self.time_period = TimePeriod(
-                self.time_type, start_time, self.time_period.end_time)
+                start_time, self.time_period.end_time)
             return True
         return False
 
@@ -238,7 +238,7 @@ class Event(object):
         """Change the event data."""
         if end_time >= self.time_period.start_time:
             self.time_period = TimePeriod(
-                self.time_type, self.time_period.start_time, end_time)
+                self.time_period.start_time, end_time)
             return True
         return False
 

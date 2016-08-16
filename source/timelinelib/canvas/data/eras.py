@@ -73,7 +73,7 @@ class Eras(object):
 
         def create_overlapping_era(e0, e1, start, end):
             era = e1.clone()
-            era.set_time_period(TimePeriod(e0.get_time_type(), start, end))
+            era.set_time_period(TimePeriod(start, end))
             era.set_color(merge_colors(e0.get_color(), e1.get_color()))
             era.set_name("Era Overlap")
             return era
@@ -88,15 +88,15 @@ class Eras(object):
         def return_era_for_overlapping_type_1(e0, e1):
             e0start, e0end, e1start, e1end = get_start_and_end_times(e0, e1)
             era = create_overlapping_era(e0, e1, e1start, e0end)
-            e0.set_time_period(TimePeriod(e0.get_time_type(), e0start, e1start))
-            e1.set_time_period(TimePeriod(e0.get_time_type(), e0end, e1end))
+            e0.set_time_period(TimePeriod(e0start, e1start))
+            e1.set_time_period(TimePeriod(e0end, e1end))
             return era
 
         def return_era_for_overlapping_type_2(e0, e1):
             e0start, e0end, _, e1end = get_start_and_end_times(e0, e1)
             era = create_overlapping_era(e0, e1, e0start, e0end)
             self.all_eras.remove(e0)
-            e1.set_time_period(TimePeriod(e0.get_time_type(), e0end, e1end))
+            e1.set_time_period(TimePeriod(e0end, e1end))
             return era
 
         def return_era_for_overlapping_type_3(e0, e1):
@@ -112,15 +112,15 @@ class Eras(object):
         def return_era_for_overlapping_type_5(e0, e1):
             e0start, _, e1start, e1end = get_start_and_end_times(e0, e1)
             era = create_overlapping_era(e0, e1, e1start, e1end)
-            e0.set_time_period(TimePeriod(e0.get_time_type(), e0start, e1start))
+            e0.set_time_period(TimePeriod(e0start, e1start))
             self.all_eras.remove(e1)
             return era
 
         def return_era_for_overlapping_type_6(e0, e1):
             e0start, e0end, e1start, e1end = get_start_and_end_times(e0, e1)
             era = create_overlapping_era(e0, e1, e1start, e1end)
-            e0.set_time_period(TimePeriod(e0.get_time_type(), e0start, e1start))
-            e1.set_time_period(TimePeriod(e0.get_time_type(), e1end, e0end))
+            e0.set_time_period(TimePeriod(e0start, e1start))
+            e1.set_time_period(TimePeriod(e1end, e0end))
             e1.set_name(e0.get_name())
             e1.set_color(e0.get_color())
             return era

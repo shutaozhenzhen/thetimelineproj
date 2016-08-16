@@ -56,7 +56,7 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.assertEqual(self.view.SetShowTime.call_count, 2)
 
     def test_milestone_updated_on_ok(self):
-        time_period = TimePeriod(GregorianTimeType(), self.start_time, self.start_time)
+        time_period = TimePeriod(self.start_time, self.start_time)
         self.simulate_user_enters_description("Aha")
         self.simulate_user_enters_colour((127, 127, 127))
         self.simulate_user_enters_time(self.start_time)
@@ -97,7 +97,6 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
 
     def test_show_time_when_false(self):
         self.milestone.get_time_period.return_value = TimePeriod(
-            self.db.time_type,
             human_time_to_gregorian("1 Jan 2010"),
             human_time_to_gregorian("1 Jan 2010")
         )
@@ -106,7 +105,6 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
 
     def test_show_time_when_true(self):
         self.milestone.get_time_period.return_value = TimePeriod(
-            self.db.time_type,
             human_time_to_gregorian("1 Jan 2010 13:00"),
             human_time_to_gregorian("1 Jan 2010 13:00")
         )
@@ -140,7 +138,7 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.milestone = Mock(Milestone)
         self.milestone.get_default_color.return_value = (0, 0, 255)
         self.milestone.get_text.return_value = ""
-        self.milestone.time_period = TimePeriod(self.db.time_type, self.start_time, self.start_time)
+        self.milestone.time_period = TimePeriod(self.start_time, self.start_time)
         self.view = self._mock_view()
         self.controller = EditMilestoneDialogController(self.view)
         self.simulate_dialog_init(self.db, self.milestone)

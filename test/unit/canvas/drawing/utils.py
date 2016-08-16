@@ -44,12 +44,12 @@ class MetricsTestCase(UnitTestCase):
 
     def given_a_gregorian_scene_period(self, start_time=START_TIME, end_time=END_TIME):
         self.time_type = GregorianTimeType()
-        self.time_period = TimePeriod(self.time_type, start_time, end_time)
+        self.time_period = TimePeriod(start_time, end_time)
         self.metrics = Metrics(self.screen_size, self.time_type, self.time_period, 50)
 
     def given_a_numeric_scene_period(self, start_time=START_NUM_TIME, end_time=END_NUM_TIME):
         self.time_type = NumTimeType()
-        self.time_period = TimePeriod(self.time_type, start_time, end_time)
+        self.time_period = TimePeriod(start_time, end_time)
         self.metrics = Metrics(self.screen_size, self.time_type, self.time_period, 50)
 
     def given_a_screen(self, width=WIDTH, height=HEIGHT):

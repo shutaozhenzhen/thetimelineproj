@@ -164,7 +164,7 @@ class XmlTimelineSpec(TmpDirTestCase):
         vp = ViewProperties()
         start = GregorianUtils.from_date(2010, 3, 1).to_time()
         end = GregorianUtils.from_date(2010, 4, 1).to_time()
-        vp.displayed_period = TimePeriod(db.get_time_type(), start, end)
+        vp.displayed_period = TimePeriod(start, end)
         vp.set_category_visible(cat3, False)
         db.save_view_properties(vp)
         export_db_to_timeline_xml(db, self.tmp_path)

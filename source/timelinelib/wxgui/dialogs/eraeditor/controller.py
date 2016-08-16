@@ -91,7 +91,7 @@ class EraEditorDialogController(Controller):
     def _validate_period_length(self):
         start = self.view.GetStart()
         end = self.view.GetEnd()
-        TimePeriod(self.time_type, start, end)
+        TimePeriod(start, end)
 
     def _update_era(self):
         w = self.view

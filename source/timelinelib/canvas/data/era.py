@@ -54,7 +54,7 @@ class Era(object):
         return self.get_time_period().start_time < other.get_time_period().start_time
 
     def update(self, start_time, end_time, name, color=DEFAULT_ERA_COLOR):
-        self.time_period = TimePeriod(self.time_type, start_time, end_time)
+        self.time_period = TimePeriod(start_time, end_time)
         self.name = name.strip()
         self.color = color
 

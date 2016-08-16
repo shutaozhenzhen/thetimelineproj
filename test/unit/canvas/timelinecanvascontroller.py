@@ -114,4 +114,4 @@ class ATimeType(TimeType):
 
 
 def time_period(start, end):
-    return TimePeriod(ATimeType(), Time(start, 0), Time(end, 0))
+    return TimePeriod(Time(start, 0), Time(end, 0))

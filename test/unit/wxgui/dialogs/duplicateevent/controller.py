@@ -66,7 +66,6 @@ class describe_duplicate_event_dialog(UnitTestCase):
         new_events = self.db.save_events.call_args[0][0]
         new_period = new_events[0].get_time_period()
         expected_period = TimePeriod(
-            GregorianTimeType(),
             GregorianUtils.from_date(2010, 8, 1).to_time(),
             GregorianUtils.from_date(2010, 8, 1).to_time())
         self.assertEqual(expected_period, new_period)
@@ -173,7 +172,6 @@ class describe_duplicate_event_dialog(UnitTestCase):
     def _create_move_period_fn_mock(self):
         self.move_period_fn = Mock()
         self.move_period_fn.return_value = TimePeriod(
-            GregorianTimeType(),
             GregorianUtils.from_date(2010, 8, 1).to_time(),
             GregorianUtils.from_date(2010, 8, 1).to_time())
         return self.move_period_fn
@@ -223,7 +221,6 @@ class describe_duplicate_event_dialog_for_containers(UnitTestCase):
     def _create_move_period_fn_mock(self):
         self.move_period_fn = Mock()
         self.move_period_fn.return_value = TimePeriod(
-            GregorianTimeType(),
             GregorianUtils.from_date(2010, 8, 1).to_time(),
             GregorianUtils.from_date(2010, 8, 1).to_time())
         return self.move_period_fn

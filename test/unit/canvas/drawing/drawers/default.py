@@ -88,6 +88,5 @@ class describe_default_drawer(UnitTestCase):
         self.timeline = MemoryDB()
         self.view_properties = ViewProperties()
         self.view_properties.displayed_period = TimePeriod(
-            GregorianTimeType(),
             GregorianUtils.from_date(2010, 1, 1).to_time(),
             GregorianUtils.from_date(2011, 1, 1).to_time())

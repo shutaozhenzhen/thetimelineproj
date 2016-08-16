@@ -24,23 +24,15 @@ class TimePeriod(object):
     currently displayed time period in the GUI.
     """
 
-    def __init__(self, time_type, start_time, end_time, assert_period_length=True):
-        """
-        Create a time period.
-
-        `start_time` and `end_time` should be of a type that can be handled
-        by the time_type object.
-        """
+    def __init__(self, start_time, end_time, assert_period_length=True):
         self.assert_period_length = assert_period_length
-        self.time_type = time_type
         self.start_time, self.end_time = self._update(start_time, end_time)
 
     def clone(self):
-        return TimePeriod(self.time_type, self.start_time, self.end_time)
+        return TimePeriod(self.start_time, self.end_time)
 
     def __eq__(self, other):
         return (isinstance(other, TimePeriod) and
-                self.time_type == other.time_type and
                 self.start_time == other.start_time and
                 self.end_time == other.end_time)
 
@@ -53,7 +45,7 @@ class TimePeriod(object):
     def update(self, start_time, end_time,
                start_delta=None, end_delta=None):
         new_start, new_end = self._update(start_time, end_time, start_delta, end_delta)
-        return TimePeriod(self.time_type, new_start, new_end)
+        return TimePeriod(new_start, new_end)
 
     def _update(self, start_time, end_time, start_delta=None, end_delta=None):
         """
@@ -142,7 +134,7 @@ class TimeOutOfRangeRightError(ValueError):
     pass
 
 
-def time_period_center(time_type, time, length):
+def time_period_center(time, length):
     """
     TimePeriod factory method.
 
@@ -152,4 +144,4 @@ def time_period_center(time_type, time, length):
     half_length = length * 0.5
     start_time = time - half_length
     end_time = time + half_length
-    return TimePeriod(time_type, start_time, end_time)
+    return TimePeriod(start_time, end_time)

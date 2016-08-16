@@ -40,8 +40,7 @@ class ContainerStrategiesTestCase(UnitTestCase):
         container = Mock(Container)
         container.events = []
         container.cid.return_value = CONTAINER_ID
-        container.get_time_period.return_value = TimePeriod(GregorianTimeType(),
-                                                            human_time_to_gregorian("1 Jul 2014"),
+        container.get_time_period.return_value = TimePeriod(human_time_to_gregorian("1 Jul 2014"),
                                                             human_time_to_gregorian("1 Jul 2014"))
         self.default_strategy = DefaultContainerStrategy(container)
         self.extended_strategy = ExtendedContainerStrategy(container)

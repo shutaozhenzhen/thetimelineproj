@@ -37,11 +37,11 @@ ANY_NUM_TIME = 10
 
 
 def gregorian_period(start, end):
-    return TimePeriod(GregorianTimeType(), human_time_to_gregorian(start), human_time_to_gregorian(end))
+    return TimePeriod(human_time_to_gregorian(start), human_time_to_gregorian(end))
 
 
 def numeric_period(start, end):
-    return TimePeriod(NumTimeType(), start, end)
+    return TimePeriod(start, end)
 
 
 def human_time_to_gregorian(human_time):
@@ -56,8 +56,7 @@ def a_time_period():
     end_year = year + random.randint(1, 5)
     end_month = random.randint(1, 12)
     end_day = random.randint(1, 28)
-    return TimePeriod(GregorianTimeType(),
-                      Gregorian(year, month, day, 0, 0, 0).to_time(),
+    return TimePeriod(Gregorian(year, month, day, 0, 0, 0).to_time(),
                       Gregorian(end_year, end_month, end_day, 0, 0, 0).to_time())
 
 

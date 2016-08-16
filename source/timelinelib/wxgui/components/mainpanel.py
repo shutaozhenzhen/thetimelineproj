@@ -82,14 +82,14 @@ class MainPanel(wx.Panel):
             while first_time < start_time:
                 start_time = period.start_time - period_delta
                 end_time = period.start_time
-                period = TimePeriod(time_type, start_time, end_time)
+                period = TimePeriod(start_time, end_time)
                 periods.insert(0, period)
             end_time = current_period.end_time
             period = current_period
             while last_time > end_time:
                 start_time = period.end_time
                 end_time = period.end_time + period_delta
-                period = TimePeriod(time_type, start_time, end_time)
+                period = TimePeriod(start_time, end_time)
                 periods.append(period)
         return periods, current_period
 

@@ -317,7 +317,7 @@ class EditEventDialogController(Controller):
         return end_time
 
     def _validate_period(self):
-        TimePeriod(self.time_type, self.start, self.end)
+        TimePeriod(self.start, self.end)
 
     def _validate_ends_today(self):
         if self.ends_today and self.start > self.time_type.now():
@@ -339,7 +339,7 @@ class EditEventDialogController(Controller):
     def _event_has_nonzero_time(self):
         try:
             return self.time_type.time_period_has_nonzero_time(
-                TimePeriod(self.time_type, self.start, self.end)
+                TimePeriod(self.start, self.end)
             )
         except Exception:
             return False
