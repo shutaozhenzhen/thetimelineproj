@@ -62,16 +62,11 @@ class TimePeriod(object):
         Optionally add the deltas to the times like this: time + delta.
 
         If data is invalid, it will not be set, and a ValueError will be raised
-        instead.
-
-        Data is invalid if time + delta is not within the range
-        [self.time_type.get_min_time(), self.time_type.get_max_time()] or if
-        the start time is larger than the end time.
+        instead. Data is invalid if or if the start time is larger than the end
+        time.
         """
-        new_start = self._ensure_within_range(start_time, start_delta,
-                                              _("Start time "))
-        new_end = self._ensure_within_range(end_time, end_delta,
-                                            _("End time "))
+        new_start = self._calc_new_time(start_time, start_delta)
+        new_end = self._calc_new_time(end_time, end_delta)
         self._assert_period_is_valid(new_start, new_end)
         return (new_start, new_end)
 
@@ -145,20 +140,10 @@ class TimePeriod(object):
             delta = self.time_type.get_max_time()[0] - self.end_time
         return self.move_delta(delta)
 
-    def _ensure_within_range(self, time, delta, error_prefix):
-        """
-        Return new time (time + delta) or raise ValueError if it is not within
-        the range [self.time_type.get_min_time(),
-        self.time_type.get_max_time()].
-        """
+    def _calc_new_time(self, time, delta):
         if delta is None:
-            delta = self.time_type.get_zero_delta()
-        new_time, overflow, error_text = self._calculate_overflow(time, delta)
-        if overflow != 0:
-            error_text = "%s %s" % (error_prefix, error_text)
-            raise ValueError(error_text)
-        else:
-            return new_time
+            return time
+        return time + delta
 
     def _calculate_overflow(self, time, delta):
         """
