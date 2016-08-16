@@ -85,14 +85,14 @@ class SVGDrawingAlgorithm(object):
         Draw major and minor strips, lines to all event boxes and baseline.
         Both major and minor strips have divider lines and labels.
         """
-        svgGroup = g()
-        self._draw_minor_strips(svgGroup)
-        self._draw_major_strips(svgGroup)
-        svgGroup.addElement(self._draw_divider_line())
-        self._draw_lines_to_non_period_events(svgGroup, self.view_properties)
+        group = g()
+        self._draw_minor_strips(group)
+        self._draw_major_strips(group)
+        group.addElement(self._draw_divider_line())
+        self._draw_lines_to_non_period_events(group, self.view_properties)
         if self._now_line_is_visible():
-            svgGroup.addElement(self._draw_now_line())
-        self.svg.addElement(svgGroup)
+            group.addElement(self._draw_now_line())
+        self.svg.addElement(group)
 
     def _get_small_font_style(self):
         myStyle = StyleBuilder()
