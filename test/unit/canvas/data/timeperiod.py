@@ -58,18 +58,6 @@ class time_period_spec(UnitTestCase):
             tp.center(ATime(5)),
             TimePeriod(ATimeType(), ATime(3), ATime(7)))
 
-    def test_center_before_lower_limit_should_make_period_start_there(self):
-        tp = TimePeriod(ATimeType(), ATime(10), ATime(14))
-        self.assertEqual(
-            tp.center(ATime(-5)),
-            TimePeriod(ATimeType(), ATime(0), ATime(4)))
-
-    def test_center_after_upper_limit_should_make_period_end_there(self):
-        tp = TimePeriod(ATimeType(), ATime(10), ATime(14))
-        self.assertEqual(
-            tp.center(ATime(200)),
-            TimePeriod(ATimeType(), ATime(96), ATime(100)))
-
     def test_move_moves_1_10th_forward(self):
         time_period = TimePeriod(ATimeType(), ATime(0), ATime(10))
         self.assertEqual(
