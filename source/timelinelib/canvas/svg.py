@@ -132,7 +132,6 @@ class SVGDrawingAlgorithm(object):
             return
         y = self.scene.divider_y
         # Label
-        label = self._encode_text(label)
         myText = self._text(label, x, y)
         myText.set_style(self._small_font_style.getStyle())
         return myText
