@@ -24,14 +24,6 @@ from timelinelib.test.utils import TIME_PERIOD_MODIFIERS
 
 class time_period_spec(UnitTestCase):
 
-    def test_creating_period_with_too_small_start_time_should_fail(self):
-        self.assertRaises(ValueError, TimePeriod,
-                          ATimeType(), ATime(-1), ATime(5))
-
-    def test_creating_period_with_too_large_end_time_should_fail(self):
-        self.assertRaises(ValueError, TimePeriod,
-                          ATimeType(), ATime(0), ATime(150))
-
     def test_creating_period_with_end_before_start_should_fail(self):
         self.assertRaises(ValueError, TimePeriod,
                           ATimeType(), ATime(50), ATime(10))
