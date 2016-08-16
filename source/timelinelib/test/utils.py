@@ -271,14 +271,9 @@ CATEGORY_MODIFIERS = [
 
 
 TIME_PERIOD_MODIFIERS = [
-    ("zoom", lambda time_period:
-        time_period.zoom(-1)),
-    ("extend left", lambda time_period:
-        time_period.update(time_period.start_time - time_period.time_type.get_min_zoom_delta()[0],
-                           time_period.end_time)),
-    ("extend right", lambda time_period:
-        time_period.update(time_period.start_time,
-                           time_period.end_time + time_period.time_type.get_min_zoom_delta()[0])),
+    ("zoom", lambda time_period: time_period.zoom(-1)),
+    ("move left", lambda time_period: time_period.move(-1)),
+    ("move right", lambda time_period: time_period.move(1)),
 ]
 
 
