@@ -150,9 +150,9 @@ class SVGDrawingAlgorithm(object):
                 x = INNER_PADDING
                 # since there is no function like textwidth() for SVG, just take into account that text can be overwritten
                 # do not perform a special handling for right border, SVG is unlimited
-            myText = self._text(label, x, fontSize + OUTER_PADDING)
-            myText.set_style(self._larger_font_style.getStyle())
-            group.addElement(myText)
+            text = self._text(label, x, fontSize + OUTER_PADDING)
+            text.set_style(self._larger_font_style.getStyle())
+            group.addElement(text)
 
     def _draw_divider_line(self):
         return ShapeBuilder().createLine(0, self.scene.divider_y, self.scene.width,
