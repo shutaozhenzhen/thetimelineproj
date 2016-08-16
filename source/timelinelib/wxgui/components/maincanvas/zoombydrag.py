@@ -27,24 +27,9 @@ class ZoomByDragInputHandler(SelectPeriodByDragInputHandler):
         self._status_bar = status_bar
         self._status_bar.set_text(_("Select region to zoom into"))
 
-    def mouse_moved(self, x, y, alt_down=False):
-        SelectPeriodByDragInputHandler.mouse_moved(self, x, y, alt_down)
-        try:
-            p = self.get_current_period()
-        except ValueError:
-            self._status_bar.set_text(_("Region too long"))
-        else:
-            if p.delta() < p.time_type.get_min_zoom_delta()[0]:
-                self._status_bar.set_text(_("Region too short"))
-            else:
-                self._status_bar.set_text("")
-
     def end_action(self):
         self._status_bar.set_text("")
         period = self.get_last_valid_period()
         start = period.start_time
         end = period.end_time
-        delta = end - start
-        if period.time_type.zoom_is_ok(delta):
-            # Don't zoom in to less than an hour which upsets things.
-            self.timeline_canvas.Navigate(lambda tp: tp.update(start, end))
+        self.timeline_canvas.Navigate(lambda tp: tp.update(start, end))
