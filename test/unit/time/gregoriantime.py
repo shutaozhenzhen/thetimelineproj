@@ -85,8 +85,7 @@ class describe_gregoriantimetype(UnitTestCase):
             self.time_type.parse_time, "2010-31-hello 0:0:0")
 
     def test_formats_period_to_string(self):
-        time_period = TimePeriod(self.time_type,
-                                 self.time_type.parse_time("2010-08-01 13:44:00"),
+        time_period = TimePeriod(self.time_type.parse_time("2010-08-01 13:44:00"),
                                  self.time_type.parse_time("2010-08-02 13:30:00"))
         self.assertEqual(
             u"1 %s 2010 13:44 to 2 %s 2010 13:30" % (_("Aug"), _("Aug")),
@@ -130,8 +129,7 @@ class describe_gregoriantimetype(UnitTestCase):
             2.5)
 
     def test_get_time_at_x(self):
-        time_period = TimePeriod(self.time_type,
-                                 self.time_type.parse_time("2010-08-01 00:00:00"),
+        time_period = TimePeriod(self.time_type.parse_time("2010-08-01 00:00:00"),
                                  self.time_type.parse_time("2010-08-02 00:00:00"))
         dt = self.time_type.get_time_at_x(time_period, 0.5)
         self.assertEqual(dt, self.time_type.parse_time("2010-08-01 12:00:00"))
@@ -440,11 +438,9 @@ class describe_gregorian_time_type_delta_formatting(UnitTestCase):
         self.time_type = GregorianTimeType()
 
     def test_format_delta_method(self):
-        time_period1 = TimePeriod(self.time_type,
-                                  self.time_type.parse_time("2010-08-01 13:44:00"),
+        time_period1 = TimePeriod(self.time_type.parse_time("2010-08-01 13:44:00"),
                                   self.time_type.parse_time("2010-08-01 13:44:00"))
-        time_period2 = TimePeriod(self.time_type,
-                                  self.time_type.parse_time("2010-08-02 13:44:00"),
+        time_period2 = TimePeriod(self.time_type.parse_time("2010-08-02 13:44:00"),
                                   self.time_type.parse_time("2010-08-02 13:44:00"))
         delta = time_period2.start_time - time_period1.start_time
         self.assertEqual(u"1 %s" % _("day"), self.time_type.format_delta(delta))
@@ -512,18 +508,16 @@ class describe_gregorian_time_type_delta_formatting(UnitTestCase):
         self.assertEqual(u"790 %s" % _("days"), self.time_type.format_delta(delta))
 
     def test_format_overlapping_events(self):
-        time_period1 = TimePeriod(self.time_type,
-                                  self.time_type.parse_time("2010-08-01 13:44:00"),
+        time_period1 = TimePeriod(self.time_type.parse_time("2010-08-01 13:44:00"),
                                   self.time_type.parse_time("2010-08-03 13:44:00"))
-        time_period2 = TimePeriod(self.time_type,
-                                  self.time_type.parse_time("2010-08-01 13:44:00"),
+        time_period2 = TimePeriod(self.time_type.parse_time("2010-08-01 13:44:00"),
                                   self.time_type.parse_time("2010-08-03 13:44:00"))
         delta = time_period2.start_time - time_period1.end_time
         self.assertEqual("0", self.time_type.format_delta(delta))
 
     def create_point_period(self, day, month, year, hour, minute):
         dt = Gregorian(year, month, day, hour, minute, 0).to_time()
-        return TimePeriod(self.time_type, dt, dt)
+        return TimePeriod(dt, dt)
 
     def get_days_delta(self, days=0, hours=0, minutes=0):
         return timeline.TimeDelta(days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60)
@@ -703,7 +697,6 @@ class describe_gregorian_time_duplicate_function(UnitTestCase):
         new_period = move_period_num_days(self.period, 6)
         self.assertEqual(
             TimePeriod(
-                GregorianTimeType(),
                 Gregorian(2010, 1, 7, 12, 0, 0).to_time(),
                 Gregorian(2010, 1, 7, 13, 0, 0).to_time()),
             new_period)
@@ -712,7 +705,6 @@ class describe_gregorian_time_duplicate_function(UnitTestCase):
         new_period = move_period_num_weeks(self.period, -3)
         self.assertEqual(
             TimePeriod(
-                GregorianTimeType(),
                 Gregorian(2009, 12, 11, 12, 0, 0).to_time(),
                 Gregorian(2009, 12, 11, 13, 0, 0).to_time()),
             new_period)
@@ -721,7 +713,6 @@ class describe_gregorian_time_duplicate_function(UnitTestCase):
         new_period = move_period_num_months(self.period, 2)
         self.assertEqual(
             TimePeriod(
-                GregorianTimeType(),
                 Gregorian(2010, 3, 1, 12, 0, 0).to_time(),
                 Gregorian(2010, 3, 1, 13, 0, 0).to_time()),
             new_period)
@@ -730,7 +721,6 @@ class describe_gregorian_time_duplicate_function(UnitTestCase):
         new_period = move_period_num_months(self.period, 20)
         self.assertEqual(
             TimePeriod(
-                GregorianTimeType(),
                 Gregorian(2011, 9, 1, 12, 0, 0).to_time(),
                 Gregorian(2011, 9, 1, 13, 0, 0).to_time()),
             new_period)
@@ -739,14 +729,12 @@ class describe_gregorian_time_duplicate_function(UnitTestCase):
         new_period = move_period_num_months(self.period, -1)
         self.assertEqual(
             TimePeriod(
-                GregorianTimeType(),
                 Gregorian(2009, 12, 1, 12, 0, 0).to_time(),
                 Gregorian(2009, 12, 1, 13, 0, 0).to_time()),
             new_period)
 
     def test_move_period_num_months_returns_none_if_day_does_not_exist(self):
         self.period = TimePeriod(
-            GregorianTimeType(),
             Gregorian(2010, 1, 31, 12, 0, 0).to_time(),
             Gregorian(2010, 1, 31, 13, 0, 0).to_time())
         new_period = move_period_num_months(self.period, 1)
@@ -783,14 +771,12 @@ class describe_gregorian_time_duplicate_function(UnitTestCase):
         new_period = move_period_num_years(self.period, 1)
         self.assertEqual(
             TimePeriod(
-                GregorianTimeType(),
                 Gregorian(2011, 1, 1, 12, 0, 0).to_time(),
                 Gregorian(2011, 1, 1, 13, 0, 0).to_time()),
             new_period)
 
     def test_move_period_num_years_returns_none_if_year_does_not_exist(self):
         self.period = TimePeriod(
-            GregorianTimeType(),
             Gregorian(2012, 2, 29, 12, 0, 0).to_time(),
             Gregorian(2012, 2, 29, 13, 0, 0).to_time())
         new_period = move_period_num_years(self.period, 1)
@@ -799,6 +785,5 @@ class describe_gregorian_time_duplicate_function(UnitTestCase):
     def setUp(self):
         UnitTestCase.setUp(self)
         self.period = TimePeriod(
-            GregorianTimeType(),
             Gregorian(2010, 1, 1, 12, 0, 0).to_time(),
             Gregorian(2010, 1, 1, 13, 0, 0).to_time())

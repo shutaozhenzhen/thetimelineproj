@@ -79,13 +79,13 @@ class NumTimeType(TimeType):
         start_time = 1
         end_time = 2
         limit = 30
-        period = TimePeriod(self, start_time, end_time)
+        period = TimePeriod(start_time, end_time)
         period_width = metrics.calc_exact_width(period)
         while period_width == 0:
             start_time *= 10
             end_time *= 10
             limit /= 10
-            period = TimePeriod(self, start_time, end_time)
+            period = TimePeriod(start_time, end_time)
             period_width = metrics.calc_exact_width(period)
         nbr_of_units = metrics.width / period_width
         size = 1
@@ -95,7 +95,7 @@ class NumTimeType(TimeType):
         return (NumStrip(size * 10), NumStrip(size))
 
     def get_default_time_period(self):
-        return time_period_center(self, 0, 100)
+        return time_period_center(0, 100)
 
     def now(self):
         return 0
@@ -192,4 +192,4 @@ def forward_fn(main_frame, current_period, navigation_fn):
 def move_period(period, delta):
     start_time = period.start_time + delta
     end_time = period.end_time + delta
-    return TimePeriod(period.time_type, start_time, end_time)
+    return TimePeriod(start_time, end_time)

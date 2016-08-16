@@ -50,8 +50,8 @@ class describe_numtimetype(UnitTestCase):
 class decribe_num_time_duplicate_functions(UnitTestCase):
 
     def setUp(self):
-        self.period = TimePeriod(NumTimeType(), 1, 2)
+        self.period = TimePeriod(1, 2)
 
     def test_move_period_adds_given_number_of_delta(self):
         new_period = move_period(self.period, 6)
-        self.assertEqual(TimePeriod(NumTimeType(), 7, 8), new_period)
+        self.assertEqual(TimePeriod(7, 8), new_period)

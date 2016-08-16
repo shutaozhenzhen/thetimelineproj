@@ -1093,7 +1093,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
                 time_type = self.timeline.get_time_type()
                 start = self._first_time(visible_events)
                 end = self._last_time(visible_events)
-                return TimePeriod(time_type, start, end).zoom(-1)
+                return TimePeriod(start, end).zoom(-1)
             else:
                 return None
         except ValueError, ex:

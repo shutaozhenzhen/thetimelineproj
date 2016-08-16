@@ -329,7 +329,7 @@ class TimelineScene(object):
                 current_start = strip.start(self._view_properties.displayed_period.start_time)
                 while current_start < self._view_properties.displayed_period.end_time:
                     next_start = strip.increment(current_start)
-                    strip_list.append(TimePeriod(self._db.get_time_type(), current_start, next_start))
+                    strip_list.append(TimePeriod(current_start, next_start))
                     current_start = next_start
             except:
                 # Exception occurs when major=century and when we are at the end of the calendar

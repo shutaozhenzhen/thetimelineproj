@@ -120,7 +120,7 @@ class BosparanianTimeType(GregorianTimeType):
         Return a tuple (major_strip, minor_strip) for current time period and
         window size.
         """
-        day_period = TimePeriod(self, timeline.BosparanianTime(0, 0), timeline.BosparanianTime(1, 0))
+        day_period = TimePeriod(timeline.BosparanianTime(0, 0), timeline.BosparanianTime(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         self.major_strip_is_decade = False
         if one_day_width > 20000:
@@ -671,14 +671,14 @@ def move_period_num_days(period, num):
     delta = delta_from_days(1) * num
     start_time = period.start_time + delta
     end_time = period.end_time + delta
-    return TimePeriod(period.time_type, start_time, end_time)
+    return TimePeriod(start_time, end_time)
 
 
 def move_period_num_weeks(period, num):
     delta = delta_from_days(7) * num
     start_time = period.start_time + delta
     end_time = period.end_time + delta
-    return TimePeriod(period.time_type, start_time, end_time)
+    return TimePeriod(start_time, end_time)
 
 
 def move_period_num_months(period, num):
@@ -709,7 +709,7 @@ def move_period_num_months(period, num):
         end_year = bosparanian_start.year + years
         start_time = bosparanian_start.replace(year=start_year, month=start_month)
         end_time = bosparanian_end.replace(year=end_year, month=end_month)
-        return TimePeriod(period.time_type, start_time.to_time(), end_time.to_time())
+        return TimePeriod(start_time.to_time(), end_time.to_time())
     except ValueError:
         return None
 
@@ -721,6 +721,6 @@ def move_period_num_years(period, num):
         end_year = BosparanianUtils.from_time(period.end_time).year
         start_time = BosparanianUtils.from_time(period.start_time).replace(year=start_year + delta)
         end_time = BosparanianUtils.from_time(period.end_time).replace(year=end_year + delta)
-        return TimePeriod(period.time_type, start_time.to_time(), end_time.to_time())
+        return TimePeriod(start_time.to_time(), end_time.to_time())
     except ValueError:
         return None

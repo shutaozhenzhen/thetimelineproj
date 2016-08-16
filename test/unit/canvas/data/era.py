@@ -200,15 +200,13 @@ class describe_gregorian_era_cloning(GregorianEraTestCase):
         self.assertEqual(clone, self.era)
 
     def test_cloning_copies_time_period_attribute(self):
-        time_period = TimePeriod(self.era.time_type,
-                                 self.era.time_type.parse_time("2010-08-01 13:44:00"),
+        time_period = TimePeriod(self.era.time_type.parse_time("2010-08-01 13:44:00"),
                                  self.era.time_type.parse_time("2014-08-01 13:44:00"))
         clone = self.era.set_time_period(time_period).clone()
         self.assertEqual(clone, self.era)
 
     def test_cloned_time_periods_are_not_the_same_object(self):
-        time_period = TimePeriod(self.era.time_type,
-                                 self.era.time_type.parse_time("2010-08-01 13:44:00"),
+        time_period = TimePeriod(self.era.time_type.parse_time("2010-08-01 13:44:00"),
                                  self.era.time_type.parse_time("2014-08-01 13:44:00"))
         clone = self.era.set_time_period(time_period).clone()
         self.assertTrue(time_period is not clone.get_time_period())
@@ -238,15 +236,13 @@ class describe_numeric_era_cloning(NumericEraTestCase):
         self.assertEqual(clone, self.era)
 
     def test_cloning_copies_time_period_attribute(self):
-        time_period = TimePeriod(self.era.time_type,
-                                 self.era.time_type.parse_time("11"),
+        time_period = TimePeriod(self.era.time_type.parse_time("11"),
                                  self.era.time_type.parse_time("1111"))
         clone = self.era.set_time_period(time_period).clone()
         self.assertEqual(clone, self.era)
 
     def test_cloned_time_periods_are_not_the_same_object(self):
-        time_period = TimePeriod(self.era.time_type,
-                                 self.era.time_type.parse_time("11"),
+        time_period = TimePeriod(self.era.time_type.parse_time("11"),
                                  self.era.time_type.parse_time("1111"))
         clone = self.era.set_time_period(time_period).clone()
         self.assertTrue(time_period is not clone.get_time_period())

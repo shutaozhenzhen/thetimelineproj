@@ -25,72 +25,71 @@ from timelinelib.test.utils import TIME_PERIOD_MODIFIERS
 class time_period_spec(UnitTestCase):
 
     def test_creating_period_with_end_before_start_should_fail(self):
-        self.assertRaises(ValueError, TimePeriod,
-                          ATimeType(), ATime(50), ATime(10))
+        self.assertRaises(ValueError, TimePeriod, ATime(50), ATime(10))
 
     def test_inside_should_return_true_if_time_is_inside_period(self):
-        tp = TimePeriod(ATimeType(), ATime(0), ATime(4))
+        tp = TimePeriod(ATime(0), ATime(4))
         self.assertTrue(tp.inside(ATime(3)))
 
     def test_inside_should_return_true_if_time_is_on_lower_edge(self):
-        tp = TimePeriod(ATimeType(), ATime(0), ATime(4))
+        tp = TimePeriod(ATime(0), ATime(4))
         self.assertTrue(tp.inside(ATime(0)))
 
     def test_inside_should_return_true_if_time_is_on_higher_edge(self):
-        tp = TimePeriod(ATimeType(), ATime(0), ATime(4))
+        tp = TimePeriod(ATime(0), ATime(4))
         self.assertTrue(tp.inside(ATime(4)))
 
     def test_inside_should_return_false_if_time_is_outside_period(self):
-        tp = TimePeriod(ATimeType(), ATime(0), ATime(4))
+        tp = TimePeriod(ATime(0), ATime(4))
         self.assertFalse(tp.inside(ATime(5)))
 
     def test_delta_should_return_time_specific_delta(self):
-        tp = TimePeriod(ATimeType(), ATime(0), ATime(4))
+        tp = TimePeriod(ATime(0), ATime(4))
         self.assertEqual(ADelta(4), tp.delta())
 
     def test_mean_time_should_return_time_specific_time(self):
-        tp = TimePeriod(ATimeType(), ATime(0), ATime(4))
+        tp = TimePeriod(ATime(0), ATime(4))
         self.assertEqual(ATime(2), tp.mean_time())
 
     def test_center_should_center_period_around_time(self):
-        tp = TimePeriod(ATimeType(), ATime(0), ATime(4))
+        tp = TimePeriod(ATime(0), ATime(4))
         self.assertEqual(
             tp.center(ATime(5)),
-            TimePeriod(ATimeType(), ATime(3), ATime(7)))
+            TimePeriod(ATime(3), ATime(7)))
 
     def test_move_moves_1_10th_forward(self):
-        time_period = TimePeriod(ATimeType(), ATime(0), ATime(10))
+        time_period = TimePeriod(ATime(0), ATime(10))
         self.assertEqual(
             time_period.move(1),
-            TimePeriod(ATimeType(), ATime(1), ATime(11)))
+            TimePeriod(ATime(1), ATime(11)))
 
     def test_move_moves_1_10th_backward(self):
-        time_period = TimePeriod(ATimeType(), ATime(20), ATime(30))
+        time_period = TimePeriod(ATime(20), ATime(30))
         self.assertEqual(
             time_period.move(-1),
-            TimePeriod(ATimeType(), ATime(19), ATime(29)))
+            TimePeriod(ATime(19), ATime(29)))
 
     def test_zoom_in_removes_1_10th_on_each_side(self):
-        time_period = TimePeriod(ATimeType(), ATime(10), ATime(20))
+        time_period = TimePeriod(ATime(10), ATime(20))
         self.assertEqual(
             time_period.zoom(1),
-            TimePeriod(ATimeType(), ATime(11), ATime(19)))
+            TimePeriod(ATime(11), ATime(19)))
 
     def test_zoom_out_adds_1_10th_on_each_side(self):
-        time_period = TimePeriod(ATimeType(), ATime(10), ATime(20))
+        time_period = TimePeriod(ATime(10), ATime(20))
         self.assertEqual(
             time_period.zoom(-1),
-            TimePeriod(ATimeType(), ATime(9), ATime(21)))
+            TimePeriod(ATime(9), ATime(21)))
 
     def test_move_delta_moves_the_period_that_delta(self):
-        time_period = TimePeriod(ATimeType(), ATime(10), ATime(20))
+        time_period = TimePeriod(ATime(10), ATime(20))
         self.assertEqual(
             time_period.move_delta(ADelta(-10)),
-            TimePeriod(ATimeType(), ATime(0), ATime(10)))
+            TimePeriod(ATime(0), ATime(10)))
 
     def test_can_be_compared(self):
         def a_time_period():
-            return TimePeriod(ATimeType(), ATime(50), ATime(60))
+            return TimePeriod(ATime(50), ATime(60))
         self.assertEqNeImplementationIsCorrect(a_time_period, TIME_PERIOD_MODIFIERS)
 
 

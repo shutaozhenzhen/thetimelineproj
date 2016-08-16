@@ -66,7 +66,7 @@ class EditMilestoneDialogController(Controller):
             self._milestone.set_description(self.view.GetDescription())
         self._milestone.set_text(MILESTONE_TEXT + "%s" % self.view.GetLabel())
         self._milestone.set_default_color(self.view.GetColour()[:3])
-        self._milestone.set_time_period(TimePeriod(self._time_type, self.view.GetTime(), self.view.GetTime()))
+        self._milestone.set_time_period(TimePeriod(self.view.GetTime(), self.view.GetTime()))
         self._milestone.set_category(self.view.GetCategory())
         if self._new_milestone:
             self._save_milestone_to_db()
