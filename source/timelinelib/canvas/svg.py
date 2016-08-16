@@ -132,9 +132,9 @@ class SVGDrawingAlgorithm(object):
             return
         y = self.scene.divider_y
         # Label
-        myText = self._text(label, x, y)
-        myText.set_style(self._small_font_style.getStyle())
-        return myText
+        text = self._text(label, x, y)
+        text.set_style(self._small_font_style.getStyle())
+        return text
 
     def _draw_major_strips(self, group):
         fontSize = LARGER_FONT_SIZE_PX
