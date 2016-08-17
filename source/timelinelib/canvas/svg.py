@@ -112,14 +112,12 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_minor_strips(self, group):
         for strip_period in self.scene.minor_strip_data:
-            self._draw_minor_strip_divider_line(group, strip_period.end_time)
+            group.addElement(self._draw_minor_strip_divider_line(strip_period.end_time))
             group.addElement(self._draw_minor_strip_label(strip_period))
 
-    def _draw_minor_strip_divider_line(self, group, time):
+    def _draw_minor_strip_divider_line(self, time):
         x = self.scene.x_pos_for_time(time)
-        oh = ShapeBuilder()
-        line = oh.createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="lightgrey")
-        group.addElement(line)
+        return ShapeBuilder().createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="lightgrey")
 
     def _draw_minor_strip_label(self, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
