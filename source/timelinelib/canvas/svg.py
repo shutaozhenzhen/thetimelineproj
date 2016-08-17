@@ -298,17 +298,20 @@ class SVGDrawingAlgorithm(object):
         # Ensure that we can't draw outside rectangle
         # have one group per event
         svgGroup = g()  # Ensure that we can't draw content outside inner rectangle
-        boxBorderColor = self._get_box_border_color(event)
-        svgRect = ShapeBuilder().createRect(rect.X, rect.Y, rect.GetWidth(), rect.GetHeight(),
-                                            stroke=boxBorderColor, fill=self._get_box_color(event))
-        if self.shadowFlag:
-            svgRect.set_filter("url(#filterShadow)")
-        svgGroup.addElement(svgRect)
+        svgGroup.addElement(self._draw_event_rect(event, rect))
         if rect.Width > 0:
             svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), self._get_small_font_style()))
         if event.has_data():
             svgGroup.addElement(self._draw_contents_indicator(event, rect))
         self.svg.addElement(svgGroup)
+
+    def _draw_event_rect(self, event, rect):
+        boxBorderColor = self._get_box_border_color(event)
+        svgRect = ShapeBuilder().createRect(rect.X, rect.Y, rect.GetWidth(), rect.GetHeight(),
+                                            stroke=boxBorderColor, fill=self._get_box_color(event))
+        if self.shadowFlag:
+            svgRect.set_filter("url(#filterShadow)")
+        return svgRect
 
     def _draw_contents_indicator(self, event, rect):
         """
