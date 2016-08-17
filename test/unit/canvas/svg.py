@@ -48,6 +48,13 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.scene.x_pos_for_time.return_value = 170
         line = self.svg._draw_major_strip_divider_line(time)
         self.assertEqual(line.getXML(), '<line y1="0" x2="170" style="stroke:black; stroke-width:0.5; " x1="170" y2="200"  />\n')
+
+    def test_can_draw_minor_strip_divider_line(self):
+        time = Mock()
+        self.scene.x_pos_for_time.return_value = 170
+        line = self.svg._draw_minor_strip_divider_line(time)
+        self.assertEqual(line.getXML(), '<line y1="0" x2="170" style="stroke:lightgrey; stroke-width:0.5; " x1="170" y2="200"  />\n')
+
     def test_can_draw_line_to_nonselected_non_period_events(self):
         from pysvg.structure import g
         self.scene.event_data = ((self.point_event, self.point_event_rect),)
