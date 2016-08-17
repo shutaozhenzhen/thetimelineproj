@@ -291,7 +291,6 @@ class SVGDrawingAlgorithm(object):
 
 
     def _draw_events(self, view_properties):
-        """Draw all event boxes and the text inside them."""
         for (event, rect) in self.scene.event_data:
             self._draw_event(event, rect)
 
