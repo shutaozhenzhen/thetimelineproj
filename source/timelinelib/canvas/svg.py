@@ -116,8 +116,7 @@ class SVGDrawingAlgorithm(object):
             group.addElement(self._draw_minor_strip_label(strip_period))
 
     def _draw_minor_strip_divider_line(self, time):
-        x = self.scene.x_pos_for_time(time)
-        return ShapeBuilder().createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="lightgrey")
+        return self._draw_vertical_line(self.scene.x_pos_for_time(time), "lightgrey")
 
     def _draw_minor_strip_label(self, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
@@ -134,8 +133,10 @@ class SVGDrawingAlgorithm(object):
             group.addElement(self._draw_major_strip_label(tp))
 
     def _draw_major_strip_divider_line(self, time):
-        x = self.scene.x_pos_for_time(time)
-        return ShapeBuilder().createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="black")
+        return self._draw_vertical_line(self.scene.x_pos_for_time(time), "black")
+
+    def _draw_vertical_line(self, x, colour):
+        return ShapeBuilder().createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke=colour)
 
     def _draw_major_strip_label(self, tp):
         label = self.scene.major_strip.label(tp.start_time, True)
