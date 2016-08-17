@@ -120,10 +120,16 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_minor_strip_label(self, strip_period):
         label = self.scene.minor_strip.label(strip_period.start_time)
-        x = (self.scene.x_pos_for_time(strip_period.start_time) +
-             self.scene.x_pos_for_time(strip_period.end_time)) / 2 - SMALL_FONT_SIZE_PX
-        y = self.scene.divider_y - OUTER_PADDING
+        x = self._calc_x_for_minor_strip_label(strip_period)
+        y = self._calc_y_for_minor_strip_label()
         return self._draw_label(label, x, y, self._small_font_style)
+
+    def _calc_x_for_minor_strip_label(self, strip_period):
+        return (self.scene.x_pos_for_time(strip_period.start_time) +
+                self.scene.x_pos_for_time(strip_period.end_time)) / 2 - SMALL_FONT_SIZE_PX
+
+    def _calc_y_for_minor_strip_label(self):
+        return self.scene.divider_y - OUTER_PADDING
 
     def _draw_label(self, label, x, y, style):
         text = self._text(label, x, y)
