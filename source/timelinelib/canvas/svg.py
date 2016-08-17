@@ -295,23 +295,19 @@ class SVGDrawingAlgorithm(object):
             self._draw_event(event, rect)
 
     def _draw_event(self, event, rect):
-        oh = ShapeBuilder()
-        myStyle = self._get_small_font_style()
         # Ensure that we can't draw outside rectangle
         # have one group per event
         svgGroup = g()  # Ensure that we can't draw content outside inner rectangle
         boxColor = self._get_box_color(event)
         boxBorderColor = self._get_box_border_color(event)
-        svgRect = oh.createRect(rect.X, rect.Y,
-            rect.GetWidth(), rect.GetHeight(),
-            stroke=boxBorderColor,
-            fill=boxColor)
+        svgRect = ShapeBuilder().createRect(rect.X, rect.Y, rect.GetWidth(), rect.GetHeight(),
+                                            stroke=boxBorderColor, fill=boxColor)
         if self.shadowFlag:
             svgRect.set_filter("url(#filterShadow)")
         svgGroup.addElement(svgRect)
         if rect.Width > 0:
             # Draw the text (if there is room for it)
-            svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), myStyle))
+            svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), self._get_small_font_style()))
             # Draw data contents indicator
         if event.has_data():
             svgGroup.addElement(self._draw_contents_indicator(event, rect))
