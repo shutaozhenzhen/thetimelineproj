@@ -177,8 +177,7 @@ class SVGDrawingAlgorithm(object):
         return line, circle
 
     def _draw_now_line(self):
-        x = self.scene.x_pos_for_now()
-        return ShapeBuilder().createLine(x, 0, x, self.scene.height, stroke="darkred")
+        return self._draw_vertical_line(self.scene.x_pos_for_now(), "darkred")
 
     def _now_line_is_visible(self):
         x = self.scene.x_pos_for_now()
