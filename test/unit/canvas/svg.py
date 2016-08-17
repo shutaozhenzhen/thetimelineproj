@@ -64,15 +64,6 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         text = self.svg._draw_minor_strip_label(strip_period)
         self.assertEqual(text.getXML(), '<text style="font-size:12px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="195" x="100"  >\nLabel</text>\n')
 
-    def test_dont_invisible_draw_minor_strip_label(self):
-        strip = Mock()
-        strip.label.return_value = "Label"
-        strip_period = Mock()
-        self.scene.x_pos_for_time.return_value = 0
-        self.scene.minor_strip = strip
-        text = self.svg._draw_minor_strip_label(strip_period)
-        self.assertEqual(text, None)
-
     def test_can_draw_major_strip_label(self):
         strip = Mock()
         strip.label.return_value = "2016"
