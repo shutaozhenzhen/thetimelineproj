@@ -123,8 +123,11 @@ class SVGDrawingAlgorithm(object):
         x = (self.scene.x_pos_for_time(strip_period.start_time) +
              self.scene.x_pos_for_time(strip_period.end_time)) / 2
         y = self.scene.divider_y - OUTER_PADDING
+        return self._draw_label(label, x, y, self._small_font_style)
+
+    def _draw_label(self, label, x, y, style):
         text = self._text(label, x, y)
-        text.set_style(self._small_font_style.getStyle())
+        text.set_style(style.getStyle())
         return text
 
     def _draw_major_strips(self, group):
@@ -145,10 +148,10 @@ class SVGDrawingAlgorithm(object):
         # visible without crossing strip borders.
         # since there is no function like textwidth() for SVG, just take into account that text can be overwritten
         # do not perform a special handling for right border, SVG is unlimited
-        x = (max(0, self.scene.x_pos_for_time(tp.start_time)) + min(self.scene.width, self.scene.x_pos_for_time(tp.end_time))) / 2
-        text = self._text(label, x, LARGER_FONT_SIZE_PX + OUTER_PADDING)
-        text.set_style(self._larger_font_style.getStyle())
-        return text
+        x = (max(0, self.scene.x_pos_for_time(tp.start_time)) +
+             min(self.scene.width, self.scene.x_pos_for_time(tp.end_time))) / 2
+        y = LARGER_FONT_SIZE_PX + OUTER_PADDING
+        return self._draw_label(label, x, y, self._larger_font_style)
 
     def _draw_divider_line(self):
         return ShapeBuilder().createLine(0, self.scene.divider_y, self.scene.width,
