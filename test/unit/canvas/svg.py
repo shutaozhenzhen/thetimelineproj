@@ -69,7 +69,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.scene.x_pos_for_time.return_value = 100
         self.scene.minor_strip = strip
         text = self.svg._draw_minor_strip_label(strip_period)
-        self.assertEqual(text.getXML(), '<text style="font-size:12px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="195" x="100"  >\nLabel</text>\n')
+        self.assertEqual(text.getXML(), '<text style="font-size:12px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="195" x="88"  >\nLabel</text>\n')
 
     def test_can_draw_major_strip_label(self):
         strip = Mock()
