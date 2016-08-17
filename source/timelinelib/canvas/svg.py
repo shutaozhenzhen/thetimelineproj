@@ -136,11 +136,11 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_major_strips(self, group):
         for tp in self.scene.major_strip_data:
-            self._draw_major_strip_divider_line_at(group, tp.end_time)
+            self._draw_major_strip_divider_line(group, tp.end_time)
             text = self._draw_major_strip_label(tp)
             group.addElement(text)
 
-    def _draw_major_strip_divider_line_at(self, group, time):
+    def _draw_major_strip_divider_line(self, group, time):
         x = self.scene.x_pos_for_time(time)
         oh = ShapeBuilder()
         line = oh.createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="black")
