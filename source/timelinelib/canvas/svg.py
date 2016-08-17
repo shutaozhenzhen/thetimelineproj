@@ -141,8 +141,7 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_major_strip_divider_line(self, time):
         x = self.scene.x_pos_for_time(time)
-        oh = ShapeBuilder()
-        return oh.createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="black")
+        return ShapeBuilder().createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke="black")
 
     def _draw_major_strip_label(self, tp):
         label = self.scene.major_strip.label(tp.start_time, True)
