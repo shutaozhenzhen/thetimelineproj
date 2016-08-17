@@ -113,9 +113,7 @@ class SVGDrawingAlgorithm(object):
     def _draw_minor_strips(self, group):
         for strip_period in self.scene.minor_strip_data:
             self._draw_minor_strip_divider_line_at(group, strip_period.end_time)
-            label = self._draw_minor_strip_label(strip_period)
-            if label:
-                group.addElement(self._draw_minor_strip_label(strip_period))
+            group.addElement(self._draw_minor_strip_label(strip_period))
 
     def _draw_minor_strip_divider_line_at(self, group, time):
         x = self.scene.x_pos_for_time(time)
@@ -127,8 +125,6 @@ class SVGDrawingAlgorithm(object):
         label = self.scene.minor_strip.label(strip_period.start_time)
         x = (self.scene.x_pos_for_time(strip_period.start_time) +
              self.scene.x_pos_for_time(strip_period.end_time)) / 2
-        if x < INNER_PADDING:
-            return
         y = self.scene.divider_y - OUTER_PADDING
         text = self._text(label, x, y)
         text.set_style(self._small_font_style.getStyle())
