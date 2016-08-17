@@ -292,11 +292,11 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_events(self, view_properties):
         """Draw all event boxes and the text inside them."""
-        oh = ShapeBuilder()
         for (event, rect) in self.scene.event_data:
-            self._draw_event(oh, event, rect)
+            self._draw_event(event, rect)
 
-    def _draw_event(self, oh, event, rect):
+    def _draw_event(self, event, rect):
+        oh = ShapeBuilder()
         myStyle = self._get_small_font_style()
         # Ensure that we can't draw outside rectangle
         # have one group per event
