@@ -33,7 +33,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
 
     def test_can_draw_now_line(self):
         shape = self.svg._draw_now_line()
-        self.assertEqual(shape.getXML(), '<line y1="0" x2="150" style="stroke:darkred; stroke-width:1; " x1="150" y2="200"  />\n')
+        self.assertEqual(shape.getXML(), '<line y1="0" x2="150" style="stroke:darkred; stroke-width:0.5; " x1="150" y2="200"  />\n')
 
     def test_can_draw_line_to_selected_non_period_events(self):
         from pysvg.structure import g
