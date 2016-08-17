@@ -289,31 +289,34 @@ class SVGDrawingAlgorithm(object):
                 cur_y = cur_y + item_height + INNER_PADDING
             self.svg.addElement(svgGroup)
 
+
     def _draw_events(self, view_properties):
         """Draw all event boxes and the text inside them."""
-        myStyle = self._get_small_font_style()
         oh = ShapeBuilder()
         for (event, rect) in self.scene.event_data:
-            # Ensure that we can't draw outside rectangle
-            # have one group per event
-            svgGroup = g()
-            # Ensure that we can't draw content outside inner rectangle
-            boxColor = self._get_box_color(event)
-            boxBorderColor = self._get_box_border_color(event)
-            svgRect = oh.createRect(rect.X, rect.Y,
-                                    rect.GetWidth(), rect.GetHeight(),
-                                    stroke=boxBorderColor,
-                                    fill=boxColor)
-            if self.shadowFlag:
-                svgRect.set_filter("url(#filterShadow)")
-            svgGroup.addElement(svgRect)
-            if rect.Width > 0:
-                # Draw the text (if there is room for it)
-                svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), myStyle))
+            self._draw_event(oh, event, rect)
+
+    def _draw_event(self, oh, event, rect):
+        myStyle = self._get_small_font_style()
+        # Ensure that we can't draw outside rectangle
+        # have one group per event
+        svgGroup = g()  # Ensure that we can't draw content outside inner rectangle
+        boxColor = self._get_box_color(event)
+        boxBorderColor = self._get_box_border_color(event)
+        svgRect = oh.createRect(rect.X, rect.Y,
+            rect.GetWidth(), rect.GetHeight(),
+            stroke=boxBorderColor,
+            fill=boxColor)
+        if self.shadowFlag:
+            svgRect.set_filter("url(#filterShadow)")
+        svgGroup.addElement(svgRect)
+        if rect.Width > 0:
+            # Draw the text (if there is room for it)
+            svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), myStyle))
             # Draw data contents indicator
-            if event.has_data():
-                svgGroup.addElement(self._draw_contents_indicator(event, rect))
-            self.svg.addElement(svgGroup)
+        if event.has_data():
+            svgGroup.addElement(self._draw_contents_indicator(event, rect))
+        self.svg.addElement(svgGroup)
 
     def _draw_contents_indicator(self, event, rect):
         """
