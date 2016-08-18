@@ -255,12 +255,11 @@ class SVGDrawingAlgorithm(object):
           +----------+
         """
         if self._legend_should_be_drawn(view_properties, categories):
-            num_categories = len(categories)
             myStyle = self._get_small_font_style()
             # reserve 15% for the legend
             width = int(self.scene.width * 0.15)
             item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
-            height = num_categories * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
+            height = len(categories) * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
             # Draw big box
             builder = ShapeBuilder()
             x = self.scene.width - width - OUTER_PADDING
