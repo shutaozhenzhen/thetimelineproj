@@ -295,9 +295,7 @@ class SVGDrawingAlgorithm(object):
             self.svg.addElement(self._draw_event(event, rect))
 
     def _draw_event(self, event, rect):
-        # Ensure that we can't draw outside rectangle
-        # have one group per event
-        svgGroup = g()  # Ensure that we can't draw content outside inner rectangle
+        svgGroup = g()
         svgGroup.addElement(self._draw_event_rect(event, rect))
         svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(),
                                                    self._get_small_font_style()))
