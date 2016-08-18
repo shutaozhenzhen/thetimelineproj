@@ -263,16 +263,23 @@ class SVGDrawingAlgorithm(object):
             builder = ShapeBuilder()
             x = self.scene.width - width - OUTER_PADDING
             svgGroup = g()
-            box_rect = builder.createRect(x,
-                                          self.scene.height - height - OUTER_PADDING,
-                                          width, height, fill='white')
-            svgGroup.addElement(box_rect)
+            svgGroup.addElement(self._draw_categories_box(len(categories)))
             # Draw text and color boxes
             cur_y = self.scene.height - height - OUTER_PADDING + INNER_PADDING
             for cat in categories:
                 self._draw_category(width, item_height, builder, x, svgGroup, cur_y, cat)
                 cur_y = cur_y + item_height + INNER_PADDING
             self.svg.addElement(svgGroup)
+
+    def _draw_categories_box(self, nbr_of_categories):
+        builder = ShapeBuilder()
+        width = int(self.scene.width * 0.15)
+        item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
+        height = nbr_of_categories * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
+        x = self.scene.width - width - OUTER_PADDING
+        return builder.createRect(x,
+                                  self.scene.height - height - OUTER_PADDING,
+                                  width, height, fill='white')
 
     def _draw_category(self, width, item_height, builder, x, svgGroup, cur_y, cat):
         base_color = self._map_svg_color(cat.color)
