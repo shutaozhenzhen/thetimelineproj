@@ -271,14 +271,13 @@ class SVGDrawingAlgorithm(object):
             self.svg.addElement(svgGroup)
 
     def _draw_categories_box(self, nbr_of_categories):
-        builder = ShapeBuilder()
         width = int(self.scene.width * 0.15)
         item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
         height = nbr_of_categories * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
         x = self.scene.width - width - OUTER_PADDING
-        return builder.createRect(x,
-                                  self.scene.height - height - OUTER_PADDING,
-                                  width, height, fill='white')
+        return ShapeBuilder().createRect(x,
+                                         self.scene.height - height - OUTER_PADDING,
+                                         width, height, fill='white')
 
     def _draw_category(self, width, item_height, x, svgGroup, cur_y, cat):
         base_color = self._map_svg_color(cat.color)
