@@ -260,14 +260,13 @@ class SVGDrawingAlgorithm(object):
             item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
             height = len(categories) * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
             # Draw big box
-            builder = ShapeBuilder()
             x = self.scene.width - width - OUTER_PADDING
             svgGroup = g()
             svgGroup.addElement(self._draw_categories_box(len(categories)))
             # Draw text and color boxes
             cur_y = self.scene.height - height - OUTER_PADDING + INNER_PADDING
             for cat in categories:
-                self._draw_category(width, item_height, builder, x, svgGroup, cur_y, cat)
+                self._draw_category(width, item_height, x, svgGroup, cur_y, cat)
                 cur_y = cur_y + item_height + INNER_PADDING
             self.svg.addElement(svgGroup)
 
@@ -281,12 +280,12 @@ class SVGDrawingAlgorithm(object):
                                   self.scene.height - height - OUTER_PADDING,
                                   width, height, fill='white')
 
-    def _draw_category(self, width, item_height, builder, x, svgGroup, cur_y, cat):
+    def _draw_category(self, width, item_height, x, svgGroup, cur_y, cat):
         base_color = self._map_svg_color(cat.color)
         border_color = self._map_svg_color(darken_color(cat.color))
-        color_box_rect = builder.createRect(x + OUTER_PADDING,
-                                            cur_y, item_height, item_height, fill=base_color,
-                                            stroke=border_color)
+        color_box_rect = ShapeBuilder().createRect(x + OUTER_PADDING,
+                                                   cur_y, item_height, item_height, fill=base_color,
+                                                   stroke=border_color)
         svgGroup.addElement(color_box_rect)
         myText = self._svg_clipped_text(cat.name,
                                         (x + OUTER_PADDING + INNER_PADDING + item_height,
