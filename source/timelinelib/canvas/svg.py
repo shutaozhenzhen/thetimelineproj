@@ -75,7 +75,7 @@ class SVGDrawingAlgorithm(object):
         self.svg.save(path, encoding=ENCODING)
 
     def draw(self):
-        self._define_shadow_filter()
+        self.svg.addElement(self._define_shadow_filter())
         self._draw_bg()
         self._draw_events(self.view_properties)
         categories = self._extract_categories()
@@ -390,7 +390,7 @@ class SVGDrawingAlgorithm(object):
     def _define_shadow_filter(self):
         d = defs()
         d.addElement(self._get_shadow_filter())
-        self.svg.addElement(d)
+        return d
 
     def _get_shadow_filter(self):
         filterShadow = filter(x="-.3", y="-.5", width=1.9, height=1.9)
