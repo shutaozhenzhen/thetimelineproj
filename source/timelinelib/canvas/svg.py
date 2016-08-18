@@ -292,17 +292,18 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_events(self, view_properties):
         for (event, rect) in self.scene.event_data:
-            self._draw_event(event, rect)
+            self.svg.addElement(self._draw_event(event, rect))
 
     def _draw_event(self, event, rect):
         # Ensure that we can't draw outside rectangle
         # have one group per event
         svgGroup = g()  # Ensure that we can't draw content outside inner rectangle
         svgGroup.addElement(self._draw_event_rect(event, rect))
-        svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), self._get_small_font_style()))
+        svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(),
+                                                   self._get_small_font_style()))
         if event.has_data():
             svgGroup.addElement(self._draw_contents_indicator(event, rect))
-        self.svg.addElement(svgGroup)
+        return svgGroup
 
     def _draw_event_rect(self, event, rect):
         boxBorderColor = self._get_box_border_color(event)
