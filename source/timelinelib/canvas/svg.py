@@ -256,8 +256,6 @@ class SVGDrawingAlgorithm(object):
         """
         if self._legend_should_be_drawn(view_properties, categories):
             num_categories = len(categories)
-            if num_categories == 0:
-                return
             myStyle = self._get_small_font_style()
             # reserve 15% for the legend
             width = int(self.scene.width * 0.15)
