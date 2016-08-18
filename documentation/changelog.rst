@@ -23,10 +23,12 @@ Data:
 
 * Sample text is displayed for fonts in the preference dialog
 
-Export:
+Export SVG:
 
 * Improved SVG exported image.
   (`#145 <https://sourceforge.net/p/thetimelineproj/backlog/145/>`_)
+
+* Timelein background colour is used used in svg image.
 
 Version 1.11.0
 --------------
