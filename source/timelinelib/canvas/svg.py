@@ -259,8 +259,7 @@ class SVGDrawingAlgorithm(object):
         """
         svgGroup = g()
         svgGroup.addElement(self._draw_categories_box(len(categories)))
-        cur_y = (self.scene.height - self._get_categories_box_height(len(categories)) -
-                 OUTER_PADDING + INNER_PADDING)
+        cur_y = self._get_categories_box_y(len(categories)) + INNER_PADDING
         for cat in categories:
             self._draw_category(self._get_categories_box_width(),
                                 self._get_categories_item_height(),
