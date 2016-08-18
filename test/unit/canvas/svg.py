@@ -105,6 +105,15 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         group = self.svg._draw_event(event, rect)
         self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:#8C8C8C; stroke-width:1; fill:#C8C8C8; " height="8" width="50" y="20" x="10"  />\n<g clip-path="url(#path13_25)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="25" x="13" lengthAdjust="spacingAndGlyphs"  >\nFoo</text>\n</g>\n<polygon style="stroke:#787878; stroke-width:1; fill:#787878; " points="50,20 60,20 60,30"  />\n</g>\n')
 
+    def test_can_draw_legend(self):
+        view_properties = Mock()
+        category = Mock()
+        category.color = (127, 127, 127)
+        category.name = "First Category"
+        categories = (category,)
+        group = self.svg._draw_legend(view_properties, categories)
+        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:black; stroke-width:1; fill:white; " height="29" width="60" y="166" x="335"  />\n<rect style="stroke:#585858; stroke-width:1; fill:#7F7F7F; " height="16" width="16" y="169" x="340"  />\n<g clip-path="url(#path362_182)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="182" x="362" lengthAdjust="spacingAndGlyphs"  >\nFirst Category</text>\n</g>\n</g>\n')
+
     def setUp(self):
         path = Mock()
         self.view_properties = self.setup_view_properties()
