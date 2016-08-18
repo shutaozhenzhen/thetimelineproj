@@ -255,7 +255,6 @@ class SVGDrawingAlgorithm(object):
           +----------+
         """
         if self._legend_should_be_drawn(view_properties, categories):
-            myStyle = self._get_small_font_style()
             # reserve 15% for the legend
             width = int(self.scene.width * 0.15)
             item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
@@ -281,7 +280,7 @@ class SVGDrawingAlgorithm(object):
                                                 (x + OUTER_PADDING + INNER_PADDING + item_height,
                                                  cur_y, width - OUTER_PADDING - INNER_PADDING - item_height,
                                                  item_height),
-                                                myStyle)
+                                                self._get_small_font_style())
                 svgGroup.addElement(myText)
                 cur_y = cur_y + item_height + INNER_PADDING
             self.svg.addElement(svgGroup)
