@@ -144,12 +144,17 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         event.category = None
         self.assertEqual((200, 200, 200), self.svg._get_base_color(event))
 
+    def test_can_draw_background(self):
+        self.appearence.get_bg_colour.return_value = (1, 2, 3, 4)
+        rect = self.svg._draw_background()
+        self.assertEqual(rect.getXML(), '<rect style="stroke:black; stroke-width:1; fill:#010203; " height="200" width="400" y="0" x="0"  />\n')
 
     def setUp(self):
         path = Mock()
         self.view_properties = self.setup_view_properties()
+        self.appearence = Mock()
         self.scene = self.setup_scene()
-        self.svg = SVGDrawingAlgorithm(path, self.scene, self.view_properties)
+        self.svg = SVGDrawingAlgorithm(path, self.scene, self.view_properties, self.appearence)
 
     def setup_view_properties(self):
         view_properties = Mock(ViewProperties)

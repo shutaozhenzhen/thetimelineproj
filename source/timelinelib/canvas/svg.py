@@ -45,8 +45,8 @@ LARGER_FONT_SIZE_PX = 14
 ENCODING = "utf-8"
 
 
-def export(path, scene, view_properties):
-    svgDrawer = SVGDrawingAlgorithm(path, scene, view_properties, shadow=True)
+def export(path, scene, view_properties, appearence):
+    svgDrawer = SVGDrawingAlgorithm(path, scene, view_properties, appearence, shadow=True)
     svgDrawer.draw()
     svgDrawer.write(path)
 
@@ -55,9 +55,10 @@ class SVGDrawingAlgorithm(object):
 
     # options:  shadow=True|False
 
-    def __init__(self, path, scene, view_properties, **kwargs):
+    def __init__(self, path, scene, view_properties, appearence, **kwargs):
         self.path = path
         self.scene = scene
+        self.appearence = appearence
         self.view_properties = view_properties
         self.svg = svg(width=scene.width, height=scene.height)
         self._small_font_style = self._get_small_font_style()
@@ -89,6 +90,7 @@ class SVGDrawingAlgorithm(object):
         Both major and minor strips have divider lines and labels.
         """
         group = g()
+        group.addElement(self._draw_background())
         self._draw_minor_strips(group)
         self._draw_major_strips(group)
         group.addElement(self._draw_divider_line())
@@ -96,6 +98,10 @@ class SVGDrawingAlgorithm(object):
         if self._now_line_is_visible():
             group.addElement(self._draw_now_line())
         self.svg.addElement(group)
+
+    def _draw_background(self):
+        svg_color = self._map_svg_color(self.appearence.get_bg_colour()[:3])
+        return ShapeBuilder().createRect(0, 0, self.scene.width, self.scene.height, fill=svg_color)
 
     def _get_small_font_style(self):
         myStyle = StyleBuilder()
