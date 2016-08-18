@@ -122,6 +122,29 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.assertEqual("", self.svg._encode_unicode_text(u""))
         self.assertEqual("åäö", self.svg._encode_unicode_text(u"åäö"))
 
+    def test_legend_should_be_drawn(self):
+        view_properties = Mock
+        view_properties.show_legend = True
+        categories = []
+        self.assertFalse(self.svg._legend_should_be_drawn(view_properties, categories))
+        categories = [""]
+        self.assertTrue(self.svg._legend_should_be_drawn(view_properties, categories))
+        view_properties.show_legend = False
+        self.assertFalse(self.svg._legend_should_be_drawn(view_properties, categories))
+
+    def test_can_get_base_color_when_event_has_no_category(self):
+        category = Mock()
+        category.color = (1, 2, 3)
+        event = Mock()
+        event.category = category
+        self.assertEqual((1, 2, 3), self.svg._get_base_color(event))
+
+    def test_can_get_base_color_when_event_has_category(self):
+        event = Mock()
+        event.category = None
+        self.assertEqual((200, 200, 200), self.svg._get_base_color(event))
+
+
     def setUp(self):
         path = Mock()
         self.view_properties = self.setup_view_properties()
