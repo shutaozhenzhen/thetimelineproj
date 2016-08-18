@@ -69,7 +69,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.scene.x_pos_for_time.return_value = 100
         self.scene.minor_strip = strip
         text = self.svg._draw_minor_strip_label(strip_period)
-        self.assertEqual(text.getXML(), '<text style="font-size:12px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="195" x="88"  >\nLabel</text>\n')
+        self.assertEqual(text.getXML(), '<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="195" x="89"  >\nLabel</text>\n')
 
     def test_can_draw_major_strip_label(self):
         strip = Mock()
@@ -89,6 +89,21 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.assertFalse(self.svg._now_line_is_visible())
         self.scene.x_pos_for_now.return_value = -100
         self.assertFalse(self.svg._now_line_is_visible())
+
+    def test_can_draw_event(self):
+        event = Mock(Event)
+        event.has_data.return_value = True
+        event.text = "Foo"
+        event.category = None
+        rect = Mock()
+        rect.X = 10
+        rect.Y = 20
+        rect.Width = 50
+        rect.GetWidth.return_value = 50
+        rect.GetHeight.return_value = 8
+        rect.Get.return_value = (10, 20, 50, 8)
+        group = self.svg._draw_event(event, rect)
+        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:#8C8C8C; stroke-width:1; fill:#C8C8C8; " height="8" width="50" y="20" x="10"  />\n<g clip-path="url(#path13_25)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="25" x="13" lengthAdjust="spacingAndGlyphs"  >\nFoo</text>\n</g>\n<polygon style="stroke:#787878; stroke-width:1; fill:#787878; " points="50,20 60,20 60,30"  />\n</g>\n')
 
     def setUp(self):
         path = Mock()
