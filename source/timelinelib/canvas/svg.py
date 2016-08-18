@@ -78,7 +78,10 @@ class SVGDrawingAlgorithm(object):
         self._define_shadow_filter()
         self._draw_bg()
         self._draw_events(self.view_properties)
-        self._draw_legend(self.view_properties, self._extract_categories())
+        categories = self._extract_categories()
+        if self._legend_should_be_drawn(self.view_properties, categories):
+            self.svg.addElement(self._draw_legend(self.view_properties, categories))
+
 
     def _draw_bg(self):
         """
@@ -254,21 +257,20 @@ class SVGDrawingAlgorithm(object):
           | Name   O |
           +----------+
         """
-        if self._legend_should_be_drawn(view_properties, categories):
-            # reserve 15% for the legend
-            width = int(self.scene.width * 0.15)
-            item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
-            height = len(categories) * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
-            # Draw big box
-            x = self.scene.width - width - OUTER_PADDING
-            svgGroup = g()
-            svgGroup.addElement(self._draw_categories_box(len(categories)))
-            # Draw text and color boxes
-            cur_y = self.scene.height - height - OUTER_PADDING + INNER_PADDING
-            for cat in categories:
-                self._draw_category(width, item_height, x, svgGroup, cur_y, cat)
-                cur_y = cur_y + item_height + INNER_PADDING
-            self.svg.addElement(svgGroup)
+        # reserve 15% for the legend
+        width = int(self.scene.width * 0.15)
+        item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
+        height = len(categories) * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
+        # Draw big box
+        x = self.scene.width - width - OUTER_PADDING
+        svgGroup = g()
+        svgGroup.addElement(self._draw_categories_box(len(categories)))
+        # Draw text and color boxes
+        cur_y = self.scene.height - height - OUTER_PADDING + INNER_PADDING
+        for cat in categories:
+            self._draw_category(width, item_height, x, svgGroup, cur_y, cat)
+            cur_y = cur_y + item_height + INNER_PADDING
+        return svgGroup
 
     def _draw_categories_box(self, nbr_of_categories):
         width = int(self.scene.width * 0.15)
