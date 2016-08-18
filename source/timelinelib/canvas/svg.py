@@ -40,7 +40,7 @@ from timelinelib.canvas.data import sort_categories
 OUTER_PADDING = 5  # Space between event boxes (pixels)
 INNER_PADDING = 3  # Space inside event box to text (pixels)
 DATA_INDICATOR_SIZE = 10
-SMALL_FONT_SIZE_PX = 12
+SMALL_FONT_SIZE_PX = 11
 LARGER_FONT_SIZE_PX = 14
 ENCODING = "utf-8"
 
@@ -299,8 +299,7 @@ class SVGDrawingAlgorithm(object):
         # have one group per event
         svgGroup = g()  # Ensure that we can't draw content outside inner rectangle
         svgGroup.addElement(self._draw_event_rect(event, rect))
-        if rect.Width > 0:
-            svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), self._get_small_font_style()))
+        svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), self._get_small_font_style()))
         if event.has_data():
             svgGroup.addElement(self._draw_contents_indicator(event, rect))
         self.svg.addElement(svgGroup)
