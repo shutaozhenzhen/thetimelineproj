@@ -194,10 +194,9 @@ class SVGDrawingAlgorithm(object):
 
     def _get_base_color(self, event):
         if event.category:
-            base_color = event.category.color
+            return event.category.color
         else:
-            base_color = (200, 200, 200)
-        return base_color
+            return (200, 200, 200)
 
     def _get_border_color(self, event):
         base_color = self._get_base_color(event)
