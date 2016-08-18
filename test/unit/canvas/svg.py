@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -111,11 +112,15 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         category.name = "First Category"
         categories = (category,)
         group = self.svg._draw_legend(categories)
-        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:black; stroke-width:1; fill:white; " height="29" width="60" y="166" x="335"  />\n<rect style="stroke:#585858; stroke-width:1; fill:#7F7F7F; " height="16" width="16" y="169" x="340"  />\n<g clip-path="url(#path362_182)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="182" x="362" lengthAdjust="spacingAndGlyphs"  >\nFirst Category</text>\n</g>\n</g>\n')
+        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:black; stroke-width:1; fill:white; " height="26" width="60" y="169" x="335"  />\n<rect style="stroke:#585858; stroke-width:1; fill:#7F7F7F; " height="16" width="16" y="174" x="340"  />\n<g clip-path="url(#path362_187)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="187" x="362" lengthAdjust="spacingAndGlyphs"  >\nFirst Category</text>\n</g>\n</g>\n')
 
     def test_can_define_shadow_filter(self):
         d = self.svg._define_shadow_filter()
         self.assertEqual(d.getXML(), '<defs  >\n<filter height="1.9" width="1.9" y="-.5" x="-.3" id="filterShadow"  >\n<feGaussianBlur result="out1" in="SourceAlpha" stdDeviation="4"  />\n<feOffset dy="-4" result="out2" dx="4" in="out1"  />\n<feMerge  >\n<feMergeNode in="out2"  />\n<feMergeNode in="SourceGraphic"  />\n</feMerge>\n</filter>\n</defs>\n')
+
+    def test__encode_unicode_text(self):
+        self.assertEqual("", self.svg._encode_unicode_text(u""))
+        self.assertEqual("åäö", self.svg._encode_unicode_text(u"åäö"))
 
     def setUp(self):
         path = Mock()
