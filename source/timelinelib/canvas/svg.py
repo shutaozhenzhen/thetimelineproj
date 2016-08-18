@@ -80,7 +80,7 @@ class SVGDrawingAlgorithm(object):
         self._draw_events(self.view_properties)
         categories = self._extract_categories()
         if self._legend_should_be_drawn(self.view_properties, categories):
-            self.svg.addElement(self._draw_legend(self.view_properties, categories))
+            self.svg.addElement(self._draw_legend(categories))
 
 
     def _draw_bg(self):
@@ -239,7 +239,7 @@ class SVGDrawingAlgorithm(object):
                 categories.append(cat)
         return sort_categories(categories)
 
-    def _draw_legend(self, view_properties, categories):
+    def _draw_legend(self, categories):
         """
         Draw legend for the given categories.
 
