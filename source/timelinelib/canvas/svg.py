@@ -257,29 +257,39 @@ class SVGDrawingAlgorithm(object):
           | Name   O |
           +----------+
         """
-        # reserve 15% for the legend
-        width = int(self.scene.width * 0.15)
-        item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
-        height = len(categories) * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
-        # Draw big box
-        x = self.scene.width - width - OUTER_PADDING
         svgGroup = g()
         svgGroup.addElement(self._draw_categories_box(len(categories)))
-        # Draw text and color boxes
-        cur_y = self.scene.height - height - OUTER_PADDING + INNER_PADDING
+        cur_y = (self.scene.height - self._get_categories_box_height(len(categories)) -
+                 OUTER_PADDING + INNER_PADDING)
         for cat in categories:
-            self._draw_category(width, item_height, x, svgGroup, cur_y, cat)
-            cur_y = cur_y + item_height + INNER_PADDING
+            self._draw_category(self._get_categories_box_width(),
+                                self._get_categories_item_height(),
+                                self._get_categories_box_x(), svgGroup, cur_y, cat)
+            cur_y = cur_y + self._get_categories_item_height() + INNER_PADDING
         return svgGroup
 
     def _draw_categories_box(self, nbr_of_categories):
-        width = int(self.scene.width * 0.15)
-        item_height = SMALL_FONT_SIZE_PX + OUTER_PADDING
-        height = nbr_of_categories * (item_height + INNER_PADDING) + 2 * OUTER_PADDING
-        x = self.scene.width - width - OUTER_PADDING
-        return ShapeBuilder().createRect(x,
-                                         self.scene.height - height - OUTER_PADDING,
-                                         width, height, fill='white')
+        return ShapeBuilder().createRect(self._get_categories_box_x(),
+                                         self._get_categories_box_y(nbr_of_categories),
+                                         self._get_categories_box_width(),
+                                         self._get_categories_box_height(nbr_of_categories),
+                                         fill='white')
+
+    def _get_categories_box_width(self):
+        # reserve 15% for the legend
+        return int(self.scene.width * 0.15)
+
+    def _get_categories_item_height(self):
+        return SMALL_FONT_SIZE_PX + OUTER_PADDING
+
+    def _get_categories_box_height(self, nbr_of_categories):
+        return nbr_of_categories * (self._get_categories_item_height() + INNER_PADDING) + 2 * OUTER_PADDING
+
+    def _get_categories_box_x(self):
+        return self.scene.width - self._get_categories_box_width() - OUTER_PADDING
+
+    def _get_categories_box_y(self, nbr_of_categories):
+        return self.scene.height - self._get_categories_box_height(nbr_of_categories) - OUTER_PADDING
 
     def _draw_category(self, width, item_height, x, svgGroup, cur_y, cat):
         base_color = self._map_svg_color(cat.color)
