@@ -270,21 +270,23 @@ class SVGDrawingAlgorithm(object):
             # Draw text and color boxes
             cur_y = self.scene.height - height - OUTER_PADDING + INNER_PADDING
             for cat in categories:
-                base_color = self._map_svg_color(cat.color)
-                border_color = self._map_svg_color(darken_color(cat.color))
-                color_box_rect = builder.createRect(x + OUTER_PADDING,
-                                                    cur_y, item_height, item_height, fill=base_color,
-                                                    stroke=border_color)
-                svgGroup.addElement(color_box_rect)
-                myText = self._svg_clipped_text(cat.name,
-                                                (x + OUTER_PADDING + INNER_PADDING + item_height,
-                                                 cur_y, width - OUTER_PADDING - INNER_PADDING - item_height,
-                                                 item_height),
-                                                self._get_small_font_style())
-                svgGroup.addElement(myText)
+                self._draw_category(width, item_height, builder, x, svgGroup, cur_y, cat)
                 cur_y = cur_y + item_height + INNER_PADDING
             self.svg.addElement(svgGroup)
 
+    def _draw_category(self, width, item_height, builder, x, svgGroup, cur_y, cat):
+        base_color = self._map_svg_color(cat.color)
+        border_color = self._map_svg_color(darken_color(cat.color))
+        color_box_rect = builder.createRect(x + OUTER_PADDING,
+                                            cur_y, item_height, item_height, fill=base_color,
+                                            stroke=border_color)
+        svgGroup.addElement(color_box_rect)
+        myText = self._svg_clipped_text(cat.name,
+                                        (x + OUTER_PADDING + INNER_PADDING + item_height,
+                                         cur_y, width - OUTER_PADDING - INNER_PADDING - item_height,
+                                         item_height),
+                                        self._get_small_font_style())
+        svgGroup.addElement(myText)
 
     def _draw_events(self, view_properties):
         for (event, rect) in self.scene.event_data:
