@@ -23,6 +23,11 @@ Data:
 
 * Sample text is displayed for fonts in the preference dialog
 
+Export:
+
+* Improved SVG exported image.
+  (`#145 <https://sourceforge.net/p/thetimelineproj/backlog/145/>`_)
+
 Version 1.11.0
 --------------
 
