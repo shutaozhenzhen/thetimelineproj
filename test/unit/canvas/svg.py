@@ -97,6 +97,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         event.has_data.return_value = True
         event.text = "Foo"
         event.category = None
+        event.get_default_color.return_value = (200, 200, 200)
         rect = Mock()
         rect.X = 10
         rect.Y = 20
@@ -138,12 +139,13 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         category.color = (1, 2, 3)
         event = Mock()
         event.category = category
-        self.assertEqual((1, 2, 3), self.svg._get_base_color(event))
+        self.assertEqual((1, 2, 3), self.svg._get_event_color(event))
 
     def test_can_get_base_color_when_event_has_category(self):
         event = Mock()
         event.category = None
-        self.assertEqual((200, 200, 200), self.svg._get_base_color(event))
+        event.get_default_color.return_value = (200, 200, 200)
+        self.assertEqual((200, 200, 200), self.svg._get_event_color(event))
 
     def test_can_draw_background(self):
         self.appearence.get_bg_colour.return_value = (1, 2, 3, 4)
