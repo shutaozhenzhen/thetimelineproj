@@ -227,8 +227,7 @@ class SVGDrawingAlgorithm(object):
     def _get_box_border_color(self, event):
         return self._map_svg_color(self._get_border_color(event))
 
-    def _get_box_color(self, event):
-        """ get the color of the event box """
+    def _get_event_box_color(self, event):
         return self._map_svg_color(self._get_event_color(event))
 
     def _get_box_indicator_color(self, event):
@@ -335,7 +334,7 @@ class SVGDrawingAlgorithm(object):
     def _draw_event_rect(self, event, rect):
         boxBorderColor = self._get_box_border_color(event)
         svgRect = ShapeBuilder().createRect(rect.X, rect.Y, rect.GetWidth(), rect.GetHeight(),
-                                            stroke=boxBorderColor, fill=self._get_box_color(event))
+                                            stroke=boxBorderColor, fill=self._get_event_box_color(event))
         if self.shadowFlag:
             svgRect.set_filter("url(#filterShadow)")
         return svgRect
