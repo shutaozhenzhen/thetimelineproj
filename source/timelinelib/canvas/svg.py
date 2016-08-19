@@ -78,7 +78,7 @@ class SVGDrawingAlgorithm(object):
 
     def draw(self):
         self.svg.addElement(self._define_shadow_filter())
-        self._draw_bg()
+        self.svg.addElement(self._draw_bg())
         self._draw_events(self.view_properties)
         categories = self._extract_categories()
         if self._legend_should_be_drawn(self.view_properties, categories):
@@ -97,13 +97,17 @@ class SVGDrawingAlgorithm(object):
         for era in self.timeline.get_all_periods():
             group.addElement(self._draw_era_strip(era))
             group.addElement(self._draw_era_text(era))
-        self._draw_minor_strips(group)
-        self._draw_major_strips(group)
+        for strip in self.scene.minor_strip_data:
+            group.addElement(self._draw_minor_strip_divider_line(strip.end_time))
+            group.addElement(self._draw_minor_strip_label(strip))
+        for strip in self.scene.major_strip_data:
+            group.addElement(self._draw_major_strip_divider_line(strip.end_time))
+            group.addElement(self._draw_major_strip_label(strip))
         group.addElement(self._draw_divider_line())
         self._draw_lines_to_non_period_events(group, self.view_properties)
         if self._now_line_is_visible():
             group.addElement(self._draw_now_line())
-        self.svg.addElement(group)
+        return group
 
     def _draw_background(self):
         svg_color = self._map_svg_color(self.appearence.get_bg_colour()[:3])
@@ -147,11 +151,6 @@ class SVGDrawingAlgorithm(object):
         myStyle.setTextAnchor('left')
         return myStyle
 
-    def _draw_minor_strips(self, group):
-        for strip_period in self.scene.minor_strip_data:
-            group.addElement(self._draw_minor_strip_divider_line(strip_period.end_time))
-            group.addElement(self._draw_minor_strip_label(strip_period))
-
     def _draw_minor_strip_divider_line(self, time):
         return self._draw_vertical_line(self.scene.x_pos_for_time(time), "lightgrey")
 
@@ -172,11 +171,6 @@ class SVGDrawingAlgorithm(object):
         text = self._text(label, x, y)
         text.set_style(style.getStyle())
         return text
-
-    def _draw_major_strips(self, group):
-        for tp in self.scene.major_strip_data:
-            group.addElement(self._draw_major_strip_divider_line(tp.end_time))
-            group.addElement(self._draw_major_strip_label(tp))
 
     def _draw_major_strip_divider_line(self, time):
         return self._draw_vertical_line(self.scene.x_pos_for_time(time), "black")
