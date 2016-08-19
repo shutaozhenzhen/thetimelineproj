@@ -221,18 +221,14 @@ class SVGDrawingAlgorithm(object):
         x = self.scene.x_pos_for_now()
         return x > 0 and x < self.scene.width
 
-    def _get_border_color(self, event):
-        return darken_color(self._get_event_color(event))
-
-    def _get_box_border_color(self, event):
-        return self._map_svg_color(self._get_border_color(event))
+    def _get_event_border_color(self, event):
+        return self._map_svg_color(darken_color(self._get_event_color(event)))
 
     def _get_event_box_color(self, event):
         return self._map_svg_color(self._get_event_color(event))
 
     def _get_box_indicator_color(self, event):
-        base_color = self._get_event_color(event)
-        return self._map_svg_color(darken_color(base_color, 0.6))
+        return self._map_svg_color(darken_color(self._get_event_color(event), 0.6))
 
     def _get_event_color(self, event):
         if event.category:
@@ -332,7 +328,7 @@ class SVGDrawingAlgorithm(object):
         return svgGroup
 
     def _draw_event_rect(self, event, rect):
-        boxBorderColor = self._get_box_border_color(event)
+        boxBorderColor = self._get_event_border_color(event)
         svgRect = ShapeBuilder().createRect(rect.X, rect.Y, rect.GetWidth(), rect.GetHeight(),
                                             stroke=boxBorderColor, fill=self._get_event_box_color(event))
         if self.shadowFlag:
