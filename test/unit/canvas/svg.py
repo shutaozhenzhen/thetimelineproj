@@ -23,6 +23,7 @@ from timelinelib.canvas.svg import SVGDrawingAlgorithm
 from timelinelib.canvas.drawing.scene import TimelineScene
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data.era import Era
 from timelinelib.test.cases.unit import UnitTestCase
 
 
@@ -149,12 +150,28 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         rect = self.svg._draw_background()
         self.assertEqual(rect.getXML(), '<rect style="stroke:black; stroke-width:1; fill:#010203; " height="200" width="400" y="0" x="0"  />\n')
 
+    def test_can_draw_era(self):
+
+        def my_side_effect(*args, **kwargs):
+            self.call_count += 1
+            if self.call_count == 1:
+                return 50
+            else:
+                return 75
+
+        self.scene.x_pos_for_time.side_effect = my_side_effect
+        era = Mock(Era)
+        era.get_color.return_value = (127, 127, 127, 4)
+        era = self.svg._draw_era(era)
+        self.assertEqual(era.getXML(), '<rect style="stroke:black; stroke-width:0; fill:#7F7F7F; " height="200" width="25" y="0" x="50"  />\n')
+
     def setUp(self):
         path = Mock()
+        timeline = Mock()
         self.view_properties = self.setup_view_properties()
         self.appearence = Mock()
         self.scene = self.setup_scene()
-        self.svg = SVGDrawingAlgorithm(path, self.scene, self.view_properties, self.appearence)
+        self.svg = SVGDrawingAlgorithm(path, timeline, self.scene, self.view_properties, self.appearence)
 
     def setup_view_properties(self):
         view_properties = Mock(ViewProperties)
@@ -162,6 +179,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         return view_properties
 
     def setup_scene(self):
+        self.call_count = 0
         scene = Mock(TimelineScene)
         scene.width = 400
         scene.height = 200
