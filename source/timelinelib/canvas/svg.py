@@ -86,13 +86,16 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_bg(self):
         """
+        Draw background color
+        Draw background Era strips and labels
         Draw major and minor strips, lines to all event boxes and baseline.
         Both major and minor strips have divider lines and labels.
+        Draw now line if it is visible
         """
         group = g()
         group.addElement(self._draw_background())
         for era in self.timeline.get_all_periods():
-            group.addElement(self._draw_era(era))
+            group.addElement(self._draw_era_strip(era))
             group.addElement(self._draw_era_text(era))
         self._draw_minor_strips(group)
         self._draw_major_strips(group)
@@ -106,22 +109,27 @@ class SVGDrawingAlgorithm(object):
         svg_color = self._map_svg_color(self.appearence.get_bg_colour()[:3])
         return ShapeBuilder().createRect(0, 0, self.scene.width, self.scene.height, fill=svg_color)
 
-    def _draw_era(self, era):
+    def _draw_era_strip(self, era):
         svg_color = self._map_svg_color(era.get_color()[:3])
-        (x, width, _, _) = self._calc_era_metrics(era)
+        x, width = self._calc_era_strip_metrics(era)
         return ShapeBuilder().createRect(x, 0, width, self.scene.height, fill=svg_color, strokewidth=0)
 
     def _draw_era_text(self, era):
-        (_, _, text_x, text_y) = self._calc_era_metrics(era)
+        text_x, text_y = self._calc_era_text_metrics(era)
         return self._draw_label(era.get_name(), text_x, text_y, self._small_font_style)
 
-    def _calc_era_metrics(self, era):
+    def _calc_era_strip_metrics(self, era):
         period = era.get_time_period()
         x = self.scene.x_pos_for_time(period.start_time)
         width = min(self.scene.x_pos_for_time(period.end_time), self.scene.width) - x
+        return x, width
+
+    def _calc_era_text_metrics(self, era):
+        period = era.get_time_period()
+        _, width = self._calc_era_strip_metrics(era)
         text_x = self.scene.x_pos_for_time(period.start_time) + width / 3
         text_y = self.scene.height - OUTER_PADDING
-        return x, width, text_x, text_y
+        return text_x, text_y
 
     def _get_small_font_style(self):
         myStyle = StyleBuilder()
