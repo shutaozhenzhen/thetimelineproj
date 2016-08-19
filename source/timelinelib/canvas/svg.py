@@ -79,7 +79,8 @@ class SVGDrawingAlgorithm(object):
     def draw(self):
         self.svg.addElement(self._define_shadow_filter())
         self.svg.addElement(self._draw_bg())
-        self._draw_events(self.view_properties)
+        for (event, rect) in self.scene.event_data:
+            self.svg.addElement(self._draw_event(event, rect))
         categories = self._extract_categories()
         if self._legend_should_be_drawn(self.view_properties, categories):
             self.svg.addElement(self._draw_legend(categories))
@@ -330,10 +331,6 @@ class SVGDrawingAlgorithm(object):
                                          item_height),
                                         self._get_small_font_style())
         svgGroup.addElement(myText)
-
-    def _draw_events(self, view_properties):
-        for (event, rect) in self.scene.event_data:
-            self.svg.addElement(self._draw_event(event, rect))
 
     def _draw_event(self, event, rect):
         svgGroup = g()
