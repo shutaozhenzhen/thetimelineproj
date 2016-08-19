@@ -228,33 +228,24 @@ class SVGDrawingAlgorithm(object):
             return (200, 200, 200)
 
     def _get_border_color(self, event):
-        base_color = self._get_base_color(event)
-        border_color = darken_color(base_color)
-        return border_color
+        return darken_color(self._get_base_color(event))
 
     def _map_svg_color(self, color):
         """
         map (r,g,b) color to svg string
         """
-        sColor = "#%02X%02X%02X" % color
-        return sColor
+        return "#%02X%02X%02X" % color
 
     def _get_box_border_color(self, event):
-        border_color = self._get_border_color(event)
-        sColor = self._map_svg_color(border_color)
-        return sColor
+        return self._map_svg_color(self._get_border_color(event))
 
     def _get_box_color(self, event):
         """ get the color of the event box """
-        base_color = self._get_base_color(event)
-        sColor = self._map_svg_color(base_color)
-        return sColor
+        return self._map_svg_color(self._get_base_color(event))
 
     def _get_box_indicator_color(self, event):
         base_color = self._get_base_color(event)
-        darker_color = darken_color(base_color, 0.6)
-        sColor = self._map_svg_color(darker_color)
-        return sColor
+        return self._map_svg_color(darken_color(base_color, 0.6))
 
     def _legend_should_be_drawn(self, view_properties, categories):
         return view_properties.show_legend and len(categories) > 0
