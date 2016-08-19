@@ -25,10 +25,13 @@ Data:
 
 Export SVG:
 
-* Improved SVG exported image.
+* Eras are now drawn in the SVG image.
+  (`#144 <https://sourceforge.net/p/thetimelineproj/backlog/144/>`_)
+
+* Improved drawing of labels in SVG image.
   (`#145 <https://sourceforge.net/p/thetimelineproj/backlog/145/>`_)
 
-* Timelein background colour is used used in svg image.
+* Timeline background colour is used used in SVG image.
 
 Version 1.11.0
 --------------
