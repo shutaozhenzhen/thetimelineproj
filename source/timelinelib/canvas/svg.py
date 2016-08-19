@@ -45,8 +45,8 @@ LARGER_FONT_SIZE_PX = 14
 ENCODING = "utf-8"
 
 
-def export(path, scene, view_properties, appearence):
-    svgDrawer = SVGDrawingAlgorithm(path, scene, view_properties, appearence, shadow=True)
+def export(path, timeline, scene, view_properties, appearence):
+    svgDrawer = SVGDrawingAlgorithm(path, timeline, scene, view_properties, appearence, shadow=True)
     svgDrawer.draw()
     svgDrawer.write(path)
 
@@ -55,8 +55,9 @@ class SVGDrawingAlgorithm(object):
 
     # options:  shadow=True|False
 
-    def __init__(self, path, scene, view_properties, appearence, **kwargs):
+    def __init__(self, path, timeline, scene, view_properties, appearence, **kwargs):
         self.path = path
+        self.timeline = timeline
         self.scene = scene
         self.appearence = appearence
         self.view_properties = view_properties
@@ -83,7 +84,6 @@ class SVGDrawingAlgorithm(object):
         if self._legend_should_be_drawn(self.view_properties, categories):
             self.svg.addElement(self._draw_legend(categories))
 
-
     def _draw_bg(self):
         """
         Draw major and minor strips, lines to all event boxes and baseline.
@@ -91,6 +91,8 @@ class SVGDrawingAlgorithm(object):
         """
         group = g()
         group.addElement(self._draw_background())
+        for era in self.timeline.get_all_periods():
+            group.addElement(self._draw_era(era))
         self._draw_minor_strips(group)
         self._draw_major_strips(group)
         group.addElement(self._draw_divider_line())
@@ -102,6 +104,13 @@ class SVGDrawingAlgorithm(object):
     def _draw_background(self):
         svg_color = self._map_svg_color(self.appearence.get_bg_colour()[:3])
         return ShapeBuilder().createRect(0, 0, self.scene.width, self.scene.height, fill=svg_color)
+
+    def _draw_era(self, era):
+        svg_color = self._map_svg_color(era.get_color()[:3])
+        period = era.get_time_period()
+        x = self.scene.x_pos_for_time(period.start_time)
+        width = min(self.scene.x_pos_for_time(period.end_time), self.scene.width) - x
+        return ShapeBuilder().createRect(x, 0, width, self.scene.height, fill=svg_color, strokewidth=0)
 
     def _get_small_font_style(self):
         myStyle = StyleBuilder()
