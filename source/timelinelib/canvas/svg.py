@@ -93,6 +93,7 @@ class SVGDrawingAlgorithm(object):
         group.addElement(self._draw_background())
         for era in self.timeline.get_all_periods():
             group.addElement(self._draw_era(era))
+            group.addElement(self._draw_era_text(era))
         self._draw_minor_strips(group)
         self._draw_major_strips(group)
         group.addElement(self._draw_divider_line())
@@ -107,10 +108,20 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_era(self, era):
         svg_color = self._map_svg_color(era.get_color()[:3])
+        (x, width, _, _) = self._calc_era_metrics(era)
+        return ShapeBuilder().createRect(x, 0, width, self.scene.height, fill=svg_color, strokewidth=0)
+
+    def _draw_era_text(self, era):
+        (_, _, text_x, text_y) = self._calc_era_metrics(era)
+        return self._draw_label(era.get_name(), text_x, text_y, self._small_font_style)
+
+    def _calc_era_metrics(self, era):
         period = era.get_time_period()
         x = self.scene.x_pos_for_time(period.start_time)
         width = min(self.scene.x_pos_for_time(period.end_time), self.scene.width) - x
-        return ShapeBuilder().createRect(x, 0, width, self.scene.height, fill=svg_color, strokewidth=0)
+        text_x = self.scene.x_pos_for_time(period.start_time) + width / 3
+        text_y = self.scene.height - OUTER_PADDING
+        return x, width, text_x, text_y
 
     def _get_small_font_style(self):
         myStyle = StyleBuilder()

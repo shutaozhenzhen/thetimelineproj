@@ -150,7 +150,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         rect = self.svg._draw_background()
         self.assertEqual(rect.getXML(), '<rect style="stroke:black; stroke-width:1; fill:#010203; " height="200" width="400" y="0" x="0"  />\n')
 
-    def test_can_draw_era(self):
+    def test_can_draw_era_background(self):
 
         def my_side_effect(*args, **kwargs):
             self.call_count += 1
@@ -164,6 +164,21 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         era.get_color.return_value = (127, 127, 127, 4)
         era = self.svg._draw_era(era)
         self.assertEqual(era.getXML(), '<rect style="stroke:black; stroke-width:0; fill:#7F7F7F; " height="200" width="25" y="0" x="50"  />\n')
+
+    def test_can_draw_era_text(self):
+
+        def my_side_effect(*args, **kwargs):
+            self.call_count += 1
+            if self.call_count == 1:
+                return 50
+            else:
+                return 75
+
+        self.scene.x_pos_for_time.side_effect = my_side_effect
+        era = Mock(Era)
+        era.get_name.return_value = "foobar"
+        text = self.svg._draw_era_text(era)
+        self.assertEqual(text.getXML(), '<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="195" x="83"  >\nfoobar</text>\n')
 
     def setUp(self):
         path = Mock()
