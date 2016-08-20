@@ -106,7 +106,7 @@ class XmlTimelineSpec(TmpDirTestCase):
     def testDisplayedPeriodTagNotWrittenIfNotSet(self):
         # Create a new db and add one event
         db = db_open(self.tmp_path)
-        db.save_event(Event(db.get_time_type(), GregorianUtils.from_date(2010, 8, 31).to_time(),
+        db.save_event(Event(GregorianUtils.from_date(2010, 8, 31).to_time(),
                             GregorianUtils.from_date(2010, 8, 31).to_time(),
                             "test"))
         # Read the file content from disk
@@ -155,7 +155,7 @@ class XmlTimelineSpec(TmpDirTestCase):
                                font_color=None, parent=cat2)
         db.save_category(cat3)
         # Create events
-        ev1 = Event(db.get_time_type(), GregorianUtils.from_date(2010, 3, 3).to_time(), GregorianUtils.from_date(2010, 3, 6).to_time(),
+        ev1 = Event(GregorianUtils.from_date(2010, 3, 3).to_time(), GregorianUtils.from_date(2010, 3, 6).to_time(),
                     "Event 1", cat1)
         ev1.set_data("description", u"The <b>first</b> event Ã¥Ã¤Ã¶.")
         ev1.set_data("alert", (GregorianUtils.from_date(2012, 12, 31).to_time(), "Time to go"))

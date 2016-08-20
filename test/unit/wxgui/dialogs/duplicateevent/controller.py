@@ -161,7 +161,6 @@ class describe_duplicate_event_dialog(UnitTestCase):
         self.view = Mock(DuplicateEventDialog)
         self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
         self.event = Event(
-            self.db.get_time_type(),
             GregorianUtils.from_date(2010, 1, 1).to_time(),
             GregorianUtils.from_date(2010, 1, 1).to_time(),
             "foo",
@@ -209,12 +208,11 @@ class describe_duplicate_event_dialog_for_containers(UnitTestCase):
         self.view = Mock(DuplicateEventDialog)
         self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
         self.event = Container(
-            self.db.get_time_type(),
             GregorianUtils.from_date(2010, 1, 1).to_time(),
             GregorianUtils.from_date(2010, 1, 1).to_time(),
             "foo",
             category=None)
-        self.event.events = [Subevent(self.db.get_time_type(), GregorianUtils.from_date(2010, 1, 1).to_time(), GregorianUtils.from_date(2010, 1, 1).to_time(), "")]
+        self.event.events = [Subevent(GregorianUtils.from_date(2010, 1, 1).to_time(), GregorianUtils.from_date(2010, 1, 1).to_time(), "")]
         self.controller = DuplicateEventDialogController(self.view)
         self.controller.on_init(self.db, self.event)
 

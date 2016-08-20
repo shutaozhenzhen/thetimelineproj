@@ -66,7 +66,6 @@ class describe_set_category_dialog(UnitTestCase):
 
     def _create_event(self, category):
         return Event(
-            self.time_type,
             GregorianUtils.from_date(2010, 1, 1).to_time(),
             GregorianUtils.from_date(2010, 1, 1).to_time(),
             "foo",

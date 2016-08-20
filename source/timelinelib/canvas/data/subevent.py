@@ -22,11 +22,11 @@ from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONT
 
 class Subevent(Event):
 
-    def __init__(self, time_type, start_time, end_time, text, category=None,
+    def __init__(self, start_time, end_time, text, category=None,
                  container=None, cid=-1, locked=False, ends_today=False):
         if not EXTENDED_CONTAINER_STRATEGY.enabled():
             locked = False
-        Event.__init__(self, time_type, start_time, end_time, text, category,
+        Event.__init__(self, start_time, end_time, text, category,
                        False, locked, ends_today)
         self.container = container
         if self.container is not None:
@@ -83,7 +83,7 @@ class Subevent(Event):
     def clone(self):
         # Objects of type datetime are immutable.
         new_event = Subevent(
-            self.get_time_type(), self.get_time_period().start_time,
+            self.get_time_period().start_time,
             self.get_time_period().end_time, self.get_text(),
             self.get_category(), None, self.container_id)
         # Description is immutable

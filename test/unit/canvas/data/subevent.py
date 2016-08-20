@@ -32,8 +32,7 @@ from timelinelib.test.utils import SUBEVENT_MODIFIERS
 class describe_subevent(UnitTestCase):
 
     def test_can_get_values(self):
-        event = Subevent(time_type=GregorianTimeType(),
-                         start_time=human_time_to_gregorian("11 Jul 2014"),
+        event = Subevent(start_time=human_time_to_gregorian("11 Jul 2014"),
                          end_time=human_time_to_gregorian("12 Jul 2014"),
                          text="a day in my life")
         self.assertEqual(event.get_id(), None)
@@ -41,7 +40,6 @@ class describe_subevent(UnitTestCase):
                          gregorian_period("11 Jul 2014", "12 Jul 2014"))
         self.assertEqual(event.get_text(), "a day in my life")
         self.assertEqual(event.get_category(), None)
-        self.assertEqual(event.get_time_type(), GregorianTimeType())
         self.assertEqual(event.get_fuzzy(), False)
         self.assertEqual(event.get_locked(), False)
         self.assertEqual(event.get_ends_today(), False)
@@ -65,9 +63,6 @@ class describe_subevent(UnitTestCase):
         self.assertEqual(
             a_subevent().set_category(a_parent_category).get_category(),
             a_parent_category)
-        self.assertEqual(
-            a_subevent().set_time_type(NumTimeType()).get_time_type(),
-            NumTimeType())
         self.assertEqual(
             a_subevent().set_fuzzy(True).get_fuzzy(),
             True)

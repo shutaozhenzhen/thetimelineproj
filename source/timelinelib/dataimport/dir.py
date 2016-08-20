@@ -108,7 +108,7 @@ def _event_from_path(db, file_path):
         start_time, end_time = end_time, start_time
     text = os.path.basename(file_path)
     category = _category_from_path(db, file_path)
-    evt = Event(db.get_time_type(), start_time, end_time, text, category)
+    evt = Event(start_time, end_time, text, category)
     return evt
 
 

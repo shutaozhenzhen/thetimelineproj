@@ -124,7 +124,7 @@ class ContainerStrategiesTestCase(UnitTestCase):
         self.assertEqual(subevent.get_time_period(), strategy.container.get_time_period())
 
     def a_subevent(self, time_period=gregorian_period("1 Jan 2014", "10 Jan 2014")):
-        return Subevent(GregorianTimeType(), time_period.start_time, time_period.end_time, "")
+        return Subevent(time_period.start_time, time_period.end_time, "")
 
 
 class describe_default_container_strategy(ContainerStrategiesTestCase):
@@ -312,81 +312,67 @@ class describe_default_container_startegy_(UnitTestCase):
         self.strategy.register_subevent(self.subevent2)
 
     def given_strategy_with_container(self):
-        self.container = Container(self.time_type,
-                                   self.time("2000-01-01 10:01:01"),
+        self.container = Container(self.time("2000-01-01 10:01:01"),
                                    self.time("2000-01-01 10:01:01"),
                                    "Container1")
         self.container.set_id(get_process_unique_id())
         self.strategy = DefaultContainerStrategy(self.container)
 
     def given_event_overlapping_point_event(self):
-        self.subevent1 = Subevent(self.time_type,
-                                  self.time("2000-05-01 10:02:01"),
+        self.subevent1 = Subevent(self.time("2000-05-01 10:02:01"),
                                   self.time("2000-05-01 10:02:01"),
                                   "Container1")
         self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time_type,
-                                  self.time("2000-05-01 10:01:01"),
+        self.subevent2 = Subevent(self.time("2000-05-01 10:01:01"),
                                   self.time("2000-07-01 10:01:01"), "Container1")
         self.subevent2.set_id(get_process_unique_id())
         self.strategy.register_subevent(self.subevent1)
         self.strategy.register_subevent(self.subevent2)
 
     def given_event_overlapping_point_event2(self):
-        self.subevent1 = Subevent(self.time_type,
-                                  self.time("2000-07-01 10:00:01"),
+        self.subevent1 = Subevent(self.time("2000-07-01 10:00:01"),
                                   self.time("2000-07-01 10:00:01"), "Container1")
         self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time_type,
-                                  self.time("2000-05-01 10:01:01"),
+        self.subevent2 = Subevent(self.time("2000-05-01 10:01:01"),
                                   self.time("2000-07-01 10:01:01"), "Container1")
         self.subevent2.set_id(get_process_unique_id())
         self.strategy.register_subevent(self.subevent1)
         self.strategy.register_subevent(self.subevent2)
 
     def given_two_overlapping_events(self):
-        self.subevent1 = Subevent(self.time_type,
-                                  self.time("2000-03-01 10:01:01"),
+        self.subevent1 = Subevent(self.time("2000-03-01 10:01:01"),
                                   self.time("2000-06-01 10:01:01"), "Container1")
         self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time_type,
-                                  self.time("2000-05-01 10:01:01"),
+        self.subevent2 = Subevent(self.time("2000-05-01 10:01:01"),
                                   self.time("2000-07-01 10:01:01"), "Container1")
         self.subevent2.set_id(get_process_unique_id())
 
     def given_two_events_with_same_period(self):
-        self.subevent1 = Subevent(self.time_type,
-                                  self.time("2000-03-01 10:01:01"),
+        self.subevent1 = Subevent(self.time("2000-03-01 10:01:01"),
                                   self.time("2000-06-01 10:01:01"), "Container1")
         self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time_type,
-                                  self.time("2000-03-01 10:01:01"),
+        self.subevent2 = Subevent(self.time("2000-03-01 10:01:01"),
                                   self.time("2000-06-01 10:01:01"), "Container1")
         self.subevent2.set_id(get_process_unique_id())
 
     def given_two_events_with_same_start_time(self):
-        self.subevent1 = Subevent(self.time_type,
-                                  self.time("2000-03-01 10:01:01"),
+        self.subevent1 = Subevent(self.time("2000-03-01 10:01:01"),
                                   self.time("2000-06-01 10:01:01"), "Container1")
         self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time_type,
-                                  self.time("2000-03-01 10:01:01"),
+        self.subevent2 = Subevent(self.time("2000-03-01 10:01:01"),
                                   self.time("2000-04-01 10:01:01"), "Container1")
         self.subevent2.set_id(get_process_unique_id())
 
     def given_two_events_with_nonoverlapping_periods(self):
-        self.subevent1 = Subevent(self.time_type,
-                                  self.time("2000-01-01 10:01:01"),
+        self.subevent1 = Subevent(self.time("2000-01-01 10:01:01"),
                                   self.time("2000-02-01 10:01:01"), "Container1")
         self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time_type,
-                                  self.time("2000-03-01 10:01:01"),
+        self.subevent2 = Subevent(self.time("2000-03-01 10:01:01"),
                                   self.time("2000-04-01 10:01:01"), "Container1")
         self.subevent2.set_id(get_process_unique_id())
 
     def given_subevent1(self):
-        self.subevent1 = Subevent(self.time_type,
-                                  self.time("2000-01-01 10:01:01"),
+        self.subevent1 = Subevent(self.time("2000-01-01 10:01:01"),
                                   self.time("2000-02-01 10:01:01"), "Container1")
         self.subevent1.set_id(get_process_unique_id())
 

@@ -62,7 +62,7 @@ class IcsLoader(object):
         try:
             start, end = self._extract_todo_start_end(vtodo)
             txt = self._get_event_name(vtodo)
-            event = Event(db.get_time_type(), start, end, txt)
+            event = Event(start, end, txt)
             event.set_description(self._extract_todo_description(vtodo))
             event.set_alert(self._extract_todo_alert(vtodo))
             self.events.append(event)
@@ -138,7 +138,7 @@ class IcsLoader(object):
     def _load_vevent(self, db, vevent):
         start, end = self._extract_start_end(vevent)
         txt = self._get_event_name(vevent)
-        event = Event(db.get_time_type(), start, end, txt)
+        event = Event(start, end, txt)
         event.set_description(self._get_description(vevent))
         self.events.append(event)
 

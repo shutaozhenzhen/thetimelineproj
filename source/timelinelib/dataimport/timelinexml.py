@@ -242,17 +242,17 @@ class Parser(object):
         milestone = self._parse_optional_bool(tmp_dict, "tmp_milestone")
         if self._is_container_event(text):
             cid, text = self._extract_container_id(text)
-            event = Container(self.db.get_time_type(), start, end, text, category, cid=cid)
+            event = Container(start, end, text, category, cid=cid)
         elif self._is_subevent(text):
             cid, text = self._extract_subid(text)
-            event = Subevent(self.db.get_time_type(), start, end, text, category, cid=cid, locked=locked, ends_today=ends_today)
+            event = Subevent(start, end, text, category, cid=cid, locked=locked, ends_today=ends_today)
         elif milestone:
             event = Milestone(self.db, start, text)
             event.set_category(category)
         else:
             if self._text_starts_with_added_space(text):
                 text = self._remove_added_space(text)
-            event = Event(self.db.get_time_type(), start, end, text, category, fuzzy, locked, ends_today)
+            event = Event(start, end, text, category, fuzzy, locked, ends_today)
         default_color = tmp_dict.pop("tmp_default_color", "200,200,200")
         event.set_data("description", description)
         event.set_data("icon", icon)

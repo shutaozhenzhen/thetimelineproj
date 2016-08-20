@@ -16,10 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.event import clone_event_list
+from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data.timeperiod import TimePeriod
-from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.time.numtime import NumTimeType
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import an_event
@@ -27,17 +29,15 @@ from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import EVENT_MODIFIERS
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
-from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data.event import clone_event_list
-from timelinelib.canvas.data import Container
-from timelinelib.canvas.data import Subevent
+from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.time.numtime import NumTimeType
+import timelinelib.time.timeline as timeline
 
 
 class describe_event(UnitTestCase):
 
     def test_can_get_values(self):
-        event = Event(time_type=GregorianTimeType(),
-                      start_time=human_time_to_gregorian("11 Jul 2014"),
+        event = Event(start_time=human_time_to_gregorian("11 Jul 2014"),
                       end_time=human_time_to_gregorian("12 Jul 2014"),
                       text="a day in my life")
         self.assertEqual(event.get_id(), None)
@@ -45,7 +45,6 @@ class describe_event(UnitTestCase):
                          gregorian_period("11 Jul 2014", "12 Jul 2014"))
         self.assertEqual(event.get_text(), "a day in my life")
         self.assertEqual(event.get_category(), None)
-        self.assertEqual(event.get_time_type(), GregorianTimeType())
         self.assertEqual(event.get_fuzzy(), False)
         self.assertEqual(event.get_locked(), False)
         self.assertEqual(event.get_ends_today(), False)
@@ -69,9 +68,6 @@ class describe_event(UnitTestCase):
         self.assertEqual(
             an_event().set_category(a_parent_category).get_category(),
             a_parent_category)
-        self.assertEqual(
-            an_event().set_time_type(NumTimeType()).get_time_type(),
-            NumTimeType())
         self.assertEqual(
             an_event().set_fuzzy(True).get_fuzzy(),
             True)
@@ -198,7 +194,7 @@ class describe_event_functions(UnitTestCase):
 
     def test_zero_time_span(self):
         event = an_event()
-        self.assertEqual(event.get_time_type().get_zero_delta(), event.time_span())
+        self.assertEqual(timeline.delta_from_seconds(0), event.time_span())
 
 
 class describe_event_cloning(UnitTestCase):
@@ -281,16 +277,16 @@ class describe_event_cloning(UnitTestCase):
 
     def test_cloning_copies_time_period_attribute(self):
         event = an_event()
-        time_period = TimePeriod(event.time_type.parse_time("2010-08-01 13:44:00"),
-                                 event.time_type.parse_time("2014-08-01 13:44:00"))
+        time_period = TimePeriod(GregorianTimeType().parse_time("2010-08-01 13:44:00"),
+                                 GregorianTimeType().parse_time("2014-08-01 13:44:00"))
         event.set_time_period(time_period)
         clone = event.clone()
         self.assertEqual(clone, event)
 
     def test_cloned_time_periods_are_not_the_same_object(self):
         event = an_event()
-        time_period = TimePeriod(event.time_type.parse_time("2010-08-01 13:44:00"),
-                                 event.time_type.parse_time("2014-08-01 13:44:00"))
+        time_period = TimePeriod(GregorianTimeType().parse_time("2010-08-01 13:44:00"),
+                                 GregorianTimeType().parse_time("2014-08-01 13:44:00"))
         event.set_time_period(time_period)
         clone = event.clone()
         self.assertTrue(time_period is not clone.get_time_period())
@@ -322,9 +318,9 @@ class describe_event_cloning_of_containers(UnitTestCase):
         self.assertEquals(cloned_event_list[2].container_id, cloned_event_list[0].container_id)
 
     def given_container_with_subevents(self):
-        self.container = Container(self.db.get_time_type(), self.now, self.now, "container", category=None, cid=1)
-        self.subevent1 = Subevent(self.db.get_time_type(), self.now, self.now, "sub1", category=None, container=self.container, cid=1)
-        self.subevent2 = Subevent(self.db.get_time_type(), self.now, self.now, "sub2", category=None, container=self.container)
+        self.container = Container(self.now, self.now, "container", category=None, cid=1)
+        self.subevent1 = Subevent(self.now, self.now, "sub1", category=None, container=self.container, cid=1)
+        self.subevent2 = Subevent(self.now, self.now, "sub2", category=None, container=self.container)
         self.container.register_subevent(self.subevent1)
         self.container.register_subevent(self.subevent2)
         self.events = [self.container, self.subevent1, self.subevent2]
