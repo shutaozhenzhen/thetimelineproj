@@ -102,7 +102,7 @@ class NoOpInputHandler(InputHandler):
         if event is None:
             self._status_bar.set_text(time_string)
         else:
-            self._status_bar.set_text(event.get_label())
+            self._status_bar.set_text(event.get_label(self.timeline_canvas.GetTimeType()))
 
     def _format_current_pos_datetime_string(self, xpos):
         tm = self.timeline_canvas.GetTimeAt(xpos)

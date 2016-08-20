@@ -140,11 +140,11 @@ class describe_event(UnitTestCase):
 
     def test_point_event_has_a_label(self):
         event = an_event_with(text="foo", time="11 Jul 2014 10:11")
-        self.assertEqual(u"foo (11 #Jul# 2014 10:11)", event.get_label())
+        self.assertEqual(u"foo (11 #Jul# 2014 10:11)", event.get_label(GregorianTimeType()))
 
     def test_point_event_has_an_empty_duration_label(self):
         event = an_event_with(text="foo", time="11 Jul 2014 10:11")
-        self.assertEqual(u"", event._get_duration_label())
+        self.assertEqual(u"", event._get_duration_label(GregorianTimeType()))
 
     def test_duration_label_for_period_events(self):
         cases = (("11 Jul 2014 10:11", "11 Jul 2014 10:12", "1 #minute#"),
@@ -168,7 +168,7 @@ class describe_event(UnitTestCase):
                  )
         for start, end, label in cases:
             event = an_event_with(start=start, end=end)
-            self.assertEqual(label, event._get_duration_label())
+            self.assertEqual(label, event._get_duration_label(GregorianTimeType()))
 
 
 class describe_event_construction(UnitTestCase):

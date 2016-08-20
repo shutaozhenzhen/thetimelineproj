@@ -1163,7 +1163,7 @@ class AlertController(object):
 
     def _format_alert_text(self, alert, event):
         text1 = "Trigger time: %s\n\n" % alert[0]
-        text2 = "Event: %s\n\n" % event.get_label()
+        text2 = "Event: %s\n\n" % event.get_label(self.time_type)
         text = "%s%s%s" % (text1, text2, alert[1])
         return text
 
