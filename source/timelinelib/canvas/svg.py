@@ -348,7 +348,33 @@ class SVGDrawingAlgorithm(object):
         return indicator
 
     def _svg_clipped_text(self, myString, rectTuple, myStyle):
+        pathId, p = self._calc_clip_path(rectTuple)
+        clip = clipPath()
+        clip.addElement(p)
+        clip.set_id(pathId)
+        self.svg.addElement(self._create_defs(clip))
         myString = self._encode_text(myString)
+        text_x, text_y = self._calc_text_pos(rectTuple)
+        myText = text(myString, text_x, text_y)
+        myText.set_style(myStyle.getStyle())
+        myText.set_lengthAdjust("spacingAndGlyphs")
+        # Put text,clipping into a SVG group
+        group = g()
+        group.set_clip_path("url(#%s)" % pathId)
+        group.addElement(myText)
+        return group
+
+    def _calc_clip_path(self, rectTuple):
+        rx, ry, width, height = rectTuple
+        text_x, text_y = self._calc_text_pos(rectTuple)
+        pathId = "path%d_%d" % (text_x, text_y)
+        p = path(pathData="M %d %d H %d V %d H %d" %
+                 (rx, ry + height,
+                  text_x + width - INNER_PADDING,
+                  ry, rx))
+        return pathId, p
+
+    def _calc_text_pos(self, rectTuple):
         rx, ry, width, height = rectTuple
         text_x = rx + INNER_PADDING
         text_y = ry + height - INNER_PADDING
@@ -359,23 +385,7 @@ class SVGDrawingAlgorithm(object):
         if text_x < INNER_PADDING:
             width = width - (INNER_PADDING - text_x)
             text_x = INNER_PADDING
-        pathId = "path%d_%d" % (text_x, text_y)
-        p = path(pathData="M %d %d H %d V %d H %d" %
-                 (rx, ry + height,
-                  text_x + width - INNER_PADDING,
-                  ry, rx))
-        clip = clipPath()
-        clip.addElement(p)
-        clip.set_id(pathId)
-        self.svg.addElement(self._create_defs(clip))
-        myText = text(myString, text_x, text_y)
-        myText.set_style(myStyle.getStyle())
-        myText.set_lengthAdjust("spacingAndGlyphs")
-        # Put text,clipping into a SVG group
-        group = g()
-        group.set_clip_path("url(#%s)" % pathId)
-        group.addElement(myText)
-        return group
+        return text_x, text_y
 
     def _text(self, the_text, x, y):
         encoded_text = self._encode_text(the_text)
