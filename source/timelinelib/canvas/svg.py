@@ -353,16 +353,19 @@ class SVGDrawingAlgorithm(object):
         clip.addElement(p)
         clip.set_id(pathId)
         self.svg.addElement(self._create_defs(clip))
+        # Put text,clipping into a SVG group
+        group = g()
+        group.set_clip_path("url(#%s)" % pathId)
+        group.addElement(self._draw_text(myString, rectTuple, myStyle))
+        return group
+
+    def _draw_text(self, myString, rectTuple, myStyle):
         myString = self._encode_text(myString)
         text_x, text_y = self._calc_text_pos(rectTuple)
         myText = text(myString, text_x, text_y)
         myText.set_style(myStyle.getStyle())
         myText.set_lengthAdjust("spacingAndGlyphs")
-        # Put text,clipping into a SVG group
-        group = g()
-        group.set_clip_path("url(#%s)" % pathId)
-        group.addElement(myText)
-        return group
+        return myText
 
     def _calc_clip_path(self, rectTuple):
         rx, ry, width, height = rectTuple
@@ -380,7 +383,7 @@ class SVGDrawingAlgorithm(object):
         text_y = ry + height - INNER_PADDING
         # TODO: in SVG, negative value should be OK, but they
         # are not drawn in Firefox. So add a special handling here
-        # however the root cause is the layout function for the recs
+        # however the root cause is the layout function for the rects
         # which should be fixed not to have values < 0
         if text_x < INNER_PADDING:
             width = width - (INNER_PADDING - text_x)
