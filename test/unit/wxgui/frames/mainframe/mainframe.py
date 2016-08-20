@@ -124,8 +124,9 @@ class describe_menu_controller(UnitTestCase):
 class describe_alert_controller(UnitTestCase):
 
     def test_alert_text_formatting(self):
+        self.controller.time_type = GregorianTimeType()
         text = self.controller._format_alert_text(self.alert, self.event)
-        expected_text = "Trigger time: %s\n\nEvent: %s\n\nTime to go" % (self.now, self.event.get_label())
+        expected_text = "Trigger time: %s\n\nEvent: %s\n\nTime to go" % (self.now, self.event.get_label(GregorianTimeType()))
         self.assertEqual(expected_text, text)
 
     def test_pytime_has_expired(self):

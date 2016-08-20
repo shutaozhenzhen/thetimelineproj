@@ -143,7 +143,7 @@ class SearchBarController(object):
             self.view.update_buttons()
 
     def list(self):
-        event_list = [event.get_label() for event in self.result]
+        event_list = [event.get_label(self.timeline_canvas.GetTimeType()) for event in self.result]
         dlg = EventListDialog(self.view, event_list)
         if dlg.ShowModal() == wx.ID_OK:
             self.result_index = dlg.GetSelectedIndex()
