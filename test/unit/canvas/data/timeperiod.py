@@ -17,9 +17,10 @@
 
 
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.time.typeinterface import TimeType
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import TIME_PERIOD_MODIFIERS
+from timelinelib.time.timeline import Time
+from timelinelib.time.timeline import TimeDelta
 
 
 class time_period_spec(UnitTestCase):
@@ -93,108 +94,9 @@ class time_period_spec(UnitTestCase):
         self.assertEqNeImplementationIsCorrect(a_time_period, TIME_PERIOD_MODIFIERS)
 
 
-class ATime(object):
-
-    def __init__(self, num):
-        self.num = num
-
-    # Exists only only to simplify testing
-    def __repr__(self):
-        return "ATime<%s>" % self.num
-
-    def __eq__(self, other):
-        return isinstance(other, ATime) and self.num == other.num
-
-    def __ne__(self, other):
-        return not (self == other)
-
-    def __add__(self, other):
-        if isinstance(other, ADelta):
-            return ATime(self.num + other.num)
-        raise Exception("Only time+delta supported")
-
-    def __sub__(self, other):
-        if isinstance(other, ATime):
-            return ADelta(self.num - other.num)
-        elif isinstance(other, ADelta):
-            return ATime(self.num - other.num)
-        raise Exception("Only time-time and time-delta supported")
-
-    def __lt__(self, other):
-        return self.num < other.num
-
-    def __le__(self, other):
-        return self.num <= other.num
-
-    def __gt__(self, other):
-        return self.num > other.num
-
-    def __ge__(self, other):
-        return self.num >= other.num
+def ATime(num):
+    return Time(num, 0)
 
 
-class ADelta(object):
-
-    def __init__(self, num):
-        self.num = num
-
-    # Exists only only to simplify testing
-    def __eq__(self, other):
-        return isinstance(other, ADelta) and self.num == other.num
-
-    # Exists only only to simplify testing
-    def __ne__(self, other):
-        return not (self == other)
-
-    # Exists only only to simplify testing
-    def __repr__(self):
-        return "ADelta<%s>" % self.num
-
-    def __neg__(self):
-        return ADelta(-self.num)
-
-    def __lt__(self, other):
-        return self.num < other.num
-
-    def __gt__(self, other):
-        return other < self
-
-    def __sub__(self, other):
-        if isinstance(other, ADelta):
-            return ADelta(self.num - other.num)
-        raise Exception("Only delta-delta supported")
-
-    def __mul__(self, other):
-        return ADelta(int(self.num*other))
-
-    def __rmul__(self, other):
-        return self * other
-
-    def __div__(self, other):
-        if isinstance(other, int):
-            return ADelta(int(self.num/other))
-        raise Exception("Only delta/int supported")
-
-
-class ATimeType(TimeType):
-
-    def get_min_time(self):
-        return (ATime(0), "can't be before 0")
-
-    def get_max_time(self):
-        return (ATime(100), "can't be after 100")
-
-    def get_zero_delta(self):
-        return ADelta(0)
-
-    def format_period(self, period):
-        return "%s to %s" % (period.start_time.num, period.end_time.num)
-
-    def get_min_zoom_delta(self):
-        return (ADelta(1), "")
-
-    def __eq__(self, other):
-        return isinstance(other, ATimeType)
-
-    def __ne__(self, other):
-        return not (self == other)
+def ADelta(num):
+    return TimeDelta(num*60*60*24)
