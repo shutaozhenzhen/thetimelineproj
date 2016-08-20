@@ -361,19 +361,19 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_text(self, myString, rectTuple, myStyle):
         myString = self._encode_text(myString)
-        text_x, text_y = self._calc_text_pos(rectTuple)
+        text_x, text_y, _ = self._calc_text_pos(rectTuple)
         myText = text(myString, text_x, text_y)
         myText.set_style(myStyle.getStyle())
         myText.set_lengthAdjust("spacingAndGlyphs")
         return myText
 
     def _calc_clip_path(self, rectTuple):
-        rx, ry, width, height = rectTuple
-        text_x, text_y = self._calc_text_pos(rectTuple)
+        rx, ry, _, height = rectTuple
+        text_x, text_y, width = self._calc_text_pos(rectTuple)
         pathId = "path%d_%d" % (text_x, text_y)
         p = path(pathData="M %d %d H %d V %d H %d" %
                  (rx, ry + height,
-                  text_x + width - INNER_PADDING,
+                  text_x + width - 2 * INNER_PADDING,
                   ry, rx))
         return pathId, p
 
@@ -388,7 +388,7 @@ class SVGDrawingAlgorithm(object):
         if text_x < INNER_PADDING:
             width = width - (INNER_PADDING - text_x)
             text_x = INNER_PADDING
-        return text_x, text_y
+        return text_x, text_y, width
 
     def _text(self, the_text, x, y):
         encoded_text = self._encode_text(the_text)
