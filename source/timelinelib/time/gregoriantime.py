@@ -19,15 +19,16 @@
 from datetime import datetime
 import re
 
-from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian import Gregorian
+from timelinelib.calendar.gregorian import GregorianUtils
 from timelinelib.calendar import get_date_formatter
 from timelinelib.calendar.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.weekdaynames import abbreviated_name_of_weekday
-from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
+from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.typeinterface import TimeType
 import timelinelib.time.timeline as timeline
