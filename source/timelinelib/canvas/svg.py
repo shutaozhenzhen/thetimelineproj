@@ -368,13 +368,10 @@ class SVGDrawingAlgorithm(object):
         return myText
 
     def _calc_clip_path(self, rectTuple):
-        rx, ry, _, height = rectTuple
-        text_x, text_y, width = self._calc_text_pos(rectTuple)
-        pathId = "path%d_%d" % (text_x, text_y)
+        rx, ry, width, height = rectTuple
+        pathId = "path%d_%d" % (rx, ry)
         p = path(pathData="M %d %d H %d V %d H %d" %
-                 (rx, ry + height,
-                  text_x + width - 2 * INNER_PADDING,
-                  ry, rx))
+                 (rx, ry + height, rx + width, ry, rx))
         return pathId, p
 
     def _calc_text_pos(self, rectTuple):
