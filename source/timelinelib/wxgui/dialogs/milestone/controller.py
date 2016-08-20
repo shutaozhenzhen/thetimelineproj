@@ -19,7 +19,6 @@
 from timelinelib.wxgui.framework import Controller
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.milestone import Milestone
-from timelinelib.canvas.data.milestone import MILESTONE_TEXT
 
 
 class EditMilestoneDialogController(Controller):
@@ -42,10 +41,6 @@ class EditMilestoneDialogController(Controller):
         self.view.SetDescription(self._milestone.get_description())
         self.view.SetShowTime(self._milestone_has_nonzero_time())
         label = self._milestone.get_text()
-        try:
-            label = label.split(":")[1]
-        except:
-            label = ""
         self.view.SetLable(label)
         self.view.SetCategory(self._milestone.get_category())
 
@@ -64,7 +59,7 @@ class EditMilestoneDialogController(Controller):
             self._milestone.set_description(None)
         else:
             self._milestone.set_description(self.view.GetDescription())
-        self._milestone.set_text(MILESTONE_TEXT + "%s" % self.view.GetLabel())
+        self._milestone.set_text(self.view.GetLabel())
         self._milestone.set_default_color(self.view.GetColour()[:3])
         self._milestone.set_time_period(TimePeriod(self.view.GetTime(), self.view.GetTime()))
         self._milestone.set_category(self.view.GetCategory())
