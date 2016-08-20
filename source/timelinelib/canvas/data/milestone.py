@@ -31,7 +31,7 @@ MILESTONE_TEXT = "Milestone:"
 class Milestone(Event):
 
     def __init__(self, db, start_time, text):
-        Event.__init__(self, db.time_type, start_time, start_time, text)
+        Event.__init__(self, start_time, start_time, text)
         self.set_default_color(DEFAULT_COLOR)
 
     def is_milestone(self):

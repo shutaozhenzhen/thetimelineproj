@@ -93,7 +93,7 @@ def an_event_with(start=None, end=None, time=ANY_TIME, text="foo", fuzzy=False,
         start = human_time_to_gregorian(time)
         end = human_time_to_gregorian(time)
     event = Event(
-        GregorianTimeType(), start, end, text, category=category,
+        start, end, text, category=category,
         fuzzy=fuzzy, locked=locked, ends_today=ends_today)
     event.set_default_color(default_color)
     return event
@@ -110,19 +110,19 @@ def a_subevent_with(start=None, end=None, time=ANY_TIME, text="sub", category=No
     else:
         start = human_time_to_gregorian(time)
         end = human_time_to_gregorian(time)
-    return Subevent(GregorianTimeType(), start, end, text, category=category, container=container, cid=cid)
+    return Subevent(start, end, text, category=category, container=container, cid=cid)
 
 
 def a_container(name, category, sub_events):
     cid = 99
     start = human_time_to_gregorian(ANY_TIME)
     end = human_time_to_gregorian(ANY_TIME)
-    container = Container(GregorianTimeType(), start, end, name,
+    container = Container(start, end, name,
                           category=category, cid=cid)
     all_events = []
     all_events.append(container)
     for (name, category) in sub_events:
-        all_events.append(Subevent(GregorianTimeType(), start, end, name,
+        all_events.append(Subevent(start, end, name,
                                    category=category, container=container))
     return all_events
 
@@ -130,7 +130,7 @@ def a_container(name, category, sub_events):
 def a_container_with(text="container", category=None, cid=-1):
     start = human_time_to_gregorian(ANY_TIME)
     end = human_time_to_gregorian(ANY_TIME)
-    container = Container(GregorianTimeType(), start, end, text, category=category, cid=cid)
+    container = Container(start, end, text, category=category, cid=cid)
     return container
 
 
@@ -190,13 +190,6 @@ def new_parent(category):
         return a_category_with(name="was: %s" % category._get_parent().get_name())
 
 
-def new_time_type(event):
-    if event.get_time_type() is None:
-        return GregorianTimeType()
-    else:
-        return None
-
-
 def new_progress(event):
     if event.get_progress() is None:
         return 8
@@ -215,8 +208,6 @@ def modifier_change_ends_today(event):
 
 
 EVENT_MODIFIERS = [
-    ("change time type", lambda event:
-        event.set_time_type(new_time_type(event))),
     ("change fuzzy", lambda event:
         event.set_fuzzy(not event.get_fuzzy())),
     ("change locked", lambda event:

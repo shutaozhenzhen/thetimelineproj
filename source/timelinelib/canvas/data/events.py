@@ -212,8 +212,7 @@ class Events(object):
                 subevent_id = self._get_max_container_id(container_events) + 1
                 subevent.set_cid(subevent_id)
             name = "[%d]Container" % subevent_id
-            container = Container(subevent.time_type,
-                                  subevent.get_time_period().start_time,
+            container = Container(subevent.get_time_period().start_time,
                                   subevent.get_time_period().end_time, name)
             self.save_event(container)
             self._register_subevent(subevent)

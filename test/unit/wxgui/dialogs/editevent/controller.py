@@ -153,7 +153,7 @@ class EditEventDialogTestCase(UnitTestCase):
         self.controller.on_period_checkbox_changed(event)
 
     def simulate_user_selects_a_container(self, subevent):
-        container = Container(GregorianTimeType(), subevent.time_period.start_time, subevent.time_period.start_time, "container")
+        container = Container(subevent.time_period.start_time, subevent.time_period.start_time, "container")
         container.register_subevent(subevent)
         self.controller.container = container
 
@@ -325,7 +325,7 @@ class describe_start_is_in_history(EditEventDialogTestCase):
 
     def test_new_event_starts_in_history(self):
         time = "1 Jan 3010"
-        self.when_editor_opened_with_time("1 Jan 3010", Event(GregorianTimeType(), human_time_to_gregorian(time), human_time_to_gregorian(time), ""))
+        self.when_editor_opened_with_time("1 Jan 3010", Event(human_time_to_gregorian(time), human_time_to_gregorian(time), ""))
         self.assertFalse(self.controller._start_is_in_history())
 
     def test_new_event_starting_in_history(self):
@@ -558,7 +558,7 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
     def test_set_ends_today_on_subevent_extends_container_period(self):
         start = human_time_to_gregorian("1 Jan 2010")
         today = human_time_to_gregorian("1 Jan 2015")
-        subevent = Subevent(GregorianTimeType(), start, start, "subevent")
+        subevent = Subevent(start, start, "subevent")
         self.when_editor_opened_with_event(subevent)
         self.simulate_user_selects_a_container(subevent)
         self.simulate_ends_today_checked(today)

@@ -22,9 +22,9 @@ from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONT
 
 class Container(Event):
 
-    def __init__(self, time_type, start_time, end_time, text, category=None,
+    def __init__(self, start_time, end_time, text, category=None,
                  cid=-1):
-        Event.__init__(self, time_type, start_time, end_time, text, category,
+        Event.__init__(self, start_time, end_time, text, category,
                        False, False, False)
         self.container_id = cid
         self.events = []
@@ -67,7 +67,7 @@ class Container(Event):
 
     def clone(self):
         return Container(
-            self.get_time_type(), self.get_time_period().start_time,
+            self.get_time_period().start_time,
             self.get_time_period().end_time, self.get_text(),
             self.get_category(), self.container_id)
 

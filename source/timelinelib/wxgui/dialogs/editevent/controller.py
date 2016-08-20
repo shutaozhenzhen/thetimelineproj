@@ -277,14 +277,14 @@ class EditEventDialogController(Controller):
         if self.container is not None:
             self._create_subevent()
         else:
-            self.event = Event(self.time_type, self.start, self.end, self.name,
+            self.event = Event(self.start, self.end, self.name,
                                self.category, self.fuzzy, self.locked,
                                self.ends_today)
 
     def _create_subevent(self):
         if self._is_new_container(self.container):
             self._add_new_container()
-        self.event = Subevent(self.time_type, self.start, self.end, self.name,
+        self.event = Subevent(self.start, self.end, self.name,
                               self.category, self.container, ends_today=self.ends_today)
 
     def _is_new_container(self, container):

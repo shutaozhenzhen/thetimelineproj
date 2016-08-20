@@ -260,7 +260,7 @@ class TutorialTimelineCreator(object):
 
     def add_event(self, text, description, start_add, end_add=None, hyperlink=None):
         start, end = self.calc_start_end(start_add, end_add)
-        evt = Event(self.db.get_time_type(), start, end, text, self.last_cat)
+        evt = Event(start, end, text, self.last_cat)
         if description:
             evt.set_data("description", description)
         if hyperlink:
@@ -270,7 +270,7 @@ class TutorialTimelineCreator(object):
 
     def add_container(self, text, description, start_add, end_add=None):
         start, end = self.calc_start_end(start_add, end_add)
-        container = Container(self.db.get_time_type(), start, end, text, self.prev_cat)
+        container = Container(start, end, text, self.prev_cat)
         container.set_cid(self.next_cid)
         self.next_cid += 1
         self.db.save_event(container)
@@ -278,7 +278,7 @@ class TutorialTimelineCreator(object):
 
     def add_subevent(self, container, text, description, start_add, end_add=None, hyperlink=None):
         start, end = self.calc_start_end(start_add, end_add)
-        evt = Subevent(self.db.get_time_type(), start, end, text, self.last_cat)
+        evt = Subevent(start, end, text, self.last_cat)
         if description:
             evt.set_data("description", description)
         if hyperlink:
@@ -329,7 +329,7 @@ class NumericTutorialTimelineCreator(object):
 
     def add_event(self, text, description, start_add, end_add=None, hyperlink=None):
         start, end = self.calc_start_end(start_add, end_add)
-        evt = Event(self.db.get_time_type(), start, end, text, self.last_cat)
+        evt = Event(start, end, text, self.last_cat)
         if description:
             evt.set_data("description", description)
         if hyperlink:
@@ -338,7 +338,7 @@ class NumericTutorialTimelineCreator(object):
 
     def add_container(self, text, description, start_add, end_add=None):
         start, end = self.calc_start_end(start_add, end_add)
-        container = Container(self.db.get_time_type(), start, end, text, self.prev_cat)
+        container = Container(start, end, text, self.prev_cat)
         container.set_cid(self.next_cid)
         self.next_cid += 1
         self.db.save_event(container)
@@ -346,7 +346,7 @@ class NumericTutorialTimelineCreator(object):
 
     def add_subevent(self, container, text, description, start_add, end_add=None, hyperlink=None):
         start, end = self.calc_start_end(start_add, end_add)
-        evt = Subevent(self.db.get_time_type(), start, end, text, self.last_cat)
+        evt = Subevent(start, end, text, self.last_cat)
         if description:
             evt.set_data("description", description)
         if hyperlink:
