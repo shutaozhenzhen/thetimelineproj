@@ -349,8 +349,6 @@ class SVGDrawingAlgorithm(object):
 
     def _svg_clipped_text(self, myString, rectTuple, myStyle):
         myString = self._encode_text(myString)
-        # Put text,clipping into a SVG group
-        group = g()
         rx, ry, width, height = rectTuple
         text_x = rx + INNER_PADDING
         text_y = ry + height - INNER_PADDING
@@ -369,14 +367,13 @@ class SVGDrawingAlgorithm(object):
         clip = clipPath()
         clip.addElement(p)
         clip.set_id(pathId)
-        d = defs()
-        d.addElement(clip)
-        self.svg.addElement(d)
+        self.svg.addElement(self._create_defs(clip))
         myText = text(myString, text_x, text_y)
         myText.set_style(myStyle.getStyle())
         myText.set_lengthAdjust("spacingAndGlyphs")
+        # Put text,clipping into a SVG group
+        group = g()
         group.set_clip_path("url(#%s)" % pathId)
-
         group.addElement(myText)
         return group
 
@@ -394,8 +391,11 @@ class SVGDrawingAlgorithm(object):
             return text
 
     def _define_shadow_filter(self):
+        return self._create_defs(self._get_shadow_filter())
+
+    def _create_defs(self, definition):
         d = defs()
-        d.addElement(self._get_shadow_filter())
+        d.addElement(definition)
         return d
 
     def _get_shadow_filter(self):
