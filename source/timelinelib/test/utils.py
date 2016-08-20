@@ -155,7 +155,7 @@ def a_gregorian_era_with(start=None, end=None, time=ANY_TIME, name="foo", color=
     else:
         start = human_time_to_gregorian(time)
         end = human_time_to_gregorian(time)
-    return Era(GregorianTimeType(), start, end, name, color)
+    return Era(start, end, name, color)
 
 
 def a_numeric_era():
@@ -166,7 +166,7 @@ def a_numeric_era_with(start=None, end=None, time=ANY_NUM_TIME, name="foo", colo
     if not (start or end):
         start = time
         end = time
-    return Era(NumTimeType(), start, end, name, color)
+    return Era(start, end, name, color)
 
 
 def inc(number):
@@ -277,7 +277,6 @@ TIME_PERIOD_MODIFIERS = [
 
 
 ERA_MODIFIERS = [
-    ("change time type", lambda era: era.set_time_type(new_time_type(era))),
     ("change id", lambda era: era.set_id(inc(era.get_id()))),
     ("change time period", lambda era: era.set_time_period(era.get_time_period().move_delta(delta_from_days(1)))),
     ("change text", lambda era: era.set_name("was: %s" % era.get_name())),
@@ -285,7 +284,6 @@ ERA_MODIFIERS = [
 ]
 
 NUM_ERA_MODIFIERS = [
-    ("change time type", lambda era: era.set_time_type(new_time_type(era))),
     ("change id", lambda era: era.set_id(inc(era.get_id()))),
     ("change time period", lambda era: era.set_time_period(era.get_time_period().move_delta(1))),
     ("change text", lambda era: era.set_name("was: %s" % era.get_name())),

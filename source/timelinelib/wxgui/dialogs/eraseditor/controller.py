@@ -63,7 +63,7 @@ class ErasEditorDialogController(Controller):
         else:
             start = self.db.time_type.now()
         end = start
-        return Era(self.db.time_type, start, end, "New Era")
+        return Era(start, end, "New Era")
 
     def _operate_with_modal_dialog(self, label, era, operation):
         if self.editor_dialog is None:

@@ -53,9 +53,6 @@ class NumericEraTestCase(UnitTestCase):
 
 class describe_gregorian_era_getters(GregorianEraTestCase):
 
-    def test_can_get_time_type(self):
-        self.assertEquals(GregorianTimeType(), self.era.get_time_type())
-
     def test_can_get_id(self):
         self.assertEquals(None, self.era.get_id())
         self.assertFalse(self.era.has_id())
@@ -72,9 +69,6 @@ class describe_gregorian_era_getters(GregorianEraTestCase):
 
 class describe_numeric_era_getters(NumericEraTestCase):
 
-    def test_can_get_time_type(self):
-        self.assertEquals(NumTimeType(), self.era.get_time_type())
-
     def test_can_get_id(self):
         self.assertEquals(None, self.era.get_id())
         self.assertFalse(self.era.has_id())
@@ -90,10 +84,6 @@ class describe_numeric_era_getters(NumericEraTestCase):
 
 
 class describe_gregorian_era_setters(GregorianEraTestCase):
-
-    def test_can_set_time_type(self):
-        self.era.set_time_type(GregorianTimeType())
-        self.assertEquals(GregorianTimeType(), self.era.get_time_type())
 
     def test_can_set_id(self):
         era_id = 100
@@ -120,10 +110,6 @@ class describe_gregorian_era_setters(GregorianEraTestCase):
 
 
 class describe_numeric_era_setters(NumericEraTestCase):
-
-    def test_can_set_time_type(self):
-        self.era.set_time_type(NumTimeType())
-        self.assertEquals(NumTimeType(), self.era.get_time_type())
 
     def test_can_set_id(self):
         era_id = 100
@@ -200,14 +186,14 @@ class describe_gregorian_era_cloning(GregorianEraTestCase):
         self.assertEqual(clone, self.era)
 
     def test_cloning_copies_time_period_attribute(self):
-        time_period = TimePeriod(self.era.time_type.parse_time("2010-08-01 13:44:00"),
-                                 self.era.time_type.parse_time("2014-08-01 13:44:00"))
+        time_period = TimePeriod(GregorianTimeType().parse_time("2010-08-01 13:44:00"),
+                                 GregorianTimeType().parse_time("2014-08-01 13:44:00"))
         clone = self.era.set_time_period(time_period).clone()
         self.assertEqual(clone, self.era)
 
     def test_cloned_time_periods_are_not_the_same_object(self):
-        time_period = TimePeriod(self.era.time_type.parse_time("2010-08-01 13:44:00"),
-                                 self.era.time_type.parse_time("2014-08-01 13:44:00"))
+        time_period = TimePeriod(GregorianTimeType().parse_time("2010-08-01 13:44:00"),
+                                 GregorianTimeType().parse_time("2014-08-01 13:44:00"))
         clone = self.era.set_time_period(time_period).clone()
         self.assertTrue(time_period is not clone.get_time_period())
 
@@ -236,14 +222,14 @@ class describe_numeric_era_cloning(NumericEraTestCase):
         self.assertEqual(clone, self.era)
 
     def test_cloning_copies_time_period_attribute(self):
-        time_period = TimePeriod(self.era.time_type.parse_time("11"),
-                                 self.era.time_type.parse_time("1111"))
+        time_period = TimePeriod(NumTimeType().parse_time("11"),
+                                 NumTimeType().parse_time("1111"))
         clone = self.era.set_time_period(time_period).clone()
         self.assertEqual(clone, self.era)
 
     def test_cloned_time_periods_are_not_the_same_object(self):
-        time_period = TimePeriod(self.era.time_type.parse_time("11"),
-                                 self.era.time_type.parse_time("1111"))
+        time_period = TimePeriod(NumTimeType().parse_time("11"),
+                                 NumTimeType().parse_time("1111"))
         clone = self.era.set_time_period(time_period).clone()
         self.assertTrue(time_period is not clone.get_time_period())
 

@@ -267,7 +267,7 @@ class Parser(object):
         start = self._parse_time(tmp_dict.pop("tmp_start"))
         end = self._parse_time(tmp_dict.pop("tmp_end"))
         color = parse_color(tmp_dict.pop("tmp_color"))
-        era = Era(self.db.get_time_type(), start, end, name, color)
+        era = Era(start, end, name, color)
         self.db.save_era(era)
 
     def _text_starts_with_added_space(self, text):
