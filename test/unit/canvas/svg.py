@@ -106,7 +106,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         rect.GetHeight.return_value = 8
         rect.Get.return_value = (10, 20, 50, 8)
         group = self.svg._draw_event(event, rect)
-        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:#8C8C8C; stroke-width:1; fill:#C8C8C8; " height="8" width="50" y="20" x="10"  />\n<g clip-path="url(#path13_25)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="25" x="13" lengthAdjust="spacingAndGlyphs"  >\nFoo</text>\n</g>\n<polygon style="stroke:#787878; stroke-width:1; fill:#787878; " points="50,20 60,20 60,30"  />\n</g>\n')
+        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:#8C8C8C; stroke-width:1; fill:#C8C8C8; " height="8" width="50" y="20" x="10"  />\n<g clip-path="url(#path10_20)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="25" x="13" lengthAdjust="spacingAndGlyphs"  >\nFoo</text>\n</g>\n<polygon style="stroke:#787878; stroke-width:1; fill:#787878; " points="50,20 60,20 60,30"  />\n</g>\n')
 
     def test_can_draw_legend(self):
         category = Mock()
@@ -114,7 +114,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         category.name = "First Category"
         categories = (category,)
         group = self.svg._draw_legend(categories)
-        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:black; stroke-width:1; fill:white; " height="26" width="60" y="169" x="335"  />\n<rect style="stroke:#585858; stroke-width:1; fill:#7F7F7F; " height="16" width="16" y="174" x="340"  />\n<g clip-path="url(#path362_187)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="187" x="362" lengthAdjust="spacingAndGlyphs"  >\nFirst Category</text>\n</g>\n</g>\n')
+        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:black; stroke-width:1; fill:white; " height="26" width="60" y="169" x="335"  />\n<rect style="stroke:#585858; stroke-width:1; fill:#7F7F7F; " height="16" width="16" y="174" x="340"  />\n<g clip-path="url(#path359_174)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="187" x="362" lengthAdjust="spacingAndGlyphs"  >\nFirst Category</text>\n</g>\n</g>\n')
 
     def test_can_define_shadow_filter(self):
         d = self.svg._define_shadow_filter()
@@ -181,6 +181,23 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         era.get_name.return_value = "foobar"
         text = self.svg._draw_era_text(era)
         self.assertEqual(text.getXML(), '<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="195" x="83"  >\nfoobar</text>\n')
+
+    def test_calc_clip_path(self):
+        """
+             (100, 100)                   (300, 100)
+                 X----------------------------X
+                 |(103,103)          (297,103)|
+                 |  x----------------------x  |
+                 |  |                      |  |
+                 |  x----------------------x  |
+                 | (103,117)         (297,117)|
+                 X----------------------------X
+             (100, 120)                  (300, 120)
+        """
+        rect = (100, 100, 200, 20)
+        path_id, path = self.svg._calc_clip_path(rect)
+        self.assertEqual('path100_100', path_id)
+        self.assertEqual('<path d="M 100 120 H 300 V 100 H 100 "  />\n', path.getXML())
 
     def setUp(self):
         path = Mock()
