@@ -23,6 +23,7 @@ from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.eraeditor.controller import EraEditorDialogController
 from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
 
@@ -72,7 +73,7 @@ class EraEditorTestCase(UnitTestCase):
     def when_era_has_period(self, start, end):
         self.era = a_gregorian_era_with(start=start, end=end)
         self.controller = EraEditorDialogController(self.view)
-        self.controller.on_init(self.era, self.era.time_type)
+        self.controller.on_init(self.era, GregorianTimeType())
 
     def when_editing_a_new_era(self):
         self.era = a_gregorian_era_with(start="1 Jan 2010", end="1 Jan 2020", name="")
@@ -87,7 +88,7 @@ class EraEditorTestCase(UnitTestCase):
         self.view.GetEnd.return_value = self.era.get_time_period().end_time
         self.simulate_user_enters_name(self.era.get_name())
         self.simulate_user_enters_color(self.era.get_color())
-        self.controller.on_init(self.era, self.era.time_type)
+        self.controller.on_init(self.era, GregorianTimeType())
 
     def assert_era_unchanged(self):
         self.assertEquals(self.era, self.era_clone)

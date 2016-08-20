@@ -31,14 +31,12 @@ class Era(object):
     background color in a timeline.
     """
 
-    def __init__(self, time_type, start_time, end_time, name, color=DEFAULT_ERA_COLOR):
+    def __init__(self, start_time, end_time, name, color=DEFAULT_ERA_COLOR):
         self.id = None
-        self.time_type = time_type
         self.update(start_time, end_time, name, color)
 
     def __eq__(self, other):
         return (isinstance(other, Era) and
-                self.get_time_type() == other.get_time_type() and
                 self.get_id() == other.get_id() and
                 self.get_time_period() == other.get_time_period() and
                 self.get_name() == other.get_name() and
@@ -59,7 +57,7 @@ class Era(object):
         self.color = color
 
     def clone(self):
-        new_event = Era(self.time_type, self.time_period.start_time,
+        new_event = Era(self.time_period.start_time,
                         self.time_period.end_time, self.name, self.color)
         return new_event
 
@@ -93,13 +91,6 @@ class Era(object):
 
     def get_color(self):
         return self.color
-
-    def set_time_type(self, time_type):
-        self.time_type = time_type
-        return self
-
-    def get_time_type(self):
-        return self.time_type
 
     def inside_period(self, time_period):
         return self.time_period.overlap(time_period)

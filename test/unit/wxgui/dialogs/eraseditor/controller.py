@@ -46,15 +46,6 @@ class describe_eras_editor_dialog(UnitTestCase):
         self.view.RemoveEra.assert_called_with(era)
         self.assertEquals(self.db.get_all_eras(), self.controller.eras)
 
-    def test_a_date_era_can_be_created(self):
-        era = self.controller._create_era()
-        self.assertTrue(isinstance(era.get_time_type(), GregorianTimeType))
-
-    def test_a_numeric_era_can_be_created(self):
-        self.db.time_type = NumTimeType()
-        era = self.controller._create_era()
-        self.assertTrue(isinstance(era.get_time_type(), NumTimeType))
-
     def test_when_added_the_add_operation_function_is_called(self):
         count = len(self.db.get_all_eras.return_value)
         dlg = Mock(EraEditorDialog)
