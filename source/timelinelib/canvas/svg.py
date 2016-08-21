@@ -117,7 +117,9 @@ class SVGDrawingAlgorithm(object):
     def _draw_era_strip(self, era):
         svg_color = self._map_svg_color(era.get_color()[:3])
         x, width = self._calc_era_strip_metrics(era)
-        return ShapeBuilder().createRect(x, 0, width, self.scene.height, fill=svg_color, strokewidth=0)
+        return ShapeBuilder().createRect(x, INNER_PADDING, width,
+                                         self.scene.height - 2 * INNER_PADDING,
+                                         fill=svg_color, strokewidth=0)
 
     def _draw_era_text(self, era):
         x, y = self._calc_era_text_metrics(era)
