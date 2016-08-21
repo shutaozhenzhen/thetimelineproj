@@ -333,8 +333,7 @@ class SVGDrawingAlgorithm(object):
              corner_x, rect.Y,
              corner_x, rect.Y + DATA_INDICATOR_SIZE)
         polyColor = self._get_box_indicator_color(event)
-        oh = ShapeBuilder()
-        indicator = oh.createPolygon(polyPoints, fill=polyColor, stroke=polyColor)
+        indicator = ShapeBuilder().createPolygon(polyPoints, fill=polyColor, stroke=polyColor)
         # TODO (low): Transparency ?
         return indicator
 
