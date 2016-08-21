@@ -57,7 +57,7 @@ class SVGDrawingAlgorithm(object):
 
     def __init__(self, path, timeline, scene, view_properties, appearence, **kwargs):
         self.path = path
-        self.timeline = timeline
+        self._timeline = timeline
         self._scene = scene
         self._appearence = appearence
         self._view_properties = view_properties
@@ -96,7 +96,7 @@ class SVGDrawingAlgorithm(object):
         """
         group = g()
         group.addElement(self._draw_background())
-        for era in self.timeline.get_all_periods():
+        for era in self._timeline.get_all_periods():
             group.addElement(self._draw_era_strip(era))
             group.addElement(self._draw_era_text(era))
         for strip in self._scene.minor_strip_data:
