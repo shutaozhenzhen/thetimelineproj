@@ -56,7 +56,7 @@ class SVGDrawingAlgorithm(object):
     # options:  shadow=True|False
 
     def __init__(self, path, timeline, scene, view_properties, appearence, **kwargs):
-        self.path = path
+        self._path = path
         self._timeline = timeline
         self._scene = scene
         self._appearence = appearence
