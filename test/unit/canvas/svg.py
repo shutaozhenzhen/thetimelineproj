@@ -203,6 +203,25 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.assertEqual('path0_100', path_id)
         self.assertEqual('<path d="M 0 120 H 400 V 100 H 0 "  />\n', path.getXML())
 
+    def test_calc_text_pos(self):
+        """
+             (100, 100)                   (300, 100)
+                 X----------------------------X
+                 |(103,103)          (297,103)|
+                 |  x----------------------x  |
+                 |  |                      |  |
+                 |  x----------------------x  |
+                 | (103,117)         (297,117)|
+                 X----------------------------X
+             (100, 120)                  (300, 120)
+        """
+        rect = (100, 100, 200, 20)
+        pos = self.svg._calc_text_pos(rect)
+        self.assertEqual((103, 117), pos)
+        rect = (-100, 100, 500, 20)
+        pos = self.svg._calc_text_pos(rect)
+        self.assertEqual((0, 117), pos)
+
     def setUp(self):
         path = Mock()
         timeline = Mock()
