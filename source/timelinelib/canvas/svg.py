@@ -373,8 +373,8 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_text(self, my_text, rect, style):
         my_text = self._encode_text(my_text)
-        text_x, text_y = self._calc_text_pos(rect)
-        myText = text(my_text, text_x, text_y)
+        x, y = self._calc_text_pos(rect)
+        myText = text(my_text, x, y)
         myText.set_style(style.getStyle())
         myText.set_lengthAdjust("spacingAndGlyphs")
         return myText
