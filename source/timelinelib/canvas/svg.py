@@ -373,7 +373,7 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_text(self, my_text, rect, style):
         my_text = self._encode_text(my_text)
-        text_x, text_y, _ = self._calc_text_pos(rect)
+        text_x, text_y = self._calc_text_pos(rect)
         myText = text(my_text, text_x, text_y)
         myText.set_style(style.getStyle())
         myText.set_lengthAdjust("spacingAndGlyphs")
@@ -390,7 +390,7 @@ class SVGDrawingAlgorithm(object):
         if text_x < INNER_PADDING:
             width = width - (INNER_PADDING - text_x)
             text_x = INNER_PADDING
-        return text_x, text_y, width
+        return text_x, text_y
 
     def _text(self, the_text, x, y):
         encoded_text = self._encode_text(the_text)
