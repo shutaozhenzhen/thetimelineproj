@@ -66,9 +66,9 @@ class SVGDrawingAlgorithm(object):
         self._small_centered_font_style = self._get_small_centered_font_style()
         self._larger_font_style = self._get_larger_font_style()
         try:
-            self.shadowFlag = kwargs["shadow"]
+            self._shadow_flag = kwargs["shadow"]
         except KeyError:
-            self.shadowFlag = False
+            self._shadow_flag = False
 
     def write(self, path):
         """
@@ -318,7 +318,7 @@ class SVGDrawingAlgorithm(object):
         boxBorderColor = self._get_event_border_color(event)
         svg_rect = ShapeBuilder().createRect(rect.X, rect.Y, rect.GetWidth(), rect.GetHeight(),
                                              stroke=boxBorderColor, fill=self._get_event_box_color(event))
-        if self.shadowFlag:
+        if self._shadow_flag:
             svg_rect.set_filter("url(#filterShadow)")
         return svg_rect
 
