@@ -120,8 +120,8 @@ class SVGDrawingAlgorithm(object):
         return ShapeBuilder().createRect(x, 0, width, self.scene.height, fill=svg_color, strokewidth=0)
 
     def _draw_era_text(self, era):
-        text_x, text_y = self._calc_era_text_metrics(era)
-        return self._draw_label(era.get_name(), text_x, text_y, self._small_font_style)
+        x, y = self._calc_era_text_metrics(era)
+        return self._draw_label(era.get_name(), x, y, self._small_font_style)
 
     def _calc_era_strip_metrics(self, era):
         period = era.get_time_period()
