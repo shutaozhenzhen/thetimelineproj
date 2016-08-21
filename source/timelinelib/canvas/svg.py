@@ -132,9 +132,9 @@ class SVGDrawingAlgorithm(object):
     def _calc_era_text_metrics(self, era):
         period = era.get_time_period()
         _, width = self._calc_era_strip_metrics(era)
-        text_x = self.scene.x_pos_for_time(period.start_time) + width / 3
-        text_y = self.scene.height - OUTER_PADDING
-        return text_x, text_y
+        x = self.scene.x_pos_for_time(period.start_time) + width / 3
+        y = self.scene.height - OUTER_PADDING
+        return x, y
 
     def _get_small_font_style(self):
         myStyle = StyleBuilder()
