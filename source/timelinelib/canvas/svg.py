@@ -348,37 +348,47 @@ class SVGDrawingAlgorithm(object):
         return indicator
 
     def _svg_clipped_text(self, myString, rectTuple, myStyle):
-        myString = self._encode_text(myString)
+        pathId, p = self._calc_clip_path(rectTuple)
+        clip = clipPath()
+        clip.addElement(p)
+        clip.set_id(pathId)
+        self.svg.addElement(self._create_defs(clip))
         # Put text,clipping into a SVG group
         group = g()
+        group.set_clip_path("url(#%s)" % pathId)
+        group.addElement(self._draw_text(myString, rectTuple, myStyle))
+        return group
+
+    def _draw_text(self, myString, rectTuple, myStyle):
+        myString = self._encode_text(myString)
+        text_x, text_y, _ = self._calc_text_pos(rectTuple)
+        myText = text(myString, text_x, text_y)
+        myText.set_style(myStyle.getStyle())
+        myText.set_lengthAdjust("spacingAndGlyphs")
+        return myText
+
+    def _calc_clip_path(self, rectTuple):
+        rx, ry, width, height = rectTuple
+        if rx < 0:
+            width += rx
+            rx = 0
+        pathId = "path%d_%d" % (rx, ry)
+        p = path(pathData="M %d %d H %d V %d H %d" %
+                 (rx, ry + height, rx + width, ry, rx))
+        return pathId, p
+
+    def _calc_text_pos(self, rectTuple):
         rx, ry, width, height = rectTuple
         text_x = rx + INNER_PADDING
         text_y = ry + height - INNER_PADDING
         # TODO: in SVG, negative value should be OK, but they
         # are not drawn in Firefox. So add a special handling here
-        # however the root cause is the layout function for the recs
+        # however the root cause is the layout function for the rects
         # which should be fixed not to have values < 0
         if text_x < INNER_PADDING:
             width = width - (INNER_PADDING - text_x)
             text_x = INNER_PADDING
-        pathId = "path%d_%d" % (text_x, text_y)
-        p = path(pathData="M %d %d H %d V %d H %d" %
-                 (rx, ry + height,
-                  text_x + width - INNER_PADDING,
-                  ry, rx))
-        clip = clipPath()
-        clip.addElement(p)
-        clip.set_id(pathId)
-        d = defs()
-        d.addElement(clip)
-        self.svg.addElement(d)
-        myText = text(myString, text_x, text_y)
-        myText.set_style(myStyle.getStyle())
-        myText.set_lengthAdjust("spacingAndGlyphs")
-        group.set_clip_path("url(#%s)" % pathId)
-
-        group.addElement(myText)
-        return group
+        return text_x, text_y, width
 
     def _text(self, the_text, x, y):
         encoded_text = self._encode_text(the_text)
@@ -394,8 +404,11 @@ class SVGDrawingAlgorithm(object):
             return text
 
     def _define_shadow_filter(self):
+        return self._create_defs(self._get_shadow_filter())
+
+    def _create_defs(self, definition):
         d = defs()
-        d.addElement(self._get_shadow_filter())
+        d.addElement(definition)
         return d
 
     def _get_shadow_filter(self):
