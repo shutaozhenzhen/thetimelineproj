@@ -369,6 +369,9 @@ class SVGDrawingAlgorithm(object):
 
     def _calc_clip_path(self, rectTuple):
         rx, ry, width, height = rectTuple
+        if rx < 0:
+            width += rx
+            rx = 0
         pathId = "path%d_%d" % (rx, ry)
         p = path(pathData="M %d %d H %d V %d H %d" %
                  (rx, ry + height, rx + width, ry, rx))
