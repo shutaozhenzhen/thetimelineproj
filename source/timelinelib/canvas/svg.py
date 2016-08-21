@@ -257,9 +257,11 @@ class SVGDrawingAlgorithm(object):
         group.addElement(self._draw_categories_box(len(categories)))
         cur_y = self._get_categories_box_y(len(categories)) + OUTER_PADDING
         for cat in categories:
-            self._draw_category(self._get_categories_box_width(),
-                                self._get_categories_item_height(),
-                                self._get_categories_box_x(), group, cur_y, cat)
+            color_box, label = self._draw_category(self._get_categories_box_width(),
+                                                   self._get_categories_item_height(),
+                                                   self._get_categories_box_x(), cur_y, cat)
+            group.addElement(color_box)
+            group.addElement(label)
             cur_y = cur_y + self._get_categories_item_height() + INNER_PADDING
         return group
 
@@ -286,19 +288,23 @@ class SVGDrawingAlgorithm(object):
     def _get_categories_box_y(self, nbr_of_categories):
         return self._scene.height - self._get_categories_box_height(nbr_of_categories) - OUTER_PADDING
 
-    def _draw_category(self, width, item_height, x, group, cur_y, cat):
+    def _draw_category(self, width, item_height, x, y, cat):
+        return (self._draw_category_color_box(item_height, x, y, cat),
+                self._draw_category_label(width, item_height, x, y, cat))
+
+    def _draw_category_color_box(self, item_height, x, y, cat):
         base_color = self._map_svg_color(cat.color)
         border_color = self._map_svg_color(darken_color(cat.color))
-        color_box_rect = ShapeBuilder().createRect(x + OUTER_PADDING,
-                                                   cur_y, item_height, item_height, fill=base_color,
-                                                   stroke=border_color)
-        group.addElement(color_box_rect)
-        label = self._svg_clipped_text(cat.name,
-                                       (x + OUTER_PADDING + INNER_PADDING + item_height,
-                                        cur_y, width - OUTER_PADDING - INNER_PADDING - item_height,
-                                        item_height),
-                                       self._get_small_font_style())
-        group.addElement(label)
+        return ShapeBuilder().createRect(x + OUTER_PADDING,
+                                         y, item_height, item_height, fill=base_color,
+                                         stroke=border_color)
+
+    def _draw_category_label(self, width, item_height, x, y, cat):
+        return self._svg_clipped_text(cat.name,
+                                      (x + OUTER_PADDING + INNER_PADDING + item_height,
+                                       y, width - OUTER_PADDING - INNER_PADDING - item_height,
+                                       item_height),
+                                      self._get_small_font_style())
 
     def _draw_event(self, event, rect):
         if self._scene.center_text():
