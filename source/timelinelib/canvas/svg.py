@@ -61,7 +61,7 @@ class SVGDrawingAlgorithm(object):
         self.scene = scene
         self.appearence = appearence
         self.view_properties = view_properties
-        self.svg = svg(width=scene.width, height=scene.height)
+        self._svg = svg(width=scene.width, height=scene.height)
         self._small_font_style = self._get_small_font_style()
         self._small_centered_font_style = self._get_small_centered_font_style()
         self._larger_font_style = self._get_larger_font_style()
@@ -75,16 +75,16 @@ class SVGDrawingAlgorithm(object):
         write the SVG code into the file with filename path. No
         checking is done if file/path exists
         """
-        self.svg.save(path, encoding=ENCODING)
+        self._svg.save(path, encoding=ENCODING)
 
     def draw(self):
-        self.svg.addElement(self._define_shadow_filter())
-        self.svg.addElement(self._draw_bg())
+        self._svg.addElement(self._define_shadow_filter())
+        self._svg.addElement(self._draw_bg())
         for (event, rect) in self.scene.event_data:
-            self.svg.addElement(self._draw_event(event, rect))
+            self._svg.addElement(self._draw_event(event, rect))
         categories = self._extract_categories()
         if self._legend_should_be_drawn(self.view_properties, categories):
-            self.svg.addElement(self._draw_legend(categories))
+            self._svg.addElement(self._draw_legend(categories))
 
     def _draw_bg(self):
         """
@@ -348,7 +348,7 @@ class SVGDrawingAlgorithm(object):
         clip = clipPath()
         clip.addElement(p)
         clip.set_id(path_id)
-        self.svg.addElement(self._create_defs(clip))
+        self._svg.addElement(self._create_defs(clip))
         return path_id
 
     def _calc_clip_path(self, rectTuple):
