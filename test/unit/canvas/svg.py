@@ -197,7 +197,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         era = Mock(Era)
         era.get_name.return_value = "foobar"
         text = self.svg._draw_era_text(era)
-        self.assertEqual(text.getXML(), '<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="195" x="83"  >\nfoobar</text>\n')
+        self.assertEqual(text.getXML(), '<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:middle; " y="195" x="87"  >\nfoobar</text>\n')
 
     def test_calc_clip_path(self):
         """
