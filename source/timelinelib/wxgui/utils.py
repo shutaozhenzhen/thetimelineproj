@@ -178,17 +178,18 @@ def set_default_cursor(parent):
 
 
 def time_picker_for(time_type):
+    from timelinelib.wxgui.components.timepickerwrapper.view import TimePickerWrapper
     from timelinelib.wxgui.components.numtimepicker import NumTimePicker
     from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDateTimePicker
     from timelinelib.wxgui.components.bosparaniandatetimepicker import BosparanianDateTimePicker
     from timelinelib.time.numtime import NumTimeType
     from timelinelib.time.gregoriantime import GregorianTimeType
     if isinstance(time_type, NumTimeType):
-        return NumTimePicker
+        return TimePickerWrapper.create(time_type, NumTimePicker)
     if isinstance(time_type, BosparanianTimeType):
-        return BosparanianDateTimePicker
+        return TimePickerWrapper.create(time_type, BosparanianDateTimePicker)
     elif isinstance(time_type, GregorianTimeType):
-        return GregorianDateTimePicker
+        return TimePickerWrapper.create(time_type, GregorianDateTimePicker)
     else:
         raise ValueError("Unsupported time type: %s" % time_type)
 
