@@ -138,22 +138,6 @@ class SVGDrawingAlgorithm(object):
         y = self.scene.height - OUTER_PADDING
         return x, y
 
-    def _get_small_font_style(self):
-        myStyle = StyleBuilder()
-        myStyle.setStrokeDashArray((2, 2))
-        myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize("%dpx" % SMALL_FONT_SIZE_PX)
-        myStyle.setTextAnchor('left')
-        return myStyle
-
-    def _get_larger_font_style(self):
-        myStyle = StyleBuilder()
-        myStyle.setStrokeDashArray("")
-        myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize("%dpx" % LARGER_FONT_SIZE_PX)
-        myStyle.setTextAnchor('left')
-        return myStyle
-
     def _draw_minor_strip_divider_line(self, time):
         return self._draw_vertical_line(self.scene.x_pos_for_time(time), "lightgrey")
 
@@ -317,10 +301,14 @@ class SVGDrawingAlgorithm(object):
         svgGroup.addElement(myText)
 
     def _draw_event(self, event, rect):
+        if self.scene.center_text():
+            style = self._get_small_centered_font_style()
+        else:
+            style = self._get_small_font_style()
         svgGroup = g()
         svgGroup.addElement(self._draw_event_rect(event, rect))
-        svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(),
-                                                   self._get_small_font_style()))
+        svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), style,
+                                                   self.scene.center_text()))
         if event.has_data():
             svgGroup.addElement(self._draw_contents_indicator(event, rect))
         return svgGroup
@@ -349,10 +337,10 @@ class SVGDrawingAlgorithm(object):
         # TODO (low): Transparency ?
         return indicator
 
-    def _svg_clipped_text(self, text, rect, style):
+    def _svg_clipped_text(self, text, rect, style, center_text=False):
         group = g()
         group.set_clip_path("url(#%s)" % self._create_clip_path(rect))
-        group.addElement(self._draw_text(text, rect, style))
+        group.addElement(self._draw_text(text, rect, style, center_text))
         return group
 
     def _create_clip_path(self, rectTuple):
@@ -373,22 +361,25 @@ class SVGDrawingAlgorithm(object):
                  (rx, ry + height, rx + width, ry, rx))
         return pathId, p
 
-    def _draw_text(self, my_text, rect, style):
+    def _draw_text(self, my_text, rect, style, center_text=False):
         my_text = self._encode_text(my_text)
-        x, y = self._calc_text_pos(rect)
+        x, y = self._calc_text_pos(rect, center_text)
         myText = text(my_text, x, y)
         myText.set_style(style.getStyle())
         myText.set_lengthAdjust("spacingAndGlyphs")
         return myText
 
-    def _calc_text_pos(self, rect):
-        rx, ry, _, height = rect
+    def _calc_text_pos(self, rect, center_text=False):
+        rx, ry, width, height = rect
         # In SVG, negative value should be OK, but they
         # are not drawn in Firefox. So add a special handling here.
         if rx < 0:
+            width += rx
             x = 0
         else:
             x = rx + INNER_PADDING
+        if center_text:
+            x += (width - 2 * INNER_PADDING) / 2
         y = ry + height - INNER_PADDING
         return x, y
 
@@ -412,6 +403,30 @@ class SVGDrawingAlgorithm(object):
         d = defs()
         d.addElement(definition)
         return d
+
+    def _get_small_font_style(self):
+        myStyle = StyleBuilder()
+        myStyle.setStrokeDashArray((2, 2))
+        myStyle.setFontFamily(fontfamily="Verdana")
+        myStyle.setFontSize("%dpx" % SMALL_FONT_SIZE_PX)
+        myStyle.setTextAnchor('left')
+        return myStyle
+
+    def _get_small_centered_font_style(self):
+        myStyle = StyleBuilder()
+        myStyle.setStrokeDashArray((2, 2))
+        myStyle.setFontFamily(fontfamily="Verdana")
+        myStyle.setFontSize("%dpx" % SMALL_FONT_SIZE_PX)
+        myStyle.setTextAnchor('middle')
+        return myStyle
+
+    def _get_larger_font_style(self):
+        myStyle = StyleBuilder()
+        myStyle.setStrokeDashArray("")
+        myStyle.setFontFamily(fontfamily="Verdana")
+        myStyle.setFontSize("%dpx" % LARGER_FONT_SIZE_PX)
+        myStyle.setTextAnchor('left')
+        return myStyle
 
     def _get_shadow_filter(self):
         filterShadow = filter(x="-.3", y="-.5", width=1.9, height=1.9)

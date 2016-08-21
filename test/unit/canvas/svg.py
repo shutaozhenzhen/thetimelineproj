@@ -108,6 +108,23 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         group = self.svg._draw_event(event, rect)
         self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:#8C8C8C; stroke-width:1; fill:#C8C8C8; " height="8" width="50" y="20" x="10"  />\n<g clip-path="url(#path10_20)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="25" x="13" lengthAdjust="spacingAndGlyphs"  >\nFoo</text>\n</g>\n<polygon style="stroke:#787878; stroke-width:1; fill:#787878; " points="50,20 60,20 60,30"  />\n</g>\n')
 
+    def test_can_draw_event_with_centered_text(self):
+        self.scene.center_text.return_value = True
+        event = Mock(Event)
+        event.has_data.return_value = True
+        event.text = "Foo"
+        event.category = None
+        event.get_default_color.return_value = (200, 200, 200)
+        rect = Mock()
+        rect.X = 10
+        rect.Y = 20
+        rect.Width = 50
+        rect.GetWidth.return_value = 50
+        rect.GetHeight.return_value = 8
+        rect.Get.return_value = (10, 20, 50, 8)
+        group = self.svg._draw_event(event, rect)
+        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:#8C8C8C; stroke-width:1; fill:#C8C8C8; " height="8" width="50" y="20" x="10"  />\n<g clip-path="url(#path10_20)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:middle; " y="25" x="35" lengthAdjust="spacingAndGlyphs"  >\nFoo</text>\n</g>\n<polygon style="stroke:#787878; stroke-width:1; fill:#787878; " points="50,20 60,20 60,30"  />\n</g>\n')
+
     def test_can_draw_legend(self):
         category = Mock()
         category.color = (127, 127, 127)
@@ -218,9 +235,13 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         rect = (100, 100, 200, 20)
         pos = self.svg._calc_text_pos(rect)
         self.assertEqual((103, 117), pos)
-        rect = (-100, 100, 500, 20)
+        pos = self.svg._calc_text_pos(rect, center_text=True)
+        self.assertEqual((200, 117), pos)
+        rect = (-100, 100, 400, 20)
         pos = self.svg._calc_text_pos(rect)
         self.assertEqual((0, 117), pos)
+        pos = self.svg._calc_text_pos(rect, center_text=True)
+        self.assertEqual((147, 117), pos)
 
     def setUp(self):
         path = Mock()
@@ -243,6 +264,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         scene.divider_y = 200
         scene.x_pos_for_now.return_value = 150
         scene.x_pos_for_time.return_value = 200
+        scene.center_text.return_value = False
         self.point_event = Mock(Event)
         self.point_event_rect = Mock()
         self.point_event_rect.Y = 100
