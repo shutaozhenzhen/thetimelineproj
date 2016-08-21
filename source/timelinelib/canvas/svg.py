@@ -316,11 +316,11 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_event_rect(self, event, rect):
         boxBorderColor = self._get_event_border_color(event)
-        svgRect = ShapeBuilder().createRect(rect.X, rect.Y, rect.GetWidth(), rect.GetHeight(),
-                                            stroke=boxBorderColor, fill=self._get_event_box_color(event))
+        svg_rect = ShapeBuilder().createRect(rect.X, rect.Y, rect.GetWidth(), rect.GetHeight(),
+                                             stroke=boxBorderColor, fill=self._get_event_box_color(event))
         if self.shadowFlag:
-            svgRect.set_filter("url(#filterShadow)")
-        return svgRect
+            svg_rect.set_filter("url(#filterShadow)")
+        return svg_rect
 
     def _draw_contents_indicator(self, event, rect):
         """
