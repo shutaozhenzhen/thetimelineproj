@@ -379,8 +379,8 @@ class SVGDrawingAlgorithm(object):
         myText.set_lengthAdjust("spacingAndGlyphs")
         return myText
 
-    def _calc_text_pos(self, rectTuple):
-        rx, ry, width, height = rectTuple
+    def _calc_text_pos(self, rect):
+        rx, ry, width, height = rect
         text_x = rx + INNER_PADDING
         text_y = ry + height - INNER_PADDING
         # TODO: in SVG, negative value should be OK, but they
