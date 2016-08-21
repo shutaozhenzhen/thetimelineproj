@@ -389,7 +389,7 @@ class SVGDrawingAlgorithm(object):
         # which should be fixed not to have values < 0
         if text_x < INNER_PADDING:
             width = width - (INNER_PADDING - text_x)
-            text_x = INNER_PADDING
+            text_x = 0
         return text_x, text_y
 
     def _text(self, the_text, x, y):
