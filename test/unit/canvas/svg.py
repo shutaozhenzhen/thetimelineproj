@@ -244,12 +244,11 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.assertEqual((147, 117), pos)
 
     def setUp(self):
-        path = Mock()
         timeline = Mock()
         self.view_properties = self.setup_view_properties()
         self.appearence = Mock()
         self.scene = self.setup_scene()
-        self.svg = SVGDrawingAlgorithm(path, timeline, self.scene, self.view_properties, self.appearence)
+        self.svg = SVGDrawingAlgorithm(timeline, self.scene, self.view_properties, self.appearence)
 
     def setup_view_properties(self):
         view_properties = Mock(ViewProperties)
