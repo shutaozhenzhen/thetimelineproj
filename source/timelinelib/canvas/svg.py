@@ -328,12 +328,12 @@ class SVGDrawingAlgorithm(object):
         right corner of the event rectangle.
         """
         corner_x = rect.X + rect.Width
-        polyPoints = "%d,%d %d,%d %d,%d" % \
+        points = "%d,%d %d,%d %d,%d" % \
             (corner_x - DATA_INDICATOR_SIZE, rect.Y,
              corner_x, rect.Y,
              corner_x, rect.Y + DATA_INDICATOR_SIZE)
         color = self._get_box_indicator_color(event)
-        indicator = ShapeBuilder().createPolygon(polyPoints, fill=color, stroke=color)
+        indicator = ShapeBuilder().createPolygon(points, fill=color, stroke=color)
         # TODO (low): Transparency ?
         return indicator
 
@@ -364,10 +364,10 @@ class SVGDrawingAlgorithm(object):
     def _draw_text(self, my_text, rect, style, center_text=False):
         my_text = self._encode_text(my_text)
         x, y = self._calc_text_pos(rect, center_text)
-        myText = text(my_text, x, y)
-        myText.set_style(style.getStyle())
-        myText.set_lengthAdjust("spacingAndGlyphs")
-        return myText
+        label = text(my_text, x, y)
+        label.set_style(style.getStyle())
+        label.set_lengthAdjust("spacingAndGlyphs")
+        return label
 
     def _calc_text_pos(self, rect, center_text=False):
         rx, ry, width, height = rect
@@ -414,12 +414,12 @@ class SVGDrawingAlgorithm(object):
         return self._get_font_style(LARGER_FONT_SIZE_PX, 'left', "")
 
     def _get_font_style(self, size, anchor, dash_array):
-        myStyle = StyleBuilder()
-        myStyle.setStrokeDashArray(dash_array)
-        myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize("%dpx" % size)
-        myStyle.setTextAnchor(anchor)
-        return myStyle
+        style = StyleBuilder()
+        style.setStrokeDashArray(dash_array)
+        style.setFontFamily(fontfamily="Verdana")
+        style.setFontSize("%dpx" % size)
+        style.setTextAnchor(anchor)
+        return style
 
     def _get_shadow_filter(self):
         filterShadow = filter(x="-.3", y="-.5", width=1.9, height=1.9)
