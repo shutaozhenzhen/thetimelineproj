@@ -46,7 +46,7 @@ ENCODING = "utf-8"
 
 
 def export(path, timeline, scene, view_properties, appearence):
-    svgDrawer = SVGDrawingAlgorithm(path, timeline, scene, view_properties, appearence, shadow=True)
+    svgDrawer = SVGDrawingAlgorithm(timeline, scene, view_properties, appearence, shadow=True)
     svgDrawer.draw()
     svgDrawer.write(path)
 
@@ -55,8 +55,7 @@ class SVGDrawingAlgorithm(object):
 
     # options:  shadow=True|False
 
-    def __init__(self, path, timeline, scene, view_properties, appearence, **kwargs):
-        self._path = path
+    def __init__(self, timeline, scene, view_properties, appearence, **kwargs):
         self._timeline = timeline
         self._scene = scene
         self._appearence = appearence
