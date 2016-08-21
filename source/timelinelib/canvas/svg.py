@@ -58,9 +58,9 @@ class SVGDrawingAlgorithm(object):
     def __init__(self, path, timeline, scene, view_properties, appearence, **kwargs):
         self.path = path
         self.timeline = timeline
-        self.scene = scene
-        self.appearence = appearence
-        self.view_properties = view_properties
+        self._scene = scene
+        self._appearence = appearence
+        self._view_properties = view_properties
         self._svg = svg(width=scene.width, height=scene.height)
         self._small_font_style = self._get_small_font_style()
         self._small_centered_font_style = self._get_small_centered_font_style()
@@ -80,10 +80,10 @@ class SVGDrawingAlgorithm(object):
     def draw(self):
         self._svg.addElement(self._define_shadow_filter())
         self._svg.addElement(self._draw_bg())
-        for (event, rect) in self.scene.event_data:
+        for (event, rect) in self._scene.event_data:
             self._svg.addElement(self._draw_event(event, rect))
         categories = self._extract_categories()
-        if self._legend_should_be_drawn(self.view_properties, categories):
+        if self._legend_should_be_drawn(self._view_properties, categories):
             self._svg.addElement(self._draw_legend(categories))
 
     def _draw_bg(self):
@@ -99,27 +99,27 @@ class SVGDrawingAlgorithm(object):
         for era in self.timeline.get_all_periods():
             group.addElement(self._draw_era_strip(era))
             group.addElement(self._draw_era_text(era))
-        for strip in self.scene.minor_strip_data:
+        for strip in self._scene.minor_strip_data:
             group.addElement(self._draw_minor_strip_divider_line(strip.end_time))
             group.addElement(self._draw_minor_strip_label(strip))
-        for strip in self.scene.major_strip_data:
+        for strip in self._scene.major_strip_data:
             group.addElement(self._draw_major_strip_divider_line(strip.end_time))
             group.addElement(self._draw_major_strip_label(strip))
         group.addElement(self._draw_divider_line())
-        self._draw_lines_to_non_period_events(group, self.view_properties)
+        self._draw_lines_to_non_period_events(group, self._view_properties)
         if self._now_line_is_visible():
             group.addElement(self._draw_now_line())
         return group
 
     def _draw_background(self):
-        svg_color = self._map_svg_color(self.appearence.get_bg_colour()[:3])
-        return ShapeBuilder().createRect(0, 0, self.scene.width, self.scene.height, fill=svg_color)
+        svg_color = self._map_svg_color(self._appearence.get_bg_colour()[:3])
+        return ShapeBuilder().createRect(0, 0, self._scene.width, self._scene.height, fill=svg_color)
 
     def _draw_era_strip(self, era):
         svg_color = self._map_svg_color(era.get_color()[:3])
         x, width = self._calc_era_strip_metrics(era)
         return ShapeBuilder().createRect(x, INNER_PADDING, width,
-                                         self.scene.height - 2 * INNER_PADDING,
+                                         self._scene.height - 2 * INNER_PADDING,
                                          fill=svg_color, strokewidth=0)
 
     def _draw_era_text(self, era):
@@ -128,32 +128,32 @@ class SVGDrawingAlgorithm(object):
 
     def _calc_era_strip_metrics(self, era):
         period = era.get_time_period()
-        x = self.scene.x_pos_for_time(period.start_time)
-        width = min(self.scene.x_pos_for_time(period.end_time), self.scene.width) - x
+        x = self._scene.x_pos_for_time(period.start_time)
+        width = min(self._scene.x_pos_for_time(period.end_time), self._scene.width) - x
         return x, width
 
     def _calc_era_text_metrics(self, era):
         period = era.get_time_period()
         _, width = self._calc_era_strip_metrics(era)
-        x = self.scene.x_pos_for_time(period.start_time) + width / 2
-        y = self.scene.height - OUTER_PADDING
+        x = self._scene.x_pos_for_time(period.start_time) + width / 2
+        y = self._scene.height - OUTER_PADDING
         return x, y
 
     def _draw_minor_strip_divider_line(self, time):
-        return self._draw_vertical_line(self.scene.x_pos_for_time(time), "lightgrey")
+        return self._draw_vertical_line(self._scene.x_pos_for_time(time), "lightgrey")
 
     def _draw_minor_strip_label(self, strip_period):
-        label = self.scene.minor_strip.label(strip_period.start_time)
+        label = self._scene.minor_strip.label(strip_period.start_time)
         x = self._calc_x_for_minor_strip_label(strip_period)
         y = self._calc_y_for_minor_strip_label()
         return self._draw_label(label, x, y, self._small_font_style)
 
     def _calc_x_for_minor_strip_label(self, strip_period):
-        return (self.scene.x_pos_for_time(strip_period.start_time) +
-                self.scene.x_pos_for_time(strip_period.end_time)) / 2 - SMALL_FONT_SIZE_PX
+        return (self._scene.x_pos_for_time(strip_period.start_time) +
+                self._scene.x_pos_for_time(strip_period.end_time)) / 2 - SMALL_FONT_SIZE_PX
 
     def _calc_y_for_minor_strip_label(self):
-        return self.scene.divider_y - OUTER_PADDING
+        return self._scene.divider_y - OUTER_PADDING
 
     def _draw_label(self, label, x, y, style):
         text = self._text(label, x, y)
@@ -161,48 +161,48 @@ class SVGDrawingAlgorithm(object):
         return text
 
     def _draw_major_strip_divider_line(self, time):
-        return self._draw_vertical_line(self.scene.x_pos_for_time(time), "black")
+        return self._draw_vertical_line(self._scene.x_pos_for_time(time), "black")
 
     def _draw_vertical_line(self, x, colour):
-        return ShapeBuilder().createLine(x, 0, x, self.scene.height, strokewidth=0.5, stroke=colour)
+        return ShapeBuilder().createLine(x, 0, x, self._scene.height, strokewidth=0.5, stroke=colour)
 
     def _draw_major_strip_label(self, tp):
-        label = self.scene.major_strip.label(tp.start_time, True)
+        label = self._scene.major_strip.label(tp.start_time, True)
         # If the label is not visible when it is positioned in the middle
         # of the period, we move it so that as much of it as possible is
         # visible without crossing strip borders.
         # since there is no function like textwidth() for SVG, just take into account that text can be overwritten
         # do not perform a special handling for right border, SVG is unlimited
-        x = (max(0, self.scene.x_pos_for_time(tp.start_time)) +
-             min(self.scene.width, self.scene.x_pos_for_time(tp.end_time))) / 2
+        x = (max(0, self._scene.x_pos_for_time(tp.start_time)) +
+             min(self._scene.width, self._scene.x_pos_for_time(tp.end_time))) / 2
         y = LARGER_FONT_SIZE_PX + OUTER_PADDING
         return self._draw_label(label, x, y, self._larger_font_style)
 
     def _draw_divider_line(self):
-        return ShapeBuilder().createLine(0, self.scene.divider_y, self.scene.width,
-                                         self.scene.divider_y, strokewidth=0.5, stroke="grey")
+        return ShapeBuilder().createLine(0, self._scene.divider_y, self._scene.width,
+                                         self._scene.divider_y, strokewidth=0.5, stroke="grey")
 
     def _draw_lines_to_non_period_events(self, group, view_properties):
-        for (event, rect) in self.scene.event_data:
-            if rect.Y < self.scene.divider_y:
+        for (event, rect) in self._scene.event_data:
+            if rect.Y < self._scene.divider_y:
                 line, circle = self._draw_line_to_non_period_event(view_properties, event, rect)
                 group.addElement(line)
                 group.addElement(circle)
 
     def _draw_line_to_non_period_event(self, view_properties, event, rect):
-        x = self.scene.x_pos_for_time(event.mean_time())
+        x = self._scene.x_pos_for_time(event.mean_time())
         y = rect.Y + rect.Height / 2
         stroke = {True: "red", False: "black"}[view_properties.is_selected(event)]
-        line = ShapeBuilder().createLine(x, y, x, self.scene.divider_y, stroke=stroke)
-        circle = ShapeBuilder().createCircle(x, self.scene.divider_y, 2)
+        line = ShapeBuilder().createLine(x, y, x, self._scene.divider_y, stroke=stroke)
+        circle = ShapeBuilder().createCircle(x, self._scene.divider_y, 2)
         return line, circle
 
     def _draw_now_line(self):
-        return self._draw_vertical_line(self.scene.x_pos_for_now(), "darkred")
+        return self._draw_vertical_line(self._scene.x_pos_for_now(), "darkred")
 
     def _now_line_is_visible(self):
-        x = self.scene.x_pos_for_now()
-        return x > 0 and x < self.scene.width
+        x = self._scene.x_pos_for_now()
+        return x > 0 and x < self._scene.width
 
     def _get_event_border_color(self, event):
         return self._map_svg_color(darken_color(self._get_event_color(event)))
@@ -230,7 +230,7 @@ class SVGDrawingAlgorithm(object):
 
     def _extract_categories(self):
         categories = []
-        for (event, _) in self.scene.event_data:
+        for (event, _) in self._scene.event_data:
             cat = event.category
             if cat and cat not in categories:
                 categories.append(cat)
@@ -273,7 +273,7 @@ class SVGDrawingAlgorithm(object):
 
     def _get_categories_box_width(self):
         # reserve 15% for the legend
-        return int(self.scene.width * 0.15)
+        return int(self._scene.width * 0.15)
 
     def _get_categories_item_height(self):
         return SMALL_FONT_SIZE_PX + OUTER_PADDING
@@ -282,10 +282,10 @@ class SVGDrawingAlgorithm(object):
         return nbr_of_categories * (self._get_categories_item_height() + INNER_PADDING) + 2 * OUTER_PADDING - INNER_PADDING
 
     def _get_categories_box_x(self):
-        return self.scene.width - self._get_categories_box_width() - OUTER_PADDING
+        return self._scene.width - self._get_categories_box_width() - OUTER_PADDING
 
     def _get_categories_box_y(self, nbr_of_categories):
-        return self.scene.height - self._get_categories_box_height(nbr_of_categories) - OUTER_PADDING
+        return self._scene.height - self._get_categories_box_height(nbr_of_categories) - OUTER_PADDING
 
     def _draw_category(self, width, item_height, x, svgGroup, cur_y, cat):
         base_color = self._map_svg_color(cat.color)
@@ -302,14 +302,14 @@ class SVGDrawingAlgorithm(object):
         svgGroup.addElement(label)
 
     def _draw_event(self, event, rect):
-        if self.scene.center_text():
+        if self._scene.center_text():
             style = self._small_centered_font_style
         else:
             style = self._small_font_style
         svgGroup = g()
         svgGroup.addElement(self._draw_event_rect(event, rect))
         svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), style,
-                                                   self.scene.center_text()))
+                                                   self._scene.center_text()))
         if event.has_data():
             svgGroup.addElement(self._draw_contents_indicator(event, rect))
         return svgGroup
