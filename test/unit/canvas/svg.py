@@ -165,7 +165,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         era = Mock(Era)
         era.get_color.return_value = (127, 127, 127, 4)
         era = self.svg._draw_era_strip(era)
-        self.assertEqual(era.getXML(), '<rect style="stroke:black; stroke-width:0; fill:#7F7F7F; " height="200" width="25" y="0" x="50"  />\n')
+        self.assertEqual(era.getXML(), '<rect style="stroke:black; stroke-width:0; fill:#7F7F7F; " height="194" width="25" y="3" x="50"  />\n')
 
     def test_can_draw_era_text(self):
 
