@@ -347,25 +347,19 @@ class SVGDrawingAlgorithm(object):
         # TODO (low): Transparency ?
         return indicator
 
-    def _svg_clipped_text(self, myString, rectTuple, myStyle):
-        pathId, p = self._calc_clip_path(rectTuple)
-        clip = clipPath()
-        clip.addElement(p)
-        clip.set_id(pathId)
-        self.svg.addElement(self._create_defs(clip))
-        # Put text,clipping into a SVG group
+    def _svg_clipped_text(self, text, rect, style):
         group = g()
-        group.set_clip_path("url(#%s)" % pathId)
-        group.addElement(self._draw_text(myString, rectTuple, myStyle))
+        group.set_clip_path("url(#%s)" % self._create_clip_path(rect))
+        group.addElement(self._draw_text(text, rect, style))
         return group
 
-    def _draw_text(self, myString, rectTuple, myStyle):
-        myString = self._encode_text(myString)
-        text_x, text_y, _ = self._calc_text_pos(rectTuple)
-        myText = text(myString, text_x, text_y)
-        myText.set_style(myStyle.getStyle())
-        myText.set_lengthAdjust("spacingAndGlyphs")
-        return myText
+    def _create_clip_path(self, rectTuple):
+        path_id, p = self._calc_clip_path(rectTuple)
+        clip = clipPath()
+        clip.addElement(p)
+        clip.set_id(path_id)
+        self.svg.addElement(self._create_defs(clip))
+        return path_id
 
     def _calc_clip_path(self, rectTuple):
         rx, ry, width, height = rectTuple
@@ -376,6 +370,14 @@ class SVGDrawingAlgorithm(object):
         p = path(pathData="M %d %d H %d V %d H %d" %
                  (rx, ry + height, rx + width, ry, rx))
         return pathId, p
+
+    def _draw_text(self, myString, rectTuple, myStyle):
+        myString = self._encode_text(myString)
+        text_x, text_y, _ = self._calc_text_pos(rectTuple)
+        myText = text(myString, text_x, text_y)
+        myText.set_style(myStyle.getStyle())
+        myText.set_lengthAdjust("spacingAndGlyphs")
+        return myText
 
     def _calc_text_pos(self, rectTuple):
         rx, ry, width, height = rectTuple
