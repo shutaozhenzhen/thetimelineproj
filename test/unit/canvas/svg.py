@@ -198,6 +198,10 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         path_id, path = self.svg._calc_clip_path(rect)
         self.assertEqual('path100_100', path_id)
         self.assertEqual('<path d="M 100 120 H 300 V 100 H 100 "  />\n', path.getXML())
+        rect = (-100, 100, 500, 20)
+        path_id, path = self.svg._calc_clip_path(rect)
+        self.assertEqual('path0_100', path_id)
+        self.assertEqual('<path d="M 0 120 H 400 V 100 H 0 "  />\n', path.getXML())
 
     def setUp(self):
         path = Mock()
