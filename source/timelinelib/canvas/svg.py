@@ -253,15 +253,15 @@ class SVGDrawingAlgorithm(object):
           | Name   O |
           +----------+
         """
-        svgGroup = g()
-        svgGroup.addElement(self._draw_categories_box(len(categories)))
+        group = g()
+        group.addElement(self._draw_categories_box(len(categories)))
         cur_y = self._get_categories_box_y(len(categories)) + OUTER_PADDING
         for cat in categories:
             self._draw_category(self._get_categories_box_width(),
                                 self._get_categories_item_height(),
-                                self._get_categories_box_x(), svgGroup, cur_y, cat)
+                                self._get_categories_box_x(), group, cur_y, cat)
             cur_y = cur_y + self._get_categories_item_height() + INNER_PADDING
-        return svgGroup
+        return group
 
     def _draw_categories_box(self, nbr_of_categories):
         return ShapeBuilder().createRect(self._get_categories_box_x(),
@@ -286,32 +286,32 @@ class SVGDrawingAlgorithm(object):
     def _get_categories_box_y(self, nbr_of_categories):
         return self._scene.height - self._get_categories_box_height(nbr_of_categories) - OUTER_PADDING
 
-    def _draw_category(self, width, item_height, x, svgGroup, cur_y, cat):
+    def _draw_category(self, width, item_height, x, group, cur_y, cat):
         base_color = self._map_svg_color(cat.color)
         border_color = self._map_svg_color(darken_color(cat.color))
         color_box_rect = ShapeBuilder().createRect(x + OUTER_PADDING,
                                                    cur_y, item_height, item_height, fill=base_color,
                                                    stroke=border_color)
-        svgGroup.addElement(color_box_rect)
+        group.addElement(color_box_rect)
         label = self._svg_clipped_text(cat.name,
                                        (x + OUTER_PADDING + INNER_PADDING + item_height,
                                         cur_y, width - OUTER_PADDING - INNER_PADDING - item_height,
                                         item_height),
                                        self._get_small_font_style())
-        svgGroup.addElement(label)
+        group.addElement(label)
 
     def _draw_event(self, event, rect):
         if self._scene.center_text():
             style = self._small_centered_font_style
         else:
             style = self._small_font_style
-        svgGroup = g()
-        svgGroup.addElement(self._draw_event_rect(event, rect))
-        svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), style,
-                                                   self._scene.center_text()))
+        group = g()
+        group.addElement(self._draw_event_rect(event, rect))
+        group.addElement(self._svg_clipped_text(event.text, rect.Get(), style,
+                                                self._scene.center_text()))
         if event.has_data():
-            svgGroup.addElement(self._draw_contents_indicator(event, rect))
-        return svgGroup
+            group.addElement(self._draw_contents_indicator(event, rect))
+        return group
 
     def _draw_event_rect(self, event, rect):
         boxBorderColor = self._get_event_border_color(event)
