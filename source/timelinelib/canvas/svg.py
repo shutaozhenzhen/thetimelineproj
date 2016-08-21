@@ -406,27 +406,20 @@ class SVGDrawingAlgorithm(object):
         return d
 
     def _get_small_font_style(self):
-        myStyle = StyleBuilder()
-        myStyle.setStrokeDashArray((2, 2))
-        myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize("%dpx" % SMALL_FONT_SIZE_PX)
-        myStyle.setTextAnchor('left')
-        return myStyle
+        return self._get_font_style(SMALL_FONT_SIZE_PX, 'left', (2, 2))
 
     def _get_small_centered_font_style(self):
-        myStyle = StyleBuilder()
-        myStyle.setStrokeDashArray((2, 2))
-        myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize("%dpx" % SMALL_FONT_SIZE_PX)
-        myStyle.setTextAnchor('middle')
-        return myStyle
+        return self._get_font_style(SMALL_FONT_SIZE_PX, 'middle', (2, 2))
 
     def _get_larger_font_style(self):
+        return self._get_font_style(LARGER_FONT_SIZE_PX, 'left', "")
+
+    def _get_font_style(self, size, anchor, dash_array):
         myStyle = StyleBuilder()
-        myStyle.setStrokeDashArray("")
+        myStyle.setStrokeDashArray(dash_array)
         myStyle.setFontFamily(fontfamily="Verdana")
-        myStyle.setFontSize("%dpx" % LARGER_FONT_SIZE_PX)
-        myStyle.setTextAnchor('left')
+        myStyle.setFontSize("%dpx" % size)
+        myStyle.setTextAnchor(anchor)
         return myStyle
 
     def _get_shadow_filter(self):
