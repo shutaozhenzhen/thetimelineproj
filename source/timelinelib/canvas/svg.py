@@ -381,16 +381,16 @@ class SVGDrawingAlgorithm(object):
 
     def _calc_text_pos(self, rect):
         rx, ry, width, height = rect
-        text_x = rx + INNER_PADDING
-        text_y = ry + height - INNER_PADDING
+        x = rx + INNER_PADDING
+        y = ry + height - INNER_PADDING
         # TODO: in SVG, negative value should be OK, but they
         # are not drawn in Firefox. So add a special handling here
         # however the root cause is the layout function for the rects
         # which should be fixed not to have values < 0
-        if text_x < INNER_PADDING:
-            width = width - (INNER_PADDING - text_x)
-            text_x = 0
-        return text_x, text_y
+        if x < INNER_PADDING:
+            width = width - (INNER_PADDING - x)
+            x = 0
+        return x, y
 
     def _text(self, the_text, x, y):
         encoded_text = self._encode_text(the_text)
