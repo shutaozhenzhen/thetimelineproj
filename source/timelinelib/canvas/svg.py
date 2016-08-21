@@ -63,6 +63,7 @@ class SVGDrawingAlgorithm(object):
         self.view_properties = view_properties
         self.svg = svg(width=scene.width, height=scene.height)
         self._small_font_style = self._get_small_font_style()
+        self._small_centered_font_style = self._get_small_centered_font_style()
         self._larger_font_style = self._get_larger_font_style()
         try:
             self.shadowFlag = kwargs["shadow"]
@@ -123,7 +124,7 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_era_text(self, era):
         x, y = self._calc_era_text_metrics(era)
-        return self._draw_label(era.get_name(), x, y, self._small_font_style)
+        return self._draw_label(era.get_name(), x, y, self._small_centered_font_style)
 
     def _calc_era_strip_metrics(self, era):
         period = era.get_time_period()
@@ -134,7 +135,7 @@ class SVGDrawingAlgorithm(object):
     def _calc_era_text_metrics(self, era):
         period = era.get_time_period()
         _, width = self._calc_era_strip_metrics(era)
-        x = self.scene.x_pos_for_time(period.start_time) + width / 3
+        x = self.scene.x_pos_for_time(period.start_time) + width / 2
         y = self.scene.height - OUTER_PADDING
         return x, y
 
@@ -302,9 +303,9 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_event(self, event, rect):
         if self.scene.center_text():
-            style = self._get_small_centered_font_style()
+            style = self._small_centered_font_style
         else:
-            style = self._get_small_font_style()
+            style = self._small_font_style
         svgGroup = g()
         svgGroup.addElement(self._draw_event_rect(event, rect))
         svgGroup.addElement(self._svg_clipped_text(event.text, rect.Get(), style,
