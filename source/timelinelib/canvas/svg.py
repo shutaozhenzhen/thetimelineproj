@@ -294,12 +294,12 @@ class SVGDrawingAlgorithm(object):
                                                    cur_y, item_height, item_height, fill=base_color,
                                                    stroke=border_color)
         svgGroup.addElement(color_box_rect)
-        myText = self._svg_clipped_text(cat.name,
-                                        (x + OUTER_PADDING + INNER_PADDING + item_height,
-                                         cur_y, width - OUTER_PADDING - INNER_PADDING - item_height,
-                                         item_height),
-                                        self._get_small_font_style())
-        svgGroup.addElement(myText)
+        label = self._svg_clipped_text(cat.name,
+                                       (x + OUTER_PADDING + INNER_PADDING + item_height,
+                                        cur_y, width - OUTER_PADDING - INNER_PADDING - item_height,
+                                        item_height),
+                                       self._get_small_font_style())
+        svgGroup.addElement(label)
 
     def _draw_event(self, event, rect):
         if self.scene.center_text():
