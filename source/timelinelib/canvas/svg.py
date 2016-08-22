@@ -35,6 +35,8 @@ from pysvg.text import text
 
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.data import sort_categories
+from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
+from cmath import rect
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -42,6 +44,8 @@ INNER_PADDING = 3  # Space inside event box to text (pixels)
 DATA_INDICATOR_SIZE = 10
 SMALL_FONT_SIZE_PX = 11
 LARGER_FONT_SIZE_PX = 14
+Y_RECT_OFFSET = 12
+Y_TEXT_OFFSET = 18
 ENCODING = "utf-8"
 
 
@@ -313,7 +317,11 @@ class SVGDrawingAlgorithm(object):
             style = self._small_font_style
         group = g()
         group.addElement(self._draw_event_rect(event, rect))
-        group.addElement(self._svg_clipped_text(event.text, rect.Get(), style,
+        text_rect = rect.Get()
+        if event.is_container() and EXTENDED_CONTAINER_HEIGHT.enabled():
+            text_rect = rect.Get()
+            text_rect = (text_rect[0], text_rect[1] - Y_TEXT_OFFSET, text_rect[2], text_rect[3])
+        group.addElement(self._svg_clipped_text(event.text, text_rect, style,
                                                 self._scene.center_text()))
         if event.has_data():
             group.addElement(self._draw_contents_indicator(event, rect))
@@ -321,8 +329,14 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_event_rect(self, event, rect):
         boxBorderColor = self._get_event_border_color(event)
-        svg_rect = ShapeBuilder().createRect(rect.X, rect.Y, rect.GetWidth(), rect.GetHeight(),
-                                             stroke=boxBorderColor, fill=self._get_event_box_color(event))
+        if event.is_container() and EXTENDED_CONTAINER_HEIGHT.enabled():
+            svg_rect = ShapeBuilder().createRect(rect.X, rect.Y - Y_RECT_OFFSET, rect.GetWidth(),
+                                                 rect.GetHeight() + Y_RECT_OFFSET,
+                                                 stroke=boxBorderColor,
+                                                 fill=self._get_event_box_color(event))
+        else:
+            svg_rect = ShapeBuilder().createRect(rect.X, rect.Y, rect.GetWidth(), rect.GetHeight(),
+                                                 stroke=boxBorderColor, fill=self._get_event_box_color(event))
         if self._shadow_flag:
             svg_rect.set_filter("url(#filterShadow)")
         return svg_rect
