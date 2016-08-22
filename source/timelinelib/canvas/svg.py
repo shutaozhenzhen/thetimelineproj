@@ -81,15 +81,26 @@ class SVGDrawingAlgorithm(object):
         self._svg.save(path, encoding=ENCODING)
 
     def draw(self):
-        self._svg.addElement(self._define_shadow_filter())
-        self._svg.addElement(self._draw_bg())
-        for (event, rect) in self._scene.event_data:
-            self._svg.addElement(self._draw_event(event, rect))
+        for element in self._get_elements():
+            self._svg.addElement(element)
+
+    def _get_elements(self):
+        elements = [self._define_shadow_filter(), self._get_bg()]
+        elements.extend(self._get_events())
+        elements.extend(self._get_legend())
+        return elements
+
+    def _get_events(self):
+        return [self._draw_event(event, rect) for (event, rect) in self._scene.event_data]
+
+    def _get_legend(self):
         categories = self._extract_categories()
         if self._legend_should_be_drawn(self._view_properties, categories):
-            self._svg.addElement(self._draw_legend(categories))
+            return [self._draw_legend(categories)]
+        else:
+            return []
 
-    def _draw_bg(self):
+    def _get_bg(self):
         """
         Draw background color
         Draw background Era strips and labels
@@ -229,7 +240,7 @@ class SVGDrawingAlgorithm(object):
         return "#%02X%02X%02X" % color
 
     def _legend_should_be_drawn(self, view_properties, categories):
-        return view_properties.show_legend and len(categories) > 0
+        return self._appearence.get_legend_visible() and len(categories) > 0
 
     def _extract_categories(self):
         categories = []
