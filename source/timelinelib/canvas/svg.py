@@ -361,7 +361,7 @@ class SVGDrawingAlgorithm(object):
         if rx < 0:
             width += rx
             rx = 0
-        pathId = "path%d_%d" % (rx, ry)
+        pathId = "path%d_%d_%d" % (rx, ry, width)
         p = path(pathData="M %d %d H %d V %d H %d" %
                  (rx, ry + height, rx + width, ry, rx))
         return pathId, p
