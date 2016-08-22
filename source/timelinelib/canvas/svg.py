@@ -95,7 +95,7 @@ class SVGDrawingAlgorithm(object):
 
     def _get_legend(self):
         categories = self._extract_categories()
-        if self._legend_should_be_drawn(self._view_properties, categories):
+        if self._legend_should_be_drawn(self._appearence, categories):
             return [self._draw_legend(categories)]
         else:
             return []
@@ -239,8 +239,8 @@ class SVGDrawingAlgorithm(object):
         """
         return "#%02X%02X%02X" % color
 
-    def _legend_should_be_drawn(self, view_properties, categories):
-        return self._appearence.get_legend_visible() and len(categories) > 0
+    def _legend_should_be_drawn(self, appearence, categories):
+        return appearence.get_legend_visible() and len(categories) > 0
 
     def _extract_categories(self):
         categories = []
