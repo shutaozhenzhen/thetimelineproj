@@ -240,12 +240,9 @@ class SVGDrawingAlgorithm(object):
         return self._appearence.get_legend_visible() and len(categories) > 0
 
     def _extract_categories(self):
-        categories = []
-        for (event, _) in self._scene.event_data:
-            cat = event.category
-            if cat and cat not in categories:
-                categories.append(cat)
-        return sort_categories(categories)
+        categories = set([event.category for (event, _) in self._scene.event_data
+                          if event.category])
+        return sort_categories(list(categories))
 
     def _draw_legend(self, categories):
         """
