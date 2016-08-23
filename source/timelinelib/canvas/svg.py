@@ -36,7 +36,6 @@ from pysvg.text import text
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.data import sort_categories
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
-from cmath import rect
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
