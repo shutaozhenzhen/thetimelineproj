@@ -36,14 +36,6 @@ class TimeType(object):
     def format_delta(self, time_period):
         raise NotImplementedError("format_delta not implemented.")
 
-    def is_time_in_range(self, time):
-        (min_time, _) = self.get_min_time()
-        (max_time, _) = self.get_max_time()
-        return (
-            (min_time is None or time >= min_time) and
-            (max_time is None or time <= max_time)
-        )
-
     def get_min_time(self):
         raise NotImplementedError("return the min time for this time type.")
 
