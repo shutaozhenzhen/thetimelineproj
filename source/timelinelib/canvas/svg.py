@@ -36,7 +36,6 @@ from pysvg.text import text
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.data import sort_categories
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
-from cmath import rect
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -81,15 +80,24 @@ class SVGDrawingAlgorithm(object):
         self._svg.save(path, encoding=ENCODING)
 
     def draw(self):
-        self._svg.addElement(self._define_shadow_filter())
-        self._svg.addElement(self._draw_bg())
-        for (event, rect) in self._scene.event_data:
-            self._svg.addElement(self._draw_event(event, rect))
-        categories = self._extract_categories()
-        if self._legend_should_be_drawn(self._view_properties, categories):
-            self._svg.addElement(self._draw_legend(categories))
+        for element in self._get_elements():
+            self._svg.addElement(element)
 
-    def _draw_bg(self):
+    def _get_elements(self):
+        elements = [self._define_shadow_filter(), self._get_bg()]
+        elements.extend(self._get_events())
+        elements.extend(self._get_legend())
+        return elements
+
+    def _get_events(self):
+        return [self._draw_event(event, rect) for (event, rect) in self._scene.event_data]
+
+    def _get_legend(self):
+        categories = self._extract_categories()
+        return [item for item in [self._draw_legend(categories)]
+                if self._legend_should_be_drawn(categories)]
+
+    def _get_bg(self):
         """
         Draw background color
         Draw background Era strips and labels
@@ -228,16 +236,13 @@ class SVGDrawingAlgorithm(object):
         """
         return "#%02X%02X%02X" % color
 
-    def _legend_should_be_drawn(self, view_properties, categories):
-        return view_properties.show_legend and len(categories) > 0
+    def _legend_should_be_drawn(self, categories):
+        return self._appearence.get_legend_visible() and len(categories) > 0
 
     def _extract_categories(self):
-        categories = []
-        for (event, _) in self._scene.event_data:
-            cat = event.category
-            if cat and cat not in categories:
-                categories.append(cat)
-        return sort_categories(categories)
+        categories = set([event.category for (event, _) in self._scene.event_data
+                          if event.category])
+        return sort_categories(list(categories))
 
     def _draw_legend(self, categories):
         """
@@ -362,16 +367,16 @@ class SVGDrawingAlgorithm(object):
         group.addElement(self._draw_text(text, rect, style, center_text))
         return group
 
-    def _create_clip_path(self, rectTuple):
-        path_id, p = self._calc_clip_path(rectTuple)
+    def _create_clip_path(self, rect):
+        path_id, path = self._calc_clip_path(rect)
         clip = clipPath()
-        clip.addElement(p)
+        clip.addElement(path)
         clip.set_id(path_id)
         self._svg.addElement(self._create_defs(clip))
         return path_id
 
-    def _calc_clip_path(self, rectTuple):
-        rx, ry, width, height = rectTuple
+    def _calc_clip_path(self, rect):
+        rx, ry, width, height = rect
         if rx < 0:
             width += rx
             rx = 0

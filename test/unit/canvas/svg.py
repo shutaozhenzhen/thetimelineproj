@@ -142,14 +142,13 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.assertEqual("åäö", self.svg._encode_unicode_text(u"åäö"))
 
     def test_legend_should_be_drawn(self):
-        view_properties = Mock
-        view_properties.show_legend = True
+        self.svg._appearence.get_legend_visible.return_value = True
         categories = []
-        self.assertFalse(self.svg._legend_should_be_drawn(view_properties, categories))
+        self.assertFalse(self.svg._legend_should_be_drawn(categories))
         categories = [""]
-        self.assertTrue(self.svg._legend_should_be_drawn(view_properties, categories))
-        view_properties.show_legend = False
-        self.assertFalse(self.svg._legend_should_be_drawn(view_properties, categories))
+        self.assertTrue(self.svg._legend_should_be_drawn(categories))
+        self.svg._appearence.get_legend_visible.return_value = False
+        self.assertFalse(self.svg._legend_should_be_drawn(categories))
 
     def test_can_get_base_color_when_event_has_no_category(self):
         category = Mock()
