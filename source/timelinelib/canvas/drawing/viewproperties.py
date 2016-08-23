@@ -34,7 +34,6 @@ class ViewProperties(Observable):
         self.selected_event_ids = []
         self.hidden_categories = []
         self.period_selection = None
-        self.show_legend = True
         self.divider_position = 0.5
         self.displayed_period = None
         self.hscroll_amount = 0
