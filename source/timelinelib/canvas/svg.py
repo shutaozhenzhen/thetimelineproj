@@ -372,16 +372,16 @@ class SVGDrawingAlgorithm(object):
         group.addElement(self._draw_text(text, rect, style, center_text))
         return group
 
-    def _create_clip_path(self, rectTuple):
-        path_id, p = self._calc_clip_path(rectTuple)
+    def _create_clip_path(self, rect):
+        path_id, p = self._calc_clip_path(rect)
         clip = clipPath()
         clip.addElement(p)
         clip.set_id(path_id)
         self._svg.addElement(self._create_defs(clip))
         return path_id
 
-    def _calc_clip_path(self, rectTuple):
-        rx, ry, width, height = rectTuple
+    def _calc_clip_path(self, rect):
+        rx, ry, width, height = rect
         if rx < 0:
             width += rx
             rx = 0
