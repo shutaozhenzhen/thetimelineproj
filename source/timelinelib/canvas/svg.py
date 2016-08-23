@@ -368,9 +368,9 @@ class SVGDrawingAlgorithm(object):
         return group
 
     def _create_clip_path(self, rect):
-        path_id, p = self._calc_clip_path(rect)
+        path_id, path = self._calc_clip_path(rect)
         clip = clipPath()
-        clip.addElement(p)
+        clip.addElement(path)
         clip.set_id(path_id)
         self._svg.addElement(self._create_defs(clip))
         return path_id
