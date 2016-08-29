@@ -35,3 +35,13 @@ class Milestone(Event):
 
     def is_milestone(self):
         return True
+
+    def clone(self):
+        # Objects of type datetime are immutable.
+        new_event = Milestone(
+            self.get_time_period().start_time,
+            self.get_time_period().start_time, self.get_text())
+        # Description is immutable
+        new_event.set_data("description", self.get_data("description"))
+        new_event.set_default_color(self.get_default_color())
+        return new_event
