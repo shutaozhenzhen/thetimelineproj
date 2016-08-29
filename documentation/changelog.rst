@@ -33,6 +33,10 @@ Export SVG:
 
 * Timeline background colour is used used in SVG image.
 
+Fixed crash reports and bugs:
+
+* Milestones are handled correctly when undoing  changes.
+
 Version 1.11.0
 --------------
 
