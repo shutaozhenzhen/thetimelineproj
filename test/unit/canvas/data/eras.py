@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from mock import Mock
+
 from timelinelib.canvas.data.eras import InvalidOperationError
 from timelinelib.canvas.data import Eras
 from timelinelib.test.cases.unit import UnitTestCase
@@ -38,7 +40,8 @@ class ErasTestCase(UnitTestCase):
         self.color2 = (255, 0, 255)
         self.color3 = (255, 128, 255)
         self.Dec_1_2015 = human_time_to_gregorian("1 Dec 2015")
-        self.eras = Eras()
+        self.db = Mock()
+        self.eras = Eras(self.db)
 
 
 class describe_cloning(ErasTestCase):

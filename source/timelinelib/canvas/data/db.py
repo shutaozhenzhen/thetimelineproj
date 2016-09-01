@@ -41,11 +41,11 @@ class MemoryDB(Observable):
         Observable.__init__(self)
         self.path = ""
         self._events = Events()
-        self._eras = Eras()
         self.displayed_period = None
         self.hidden_categories = []
         self.save_disabled = False
         self.time_type = GregorianTimeType()
+        self._eras = Eras(self.time_type.now)
         self.saved_now = self.time_type.now()
         self.readonly = False
         self._undo_handler = UndoHandler(self)

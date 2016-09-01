@@ -40,8 +40,22 @@ class EraEditorDialog(Dialog):
                 </BoxSizerHorizontal>
 
                 <Spacer />
-                <CheckBox align="ALIGN_CENTER_VERTICAL" label="$(show_time_text)" name="cbx_show_time"
-                     event_EVT_CHECKBOX="show_time_checkbox_on_checked" />
+                <BoxSizerHorizontal >
+                    <CheckBox
+                        align="ALIGN_CENTER_VERTICAL"
+                        label="$(show_time_text)"
+                        name="cbx_show_time"
+                        event_EVT_CHECKBOX="show_time_checkbox_on_checked"
+                    />
+
+                    <Spacer />
+
+                    <CheckBox
+                        align="ALIGN_CENTER_VERTICAL"
+                        label="$(ends_today_text)"
+                        name="cbx_ends_today"
+                    />
+                </BoxSizerHorizontal>
 
                 <StaticText label="$(name_text)" align="ALIGN_CENTER_VERTICAL" />
                 <TextCtrl name="txt_name" />
@@ -71,6 +85,7 @@ class EraEditorDialog(Dialog):
             "to_text": _("to"),
             "time_type": time_type,
             "config": config,
+            "ends_today_text":  _("Ends today"),
         }, title=title)
         self.controller.on_init(era, time_type)
         self.dtp_start.SetFocus()
@@ -92,6 +107,12 @@ class EraEditorDialog(Dialog):
 
     def GetEnd(self):
         return self.dtp_end.get_value()
+
+    def GetEndsToday(self):
+        return self.cbx_ends_today.IsChecked()
+
+    def SetEndsToday(self, value):
+        self.cbx_ends_today.SetValue(value)
 
     def SetEnd(self, end):
         self.dtp_end.set_value(end)

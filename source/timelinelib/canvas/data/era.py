@@ -31,8 +31,9 @@ class Era(object):
     background color in a timeline.
     """
 
-    def __init__(self, start_time, end_time, name, color=DEFAULT_ERA_COLOR):
+    def __init__(self, start_time, end_time, name, color=DEFAULT_ERA_COLOR, ends_today=False):
         self.id = None
+        self._ends_today = ends_today
         self.update(start_time, end_time, name, color)
 
     def __eq__(self, other):
@@ -51,15 +52,22 @@ class Era(object):
     def __lt__(self, other):
         return self.get_time_period().start_time < other.get_time_period().start_time
 
+    def ends_today(self):
+        return self._ends_today
+
+    def set_ends_today(self, value):
+        self._ends_today = value
+
     def update(self, start_time, end_time, name, color=DEFAULT_ERA_COLOR):
         self.time_period = TimePeriod(start_time, end_time)
         self.name = name.strip()
         self.color = color
 
     def clone(self):
-        new_event = Era(self.time_period.start_time,
-                        self.time_period.end_time, self.name, self.color)
-        return new_event
+        new_era = Era(self.time_period.start_time,
+                      self.time_period.end_time, self.name, self.color)
+        new_era.set_ends_today(self._ends_today)
+        return new_era
 
     def set_id(self, era_id):
         self.id = era_id

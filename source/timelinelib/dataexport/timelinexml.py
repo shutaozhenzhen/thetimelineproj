@@ -155,6 +155,7 @@ class Exporter(object):
         write_simple_tag(xmlfile, "start", self._time_string(era.get_time_period().start_time), INDENT3)
         write_simple_tag(xmlfile, "end", self._time_string(era.get_time_period().end_time), INDENT3)
         write_simple_tag(xmlfile, "color", color_string(era.get_color()), INDENT3)
+        write_simple_tag(xmlfile, "ends_today", "%s" % era.ends_today(), INDENT3)
     _write_era = wrap_in_tag(_write_era, "era", INDENT2)
 
     def _text_starts_with_container_tag(self, text):

@@ -44,6 +44,7 @@ class EraEditorDialogController(Controller):
         self.view.SetName(self.era.get_name())
         self.view.SetColor(self.era.get_color())
         self.view.SetShowTime(self._era_has_nonzero_time())
+        self.view.SetEndsToday(self.era.ends_today())
 
     def _era_has_nonzero_time(self):
         try:
@@ -96,3 +97,4 @@ class EraEditorDialogController(Controller):
     def _update_era(self):
         w = self.view
         self.era.update(w.GetStart(), w.GetEnd(), w.GetName(), w.GetColor()[:3])
+        self.era.set_ends_today(self.view.GetEndsToday())
