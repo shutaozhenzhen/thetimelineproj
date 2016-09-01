@@ -125,6 +125,7 @@ class Parser(object):
                     Tag("start", SINGLE, parse_fn_store("tmp_start")),
                     Tag("end", SINGLE, parse_fn_store("tmp_end")),
                     Tag("color", SINGLE, parse_fn_store("tmp_color")),
+                    Tag("ends_today", OPTIONAL, parse_fn_store("tmp_ends_today")),
                 ])
             ]),
             Tag("categories", SINGLE, None, [
@@ -146,20 +147,13 @@ class Parser(object):
                     Tag("fuzzy", OPTIONAL, parse_fn_store("tmp_fuzzy")),
                     Tag("locked", OPTIONAL, parse_fn_store("tmp_locked")),
                     Tag("ends_today", OPTIONAL, parse_fn_store("tmp_ends_today")),
-                    Tag("category", OPTIONAL,
-                        parse_fn_store("tmp_category")),
-                    Tag("description", OPTIONAL,
-                        parse_fn_store("tmp_description")),
-                    Tag("alert", OPTIONAL,
-                        parse_fn_store("tmp_alert")),
-                    Tag("hyperlink", OPTIONAL,
-                        parse_fn_store("tmp_hyperlink")),
-                    Tag("icon", OPTIONAL,
-                        parse_fn_store("tmp_icon")),
-                    Tag("default_color", OPTIONAL,
-                        parse_fn_store("tmp_default_color")),
+                    Tag("category", OPTIONAL, parse_fn_store("tmp_category")),
+                    Tag("description", OPTIONAL, parse_fn_store("tmp_description")),
+                    Tag("alert", OPTIONAL, parse_fn_store("tmp_alert")),
+                    Tag("hyperlink", OPTIONAL, parse_fn_store("tmp_hyperlink")),
+                    Tag("icon", OPTIONAL, parse_fn_store("tmp_icon")),
+                    Tag("default_color", OPTIONAL, parse_fn_store("tmp_default_color")),
                     Tag("milestone", OPTIONAL, parse_fn_store("tmp_milestone")),
-
                 ])
             ]),
             Tag("view", SINGLE, None, [
@@ -267,7 +261,8 @@ class Parser(object):
         start = self._parse_time(tmp_dict.pop("tmp_start"))
         end = self._parse_time(tmp_dict.pop("tmp_end"))
         color = parse_color(tmp_dict.pop("tmp_color"))
-        era = Era(start, end, name, color)
+        ends_today = self._parse_optional_bool(tmp_dict, "tmp_ends_today")
+        era = Era(start, end, name, color, ends_today)
         self.db.save_era(era)
 
     def _text_starts_with_added_space(self, text):

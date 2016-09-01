@@ -32,14 +32,15 @@ class Eras(object):
     necessary operation for undo/redo operations.
     """
 
-    def __init__(self, eras=None):
+    def __init__(self, now_func, eras=None):
+        self.now_func = now_func
         if eras is None:
             self._eras = []
         else:
             self._eras = eras
 
     def clone(self):
-        return Eras(clone_era_list(self._eras))
+        return Eras(self.now_func, clone_era_list(self._eras))
 
     def get_all(self):
         return sorted(self._eras)
@@ -160,7 +161,13 @@ class Eras(object):
                     e0 = e1
             return True
 
+        def adjust_all_eras_for_ends_today():
+            for era in self.all_eras:
+                if era.ends_today():
+                    era.set_time_period(TimePeriod(era.get_time_period().start_time, self.now_func()))
+
         self.all_eras = clone_all_eras()
+        adjust_all_eras_for_ends_today()
         if self.all_eras == []:
             return []
         while True:

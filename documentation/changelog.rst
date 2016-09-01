@@ -12,6 +12,11 @@ Version 1.12.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+GUI:
+
+* Era's now have an ends-today property.
+  (`#159 <https://sourceforge.net/p/thetimelineproj/backlog/159/>`_)
+
 Documentation:
 
 * Help pages updated.
