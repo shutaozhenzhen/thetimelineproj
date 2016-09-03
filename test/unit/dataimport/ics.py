@@ -18,11 +18,11 @@
 
 import os
 
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.dataimport.ics import import_db_from_ics
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.canvas.data.exceptions import TimelineIOError
-from timelinelib.time.timeline import TimeDelta
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.time.timeline import TimeDelta
 
 
 ICS_CONTENT = """
@@ -219,7 +219,7 @@ class describe_import_vevent_from_ics(describe_import_ics):
         self.given_ics_file(ICS_CONTENT_WITHOUT_DTEND)
         db = self.when_ics_file_imported()
         event = db.get_all_events()[0]
-        self.assertEqual(event.time_period.start_time, event.time_period.end_time)
+        self.assertFalse(event.get_time_period().is_period())
 
     def test_can_import_events_from_ics_file_with_duration(self):
         self.given_ics_file(ICS_CONTENT_WITH_DURATION)
