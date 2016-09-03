@@ -225,7 +225,7 @@ class describe_import_vevent_from_ics(describe_import_ics):
         self.given_ics_file(ICS_CONTENT_WITH_DURATION)
         db = self.when_ics_file_imported()
         event = db.get_all_events()[0]
-        self.assertEqual(event.time_period.end_time, event.time_period.start_time + TimeDelta(60 * 60))
+        self.assertEqual(event.get_time_period().delta(), TimeDelta(60 * 60))
 
     def test_can_import_categories_from_ics_file(self):
         self.given_ics_file(ICS_CONTENT)
