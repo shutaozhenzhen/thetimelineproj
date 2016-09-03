@@ -247,5 +247,5 @@ class describe_era_editor_exceptions(EraEditorTestCase):
 
     def test_era_with_none_time_period_hasent_nonzero_time(self):
         self.when_editing_an_era()
-        self.era.time_period = None
+        self.era.set_time_period(None)
         self.assertFalse(self.controller._era_has_nonzero_time())
