@@ -36,7 +36,7 @@ class EditMilestoneDialogController(Controller):
         self._populate_view()
 
     def _populate_view(self):
-        self.view.SetTime(self._milestone.time_period.start_time)
+        self.view.SetTime(self._milestone.get_time())
         self.view.SetColor(self._milestone.get_default_color())
         self.view.SetDescription(self._milestone.get_description())
         self.view.SetShowTime(self._milestone_has_nonzero_time())
