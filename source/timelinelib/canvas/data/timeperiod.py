@@ -80,6 +80,9 @@ class TimePeriod(object):
         return not (time_period.end_time < self.start_time or
                     time_period.start_time > self.end_time)
 
+    def ends_at(self, time):
+        return self.end_time == time
+
     def is_period(self):
         """
         Return True if this time period is longer than just a point in time,

@@ -564,7 +564,7 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         self.simulate_user_selects_a_container(subevent)
         self.simulate_ends_today_checked(today)
         self.controller._update_event()
-        self.assertEqual(self.controller.container.time_period.end_time, today)
+        self.assertTrue(self.controller.container.get_time_period().ends_at(today))
 
     def test_container_allows_ends_today(self):
         self.view.GetContainer.return_value = None
