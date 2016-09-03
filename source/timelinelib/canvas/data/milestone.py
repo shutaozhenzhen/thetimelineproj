@@ -33,6 +33,9 @@ class Milestone(Event):
         Event.__init__(self, start_time, start_time, text)
         self.set_default_color(DEFAULT_COLOR)
 
+    def get_time(self):
+        return self.get_time_period().start_time
+
     def is_milestone(self):
         return True
 
