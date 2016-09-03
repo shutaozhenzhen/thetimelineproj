@@ -153,7 +153,8 @@ class EditEventDialogTestCase(UnitTestCase):
         self.controller.on_period_checkbox_changed(event)
 
     def simulate_user_selects_a_container(self, subevent):
-        container = Container(subevent.time_period.start_time, subevent.time_period.start_time, "container")
+        time_period = subevent.get_time_period()
+        container = Container(time_period.start_time, time_period.start_time, "container")
         container.register_subevent(subevent)
         self.controller.container = container
 
