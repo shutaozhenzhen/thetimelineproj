@@ -1105,11 +1105,11 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         return self.main_panel.get_visible_events(all_events)
 
     def _first_time(self, events):
-        start_time = lambda event: event.time_period.start_time
+        start_time = lambda event: event.get_start_time()
         return start_time(min(events, key=start_time))
 
     def _last_time(self, events):
-        end_time = lambda event: event.time_period.end_time
+        end_time = lambda event: event.get_end_time()
         return end_time(max(events, key=end_time))
 
     def get_export_periods(self):
