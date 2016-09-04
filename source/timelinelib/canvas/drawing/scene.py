@@ -212,7 +212,7 @@ class TimelineScene(object):
 
     def _create_ideal_rect_for_event(self, event):
         if event.get_ends_today():
-            event.time_period.end_time = self._db.get_time_type().now()
+            event.set_end_time(self._db.get_time_type().now())
         if self._display_as_period(event):
             return self._calc_ideal_rect_for_period_event(event)
         else:

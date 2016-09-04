@@ -41,6 +41,9 @@ class TimePeriod(object):
     def __repr__(self):
         return "TimePeriod<%s, %s>" % (self.start_time, self.end_time)
 
+    def set_end_time(self, time):
+        return self.update(self.start_time, time)
+
     def update(self, start_time, end_time,
                start_delta=None, end_delta=None):
         new_start, new_end = self._update(start_time, end_time, start_delta, end_delta)
