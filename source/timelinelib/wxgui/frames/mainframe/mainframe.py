@@ -520,7 +520,7 @@ class GuiCreator(object):
         def find_first(evt):
             event = self.timeline.get_first_event()
             if event:
-                start = event.time_period.start_time
+                start = event.get_start_time()
                 delta = self.main_panel.get_displayed_period_delta()
                 end = start + delta
                 margin_delta = self.timeline.get_time_type().margin_delta(delta)
@@ -529,7 +529,7 @@ class GuiCreator(object):
         def find_last(evt):
             event = self.timeline.get_last_event()
             if event:
-                end = event.time_period.end_time
+                end = event.get_end_time()
                 delta = self.main_panel.get_displayed_period_delta()
                 try:
                     start = end - delta
