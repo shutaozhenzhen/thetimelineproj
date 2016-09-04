@@ -93,7 +93,7 @@ class AlertEditor(BaseEditor, AlertEditorGuiCreator):
 
     def _set_initial_time(self):
         if self.editor.event is not None:
-            self.dtp_start.set_value(self.editor.event.time_period.start_time)
+            self.dtp_start.set_value(self.editor.event.get_start_time())
         else:
             self.dtp_start.set_value(self.editor.start)
 

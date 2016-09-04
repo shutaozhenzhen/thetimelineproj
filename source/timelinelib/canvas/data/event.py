@@ -93,6 +93,9 @@ class Event(object):
         self.time_period = time_period
         return self
 
+    def get_start_time(self):
+        return self.time_period.get_start_time()
+
     def set_end_time(self, time):
         self.set_time_period(self.get_time_period().set_end_time(time))
 
