@@ -43,7 +43,7 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
                 self.event_periods.append(period_pair)
         if event.is_container():
             for subevent in event.events:
-                period_pair = (subevent, subevent.time_period)
+                period_pair = (subevent, subevent.get_time_period())
                 self.event_periods.append(period_pair)
         assert self.event_periods[0][0] == event_being_dragged
 
