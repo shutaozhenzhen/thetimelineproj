@@ -221,12 +221,6 @@ class TimelineScene(object):
     def _display_as_period(self, event):
         return self._metrics.calc_width(event.get_time_period()) > self._period_threshold
 
-    def _calc_subevent_threshold_width(self, event):
-        # The enlarging factor allows sub-events to be smaller than a normal
-        # event before the container becomes a point event.
-        enlarging_factor = 2
-        return enlarging_factor * self._metrics.calc_width(event.time_period)
-
     def _calc_ideal_rect_for_period_event(self, event):
         rw, rh = self._calc_width_and_height_for_period_event(event)
         rx = self._calc_x_pos_for_period_event(event)
