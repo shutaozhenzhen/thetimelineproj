@@ -42,6 +42,7 @@ class IcsLoader(object):
          self.use_trigger_as_alert) = options
         self.events = []
         self.categories = []
+        self.category_names = []
         file_contents = self._read_file_content(path)
         cal = self._read_calendar_object(file_contents)
         self._load_events(cal, db)
@@ -144,9 +145,11 @@ class IcsLoader(object):
 
     def _load_categories(self, vevent):
         if "categories" in vevent:
-            categories_names = [cat.strip() for cat in vevent["categories"].split(",") if len(cat.strip()) > 0]
+            categories_names = set([cat.strip() for cat in vevent["categories"].split(",") if len(cat.strip()) > 0])
             for category_name in categories_names:
-                self.categories.append(Category(category_name, self._get_random_color(), None))
+                if category_name not in self.category_names:
+                    self.categories.append(Category(category_name, self._get_random_color(), None))
+                    self.category_names.append(category_name)
 
     def _get_random_color(self):
         return (random.randint(0, 255),
