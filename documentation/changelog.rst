@@ -42,6 +42,9 @@ Fixed crash reports and bugs:
 
 * Milestones are handled correctly when undoing  changes.
 
+* Duplicate categories in ics file is now handled correctly
+  (`#160 <https://sourceforge.net/p/thetimelineproj/backlog/160/>`_)
+
 Version 1.11.0
 --------------
 
