@@ -45,6 +45,9 @@ Fixed crash reports and bugs:
 * Duplicate categories in ics file is now handled correctly
   (`#160 <https://sourceforge.net/p/thetimelineproj/backlog/160/>`_)
 
+* Invalid date and time entries, now generates error message.
+  (`#163 <https://sourceforge.net/p/thetimelineproj/backlog/163/>`_)
+
 Version 1.11.0
 --------------
 
