@@ -187,6 +187,8 @@ class EditEventDialogController(Controller):
             return self.view.GetStart()
         except ValueError, ex:
             self.view.DisplayInvalidStart("%s" % ex_msg(ex))
+        except TypeError, ex:
+            pass
 
     def _get_end_from_view(self):
         if self.view.GetShowPeriod():
