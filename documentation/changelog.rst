@@ -48,6 +48,9 @@ Fixed crash reports and bugs:
 * Invalid date and time entries, now generates error message.
   (`#163 <https://sourceforge.net/p/thetimelineproj/backlog/163/>`_)
 
+* Creating exception message should not fail now.
+  (`#161 <https://sourceforge.net/p/thetimelineproj/backlog/161/>`_)
+
 Version 1.11.0
 --------------
 

@@ -21,6 +21,7 @@ import os.path
 
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.wxgui.utils import register_unlock_function
+from timelinelib.general.encodings import to_unicode
 
 
 def safe_write(path, encoding, write_fn):
@@ -34,7 +35,7 @@ def safe_write(path, encoding, write_fn):
     def raise_error(specific_msg, cause_exception):
         err_general = _("Unable to save timeline data to '%s'. File left unmodified.") % path
         err_template = "%s\n\n%%s\n\n%%s" % err_general
-        raise TimelineIOError(err_template % (specific_msg, cause_exception))
+        raise TimelineIOError(err_template % (to_unicode(specific_msg), to_unicode(cause_exception)))
     tmp_path = create_non_exising_path(path, "tmp")
     backup_path = create_non_exising_path(path, "bak")
     # Write data to tmp dbfile
