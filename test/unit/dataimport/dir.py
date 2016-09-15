@@ -19,6 +19,7 @@
 import os.path
 
 from timelinelib.dataimport.dir import import_db_from_dir
+from timelinelib.dataimport.dir import get_unique_cat_name
 from timelinelib.test.cases.unit import UnitTestCase
 
 
@@ -30,3 +31,18 @@ class describe_import_dir(UnitTestCase):
         db = import_db_from_dir(this_dir)
         event_names = [event.get_text() for event in db.get_all_events()]
         self.assertTrue(this_name in event_names, "Events: %s" % event_names)
+
+
+class describe_get_unique_cat_name(UnitTestCase):
+
+    def test_different_dir_names_keeps_cat_names(self):
+        used_names = []
+        self.assertEquals("temp", get_unique_cat_name("temp", used_names))
+
+    def test_duplicate_dir_names_renames_cat_name(self):
+        used_names = ["temp"]
+        self.assertEquals("temp(1)", get_unique_cat_name("temp", used_names))
+
+    def test_duplicate_dir_names_renames_cat_names(self):
+        used_names = ["temp", "temp(1)"]
+        self.assertEquals("temp(2)", get_unique_cat_name("temp", used_names))

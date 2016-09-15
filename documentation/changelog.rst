@@ -51,6 +51,9 @@ Fixed crash reports and bugs:
 * Creating exception message should not fail now.
   (`#161 <https://sourceforge.net/p/thetimelineproj/backlog/161/>`_)
 
+* Duplicate dir names in directory Timeline is now handled.
+  (`#162 <https://sourceforge.net/p/thetimelineproj/backlog/162/>`_)
+
 Version 1.11.0
 --------------
 

@@ -83,16 +83,30 @@ def _load(db, dir_path):
         # Hide all categories but the first
         db.set_hidden_categories(all_cats[1:])
         # Set colors and change names
+        used_names = []
         for cat in db.get_categories():
             cat.color = _color_from_range(color_ranges[cat.name])
-            cat.name = os.path.basename(cat.name)
+            cat.name = get_unique_cat_name(os.path.basename(cat.name), used_names)
             db.save_category(cat)
     except Exception, e:
         msg = _("Unable to read from filename '%s'.") % dir_path
         whole_msg = "%s\n\n%s" % (msg, e)
+        print whole_msg
         raise TimelineIOError(whole_msg)
     finally:
         db.enable_save(call_save=False)
+
+
+def get_unique_cat_name(name, used_names):
+    cat_name = name
+    if cat_name in used_names:
+        i = 1
+        cat_name = "%s(%d)" % (name, i)
+        while cat_name in used_names:
+            i += 1
+            cat_name = "%s(%d)" % (name, i)
+    used_names.append(cat_name)
+    return cat_name
 
 
 def _event_from_path(db, file_path):
@@ -122,4 +136,4 @@ def _category_from_path(db, file_path):
 def _color_from_range(color_range):
     (rstart, _, b) = color_range
     (r, g, b) = colorsys.hsv_to_rgb(rstart, b, 1)
-    return (r*255, g*255, b*255)
+    return (r * 255, g * 255, b * 255)
