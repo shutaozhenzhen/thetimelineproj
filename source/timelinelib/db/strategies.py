@@ -109,10 +109,9 @@ class DefaultContainerStrategy(ContainerStrategy):
         #      or                      +
         #      or         +
         #      or                                                      +
-        left_delta = new_event.get_time_period().start_time - event.get_time_period().start_time
-        right_delta = event.get_time_period().end_time - new_event.get_time_period().end_time
-        move_left = left_delta > right_delta
-        if move_left:
+        left_delta = event.start_to_start(new_event).delta()
+        right_delta = new_event.end_to_end(event).delta()
+        if left_delta > right_delta:
             self._move_events_left(new_event, event)
         else:
             self._move_events_right(new_event, event)

@@ -93,6 +93,12 @@ class Event(object):
         self.time_period = time_period
         return self
 
+    def start_to_start(self, event):
+        return self.time_period.start_to_start(event.get_time_period())
+
+    def end_to_end(self, event):
+        return self.time_period.end_to_end(event.get_time_period())
+
     def move_delta(self, delta):
         self.set_time_period(self.time_period.move_delta(delta))
 

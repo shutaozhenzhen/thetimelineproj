@@ -47,8 +47,17 @@ class TimePeriod(object):
     def get_end_time(self):
         return self.end_time
 
+    def set_start_time(self, time):
+        return self.update(time, self.end_time)
+
     def set_end_time(self, time):
         return self.update(self.start_time, time)
+
+    def start_to_start(self, time_period):
+        return self.set_end_time(time_period.get_start_time())
+
+    def end_to_end(self, time_period):
+        return time_period.set_start_time(self.get_end_time())
 
     def update(self, start_time, end_time,
                start_delta=None, end_delta=None):
