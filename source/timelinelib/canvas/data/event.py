@@ -93,6 +93,9 @@ class Event(object):
         self.time_period = time_period
         return self
 
+    def move_delta(self, delta):
+        self.set_time_period(self.time_period.move_delta(delta))
+
     def get_start_time(self):
         return self.time_period.get_start_time()
 

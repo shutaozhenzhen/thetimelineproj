@@ -225,20 +225,14 @@ class DefaultContainerStrategy(ContainerStrategy):
             if event == new_event:
                 continue
             if event.get_time_period().start_time <= latest_start_time:
-                self._adjust_event_time_period(event, delta)
+                event.move_delta(delta)
 
     def _move_late_events_right(self, new_event, earliest_start_time, delta):
         for event in self.container.events:
             if event == new_event:
                 continue
             if event.get_time_period().start_time >= earliest_start_time:
-                self._adjust_event_time_period(event, delta)
-
-    def _adjust_event_time_period(self, event, delta):
-        new_start = event.get_time_period().start_time + delta
-        new_end = event.get_time_period().end_time + delta
-        event.get_time_period().start_time = new_start
-        event.get_time_period().end_time = new_end
+                event.move_delta(delta)
 
 
 class ExtendedContainerStrategy(DefaultContainerStrategy):
