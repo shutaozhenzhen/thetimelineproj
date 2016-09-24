@@ -101,7 +101,7 @@ class Era(object):
         return self.color
 
     def inside_period(self, time_period):
-        return self.time_period.overlap(time_period)
+        return self.time_period.inside_period(time_period)
 
     def overlapping(self, era):
         if era.get_time_period().start_time >= self.time_period.end_time:
