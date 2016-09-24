@@ -54,10 +54,13 @@ class TimePeriod(object):
         return self.update(self.start_time, time)
 
     def start_to_start(self, time_period):
-        return self.set_end_time(time_period.get_start_time())
+        return TimePeriod(self.start_time, time_period.get_start_time())
+
+    def start_to_end(self, time_period):
+        return TimePeriod(self.start_time, time_period.get_end_time())
 
     def end_to_end(self, time_period):
-        return time_period.set_start_time(self.get_end_time())
+        return TimePeriod(self.end_time, time_period.get_end_time())
 
     def update(self, start_time, end_time,
                start_delta=None, end_delta=None):
