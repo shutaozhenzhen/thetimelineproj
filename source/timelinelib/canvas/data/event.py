@@ -61,16 +61,16 @@ class Event(object):
         return not (self == other)
 
     def __lt__(self, other):
-        return self.time_period.start_time < other.time_period.start_time
+        raise NotImplementedError("I don't believe this is in use.")
 
     def __gt__(self, other):
-        return self.time_period.start_time > other.time_period.start_time
+        raise NotImplementedError("I don't believe this is in use.")
 
     def __le__(self, other):
-        return self.time_period.start_time <= other.time_period.start_time
+        raise NotImplementedError("I don't believe this is in use.")
 
     def __ge__(self, other):
-        return self.time_period.start_time >= other.time_period.start_time
+        raise NotImplementedError("I don't believe this is in use.")
 
     def __repr__(self):
         return "Event<id=%r, text=%r, time_period=%r, ...>" % (
