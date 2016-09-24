@@ -96,6 +96,9 @@ class Event(object):
     def start_to_start(self, event):
         return self.time_period.start_to_start(event.get_time_period())
 
+    def start_to_end(self, event):
+        return self.time_period.start_to_end(event.get_time_period())
+
     def end_to_end(self, event):
         return self.time_period.end_to_end(event.get_time_period())
 
