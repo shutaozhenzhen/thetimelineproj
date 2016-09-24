@@ -16,6 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.time.timeline import TimeDelta
+
+
 class TimePeriod(object):
     """
     Represents a period in time using a start and end time.
@@ -59,6 +62,9 @@ class TimePeriod(object):
     def start_to_end(self, time_period):
         return TimePeriod(self.start_time, time_period.get_end_time())
 
+    def end_to_start(self, time_period):
+        return TimePeriod(self.end_time, time_period.get_start_time())
+
     def end_to_end(self, time_period):
         return TimePeriod(self.end_time, time_period.get_end_time())
 
@@ -96,10 +102,23 @@ class TimePeriod(object):
         """
         return time >= self.start_time and time <= self.end_time
 
+    def distance_to(self, time_period):
+        if time_period.starts_after(self.end_time):
+            return self.end_to_start(time_period).delta()
+        elif time_period.ends_before(self.start_time):
+            return time_period.end_to_start(self).delta()
+        else:
+            return TimeDelta(0)
+
     def overlap(self, time_period):
-        """Return True if this time period has any overlap with the given."""
-        return not (time_period.end_time < self.start_time or
-                    time_period.start_time > self.end_time)
+        return not (time_period.ends_before(self.start_time) or
+                    time_period.starts_after(self.end_time))
+
+    def starts_after(self, time):
+        return self.start_time > time
+
+    def ends_before(self, time):
+        return self.end_time < time
 
     def ends_at(self, time):
         return self.end_time == time

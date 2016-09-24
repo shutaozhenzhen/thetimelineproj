@@ -350,6 +350,9 @@ class Event(object):
         return (event.time_period.start_time < self.time_period.end_time and
                 event.time_period.end_time > self.time_period.start_time)
 
+    def distance_to(self, event):
+        return self.time_period.distance_to(event.get_time_period())
+
     def get_exportable_fields(self):
         return EXPORTABLE_FIELDS
 
