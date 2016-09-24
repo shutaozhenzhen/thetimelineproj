@@ -93,6 +93,26 @@ class time_period_spec(UnitTestCase):
             return TimePeriod(ATime(50), ATime(60))
         self.assertEqNeImplementationIsCorrect(a_time_period, TIME_PERIOD_MODIFIERS)
 
+    def test_overlaps(self):
+        p = TimePeriod(ATime(10), ATime(20))
+        self.assertFalse(p.overlaps(TimePeriod(ATime(0), ATime(9))))
+        self.assertFalse(p.overlaps(TimePeriod(ATime(0), ATime(10))))
+        self.assertTrue(p.overlaps(TimePeriod(ATime(0), ATime(11))))
+        self.assertTrue(p.overlaps(TimePeriod(ATime(11), ATime(19))))
+        self.assertTrue(p.overlaps(TimePeriod(ATime(19), ATime(30))))
+        self.assertFalse(p.overlaps(TimePeriod(ATime(20), ATime(30))))
+        self.assertFalse(p.overlaps(TimePeriod(ATime(21), ATime(30))))
+
+    def test_inside_period(self):
+        p = TimePeriod(ATime(10), ATime(20))
+        self.assertFalse(p.inside_period(TimePeriod(ATime(0), ATime(9))))
+        self.assertTrue(p.inside_period(TimePeriod(ATime(0), ATime(10))))
+        self.assertTrue(p.inside_period(TimePeriod(ATime(0), ATime(11))))
+        self.assertTrue(p.inside_period(TimePeriod(ATime(11), ATime(19))))
+        self.assertTrue(p.inside_period(TimePeriod(ATime(19), ATime(30))))
+        self.assertTrue(p.inside_period(TimePeriod(ATime(20), ATime(30))))
+        self.assertFalse(p.inside_period(TimePeriod(ATime(21), ATime(30))))
+
 
 def ATime(num):
     return Time(num, 0)

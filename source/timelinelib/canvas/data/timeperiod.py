@@ -110,15 +110,28 @@ class TimePeriod(object):
         else:
             return TimeDelta(0)
 
+    def overlaps(self, time_period):
+        return (time_period.ends_after(self.start_time) and
+                time_period.starts_before(self.end_time))
+
+    def outside_period(self, time_period):
+        return (time_period.ends_before(self.start_time) or
+                time_period.starts_after(self.end_time))
+
     def inside_period(self, time_period):
-        return not (time_period.ends_before(self.start_time) or
-                    time_period.starts_after(self.end_time))
+        return not self.outside_period(time_period)
 
     def starts_after(self, time):
         return self.start_time > time
 
+    def starts_before(self, time):
+        return self.start_time < time
+
     def ends_before(self, time):
         return self.end_time < time
+
+    def ends_after(self, time):
+        return self.end_time > time
 
     def ends_at(self, time):
         return self.end_time == time
