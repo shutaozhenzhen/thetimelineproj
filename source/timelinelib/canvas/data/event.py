@@ -256,7 +256,7 @@ class Event(object):
 
     def inside_period(self, time_period):
         """Wrapper for time period method."""
-        return self.time_period.overlap(time_period)
+        return self.time_period.inside_period(time_period)
 
     def is_period(self):
         """Wrapper for time period method."""
