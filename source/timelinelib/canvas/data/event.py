@@ -347,8 +347,7 @@ class Event(object):
         return self.time_period.end_time - self.time_period.start_time
 
     def overlaps(self, event):
-        return (event.time_period.start_time < self.time_period.end_time and
-                event.time_period.end_time > self.time_period.start_time)
+        return self.time_period.overlaps(event.get_time_period())
 
     def distance_to(self, event):
         return self.time_period.distance_to(event.get_time_period())
