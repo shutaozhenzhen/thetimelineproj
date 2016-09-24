@@ -118,7 +118,7 @@ class DefaultContainerStrategy(ContainerStrategy):
 
     def _move_events_left(self, new_event, event):
         delta = new_event.start_to_end(event).delta()
-        latest_start_time = event.time_period.start_time
+        latest_start_time = event.get_time_period().start_time
         self._move_early_events_left(new_event, latest_start_time, delta)
 
     def _move_events_right(self, new_event, event):
