@@ -24,7 +24,7 @@
         http://translations.launchpad.net/thetimelineproj/trunk/+translations
         Format: PO format
     O  Updates th .po files
-        Run "python tools/import-po-fromlaunchpad-export.py /path/to/launchpad-export.tar.gz"
+        Run "python tools/import-po-from-launchpad-export.py /path/to/launchpad-export.tar.gz"
     O  Commit "Import translations"
     
 4. Update timeline.iss
