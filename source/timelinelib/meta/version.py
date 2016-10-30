@@ -20,7 +20,7 @@ TYPE_DEV = "development"
 TYPE_BETA = "beta"
 TYPE_FINAL = ""
 
-VERSION = (1, 12, 0)
+VERSION = (1, 13, 0)
 TYPE = TYPE_DEV
 REVISION_HASH = ""
 REVISION_DATE = ""
