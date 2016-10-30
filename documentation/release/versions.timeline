@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.11.0 (daa97e9c765e 2016-08-02)</version>
+  <version>1.12.0 (3579f575a74c 2016-10-30)</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -1178,11 +1178,68 @@ Bug fixes:
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
+      <category>Planned Release</category>
       <description>Version 1.12.0
 -------------
 
-**Planned release on 31 October 2016.**
+**Release on 31 October 2016.**
+
+GUI:
+
+* Era's now have an ends-today property.
+  (`#159 &lt;https://sourceforge.net/p/thetimelineproj/backlog/159/&gt;`_)
+
+Documentation:
+
+* Help pages updated.
+
+Data:
+
+* Option to switch off time for entire project.
+  (`#157 &lt;https://sourceforge.net/p/thetimelineproj/backlog/157/&gt;`_)
+
+* Sample text is displayed for fonts in the preference dialog
+
+Export SVG:
+
+* Eras are now drawn in the SVG image.
+  (`#144 &lt;https://sourceforge.net/p/thetimelineproj/backlog/144/&gt;`_)
+
+* Improved drawing of labels in SVG image.
+  (`#145 &lt;https://sourceforge.net/p/thetimelineproj/backlog/145/&gt;`_)
+
+* Timeline background colour is used used in SVG image.
+
+Fixed crash reports and bugs:
+
+* Milestones are handled correctly when undoing  changes.
+
+* Duplicate categories in ics file is now handled correctly
+  (`#160 &lt;https://sourceforge.net/p/thetimelineproj/backlog/160/&gt;`_)
+
+* Invalid date and time entries, now generates error message.
+  (`#163 &lt;https://sourceforge.net/p/thetimelineproj/backlog/163/&gt;`_)
+
+* Creating exception message should not fail now.
+  (`#161 &lt;https://sourceforge.net/p/thetimelineproj/backlog/161/&gt;`_)
+
+* Duplicate dir names in directory Timeline is now handled.
+  (`#162 &lt;https://sourceforge.net/p/thetimelineproj/backlog/162/&gt;`_)</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2017-01-31 00:00:00</start>
+      <end>2017-01-31 00:00:00</end>
+      <text>Timeline 1.13.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Future Release</category>
+      <description>Version 1.13.0
+-------------
+
+**Planned release on 31 January 2016.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
@@ -1194,8 +1251,8 @@ Bug fixes:
   </events>
   <view>
     <displayed_period>
-      <start>2009-12-02 03:31:39</start>
-      <end>2018-12-20 15:32:18</end>
+      <start>2009-12-04 03:19:04</start>
+      <end>2018-12-22 15:19:43</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
