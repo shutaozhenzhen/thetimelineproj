@@ -1039,8 +1039,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
     # Timeline Menu action handlers
     def _measure_distance_between_events(self):
         event1, event2 = self._get_selected_events()
-        distance = self.controller.calc_events_distance(event1, event2)
-        self._display_distance(distance)
+        self._display_distance(event1.distance_to(event2))
 
     def _get_selected_events(self):
         event_id_1, event_id_2 = self.main_panel.get_ids_of_two_first_selected_events()
