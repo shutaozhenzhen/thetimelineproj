@@ -32,11 +32,13 @@ from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Category
 from timelinelib.utils import ex_msg
 from timelinelib.time.timeline import TimeDelta
+from timelinelib.wxgui.utils import display_warning_message
 
 
 class IcsLoader(object):
 
     def load(self, db, path, options):
+        self.vevents_not_loaded = []
         (self.add_location_to_description,
          self.use_trigger_as_start_date,
          self.use_trigger_as_alert) = options
@@ -48,6 +50,7 @@ class IcsLoader(object):
         self._load_events(cal, db)
         self._load_todos(cal, db)
         self._save_data_in_db(db)
+        self._report_on_vevents_not_loaded()
 
     def _load_events(self, cal, db):
         for vevent in cal.walk("VEVENT"):
@@ -137,11 +140,14 @@ class IcsLoader(object):
             db.save_category(category)
 
     def _load_vevent(self, db, vevent):
-        start, end = self._extract_start_end(vevent)
-        txt = self._get_event_name(vevent)
-        event = Event(start, end, txt)
-        event.set_description(self._get_description(vevent))
-        self.events.append(event)
+        try:
+            start, end = self._extract_start_end(vevent)
+            txt = self._get_event_name(vevent)
+            event = Event(start, end, txt)
+            event.set_description(self._get_description(vevent))
+            self.events.append(event)
+        except:
+            self.vevents_not_loaded.append((txt, start, end))
 
     def _load_categories(self, vevent):
         if "categories" in vevent:
@@ -216,6 +222,23 @@ class IcsLoader(object):
 
     def _get_subelements(self, parent, subelement_name):
         return parent.walk(subelement_name)
+
+    def _report_on_vevents_not_loaded(self):
+        if len(self.vevents_not_loaded) > 0:
+            message = ("Some events couldn't be loaded!\n" +
+                       "The first 10 failing events are shown below.\n" +
+                       self._format_vevents_not_loaded())
+            display_warning_message(message)
+
+    def _format_vevents_not_loaded(self):
+        return "\n".join(["Name='%s'  Start=%s  End=%s" % (txt,
+                                          self._time_to_text(start),
+                                          self._time_to_text(end)) for txt, start, end in self.vevents_not_loaded][:10])
+
+    def _time_to_text(self, time):
+        d = "%d-%02d-%02d " % GregorianUtils.from_time(time).to_date_tuple()
+        t = "%02d.%02d.%02d" % GregorianUtils.from_time(time).to_time_tuple()
+        return d + t
 
 
 def import_db_from_ics(path, options_dialog=None, options=None):
