@@ -2,7 +2,7 @@ Changelog
 =========
 
 Version 1.13.0
--------------
+--------------
 
 **Planned release on 31 January 2016.**
 
@@ -21,9 +21,9 @@ Fixed crash reports and bugs:
   (`#166 <https://sourceforge.net/p/thetimelineproj/backlog/166/>`_)
 
 Version 1.12.0
--------------
+--------------
 
-**Release on 31 October 2016.**
+**Released on 31 October 2016.**
 
 GUI:
 
@@ -70,7 +70,7 @@ Fixed crash reports and bugs:
 Version 1.11.0
 --------------
 
-**Release on 2 August 2016.**
+**Released on 2 August 2016.**
 
 Data import:
 
