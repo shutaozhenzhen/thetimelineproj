@@ -77,6 +77,7 @@ class MemoryDB(Observable):
         if time_type is not None:
             try:
                 self.saved_now = time_type.now()
+                self._eras.set_now_func(time_type.now)
             except NotImplementedError:
                 self.saved_now = Time(0, 0)
 

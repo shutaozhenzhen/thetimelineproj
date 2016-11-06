@@ -39,6 +39,9 @@ class Eras(object):
         else:
             self._eras = eras
 
+    def set_now_func(self, now_func):
+        self.now_func = now_func
+
     def clone(self):
         return Eras(self.now_func, clone_era_list(self._eras))
 
