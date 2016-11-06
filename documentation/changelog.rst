@@ -14,9 +14,11 @@ Version 1.13.0
 
 Fixed crash reports and bugs:
 
-* Avoid crash when a milestone has no text.
+* A Milestone can now have an empty text without crashing.
   (`#165 <https://sourceforge.net/p/thetimelineproj/backlog/165/>`_)
 
+* Now an Era in a numeric timeline can have "ends today" without crashing.
+  (`#166 <https://sourceforge.net/p/thetimelineproj/backlog/166/>`_)
 
 Version 1.12.0
 -------------
