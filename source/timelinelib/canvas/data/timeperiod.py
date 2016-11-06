@@ -16,6 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.time.timeline import TimeDelta
+
+
 class TimePeriod(object):
     """
     Represents a period in time using a start and end time.
@@ -47,8 +50,23 @@ class TimePeriod(object):
     def get_end_time(self):
         return self.end_time
 
+    def set_start_time(self, time):
+        return self.update(time, self.end_time)
+
     def set_end_time(self, time):
         return self.update(self.start_time, time)
+
+    def start_to_start(self, time_period):
+        return TimePeriod(self.start_time, time_period.get_start_time())
+
+    def start_to_end(self, time_period):
+        return TimePeriod(self.start_time, time_period.get_end_time())
+
+    def end_to_start(self, time_period):
+        return TimePeriod(self.end_time, time_period.get_start_time())
+
+    def end_to_end(self, time_period):
+        return TimePeriod(self.end_time, time_period.get_end_time())
 
     def update(self, start_time, end_time,
                start_delta=None, end_delta=None):
@@ -84,10 +102,36 @@ class TimePeriod(object):
         """
         return time >= self.start_time and time <= self.end_time
 
-    def overlap(self, time_period):
-        """Return True if this time period has any overlap with the given."""
-        return not (time_period.end_time < self.start_time or
-                    time_period.start_time > self.end_time)
+    def distance_to(self, time_period):
+        if time_period.starts_after(self.end_time):
+            return self.end_to_start(time_period).delta()
+        elif time_period.ends_before(self.start_time):
+            return time_period.end_to_start(self).delta()
+        else:
+            return TimeDelta(0)
+
+    def overlaps(self, time_period):
+        return (time_period.ends_after(self.start_time) and
+                time_period.starts_before(self.end_time))
+
+    def outside_period(self, time_period):
+        return (time_period.ends_before(self.start_time) or
+                time_period.starts_after(self.end_time))
+
+    def inside_period(self, time_period):
+        return not self.outside_period(time_period)
+
+    def starts_after(self, time):
+        return self.start_time > time
+
+    def starts_before(self, time):
+        return self.start_time < time
+
+    def ends_before(self, time):
+        return self.end_time < time
+
+    def ends_after(self, time):
+        return self.end_time > time
 
     def ends_at(self, time):
         return self.end_time == time

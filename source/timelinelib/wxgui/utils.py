@@ -146,7 +146,7 @@ def handle_db_error_by_crashing(e, parent=None):
     try:
         display_error_message("\n\n".join([
             _("Timeline has encountered a fatal error:"),
-            str(e),
+            unicode(e),
             _("To prevent you from loosing data, Timeline will now crash."),
         ]), parent=parent)
         (error_type, value, traceback) = sys.exc_info()
