@@ -12,6 +12,11 @@ Version 1.13.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Fixed crash reports and bugs:
+
+* Avoid crash when a milestone has no text.
+  (`#165 <https://sourceforge.net/p/thetimelineproj/backlog/165/>`_)
+
 
 Version 1.12.0
 -------------
