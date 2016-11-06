@@ -414,7 +414,10 @@ class DefaultEventBoxDrawer(object):
         def draw_label():
             x_offset = 6
             y_offset = 2
-            label = event.get_text()[0]
+            try:
+                label = event.get_text()[0]
+            except IndexError:
+                label = " "
             dc.DrawText(label, rect.x + x_offset, rect.y + y_offset)
 
         def draw_move_handle():

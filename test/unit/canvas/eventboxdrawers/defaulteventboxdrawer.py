@@ -99,6 +99,21 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.dc.SetClippingRect.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
         self.dc.DrawText.assert_called_with(u"\u2714" + DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
 
+    def test_milestone_with_no_text_can_be_drawn(self):
+        app = wx.App()
+        self.event.get_text.return_value = ""
+        self.event.get_default_color.return_value = (127, 127, 127)
+        self.event.get_category.return_value = None
+        rect = wx.Rect(0, 0, 100, 20)
+        scene = Mock()
+        try:
+            self.drawer._draw_milestone_event(self.dc, rect, scene, self.event, False)
+            self.dc.DrawText.assert_called_with(" ", 6, 2)
+        except IndexError:
+            self.fail("Exception was not expected")
+        finally:
+            app.Destroy()
+
     def setUp(self):
         self.drawer = DefaultEventBoxDrawer()
         self.drawer.view_properties = Mock()
