@@ -39,8 +39,18 @@ class ListExporter(PluginBase):
         dlg.ShowModal()
         dlg.Destroy()
 
-    def _get_events(self, timeline):
-        return [(timeline.get_time_type().format_period(event.get_time_period()), event.get_text()) for event in sorted(timeline.get_all_events())]
+    def _get_events(self, db):
+        return [
+            (
+                db.get_time_type().format_period(event.get_time_period()),
+                event.get_text()
+            )
+            for event
+            in sorted(
+                db.get_all_events(),
+                key=lambda event: event.get_start_time()
+            )
+        ]
 
 
 class ListboxDialog(wx.Dialog):
