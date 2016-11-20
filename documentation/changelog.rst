@@ -111,7 +111,7 @@ Data:
 
 Navigation:
 
-* Now it´s possible to return to the previous time period after a navigation.
+* Now it's possible to return to the previous time period after a navigation.
   (`#153 <https://sourceforge.net/p/thetimelineproj/backlog/153/>`_)
 
 Bug fixes:
