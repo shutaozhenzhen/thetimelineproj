@@ -20,6 +20,9 @@ Fixed crash reports and bugs:
 * Now an Era in a numeric timeline can have "ends today" without crashing.
   (`#166 <https://sourceforge.net/p/thetimelineproj/backlog/166/>`_)
 
+* NotImplementedError: I don't believe this is in use.
+  (`#168 <https://sourceforge.net/p/thetimelineproj/backlog/168/>`_)
+
 Version 1.12.0
 --------------
 
