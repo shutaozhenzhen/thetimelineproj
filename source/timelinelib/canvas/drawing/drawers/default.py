@@ -317,10 +317,21 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_major_strip_label(self, time_period):
         label = self.scene.major_strip.label(time_period.start_time, True)
-        x = self._calculate_major_strip_label_x(time_period, label)
+        tw, _ = self.dc.GetTextExtent(label)
+        if self._calculate_major_strip_width(time_period) < tw:
+            self._draw_major_strip_vertical_label(time_period, label)
+        else:
+            self._draw_major_strip_horizontal_label(time_period, label)
+
+    def _draw_major_strip_vertical_label(self, time_period, label):
+        x = self._calculate_major_strip_vertical_label_x(time_period, label)
+        self.dc.DrawRotatedText(label, x, INNER_PADDING, -90)
+
+    def _draw_major_strip_horizontal_label(self, time_period, label):
+        x = self._calculate_major_strip_horizontal_label_x(time_period, label)
         self.dc.DrawText(label, x, INNER_PADDING)
 
-    def _calculate_major_strip_label_x(self, time_period, label):
+    def _calculate_major_strip_horizontal_label_x(self, time_period, label):
         tw, _ = self.dc.GetTextExtent(label)
         x = self.scene.x_pos_for_time(time_period.mean_time()) - tw / 2
         if x - INNER_PADDING < 0:
@@ -334,6 +345,13 @@ class DefaultDrawingAlgorithm(Drawer):
             if x < left + INNER_PADDING:
                 x = left + INNER_PADDING
         return x
+
+    def _calculate_major_strip_vertical_label_x(self, time_period, label):
+        _, th = self.dc.GetTextExtent(label)
+        return self.scene.x_pos_for_time(time_period.mean_time()) + th / 2
+
+    def _calculate_major_strip_width(self, time_period):
+        return self.scene.x_pos_for_time(time_period.end_time) - self.scene.x_pos_for_time(time_period.start_time)
 
     def _draw_divider_line(self):
         self.dc.SetPen(self.black_solid_pen)
