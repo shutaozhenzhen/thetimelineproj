@@ -79,7 +79,7 @@ class Eras(object):
             era = e1.clone()
             era.set_time_period(TimePeriod(start, end))
             era.set_color(merge_colors(e0.get_color(), e1.get_color()))
-            era.set_name("Era Overlap")
+            era.set_name("%s + %s" % (e0.get_name(), e1.get_name()))
             return era
 
         def get_start_and_end_times(e0, e1):
