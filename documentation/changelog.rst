@@ -12,6 +12,10 @@ Version 1.13.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+GUI:
+
+* The naming strategy of overlapping Era's has been changed
+
 Fixed crash reports and bugs:
 
 * A Milestone can now have an empty text without crashing.
