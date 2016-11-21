@@ -77,6 +77,11 @@ Crash report that has been fixed in the upcoming release::
 
     The problem has been fixed and will be available in the next release.
 
+    Don't want to wait for it? Try the beta version!
+
+    * Source: https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact
+    * Windows installer: https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact
+
     /The Timeline Team
 
 Crash report that has been fixed in released version::

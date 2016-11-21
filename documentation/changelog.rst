@@ -2,7 +2,7 @@ Changelog
 =========
 
 Version 1.13.0
--------------
+--------------
 
 **Planned release on 31 January 2016.**
 
@@ -20,10 +20,13 @@ Fixed crash reports and bugs:
 * Now an Era in a numeric timeline can have "ends today" without crashing.
   (`#166 <https://sourceforge.net/p/thetimelineproj/backlog/166/>`_)
 
-Version 1.12.0
--------------
+* NotImplementedError: I don't believe this is in use.
+  (`#168 <https://sourceforge.net/p/thetimelineproj/backlog/168/>`_)
 
-**Release on 31 October 2016.**
+Version 1.12.0
+--------------
+
+**Released on 31 October 2016.**
 
 GUI:
 
@@ -70,7 +73,7 @@ Fixed crash reports and bugs:
 Version 1.11.0
 --------------
 
-**Release on 2 August 2016.**
+**Released on 2 August 2016.**
 
 Data import:
 
@@ -108,7 +111,7 @@ Data:
 
 Navigation:
 
-* Now it´s possible to return to the previous time period after a navigation.
+* Now it's possible to return to the previous time period after a navigation.
   (`#153 <https://sourceforge.net/p/thetimelineproj/backlog/153/>`_)
 
 Bug fixes:
