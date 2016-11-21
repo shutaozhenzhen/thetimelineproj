@@ -16,6 +16,8 @@ GUI:
 
 * The naming strategy of overlapping Era's has been changed
 
+* Major strip labels are drawn vertical when they don't fit in horizontal space.
+
 Fixed crash reports and bugs:
 
 * A Milestone can now have an empty text without crashing.
