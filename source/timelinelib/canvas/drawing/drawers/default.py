@@ -306,6 +306,7 @@ class DefaultDrawingAlgorithm(Drawer):
     def _draw_major_strips(self):
         font.set_major_strip_text_font(self.appearance.get_major_strip_font(), self.dc)
         self.dc.SetPen(self.major_strip_pen)
+        self.use_major_strip_vertical_label = self._use_major_strip_vertical_label(self.scene.major_strip_data[0])
         for time_period in self.scene.major_strip_data:
             self._draw_major_strip_end_line(time_period)
             self._draw_major_strip_label(time_period)
@@ -315,10 +316,14 @@ class DefaultDrawingAlgorithm(Drawer):
         x = self.scene.x_pos_for_time(end_time)
         self.dc.DrawLine(x, 0, x, self.scene.height)
 
-    def _draw_major_strip_label(self, time_period):
+    def _use_major_strip_vertical_label(self, time_period):
         label = self.scene.major_strip.label(time_period.start_time, True)
         tw, _ = self.dc.GetTextExtent(label)
-        if self._calculate_major_strip_width(time_period) < tw:
+        return self._calculate_major_strip_width(time_period) < (tw + 5)
+
+    def _draw_major_strip_label(self, time_period):
+        label = self.scene.major_strip.label(time_period.start_time, True)
+        if self.use_major_strip_vertical_label:
             self._draw_major_strip_vertical_label(time_period, label)
         else:
             self._draw_major_strip_horizontal_label(time_period, label)
