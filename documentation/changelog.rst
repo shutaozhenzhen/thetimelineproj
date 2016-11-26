@@ -29,6 +29,9 @@ Fixed crash reports and bugs:
 * NotImplementedError: I don't believe this is in use.
   (`#168 <https://sourceforge.net/p/thetimelineproj/backlog/168/>`_)
 
+* Now you can tab out of an invalid date field without crashing.
+  (`#169 <https://sourceforge.net/p/thetimelineproj/backlog/169/>`_)
+
 Version 1.12.0
 --------------
 
