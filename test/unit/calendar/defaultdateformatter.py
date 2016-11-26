@@ -50,6 +50,10 @@ class describe_new_date_formatter(UnitTestCase):
         self.assert_next_region_is(("2016-02-13", 5), (8, 2))
         self.assert_next_region_is(("2016-02-13", 8), None)
         self.assert_next_region_is(("2016-02-13", 42), None)
+        self.assert_next_region_is(("2016-02-", 8), None)
+        self.assert_next_region_is(("2016-02", 7), None)
+        self.assert_next_region_is(("", 0), None)
+        self.assert_next_region_is(("2016-", 4), (5, 0))
 
     def test_can_get_previous_region(self):
         self.assert_previous_region_is(("2016-02-13", 42), (5, 2))

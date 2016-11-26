@@ -76,8 +76,12 @@ class DefaultDateFormatter(object):
             return 2
 
     def _split(self, date_string):
-        (region_1, rest) = date_string.split(self._first_separator, 1)
-        (region_2, region_3) = rest.split(self._second_separator, 1)
+        region_1 = region_2 = region_3 = ''
+        try:
+            (region_1, region_2) = date_string.split(self._first_separator, 1)
+            (region_2, region_3) = region_2.split(self._second_separator, 1)
+        except ValueError:
+            pass
         return [
             region_1,
             region_2,
@@ -85,10 +89,15 @@ class DefaultDateFormatter(object):
         ]
 
     def get_next_region(self, date_string, cursor_position):
+        if self._cursor_at_end_of_string(date_string, cursor_position):
+            return None
         for region in [1, 2]:
             if cursor_position < self._get_region_start(date_string, region):
                 return self._get_region_selection(date_string, region)
         return None
+
+    def _cursor_at_end_of_string(self, date_string, cursor_position):
+        return cursor_position == len(date_string)
 
     def get_previous_region(self, date_string, cursor_position):
         for region in [1, 0]:
