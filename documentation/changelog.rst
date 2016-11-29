@@ -18,6 +18,10 @@ GUI:
 
 * Major strip labels are drawn vertical when they don't fit in horizontal space.
 
+Exporting:
+
+* How to handle encoding errors, when exporting events to file, can now be selected.
+
 Fixed crash reports and bugs:
 
 * A Milestone can now have an empty text without crashing.

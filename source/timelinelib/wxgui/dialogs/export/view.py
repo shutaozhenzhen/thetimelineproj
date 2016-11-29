@@ -24,6 +24,13 @@ from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import display_information_message
 
 
+IGNORE = _("Ignore")
+REPLACE = _("Replace")
+XML_REPLACE = _("XML-Replace")
+STRICT = _("Strict")
+STRATEGY = {IGNORE: "ignore", REPLACE: "replace", XML_REPLACE: "xmlcharrefreplace", STRICT: "strict"}
+
+
 class ExportDialog(Dialog):
 
     """
@@ -34,6 +41,13 @@ class ExportDialog(Dialog):
 
         <StaticBoxSizerVertical label="$(encoding_description_text)" border="LEFT|RIGHT|BOTTOM">
             <ListBox style="LB_SINGLE" name="lb_text_encodings" />
+        </StaticBoxSizerVertical>
+
+        <StaticBoxSizerVertical label="$(encoding_error_strategy_text)" border="LEFT|RIGHT|BOTTOM">
+            <ListBox 
+                style="LB_SINGLE" 
+                name="lb_error_strategies" 
+                choices="$(lb_error_strategies_choices)" />
         </StaticBoxSizerVertical>
 
         <StaticBoxSizerVertical label="$(export_items_description_text)" border="LEFT|RIGHT|BOTTOM">
@@ -58,12 +72,15 @@ class ExportDialog(Dialog):
         Dialog.__init__(self, ExportDialogController, parent, {
             "type_description_text": _("Select Export File Type"),
             "encoding_description_text": _("Select Text Encoding"),
+            "encoding_error_strategy_text": _("Select encoding error strategy"),
             "export_items_description_text": _("Select Items to export"),
             "events_text": _("Events"),
             "categories_text": _("Categories"),
             "select_text": _("Select Fields..."),
+            "lb_error_strategies_choices": [IGNORE, REPLACE, XML_REPLACE, STRICT],
         }, title=_("Export Timeline"))
         self.controller.on_init()
+        self.lb_error_strategies.Select(0)
 
     def SetTargetTypes(self, types):
         self.lb_target_types.AppendItems(types)
@@ -110,6 +127,9 @@ class ExportDialog(Dialog):
 
     def GetTextEncoding(self):
         return self.lb_text_encodings.GetStringSelection()
+
+    def GetTextEncodingErrorStrategy(self):
+        return STRATEGY[self.lb_error_strategies.GetStringSelection()]
 
     def GetEventFields(self):
         return self.controller.get_event_fields()
