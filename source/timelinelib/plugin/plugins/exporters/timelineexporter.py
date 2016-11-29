@@ -63,6 +63,7 @@ class CsvExporter(object):
         self.path = path
         self.timeline = timeline
         self.text_encoding = dlg.GetTextEncoding()
+        self.encoding_error_strategy = dlg.GetTextEncodingErrorStrategy()
         self.export_events = dlg.GetExportEvents()
         self.export_categories = dlg.GetExportCategories()
         self.event_fields = dlg.GetEventFields()
@@ -92,7 +93,6 @@ class CsvExporter(object):
     def _write_heading(self, f, fields):
         for field in fields:
             self._write_encoded_text(f, field)
-            #f.write("%s;" % field)
         f.write("\n")
 
     def _write_events_fields(self, f, event_fields):
@@ -189,7 +189,7 @@ class CsvExporter(object):
 
     def _encode_text(self, text):
         if text is not None:
-            return text.encode(self.text_encoding)
+            return text.encode(self.text_encoding, self.encoding_error_strategy)
         else:
             return text
 
