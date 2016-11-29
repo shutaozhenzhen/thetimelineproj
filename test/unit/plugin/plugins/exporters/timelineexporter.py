@@ -68,6 +68,7 @@ class TimelineExporterTestCase(UnitTestCase):
         self.dlg.GetEventFields.return_value = event_fields
         self.dlg.GetCategoryFields.return_value = category_fields
         self.dlg.GetTextEncoding.return_value = "cp1252"
+        self.dlg.GetTextEncodingErrorStrategy.return_value = "strict"
 
 
 class describe_timeline_exporter(TimelineExporterTestCase):
