@@ -22,6 +22,8 @@ Exporting:
 
 * How to handle encoding errors, when exporting events to file, can now be selected.
 
+* The events in a timeline can now be presented as a slideshow in a web browser.
+
 Fixed crash reports and bugs:
 
 * A Milestone can now have an empty text without crashing.
