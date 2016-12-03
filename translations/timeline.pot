@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-02 16:50+0100\n"
+"POT-Creation-Date: 2016-12-03 16:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2539,12 +2539,32 @@ msgstr ""
 msgid "Never use time precision for events"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\presentation\view.py:51
+#: source\timelinelib\wxgui\dialogs\presentation\controller.py:45
+msgid "The html pages directory is mandatory"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\presentation\controller.py:49
+msgid "Can't find the html pages directory!"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\presentation\controller.py:55
+msgid "The html pages director isn't empty!"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\presentation\view.py:69
 msgid "Select Events"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\presentation\view.py:52
+#: source\timelinelib\wxgui\dialogs\presentation\view.py:70
+msgid "Save html pages at"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\presentation\view.py:71
 msgid "Start Slide Show"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\presentation\view.py:75
+msgid "Select html pages directory"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\setcategory\controller.py:33
@@ -2914,11 +2934,11 @@ msgstr ""
 msgid "Unable to write configuration file."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:1052
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:1058
 msgid "Distance between selected events"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:1055
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:1061
 msgid "Events are overlapping or distance is 0"
 msgstr ""
 
@@ -2937,7 +2957,7 @@ msgid ""
 "Do you want to Synchronize?"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:163
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:158
 #, python-format
 msgid ""
 "Unable to take lock on %s\n"
@@ -2945,7 +2965,7 @@ msgid ""
 "Check if you have write access to this directory."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:193
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:188
 #, python-format
 msgid ""
 "The lockfile used to protect the timeline from concurrent updates is opened "
