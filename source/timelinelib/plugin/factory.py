@@ -23,7 +23,8 @@ from inspect import isclass
 
 EVENTBOX_DRAWER = "eventboxdrawer"
 EXPORTER = "exporter"
-VALID_SERVICES = [EVENTBOX_DRAWER, EXPORTER]
+TEXT_TRANSFORMER = "texttransformer"
+VALID_SERVICES = [EVENTBOX_DRAWER, EXPORTER, TEXT_TRANSFORMER]
 
 
 class PluginException(Exception):
