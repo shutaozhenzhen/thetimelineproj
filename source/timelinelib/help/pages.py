@@ -178,7 +178,7 @@ To zoom vertically, hold down the Alt-key and scroll the mouse wheel.
     help_system.install_page(
         page_id="events",
         header=_("Events"),
-        related_pages=["event_properties", "add_icon", "create_event", "select_events", "edit_event", "delete_event", "move_event_vertically", "duplicate_event", "categories"],
+        related_pages=["event_properties", "add_icon", "create_event", "select_events", "edit_event", "delete_event", "move_event_vertically", "duplicate_event", "categories", "search_event"],
         # TRANSLATORS: This text uses special markup.
         # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
         # Just write them as they are.
@@ -377,6 +377,29 @@ Now a dialog appears in which you can define
  If number of duplications = 3, time span = day and frequency = 2, you will get 3 new copies of the event spread out with the time span of 2 days between them.
 
  You can also get to the duplication dialog from the event context menu, wich appears if you right-click an event with the mouse.
+"""))
+
+    help_system.install_page(
+        page_id="search_event",
+        header=_("Search event"),
+        related_pages=["events", ],
+        # TRANSLATORS: This text uses special markup.
+        # DON'T translate 'HelpFigure(..)' or 'Help(..)'.
+        # Just write them as they are.
+        # Stars produce emphasized text. DON'T remove them.
+        # Dashes produce bullet lists. DON'T remove them.
+        body=_("""
+You can search for an event by selecting the Edit -> Search menu.
+
+A text control is opened in the lower left corner of the application.
+
+Enter a target text in the text control and click Enter.
+If the text is found in the Text or Description of any event, the first event
+found is highlighted for a short period of time.
+
+By clicking on the icons to the right of the text control you can navigate
+back and forth between all the events that has been found. You can also
+select an event from a list of all found events.
 """))
 
     help_system.install_page(
