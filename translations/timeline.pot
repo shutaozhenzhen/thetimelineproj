@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-03 16:59+0100\n"
+"POT-Creation-Date: 2016-12-03 17:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -462,80 +462,85 @@ msgstr ""
 msgid "Vertical Zoom Out"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:79
+#: source\timelinelib\config\shortcut.py:78
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:328
+msgid "Start slide show"
+msgstr ""
+
+#: source\timelinelib\config\shortcut.py:80
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:407
 msgid "Create Event"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:80
+#: source\timelinelib\config\shortcut.py:81
 msgid "Edit Selected Event"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:81
+#: source\timelinelib\config\shortcut.py:82
 msgid "Duplicate Selected Event"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:83
+#: source\timelinelib\config\shortcut.py:84
 msgid "Set Category on Selected Events"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:84
+#: source\timelinelib\config\shortcut.py:85
 msgid "Measure Distance between two Events"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:86
+#: source\timelinelib\config\shortcut.py:87
 #: source\timelinelib\wxgui\dialogs\setcategory\controller.py:40
 msgid "Set Category on events without category"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:87
+#: source\timelinelib\config\shortcut.py:88
 msgid "Edit Categories"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:88
+#: source\timelinelib\config\shortcut.py:89
 msgid "Read Only"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:89
+#: source\timelinelib\config\shortcut.py:90
 msgid "Undo"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:90
+#: source\timelinelib\config\shortcut.py:91
 msgid "Redo"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:92
+#: source\timelinelib\config\shortcut.py:93
 msgid "Contents"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:93
+#: source\timelinelib\config\shortcut.py:94
 #: source\timelinelib\wxgui\components\welcomepanel.py:42
 msgid "Getting started tutorial"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:94
+#: source\timelinelib\config\shortcut.py:95
 #: source\timelinelib\wxgui\dialogs\feature\view.py:48
 msgid "Give Feedback"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:95
-#: source\timelinelib\help\pages.py:496
+#: source\timelinelib\config\shortcut.py:96
+#: source\timelinelib\help\pages.py:519
 msgid "Contact"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:96
+#: source\timelinelib\config\shortcut.py:97
 msgid "About"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:98
+#: source\timelinelib\config\shortcut.py:99
 msgid "Find First Event"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:99
+#: source\timelinelib\config\shortcut.py:100
 msgid "Find Last Event"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:100
+#: source\timelinelib\config\shortcut.py:101
 msgid "Find All Events"
 msgstr ""
 
@@ -726,7 +731,7 @@ msgstr ""
 
 #: source\timelinelib\dataimport\tutorial.py:115
 #: source\timelinelib\dataimport\tutorial.py:218
-#: source\timelinelib\help\pages.py:433
+#: source\timelinelib\help\pages.py:456
 msgid "Delete event"
 msgstr ""
 
@@ -1313,6 +1318,32 @@ msgid ""
 msgstr ""
 
 #: source\timelinelib\help\pages.py:384
+msgid "Search event"
+msgstr ""
+
+#. TRANSLATORS: This text uses special markup.
+#. DON'T translate 'HelpFigure(..)' or 'Help(..)'.
+#. Just write them as they are.
+#. Stars produce emphasized text. DON'T remove them.
+#. Dashes produce bullet lists. DON'T remove them.
+#: source\timelinelib\help\pages.py:391
+msgid ""
+"\n"
+"You can search for an event by selecting the Edit -> Search menu.\n"
+"\n"
+"A text control is opened in the lower left corner of the application.\n"
+"\n"
+"Enter a target text in the text control and click Enter.\n"
+"If the text is found in the Text or Description of any event, the first "
+"event\n"
+"found is highlighted for a short period of time.\n"
+"\n"
+"By clicking on the icons to the right of the text control you can navigate\n"
+"back and forth between all the events that has been found. You can also\n"
+"select an event from a list of all found events.\n"
+msgstr ""
+
+#: source\timelinelib\help\pages.py:407
 msgid "Selecting events"
 msgstr ""
 
@@ -1321,14 +1352,14 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:390
+#: source\timelinelib\help\pages.py:413
 msgid ""
 "\n"
 "To select an event, click on it. To select multiple events, hold down the "
 "*Ctrl* key while clicking events.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:396
+#: source\timelinelib\help\pages.py:419
 msgid "Import timeline"
 msgstr ""
 
@@ -1337,7 +1368,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:403
+#: source\timelinelib\help\pages.py:426
 msgid ""
 "\n"
 "This feature can be used to merge two timelines into one.\n"
@@ -1346,7 +1377,7 @@ msgid ""
 "select the timeline to be imported.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:411
+#: source\timelinelib\help\pages.py:434
 msgid "Event Containers"
 msgstr ""
 
@@ -1355,7 +1386,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:418
+#: source\timelinelib\help\pages.py:441
 msgid ""
 "\n"
 "Containers are a way to group events together.\n"
@@ -1379,14 +1410,14 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:440
+#: source\timelinelib\help\pages.py:463
 msgid ""
 "\n"
 "To delete an event, select it and press the *Del* key. Multiple events can "
 "be deleted at the same time.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:446
+#: source\timelinelib\help\pages.py:469
 msgid "Will associated events be deleted when I delete a category?"
 msgstr ""
 
@@ -1395,13 +1426,13 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:452
+#: source\timelinelib\help\pages.py:475
 msgid ""
 "\n"
 "No. The events will still be there but they will not belong to a category.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:458
+#: source\timelinelib\help\pages.py:481
 msgid "Add a user defined icon"
 msgstr ""
 
@@ -1410,7 +1441,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:465
+#: source\timelinelib\help\pages.py:488
 msgid ""
 "\n"
 "Icons used for the event properties\n"
@@ -1426,7 +1457,7 @@ msgid ""
 "Now the icon can be selected in the properties dialog on the Icons tab.\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:481
+#: source\timelinelib\help\pages.py:504
 #: source\timelinelib\wxgui\components\categorychoice.py:77
 msgid "Edit categories"
 msgstr ""
@@ -1436,7 +1467,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:488
+#: source\timelinelib\help\pages.py:511
 msgid ""
 "\n"
 "Categories can be managed in the *Edit Categories* dialog (*Timeline* > "
@@ -1451,7 +1482,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:502
+#: source\timelinelib\help\pages.py:525
 msgid ""
 "\n"
 "If you have more questions about Timeline, or if you want to get in contact "
@@ -1459,7 +1490,7 @@ msgid ""
 "list: <thetimelineproj-user@lists.sourceforge.net>. (Please use English.)\n"
 msgstr ""
 
-#: source\timelinelib\help\pages.py:508
+#: source\timelinelib\help\pages.py:531
 msgid "Why is Timeline not available in my language?"
 msgstr ""
 
@@ -1468,7 +1499,7 @@ msgstr ""
 #. Just write them as they are.
 #. Stars produce emphasized text. DON'T remove them.
 #. Dashes produce bullet lists. DON'T remove them.
-#: source\timelinelib\help\pages.py:515
+#: source\timelinelib\help\pages.py:538
 msgid ""
 "\n"
 "Timeline is developed and translated by volunteers. If you would like to "
@@ -2539,15 +2570,15 @@ msgstr ""
 msgid "Never use time precision for events"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\presentation\controller.py:45
+#: source\timelinelib\wxgui\dialogs\presentation\controller.py:46
 msgid "The html pages directory is mandatory"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\presentation\controller.py:49
+#: source\timelinelib\wxgui\dialogs\presentation\controller.py:50
 msgid "Can't find the html pages directory!"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\presentation\controller.py:55
+#: source\timelinelib\wxgui\dialogs\presentation\controller.py:56
 msgid "The html pages director isn't empty!"
 msgstr ""
 
@@ -2724,10 +2755,6 @@ msgstr ""
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:322
 msgid "Vertical Zoom &Out\tAlt+-"
-msgstr ""
-
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:328
-msgid "Start slide show"
 msgstr ""
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:335
