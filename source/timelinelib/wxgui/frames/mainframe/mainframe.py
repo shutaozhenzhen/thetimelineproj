@@ -125,6 +125,7 @@ ID_SAVEAS = wx.ID_SAVEAS
 ID_EXIT = wx.ID_EXIT
 ID_MOVE_EVENT_UP = wx.NewId()
 ID_MOVE_EVENT_DOWN = wx.NewId()
+ID_PRESENTATION = wx.NewId()
 ID_NAVIGATE = wx.NewId() + 100
 
 
@@ -305,6 +306,10 @@ class GuiCreator(object):
         def vert_zoomout(evt):
             DrawingAreaProxy(self).vert_zoom_out()
 
+        def start_slide_show(evt):
+            canvas = self.main_panel.get_timeline_canvas()
+            self.controller.start_slide_show(canvas)
+
         items = [self._create_view_toolbar_menu_item,
                  (ID_SIDEBAR, sidebar, _("&Sidebar\tCtrl+I"), CHECKBOX),
                  (ID_LEGEND, legend, _("&Legend"), CHECKBOX),
@@ -319,6 +324,8 @@ class GuiCreator(object):
                  self._create_view_point_event_alignment_menu,
                  None,
                  self._create_event_box_drawers_menu,
+                 None,
+                 (ID_PRESENTATION, start_slide_show, _("Start slide show") + "...", NONE),
                  ]
 
         view_menu = wx.Menu()
