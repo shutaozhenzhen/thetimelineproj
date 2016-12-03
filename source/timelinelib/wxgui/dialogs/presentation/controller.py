@@ -27,6 +27,7 @@ from timelinelib.wxgui.dialogs.presentation.templates import CSS
 from timelinelib.wxgui.dialogs.presentation.templates import IMAGE_AND_DESCRIPTION
 from timelinelib.wxgui.dialogs.presentation.templates import ONLY_DESCRIPTION
 from timelinelib.wxgui.dialogs.presentation.templates import PAGE_TEMPLATE
+from timelinelib.config.paths import ICONS_DIR
 
 
 class PresentationDialogController(Controller):
@@ -77,7 +78,7 @@ class PresentationDialogController(Controller):
         return vp.filter_events(self._db.get_events(vp.displayed_period))
 
     def _create_images(self, events):
-        shutil.copy(os.path.join("..", "icons", "32.png"), os.path.join(self._pages_dir, "32.png"))
+        shutil.copy(os.path.join(ICONS_DIR, "32.png"), os.path.join(self._pages_dir, "32.png"))
         self._image_source = [""]
         inx = 0
         for event in events:
