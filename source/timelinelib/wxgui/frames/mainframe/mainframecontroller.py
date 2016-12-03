@@ -28,6 +28,7 @@ from timelinelib.calendar.dateformatparser import DateFormatParser
 from timelinelib.calendar import set_date_formatter
 from timelinelib.time.bosparaniantime import BosparanianTimeType
 from timelinelib.calendar import BosparanianDateFormatter
+from timelinelib.wxgui.dialogs.presentation.view import open_slideshow_dialog
 
 
 class LockedException(Exception):
@@ -115,6 +116,9 @@ class MainFrameController(object):
         if last_changed > 0:
             self._lock()
         return True
+
+    def start_slide_show(self, canvas):
+        open_slideshow_dialog(self.timeline, canvas)
 
     def _timeline_path_doesnt_exists_yet(self):
         return not os.path.exists(self.timelinepath)
