@@ -47,13 +47,13 @@ class PresentationDialogController(Controller):
             self.view.InvalidTargetDir()
             return
         if not os.path.exists(self._pages_dir):
-            query = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")
+            query = _("Can't find the html pages directory!") + "\n" + _("Do you want to create it?")
             if not get_user_ack(query):
                 return
             os.mkdir(self._pages_dir)
         else:
             if len(os.listdir(self._pages_dir)) > 0:
-                query = _("The html pages director isn't empty!" + "\n" + "Do you want overwrite it?")
+                query = _("The html pages directory isn't empty!") + "\n" + _("Do you want overwrite it?")
                 if not get_user_ack(query):
                     return
         events = self._get_events()
