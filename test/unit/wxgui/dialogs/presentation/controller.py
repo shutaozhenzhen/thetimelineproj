@@ -40,7 +40,7 @@ class describe_slideshow_dialog_controller(UnitTestCase):
         self.assertEqual(self.canvas, self.controller._canvas)
         self.assertFalse(self.controller._text_transformer is None)
 
-    def test_can_get_time_from_view(self):
+    def test_user_can_select_target_directory(self):
         self.simuate_user_selects_directory()
         self.view.ChangeDir.assert_called_with()
 
@@ -115,6 +115,8 @@ class describe_slideshow_dialog_controller(UnitTestCase):
         self.view = self._mock_view()
         self.controller = PresentationDialogController(self.view)
         self.simulate_dialog_init(self.db, self.canvas)
+        if not os.path.exists("c:\\temp"):
+            os.mkdir("c:\\temp")
 
     def tearDown(self):
         if os.path.exists(PATH):
