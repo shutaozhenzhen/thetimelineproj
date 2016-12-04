@@ -29,7 +29,7 @@ from timelinelib.config.paths import ICONS_DIR
 
 DIR_IS_MANDATORY = _("The html pages directory is mandatory")
 CANT_FIND_DIR = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")
-OVERWRITE_DIR = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")
+OVERWRITE_DIR = _("The html pages director isn't empty!" + "\n" + "Do you want overwrite it?")
 
 
 class PresentationDialogController(Controller):
@@ -55,8 +55,7 @@ class PresentationDialogController(Controller):
             if not self.view.GetUserAck(CANT_FIND_DIR):
                 return False
             os.mkdir(self.view.GetTargetDir())
-        else:
-            if self._target_dir_is_not_empty():
+        elif self._target_dir_is_not_empty():
                 if not self.view.GetUserAck(OVERWRITE_DIR):
                     return False
         return True
