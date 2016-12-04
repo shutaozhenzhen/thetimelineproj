@@ -19,10 +19,7 @@
 import os
 import shutil
 import wx
-import webbrowser
 from timelinelib.wxgui.framework import Controller
-from timelinelib.wxgui.utils import get_user_ack
-from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.dialogs.presentation.templates import CSS
 from timelinelib.wxgui.dialogs.presentation.templates import IMAGE_AND_DESCRIPTION
 from timelinelib.wxgui.dialogs.presentation.templates import ONLY_DESCRIPTION
@@ -43,24 +40,24 @@ class PresentationDialogController(Controller):
     def on_start(self, evt):
         self._pages_dir = self.view.GetTargetDir()
         if len(self._pages_dir.strip()) == 0:
-            display_error_message(_("The html pages directory is mandatory"))
             self.view.InvalidTargetDir()
             return
         if not os.path.exists(self._pages_dir):
             query = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")
-            if not get_user_ack(query):
+            if not self.view.GetUserAck(query):
                 return
             os.mkdir(self._pages_dir)
         else:
             if len(os.listdir(self._pages_dir)) > 0:
                 query = _("The html pages director isn't empty!" + "\n" + "Do you want overwrite it?")
-                if not get_user_ack(query):
+                if not self.view.GetUserAck(query):
                     return
         events = self._get_events()
-        self._create_images(events)
-        self._create_css()
-        self._create_pages(events)
-        self._display_start_page()
+        if len(events) > 0:
+            self._create_images(events)
+            self._create_css()
+            self._create_pages(events)
+            self.view.DisplayStartPage(os.path.join(self._pages_dir, "page_1.html"))
         self.view.EndModalOk()
 
     def _get_events(self):
@@ -147,9 +144,6 @@ class PresentationDialogController(Controller):
                               pos_history)
         f.write(pg.encode('utf8', 'ignore'))
         f.close()
-
-    def _display_start_page(self):
-        webbrowser.open(os.path.join(self._pages_dir, "page_1.html"), new=1)
 
     def _install_text_transformer_plugin(self):
         from timelinelib.plugin import factory
