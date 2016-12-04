@@ -53,7 +53,7 @@ class PresentationDialogController(Controller):
                 return False
             os.mkdir(self._pages_dir)
         else:
-            if len(os.listdir(self._pages_dir)) > 0:
+            if self._target_dir_is_not_empty():
                 query = _("The html pages director isn't empty!" + "\n" + "Do you want overwrite it?")
                 if not self.view.GetUserAck(query):
                     return False
@@ -64,6 +64,9 @@ class PresentationDialogController(Controller):
 
     def _target_dir_exists(self):
         return os.path.exists(self.view.GetTargetDir())
+
+    def _target_dir_is_not_empty(self):
+        return len(os.listdir(self.view.GetTargetDir())) > 0
 
     def _create_and_start_slideshow(self):
         events = self._get_events()
