@@ -32,7 +32,7 @@ CANT_FIND_DIR = _("Can't find the html pages directory!" + "\n" + "Do you want t
 OVERWRITE_DIR = _("The html pages director isn't empty!" + "\n" + "Do you want overwrite it?")
 
 
-class PresentationDialogController(Controller):
+class SlideshowDialogController(Controller):
 
     def on_init(self, db, canvas):
         self._db = db
