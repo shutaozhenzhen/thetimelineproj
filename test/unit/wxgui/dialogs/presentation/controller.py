@@ -47,7 +47,7 @@ class describe_slideshow_dialog_controller(UnitTestCase):
     def test_target_directory_is_mandatory(self):
         self.view.GetTargetDir.return_value = ""
         self.simuate_user_clicks_ok()
-        self.view.InvalidTargetDir.assert_called_with()
+        self.view.InvalidTargetDir.assert_called_with("#The html pages directory is mandatory#")
 
     def test_creation_of_target_directory_can_be_rejected(self):
         self.view.GetTargetDir.return_value = PATH
