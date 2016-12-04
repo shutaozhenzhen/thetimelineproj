@@ -16,9 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+import webbrowser
+
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.dialogs.presentation.controller import PresentationDialogController
-import wx
+from timelinelib.wxgui.utils import display_error_message
+from timelinelib.wxgui.utils import get_user_ack
 
 
 class SlideshowDialog(Dialog):
@@ -84,7 +88,14 @@ class SlideshowDialog(Dialog):
         return self.tb_target_dir.GetValue()
 
     def InvalidTargetDir(self):
+        display_error_message(_("The html pages directory is mandatory"))
         self.tb_target_dir.SetFocus()
+
+    def GetUserAck(self, query):
+        return get_user_ack(query)
+
+    def DisplayStartPage(self, page_path):
+        webbrowser.open(page_path, new=1)
 
 
 def open_slideshow_dialog(db, canvas):

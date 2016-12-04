@@ -1,0 +1,208 @@
+# Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015  Rickard Lindberg, Roger Lindberg
+#
+# This file is part of Timeline.
+#
+# Timeline is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Timeline is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
+
+
+import os
+
+from mock import Mock
+from mock import sentinel
+
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.wxgui.dialogs.presentation.view import SlideshowDialog
+from timelinelib.wxgui.dialogs.presentation.controller import PresentationDialogController
+from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.canvas.data.timeperiod import TimePeriod
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.event import Event
+
+
+PATH = "c:\\temp\\zyx"
+FILE = "foo.txt"
+
+class describe_slideshow_dialog_controller(UnitTestCase):
+
+    def test_is_initialized(self):
+        self.assertEqual(self.db, self.controller._db)
+        self.assertEqual(self.canvas, self.controller._canvas)
+        self.assertFalse(self.controller._text_transformer is None)
+
+    def test_can_get_time_from_view(self):
+        self.simuate_user_selects_directory()
+        self.view.ChangeDir.assert_called_with()
+
+    def test_target_directory_is_mandatory(self):
+        self.view.GetTargetDir.return_value = ""
+        self.simuate_user_clicks_ok()
+        self.view.InvalidTargetDir.assert_called_with()
+
+    def test_creation_of_target_directory_can_be_rejected(self):
+        self.view.GetTargetDir.return_value = PATH
+        self.view.GetUserAck.return_value = False
+        self.simuate_user_clicks_ok()
+        self.assertFalse(os.path.exists(PATH))
+        self.assertEqual(0, self.view.EndModalOk.call_count)
+
+    def test_creation_of_target_directory_can_be_accepted(self):
+        vp = Mock()
+        vp.filter_events.return_value = []
+        self.canvas.get_view_properties.return_value = vp
+        self.view.GetTargetDir.return_value = PATH
+        self.view.GetUserAck.return_value = True
+        self.simuate_user_clicks_ok()
+        self.assertTrue(os.path.exists(PATH))
+        self.view.EndModalOk.assert_called_with()
+
+    def test_overwrite_of_target_directory_can_be_rejected(self):
+        vp = Mock()
+        vp.filter_events.return_value = []
+        self.canvas.get_view_properties.return_value = vp
+        os.mkdir(PATH)
+        f = open(os.path.join(PATH, FILE), "w")
+        f.close()
+        self.view.GetTargetDir.return_value = PATH
+        self.view.GetUserAck.return_value = False
+        self.simuate_user_clicks_ok()
+        self.assertTrue(os.path.exists(PATH))
+        self.assertEqual(0, self.view.EndModalOk.call_count)
+
+    def test_overwrite_of_target_directory_can_be_accepted(self):
+        event = Event(start_time=human_time_to_gregorian("11 Jul 2014"),
+                      end_time=human_time_to_gregorian("12 Jul 2014"),
+                      text="a day in my life")
+        vp = Mock()
+        vp.filter_events.return_value = [event, ]
+        self.canvas.get_view_properties.return_value = vp
+        os.mkdir(PATH)
+        f = open(os.path.join(PATH, FILE), "w")
+        f.close()
+        self.view.GetTargetDir.return_value = PATH
+        self.view.GetUserAck.return_value = True
+        self.simuate_user_clicks_ok()
+        self.assertTrue(os.path.exists(PATH))
+        self.view.DisplayStartPage.assert_called_with(os.path.join(PATH, "page_1.html"))
+        self.view.EndModalOk.assert_called_with()
+
+#     def test_can_get_colour_from_view(self):
+#         self.view.GetColour.return_value = sentinel.COLOUR
+#         colour = self.controller.view.GetColour()
+#         self.assertEqual(colour, sentinel.COLOUR)
+#
+#     def test_can_toggle_time_view(self):
+#         self.simuate_user_selects_view_time()
+#         self.assertEqual(self.view.SetShowTime.call_count, 2)
+#
+#     def test_milestone_updated_on_ok(self):
+#         time_period = TimePeriod(self.start_time, self.start_time)
+#         self.simulate_user_enters_description("Aha")
+#         self.simulate_user_enters_colour((127, 127, 127))
+#         self.simulate_user_enters_time(self.start_time)
+#         self.simulate_ok_clicked()
+#         self.milestone.set_description.assert_called_with("Aha")
+#         self.milestone.set_default_color.assert_called_with((127, 127, 127))
+#         self.milestone.set_time_period.assert_called_with(time_period)
+#         self.assertEqual(self.view.Close.call_count, 1)
+#
+#     def test_db_updated_on_ok(self):
+#         self.simulate_dialog_init(self.db, None)
+#         self.simulate_user_enters_description("Aha")
+#         self.simulate_user_enters_colour((127, 127, 127))
+#         self.simulate_user_enters_time(self.start_time)
+#         self.simulate_ok_clicked()
+#         self.assertEqual(self.db.save_event.call_count, 1)
+#         self.assertEqual(self.controller.get_milestone().get_description(), "Aha")
+#
+#     def test_db_updated_when_no_description_on_ok(self):
+#         self.simulate_dialog_init(self.db, None)
+#         self.simulate_user_enters_description("")
+#         self.simulate_user_enters_colour((127, 127, 127))
+#         self.simulate_user_enters_time(self.start_time)
+#         self.simulate_ok_clicked()
+#         self.assertEqual(self.db.save_event.call_count, 1)
+#         self.assertEqual(self.controller.get_milestone().get_description(), None)
+#
+#     def test_db_update_fails_on_ok(self):
+#         exception = Exception("test")
+#         self.db.save_event.side_effect = exception
+#         self.simulate_dialog_init(self.db, None)
+#         self.simulate_user_enters_description("")
+#         self.simulate_user_enters_colour((127, 127, 127))
+#         self.simulate_user_enters_time(self.start_time)
+#         self.simulate_ok_clicked()
+#         self.assertEqual(self.db.save_event.call_count, 1)
+#         self.view.HandleDbError.called_with(exception)
+#
+#     def test_show_time_when_false(self):
+#         self.milestone.get_time_period.return_value = TimePeriod(
+#             human_time_to_gregorian("1 Jan 2010"),
+#             human_time_to_gregorian("1 Jan 2010")
+#         )
+#         self.simulate_dialog_init(self.db, self.milestone)
+#         self.view.SetShowTime.assert_called_with(False)
+#
+#     def test_show_time_when_true(self):
+#         self.milestone.get_time_period.return_value = TimePeriod(
+#             human_time_to_gregorian("1 Jan 2010 13:00"),
+#             human_time_to_gregorian("1 Jan 2010 13:00")
+#         )
+#         self.simulate_dialog_init(self.db, self.milestone)
+#         self.view.SetShowTime.assert_called_with(True)
+#
+#     def simulate_user_enters_description(self, description):
+#         self.view.GetDescription.return_value = description
+#
+#     def simulate_user_enters_colour(self, colour):
+#         self.view.GetColour.return_value = colour
+#
+#     def simulate_user_enters_time(self, time):
+#         self.view.GetTime.return_value = time
+#
+#     def simulate_ok_clicked(self):
+#         self.controller.on_ok_clicked(None)
+#
+    def simulate_dialog_init(self, db, canvas):
+        self.controller.on_init(db, canvas)
+
+    def simuate_user_selects_directory(self):
+        evt = Mock()
+        self.controller.on_change_dir(evt)
+
+    def simuate_user_clicks_ok(self):
+        evt = Mock()
+        self.controller.on_start(evt)
+
+    def setUp(self):
+        self.db = Mock(MemoryDB)
+        self.db.time_type = GregorianTimeType()
+        self.start_time = human_time_to_gregorian("1 Jan 2010")
+        self.canvas = Mock()
+        self.view = self._mock_view()
+        self.controller = PresentationDialogController(self.view)
+        self.simulate_dialog_init(self.db, self.canvas)
+
+    def tearDown(self):
+        if os.path.exists(PATH):
+            files = os.listdir(PATH)
+            for f in files:
+                os.remove(os.path.join(PATH, f))
+            os.rmdir(PATH)
+
+    def _mock_view(self):
+        view = Mock(SlideshowDialog)
+        view.AllEventsSelected.return_value = False
+        view.GetTargetDir.return_value = ""
+        return view
