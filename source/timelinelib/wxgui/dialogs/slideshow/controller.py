@@ -112,16 +112,23 @@ class SlideshowDialogController(Controller):
     def _create_pages(self, events):
         nbr_of_pages = len(events)
         page_nbr = 0
-        w1 = events[-1].get_end_time() - events[0].get_start_time()
+        w1 = events[-1].get_start_time() - events[0].get_start_time()
         pos_style = self._get_positions_style(events)
         pos_history = self.get_position_history(len(events))
         for event in events:
             w2 = event.get_start_time() - events[0].get_start_time()
-            p = 2 + int(90 * float(w2.seconds) / float(w1.seconds))
+            p = self._calc_history_pos(w1, w2, events, event)
             page_nbr += 1
             next_page_nbr = self._get_next_page_nbr(page_nbr, nbr_of_pages)
             prev_page_nbr = self._get_prev_page_nbr(page_nbr, nbr_of_pages)
             self._create_page(pos_style, p, event, page_nbr, next_page_nbr, prev_page_nbr, pos_history)
+
+    def _calc_history_pos(self, w1, w2, events, event):
+        w2 = event.get_start_time() - events[0].get_start_time()
+        try:
+            return 2 + int(90 * float(w2.seconds) / float(w1.seconds))
+        except ZeroDivisionError:
+            return 2
 
     def _get_next_page_nbr(self, page_nbr, nbr_of_pages):
         if page_nbr == nbr_of_pages:
@@ -142,7 +149,6 @@ class SlideshowDialogController(Controller):
         else:
             x = IMAGE_AND_DESCRIPTION % (self._image_source[page_nbr],
                                          self._text_transformer.transform(event.get_description()))
-
         pg = PAGE_TEMPLATE % (pos_style,
                               p,
                               self._db.get_time_type().format_period(event.get_time_period()),
@@ -173,12 +179,12 @@ class SlideshowDialogController(Controller):
 }
 """
         collector = []
-        w1 = events[-1].get_end_time() - events[0].get_start_time()
+        w1 = events[-1].get_start_time() - events[0].get_start_time()
         nbr = 0
         for event in events:
             nbr += 1
             w2 = event.get_start_time() - events[0].get_start_time()
-            p = 2 + int(90 * float(w2.seconds) / float(w1.seconds))
+            p = self._calc_history_pos(w1, w2, events, event)
             collector.append(template % (nbr, p))
         return "\n".join(collector)
 
