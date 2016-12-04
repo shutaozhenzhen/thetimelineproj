@@ -47,7 +47,7 @@ class PresentationDialogController(Controller):
         if self._target_dir_is_empty():
             self.view.InvalidTargetDir(_("The html pages directory is mandatory"))
             return False
-        if not os.path.exists(self._pages_dir):
+        if not self._target_dir_exists():
             query = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")
             if not self.view.GetUserAck(query):
                 return False
@@ -61,6 +61,10 @@ class PresentationDialogController(Controller):
 
     def _target_dir_is_empty(self):
         return len(self.view.GetTargetDir().strip()) == 0
+
+    def _target_dir_exists(self):
+        return os.path.exists(self.view.GetTargetDir())
+
     def _create_and_start_slideshow(self):
         events = self._get_events()
         if len(events) > 0:
