@@ -122,14 +122,6 @@ class PresentationDialogController(Controller):
         f = open(os.path.join(self._pages_dir, "page_%d.html" % page_nbr), "w")
         if self._image_source[page_nbr] == "":
             x = ONLY_DESCRIPTION % self._text_transformer.transform(event.get_description())
-#             pg = PAGE_TEMPLATE2 % (pos_style,
-#                                    p,
-#                                    self._db.get_time_type().format_period(event.get_time_period()),
-#                                    event.get_text(),
-#                                    self._text_transformer.transform(event.get_description()),
-#                                    prev_page_nbr,
-#                                    next_page_nbr,
-#                                    pos_history)
         else:
             x = IMAGE_AND_DESCRIPTION % (self._image_source[page_nbr],
                                          self._text_transformer.transform(event.get_description()))
