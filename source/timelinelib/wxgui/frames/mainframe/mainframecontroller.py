@@ -28,7 +28,7 @@ from timelinelib.calendar.dateformatparser import DateFormatParser
 from timelinelib.calendar import set_date_formatter
 from timelinelib.time.bosparaniantime import BosparanianTimeType
 from timelinelib.calendar import BosparanianDateFormatter
-from timelinelib.wxgui.dialogs.presentation.view import open_slideshow_dialog
+from timelinelib.wxgui.dialogs.slideshow.view import open_slideshow_dialog
 
 
 class LockedException(Exception):

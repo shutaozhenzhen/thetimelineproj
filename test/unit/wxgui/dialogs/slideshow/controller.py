@@ -21,8 +21,8 @@ import os
 from mock import Mock
 
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.wxgui.dialogs.presentation.view import SlideshowDialog
-from timelinelib.wxgui.dialogs.presentation.controller import SlideshowDialogController
+from timelinelib.wxgui.dialogs.slideshow.view import SlideshowDialog
+from timelinelib.wxgui.dialogs.slideshow.controller import SlideshowDialogController
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.canvas.data.db import MemoryDB

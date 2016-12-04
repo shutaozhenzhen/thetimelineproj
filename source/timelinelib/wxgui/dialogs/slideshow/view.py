@@ -20,7 +20,7 @@ import wx
 import webbrowser
 
 from timelinelib.wxgui.framework import Dialog
-from timelinelib.wxgui.dialogs.presentation.controller import SlideshowDialogController
+from timelinelib.wxgui.dialogs.slideshow.controller import SlideshowDialogController
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import get_user_ack
 

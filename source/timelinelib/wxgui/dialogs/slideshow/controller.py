@@ -20,10 +20,10 @@ import os
 import shutil
 import wx
 from timelinelib.wxgui.framework import Controller
-from timelinelib.wxgui.dialogs.presentation.templates import CSS
-from timelinelib.wxgui.dialogs.presentation.templates import IMAGE_AND_DESCRIPTION
-from timelinelib.wxgui.dialogs.presentation.templates import ONLY_DESCRIPTION
-from timelinelib.wxgui.dialogs.presentation.templates import PAGE_TEMPLATE
+from timelinelib.wxgui.dialogs.slideshow.templates import CSS
+from timelinelib.wxgui.dialogs.slideshow.templates import IMAGE_AND_DESCRIPTION
+from timelinelib.wxgui.dialogs.slideshow.templates import ONLY_DESCRIPTION
+from timelinelib.wxgui.dialogs.slideshow.templates import PAGE_TEMPLATE
 from timelinelib.config.paths import ICONS_DIR
 
 
