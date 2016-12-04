@@ -22,7 +22,7 @@ from mock import Mock
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.presentation.view import SlideshowDialog
-from timelinelib.wxgui.dialogs.presentation.controller import PresentationDialogController
+from timelinelib.wxgui.dialogs.presentation.controller import SlideshowDialogController
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.canvas.data.db import MemoryDB
@@ -113,7 +113,7 @@ class describe_slideshow_dialog_controller(UnitTestCase):
         self.start_time = human_time_to_gregorian("1 Jan 2010")
         self.canvas = Mock()
         self.view = self._mock_view()
-        self.controller = PresentationDialogController(self.view)
+        self.controller = SlideshowDialogController(self.view)
         self.simulate_dialog_init(self.db, self.canvas)
         if not os.path.exists("c:\\temp"):
             os.mkdir("c:\\temp")

@@ -20,7 +20,7 @@ import wx
 import webbrowser
 
 from timelinelib.wxgui.framework import Dialog
-from timelinelib.wxgui.dialogs.presentation.controller import PresentationDialogController
+from timelinelib.wxgui.dialogs.presentation.controller import SlideshowDialogController
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import get_user_ack
 
@@ -69,7 +69,7 @@ class SlideshowDialog(Dialog):
     def __init__(self, parent, db, canvas):
         self._db = db
         self._canvas = canvas
-        Dialog.__init__(self, PresentationDialogController, parent, {
+        Dialog.__init__(self, SlideshowDialogController, parent, {
             "events_label": _("Select Events"),
             "target_dir_label": _("Save html pages at")
         }, title=_("Start Slide Show"))
