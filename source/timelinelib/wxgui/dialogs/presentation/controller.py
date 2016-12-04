@@ -38,22 +38,26 @@ class PresentationDialogController(Controller):
         self.view.ChangeDir()
 
     def on_start(self, evt):
+        if self._input_is_valid():
+            self._create_and_start_slideshow()
+            self.view.EndModalOk()
+
+    def _input_is_valid(self):
         self._pages_dir = self.view.GetTargetDir()
         if len(self._pages_dir.strip()) == 0:
             self.view.InvalidTargetDir(_("The html pages directory is mandatory"))
-            return
+            return False
         if not os.path.exists(self._pages_dir):
             query = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")
             if not self.view.GetUserAck(query):
-                return
+                return False
             os.mkdir(self._pages_dir)
         else:
             if len(os.listdir(self._pages_dir)) > 0:
                 query = _("The html pages director isn't empty!" + "\n" + "Do you want overwrite it?")
                 if not self.view.GetUserAck(query):
-                    return
-        self._create_and_start_slideshow()
-        self.view.EndModalOk()
+                    return False
+        return True
 
     def _create_and_start_slideshow(self):
         events = self._get_events()
