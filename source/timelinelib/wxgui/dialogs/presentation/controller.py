@@ -44,7 +44,7 @@ class PresentationDialogController(Controller):
 
     def _input_is_valid(self):
         self._pages_dir = self.view.GetTargetDir()
-        if self._target_dir_is_empty():
+        if self._target_dir_not_given():
             self.view.InvalidTargetDir(_("The html pages directory is mandatory"))
             return False
         if not self._target_dir_exists():
@@ -59,7 +59,7 @@ class PresentationDialogController(Controller):
                     return False
         return True
 
-    def _target_dir_is_empty(self):
+    def _target_dir_not_given(self):
         return len(self.view.GetTargetDir().strip()) == 0
 
     def _target_dir_exists(self):
