@@ -19,20 +19,19 @@
 import os
 
 from mock import Mock
-from mock import sentinel
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.presentation.view import SlideshowDialog
 from timelinelib.wxgui.dialogs.presentation.controller import PresentationDialogController
 from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.test.utils import human_time_to_gregorian
-from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.event import Event
 
 
 PATH = "c:\\temp\\zyx"
 FILE = "foo.txt"
+
 
 class describe_slideshow_dialog_controller(UnitTestCase):
 
@@ -97,83 +96,6 @@ class describe_slideshow_dialog_controller(UnitTestCase):
         self.view.DisplayStartPage.assert_called_with(os.path.join(PATH, "page_1.html"))
         self.view.EndModalOk.assert_called_with()
 
-#     def test_can_get_colour_from_view(self):
-#         self.view.GetColour.return_value = sentinel.COLOUR
-#         colour = self.controller.view.GetColour()
-#         self.assertEqual(colour, sentinel.COLOUR)
-#
-#     def test_can_toggle_time_view(self):
-#         self.simuate_user_selects_view_time()
-#         self.assertEqual(self.view.SetShowTime.call_count, 2)
-#
-#     def test_milestone_updated_on_ok(self):
-#         time_period = TimePeriod(self.start_time, self.start_time)
-#         self.simulate_user_enters_description("Aha")
-#         self.simulate_user_enters_colour((127, 127, 127))
-#         self.simulate_user_enters_time(self.start_time)
-#         self.simulate_ok_clicked()
-#         self.milestone.set_description.assert_called_with("Aha")
-#         self.milestone.set_default_color.assert_called_with((127, 127, 127))
-#         self.milestone.set_time_period.assert_called_with(time_period)
-#         self.assertEqual(self.view.Close.call_count, 1)
-#
-#     def test_db_updated_on_ok(self):
-#         self.simulate_dialog_init(self.db, None)
-#         self.simulate_user_enters_description("Aha")
-#         self.simulate_user_enters_colour((127, 127, 127))
-#         self.simulate_user_enters_time(self.start_time)
-#         self.simulate_ok_clicked()
-#         self.assertEqual(self.db.save_event.call_count, 1)
-#         self.assertEqual(self.controller.get_milestone().get_description(), "Aha")
-#
-#     def test_db_updated_when_no_description_on_ok(self):
-#         self.simulate_dialog_init(self.db, None)
-#         self.simulate_user_enters_description("")
-#         self.simulate_user_enters_colour((127, 127, 127))
-#         self.simulate_user_enters_time(self.start_time)
-#         self.simulate_ok_clicked()
-#         self.assertEqual(self.db.save_event.call_count, 1)
-#         self.assertEqual(self.controller.get_milestone().get_description(), None)
-#
-#     def test_db_update_fails_on_ok(self):
-#         exception = Exception("test")
-#         self.db.save_event.side_effect = exception
-#         self.simulate_dialog_init(self.db, None)
-#         self.simulate_user_enters_description("")
-#         self.simulate_user_enters_colour((127, 127, 127))
-#         self.simulate_user_enters_time(self.start_time)
-#         self.simulate_ok_clicked()
-#         self.assertEqual(self.db.save_event.call_count, 1)
-#         self.view.HandleDbError.called_with(exception)
-#
-#     def test_show_time_when_false(self):
-#         self.milestone.get_time_period.return_value = TimePeriod(
-#             human_time_to_gregorian("1 Jan 2010"),
-#             human_time_to_gregorian("1 Jan 2010")
-#         )
-#         self.simulate_dialog_init(self.db, self.milestone)
-#         self.view.SetShowTime.assert_called_with(False)
-#
-#     def test_show_time_when_true(self):
-#         self.milestone.get_time_period.return_value = TimePeriod(
-#             human_time_to_gregorian("1 Jan 2010 13:00"),
-#             human_time_to_gregorian("1 Jan 2010 13:00")
-#         )
-#         self.simulate_dialog_init(self.db, self.milestone)
-#         self.view.SetShowTime.assert_called_with(True)
-#
-#     def simulate_user_enters_description(self, description):
-#         self.view.GetDescription.return_value = description
-#
-#     def simulate_user_enters_colour(self, colour):
-#         self.view.GetColour.return_value = colour
-#
-#     def simulate_user_enters_time(self, time):
-#         self.view.GetTime.return_value = time
-#
-#     def simulate_ok_clicked(self):
-#         self.controller.on_ok_clicked(None)
-#
     def simulate_dialog_init(self, db, canvas):
         self.controller.on_init(db, canvas)
 
