@@ -43,7 +43,6 @@ class PresentationDialogController(Controller):
             self.view.EndModalOk()
 
     def _input_is_valid(self):
-        self._pages_dir = self.view.GetTargetDir()
         if self._target_dir_not_given():
             self.view.InvalidTargetDir(_("The html pages directory is mandatory"))
             return False
@@ -51,7 +50,7 @@ class PresentationDialogController(Controller):
             query = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")
             if not self.view.GetUserAck(query):
                 return False
-            os.mkdir(self._pages_dir)
+            os.mkdir(self.view.GetTargetDir())
         else:
             if self._target_dir_is_not_empty():
                 query = _("The html pages director isn't empty!" + "\n" + "Do you want overwrite it?")
@@ -74,7 +73,7 @@ class PresentationDialogController(Controller):
             self._create_images(events)
             self._create_css()
             self._create_pages(events)
-            self.view.DisplayStartPage(os.path.join(self._pages_dir, "page_1.html"))
+            self.view.DisplayStartPage(os.path.join(self.view.GetTargetDir(), "page_1.html"))
 
     def _get_events(self):
         if self.view.AllEventsSelected():
@@ -91,20 +90,20 @@ class PresentationDialogController(Controller):
         return vp.filter_events(self._db.get_events(vp.displayed_period))
 
     def _create_images(self, events):
-        shutil.copy(os.path.join(ICONS_DIR, "32.png"), os.path.join(self._pages_dir, "32.png"))
+        shutil.copy(os.path.join(ICONS_DIR, "32.png"), os.path.join(self.view.GetTargetDir(), "32.png"))
         self._image_source = [""]
         inx = 0
         for event in events:
             inx += 1
             icon = event.get_icon()
             if icon:
-                icon.SaveFile(os.path.join(self._pages_dir, "icon_img_%d.bmp" % inx), wx.BITMAP_TYPE_BMP)
+                icon.SaveFile(os.path.join(self.view.GetTargetDir(), "icon_img_%d.bmp" % inx), wx.BITMAP_TYPE_BMP)
                 self._image_source.append("icon_img_%d.bmp" % inx)
             else:
                 self._image_source.append("")
 
     def _create_css(self):
-        f = open(os.path.join(self._pages_dir, "slideshow.css"), "w")
+        f = open(os.path.join(self.view.GetTargetDir(), "slideshow.css"), "w")
         f.write(CSS.encode('utf8', 'ignore'))
         f.close()
 
@@ -135,7 +134,7 @@ class PresentationDialogController(Controller):
             return page_nbr - 1
 
     def _create_page(self, pos_style, p, event, page_nbr, next_page_nbr, prev_page_nbr, pos_history):
-        f = open(os.path.join(self._pages_dir, "page_%d.html" % page_nbr), "w")
+        f = open(os.path.join(self.view.GetTargetDir(), "page_%d.html" % page_nbr), "w")
         if self._image_source[page_nbr] == "":
             x = ONLY_DESCRIPTION % self._text_transformer.transform(event.get_description())
         else:
