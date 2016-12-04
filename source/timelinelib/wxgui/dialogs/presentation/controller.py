@@ -52,13 +52,16 @@ class PresentationDialogController(Controller):
                 query = _("The html pages director isn't empty!" + "\n" + "Do you want overwrite it?")
                 if not self.view.GetUserAck(query):
                     return
+        self._create_and_start_slideshow()
+        self.view.EndModalOk()
+
+    def _create_and_start_slideshow(self):
         events = self._get_events()
         if len(events) > 0:
             self._create_images(events)
             self._create_css()
             self._create_pages(events)
             self.view.DisplayStartPage(os.path.join(self._pages_dir, "page_1.html"))
-        self.view.EndModalOk()
 
     def _get_events(self):
         if self.view.AllEventsSelected():
