@@ -27,6 +27,11 @@ from timelinelib.wxgui.dialogs.presentation.templates import PAGE_TEMPLATE
 from timelinelib.config.paths import ICONS_DIR
 
 
+DIR_IS_MANDATORY = _("The html pages directory is mandatory")
+CANT_FIND_DIR = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")
+OVERWRITE_DIR = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")
+
+
 class PresentationDialogController(Controller):
 
     def on_init(self, db, canvas):
@@ -44,17 +49,15 @@ class PresentationDialogController(Controller):
 
     def _input_is_valid(self):
         if self._target_dir_not_given():
-            self.view.InvalidTargetDir(_("The html pages directory is mandatory"))
+            self.view.InvalidTargetDir(DIR_IS_MANDATORY)
             return False
         if not self._target_dir_exists():
-            query = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")
-            if not self.view.GetUserAck(query):
+            if not self.view.GetUserAck(CANT_FIND_DIR):
                 return False
             os.mkdir(self.view.GetTargetDir())
         else:
             if self._target_dir_is_not_empty():
-                query = _("The html pages director isn't empty!" + "\n" + "Do you want overwrite it?")
-                if not self.view.GetUserAck(query):
+                if not self.view.GetUserAck(OVERWRITE_DIR):
                     return False
         return True
 
