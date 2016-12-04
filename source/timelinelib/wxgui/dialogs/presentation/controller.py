@@ -40,7 +40,7 @@ class PresentationDialogController(Controller):
     def on_start(self, evt):
         self._pages_dir = self.view.GetTargetDir()
         if len(self._pages_dir.strip()) == 0:
-            self.view.InvalidTargetDir()
+            self.view.InvalidTargetDir(_("The html pages directory is mandatory"))
             return
         if not os.path.exists(self._pages_dir):
             query = _("Can't find the html pages directory!" + "\n" + "Do you want to create it?")

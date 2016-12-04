@@ -87,8 +87,8 @@ class SlideshowDialog(Dialog):
     def GetTargetDir(self):
         return self.tb_target_dir.GetValue()
 
-    def InvalidTargetDir(self):
-        display_error_message(_("The html pages directory is mandatory"))
+    def InvalidTargetDir(self, message):
+        display_error_message(message)
         self.tb_target_dir.SetFocus()
 
     def GetUserAck(self, query):
