@@ -213,16 +213,10 @@ first event to the start time of the last event.
 """
 
 ONLY_DESCRIPTION = """
-<div class="only_description">
-<p  id="only_description">%s</p>
-</div>
+<div id="only_description">%s</div>
 """
 
 IMAGE_AND_DESCRIPTION = """
-<table>
-  <tr>
-    <td><p id="imagebox"><img class="enlarge" src="%s"></p></td>
-    <td><p id="descriptionbox">%s</p></td>
-  </tr>
-</table>
+<div id="imagebox"><img class="enlarge" src="%s"></div>
+<div id="descriptionbox">%s</div>
 """
