@@ -16,14 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from markdown import markdown
+
 from timelinelib.text.transformers.defaulttransformer import DefaultTextTransformer
-
-
-REPLACEMENTS = (
-    ("<", "&lt;"),
-    (">", "&gt;"),
-    ("\n", "</br>"),
-)
 
 
 class PlainTextToHtml(DefaultTextTransformer):
@@ -32,7 +27,7 @@ class PlainTextToHtml(DefaultTextTransformer):
         pass
 
     def transform(self, text):
-        new_text = super(PlainTextToHtml, self).transform(text)
-        for target, replacement in REPLACEMENTS:
-            new_text = new_text.replace(target, replacement)
-        return new_text
+        if text is None:
+            return ""
+        else:
+            return markdown(text)
