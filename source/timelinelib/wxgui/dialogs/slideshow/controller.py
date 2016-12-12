@@ -114,7 +114,7 @@ class SlideshowDialogController(Controller):
         page_nbr = 0
         w1 = events[-1].get_start_time() - events[0].get_start_time()
         pos_style = self._get_positions_style(events)
-        pos_history = self.get_position_history(len(events))
+        pos_history = self._get_position_history(len(events))
         for event in events:
             w2 = event.get_start_time() - events[0].get_start_time()
             p = self._calc_history_pos(w1, w2, events, event)
@@ -188,7 +188,7 @@ class SlideshowDialogController(Controller):
             collector.append(template % (nbr, p))
         return "\n".join(collector)
 
-    def get_position_history(self, count):
+    def _get_position_history(self, count):
         template = '<div class="position_in_history_%d"/>'
         collector = []
         for i in range(count):
