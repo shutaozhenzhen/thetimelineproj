@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import html
 from markdown import markdown
 
 from timelinelib.text.transformers.defaulttransformer import DefaultTextTransformer
@@ -27,7 +28,8 @@ class PlainTextToHtml(DefaultTextTransformer):
         pass
 
     def transform(self, text):
-        if text is None:
-            return ""
-        else:
-            return markdown(text)
+        html_text = super(PlainTextToHtml, self).transform(text)
+        try:
+            return markdown(html_text)
+        except:
+            return html.escape(html_text)
