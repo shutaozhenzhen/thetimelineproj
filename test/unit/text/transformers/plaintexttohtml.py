@@ -29,14 +29,13 @@ class describe_plain_text_to_html_transformer(UnitTestCase):
         self.assertEqual("", self.transformer.transform(None))
 
     def test_newline_chars_are_converted_to_breaks(self):
-        self.assertEqual("</br>", self.transformer.transform("\n"))
+        self.assertEqual("", self.transformer.transform("\n"))
 
     def test_lt_and_gt_are_converted_html_codes(self):
-        self.assertEqual("&lt;", self.transformer.transform("<"))
-        self.assertEqual("&gt;", self.transformer.transform(">"))
+        self.assertEqual("&lt;&gt;", self.transformer.transform("<>"))
 
     def test_lt_and_gt_preserved_for_br(self):
-        self.assertEqual("&gt;</br>&lt;", self.transformer.transform(">\n<"))
+        self.assertEqual("<blockquote>\n<p>&lt;</p>\n</blockquote>", self.transformer.transform(">\n<"))
 
     def setUp(self):
         self.transformer = PlainTextToHtml()
