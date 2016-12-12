@@ -56,8 +56,8 @@ class SlideshowDialogController(Controller):
                 return False
             os.mkdir(self.view.GetTargetDir())
         elif self._target_dir_is_not_empty():
-                if not self.view.GetUserAck(OVERWRITE_DIR):
-                    return False
+            if not self.view.GetUserAck(OVERWRITE_DIR):
+                return False
         return True
 
     def _target_dir_not_given(self):
@@ -194,7 +194,3 @@ class SlideshowDialogController(Controller):
         for i in range(count):
             collector.append(template % (i + 1))
         return "\n".join(collector)
-
-
-def event_key(event):
-    return event.get_start_time
