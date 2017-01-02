@@ -17,7 +17,7 @@
 
 
 from timelinelib.canvas.drawing.drawers import get_progress_color
-from timelinelib.canvas.data.timeperiod import TimePeriod
+from timelinelib.canvas.data.item import TimelineItem
 
 
 DEFAULT_COLOR = (200, 200, 200)
@@ -27,7 +27,7 @@ EXPORTABLE_FIELDS = (_("Text"), _("Description"), _("Start"), _("End"), _("Categ
                      _("Is Container"), _("Is Subevent"))
 
 
-class Event(object):
+class Event(TimelineItem):
 
     def __init__(self, start_time, end_time, text, category=None,
                  fuzzy=False, locked=False, ends_today=False):
@@ -85,31 +85,6 @@ class Event(object):
     def set_id(self, event_id):
         self.id = event_id
         return self
-
-    def get_time_period(self):
-        return self._time_period
-
-    def set_time_period(self, time_period):
-        self._time_period = time_period
-        return self
-
-    def start_to_start(self, event):
-        return self._time_period.start_to_start(event.get_time_period())
-
-    def start_to_end(self, event):
-        return self._time_period.start_to_end(event.get_time_period())
-
-    def end_to_end(self, event):
-        return self._time_period.end_to_end(event.get_time_period())
-
-    def move_delta(self, delta):
-        self.set_time_period(self._time_period.move_delta(delta))
-
-    def get_start_time(self):
-        return self._time_period.get_start_time()
-
-    def get_end_time(self):
-        return self._time_period.get_end_time()
 
     def set_end_time(self, time):
         self.set_time_period(self.get_time_period().set_end_time(time))
@@ -220,7 +195,7 @@ class Event(object):
     def update(self, start_time, end_time, text, category=None, fuzzy=None,
                locked=None, ends_today=None):
         """Change the event data."""
-        self._time_period = TimePeriod(start_time, end_time)
+        self.update_period(start_time, end_time)
         self.text = text.strip()
         self.category = category
         if ends_today is not None:
@@ -230,41 +205,6 @@ class Event(object):
             self.fuzzy = fuzzy
         if locked is not None:
             self.locked = locked
-
-    def update_period(self, start_time, end_time):
-        """Change the event period."""
-        self._time_period = TimePeriod(start_time, end_time)
-
-    def update_period_o(self, new_period):
-        self.update_period(new_period.start_time, new_period.end_time)
-
-    def update_start(self, start_time):
-        """Change the event data."""
-        if start_time <= self._time_period.end_time:
-            self._time_period = TimePeriod(
-                start_time, self._time_period.end_time)
-            return True
-        return False
-
-    def update_end(self, end_time):
-        """Change the event data."""
-        if end_time >= self._time_period.start_time:
-            self._time_period = TimePeriod(
-                self._time_period.start_time, end_time)
-            return True
-        return False
-
-    def inside_period(self, time_period):
-        """Wrapper for time period method."""
-        return self._time_period.inside_period(time_period)
-
-    def is_period(self):
-        """Wrapper for time period method."""
-        return self._time_period.is_period()
-
-    def mean_time(self):
-        """Wrapper for time period method."""
-        return self._time_period.mean_time()
 
     def get_data(self, event_id):
         """
@@ -301,7 +241,7 @@ class Event(object):
         """Returns a unicode label describing the event."""
         event_label = u"%s (%s)" % (
             self.text,
-            time_type.format_period(self._time_period),
+            time_type.format_period(self.get_time_period()),
         )
         duration_label = self._get_duration_label(time_type)
         if duration_label != "":
@@ -310,16 +250,19 @@ class Event(object):
             return event_label
 
     def _get_duration_label(self, time_type):
-        duration = self._time_period.end_time - self._time_period.start_time
-        label = time_type.format_delta(duration)
+        label = time_type.format_delta(self.time_span())
         if label == "0":
             label = ""
         return label
 
     def clone(self):
         # Objects of type datetime are immutable.
-        new_event = Event(self._time_period.start_time,
-                          self._time_period.end_time, self.text, self.category)
+        new_event = Event(
+            self.get_start_time(),
+            self.get_end_time(),
+            self.text,
+            self.category
+        )
         # Description is immutable
         new_event.set_data("description", self.get_data("description"))
         # Icon is immutable in the sense that it is never changed by our
@@ -342,15 +285,6 @@ class Event(object):
 
     def is_milestone(self):
         return False
-
-    def time_span(self):
-        return self._time_period.end_time - self._time_period.start_time
-
-    def overlaps(self, event):
-        return self._time_period.overlaps(event.get_time_period())
-
-    def distance_to(self, event):
-        return self._time_period.distance_to(event.get_time_period())
 
     def get_exportable_fields(self):
         return EXPORTABLE_FIELDS
