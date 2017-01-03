@@ -19,8 +19,8 @@
 import re
 
 from timelinelib.calendar.bosparanian.bosparanian import Bosparanian, BosparanianUtils
-from timelinelib.calendar.bosparanian_monthnames import bosp_abbreviated_name_of_month
-from timelinelib.calendar.bosparanian_monthnames import bosp_name_of_month
+from timelinelib.calendar.bosparanian.monthnames import bosp_abbreviated_name_of_month
+from timelinelib.calendar.bosparanian.monthnames import bosp_name_of_month
 from timelinelib.calendar.bosparanian_weekdaynames import bosp_abbreviated_name_of_weekday
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar import get_date_formatter
