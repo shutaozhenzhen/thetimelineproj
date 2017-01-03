@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.bosparanian.monthnames import bosp_abbreviated_name_of_month
+from timelinelib.calendar.bosparanian.monthnames import bosp_month_from_abbreviated_name
 from timelinelib.calendar.dateformatter import DateFormatter
-from timelinelib.calendar.bosparanian_monthnames import bosp_abbreviated_name_of_month
-from timelinelib.calendar.bosparanian_monthnames import bosp_month_from_abbreviated_name
 
 
 class BosparanianDateFormatter(DateFormatter):
