@@ -268,8 +268,10 @@ class GregorianUtils(CalendarUtilsBase):
     @classmethod
     def calendar_week(cls, time):
         def monday_week_1(year):
+            from timelinelib.time.gregoriantime import GregorianTimeType
             jan_4 = cls.from_date(year, 1, 4).to_time()
-            return jan_4 - timeline.delta_from_days(jan_4.get_day_of_week())
+            jan_4_day_of_week = GregorianTimeType().get_day_of_week(jan_4)
+            return jan_4 - timeline.delta_from_days(jan_4_day_of_week)
     
         def days_between(end, start):
             return end.julian_day - start.julian_day

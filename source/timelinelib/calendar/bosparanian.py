@@ -87,8 +87,10 @@ class BosparanianUtils(GregorianUtils):
         returns number of week in year
         """
         def windsday_week_1(year):
+            from timelinelib.time.bosparaniantime import BosparanianTimeType
             pra_4 = cls.from_date(year, 1, 4).to_time()
-            return pra_4 - timeline.delta_from_days(pra_4.get_day_of_week())
+            pra_4_day_of_week = BosparanianTimeType().get_day_of_week(pra_4)
+            return pra_4 - timeline.delta_from_days(pra_4_day_of_week)
         def days_between(end, start):
             return end.julian_day - start.julian_day
         def days_since_windsday_week_1(time):

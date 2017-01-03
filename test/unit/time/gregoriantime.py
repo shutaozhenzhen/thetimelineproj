@@ -137,7 +137,7 @@ class describe_gregoriantimetype(UnitTestCase):
 
     def test_get_weekday(self):
         dt = self.time_type.parse_time("2013-07-10 00:00:00")
-        self.assertEqual(2, dt.get_day_of_week())
+        self.assertEqual(2, self.time_type.get_day_of_week(dt))
 
     def test_get_min_zoom_delta(self):
         self.assertEqual(timeline.TimeDelta(60), self.time_type.get_min_zoom_delta()[0])
