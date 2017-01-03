@@ -17,10 +17,10 @@
 
 import wx
 
-from timelinelib.calendar.bosparanian import Bosparanian, BosparanianUtils
+from timelinelib.calendar.bosparanian.bosparanian import Bosparanian, BosparanianUtils
+from timelinelib.calendar import get_date_formatter
 from timelinelib.time.bosparaniantime import BosparanianTimeType
 from timelinelib.time.timeline import delta_from_days
-from timelinelib.calendar import get_date_formatter
 
 
 class BosparanianDateTimePicker(wx.Panel):
@@ -38,7 +38,7 @@ class BosparanianDateTimePicker(wx.Panel):
         try:
             self.parent.on_return()
         except AttributeError:
-            pass            
+            pass
 
     def on_escape(self):
         try:
