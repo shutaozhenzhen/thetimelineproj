@@ -23,7 +23,7 @@ class Bosparanian(Gregorian):
 
     def __init__(self, year, month, day, hour, minute, second):
         self.utils = BosparanianUtils
-        self.timeclass = timeline.BosparanianTime
+        self.timeclass = timeline.Time
         if not self.utils.is_valid(year, month, day):
             raise ValueError("Invalid bosparanian date %s-%s-%s" % (year, month, day))
         self.year = year
