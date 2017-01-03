@@ -295,7 +295,7 @@ class DefaultDrawingAlgorithm(Drawer):
                 italic = False
                 if strip_period.start_time.is_weekend_day():
                     bold = True
-                if strip_period.start_time.is_special_day():
+                if self.time_type.is_special_day(strip_period.start_time):
                     italic = True
                 font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc, force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
             else:

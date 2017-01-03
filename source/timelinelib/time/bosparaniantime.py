@@ -177,6 +177,9 @@ class BosparanianTimeType(GregorianTimeType):
     def get_utils(self):
         return BosparanianUtils
 
+    def is_special_day(self, time):
+        return time.get_day_of_week() == 3
+
 
 def open_now_date_editor(main_frame, current_period, navigation_fn):
     def navigate_to(time):

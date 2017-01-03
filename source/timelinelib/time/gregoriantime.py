@@ -253,6 +253,9 @@ class GregorianTimeType(TimeType):
     def get_utils(self):
         return GregorianUtils
 
+    def is_special_day(self, time):
+        return False
+
 
 def go_to_today_fn(main_frame, current_period, navigation_fn):
     navigation_fn(lambda tp: tp.center(GregorianTimeType().now()))

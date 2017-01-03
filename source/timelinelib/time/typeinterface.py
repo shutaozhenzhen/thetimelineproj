@@ -49,7 +49,7 @@ class TimeType(object):
         raise NotImplementedError("get_default_time_period not implemented.")
 
     def supports_saved_now(self):
-        raise NotImplementedError("supports_saved_now not implemented.")        
+        raise NotImplementedError("supports_saved_now not implemented.")
 
     def set_saved_now(self,time):
         raise NotImplementedError("set_saved_now not implemented.")
@@ -93,6 +93,9 @@ class TimeType(object):
 
     def adjust_for_bc_years(self, time):
         raise NotImplementedError("adjust_for_bc_years not implemented.")
-    
+
     def get_utils(self):
         raise NotImplementedError("get_utils not implemented.")
+
+    def is_special_day(self, time):
+        raise NotImplementedError("is_special_day not implemented.")
