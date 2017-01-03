@@ -17,7 +17,7 @@
 
 
 from timelinelib.test.cases.unit import UnitTestCase
-import timelinelib.calendar.weekdaynames
+import timelinelib.calendar.gregorian.weekdaynames
 
 
 class describe_weekday_names(UnitTestCase):
@@ -25,9 +25,9 @@ class describe_weekday_names(UnitTestCase):
     def test_abbreviated_weekday_name_for_0_should_be_mon_translated(self):
         self.assertEqual(
             _("Mon"),
-            timelinelib.calendar.weekdaynames.abbreviated_name_of_weekday(0))
+            timelinelib.calendar.gregorian.weekdaynames.abbreviated_name_of_weekday(0))
 
     def test_abbreviated_weekday_name_for_6_should_be_sun_translated(self):
         self.assertEqual(
             _("Sun"),
-            timelinelib.calendar.weekdaynames.abbreviated_name_of_weekday(6))
+            timelinelib.calendar.gregorian.weekdaynames.abbreviated_name_of_weekday(6))
