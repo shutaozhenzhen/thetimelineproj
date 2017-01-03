@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
 
 
 date_formatter = None

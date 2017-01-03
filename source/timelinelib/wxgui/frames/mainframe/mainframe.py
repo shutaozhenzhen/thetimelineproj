@@ -22,7 +22,7 @@ import os.path
 import wx.lib.newevent
 
 from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
 from timelinelib.calendar import set_date_formatter
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import TimePeriod
