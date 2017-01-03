@@ -293,7 +293,7 @@ class DefaultDrawingAlgorithm(Drawer):
             if self.scene.minor_strip_is_day():
                 bold = False
                 italic = False
-                if strip_period.start_time.is_weekend_day():
+                if self.time_type.is_weekend_day(strip_period.start_time):
                     bold = True
                 if self.time_type.is_special_day(strip_period.start_time):
                     italic = True

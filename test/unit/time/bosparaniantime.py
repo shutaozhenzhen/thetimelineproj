@@ -23,7 +23,7 @@ from timelinelib.time.bosparaniantime import BosparanianTimeType
 
 class describe_bosparanian_time_type(UnitTestCase):
 
-    def test_special_day(self):
+    def test_is_special_day(self):
         DAYS = [
             ("11 Jan 2016", False),
             ("12 Jan 2016", False),
@@ -37,6 +37,22 @@ class describe_bosparanian_time_type(UnitTestCase):
             self.assertEqual(
                 self.time_type.is_special_day(human_time_to_gregorian(day)),
                 expected_is_special
+            )
+
+    def test_is_weekend_day(self):
+        DAYS = [
+            ("11 Jan 2016", True),  # Monday
+            ("12 Jan 2016", False),
+            ("13 Jan 2016", False),
+            ("14 Jan 2016", True),  # Thursday
+            ("15 Jan 2016", False),
+            ("16 Jan 2016", False),
+            ("17 Jan 2016", False),
+        ]
+        for day, expected_is_weekend in DAYS:
+            self.assertEqual(
+                self.time_type.is_weekend_day(human_time_to_gregorian(day)),
+                expected_is_weekend
             )
 
     def setUp(self):
