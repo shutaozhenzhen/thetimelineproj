@@ -24,6 +24,7 @@ from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
+from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.time.gregoriantime import backward_fn
 from timelinelib.time.gregoriantime import backward_one_month_fn
 from timelinelib.time.gregoriantime import backward_one_week_fn
@@ -140,6 +141,22 @@ class describe_gregoriantimetype(UnitTestCase):
 
     def test_get_min_zoom_delta(self):
         self.assertEqual(timeline.TimeDelta(60), self.time_type.get_min_zoom_delta()[0])
+
+    def test_is_weekend_day(self):
+        DAYS = [
+            ("11 Jan 2016", False), # Monday
+            ("12 Jan 2016", False),
+            ("13 Jan 2016", False),
+            ("14 Jan 2016", False),
+            ("15 Jan 2016", False),
+            ("16 Jan 2016", True),
+            ("17 Jan 2016", True),
+        ]
+        for day, expected_is_weekend in DAYS:
+            self.assertEqual(
+                self.time_type.is_weekend_day(human_time_to_gregorian(day)),
+                expected_is_weekend
+            )
 
 
 class describe_gregorian_strip_week(UnitTestCase):

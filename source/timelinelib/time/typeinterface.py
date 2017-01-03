@@ -99,3 +99,6 @@ class TimeType(object):
 
     def is_special_day(self, time):
         raise NotImplementedError("is_special_day not implemented.")
+
+    def is_weekend_day(self, time):
+        raise NotImplementedError("is_weekend_day not implemented.")
