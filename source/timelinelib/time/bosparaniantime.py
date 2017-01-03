@@ -42,7 +42,7 @@ class BosparanianTimeType(GregorianTimeType):
         return isinstance(other, BosparanianTimeType)
 
     def time_string(self, time):
-        return "%d-%02d-%02d %02d:%02d:%02d" % self.get_utils().from_time(time).to_tuple()
+        return "%d-%02d-%02d %02d:%02d:%02d" % BosparanianUtils.from_time(time).to_tuple()
 
     def parse_time(self, time_string):
         match = re.search(r"^(-?\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)$", time_string)
@@ -90,7 +90,7 @@ class BosparanianTimeType(GregorianTimeType):
             return u"%s %s" % (label_without_time(time), time_label(time))
 
         def label_without_time(time):
-            bosparanian_datetime = self.get_utils().from_time(time)
+            bosparanian_datetime = BosparanianUtils.from_time(time)
             return u"%s %s %s" % (bosparanian_datetime.day, bosp_abbreviated_name_of_month(bosparanian_datetime.month), bosparanian_datetime.year)
 
         def time_label(time):
@@ -160,7 +160,7 @@ class BosparanianTimeType(GregorianTimeType):
         return u"bosparaniantime"
 
     def event_date_string(self, time):
-        bosparanian_time = self.get_utils().from_time(time)
+        bosparanian_time = BosparanianUtils.from_time(time)
         (date, bc) = get_date_formatter().format(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
         if bc:
             return "%s %s" % (date, _("BC"))
@@ -168,14 +168,11 @@ class BosparanianTimeType(GregorianTimeType):
             return date
 
     def event_time_string(self, time):
-        bosparanian_time = self.get_utils().from_time(time)
+        bosparanian_time = BosparanianUtils.from_time(time)
         return "%02d:%02d" % (bosparanian_time.hour, bosparanian_time.minute)
 
     def adjust_for_bc_years(self, time):
         return time
-
-    def get_utils(self):
-        return BosparanianUtils
 
     def is_special_day(self, time):
         return self.get_day_of_week(time) == 3

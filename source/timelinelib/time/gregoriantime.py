@@ -49,7 +49,7 @@ class GregorianTimeType(TimeType):
         return not (self == other)
 
     def time_string(self, time):
-        return "%d-%02d-%02d %02d:%02d:%02d" % self.get_utils().from_time(time).to_tuple()
+        return "%d-%02d-%02d %02d:%02d:%02d" % GregorianUtils.from_time(time).to_tuple()
 
     def parse_time(self, time_string):
         match = re.search(r"^(-?\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)$", time_string)
@@ -99,7 +99,7 @@ class GregorianTimeType(TimeType):
             return u"%s %s" % (label_without_time(time), time_label(time))
 
         def label_without_time(time):
-            gregorian_datetime = self.get_utils().from_time(time)
+            gregorian_datetime = GregorianUtils.from_time(time)
             return u"%s %s %s" % (gregorian_datetime.day, abbreviated_name_of_month(gregorian_datetime.month), gregorian_datetime.year)
 
         def time_label(time):
@@ -223,7 +223,7 @@ class GregorianTimeType(TimeType):
         return delta / 24
 
     def event_date_string(self, time):
-        gregorian_time = self.get_utils().from_time(time)
+        gregorian_time = GregorianUtils.from_time(time)
         (date, bc) = get_date_formatter().format((gregorian_time.year, gregorian_time.month, gregorian_time.day))
         if bc:
             return "%s %s" % (date, BC)
@@ -231,7 +231,7 @@ class GregorianTimeType(TimeType):
             return date
 
     def event_time_string(self, time):
-        gregorian_time = self.get_utils().from_time(time)
+        gregorian_time = GregorianUtils.from_time(time)
         return "%02d:%02d" % (gregorian_time.hour, gregorian_time.minute)
 
     def eventtimes_equals(self, time1, time2):
@@ -242,16 +242,13 @@ class GregorianTimeType(TimeType):
         return s1 == s2
 
     def adjust_for_bc_years(self, time):
-        gregorian_time = self.get_utils().from_time(time)
+        gregorian_time = GregorianUtils.from_time(time)
         if self.major_strip_is_decade:
             if gregorian_time.year < 0:
                 gregorian_time.year += 2
             elif gregorian_time.year < 10:
                 gregorian_time.year += 1
         return gregorian_time.to_time()
-
-    def get_utils(self):
-        return GregorianUtils
 
     def is_special_day(self, time):
         return False
