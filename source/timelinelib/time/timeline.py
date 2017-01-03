@@ -80,9 +80,6 @@ class Time(object):
         seconds = self.seconds % 60
         return (hours, minutes, seconds)
 
-    def get_day_of_week(self):
-        return self.julian_day % 7
-
 
 class TimeDelta(object):
 

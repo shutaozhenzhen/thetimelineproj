@@ -257,7 +257,10 @@ class GregorianTimeType(TimeType):
         return False
 
     def is_weekend_day(self, time):
-        return time.get_day_of_week() in (5, 6)
+        return self.get_day_of_week(time) in (5, 6)
+
+    def get_day_of_week(self, time):
+        return time.julian_day % 7
 
 
 def go_to_today_fn(main_frame, current_period, navigation_fn):
@@ -520,7 +523,7 @@ def fit_day_fn(main_frame, current_period, navigation_fn):
 def fit_week_fn(main_frame, current_period, navigation_fn):
     mean = GregorianUtils.from_time(current_period.mean_time())
     start = GregorianUtils.from_date(mean.year, mean.month, mean.day).to_time()
-    weekday = start.get_day_of_week()
+    weekday = GregorianTimeType().get_day_of_week(start)
     start = start - delta_from_days(weekday)
     if not main_frame.week_starts_on_monday():
         start = start - delta_from_days(1)
@@ -681,10 +684,10 @@ class StripWeek(Strip):
 
     def start(self, time):
         if self.appearance.get_week_start() == "monday":
-            days_to_subtract = time.get_day_of_week()
+            days_to_subtract = GregorianTimeType().get_day_of_week(time)
         else:
             # It is sunday
-            days_to_subtract = (time.get_day_of_week() + 1) % 7
+            days_to_subtract = (GregorianTimeType().get_day_of_week(time) + 1) % 7
         return timeline.Time(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
@@ -694,14 +697,14 @@ class StripWeek(Strip):
 class StripWeekday(Strip):
 
     def label(self, time, major=False):
+        day_of_week = GregorianTimeType().get_day_of_week(time)
         if major:
-            day_of_week = time.get_day_of_week()
             time = GregorianUtils.from_time(time)
             return "%s %s %s %s" % (abbreviated_name_of_weekday(day_of_week),
                                     time.day,
                                     abbreviated_name_of_month(time.month),
                                     format_year(time.year))
-        return (abbreviated_name_of_weekday(time.get_day_of_week()) +
+        return (abbreviated_name_of_weekday(day_of_week) +
                 " %s" % GregorianUtils.from_time(time).day)
 
     def start(self, time):

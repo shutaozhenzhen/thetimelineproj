@@ -178,10 +178,10 @@ class BosparanianTimeType(GregorianTimeType):
         return BosparanianUtils
 
     def is_special_day(self, time):
-        return time.get_day_of_week() == 3
+        return self.get_day_of_week(time) == 3
 
     def is_weekend_day(self, time):
-        return time.get_day_of_week() in (0, 3)
+        return self.get_day_of_week(time) in (0, 3)
 
 
 def open_now_date_editor(main_frame, current_period, navigation_fn):
@@ -398,7 +398,7 @@ def fit_day_fn(main_frame, current_period, navigation_fn):
 def fit_week_fn(main_frame, current_period, navigation_fn):
     mean = BosparanianUtils.from_time(current_period.mean_time())
     start = BosparanianUtils.from_date(mean.year, mean.month, mean.day).to_time()
-    weekday = start.get_day_of_week()
+    weekday = BosparanianTimeType().get_day_of_week(start)
     start = start - delta_from_days(weekday)
     if not main_frame.week_starts_on_monday():
         start = start - delta_from_days(1)
@@ -547,14 +547,6 @@ class StripDay(Strip):
     def is_day(self):
         return True
 
-#    def get_font(self, time_period):
-#        if (time_period.start_time.get_day_of_week() == 0): # Windsday in italics (start of week)
-#            return get_default_font(8,True,False)
-#        elif (time_period.start_time.get_day_of_week() == 3): # Praiosday in bold
-#            return get_default_font(8, True, True)
-#        else:
-#            return get_default_font(8)
-
 
 class StripWeek(Strip):
 
@@ -591,7 +583,7 @@ class StripWeek(Strip):
                                       format_year(end.year))
 
     def start(self, time):
-        days_to_subtract = time.get_day_of_week()
+        days_to_subtract = BosparanianTimeType().get_day_of_week(time)
         return timeline.Time(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
@@ -601,14 +593,14 @@ class StripWeek(Strip):
 class StripWeekday(Strip):
 
     def label(self, time, major=False):
+        day_of_week = BosparanianTimeType().get_day_of_week(time)
         if major:
-            day_of_week = time.get_day_of_week()
             time = BosparanianUtils.from_time(time)
             return "%s %s %s %s" % (bosp_abbreviated_name_of_weekday(day_of_week),
                                     time.day,
                                     bosp_abbreviated_name_of_month(time.month),
                                     format_year(time.year))
-        return (bosp_abbreviated_name_of_weekday(time.get_day_of_week()) +
+        return (bosp_abbreviated_name_of_weekday(day_of_week) +
                 " %s" % BosparanianUtils.from_time(time).day)
 
     def start(self, time):
@@ -618,17 +610,9 @@ class StripWeekday(Strip):
 
     def increment(self, time):
         return time + delta_from_days(1)
-    
+
     def is_day(self):
         return True
-
-#    def get_font(self, time_period):
-#        if (time_period.start_time.get_day_of_week() == 0): # Windsday in italics (start of week)
-#            return get_default_font(8,True,False)
-#        elif (time_period.start_time.get_day_of_week() == 3): # Praiosday in bold
-#            return get_default_font(8, True, True)
-#        else:
-#            return get_default_font(8)
 
 
 class StripHour(Strip):
