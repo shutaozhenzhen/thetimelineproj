@@ -16,16 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.time.timeline import Time
-from timelinelib.time.timeline import BosparanianTime
-from timelinelib.time.timeline import TimeDelta
-from timelinelib.time.timeline import delta_from_seconds
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.test.utils import TIME_MODIFIERS
 from timelinelib.time.timeline import delta_from_days
+from timelinelib.time.timeline import delta_from_seconds
 from timelinelib.time.timeline import get_min_time
 from timelinelib.time.timeline import MIN_JULIAN_DAY
-from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import TIME_MODIFIERS
-from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.time.timeline import Time
+from timelinelib.time.timeline import TimeDelta
 
 
 class describe_time_properties(UnitTestCase):

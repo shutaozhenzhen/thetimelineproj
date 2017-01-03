@@ -84,10 +84,6 @@ class Time(object):
         return self.julian_day % 7
 
 
-class BosparanianTime(Time):
-    pass
-
-
 class TimeDelta(object):
 
     def __init__(self, seconds):

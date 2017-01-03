@@ -113,14 +113,14 @@ class BosparanianTimeType(GregorianTimeType):
         return (timeline.get_min_time(), _("can't be before year -7299"))
 
     def get_max_time(self):
-        return (timeline.BosparanianTime(5369833, 0), _("can't be after year 7410"))
+        return (timeline.Time(5369833, 0), _("can't be after year 7410"))
 
     def choose_strip(self, metrics, appearance):
         """
         Return a tuple (major_strip, minor_strip) for current time period and
         window size.
         """
-        day_period = TimePeriod(timeline.BosparanianTime(0, 0), timeline.BosparanianTime(1, 0))
+        day_period = TimePeriod(timeline.Time(0, 0), timeline.Time(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         self.major_strip_is_decade = False
         if one_day_width > 20000:
@@ -592,7 +592,7 @@ class StripWeek(Strip):
 
     def start(self, time):
         days_to_subtract = time.get_day_of_week()
-        return timeline.BosparanianTime(time.julian_day - days_to_subtract, 0)
+        return timeline.Time(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
         return time + delta_from_days(7)
@@ -642,7 +642,7 @@ class StripHour(Strip):
 
     def start(self, time):
         (hours, _, _) = time.get_time_of_day()
-        return timeline.BosparanianTime(time.julian_day, hours * 60 * 60)
+        return timeline.Time(time.julian_day, hours * 60 * 60)
 
     def increment(self, time):
         return time + timeline.delta_from_seconds(60 * 60)
@@ -659,7 +659,7 @@ class StripMinute(Strip):
 
     def start(self, time):
         (hours, minutes, _) = time.get_time_of_day()
-        return timeline.BosparanianTime(time.julian_day, minutes * 60 + hours * 60 * 60)
+        return timeline.Time(time.julian_day, minutes * 60 + hours * 60 * 60)
 
     def increment(self, time):
         return time + timeline.delta_from_seconds(60)
