@@ -71,10 +71,6 @@ class describe_time_properties(UnitTestCase):
         self.assertTrue(human_time_to_gregorian("16 Jan 2016").is_weekend_day())
         self.assertTrue(human_time_to_gregorian("17 Jan 2016").is_weekend_day())
 
-    def test_is_special_day(self):
-        for i in range(30):
-            self.assertFalse(human_time_to_gregorian("%d Jan 2016" % (i + 1)).is_special_day())
-
 
 class describe_time_delta_properties(UnitTestCase):
 
@@ -106,15 +102,6 @@ class describe_bosparanian_time(UnitTestCase):
         self.assertFalse(self.a_time("15 Jan 2016").is_weekend_day())
         self.assertFalse(self.a_time("16 Jan 2016").is_weekend_day())
         self.assertFalse(self.a_time("17 Jan 2016").is_weekend_day())
-
-    def test_is_special_day(self):
-        self.assertFalse(self.a_time("11 Jan 2016").is_special_day())
-        self.assertFalse(self.a_time("12 Jan 2016").is_special_day())
-        self.assertFalse(self.a_time("13 Jan 2016").is_special_day())
-        self.assertTrue(self.a_time("14 Jan 2016").is_special_day())  # Thursday
-        self.assertFalse(self.a_time("15 Jan 2016").is_special_day())
-        self.assertFalse(self.a_time("16 Jan 2016").is_special_day())
-        self.assertFalse(self.a_time("17 Jan 2016").is_special_day())
 
     def a_time(self, time_spec):
         time = human_time_to_gregorian(time_spec)
