@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
 
 
 REGION_START_POS = 0

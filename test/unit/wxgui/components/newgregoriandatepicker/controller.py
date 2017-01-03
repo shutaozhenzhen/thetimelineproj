@@ -20,7 +20,7 @@ from mock import Mock
 from mock import sentinel
 import wx
 
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.components.newgregoriandatepicker.controller import NewGregorianDatePickerController
 from timelinelib.wxgui.components.newgregoriandatepicker.view import NewGregorianDatePicker

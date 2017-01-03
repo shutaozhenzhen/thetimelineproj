@@ -18,7 +18,7 @@
 
 import humblewx
 
-from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.framework import Dialog
 
