@@ -17,7 +17,7 @@
 
 
 from timelinelib.test.cases.unit import UnitTestCase
-import timelinelib.calendar.monthnames
+import timelinelib.calendar.gregorian.monthnames
 
 
 class MonthNamesSpec(UnitTestCase):
@@ -25,29 +25,29 @@ class MonthNamesSpec(UnitTestCase):
     def test_english_name_for_month_1_should_be_january(self):
         self.assertEqual(
             "January",
-            timelinelib.calendar.monthnames.english_name_of_month(1))
+            timelinelib.calendar.gregorian.monthnames.english_name_of_month(1))
 
     def test_abbreviated_name_for_month_1_should_be_jan_translated(self):
         self.assertEqual(
             _("Jan"),
-            timelinelib.calendar.monthnames.abbreviated_name_of_month(1))
+            timelinelib.calendar.gregorian.monthnames.abbreviated_name_of_month(1))
 
     def test_month_from_english_name_january_should_be_1(self):
         self.assertEqual(
             1,
-            timelinelib.calendar.monthnames.month_from_english_name("January"))
+            timelinelib.calendar.gregorian.monthnames.month_from_english_name("January"))
 
     def test_english_name_for_month_12_should_be_december(self):
         self.assertEqual(
             "December",
-            timelinelib.calendar.monthnames.english_name_of_month(12))
+            timelinelib.calendar.gregorian.monthnames.english_name_of_month(12))
 
     def test_abbreviated_name_for_month_12_should_be_dec_translated(self):
         self.assertEqual(
             _("Dec"),
-            timelinelib.calendar.monthnames.abbreviated_name_of_month(12))
+            timelinelib.calendar.gregorian.monthnames.abbreviated_name_of_month(12))
 
     def test_month_from_english_name_december_should_be_12(self):
         self.assertEqual(
             12,
-            timelinelib.calendar.monthnames.month_from_english_name("December"))
+            timelinelib.calendar.gregorian.monthnames.month_from_english_name("December"))

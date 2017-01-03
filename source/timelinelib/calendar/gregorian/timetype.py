@@ -21,8 +21,8 @@ import re
 
 from timelinelib.calendar.gregorian.gregorian import Gregorian
 from timelinelib.calendar.gregorian.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.monthnames import abbreviated_name_of_month
 from timelinelib.calendar import get_date_formatter
-from timelinelib.calendar.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.weekdaynames import abbreviated_name_of_weekday
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
