@@ -17,8 +17,8 @@
 
 
 from timelinelib.calendar.gregorian.gregorian import GregorianUtils
-from timelinelib.calendar.monthnames import abbreviated_name_of_month
-from timelinelib.calendar.monthnames import month_of_abbreviated_name
+from timelinelib.calendar.gregorian.monthnames import abbreviated_name_of_month
+from timelinelib.calendar.gregorian.monthnames import month_of_abbreviated_name
 
 
 class DefaultDateFormatter(object):
