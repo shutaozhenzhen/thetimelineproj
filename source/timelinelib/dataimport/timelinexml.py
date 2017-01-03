@@ -24,7 +24,7 @@ import StringIO
 
 import wx
 
-from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
+from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar import get_date_formatter

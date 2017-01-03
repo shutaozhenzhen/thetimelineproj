@@ -21,7 +21,7 @@ import os.path
 
 import wx.lib.newevent
 
-from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
+from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
 from timelinelib.calendar import set_date_formatter
 from timelinelib.canvas.data.exceptions import TimelineIOError
@@ -49,17 +49,17 @@ from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
-from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
 from timelinelib.wxgui.dialogs.feature.view import show_feature_feedback_dialog
 from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
 from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
 from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
+from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
-from timelinelib.wxgui.dialogs.systeminfo.view import SystemInfoDialog
 from timelinelib.wxgui.dialogs.systeminfo.view import show_system_info_dialog
+from timelinelib.wxgui.dialogs.systeminfo.view import SystemInfoDialog
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
