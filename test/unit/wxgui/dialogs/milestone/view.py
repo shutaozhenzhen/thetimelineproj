@@ -18,13 +18,13 @@
 
 from mock import Mock
 
-from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.wxgui.dialogs.milestone.view import EditMilestoneDialog
-from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.canvas.data.milestone import Milestone
-from timelinelib.test.utils import human_time_to_gregorian
-from timelinelib.config.dotfile import Config
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.milestone import Milestone
+from timelinelib.config.dotfile import Config
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.wxgui.dialogs.milestone.view import EditMilestoneDialog
 
 
 class describe_milestone_editor_dialog(UnitTestCase):

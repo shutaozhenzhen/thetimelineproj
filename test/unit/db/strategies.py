@@ -18,16 +18,16 @@
 
 from mock import Mock
 
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.canvas.data.container import Container
+from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data.idnumber import get_process_unique_id
+from timelinelib.canvas.data.subevent import Subevent
+from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.db.strategies import DefaultContainerStrategy
 from timelinelib.db.strategies import ExtendedContainerStrategy
-from timelinelib.canvas.data.event import Event
-from timelinelib.canvas.data.subevent import Subevent
-from timelinelib.canvas.data.container import Container
-from timelinelib.canvas.data.idnumber import get_process_unique_id
+from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
-from timelinelib.canvas.data.timeperiod import TimePeriod
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.test.utils import human_time_to_gregorian
 
 

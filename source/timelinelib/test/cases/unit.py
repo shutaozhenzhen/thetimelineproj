@@ -21,7 +21,7 @@ import unittest
 
 import wx
 
-from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 
 
 class UnitTestCase(unittest.TestCase):

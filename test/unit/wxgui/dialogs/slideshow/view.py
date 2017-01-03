@@ -18,10 +18,10 @@
 
 from mock import Mock
 
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.slideshow.view import SlideshowDialog
-from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.canvas.data.db import MemoryDB
 
 
 class describe_slideshow_dialog(UnitTestCase):

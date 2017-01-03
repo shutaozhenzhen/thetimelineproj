@@ -19,19 +19,19 @@
 
 import codecs
 
-from timelinelib.calendar.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.dataexport.timelinexml import alert_string
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
-from timelinelib.canvas.data import Event
 from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
 from timelinelib.dataimport.timelinexml import parse_alert_string
-from timelinelib.canvas.data import TimePeriod
 from timelinelib.db import db_open
 from timelinelib.meta.version import get_full_version
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.utils import a_category_with
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
 
 

@@ -17,15 +17,16 @@
 
 
 from mock import Mock
+
 import wx
 
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.wxgui.frames.mainframe.mainframe import MenuController
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.test.utils import an_event
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.frames.mainframe.mainframe import AlertController
-from timelinelib.test.utils import an_event
+from timelinelib.wxgui.frames.mainframe.mainframe import MenuController
 
 
 class describe_menu_controller(UnitTestCase):

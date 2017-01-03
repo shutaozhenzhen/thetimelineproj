@@ -16,11 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.time.numtime import NumTimeType
-from timelinelib.time.numtime import move_period
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.time.numtime import move_period
+from timelinelib.time.numtime import NumTimeType
 
 
 class describe_numtimetype(UnitTestCase):

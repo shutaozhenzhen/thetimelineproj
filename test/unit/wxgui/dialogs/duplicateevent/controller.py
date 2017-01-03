@@ -18,7 +18,8 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Container
@@ -26,7 +27,6 @@ from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.duplicateevent.controller import BACKWARD
 from timelinelib.wxgui.dialogs.duplicateevent.controller import BOTH
 from timelinelib.wxgui.dialogs.duplicateevent.controller import DuplicateEventDialogController

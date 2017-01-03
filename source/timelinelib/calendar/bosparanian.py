@@ -16,8 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
 import timelinelib.time.timeline as timeline
-from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
+
 
 class Bosparanian(Gregorian):
 

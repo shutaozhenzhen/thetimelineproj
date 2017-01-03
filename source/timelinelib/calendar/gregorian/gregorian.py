@@ -24,7 +24,7 @@ class Gregorian(CalendarBase):
 
     def __init__(self, year, month, day, hour, minute, second):
         self.utils = GregorianUtils
-        self.timeclass = timeline.Time        
+        self.timeclass = timeline.Time
         if not self.utils.is_valid(year, month, day):
             raise ValueError("Invalid gregorian date %s-%s-%s" % (year, month, day))
         self.year = year
@@ -268,7 +268,7 @@ class GregorianUtils(CalendarUtilsBase):
     @classmethod
     def calendar_week(cls, time):
         def monday_week_1(year):
-            from timelinelib.time.gregoriantime import GregorianTimeType
+            from timelinelib.calendar.gregorian.timetype import GregorianTimeType
             jan_4 = cls.from_date(year, 1, 4).to_time()
             jan_4_day_of_week = GregorianTimeType().get_day_of_week(jan_4)
             return jan_4 - timeline.delta_from_days(jan_4_day_of_week)

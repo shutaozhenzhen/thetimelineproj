@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Eras
@@ -25,7 +26,6 @@ from timelinelib.canvas.data.undohandler import UndoHandler
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature
 from timelinelib.general.observer import Observable
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.timeline import Time
 
 

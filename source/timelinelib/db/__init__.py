@@ -16,15 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import tempfile
 import os.path
+import tempfile
 
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
-from timelinelib.time.gregoriantime import GregorianTimeType
 
 
 def db_open(path, timetype=None):

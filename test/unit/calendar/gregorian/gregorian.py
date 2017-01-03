@@ -21,7 +21,7 @@ import datetime
 import wx
 
 from timelinelib.test.cases.unit import UnitTestCase
-import timelinelib.calendar.gregorian as gregorian
+import timelinelib.calendar.gregorian.gregorian as gregorian
 import timelinelib.time.timeline as timeline
 
 

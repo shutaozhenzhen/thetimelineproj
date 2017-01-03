@@ -26,6 +26,7 @@ import wx
 
 from timelinelib.calendar.bosparaniandateformatter import BosparanianDateFormatter
 from timelinelib.calendar.defaultdateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar import get_date_formatter
 from timelinelib.calendar import set_date_formatter
 from timelinelib.canvas.data.db import MemoryDB
@@ -36,6 +37,7 @@ from timelinelib.canvas.data import Era
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.data.milestone import Milestone
 from timelinelib.db.utils import create_non_exising_path
 from timelinelib.general.xmlparser import ANY
 from timelinelib.general.xmlparser import OPTIONAL
@@ -44,10 +46,8 @@ from timelinelib.general.xmlparser import parse_fn_store
 from timelinelib.general.xmlparser import SINGLE
 from timelinelib.general.xmlparser import Tag
 from timelinelib.time.bosparaniantime import BosparanianTimeType
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
-from timelinelib.canvas.data.milestone import Milestone
 
 
 def import_db_from_timeline_xml(path):

@@ -16,9 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.subevent import Subevent
-from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.time.numtime import NumTimeType
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import a_container_with
@@ -27,6 +26,7 @@ from timelinelib.test.utils import a_subevent_with
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.test.utils import SUBEVENT_MODIFIERS
+from timelinelib.time.numtime import NumTimeType
 
 
 class describe_subevent(UnitTestCase):

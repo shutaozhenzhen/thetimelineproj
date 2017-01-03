@@ -19,14 +19,14 @@
 from mock import Mock
 from mock import sentinel
 
-from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.wxgui.dialogs.milestone.view import EditMilestoneDialog
-from timelinelib.wxgui.dialogs.milestone.controller import EditMilestoneDialogController
-from timelinelib.canvas.data.milestone import Milestone
-from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.test.utils import human_time_to_gregorian
-from timelinelib.canvas.data.timeperiod import TimePeriod
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.milestone import Milestone
+from timelinelib.canvas.data.timeperiod import TimePeriod
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.wxgui.dialogs.milestone.controller import EditMilestoneDialogController
+from timelinelib.wxgui.dialogs.milestone.view import EditMilestoneDialog
 
 
 class describe_edit_milestone_dialog_controller(UnitTestCase):

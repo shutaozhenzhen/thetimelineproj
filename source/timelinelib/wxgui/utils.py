@@ -182,7 +182,7 @@ def time_picker_for(time_type):
     from timelinelib.wxgui.components.gregoriandatetimepicker import GregorianDateTimePicker
     from timelinelib.wxgui.components.bosparaniandatetimepicker import BosparanianDateTimePicker
     from timelinelib.time.numtime import NumTimeType
-    from timelinelib.time.gregoriantime import GregorianTimeType
+    from timelinelib.calendar.gregorian.timetype import GregorianTimeType
     if isinstance(time_type, NumTimeType):
         return NumTimePicker
     if isinstance(time_type, BosparanianTimeType):

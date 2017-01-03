@@ -18,15 +18,14 @@
 
 from random import random
 
-
-from timelinelib.canvas.drawing.utils import Metrics
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.timeperiod import TimePeriod
-from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import human_time_to_gregorian
-from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.time.numtime import NumTimeType
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.drawing.utils import lighten_color
+from timelinelib.canvas.drawing.utils import Metrics
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.time.numtime import NumTimeType
 
 
 WIDTH = 200
