@@ -26,10 +26,19 @@ class TimeEditorDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <CheckBox use="$(use_checkbox)" label="$(cb_text)" name="cbx_show_time"
-                  border="ALL"
-                  event_EVT_CHECKBOX="show_time_checkbox_on_checked" />
-        <TimePicker time_type="$(time_type)" config="$(config)" border="LEFT|RIGHT|BOTTOM" name="time_picker"/>
+        <CheckBox
+            name="show_time_checkbox"
+            use="$(use_checkbox)"
+            label="$(show_time_checkbox_label)"
+            border="ALL"
+            event_EVT_CHECKBOX="show_time_checkbox_on_checked"
+        />
+        <TimePicker
+            name="time_picker"
+            time_type="$(time_type)"
+            config="$(config)"
+            border="LEFT|RIGHT|BOTTOM"
+        />
         <DialogButtonsOkCancelSizer
             border="BOTTOM|LEFT|RIGHT"
             event_EVT_BUTTON__ID_OK="ok_button_clicked"
@@ -39,12 +48,12 @@ class TimeEditorDialog(Dialog):
 
     def __init__(self, parent, config, time_type, time, title):
         Dialog.__init__(self, TimeEditorDialogController, parent, {
-            "cb_text": _("Show time"),
+            "show_time_checkbox_label": _("Show time"),
             "use_checkbox": time_type.is_date_time_type(),
             "time_type": time_type,
             "config": config,
         }, title=title)
-        self.controller.on_init(time_type, time)
+        self.controller.on_init(time)
 
     def SetTime(self, time):
         self.time_picker.set_value(time)
@@ -53,7 +62,7 @@ class TimeEditorDialog(Dialog):
         return self.time_picker.get_value()
 
     def ShowTimeIsChecked(self):
-        return self.cbx_show_time.IsChecked()
+        return self.show_time_checkbox.IsChecked()
 
     def ShowTime(self, value):
         try:

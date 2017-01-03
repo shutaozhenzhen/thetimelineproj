@@ -23,8 +23,7 @@ from timelinelib.utils import ex_msg
 
 class TimeEditorDialogController(Controller):
 
-    def on_init(self, time_type, time):
-        self.time_type = time_type
+    def on_init(self, time):
         self.view.SetTime(time)
         self.view.ShowTime(False)
 
@@ -33,14 +32,8 @@ class TimeEditorDialogController(Controller):
 
     def ok_button_clicked(self, evt):
         try:
-            time = self.view.GetTime()
-            if time is None:
+            if self.view.GetTime() is None:
                 raise ValueError(_("Invalid date"))
-            if self.time_type.is_date_time_type():
-                if not self.view.ShowTimeIsChecked():
-                    gt = self.time_type.get_utils().from_time(time)
-                    gt.hour = 12
-                    self.view.SetTime(gt.to_time())
         except ValueError, ex:
             display_error_message(ex_msg(ex))
         else:
