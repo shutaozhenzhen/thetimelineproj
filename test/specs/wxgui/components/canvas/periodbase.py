@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.dataimport.tutorial import TutorialTimelineCreator
 from timelinelib.test.cases.unit import UnitTestCase

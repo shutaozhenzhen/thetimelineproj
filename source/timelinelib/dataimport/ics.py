@@ -16,22 +16,21 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import random
-
 from datetime import date
 from datetime import datetime
 from datetime import timedelta
 from os.path import abspath
+import random
 
 from icalendar import Calendar
 
-from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
-from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Category
-from timelinelib.utils import ex_msg
+from timelinelib.canvas.data import Event
 from timelinelib.time.timeline import TimeDelta
+from timelinelib.utils import ex_msg
 from timelinelib.wxgui.utils import display_warning_message
 
 

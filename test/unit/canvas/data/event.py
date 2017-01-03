@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.event import clone_event_list
 from timelinelib.canvas.data import Container
@@ -29,7 +30,6 @@ from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import EVENT_MODIFIERS
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
 import timelinelib.time.timeline as timeline
 

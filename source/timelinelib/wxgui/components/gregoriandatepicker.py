@@ -18,8 +18,8 @@
 
 import wx
 
-from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
-from timelinelib.time.gregoriantime import GregorianTimeType
+from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.components import TextPatternControl
 

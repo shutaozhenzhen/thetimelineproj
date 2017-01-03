@@ -19,17 +19,17 @@
 import wx
 from mock import Mock
 
-from timelinelib.calendar.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
+from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data import Event, TimePeriod
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.config.dotfile import Config
-from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data import Event, TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.time.gregoriantime import GregorianTimeType
 
 
 IMAGE_SIZE = (500, 200)

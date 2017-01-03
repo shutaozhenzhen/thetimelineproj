@@ -19,6 +19,7 @@
 from mock import Mock
 from mock import sentinel
 
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.event import Event
@@ -30,11 +31,10 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.test.utils import ObjectWithTruthValue
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.time.numtime import NumTimeType
+from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.dialogs.editevent.controller import EditEventDialogController
 from timelinelib.wxgui.dialogs.editevent.view import EditEventDialog
-from timelinelib.time.timeline import delta_from_days
 
 
 class EditEventDialogTestCase(UnitTestCase):

@@ -19,8 +19,8 @@
 from datetime import datetime
 import re
 
-from timelinelib.calendar.gregorian import Gregorian
-from timelinelib.calendar.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import Gregorian
+from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar import get_date_formatter
 from timelinelib.calendar.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.weekdaynames import abbreviated_name_of_weekday

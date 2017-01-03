@@ -18,7 +18,7 @@
 
 import codecs
 
-from timelinelib.calendar.gregorian import Gregorian
+from timelinelib.calendar.gregorian.gregorian import Gregorian
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.db import db_open

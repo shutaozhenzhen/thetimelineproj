@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.monthnames import month_of_abbreviated_name
-from timelinelib.calendar.gregorian import GregorianUtils
 
 
 class DefaultDateFormatter(object):

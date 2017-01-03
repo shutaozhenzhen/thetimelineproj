@@ -16,9 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.timeperiod import TimePeriod
-from timelinelib.time.gregoriantime import GregorianTimeType
-from timelinelib.time.numtime import NumTimeType
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
 from timelinelib.test.utils import a_numeric_era_with
@@ -27,6 +26,7 @@ from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.test.utils import NUM_ERA_MODIFIERS
 from timelinelib.test.utils import numeric_period
+from timelinelib.time.numtime import NumTimeType
 
 
 NAME = "Era name"

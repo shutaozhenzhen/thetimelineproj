@@ -20,7 +20,7 @@ from datetime import datetime
 import colorsys
 import os.path
 
-from timelinelib.calendar.gregorian import Gregorian
+from timelinelib.calendar.gregorian.gregorian import Gregorian
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category

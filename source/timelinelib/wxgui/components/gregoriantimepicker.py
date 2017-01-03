@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.wxgui.components import TextPatternControl
 
 

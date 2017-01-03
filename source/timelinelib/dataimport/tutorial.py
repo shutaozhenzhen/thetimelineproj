@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
@@ -24,7 +24,7 @@ from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.time.timeline import delta_from_days
-import timelinelib.calendar.gregorian as gregorian
+import timelinelib.calendar.gregorian.gregorian as gregorian
 
 
 def create_in_memory_tutorial_db():
@@ -240,7 +240,7 @@ class TutorialTimelineCreator(object):
 
     def __init__(self):
         self.db = MemoryDB()
-        from timelinelib.time.gregoriantime import GregorianTimeType
+        from timelinelib.calendar.gregorian.timetype import GregorianTimeType
         self.db.time_type = GregorianTimeType()
         now = GregorianUtils.from_time(self.db.time_type.now())
         self.start = self.get_time(now.year, now.month, 1)

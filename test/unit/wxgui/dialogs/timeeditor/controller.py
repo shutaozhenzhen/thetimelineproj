@@ -18,10 +18,10 @@
 
 from mock import Mock
 
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
-from timelinelib.time.gregoriantime import GregorianTimeType
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 
 
