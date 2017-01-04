@@ -18,6 +18,7 @@
 
 from mock import Mock
 
+from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
@@ -29,7 +30,7 @@ class describe_time_editor_dialog_for_gregorian_time(UnitTestCase):
 
     def test_it_can_be_created(self):
         config = Mock(Config)
-        config.get_date_format.return_value = "yyyy-mm-dd"
+        config.get_date_formatter.return_value = DefaultDateFormatter()
         self.show_dialog(
             TimeEditorDialog,
             None,

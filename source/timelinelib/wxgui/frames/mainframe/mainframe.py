@@ -21,9 +21,6 @@ import os.path
 
 import wx.lib.newevent
 
-from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
-from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
-from timelinelib.calendar import set_date_formatter
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.config.dotfile import read_config
@@ -943,13 +940,11 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         path = self._get_file_path()
         if path is not None:
             self.controller.open_timeline(path)
-            set_date_formatter(DefaultDateFormatter())
 
     def _create_new_bosparanian_timeline(self):
         path = self._get_file_path()
         if path is not None:
             timetype = BosparanianTimeType()
-            set_date_formatter(BosparanianDateFormatter())
             self.controller.open_timeline(path, timetype)
 
     def _create_new_numeric_timeline(self):
@@ -957,7 +952,6 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         if path is not None:
             timetype = NumTimeType()
             self.controller.open_timeline(path, timetype)
-            set_date_formatter(DefaultDateFormatter())
 
     def _get_file_path(self):
         path = None
