@@ -18,8 +18,8 @@
 import wx
 
 from timelinelib.calendar.bosparanian.bosparanian import Bosparanian, BosparanianUtils
+from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-from timelinelib.calendar import get_date_formatter
 from timelinelib.time.timeline import delta_from_days
 
 
@@ -92,8 +92,6 @@ class BosparanianDateTimePickerController(object):
         self.date_picker.set_value(BosparanianUtils.from_time(time).to_date_tuple())
         self.time_picker.set_value(BosparanianUtils.from_time(time).to_time_tuple())
 
-    
-
 
 class BosparanianDatePicker(wx.TextCtrl):
 
@@ -147,7 +145,7 @@ class BosparanianDatePicker(wx.TextCtrl):
                 self.controller.on_up()
             elif evt.GetKeyCode() == wx.WXK_DOWN:
                 self.controller.on_down()
-            elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or 
+            elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or
                   evt.GetKeyCode() == wx.WXK_RETURN):
                 self.parent.on_return()
             elif (evt.GetKeyCode() == wx.WXK_ESCAPE):
@@ -155,7 +153,6 @@ class BosparanianDatePicker(wx.TextCtrl):
             else:
                 evt.Skip()
         self.Bind(wx.EVT_KEY_DOWN, on_key_down)
-       
 
     def _resize_to_fit_text(self):
         w, _ = self.GetTextExtent("0000BF-MMM-00")
@@ -169,7 +166,7 @@ class BosparanianDatePickerController(object):
         self.date_picker = date_picker
         self.error_bg = error_bg
         self.original_bg = self.date_picker.GetBackgroundColour()
-        self.date_formatter = get_date_formatter()
+        self.date_formatter = BosparanianDateFormatter()
         self.separator = self.date_formatter.separator()
         self.region_year, self.region_month, self.region_day = self.date_formatter.get_regions()
         self.region_siblings = ((self.region_year, self.region_month),
@@ -189,13 +186,13 @@ class BosparanianDatePickerController(object):
 
     def set_value(self, value):
         year, month, day = value
-        date_string = get_date_formatter().format(year, month, day)
+        date_string = self.date_formatter.format(year, month, day)
         self.date_picker.set_date_string(date_string)
         self._on_change()
 
     def _on_change(self):
         if self._current_date_is_valid() and not self.on_change is None:
-            self.on_change() 
+            self.on_change()
 
     def on_set_focus(self):
         if self.last_selection:
@@ -307,7 +304,7 @@ class BosparanianDatePickerController(object):
             year, month, day = current_date
             BosparanianUtils.from_date(year, month, day)
             if BosparanianUtils.from_date(year, month, day).to_time() == BosparanianTimeType().get_min_time()[0]:
-                return 
+                return
             new_date = decrement_day(current_date)
             self._save_preferred_day(new_date)
         if current_date != new_date:
@@ -323,7 +320,7 @@ class BosparanianDatePickerController(object):
         self.date_picker.Refresh()
 
     def _parse_year_month_day(self):
-        return get_date_formatter().parse(self.date_picker.get_date_string())
+        return self.date_formatter.parse(self.date_picker.get_date_string())
 
     def _ensure_within_allowed_period(self, date):
         year, month, day = date
