@@ -32,8 +32,8 @@ import sys
 
 import wx
 
-from timelinelib.calendar.dateformatparser import DateFormatParser
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
+from timelinelib.config.dateformatparser import DateFormatParser
 from timelinelib.general.observer import Observable
 from timelinelib.wxgui.components.font import Font
 from timelinelib.wxgui.utils import display_information_message

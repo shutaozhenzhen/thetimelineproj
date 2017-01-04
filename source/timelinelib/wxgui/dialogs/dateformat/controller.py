@@ -19,8 +19,8 @@
 import locale
 import datetime
 
+from timelinelib.config.dateformatparser import DateFormatParser
 from timelinelib.wxgui.framework import Controller
-from timelinelib.calendar.dateformatparser import DateFormatParser
 
 
 class DateFormatDialogController(Controller):
