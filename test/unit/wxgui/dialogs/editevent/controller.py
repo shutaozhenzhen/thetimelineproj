@@ -19,7 +19,7 @@
 from mock import Mock
 from mock import sentinel
 
-from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.db import MemoryDB
@@ -190,7 +190,7 @@ class describe_edit_event_dialog(EditEventDialogTestCase):
 
     def test_it_can_be_created(self):
         config = Mock(Config)
-        config.get_date_formatter.return_value = DefaultDateFormatter()
+        config.get_date_formatter.return_value = GregorianDateFormatter()
         config.event_editor_show_period = True
         config.event_editor_show_time = False
         config.event_editor_tab_order = ["0", "1", "2", "3", "4", ":"]

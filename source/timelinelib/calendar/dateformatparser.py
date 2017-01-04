@@ -16,16 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 
 
 REGION_START_POS = 0
 REGION_LENGTH = 1
 REGION_SEPARATOR = 2
 REGION_TYPE = 3
-YEAR = DefaultDateFormatter.YEAR
-MONTH = DefaultDateFormatter.MONTH
-DAY = DefaultDateFormatter.DAY
+YEAR = GregorianDateFormatter.YEAR
+MONTH = GregorianDateFormatter.MONTH
+DAY = GregorianDateFormatter.DAY
 ERROR_TEXT = _("""\
 Invalid Date Format:
 
