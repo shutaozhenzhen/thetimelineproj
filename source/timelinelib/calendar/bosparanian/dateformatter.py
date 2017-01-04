@@ -18,10 +18,9 @@
 
 from timelinelib.calendar.bosparanian.monthnames import bosp_abbreviated_name_of_month
 from timelinelib.calendar.bosparanian.monthnames import bosp_month_from_abbreviated_name
-from timelinelib.calendar.dateformatter import DateFormatter
 
 
-class BosparanianDateFormatter(DateFormatter):
+class BosparanianDateFormatter(object):
 
     def __init__(self):
         self._separator = "-"
