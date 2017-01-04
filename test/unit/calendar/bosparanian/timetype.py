@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
-from timelinelib.time.bosparaniantime import BosparanianTimeType
 
 
 class describe_bosparanian_time_type(UnitTestCase):

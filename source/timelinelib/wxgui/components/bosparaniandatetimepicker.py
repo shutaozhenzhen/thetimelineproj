@@ -18,8 +18,8 @@
 import wx
 
 from timelinelib.calendar.bosparanian.bosparanian import Bosparanian, BosparanianUtils
+from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.calendar import get_date_formatter
-from timelinelib.time.bosparaniantime import BosparanianTimeType
 from timelinelib.time.timeline import delta_from_days
 
 

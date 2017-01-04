@@ -41,7 +41,7 @@ from timelinelib.plugin.factory import EXPORTER
 from timelinelib.plugin import factory
 from timelinelib.proxies.drawingarea import DrawingAreaProxy
 from timelinelib.proxies.sidebar import SidebarProxy
-from timelinelib.time.bosparaniantime import BosparanianTimeType
+from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.mainpanel import MainPanel
