@@ -85,9 +85,6 @@ class TimeType(object):
     def format_time(self, time):
         raise NotImplementedError("format_time not implemented.")
 
-    def eventtimes_equals(self, time1, time2):
-        raise NotImplementedError("eventtimes_equals not implemented.")
-
     def adjust_for_bc_years(self, time):
         raise NotImplementedError("adjust_for_bc_years not implemented.")
 

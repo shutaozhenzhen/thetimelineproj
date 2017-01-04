@@ -240,13 +240,6 @@ class GregorianTimeType(TimeType):
         gregorian_time = GregorianUtils.from_time(time)
         return "%02d:%02d" % (gregorian_time.hour, gregorian_time.minute)
 
-    def eventtimes_equals(self, time1, time2):
-        s1 = "%s %s" % (self._event_date_string(time1),
-                        self._event_date_string(time1))
-        s2 = "%s %s" % (self._event_date_string(time2),
-                        self._event_date_string(time2))
-        return s1 == s2
-
     def adjust_for_bc_years(self, time):
         gregorian_time = GregorianUtils.from_time(time)
         if self.major_strip_is_decade:

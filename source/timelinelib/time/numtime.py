@@ -134,9 +134,6 @@ class NumTimeType(TimeType):
     def margin_delta(self, delta):
         return delta / 24
 
-    def eventtimes_equals(self, time1, time2):
-        return self.time_string(time1) == self.time_string(time2)
-
     def format_time(self, time):
         return "%s" % time
 
