@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.config.dateformatparser import DateFormatParser
+from timelinelib.config.dateformatparser import YEAR, MONTH, DAY
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.calendar.dateformatparser import DateFormatParser
-from timelinelib.calendar.dateformatparser import YEAR, MONTH, DAY
 
 
 class describe_date_fromat_parser(UnitTestCase):
