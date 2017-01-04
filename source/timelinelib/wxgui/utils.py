@@ -20,8 +20,8 @@ import sys
 
 import wx
 
+from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.canvas.data import sort_categories
-from timelinelib.time.bosparaniantime import BosparanianTimeType
 
 
 # Border, in pixels, between controls in a window (should always be used when

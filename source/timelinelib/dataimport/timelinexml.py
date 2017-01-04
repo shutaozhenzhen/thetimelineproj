@@ -25,6 +25,7 @@ import StringIO
 import wx
 
 from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
+from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar import get_date_formatter
@@ -45,7 +46,6 @@ from timelinelib.general.xmlparser import parse
 from timelinelib.general.xmlparser import parse_fn_store
 from timelinelib.general.xmlparser import SINGLE
 from timelinelib.general.xmlparser import Tag
-from timelinelib.time.bosparaniantime import BosparanianTimeType
 from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
 
