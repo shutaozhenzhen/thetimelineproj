@@ -104,15 +104,10 @@ class describe_gregoriantimetype(UnitTestCase):
             self.time_type.margin_delta(timeline.TimeDelta(48)),
             timeline.TimeDelta(2))
 
-    def test_event_date_string_method(self):
+    def test_format_time(self):
         self.assertEqual(
-            "2010-08-01",
-            self.time_type.event_date_string(self.time_type.parse_time("2010-08-01 13:44:22")))
-
-    def test_event_time_string_method(self):
-        self.assertEqual(
-            "13:44",
-            self.time_type.event_time_string(self.time_type.parse_time("2010-08-01 13:44:22")))
+            "2010-08-01 13:44",
+            self.time_type.format_time(self.time_type.parse_time("2010-08-01 13:44:22")))
 
     def test_eventtimes_equals_method_when_equals(self):
         self.assertTrue(

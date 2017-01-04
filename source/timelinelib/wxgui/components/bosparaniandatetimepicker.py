@@ -455,7 +455,7 @@ class BosparanianTimePicker(wx.TextCtrl):
                 self.controller.on_up()
             elif evt.GetKeyCode() == wx.WXK_DOWN:
                 self.controller.on_down()
-            elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or 
+            elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or
                   evt.GetKeyCode() == wx.WXK_RETURN):
                 self.parent.on_return()
             elif (evt.GetKeyCode() == wx.WXK_ESCAPE):
@@ -475,7 +475,7 @@ class BosparanianTimePickerController(object):
     def __init__(self, time_picker, on_change):
         self.time_picker = time_picker
         self.original_bg = self.time_picker.GetBackgroundColour()
-        self.separator = BosparanianTimeType().event_time_string(BosparanianTimeType().now())[2]
+        self.separator = ":"
         self.hour_part = 0
         self.minute_part = 1
         self.last_selection = None

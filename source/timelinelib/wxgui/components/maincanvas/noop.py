@@ -105,10 +105,9 @@ class NoOpInputHandler(InputHandler):
             self._status_bar.set_text(event.get_label(self.timeline_canvas.GetTimeType()))
 
     def _format_current_pos_datetime_string(self, xpos):
-        tm = self.timeline_canvas.GetTimeAt(xpos)
-        dt = self.timeline_canvas.GetDb().get_time_type().event_date_string(tm)
-        tm = self.timeline_canvas.GetDb().get_time_type().event_time_string(tm)
-        return "%s %s" % (dt, tm)
+        return self.timeline_canvas.GetDb().get_time_type().format_time(
+            self.timeline_canvas.GetTimeAt(xpos)
+        )
 
     def _start_balloon_timers(self):
         if self._balloons_disabled():
