@@ -18,7 +18,7 @@
 
 import humblewx
 
-from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.framework import Dialog
 
@@ -51,7 +51,7 @@ class NewGregorianDatePickerTestDialog(Dialog):
         self.date.SetGregorianDate((2015, 11, 1))
 
     def _create_date_formatter(self):
-        formatter = DefaultDateFormatter()
+        formatter = GregorianDateFormatter()
         formatter.set_separators("/", " ")
         formatter.set_region_order(year=2, month=1, day=0)
         return formatter

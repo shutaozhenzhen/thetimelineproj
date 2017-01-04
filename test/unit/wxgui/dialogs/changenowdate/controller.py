@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.config.dotfile import Config
 from timelinelib.db import db_open
 from timelinelib.test.cases.unit import UnitTestCase
@@ -37,7 +37,7 @@ class describe_change_now_date_dialog(UnitTestCase):
 
     def test_it_can_be_created(self):
         config = Mock(Config)
-        config.get_date_formatter.return_value = DefaultDateFormatter()
+        config.get_date_formatter.return_value = GregorianDateFormatter()
         db = db_open(":tutorial:")
         handle_new_time_fn = Mock()
         title = "a dialog title"

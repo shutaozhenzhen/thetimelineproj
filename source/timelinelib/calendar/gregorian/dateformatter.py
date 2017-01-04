@@ -21,7 +21,7 @@ from timelinelib.calendar.gregorian.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.gregorian.monthnames import month_of_abbreviated_name
 
 
-class DefaultDateFormatter(object):
+class GregorianDateFormatter(object):
 
     YEAR = "YEAR"
     MONTH = "MONTH"

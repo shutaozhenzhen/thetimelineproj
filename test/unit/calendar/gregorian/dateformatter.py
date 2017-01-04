@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.test.cases.unit import UnitTestCase
 
 
@@ -63,21 +63,21 @@ class describe_new_date_formatter(UnitTestCase):
         self.assert_previous_region_is(("2016-02-13", 0), None)
 
     def test_can_get_region_type(self):
-        self.assert_region_type_is(("2016-02-13", 0), DefaultDateFormatter.YEAR)
-        self.assert_region_type_is(("2016-02-13", 4), DefaultDateFormatter.YEAR)
-        self.assert_region_type_is(("2016-02-13", 5), DefaultDateFormatter.MONTH)
-        self.assert_region_type_is(("2016-02-13", 7), DefaultDateFormatter.MONTH)
-        self.assert_region_type_is(("2016-02-13", 8), DefaultDateFormatter.DAY)
+        self.assert_region_type_is(("2016-02-13", 0), GregorianDateFormatter.YEAR)
+        self.assert_region_type_is(("2016-02-13", 4), GregorianDateFormatter.YEAR)
+        self.assert_region_type_is(("2016-02-13", 5), GregorianDateFormatter.MONTH)
+        self.assert_region_type_is(("2016-02-13", 7), GregorianDateFormatter.MONTH)
+        self.assert_region_type_is(("2016-02-13", 8), GregorianDateFormatter.DAY)
 
     def test_can_get_region_type_for_different_order(self):
         self.formatter.set_region_order(year=2, month=0, day=1)
-        self.assert_region_type_is(("02-13-2015", 0), DefaultDateFormatter.MONTH)
-        self.assert_region_type_is(("02-13-2015", 3), DefaultDateFormatter.DAY)
-        self.assert_region_type_is(("02-13-2015", 6), DefaultDateFormatter.YEAR)
+        self.assert_region_type_is(("02-13-2015", 0), GregorianDateFormatter.MONTH)
+        self.assert_region_type_is(("02-13-2015", 3), GregorianDateFormatter.DAY)
+        self.assert_region_type_is(("02-13-2015", 6), GregorianDateFormatter.YEAR)
 
     def test_can_get_region_type_for_abbreviated_month_name(self):
         self.formatter.use_abbreviated_name_for_month(True)
-        self.assert_region_type_is(("2015-#Feb#-10", 11), DefaultDateFormatter.DAY)
+        self.assert_region_type_is(("2015-#Feb#-10", 11), GregorianDateFormatter.DAY)
 
     def test_fails_if_region_order_is_incorrect(self):
         self.assertRaises(ValueError, self.formatter.set_region_order,
@@ -123,4 +123,4 @@ class describe_new_date_formatter(UnitTestCase):
 
     def setUp(self):
         UnitTestCase.setUp(self)
-        self.formatter = DefaultDateFormatter()
+        self.formatter = GregorianDateFormatter()

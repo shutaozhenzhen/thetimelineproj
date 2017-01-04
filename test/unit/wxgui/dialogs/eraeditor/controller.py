@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.config.dotfile import Config
@@ -50,7 +50,7 @@ class describe_era_editor_dialog(UnitTestCase):
         self.db = MemoryDB()
         self.view = Mock(EraEditorDialog)
         self.config = Mock(Config)
-        self.config.get_date_formatter.return_value = DefaultDateFormatter()
+        self.config.get_date_formatter.return_value = GregorianDateFormatter()
         self.controller = EraEditorDialogController(self.view)
         self.era = a_gregorian_era_with(name=NAME, color=COLOR, start=GREGORIAN_START, end=GREGORIAN_END)
 

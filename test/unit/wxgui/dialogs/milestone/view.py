@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.milestone import Milestone
@@ -39,5 +39,5 @@ class describe_milestone_editor_dialog(UnitTestCase):
                               "Milestone:1")
         milestone.set_description("a milestone")
         config = Mock(Config)
-        config.get_date_formatter.return_value = DefaultDateFormatter()
+        config.get_date_formatter.return_value = GregorianDateFormatter()
         self.show_dialog(EditMilestoneDialog, None, "Milestone", db, config, milestone)
