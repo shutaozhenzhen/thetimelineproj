@@ -19,11 +19,6 @@
 import getpass
 import os
 
-from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-from timelinelib.calendar.dateformatparser import DateFormatParser
-from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
-from timelinelib.calendar import BosparanianDateFormatter
-from timelinelib.calendar import set_date_formatter
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.wxgui.dialogs.slideshow.view import open_slideshow_dialog
 from timelinelib.wxgui.utils import display_error_message
@@ -68,7 +63,6 @@ class MainFrameController(object):
             new_db = self.db_open_fn(path, timetype=timetype)
             self.timeline = new_db
             self.timeline.loaded()
-            self._set_date_formatter(self.timeline.get_time_type())
         except TimelineIOError, e:
             self.main_frame.HandleDbError(e)
             self.timelinepath = None
@@ -205,19 +199,3 @@ The lockfile is found at: %s""") % lockpath
         finally:
             if fp is not None:
                 fp.close()
-
-    def _set_date_formatter(self, time_type):
-        def set_date_formatter_to_use():
-            if time_type.get_name() == BosparanianTimeType().get_name():
-                set_date_formatter(BosparanianDateFormatter())
-            else:
-                parser = DateFormatParser().parse(self.config.get_date_format())
-                date_formatter = DefaultDateFormatter()
-                date_formatter.set_separators(*parser.get_separators())
-                date_formatter.set_region_order(*parser.get_region_order())
-                date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())
-                set_date_formatter(date_formatter)
-
-        if time_type is not None and time_type.is_date_time_type():
-            set_date_formatter_to_use()
-            self.config.listen_for_any(set_date_formatter_to_use)

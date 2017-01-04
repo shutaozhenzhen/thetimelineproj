@@ -32,6 +32,8 @@ import sys
 
 import wx
 
+from timelinelib.calendar.dateformatparser import DateFormatParser
+from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
 from timelinelib.general.observer import Observable
 from timelinelib.wxgui.components.font import Font
 from timelinelib.wxgui.utils import display_information_message
@@ -466,6 +468,14 @@ class Config(Observable):
     def set_hyperlink_icon(self, value):
         self.config_parser.set(DEFAULTSECT, HYPERLINK_ICON, value)
         self._notify()
+
+    def get_date_formatter(self):
+        parser = DateFormatParser().parse(self.get_date_format())
+        date_formatter = DefaultDateFormatter()
+        date_formatter.set_separators(*parser.get_separators())
+        date_formatter.set_region_order(*parser.get_region_order())
+        date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())
+        return date_formatter
 
     def get_date_format(self):
         return self.config_parser.get(DEFAULTSECT, DATE_FORMAT)

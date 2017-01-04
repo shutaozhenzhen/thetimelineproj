@@ -24,12 +24,8 @@ import StringIO
 
 import wx
 
-from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-from timelinelib.calendar.gregorian.dateformatter import DefaultDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.calendar import get_date_formatter
-from timelinelib.calendar import set_date_formatter
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
@@ -176,10 +172,6 @@ class Parser(object):
         for timetype in valid_time_types:
             if text == timetype.get_name():
                 self.db.set_time_type(timetype)
-                if timetype.get_name() == BosparanianTimeType().get_name():
-                    set_date_formatter(BosparanianDateFormatter())
-                elif get_date_formatter is None:
-                    set_date_formatter(DefaultDateFormatter())
                 break
         if self.db.get_time_type() is None:
             raise ParseException("Invalid timetype '%s' found." % text)
