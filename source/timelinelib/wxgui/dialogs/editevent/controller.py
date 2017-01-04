@@ -208,12 +208,12 @@ class EditEventDialogController(Controller):
             self._exception_if_end_has_changed(end)
 
     def _exception_if_start_has_changed(self, start):
-        if not self.time_type.eventtimes_equals(self.start, start):
+        if self.start != start:
             self.view.SetStart(self.start)
             self._exception_when_start_or_end_has_changed()
 
     def _exception_if_end_has_changed(self, end):
-        if not self.time_type.eventtimes_equals(self.end, end):
+        if self.end != end:
             self.view.SetEnd(self.end)
             self._exception_when_start_or_end_has_changed()
 
