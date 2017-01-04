@@ -18,6 +18,7 @@
 
 import wx
 
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.timelinecanvas import LEFT_RESIZE_HANDLE
 from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
 from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
@@ -105,8 +106,11 @@ class NoOpInputHandler(InputHandler):
             self._status_bar.set_text(event.get_label(self.timeline_canvas.GetTimeType()))
 
     def _format_current_pos_datetime_string(self, xpos):
-        return self.timeline_canvas.GetDb().get_time_type().format_time(
-            self.timeline_canvas.GetTimeAt(xpos)
+        return self.timeline_canvas.GetDb().get_time_type().format_period(
+            TimePeriod(
+                self.timeline_canvas.GetTimeAt(xpos),
+                self.timeline_canvas.GetTimeAt(xpos)
+            )
         )
 
     def _start_balloon_timers(self):

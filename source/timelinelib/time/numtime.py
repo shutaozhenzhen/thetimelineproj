@@ -134,9 +134,6 @@ class NumTimeType(TimeType):
     def margin_delta(self, delta):
         return delta / 24
 
-    def format_time(self, time):
-        return "%s" % time
-
     def adjust_for_bc_years(self, time):
         return time
 
