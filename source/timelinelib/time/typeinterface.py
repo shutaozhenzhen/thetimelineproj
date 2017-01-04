@@ -82,9 +82,6 @@ class TimeType(object):
     def margin_delta(self, delta):
         raise NotImplementedError("margin_delta not implemented.")
 
-    def format_time(self, time):
-        raise NotImplementedError("format_time not implemented.")
-
     def adjust_for_bc_years(self, time):
         raise NotImplementedError("adjust_for_bc_years not implemented.")
 

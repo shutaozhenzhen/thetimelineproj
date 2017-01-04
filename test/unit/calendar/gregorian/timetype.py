@@ -104,11 +104,6 @@ class describe_gregoriantimetype(UnitTestCase):
             self.time_type.margin_delta(timeline.TimeDelta(48)),
             timeline.TimeDelta(2))
 
-    def test_format_time(self):
-        self.assertEqual(
-            "2010-08-01 13:44",
-            self.time_type.format_time(self.time_type.parse_time("2010-08-01 13:44:22")))
-
     def test_div_deltas(self):
         self.assertEqual(
             self.time_type.div_timedeltas(timeline.TimeDelta(5), timeline.TimeDelta(2)),

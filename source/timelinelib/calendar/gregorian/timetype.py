@@ -222,24 +222,6 @@ class GregorianTimeType(TimeType):
     def margin_delta(self, delta):
         return delta / 24
 
-    def format_time(self, time):
-        return "%s %s" % (
-            self._event_date_string(time),
-            self._event_time_string(time)
-        )
-
-    def _event_date_string(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        (date, bc) = get_date_formatter().format((gregorian_time.year, gregorian_time.month, gregorian_time.day))
-        if bc:
-            return "%s %s" % (date, BC)
-        else:
-            return date
-
-    def _event_time_string(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        return "%02d:%02d" % (gregorian_time.hour, gregorian_time.minute)
-
     def adjust_for_bc_years(self, time):
         gregorian_time = GregorianUtils.from_time(time)
         if self.major_strip_is_decade:

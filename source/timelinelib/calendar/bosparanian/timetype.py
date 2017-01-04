@@ -159,24 +159,6 @@ class BosparanianTimeType(GregorianTimeType):
     def get_name(self):
         return u"bosparaniantime"
 
-    def format_time(self, time):
-        return "%s %s" % (
-            self._event_date_string(time),
-            self._event_time_string(time)
-        )
-
-    def _event_date_string(self, time):
-        bosparanian_time = BosparanianUtils.from_time(time)
-        (date, bc) = get_date_formatter().format(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
-        if bc:
-            return "%s %s" % (date, _("BC"))
-        else:
-            return date
-
-    def _event_time_string(self, time):
-        bosparanian_time = BosparanianUtils.from_time(time)
-        return "%02d:%02d" % (bosparanian_time.hour, bosparanian_time.minute)
-
     def adjust_for_bc_years(self, time):
         return time
 
