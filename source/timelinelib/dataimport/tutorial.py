@@ -310,7 +310,7 @@ class NumericTutorialTimelineCreator(object):
 
     def __init__(self):
         self.db = MemoryDB()
-        from timelinelib.time.numtime import NumTimeType
+        from timelinelib.calendar.num.timetype import NumTimeType
         self.db.time_type = NumTimeType()
         self.start = self.db.time_type.now()
         self.end = self.start + 30

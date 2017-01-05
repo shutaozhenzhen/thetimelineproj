@@ -26,6 +26,7 @@ import wx
 
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
@@ -42,7 +43,6 @@ from timelinelib.general.xmlparser import parse
 from timelinelib.general.xmlparser import parse_fn_store
 from timelinelib.general.xmlparser import SINGLE
 from timelinelib.general.xmlparser import Tag
-from timelinelib.time.numtime import NumTimeType
 from timelinelib.utils import ex_msg
 
 

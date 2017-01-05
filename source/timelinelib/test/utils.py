@@ -21,13 +21,13 @@ import random
 from timelinelib.calendar.gregorian.gregorian import Gregorian
 from timelinelib.calendar.gregorian.monthnames import ABBREVIATED_ENGLISH_MONTH_NAMES
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Era
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.time.numtime import NumTimeType
 from timelinelib.time.timeline import delta_from_days
 from timelinelib.time.timeline import TimeDelta
 
