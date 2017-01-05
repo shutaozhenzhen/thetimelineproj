@@ -177,22 +177,6 @@ def set_default_cursor(parent):
     parent.SetCursor(wx.StockCursor(wx.CURSOR_DEFAULT))
 
 
-def time_picker_for(time_type):
-    from timelinelib.calendar.num.timepicker import NumTimePicker
-    from timelinelib.calendar.gregorian.datetimepicker import GregorianDateTimePicker
-    from timelinelib.calendar.bosparanian.timepicker import BosparanianDateTimePicker
-    from timelinelib.time.numtime import NumTimeType
-    from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-    if isinstance(time_type, NumTimeType):
-        return NumTimePicker
-    if isinstance(time_type, BosparanianTimeType):
-        return BosparanianDateTimePicker
-    elif isinstance(time_type, GregorianTimeType):
-        return GregorianDateTimePicker
-    else:
-        raise ValueError("Unsupported time type: %s" % time_type)
-
-
 def set_focus(parent, name):
     for child in parent.GetChildren():
         if child.GetName() == name:

@@ -167,6 +167,10 @@ class BosparanianTimeType(GregorianTimeType):
     def is_weekend_day(self, time):
         return self.get_day_of_week(time) in (0, 3)
 
+    def create_time_picker(self, parent, *args, **kwargs):
+        from timelinelib.calendar.bosparanian.timepicker import BosparanianDateTimePicker
+        return BosparanianDateTimePicker(parent, *args, **kwargs)
+
 
 def open_now_date_editor(main_frame, current_period, navigation_fn):
     def navigate_to(time):
