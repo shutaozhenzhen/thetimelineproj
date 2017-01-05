@@ -18,7 +18,10 @@
 
 import wx
 
+from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.gregorian.timepicker.datecontroller import GregorianDatePickerController
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.canvas.data.internaltime import delta_from_days
 
 
 class GregorianDatePicker(wx.Panel):
@@ -88,24 +91,59 @@ class GregorianDatePicker(wx.Panel):
 
 class DateModifier(object):
 
-    def __init__(self):
-        import timelinelib.calendar.gregorian.timepicker.utils as gdp
-        self.gdp = gdp
-
     def increment_year(self, date):
-        return self.gdp.increment_year(date)
+        max_year = GregorianUtils.from_time(GregorianTimeType().get_max_time()[0]).year
+        year, month, day = date
+        if year < max_year - 1:
+            return self._set_valid_day(year + 1, month, day)
+        return date
 
     def increment_month(self, date):
-        return self.gdp.increment_month(date)
+        max_year = GregorianUtils.from_time(GregorianTimeType().get_max_time()[0]).year
+        year, month, day = date
+        if month < 12:
+            return self._set_valid_day(year, month + 1, day)
+        elif year < max_year - 1:
+            return self._set_valid_day(year + 1, 1, day)
+        return date
 
     def increment_day(self, date):
-        return self.gdp.increment_day(date)
+        year, month, day = date
+        time = GregorianUtils.from_date(year, month, day).to_time()
+        if time <  GregorianTimeType().get_max_time()[0] - delta_from_days(1):
+            return GregorianUtils.from_time(time + delta_from_days(1)).to_date_tuple()
+        return date
 
     def decrement_year(self, date):
-        return self.gdp.decrement_year(date)
+        year, month, day = date
+        if year > GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).year:
+            return self._set_valid_day(year - 1, month, day)
+        return date
 
     def decrement_month(self, date):
-        return self.gdp.decrement_month(date)
+        year, month, day = date
+        if month > 1:
+            return self._set_valid_day(year, month - 1, day)
+        elif year > GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).year:
+            return self._set_valid_day(year - 1, 12, day)
+        return date
 
     def decrement_day(self, date):
-        return self.gdp.decrement_day(date)
+        year, month, day = date
+        if day > 1:
+            return self._set_valid_day(year, month, day - 1)
+        elif month > 1:
+            return self._set_valid_day(year, month - 1, 31)
+        elif year > GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).year:
+            return self._set_valid_day(year - 1, 12, 31)
+        return date
+
+    def _set_valid_day(self, new_year, new_month, new_day):
+        done = False
+        while not done:
+            try:
+                date = GregorianUtils.from_date(new_year, new_month, new_day)
+                done = True
+            except Exception:
+                new_day -= 1
+        return date.to_date_tuple()
