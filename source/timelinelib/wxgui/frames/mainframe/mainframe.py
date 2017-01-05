@@ -538,7 +538,7 @@ class GuiCreator(object):
                 try:
                     start = end - delta
                 except ValueError:
-                    start = self.timeline.get_time_type().get_min_time()[0]
+                    start = self.timeline.get_time_type().get_min_time()
                 margin_delta = self.timeline.get_time_type().margin_delta(delta)
                 self.main_panel.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
 

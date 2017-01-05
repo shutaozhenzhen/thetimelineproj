@@ -98,10 +98,10 @@ class TimelineCanvasController(object):
         MIN_ZOOM_DELTA, min_zoom_error_text = self.time_type.get_min_zoom_delta()
         if new_period.delta() < MIN_ZOOM_DELTA:
             raise ValueError(min_zoom_error_text)
-        (min_time, min_error_text) = self.time_type.get_min_time()
+        min_time = self.time_type.get_min_time()
         if min_time is not None and new_period.start_time < min_time:
             raise ValueError(_("Can't scroll more to the left"))
-        (max_time, max_error_text) = self.time_type.get_max_time()
+        max_time = self.time_type.get_max_time()
         if max_time is not None and new_period.end_time > max_time:
             raise ValueError(_("Can't scroll more to the right"))
         self.view_properties.displayed_period = new_period

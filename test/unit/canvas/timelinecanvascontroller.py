@@ -92,10 +92,10 @@ class describe_navigate(TimelineCanvasControllerTestCase):
 class ATimeType(TimeType):
 
     def get_min_time(self):
-        return (Time(10, 0), "can't be before 10, 0")
+        return Time(10, 0)
 
     def get_max_time(self):
-        return (Time(20, 0), "can't be after 20, 0")
+        return Time(20, 0)
 
     def get_zero_delta(self):
         return TimeDelta(0)

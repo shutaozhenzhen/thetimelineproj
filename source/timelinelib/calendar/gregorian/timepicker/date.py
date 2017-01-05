@@ -92,14 +92,14 @@ class GregorianDatePicker(wx.Panel):
 class DateModifier(object):
 
     def increment_year(self, date):
-        max_year = GregorianUtils.from_time(GregorianTimeType().get_max_time()[0]).year
+        max_year = GregorianUtils.from_time(GregorianTimeType().get_max_time()).year
         year, month, day = date
         if year < max_year - 1:
             return self._set_valid_day(year + 1, month, day)
         return date
 
     def increment_month(self, date):
-        max_year = GregorianUtils.from_time(GregorianTimeType().get_max_time()[0]).year
+        max_year = GregorianUtils.from_time(GregorianTimeType().get_max_time()).year
         year, month, day = date
         if month < 12:
             return self._set_valid_day(year, month + 1, day)
@@ -110,13 +110,13 @@ class DateModifier(object):
     def increment_day(self, date):
         year, month, day = date
         time = GregorianUtils.from_date(year, month, day).to_time()
-        if time <  GregorianTimeType().get_max_time()[0] - delta_from_days(1):
+        if time <  GregorianTimeType().get_max_time() - delta_from_days(1):
             return GregorianUtils.from_time(time + delta_from_days(1)).to_date_tuple()
         return date
 
     def decrement_year(self, date):
         year, month, day = date
-        if year > GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).year:
+        if year > GregorianUtils.from_time(GregorianTimeType().get_min_time()).year:
             return self._set_valid_day(year - 1, month, day)
         return date
 
@@ -124,7 +124,7 @@ class DateModifier(object):
         year, month, day = date
         if month > 1:
             return self._set_valid_day(year, month - 1, day)
-        elif year > GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).year:
+        elif year > GregorianUtils.from_time(GregorianTimeType().get_min_time()).year:
             return self._set_valid_day(year - 1, 12, day)
         return date
 
@@ -134,7 +134,7 @@ class DateModifier(object):
             return self._set_valid_day(year, month, day - 1)
         elif month > 1:
             return self._set_valid_day(year, month - 1, 31)
-        elif year > GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).year:
+        elif year > GregorianUtils.from_time(GregorianTimeType().get_min_time()).year:
             return self._set_valid_day(year - 1, 12, 31)
         return date
 

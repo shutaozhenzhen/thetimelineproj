@@ -93,11 +93,11 @@ class describe_gregoriantimetype(UnitTestCase):
             self.time_type.format_period(time_period))
 
     def test_returns_min_time(self):
-        self.assertEqual(timeline.Time(0, 0), self.time_type.get_min_time()[0])
+        self.assertEqual(timeline.Time(0, 0), self.time_type.get_min_time())
 
     def test_returns_max_time(self):
         self.assertEqual(self.time_type.parse_time("9990-01-01 00:00:00"),
-                         self.time_type.get_max_time()[0])
+                         self.time_type.get_max_time())
 
     def test_returns_margin_delta(self):
         self.assertEqual(

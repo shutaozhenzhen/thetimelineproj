@@ -109,10 +109,10 @@ class BosparanianTimeType(GregorianTimeType):
         return label
 
     def get_min_time(self):
-        return (timeline.get_min_time(), _("can't be before year -7299"))
+        return timeline.get_min_time()
 
     def get_max_time(self):
-        return (timeline.Time(5369833, 0), _("can't be after year 7410"))
+        return timeline.Time(5369833, 0)
 
     def choose_strip(self, metrics, appearance):
         """
@@ -218,9 +218,9 @@ def _move_page_years(curret_period, navigation_fn, direction):
         try:
             new_start = bosparanian_start.replace(year=new_start_year).to_time()
             new_end = bosparanian_end.replace(year=new_end_year).to_time()
-            if new_end > BosparanianTimeType().get_max_time()[0]:
+            if new_end > BosparanianTimeType().get_max_time():
                 raise ValueError()
-            if new_start < BosparanianTimeType().get_min_time()[0]:
+            if new_start < BosparanianTimeType().get_min_time():
                 raise ValueError()
         except ValueError:
             if direction < 0:
@@ -261,9 +261,9 @@ def _move_page_months(curret_period, navigation_fn, direction):
             new_end = end.replace(year=new_end_year, month=new_end_month)
             start = new_start.to_time()
             end = new_end.to_time()
-            if end > BosparanianTimeType().get_max_time()[0]:
+            if end > BosparanianTimeType().get_max_time():
                 raise ValueError()
-            if start < BosparanianTimeType().get_min_time()[0]:
+            if start < BosparanianTimeType().get_min_time():
                 raise ValueError()
         except ValueError:
             if direction < 0:
@@ -330,15 +330,15 @@ def fit_millennium_fn(main_frame, current_period, navigation_fn):
 
 
 def get_min_year_containing_praios_1():
-    return BosparanianUtils.from_time(BosparanianTimeType().get_min_time()[0]).year + 1
+    return BosparanianUtils.from_time(BosparanianTimeType().get_min_time()).year + 1
 
 
 def get_millenium_max_year():
-    return BosparanianUtils.from_time(BosparanianTimeType().get_max_time()[0]).year - 1000
+    return BosparanianUtils.from_time(BosparanianTimeType().get_max_time()).year - 1000
 
 
 def get_century_max_year():
-    return BosparanianUtils.from_time(BosparanianTimeType().get_max_time()[0]).year - 100
+    return BosparanianUtils.from_time(BosparanianTimeType().get_max_time()).year - 100
 
 
 def fit_century_fn(main_frame, current_period, navigation_fn):

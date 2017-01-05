@@ -70,10 +70,10 @@ class NumTimeType(TimeType):
         return "%d" % delta
 
     def get_min_time(self):
-        return(None, None)
+        return None
 
     def get_max_time(self):
-        return(None, None)
+        return None
 
     def choose_strip(self, metrics, appearance):
         start_time = 1

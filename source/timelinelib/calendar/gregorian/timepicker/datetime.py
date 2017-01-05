@@ -174,8 +174,8 @@ class CalendarPopup(wx.PopupTransientWindow):
         return style
 
     def _set_cal_range(self, cal):
-        min_date, _ = GregorianTimeType().get_min_time()
-        max_date, _ = GregorianTimeType().get_max_time()
+        min_date = GregorianTimeType().get_min_time()
+        max_date = GregorianTimeType().get_max_time()
         min_date = self.time_to_wx_date(min_date)
         max_date = self.time_to_wx_date(max_date) - wx.DateSpan.Day()
         cal.SetDateRange(min_date, max_date)
