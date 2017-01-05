@@ -18,11 +18,11 @@
 
 from mock import Mock
 
+from timelinelib.calendar.gregorian.datepicker.datetime import CalendarPopup
+from timelinelib.calendar.gregorian.datepicker.datetime import CalendarPopupController
+from timelinelib.calendar.gregorian.datepicker.datetime import GregorianDateTimePickerController
+from timelinelib.calendar.gregorian.datepicker.datetime import GregorianTimePicker
 from timelinelib.calendar.gregorian.datepicker.utils import GregorianDatePicker
-from timelinelib.calendar.gregorian.datetimepicker import CalendarPopup
-from timelinelib.calendar.gregorian.datetimepicker import CalendarPopupController
-from timelinelib.calendar.gregorian.datetimepicker import GregorianDateTimePickerController
-from timelinelib.calendar.gregorian.datetimepicker import GregorianTimePicker
 from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.internaltime import delta_from_days
