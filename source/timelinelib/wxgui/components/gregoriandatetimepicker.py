@@ -22,10 +22,10 @@ import wx.calendar
 
 from timelinelib.calendar.gregorian.datepicker.view import NewGregorianDatePicker
 from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian.timepicker import GregorianTimePicker
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.time.timeline import Time
-from timelinelib.wxgui.components.gregoriantimepicker import GregorianTimePicker
 
 
 class GregorianDateTimePicker(wx.Panel):
