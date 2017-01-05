@@ -16,7 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.datepicker.view import NewGregorianDatePicker
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
+from timelinelib.wxgui.components.categorytree import CustomCategoryTree
 from timelinelib.wxgui.components.colourselect import ColourSelect
 from timelinelib.wxgui.components.containerchoice import ContainerChoice
 from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsapplyclosesizer import DialogButtonsApplyCloseSizer
@@ -26,18 +28,16 @@ from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsokcancelsizer
 from timelinelib.wxgui.components.feedbacktext import FeedbackText
 from timelinelib.wxgui.components.filechooser import FileChooser
 from timelinelib.wxgui.components.header import Header
+from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.components.propertyeditors.alerteditor import AlertEditor
+from timelinelib.wxgui.components.propertyeditors.coloreditor import ColorEditor
 from timelinelib.wxgui.components.propertyeditors.descriptioneditor import DescriptionEditor
 from timelinelib.wxgui.components.propertyeditors.hyperlinkeditor import HyperlinkEditor
 from timelinelib.wxgui.components.propertyeditors.iconeditor import IconEditor
 from timelinelib.wxgui.components.propertyeditors.progresseditor import ProgressEditor
-from timelinelib.wxgui.components.propertyeditors.coloreditor import ColorEditor
 from timelinelib.wxgui.components.textctrlselect import TextCtrlSelect
-from timelinelib.wxgui.components.twostatebutton import TwoStateButton
-from timelinelib.wxgui.components.categorytree import CustomCategoryTree
-from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.components.textpatterncontrol.view import TextPatternControl
-from timelinelib.wxgui.components.newgregoriandatepicker.view import NewGregorianDatePicker
+from timelinelib.wxgui.components.twostatebutton import TwoStateButton
 
 
 def TimePicker(parent, time_type, name="", *args, **kwargs):

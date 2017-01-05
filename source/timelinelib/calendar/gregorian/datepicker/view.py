@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.components.newgregoriandatepicker.controller import NewGregorianDatePickerController
+from timelinelib.calendar.gregorian.datepicker.controller import NewGregorianDatePickerController
 
 
 class NewGregorianDatePicker(wx.Panel):
