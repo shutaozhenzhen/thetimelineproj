@@ -18,8 +18,8 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.components.numtimepicker import NumTimePicker
-from timelinelib.wxgui.components.numtimepicker import NumTimePickerController
+from timelinelib.calendar.num.timepicker import NumTimePicker
+from timelinelib.calendar.num.timepicker import NumTimePickerController
 from timelinelib.test.cases.unit import UnitTestCase
 
 
