@@ -25,6 +25,7 @@ from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.config.dotfile import Config
 from timelinelib.db import db_open
@@ -33,7 +34,6 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.test.utils import ObjectWithTruthValue
-from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.dialogs.editevent.controller import EditEventDialogController
 from timelinelib.wxgui.dialogs.editevent.view import EditEventDialog
 

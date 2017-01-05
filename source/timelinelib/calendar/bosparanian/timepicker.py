@@ -15,12 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+
 import wx
 
 from timelinelib.calendar.bosparanian.bosparanian import Bosparanian, BosparanianUtils
 from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-from timelinelib.time.timeline import delta_from_days
+from timelinelib.canvas.data.internaltime import delta_from_days
 
 
 class BosparanianDateTimePicker(wx.Panel):

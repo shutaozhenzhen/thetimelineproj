@@ -21,10 +21,10 @@ import wx
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.time.timeline import delta_from_days
+from timelinelib.canvas.data.internaltime import delta_from_days
+from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_STRATEGY
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.framework import Controller
-from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_STRATEGY
 
 
 class EditEventDialogController(Controller):

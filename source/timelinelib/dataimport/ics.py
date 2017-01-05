@@ -29,7 +29,7 @@ from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Event
-from timelinelib.time.timeline import TimeDelta
+from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.utils import display_warning_message
 

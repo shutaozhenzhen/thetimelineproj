@@ -23,7 +23,7 @@ from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.time.timeline import delta_from_days
+from timelinelib.canvas.data.internaltime import delta_from_days
 import timelinelib.calendar.gregorian.gregorian as gregorian
 
 

@@ -19,10 +19,10 @@
 import os
 
 from timelinelib.canvas.data.exceptions import TimelineIOError
+from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.dataimport.ics import import_db_from_ics
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
-from timelinelib.time.timeline import TimeDelta
 
 
 ICS_CONTENT = """

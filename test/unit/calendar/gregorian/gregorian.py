@@ -22,7 +22,7 @@ import wx
 
 from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.calendar.gregorian.gregorian as gregorian
-import timelinelib.time.timeline as timeline
+import timelinelib.canvas.data.internaltime as timeline
 
 
 class describe_gregorian(UnitTestCase):

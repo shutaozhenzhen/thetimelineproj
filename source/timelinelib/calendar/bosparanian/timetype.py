@@ -26,9 +26,9 @@ from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.canvas.drawing.interface import Strip
-from timelinelib.time.timeline import delta_from_days
-import timelinelib.time.timeline as timeline
+import timelinelib.canvas.data.internaltime as timeline
 
 
 class BosparanianTimeType(GregorianTimeType):
