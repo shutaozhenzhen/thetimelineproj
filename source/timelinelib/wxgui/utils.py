@@ -178,7 +178,7 @@ def set_default_cursor(parent):
 
 
 def time_picker_for(time_type):
-    from timelinelib.wxgui.components.numtimepicker import NumTimePicker
+    from timelinelib.calendar.num.timepicker import NumTimePicker
     from timelinelib.calendar.gregorian.datetimepicker import GregorianDateTimePicker
     from timelinelib.calendar.bosparanian.timepicker import BosparanianDateTimePicker
     from timelinelib.time.numtime import NumTimeType
