@@ -21,7 +21,7 @@ from mock import sentinel
 import wx
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
-from timelinelib.calendar.gregorian.datepicker.controller import NewGregorianDatePickerController
+from timelinelib.calendar.gregorian.datepicker.datecontroller import GregorianDatePickerController
 from timelinelib.calendar.gregorian.datepicker.date import GregorianDatePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
@@ -162,7 +162,7 @@ class describe_new_gregorian_date_picker(UnitTestCase):
         self.view.GetText.return_value = sentinel.TEXT
         self.view.GetIsBc.return_value = sentinel.IS_BC
         self.view.GetCursorPosition.return_value = sentinel.CURSOR_POSITION
-        self.controller = NewGregorianDatePickerController(self.view)
+        self.controller = GregorianDatePickerController(self.view)
         self.controller.on_init(self.date_formatter, self.date_modifier)
 
     def assert_modifier_called(self, modifier):
