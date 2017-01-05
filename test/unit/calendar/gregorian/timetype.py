@@ -56,7 +56,7 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
-import timelinelib.time.timeline as timeline
+import timelinelib.canvas.data.internaltime as timeline
 
 
 class describe_gregoriantimetype(UnitTestCase):

@@ -28,8 +28,8 @@ from timelinelib.canvas.data import Era
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.time.timeline import delta_from_days
-from timelinelib.time.timeline import TimeDelta
+from timelinelib.canvas.data.internaltime import delta_from_days
+from timelinelib.canvas.data.internaltime import TimeDelta
 
 
 ANY_TIME = "1 Jan 2010"

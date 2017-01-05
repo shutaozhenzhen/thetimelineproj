@@ -22,9 +22,9 @@ import wx
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
+from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event
-from timelinelib.time.timeline import delta_from_days
 from timelinelib.wxgui.frames.mainframe.mainframe import AlertController
 from timelinelib.wxgui.frames.mainframe.mainframe import MenuController
 

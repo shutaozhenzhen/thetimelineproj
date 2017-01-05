@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.data.internaltime import set_min_julian_day
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
-from timelinelib.time.timeline import set_min_julian_day
 
 
 CONFIG_NAME = "Accept negative Julian days"

@@ -17,10 +17,10 @@
 
 
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.data.internaltime import Time
+from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import TIME_PERIOD_MODIFIERS
-from timelinelib.time.timeline import Time
-from timelinelib.time.timeline import TimeDelta
 
 
 class time_period_spec(UnitTestCase):

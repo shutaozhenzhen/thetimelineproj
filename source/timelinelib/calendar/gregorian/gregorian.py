@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.calendarbase import CalendarBase, CalendarUtilsBase
-import timelinelib.time.timeline as timeline
+import timelinelib.canvas.data.internaltime as timeline
 
 
 class Gregorian(CalendarBase):

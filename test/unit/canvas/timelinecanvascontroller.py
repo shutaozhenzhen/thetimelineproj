@@ -22,11 +22,11 @@ import wx
 from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.data.internaltime import Time
+from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.canvas import TimelineCanvas
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.time.timeline import Time
-from timelinelib.time.timeline import TimeDelta
 
 
 class TimelineCanvasControllerTestCase(UnitTestCase):

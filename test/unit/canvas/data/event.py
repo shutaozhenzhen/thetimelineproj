@@ -31,7 +31,7 @@ from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import EVENT_MODIFIERS
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
-import timelinelib.time.timeline as timeline
+import timelinelib.canvas.data.internaltime as timeline
 
 
 class describe_event(UnitTestCase):

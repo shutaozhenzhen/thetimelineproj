@@ -25,8 +25,8 @@ from timelinelib.calendar.gregorian.datetimepicker import GregorianDateTimePicke
 from timelinelib.calendar.gregorian.datetimepicker import GregorianTimePicker
 from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.time.timeline import delta_from_days
 
 
 class AGregorianDateTimePicker(UnitTestCase):

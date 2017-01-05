@@ -19,7 +19,6 @@
 import os.path
 import tempfile
 
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Event
@@ -96,6 +95,7 @@ def db_open_newtype_timeline(path, timetype=None):
             return db
     else:
         from timelinelib.canvas.data.db import MemoryDB
+        from timelinelib.calendar.gregorian.timetype import GregorianTimeType
         db = MemoryDB()
         if timetype is None:
             db.set_time_type(GregorianTimeType())

@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.time.timeline import TimeDelta
+from timelinelib.canvas.data.internaltime import TimeDelta
 
 
 class TimePeriod(object):

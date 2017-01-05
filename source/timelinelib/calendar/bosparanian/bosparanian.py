@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
-import timelinelib.time.timeline as timeline
+import timelinelib.canvas.data.internaltime as timeline
 
 
 class Bosparanian(Gregorian):
