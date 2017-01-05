@@ -19,6 +19,7 @@
 from mock import Mock
 import wx
 
+from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas import TimelineCanvas
@@ -26,7 +27,6 @@ from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.time.timeline import Time
 from timelinelib.time.timeline import TimeDelta
-from timelinelib.time.typeinterface import TimeType
 
 
 class TimelineCanvasControllerTestCase(UnitTestCase):

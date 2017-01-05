@@ -23,13 +23,13 @@ from timelinelib.calendar.gregorian.gregorian import Gregorian
 from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.gregorian.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.gregorian.weekdaynames import abbreviated_name_of_weekday
+from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
 from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.time.timeline import delta_from_days
-from timelinelib.time.typeinterface import TimeType
 import timelinelib.time.timeline as timeline
 
 
