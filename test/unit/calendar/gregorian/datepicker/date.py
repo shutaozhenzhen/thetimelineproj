@@ -35,7 +35,7 @@ class NewGregorianDatePickerTestDialog(Dialog):
     <BoxSizerVertical>
         <FlexGridSizer columns="1" border="ALL">
             <Button label="before" />
-            <NewGregorianDatePicker
+            <GregorianDatePicker
                 date_formatter="$(date_formatter)"
                 name="date"
             />
