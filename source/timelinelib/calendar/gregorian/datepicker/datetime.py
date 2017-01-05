@@ -20,8 +20,8 @@ import os.path
 
 import wx.calendar
 
+from timelinelib.calendar.gregorian.datepicker.date import GregorianDatePicker
 from timelinelib.calendar.gregorian.datepicker.time import GregorianTimePicker
-from timelinelib.calendar.gregorian.datepicker.view import NewGregorianDatePicker
 from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.internaltime import Time
@@ -81,7 +81,7 @@ class GregorianDateTimePicker(wx.Panel):
         self.SetSizerAndFit(sizer)
 
     def _create_date_picker(self):
-        return NewGregorianDatePicker(self, self.config.get_date_formatter())
+        return GregorianDatePicker(self, self.config.get_date_formatter())
 
     def _date_button_on_click(self, evt):
         try:

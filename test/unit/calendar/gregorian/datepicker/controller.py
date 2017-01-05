@@ -22,7 +22,7 @@ import wx
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.datepicker.controller import NewGregorianDatePickerController
-from timelinelib.calendar.gregorian.datepicker.view import NewGregorianDatePicker
+from timelinelib.calendar.gregorian.datepicker.date import GregorianDatePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
 
@@ -158,7 +158,7 @@ class describe_new_gregorian_date_picker(UnitTestCase):
         self.date_modifier.decrement_year.return_value = modifier_result
         self.date_modifier.decrement_month.return_value = modifier_result
         self.date_modifier.decrement_day.return_value = modifier_result
-        self.view = Mock(NewGregorianDatePicker)
+        self.view = Mock(GregorianDatePicker)
         self.view.GetText.return_value = sentinel.TEXT
         self.view.GetIsBc.return_value = sentinel.IS_BC
         self.view.GetCursorPosition.return_value = sentinel.CURSOR_POSITION

@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.datepicker.view import NewGregorianDatePicker
+from timelinelib.calendar.gregorian.datepicker.date import GregorianDatePicker
 from timelinelib.wxgui.components.categorychoice import CategoryChoice
 from timelinelib.wxgui.components.categorytree import CustomCategoryTree
 from timelinelib.wxgui.components.colourselect import ColourSelect

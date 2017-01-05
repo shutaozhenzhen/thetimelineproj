@@ -21,7 +21,7 @@ import wx
 from timelinelib.calendar.gregorian.datepicker.controller import NewGregorianDatePickerController
 
 
-class NewGregorianDatePicker(wx.Panel):
+class GregorianDatePicker(wx.Panel):
 
     def __init__(self, parent, date_formatter, name=None):
         wx.Panel.__init__(self, parent)
