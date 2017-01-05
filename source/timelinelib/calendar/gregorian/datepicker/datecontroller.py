@@ -20,7 +20,7 @@ import humblewx
 import wx
 
 
-class NewGregorianDatePickerController(humblewx.Controller):
+class GregorianDatePickerController(humblewx.Controller):
 
     def on_init(self, date_formatter, date_modifier):
         self._date_formatter = date_formatter
