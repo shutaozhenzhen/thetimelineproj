@@ -18,10 +18,10 @@
 
 import re
 
-from timelinelib.canvas.drawing.interface import Strip
+from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
-from timelinelib.time.typeinterface import TimeType
+from timelinelib.canvas.drawing.interface import Strip
 
 
 class NumTimeType(TimeType):
