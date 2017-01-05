@@ -18,14 +18,12 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import Gregorian
 from timelinelib.calendar.gregorian.timepicker.date import GregorianDatePicker
 from timelinelib.calendar.gregorian.timepicker.datetime import CalendarPopup
 from timelinelib.calendar.gregorian.timepicker.datetime import CalendarPopupController
 from timelinelib.calendar.gregorian.timepicker.datetime import GregorianDateTimePickerController
 from timelinelib.calendar.gregorian.timepicker.datetime import GregorianTimePicker
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.test.cases.unit import UnitTestCase
 
 
@@ -108,14 +106,3 @@ class ACalendarPopup(UnitTestCase):
     def _simulateDateChange(self):
         self.controller.on_day()
         self.controller.on_dismiss()
-
-
-def get_min_time_string():
-    year, month, day = GregorianUtils.from_time(GregorianTimeType().get_min_time()[0]).to_date_tuple()
-    return "%d-%02d-%02d" % (year, month, day)
-
-
-def get_max_time_string():
-    # max_time is not a valid date so we must decrease with one day
-    year, month, day = GregorianUtils.from_time(GregorianTimeType().get_max_time()[0] - delta_from_days(1)).to_date_tuple()
-    return "%d-%02d-%02d" % (year, month, day)
