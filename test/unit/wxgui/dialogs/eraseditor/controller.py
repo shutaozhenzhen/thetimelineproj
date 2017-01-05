@@ -21,11 +21,11 @@ import wx
 from mock import Mock
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.era import Era
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
-from timelinelib.time.numtime import NumTimeType
 from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
 from timelinelib.wxgui.dialogs.eraseditor.controller import ErasEditorDialogController
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog

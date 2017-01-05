@@ -20,13 +20,13 @@ import os
 
 from mock import Mock
 
+from timelinelib.calendar.num.timetype import NumTimeType
+from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.db import db_open
+from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.importevents.controller import ImportEventsDialogController
 from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
-from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.canvas.data.event import Event
-from timelinelib.time.numtime import NumTimeType
-from timelinelib.canvas.data.exceptions import TimelineIOError
 
 
 class describe_import_events_dialog(UnitTestCase):

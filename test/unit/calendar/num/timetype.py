@@ -17,10 +17,10 @@
 
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.calendar.num.timetype import move_period
+from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.time.numtime import move_period
-from timelinelib.time.numtime import NumTimeType
 
 
 class describe_numtimetype(UnitTestCase):

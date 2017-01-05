@@ -17,6 +17,7 @@
 
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
@@ -26,7 +27,6 @@ from timelinelib.test.utils import a_subevent_with
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.test.utils import SUBEVENT_MODIFIERS
-from timelinelib.time.numtime import NumTimeType
 
 
 class describe_subevent(UnitTestCase):

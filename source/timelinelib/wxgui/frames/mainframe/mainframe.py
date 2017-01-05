@@ -39,7 +39,7 @@ from timelinelib.plugin import factory
 from timelinelib.proxies.drawingarea import DrawingAreaProxy
 from timelinelib.proxies.sidebar import SidebarProxy
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-from timelinelib.time.numtime import NumTimeType
+from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.mainpanel import MainPanel
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter

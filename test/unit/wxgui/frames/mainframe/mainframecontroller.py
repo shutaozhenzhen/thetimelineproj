@@ -18,10 +18,10 @@
 
 from mock import Mock
 
+from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.time.numtime import NumTimeType
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 
