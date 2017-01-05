@@ -140,6 +140,10 @@ class NumTimeType(TimeType):
     def supports_saved_now(self):
         return False
 
+    def create_time_picker(self, parent, *args, **kwargs):
+        from timelinelib.calendar.num.timepicker import NumTimePicker
+        return NumTimePicker(parent, *args, **kwargs)
+
 
 class NumStrip(Strip):
 

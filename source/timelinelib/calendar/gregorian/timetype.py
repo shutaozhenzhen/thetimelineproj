@@ -239,6 +239,10 @@ class GregorianTimeType(TimeType):
     def get_day_of_week(self, time):
         return time.julian_day % 7
 
+    def create_time_picker(self, parent, *args, **kwargs):
+        from timelinelib.calendar.gregorian.datetimepicker import GregorianDateTimePicker
+        return GregorianDateTimePicker(parent, *args, **kwargs)
+
 
 def go_to_today_fn(main_frame, current_period, navigation_fn):
     navigation_fn(lambda tp: tp.center(GregorianTimeType().now()))
