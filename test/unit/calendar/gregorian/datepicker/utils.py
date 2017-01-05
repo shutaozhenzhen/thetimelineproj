@@ -16,12 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.datepicker.utils import DAY_INDEX
+from timelinelib.calendar.gregorian.datepicker.utils import gregorian_date_to_parts
+from timelinelib.calendar.gregorian.datepicker.utils import MONTH_INDEX
+from timelinelib.calendar.gregorian.datepicker.utils import parts_to_gregorian_date
+from timelinelib.calendar.gregorian.datepicker.utils import YEAR_INDEX
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.wxgui.components.gregoriandatepicker import DAY_INDEX
-from timelinelib.wxgui.components.gregoriandatepicker import gregorian_date_to_parts
-from timelinelib.wxgui.components.gregoriandatepicker import MONTH_INDEX
-from timelinelib.wxgui.components.gregoriandatepicker import parts_to_gregorian_date
-from timelinelib.wxgui.components.gregoriandatepicker import YEAR_INDEX
 
 
 FORMAT_YMD = (YEAR_INDEX, MONTH_INDEX, DAY_INDEX)
