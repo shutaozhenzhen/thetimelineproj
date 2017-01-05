@@ -240,7 +240,7 @@ class GregorianTimeType(TimeType):
         return time.julian_day % 7
 
     def create_time_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.gregorian.datepicker.datetime import GregorianDateTimePicker
+        from timelinelib.calendar.gregorian.timepicker.datetime import GregorianDateTimePicker
         return GregorianDateTimePicker(parent, *args, **kwargs)
 
 

@@ -21,8 +21,8 @@ from mock import sentinel
 import wx
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
-from timelinelib.calendar.gregorian.datepicker.datecontroller import GregorianDatePickerController
-from timelinelib.calendar.gregorian.datepicker.date import GregorianDatePicker
+from timelinelib.calendar.gregorian.timepicker.datecontroller import GregorianDatePickerController
+from timelinelib.calendar.gregorian.timepicker.date import GregorianDatePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
 
