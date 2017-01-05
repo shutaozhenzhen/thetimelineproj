@@ -20,9 +20,9 @@ import os.path
 
 import wx.calendar
 
-from timelinelib.calendar.gregorian.datepicker.date import GregorianDatePicker
-from timelinelib.calendar.gregorian.datepicker.time import GregorianTimePicker
 from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian.timepicker.date import GregorianDatePicker
+from timelinelib.calendar.gregorian.timepicker.time import GregorianTimePicker
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.internaltime import Time
 from timelinelib.config.paths import ICONS_DIR

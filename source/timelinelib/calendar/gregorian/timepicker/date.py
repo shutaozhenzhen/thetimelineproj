@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.calendar.gregorian.datepicker.datecontroller import GregorianDatePickerController
+from timelinelib.calendar.gregorian.timepicker.datecontroller import GregorianDatePickerController
 
 
 class GregorianDatePicker(wx.Panel):
@@ -89,7 +89,7 @@ class GregorianDatePicker(wx.Panel):
 class DateModifier(object):
 
     def __init__(self):
-        import timelinelib.calendar.gregorian.datepicker.utils as gdp
+        import timelinelib.calendar.gregorian.timepicker.utils as gdp
         self.gdp = gdp
 
     def increment_year(self, date):
