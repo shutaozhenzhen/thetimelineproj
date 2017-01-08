@@ -33,6 +33,13 @@ def setup_humblewx():
     import timelinelib.wxgui.components
     import humblewx
     humblewx.COMPONENT_MODULES.insert(0, timelinelib.wxgui.components)
+    class Panel(wx.Panel, humblewx.GuiCreator):
+        def __init__(self, controller_class, parent, variables={}, **kwargs):
+            wx.Panel.__init__(self, parent, **kwargs)
+            component = self._create(controller_class, variables)
+            if isinstance(component, wx.Sizer):
+                self.SetSizerAndFit(component)
+    humblewx.Panel = Panel
 
 
 def start_wx_application(application_arguments, before_main_loop_hook=None):
