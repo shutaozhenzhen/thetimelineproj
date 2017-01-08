@@ -171,6 +171,10 @@ class BosparanianTimeType(GregorianTimeType):
         from timelinelib.calendar.bosparanian.timepicker import BosparanianDateTimePicker
         return BosparanianDateTimePicker(parent, *args, **kwargs)
 
+    def create_period_picker(self, parent, *args, **kwargs):
+        from timelinelib.calendar.bosparanian.periodpicker import BosparanianPeriodPicker
+        return BosparanianPeriodPicker(parent, *args, **kwargs)
+
 
 def open_now_date_editor(main_frame, current_period, navigation_fn):
     def navigate_to(time):

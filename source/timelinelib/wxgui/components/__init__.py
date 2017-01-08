@@ -41,3 +41,7 @@ from timelinelib.wxgui.components.twostatebutton import TwoStateButton
 
 def TimePicker(parent, time_type, name="", *args, **kwargs):
     return time_type.create_time_picker(parent, *args, **kwargs)
+
+
+def PeriodPicker(parent, time_type, name="", *args, **kwargs):
+    return time_type.create_period_picker(parent, *args, **kwargs)

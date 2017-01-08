@@ -243,6 +243,10 @@ class GregorianTimeType(TimeType):
         from timelinelib.calendar.gregorian.timepicker.datetime import GregorianDateTimePicker
         return GregorianDateTimePicker(parent, *args, **kwargs)
 
+    def create_period_picker(self, parent, *args, **kwargs):
+        from timelinelib.calendar.gregorian.timepicker.period import GregorianPeriodPicker
+        return GregorianPeriodPicker(parent, *args, **kwargs)
+
 
 def go_to_today_fn(main_frame, current_period, navigation_fn):
     navigation_fn(lambda tp: tp.center(GregorianTimeType().now()))
