@@ -144,6 +144,10 @@ class NumTimeType(TimeType):
         from timelinelib.calendar.num.timepicker import NumTimePicker
         return NumTimePicker(parent, *args, **kwargs)
 
+    def create_period_picker(self, parent, *args, **kwargs):
+        from timelinelib.calendar.num.periodpicker import NumPeriodPicker
+        return NumPeriodPicker(parent, *args, **kwargs)
+
 
 class NumStrip(Strip):
 
