@@ -46,3 +46,12 @@ class Dialog(humblewx.Dialog, HandleDbErrorMixin):
 
     def DisplayInformationMessage(self, caption, message):
         display_information_message(caption, message, parent=self)
+
+
+class Panel(wx.Panel, humblewx.GuiCreator):
+
+    def __init__(self, controller_class, parent, variables={}, **kwargs):
+        wx.Panel.__init__(self, parent, **kwargs)
+        component = self._create(controller_class, variables)
+        if isinstance(component, wx.Sizer):
+            self.SetSizerAndFit(component)
