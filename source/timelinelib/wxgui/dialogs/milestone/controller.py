@@ -39,20 +39,13 @@ class EditMilestoneDialogController(Controller):
         self.view.SetTime(self._milestone.get_time())
         self.view.SetColor(self._milestone.get_default_color())
         self.view.SetDescription(self._milestone.get_description())
-        self.view.SetShowTime(self._milestone_has_nonzero_time())
         label = self._milestone.get_text()
         self.view.SetLable(label)
         self.view.SetCategory(self._milestone.get_category())
 
-    def _milestone_has_nonzero_time(self):
-        return self._time_type.time_period_has_nonzero_time(self._milestone.get_time_period())
-
     def on_ok_clicked(self, evt):
         self._update_milestone()
         self.view.Close()
-
-    def show_time_checkbox_on_checked(self, evt):
-        self.view.SetShowTime(evt.IsChecked())
 
     def _update_milestone(self):
         if self.view.GetDescription() == "":
