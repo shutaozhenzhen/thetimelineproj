@@ -18,46 +18,12 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
+from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.dialogs.eraeditor.controller import EraEditorDialogController
 from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
-
-
-GREGORIAN_START = "11 Jul 2014 11:22"
-GREGORIAN_END = "11 Jul 2015"
-NAME = "New Era"
-COLOR = (1, 2, 3)
-
-
-class CommandEvent(object):
-
-    def __init__(self, checked):
-        self.checked = checked
-
-    def IsChecked(self):
-        return self.checked
-
-
-class describe_era_editor_dialog(UnitTestCase):
-
-    def setUp(self):
-        self.db = MemoryDB()
-        self.view = Mock(EraEditorDialog)
-        self.config = Mock(Config)
-        self.config.get_date_formatter.return_value = GregorianDateFormatter()
-        self.controller = EraEditorDialogController(self.view)
-        self.era = a_gregorian_era_with(name=NAME, color=COLOR, start=GREGORIAN_START, end=GREGORIAN_END)
-
-    def test_it_can_be_created(self):
-        self.show_dialog(
-            EraEditorDialog, None, "Title", self.db.time_type, self.config,
-            self.era)
 
 
 class EraEditorTestCase(UnitTestCase):
@@ -65,16 +31,10 @@ class EraEditorTestCase(UnitTestCase):
     def when_editor_opened_with_era(self, era):
         self.editor = EraEditorDialogController(self.view, era)
 
-    def assert_start_time_set_to(self, time):
-        self.view.SetStart.assert_called_with(human_time_to_gregorian(time))
-
-    def assert_end_time_set_to(self, time):
-        self.view.SetEnd.assert_called_with(human_time_to_gregorian(time))
-
     def when_era_has_period(self, start, end):
         self.era = a_gregorian_era_with(start=start, end=end)
         self.controller = EraEditorDialogController(self.view)
-        self.controller.on_init(self.era, GregorianTimeType())
+        self.controller.on_init(self.era)
 
     def when_editing_a_new_era(self):
         self.era = a_gregorian_era_with(start="1 Jan 2010", end="1 Jan 2020", name="")
@@ -85,20 +45,16 @@ class EraEditorTestCase(UnitTestCase):
         self.era = a_gregorian_era_with(start="1 Jan 2010", end="1 Jan 2020", name="Haha")
         self.era_clone = self.era.clone()
         self.controller = EraEditorDialogController(self.view)
-        self.view.GetStart.return_value = self.era.get_time_period().start_time
-        self.view.GetEnd.return_value = self.era.get_time_period().end_time
+        self.view.GetPeriod.return_value = self.era.get_time_period()
         self.simulate_user_enters_name(self.era.get_name())
         self.simulate_user_enters_color(self.era.get_color())
-        self.controller.on_init(self.era, GregorianTimeType())
+        self.controller.on_init(self.era)
 
     def assert_era_unchanged(self):
         self.assertEquals(self.era, self.era_clone)
 
-    def simulate_user_enters_start_time(self, time):
-        self.view.GetStart.return_value = human_time_to_gregorian(time)
-
-    def simulate_user_enters_end_time(self, time):
-        self.view.GetEnd.return_value = human_time_to_gregorian(time)
+    def simulate_user_enters_period(self, start, end):
+        self.view.GetPeriod.return_value = gregorian_period(start, end)
 
     def simulate_user_enters_name(self, name):
         self.view.GetName.return_value = name
@@ -109,50 +65,17 @@ class EraEditorTestCase(UnitTestCase):
     def simulate_user_clicks_ok(self):
         self.controller.on_ok(None)
 
-    def simulate_user_clicks_time_checkbox(self, checked):
-        self.controller.show_time_checkbox_on_checked(CommandEvent(checked))
-
     def setUp(self):
         self.view = Mock(EraEditorDialog)
 
 
-class describe_era_editor_dialog_controller_add(UnitTestCase):
-
-    def setUp(self):
-        self.view = Mock(EraEditorDialog)
-        self.controller = EraEditorDialogController(self.view)
-
-
-class describe_era_editor_dialog_controller_edit(UnitTestCase):
-
-    def setUp(self):
-        self.view = Mock(EraEditorDialog)
-        self.controller = EraEditorDialogController(self.view, self.era)
-
-
-class describe_era_editor_dialog__start_time_field(EraEditorTestCase):
+class describe_era_editor_dialog__period_field(EraEditorTestCase):
 
     def test_has_value_from_era(self):
         self.when_era_has_period("1 Jan 2010", "1 Jan 2020")
-        self.assert_start_time_set_to("1 Jan 2010")
-
-
-class describe_era_editor_dialog__end_time_field(EraEditorTestCase):
-
-    def test_has_value_from_era(self):
-        self.when_era_has_period("1 Jan 2010", "1 Jan 2020")
-        self.assert_end_time_set_to("1 Jan 2020")
-
-
-class describe_era_editor_dialog__time_fields(EraEditorTestCase):
-
-    def test_are_shown_if_time_specified(self):
-        self.when_era_has_period("1 Jan 2010 15:30", "1 Jan 2020 15:30")
-        self.view.SetShowTime.assert_called_with(True)
-
-    def test_are_hidden_if_no_time_specified(self):
-        self.when_era_has_period("1 Jan 2010", "1 Jan 2020")
-        self.view.SetShowTime.assert_called_with(False)
+        self.view.SetPeriod.assert_called_with(
+            gregorian_period("1 Jan 2010", "1 Jan 2020")
+        )
 
 
 class describe_era_editor_dialog__name_field(EraEditorTestCase):
@@ -164,15 +87,13 @@ class describe_era_editor_dialog__name_field(EraEditorTestCase):
 
 class describe_era_editor__saving(EraEditorTestCase):
 
-    def test_saves_start_time(self):
+    def test_saves_period(self):
         self.when_editing_an_era()
         self.given_saving_valid_era()
-        self.assertEqual(self.era.get_time_period().start_time, human_time_to_gregorian("1 Jan 2010"))
-
-    def test_saves_end_time(self):
-        self.when_editing_an_era()
-        self.given_saving_valid_era()
-        self.assertEqual(self.era.get_time_period().end_time, human_time_to_gregorian("1 Jan 2020"))
+        self.assertEqual(
+            self.era.get_time_period(),
+            gregorian_period("1 Jan 2010", "1 Jan 2020")
+        )
 
     def test_saves_name(self):
         self.when_editing_an_era()
@@ -185,8 +106,7 @@ class describe_era_editor__saving(EraEditorTestCase):
         self.assertEqual(self.era.get_color(), (220, 220, 220))
 
     def given_saving_valid_era(self):
-        self.simulate_user_enters_start_time("1 Jan 2010")
-        self.simulate_user_enters_end_time("1 Jan 2020")
+        self.simulate_user_enters_period("1 Jan 2010", "1 Jan 2020")
         self.simulate_user_enters_name("New event")
         self.simulate_user_enters_color((220, 220, 220))
         self.simulate_user_clicks_ok()
@@ -201,52 +121,15 @@ class describe_era_editor__validation(EraEditorTestCase):
         self.assertTrue(self.view.DisplayInvalidName.called)
         self.assert_era_unchanged()
 
-    def test_start_must_be_valid(self):
+    def test_period_must_be_valid(self):
         self.when_editing_an_era()
-        self.view.GetStart.return_value = None
+        self.view.GetPeriod.side_effect = ValueError
         self.simulate_user_clicks_ok()
-        self.assertTrue(self.view.DisplayInvalidStart.called)
-        self.assert_era_unchanged()
-
-    def test_end_must_be_valid(self):
-        self.when_editing_an_era()
-        self.view.GetEnd.return_value = None
-        self.simulate_user_clicks_ok()
-        self.assertTrue(self.view.DisplayInvalidEnd.called)
-        self.assert_era_unchanged()
-
-    def test_start_must_be_less_then_end(self):
-        self.when_editing_an_era()
-        self.simulate_user_enters_start_time("2 Jan 2011")
-        self.simulate_user_enters_end_time("1 Jan 2011")
-        self.simulate_user_clicks_ok()
-        self.assertTrue(self.view.DisplayInvalidStart.called)
+        self.assertTrue(self.view.DisplayInvalidPeriod.called)
         self.assert_era_unchanged()
 
     def test_period_can_be_long(self):
         self.when_editing_an_era()
-        self.simulate_user_enters_start_time("1 Jan 2000")
-        self.simulate_user_enters_end_time("1 Jan 5000")
+        self.simulate_user_enters_period("1 Jan 2000", "1 Jan 5000")
         self.simulate_user_clicks_ok()
         self.assertEqual(0, self.view.DisplayInvalidPeriod.call_count)
-
-
-class describe_era_editor_time_checkbox(EraEditorTestCase):
-
-    def test_check(self):
-        self.when_editing_an_era()
-        self.simulate_user_clicks_time_checkbox(True)
-        self.view.SetShowTime.assert_called_with(True)
-
-    def test_uncheck(self):
-        self.when_editing_an_era()
-        self.simulate_user_clicks_time_checkbox(False)
-        self.view.SetShowTime.assert_called_with(False)
-
-
-class describe_era_editor_exceptions(EraEditorTestCase):
-
-    def test_era_with_none_time_period_hasent_nonzero_time(self):
-        self.when_editing_an_era()
-        self.era.set_time_period(None)
-        self.assertFalse(self.controller._era_has_nonzero_time())

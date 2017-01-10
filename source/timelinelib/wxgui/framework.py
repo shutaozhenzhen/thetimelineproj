@@ -24,6 +24,7 @@ import wx
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.utils import handle_db_error_by_crashing
+from timelinelib.wxgui.utils import _set_focus_and_select
 
 
 class HandleDbErrorMixin(object):
@@ -38,8 +39,10 @@ class Dialog(humblewx.Dialog, HandleDbErrorMixin):
     def EndModalOk(self):
         self.EndModal(wx.ID_OK)
 
-    def DisplayErrorMessage(self, message):
+    def DisplayErrorMessage(self, message, focus_widget=None):
         display_error_message(message, parent=self)
+        if focus_widget is not None:
+            _set_focus_and_select(focus_widget)
 
     def DisplayInformationMessage(self, caption, message):
         display_information_message(caption, message, parent=self)
