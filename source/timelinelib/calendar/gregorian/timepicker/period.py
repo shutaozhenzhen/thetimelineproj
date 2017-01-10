@@ -16,13 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import humblewx
-
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.wxgui.framework import Controller
+from timelinelib.wxgui.framework import Panel
 
 
-class GregorianPeriodPicker(humblewx.Panel):
+class GregorianPeriodPicker(Panel):
 
     """
     <BoxSizerVertical>
@@ -61,7 +61,7 @@ class GregorianPeriodPicker(humblewx.Panel):
     """
 
     def __init__(self, parent, config, name=None):
-        humblewx.Panel.__init__(self, GregorianPeriodPickerController, parent, {
+        Panel.__init__(self, GregorianPeriodPickerController, parent, {
             "time_type": GregorianTimeType(),
             "config": config,
             "to_label": _("to"),
@@ -102,7 +102,7 @@ class GregorianPeriodPicker(humblewx.Panel):
         self.end_time.show_time(show)
 
 
-class GregorianPeriodPickerController(humblewx.Controller):
+class GregorianPeriodPickerController(Controller):
 
     def get_value(self):
         return TimePeriod(self._get_start(), self._get_end())

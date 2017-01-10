@@ -16,13 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import humblewx
-
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.wxgui.framework import Controller
+from timelinelib.wxgui.framework import Panel
 
 
-class NumPeriodPicker(humblewx.Panel):
+class NumPeriodPicker(Panel):
 
     """
     <BoxSizerVertical>
@@ -56,7 +56,7 @@ class NumPeriodPicker(humblewx.Panel):
     """
 
     def __init__(self, parent, config, name=None):
-        humblewx.Panel.__init__(self, NumPeriodPickerController, parent, {
+        Panel.__init__(self, NumPeriodPickerController, parent, {
             "time_type": NumTimeType(),
             "config": config,
             "to_label": _("to"),
@@ -91,7 +91,7 @@ class NumPeriodPicker(humblewx.Panel):
         self.Layout()
 
 
-class NumPeriodPickerController(humblewx.Controller):
+class NumPeriodPickerController(Controller):
 
     def get_value(self):
         return TimePeriod(self._get_start(), self._get_end())

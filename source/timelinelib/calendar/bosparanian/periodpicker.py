@@ -16,13 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import humblewx
-
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.wxgui.framework import Controller
+from timelinelib.wxgui.framework import Panel
 
 
-class BosparanianPeriodPicker(humblewx.Panel):
+class BosparanianPeriodPicker(Panel):
 
     """
     <BoxSizerVertical>
@@ -61,7 +61,7 @@ class BosparanianPeriodPicker(humblewx.Panel):
     """
 
     def __init__(self, parent, config, name=None):
-        humblewx.Panel.__init__(self, BosparanianPeriodPickerController, parent, {
+        Panel.__init__(self, BosparanianPeriodPickerController, parent, {
             "time_type": BosparanianTimeType(),
             "config": config,
             "to_label": _("to"),
@@ -102,7 +102,7 @@ class BosparanianPeriodPicker(humblewx.Panel):
         self.end_time.show_time(show)
 
 
-class BosparanianPeriodPickerController(humblewx.Controller):
+class BosparanianPeriodPickerController(Controller):
 
     def get_value(self):
         return TimePeriod(self._get_start(), self._get_end())
