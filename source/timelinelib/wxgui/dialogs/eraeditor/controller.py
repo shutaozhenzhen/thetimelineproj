@@ -17,84 +17,51 @@
 
 
 from timelinelib.wxgui.framework import Controller
-from timelinelib.canvas.data import TimePeriod
 
 
 class EraEditorDialogController(Controller):
 
-    def on_init(self, era, time_type):
+    def on_init(self, era):
         self.era = era
-        self.time_type = time_type
         self._populate_view()
-
-    def show_time_checkbox_on_checked(self, evt):
-        self.view.SetShowTime(evt.IsChecked())
 
     def on_ok(self, evt):
         try:
             self._validate_input()
-            self._update_era()
-            self.view.Close()
         except ValueError:
             pass
+        else:
+            self._update_era()
+            self.view.EndModalOk()
 
     def _populate_view(self):
-        self.view.SetStart(self.era.get_time_period().start_time)
-        self.view.SetEnd(self.era.get_time_period().end_time)
+        self.view.SetPeriod(self.era.get_time_period())
         self.view.SetName(self.era.get_name())
         self.view.SetColor(self.era.get_color())
-        self.view.SetShowTime(self._era_has_nonzero_time())
         self.view.SetEndsToday(self.era.ends_today())
-
-    def _era_has_nonzero_time(self):
-        try:
-            return self.time_type.time_period_has_nonzero_time(
-                self.era.get_time_period()
-            )
-        except Exception:
-            return False
 
     def _validate_input(self):
         self._validate_name()
-        self._validate_start()
-        self._validate_end()
         self._validate_period()
-        self._validate_period_length()
 
     def _validate_name(self):
-        name = self.view.GetName()
-        if name == "":
+        if self.view.GetName() == "":
             msg = _("Field '%s' can't be empty.") % _("Name")
             self.view.DisplayInvalidName(msg)
             raise ValueError()
 
-    def _validate_start(self):
-        x = self.view.GetStart()
-        if self.view.GetStart() is None:
-            msg = _("Invalid start time.")
-            self.view.DisplayInvalidStart(msg)
-            raise ValueError(msg)
-
-    def _validate_end(self):
-        if self.view.GetEnd() is None:
-            msg = _("Invalid end time.")
-            self.view.DisplayInvalidEnd(msg)
-            raise ValueError(msg)
-
     def _validate_period(self):
-        start = self.view.GetStart()
-        end = self.view.GetEnd()
-        if start > end:
-            msg = _("End must be > Start")
-            self.view.DisplayInvalidStart(msg)
-            raise ValueError(msg)
-
-    def _validate_period_length(self):
-        start = self.view.GetStart()
-        end = self.view.GetEnd()
-        TimePeriod(start, end)
+        try:
+            self.view.GetPeriod()
+        except ValueError, e:
+            self.view.DisplayInvalidPeriod(str(e))
+            raise ValueError()
 
     def _update_era(self):
-        w = self.view
-        self.era.update(w.GetStart(), w.GetEnd(), w.GetName(), w.GetColor()[:3])
+        self.era.update(
+            self.view.GetPeriod().get_start_time(),
+            self.view.GetPeriod().get_end_time(),
+            self.view.GetName(),
+            self.view.GetColor()[:3]
+        )
         self.era.set_ends_today(self.view.GetEndsToday())
