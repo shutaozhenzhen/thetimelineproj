@@ -51,10 +51,6 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         colour = self.controller.view.GetColour()
         self.assertEqual(colour, sentinel.COLOUR)
 
-    def test_can_toggle_time_view(self):
-        self.simuate_user_selects_view_time()
-        self.assertEqual(self.view.SetShowTime.call_count, 2)
-
     def test_milestone_updated_on_ok(self):
         time_period = TimePeriod(self.start_time, self.start_time)
         self.simulate_user_enters_description("Aha")
@@ -95,22 +91,6 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.assertEqual(self.db.save_event.call_count, 1)
         self.view.HandleDbError.called_with(exception)
 
-    def test_show_time_when_false(self):
-        self.milestone.get_time_period.return_value = TimePeriod(
-            human_time_to_gregorian("1 Jan 2010"),
-            human_time_to_gregorian("1 Jan 2010")
-        )
-        self.simulate_dialog_init(self.db, self.milestone)
-        self.view.SetShowTime.assert_called_with(False)
-
-    def test_show_time_when_true(self):
-        self.milestone.get_time_period.return_value = TimePeriod(
-            human_time_to_gregorian("1 Jan 2010 13:00"),
-            human_time_to_gregorian("1 Jan 2010 13:00")
-        )
-        self.simulate_dialog_init(self.db, self.milestone)
-        self.view.SetShowTime.assert_called_with(True)
-
     def simulate_user_enters_description(self, description):
         self.view.GetDescription.return_value = description
 
@@ -125,11 +105,6 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
 
     def simulate_dialog_init(self, time_type, milestone):
         self.controller.on_init(time_type, milestone)
-
-    def simuate_user_selects_view_time(self):
-        evt = Mock()
-        evt.IsChecked.return_value = True
-        self.controller.show_time_checkbox_on_checked(evt)
 
     def setUp(self):
         self.db = Mock(MemoryDB)

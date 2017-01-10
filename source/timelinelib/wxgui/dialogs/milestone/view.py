@@ -27,25 +27,31 @@ class EditMilestoneDialog(Dialog):
 
     """
     <BoxSizerVertical>
-
         <StaticBoxSizerVertical label="$(groupbox_text)" border="ALL" >
-
             <FlexGridSizer rows="0" columns="2" border="ALL">
-
-                <StaticText label="$(when_text)" align="ALIGN_LEFT" />
-                <TimePicker time_type="$(time_type)" config="$(config)" name="dtp_time" />
-
-                <Spacer />
-                <CheckBox align="ALIGN_CENTER_VERTICAL" label="$(show_time_text)" name="cbx_show_time"
-                     event_EVT_CHECKBOX="show_time_checkbox_on_checked" />
-
-                <StaticText label="$(description_text)" align="ALIGN_CENTER_VERTICAL" />
+                <StaticText
+                    label="$(when_text)"
+                    align="ALIGN_CENTER_VERTICAL"
+                />
+                <TimePicker
+                    time_type="$(time_type)"
+                    config="$(config)"
+                    name="dtp_time"
+                />
+                <StaticText
+                    label="$(description_text)"
+                    align="ALIGN_CENTER_VERTICAL"
+                />
                 <TextCtrl name="txt_description" />
-
-                <StaticText label="$(description_label)" align="ALIGN_CENTER_VERTICAL" />
+                <StaticText
+                    label="$(description_label)"
+                    align="ALIGN_CENTER_VERTICAL"
+                />
                 <TextCtrl name="txt_label" />
-
-                <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_label)" />
+                <StaticText
+                    align="ALIGN_CENTER_VERTICAL"
+                    label="$(category_label)"
+                />
                 <CategoryChoice
                     name="category_choice"
                     allow_add="True"
@@ -53,14 +59,18 @@ class EditMilestoneDialog(Dialog):
                     timeline="$(db)"
                     align="ALIGN_LEFT"
                 />
-
-                <StaticText label="$(colour_text)" align="ALIGN_CENTER_VERTICAL" />
-                <ColourSelect name="colorpicker" align="ALIGN_CENTER_VERTICAL" width="60" height="30" />
-
+                <StaticText
+                    label="$(colour_text)"
+                    align="ALIGN_CENTER_VERTICAL"
+                />
+                <ColourSelect
+                    name="colorpicker"
+                    align="ALIGN_CENTER_VERTICAL"
+                    width="60"
+                    height="30"
+                />
             </FlexGridSizer>
-
         </StaticBoxSizerVertical>
-
         <DialogButtonsOkCancelSizer
             border="LEFT|BOTTOM|RIGHT"
             event_EVT_BUTTON__ID_OK="on_ok_clicked"
@@ -68,13 +78,11 @@ class EditMilestoneDialog(Dialog):
     </BoxSizerVertical>
     """
 
-
     def __init__(self, parent, title, db, config, milestone):
         Dialog.__init__(self, EditMilestoneDialogController, parent, {
             "groupbox_text": _("Milestone Properties"),
             "when_text": _("When:"),
             "time_type": db.time_type,
-            "show_time_text": _("Show time"),
             "description_text": _("Description:"),
             "description_label": _("Label:"),
             "category_label": _("Category:"),
@@ -118,14 +126,6 @@ class EditMilestoneDialog(Dialog):
 
     def SetColor(self, color):
         self.colorpicker.SetValue(color)
-
-    def SetShowTime(self, value):
-        try:
-            self.cbx_show_time.SetValue(value)
-            self.dtp_time.show_time(value)
-        except:
-            # Not all TimePicker objects has a 'show_time' attribute
-            pass
 
     def handle_keypress(self, evt):
         self.txt_label.Clear()

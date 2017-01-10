@@ -40,4 +40,11 @@ class describe_milestone_editor_dialog(UnitTestCase):
         milestone.set_description("a milestone")
         config = Mock(Config)
         config.get_date_formatter.return_value = GregorianDateFormatter()
-        self.show_dialog(EditMilestoneDialog, None, "Milestone", db, config, milestone)
+        self.show_dialog(
+            EditMilestoneDialog,
+            None,
+            "Milestone",
+            db,
+            config,
+            milestone
+        )
