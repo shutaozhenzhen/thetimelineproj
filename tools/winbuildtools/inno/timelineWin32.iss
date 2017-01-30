@@ -78,8 +78,6 @@ Source: "dist\translations\he\LC_MESSAGES\*"; DestDir: "{app}\translations\ko\LC
 
 Source: "dist\translations\lt\LC_MESSAGES\*"; DestDir: "{app}\translations\lt\LC_MESSAGES"; Flags: ignoreversion
 
-Source: "dist\translations\he\LC_MESSAGES\*"; DestDir: "{app}\translations\nl\LC_MESSAGES"; Flags: ignoreversion
-
 Source: "dist\translations\pl\LC_MESSAGES\*"; DestDir: "{app}\translations\pl\LC_MESSAGES"; Flags: ignoreversion
 Source: "C:\Python27\lib\site-packages\wx-2.8-msw-unicode\wx\locale\pl\LC_MESSAGES\*"; DestDir: "{app}\translations\pl\LC_MESSAGES"; Flags: ignoreversion
 
