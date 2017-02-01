@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.12.0 (3579f575a74c 2016-10-30)</version>
+  <version>1.13.0 (94d59f78b6a7 2017-01-30)</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -396,6 +396,36 @@ Bug fixes:
       <default_color>200,200,200</default_color>
     </event>
     <event>
+      <start>2014-06-30 15:16:00</start>
+      <end>2014-06-30 15:16:00</end>
+      <text>Timeleine 1.3.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Version 1.3.0
+-------------
+
+** Released on 30 June 2014.**
+
+New features, enhancements:
+
+* Event description included in search target.
+* Search result can now be presented and selected in a listbox
+* CategoriesEditor is now resizeable
+
+Bug fixes:
+
+* Scrolling with PgUp/PgDn does not crash when it would end up on non-existing
+  Feb 29 (`bug report
+  &lt;http://sourceforge.net/p/thetimelineproj/mailman/message/32218798/&gt;`_)
+* Prevent PyAssertionError when opening category editor (wxPython 3.0.0.0)
+* Fit millennium does not crash if timeline is far to the left
+* Some Edit menu items are disabled when there is no open Timeline</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
       <start>2014-04-05 07:16:00</start>
       <end>2014-04-05 07:16:00</end>
       <text>Timeline 1.2.0</text>
@@ -563,123 +593,6 @@ Bug fixes:
       <default_color>200,200,200</default_color>
     </event>
     <event>
-      <start>2014-06-30 15:16:00</start>
-      <end>2014-06-30 15:16:00</end>
-      <text>Timeleine 1.3.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Version 1.3.0
--------------
-
-** Released on 30 June 2014.**
-
-New features, enhancements:
-
-* Event description included in search target.
-* Search result can now be presented and selected in a listbox
-* CategoriesEditor is now resizeable
-
-Bug fixes:
-
-* Scrolling with PgUp/PgDn does not crash when it would end up on non-existing
-  Feb 29 (`bug report
-  &lt;http://sourceforge.net/p/thetimelineproj/mailman/message/32218798/&gt;`_)
-* Prevent PyAssertionError when opening category editor (wxPython 3.0.0.0)
-* Fit millennium does not crash if timeline is far to the left
-* Some Edit menu items are disabled when there is no open Timeline</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
-      <start>2015-01-31 21:01:00</start>
-      <end>2015-01-31 21:01:00</end>
-      <text>Timeline 1.5.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Version 1.5.0
--------------
-
-**Released on 31 January 2015.**
-
-New features, enhancements:
-
- * Made progress bar thinner to improve visibility
- * Made progress- and done-colors selectable
- * Deeper zooming, to one minute, enabled
- * Introduced the concept of 'Experimental features'
- * Experimental feature - Mark event as done
- * Experimental feature - Extend container height
- * Experimental feature - Locale date formats
- 
-Bug fixes:
-
- * Fixed: Crash report: Duplication subevent
- * Fixed: Crash report: Clicking Return in datetimepicker in Event alert editor
- * Fixed problem with duplication of containers
- * Fixed problem with menus requiring a timeline</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
-      <start>2015-04-30 06:38:00</start>
-      <end>2015-04-30 06:38:00</end>
-      <text>Timeline 1.6.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Version 1.6.0
--------------
-
-**Released on 30 April 2015.**
-
-Solved problems:
-
-* Dividerline slider pos preserved between sessions
-
-* Introduced a Gradient Event box drawer
-
-* A new Event box drawer is added (gradient draw)
-
-* When selecting period in event editor - end date = start date + 1 day
-
-* Introduced background Era's
-
-* Bitmaps used to mark fuzzy and locked edges
-
-* Fixed crash when opening preferences dialog (wxPython 3.0.2.0)
-
-* Fixed crash when opening hyperlink
-
-* Fixed crash when using experimental feature locale date
-
-* Fixed crash when entering non-ascii characters in feedback dialog subject or text
-
-* Crash report: AttributeError: 'MainFrame' object has no attribute 'open_timeline'
-  (`#22 &lt;https://sourceforge.net/p/thetimelineproj/backlog/22&gt;`_).
-
-* Crash report: PyAssertionError: C++ assertion "Assert failure" failed at
-  ../src/common/sizer.cpp(1401) in DoInsert(): too many items (9 &gt; 24) in grid
-  sizer (maybe you should omit the number of either rows or columns?)
-  (`#21 &lt;https://sourceforge.net/p/thetimelineproj/backlog/21&gt;`_).
-  This was only a problem with wxPython 3.
-
-* Crash report: KeyError: '33'
-  (`#26 &lt;https://sourceforge.net/p/thetimelineproj/backlog/26&gt;`_).
-  This happened when using experimental feature 'locale date'.
-  
-* Added export function timeline -&gt; CSV
-
-* Crash report: ValueError: to_julian_day only works for positive julian days, but was -32104
-  (`#43 &lt;https://sourceforge.net/p/thetimelineproj/backlog/43&gt;`_).</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
       <start>2015-07-30 06:38:00</start>
       <end>2015-07-30 06:38:00</end>
       <text>Timeline 1.7.0</text>
@@ -822,6 +735,55 @@ Windows specific:
       <default_color>200,200,200</default_color>
     </event>
     <event>
+      <start>2015-08-17 00:00:00</start>
+      <end>2015-08-17 00:00:00</end>
+      <text>Timeline 1.7.1</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Correction Release</category>
+      <description>Version 1.7.1
+-------------
+
+**Released on 17 August 2015.**
+
+Data:
+
+* Content of .timeline file is not erased when it is opened. This was a bug
+  that has now been fixed.
+
+Drawing:
+
+* Minor strip font is only bold for weekend days. A bug made it a bit random
+  before.
+
+Fixed crash reports:
+
+* ``AttributeError: 'module' object has no attribute 'Color'``
+
+* ``AttributeError: 'EventEditorDialog' object has no attribute 'set_focus'``
+  (`#89 &lt;https://sourceforge.net/p/thetimelineproj/backlog/89/&gt;`_)</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
+      <start>2015-11-10 00:00:00</start>
+      <end>2015-11-10 00:00:00</end>
+      <text>Timeline 1.8.1</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Correction Release</category>
+      <description>This is a bugfix release. It fixes a critical bug that disables editing numerical timelines.
+
+Fixed crash reports:
+
+* ``AttributeError: 'NumTimePicker' object has no attribute 'show_time'``
+  (`#117 &lt;https://sourceforge.net/p/thetimelineproj/backlog/117/&gt;`_)</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
       <start>2015-10-31 06:38:00</start>
       <end>2015-10-31 06:38:00</end>
       <text>Timeline 1.8.0</text>
@@ -898,36 +860,217 @@ Fixed crash reports:
       <default_color>200,200,200</default_color>
     </event>
     <event>
-      <start>2015-08-17 00:00:00</start>
-      <end>2015-08-17 00:00:00</end>
-      <text>Timeline 1.7.1</text>
+      <start>2015-01-31 21:01:00</start>
+      <end>2015-01-31 21:01:00</end>
+      <text>Timeline 1.5.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Correction Release</category>
-      <description>Version 1.7.1
+      <category>Planned Release</category>
+      <description>Version 1.5.0
 -------------
 
-**Released on 17 August 2015.**
+**Released on 31 January 2015.**
+
+New features, enhancements:
+
+ * Made progress bar thinner to improve visibility
+ * Made progress- and done-colors selectable
+ * Deeper zooming, to one minute, enabled
+ * Introduced the concept of 'Experimental features'
+ * Experimental feature - Mark event as done
+ * Experimental feature - Extend container height
+ * Experimental feature - Locale date formats
+ 
+Bug fixes:
+
+ * Fixed: Crash report: Duplication subevent
+ * Fixed: Crash report: Clicking Return in datetimepicker in Event alert editor
+ * Fixed problem with duplication of containers
+ * Fixed problem with menus requiring a timeline</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
+      <start>2015-04-30 06:38:00</start>
+      <end>2015-04-30 06:38:00</end>
+      <text>Timeline 1.6.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Version 1.6.0
+-------------
+
+**Released on 30 April 2015.**
+
+Solved problems:
+
+* Dividerline slider pos preserved between sessions
+
+* Introduced a Gradient Event box drawer
+
+* A new Event box drawer is added (gradient draw)
+
+* When selecting period in event editor - end date = start date + 1 day
+
+* Introduced background Era's
+
+* Bitmaps used to mark fuzzy and locked edges
+
+* Fixed crash when opening preferences dialog (wxPython 3.0.2.0)
+
+* Fixed crash when opening hyperlink
+
+* Fixed crash when using experimental feature locale date
+
+* Fixed crash when entering non-ascii characters in feedback dialog subject or text
+
+* Crash report: AttributeError: 'MainFrame' object has no attribute 'open_timeline'
+  (`#22 &lt;https://sourceforge.net/p/thetimelineproj/backlog/22&gt;`_).
+
+* Crash report: PyAssertionError: C++ assertion "Assert failure" failed at
+  ../src/common/sizer.cpp(1401) in DoInsert(): too many items (9 &gt; 24) in grid
+  sizer (maybe you should omit the number of either rows or columns?)
+  (`#21 &lt;https://sourceforge.net/p/thetimelineproj/backlog/21&gt;`_).
+  This was only a problem with wxPython 3.
+
+* Crash report: KeyError: '33'
+  (`#26 &lt;https://sourceforge.net/p/thetimelineproj/backlog/26&gt;`_).
+  This happened when using experimental feature 'locale date'.
+  
+* Added export function timeline -&gt; CSV
+
+* Crash report: ValueError: to_julian_day only works for positive julian days, but was -32104
+  (`#43 &lt;https://sourceforge.net/p/thetimelineproj/backlog/43&gt;`_).</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
+      <start>2016-08-02 00:00:00</start>
+      <end>2016-08-02 00:00:00</end>
+      <text>Timeline 1.11.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Version 1.11.0
+--------------
+
+**Release on 2 August 2016.**
+
+*Don't want to wait for the final release? Try the beta version!*
+
+* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+
+* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.
+
+Data import:
+
+* VTODO elements are now imported, as events, from ics files.
+  (`#142 &lt;https://sourceforge.net/p/thetimelineproj/backlog/142/&gt;`_)
+
+* Import options can now be specified when importing events, from ics files.
+  (`#141 &lt;https://sourceforge.net/p/thetimelineproj/backlog/141/&gt;`_)
+
+Data export:
+
+* When exporting a timeline to images a merged image is also created.
+
+Translations:
+
+* Made label texts in 'Export to Listbox', translatable.
+  (`#147 &lt;https://sourceforge.net/p/thetimelineproj/backlog/147/&gt;`_)
+
+GUI:
+
+* A checkmark can now be displayed in front of the event text when the event is done (100% progress).
+  (`#134 &lt;https://sourceforge.net/p/thetimelineproj/backlog/134/&gt;`_)
+
+* The duplicate event dialog can be opened from the event editor dialog
+  (`#131 &lt;https://sourceforge.net/p/thetimelineproj/backlog/131/&gt;`_)
+  
+* Atfer a search match the found event is highlighted
+
+* The backgound colour can now be user defined.
+  (`#151 &lt;https://sourceforge.net/p/thetimelineproj/backlog/151/&gt;`_)
+
+Data:
+* Introduced the special event type, Milestone.
+
+Navigation:
+
+* Now it´s possible to return to the previous time period after a navigation.
+  (`#153 &lt;https://sourceforge.net/p/thetimelineproj/backlog/153/&gt;`_)
+
+Bug fixes:
+
+* Bosparanian date format craches.
+
+* Timeline menu items are now disabled when no timeline is opened.
+  (`#148 &lt;https://sourceforge.net/p/thetimelineproj/backlog/148/&gt;`_)
+
+*  Float division by zero when mouse moved..
+  (`#150 &lt;https://sourceforge.net/p/thetimelineproj/backlog/150/&gt;`_)</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2016-10-31 00:00:00</start>
+      <end>2016-10-31 00:00:00</end>
+      <text>Timeline 1.12.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Version 1.12.0
+-------------
+
+**Release on 31 October 2016.**
+
+GUI:
+
+* Era's now have an ends-today property.
+  (`#159 &lt;https://sourceforge.net/p/thetimelineproj/backlog/159/&gt;`_)
+
+Documentation:
+
+* Help pages updated.
 
 Data:
 
-* Content of .timeline file is not erased when it is opened. This was a bug
-  that has now been fixed.
+* Option to switch off time for entire project.
+  (`#157 &lt;https://sourceforge.net/p/thetimelineproj/backlog/157/&gt;`_)
 
-Drawing:
+* Sample text is displayed for fonts in the preference dialog
 
-* Minor strip font is only bold for weekend days. A bug made it a bit random
-  before.
+Export SVG:
 
-Fixed crash reports:
+* Eras are now drawn in the SVG image.
+  (`#144 &lt;https://sourceforge.net/p/thetimelineproj/backlog/144/&gt;`_)
 
-* ``AttributeError: 'module' object has no attribute 'Color'``
+* Improved drawing of labels in SVG image.
+  (`#145 &lt;https://sourceforge.net/p/thetimelineproj/backlog/145/&gt;`_)
 
-* ``AttributeError: 'EventEditorDialog' object has no attribute 'set_focus'``
-  (`#89 &lt;https://sourceforge.net/p/thetimelineproj/backlog/89/&gt;`_)</description>
-      <default_color>200,200,200</default_color>
+* Timeline background colour is used used in SVG image.
+
+Fixed crash reports and bugs:
+
+* Milestones are handled correctly when undoing  changes.
+
+* Duplicate categories in ics file is now handled correctly
+  (`#160 &lt;https://sourceforge.net/p/thetimelineproj/backlog/160/&gt;`_)
+
+* Invalid date and time entries, now generates error message.
+  (`#163 &lt;https://sourceforge.net/p/thetimelineproj/backlog/163/&gt;`_)
+
+* Creating exception message should not fail now.
+  (`#161 &lt;https://sourceforge.net/p/thetimelineproj/backlog/161/&gt;`_)
+
+* Duplicate dir names in directory Timeline is now handled.
+  (`#162 &lt;https://sourceforge.net/p/thetimelineproj/backlog/162/&gt;`_)</description>
+      <default_color>192,192,192</default_color>
     </event>
     <event>
       <start>2016-04-30 00:00:00</start>
@@ -1085,149 +1228,6 @@ Bug fixes:
       <default_color>200,200,200</default_color>
     </event>
     <event>
-      <start>2015-11-10 00:00:00</start>
-      <end>2015-11-10 00:00:00</end>
-      <text>Timeline 1.8.1</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Correction Release</category>
-      <description>This is a bugfix release. It fixes a critical bug that disables editing numerical timelines.
-
-Fixed crash reports:
-
-* ``AttributeError: 'NumTimePicker' object has no attribute 'show_time'``
-  (`#117 &lt;https://sourceforge.net/p/thetimelineproj/backlog/117/&gt;`_)</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
-      <start>2016-08-02 00:00:00</start>
-      <end>2016-08-02 00:00:00</end>
-      <text>Timeline 1.11.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Version 1.11.0
---------------
-
-**Release on 2 August 2016.**
-
-*Don't want to wait for the final release? Try the beta version!*
-
-* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
-
-* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.
-
-Data import:
-
-* VTODO elements are now imported, as events, from ics files.
-  (`#142 &lt;https://sourceforge.net/p/thetimelineproj/backlog/142/&gt;`_)
-
-* Import options can now be specified when importing events, from ics files.
-  (`#141 &lt;https://sourceforge.net/p/thetimelineproj/backlog/141/&gt;`_)
-
-Data export:
-
-* When exporting a timeline to images a merged image is also created.
-
-Translations:
-
-* Made label texts in 'Export to Listbox', translatable.
-  (`#147 &lt;https://sourceforge.net/p/thetimelineproj/backlog/147/&gt;`_)
-
-GUI:
-
-* A checkmark can now be displayed in front of the event text when the event is done (100% progress).
-  (`#134 &lt;https://sourceforge.net/p/thetimelineproj/backlog/134/&gt;`_)
-
-* The duplicate event dialog can be opened from the event editor dialog
-  (`#131 &lt;https://sourceforge.net/p/thetimelineproj/backlog/131/&gt;`_)
-  
-* Atfer a search match the found event is highlighted
-
-* The backgound colour can now be user defined.
-  (`#151 &lt;https://sourceforge.net/p/thetimelineproj/backlog/151/&gt;`_)
-
-Data:
-* Introduced the special event type, Milestone.
-
-Navigation:
-
-* Now it´s possible to return to the previous time period after a navigation.
-  (`#153 &lt;https://sourceforge.net/p/thetimelineproj/backlog/153/&gt;`_)
-
-Bug fixes:
-
-* Bosparanian date format craches.
-
-* Timeline menu items are now disabled when no timeline is opened.
-  (`#148 &lt;https://sourceforge.net/p/thetimelineproj/backlog/148/&gt;`_)
-
-*  Float division by zero when mouse moved..
-  (`#150 &lt;https://sourceforge.net/p/thetimelineproj/backlog/150/&gt;`_)</description>
-      <default_color>192,192,192</default_color>
-    </event>
-    <event>
-      <start>2016-10-31 00:00:00</start>
-      <end>2016-10-31 00:00:00</end>
-      <text>Timeline 1.12.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Version 1.12.0
--------------
-
-**Release on 31 October 2016.**
-
-GUI:
-
-* Era's now have an ends-today property.
-  (`#159 &lt;https://sourceforge.net/p/thetimelineproj/backlog/159/&gt;`_)
-
-Documentation:
-
-* Help pages updated.
-
-Data:
-
-* Option to switch off time for entire project.
-  (`#157 &lt;https://sourceforge.net/p/thetimelineproj/backlog/157/&gt;`_)
-
-* Sample text is displayed for fonts in the preference dialog
-
-Export SVG:
-
-* Eras are now drawn in the SVG image.
-  (`#144 &lt;https://sourceforge.net/p/thetimelineproj/backlog/144/&gt;`_)
-
-* Improved drawing of labels in SVG image.
-  (`#145 &lt;https://sourceforge.net/p/thetimelineproj/backlog/145/&gt;`_)
-
-* Timeline background colour is used used in SVG image.
-
-Fixed crash reports and bugs:
-
-* Milestones are handled correctly when undoing  changes.
-
-* Duplicate categories in ics file is now handled correctly
-  (`#160 &lt;https://sourceforge.net/p/thetimelineproj/backlog/160/&gt;`_)
-
-* Invalid date and time entries, now generates error message.
-  (`#163 &lt;https://sourceforge.net/p/thetimelineproj/backlog/163/&gt;`_)
-
-* Creating exception message should not fail now.
-  (`#161 &lt;https://sourceforge.net/p/thetimelineproj/backlog/161/&gt;`_)
-
-* Duplicate dir names in directory Timeline is now handled.
-  (`#162 &lt;https://sourceforge.net/p/thetimelineproj/backlog/162/&gt;`_)</description>
-      <default_color>192,192,192</default_color>
-    </event>
-    <event>
       <start>2017-01-31 00:00:00</start>
       <end>2017-01-31 00:00:00</end>
       <text>Timeline 1.13.0</text>
@@ -1235,11 +1235,32 @@ Fixed crash reports and bugs:
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
+      <category>Planned Release</category>
       <description>Version 1.13.0
 -------------
 
 **Planned release on 31 January 2016.**
+
+*Don't want to wait for the final release? Try the beta version!*
+
+* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+
+* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2017-04-30 00:00:00</start>
+      <end>2017-04-30 00:00:00</end>
+      <text>Timeline 1.14.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Future Release</category>
+      <description>Version 1.14.0
+-------------
+
+**Planned release on 30 April 2017.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
