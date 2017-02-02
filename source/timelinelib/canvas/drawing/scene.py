@@ -343,6 +343,9 @@ class TimelineScene(object):
     def minor_strip_is_day(self):
         return self.minor_strip.is_day()
 
+    def is_weekend_day(self, time):
+        return self._db.time_type.is_weekend_day(time)
+
     def get_hidden_event_count(self):
         return len(self.events_from_db) - self._count_visible_events()
 

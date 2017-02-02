@@ -35,9 +35,8 @@ class DefaultBackgroundDrawer(object):
     def _draw_weekend_days(self, dc, drawer, scene, colorize_weekends, weekend_colour):
         def draw_day_backgrounds(h):
             for strip_period in scene.minor_strip_data:
-                if colorize_weekends and strip_period.start_time.is_weekend_day():
+                if colorize_weekends and scene.is_weekend_day(strip_period.start_time):
                     self._draw_weekend_rect(strip_period, h, weekend_colour)
-
         _, h = dc.GetSizeTuple()
         if drawer.time_type.is_date_time_type():
             if scene.minor_strip_is_day():

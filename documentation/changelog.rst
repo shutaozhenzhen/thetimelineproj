@@ -12,6 +12,12 @@ Version 1.14.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+
+Fixed crash reports and bugs:
+
+* Now weekends can be colorized again.
+  (`#170 <https://sourceforge.net/p/thetimelineproj/backlog/170/>`_)
+
 Version 1.13.0
 --------------
 
