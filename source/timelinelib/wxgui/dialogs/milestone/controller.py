@@ -19,6 +19,11 @@
 from timelinelib.wxgui.framework import Controller
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.milestone import Milestone
+from timelinelib.wxgui.utils import display_error_message
+
+
+class DateTimeError(Exception):
+    pass
 
 
 class EditMilestoneDialogController(Controller):
@@ -35,6 +40,16 @@ class EditMilestoneDialogController(Controller):
             self._milestone = milestone
         self._populate_view()
 
+    def get_milestone(self):
+        return self._milestone
+
+    def on_ok_clicked(self, evt):
+        try:
+            self._update_milestone()
+            self.view.Close()
+        except DateTimeError:
+            pass
+
     def _populate_view(self):
         self.view.SetTime(self._milestone.get_time())
         self.view.SetColor(self._milestone.get_default_color())
@@ -43,21 +58,30 @@ class EditMilestoneDialogController(Controller):
         self.view.SetLable(label)
         self.view.SetCategory(self._milestone.get_category())
 
-    def on_ok_clicked(self, evt):
-        self._update_milestone()
-        self.view.Close()
-
     def _update_milestone(self):
+        self._set_milestone_description()
+        self._milestone.set_text(self.view.GetLabel())
+        self._milestone.set_default_color(self.view.GetColour()[:3])
+        self._set_milestone_time_period()
+        self._milestone.set_category(self.view.GetCategory())
+        if self._new_milestone:
+            self._save_milestone_to_db()
+
+    def _set_milestone_description(self):
         if self.view.GetDescription() == "":
             self._milestone.set_description(None)
         else:
             self._milestone.set_description(self.view.GetDescription())
-        self._milestone.set_text(self.view.GetLabel())
-        self._milestone.set_default_color(self.view.GetColour()[:3])
-        self._milestone.set_time_period(TimePeriod(self.view.GetTime(), self.view.GetTime()))
-        self._milestone.set_category(self.view.GetCategory())
-        if self._new_milestone:
-            self._save_milestone_to_db()
+
+    def _set_milestone_time_period(self):
+        try:
+            t = self.view.GetTime()
+            if t is None:
+                raise DateTimeError()
+            self._milestone.set_time_period(TimePeriod(t, t))
+        except:
+            display_error_message(_("You can't save a milestone with an invalid date/time"))
+            raise(DateTimeError())
 
     def _save_milestone_to_db(self):
         try:
@@ -65,5 +89,3 @@ class EditMilestoneDialogController(Controller):
         except Exception, e:
             self.view.HandleDbError(e)
 
-    def get_milestone(self):
-        return self._milestone
