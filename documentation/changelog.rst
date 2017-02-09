@@ -17,6 +17,10 @@ Fixed crash reports and bugs:
 
 * Now weekends can be colorized again.
   (`#170 <https://sourceforge.net/p/thetimelineproj/backlog/170/>`_)
+  
+* It's no longer possiblöe to close the milestone editor dialog with an invalid date/time.
+  (`#171 <https://sourceforge.net/p/thetimelineproj/backlog/171/>`_)
+
 
 Version 1.13.0
 --------------
