@@ -21,6 +21,8 @@ Fixed crash reports and bugs:
 * It's no longer possiblöe to close the milestone editor dialog with an invalid date/time.
   (`#171 <https://sourceforge.net/p/thetimelineproj/backlog/171/>`_)
 
+* The event progress bar is now correctly drawn when event is partly outside of screen.
+
 
 Version 1.13.0
 --------------
