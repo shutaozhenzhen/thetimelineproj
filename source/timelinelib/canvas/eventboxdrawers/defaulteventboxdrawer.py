@@ -37,6 +37,7 @@ GRAY = (200, 200, 200)
 class DefaultEventBoxDrawer(object):
 
     def draw(self, dc, scene, rect, event, view_properties):
+        self.scene = scene
         self.view_properties = view_properties
         selected = view_properties.is_selected(event)
         self.center_text = scene.center_text()
@@ -195,19 +196,21 @@ class DefaultEventBoxDrawer(object):
     def _draw_progress_box(self, dc, rect, event):
         if event.get_data("progress"):
             self._set_progress_color(dc, event)
-            progress_rect = self._get_progress_rect(rect, event.get_data("progress") / 100.0)
+            progress_rect = self._get_progress_rect(rect, event)
             dc.DrawRectangleRect(progress_rect)
 
     def _set_progress_color(self, dc, event):
         progress_color = event.get_progress_color()
         dc.SetBrush(wx.Brush(wx.Colour(progress_color[0], progress_color[1], progress_color[2])))
 
-    def _get_progress_rect(self, event_rect, width_factor):
+    def _get_progress_rect(self, event_rect, event):
         HEIGHT_FACTOR = 0.35
-        w = event_rect.width * width_factor
         h = event_rect.height * HEIGHT_FACTOR
         y = event_rect.y + (event_rect.height - h)
-        return wx.Rect(event_rect.x, y, w, h)
+        rw, _ = self.scene._calc_width_and_height_for_period_event(event)
+        rx = self.scene._calc_x_pos_for_period_event(event)
+        w = rw * event.get_data("progress") / 100.0
+        return wx.Rect(rx, y, w, h)
 
     def _draw_balloon_indicator(self, dc, event, rect):
         """
