@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Contains the class NumTimeType."""
 
 import re
 
@@ -25,6 +26,7 @@ from timelinelib.canvas.drawing.interface import Strip
 
 
 class NumTimeType(TimeType):
+    """The class."""
 
     def __eq__(self, other):
         return isinstance(other, NumTimeType)
