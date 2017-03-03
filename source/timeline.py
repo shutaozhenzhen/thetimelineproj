@@ -17,6 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+This is the module used to start Timeline.
+"""
+
+
 import gettext
 import locale
 import os
