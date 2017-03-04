@@ -26,7 +26,7 @@ class Timer(object):
     A general timer that can measure the elapsed time between
     a start and end time.
 
-    The timer function used depends on os (as in timeit.py Python standard library)
+    The timer function used, depends on os (as in timeit.py Python standard library)
 
     * On Windows, the best timer is time.clock()
     * On most other platforms the best timer is time.time()
@@ -50,5 +50,5 @@ class Timer(object):
 
     @property
     def elapsed_ms(self):
-        """Return the elapsed time i milliseconds."""
+        """Return the elapsed time i milliseconds between start and end."""
         return (self._end - self._start) * 1000

@@ -25,7 +25,7 @@ from timelinelib.canvas.drawing import get_drawer
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.canvas.events import create_timeline_redrawn_event
-from timelinelib.monitoring import DEBUG_ENABLED
+from timelinelib import DEBUG_ENABLED
 from timelinelib.monitoring import Monitoring
 from timelinelib.wxgui.components.font import Font
 

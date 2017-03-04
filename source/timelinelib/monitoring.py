@@ -15,17 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Contains the Monitoring class and the DEBUG_ENABLED flag.
-
-The DEBUG_ENABLED flag is set with the application argument --debug
-at start of timeline.
-"""
+"""Contains the Monitoring class."""
 
 from timelinelib.timer import Timer
-
-
-DEBUG_ENABLED = False
 
 
 class Monitoring(object):
