@@ -21,4 +21,11 @@ This is the main package of The Timeline Project.
 The only code for running Timeline that is not in this package
 is the module timeline.py. That is the main module for starting
 the Timeline application.
+
+Contains the boolean flag DEBUG_ENABLED. This flag is set with the
+application argument --debug at start of Timeline. When enabled,
+timer and counting statistics are shown in the main panel.
 """
+
+
+DEBUG_ENABLED = False
