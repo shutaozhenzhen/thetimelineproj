@@ -65,6 +65,7 @@ class EditEventDialogTestCase(UnitTestCase):
 
     def when_editing_a_new_event(self):
         self.when_editor_opened_with_time("1 Jan 2010")
+        self.view.GetEndsToday.return_value = False
 
     def when_editor_opened_with_time(self, time, event=None):
         self.when_editor_opened_with(
