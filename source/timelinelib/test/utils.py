@@ -36,6 +36,11 @@ ANY_NUM_TIME = 10
 
 
 def gregorian_period(start, end):
+    """
+    Create a gregorian time period.
+    The start and end times are in a human readable format like
+    "1 Aug 2010" or "1 Aug 2010 12:00:01".
+    """
     return TimePeriod(human_time_to_gregorian(start), human_time_to_gregorian(end))
 
 
