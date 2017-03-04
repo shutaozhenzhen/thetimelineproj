@@ -70,6 +70,7 @@ def human_time_to_gregorian(human_time):
 
 
 def a_time_period():
+    """Create a random :doc:`TimePeriod <timelinelib_canvas_data_timeperiod>` object."""
     year = random.randint(1, 4000)
     month = random.randint(1, 12)
     day = random.randint(1, 28)
