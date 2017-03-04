@@ -118,7 +118,7 @@ class EditEventDialogController(Controller):
             self.start = self.event.get_time_period().start_time
             self.end = self.event.get_time_period().end_time
             self.view.SetName(self.event.get_text())
-            self.category = self.event.get_category()
+            self.view.SetCategory(self.event.get_category())
             self.fuzzy = self.event.get_fuzzy()
             self.locked = self.event.get_locked()
             self.ends_today = self.event.get_ends_today()
@@ -126,7 +126,7 @@ class EditEventDialogController(Controller):
             self.start = start
             self.end = end
             self.view.SetName("")
-            self.category = None
+            self.view.SetCategory(None)
             self.fuzzy = False
             self.locked = False
             self.ends_today = False
@@ -142,7 +142,6 @@ class EditEventDialogController(Controller):
             self.view.SetContainer(None)
         self.view.SetStart(self.start)
         self.view.SetEnd(self.end)
-        self.view.SetCategory(self.category)
         if self.event:
             self.view.SetShowPeriod(self.end > self.start)
             self.view.SetShowTime(self._event_has_nonzero_time())
@@ -166,7 +165,6 @@ class EditEventDialogController(Controller):
         self.fuzzy = self.view.GetFuzzy()
         self.locked = self.view.GetLocked()
         self.ends_today = self.view.GetEndsToday()
-        self.category = self.view.GetCategory()
         start = self._get_start_from_view()
         if self._dialog_has_signalled_invalid_input(start):
             self.view.DisplayInvalidStart(_("Invalid Start- date or time"))
@@ -247,7 +245,7 @@ class EditEventDialogController(Controller):
     def _update_event_when_container_selected_and_event_is_subevent(self):
         if self.event.container == self.container:
             self.event.update(self.start, self.end, self.view.GetName(),
-                              self.category, self.fuzzy, self.locked,
+                              self.view.GetCategory(), self.fuzzy, self.locked,
                               self.ends_today)
             self.container.update_container(self.event)
         else:
@@ -258,7 +256,7 @@ class EditEventDialogController(Controller):
             self._remove_event_from_container()
         else:
             self.event.update(self.start, self.end, self.view.GetName(),
-                              self.category, self.fuzzy, self.locked,
+                              self.view.GetCategory(), self.fuzzy, self.locked,
                               self.ends_today)
 
     def _remove_event_from_container(self):
@@ -281,14 +279,14 @@ class EditEventDialogController(Controller):
             self._create_subevent()
         else:
             self.event = Event(self.start, self.end, self.view.GetName(),
-                               self.category, self.fuzzy, self.locked,
+                               self.view.GetCategory(), self.fuzzy, self.locked,
                                self.ends_today)
 
     def _create_subevent(self):
         if self._is_new_container(self.container):
             self._add_new_container()
         self.event = Subevent(self.start, self.end, self.view.GetName(),
-                              self.category, self.container, ends_today=self.ends_today)
+                              self.view.GetCategory(), self.container, ends_today=self.ends_today)
 
     def _is_new_container(self, container):
         return container not in self.timeline.get_containers()
