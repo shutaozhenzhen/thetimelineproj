@@ -43,12 +43,13 @@ ANY_TIME = "1 Jan 2010"
 ANY_NUM_TIME = 10
 
 
-def gregorian_period(start, end):
+def gregorian_period(human_start_time, human_end_time):
     """
     Create a gregorian TimePeriod object.
     The start and end times are strings in a human readable format.
     """
-    return TimePeriod(human_time_to_gregorian(start), human_time_to_gregorian(end))
+    return TimePeriod(human_time_to_gregorian(human_start_time),
+                      human_time_to_gregorian(human_end_time))
 
 
 def numeric_period(start, end):
