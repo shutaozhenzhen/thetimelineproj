@@ -112,6 +112,7 @@ def an_event():
 
 def an_event_with(start=None, end=None, time=ANY_TIME, text="foo", fuzzy=False,
                   locked=False, ends_today=False, category=None, default_color=(200, 200, 200)):
+    """Create an :doc:`Event <timelinelib_canvas_data_event>` object."""
     if start and end:
         start = human_time_to_gregorian(start)
         end = human_time_to_gregorian(end)
@@ -126,10 +127,12 @@ def an_event_with(start=None, end=None, time=ANY_TIME, text="foo", fuzzy=False,
 
 
 def a_subevent():
+    """Create a :doc:`Subevent <timelinelib_canvas_data_subevent>` object."""
     return a_subevent_with()
 
 
 def a_subevent_with(start=None, end=None, time=ANY_TIME, text="sub", category=None, container=None, cid=-1):
+    """Create a :doc:`Subevent <timelinelib_canvas_data_subevent>` object."""
     if start and end:
         start = human_time_to_gregorian(start)
         end = human_time_to_gregorian(end)
@@ -140,6 +143,7 @@ def a_subevent_with(start=None, end=None, time=ANY_TIME, text="sub", category=No
 
 
 def a_container(name, category, sub_events):
+    """Create a :doc:`Container <timelinelib_canvas_data_container>` object."""
     cid = 99
     start = human_time_to_gregorian(ANY_TIME)
     end = human_time_to_gregorian(ANY_TIME)
@@ -154,6 +158,7 @@ def a_container(name, category, sub_events):
 
 
 def a_container_with(text="container", category=None, cid=-1):
+    """Create a :doc:`Container <timelinelib_canvas_data_container>` object."""
     start = human_time_to_gregorian(ANY_TIME)
     end = human_time_to_gregorian(ANY_TIME)
     container = Container(start, end, text, category=category, cid=cid)
@@ -161,20 +166,24 @@ def a_container_with(text="container", category=None, cid=-1):
 
 
 def a_category():
+    """Create a :doc:`Category <timelinelib_canvas_data_category>` object."""
     return a_category_with(name="category")
 
 
 def a_category_with(name, color=(255, 0, 0), font_color=(0, 255, 255),
                     parent=None):
+    """Create a :doc:`Category <timelinelib_canvas_data_category>` object."""
     return Category(name=name, color=color, font_color=font_color,
                     parent=parent)
 
 
 def a_gregorian_era():
+    """Create an :doc:`Era <timelinelib_canvas_data_era>` object."""
     return a_gregorian_era_with()
 
 
 def a_gregorian_era_with(start=None, end=None, time=ANY_TIME, name="foo", color=(128, 128, 128), time_type=GregorianTimeType()):
+    """Create an :doc:`Era <timelinelib_canvas_data_era>` object."""
     if start and end:
         start = human_time_to_gregorian(start)
         end = human_time_to_gregorian(end)
@@ -185,10 +194,12 @@ def a_gregorian_era_with(start=None, end=None, time=ANY_TIME, name="foo", color=
 
 
 def a_numeric_era():
+    """Create an :doc:`Era <timelinelib_canvas_data_era>` object."""
     return a_numeric_era_with()
 
 
 def a_numeric_era_with(start=None, end=None, time=ANY_NUM_TIME, name="foo", color=(128, 128, 128)):
+    """Create an :doc:`Era <timelinelib_canvas_data_era>` object."""
     if not (start or end):
         start = time
         end = time
@@ -196,6 +207,7 @@ def a_numeric_era_with(start=None, end=None, time=ANY_NUM_TIME, name="foo", colo
 
 
 def inc(number):
+    """Return the number + 1. If number is None return 8."""
     if number is None:
         return 8
     else:
@@ -203,6 +215,7 @@ def inc(number):
 
 
 def new_cat(event):
+    """Return a new category."""
     if event.get_category() is None:
         return a_category_with(name="new category")
     else:
@@ -210,6 +223,7 @@ def new_cat(event):
 
 
 def new_parent(category):
+    """Return a new category parent."""
     if category._get_parent() is None:
         return a_category_with(name="new category")
     else:
@@ -217,6 +231,7 @@ def new_parent(category):
 
 
 def new_progress(event):
+    """Return the event's progress + 1. If the event's progress is None, return 8."""
     if event.get_progress() is None:
         return 8
     else:
@@ -224,6 +239,7 @@ def new_progress(event):
 
 
 def modifier_change_ends_today(event):
+    """Toggle the event's ends-today property."""
     if event.get_locked():
         event.set_locked(False)
         event.set_ends_today(not event.get_ends_today())
@@ -314,7 +330,7 @@ TIME_MODIFIERS = [
 
 
 class ObjectWithTruthValue(object):
-
+    """An object of this class can be treated as a boolean."""
     def __init__(self, truth_value):
         self.truth_value = truth_value
 
@@ -323,6 +339,10 @@ class ObjectWithTruthValue(object):
 
 
 def select_language(language):
+    """
+    Select the system locale language.
+    This function is Windows specific.
+    """
     import platform
     from timelinelib.config.paths import LOCALE_DIR
     from timelinelib.meta.about import APPLICATION_NAME
@@ -334,6 +354,9 @@ def select_language(language):
 
 
 class _ANY(object):
+    """An object of this class is always considered equal to any other object."""
+
     def __eq__(self, other):
         return True
 ANY = _ANY()
+"""This object is always considered equal to any other object."""
