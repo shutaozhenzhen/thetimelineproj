@@ -62,9 +62,9 @@ from timelinelib.config.arguments import ApplicationArguments
 application_arguments = ApplicationArguments()
 application_arguments.parse_from(sys.argv[1:])
 
-import timelinelib.debug
+import timelinelib.monitoring
 
-timelinelib.debug.DEBUG_ENABLED = application_arguments.get_debug_flag()
+timelinelib.monitoring.DEBUG_ENABLED = application_arguments.get_debug_flag()
 
 from timelinelib.wxgui.setup import setup_humblewx
 
