@@ -120,7 +120,7 @@ class EditEventDialogController(Controller):
             self.view.SetName(self.event.get_text())
             self.view.SetCategory(self.event.get_category())
             self.view.SetFuzzy(self.event.get_fuzzy())
-            self.locked = self.event.get_locked()
+            self.view.SetLocked(self.event.get_locked())
             self.ends_today = self.event.get_ends_today()
         else:
             self.start = start
@@ -128,7 +128,7 @@ class EditEventDialogController(Controller):
             self.view.SetName("")
             self.view.SetCategory(None)
             self.view.SetFuzzy(False)
-            self.locked = False
+            self.view.SetLocked(False)
             self.ends_today = False
 
     def _set_view_content(self):
@@ -157,11 +157,9 @@ class EditEventDialogController(Controller):
         elif self.event is None and self.config.get_uncheck_time_for_new_events():
             self.view.SetShowTime(False)
         self.view.SetShowAddMoreCheckbox(self.event is None)
-        self.view.SetLocked(self.locked)
         self.view.SetEndsToday(self.ends_today)
 
     def _get_and_verify_input(self):
-        self.locked = self.view.GetLocked()
         self.ends_today = self.view.GetEndsToday()
         start = self._get_start_from_view()
         if self._dialog_has_signalled_invalid_input(start):
@@ -171,7 +169,7 @@ class EditEventDialogController(Controller):
         if self._dialog_has_signalled_invalid_input(end):
             self.view.DisplayInvalidStart(_("Invalid End- date or time"))
             raise ValueError()
-        if self.event is not None and self.locked:
+        if self.event is not None and self.view.GetLocked():
             self._verify_that_time_has_not_been_changed(start, end)
         self.start = self._validate_and_save_start(self._get_start_from_view())
         self.end = self._validate_and_save_end(self._get_end_from_view())
@@ -248,7 +246,7 @@ class EditEventDialogController(Controller):
                 self.view.GetName(),
                 self.view.GetCategory(),
                 self.view.GetFuzzy(),
-                self.locked,
+                self.view.GetLocked(),
                 self.ends_today
             )
             self.container.update_container(self.event)
@@ -265,7 +263,7 @@ class EditEventDialogController(Controller):
                 self.view.GetName(),
                 self.view.GetCategory(),
                 self.view.GetFuzzy(),
-                self.locked,
+                self.view.GetLocked(),
                 self.ends_today
             )
 
@@ -294,7 +292,7 @@ class EditEventDialogController(Controller):
                 self.view.GetName(),
                 self.view.GetCategory(),
                 self.view.GetFuzzy(),
-                self.locked,
+                self.view.GetLocked(),
                 self.ends_today
             )
 
