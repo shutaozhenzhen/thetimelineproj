@@ -82,6 +82,10 @@ def a_time_period():
 
 
 def human_time_to_ymdhm(human_time):
+    """
+    Convert a human readable date and time string into a tuple of
+    numeric values.
+    """
     parts = human_time.split(" ")
     day_part, month_part, year_part = parts[0], parts[1], parts[2]
     day = int(day_part)
@@ -102,6 +106,7 @@ def human_time_to_ymdhm(human_time):
 
 
 def an_event():
+    """Create an :doc:`Event <timelinelib_canvas_data_event>` object."""
     return an_event_with(time=ANY_TIME)
 
 
