@@ -15,6 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Contains unit test utility functions.
+
+Many functions use a human readable date and time string as argument.
+Such a string has a day, month, year and an optional time like this::
+
+   "1 Aug 2012" or "12 Jan 2017 12:05:30"
+"""
 
 import random
 
