@@ -172,11 +172,11 @@ class CustomCategoryTree(wx.ScrolledWindow):
         self.monitoring.timer_end()
         if DEBUG_ENABLED:
             (width, height) = self.GetSizeTuple()
-            redraw_time = self.monitoring.timer_elapsed_ms()
+            redraw_time = self.monitoring.timer_elapsed_ms
             self.monitoring.count_category_redraw()
             memdc.SetTextForeground((255, 0, 0))
             memdc.SetFont(Font(10, weight=wx.FONTWEIGHT_BOLD))
-            memdc.DrawText("Redraw count: %d" % self.monitoring.category_redraw_count, 10, height - 35)
+            memdc.DrawText("Redraw count: %d" % self.monitoring._category_redraw_count, 10, height - 35)
             memdc.DrawText("Last redraw time: %.3f ms" % redraw_time, 10, height - 20)
         memdc.EndDrawing()
         del memdc
