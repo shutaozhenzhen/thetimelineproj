@@ -121,7 +121,7 @@ class EditEventDialogController(Controller):
             self.view.SetCategory(self.event.get_category())
             self.view.SetFuzzy(self.event.get_fuzzy())
             self.view.SetLocked(self.event.get_locked())
-            self.ends_today = self.event.get_ends_today()
+            self.view.SetEndsToday(self.event.get_ends_today())
         else:
             self.start = start
             self.end = end
@@ -129,7 +129,7 @@ class EditEventDialogController(Controller):
             self.view.SetCategory(None)
             self.view.SetFuzzy(False)
             self.view.SetLocked(False)
-            self.ends_today = False
+            self.view.SetEndsToday(False)
 
     def _set_view_content(self):
         if self.event is not None:
@@ -157,10 +157,8 @@ class EditEventDialogController(Controller):
         elif self.event is None and self.config.get_uncheck_time_for_new_events():
             self.view.SetShowTime(False)
         self.view.SetShowAddMoreCheckbox(self.event is None)
-        self.view.SetEndsToday(self.ends_today)
 
     def _get_and_verify_input(self):
-        self.ends_today = self.view.GetEndsToday()
         start = self._get_start_from_view()
         if self._dialog_has_signalled_invalid_input(start):
             self.view.DisplayInvalidStart(_("Invalid Start- date or time"))
@@ -199,7 +197,7 @@ class EditEventDialogController(Controller):
 
     def _verify_that_time_has_not_been_changed(self, start, end):
         self._exception_if_start_has_changed(start)
-        if not self.ends_today:
+        if not self.view.GetEndsToday():
             self._exception_if_end_has_changed(end)
 
     def _exception_if_start_has_changed(self, start):
@@ -247,7 +245,7 @@ class EditEventDialogController(Controller):
                 self.view.GetCategory(),
                 self.view.GetFuzzy(),
                 self.view.GetLocked(),
-                self.ends_today
+                self.view.GetEndsToday()
             )
             self.container.update_container(self.event)
         else:
@@ -264,7 +262,7 @@ class EditEventDialogController(Controller):
                 self.view.GetCategory(),
                 self.view.GetFuzzy(),
                 self.view.GetLocked(),
-                self.ends_today
+                self.view.GetEndsToday()
             )
 
     def _remove_event_from_container(self):
@@ -293,7 +291,7 @@ class EditEventDialogController(Controller):
                 self.view.GetCategory(),
                 self.view.GetFuzzy(),
                 self.view.GetLocked(),
-                self.ends_today
+                self.view.GetEndsToday()
             )
 
     def _create_subevent(self):
@@ -305,7 +303,7 @@ class EditEventDialogController(Controller):
             self.view.GetName(),
             self.view.GetCategory(),
             self.container,
-            ends_today=self.ends_today
+            ends_today=self.view.GetEndsToday()
         )
 
     def _is_new_container(self, container):
@@ -328,7 +326,7 @@ class EditEventDialogController(Controller):
     def _validate_and_save_end(self, end):
         if end is None:
             raise ValueError()
-        if self.ends_today:
+        if self.view.GetEndsToday():
             end_time = self.time_type.now()
         else:
             end_time = end
@@ -341,7 +339,7 @@ class EditEventDialogController(Controller):
         TimePeriod(self.start, self.end)
 
     def _validate_ends_today(self):
-        if self.ends_today and self.start > self.time_type.now():
+        if self.view.GetEndsToday() and self.start > self.time_type.now():
             self.view.DisplayErrorMessage(_("Start time > Now."))
             raise ValueError()
 
