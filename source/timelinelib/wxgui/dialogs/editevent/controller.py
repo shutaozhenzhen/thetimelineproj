@@ -155,6 +155,10 @@ class EditEventDialogController(Controller):
             else:
                 self.view.SetShowPeriod(self.end > self.start)
                 self.view.SetShowTime(self._event_has_nonzero_time())
+        if self.config.get_never_use_time():
+            self.view.DisableTime()
+        elif self.event is None and self.config.get_uncheck_time_for_new_events():
+            self.view.SetShowTime(False)
         self.view.SetShowAddMoreCheckbox(self.event is None)
         self.view.SetFuzzy(self.fuzzy)
         self.view.SetLocked(self.locked)
