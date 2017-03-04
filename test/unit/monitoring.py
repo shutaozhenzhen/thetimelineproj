@@ -18,7 +18,7 @@
 
 from timelinelib.test.cases.unit import UnitTestCase
 from mock import Mock
-from timelinelib.debug import Monitoring
+from timelinelib.monitoring import Monitoring
 from timelinelib.timer import Timer
 
 
