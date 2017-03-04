@@ -206,13 +206,13 @@ class TimelineCanvasController(object):
 
         def display_monitor_result(dc):
             (width, height) = self.view.GetSizeTuple()
-            redraw_time = self.monitoring.timer_elapsed_ms()
+            redraw_time = self.monitoring.timer_elapsed_ms
             self.monitoring.count_timeline_redraw()
             dc.SetTextForeground((255, 0, 0))
             dc.SetFont(Font(12, weight=wx.FONTWEIGHT_BOLD))
             dc.DrawText("Undo buffer size: %d" % len(self.timeline._undo_handler._undo_buffer), width - 300, height - 100)
             dc.DrawText("Undo buffer pos: %d" % self.timeline._undo_handler._pos, width - 300, height - 80)
-            dc.DrawText("Redraw count: %d" % self.monitoring.timeline_redraw_count, width - 300, height - 60)
+            dc.DrawText("Redraw count: %d" % self.monitoring._timeline_redraw_count, width - 300, height - 60)
             dc.DrawText("Last redraw time: %.3f ms" % redraw_time, width - 300, height - 40)
 
         def fn_draw(dc):
