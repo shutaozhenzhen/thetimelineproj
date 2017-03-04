@@ -244,9 +244,15 @@ class EditEventDialogController(Controller):
 
     def _update_event_when_container_selected_and_event_is_subevent(self):
         if self.event.container == self.container:
-            self.event.update(self.start, self.end, self.view.GetName(),
-                              self.view.GetCategory(), self.fuzzy, self.locked,
-                              self.ends_today)
+            self.event.update(
+                self.start,
+                self.end,
+                self.view.GetName(),
+                self.view.GetCategory(),
+                self.fuzzy,
+                self.locked,
+                self.ends_today
+            )
             self.container.update_container(self.event)
         else:
             self._change_container()
@@ -255,9 +261,15 @@ class EditEventDialogController(Controller):
         if self.event.is_subevent():
             self._remove_event_from_container()
         else:
-            self.event.update(self.start, self.end, self.view.GetName(),
-                              self.view.GetCategory(), self.fuzzy, self.locked,
-                              self.ends_today)
+            self.event.update(
+                self.start,
+                self.end,
+                self.view.GetName(),
+                self.view.GetCategory(),
+                self.fuzzy,
+                self.locked,
+                self.ends_today
+            )
 
     def _remove_event_from_container(self):
         self.event.container.unregister_subevent(self.event)
@@ -278,15 +290,27 @@ class EditEventDialogController(Controller):
         if self.container is not None:
             self._create_subevent()
         else:
-            self.event = Event(self.start, self.end, self.view.GetName(),
-                               self.view.GetCategory(), self.fuzzy, self.locked,
-                               self.ends_today)
+            self.event = Event(
+                self.start,
+                self.end,
+                self.view.GetName(),
+                self.view.GetCategory(),
+                self.fuzzy,
+                self.locked,
+                self.ends_today
+            )
 
     def _create_subevent(self):
         if self._is_new_container(self.container):
             self._add_new_container()
-        self.event = Subevent(self.start, self.end, self.view.GetName(),
-                              self.view.GetCategory(), self.container, ends_today=self.ends_today)
+        self.event = Subevent(
+            self.start,
+            self.end,
+            self.view.GetName(),
+            self.view.GetCategory(),
+            self.container,
+            ends_today=self.ends_today
+        )
 
     def _is_new_container(self, container):
         return container not in self.timeline.get_containers()
