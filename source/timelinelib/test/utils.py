@@ -21,7 +21,6 @@ import random
 from timelinelib.calendar.gregorian.gregorian import Gregorian
 from timelinelib.calendar.gregorian.monthnames import ABBREVIATED_ENGLISH_MONTH_NAMES
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Era
