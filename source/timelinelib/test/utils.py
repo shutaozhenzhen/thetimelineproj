@@ -110,12 +110,13 @@ def an_event():
     return an_event_with(time=ANY_TIME)
 
 
-def an_event_with(start=None, end=None, time=ANY_TIME, text="foo", fuzzy=False,
-                  locked=False, ends_today=False, category=None, default_color=(200, 200, 200)):
+def an_event_with(human_start_time=None, human_end_time=None, time=ANY_TIME,
+                  text="foo", fuzzy=False, locked=False, ends_today=False,
+                  category=None, default_color=(200, 200, 200)):
     """Create an :doc:`Event <timelinelib_canvas_data_event>` object."""
-    if start and end:
-        start = human_time_to_gregorian(start)
-        end = human_time_to_gregorian(end)
+    if human_start_time and human_end_time:
+        start = human_time_to_gregorian(human_start_time)
+        end = human_time_to_gregorian(human_end_time)
     else:
         start = human_time_to_gregorian(time)
         end = human_time_to_gregorian(time)

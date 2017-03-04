@@ -117,7 +117,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         return event
 
     def a_period_event(self, start, end):
-        event = an_event_with(start=start, end=end)
+        event = an_event_with(human_start_time=start, human_end_time=end)
         self.selected_events.append(event)
         return event
 

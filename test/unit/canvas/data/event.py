@@ -163,7 +163,7 @@ class describe_event(UnitTestCase):
                  ("11 Jul 2014 10:11", "12 Jul 2014 12:13", "1 #day# 2 #hours# 2 #minutes#"),
                  )
         for start, end, label in cases:
-            event = an_event_with(start=start, end=end)
+            event = an_event_with(human_start_time=start, human_end_time=end)
             self.assertEqual(label, event._get_duration_label(GregorianTimeType()))
 
 
