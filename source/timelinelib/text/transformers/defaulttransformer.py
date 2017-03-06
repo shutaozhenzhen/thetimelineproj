@@ -18,9 +18,6 @@
 
 class DefaultTextTransformer(object):
 
-    def __init__(self):
-        pass
-
     def transform(self, text):
         if text is None:
             return ""
