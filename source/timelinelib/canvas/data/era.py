@@ -25,10 +25,9 @@ DEFAULT_ERA_COLOR = (200, 200, 200)
 class Era(TimelineItem):
     """
     A clearly defined period of time of arbitrary but well-defined length.
-
-    In addition to the time period attributes (start, end) an Era also has a
-    name and a color. The color is used to display the Era period as a
-    background color in a timeline.
+    An Era is indicated in a timeline, by setting the background color
+    to the Era color for the Era time period. The Era name is also
+    drawn on the timeline within the Era time period.
     """
 
     def __init__(self, start_time, end_time, name, color=DEFAULT_ERA_COLOR, ends_today=False):
