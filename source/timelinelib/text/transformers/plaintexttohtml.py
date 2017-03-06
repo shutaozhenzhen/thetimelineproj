@@ -23,9 +23,6 @@ from timelinelib.text.transformers.defaulttransformer import DefaultTextTransfor
 
 class PlainTextToHtml(DefaultTextTransformer):
 
-    def __init__(self):
-        pass
-
     def transform(self, text):
         html_text = super(PlainTextToHtml, self).transform(text)
         try:
