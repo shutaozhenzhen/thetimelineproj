@@ -82,6 +82,7 @@ COLORIZE_WEEKENDS = "colorize_weekens"
 SKIP_S_IN_DECADE_TEXT = "skip_s_in_decade_text"
 DISPLAY_CHECKMARK_ON_EVENTS_DONE = "display_checkmark_on_events-done"
 NEVER_USE_TIME = "never_use_time"
+LEGEND_POS = "legend_pos"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
@@ -122,6 +123,7 @@ DEFAULTS = {
     SKIP_S_IN_DECADE_TEXT: "False",
     DISPLAY_CHECKMARK_ON_EVENTS_DONE: "False",
     NEVER_USE_TIME: "False",
+    LEGEND_POS: "0"
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -453,6 +455,15 @@ class Config(Observable):
 
     def set_fuzzy_icon(self, value):
         self.config_parser.set(DEFAULTSECT, FUZZY_ICON, value)
+        self._notify()
+
+    @property
+    def legend_pos(self):
+        return self.config_parser.getint(DEFAULTSECT, LEGEND_POS)
+
+    @legend_pos.setter
+    def legend_pos(self, pos):
+        self.config_parser.set(DEFAULTSECT, LEGEND_POS, str(min(3, max(0, pos))))
         self._notify()
 
     def get_locked_icon(self):
