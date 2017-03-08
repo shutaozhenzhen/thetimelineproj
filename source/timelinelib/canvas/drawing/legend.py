@@ -15,11 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
-"""
-This class represents the legend rectangle drawn on the
-:doc:`TimelinePanel <timelinelib_wxgui_components_timelinepanel>`.
-It's tests are found :doc:`Here <unit_canvas_drawing_legend>`
-"""
+"""Contains the class Legend and positional constants."""
 
 
 from timelinelib.canvas.drawing.utils import darken_color
@@ -28,12 +24,21 @@ from timelinelib.canvas.drawing.utils import darken_color
 MARGIN = 5
 INNER_PADDING = 3  # Space inside event box to text (pixels)
 BOTTOM_LEFT = 0
+"""Default value."""
 TOP_LEFT = 1
+"""."""
 TOP_RIGHT = 2
+"""."""
 BOTTOM_RIGHT = 3
+"""."""
 
 
 class Legend(object):
+    """
+    This class represents the legend rectangle drawn on the
+    :doc:`TimelinePanel <timelinelib_wxgui_components_timelinepanel>`.
+    It's tests are found :doc:`Here <unit_canvas_drawing_legend>`.
+    """
 
     def __init__(self, rect=None, itemheight=None, categories=None, viewport_width=0, viewport_height=0):
         self._rect = rect
@@ -45,6 +50,7 @@ class Legend(object):
 
     @property
     def rect(self):
+        """The bounding rectangle of the legend in screen coordinates."""
         return self._rect
 
     @rect.setter
@@ -53,6 +59,7 @@ class Legend(object):
 
     @property
     def pos(self):
+        """Legend position. valurange=0-3."""
         return self.pos
 
     @pos.setter
@@ -72,6 +79,17 @@ class Legend(object):
 
     @property
     def items(self):
+        """
+        A list of drawing info with one item for each category-item
+        that shall be draw in the legend box.
+        One item contains the following data:
+         - name
+         - color
+         - border color
+         - x pos
+         - y pos
+         - box rect
+        """
         def c(cat):
             color_box_rect = (self.x, self.y, self._itemheight, self._itemheight)
             dat = (cat.name, cat.color, darken_color(cat.color), self._rect.x + INNER_PADDING, self.y, color_box_rect)
