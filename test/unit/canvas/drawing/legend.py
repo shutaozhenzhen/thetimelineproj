@@ -35,24 +35,35 @@ def has_property(name):
     return outer_wrapper
 
 
+def autodoc(f):
+    def wrapper(*args):
+        """ """
+        f(*args)
+    return wrapper
+
+
 class describe_legend(UnitTestCase):
     """ """
 
+    @autodoc
     @has_property('rect')
     def test_has_a_rect_property(self):
         self.legend.rect = sentinel.RECT
         self.assertEqual(sentinel.RECT, self.legend.rect)
 
+    @autodoc
     @has_property('items')
     def test_has_a_items_property(self):
         pass
 
+    @autodoc
     def test_can_return_list_with_content_info(self):
         legend = self.a_legend()
         self.assertEqual([
                           ('cat-1', (10, 20, 30), (7, 14, 21), 8, 358, (92, 358, 10, 10)),
                           ('cat-2', (10, 20, 20), (7, 14, 14), 8, 371, (92, 371, 10, 10))], legend.items)
 
+    @autodoc
     def test_can_move_legend_to_top_of_screen(self):
         legend = self.a_legend()
         legend.pos = TOP_LEFT
@@ -60,6 +71,7 @@ class describe_legend(UnitTestCase):
                           ('cat-1', (10, 20, 30), (7, 14, 21), 8, 8, (92, 8, 10, 10)),
                           ('cat-2', (10, 20, 20), (7, 14, 14), 8, 21, (92, 21, 10, 10))], legend.items)
 
+    @autodoc
     def test_can_move_legend_to_top_right_of_screen(self):
         legend = self.a_legend()
         legend.pos = TOP_RIGHT
@@ -67,6 +79,7 @@ class describe_legend(UnitTestCase):
                           ('cat-1', (10, 20, 30), (7, 14, 21), 298, 8, (382, 8, 10, 10)),
                           ('cat-2', (10, 20, 20), (7, 14, 14), 298, 21, (382, 21, 10, 10))], legend.items)
 
+    @autodoc
     def test_can_move_legend_to_bottom_right_of_screen(self):
         legend = self.a_legend()
         legend.pos = BOTTOM_RIGHT
