@@ -35,12 +35,12 @@ BOTTOM_RIGHT = 3
 
 class Legend(object):
 
-    def __init__(self, rect=None, itemheight=None, categories=None, width=0, height=0):
+    def __init__(self, rect=None, itemheight=None, categories=None, viewport_width=0, viewport_height=0):
         self._rect = rect
         self._categories = categories
         self._itemheight = itemheight
-        self._width = width
-        self._height = height
+        self._viewport_width = viewport_width
+        self._viewport_height = viewport_height
         self.pos = BOTTOM_LEFT
 
     @property
@@ -51,34 +51,32 @@ class Legend(object):
     def rect(self, rect):
         self._rect = rect
 
-
     @property
     def pos(self):
         return self.pos
 
     @pos.setter
     def pos(self, pos):
-        if pos == BOTTOM_LEFT:
-            self._rect.SetX(MARGIN)
-            self._rect.SetY(self._height - self._rect.height - MARGIN)
-        elif pos == TOP_LEFT:
-            self._rect.SetX(MARGIN)
-            self._rect.SetY(MARGIN)
-        elif pos == TOP_RIGHT:
-            self._rect.SetX(self._width - self._rect.width - MARGIN)
-            self._rect.SetY(MARGIN)
-        elif pos == BOTTOM_RIGHT:
-            self._rect.SetX(self._width - self._rect.width - MARGIN)
-            self._rect.SetY(self._height - self._rect.height - MARGIN)
+        top_y = MARGIN
+        bottom_y = self._viewport_height - self._rect.height - MARGIN
+        left_x = MARGIN
+        right_x = self._viewport_width - self._rect.width - MARGIN
+        points = {BOTTOM_LEFT: (left_x, bottom_y),
+                  TOP_LEFT: (left_x, top_y),
+                  TOP_RIGHT: (right_x, top_y),
+                  BOTTOM_RIGHT: (right_x, bottom_y)}
+        x, y = points[pos]
+        self._rect.SetX(x)
+        self._rect.SetY(y)
         self._pos = pos
 
     @property
     def items(self):
-        self.x = self._rect.x + self._rect.Width - self._itemheight - INNER_PADDING
-        self.y = self._rect.y + INNER_PADDING
         def c(cat):
             color_box_rect = (self.x, self.y, self._itemheight, self._itemheight)
             dat = (cat.name, cat.color, darken_color(cat.color), self._rect.x + INNER_PADDING, self.y, color_box_rect)
             self.y += self._itemheight + INNER_PADDING
             return dat
+        self.x = self._rect.x + self._rect.Width - self._itemheight - INNER_PADDING
+        self.y = self._rect.y + INNER_PADDING
         return [c(cat) for cat in self._categories]
