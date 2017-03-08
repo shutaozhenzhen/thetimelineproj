@@ -21,7 +21,6 @@
 from mock import sentinel
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.canvas.drawing.legend import Legend
-from timelinelib.canvas.drawing.legend import BOTTOM_LEFT
 from timelinelib.canvas.drawing.legend import TOP_LEFT
 from timelinelib.canvas.drawing.legend import BOTTOM_RIGHT
 from timelinelib.canvas.drawing.legend import TOP_RIGHT
@@ -45,6 +44,10 @@ class describe_legend(UnitTestCase):
     def test_has_a_rect_property(self):
         self.legend.rect = sentinel.RECT
         self.assertEqual(sentinel.RECT, self.legend.rect)
+
+    @has_property('items')
+    def test_has_a_items_property(self):
+        pass
 
     def test_can_return_list_with_content_info(self):
         legend = self.a_legend()
