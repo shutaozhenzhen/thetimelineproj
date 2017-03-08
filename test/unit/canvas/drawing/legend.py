@@ -21,7 +21,10 @@
 from mock import sentinel
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.canvas.drawing.legend import Legend
+from timelinelib.canvas.drawing.legend import BOTTOM_LEFT
 from timelinelib.canvas.drawing.legend import TOP_LEFT
+from timelinelib.canvas.drawing.legend import BOTTOM_RIGHT
+from timelinelib.canvas.drawing.legend import TOP_RIGHT
 
 
 def has_property(name):
@@ -56,6 +59,20 @@ class describe_legend(UnitTestCase):
                           ('cat-1', (10, 20, 30), (7, 14, 21), 8, 8, (92, 8, 10, 10)),
                           ('cat-2', (10, 20, 20), (7, 14, 14), 8, 21, (92, 21, 10, 10))], legend.items)
 
+    def test_can_move_legend_to_top_right_of_screen(self):
+        legend = self.a_legend()
+        legend.pos = TOP_RIGHT
+        self.assertEqual([
+                          ('cat-1', (10, 20, 30), (7, 14, 21), 298, 8, (382, 8, 10, 10)),
+                          ('cat-2', (10, 20, 20), (7, 14, 14), 298, 21, (382, 21, 10, 10))], legend.items)
+
+    def test_can_move_legend_to_bottom_right_of_screen(self):
+        legend = self.a_legend()
+        legend.pos = BOTTOM_RIGHT
+        self.assertEqual([
+                          ('cat-1', (10, 20, 30), (7, 14, 21), 298, 358, (382, 358, 10, 10)),
+                          ('cat-2', (10, 20, 20), (7, 14, 14), 298, 371, (382, 371, 10, 10))], legend.items)
+
     def a_legend(self):
         categories = [Cat('cat-1', (10, 20, 30)), Cat('cat-2', (10, 20, 20))]
         rect = Rect(2, 400, 100, 40)
@@ -80,6 +97,7 @@ class Rect():
         self.x = x
         self.y = y
         self.Width = w
+        self.width = w
         self.height = h
 
     def SetX(self, x):
