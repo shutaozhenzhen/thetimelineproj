@@ -36,9 +36,7 @@ def has_property(name):
 
 
 class describe_legend(UnitTestCase):
-
-    def test_can_be_created(self):
-        self.assertTrue(self.legend is not None)
+    """ """
 
     @has_property('rect')
     def test_has_a_rect_property(self):
