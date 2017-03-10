@@ -449,21 +449,6 @@ class DefaultDrawingAlgorithm(Drawer):
     def _legend_should_be_drawn(self, categories):
         return self.appearance.get_legend_visible() and len(categories) > 0
 
-    def _calculate_legend_rect(self, categories, view_properties):
-        max_width = 0
-        height = INNER_PADDING
-        for cat in categories:
-            tw, th = self.dc.GetTextExtent(cat.name)
-            height = height + th + INNER_PADDING
-            if tw > max_width:
-                max_width = tw
-        item_height = self._text_height_with_current_font()
-        width = max_width + 4 * INNER_PADDING + item_height
-        return wx.Rect(OUTER_PADDING,
-                       self.scene.height - height - OUTER_PADDING,
-                       width,
-                       height)
-
     def _draw_legend_box(self, rect):
         self.dc.SetBrush(self.white_solid_brush)
         self.dc.SetPen(self.black_solid_pen)
