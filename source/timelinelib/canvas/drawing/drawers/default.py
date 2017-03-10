@@ -449,14 +449,6 @@ class DefaultDrawingAlgorithm(Drawer):
     def _legend_should_be_drawn(self, categories):
         return self.appearance.get_legend_visible() and len(categories) > 0
 
-    def _draw_legend_items(self, legend):
-        for name, color, dark_color, x, y, color_box_rect in legend.items:
-            self.dc.SetBrush(wx.Brush(color, wx.SOLID))
-            self.dc.SetPen(wx.Pen(dark_color, 1, wx.SOLID))
-            self.dc.DrawRectangleRect(color_box_rect)
-            self.dc.DrawText(name, x, y)
-        return
-
     def _scroll_events_vertically(self, view_properties):
         collection = []
         amount = view_properties.hscroll_amount
