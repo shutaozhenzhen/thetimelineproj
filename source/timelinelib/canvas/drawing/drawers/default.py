@@ -30,7 +30,6 @@ from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
 from timelinelib.wxgui.components.font import Font
 import timelinelib.wxgui.components.font as font
-from timelinelib.canvas.drawing.legend import Legend
 from timelinelib.canvas.drawing.drawers.legenddrawer import LegendDrawer
 
 
