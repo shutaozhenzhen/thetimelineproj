@@ -447,14 +447,6 @@ class DefaultDrawingAlgorithm(Drawer):
     def _draw_legend(self, view_properties, categories):
         if self._legend_should_be_drawn(categories):
             LegendDrawer(self.dc, self.scene, categories).draw()
-            return
-            font.set_legend_text_font(self.appearance.get_legend_font(), self.dc)
-            rect = self._calculate_legend_rect(categories, view_properties)
-            item_height = self._text_height_with_current_font()
-            legend = Legend(rect, item_height, categories, self.scene.width, self.scene.height)
-            legend.pos = view_properties.legend_pos
-            self._draw_legend_box(legend.rect)
-            self._draw_legend_items(legend)
 
     def _legend_should_be_drawn(self, categories):
         return self.appearance.get_legend_visible() and len(categories) > 0
