@@ -31,6 +31,7 @@ from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONT
 from timelinelib.wxgui.components.font import Font
 import timelinelib.wxgui.components.font as font
 from timelinelib.canvas.drawing.legend import Legend
+from timelinelib.canvas.drawing.drawers.legenddrawer import LegendDrawer
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -445,6 +446,8 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_legend(self, view_properties, categories):
         if self._legend_should_be_drawn(categories):
+            LegendDrawer(self.dc, self.scene, categories).draw()
+            return
             font.set_legend_text_font(self.appearance.get_legend_font(), self.dc)
             rect = self._calculate_legend_rect(categories, view_properties)
             item_height = self._text_height_with_current_font()
