@@ -23,7 +23,6 @@ import wx
 
 from timelinelib.canvas.drawing.interface import Drawer
 from timelinelib.canvas.drawing.scene import TimelineScene
-from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.canvas.data import sort_categories
 from timelinelib.canvas.data.timeperiod import TimePeriod
