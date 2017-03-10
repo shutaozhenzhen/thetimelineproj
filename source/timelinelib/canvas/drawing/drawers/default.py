@@ -449,11 +449,6 @@ class DefaultDrawingAlgorithm(Drawer):
     def _legend_should_be_drawn(self, categories):
         return self.appearance.get_legend_visible() and len(categories) > 0
 
-    def _draw_legend_box(self, rect):
-        self.dc.SetBrush(self.white_solid_brush)
-        self.dc.SetPen(self.black_solid_pen)
-        self.dc.DrawRectangleRect(rect)
-
     def _text_height_with_current_font(self):
         STRING_WITH_MIXED_CAPITALIZATION = "jJ"
         _, th = self.dc.GetTextExtent(STRING_WITH_MIXED_CAPITALIZATION)
