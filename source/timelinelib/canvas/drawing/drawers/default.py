@@ -449,11 +449,6 @@ class DefaultDrawingAlgorithm(Drawer):
     def _legend_should_be_drawn(self, categories):
         return self.appearance.get_legend_visible() and len(categories) > 0
 
-    def _text_height_with_current_font(self):
-        STRING_WITH_MIXED_CAPITALIZATION = "jJ"
-        _, th = self.dc.GetTextExtent(STRING_WITH_MIXED_CAPITALIZATION)
-        return th
-
     def _draw_legend_items(self, legend):
         for name, color, dark_color, x, y, color_box_rect in legend.items:
             self.dc.SetBrush(wx.Brush(color, wx.SOLID))
