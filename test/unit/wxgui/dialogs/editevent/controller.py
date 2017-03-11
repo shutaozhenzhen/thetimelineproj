@@ -31,6 +31,7 @@ from timelinelib.config.dotfile import Config
 from timelinelib.db import db_open
 from timelinelib.repositories.interface import EventRepository
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import an_event
 from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.test.utils import ObjectWithTruthValue
@@ -84,7 +85,7 @@ class EditEventDialogTestCase(UnitTestCase):
     def when_editor_opened_with(self, start, end, event):
         self.controller.on_init(
             self.config,
-            GregorianTimeType(),
+            self.db.time_type,
             self.event_repository,
             self.db,
             start,
@@ -160,9 +161,6 @@ class EditEventDialogTestCase(UnitTestCase):
         container.register_subevent(subevent)
         self.controller.container = container
 
-    def simulate_ends_today_checked(self, today):
-        self.controller.end = today
-
     def simulate_user_clicks_enlarge_button(self, enlarged=True):
         import wx
         app = wx.App()
@@ -174,6 +172,10 @@ class EditEventDialogTestCase(UnitTestCase):
         else:
             self.controller.on_enlarge_click(evt)
         app.Destroy()
+
+    def get_saved_event(self):
+        self.assertEqual(len(self.event_repository.save.call_args_list), 1)
+        return self.event_repository.save.call_args_list[0][0][0]
 
     def assert_start_time_set_to(self, time):
         self.view.SetStart.assert_called_with(human_time_to_gregorian(time))
@@ -326,29 +328,16 @@ class describe_locked_checkbox(EditEventDialogTestCase):
 
 class describe_start_is_in_history(EditEventDialogTestCase):
 
-    def test_new_event_starts_in_history(self):
-        time = "1 Jan 3010"
-        self.when_editor_opened_with_time("1 Jan 3010", Event(human_time_to_gregorian(time), human_time_to_gregorian(time), ""))
-        self.assertFalse(self.controller._start_is_in_history())
-
     def test_new_event_starting_in_history(self):
         self.when_editor_opened_with_time("1 Jan 2010")
         self.assertTrue(self.controller._start_is_in_history())
 
     def test_event_not_starting_in_history(self):
-        time_period = Mock()
-        time_period.start_time = human_time_to_gregorian("1 Jan 3010")
-        event = Mock()
-        event.get_time_period.return_value = time_period
-        self.when_editor_opened_with_event(event)
+        self.when_editor_opened_with_event(an_event_with(time="1 Jan 3010"))
         self.assertFalse(self.controller._start_is_in_history())
 
     def test_event_starting_in_history(self):
-        time_period = Mock()
-        time_period.start_time = human_time_to_gregorian("1 Jan 2010")
-        event = Mock()
-        event.get_time_period.return_value = time_period
-        self.when_editor_opened_with_event(event)
+        self.when_editor_opened_with_event(an_event_with(time="1 Jan 2010"))
         self.assertTrue(self.controller._start_is_in_history())
 
 
@@ -366,9 +355,12 @@ class describe_ends_today_checkbox(EditEventDialogTestCase):
 
     def test_no_endtime_check(self):
         self.when_editor_opened_with_period("2 Jan 2010", "3 Jan 2010")
-        self.controller.ends_today = True
-        end_time = human_time_to_gregorian("1 Jan 2010")
-        self.assertTrue(end_time <= self.controller._validate_and_save_end(end_time))
+        self.view.GetEndsToday.return_value = True
+        self.simulate_user_clicks_ok()
+        self.assertGreater(
+            self.get_saved_event().get_end_time(),
+            human_time_to_gregorian("3 Jan 2010")
+        )
 
 
 class describe_text_field(EditEventDialogTestCase):
@@ -564,18 +556,17 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         subevent = Subevent(start, start, "subevent")
         self.when_editor_opened_with_event(subevent)
         self.simulate_user_selects_a_container(subevent)
-        self.simulate_ends_today_checked(today)
+        self.db.time_type.now = lambda: today
+        self.view.GetEndsToday.return_value = True
+        self.view.GetStart.return_value = human_time_to_gregorian("1 Jan 2010")
+        self.view.GetEnd.return_value = human_time_to_gregorian("1 Jan 2010")
+        self.view.GetLocked.return_value = False
         self.controller._update_event()
         self.assertTrue(self.controller.container.get_time_period().ends_at(today))
 
     def test_container_allows_ends_today(self):
         self.view.GetContainer.return_value = None
         self.assertTrue(self.controller._container_allows_ends_today())
-
-    def test_start_is_in_history(self):
-        self.controller.event = Mock()
-        self.controller.start = None
-        self.assertFalse(self.controller._start_is_in_history())
 
     def test_update_event_delete(self):
         self.when_editing_a_new_event()
@@ -584,6 +575,7 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         self.controller.timeline = Mock()
         self.controller.timeline.get_containers.return_value = []
         self.controller.event.is_subevent.return_value = False
+        self.view.GetLocked.return_value = False
         self.controller._update_event()
         self.assertEqual(1, self.controller.timeline.delete_event.call_count)
 
@@ -595,6 +587,7 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         self.controller.timeline = Mock()
         self.controller.timeline.get_containers.return_value = []
         self.controller.event.is_subevent.return_value = True
+        self.view.GetLocked.return_value = False
         self.controller._update_event()
         self.controller.container.register_subevent.asert_called_with(self.controller.event)
 
@@ -604,6 +597,7 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         self.controller.event = Mock()
         self.controller.timeline = Mock()
         self.controller.event.is_subevent.return_value = True
+        self.view.GetLocked.return_value = False
         self.controller._update_event()
         self.assertEqual(1, self.controller.timeline.delete_event.call_count)
 
@@ -675,53 +669,54 @@ class describe_changing_container(EditEventDialogTestCase):
 class describe_exceptions(EditEventDialogTestCase):
 
     def test_start_changed(self):
-        self.when_editing_a_new_event()
-        self.controller.start = human_time_to_gregorian("1 Jan 2010")
-        self.controller.end = human_time_to_gregorian("1 Jan 2010")
-        start = human_time_to_gregorian("1 Jan 2009")
-        try:
-            self.controller._verify_that_time_has_not_been_changed(start, self.controller.end)
-            self.fail("Unexpected ok")
-        except ValueError:
-            self.view.SetStart.assert_called_with(self.controller.start)
-            self.view.DisplayInvalidStart.assert_called_with("#You can't change time when the Event is locked#")
+        event = an_event_with(
+            human_start_time="10 Jan 2010",
+            human_end_time="20 Jan 2010"
+        )
+        self.when_editor_opened_with_event(event)
+        self.view.GetLocked.return_value = True
+        self.view.GetEndsToday.return_value = False
+        self.view.GetStart.return_value = human_time_to_gregorian("1 Jan 2010")
+        self.view.GetEnd.return_value = human_time_to_gregorian("20 Jan 2010")
+        self.simulate_user_clicks_ok()
+        self.view.SetStart.assert_called_with(human_time_to_gregorian("10 Jan 2010"))
+        self.view.DisplayInvalidStart.assert_called_with("#You can't change time when the Event is locked#")
 
     def test_end_changed(self):
-        self.when_editing_a_new_event()
-        self.controller.start = human_time_to_gregorian("1 Jan 2010")
-        self.controller.end = human_time_to_gregorian("1 Jan 2010")
-        end = human_time_to_gregorian("1 Jan 2011")
-        try:
-            self.controller._verify_that_time_has_not_been_changed(self.controller.start, end)
-            self.fail("Unexpected ok")
-        except ValueError:
-            self.view.SetStart.assert_called_with(self.controller.start)
-            self.view.DisplayInvalidStart.assert_called_with("#You can't change time when the Event is locked#")
+        event = an_event_with(
+            human_start_time="10 Jan 2010",
+            human_end_time="20 Jan 2010"
+        )
+        self.when_editor_opened_with_event(event)
+        self.view.GetLocked.return_value = True
+        self.view.GetEndsToday.return_value = False
+        self.view.GetStart.return_value = human_time_to_gregorian("10 Jan 2010")
+        self.view.GetEnd.return_value = human_time_to_gregorian("30 Jan 2010")
+        self.simulate_user_clicks_ok()
+        self.view.SetEnd.assert_called_with(human_time_to_gregorian("20 Jan 2010"))
+        self.view.DisplayInvalidStart.assert_called_with("#You can't change time when the Event is locked#")
 
     def test_invalid_start(self):
-        try:
-            self.controller._validate_and_save_start(None)
-            self.fail("Unexpected ok")
-        except ValueError:
-            pass
+        self.when_editing_a_new_event()
+        self.view.GetStart.side_effect = ValueError
+        self.simulate_user_clicks_ok()
+        self.assertTrue(self.view.DisplayInvalidStart.called)
 
     def test_invalid_end(self):
-        try:
-            self.controller._validate_and_save_end(None)
-            self.fail("Unexpected ok")
-        except ValueError:
-            pass
+        self.when_editing_a_new_event()
+        self.view.GetEnd.side_effect = ValueError
+        self.simulate_user_clicks_ok()
+        self.assertTrue(self.view.DisplayInvalidEnd.called)
 
     def test_ends_today(self):
-        self.controller.time_type = Mock()
-        self.controller.time_type.now.return_value = 0
-        self.controller.ends_today = True
-        self.controller.start = 1
-        try:
-            self.controller._validate_ends_today()
-            self.fail("Unexpected ok")
-        except ValueError:
-            self.view.DisplayErrorMessage.assert_called_with("#Start time > Now.#")
+        self.when_editor_opened_with_event(an_event())
+        self.db.time_type.now = lambda: human_time_to_gregorian("1 Jan 2010")
+        self.view.GetEndsToday.return_value = True
+        self.view.GetLocked.return_value = False
+        self.view.GetStart.return_value = human_time_to_gregorian("10 Jan 2010")
+        self.view.GetEnd.return_value = human_time_to_gregorian("20 Jan 2010")
+        self.simulate_user_clicks_ok()
+        self.view.DisplayInvalidStart.assert_called_with("#End must be > Start#")
 
     def test_save_to_db(self):
         e = Exception("")
