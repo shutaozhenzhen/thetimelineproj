@@ -112,7 +112,16 @@ class EditEventDialogController(Controller):
     def _set_values(self, start, end, event):
         self.event = event
         self.opened_from_menu = self.event is None and start is None
-        if self.event is not None:
+        if self.event is None:
+            self._set_period_in_view(start, end)
+            self.view.SetName("")
+            self.view.SetCategory(None)
+            self.view.SetFuzzy(False)
+            self.view.SetLocked(False)
+            self.view.SetEndsToday(False)
+            self.view.SetContainer(None)
+            self.view.SetShowAddMoreCheckbox(True)
+        else:
             self._set_period_in_view(
                 self.event.get_time_period().start_time,
                 self.event.get_time_period().end_time
@@ -128,15 +137,6 @@ class EditEventDialogController(Controller):
             else:
                 self.view.SetContainer(None)
             self.view.SetShowAddMoreCheckbox(False)
-        else:
-            self._set_period_in_view(start, end)
-            self.view.SetName("")
-            self.view.SetCategory(None)
-            self.view.SetFuzzy(False)
-            self.view.SetLocked(False)
-            self.view.SetEndsToday(False)
-            self.view.SetContainer(None)
-            self.view.SetShowAddMoreCheckbox(True)
 
     def _set_period_in_view(self, start, end):
         self.view.SetStart(start)
