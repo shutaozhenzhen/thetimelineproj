@@ -35,7 +35,6 @@ class EditEventDialogController(Controller):
         self.time_type = time_type
         self.event_repository = event_repository
         self._set_values(start, end, event)
-        self._set_view_content()
         self.view.SetFocusOnFirstControl()
 
     def on_period_checkbox_changed(self, event):
@@ -123,6 +122,12 @@ class EditEventDialogController(Controller):
             self.view.SetFuzzy(self.event.get_fuzzy())
             self.view.SetLocked(self.event.get_locked())
             self.view.SetEndsToday(self.event.get_ends_today())
+            self.view.SetEventData(self.event.data)
+            if self.event.is_subevent():
+                self.view.SetContainer(self.event.container)
+            else:
+                self.view.SetContainer(None)
+            self.view.SetShowAddMoreCheckbox(False)
         else:
             self._set_period_in_view(start, end)
             self.view.SetName("")
@@ -130,17 +135,8 @@ class EditEventDialogController(Controller):
             self.view.SetFuzzy(False)
             self.view.SetLocked(False)
             self.view.SetEndsToday(False)
-
-    def _set_view_content(self):
-        if self.event is not None:
-            self.view.SetEventData(self.event.data)
-            if self.event.is_subevent():
-                self.view.SetContainer(self.event.container)
-            else:
-                self.view.SetContainer(None)
-        else:
             self.view.SetContainer(None)
-        self.view.SetShowAddMoreCheckbox(self.event is None)
+            self.view.SetShowAddMoreCheckbox(True)
 
     def _set_period_in_view(self, start, end):
         self.view.SetStart(start)
