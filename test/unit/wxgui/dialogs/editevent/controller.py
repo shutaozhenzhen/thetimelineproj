@@ -159,7 +159,8 @@ class EditEventDialogTestCase(UnitTestCase):
         time_period = subevent.get_time_period()
         container = Container(time_period.start_time, time_period.start_time, "container")
         container.register_subevent(subevent)
-        self.controller.container = container
+        self.view.GetContainer.return_value = container
+        return container
 
     def simulate_user_clicks_enlarge_button(self, enlarged=True):
         import wx
@@ -555,14 +556,14 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         today = human_time_to_gregorian("1 Jan 2015")
         subevent = Subevent(start, start, "subevent")
         self.when_editor_opened_with_event(subevent)
-        self.simulate_user_selects_a_container(subevent)
+        container = self.simulate_user_selects_a_container(subevent)
         self.db.time_type.now = lambda: today
         self.view.GetEndsToday.return_value = True
         self.view.GetStart.return_value = human_time_to_gregorian("1 Jan 2010")
         self.view.GetEnd.return_value = human_time_to_gregorian("1 Jan 2010")
         self.view.GetLocked.return_value = False
         self.controller._update_event()
-        self.assertTrue(self.controller.container.get_time_period().ends_at(today))
+        self.assertTrue(container.get_time_period().ends_at(today))
 
     def test_container_allows_ends_today(self):
         self.view.GetContainer.return_value = None
@@ -570,7 +571,7 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
 
     def test_update_event_delete(self):
         self.when_editing_a_new_event()
-        self.controller.container = Mock()
+        self.view.GetContainer.return_value = Mock()
         self.controller.event = Mock()
         self.controller.timeline = Mock()
         self.controller.timeline.get_containers.return_value = []
@@ -661,7 +662,7 @@ class describe_changing_container(EditEventDialogTestCase):
         container.cid.return_value = MAX_CID - 1
         self.controller.timeline = Mock()
         self.controller.timeline.get_containers.return_value = [container]
-        self.controller.container = container
+        self.view.GetContainer.return_value = container
         self.controller._add_new_container()
         container.set_cid.assert_called_with(MAX_CID)
 

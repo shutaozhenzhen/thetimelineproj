@@ -94,7 +94,6 @@ class EditEventDialogController(Controller):
 
     def _create_or_update_event(self):
         try:
-            self._get_and_verify_input()
             self._save_event()
             if self.view.IsAddMoreChecked():
                 self.event = None
@@ -169,9 +168,6 @@ class EditEventDialogController(Controller):
         except Exception:
             return False
 
-    def _get_and_verify_input(self):
-        self.container = self.view.GetContainer()
-
     def _get_period_from_view(self):
         start = self._get_start_from_view()
         if start is None:
@@ -235,7 +231,7 @@ class EditEventDialogController(Controller):
         self._save_event_to_db()
 
     def _update_event(self):
-        container_selected = (self.container is not None)
+        container_selected = (self.view.GetContainer() is not None)
         if container_selected:
             self._update_event_when_container_selected()
         else:
@@ -248,7 +244,7 @@ class EditEventDialogController(Controller):
             self._add_event_to_container()
 
     def _update_event_when_container_selected_and_event_is_subevent(self):
-        if self.event.container == self.container:
+        if self.event.container == self.view.GetContainer():
             (start, end) = self._get_period_from_view()
             self.event.update(
                 start,
@@ -259,7 +255,7 @@ class EditEventDialogController(Controller):
                 self.view.GetLocked(),
                 self.view.GetEndsToday()
             )
-            self.container.update_container(self.event)
+            self.view.GetContainer().update_container(self.event)
         else:
             self._change_container()
 
@@ -288,13 +284,13 @@ class EditEventDialogController(Controller):
         self._create_subevent()
 
     def _change_container(self):
-        if self._is_new_container(self.container):
+        if self._is_new_container(self.view.GetContainer()):
             self._add_new_container()
         self._remove_event_from_container()
-        self.container.register_subevent(self.event)
+        self.view.GetContainer().register_subevent(self.event)
 
     def _create_new_event(self):
-        if self.container is not None:
+        if self.view.GetContainer() is not None:
             self._create_subevent()
         else:
             (start, end) = self._get_period_from_view()
@@ -309,7 +305,7 @@ class EditEventDialogController(Controller):
             )
 
     def _create_subevent(self):
-        if self._is_new_container(self.container):
+        if self._is_new_container(self.view.GetContainer()):
             self._add_new_container()
         (start, end) = self._get_period_from_view()
         self.event = Subevent(
@@ -317,7 +313,7 @@ class EditEventDialogController(Controller):
             end,
             self.view.GetName(),
             self.view.GetCategory(),
-            self.container,
+            self.view.GetContainer(),
             ends_today=self.view.GetEndsToday()
         )
 
@@ -330,7 +326,7 @@ class EditEventDialogController(Controller):
             if container.cid() > max_id:
                 max_id = container.cid()
         max_id += 1
-        self.container.set_cid(max_id)
+        self.view.GetContainer().set_cid(max_id)
         self._save_container_to_db()
 
     def _adjust_end_if_ends_today(self, start, end):
@@ -351,7 +347,7 @@ class EditEventDialogController(Controller):
 
     def _save_container_to_db(self):
         try:
-            self.event_repository.save(self.container)
+            self.event_repository.save(self.view.GetContainer())
         except Exception, e:
             self.view.HandleDbError(e)
 
