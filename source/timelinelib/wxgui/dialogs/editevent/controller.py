@@ -37,29 +37,6 @@ class EditEventDialogController(Controller):
         self._set_values(start, end, event)
         self.view.SetFocusOnFirstControl()
 
-    def on_period_checkbox_changed(self, event):
-        end = self.view.GetEnd()
-        start = self.view.GetStart()
-        if start is not None and end is not None:
-            if (event.IsChecked() and start >= end):
-                self._set_inital_period_end_time(start)
-        self.view.ShowToTime(event.IsChecked())
-
-    def _set_inital_period_end_time(self, start):
-        try:
-            self.view.SetEnd(start + self._get_period_initial_delta())
-        except TypeError:
-            pass
-
-    def _get_period_initial_delta(self):
-        if self.timeline.get_time_type().is_date_time_type():
-            return delta_from_days(1)
-        else:
-            return 1
-
-    def on_show_time_checkbox_changed(self, event):
-        self.view.SetShowTime(event.IsChecked())
-
     def on_locked_checkbox_changed(self, event):
         self._enable_disable_ends_today()
 
@@ -139,84 +116,51 @@ class EditEventDialogController(Controller):
             self.view.SetShowAddMoreCheckbox(False)
 
     def _set_period_in_view(self, start, end):
-        self.view.SetStart(start)
-        self.view.SetEnd(end)
+        self.view.SetPeriod(self._get_period(start, end))
         if self.event:
-            self.view.SetShowPeriod(end > start)
-            self.view.SetShowTime(self._event_has_nonzero_time(start, end))
+            pass
         else:
             if self.opened_from_menu:
                 self.view.SetShowPeriod(self.config.event_editor_show_period)
                 self.view.SetShowTime(self.config.event_editor_show_time)
             else:
-                self.view.SetShowPeriod(end > start)
-                self.view.SetShowTime(self._event_has_nonzero_time(start, end))
+                pass
         if self.config.get_never_use_time():
             self.view.DisableTime()
         elif self.event is None and self.config.get_uncheck_time_for_new_events():
             self.view.SetShowTime(False)
 
-    def _event_has_nonzero_time(self, start, end):
-        try:
-            return self.time_type.time_period_has_nonzero_time(
-                TimePeriod(start, end)
-            )
-        except Exception:
-            return False
+    def _get_period(self, start, end):
+        if start is None and end is None:
+            time = self.time_type.now()
+            return TimePeriod(time, time)
+        elif end is None:
+            return TimePeriod(start, start)
+        else:
+            return TimePeriod(start, end)
 
     def _get_period_from_view(self):
-        start = self._get_start_from_view()
-        if start is None:
-            self.view.DisplayInvalidStart(_("Invalid Start- date or time"))
+        try:
+            period = self.view.GetPeriod()
+        except ValueError, ex:
+            self.view.DisplayInvalidPeriod("%s" % ex_msg(ex))
             raise ValueError()
-        end = self._get_end_from_view()
-        if end is None:
-            self.view.DisplayInvalidStart(_("Invalid End- date or time"))
-            raise ValueError()
+        (start, end) = (period.get_start_time(), period.get_end_time())
         if self.event is not None and self.view.GetLocked():
             self._verify_that_time_has_not_been_changed(start, end)
         end = self._adjust_end_if_ends_today(start, end)
         TimePeriod(start, end)
         return (start, end)
 
-    def _get_start_from_view(self):
-        try:
-            return self.view.GetStart()
-        except ValueError, ex:
-            self.view.DisplayInvalidStart("%s" % ex_msg(ex))
-        except TypeError, ex:
-            pass
-
-    def _get_end_from_view(self):
-        if self.view.GetShowPeriod():
-            try:
-                return self.view.GetEnd()
-            except ValueError, ex:
-                self.view.DisplayInvalidEnd("%s" % ex_msg(ex))
-        else:
-            return self._get_start_from_view()
-
     def _verify_that_time_has_not_been_changed(self, start, end):
-        self._exception_if_start_has_changed(start)
-        if not self.view.GetEndsToday():
-            self._exception_if_end_has_changed(end)
-
-    def _exception_if_start_has_changed(self, start):
         original_start = self.event.get_start_time()
-        if original_start != start:
-            self.view.SetStart(original_start)
-            self._exception_when_start_or_end_has_changed()
-
-    def _exception_if_end_has_changed(self, end):
         original_end = self.event.get_end_time()
-        if original_end != end:
-            self.view.SetEnd(original_end)
-            self._exception_when_start_or_end_has_changed()
-
-    def _exception_when_start_or_end_has_changed(self):
-        error_message = _("You can't change time when the Event is locked")
-        self.view.DisplayInvalidStart(error_message)
-        raise ValueError()
+        if (original_start != start or
+            (not self.view.GetEndsToday() and original_end != end)):
+            self.view.SetPeriod(self.event.get_time_period())
+            error_message = _("You can't change time when the Event is locked")
+            self.view.DisplayInvalidPeriod(error_message)
+            raise ValueError()
 
     def _save_event(self):
         if self.event is None:
@@ -331,7 +275,7 @@ class EditEventDialogController(Controller):
         else:
             end_time = end
         if end_time < start:
-            self.view.DisplayInvalidStart(_("End must be > Start"))
+            self.view.DisplayInvalidPeriod(_("End must be > Start"))
             raise ValueError()
         return end_time
 

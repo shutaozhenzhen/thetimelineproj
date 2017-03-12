@@ -90,6 +90,15 @@ class NumPeriodPicker(Panel):
         self.end_time.Show(show)
         self.Layout()
 
+    def GetShowTime(self):
+        return False
+
+    def SetShowTime(self, show):
+        pass
+
+    def DisableTime(self):
+        pass
+
 
 class NumPeriodPickerController(Controller):
 

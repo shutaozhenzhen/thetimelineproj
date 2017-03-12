@@ -25,6 +25,7 @@ from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.config.dotfile import Config
@@ -33,6 +34,7 @@ from timelinelib.repositories.interface import EventRepository
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event
 from timelinelib.test.utils import an_event_with
+from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.test.utils import ObjectWithTruthValue
 from timelinelib.wxgui.dialogs.editevent.controller import EditEventDialogController
@@ -50,18 +52,6 @@ class EditEventDialogTestCase(UnitTestCase):
         self.num_db.time_type = NumTimeType()
         self.config = Mock(Config)
         self.config.event_editor_show_period = False
-        self.config.event_editor_show_time = False
-
-    def when_show_period_used_last_time(self):
-        self.config.event_editor_show_period = True
-
-    def when_show_period_not_used_last_time(self):
-        self.config.event_editor_show_period = False
-
-    def when_show_time_used_last_time(self):
-        self.config.event_editor_show_time = True
-
-    def when_show_time_not_used_last_time(self):
         self.config.event_editor_show_time = False
 
     def when_editing_a_new_event(self):
@@ -91,10 +81,10 @@ class EditEventDialogTestCase(UnitTestCase):
             start,
             end,
             event)
-        self.view.GetStart.return_value = start
-        self.view.GetEnd.return_value = end
         self.view.GetContainer.return_value = None
         self.view.IsAddMoreChecked.return_value = False
+        if start is not None and end is not None:
+            self.view.GetPeriod.return_value = TimePeriod(start, end)
 
     def when_editor_opened_with_num(self, start, end, event):
         self.controller.on_init(
@@ -106,11 +96,8 @@ class EditEventDialogTestCase(UnitTestCase):
             end,
             event)
 
-    def simulate_user_enters_start_time(self, time):
-        self.view.GetStart.return_value = human_time_to_gregorian(time)
-
-    def simulate_user_enters_end_time(self, time):
-        self.view.GetEnd.return_value = human_time_to_gregorian(time)
+    def simulate_user_enters_period(self, start, end):
+        self.view.GetPeriod.return_value = gregorian_period(start, end)
 
     def simulate_user_enters_num_start_time(self, time):
         self.view.GetStart.return_value = time
@@ -136,24 +123,9 @@ class EditEventDialogTestCase(UnitTestCase):
         self.view.GetLocked.return_value = True
         self.controller.on_locked_checkbox_changed(evt)
 
-    def simulate_user_checkes_show_time_checkbox(self):
-        event = Mock()
-        event.IsChecked.return_value = True
-        self.controller.on_show_time_checkbox_changed(event)
-
-    def simulate_user_uncheckes_show_time_checkbox(self):
-        event = Mock()
-        event.IsChecked.return_value = False
-        self.controller.on_show_time_checkbox_changed(event)
-
     def simulate_container_changed(self):
         evt = Mock()
         self.controller.on_container_changed(evt)
-
-    def simulate_user_clicks_period_checkbox(self, checked=True):
-        event = Mock()
-        event.IsChecked.return_value = checked
-        self.controller.on_period_checkbox_changed(event)
 
     def simulate_user_selects_a_container(self, subevent):
         time_period = subevent.get_time_period()
@@ -217,74 +189,53 @@ class describe_edit_event_dialog(EditEventDialogTestCase):
         self.show_dialog(EditEventDialog, None, config, "title", db)
 
 
-class describe_start_time_field(EditEventDialogTestCase):
-
-    def test_has_value_from_first_argument(self):
-        self.when_editor_opened_with_time("1 Jan 2010")
-        self.assert_start_time_set_to("1 Jan 2010")
-
-    def test_has_value_from_event(self):
-        time_period = Mock()
-        time_period.start_time = sentinel.START_TIME
-        event = Mock()
-        event.get_time_period.return_value = time_period
-        self.when_editor_opened_with_event(event)
-        self.view.SetStart.assert_called_with(sentinel.START_TIME)
-
-
-class describe_end_time_field(EditEventDialogTestCase):
+class describe_period_field(EditEventDialogTestCase):
 
     def test_has_value_from_first_argument_if_only_one_given(self):
         self.when_editor_opened_with_time("1 Jan 2010")
-        self.assert_end_time_set_to("1 Jan 2010")
+        self.view.SetPeriod.assert_called_with(
+            gregorian_period("1 Jan 2010", "1 Jan 2010")
+        )
 
     def test_has_value_from_second_argument(self):
         self.when_editor_opened_with_period("1 Jan 2010", "2 Jan 2010")
-        self.assert_end_time_set_to("2 Jan 2010")
+        self.view.SetPeriod.assert_called_with(
+            gregorian_period("1 Jan 2010", "2 Jan 2010")
+        )
 
     def test_has_value_from_event(self):
-        time_period = Mock()
-        time_period.end_time = sentinel.END_TIME
-        event = Mock()
-        event.get_time_period.return_value = time_period
-        self.when_editor_opened_with_event(event)
-        self.view.SetEnd.assert_called_with(sentinel.END_TIME)
+        self.when_editor_opened_with_event(an_event_with(
+            human_start_time="1 Jan 2010",
+            human_end_time="2 Jan 2010"
+        ))
+        self.view.SetPeriod.assert_called_with(
+            gregorian_period("1 Jan 2010", "2 Jan 2010")
+        )
 
-    def test_is_hidden_if_no_period(self):
-        self.when_editor_opened_with_time("1 Jan 2010")
-        self.view.SetShowPeriod.assert_called_with(False)
+
+class describe_period_field_period(EditEventDialogTestCase):
 
     def test_is_shown_if_shown_previous_time(self):
-        self.when_show_period_used_last_time()
-        self.when_editor_opened_with_period("1 Jan 2010", "2 Jan 2010")
+        self.config.event_editor_show_period = True
+        self.when_editor_opened_with_event(None)
         self.view.SetShowPeriod.assert_called_with(True)
 
-    def test_is_shown_if_period_defined(self):
-        self.when_show_period_not_used_last_time()
-        self.when_editor_opened_with_period("1 Jan 2010", "2 Jan 2010")
-        self.view.SetShowPeriod.assert_called_with(True)
+    def test_is_hidden_if_hidden_previous_time(self):
+        self.config.event_editor_show_period = False
+        self.when_editor_opened_with_event(None)
+        self.view.SetShowPeriod.assert_called_with(False)
 
 
-class describe_time_fields(EditEventDialogTestCase):
+class describe_period_field_time(EditEventDialogTestCase):
 
-    def test_are_hidden_if_no_time_specified(self):
-        self.when_editor_opened_with_time("1 Jan 2010")
-        self.view.SetShowTime.assert_called_with(False)
-
-    def test_are_shown_if_shown_previous_time(self):
-        self.when_show_time_used_last_time()
-        self.when_editor_opened_with_time("1 Jan 2010 15:30")
+    def test_is_shown_if_shown_previous_time(self):
+        self.config.event_editor_show_time = True
+        self.when_editor_opened_with_event(None)
         self.view.SetShowTime.assert_called_with(True)
 
-    def test_are_not_shown_if_not_shown_previous_time(self):
-        self.when_show_time_not_used_last_time()
-        self.when_editor_opened_with_time("1 Jan 2010 15:30")
-        self.view.SetShowTime.assert_called_with(True)
-
-    def test_show_time_click_changes_view(self):
-        self.simulate_user_checkes_show_time_checkbox()
-        self.view.SetShowTime.assert_called_with(True)
-        self.simulate_user_uncheckes_show_time_checkbox()
+    def test_is_hidden_if_hidden_previous_time(self):
+        self.config.event_editor_show_time = False
+        self.when_editor_opened_with_event(None)
         self.view.SetShowTime.assert_called_with(False)
 
 
@@ -295,8 +246,8 @@ class describe_fuzzy_checkbox(EditEventDialogTestCase):
         self.view.SetFuzzy.assert_called_with(False)
 
     def test_has_value_from_event(self):
-        event = Mock()
-        event.get_fuzzy.return_value = sentinel.FUZZY
+        event = an_event()
+        event.set_fuzzy(sentinel.FUZZY)
         self.when_editor_opened_with_event(event)
         self.view.SetFuzzy.assert_called_with(sentinel.FUZZY)
 
@@ -308,8 +259,7 @@ class describe_locked_checkbox(EditEventDialogTestCase):
         self.view.SetLocked.assert_called_with(False)
 
     def test_has_value_from_event(self):
-        event = Mock()
-        event.get_locked.return_value = sentinel.LOCKED
+        event = an_event_with(locked=sentinel.LOCKED)
         self.when_editor_opened_with_event(event)
         self.view.SetLocked.assert_called_with(sentinel.LOCKED)
 
@@ -349,8 +299,8 @@ class describe_ends_today_checkbox(EditEventDialogTestCase):
         self.view.SetEndsToday.assert_called_with(False)
 
     def test_has_value_from_event(self):
-        event = Mock()
-        event.get_ends_today.return_value = sentinel.ENDS_TODYAY
+        event = an_event()
+        event.set_ends_today(sentinel.ENDS_TODYAY)
         self.when_editor_opened_with_event(event)
         self.view.SetEndsToday.assert_called_with(sentinel.ENDS_TODYAY)
 
@@ -371,10 +321,10 @@ class describe_text_field(EditEventDialogTestCase):
         self.view.SetName.assert_called_with("")
 
     def test_has_value_from_event(self):
-        event = Mock()
-        event.get_text.return_value = sentinel.TEXT
+        event = an_event()
+        event.set_text("hello")
         self.when_editor_opened_with_event(event)
-        self.view.SetName.assert_called_with(sentinel.TEXT)
+        self.view.SetName.assert_called_with("hello")
 
 
 class describe_category_field(EditEventDialogTestCase):
@@ -384,8 +334,8 @@ class describe_category_field(EditEventDialogTestCase):
         self.view.SetCategory.assert_called_with(None)
 
     def test_has_value_from_event(self):
-        event = Mock()
-        event.get_category.return_value = sentinel.CATEGORY
+        event = an_event()
+        event.set_category(sentinel.CATEGORY)
         self.when_editor_opened_with_event(event)
         self.view.SetCategory.assert_called_with(sentinel.CATEGORY)
 
@@ -393,7 +343,7 @@ class describe_category_field(EditEventDialogTestCase):
 class describe_additional_data(EditEventDialogTestCase):
 
     def test_is_populated_from_event(self):
-        event = Mock()
+        event = an_event()
         event.data = sentinel.DATA
         self.when_editor_opened_with_event(event)
         self.view.SetEventData.assert_called_with(sentinel.DATA)
@@ -419,8 +369,9 @@ class describe_saving(object):
     def given_saving_valid_event(self):
         self.locked_value = ObjectWithTruthValue(False)
         self.ends_today_value = ObjectWithTruthValue(False)
-        self.simulate_user_enters_start_time("1 Jan 2010")
-        self.simulate_user_enters_end_time("2 Jan 2010")
+        self.view.GetPeriod.return_value = gregorian_period(
+            "1 Jan 2010", "2 Jan 2010"
+        )
         self.view.GetFuzzy.return_value = sentinel.FUZZY
         self.view.GetLocked.return_value = self.locked_value
         self.view.GetEndsToday.return_value = self.ends_today_value
@@ -440,12 +391,6 @@ class describe_saving(object):
         self.given_saving_valid_event()
         self.assertEqual(self.saved_event.get_time_period().end_time,
                          human_time_to_gregorian("2 Jan 2010"))
-
-    def test_saves_end_time_from_start_time(self):
-        self.view.GetShowPeriod.return_value = False
-        self.given_saving_valid_event()
-        self.assertEqual(self.saved_event.get_time_period().end_time,
-                         human_time_to_gregorian("1 Jan 2010"))
 
     def test_saves_text(self):
         self.given_saving_valid_event()
@@ -504,28 +449,11 @@ class describe_saving_existing(EditEventDialogTestCase, describe_saving):
 
 class describe_validation(EditEventDialogTestCase):
 
-    def test_start_must_be_valid(self):
+    def test_period_must_be_valid(self):
         self.when_editing_a_new_event()
-        self.view.GetStart.side_effect = ValueError
+        self.view.GetPeriod.side_effect = ValueError
         self.simulate_user_clicks_ok()
-        self.assertTrue(self.view.DisplayInvalidStart.called)
-        self.assert_no_event_saved()
-
-    def test_end_must_be_valid(self):
-        self.when_editing_a_new_event()
-        self.view.GetEnd.side_effect = ValueError
-        self.simulate_user_clicks_ok()
-        self.assertTrue(self.view.DisplayInvalidEnd.called)
-        self.assert_no_event_saved()
-
-    def test_start_must_be_less_then_end(self):
-        self.when_editor_opened_with_period("1 Jan 2010", "1 Jan 2010")
-        self.view.GetName.return_value = "updated_event"
-        self.view.GetEndsToday.return_value = False
-        self.simulate_user_enters_start_time("2 Jan 2011")
-        self.simulate_user_enters_end_time("1 Jan 2011")
-        self.simulate_user_clicks_ok()
-        self.assertTrue(self.view.DisplayInvalidStart.called)
+        self.assertTrue(self.view.DisplayInvalidPeriod.called)
         self.assert_no_event_saved()
 
     def test_period_can_be_long(self):
@@ -533,18 +461,16 @@ class describe_validation(EditEventDialogTestCase):
         self.view.GetName.return_value = "a valid name"  # why needed?
         self.view.GetLocked.return_value = False  # why needed?
         self.view.GetEndsToday.return_value = False
-        self.simulate_user_enters_start_time("1 Jan 2000")
-        self.simulate_user_enters_end_time("1 Jan 5000")
+        self.simulate_user_enters_period("1 Jan 2000", "1 Jan 5000")
         self.simulate_user_clicks_ok()
         self.assertEqual(0, self.view.DisplayErrorMessage.call_count)
 
     def test_time_cant_change_when_event_is_locked(self):
         self.when_editor_opened_with_event(an_event_with(time="1 Jan 2010"))
-        self.simulate_user_enters_start_time("2 Jan 2011 12:00")
-        self.simulate_user_enters_end_time("1 Jan 2011 12:00")
+        self.simulate_user_enters_period("1 Jan 2011 12:00", "2 Jan 2011 12:00")
         self.view.GetLocked.return_value = True
         self.simulate_user_clicks_ok()
-        self.view.DisplayInvalidStart.assert_called_with(
+        self.view.DisplayInvalidPeriod.assert_called_with(
             _("You can't change time when the Event is locked"))
         self.assert_no_event_saved()
 
@@ -559,8 +485,7 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         container = self.simulate_user_selects_a_container(subevent)
         self.db.time_type.now = lambda: today
         self.view.GetEndsToday.return_value = True
-        self.view.GetStart.return_value = human_time_to_gregorian("1 Jan 2010")
-        self.view.GetEnd.return_value = human_time_to_gregorian("1 Jan 2010")
+        self.simulate_user_enters_period("1 Jan 2010", "1 Jan 2010")
         self.view.GetLocked.return_value = False
         self.controller._update_event()
         self.assertTrue(container.get_time_period().ends_at(today))
@@ -601,36 +526,6 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         self.view.GetLocked.return_value = False
         self.controller._update_event()
         self.assertEqual(1, self.controller.timeline.delete_event.call_count)
-
-
-class describe_period_selection(EditEventDialogTestCase):
-
-    def test_period_can_be_turned_on_for_datetime_timeline(self):
-        event = Mock()
-        self.when_editor_opened_with_event(event)
-        self.simulate_user_enters_start_time("1 Jan 2010")
-        self.simulate_user_enters_end_time("1 Jan 2010")
-        self.simulate_user_clicks_period_checkbox(sentinel.STATE)
-        self.view.ShowToTime.assert_called_with(sentinel.STATE)
-        self.view.SetEnd.assert_called_with(self.view.GetStart() + delta_from_days(1))
-
-    def test_period_can_be_turned_on_even_when_end_time_type_is_unexpected(self):
-        event = Mock()
-        self.when_editor_opened_with_event(event)
-        self.simulate_user_enters_start_time("1 Jan 2010")
-        self.simulate_user_enters_end_time("1 Jan 2010")
-        self.view.SetEnd.side_effect = TypeError()
-        self.simulate_user_clicks_period_checkbox(sentinel.STATE)
-        self.view.ShowToTime.assert_called_with(sentinel.STATE)
-
-    def test_period_can_be_turned_on_for_numtime_timeline(self):
-        event = Mock()
-        self.when_editor_opened_with_num_event(event)
-        self.simulate_user_enters_num_start_time(1)
-        self.simulate_user_enters_num_end_time(1)
-        self.simulate_user_clicks_period_checkbox(sentinel.STATE)
-        self.view.ShowToTime.assert_called_with(sentinel.STATE)
-        self.view.SetEnd.assert_called_with(2)
 
 
 class describe_enlarging(EditEventDialogTestCase):
@@ -677,11 +572,12 @@ class describe_exceptions(EditEventDialogTestCase):
         self.when_editor_opened_with_event(event)
         self.view.GetLocked.return_value = True
         self.view.GetEndsToday.return_value = False
-        self.view.GetStart.return_value = human_time_to_gregorian("1 Jan 2010")
-        self.view.GetEnd.return_value = human_time_to_gregorian("20 Jan 2010")
+        self.simulate_user_enters_period("1 Jan 2010", "20 Jan 2010")
         self.simulate_user_clicks_ok()
-        self.view.SetStart.assert_called_with(human_time_to_gregorian("10 Jan 2010"))
-        self.view.DisplayInvalidStart.assert_called_with("#You can't change time when the Event is locked#")
+        self.view.SetPeriod.assert_called_with(
+            gregorian_period("10 Jan 2010", "20 Jan 2010")
+        )
+        self.view.DisplayInvalidPeriod.assert_called_with("#You can't change time when the Event is locked#")
 
     def test_end_changed(self):
         event = an_event_with(
@@ -691,33 +587,27 @@ class describe_exceptions(EditEventDialogTestCase):
         self.when_editor_opened_with_event(event)
         self.view.GetLocked.return_value = True
         self.view.GetEndsToday.return_value = False
-        self.view.GetStart.return_value = human_time_to_gregorian("10 Jan 2010")
-        self.view.GetEnd.return_value = human_time_to_gregorian("30 Jan 2010")
+        self.simulate_user_enters_period("10 Jan 2010", "30 Jan 2010")
         self.simulate_user_clicks_ok()
-        self.view.SetEnd.assert_called_with(human_time_to_gregorian("20 Jan 2010"))
-        self.view.DisplayInvalidStart.assert_called_with("#You can't change time when the Event is locked#")
+        self.view.SetPeriod.assert_called_with(
+            gregorian_period("10 Jan 2010", "20 Jan 2010")
+        )
+        self.view.DisplayInvalidPeriod.assert_called_with("#You can't change time when the Event is locked#")
 
-    def test_invalid_start(self):
+    def test_invalid_period(self):
         self.when_editing_a_new_event()
-        self.view.GetStart.side_effect = ValueError
+        self.view.GetPeriod.side_effect = ValueError
         self.simulate_user_clicks_ok()
-        self.assertTrue(self.view.DisplayInvalidStart.called)
-
-    def test_invalid_end(self):
-        self.when_editing_a_new_event()
-        self.view.GetEnd.side_effect = ValueError
-        self.simulate_user_clicks_ok()
-        self.assertTrue(self.view.DisplayInvalidEnd.called)
+        self.assertTrue(self.view.DisplayInvalidPeriod.called)
 
     def test_ends_today(self):
         self.when_editor_opened_with_event(an_event())
         self.db.time_type.now = lambda: human_time_to_gregorian("1 Jan 2010")
         self.view.GetEndsToday.return_value = True
         self.view.GetLocked.return_value = False
-        self.view.GetStart.return_value = human_time_to_gregorian("10 Jan 2010")
-        self.view.GetEnd.return_value = human_time_to_gregorian("20 Jan 2010")
+        self.simulate_user_enters_period("10 Jan 2010", "20 Jan 2010")
         self.simulate_user_clicks_ok()
-        self.view.DisplayInvalidStart.assert_called_with("#End must be > Start#")
+        self.view.DisplayInvalidPeriod.assert_called_with("#End must be > Start#")
 
     def test_save_to_db(self):
         e = Exception("")

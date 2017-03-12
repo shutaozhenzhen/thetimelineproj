@@ -65,20 +65,8 @@ class EditEventDialog(Dialog):
     TIME_DETAILS_ROW = """
         <StaticText align="ALIGN_CENTER_VERTICAL" label="$(when_label)" />
         <BoxSizerHorizontal>
-            <TimePicker
-                name="start_time"
-                time_type="$(time_type)"
-                config="$(config)"
-            />
-            <Spacer />
-            <StaticText
-                label="$(to_label)"
-                name="to_label"
-                align="ALIGN_CENTER_VERTICAL"
-            />
-            <Spacer />
-            <TimePicker
-                name="end_time"
+            <PeriodPicker
+                name="period_picker"
                 time_type="$(time_type)"
                 config="$(config)"
             />
@@ -88,15 +76,6 @@ class EditEventDialog(Dialog):
     CHECKBOX_ROW = """
         <Spacer />
         <FlexGridSizer rows="1">
-            <CheckBox
-                name="period_checkbox"
-                event_EVT_CHECKBOX="on_period_checkbox_changed"
-                label="$(period_checkbox_text)" />
-            <CheckBox
-                name="show_time_checkbox"
-                event_EVT_CHECKBOX="on_show_time_checkbox_changed"
-                label="$(show_time_checkbox_text)"
-            />
             <CheckBox
                 name="fuzzy_checkbox"
                 label="$(fuzzy_checkbox_text)"
@@ -195,12 +174,9 @@ class EditEventDialog(Dialog):
             "config": config,
             "properties_label": _("Event Properties"),
             "when_label": _("When:"),
-            "period_checkbox_text": _("Period"),
-            "show_time_checkbox_text": _("Show time"),
             "fuzzy_checkbox_text": _("Fuzzy"),
             "locked_checkbox_text": _("Locked"),
             "ends_today_checkbox_text": _("Ends today"),
-            "to_label": _("to"),
             "text_label": _("Text:"),
             "category_label": _("Category:"),
             "container_label": _("Container:"),
@@ -231,44 +207,26 @@ class EditEventDialog(Dialog):
     def GetDuplicateEventDialog(self, timeline, event):
         return DuplicateEventDialog(self.parent, timeline, event)
 
-    def GetStart(self):
-        return self.start_time.get_value()
+    def GetPeriod(self):
+        return self.period_picker.GetValue()
 
-    def SetStart(self, value):
-        self.start_time.set_value(value)
-
-    def GetEnd(self):
-        return self.end_time.get_value()
-
-    def SetEnd(self, value):
-        self.end_time.set_value(value)
+    def SetPeriod(self, value):
+        self.period_picker.SetValue(value)
 
     def GetShowPeriod(self):
-        return self.period_checkbox.GetValue()
+        return self.period_picker.GetShowPeriod()
 
     def SetShowPeriod(self, value):
-        self.period_checkbox.SetValue(value)
-        self.ShowToTime(value)
-
-    def ShowToTime(self, show):
-        self.to_label.Show(show)
-        self.end_time.Show(show)
-        self.Layout()
+        self.period_picker.SetShowPeriod(value)
 
     def GetShowTime(self):
-        return self.show_time_checkbox.GetValue()
+        return self.period_picker.GetShowTime()
 
     def SetShowTime(self, value):
-        if self.timeline.get_time_type().is_date_time_type():
-            self.show_time_checkbox.SetValue(value)
-            self.start_time.show_time(value)
-            self.end_time.show_time(value)
-        else:
-            self.show_time_checkbox.Hide()
+        self.period_picker.SetShowTime(value)
 
     def DisableTime(self):
-        self.SetShowTime(False)
-        self.show_time_checkbox.Disable()
+        self.period_picker.DisableTime()
 
     def GetFuzzy(self):
         return self.fuzzy_checkbox.GetValue()
@@ -341,8 +299,8 @@ class EditEventDialog(Dialog):
 
     def SetFocusOnFirstControl(self):
         control = {
-            "0": self.start_time,
-            "1": self.period_checkbox,
+            "0": self.period_picker,
+            "1": self.fuzzy_checkbox,
             "2": self.name,
             "3": self.category_choice,
             "4": self.container_choice,
@@ -350,11 +308,8 @@ class EditEventDialog(Dialog):
         }[self.config.event_editor_tab_order[0]]
         _set_focus_and_select(control)
 
-    def DisplayInvalidStart(self, message):
-        self._display_invalid_input(message, self.start_time)
-
-    def DisplayInvalidEnd(self, message):
-        self._display_invalid_input(message, self.end_time)
+    def DisplayInvalidPeriod(self, message):
+        self._display_invalid_input(message, self.period_picker)
 
     def _display_invalid_input(self, message, control):
         self.DisplayErrorMessage(message)
