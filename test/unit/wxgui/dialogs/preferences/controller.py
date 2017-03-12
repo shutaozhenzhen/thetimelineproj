@@ -82,6 +82,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
         config.get_major_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         config.get_minor_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         config.get_legend_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
+        config.legend_pos = 0
         return config
 
     def _mock_features(self):
@@ -118,6 +119,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_major_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.get_minor_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.get_legend_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
+        self.config.legend_pos = 0
         self.config.date_format = "yyyy-mm-dd"
         self.config.get_never_use_time.return_value = False
         self.experimental_features = Mock(ExperimentalFeatures)

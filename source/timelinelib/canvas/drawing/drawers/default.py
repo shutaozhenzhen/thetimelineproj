@@ -23,13 +23,13 @@ import wx
 
 from timelinelib.canvas.drawing.interface import Drawer
 from timelinelib.canvas.drawing.scene import TimelineScene
-from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.canvas.data import sort_categories
 from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
 from timelinelib.wxgui.components.font import Font
 import timelinelib.wxgui.components.font as font
+from timelinelib.canvas.drawing.drawers.legenddrawer import LegendDrawer
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -102,6 +102,7 @@ class DefaultDrawingAlgorithm(Drawer):
         return self.scene.get_closest_overlapping_event(event_to_move, up=up)
 
     def draw(self, dc, timeline, view_properties, appearance):
+        view_properties.legend_pos = appearance.get_legend_pos()
         view_properties.set_fuzzy_icon(appearance.get_fuzzy_icon())
         view_properties.set_locked_icon(appearance.get_locked_icon())
         view_properties.set_hyperlink_icon(appearance.get_hyperlink_icon())
@@ -443,52 +444,10 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_legend(self, view_properties, categories):
         if self._legend_should_be_drawn(categories):
-            font.set_legend_text_font(self.appearance.get_legend_font(), self.dc)
-            rect = self._calculate_legend_rect(categories)
-            self._draw_legend_box(rect)
-            self._draw_legend_items(rect, categories)
+            LegendDrawer(self.dc, self.scene, categories).draw()
 
     def _legend_should_be_drawn(self, categories):
         return self.appearance.get_legend_visible() and len(categories) > 0
-
-    def _calculate_legend_rect(self, categories):
-        max_width = 0
-        height = INNER_PADDING
-        for cat in categories:
-            tw, th = self.dc.GetTextExtent(cat.name)
-            height = height + th + INNER_PADDING
-            if tw > max_width:
-                max_width = tw
-        item_height = self._text_height_with_current_font()
-        width = max_width + 4 * INNER_PADDING + item_height
-        return wx.Rect(OUTER_PADDING,
-                       self.scene.height - height - OUTER_PADDING,
-                       width,
-                       height)
-
-    def _draw_legend_box(self, rect):
-        self.dc.SetBrush(self.white_solid_brush)
-        self.dc.SetPen(self.black_solid_pen)
-        self.dc.DrawRectangleRect(rect)
-
-    def _text_height_with_current_font(self):
-        STRING_WITH_MIXED_CAPITALIZATION = "jJ"
-        _, th = self.dc.GetTextExtent(STRING_WITH_MIXED_CAPITALIZATION)
-        return th
-
-    def _draw_legend_items(self, rect, categories):
-        item_height = self._text_height_with_current_font()
-        cur_y = rect.Y + INNER_PADDING
-        for cat in categories:
-            base_color = cat.color
-            border_color = darken_color(base_color)
-            self.dc.SetBrush(wx.Brush(base_color, wx.SOLID))
-            self.dc.SetPen(wx.Pen(border_color, 1, wx.SOLID))
-            color_box_rect = (OUTER_PADDING + rect.Width - item_height -
-                              INNER_PADDING, cur_y, item_height, item_height)
-            self.dc.DrawRectangleRect(color_box_rect)
-            self.dc.DrawText(cat.name, OUTER_PADDING + INNER_PADDING, cur_y)
-            cur_y = cur_y + item_height + INNER_PADDING
 
     def _scroll_events_vertically(self, view_properties):
         collection = []

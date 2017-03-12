@@ -85,6 +85,11 @@ class PreferencesDialog(Dialog):
                                 width="50"
                             />
                         </BoxSizerHorizontal>
+                        <RadioBox
+                            name="legend_positions"
+                            choices="$(legend_positions)"
+                            label="$(legend_positions_text)"
+                        />
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -323,6 +328,8 @@ class PreferencesDialog(Dialog):
             "skip_s_in_decade_text_text": _("Skip s in decade text"),
             "display_checkmark_on_events_done_text": _("Display checkmark when events are done"),
             "never_use_time_text": _("Never use time precision for events"),
+            "legend_positions_text": _("Legend Position"),
+            "legend_positions": [_("Bottom-Left"), _("Top-Left"), _("Top-Right"), _("Bottom-Right")],
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
         self.font_sizer.Layout()
@@ -467,3 +474,9 @@ class PreferencesDialog(Dialog):
     def SetLegendFont(self, font):
         self.legend_font_sample.SetFont(font)
         self.font_sizer.Layout()
+
+    def GetLegendPos(self):
+        return self.legend_positions.GetSelection()
+
+    def SetLegendPos(self, pos):
+        self.legend_positions.SetSelection(pos)

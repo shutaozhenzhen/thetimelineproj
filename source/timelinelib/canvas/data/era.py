@@ -25,10 +25,9 @@ DEFAULT_ERA_COLOR = (200, 200, 200)
 class Era(TimelineItem):
     """
     A clearly defined period of time of arbitrary but well-defined length.
-
-    In addition to the time period attributes (start, end) an Era also has a
-    name and a color. The color is used to display the Era period as a
-    background color in a timeline.
+    An Era is indicated in a timeline, by setting the background color
+    to the Era color for the Era time period. The Era name is also
+    drawn on the timeline within the Era time period.
     """
 
     def __init__(self, start_time, end_time, name, color=DEFAULT_ERA_COLOR, ends_today=False):
@@ -53,47 +52,59 @@ class Era(TimelineItem):
         return self.get_start_time() < other.get_start_time()
 
     def ends_today(self):
+        """ """
         return self._ends_today
 
     def set_ends_today(self, value):
+        """ """
         self._ends_today = value
 
     def update(self, start_time, end_time, name, color=DEFAULT_ERA_COLOR):
+        """ """
         self.update_period(start_time, end_time)
         self.name = name.strip()
         self.color = color
 
     def clone(self):
+        """ """
         new_era = Era(self.get_start_time(),
                       self.get_end_time(), self.name, self.color)
         new_era.set_ends_today(self._ends_today)
         return new_era
 
     def set_id(self, era_id):
+        """ """
         self.id = era_id
         return self
 
     def get_id(self):
+        """ """
         return self.id
 
     def has_id(self):
+        """ """
         return self.id is not None
 
     def set_name(self, name):
+        """ """
         self.name = name.strip()
         return self
 
     def get_name(self):
+        """ """
         return self.name
 
     def set_color(self, color):
+        """ """
         self.color = color
         return self
 
     def get_color(self):
+        """ """
         return self.color
 
     def overlapping(self, era):
+        """ """
         if era.get_start_time() >= self.get_end_time():
             return 0
         if era.get_start_time() == self.get_start_time():
