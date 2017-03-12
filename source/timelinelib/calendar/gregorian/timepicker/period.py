@@ -96,10 +96,17 @@ class GregorianPeriodPicker(Panel):
         self.end_time.Show(show)
         self.Layout()
 
+    def GetShowTime(self):
+        return self.show_time_checkbox.GetValue()
+
     def SetShowTime(self, show):
         self.show_time_checkbox.SetValue(show)
         self.start_time.show_time(show)
         self.end_time.show_time(show)
+
+    def DisableTime(self):
+        self.SetShowTime(False)
+        self.show_time_checkbox.Disable()
 
 
 class GregorianPeriodPickerController(Controller):
