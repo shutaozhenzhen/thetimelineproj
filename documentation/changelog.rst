@@ -13,6 +13,10 @@ Version 1.14.0
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
 
+GUI
+
+* Now the position of the legend can be changed.
+
 Fixed crash reports and bugs:
 
 * Now weekends can be colorized again.

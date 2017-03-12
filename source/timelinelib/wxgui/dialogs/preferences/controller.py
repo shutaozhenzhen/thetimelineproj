@@ -39,6 +39,7 @@ class PreferencesDialogController(Controller):
         self.config.now_line_colour = str(self.view.GetNowLineColor())
         self.config.weekend_colour = str(self.view.GetWeekendColor())
         self.config.set_bg_color(str(self.view.GetBgColor()))
+        self.config.legend_pos = self.view.GetLegendPos()
 
     def on_open_recent_change(self, event):
         self.config.set_open_recent_at_startup(event.IsChecked())
@@ -143,6 +144,7 @@ class PreferencesDialogController(Controller):
         self.view.SetMajorStripFont(deserialize_font(self.config.get_major_strip_font()))
         self.view.SetMinorStripFont(deserialize_font(self.config.get_minor_strip_font()))
         self.view.SetLegendFont(deserialize_font(self.config.get_legend_font()))
+        self.view.SetLegendPos(self.config.legend_pos)
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:

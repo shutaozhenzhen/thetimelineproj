@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Unittests of the class :doc:`Monitoring <timelinelib_monitoring>`."""
 
 from timelinelib.test.cases.unit import UnitTestCase
 from mock import Mock
@@ -23,22 +24,27 @@ from timelinelib.timer import Timer
 
 
 class desribe_monitoring(UnitTestCase):
+    """ """
 
     def test_counters_are_zero_at_start(self):
+        """ """
         self.assertEquals(0, self.monitoring._timeline_redraw_count)
         self.assertEquals(0, self.monitoring._category_redraw_count)
 
     def test_timeline_redraw_counter_increments(self):
+        """ """
         self.monitoring.count_timeline_redraw()
         self.assertEquals(1, self.monitoring._timeline_redraw_count)
         self.assertEquals(0, self.monitoring._category_redraw_count)
 
     def test_category_redraw_counter_increments(self):
+        """ """
         self.monitoring.count_category_redraw()
         self.assertEquals(0, self.monitoring._timeline_redraw_count)
         self.assertEquals(1, self.monitoring._category_redraw_count)
 
     def test_returns_elapsed_time(self):
+        """ """
         self.monitoring.timer_start()
         self.monitoring.timer_end()
         self.timer.start.assert_called_with()
@@ -46,6 +52,7 @@ class desribe_monitoring(UnitTestCase):
         self.assertEquals(3, self.monitoring.timer_elapsed_ms)
 
     def setUp(self):
+        """ """
         self.timer = Mock(Timer)
         self.timer.elapsed_ms = 3
         self.monitoring = Monitoring(self.timer)

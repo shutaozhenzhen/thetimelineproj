@@ -44,6 +44,15 @@ class ViewProperties(Observable):
         self.hyperlink_icon = None
         self.skip_s_in_decade_text = False
         self.display_checkmark_on_events_done = False
+        self.legend_pos = 0
+
+    @property
+    def legend_pos(self):
+        return self._legend_pos
+
+    @legend_pos.setter
+    def legend_pos(self, pos):
+        self._legend_pos = pos
 
     def get_fuzzy_icon(self):
         return self.fuzzy_icon
