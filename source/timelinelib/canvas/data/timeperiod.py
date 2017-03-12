@@ -89,9 +89,10 @@ class TimePeriod(object):
         return (new_start, new_end)
 
     def _assert_period_is_valid(self, new_start, new_end):
-        self._assert_start_gt_end(new_start, new_end)
-
-    def _assert_start_gt_end(self, new_start, new_end):
+        if new_start is None:
+            raise ValueError(_("Invalid start time"))
+        if new_end is None:
+            raise ValueError(_("Invalid end time"))
         if new_start > new_end:
             raise ValueError(_("Start time can't be after end time"))
 
