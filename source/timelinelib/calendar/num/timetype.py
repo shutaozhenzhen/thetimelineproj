@@ -116,9 +116,6 @@ class NumTimeType(TimeType):
     def get_zero_delta(self):
         return 0
 
-    def time_period_has_nonzero_time(self, time_period):
-        return False
-
     def get_name(self):
         return u"numtime"
 
