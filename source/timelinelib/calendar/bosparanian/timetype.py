@@ -95,14 +95,14 @@ class BosparanianTimeType(GregorianTimeType):
         def time_label(time):
             return "%02d:%02d" % time.get_time_of_day()[:-1]
         if time_period.is_period():
-            if self.time_period_has_nonzero_time(time_period):
+            if has_nonzero_time(time_period):
                 label = u"%s to %s" % (label_with_time(time_period.start_time),
                                        label_with_time(time_period.end_time))
             else:
                 label = u"%s to %s" % (label_without_time(time_period.start_time),
                                        label_without_time(time_period.end_time))
         else:
-            if self.time_period_has_nonzero_time(time_period):
+            if has_nonzero_time(time_period):
                 label = u"%s" % label_with_time(time_period.start_time)
             else:
                 label = u"%s" % label_without_time(time_period.start_time)
@@ -706,3 +706,8 @@ def move_period_num_years(period, num):
         return TimePeriod(start_time.to_time(), end_time.to_time())
     except ValueError:
         return None
+
+
+def has_nonzero_time(time_period):
+    return (time_period.start_time.seconds != 0 or
+            time_period.end_time.seconds != 0)

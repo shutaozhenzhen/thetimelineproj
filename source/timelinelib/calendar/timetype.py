@@ -70,9 +70,6 @@ class TimeType(object):
     def get_zero_delta(self):
         raise NotImplementedError("get_zero_delta not implemented.")
 
-    def time_period_has_nonzero_time(self, time_period):
-        raise NotImplementedError("time_period_has_nonzero_time not implemented.")
-
     def get_name(self):
         raise NotImplementedError("get_name not implemented.")
 
