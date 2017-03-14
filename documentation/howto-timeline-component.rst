@@ -43,7 +43,7 @@ Here is a complete example how to use the canvas component:
 
 .. literalinclude:: timeline_canvas_examples.py
     :language: python
-    :lines: 32-
+    :lines: 14-
 
 The canvas
 ----------
