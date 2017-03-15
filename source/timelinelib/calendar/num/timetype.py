@@ -38,9 +38,12 @@ class NumTimeType(TimeType):
         return "%s" % (time)
 
     def parse_time(self, time_string):
-        match = re.search(r"^([-]?\d+(.\d+)?)$", time_string)
+        match = re.search(r"^([-]?\d+(.\d+)?(e[+]\d+)?)$", time_string)
         if match:
-            time = float(match.group(1))
+            if '.' in time_string or 'e' in time_string:
+                time = float(match.group(1))
+            else:
+                time = int(match.group(1))
             try:
                 return time
             except ValueError:

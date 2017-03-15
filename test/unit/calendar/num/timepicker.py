@@ -33,9 +33,6 @@ class desribe_num_time_picker(UnitTestCase):
         self.controller.set_value(None)
         self.time_picker.set_value.assert_called_with(0)
 
-    def test_time_range_is_set(self):
-        self.time_picker.set_range.assert_called_with(-1000000000, 1000000000)
-
     def setUp(self):
         self.time_picker = Mock(NumTimePicker)
         self.controller = NumTimePickerController(self.time_picker, 0, None)
