@@ -17,6 +17,7 @@
 
 
 import wx
+from timelinelib.wxgui.components.numctrl import NumCtrl
 
 
 class NumTimePicker(wx.Panel):
@@ -27,38 +28,30 @@ class NumTimePicker(wx.Panel):
         self.controller = NumTimePickerController(self, 0, on_change)
 
     def get_value(self):
-        return self.time_picker.GetValue()
+        return int(self.time_picker.GetValue())
 
     def set_value(self, num_time):
         if num_time is None:
-            self.time_picker.SetValue(0)
-        else:    
-            self.time_picker.SetValue(int(round(num_time,0)))
-
-    def set_range(self, min, max):
-        self.time_picker.SetRange(min, max)
+            self.time_picker.SetValue('0')
+        else:
+            self.time_picker.SetValue(str(int(num_time)))
 
     def select_all(self):
         self.time_picker.SetSelection(0, len(str(self.get_value())))
 
     def _create_gui(self):
-        time_picker = wx.SpinCtrl(self, -1, "", (30, 50))
-        self.Bind(wx.EVT_SPINCTRL, self.OnSpin, time_picker)
+        time_picker = NumCtrl(self, size=(200, -1))
         # Layout
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(time_picker, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         self.SetSizerAndFit(sizer)
         return time_picker
 
-    def OnSpin(self, evt):
-        self.controller.on_spin()
-
 
 class NumTimePickerController(object):
 
     def __init__(self, time_picker, default_num_time, on_change):
         self.time_picker = time_picker
-        self.time_picker.set_range(-1000000000, 1000000000)
         self.default_num_time = default_num_time
         self.on_change = on_change
 
@@ -67,13 +60,8 @@ class NumTimePickerController(object):
         return num_time
 
     def set_value(self, num_time):
-        if num_time == None:
+        if num_time is None:
             num_time = self.default_num_time
         self.time_picker.set_value(num_time)
-        if not self.on_change is None:
-            self.on_change()         
-
-    def on_spin(self):
-        pass
-
-
+        if self.on_change is not None:
+            self.on_change()
