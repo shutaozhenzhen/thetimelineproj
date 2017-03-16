@@ -19,17 +19,44 @@
 import wx
 
 
-class NumCtrl(wx.TextCtrl):
+class NumCtrl(wx.Panel):
 
     def __init__(self, parent, size=(-1, -1)):
-        wx.TextCtrl.__init__(self, parent, size=size)
-        self.Bind(wx.EVT_CHAR, self._OnKeyPress)
+        wx.Panel.__init__(self, parent)
+        self._CreateGui(size)
+
+    def _CreateGui(self, size):
+        sizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.text = wx.TextCtrl(self, size=size)
+        self.spin = wx.SpinButton(self, style=wx.SP_VERTICAL, size=(-1, self.text.GetSize()[1] + 5))
+        sizer.Add(self.text, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(self.spin, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        self.Bind(wx.EVT_CHAR, self._OnKeyPress, self.text)
+        self.Bind(wx.EVT_SPIN_UP, self._OnSpinUp, self.spin)
+        self.Bind(wx.EVT_SPIN_DOWN, self._OnSpinDown, self.spin)
+        self.SetSizerAndFit(sizer)
+
+    def SetValue(self, value):
+        self.text.SetValue(value)
+
+    def GetValue(self):
+        return self.text.GetValue()
 
     def _OnKeyPress(self, event):
         if self.ValidKeyCode(event.GetKeyCode()):
             event.Skip()
 
+    def _OnSpinUp(self, event):
+        self._Spin(1)
+
+    def _OnSpinDown(self, event):
+        self._Spin(-1)
+
+    def _Spin(self, value):
+        self.SetValue(str(int(self.GetValue()) + value))
+
     def ValidKeyCode(self, keycode):
+        """Allow digits, and a minus sign in the first position."""
         if IsAscci(keycode):
             if IsMinus(keycode):
                 if self.MinusIsOk():
