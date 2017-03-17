@@ -16,27 +16,27 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.categorychoice import CategoryChoice
-from timelinelib.wxgui.components.categorytree import CustomCategoryTree
-from timelinelib.wxgui.components.colourselect import ColourSelect
-from timelinelib.wxgui.components.containerchoice import ContainerChoice
-from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsapplyclosesizer import DialogButtonsApplyCloseSizer
-from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsclosesizer import DialogButtonsCloseSizer
-from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonseditaddremoveclosesizer import DialogButtonsEditAddRemoveCloseSizer
-from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsokcancelsizer import DialogButtonsOkCancelSizer
-from timelinelib.wxgui.components.feedbacktext import FeedbackText
-from timelinelib.wxgui.components.filechooser import FileChooser
-from timelinelib.wxgui.components.header import Header
-from timelinelib.wxgui.components.messagebar import MessageBar
-from timelinelib.wxgui.components.propertyeditors.alerteditor import AlertEditor
-from timelinelib.wxgui.components.propertyeditors.coloreditor import ColorEditor
-from timelinelib.wxgui.components.propertyeditors.descriptioneditor import DescriptionEditor
-from timelinelib.wxgui.components.propertyeditors.hyperlinkeditor import HyperlinkEditor
-from timelinelib.wxgui.components.propertyeditors.iconeditor import IconEditor
-from timelinelib.wxgui.components.propertyeditors.progresseditor import ProgressEditor
-from timelinelib.wxgui.components.textctrlselect import TextCtrlSelect
-from timelinelib.wxgui.components.textpatterncontrol.view import TextPatternControl
-from timelinelib.wxgui.components.twostatebutton import TwoStateButton
+from .categorychoice import CategoryChoice
+from .categorytree import CustomCategoryTree
+from .colourselect import ColourSelect
+from .containerchoice import ContainerChoice
+from .dialogbuttonssizers.dialogbuttonsapplyclosesizer import DialogButtonsApplyCloseSizer
+from .dialogbuttonssizers.dialogbuttonsclosesizer import DialogButtonsCloseSizer
+from .dialogbuttonssizers.dialogbuttonseditaddremoveclosesizer import DialogButtonsEditAddRemoveCloseSizer
+from .dialogbuttonssizers.dialogbuttonsokcancelsizer import DialogButtonsOkCancelSizer
+from .feedbacktext import FeedbackText
+from .filechooser import FileChooser
+from .header import Header
+from .messagebar import MessageBar
+from .propertyeditors.alerteditor import AlertEditor
+from .propertyeditors.coloreditor import ColorEditor
+from .propertyeditors.descriptioneditor import DescriptionEditor
+from .propertyeditors.hyperlinkeditor import HyperlinkEditor
+from .propertyeditors.iconeditor import IconEditor
+from .propertyeditors.progresseditor import ProgressEditor
+from .textctrlselect import TextCtrlSelect
+from .textpatterncontrol.view import TextPatternControl
+from .twostatebutton import TwoStateButton
 
 
 def TimePicker(parent, time_type, name="", *args, **kwargs):
