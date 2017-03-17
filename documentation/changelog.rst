@@ -15,6 +15,8 @@ Version 1.14.0
 
 GUI
 
+* The limitation of number sizes has been removed in the numeric event editor.
+
 * Now the position of the legend can be changed.
 
 Fixed crash reports and bugs:
