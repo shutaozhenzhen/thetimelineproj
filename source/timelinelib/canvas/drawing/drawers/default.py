@@ -102,6 +102,7 @@ class DefaultDrawingAlgorithm(Drawer):
         return self.scene.get_closest_overlapping_event(event_to_move, up=up)
 
     def draw(self, dc, timeline, view_properties, appearance):
+        view_properties.hide_events_done = appearance.get_hide_events_done()
         view_properties.legend_pos = appearance.get_legend_pos()
         view_properties.set_fuzzy_icon(appearance.get_fuzzy_icon())
         view_properties.set_locked_icon(appearance.get_locked_icon())
