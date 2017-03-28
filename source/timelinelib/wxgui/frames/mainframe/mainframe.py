@@ -123,6 +123,7 @@ ID_EXIT = wx.ID_EXIT
 ID_MOVE_EVENT_UP = wx.NewId()
 ID_MOVE_EVENT_DOWN = wx.NewId()
 ID_PRESENTATION = wx.NewId()
+ID_HIDE_DONE = wx.NewId()
 ID_NAVIGATE = wx.NewId() + 100
 
 
@@ -307,6 +308,9 @@ class GuiCreator(object):
             canvas = self.main_panel.get_timeline_canvas()
             self.controller.start_slide_show(canvas)
 
+        def hide_events_done(evt):
+            self.config.hide_events_done = evt.IsChecked()
+
         items = [self._create_view_toolbar_menu_item,
                  (ID_SIDEBAR, sidebar, _("&Sidebar\tCtrl+I"), CHECKBOX),
                  (ID_LEGEND, legend, _("&Legend"), CHECKBOX),
@@ -323,6 +327,8 @@ class GuiCreator(object):
                  self._create_event_box_drawers_menu,
                  None,
                  (ID_PRESENTATION, start_slide_show, _("Start slide show") + "...", NONE),
+                 None,
+                 (ID_HIDE_DONE, hide_events_done, _("&Hide Events done"), CHECKBOX),
                  ]
 
         view_menu = wx.Menu()
@@ -380,12 +386,14 @@ class GuiCreator(object):
         check_item_corresponding_to_config()
 
     def _check_view_menu_items(self, view_menu):
-        sidebar_item = view_menu.FindItemById(ID_SIDEBAR)
-        legend_item = view_menu.FindItemById(ID_LEGEND)
-        balloons_item = view_menu.FindItemById(ID_BALLOONS)
-        sidebar_item.Check(self.config.get_show_sidebar())
-        legend_item.Check(self.config.get_show_legend())
-        balloons_item.Check(self.config.get_balloon_on_hover())
+
+        def item(item_id):
+            return view_menu.FindItemById(item_id)
+
+        item(ID_SIDEBAR).Check(self.config.get_show_sidebar())
+        item(ID_LEGEND).Check(self.config.get_show_legend())
+        item(ID_BALLOONS).Check(self.config.get_balloon_on_hover())
+        item(ID_HIDE_DONE).Check(self.config.hide_events_done)
 
     def _add_view_menu_items_to_controller(self, view_menu):
         sidebar_item = view_menu.FindItemById(ID_SIDEBAR)

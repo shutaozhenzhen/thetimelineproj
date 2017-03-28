@@ -53,6 +53,7 @@ SIDEBAR_WIDTH = "sidebar_width"
 RECENT_FILES = "recent_files"
 OPEN_RECENT_AT_STARTUP = "open_recent_at_startup"
 BALLOON_ON_HOVER = "balloon_on_hover"
+HIDE_EVENTS_DONE = "hide_events_done"
 WEEK_START = "week_start"
 USE_INERTIAL_SCROLLING = "use_inertial_scrolling"
 EXPERIMENTAL_FEATURES = "experimental_features"
@@ -285,6 +286,15 @@ class Config(Observable):
 
     def set_balloon_on_hover(self, balloon_on_hover):
         self.config_parser.set(DEFAULTSECT, BALLOON_ON_HOVER, str(balloon_on_hover))
+        self._notify()
+
+    @property
+    def hide_events_done(self):
+        return self.config_parser.getboolean(DEFAULTSECT, HIDE_EVENTS_DONE)
+
+    @hide_events_done.setter
+    def hide_events_done(self, value):
+        self.config_parser.set(DEFAULTSECT, HIDE_EVENTS_DONE, str(value))
         self._notify()
 
     def get_uncheck_time_for_new_events(self):

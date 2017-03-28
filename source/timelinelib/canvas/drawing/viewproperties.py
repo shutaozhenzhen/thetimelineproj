@@ -45,6 +45,7 @@ class ViewProperties(Observable):
         self.skip_s_in_decade_text = False
         self.display_checkmark_on_events_done = False
         self.legend_pos = 0
+        self._hide_events_done = False
 
     @property
     def legend_pos(self):
@@ -53,6 +54,14 @@ class ViewProperties(Observable):
     @legend_pos.setter
     def legend_pos(self, pos):
         self._legend_pos = pos
+
+    @property
+    def hide_events_done(self):
+        return self._hide_events_done
+
+    @hide_events_done.setter
+    def hide_events_done(self, value):
+        self._hide_events_done = value
 
     def get_fuzzy_icon(self):
         return self.fuzzy_icon
@@ -116,6 +125,8 @@ class ViewProperties(Observable):
         return [event for event in events if self._is_event_visible(event)]
 
     def _is_event_visible(self, event):
+        if self._hide_events_done and event.get_progress() == 100:
+            return False
         if event.is_subevent():
             return (self.is_event_with_category_visible(event.get_category()) and
                     self.is_event_with_category_visible(event.container.get_category()))

@@ -28,6 +28,7 @@ class Appearance(Observable):
         Observable.__init__(self)
         self._build_property("legend_visible", True)
         self._build_property("balloons_visible", True)
+        self._build_property("hide_events_done", False)
         self._build_property("minor_strip_divider_line_colour", (200, 200, 200))
         self._build_property("major_strip_divider_line_colour", (200, 200, 200))
         self._build_property("now_line_colour", (200, 0, 0))
