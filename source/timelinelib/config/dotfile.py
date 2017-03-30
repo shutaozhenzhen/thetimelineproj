@@ -124,7 +124,8 @@ DEFAULTS = {
     SKIP_S_IN_DECADE_TEXT: "False",
     DISPLAY_CHECKMARK_ON_EVENTS_DONE: "False",
     NEVER_USE_TIME: "False",
-    LEGEND_POS: "0"
+    LEGEND_POS: "0",
+    HIDE_EVENTS_DONE: "False"
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
