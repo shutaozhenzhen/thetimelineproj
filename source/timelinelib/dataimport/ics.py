@@ -114,7 +114,7 @@ class IcsLoader(object):
     def _read_calendar_object(self, file_contents):
         try:
             return Calendar.from_ical(file_contents)
-        except Exception, pe:
+        except Exception as pe:
             msg1 = _("Unable to read calendar data.")
             msg2 = "\n\n" + ex_msg(pe)
             raise TimelineIOError(msg1 + msg2)
@@ -124,7 +124,7 @@ class IcsLoader(object):
         try:
             ics_file = open(path, "rb")
             return ics_file.read()
-        except IOError, e:
+        except IOError as e:
             msg = _("Unable to read from file '%s'.")
             whole_msg = (msg + "\n\n%s") % (abspath(path), e)
             raise TimelineIOError(whole_msg)

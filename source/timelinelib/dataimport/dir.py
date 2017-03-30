@@ -88,7 +88,7 @@ def _load(db, dir_path):
             cat.color = _color_from_range(color_ranges[cat.name])
             cat.name = get_unique_cat_name(os.path.basename(cat.name), used_names)
             db.save_category(cat)
-    except Exception, e:
+    except Exception as e:
         msg = _("Unable to read from filename '%s'.") % dir_path
         whole_msg = "%s\n\n%s" % (msg, e)
         print whole_msg

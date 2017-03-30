@@ -47,28 +47,28 @@ def safe_write(path, encoding, write_fn):
         try:
             try:
                 write_fn(dbfile)
-            except Exception, e:
+            except Exception as e:
                 raise_error(_("Unable to write timeline data."), e)
         finally:
             dbfile.close()
-    except IOError, e:
+    except IOError as e:
         raise_error(_("Unable to write to temporary dbfile '%s'.") % tmp_path, e)
     # Copy original to backup (if original exists)
     if os.path.exists(path):
         try:
             os.rename(path, backup_path)
-        except Exception, e:  # Can this only be a OSError?
+        except Exception as e:  # Can this only be a OSError?
             raise_error(_("Unable to take backup to '%s'.") % backup_path, e)
     # Copy tmp to original
     try:
         os.rename(tmp_path, path)
-    except Exception, e:  # Can this only be a OSError?
+    except Exception as e:  # Can this only be a OSError?
         raise_error(_("Unable to rename temporary dbfile '%s' to original.") % tmp_path, e)
     # Delete backup (if backup was created)
     if os.path.exists(backup_path):
         try:
             os.remove(backup_path)
-        except Exception, e:  # Can this only be a OSError?
+        except Exception as e:  # Can this only be a OSError?
             raise_error(_("Unable to delete backup dbfile '%s'.") % backup_path, e)
 
 
@@ -87,7 +87,7 @@ def safe_locking(controller, edit_function, exception_handler=None):
         try:
             register_unlock_function(controller.edit_ends)
             edit_function()
-        except Exception, e:
+        except Exception as e:
             if exception_handler is not None:
                 controller.edit_ends()
                 exception_handler(e)

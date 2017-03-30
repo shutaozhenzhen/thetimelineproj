@@ -86,6 +86,6 @@ class EditMilestoneDialogController(Controller):
     def _save_milestone_to_db(self):
         try:
             self._db.save_event(self._milestone)
-        except Exception, e:
+        except Exception as e:
             self.view.HandleDbError(e)
 

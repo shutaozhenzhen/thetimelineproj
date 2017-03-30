@@ -92,7 +92,7 @@ class DuplicateEventDialogController(Controller):
             if nbr_of_missing_dates > 0:
                 self.view.HandleDateErrors(nbr_of_missing_dates)
             self.view.Close()
-        except TimelineIOError, e:
+        except TimelineIOError as e:
             self.view.HandleDbError(e)
 
     def _repeat_container_period(self, event):

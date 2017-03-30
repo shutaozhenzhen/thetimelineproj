@@ -82,7 +82,7 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
             total_move_delta = self._get_total_move_delta()
             for (event, original_period) in self.event_periods:
                 event.update_period_o(original_period.move_delta(total_move_delta))
-        except ValueError, ex:
+        except ValueError as ex:
             self.status_bar.set_text("%s" % ex)
 
     def _get_total_move_delta(self):

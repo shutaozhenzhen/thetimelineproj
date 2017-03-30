@@ -34,7 +34,7 @@ class TimeEditorDialogController(Controller):
         try:
             if self.view.GetTime() is None:
                 raise ValueError(_("Invalid date"))
-        except ValueError, ex:
+        except ValueError as ex:
             display_error_message(ex_msg(ex))
         else:
             self.view.Close()

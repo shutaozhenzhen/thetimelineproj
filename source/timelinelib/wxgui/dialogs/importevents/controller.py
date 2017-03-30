@@ -39,7 +39,7 @@ class ImportEventsDialogController(Controller):
             return
         try:
             self._db.import_db(self._db_to_import)
-        except TimelineIOError, e:
+        except TimelineIOError as e:
             self.view.HandleDbError(e)
         else:
             self.view.Close()
@@ -60,7 +60,7 @@ class ImportEventsDialogController(Controller):
     def _handle_valid_path(self):
         try:
             db_to_import = db_open(self.view.GetFilePath())
-        except Exception, e:
+        except Exception as e:
             self._set_error(_("Unable to load events: %s.") % ex_msg(e))
         else:
             self._report_nbr_of_events_in_db(db_to_import)

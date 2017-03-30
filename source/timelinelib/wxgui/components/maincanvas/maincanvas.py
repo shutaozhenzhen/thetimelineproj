@@ -51,11 +51,11 @@ class MainCanvas(TimelineCanvas):
     def Navigate(self, navigation_fn):
         try:
             TimelineCanvas.Navigate(self, navigation_fn)
-        except (TimeOutOfRangeLeftError), e:
+        except (TimeOutOfRangeLeftError) as e:
             self._status_bar.set_text(_("Can't scroll more to the left"))
-        except (TimeOutOfRangeRightError), e:
+        except (TimeOutOfRangeRightError) as e:
             self._status_bar.set_text(_("Can't scroll more to the right"))
-        except (ValueError, OverflowError), e:
+        except (ValueError, OverflowError) as e:
             self._status_bar.set_text(ex_msg(e))
         else:
             self._status_bar.set_text("")

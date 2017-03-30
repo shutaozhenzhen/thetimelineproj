@@ -110,7 +110,7 @@ class MemoryDB(Observable):
         try:
             for event in events:
                 self._events.save_event(event)
-        except Exception, e:
+        except Exception as e:
             raise TimelineIOError("Saving event failed: %s" % e)
         else:
             self._save_if_not_disabled(STATE_CHANGE_ANY)
@@ -133,7 +133,7 @@ class MemoryDB(Observable):
     def save_era(self, era):
         try:
             self._eras.save_era(era)
-        except Exception, e:
+        except Exception as e:
             raise TimelineIOError("Saving Era failed: %s" % e)
         else:
             self._save_if_not_disabled(STATE_CHANGE_CATEGORY)
@@ -141,7 +141,7 @@ class MemoryDB(Observable):
     def delete_era(self, era):
         try:
             self._eras.delete_era(era)
-        except Exception, e:
+        except Exception as e:
             raise TimelineIOError("Deleting Era failed: %s" % e)
         else:
             self._save_if_not_disabled(STATE_CHANGE_CATEGORY)
@@ -164,7 +164,7 @@ class MemoryDB(Observable):
     def _process_event(self, event_or_id, process_func, error_text, save=False):
         try:
             process_func(self._get_event(event_or_id))
-        except Exception, e:
+        except Exception as e:
             raise TimelineIOError("%s: %s" % (error_text, e))
         else:
             if save:
@@ -185,7 +185,7 @@ class MemoryDB(Observable):
     def save_category(self, category):
         try:
             self._events.save_category(category)
-        except Exception, e:
+        except Exception as e:
             raise TimelineIOError("Saving category failed: %s" % e)
         else:
             self._save_if_not_disabled(STATE_CHANGE_CATEGORY)
@@ -206,7 +206,7 @@ class MemoryDB(Observable):
             self.hidden_categories.remove(category)
         try:
             self._events.delete_category(category)
-        except Exception, e:
+        except Exception as e:
             raise TimelineIOError("Deleting category failed: %s" % e)
         else:
             self._save_if_not_disabled(STATE_CHANGE_CATEGORY)

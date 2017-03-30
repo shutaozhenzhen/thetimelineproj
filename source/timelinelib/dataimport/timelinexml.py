@@ -83,7 +83,7 @@ class Parser(object):
             self.db.disable_save()
             parse(self.path, partial_schema, tmp_dict)
             self.db.enable_save(call_save=False)
-        except Exception, e:
+        except Exception as e:
             msg = _("Unable to read timeline data from '%s'.")
             whole_msg = (msg + "\n\n%s") % (abspath(self.path), ex_msg(e))
             raise TimelineIOError(whole_msg)
