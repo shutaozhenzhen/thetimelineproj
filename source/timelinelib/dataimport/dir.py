@@ -91,7 +91,7 @@ def _load(db, dir_path):
     except Exception as e:
         msg = _("Unable to read from filename '%s'.") % dir_path
         whole_msg = "%s\n\n%s" % (msg, e)
-        print whole_msg
+        print(whole_msg)
         raise TimelineIOError(whole_msg)
     finally:
         db.enable_save(call_save=False)
