@@ -90,7 +90,7 @@ http://www.python.org
 
 There is most definitely a binary package or installer for your platform.
 
-Timeline requires version 2.5 or greater.
+Timeline requires version 2.7.5 or greater.
 
 wxPython (Python package)
 #########################
