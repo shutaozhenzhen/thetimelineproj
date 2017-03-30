@@ -94,10 +94,10 @@ class PluginFactory(object):
         self._get_plugin_method(instance, "service")
         self._get_plugin_method(instance, "display_name")
         if not instance.isplugin():
-            print "NP"
+            print("NP")
             raise PluginException()
         if instance.service() not in VALID_SERVICES:
-            print "NVS"
+            print("NVS")
             raise PluginException()
 
     def _get_plugin_method(self, obj, method_name):
