@@ -36,7 +36,7 @@ class EditCategoryDialogController(Controller):
         self._category_repository = category_repository
         try:
             self.view.PopulateCategories(exclude=self._category)
-        except TimelineIOError, e:
+        except TimelineIOError as e:
             self.view.HandleDbError(e)
         else:
             if self._category is None:
@@ -91,7 +91,7 @@ class EditCategoryDialogController(Controller):
     def _save(self):
         try:
             self._category_repository.save(self._category)
-        except TimelineIOError, e:
+        except TimelineIOError as e:
             self.view.HandleDbError(e)
         else:
             self.view.EndModalOk()

@@ -142,7 +142,7 @@ class EditEventDialogController(Controller):
     def _get_period_from_view(self):
         try:
             period = self.view.GetPeriod()
-        except ValueError, ex:
+        except ValueError as ex:
             self.view.DisplayInvalidPeriod("%s" % ex_msg(ex))
             raise ValueError()
         (start, end) = (period.get_start_time(), period.get_end_time())
@@ -282,13 +282,13 @@ class EditEventDialogController(Controller):
     def _save_event_to_db(self):
         try:
             self.event_repository.save(self.event)
-        except Exception, e:
+        except Exception as e:
             self.view.HandleDbError(e)
 
     def _save_container_to_db(self):
         try:
             self.event_repository.save(self.view.GetContainer())
-        except Exception, e:
+        except Exception as e:
             self.view.HandleDbError(e)
 
     def _enable_disable_ends_today(self):

@@ -1033,7 +1033,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         self.config.set_sidebar_width(self.main_panel.get_sidebar_width())
         try:
             self.config.write()
-        except IOError, ex:
+        except IOError as ex:
             friendly = _("Unable to write configuration file.")
             msg = "%s\n\n%s" % (friendly, ex_msg(ex))
             display_error_message(msg, self)
@@ -1042,7 +1042,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         if self.timeline:
             try:
                 self.main_panel.save_view_properties(self.timeline)
-            except TimelineIOError, e:
+            except TimelineIOError as e:
                 self.HandleDbError(e)
 
     # Timeline Menu action handlers
@@ -1104,7 +1104,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
                 return TimePeriod(start, end).zoom(-1)
             else:
                 return None
-        except ValueError, ex:
+        except ValueError as ex:
             display_error_message(ex.message)
         return None
 

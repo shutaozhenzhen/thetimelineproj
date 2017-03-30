@@ -63,7 +63,7 @@ class MainFrameController(object):
             new_db = self.db_open_fn(path, timetype=timetype)
             self.timeline = new_db
             self.timeline.loaded()
-        except TimelineIOError, e:
+        except TimelineIOError as e:
             self.main_frame.HandleDbError(e)
             self.timelinepath = None
         else:
@@ -172,7 +172,7 @@ class MainFrameController(object):
         if os.path.exists(lockpath):
             try:
                 os.remove(lockpath)
-            except WindowsError, ex:
+            except WindowsError as ex:
                 if ex.winerror == 32:
                     self._report_other_process_uses_lockfile(lockpath)
                 else:

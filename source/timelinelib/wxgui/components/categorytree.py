@@ -494,5 +494,5 @@ def delete_category(parent_ctrl, db, cat):
     if gui_utils._ask_question(question, parent_ctrl) == wx.YES:
         try:
             db.delete_category(cat)
-        except TimelineIOError, e:
+        except TimelineIOError as e:
             handle_db_error_by_crashing(e, parent_ctrl)

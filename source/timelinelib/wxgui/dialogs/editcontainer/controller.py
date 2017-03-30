@@ -56,7 +56,7 @@ class EditContainerDialogController(Controller):
                 self.view.EndModalOk()
             except ValueError:
                 pass
-        except TimelineIOError, e:
+        except TimelineIOError as e:
             self.view.HandleDbError(e)
 
     def get_container(self):

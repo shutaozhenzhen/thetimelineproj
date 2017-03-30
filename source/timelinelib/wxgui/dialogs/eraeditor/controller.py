@@ -53,7 +53,7 @@ class EraEditorDialogController(Controller):
     def _validate_period(self):
         try:
             self.view.GetPeriod()
-        except ValueError, e:
+        except ValueError as e:
             self.view.DisplayInvalidPeriod(str(e))
             raise ValueError()
 
