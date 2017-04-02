@@ -60,9 +60,6 @@ class NumTimeType(TimeType):
             (_("Forward\tPgDn"), forward_fn),
         ]
 
-    def is_date_time_type(self):
-        return False
-
     def format_period(self, time_period):
         """Returns a unicode string describing the time period."""
         if time_period.is_period():
