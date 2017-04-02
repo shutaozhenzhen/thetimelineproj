@@ -25,10 +25,6 @@ class TimeEditorDialogController(Controller):
 
     def on_init(self, time):
         self.view.SetTime(time)
-        self.view.ShowTime(False)
-
-    def show_time_checkbox_on_checked(self, evt):
-        self.view.ShowTime(evt.IsChecked())
 
     def ok_button_clicked(self, evt):
         try:
