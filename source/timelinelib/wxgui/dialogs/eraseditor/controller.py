@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import time
 import wx
 
 from timelinelib.canvas.data.era import Era
@@ -58,10 +57,7 @@ class ErasEditorDialogController(Controller):
         self._operate_with_modal_dialog(_("Edit an Era"), era, self.view.UpdateEra)
 
     def _create_era(self):
-        if self.db.time_type.is_date_time_type():
-            start = self.db.time_type.parse_time("%s 00:00:00" % time.strftime("%Y-%m-%d"))
-        else:
-            start = self.db.time_type.now()
+        start = self.db.time_type.now()
         end = start
         return Era(start, end, "New Era")
 
