@@ -89,9 +89,6 @@ class GregorianTimeType(TimeType):
             (_("Fit Day"), fit_day_fn),
         ]
 
-    def is_date_time_type(self):
-        return True
-
     def format_period(self, time_period):
         """Returns a unicode string describing the time period."""
         def label_with_time(time):

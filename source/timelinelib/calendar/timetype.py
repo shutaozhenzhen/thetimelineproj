@@ -27,9 +27,6 @@ class TimeType(object):
     def get_navigation_functions(self):
         raise NotImplementedError("get_navigation_functions not implemented.")
 
-    def is_date_time_type(self):
-        raise NotImplementedError("is_date_time_type not implemented.")
-
     def format_period(self, time_period):
         raise NotImplementedError("format_period not implemented.")
 
