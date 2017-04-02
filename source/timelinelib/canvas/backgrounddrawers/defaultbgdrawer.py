@@ -33,14 +33,11 @@ class DefaultBackgroundDrawer(object):
         dc.DrawRectangle(0, 0, w, h)
 
     def _draw_weekend_days(self, dc, drawer, scene, colorize_weekends, weekend_colour):
-        def draw_day_backgrounds(h):
+        if colorize_weekends and scene.minor_strip_is_day():
+            _, h = dc.GetSizeTuple()
             for strip_period in scene.minor_strip_data:
-                if colorize_weekends and scene.is_weekend_day(strip_period.start_time):
+                if scene.is_weekend_day(strip_period.start_time):
                     self._draw_weekend_rect(strip_period, h, weekend_colour)
-        _, h = dc.GetSizeTuple()
-        if drawer.time_type.is_date_time_type():
-            if scene.minor_strip_is_day():
-                draw_day_backgrounds(h)
 
     def _draw_eras(self, dc, scene, timeline):
         _, h = dc.GetSizeTuple()
