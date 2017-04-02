@@ -26,18 +26,11 @@ class TimeEditorDialog(Dialog):
 
     """
     <BoxSizerVertical>
-        <CheckBox
-            name="show_time_checkbox"
-            use="$(use_checkbox)"
-            label="$(show_time_checkbox_label)"
-            border="ALL"
-            event_EVT_CHECKBOX="show_time_checkbox_on_checked"
-        />
         <TimePicker
             name="time_picker"
             time_type="$(time_type)"
             config="$(config)"
-            border="LEFT|RIGHT|BOTTOM"
+            border="ALL"
         />
         <DialogButtonsOkCancelSizer
             border="BOTTOM|LEFT|RIGHT"
@@ -48,8 +41,6 @@ class TimeEditorDialog(Dialog):
 
     def __init__(self, parent, config, time_type, time, title):
         Dialog.__init__(self, TimeEditorDialogController, parent, {
-            "show_time_checkbox_label": _("Show time"),
-            "use_checkbox": time_type.is_date_time_type(),
             "time_type": time_type,
             "config": config,
         }, title=title)
@@ -60,16 +51,6 @@ class TimeEditorDialog(Dialog):
 
     def GetTime(self):
         return self.time_picker.get_value()
-
-    def ShowTimeIsChecked(self):
-        return self.show_time_checkbox.IsChecked()
-
-    def ShowTime(self, value):
-        try:
-            self.time_picker.show_time(value)
-        except:
-            # Not all TimePicker objects has a 'show_time' attribute
-            pass
 
     def Close(self):
         self.EndModal(wx.ID_OK)
