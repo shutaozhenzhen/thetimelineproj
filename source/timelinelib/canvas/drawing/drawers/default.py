@@ -291,17 +291,14 @@ class DefaultDrawingAlgorithm(Drawer):
         self.dc.DrawText(label, middle - tw / 2, middley - th)
 
     def _set_minor_strip_font(self, strip_period):
-        if self.time_type.is_date_time_type():
-            if self.scene.minor_strip_is_day():
-                bold = False
-                italic = False
-                if self.time_type.is_weekend_day(strip_period.start_time):
-                    bold = True
-                if self.time_type.is_special_day(strip_period.start_time):
-                    italic = True
-                font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc, force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
-            else:
-                font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
+        if self.scene.minor_strip_is_day():
+            bold = False
+            italic = False
+            if self.time_type.is_weekend_day(strip_period.start_time):
+                bold = True
+            if self.time_type.is_special_day(strip_period.start_time):
+                italic = True
+            font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc, force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
         else:
             font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
 
