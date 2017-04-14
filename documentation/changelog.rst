@@ -2,7 +2,7 @@ Changelog
 =========
 
 Version 1.14.0
--------------
+--------------
 
 **Planned release on 30 April 2017.**
 
@@ -12,10 +12,13 @@ Version 1.14.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Calendar:
 
-GUI
+* BC years are formatted correctly in status bar.
 
-* View selecttion to hide/show events done (progress = 100%).
+GUI:
+
+* View selection to hide/show events done (progress = 100%).
 
 * The limitation of number sizes has been removed in the numeric event editor.
 
@@ -25,12 +28,13 @@ Fixed crash reports and bugs:
 
 * Now weekends can be colorized again.
   (`#170 <https://sourceforge.net/p/thetimelineproj/backlog/170/>`_)
-  
-* It's no longer possiblöe to close the milestone editor dialog with an invalid date/time.
+
+* It's no longer possible to close the milestone editor dialog with an invalid
+  date/time.
   (`#171 <https://sourceforge.net/p/thetimelineproj/backlog/171/>`_)
 
-* The event progress bar is now correctly drawn when event is partly outside of screen.
-
+* The event progress bar is now correctly drawn when event is partly outside of
+  screen.
 
 Version 1.13.0
 --------------
@@ -212,7 +216,7 @@ Fixed crash reports:
 
 * Import events dialog gives UnicodeEncodeError if exceptions contain unicode
   messages.
-  
+
 Import:
 
 * Categories are now created when importing ics data
