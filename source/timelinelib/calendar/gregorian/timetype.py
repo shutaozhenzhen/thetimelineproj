@@ -38,9 +38,6 @@ BC = _("BC")
 
 class GregorianTimeType(TimeType):
 
-    def __init__(self):
-        self.major_strip_is_decade = False
-
     def __eq__(self, other):
         return isinstance(other, GregorianTimeType)
 
@@ -149,7 +146,6 @@ class GregorianTimeType(TimeType):
         """
         day_period = TimePeriod(timeline.Time(0, 0), timeline.Time(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
-        self.major_strip_is_decade = False
         if one_day_width > 20000:
             return (StripHour(), StripMinute())
         elif one_day_width > 600:
@@ -161,7 +157,6 @@ class GregorianTimeType(TimeType):
         elif one_day_width > 1.5:
             return (StripYear(), StripMonth())
         elif one_day_width > 0.12:
-            self.major_strip_is_decade = True
             return (StripDecade(), StripYear())
         elif one_day_width > 0.012:
             return (StripCentury(), StripDecade())
@@ -212,15 +207,6 @@ class GregorianTimeType(TimeType):
 
     def margin_delta(self, delta):
         return delta / 24
-
-    def adjust_for_bc_years(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        if self.major_strip_is_decade:
-            if gregorian_time.year < 0:
-                gregorian_time.year += 2
-            elif gregorian_time.year < 10:
-                gregorian_time.year += 1
-        return gregorian_time.to_time()
 
     def is_special_day(self, time):
         return False
@@ -510,57 +496,207 @@ def fit_week_fn(main_frame, current_period, navigation_fn):
 
 class StripCentury(Strip):
 
+    """
+    Year Name | Year integer | Decade name
+    ----------+--------------+------------
+    ..        |  ..          |
+    200 BC    | -199         | 200s BC (100 years)
+    ----------+--------------+------------
+    199 BC    | -198         |
+    ...       | ...          | 100s BC (100 years)
+    100 BC    | -99          |
+    ----------+--------------+------------
+    99  BC    | -98          |
+    ...       |  ...         | 0s BC (only 99 years)
+    1   BC    |  0           |
+    ----------+--------------+------------
+    1         |  1           |
+    ...       |  ...         | 0s (only 99 years)
+    99        |  99          |
+    ----------+--------------+------------
+    100       |  100         |
+    ..        |  ..          | 100s (100 years)
+    199       |  199         |
+    ----------+--------------+------------
+    200       |  200         | 200s (100 years)
+    ..        |  ..          |
+    """
+
     def label(self, time, major=False):
         if major:
-            # TODO: This only works for English. Possible to localize?
-            time = GregorianUtils.from_time(time)
-            start_year = self._century_start_year(time.year)
-            century = (start_year + 100) / 100
-            if century <= 0:
-                return "%s %s" % (str(abs(century - 1)), _("century BC"))
-            else:
-                return "%s %s" % (str(century), _("century"))
-        return ""
+            gregorian_time = GregorianUtils.from_time(time)
+            return self._format_century(
+                self._century_number(
+                    self._century_start_year(gregorian_time.year)
+                ),
+                gregorian_time.is_bc()
+            )
+        else:
+            return ""
 
     def start(self, time):
-        time = GregorianUtils.from_time(time)
-        return GregorianUtils.from_date(self._century_start_year(time.year), 1, 1).to_time()
+        return GregorianUtils.from_date(
+            self._century_start_year(GregorianUtils.from_time(time).year),
+            1,
+            1
+        ).to_time()
 
     def increment(self, time):
         gregorian_time = GregorianUtils.from_time(time)
-        return gregorian_time.replace(year=gregorian_time.year + 100).to_time()
+        return gregorian_time.replace(
+            year=self._next_century_start_year(gregorian_time.year)
+        ).to_time()
+
+    def _century_number(self, century_start_year):
+        if century_start_year > 99:
+            return century_start_year
+        elif century_start_year >= -98:
+            return 0
+        else: # century_start_year < -98:
+            return self._century_number(-century_start_year-98)
+
+    def _next_century_start_year(self, start_year):
+        return start_year + self._century_year_len(start_year)
+
+    def _century_year_len(self, start_year):
+        if start_year in [-98, 1]:
+            return 99
+        else:
+            return 100
+
+    def _format_century(self, century_number, is_bc):
+        if is_bc:
+            return "{century}s {bc}".format(century=century_number, bc=BC)
+        else:
+            return "{century}s".format(century=century_number)
 
     def _century_start_year(self, year):
-        year = (int(year) / 100) * 100
-        return year
+        if year > 99:
+            return year - int(year) % 100
+        elif year >= 1:
+            return 1
+        elif year >= -98:
+            return -98
+        else: # year < -98
+            return -self._century_start_year(-year+1) - 98
 
 
 class StripDecade(Strip):
+
+    """
+    Year Name | Year integer | Decade name
+    ----------+--------------+------------
+    ..        |  ..          |
+    20 BC     | -19          | 20s BC (10 years)
+    ----------+--------------+------------
+    19 BC     | -18          |
+    18 BC     | -17          |
+    17 BC     | -16          |
+    16 BC     | -15          |
+    15 BC     | -14          | 10s BC (10 years)
+    14 BC     | -13          |
+    13 BC     | -12          |
+    12 BC     | -11          |
+    11 BC     | -10          |
+    10 BC     | -9           |
+    ----------+--------------+------------
+    9  BC     | -8           |
+    8  BC     | -7           |
+    7  BC     | -6           |
+    6  BC     | -5           |
+    5  BC     | -4           | 0s BC (only 9 years)
+    4  BC     | -3           |
+    3  BC     | -2           |
+    2  BC     | -1           |
+    1  BC     |  0           |
+    ----------+--------------+------------
+    1         |  1           |
+    2         |  2           |
+    3         |  3           |
+    4         |  4           |
+    5         |  5           |  0s (only 9 years)
+    6         |  6           |
+    7         |  7           |
+    8         |  8           |
+    9         |  9           |
+    ----------+--------------+------------
+    10        |  10          |
+    11        |  11          |
+    12        |  12          |
+    13        |  13          |
+    14        |  14          |
+    15        |  15          |  10s (10 years)
+    16        |  16          |
+    17        |  17          |
+    18        |  18          |
+    19        |  19          |
+    ----------+--------------+------------
+    20        |  20          |  20s (10 years)
+    ..        |  ..          |
+    """
 
     def __init__(self):
         self.skip_s_in_decade_text = False
 
     def label(self, time, major=False):
-        time = GregorianUtils.from_time(time)
-        return format_decade(self._decade_start_year(time.year), self.skip_s_in_decade_text)
+        gregorian_time = GregorianUtils.from_time(time)
+        return self._format_decade(
+            self._decade_number(self._decade_start_year(gregorian_time.year)),
+            gregorian_time.is_bc()
+        )
 
     def start(self, time):
-        gregorian_time = GregorianUtils.from_time(time)
-        new_gregorian = GregorianUtils.from_date(self._decade_start_year(gregorian_time.year), 1, 1)
-        return new_gregorian.to_time()
+        return GregorianUtils.from_date(
+            self._decade_start_year(GregorianUtils.from_time(time).year),
+            1,
+            1
+        ).to_time()
 
     def increment(self, time):
         gregorian_time = GregorianUtils.from_time(time)
-        return gregorian_time.replace(year=gregorian_time.year + 10).to_time()
+        return gregorian_time.replace(
+            year=self._next_decacde_start_year(gregorian_time.year)
+        ).to_time()
 
     def set_skip_s_in_decade_text(self, value):
         self.skip_s_in_decade_text = value
 
+    def _format_decade(self, decade_number, is_bc):
+        parts = []
+        parts.append("{0}".format(decade_number))
+        if not self.skip_s_in_decade_text:
+            parts.append("s")
+        if is_bc:
+            parts.append(" ")
+            parts.append(BC)
+        return "".join(parts)
+
     def _decade_start_year(self, year):
-        # The first start year must be to the left of the first visible
-        # year on the timeline in order to draw the first vertical decade
-        # line correctly. Therefore -10 in the calculation below
-        return (int(year) / 10) * 10 - 10
+        if year > 9:
+            return int(year) - (int(year) % 10)
+        elif year >= 1:
+            return 1
+        elif year >= -8:
+            return -8
+        else: # year < -8
+            return -self._decade_start_year(-year+1) - 8
+
+    def _next_decacde_start_year(self, start_year):
+        return start_year + self._decade_year_len(start_year)
+
+    def _decade_year_len(self, start_year):
+        if self._decade_number(start_year) == 0:
+            return 9
+        else:
+            return 10
+
+    def _decade_number(self, start_year):
+        if start_year > 9:
+            return start_year
+        elif start_year >= -8:
+            return 0
+        else: # start_year < -8
+            return self._decade_number(-start_year-8)
 
 
 class StripYear(Strip):
@@ -736,18 +872,6 @@ def format_year(year):
     else:
         return str(year)
 
-
-def format_decade(start_year, skip_s=False):
-    if skip_s:
-        if start_year >= -10:
-            return str(start_year + 10)
-        else:
-            return "%d %s" % ((abs(start_year) - 20), BC)
-    else:
-        if start_year >= -10:
-            return str(start_year + 10) + "s"
-        else:
-            return "%ds %s" % ((abs(start_year) - 20), BC)
 
 def move_period_num_days(period, num):
     delta = delta_from_days(1) * num

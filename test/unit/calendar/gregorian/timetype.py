@@ -260,43 +260,6 @@ class describe_gregorian_strip_hour(UnitTestCase):
         self.strip = StripHour()
 
 
-class describe_gregorian_strip_century(UnitTestCase):
-
-    def test_start(self):
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("2013-07-10 12:33:15")),
-            self.time_type.parse_time("2000-01-01 00:00:00"))
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("1013-07-10 12:33:15")),
-            self.time_type.parse_time("1000-01-01 00:00:00"))
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("13-07-10 12:33:15")),
-            self.time_type.parse_time("0-01-01 00:00:00"))
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("-33-07-10 12:33:15")),
-            self.time_type.parse_time("-100-01-01 00:00:00"))
-
-    def test_increment(self):
-        self.assertEqual(
-            self.strip.increment(self.time_type.parse_time("2000-01-01 00:00:00")),
-            self.time_type.parse_time("2100-01-01 00:00:00"))
-
-    def test_label_minor(self):
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00")),
-            "")
-
-    def test_label_major(self):
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00"), True),
-            "21 #century#")
-
-    def setUp(self):
-        UnitTestCase.setUp(self)
-        self.time_type = GregorianTimeType()
-        self.strip = StripCentury()
-
-
 class describe_gregorian_strip_day(UnitTestCase):
 
     def test_start(self):
@@ -395,37 +358,160 @@ class describe_gregorian_strip_year(UnitTestCase):
 
 class describe_gregorian_strip_decade(UnitTestCase):
 
+    def test_label(self):
+        for (time, expected_label) in [
+            ("7 Jul -19", "20s #BC#"),
+            ("7 Jul -18", "10s #BC#"),
+            ("7 Jul -9", "10s #BC#"),
+            ("7 Jul -8", "0s #BC#"),
+            ("7 Jul 0", "0s #BC#"),
+            ("7 Jul 1", "0s"),
+            ("7 Jul 9", "0s"),
+            ("7 Jul 10", "10s"),
+            ("7 Jul 19", "10s"),
+            ("7 Jul 20", "20s"),
+            ("7 Jul 2013", "2010s"),
+        ]:
+            self.assertEqual(
+                self.strip.label(human_time_to_gregorian(time)),
+                expected_label
+            )
+
     def test_start(self):
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("2013-07-10 12:33:15")),
-            self.time_type.parse_time("2000-01-01 00:00:00"))
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("5-07-10 12:33:15")),
-            self.time_type.parse_time("-10-01-01 00:00:00"))
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("-5-07-10 12:33:15")),
-            self.time_type.parse_time("-20-01-01 00:00:00"))
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("-11-07-10 12:33:15")),
-            self.time_type.parse_time("-30-01-01 00:00:00"))
+        for (start_year, expected_decade_start_year) in [
+            # 20s BC
+            (-19, -28),
+            # 10s BC
+            (-18, -18),
+            (-9, -18),
+            # 0s BC
+            (-8, -8),
+            (0, -8),
+            # 0s
+            (1, 1),
+            (9, 1),
+            # 10s
+            (10, 10),
+            (19, 10),
+            # 20s
+            (20, 20),
+            # 2010s
+            (2010, 2010),
+            (2013, 2010),
+        ]:
+            self.assertEqual(
+                self.strip.start(human_time_to_gregorian(
+                    "10 Jul {0} 12:33:15".format(start_year)
+                )),
+                human_time_to_gregorian(
+                    "1 Jan {0} 00:00:00".format(expected_decade_start_year)
+                )
+            )
 
     def test_increment(self):
-        self.assertEqual(
-            self.strip.increment(self.time_type.parse_time("2010-01-01 00:00:00")),
-            self.time_type.parse_time("2020-01-01 00:00:00"))
-
-    def test_label(self):
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00")),
-            "2010s")
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00")),
-            "0s #BC#")
+        for (start_year, expected_next_start_year) in [
+            (-28, -18),
+            (-18, -8),
+            (-8, 1),
+            (1, 10),
+            (10, 20),
+            (2010, 2020),
+        ]:
+            self.assertEqual(
+                self.strip.increment(human_time_to_gregorian(
+                    "1 Jan {0}".format(start_year)
+                )),
+                human_time_to_gregorian(
+                    "1 Jan {0}".format(expected_next_start_year)
+                )
+            )
 
     def setUp(self):
         UnitTestCase.setUp(self)
         self.time_type = GregorianTimeType()
         self.strip = StripDecade()
+
+
+class describe_gregorian_strip_century(UnitTestCase):
+
+    def test_label_minor(self):
+        self.assertEqual(
+            self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00")),
+            "")
+
+    def test_label_major(self):
+        for (time, expected_label) in [
+            ("7 Jul -199", "200s #BC#"),
+            ("7 Jul -198", "100s #BC#"),
+            ("7 Jul -99", "100s #BC#"),
+            ("7 Jul -98", "0s #BC#"),
+            ("7 Jul 0", "0s #BC#"),
+            ("7 Jul 1", "0s"),
+            ("7 Jul 99", "0s"),
+            ("7 Jul 100", "100s"),
+            ("7 Jul 199", "100s"),
+            ("7 Jul 200", "200s"),
+            ("7 Jul 2013", "2000s"),
+        ]:
+            self.assertEqual(
+                self.strip.label(human_time_to_gregorian(time), major=True),
+                expected_label,
+            )
+
+    def test_start(self):
+        for (start_year, expected_century_start_year) in [
+            # 200s BC
+            (-199, -298),
+            # 100s BC
+            (-198, -198),
+            (-99, -198),
+            ## 0s BC
+            (-98, -98),
+            (0, -98),
+            # 0s
+            (1, 1),
+            (99, 1),
+            # 100s
+            (100, 100),
+            (199, 100),
+            # 200s
+            (200, 200),
+            # 2000s
+            (2000, 2000),
+            (2010, 2000),
+            (2099, 2000),
+        ]:
+            self.assertEqual(
+                self.strip.start(human_time_to_gregorian(
+                    "10 Jul {0} 12:33:15".format(start_year)
+                )),
+                human_time_to_gregorian(
+                    "1 Jan {0} 00:00:00".format(expected_century_start_year)
+                )
+            )
+
+    def test_increment(self):
+        for (start_year, expected_next_start_year) in [
+            (-298, -198),
+            (-198, -98),
+            (-98, 1),
+            (1, 100),
+            (100, 200),
+            (200, 300),
+        ]:
+            self.assertEqual(
+                self.strip.increment(human_time_to_gregorian(
+                    "1 Jan {0}".format(start_year)
+                )),
+                human_time_to_gregorian(
+                    "1 Jan {0}".format(expected_next_start_year)
+                )
+            )
+
+    def setUp(self):
+        UnitTestCase.setUp(self)
+        self.time_type = GregorianTimeType()
+        self.strip = StripCentury()
 
 
 class describe_gregorian_time_type_delta_formatting(UnitTestCase):

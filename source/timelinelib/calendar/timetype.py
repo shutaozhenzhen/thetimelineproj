@@ -76,9 +76,6 @@ class TimeType(object):
     def margin_delta(self, delta):
         raise NotImplementedError("margin_delta not implemented.")
 
-    def adjust_for_bc_years(self, time):
-        raise NotImplementedError("adjust_for_bc_years not implemented.")
-
     def is_special_day(self, time):
         raise NotImplementedError("is_special_day not implemented.")
 

@@ -34,6 +34,9 @@ class Gregorian(CalendarBase):
         self.minute = minute
         self.second = second
 
+    def is_bc(self):
+        return self.year <= 0
+
     def replace(self, year=None, month=None):
         if year is None:
             year = self.year
