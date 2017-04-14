@@ -133,9 +133,6 @@ class NumTimeType(TimeType):
     def margin_delta(self, delta):
         return delta / 24
 
-    def adjust_for_bc_years(self, time):
-        return time
-
     def supports_saved_now(self):
         return False
 

@@ -158,9 +158,6 @@ class BosparanianTimeType(GregorianTimeType):
     def get_name(self):
         return u"bosparaniantime"
 
-    def adjust_for_bc_years(self, time):
-        return time
-
     def is_special_day(self, time):
         return self.get_day_of_week(time) == 3
 
