@@ -47,7 +47,8 @@ GUI:
 
 * Major strip labels are drawn vertical when they don't fit in horizontal space.
 
-* Balloon with is no longer depedent on the event width, so the text don't dissapear to early.
+* Balloon width is no longer dependent on the event width, so the text don't
+  disappear to early.
 
 Exporting:
 
