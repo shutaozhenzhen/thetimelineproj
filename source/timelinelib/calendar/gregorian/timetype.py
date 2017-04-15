@@ -194,9 +194,6 @@ class GregorianTimeType(TimeType):
             (_("Year"), move_period_num_years),
         ]
 
-    def zoom_is_ok(self, delta):
-        return (delta.seconds > 60) or (delta.get_days() > 0)
-
     def margin_delta(self, delta):
         return delta / 24
 
