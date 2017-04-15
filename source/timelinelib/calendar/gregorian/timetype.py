@@ -79,7 +79,7 @@ class GregorianTimeType(TimeType):
             ("SEP", None),
             (_("Fit Millennium"), fit_millennium_fn),
             (_("Fit Century"), fit_century_fn),
-            (_("Fit Decade"), fit_decade_fn),
+            (_("Fit Decade"), create_strip_fitter(StripDecade)),
             (_("Fit Year"), fit_year_fn),
             (_("Fit Month"), fit_month_fn),
             (_("Fit Week"), fit_week_fn),
@@ -454,13 +454,6 @@ def fit_century_fn(main_frame, current_period, navigation_fn):
     navigation_fn(lambda tp: tp.update(start, end))
 
 
-def fit_decade_fn(main_frame, current_period, navigation_fn):
-    mean = GregorianUtils.from_time(current_period.mean_time())
-    start = GregorianUtils.from_date(int(mean.year / 10) * 10, 1, 1).to_time()
-    end = GregorianUtils.from_date(int(mean.year / 10) * 10 + 10, 1, 1).to_time()
-    navigation_fn(lambda tp: tp.update(start, end))
-
-
 def fit_year_fn(main_frame, current_period, navigation_fn):
     mean = GregorianUtils.from_time(current_period.mean_time())
     start = GregorianUtils.from_date(mean.year, 1, 1).to_time()
@@ -494,6 +487,15 @@ def fit_week_fn(main_frame, current_period, navigation_fn):
         start = start - delta_from_days(1)
     end = start + delta_from_days(7)
     navigation_fn(lambda tp: tp.update(start, end))
+
+
+def create_strip_fitter(strip_cls):
+    def fit(main_frame, current_period, navigation_fn):
+        strip = strip_cls()
+        start = strip.start(current_period.mean_time())
+        end = strip.increment(start)
+        navigation_fn(lambda tp: tp.update(start, end))
+    return fit
 
 
 class StripCentury(Strip):

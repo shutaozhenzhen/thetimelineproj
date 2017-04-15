@@ -26,7 +26,6 @@ from timelinelib.calendar.gregorian.timetype import backward_one_week_fn
 from timelinelib.calendar.gregorian.timetype import backward_one_year_fn
 from timelinelib.calendar.gregorian.timetype import fit_century_fn
 from timelinelib.calendar.gregorian.timetype import fit_day_fn
-from timelinelib.calendar.gregorian.timetype import fit_decade_fn
 from timelinelib.calendar.gregorian.timetype import fit_millennium_fn
 from timelinelib.calendar.gregorian.timetype import fit_month_fn
 from timelinelib.calendar.gregorian.timetype import fit_week_fn
@@ -655,18 +654,6 @@ class describe_gregorian_time_navigation_functions(UnitTestCase):
     def test_fit_last_year_should_display_the_year_that_is_in_the_center(self):
         self.when_navigating(fit_year_fn, "1 Jan 9989", "1 Jan 9990")
         self.then_period_becomes("1 Jan 9989", "1 Jan 9990")
-
-    def test_fit_decade_should_display_the_decade_that_is_in_the_center(self):
-        self.when_navigating(fit_decade_fn, "1 Jan 2010", "2 Jan 2010")
-        self.then_period_becomes("1 Jan 2010", "1 Jan 2020")
-
-    def test_fit_first_decade_should_display_the_decade_that_is_in_the_center(self):
-        self.when_navigating(fit_decade_fn, "1 Jan 10", "2 Jan 10")
-        self.then_period_becomes("1 Jan 10", "1 Jan 20")
-
-    def test_fit_last_decade_should_display_the_decade_that_is_in_the_center(self):
-        self.when_navigating(fit_decade_fn, "1 Jan 9989", "1 Jan 9990")
-        self.then_period_becomes("1 Jan 9980", "1 Jan 9990")
 
     def test_fit_century_should_display_the_century_that_is_in_the_center(self):
         self.when_navigating(fit_century_fn, "1 Jan 2010", "2 Jan 2010")
