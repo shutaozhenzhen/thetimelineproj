@@ -113,6 +113,12 @@ class time_period_spec(UnitTestCase):
         self.assertTrue(p.inside_period(TimePeriod(ATime(20), ATime(30))))
         self.assertFalse(p.inside_period(TimePeriod(ATime(21), ATime(30))))
 
+    def test_get_time_at_percent(self):
+        period_100 = TimePeriod(ATime(0), ATime(100))
+        self.assertEqual(period_100.get_time_at_percent(0), ATime(0))
+        self.assertEqual(period_100.get_time_at_percent(0.5), ATime(50))
+        self.assertEqual(period_100.get_time_at_percent(1), ATime(100))
+
 
 def ATime(num):
     return Time(num, 0)
