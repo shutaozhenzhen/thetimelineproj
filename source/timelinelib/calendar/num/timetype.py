@@ -105,9 +105,6 @@ class NumTimeType(TimeType):
     def get_min_zoom_delta(self):
         return (5, _("Can't zoom deeper than 5"))
 
-    def get_zero_delta(self):
-        return 0
-
     def get_name(self):
         return u"numtime"
 
