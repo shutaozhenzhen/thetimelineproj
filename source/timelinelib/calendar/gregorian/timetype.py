@@ -726,7 +726,10 @@ class StripWeek(Strip):
             last_weekday = next_first_weekday - delta_from_days(1)
             range_string = self._time_range_string(first_weekday, last_weekday)
             if self.appearance.get_week_start() == "monday":
-                return (_("Week") + " %s (%s)") % (GregorianUtils.calendar_week(time), range_string)
+                return (_("Week") + " %s (%s)") % (
+                    GregorianUtils.from_time(time).week_number,
+                    range_string
+                )
             else:
                 # It is sunday (don't know what to do about week numbers here)
                 return range_string

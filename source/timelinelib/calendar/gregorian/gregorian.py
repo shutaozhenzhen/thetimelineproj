@@ -34,6 +34,29 @@ class GregorianDateTime(CalendarBase):
         self.minute = minute
         self.second = second
 
+    @property
+    def week_number(self):
+        def monday_week_1(year):
+            from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+            jan_4 = GregorianUtils.from_date(year, 1, 4).to_time()
+            jan_4_day_of_week = GregorianTimeType().get_day_of_week(jan_4)
+            return jan_4 - timeline.delta_from_days(jan_4_day_of_week)
+        def days_between(end, start):
+            return end.julian_day - start.julian_day
+        def days_since_monday_week_1(time):
+            year = GregorianUtils.from_time(time).year
+            diff = days_between(end=time, start=monday_week_1(year + 1))
+            if diff >= 0:
+                return diff
+            diff = days_between(end=time, start=monday_week_1(year))
+            if diff >= 0:
+                return diff
+            diff = days_between(end=time, start=monday_week_1(year - 1))
+            if diff >= 0:
+                return diff
+            raise ValueError("should not end up here")
+        return days_since_monday_week_1(self.to_time()) / 7 + 1
+
     def is_bc(self):
         return self.year <= 0
 
@@ -267,32 +290,6 @@ class GregorianUtils(CalendarUtilsBase):
         if julian_day < timeline.MIN_JULIAN_DAY:
             raise ValueError("from_absolute_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
         return julian_day
-
-    @classmethod
-    def calendar_week(cls, time):
-        def monday_week_1(year):
-            from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-            jan_4 = cls.from_date(year, 1, 4).to_time()
-            jan_4_day_of_week = GregorianTimeType().get_day_of_week(jan_4)
-            return jan_4 - timeline.delta_from_days(jan_4_day_of_week)
-
-        def days_between(end, start):
-            return end.julian_day - start.julian_day
-
-        def days_since_monday_week_1(time):
-
-            year = cls.from_time(time).year
-            diff = days_between(end=time, start=monday_week_1(year + 1))
-            if diff >= 0:
-                return diff
-            diff = days_between(end=time, start=monday_week_1(year))
-            if diff >= 0:
-                return diff
-            diff = days_between(end=time, start=monday_week_1(year - 1))
-            if diff >= 0:
-                return diff
-            raise ValueError("should not end up here")
-        return days_since_monday_week_1(time) / 7 + 1
 
     @classmethod
     def from_time(cls, time):
