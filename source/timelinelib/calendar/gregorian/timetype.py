@@ -80,7 +80,7 @@ class GregorianTimeType(TimeType):
             (_("Fit Millennium"), fit_millennium_fn),
             (_("Fit Century"), create_strip_fitter(StripCentury)),
             (_("Fit Decade"), create_strip_fitter(StripDecade)),
-            (_("Fit Year"), fit_year_fn),
+            (_("Fit Year"), create_strip_fitter(StripYear)),
             (_("Fit Month"), fit_month_fn),
             (_("Fit Week"), fit_week_fn),
             (_("Fit Day"), fit_day_fn),
@@ -437,13 +437,6 @@ def get_min_year_containing_jan_1():
 
 def get_millenium_max_year():
     return GregorianUtils.from_time(GregorianTimeType().get_max_time()).year - 1000
-
-
-def fit_year_fn(main_frame, current_period, navigation_fn):
-    mean = GregorianUtils.from_time(current_period.mean_time())
-    start = GregorianUtils.from_date(mean.year, 1, 1).to_time()
-    end = GregorianUtils.from_date(mean.year + 1, 1, 1).to_time()
-    navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_month_fn(main_frame, current_period, navigation_fn):
