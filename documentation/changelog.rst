@@ -16,6 +16,9 @@ Calendar:
 
 * BC years are formatted correctly in status bar.
 
+* Decades and centuries are correctly represented around year 0 and in BC
+  years. (Centuries are now denoted 1900s and represent the years 1900-1999.)
+
 GUI:
 
 * View selection to hide/show events done (progress = 100%).
