@@ -476,10 +476,12 @@ def fit_week_fn(main_frame, current_period, navigation_fn):
 
 def create_strip_fitter(strip_cls):
     def fit(main_frame, current_period, navigation_fn):
-        strip = strip_cls()
-        start = strip.start(current_period.mean_time())
-        end = strip.increment(start)
-        navigation_fn(lambda tp: tp.update(start, end))
+        def navigate(time_period):
+            strip = strip_cls()
+            start = strip.start(current_period.mean_time())
+            end = strip.increment(start)
+            return time_period.update(start, end)
+        navigation_fn(navigate)
     return fit
 
 
