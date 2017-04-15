@@ -83,7 +83,7 @@ class GregorianTimeType(TimeType):
             (_("Fit Year"), create_strip_fitter(StripYear)),
             (_("Fit Month"), create_strip_fitter(StripMonth)),
             (_("Fit Week"), fit_week_fn),
-            (_("Fit Day"), fit_day_fn),
+            (_("Fit Day"), create_strip_fitter(StripDay)),
         ]
 
     def format_period(self, time_period):
@@ -439,13 +439,6 @@ def get_millenium_max_year():
     return GregorianUtils.from_time(GregorianTimeType().get_max_time()).year - 1000
 
 
-def fit_day_fn(main_frame, current_period, navigation_fn):
-    mean = GregorianUtils.from_time(current_period.mean_time())
-    start = GregorianUtils.from_date(mean.year, mean.month, mean.day).to_time()
-    end = start + delta_from_days(1)
-    navigation_fn(lambda tp: tp.update(start, end))
-
-
 def fit_week_fn(main_frame, current_period, navigation_fn):
     mean = GregorianUtils.from_time(current_period.mean_time())
     start = GregorianUtils.from_date(mean.year, mean.month, mean.day).to_time()
@@ -723,8 +716,11 @@ class StripDay(Strip):
 
     def start(self, time):
         gregorian_time = GregorianUtils.from_time(time)
-        new_gregorian = GregorianUtils.from_date(gregorian_time.year, gregorian_time.month, gregorian_time.day)
-        return new_gregorian.to_time()
+        return GregorianUtils.from_date(
+            gregorian_time.year,
+            gregorian_time.month,
+            gregorian_time.day
+        ).to_time()
 
     def increment(self, time):
         return time + delta_from_days(1)
