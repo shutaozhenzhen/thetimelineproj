@@ -102,9 +102,6 @@ class NumTimeType(TimeType):
     def now(self):
         return 0
 
-    def div_timedeltas(self, delta1, delta2):
-        return delta1 / delta2
-
     def get_min_zoom_delta(self):
         return (5, _("Can't zoom deeper than 5"))
 
