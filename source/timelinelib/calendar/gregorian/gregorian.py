@@ -78,17 +78,17 @@ class Gregorian(CalendarBase):
 
     def __repr__(self):
         return "Gregorian<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
-    
+
 
 class GregorianUtils(CalendarUtilsBase):
     @classmethod
     def is_valid(cls, year, month, day):
         return (month >= 1 and month <= 12 and day >= 1 and day <= cls.days_in_month(year, month))
-    
-    @classmethod    
+
+    @classmethod
     def is_valid_time(cls, hour, minute, second):
         return (hour >= 0 and hour < 24 and minute >= 0 and minute < 60 and second >= 0 and second < 60)
-    
+
     @classmethod
     def days_in_month(cls, year, month):
         if month in [4, 6, 9, 11]:
@@ -98,89 +98,89 @@ class GregorianUtils(CalendarUtilsBase):
         if cls.is_leap_year(year):
             return 29
         return 28
-    
+
     @classmethod
     def is_leap_year(cls, year):
         return year % 4 == 0 and (year % 400 == 0 or not year % 100 == 0)
-    
+
     @classmethod
     def from_absolute_day(cls, julian_day):
         """
         This algorithm is described here:
-    
+
         * http://www.tondering.dk/claus/cal/julperiod.php#formula
-    
+
         Integer division works differently in C and in Python for negative numbers.
         C truncates towards 0 and Python truncates towards negative infinity:
         http://python-history.blogspot.se/2010/08/why-pythons-integer-division-floors.html
-    
+
         The above source don't state which to be used. If we can prove that
         division-expressions are always positive, we can be sure this algorithm
         works the same in C and in Python.
-    
+
         We must prove that:
-    
+
         1) m             >= 0
         2) ((5 * e) + 2) >= 0  =>  e >= 0
         3) (1461 * d)    >= 0  =>  d >= 0
         4) ((4 * c) + 3) >= 0  =>  c >= 0
         5) (b * 146097)  >= 0  =>  b >= 0
         6) ((4 * a) + 3) >= 0  =>  a >= 0
-    
+
         Let's work from the top:
-    
+
         julian_day >= 0                   =>
-    
+
         a >= 0 + 32044
            = 32044                        =>
-    
+
         This proves 6).
-    
+
         b >= ((4 * 32044) + 3) // 146097
            = 0
-    
+
         This proves 5).
-    
+
         Let's look at c:
-    
+
         c = a - ((b * 146097) // 4)
           = a - (((((4 * a) + 3) // 146097) * 146097) // 4)
-    
+
         For c to be >= 0, then
-    
+
         (((((4 * a) + 3) // 146097) * 146097) // 4) <= a
-    
+
         Let's look at this component: ((((4 * a) + 3) // 146097) * 146097)
-    
+
         This expression can never be larger than (4 * a) + 3. That gives this:
-    
+
         ((4 * a) + 3) // 4 <= a, which holds.
-    
+
         This proves 4).
-    
+
         Now, let's look at d:
-    
+
         d = ((4 * c) + 3) // 1461
-    
+
         If c is >= 0, then d is also >= 0.
-    
+
         This proves 3).
-    
+
         Let's look at e:
-    
+
         e = c - ((1461 * d) // 4)
           = c - ((1461 * (((4 * c) + 3) // 1461)) // 4)
-    
+
         The same resoning as above can be used to conclude that e >= 0.
-    
+
         This proves 2).
-    
+
         Now, let's look at m:
-    
+
         m = ((5 * e) + 2) // 153
-    
+
         If e >= 0, then m is also >= 0.
-    
+
         This proves 1).
         """
         if julian_day < timeline.MIN_JULIAN_DAY:
@@ -195,49 +195,49 @@ class GregorianUtils(CalendarUtilsBase):
         month = m + 3 - (12 * (m // 10))
         year = (b * 100) + d - 4800 + (m // 10)
         return (year, month, day)
-    
+
     @classmethod
     def to_absolute_day(cls, year, month, day):
         """
         This algorithm is described here:
-    
+
         * http://www.tondering.dk/claus/cal/julperiod.php#formula
         * http://en.wikipedia.org/wiki/Julian_day#Converting_Julian_or_Gregorian_calendar_date_to_Julian_Day_Number
-    
+
         Integer division works differently in C and in Python for negative numbers.
         C truncates towards 0 and Python truncates towards negative infinity:
         http://python-history.blogspot.se/2010/08/why-pythons-integer-division-floors.html
-    
+
         The above sources don't state which to be used. If we can prove that
         division-expressions are always positive, we can be sure this algorithm
         works the same in C and in Python.
-    
+
         We must prove that:
-    
+
         1) y >= 0
         2) ((153 * m) + 2) >= 0
-    
+
         Let's prove 1):
-    
+
         y = year + 4800 - a
           = year + 4800 - ((14 - month) // 12)
-    
+
         year >= -4713 (gives a julian day of 0)
-    
+
         so
-    
+
         year + 4800 >= -4713 + 4800 = 87
-    
+
         The expression ((14 - month) // 12) varies between 0 and 1 when month
         varies between 1 and 12. Therefore y >= 87 - 1 = 86, and 1) is proved.
-    
+
         Let's prove 2):
-    
+
         m = month + (12 * a) - 3
           = month + (12 * ((14 - month) // 12)) - 3
-    
+
         1 <= month <= 12
-    
+
         m(1)  = 1  + (12 * ((14 - 1)  // 12)) - 3 = 1  + (12 * 1) - 3 = 10
         m(2)  = 2  + (12 * ((14 - 2)  // 12)) - 3 = 2  + (12 * 1) - 3 = 11
         m(3)  = 3  + (12 * ((14 - 3)  // 12)) - 3 = 3  + (12 * 0) - 3 = 0
@@ -250,7 +250,7 @@ class GregorianUtils(CalendarUtilsBase):
         m(10) = 10 + (12 * ((14 - 10) // 12)) - 3 = 10 + (12 * 0) - 3 = 7
         m(11) = 11 + (12 * ((14 - 11) // 12)) - 3 = 11 + (12 * 0) - 3 = 8
         m(12) = 12 + (12 * ((14 - 12) // 12)) - 3 = 12 + (12 * 0) - 3 = 9
-    
+
         So, m is always > 0. Which also makes the expression ((153 * m) + 2) > 0,
         and 2) is proved.
         """
@@ -267,7 +267,7 @@ class GregorianUtils(CalendarUtilsBase):
         if julian_day < timeline.MIN_JULIAN_DAY:
             raise ValueError("from_absolute_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
         return julian_day
-    
+
     @classmethod
     def calendar_week(cls, time):
         def monday_week_1(year):
@@ -275,12 +275,12 @@ class GregorianUtils(CalendarUtilsBase):
             jan_4 = cls.from_date(year, 1, 4).to_time()
             jan_4_day_of_week = GregorianTimeType().get_day_of_week(jan_4)
             return jan_4 - timeline.delta_from_days(jan_4_day_of_week)
-    
+
         def days_between(end, start):
             return end.julian_day - start.julian_day
-    
+
         def days_since_monday_week_1(time):
-    
+
             year = cls.from_time(time).year
             diff = days_between(end=time, start=monday_week_1(year + 1))
             if diff >= 0:
@@ -293,13 +293,13 @@ class GregorianUtils(CalendarUtilsBase):
                 return diff
             raise ValueError("should not end up here")
         return days_since_monday_week_1(time) / 7 + 1
-    
+
     @classmethod
     def from_time(cls, time):
         (year, month, day) = cls.from_absolute_day(time.julian_day)
         (hour, minute, second) = time.get_time_of_day()
         return Gregorian(year, month, day, hour, minute, second)
-    
+
     @classmethod
     def from_date(cls, year, month, day):
         return Gregorian(year, month, day, 0, 0, 0)
