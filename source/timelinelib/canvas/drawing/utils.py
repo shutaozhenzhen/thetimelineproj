@@ -34,10 +34,9 @@ class Metrics(object):
 
     def calc_exact_x(self, time):
         """Return the x position in pixels as a float for the given time."""
-        delta1 = self.time_type.div_timedeltas(time - self.time_period.start_time,
-                                               self.time_period.delta())
-        float_res = self.width * delta1
-        return float_res
+        return self.width * (
+            (time - self.time_period.start_time) / self.time_period.delta()
+        )
 
     def calc_x(self, time):
         """Return the x position in pixels as an integer for the given time."""

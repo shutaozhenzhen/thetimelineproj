@@ -54,9 +54,6 @@ class TimeType(object):
     def now(self):
         raise NotImplementedError("now not implemented.")
 
-    def div_timedeltas(self, delta1, delta2):
-        raise NotImplementedError("div_timedeltas not implemented.")
-
     def get_min_zoom_delta(self):
         raise NotImplementedError("get_min_zoom_delta not implemented.")
 

@@ -180,9 +180,6 @@ class GregorianTimeType(TimeType):
                               py.hour, py.minute, py.second)
         return gregorian.to_time()
 
-    def div_timedeltas(self, delta1, delta2):
-        return delta1 / delta2
-
     def get_min_zoom_delta(self):
         return (timeline.delta_from_seconds(60), _("Can't zoom deeper than 1 minute"))
 

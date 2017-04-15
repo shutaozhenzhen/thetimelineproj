@@ -99,11 +99,6 @@ class describe_gregoriantimetype(UnitTestCase):
             self.time_type.margin_delta(timeline.TimeDelta(48)),
             timeline.TimeDelta(2))
 
-    def test_div_deltas(self):
-        self.assertEqual(
-            self.time_type.div_timedeltas(timeline.TimeDelta(5), timeline.TimeDelta(2)),
-            2.5)
-
     def test_get_weekday(self):
         dt = self.time_type.parse_time("2013-07-10 00:00:00")
         self.assertEqual(2, self.time_type.get_day_of_week(dt))
