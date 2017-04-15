@@ -116,9 +116,6 @@ class NumTimeType(TimeType):
             (_("1000-period"), lambda p, d: move_period(p, d * 1000)),
         ]
 
-    def margin_delta(self, delta):
-        return delta / 24
-
     def supports_saved_now(self):
         return False
 

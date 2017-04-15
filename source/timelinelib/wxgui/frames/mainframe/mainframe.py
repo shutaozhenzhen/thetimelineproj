@@ -535,7 +535,7 @@ class GuiCreator(object):
                 start = event.get_start_time()
                 delta = self.main_panel.get_displayed_period_delta()
                 end = start + delta
-                margin_delta = self.timeline.get_time_type().margin_delta(delta)
+                margin_delta = delta / 24
                 self.main_panel.Navigate(lambda tp: tp.update(start, end, -margin_delta))
 
         def find_last(evt):
@@ -547,7 +547,7 @@ class GuiCreator(object):
                     start = end - delta
                 except ValueError:
                     start = self.timeline.get_time_type().get_min_time()
-                margin_delta = self.timeline.get_time_type().margin_delta(delta)
+                margin_delta = delta / 24
                 self.main_panel.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
 
         def restore_time_period(evt):
