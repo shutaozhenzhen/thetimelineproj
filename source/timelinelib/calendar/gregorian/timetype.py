@@ -180,10 +180,6 @@ class GregorianTimeType(TimeType):
                               py.hour, py.minute, py.second)
         return gregorian.to_time()
 
-    def get_time_at_x(self, time_period, x_percent_of_width):
-        """Return the time at pixel `x`."""
-        return time_period.start_time + time_period.delta() * x_percent_of_width
-
     def div_timedeltas(self, delta1, delta2):
         return delta1 / delta2
 
