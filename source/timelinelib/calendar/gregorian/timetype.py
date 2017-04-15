@@ -194,9 +194,6 @@ class GregorianTimeType(TimeType):
             (_("Year"), move_period_num_years),
         ]
 
-    def margin_delta(self, delta):
-        return delta / 24
-
     def is_special_day(self, time):
         return False
 

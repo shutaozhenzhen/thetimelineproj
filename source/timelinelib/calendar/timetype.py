@@ -63,9 +63,6 @@ class TimeType(object):
     def get_duplicate_functions(self):
         raise NotImplementedError("get_duplicate_functions not implemented.")
 
-    def margin_delta(self, delta):
-        raise NotImplementedError("margin_delta not implemented.")
-
     def is_special_day(self, time):
         raise NotImplementedError("is_special_day not implemented.")
 
