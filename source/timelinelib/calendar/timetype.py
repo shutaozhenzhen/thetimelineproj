@@ -57,9 +57,6 @@ class TimeType(object):
     def get_min_zoom_delta(self):
         raise NotImplementedError("get_min_zoom_delta not implemented.")
 
-    def get_zero_delta(self):
-        raise NotImplementedError("get_zero_delta not implemented.")
-
     def get_name(self):
         raise NotImplementedError("get_name not implemented.")
 

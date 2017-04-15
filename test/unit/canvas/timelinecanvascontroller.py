@@ -97,9 +97,6 @@ class ATimeType(TimeType):
     def get_max_time(self):
         return Time(20, 0)
 
-    def get_zero_delta(self):
-        return TimeDelta(0)
-
     def format_period(self, period):
         return "%s to %s" % (period.start_time, period.end_time)
 

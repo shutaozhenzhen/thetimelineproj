@@ -183,9 +183,6 @@ class GregorianTimeType(TimeType):
     def get_min_zoom_delta(self):
         return (timeline.delta_from_seconds(60), _("Can't zoom deeper than 1 minute"))
 
-    def get_zero_delta(self):
-        return timeline.delta_from_seconds(0)
-
     def get_name(self):
         return u"gregoriantime"
 
