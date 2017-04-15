@@ -18,7 +18,7 @@
 
 import codecs
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.db import db_open
@@ -96,9 +96,9 @@ class DbOpenSpec(TmpDirTestCase):
         self.assertTrue(event.has_id())
         self.assertEqual(event.get_text(), "Event 1")
         self.assertEqual(event.get_time_period().start_time,
-                         Gregorian(2009, 11, 4, 22, 52, 0).to_time())
+                         GregorianDateTime(2009, 11, 4, 22, 52, 0).to_time())
         self.assertEqual(event.get_time_period().end_time,
-                         Gregorian(2009, 11, 11, 22, 52, 0).to_time())
+                         GregorianDateTime(2009, 11, 11, 22, 52, 0).to_time())
         self.assertEqual(event.get_category().get_name(), "Category 1")
         self.assertEqual(event.get_data("description"), "The first event.")
         self.assertEqual(event.get_data("icon"), None)
@@ -106,8 +106,8 @@ class DbOpenSpec(TmpDirTestCase):
         # checked later)
         vp = ViewProperties()
         db.load_view_properties(vp)
-        self.assertEqual(vp.displayed_period.start_time, Gregorian(2009, 10, 17, 22, 38, 32).to_time())
-        self.assertEqual(vp.displayed_period.end_time, Gregorian(2009, 12, 2, 16, 22, 4).to_time())
+        self.assertEqual(vp.displayed_period.start_time, GregorianDateTime(2009, 10, 17, 22, 38, 32).to_time())
+        self.assertEqual(vp.displayed_period.end_time, GregorianDateTime(2009, 12, 2, 16, 22, 4).to_time())
         # Assert categories correctly loaded
         categories = db.get_categories()
         self.assertEqual(len(categories), 3)

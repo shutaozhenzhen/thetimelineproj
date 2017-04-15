@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime, GregorianUtils
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
@@ -303,7 +303,7 @@ class TutorialTimelineCreator(object):
 
     def get_time(self, year, month, day):
         if self.db.get_time_type().get_name() == u"gregoriantime":
-            return Gregorian(year, month, day, 0, 0, 0).to_time()
+            return GregorianDateTime(year, month, day, 0, 0, 0).to_time()
 
 
 class NumericTutorialTimelineCreator(object):

@@ -20,7 +20,7 @@ from timelinelib.calendar.calendarbase import CalendarBase, CalendarUtilsBase
 import timelinelib.canvas.data.internaltime as timeline
 
 
-class Gregorian(CalendarBase):
+class GregorianDateTime(CalendarBase):
 
     def __init__(self, year, month, day, hour, minute, second):
         self.utils = GregorianUtils
@@ -77,7 +77,7 @@ class Gregorian(CalendarBase):
                 self.second == 0)
 
     def __repr__(self):
-        return "Gregorian<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
+        return "GregorianDateTime<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
 
 
 class GregorianUtils(CalendarUtilsBase):
@@ -298,8 +298,8 @@ class GregorianUtils(CalendarUtilsBase):
     def from_time(cls, time):
         (year, month, day) = cls.from_absolute_day(time.julian_day)
         (hour, minute, second) = time.get_time_of_day()
-        return Gregorian(year, month, day, hour, minute, second)
+        return GregorianDateTime(year, month, day, hour, minute, second)
 
     @classmethod
     def from_date(cls, year, month, day):
-        return Gregorian(year, month, day, 0, 0, 0)
+        return GregorianDateTime(year, month, day, 0, 0, 0)

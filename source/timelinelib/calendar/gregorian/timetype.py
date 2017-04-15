@@ -19,7 +19,7 @@
 from datetime import datetime
 import re
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.gregorian.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.gregorian.weekdaynames import abbreviated_name_of_weekday
@@ -57,7 +57,7 @@ class GregorianTimeType(TimeType):
             minute = int(match.group(5))
             second = int(match.group(6))
             try:
-                return Gregorian(year, month, day, hour, minute, second).to_time()
+                return GregorianDateTime(year, month, day, hour, minute, second).to_time()
             except ValueError:
                 raise ValueError("Invalid time, time string = '%s'" % time_string)
         else:
@@ -176,7 +176,7 @@ class GregorianTimeType(TimeType):
 
     def now(self):
         py = datetime.now()
-        gregorian = Gregorian(py.year, py.month, py.day,
+        gregorian = GregorianDateTime(py.year, py.month, py.day,
                               py.hour, py.minute, py.second)
         return gregorian.to_time()
 
