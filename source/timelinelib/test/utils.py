@@ -26,7 +26,7 @@ Such a string has a day, month, year and an optional time like this::
 
 import random
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.monthnames import ABBREVIATED_ENGLISH_MONTH_NAMES
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import Category
@@ -66,7 +66,7 @@ def human_time_to_gregorian(human_time):
     from a human readable date and time string.
     """
     (year, month, day, hour, minute, seconds) = human_time_to_ymdhm(human_time)
-    return Gregorian(year, month, day, hour, minute, seconds).to_time()
+    return GregorianDateTime(year, month, day, hour, minute, seconds).to_time()
 
 
 def a_time_period():
@@ -77,8 +77,8 @@ def a_time_period():
     end_year = year + random.randint(1, 5)
     end_month = random.randint(1, 12)
     end_day = random.randint(1, 28)
-    return TimePeriod(Gregorian(year, month, day, 0, 0, 0).to_time(),
-                      Gregorian(end_year, end_month, end_day, 0, 0, 0).to_time())
+    return TimePeriod(GregorianDateTime(year, month, day, 0, 0, 0).to_time(),
+                      GregorianDateTime(end_year, end_month, end_day, 0, 0, 0).to_time())
 
 
 def human_time_to_ymdhm(human_time):

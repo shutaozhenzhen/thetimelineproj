@@ -24,7 +24,7 @@ import random
 
 from icalendar import Calendar
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime, GregorianUtils
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
@@ -208,7 +208,7 @@ class IcsLoader(object):
 
     def _convert_to_datetime(self, d):
         if isinstance(d, datetime):
-            return Gregorian(d.year, d.month, d.day, d.hour, d.minute, d.second).to_time()
+            return GregorianDateTime(d.year, d.month, d.day, d.hour, d.minute, d.second).to_time()
         elif isinstance(d, date):
             return GregorianUtils.from_date(d.year, d.month, d.day).to_time()
         else:

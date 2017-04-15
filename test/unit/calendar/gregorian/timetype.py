@@ -19,7 +19,7 @@
 import mock
 import wx
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.timetype import backward_fn
 from timelinelib.calendar.gregorian.timetype import backward_one_month_fn
 from timelinelib.calendar.gregorian.timetype import backward_one_week_fn
@@ -578,7 +578,7 @@ class describe_gregorian_time_type_delta_formatting(UnitTestCase):
         self.assertEqual("0", self.time_type.format_delta(delta))
 
     def create_point_period(self, day, month, year, hour, minute):
-        dt = Gregorian(year, month, day, hour, minute, 0).to_time()
+        dt = GregorianDateTime(year, month, day, hour, minute, 0).to_time()
         return TimePeriod(dt, dt)
 
     def get_days_delta(self, days=0, hours=0, minutes=0):
@@ -699,46 +699,46 @@ class describe_gregorian_time_duplicate_function(UnitTestCase):
         new_period = move_period_num_days(self.period, 6)
         self.assertEqual(
             TimePeriod(
-                Gregorian(2010, 1, 7, 12, 0, 0).to_time(),
-                Gregorian(2010, 1, 7, 13, 0, 0).to_time()),
+                GregorianDateTime(2010, 1, 7, 12, 0, 0).to_time(),
+                GregorianDateTime(2010, 1, 7, 13, 0, 0).to_time()),
             new_period)
 
     def test_move_period_num_weeks_adds_given_number_of_weeks(self):
         new_period = move_period_num_weeks(self.period, -3)
         self.assertEqual(
             TimePeriod(
-                Gregorian(2009, 12, 11, 12, 0, 0).to_time(),
-                Gregorian(2009, 12, 11, 13, 0, 0).to_time()),
+                GregorianDateTime(2009, 12, 11, 12, 0, 0).to_time(),
+                GregorianDateTime(2009, 12, 11, 13, 0, 0).to_time()),
             new_period)
 
     def test_move_period_num_months_adds_given_number_of_months(self):
         new_period = move_period_num_months(self.period, 2)
         self.assertEqual(
             TimePeriod(
-                Gregorian(2010, 3, 1, 12, 0, 0).to_time(),
-                Gregorian(2010, 3, 1, 13, 0, 0).to_time()),
+                GregorianDateTime(2010, 3, 1, 12, 0, 0).to_time(),
+                GregorianDateTime(2010, 3, 1, 13, 0, 0).to_time()),
             new_period)
 
     def test_move_period_num_months_can_handle_year_boundries_up(self):
         new_period = move_period_num_months(self.period, 20)
         self.assertEqual(
             TimePeriod(
-                Gregorian(2011, 9, 1, 12, 0, 0).to_time(),
-                Gregorian(2011, 9, 1, 13, 0, 0).to_time()),
+                GregorianDateTime(2011, 9, 1, 12, 0, 0).to_time(),
+                GregorianDateTime(2011, 9, 1, 13, 0, 0).to_time()),
             new_period)
 
     def test_move_period_num_months_can_handle_year_boundries_down(self):
         new_period = move_period_num_months(self.period, -1)
         self.assertEqual(
             TimePeriod(
-                Gregorian(2009, 12, 1, 12, 0, 0).to_time(),
-                Gregorian(2009, 12, 1, 13, 0, 0).to_time()),
+                GregorianDateTime(2009, 12, 1, 12, 0, 0).to_time(),
+                GregorianDateTime(2009, 12, 1, 13, 0, 0).to_time()),
             new_period)
 
     def test_move_period_num_months_returns_none_if_day_does_not_exist(self):
         self.period = TimePeriod(
-            Gregorian(2010, 1, 31, 12, 0, 0).to_time(),
-            Gregorian(2010, 1, 31, 13, 0, 0).to_time())
+            GregorianDateTime(2010, 1, 31, 12, 0, 0).to_time(),
+            GregorianDateTime(2010, 1, 31, 13, 0, 0).to_time())
         new_period = move_period_num_months(self.period, 1)
         self.assertEqual(None, new_period)
 
@@ -773,19 +773,19 @@ class describe_gregorian_time_duplicate_function(UnitTestCase):
         new_period = move_period_num_years(self.period, 1)
         self.assertEqual(
             TimePeriod(
-                Gregorian(2011, 1, 1, 12, 0, 0).to_time(),
-                Gregorian(2011, 1, 1, 13, 0, 0).to_time()),
+                GregorianDateTime(2011, 1, 1, 12, 0, 0).to_time(),
+                GregorianDateTime(2011, 1, 1, 13, 0, 0).to_time()),
             new_period)
 
     def test_move_period_num_years_returns_none_if_year_does_not_exist(self):
         self.period = TimePeriod(
-            Gregorian(2012, 2, 29, 12, 0, 0).to_time(),
-            Gregorian(2012, 2, 29, 13, 0, 0).to_time())
+            GregorianDateTime(2012, 2, 29, 12, 0, 0).to_time(),
+            GregorianDateTime(2012, 2, 29, 13, 0, 0).to_time())
         new_period = move_period_num_years(self.period, 1)
         self.assertEqual(None, new_period)
 
     def setUp(self):
         UnitTestCase.setUp(self)
         self.period = TimePeriod(
-            Gregorian(2010, 1, 1, 12, 0, 0).to_time(),
-            Gregorian(2010, 1, 1, 13, 0, 0).to_time())
+            GregorianDateTime(2010, 1, 1, 12, 0, 0).to_time(),
+            GregorianDateTime(2010, 1, 1, 13, 0, 0).to_time())

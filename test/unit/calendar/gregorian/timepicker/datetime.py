@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.timepicker.date import GregorianDatePicker
 from timelinelib.calendar.gregorian.timepicker.datetime import CalendarPopup
 from timelinelib.calendar.gregorian.timepicker.datetime import CalendarPopupController
@@ -37,22 +37,22 @@ class AGregorianDateTimePicker(UnitTestCase):
             self.date_picker, self.time_picker, self.now_fn, None)
 
     def testDateControlIsAssignedDatePartFromSetValue(self):
-        self.controller.set_value(Gregorian(2010, 11, 20, 15, 33, 0).to_time())
+        self.controller.set_value(GregorianDateTime(2010, 11, 20, 15, 33, 0).to_time())
         self.date_picker.SetGregorianDate.assert_called_with((2010, 11, 20))
 
     # TODO: Is this really GregorianDateTimePicker's responsibility?
     def testDateControlIsAssignedCurrentDateIfSetWithValueNone(self):
-        self.now_fn.return_value = Gregorian(2010, 8, 31, 0, 0, 0).to_time()
+        self.now_fn.return_value = GregorianDateTime(2010, 8, 31, 0, 0, 0).to_time()
         self.controller.set_value(None)
         self.date_picker.SetGregorianDate.assert_called_with((2010, 8, 31))
 
     def testTimeControlIsAssignedTimePartFromSetValue(self):
-        self.controller.set_value(Gregorian(2010, 11, 20, 15, 33, 0).to_time())
+        self.controller.set_value(GregorianDateTime(2010, 11, 20, 15, 33, 0).to_time())
         self.time_picker.SetGregorianTime.assert_called_with((15, 33, 0))
 
     # TODO: Is this really GregorianDateTimePicker's responsibility?
     def testTimeControlIsAssignedCurrentTimeIfSetWithValueNone(self):
-        self.now_fn.return_value = Gregorian(2010, 8, 31, 12, 15, 0).to_time()
+        self.now_fn.return_value = GregorianDateTime(2010, 8, 31, 12, 15, 0).to_time()
         self.controller.set_value(None)
         self.time_picker.SetGregorianTime.assert_called_with((12, 15, 0))
 
@@ -60,13 +60,13 @@ class AGregorianDateTimePicker(UnitTestCase):
         self.time_picker.IsShown.return_value = True
         self.time_picker.GetGregorianTime.return_value = (14, 30, 0)
         self.date_picker.GetGregorianDate.return_value = (2010, 8, 31)
-        self.assertEqual(Gregorian(2010, 8, 31, 14, 30, 0).to_time(), self.controller.get_value())
+        self.assertEqual(GregorianDateTime(2010, 8, 31, 14, 30, 0).to_time(), self.controller.get_value())
 
     def testGetValueWhenTimeIsHiddenShouldReturnDateWithoutTime(self):
         self.time_picker.IsShown.return_value = False
         self.time_picker.GetGregorianTime.return_value = (14, 30, 0)
         self.date_picker.GetGregorianDate.return_value = (2010, 8, 31)
-        self.assertEqual(Gregorian(2010, 8, 31, 0, 0, 0).to_time(), self.controller.get_value())
+        self.assertEqual(GregorianDateTime(2010, 8, 31, 0, 0, 0).to_time(), self.controller.get_value())
 
     def testControllerCanConverDateTupleToWxDate(self):
         wx_date = self.controller.date_tuple_to_wx_date((2010, 8, 31))

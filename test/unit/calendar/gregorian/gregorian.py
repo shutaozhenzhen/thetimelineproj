@@ -28,13 +28,13 @@ import timelinelib.canvas.data.internaltime as timeline
 class describe_gregorian(UnitTestCase):
 
     def test_rejects_invalid_dates(self):
-        self.assertRaises(ValueError, gregorian.Gregorian, 2013, 0, 1, 0, 0, 0)
+        self.assertRaises(ValueError, gregorian.GregorianDateTime, 2013, 0, 1, 0, 0, 0)
 
     def test_can_replace(self):
-        g = gregorian.Gregorian(2013, 7, 12, 10, 16, 12)
-        self.assertEqual(g.replace(year=1990), gregorian.Gregorian(1990, 7, 12, 10, 16, 12))
-        self.assertEqual(g.replace(month=6), gregorian.Gregorian(2013, 6, 12, 10, 16, 12))
-        self.assertEqual(g.replace(year=1990, month=6), gregorian.Gregorian(1990, 6, 12, 10, 16, 12))
+        g = gregorian.GregorianDateTime(2013, 7, 12, 10, 16, 12)
+        self.assertEqual(g.replace(year=1990), gregorian.GregorianDateTime(1990, 7, 12, 10, 16, 12))
+        self.assertEqual(g.replace(month=6), gregorian.GregorianDateTime(2013, 6, 12, 10, 16, 12))
+        self.assertEqual(g.replace(year=1990, month=6), gregorian.GregorianDateTime(1990, 6, 12, 10, 16, 12))
         self.assertRaises(ValueError, g.replace, month=13)
 
 
@@ -43,17 +43,17 @@ class GregorianConversionsSpec(UnitTestCase):
     def test_can_convert_from_timeline_time_to_gregorian(self):
         self.assertEqual(
             gregorian.GregorianUtils.from_time(timeline.Time(julian_day=0, seconds=0)),
-            gregorian.Gregorian(-4713, 11, 24, 0, 0, 0))
+            gregorian.GregorianDateTime(-4713, 11, 24, 0, 0, 0))
         self.assertEqual(
             gregorian.GregorianUtils.from_time(timeline.Time(julian_day=1, seconds=0)),
-            gregorian.Gregorian(-4713, 11, 25, 0, 0, 0))
+            gregorian.GregorianDateTime(-4713, 11, 25, 0, 0, 0))
 
     def test_can_convert_from_gregorian_to_timeline_time(self):
         self.assertEqual(
-            gregorian.Gregorian(-4713, 11, 24, 0, 0, 0).to_time(),
+            gregorian.GregorianDateTime(-4713, 11, 24, 0, 0, 0).to_time(),
             timeline.Time(julian_day=0, seconds=0))
         self.assertEqual(
-            gregorian.Gregorian(-4713, 11, 25, 0, 0, 0).to_time(),
+            gregorian.GregorianDateTime(-4713, 11, 25, 0, 0, 0).to_time(),
             timeline.Time(julian_day=1, seconds=0))
 
     def test_roundtrip_julian_day_conversions(self):

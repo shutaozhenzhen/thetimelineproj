@@ -16,11 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime, GregorianUtils
 import timelinelib.canvas.data.internaltime as timeline
 
 
-class Bosparanian(Gregorian):
+class Bosparanian(GregorianDateTime):
 
     def __init__(self, year, month, day, hour, minute, second):
         self.utils = BosparanianUtils

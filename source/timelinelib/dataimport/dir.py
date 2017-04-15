@@ -20,7 +20,7 @@ from datetime import datetime
 import colorsys
 import os.path
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
@@ -116,7 +116,7 @@ def _event_from_path(db, file_path):
     # st_ctime (platform dependent; time of most recent metadata change on
     #           Unix, or the time of creation on Windows):
     dt = datetime.fromtimestamp(int(stat.st_mtime))
-    start_time = Gregorian(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second).to_time()
+    start_time = GregorianDateTime(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second).to_time()
     end_time = start_time
     if start_time > end_time:
         start_time, end_time = end_time, start_time

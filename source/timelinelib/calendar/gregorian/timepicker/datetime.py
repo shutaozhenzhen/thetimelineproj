@@ -20,7 +20,7 @@ import os.path
 
 import wx.calendar
 
-from timelinelib.calendar.gregorian.gregorian import Gregorian, GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime, GregorianUtils
 from timelinelib.calendar.gregorian.timepicker.date import GregorianDatePicker
 from timelinelib.calendar.gregorian.timepicker.time import GregorianTimePicker
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
@@ -124,7 +124,7 @@ class GregorianDateTimePickerController(object):
         else:
             hour, minute, second = (0, 0, 0)
         year, month, day = self.date_picker.GetGregorianDate()
-        return Gregorian(year, month, day, hour, minute, second).to_time()
+        return GregorianDateTime(year, month, day, hour, minute, second).to_time()
 
     def set_value(self, time):
         if time is None:
