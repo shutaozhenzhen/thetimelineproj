@@ -82,9 +82,6 @@ class Bosparanian(object):
         seconds = self.hour * 60 * 60 + self.minute * 60 + self.second
         return timeline.Time(days, seconds)
 
-    def is_bc(self):
-        return self.year <= 0
-
     def replace(self, year=None, month=None):
         if year is None:
             year = self.year
