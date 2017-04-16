@@ -94,5 +94,6 @@ class Subevent(Event):
         new_event.set_data("hyperlink", self.get_data("hyperlink"))
         new_event.set_data("progress", self.get_data("progress"))
         new_event.set_data("alert", self.get_data("alert"))
+        new_event.set_data("default_color", self.get_data("default_color"))
         new_event.set_fuzzy(self.get_fuzzy())
         return new_event
