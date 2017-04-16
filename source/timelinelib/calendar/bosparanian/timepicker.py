@@ -252,7 +252,7 @@ class BosparanianDatePickerController(object):
             return date
         def increment_day(date):
             year, month, day = date
-            time = BosparanianUtils.from_date(year, month, day).to_time()
+            time = Bosparanian.from_ymd(year, month, day).to_time()
             if time <  BosparanianTimeType().get_max_time() - delta_from_days(1):
                 return BosparanianUtils.from_time(time + delta_from_days(1)).to_date_tuple()
             return date
@@ -303,8 +303,8 @@ class BosparanianDatePickerController(object):
             new_date = decrement_month(current_date)
         else:
             year, month, day = current_date
-            BosparanianUtils.from_date(year, month, day)
-            if BosparanianUtils.from_date(year, month, day).to_time() == BosparanianTimeType().get_min_time():
+            Bosparanian.from_ymd(year, month, day)
+            if Bosparanian.from_ymd(year, month, day).to_time() == BosparanianTimeType().get_min_time():
                 return
             new_date = decrement_day(current_date)
             self._save_preferred_day(new_date)
@@ -345,7 +345,7 @@ class BosparanianDatePickerController(object):
         done = False
         while not done:
             try:
-                date = BosparanianUtils.from_date(new_year, new_month, new_day)
+                date = Bosparanian.from_ymd(new_year, new_month, new_day)
                 done = True
             except Exception:
                 new_day -= 1
