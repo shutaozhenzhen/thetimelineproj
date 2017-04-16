@@ -92,7 +92,7 @@ class GregorianDateTime(CalendarBase):
         return (self.hour, self.minute, self.second)
 
     def to_time(self):
-        days = self.utils.to_absolute_day(self.year, self.month, self.day)
+        days = gregorian_ymd_to_julian_day(self.year, self.month, self.day)
         seconds = self.hour * 60 * 60 + self.minute * 60 + self.second
         return self.timeclass(days, seconds)
 
@@ -114,79 +114,7 @@ class GregorianDateTime(CalendarBase):
 
 
 class GregorianUtils(CalendarUtilsBase):
-
-
-    @classmethod
-    def to_absolute_day(cls, year, month, day):
-        """
-        This algorithm is described here:
-
-        * http://www.tondering.dk/claus/cal/julperiod.php#formula
-        * http://en.wikipedia.org/wiki/Julian_day#Converting_Julian_or_Gregorian_calendar_date_to_Julian_Day_Number
-
-        Integer division works differently in C and in Python for negative numbers.
-        C truncates towards 0 and Python truncates towards negative infinity:
-        http://python-history.blogspot.se/2010/08/why-pythons-integer-division-floors.html
-
-        The above sources don't state which to be used. If we can prove that
-        division-expressions are always positive, we can be sure this algorithm
-        works the same in C and in Python.
-
-        We must prove that:
-
-        1) y >= 0
-        2) ((153 * m) + 2) >= 0
-
-        Let's prove 1):
-
-        y = year + 4800 - a
-          = year + 4800 - ((14 - month) // 12)
-
-        year >= -4713 (gives a julian day of 0)
-
-        so
-
-        year + 4800 >= -4713 + 4800 = 87
-
-        The expression ((14 - month) // 12) varies between 0 and 1 when month
-        varies between 1 and 12. Therefore y >= 87 - 1 = 86, and 1) is proved.
-
-        Let's prove 2):
-
-        m = month + (12 * a) - 3
-          = month + (12 * ((14 - month) // 12)) - 3
-
-        1 <= month <= 12
-
-        m(1)  = 1  + (12 * ((14 - 1)  // 12)) - 3 = 1  + (12 * 1) - 3 = 10
-        m(2)  = 2  + (12 * ((14 - 2)  // 12)) - 3 = 2  + (12 * 1) - 3 = 11
-        m(3)  = 3  + (12 * ((14 - 3)  // 12)) - 3 = 3  + (12 * 0) - 3 = 0
-        m(4)  = 4  + (12 * ((14 - 4)  // 12)) - 3 = 4  + (12 * 0) - 3 = 1
-        m(5)  = 5  + (12 * ((14 - 5)  // 12)) - 3 = 5  + (12 * 0) - 3 = 2
-        m(6)  = 6  + (12 * ((14 - 6)  // 12)) - 3 = 6  + (12 * 0) - 3 = 3
-        m(7)  = 7  + (12 * ((14 - 7)  // 12)) - 3 = 7  + (12 * 0) - 3 = 4
-        m(8)  = 8  + (12 * ((14 - 8)  // 12)) - 3 = 8  + (12 * 0) - 3 = 5
-        m(9)  = 9  + (12 * ((14 - 9)  // 12)) - 3 = 9  + (12 * 0) - 3 = 6
-        m(10) = 10 + (12 * ((14 - 10) // 12)) - 3 = 10 + (12 * 0) - 3 = 7
-        m(11) = 11 + (12 * ((14 - 11) // 12)) - 3 = 11 + (12 * 0) - 3 = 8
-        m(12) = 12 + (12 * ((14 - 12) // 12)) - 3 = 12 + (12 * 0) - 3 = 9
-
-        So, m is always > 0. Which also makes the expression ((153 * m) + 2) > 0,
-        and 2) is proved.
-        """
-        a = (14 - month) // 12
-        y = year + 4800 - a
-        m = month + (12 * a) - 3
-        julian_day = (day
-                      + (((153 * m) + 2) // 5)
-                      + (y * 365)
-                      + (y // 4)
-                      - (y // 100)
-                      + (y // 400)
-                      - 32045)
-        if julian_day < timeline.MIN_JULIAN_DAY:
-            raise ValueError("from_absolute_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
-        return julian_day
+    pass
 
 
 def days_in_month(year, month):
@@ -309,3 +237,75 @@ def julian_day_to_gregorian_ymd(julian_day):
     month = m + 3 - (12 * (m // 10))
     year = (b * 100) + d - 4800 + (m // 10)
     return (year, month, day)
+
+
+def gregorian_ymd_to_julian_day(year, month, day):
+    """
+    This algorithm is described here:
+
+    * http://www.tondering.dk/claus/cal/julperiod.php#formula
+    * http://en.wikipedia.org/wiki/Julian_day#Converting_Julian_or_Gregorian_calendar_date_to_Julian_Day_Number
+
+    Integer division works differently in C and in Python for negative numbers.
+    C truncates towards 0 and Python truncates towards negative infinity:
+    http://python-history.blogspot.se/2010/08/why-pythons-integer-division-floors.html
+
+    The above sources don't state which to be used. If we can prove that
+    division-expressions are always positive, we can be sure this algorithm
+    works the same in C and in Python.
+
+    We must prove that:
+
+    1) y >= 0
+    2) ((153 * m) + 2) >= 0
+
+    Let's prove 1):
+
+    y = year + 4800 - a
+      = year + 4800 - ((14 - month) // 12)
+
+    year >= -4713 (gives a julian day of 0)
+
+    so
+
+    year + 4800 >= -4713 + 4800 = 87
+
+    The expression ((14 - month) // 12) varies between 0 and 1 when month
+    varies between 1 and 12. Therefore y >= 87 - 1 = 86, and 1) is proved.
+
+    Let's prove 2):
+
+    m = month + (12 * a) - 3
+      = month + (12 * ((14 - month) // 12)) - 3
+
+    1 <= month <= 12
+
+    m(1)  = 1  + (12 * ((14 - 1)  // 12)) - 3 = 1  + (12 * 1) - 3 = 10
+    m(2)  = 2  + (12 * ((14 - 2)  // 12)) - 3 = 2  + (12 * 1) - 3 = 11
+    m(3)  = 3  + (12 * ((14 - 3)  // 12)) - 3 = 3  + (12 * 0) - 3 = 0
+    m(4)  = 4  + (12 * ((14 - 4)  // 12)) - 3 = 4  + (12 * 0) - 3 = 1
+    m(5)  = 5  + (12 * ((14 - 5)  // 12)) - 3 = 5  + (12 * 0) - 3 = 2
+    m(6)  = 6  + (12 * ((14 - 6)  // 12)) - 3 = 6  + (12 * 0) - 3 = 3
+    m(7)  = 7  + (12 * ((14 - 7)  // 12)) - 3 = 7  + (12 * 0) - 3 = 4
+    m(8)  = 8  + (12 * ((14 - 8)  // 12)) - 3 = 8  + (12 * 0) - 3 = 5
+    m(9)  = 9  + (12 * ((14 - 9)  // 12)) - 3 = 9  + (12 * 0) - 3 = 6
+    m(10) = 10 + (12 * ((14 - 10) // 12)) - 3 = 10 + (12 * 0) - 3 = 7
+    m(11) = 11 + (12 * ((14 - 11) // 12)) - 3 = 11 + (12 * 0) - 3 = 8
+    m(12) = 12 + (12 * ((14 - 12) // 12)) - 3 = 12 + (12 * 0) - 3 = 9
+
+    So, m is always > 0. Which also makes the expression ((153 * m) + 2) > 0,
+    and 2) is proved.
+    """
+    a = (14 - month) // 12
+    y = year + 4800 - a
+    m = month + (12 * a) - 3
+    julian_day = (day
+                  + (((153 * m) + 2) // 5)
+                  + (y * 365)
+                  + (y // 4)
+                  - (y // 100)
+                  + (y // 400)
+                  - 32045)
+    if julian_day < timeline.MIN_JULIAN_DAY:
+        raise ValueError("gregorian_ymd_to_julian_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
+    return julian_day
