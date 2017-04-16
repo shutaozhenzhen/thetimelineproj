@@ -62,10 +62,6 @@ class CalendarUtilsBase(object):
         raise NotImplementedError("days_in_month not implemented.")
 
     @classmethod
-    def is_leap_year(year):
-        raise NotImplementedError("is_leap_year not implemented.")
-
-    @classmethod
     def from_absolute_day(self, absolute_day):
         raise NotImplementedError("from_absolute_day not implemented.")
 

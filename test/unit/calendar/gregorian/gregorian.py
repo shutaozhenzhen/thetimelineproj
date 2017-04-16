@@ -123,10 +123,10 @@ class describe_gregorian_primitives(UnitTestCase):
         self.assertEqual(29, gregorian.GregorianUtils.days_in_month(2016, 2))
 
     def test_is_leap_year(self):
-        self.assertFalse(gregorian.GregorianUtils.is_leap_year(2013))
-        self.assertFalse(gregorian.GregorianUtils.is_leap_year(1900))
-        self.assertTrue(gregorian.GregorianUtils.is_leap_year(2016))
-        self.assertTrue(gregorian.GregorianUtils.is_leap_year(2000))
+        self.assertFalse(gregorian.is_leap_year(2013))
+        self.assertFalse(gregorian.is_leap_year(1900))
+        self.assertTrue(gregorian.is_leap_year(2016))
+        self.assertTrue(gregorian.is_leap_year(2000))
 
     def test_week_number(self):
         def assert_is_week(date_tuple, w):

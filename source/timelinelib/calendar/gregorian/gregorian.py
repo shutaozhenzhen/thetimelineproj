@@ -128,13 +128,9 @@ class GregorianUtils(CalendarUtilsBase):
             return 30
         if month in [1, 3, 5, 7, 8, 10, 12]:
             return 31
-        if cls.is_leap_year(year):
+        if is_leap_year(year):
             return 29
         return 28
-
-    @classmethod
-    def is_leap_year(cls, year):
-        return year % 4 == 0 and (year % 400 == 0 or not year % 100 == 0)
 
     @classmethod
     def from_absolute_day(cls, julian_day):
@@ -300,3 +296,8 @@ class GregorianUtils(CalendarUtilsBase):
         if julian_day < timeline.MIN_JULIAN_DAY:
             raise ValueError("from_absolute_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
         return julian_day
+
+
+def is_leap_year(year):
+    return year % 4 == 0 and (year % 400 == 0 or not year % 100 == 0)
+
