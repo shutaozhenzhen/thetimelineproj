@@ -16,12 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-import os.path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
 if __name__ == "__main__":
+    import sys
+    import os.path
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", "source"))
+    import __builtin__
+    __builtin__.__dict__["_"] = lambda x: x
+    from timelinelib.calendar.gregorian.gregorian import julian_day_to_gregorian_ymd
+    from timelinelib.calendar.gregorian.gregorian import gregorian_ymd_to_julian_day
     for julian_day in range(10000000):
-        (year, month, day) = GregorianUtils.from_absolute_day(julian_day)
-        roundtrip_julian_day = GregorianUtils.to_julian_day(year, month, day)
+        (year, month, day) = julian_day_to_gregorian_ymd(julian_day)
+        roundtrip_julian_day = gregorian_ymd_to_julian_day(year, month, day)
         print("%d - %d-%d-%d - %d" % (julian_day, year, month, day, roundtrip_julian_day))
