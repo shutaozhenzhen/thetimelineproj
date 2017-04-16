@@ -16,11 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 import timelinelib.canvas.data.internaltime as timeline
 
 
-class Bosparanian(GregorianDateTime):
+class Bosparanian(object):
 
     def __init__(self, year, month, day, hour, minute, second):
         if not is_valid(year, month, day):
@@ -31,6 +30,13 @@ class Bosparanian(GregorianDateTime):
         self.hour = hour
         self.minute = minute
         self.second = second
+
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__) and
+                self.to_tuple() == other.to_tuple())
+
+    def __ne__(self, other):
+        return not (self == other)
 
     @classmethod
     def from_time(cls, time):
@@ -75,6 +81,40 @@ class Bosparanian(GregorianDateTime):
         days = ymd_to_bosparanian_day(self.year, self.month, self.day)
         seconds = self.hour * 60 * 60 + self.minute * 60 + self.second
         return timeline.Time(days, seconds)
+
+    def is_bc(self):
+        return self.year <= 0
+
+    def replace(self, year=None, month=None):
+        if year is None:
+            year = self.year
+        if month is None:
+            month = self.month
+        return self.__class__(year, month, self.day,
+                         self.hour, self.minute, self.second)
+
+    def to_tuple(self):
+        return (self.year, self.month, self.day, self.hour, self.minute,
+                self.second)
+
+    def to_date_tuple(self):
+        return (self.year, self.month, self.day)
+
+    def to_time_tuple(self):
+        return (self.hour, self.minute, self.second)
+
+    def is_first_day_in_year(self):
+        return (self.month == 1 and
+                self.day == 1 and
+                self.hour == 0 and
+                self.minute == 0 and
+                self.second == 0)
+
+    def is_first_of_month(self):
+        return (self.day == 1 and
+                self.hour == 0 and
+                self.minute == 0 and
+                self.second == 0)
 
     def __repr__(self):
         return "Bosparanian<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
