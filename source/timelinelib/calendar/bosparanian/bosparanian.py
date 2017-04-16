@@ -65,7 +65,7 @@ class Bosparanian(GregorianDateTime):
         return days_since_windsday_week_1(self.to_time()) / 7 + 1
 
     def days_in_month(self):
-        return self.utils.days_in_month(self.year, self.month)
+        return days_in_month(self.month)
 
     def to_time(self):
         days = self.utils.to_absolute_day(self.year, self.month, self.day)
@@ -77,12 +77,6 @@ class Bosparanian(GregorianDateTime):
 
 
 class BosparanianUtils(object):
-
-    @classmethod
-    def days_in_month(cls, year, month):
-        if month in [13]:
-            return 5
-        return 30
 
     @classmethod
     def from_absolute_day(cls, bosparanian_day):
@@ -123,7 +117,7 @@ class BosparanianUtils(object):
 def is_valid(year, month, day):
     return (
         month >= 1 and month <= 13 and
-        day >= 1 and day <= BosparanianUtils.days_in_month(year, month)
+        day >= 1 and day <= days_in_month(month)
     )
 
 
@@ -133,3 +127,9 @@ def is_valid_time(hour, minute, second):
         minute >= 0 and minute < 60 and
         second >= 0 and second < 60
     )
+
+
+def days_in_month(month):
+    if month in [13]:
+        return 5
+    return 30
