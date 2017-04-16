@@ -34,6 +34,9 @@ class Bosparanian(GregorianDateTime):
         self.minute = minute
         self.second = second
 
+    def days_in_month(self):
+        return self.utils.days_in_month(self.year, self.month)
+
     def __repr__(self):
         return "Bosparanian<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
 
