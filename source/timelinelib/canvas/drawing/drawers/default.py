@@ -286,7 +286,9 @@ class DefaultDrawingAlgorithm(Drawer):
         label = self.scene.minor_strip.label(strip_period.start_time)
         self._set_minor_strip_font(strip_period)
         (tw, th) = self.dc.GetTextExtent(label)
-        middle = self.scene.x_pos_for_time(strip_period.mean_time())
+        start_x = self.scene.x_pos_for_time(strip_period.get_start_time())
+        end_x = self.scene.x_pos_for_time(strip_period.get_end_time())
+        middle = (start_x + end_x) / 2
         middley = self.scene.divider_y
         self.dc.DrawText(label, middle - tw / 2, middley - th)
 
