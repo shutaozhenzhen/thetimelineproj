@@ -25,7 +25,7 @@ class GregorianDateTime(CalendarBase):
     def __init__(self, year, month, day, hour, minute, second):
         self.utils = GregorianUtils
         self.timeclass = timeline.Time
-        if not self.utils.is_valid(year, month, day):
+        if not is_valid(year, month, day):
             raise ValueError("Invalid gregorian date %s-%s-%s" % (year, month, day))
         self.year = year
         self.month = month
@@ -114,9 +114,6 @@ class GregorianDateTime(CalendarBase):
 
 
 class GregorianUtils(CalendarUtilsBase):
-    @classmethod
-    def is_valid(cls, year, month, day):
-        return (month >= 1 and month <= 12 and day >= 1 and day <= days_in_month(year, month))
 
     @classmethod
     def from_absolute_day(cls, julian_day):
@@ -303,4 +300,11 @@ def is_valid_time(hour, minute, second):
         hour >= 0 and hour < 24 and
         minute >= 0 and minute < 60 and
         second >= 0 and second < 60
+    )
+
+
+def is_valid(year, month, day):
+    return (
+        month >= 1 and month <= 12 and
+        day >= 1 and day <= days_in_month(year, month)
     )

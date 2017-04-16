@@ -100,12 +100,12 @@ class GregorianConversionsSpec(UnitTestCase):
 class describe_gregorian_primitives(UnitTestCase):
 
     def test_is_valid(self):
-        self.assertTrue(gregorian.GregorianUtils.is_valid(2013, 1, 1))
-        self.assertFalse(gregorian.GregorianUtils.is_valid(2013, 0, 1))
-        self.assertFalse(gregorian.GregorianUtils.is_valid(2013, 13, 1))
-        self.assertFalse(gregorian.GregorianUtils.is_valid(2013, 1, 0))
-        self.assertFalse(gregorian.GregorianUtils.is_valid(2013, 1, 32))
-        self.assertFalse(gregorian.GregorianUtils.is_valid(2013, 2, 30))
+        self.assertTrue(gregorian.is_valid(2013, 1, 1))
+        self.assertFalse(gregorian.is_valid(2013, 0, 1))
+        self.assertFalse(gregorian.is_valid(2013, 13, 1))
+        self.assertFalse(gregorian.is_valid(2013, 1, 0))
+        self.assertFalse(gregorian.is_valid(2013, 1, 32))
+        self.assertFalse(gregorian.is_valid(2013, 2, 30))
 
     def test_days_in_month(self):
         self.assertEqual(31, gregorian.days_in_month(2013, 1))
