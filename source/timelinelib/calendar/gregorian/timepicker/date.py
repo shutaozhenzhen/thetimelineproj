@@ -18,6 +18,7 @@
 
 import wx
 
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.gregorian.timepicker.datecontroller import GregorianDatePickerController
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
@@ -109,7 +110,7 @@ class DateModifier(object):
 
     def increment_day(self, date):
         year, month, day = date
-        time = GregorianUtils.from_date(year, month, day).to_time()
+        time = GregorianDateTime.from_ymd(year, month, day).to_time()
         if time <  GregorianTimeType().get_max_time() - delta_from_days(1):
             return GregorianUtils.from_time(time + delta_from_days(1)).to_date_tuple()
         return date
@@ -142,7 +143,7 @@ class DateModifier(object):
         done = False
         while not done:
             try:
-                date = GregorianUtils.from_date(new_year, new_month, new_day)
+                date = GregorianDateTime.from_ymd(new_year, new_month, new_day)
                 done = True
             except Exception:
                 new_day -= 1

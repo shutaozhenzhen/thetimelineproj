@@ -410,8 +410,8 @@ def fit_millennium_fn(main_frame, current_period, navigation_fn):
         year = get_millenium_max_year()
     else:
         year = max(get_min_year_containing_jan_1(), int(mean.year / 1000) * 1000)
-    start = GregorianUtils.from_date(year, 1, 1).to_time()
-    end = GregorianUtils.from_date(year + 1000, 1, 1).to_time()
+    start = GregorianDateTime.from_ymd(year, 1, 1).to_time()
+    end = GregorianDateTime.from_ymd(year + 1000, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
@@ -425,7 +425,7 @@ def get_millenium_max_year():
 
 def fit_week_fn(main_frame, current_period, navigation_fn):
     mean = GregorianUtils.from_time(current_period.mean_time())
-    start = GregorianUtils.from_date(mean.year, mean.month, mean.day).to_time()
+    start = GregorianDateTime.from_ymd(mean.year, mean.month, mean.day).to_time()
     weekday = GregorianTimeType().get_day_of_week(start)
     start = start - delta_from_days(weekday)
     if not main_frame.week_starts_on_monday():
@@ -486,7 +486,7 @@ class StripCentury(Strip):
             return ""
 
     def start(self, time):
-        return GregorianUtils.from_date(
+        return GregorianDateTime.from_ymd(
             self._century_start_year(GregorianUtils.from_time(time).year),
             1,
             1
@@ -597,7 +597,7 @@ class StripDecade(Strip):
         )
 
     def start(self, time):
-        return GregorianUtils.from_date(
+        return GregorianDateTime.from_ymd(
             self._decade_start_year(GregorianUtils.from_time(time).year),
             1,
             1
@@ -657,7 +657,7 @@ class StripYear(Strip):
 
     def start(self, time):
         gregorian_time = GregorianUtils.from_time(time)
-        new_gregorian = GregorianUtils.from_date(gregorian_time.year, 1, 1)
+        new_gregorian = GregorianDateTime.from_ymd(gregorian_time.year, 1, 1)
         return new_gregorian.to_time()
 
     def increment(self, time):
@@ -676,7 +676,7 @@ class StripMonth(Strip):
 
     def start(self, time):
         gregorian_time = GregorianUtils.from_time(time)
-        return GregorianUtils.from_date(
+        return GregorianDateTime.from_ymd(
             gregorian_time.year,
             gregorian_time.month,
             1
@@ -700,7 +700,7 @@ class StripDay(Strip):
 
     def start(self, time):
         gregorian_time = GregorianUtils.from_time(time)
-        return GregorianUtils.from_date(
+        return GregorianDateTime.from_ymd(
             gregorian_time.year,
             gregorian_time.month,
             gregorian_time.day
@@ -783,7 +783,7 @@ class StripWeekday(Strip):
 
     def start(self, time):
         gregorian_time = GregorianUtils.from_time(time)
-        new_gregorian = GregorianUtils.from_date(gregorian_time.year, gregorian_time.month, gregorian_time.day)
+        new_gregorian = GregorianDateTime.from_ymd(gregorian_time.year, gregorian_time.month, gregorian_time.day)
         return new_gregorian.to_time()
 
     def increment(self, time):
