@@ -548,8 +548,8 @@ class StripWeek(Strip):
             next_first_weekday = self.increment(first_weekday)
             last_weekday = next_first_weekday - delta_from_days(1)
             range_string = self._time_range_string(first_weekday, last_weekday)
-            return (_("Week") + " %s (%s)") % (BosparanianUtils.calendar_week(time), range_string)
-        return _("Week") + " %s" % BosparanianUtils.calendar_week(time)
+            return (_("Week") + " %s (%s)") % (BosparanianUtils.from_time(time).week_number, range_string)
+        return _("Week") + " %s" % BosparanianUtils.from_time(time).week_number
 
     def _time_range_string(self, start, end):
         start = BosparanianUtils.from_time(start)

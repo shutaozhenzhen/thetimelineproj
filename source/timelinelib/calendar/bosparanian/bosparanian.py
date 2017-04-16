@@ -38,6 +38,32 @@ class Bosparanian(GregorianDateTime):
     def from_ymd(cls, year, month, day):
         return cls(year, month, day, 0, 0, 0)
 
+    @property
+    def week_number(self):
+        """
+        returns number of week in year
+        """
+        def windsday_week_1(year):
+            from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
+            pra_4 = Bosparanian.from_ymd(year, 1, 4).to_time()
+            pra_4_day_of_week = BosparanianTimeType().get_day_of_week(pra_4)
+            return pra_4 - timeline.delta_from_days(pra_4_day_of_week)
+        def days_between(end, start):
+            return end.julian_day - start.julian_day
+        def days_since_windsday_week_1(time):
+            year = BosparanianUtils.from_time(time).year
+            diff = days_between(end=time, start=windsday_week_1(year + 1))
+            if diff >= 0:
+                return diff
+            diff = days_between(end=time, start=windsday_week_1(year))
+            if diff >= 0:
+                return diff
+            diff = days_between(end=time, start=windsday_week_1(year - 1))
+            if diff >= 0:
+                return diff
+            raise ValueError("should not end up here")
+        return days_since_windsday_week_1(self.to_time()) / 7 + 1
+
     def days_in_month(self):
         return self.utils.days_in_month(self.year, self.month)
 
@@ -93,32 +119,6 @@ class BosparanianUtils(object):
         bosp_day += day - 1
         bosparanian_day=bosp_day+(365*100*73)-3 # shift by 73 centuries and align week
         return bosparanian_day
-
-    @classmethod
-    def calendar_week(cls, time):
-        """
-        returns number of week in year
-        """
-        def windsday_week_1(year):
-            from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-            pra_4 = Bosparanian.from_ymd(year, 1, 4).to_time()
-            pra_4_day_of_week = BosparanianTimeType().get_day_of_week(pra_4)
-            return pra_4 - timeline.delta_from_days(pra_4_day_of_week)
-        def days_between(end, start):
-            return end.julian_day - start.julian_day
-        def days_since_windsday_week_1(time):
-            year = cls.from_time(time).year
-            diff = days_between(end=time, start=windsday_week_1(year + 1))
-            if diff >= 0:
-                return diff
-            diff = days_between(end=time, start=windsday_week_1(year))
-            if diff >= 0:
-                return diff
-            diff = days_between(end=time, start=windsday_week_1(year - 1))
-            if diff >= 0:
-                return diff
-            raise ValueError("should not end up here")
-        return days_since_windsday_week_1(time) / 7 + 1
 
     @classmethod
     def from_time(cls, time):
