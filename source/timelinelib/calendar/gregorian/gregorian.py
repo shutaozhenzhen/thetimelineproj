@@ -79,7 +79,7 @@ class GregorianDateTime(CalendarBase):
                          self.hour, self.minute, self.second)
 
     def days_in_month(self):
-        return self.utils.days_in_month(self.year, self.month)
+        return days_in_month(self.year, self.month)
 
     def to_tuple(self):
         return (self.year, self.month, self.day, self.hour, self.minute,
@@ -116,21 +116,11 @@ class GregorianDateTime(CalendarBase):
 class GregorianUtils(CalendarUtilsBase):
     @classmethod
     def is_valid(cls, year, month, day):
-        return (month >= 1 and month <= 12 and day >= 1 and day <= cls.days_in_month(year, month))
+        return (month >= 1 and month <= 12 and day >= 1 and day <= days_in_month(year, month))
 
     @classmethod
     def is_valid_time(cls, hour, minute, second):
         return (hour >= 0 and hour < 24 and minute >= 0 and minute < 60 and second >= 0 and second < 60)
-
-    @classmethod
-    def days_in_month(cls, year, month):
-        if month in [4, 6, 9, 11]:
-            return 30
-        if month in [1, 3, 5, 7, 8, 10, 12]:
-            return 31
-        if is_leap_year(year):
-            return 29
-        return 28
 
     @classmethod
     def from_absolute_day(cls, julian_day):
@@ -296,6 +286,16 @@ class GregorianUtils(CalendarUtilsBase):
         if julian_day < timeline.MIN_JULIAN_DAY:
             raise ValueError("from_absolute_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
         return julian_day
+
+
+def days_in_month(year, month):
+    if month in [4, 6, 9, 11]:
+        return 30
+    if month in [1, 3, 5, 7, 8, 10, 12]:
+        return 31
+    if is_leap_year(year):
+        return 29
+    return 28
 
 
 def is_leap_year(year):

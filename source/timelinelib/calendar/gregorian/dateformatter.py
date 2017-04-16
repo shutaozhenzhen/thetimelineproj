@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.gregorian import days_in_month
 from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.gregorian.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.gregorian.monthnames import month_of_abbreviated_name
@@ -189,7 +190,7 @@ class GregorianDateFormatter(object):
 
     def _parse_day(self, day_string, year, month):
         day = int(day_string)
-        if day - 1 in range(GregorianUtils.days_in_month(year, month)):
+        if day - 1 in range(days_in_month(year, month)):
             return day
         else:
             raise ValueError("Invalid day")
