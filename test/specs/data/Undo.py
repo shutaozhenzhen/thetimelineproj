@@ -115,6 +115,7 @@ class DBOperations(object):
 
     def _get_single(self):
         return random.choice([
+            self._operation_change_default_color,
             self._operation_change_progress,
             self._operation_change_category,
             self._operation_add_category,
@@ -130,6 +131,20 @@ class DBOperations(object):
             self._operation_change_time_period,
             self._operation_add_container_with_subevents,
         ])
+
+    def _operation_change_default_color(self, db):
+        event = self._get_random_event(db, container=False)
+        while True:
+            new_color = (
+                random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255),
+            )
+            if new_color != event.get_default_color():
+                event.set_default_color(new_color)
+                break
+        db.save_event(event)
+        return "change default color to %s %r" % (new_color, event)
 
     def _operation_change_progress(self, db):
         event = self._get_random_event(db, container=False)
