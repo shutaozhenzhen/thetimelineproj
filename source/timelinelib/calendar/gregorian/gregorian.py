@@ -23,7 +23,6 @@ import timelinelib.canvas.data.internaltime as timeline
 class GregorianDateTime(CalendarBase):
 
     def __init__(self, year, month, day, hour, minute, second):
-        self.timeclass = timeline.Time
         if not is_valid(year, month, day):
             raise ValueError("Invalid gregorian date %s-%s-%s" % (year, month, day))
         self.year = year
@@ -93,7 +92,7 @@ class GregorianDateTime(CalendarBase):
     def to_time(self):
         days = gregorian_ymd_to_julian_day(self.year, self.month, self.day)
         seconds = self.hour * 60 * 60 + self.minute * 60 + self.second
-        return self.timeclass(days, seconds)
+        return timeline.Time(days, seconds)
 
     def is_first_day_in_year(self):
         return (self.month == 1 and

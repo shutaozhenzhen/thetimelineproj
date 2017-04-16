@@ -23,7 +23,6 @@ import timelinelib.canvas.data.internaltime as timeline
 class Bosparanian(GregorianDateTime):
 
     def __init__(self, year, month, day, hour, minute, second):
-        self.timeclass = timeline.Time
         if not is_valid(year, month, day):
             raise ValueError("Invalid bosparanian date %s-%s-%s" % (year, month, day))
         self.year = year
@@ -75,7 +74,7 @@ class Bosparanian(GregorianDateTime):
     def to_time(self):
         days = ymd_to_bosparanian_day(self.year, self.month, self.day)
         seconds = self.hour * 60 * 60 + self.minute * 60 + self.second
-        return self.timeclass(days, seconds)
+        return timeline.Time(days, seconds)
 
     def __repr__(self):
         return "Bosparanian<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
