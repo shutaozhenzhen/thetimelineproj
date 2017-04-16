@@ -325,8 +325,8 @@ def fit_millennium_fn(main_frame, current_period, navigation_fn):
         year = get_millenium_max_year()
     else:
         year = max(get_min_year_containing_praios_1(), int(mean.year / 1000) * 1000)
-    start = BosparanianUtils.from_date(year, 1, 1).to_time()
-    end = BosparanianUtils.from_date(year + 1000, 1, 1).to_time()
+    start = Bosparanian.from_ymd(year, 1, 1).to_time()
+    end = Bosparanian.from_ymd(year + 1000, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
@@ -348,45 +348,45 @@ def fit_century_fn(main_frame, current_period, navigation_fn):
         year = get_century_max_year()
     else:
         year = max(get_min_year_containing_praios_1(), int(mean.year / 100) * 100)
-    start = BosparanianUtils.from_date(year, 1, 1).to_time()
-    end = BosparanianUtils.from_date(year + 100, 1, 1).to_time()
+    start = Bosparanian.from_ymd(year, 1, 1).to_time()
+    end = Bosparanian.from_ymd(year + 100, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_decade_fn(main_frame, current_period, navigation_fn):
     mean = BosparanianUtils.from_time(current_period.mean_time())
-    start = BosparanianUtils.from_date(int(mean.year / 10) * 10, 1, 1).to_time()
-    end = BosparanianUtils.from_date(int(mean.year / 10) * 10 + 10, 1, 1).to_time()
+    start = Bosparanian.from_ymd(int(mean.year / 10) * 10, 1, 1).to_time()
+    end = Bosparanian.from_ymd(int(mean.year / 10) * 10 + 10, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_year_fn(main_frame, current_period, navigation_fn):
     mean = BosparanianUtils.from_time(current_period.mean_time())
-    start = BosparanianUtils.from_date(mean.year, 1, 1).to_time()
-    end = BosparanianUtils.from_date(mean.year + 1, 1, 1).to_time()
+    start = Bosparanian.from_ymd(mean.year, 1, 1).to_time()
+    end = Bosparanian.from_ymd(mean.year + 1, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_month_fn(main_frame, current_period, navigation_fn):
     mean = BosparanianUtils.from_time(current_period.mean_time())
-    start = BosparanianUtils.from_date(mean.year, mean.month, 1).to_time()
+    start = Bosparanian.from_ymd(mean.year, mean.month, 1).to_time()
     if mean.month == 13:
-        end = BosparanianUtils.from_date(mean.year + 1, 1, 1).to_time()
+        end = Bosparanian.from_ymd(mean.year + 1, 1, 1).to_time()
     else:
-        end = BosparanianUtils.from_date(mean.year, mean.month + 1, 1).to_time()
+        end = Bosparanian.from_ymd(mean.year, mean.month + 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_day_fn(main_frame, current_period, navigation_fn):
     mean = BosparanianUtils.from_time(current_period.mean_time())
-    start = BosparanianUtils.from_date(mean.year, mean.month, mean.day).to_time()
+    start = Bosparanian.from_ymd(mean.year, mean.month, mean.day).to_time()
     end = start + delta_from_days(1)
     navigation_fn(lambda tp: tp.update(start, end))
 
 
 def fit_week_fn(main_frame, current_period, navigation_fn):
     mean = BosparanianUtils.from_time(current_period.mean_time())
-    start = BosparanianUtils.from_date(mean.year, mean.month, mean.day).to_time()
+    start = Bosparanian.from_ymd(mean.year, mean.month, mean.day).to_time()
     weekday = BosparanianTimeType().get_day_of_week(start)
     start = start - delta_from_days(weekday)
     if not main_frame.week_starts_on_monday():
@@ -410,7 +410,7 @@ class StripCentury(Strip):
 
     def start(self, time):
         time = BosparanianUtils.from_time(time)
-        return BosparanianUtils.from_date(self._century_start_year(time.year), 1, 1).to_time()
+        return Bosparanian.from_ymd(self._century_start_year(time.year), 1, 1).to_time()
 
     def increment(self, time):
         gregorian_time = BosparanianUtils.from_time(time)
@@ -429,7 +429,7 @@ class StripDecade(Strip):
 
     def start(self, time):
         bosparanian_time = BosparanianUtils.from_time(time)
-        new_bosparanian = BosparanianUtils.from_date(self._decade_start_year(bosparanian_time.year), 1, 1)
+        new_bosparanian = Bosparanian.from_ymd(self._decade_start_year(bosparanian_time.year), 1, 1)
         return new_bosparanian.to_time()
 
     def increment(self, time):
@@ -450,7 +450,7 @@ class StripYear(Strip):
 
     def start(self, time):
         bosparanian_time = BosparanianUtils.from_time(time)
-        new_bosparanian = BosparanianUtils.from_date(bosparanian_time.year, 1, 1)
+        new_bosparanian = Bosparanian.from_ymd(bosparanian_time.year, 1, 1)
         return new_bosparanian.to_time()
 
     def increment(self, time):
@@ -471,7 +471,7 @@ class StripMonth(Strip):
 
     def start(self, time):
         bosparanian_time = BosparanianUtils.from_time(time)
-        new_bosparanian = BosparanianUtils.from_date(bosparanian_time.year, bosparanian_time.month, 1)
+        new_bosparanian = Bosparanian.from_ymd(bosparanian_time.year, bosparanian_time.month, 1)
         return new_bosparanian.to_time()
 
     def increment(self, time):
@@ -504,7 +504,7 @@ class StripQuarter(Strip):
             m = 13
         else:
             m = (q - 1) * 3 + 1
-        return BosparanianUtils.from_date(BosparanianUtils.from_time(time).year, m, 1).to_time()
+        return Bosparanian.from_ymd(BosparanianUtils.from_time(time).year, m, 1).to_time()
 
     def increment(self, time):
         q = self.get_quarter(time)
@@ -527,7 +527,7 @@ class StripDay(Strip):
 
     def start(self, time):
         bosparanian_time = BosparanianUtils.from_time(time)
-        new_bosparanian = BosparanianUtils.from_date(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
+        new_bosparanian = Bosparanian.from_ymd(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
         return new_bosparanian.to_time()
 
     def increment(self, time):
@@ -594,7 +594,7 @@ class StripWeekday(Strip):
 
     def start(self, time):
         bosparanian_time = BosparanianUtils.from_time(time)
-        new_bosparanian = BosparanianUtils.from_date(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
+        new_bosparanian = Bosparanian.from_ymd(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
         return new_bosparanian.to_time()
 
     def increment(self, time):

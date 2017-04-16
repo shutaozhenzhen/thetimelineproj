@@ -34,6 +34,10 @@ class Bosparanian(GregorianDateTime):
         self.minute = minute
         self.second = second
 
+    @classmethod
+    def from_ymd(cls, year, month, day):
+        return cls(year, month, day, 0, 0, 0)
+
     def days_in_month(self):
         return self.utils.days_in_month(self.year, self.month)
 
@@ -97,7 +101,7 @@ class BosparanianUtils(object):
         """
         def windsday_week_1(year):
             from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-            pra_4 = cls.from_date(year, 1, 4).to_time()
+            pra_4 = Bosparanian.from_ymd(year, 1, 4).to_time()
             pra_4_day_of_week = BosparanianTimeType().get_day_of_week(pra_4)
             return pra_4 - timeline.delta_from_days(pra_4_day_of_week)
         def days_between(end, start):
@@ -121,7 +125,3 @@ class BosparanianUtils(object):
         (year, month, day) = cls.from_absolute_day(time.julian_day)
         (hour, minute, second) = time.get_time_of_day()
         return Bosparanian(year, month, day, hour, minute, second)
-
-    @classmethod
-    def from_date(cls, year, month, day):
-        return Bosparanian(year, month, day, 0, 0, 0)
