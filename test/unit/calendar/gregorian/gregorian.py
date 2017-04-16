@@ -131,7 +131,7 @@ class describe_gregorian_primitives(UnitTestCase):
     def test_week_number(self):
         def assert_is_week(date_tuple, w):
             (y, m, d) = date_tuple
-            date = gregorian.GregorianUtils.from_date(y, m, d)
+            date = gregorian.GregorianDateTime.from_ymd(y, m, d)
             self.assertEqual(date.week_number, w)
         assert_is_week((2012, 12, 30), 52)
         assert_is_week((2012, 12, 31), 1)
@@ -148,7 +148,7 @@ class describe_gregorian_primitives(UnitTestCase):
             m = time.month
             d = time.day
             self.assertEqual(
-                gregorian.GregorianUtils.from_date(y, m, d).week_number,
+                gregorian.GregorianDateTime.from_ymd(y, m, d).week_number,
                 time.isocalendar()[1],
                 "%s" % time
             )

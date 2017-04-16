@@ -210,7 +210,7 @@ class IcsLoader(object):
         if isinstance(d, datetime):
             return GregorianDateTime(d.year, d.month, d.day, d.hour, d.minute, d.second).to_time()
         elif isinstance(d, date):
-            return GregorianUtils.from_date(d.year, d.month, d.day).to_time()
+            return GregorianDateTime.from_ymd(d.year, d.month, d.day).to_time()
         else:
             raise TimelineIOError("Unknown date.")
 

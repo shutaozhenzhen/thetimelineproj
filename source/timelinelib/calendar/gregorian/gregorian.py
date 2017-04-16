@@ -34,11 +34,15 @@ class GregorianDateTime(CalendarBase):
         self.minute = minute
         self.second = second
 
+    @classmethod
+    def from_ymd(cls, year, month, day):
+        return cls(year, month, day, 0, 0, 0)
+
     @property
     def week_number(self):
         def monday_week_1(year):
             from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-            jan_4 = GregorianUtils.from_date(year, 1, 4).to_time()
+            jan_4 = GregorianDateTime.from_ymd(year, 1, 4).to_time()
             jan_4_day_of_week = GregorianTimeType().get_day_of_week(jan_4)
             return jan_4 - timeline.delta_from_days(jan_4_day_of_week)
         def days_between(end, start):
@@ -296,7 +300,3 @@ class GregorianUtils(CalendarUtilsBase):
         (year, month, day) = cls.from_absolute_day(time.julian_day)
         (hour, minute, second) = time.get_time_of_day()
         return GregorianDateTime(year, month, day, hour, minute, second)
-
-    @classmethod
-    def from_date(cls, year, month, day):
-        return GregorianDateTime(year, month, day, 0, 0, 0)
