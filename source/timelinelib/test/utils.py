@@ -112,7 +112,7 @@ def an_event():
 
 def an_event_with(human_start_time=None, human_end_time=None, time=ANY_TIME,
                   text="foo", fuzzy=False, locked=False, ends_today=False,
-                  category=None, default_color=(200, 200, 200)):
+                  category=None, default_color=None):
     """Create an :doc:`Event <timelinelib_canvas_data_event>` object."""
     if human_start_time and human_end_time:
         start = human_time_to_gregorian(human_start_time)
