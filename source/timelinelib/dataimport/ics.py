@@ -235,8 +235,8 @@ class IcsLoader(object):
                                           self._time_to_text(end)) for txt, start, end in self.vevents_not_loaded][:10])
 
     def _time_to_text(self, time):
-        d = "%d-%02d-%02d " % GregorianUtils.from_time(time).to_date_tuple()
-        t = "%02d.%02d.%02d" % GregorianUtils.from_time(time).to_time_tuple()
+        d = "%d-%02d-%02d " % GregorianDateTime.from_time(time).to_date_tuple()
+        t = "%02d.%02d.%02d" % GregorianDateTime.from_time(time).to_time_tuple()
         return d + t
 
 

@@ -129,8 +129,8 @@ class GregorianDateTimePickerController(object):
     def set_value(self, time):
         if time is None:
             time = self.now_fn()
-        self.date_picker.SetGregorianDate(GregorianUtils.from_time(time).to_date_tuple())
-        self.time_picker.SetGregorianTime(GregorianUtils.from_time(time).to_time_tuple())
+        self.date_picker.SetGregorianDate(GregorianDateTime.from_time(time).to_date_tuple())
+        self.time_picker.SetGregorianTime(GregorianDateTime.from_time(time).to_time_tuple())
         if self.on_change is not None:
             self.on_change()
 
@@ -181,12 +181,12 @@ class CalendarPopup(wx.PopupTransientWindow):
         cal.SetDateRange(min_date, max_date)
 
     def time_to_wx_date(self, time):
-        year, month, day = GregorianUtils.from_time(time).to_date_tuple()
+        year, month, day = GregorianDateTime.from_time(time).to_date_tuple()
         try:
             return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
         except OverflowError:
             if year < 0:
-                year, month, day = GregorianUtils.from_time(Time(0, 0)).to_date_tuple()
+                year, month, day = GregorianDateTime.from_time(Time(0, 0)).to_date_tuple()
                 return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
 
     def _bind_events(self):
