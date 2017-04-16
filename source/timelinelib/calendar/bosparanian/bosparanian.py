@@ -47,6 +47,10 @@ class BosparanianUtils(GregorianUtils):
         return (month >= 1 and month <= 13 and day >= 1 and day <= cls.days_in_month(year, month))
 
     @classmethod
+    def is_valid_time(cls, hour, minute, second):
+        return (hour >= 0 and hour < 24 and minute >= 0 and minute < 60 and second >= 0 and second < 60)
+
+    @classmethod
     def days_in_month(cls, year, month):
         if month in [13]:
             return 5

@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.gregorian import GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import is_valid_time
 from timelinelib.wxgui.components import TextPatternControl
 
 
@@ -79,7 +79,7 @@ def parts_to_gregorian_time(parts):
     [hour_str, minute_str] = parts
     hour = int(hour_str)
     minute = int(minute_str)
-    if not GregorianUtils.is_valid_time(hour, minute, 0):
+    if not is_valid_time(hour, minute, 0):
         raise ValueError()
     return (hour, minute, 0)
 

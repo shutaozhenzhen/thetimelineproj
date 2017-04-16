@@ -119,10 +119,6 @@ class GregorianUtils(CalendarUtilsBase):
         return (month >= 1 and month <= 12 and day >= 1 and day <= days_in_month(year, month))
 
     @classmethod
-    def is_valid_time(cls, hour, minute, second):
-        return (hour >= 0 and hour < 24 and minute >= 0 and minute < 60 and second >= 0 and second < 60)
-
-    @classmethod
     def from_absolute_day(cls, julian_day):
         """
         This algorithm is described here:
@@ -301,3 +297,10 @@ def days_in_month(year, month):
 def is_leap_year(year):
     return year % 4 == 0 and (year % 400 == 0 or not year % 100 == 0)
 
+
+def is_valid_time(hour, minute, second):
+    return (
+        hour >= 0 and hour < 24 and
+        minute >= 0 and minute < 60 and
+        second >= 0 and second < 60
+    )
