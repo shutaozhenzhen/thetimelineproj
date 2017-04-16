@@ -25,7 +25,7 @@ class Bosparanian(GregorianDateTime):
     def __init__(self, year, month, day, hour, minute, second):
         self.utils = BosparanianUtils
         self.timeclass = timeline.Time
-        if not self.utils.is_valid(year, month, day):
+        if not is_valid(year, month, day):
             raise ValueError("Invalid bosparanian date %s-%s-%s" % (year, month, day))
         self.year = year
         self.month = month
@@ -77,9 +77,6 @@ class Bosparanian(GregorianDateTime):
 
 
 class BosparanianUtils(object):
-    @classmethod
-    def is_valid(cls, year, month, day):
-        return (month >= 1 and month <= 13 and day >= 1 and day <= cls.days_in_month(year, month))
 
     @classmethod
     def is_valid_time(cls, hour, minute, second):
@@ -125,3 +122,10 @@ class BosparanianUtils(object):
         (year, month, day) = cls.from_absolute_day(time.julian_day)
         (hour, minute, second) = time.get_time_of_day()
         return Bosparanian(year, month, day, hour, minute, second)
+
+
+def is_valid(year, month, day):
+    return (
+        month >= 1 and month <= 13 and
+        day >= 1 and day <= BosparanianUtils.days_in_month(year, month)
+    )
