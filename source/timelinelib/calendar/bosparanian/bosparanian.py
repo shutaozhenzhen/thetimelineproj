@@ -19,7 +19,7 @@
 import timelinelib.canvas.data.internaltime as timeline
 
 
-class Bosparanian(object):
+class BosparanianDateTime(object):
 
     def __init__(self, year, month, day, hour, minute, second):
         if not is_valid(year, month, day):
@@ -42,7 +42,7 @@ class Bosparanian(object):
     def from_time(cls, time):
         (year, month, day) = bosparanian_day_to_ymd(time.julian_day)
         (hour, minute, second) = time.get_time_of_day()
-        return Bosparanian(year, month, day, hour, minute, second)
+        return BosparanianDateTime(year, month, day, hour, minute, second)
 
     @classmethod
     def from_ymd(cls, year, month, day):
@@ -55,13 +55,13 @@ class Bosparanian(object):
         """
         def windsday_week_1(year):
             from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-            pra_4 = Bosparanian.from_ymd(year, 1, 4).to_time()
+            pra_4 = BosparanianDateTime.from_ymd(year, 1, 4).to_time()
             pra_4_day_of_week = BosparanianTimeType().get_day_of_week(pra_4)
             return pra_4 - timeline.delta_from_days(pra_4_day_of_week)
         def days_between(end, start):
             return end.julian_day - start.julian_day
         def days_since_windsday_week_1(time):
-            year = Bosparanian.from_time(time).year
+            year = BosparanianDateTime.from_time(time).year
             diff = days_between(end=time, start=windsday_week_1(year + 1))
             if diff >= 0:
                 return diff
@@ -114,7 +114,7 @@ class Bosparanian(object):
                 self.second == 0)
 
     def __repr__(self):
-        return "Bosparanian<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
+        return "BosparanianDateTime<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
 
 
 def ymd_to_bosparanian_day(year, month, day):
