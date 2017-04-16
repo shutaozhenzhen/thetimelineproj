@@ -58,7 +58,7 @@ class GregorianConversionsSpec(UnitTestCase):
 
     def test_roundtrip_julian_day_conversions(self):
         for julian_day in range(100):
-            (year, month, day) = gregorian.GregorianUtils.from_absolute_day(julian_day)
+            (year, month, day) = gregorian.julian_day_to_gregorian_ymd(julian_day)
             roundtrip = gregorian.GregorianUtils.to_absolute_day(year, month, day)
             self.assertEqual(roundtrip, julian_day)
 
@@ -70,14 +70,14 @@ class GregorianConversionsSpec(UnitTestCase):
         for gregorian_date in dates:
             (year, month, day) = gregorian_date
             julian_day = gregorian.GregorianUtils.to_absolute_day(year, month, day)
-            roundtrip = gregorian.GregorianUtils.from_absolute_day(julian_day)
+            roundtrip = gregorian.julian_day_to_gregorian_ymd(julian_day)
             self.assertEqual(roundtrip, gregorian_date)
 
     def test_works_same_as_python_date(self):
         py_date = datetime.date(1900, 1, 1)
         jd = gregorian.GregorianUtils.to_absolute_day(1900, 1, 1)
         for _ in range(365 * 200):
-            (y, m, d) = gregorian.GregorianUtils.from_absolute_day(jd)
+            (y, m, d) = gregorian.julian_day_to_gregorian_ymd(jd)
             self.assertEqual(py_date, datetime.date(y, m, d))
             py_date += datetime.timedelta(days=1)
             jd += 1
