@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.calendar.bosparanian.bosparanian import Bosparanian, BosparanianUtils, is_valid_time
+from timelinelib.calendar.bosparanian.bosparanian import Bosparanian, is_valid_time
 from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.canvas.data.internaltime import delta_from_days
@@ -90,8 +90,8 @@ class BosparanianDateTimePickerController(object):
     def set_value(self, time):
         if time == None:
             time = self.now_fn()
-        self.date_picker.set_value(BosparanianUtils.from_time(time).to_date_tuple())
-        self.time_picker.set_value(BosparanianUtils.from_time(time).to_time_tuple())
+        self.date_picker.set_value(Bosparanian.from_time(time).to_date_tuple())
+        self.time_picker.set_value(Bosparanian.from_time(time).to_time_tuple())
 
 
 class BosparanianDatePicker(wx.TextCtrl):
@@ -237,7 +237,7 @@ class BosparanianDatePickerController(object):
 
 
     def on_up(self):
-        max_year = BosparanianUtils.from_time(BosparanianTimeType().get_max_time()).year
+        max_year = Bosparanian.from_time(BosparanianTimeType().get_max_time()).year
         def increment_year(date):
             year, month, day = date
             if year < max_year - 1:
@@ -254,7 +254,7 @@ class BosparanianDatePickerController(object):
             year, month, day = date
             time = Bosparanian.from_ymd(year, month, day).to_time()
             if time <  BosparanianTimeType().get_max_time() - delta_from_days(1):
-                return BosparanianUtils.from_time(time + delta_from_days(1)).to_date_tuple()
+                return Bosparanian.from_time(time + delta_from_days(1)).to_date_tuple()
             return date
         if not self._current_date_is_valid():
             return
@@ -274,14 +274,14 @@ class BosparanianDatePickerController(object):
     def on_down(self):
         def decrement_year(date):
             year, month, day = date
-            if year > BosparanianUtils.from_time(BosparanianTimeType().get_min_time()).year:
+            if year > Bosparanian.from_time(BosparanianTimeType().get_min_time()).year:
                 return self._set_valid_day(year - 1, month, day)
             return date
         def decrement_month(date):
             year, month, day = date
             if month > 1:
                 return self._set_valid_day(year, month - 1, day)
-            elif year > BosparanianUtils.from_time(BosparanianTimeType().get_min_time()).year:
+            elif year > Bosparanian.from_time(BosparanianTimeType().get_min_time()).year:
                 return self._set_valid_day(year - 1, 13, day)
             return date
         def decrement_day(date):
@@ -290,7 +290,7 @@ class BosparanianDatePickerController(object):
                 return self._set_valid_day(year, month, day - 1)
             elif month > 1:
                 return self._set_valid_day(year, month - 1, 30)
-            elif year > BosparanianUtils.from_time(BosparanianTimeType().get_min_time()).year:
+            elif year > Bosparanian.from_time(BosparanianTimeType().get_min_time()).year:
                 return self._set_valid_day(year - 1, 13, 5)
             return date
         if not self._current_date_is_valid():

@@ -35,6 +35,12 @@ class Bosparanian(GregorianDateTime):
         self.second = second
 
     @classmethod
+    def from_time(cls, time):
+        (year, month, day) = BosparanianUtils.from_absolute_day(time.julian_day)
+        (hour, minute, second) = time.get_time_of_day()
+        return Bosparanian(year, month, day, hour, minute, second)
+
+    @classmethod
     def from_ymd(cls, year, month, day):
         return cls(year, month, day, 0, 0, 0)
 
@@ -51,7 +57,7 @@ class Bosparanian(GregorianDateTime):
         def days_between(end, start):
             return end.julian_day - start.julian_day
         def days_since_windsday_week_1(time):
-            year = BosparanianUtils.from_time(time).year
+            year = Bosparanian.from_time(time).year
             diff = days_between(end=time, start=windsday_week_1(year + 1))
             if diff >= 0:
                 return diff
@@ -106,12 +112,6 @@ class BosparanianUtils(object):
         bosp_day += day - 1
         bosparanian_day=bosp_day+(365*100*73)-3 # shift by 73 centuries and align week
         return bosparanian_day
-
-    @classmethod
-    def from_time(cls, time):
-        (year, month, day) = cls.from_absolute_day(time.julian_day)
-        (hour, minute, second) = time.get_time_of_day()
-        return Bosparanian(year, month, day, hour, minute, second)
 
 
 def is_valid(year, month, day):
