@@ -38,6 +38,12 @@ class GregorianDateTime(CalendarBase):
     def from_ymd(cls, year, month, day):
         return cls(year, month, day, 0, 0, 0)
 
+    @classmethod
+    def from_time(cls, time):
+        (year, month, day) = GregorianUtils.from_absolute_day(time.julian_day)
+        (hour, minute, second) = time.get_time_of_day()
+        return cls(year, month, day, hour, minute, second)
+
     @property
     def week_number(self):
         def monday_week_1(year):
@@ -48,7 +54,7 @@ class GregorianDateTime(CalendarBase):
         def days_between(end, start):
             return end.julian_day - start.julian_day
         def days_since_monday_week_1(time):
-            year = GregorianUtils.from_time(time).year
+            year = GregorianDateTime.from_time(time).year
             diff = days_between(end=time, start=monday_week_1(year + 1))
             if diff >= 0:
                 return diff
@@ -294,9 +300,3 @@ class GregorianUtils(CalendarUtilsBase):
         if julian_day < timeline.MIN_JULIAN_DAY:
             raise ValueError("from_absolute_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
         return julian_day
-
-    @classmethod
-    def from_time(cls, time):
-        (year, month, day) = cls.from_absolute_day(time.julian_day)
-        (hour, minute, second) = time.get_time_of_day()
-        return GregorianDateTime(year, month, day, hour, minute, second)

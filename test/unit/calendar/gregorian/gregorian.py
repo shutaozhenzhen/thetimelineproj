@@ -42,10 +42,10 @@ class GregorianConversionsSpec(UnitTestCase):
 
     def test_can_convert_from_timeline_time_to_gregorian(self):
         self.assertEqual(
-            gregorian.GregorianUtils.from_time(timeline.Time(julian_day=0, seconds=0)),
+            gregorian.GregorianDateTime.from_time(timeline.Time(julian_day=0, seconds=0)),
             gregorian.GregorianDateTime(-4713, 11, 24, 0, 0, 0))
         self.assertEqual(
-            gregorian.GregorianUtils.from_time(timeline.Time(julian_day=1, seconds=0)),
+            gregorian.GregorianDateTime.from_time(timeline.Time(julian_day=1, seconds=0)),
             gregorian.GregorianDateTime(-4713, 11, 25, 0, 0, 0))
 
     def test_can_convert_from_gregorian_to_timeline_time(self):
@@ -87,7 +87,7 @@ class GregorianConversionsSpec(UnitTestCase):
         STOP = 10 * STEP
         for i in range(0, STOP, STEP):
             tm1 = timeline.Time(i, 0)
-            gt = gregorian.GregorianUtils.from_time(tm1)
+            gt = gregorian.GregorianDateTime.from_time(tm1)
             wt = wx.DateTime()
             wt.SetJDN(i)
             ws = "%d-%02d-%02d" % (wt.Year, wt.Month + 1, wt.Day)
