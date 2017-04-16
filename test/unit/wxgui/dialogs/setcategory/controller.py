@@ -18,13 +18,12 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data.event import Event
 from timelinelib.db import db_open
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
+from timelinelib.test.utils import an_event_with
 from timelinelib.wxgui.dialogs.setcategory.controller import SetCategoryDialogController
 from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
 
@@ -65,11 +64,11 @@ class describe_set_category_dialog(UnitTestCase):
         self.event1.set_id(2)
 
     def _create_event(self, category):
-        return Event(
-            GregorianUtils.from_date(2010, 1, 1).to_time(),
-            GregorianUtils.from_date(2010, 1, 1).to_time(),
-            "foo",
-            category)
+        return an_event_with(
+            time="1 Jan 2010",
+            text="foo",
+            category=category
+        )
 
     def test_it_can_be_created(self):
         db = db_open(":tutorial:")

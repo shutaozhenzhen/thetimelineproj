@@ -19,10 +19,8 @@
 
 import codecs
 
-from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import Event
-from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.dataexport.timelinexml import alert_string
@@ -33,6 +31,9 @@ from timelinelib.db import db_open
 from timelinelib.meta.version import get_full_version
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.utils import a_category_with
+from timelinelib.test.utils import an_event_with
+from timelinelib.test.utils import gregorian_period
+from timelinelib.test.utils import human_time_to_gregorian
 
 
 class XmlTimelineSpec(TmpDirTestCase):
@@ -99,16 +100,21 @@ class XmlTimelineSpec(TmpDirTestCase):
         self.assertEqual("2012-11-11 00:00:00", "%s" % GregorianTimeType().time_string(time))
 
     def testAlertDataConversionGivesAlertString(self):
-        alert = (GregorianUtils.from_date(2010, 8, 31).to_time(), "Hoho")
-        alert_text = alert_string(GregorianTimeType(), alert)
-        self.assertEqual("2010-08-31 00:00:00;Hoho", alert_text)
+        self.assertEqual(
+            "2010-08-31 00:00:00;Hoho",
+            alert_string(
+                GregorianTimeType(),
+                (human_time_to_gregorian("31 Aug 2010"), "Hoho")
+            )
+        )
 
     def testDisplayedPeriodTagNotWrittenIfNotSet(self):
         # Create a new db and add one event
         db = db_open(self.tmp_path)
-        db.save_event(Event(GregorianUtils.from_date(2010, 8, 31).to_time(),
-                            GregorianUtils.from_date(2010, 8, 31).to_time(),
-                            "test"))
+        db.save_event(an_event_with(
+            time="31 Aug 2010",
+            text="test"
+        ))
         # Read the file content from disk
         f = codecs.open(self.tmp_path, "r", "utf-8")
         content = f.read()
@@ -155,16 +161,18 @@ class XmlTimelineSpec(TmpDirTestCase):
                                font_color=None, parent=cat2)
         db.save_category(cat3)
         # Create events
-        ev1 = Event(GregorianUtils.from_date(2010, 3, 3).to_time(), GregorianUtils.from_date(2010, 3, 6).to_time(),
-                    "Event 1", cat1)
+        ev1 = an_event_with(
+            human_start_time="3 Mar 2010",
+            human_end_time="6 Mar 2010",
+            text="Event 1",
+            category=cat1
+        )
         ev1.set_data("description", u"The <b>first</b> event Ã¥Ã¤Ã¶.")
-        ev1.set_data("alert", (GregorianUtils.from_date(2012, 12, 31).to_time(), "Time to go"))
+        ev1.set_data("alert", (human_time_to_gregorian("31 Dec 2012"), "Time to go"))
         db.save_event(ev1)
         # Create view properties
         vp = ViewProperties()
-        start = GregorianUtils.from_date(2010, 3, 1).to_time()
-        end = GregorianUtils.from_date(2010, 4, 1).to_time()
-        vp.displayed_period = TimePeriod(start, end)
+        vp.displayed_period = gregorian_period("1 Mar 2010", "1 Apr 2010")
         vp.set_category_visible(cat3, False)
         db.save_view_properties(vp)
         export_db_to_timeline_xml(db, self.tmp_path)
@@ -175,18 +183,16 @@ class XmlTimelineSpec(TmpDirTestCase):
         self.assertEqual(len(events), 1)
         event = events[0]
         self.assertEqual(event.get_text(), "Event 1")
-        self.assertEqual(event.get_time_period().start_time, GregorianUtils.from_date(2010, 3, 3).to_time())
-        self.assertEqual(event.get_time_period().end_time, GregorianUtils.from_date(2010, 3, 6).to_time())
+        self.assertEqual(event.get_time_period(), gregorian_period("3 Mar 2010", "6 Mar 2010"))
         self.assertEqual(event.get_category().get_name(), "Category 1")
         self.assertEqual(event.get_data("description"), u"The <b>first</b> event Ã¥Ã¤Ã¶.")
-        self.assertEqual(event.get_data("alert"), (GregorianUtils.from_date(2012, 12, 31).to_time(), "Time to go"))
+        self.assertEqual(event.get_data("alert"), (human_time_to_gregorian("31 Dec 2012"), "Time to go"))
         self.assertEqual(event.get_data("icon"), None)
         # Assert that correct view properties are loaded (category visibility
         # checked later)
         vp = ViewProperties()
         db.load_view_properties(vp)
-        self.assertEqual(vp.displayed_period.start_time, GregorianUtils.from_date(2010, 3, 1).to_time())
-        self.assertEqual(vp.displayed_period.end_time, GregorianUtils.from_date(2010, 4, 1).to_time())
+        self.assertEqual(vp.displayed_period, gregorian_period("1 Mar 2010", "1 Apr 2010"))
         # Assert categories correctly loaded
         categories = db.get_categories()
         self.assertEqual(len(categories), 3)

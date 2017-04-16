@@ -18,15 +18,15 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Container
-from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
-from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import an_event_with
+from timelinelib.test.utils import gregorian_period
+from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.dialogs.duplicateevent.controller import BACKWARD
 from timelinelib.wxgui.dialogs.duplicateevent.controller import BOTH
 from timelinelib.wxgui.dialogs.duplicateevent.controller import DuplicateEventDialogController
@@ -65,10 +65,10 @@ class describe_duplicate_event_dialog(UnitTestCase):
         self._duplicate_with(count=1, freq=1, direction=FORWARD)
         new_events = self.db.save_events.call_args[0][0]
         new_period = new_events[0].get_time_period()
-        expected_period = TimePeriod(
-            GregorianUtils.from_date(2010, 8, 1).to_time(),
-            GregorianUtils.from_date(2010, 8, 1).to_time())
-        self.assertEqual(expected_period, new_period)
+        self.assertEqual(
+            gregorian_period("1 Aug 2010", "1 Aug 2010"),
+            new_period
+        )
 
     def test_the_new_event_should_not_be_the_same_as_the_existing(self):
         self._duplicate_with(count=1, freq=1, direction=FORWARD)
@@ -160,19 +160,16 @@ class describe_duplicate_event_dialog(UnitTestCase):
         self.db.get_time_type.return_value = GregorianTimeType()
         self.view = Mock(DuplicateEventDialog)
         self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
-        self.event = Event(
-            GregorianUtils.from_date(2010, 1, 1).to_time(),
-            GregorianUtils.from_date(2010, 1, 1).to_time(),
-            "foo",
-            category=None)
+        self.event = an_event_with(time="1 Jan 2010", text="foo")
         self.controller = DuplicateEventDialogController(self.view)
         self.controller.on_init(self.db, self.event)
 
     def _create_move_period_fn_mock(self):
         self.move_period_fn = Mock()
-        self.move_period_fn.return_value = TimePeriod(
-            GregorianUtils.from_date(2010, 8, 1).to_time(),
-            GregorianUtils.from_date(2010, 8, 1).to_time())
+        self.move_period_fn.return_value = gregorian_period(
+            "1 Aug 2010",
+            "1 Aug 2010"
+        )
         return self.move_period_fn
 
     def _duplicate_with(self, count, freq, direction):
@@ -208,19 +205,20 @@ class describe_duplicate_event_dialog_for_containers(UnitTestCase):
         self.view = Mock(DuplicateEventDialog)
         self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
         self.event = Container(
-            GregorianUtils.from_date(2010, 1, 1).to_time(),
-            GregorianUtils.from_date(2010, 1, 1).to_time(),
+            human_time_to_gregorian("1 Jan 2010"),
+            human_time_to_gregorian("1 Jan 2010"),
             "foo",
             category=None)
-        self.event.events = [Subevent(GregorianUtils.from_date(2010, 1, 1).to_time(), GregorianUtils.from_date(2010, 1, 1).to_time(), "")]
+        self.event.events = [Subevent(human_time_to_gregorian("1 Jan 2010"), human_time_to_gregorian("1 Jan 2010"), "")]
         self.controller = DuplicateEventDialogController(self.view)
         self.controller.on_init(self.db, self.event)
 
     def _create_move_period_fn_mock(self):
         self.move_period_fn = Mock()
-        self.move_period_fn.return_value = TimePeriod(
-            GregorianUtils.from_date(2010, 8, 1).to_time(),
-            GregorianUtils.from_date(2010, 8, 1).to_time())
+        self.move_period_fn.return_value = gregorian_period(
+            "1 Aug 2010",
+            "1 Aug 2010"
+        )
         return self.move_period_fn
 
     def _create_move_period_fn_mock_returning_none(self):

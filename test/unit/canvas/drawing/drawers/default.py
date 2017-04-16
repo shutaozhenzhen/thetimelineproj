@@ -16,20 +16,19 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
 from mock import Mock
+import wx
 
-from timelinelib.calendar.gregorian.gregorian import GregorianUtils
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data import Event, TimePeriod
+from timelinelib.canvas.data import Event
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import gregorian_period
+from timelinelib.test.utils import human_time_to_gregorian
 
 
 IMAGE_SIZE = (500, 200)
@@ -42,15 +41,15 @@ class describe_default_drawer(UnitTestCase):
 
     def test_draws_period_event_below_baseline(self):
         self.given_event(name="vacation",
-                         start=GregorianUtils.from_date(2010, 2, 1).to_time(),
-                         end=GregorianUtils.from_date(2010, 8, 1).to_time())
+                         start=human_time_to_gregorian("1 Feb 2010"),
+                         end=human_time_to_gregorian("1 Aug 2010"))
         self.when_timeline_is_drawn()
         self.assert_text_drawn_below("vacation", BASELINE_Y_POS)
 
     def test_draws_non_period_event_above_baseline(self):
         self.given_event(name="mike's birthday",
-                         start=GregorianUtils.from_date(2010, 2, 1).to_time(),
-                         end=GregorianUtils.from_date(2010, 2, 1).to_time())
+                         start=human_time_to_gregorian("1 Feb 2010"),
+                         end=human_time_to_gregorian("1 Feb 2010"))
         self.when_timeline_is_drawn()
         self.assert_text_drawn_above("mike's birthday", BASELINE_Y_POS)
 
@@ -87,6 +86,7 @@ class describe_default_drawer(UnitTestCase):
         self.dc.GetTextExtent.return_value = TEXT_SIZE
         self.timeline = MemoryDB()
         self.view_properties = ViewProperties()
-        self.view_properties.displayed_period = TimePeriod(
-            GregorianUtils.from_date(2010, 1, 1).to_time(),
-            GregorianUtils.from_date(2011, 1, 1).to_time())
+        self.view_properties.displayed_period = gregorian_period(
+            "1 Jan 2010",
+            "1 Jan 2011"
+        )
