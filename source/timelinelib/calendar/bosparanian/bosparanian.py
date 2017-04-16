@@ -36,7 +36,7 @@ class Bosparanian(GregorianDateTime):
 
     @classmethod
     def from_time(cls, time):
-        (year, month, day) = BosparanianUtils.from_absolute_day(time.julian_day)
+        (year, month, day) = bosparanian_day_to_ymd(time.julian_day)
         (hour, minute, second) = time.get_time_of_day()
         return Bosparanian(year, month, day, hour, minute, second)
 
@@ -85,22 +85,6 @@ class Bosparanian(GregorianDateTime):
 class BosparanianUtils(object):
 
     @classmethod
-    def from_absolute_day(cls, bosparanian_day):
-        """
-        Converts a day number, counted from 1st PRA, 0 BF to standard bosparanian calendar date
-        """
-        bosp_day=bosparanian_day-(365*100*73)+3 # shift by 73 centuries and align week
-        year = bosp_day // 365
-        d = bosp_day - (year * 365)
-        if d >= 360:
-            month = 13
-            day = d-359
-            return (year,month,day)
-        month = d // 30 + 1
-        day = d % 30 + 1
-        return (year,month,day)
-
-    @classmethod
     def to_absolute_day(cls, year, month, day):
         """
         Converts a bosparanian date given as year, month, and day, to a day number counted from 1st PRA 0 BF
@@ -112,6 +96,22 @@ class BosparanianUtils(object):
         bosp_day += day - 1
         bosparanian_day=bosp_day+(365*100*73)-3 # shift by 73 centuries and align week
         return bosparanian_day
+
+
+def bosparanian_day_to_ymd(bosparanian_day):
+    """
+    Converts a day number, counted from 1st PRA, 0 BF to standard bosparanian calendar date
+    """
+    bosp_day=bosparanian_day-(365*100*73)+3 # shift by 73 centuries and align week
+    year = bosp_day // 365
+    d = bosp_day - (year * 365)
+    if d >= 360:
+        month = 13
+        day = d-359
+        return (year,month,day)
+    month = d // 30 + 1
+    day = d % 30 + 1
+    return (year,month,day)
 
 
 def is_valid(year, month, day):
