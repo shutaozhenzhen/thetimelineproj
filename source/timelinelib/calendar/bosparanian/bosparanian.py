@@ -50,10 +50,6 @@ class BosparanianUtils(GregorianUtils):
         return 30
 
     @classmethod
-    def is_leap_year(cls, year):
-        return False
-
-    @classmethod
     def from_absolute_day(cls, bosparanian_day):
         """
         Converts a day number, counted from 1st PRA, 0 BF to standard bosparanian calendar date
