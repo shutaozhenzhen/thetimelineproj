@@ -18,7 +18,7 @@
 
 import wx
 
-from timelinelib.calendar.bosparanian.bosparanian import Bosparanian, BosparanianUtils
+from timelinelib.calendar.bosparanian.bosparanian import Bosparanian, BosparanianUtils, is_valid_time
 from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.canvas.data.internaltime import delta_from_days
@@ -487,7 +487,7 @@ class BosparanianTimePickerController(object):
             hour_string, minute_string = split
             hour = int(hour_string)
             minute = int(minute_string)
-            if not BosparanianUtils.is_valid_time(hour, minute, 0):
+            if not is_valid_time(hour, minute, 0):
                 raise ValueError()
             return (hour, minute, 0)
         except ValueError:
