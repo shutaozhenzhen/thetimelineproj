@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.gregorian import GregorianDateTime, GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 import timelinelib.canvas.data.internaltime as timeline
 
 
@@ -46,7 +46,7 @@ class Bosparanian(GregorianDateTime):
         return "Bosparanian<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
 
 
-class BosparanianUtils(GregorianUtils):
+class BosparanianUtils(object):
     @classmethod
     def is_valid(cls, year, month, day):
         return (month >= 1 and month <= 13 and day >= 1 and day <= cls.days_in_month(year, month))

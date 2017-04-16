@@ -20,7 +20,6 @@ from datetime import datetime
 import re
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
-from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.gregorian.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.gregorian.weekdaynames import abbreviated_name_of_weekday
 from timelinelib.calendar.timetype import TimeType

@@ -16,14 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.calendarbase import CalendarBase, CalendarUtilsBase
+from timelinelib.calendar.calendarbase import CalendarBase
 import timelinelib.canvas.data.internaltime as timeline
 
 
 class GregorianDateTime(CalendarBase):
 
     def __init__(self, year, month, day, hour, minute, second):
-        self.utils = GregorianUtils
         self.timeclass = timeline.Time
         if not is_valid(year, month, day):
             raise ValueError("Invalid gregorian date %s-%s-%s" % (year, month, day))
@@ -111,10 +110,6 @@ class GregorianDateTime(CalendarBase):
 
     def __repr__(self):
         return "GregorianDateTime<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
-
-
-class GregorianUtils(CalendarUtilsBase):
-    pass
 
 
 def days_in_month(year, month):
