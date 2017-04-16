@@ -23,7 +23,6 @@ import timelinelib.canvas.data.internaltime as timeline
 class Bosparanian(GregorianDateTime):
 
     def __init__(self, year, month, day, hour, minute, second):
-        self.utils = BosparanianUtils
         self.timeclass = timeline.Time
         if not is_valid(year, month, day):
             raise ValueError("Invalid bosparanian date %s-%s-%s" % (year, month, day))
@@ -74,7 +73,7 @@ class Bosparanian(GregorianDateTime):
         return days_in_month(self.month)
 
     def to_time(self):
-        days = self.utils.to_absolute_day(self.year, self.month, self.day)
+        days = ymd_to_bosparanian_day(self.year, self.month, self.day)
         seconds = self.hour * 60 * 60 + self.minute * 60 + self.second
         return self.timeclass(days, seconds)
 
@@ -82,20 +81,17 @@ class Bosparanian(GregorianDateTime):
         return "Bosparanian<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
 
 
-class BosparanianUtils(object):
-
-    @classmethod
-    def to_absolute_day(cls, year, month, day):
-        """
-        Converts a bosparanian date given as year, month, and day, to a day number counted from 1st PRA 0 BF
-        """
-        bosp_day = year * 365
-        bosp_day += ((month - 1) // 13) * 365
-        m = (month - 1) % 13
-        bosp_day += m * 30
-        bosp_day += day - 1
-        bosparanian_day=bosp_day+(365*100*73)-3 # shift by 73 centuries and align week
-        return bosparanian_day
+def ymd_to_bosparanian_day(year, month, day):
+    """
+    Converts a bosparanian date given as year, month, and day, to a day number counted from 1st PRA 0 BF
+    """
+    bosp_day = year * 365
+    bosp_day += ((month - 1) // 13) * 365
+    m = (month - 1) % 13
+    bosp_day += m * 30
+    bosp_day += day - 1
+    bosparanian_day=bosp_day+(365*100*73)-3 # shift by 73 centuries and align week
+    return bosparanian_day
 
 
 def bosparanian_day_to_ymd(bosparanian_day):
