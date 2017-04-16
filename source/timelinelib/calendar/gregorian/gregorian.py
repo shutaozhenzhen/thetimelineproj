@@ -16,11 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.calendarbase import CalendarBase
 import timelinelib.canvas.data.internaltime as timeline
 
 
-class GregorianDateTime(CalendarBase):
+class GregorianDateTime(object):
 
     def __init__(self, year, month, day, hour, minute, second):
         if not is_valid(year, month, day):
@@ -31,6 +30,13 @@ class GregorianDateTime(CalendarBase):
         self.hour = hour
         self.minute = minute
         self.second = second
+
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__) and
+                self.to_tuple() == other.to_tuple())
+
+    def __ne__(self, other):
+        return not (self == other)
 
     @classmethod
     def from_ymd(cls, year, month, day):
