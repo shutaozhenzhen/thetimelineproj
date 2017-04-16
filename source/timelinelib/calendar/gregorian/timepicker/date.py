@@ -19,7 +19,6 @@
 import wx
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
-from timelinelib.calendar.gregorian.gregorian import GregorianUtils
 from timelinelib.calendar.gregorian.timepicker.datecontroller import GregorianDatePickerController
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.internaltime import delta_from_days

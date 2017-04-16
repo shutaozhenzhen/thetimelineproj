@@ -24,7 +24,7 @@ import random
 
 from icalendar import Calendar
 
-from timelinelib.calendar.gregorian.gregorian import GregorianDateTime, GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category

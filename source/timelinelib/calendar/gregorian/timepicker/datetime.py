@@ -20,7 +20,7 @@ import os.path
 
 import wx.calendar
 
-from timelinelib.calendar.gregorian.gregorian import GregorianDateTime, GregorianUtils
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.timepicker.date import GregorianDatePicker
 from timelinelib.calendar.gregorian.timepicker.time import GregorianTimePicker
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
