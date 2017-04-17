@@ -39,6 +39,9 @@ Fixed crash reports and bugs:
 * The event progress bar is now correctly drawn when event is partly outside of
   screen.
 
+* OverflowError: long int too large to convert to float.
+  (`#126 <https://sourceforge.net/p/thetimelineproj/backlog/126/>`_)
+
 Version 1.13.0
 --------------
 

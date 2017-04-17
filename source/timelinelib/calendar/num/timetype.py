@@ -15,8 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+
 """Contains the class NumTimeType."""
 
+
+import math
 import re
 
 from timelinelib.calendar.timetype import TimeType
@@ -78,23 +81,27 @@ class NumTimeType(TimeType):
         return None
 
     def choose_strip(self, metrics, appearance):
-        start_time = 1
-        end_time = 2
-        limit = 30
-        period = TimePeriod(start_time, end_time)
-        period_width = metrics.calc_exact_width(period)
-        while period_width == 0:
-            start_time *= 10
-            end_time *= 10
-            limit /= 10
-            period = TimePeriod(start_time, end_time)
-            period_width = metrics.calc_exact_width(period)
-        nbr_of_units = metrics.width / period_width
-        size = 1
-        while nbr_of_units > limit:
-            size *= 10
-            nbr_of_units /= 10
-        return (NumStrip(size * 10), NumStrip(size))
+        # Choose an exponent that will make the minor strip just larger than
+        # the displayed period:
+        #
+        #     10**x > period_delta   =>
+        #     x > log(period_delta)
+        exponent = int(math.log(metrics.time_period.delta(), 10)) + 1
+        # Keep decreasing the exponent until the minor strip is small enough.
+        while True:
+            if exponent == 0:
+                break
+            next_minor_strip_with_px = metrics.calc_exact_width(
+                TimePeriod(
+                    0,
+                    10**(exponent-1)
+                )
+            )
+            if next_minor_strip_with_px > 30:
+                exponent -= 1
+            else:
+                break
+        return (NumStrip(10**(exponent+1)), NumStrip(10**exponent))
 
     def get_default_time_period(self):
         return time_period_center(0, 100)
