@@ -46,6 +46,7 @@ class ViewProperties(Observable):
         self.display_checkmark_on_events_done = False
         self.legend_pos = 0
         self._hide_events_done = False
+        self._all_events = []
 
     @property
     def legend_pos(self):
@@ -122,6 +123,7 @@ class ViewProperties(Observable):
         return self.displayed_period
 
     def filter_events(self, events):
+        self._all_events = events
         return [event for event in events if self._is_event_visible(event)]
 
     def _is_event_visible(self, event):
@@ -140,6 +142,11 @@ class ViewProperties(Observable):
         if self.selected_event_ids:
             self.selected_event_ids = []
             self._notify()
+
+    def select_all_events(self):
+        self.selected_event_ids = [event.get_id() for event in self._all_events
+                                   if not event.is_container()]
+        self._notify()
 
     def event_is_hovered(self, event):
         return (self.hovered_event is not None and
