@@ -21,6 +21,8 @@ Calendar:
 
 GUI:
 
+* All events can be selected with a menu command
+
 * View selection to hide/show events done (progress = 100%).
 
 * The limitation of number sizes has been removed in the numeric event editor.
