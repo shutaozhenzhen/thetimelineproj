@@ -17,6 +17,7 @@
 
 
 import os
+import re
 import subprocess
 import sys
 
@@ -39,6 +40,26 @@ class describe_po_files(UnitTestCase):
                             msgid
                         )
                     )
+
+    def test_menu_shortcuts_are_not_translated(self):
+        # Menu shortcuts should really not be in the translation string.
+        # However, they are. This test ensures that they are at least not
+        # translated.
+        for po_file in get_po_files():
+            for (msgid, msgstr) in get_po_entries(po_file):
+                # This pattern is rough and might need tweaking.
+                shortcut_re = re.compile(
+                    r"\t(ctrl|rawctrl|alt|shift)[+-][^ ]*$",
+                    flags=re.IGNORECASE
+                )
+                match = shortcut_re.search(msgid)
+                if match and msgstr and not msgstr.endswith(match.group(0)):
+                    self.fail("\n".join([
+                        "Incorrect shortcut translation.",
+                        "PO-file: %s" % po_file,
+                        "msgid: %r" % msgid,
+                        "msgstr: %r" % msgstr,
+                    ]))
 
 
 class describe_pot_file(TmpDirTestCase):

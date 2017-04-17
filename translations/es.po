@@ -2793,7 +2793,7 @@ msgstr "&Editar"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:314
 msgid "&Sidebar\tCtrl+I"
-msgstr "&Barra lateral\tCtrl+l"
+msgstr "&Barra lateral\tCtrl+I"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:315
 msgid "&Legend"

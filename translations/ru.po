@@ -1652,7 +1652,7 @@ msgstr "Назад на один Месяц\tCtrl+M"
 #: source\timelinelib\time\bosparaniantime.py:74
 #: source\timelinelib\time\gregoriantime.py:81
 msgid "Forward One Yea&r\tCtrl+R"
-msgstr "Вперёд на один Год"
+msgstr "Вперёд на один Год\tCtrl+R"
 
 #: source\timelinelib\time\bosparaniantime.py:75
 #: source\timelinelib\time\gregoriantime.py:82

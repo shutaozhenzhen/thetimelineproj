@@ -1700,7 +1700,7 @@ msgstr "Framåt En Vec&ka\tCtrl+K"
 #: source\timelinelib\time\bosparaniantime.py:71
 #: source\timelinelib\time\gregoriantime.py:78
 msgid "Back One &Week\tCtrl+W"
-msgstr "Bakåt En &Vecka\tCtrl+V"
+msgstr "Bakåt En &Vecka\tCtrl+W"
 
 #: source\timelinelib\time\bosparaniantime.py:72
 #: source\timelinelib\time\gregoriantime.py:79
@@ -1720,7 +1720,7 @@ msgstr "Framåt ett Å&r\tCtrl+R"
 #: source\timelinelib\time\bosparaniantime.py:75
 #: source\timelinelib\time\gregoriantime.py:82
 msgid "Back One &Year\tCtrl+Y"
-msgstr "Bakåt Ett &År\tCtrl+Å"
+msgstr "Bakåt Ett &År\tCtrl+Y"
 
 #: source\timelinelib\time\bosparaniantime.py:77
 #: source\timelinelib\time\gregoriantime.py:84
@@ -1790,7 +1790,7 @@ msgstr "Vecka"
 
 #: source\timelinelib\time\gregoriantime.py:72
 msgid "Go to &Today\tCtrl+T"
-msgstr "Gå till &Idag \tCtrl+I"
+msgstr "Gå till &Idag \tCtrl+T"
 
 #: source\timelinelib\time\gregoriantime.py:127
 msgid "day"
@@ -1850,11 +1850,11 @@ msgstr "århundade"
 
 #: source\timelinelib\time\numtime.py:51
 msgid "Go to &Zero\tCtrl+Z"
-msgstr "Gå till &Noll \t Ctrl+0"
+msgstr "Gå till &Noll\tCtrl+Z"
 
 #: source\timelinelib\time\numtime.py:52
 msgid "Go to &Time\tCtrl+T"
-msgstr "Gå till &Tid \t Ctrl+T"
+msgstr "Gå till &Tid\tCtrl+T"
 
 #: source\timelinelib\time\numtime.py:112
 msgid "Can't zoom deeper than 5"
