@@ -66,6 +66,7 @@ METADATA = [  # File
               # Edit
               Metadata(mf.ID_FIND, "shortcut_find", LABEL_EDIT % _("Find"), CTRL_MODIFIER, "F"),
               Metadata(mf.ID_PREFERENCES, "shortcut_preferences", LABEL_EDIT % _("Preferences"), NO_MODIFIER, ""),
+              Metadata(mf.ID_SELECT_ALL, "shortcut_selectall", LABEL_EDIT % _("Select All Events"), NO_MODIFIER, ""),
               Metadata(mf.ID_EDIT_SHORTCUTS, "shortcut_shortcuts", LABEL_EDIT % _("Shortcuts"), NO_MODIFIER, ""),
               # View
               Metadata(mf.ID_SIDEBAR, "shortcut_sidebar", LABEL_VIEW % _("Sidebar"), CTRL_MODIFIER, "I"),
