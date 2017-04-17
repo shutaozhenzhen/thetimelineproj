@@ -139,6 +139,10 @@ class MainFrameController(object):
         vp.set_displayed_period(displayed_period)
         timeline_canvas.redraw_timeline()
 
+    def select_all(self):
+        timeline_canvas = self.main_frame.main_panel.timeline_panel.timeline_canvas
+        timeline_canvas.SelectAllEvents()
+
     def _lock(self):
         fp = None
         if not self.timeline.get_should_lock():

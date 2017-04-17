@@ -110,6 +110,7 @@ ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
 ID_FIND_CATEGORIES = wx.NewId()
+ID_SELECT_ALL = wx.NewId()
 ID_RESTORE_TIME_PERIOD = wx.NewId()
 ID_NEW = wx.ID_NEW
 ID_FIND = wx.ID_FIND
@@ -246,6 +247,9 @@ class GuiCreator(object):
             dialog.ShowModal()
             dialog.Destroy()
 
+        def select_all(evt):
+            self.controller.select_all()
+
         def preferences(evt):
             def edit_function():
                 dialog = PreferencesDialog(self, self.config)
@@ -263,6 +267,8 @@ class GuiCreator(object):
         cbx = NONE
         items = ((wx.ID_FIND, find, None, cbx),
                  (ID_FIND_CATEGORIES, find_categories, _("Find Categories..."), cbx),
+                 None,
+                 (ID_SELECT_ALL, select_all, _("Select All Events"), cbx),
                  None,
                  (wx.ID_PREFERENCES, preferences, None, cbx),
                  (ID_EDIT_SHORTCUTS, edit_shortcuts, _("Shortcuts..."), cbx))
