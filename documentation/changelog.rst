@@ -48,6 +48,10 @@ Fixed crash reports and bugs:
   ../src/gtk/menu.cpp(1300) in GetGtkHotKey(): unknown keyboard accel.
   This was caused by incorrect translations.
 
+* TypeError: %d format: a number is required, not TimeDelta. This happened when
+  trying to measure the distance between two overlapping events in a numeric
+  timeline.
+
 Version 1.13.0
 --------------
 
