@@ -261,7 +261,7 @@ class CustomCategoryTreeRenderer(object):
         del self.dc
 
     def _render_items(self, items):
-        self.dc.SetFont(wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT))
+        self.dc.SetFont(wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT))
         for item in items:
             self._render_item(item)
 
