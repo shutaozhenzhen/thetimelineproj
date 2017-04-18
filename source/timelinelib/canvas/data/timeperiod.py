@@ -112,7 +112,7 @@ class TimePeriod(object):
         elif time_period.ends_before(self.start_time):
             return time_period.end_to_start(self).delta()
         else:
-            return TimeDelta(0)
+            return None
 
     def overlaps(self, time_period):
         return (time_period.ends_after(self.start_time) and

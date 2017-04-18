@@ -1064,9 +1064,10 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
 
     def _display_distance(self, distance):
         caption = _("Distance between selected events")
-        distance_text = self.timeline.get_time_type().format_delta(distance)
-        if distance_text == "0":
+        if distance is None:
             distance_text = _("Events are overlapping or distance is 0")
+        else:
+            distance_text = self.timeline.get_time_type().format_delta(distance)
         display_information_message(caption, distance_text)
 
     def _set_category(self):
