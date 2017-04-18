@@ -41,16 +41,16 @@ Fixed crash reports and bugs:
 * The event progress bar is now correctly drawn when event is partly outside of
   screen.
 
-* OverflowError: long int too large to convert to float.
+* ``OverflowError: long int too large to convert to float.``
   (`#126 <https://sourceforge.net/p/thetimelineproj/backlog/126/>`_)
 
-* wx._core.PyAssertionError: C++ assertion "Assert failure" failed at
-  ../src/gtk/menu.cpp(1300) in GetGtkHotKey(): unknown keyboard accel.
+* ``wx._core.PyAssertionError: C++ assertion "Assert failure" failed at
+  ../src/gtk/menu.cpp(1300) in GetGtkHotKey(): unknown keyboard accel.``
   This was caused by incorrect translations.
 
-* TypeError: %d format: a number is required, not TimeDelta. This happened when
-  trying to measure the distance between two overlapping events in a numeric
-  timeline.
+* ``TypeError: %d format: a number is required, not TimeDelta.``
+  This happened when trying to measure the distance between two overlapping
+  events in a numeric timeline.
 
 Version 1.13.0
 --------------
