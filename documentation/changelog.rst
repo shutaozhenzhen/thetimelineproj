@@ -44,6 +44,10 @@ Fixed crash reports and bugs:
 * OverflowError: long int too large to convert to float.
   (`#126 <https://sourceforge.net/p/thetimelineproj/backlog/126/>`_)
 
+* wx._core.PyAssertionError: C++ assertion "Assert failure" failed at
+  ../src/gtk/menu.cpp(1300) in GetGtkHotKey(): unknown keyboard accel.
+  This was caused by incorrect translations.
+
 Version 1.13.0
 --------------
 
