@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from mock import Mock
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
@@ -34,6 +36,11 @@ class describe_change_now_date_dialog(UnitTestCase):
         self.db = Mock()
         self.callback_function = Mock()
         self.controller.on_init(self.db, self.callback_function)
+        self.app = wx.App(False)
+        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+
+    def tearDown(self):
+        self.app.Destroy()
 
     def test_it_can_be_created(self):
         config = Mock(Config)
