@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from mock import Mock
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
@@ -39,3 +41,10 @@ class describe_era_editor_dialog(UnitTestCase):
             config,
             a_gregorian_era()
         )
+
+    def setUp(self):
+        self.app = wx.App(False)
+        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+
+    def tearDown(self):
+        self.app.Destroy()

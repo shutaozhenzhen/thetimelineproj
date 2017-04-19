@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from mock import Mock
 
 from timelinelib.wxgui.dialogs.eventeditortabselection.controller import EventEditorTabSelectionDialogController
@@ -25,11 +27,16 @@ from timelinelib.test.cases.unit import UnitTestCase
 
 class describe_event_editor_tab_selection_dialog(UnitTestCase):
 
-    def setUp(self):
-        self.view = Mock(EventEditorTabSelectionDialog)
-        self.controller = EventEditorTabSelectionDialogController(self.view)
-
     def test_it_can_be_created(self):
         config = Mock()
         config.event_editor_tab_order = "01234:"
         self.show_dialog(EventEditorTabSelectionDialog, None, config)
+
+    def setUp(self):
+        self.app = wx.App(False)
+        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        self.view = Mock(EventEditorTabSelectionDialog)
+        self.controller = EventEditorTabSelectionDialogController(self.view)
+
+    def tearDown(self):
+        self.app.Destroy()
