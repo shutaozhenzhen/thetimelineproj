@@ -26,9 +26,15 @@ from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 class _describe_preferences_dialog(UnitTestCase):
 
     def test_it_can_be_created(self):
-        app = wx.App()
         path = os.path.join(
-                wx.StandardPaths.Get().GetUserConfigDir(),
-                ".thetimelineproj.cfg")
+            wx.StandardPaths.Get().GetUserConfigDir(),
+            ".thetimelineproj.cfg")
         config = Config(path)
         self.show_dialog(PreferencesDialog, None, config)
+
+    def setUp(self):
+        self.app = wx.App()
+        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+
+    def tearDown(self):
+        self.app.Destroy()
