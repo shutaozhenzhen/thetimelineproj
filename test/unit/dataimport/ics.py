@@ -18,6 +18,8 @@
 
 import os
 
+import wx
+
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.dataimport.ics import import_db_from_ics
@@ -276,3 +278,10 @@ class describe_import_vtodo_from_ics(describe_import_ics):
         self.assertEqual(len(db.get_all_events()), 1)
         event = db.get_first_event()
         self.assertEqual(event.get_text(), "")
+
+    def setUp(self):
+        self.app = wx.App(False)
+        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+
+    def tearDown(self):
+        self.app.Destroy()

@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from mock import Mock
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
@@ -48,3 +50,10 @@ class describe_milestone_editor_dialog(UnitTestCase):
             config,
             milestone
         )
+
+    def setUp(self):
+        self.app = wx.App(False)
+        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+
+    def tearDown(self):
+        self.app.Destroy()
