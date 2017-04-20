@@ -103,7 +103,7 @@ class describe_gregoriantimetype(UnitTestCase):
 
     def test_is_weekend_day(self):
         DAYS = [
-            ("11 Jan 2016", False), # Monday
+            ("11 Jan 2016", False),  # Monday
             ("12 Jan 2016", False),
             ("13 Jan 2016", False),
             ("14 Jan 2016", False),
@@ -444,7 +444,7 @@ class describe_gregorian_strip_century(UnitTestCase):
             # 100s BC
             (-198, -198),
             (-99, -198),
-            ## 0s BC
+            # # 0s BC
             (-98, -98),
             (0, -98),
             # 0s
@@ -567,7 +567,7 @@ class describe_gregorian_time_type_delta_formatting(UnitTestCase):
         time_period1 = self.create_point_period(1, 1, 1999, 0, 0)
         time_period2 = self.create_point_period(1, 3, 2001, 0, 0)
         delta = time_period2.start_time - time_period1.start_time
-        self.assertEqual(u"790 %s" % _("days"), self.time_type.format_delta(delta))
+        self.assertEqual('2 #years# 60 #days#', self.time_type.format_delta(delta))
 
     def test_format_overlapping_events(self):
         time_period1 = TimePeriod(self.time_type.parse_time("2010-08-01 13:44:00"),
@@ -575,7 +575,7 @@ class describe_gregorian_time_type_delta_formatting(UnitTestCase):
         time_period2 = TimePeriod(self.time_type.parse_time("2010-08-01 13:44:00"),
                                   self.time_type.parse_time("2010-08-03 13:44:00"))
         delta = time_period2.start_time - time_period1.end_time
-        self.assertEqual("0", self.time_type.format_delta(delta))
+        self.assertEqual('2 #days#', self.time_type.format_delta(delta))
 
     def create_point_period(self, day, month, year, hour, minute):
         dt = GregorianDateTime(year, month, day, hour, minute, 0).to_time()

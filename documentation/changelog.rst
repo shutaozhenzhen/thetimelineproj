@@ -21,6 +21,8 @@ Calendar:
 
 GUI:
 
+* The formatting of the time duration for Gragorian time is more intuitive.
+
 * All events can be selected with a menu command
 
 * View selection to hide/show events done (progress = 100%).
