@@ -76,6 +76,6 @@ class ImportIcsDialog(Dialog):
 
     def _make_static_texts_bold(self):
         f = self.VeventLocation.GetFont()
-        f.SetWeight(wx.BOLD)
+        f.SetWeight(wx.FONTWEIGHT_BOLD)
         self.VeventLocation.SetFont(f)
         self.ValarmTrigger.SetFont(f)

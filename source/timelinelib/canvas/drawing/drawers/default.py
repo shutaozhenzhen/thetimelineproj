@@ -73,21 +73,21 @@ class DefaultDrawingAlgorithm(Drawer):
             self.outer_padding = OUTER_PADDING
 
     def _create_pens(self):
-        self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.SOLID)
-        self.black_solid_pen = wx.Pen(wx.Colour(0, 0, 0), 1, wx.SOLID)
-        self.darkred_solid_pen = wx.Pen(wx.Colour(200, 0, 0), 1, wx.SOLID)
-        self.minor_strip_pen = wx.Pen(wx.Colour(200, 200, 200), 1, wx.USER_DASH)
+        self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.PENSTYLE_SOLID)
+        self.black_solid_pen = wx.Pen(wx.Colour(0, 0, 0), 1, wx.PENSTYLE_SOLID)
+        self.darkred_solid_pen = wx.Pen(wx.Colour(200, 0, 0), 1, wx.PENSTYLE_SOLID)
+        self.minor_strip_pen = wx.Pen(wx.Colour(200, 200, 200), 1, wx.PENSTYLE_USER_DASH)
         self.minor_strip_pen.SetDashes([2, 2])
         self.minor_strip_pen.SetCap(wx.CAP_BUTT)
-        self.major_strip_pen = wx.Pen(wx.Colour(200, 200, 200), 1, wx.SOLID)
-        self.now_pen = wx.Pen(wx.Colour(200, 0, 0), 1, wx.SOLID)
-        self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.SOLID)
+        self.major_strip_pen = wx.Pen(wx.Colour(200, 200, 200), 1, wx.PENSTYLE_SOLID)
+        self.now_pen = wx.Pen(wx.Colour(200, 0, 0), 1, wx.PENSTYLE_SOLID)
+        self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.PENSTYLE_SOLID)
 
     def _create_brushes(self):
-        self.white_solid_brush = wx.Brush(wx.Colour(255, 255, 255), wx.SOLID)
-        self.black_solid_brush = wx.Brush(wx.Colour(0, 0, 0), wx.SOLID)
-        self.red_solid_brush = wx.Brush(wx.Colour(255, 0, 0), wx.SOLID)
-        self.lightgrey_solid_brush = wx.Brush(wx.Colour(230, 230, 230), wx.SOLID)
+        self.white_solid_brush = wx.Brush(wx.Colour(255, 255, 255), wx.PENSTYLE_SOLID)
+        self.black_solid_brush = wx.Brush(wx.Colour(0, 0, 0), wx.PENSTYLE_SOLID)
+        self.red_solid_brush = wx.Brush(wx.Colour(255, 0, 0), wx.PENSTYLE_SOLID)
+        self.lightgrey_solid_brush = wx.Brush(wx.Colour(230, 230, 230), wx.PENSTYLE_SOLID)
 
     def event_is_period(self, time_period):
         period_width_in_pixels = self.scene.width_of_period(time_period)
@@ -687,8 +687,8 @@ class DefaultDrawingAlgorithm(Drawer):
         # Draw the ballon
         BORDER_COLOR = wx.Colour(127, 127, 127)
         BG_COLOR = wx.Colour(255, 255, 231)
-        PEN = wx.Pen(BORDER_COLOR, 1, wx.SOLID)
-        BRUSH = wx.Brush(BG_COLOR, wx.SOLID)
+        PEN = wx.Pen(BORDER_COLOR, 1, wx.PENSTYLE_SOLID)
+        BRUSH = wx.Brush(BG_COLOR, wx.PENSTYLE_SOLID)
         gc.SetPen(PEN)
         gc.SetBrush(BRUSH)
         gc.DrawPath(path)

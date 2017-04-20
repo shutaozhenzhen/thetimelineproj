@@ -164,7 +164,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
         width, height = self.GetVirtualSizeTuple()
         self.buffer_image = wx.EmptyBitmap(width, height)
         memdc = wx.BufferedDC(None, self.buffer_image)
-        memdc.SetBackground(wx.Brush(self.GetBackgroundColour(), wx.SOLID))
+        memdc.SetBackground(wx.Brush(self.GetBackgroundColour(), wx.PENSTYLE_SOLID))
         memdc.Clear()
         memdc.BeginDrawing()
         self.monitoring.timer_start()
@@ -273,8 +273,8 @@ class CustomCategoryTreeRenderer(object):
         self._render_color_box(item)
 
     def _render_arrow(self, item):
-        self.dc.SetBrush(wx.Brush(wx.Colour(100, 100, 100), wx.SOLID))
-        self.dc.SetPen(wx.Pen(wx.Colour(100, 100, 100), 0, wx.SOLID))
+        self.dc.SetBrush(wx.Brush(wx.Colour(100, 100, 100), wx.PENSTYLE_SOLID))
+        self.dc.SetPen(wx.Pen(wx.Colour(100, 100, 100), 0, wx.PENSTYLE_SOLID))
         offset = self.TRIANGLE_SIZE / 2
         center_x = item["x"] + 2 * self.INNER_PADDING + offset
         center_y = item["y"] + self.model.ITEM_HEIGHT_PX / 2 - 1
@@ -319,8 +319,8 @@ class CustomCategoryTreeRenderer(object):
 
     def _render_color_box(self, item):
         color = item.get("color", None)
-        self.dc.SetBrush(wx.Brush(color, wx.SOLID))
-        self.dc.SetPen(wx.Pen(darken_color(color), 1, wx.SOLID))
+        self.dc.SetBrush(wx.Brush(color, wx.PENSTYLE_SOLID))
+        self.dc.SetPen(wx.Pen(darken_color(color), 1, wx.PENSTYLE_SOLID))
         (w, h) = (16, 16)
         self.dc.DrawRectangle(
             item["x"] + item["width"] - w - self.INNER_PADDING,

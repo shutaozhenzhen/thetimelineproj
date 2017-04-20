@@ -61,7 +61,7 @@ class FeatureDialog(Dialog):
 
     def _make_info_label_bold(self):
         font = self.feature_name.GetFont()
-        font.SetWeight(wx.BOLD)
+        font.SetWeight(wx.FONTWEIGHT_BOLD)
         self.feature_name.SetFont(font)
 
 

@@ -114,8 +114,8 @@ class LegendDrawer():
 
     def _create_legend(self, box_width, box_height, tw, th):
         go = GraphObject(w=box_width, h=box_height)
-        go.brush_color = wx.Brush(wx.Colour(255, 255, 255), wx.SOLID)
-        go.pen_color = wx.Pen(wx.Colour(0, 0, 0), 1, wx.SOLID)
+        go.brush_color = wx.Brush(wx.Colour(255, 255, 255), wx.PENSTYLE_SOLID)
+        go.pen_color = wx.Pen(wx.Colour(0, 0, 0), 1, wx.PENSTYLE_SOLID)
         go.childs = self._legend_items(tw, th)
         go.translate(OP, OP)
         self._set_legend_pos(go)

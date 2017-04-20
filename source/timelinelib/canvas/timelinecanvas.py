@@ -205,7 +205,7 @@ class TimelineCanvas(wx.Panel):
         memdc = wx.MemoryDC()
         memdc.SelectObject(self.surface_bitmap)
         memdc.BeginDrawing()
-        memdc.SetBackground(wx.Brush(wx.WHITE, wx.SOLID))
+        memdc.SetBackground(wx.Brush(wx.WHITE, wx.PENSTYLE_SOLID))
         memdc.Clear()
         fn_draw(memdc)
         memdc.EndDrawing()
