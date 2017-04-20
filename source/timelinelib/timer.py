@@ -50,5 +50,5 @@ class Timer(object):
 
     @property
     def elapsed_ms(self):
-        """Return the elapsed time i milliseconds between start and end."""
+        """Return the elapsed time in milliseconds between start and end."""
         return (self._end - self._start) * 1000
