@@ -42,11 +42,11 @@ class Monitoring(object):
         self._category_redraw_count += 1
 
     def timer_start(self):
-        """Start time measurment."""
+        """Start time measurement."""
         self._timer.start()
 
     def timer_end(self):
-        """Stop time measurment."""
+        """Stop time measurement."""
         self._timer.end()
 
     @property
