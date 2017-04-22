@@ -25,10 +25,19 @@ class DateFormatDialog(Dialog):
     """
     <BoxSizerVertical>
         <FlexGridSizer name="grid" rows="0" columns="2" border="ALL" >
-            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(date_format_text)"/>
-            <TextCtrl name="date_format" />
-            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(locale_date_format_text)"/>
-            <StaticText align="ALIGN_CENTER_VERTICAL" name="locale_date_format"/>
+            <StaticText
+                align="ALIGN_CENTER_VERTICAL"
+                label="$(date_format_text)"
+            />
+            <TextCtrl name="date_format" fit_text="__YYYY__MMM__DD__" />
+            <StaticText
+                align="ALIGN_CENTER_VERTICAL"
+                label="$(locale_date_format_text)"
+            />
+            <StaticText
+                align="ALIGN_CENTER_VERTICAL"
+                name="locale_date_format"
+            />
         </FlexGridSizer>
         <BoxSizerHorizontal>
             <StretchSpacer/>
@@ -44,7 +53,6 @@ class DateFormatDialog(Dialog):
         Dialog.__init__(self, DateFormatDialogController, parent, {
             "date_format_text": _("Date format:"),
             "locale_date_format_text": _("Locale Date format:"),
-            "date_format_text": _("Date format:"),
         }, title=_("Set Date format"))
         self.controller.on_init(config)
 
