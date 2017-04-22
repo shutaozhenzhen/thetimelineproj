@@ -109,7 +109,7 @@ class NumTimeType(TimeType):
         return (NumStrip(10**(exponent+1)), NumStrip(10**exponent))
 
     def get_default_time_period(self):
-        return time_period_center(NumTime(0), NumTime(100))
+        return time_period_center(NumTime(0), NumDelta(100))
 
     def now(self):
         return NumTime(0)
