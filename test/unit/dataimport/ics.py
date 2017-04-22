@@ -23,6 +23,7 @@ import wx
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.dataimport.ics import import_db_from_ics
+from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
 
@@ -178,24 +179,15 @@ END:VCA
 """
 
 
-class describe_import_ics(UnitTestCase):
+class describe_import_ics(TmpDirTestCase):
 
     def given_ics_file(self, name):
-        self.ics_file_path = "ics_file.txt"
+        self.ics_file_path = self.get_tmp_path("ics_file.txt")
         with open(self.ics_file_path, "w") as f:
             f.write(name)
 
     def when_ics_file_imported(self, options=None):
         return import_db_from_ics(self.ics_file_path, options=options)
-
-    def setUp(self):
-        self.ics_file_path = "ics_file.txt"
-
-    def tearDown(self):
-        try:
-            os.remove(self.ics_file_path)
-        except:
-            pass
 
 
 class describe_import_vevent_from_ics(describe_import_ics):
@@ -280,8 +272,10 @@ class describe_import_vtodo_from_ics(describe_import_ics):
         self.assertEqual(event.get_text(), "")
 
     def setUp(self):
+        describe_import_ics.setUp(self)
         self.app = wx.App(False)
         self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
 
     def tearDown(self):
+        describe_import_ics.tearDown(self)
         self.app.Destroy()
