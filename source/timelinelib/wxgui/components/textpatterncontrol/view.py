@@ -18,13 +18,19 @@
 
 import wx
 
+from timelinelib.wxgui.components.textctrl import TextCtrl
 from timelinelib.wxgui.components.textpatterncontrol.controller import TextPatternControlController
 
 
-class TextPatternControl(wx.TextCtrl):
+class TextPatternControl(TextCtrl):
 
-    def __init__(self, parent, name=None):
-        wx.TextCtrl.__init__(self, parent, style=wx.TE_PROCESS_TAB)
+    def __init__(self, parent, name=None, fit_text=None):
+        TextCtrl.__init__(
+            self,
+            parent,
+            style=wx.TE_PROCESS_TAB,
+            fit_text=fit_text
+        )
         self.controller = TextPatternControlController(self)
         self._bind_events()
         self.controller.on_init()

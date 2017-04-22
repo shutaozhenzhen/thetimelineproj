@@ -22,6 +22,7 @@ from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.timepicker.datecontroller import GregorianDatePickerController
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.internaltime import delta_from_days
+from timelinelib.wxgui.components.textctrl import TextCtrl
 
 
 class GregorianDatePicker(wx.Panel):
@@ -29,19 +30,23 @@ class GregorianDatePicker(wx.Panel):
     def __init__(self, parent, date_formatter, name=None):
         wx.Panel.__init__(self, parent)
         self.controller = GregorianDatePickerController(self)
-        self._create_gui()
+        self._create_gui(date_formatter)
         self.controller.on_init(
             date_formatter,
             DateModifier()
         )
 
-    def _create_gui(self):
-        self._create_date_text()
+    def _create_gui(self, date_formatter):
+        self._create_date_text(date_formatter)
         self._create_bc_button()
         self._layout()
 
-    def _create_date_text(self):
-        self.date_text = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
+    def _create_date_text(self, date_formatter):
+        self.date_text = TextCtrl(
+            self,
+            style=wx.TE_PROCESS_ENTER,
+            fit_text=self._format_sample_date(date_formatter)
+        )
         self.date_text.Bind(wx.EVT_CHAR, self.controller.on_char)
         self.date_text.Bind(wx.EVT_TEXT, self.controller.on_text)
 
@@ -56,6 +61,13 @@ class GregorianDatePicker(wx.Panel):
         sizer.Add(self.date_text, flag=wx.EXPAND, proportion=1)
         sizer.Add(self.bc_button, flag=wx.EXPAND)
         self.SetSizer(sizer)
+
+    def _format_sample_date(self, date_formatter):
+        return date_formatter.format(
+            GregorianDateTime.from_time(
+                GregorianTimeType().now()
+            ).to_date_tuple()
+        )[0]
 
     def GetGregorianDate(self):
         return self.controller.get_gregorian_date()
