@@ -17,6 +17,7 @@
 
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.calendar.num.time import NumDelta
 from timelinelib.calendar.num.timetype import move_period
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data import TimePeriod
@@ -30,12 +31,10 @@ class describe_numtimetype(UnitTestCase):
         self.time_type = NumTimeType()
 
     def test_format_delta_1(self):
-        delta = 1
-        self.assertEqual("1", self.time_type.format_delta(delta))
+        self.assertEqual("1", self.time_type.format_delta(NumDelta(1)))
 
     def test_format_delta_2(self):
-        delta = 2
-        self.assertEqual("2", self.time_type.format_delta(delta))
+        self.assertEqual("2", self.time_type.format_delta(NumDelta(2)))
 
     def test_equality(self):
         self.assertEqual(NumTimeType(), NumTimeType())

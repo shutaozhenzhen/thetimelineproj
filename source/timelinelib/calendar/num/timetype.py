@@ -22,6 +22,8 @@
 import math
 import re
 
+from timelinelib.calendar.num.time import NumDelta
+from timelinelib.calendar.num.time import NumTime
 from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
@@ -38,7 +40,7 @@ class NumTimeType(TimeType):
         return not (self == other)
 
     def time_string(self, time):
-        return "%s" % (time)
+        return "%s" % (time.value)
 
     def parse_time(self, time_string):
         match = re.search(r"^([-]?\d+(.\d+)?(e[+]\d+)?)$", time_string)
@@ -48,7 +50,7 @@ class NumTimeType(TimeType):
             else:
                 time = int(match.group(1))
             try:
-                return time
+                return NumTime(time)
             except ValueError:
                 raise ValueError("Invalid time, time string = '%s'" % time_string)
         else:
@@ -66,13 +68,16 @@ class NumTimeType(TimeType):
     def format_period(self, time_period):
         """Returns a unicode string describing the time period."""
         if time_period.is_period():
-            label = u"%s to %s" % (time_period.start_time, time_period.end_time)
+            label = u"%s to %s" % (
+                time_period.start_time.value,
+                time_period.end_time.value
+            )
         else:
-            label = u"%s" % time_period.start_time
+            label = u"%s" % time_period.start_time.value
         return label
 
     def format_delta(self, delta):
-        return "%d" % delta
+        return "%d" % delta.value
 
     def get_min_time(self):
         return None
@@ -86,15 +91,15 @@ class NumTimeType(TimeType):
         #
         #     10**x > period_delta   =>
         #     x > log(period_delta)
-        exponent = int(math.log(metrics.time_period.delta(), 10)) + 1
+        exponent = int(math.log(metrics.time_period.delta().value, 10)) + 1
         # Keep decreasing the exponent until the minor strip is small enough.
         while True:
             if exponent == 0:
                 break
             next_minor_strip_with_px = metrics.calc_exact_width(
                 TimePeriod(
-                    0,
-                    10**(exponent-1)
+                    NumTime(0),
+                    NumTime(10**(exponent-1))
                 )
             )
             if next_minor_strip_with_px > 30:
@@ -104,13 +109,13 @@ class NumTimeType(TimeType):
         return (NumStrip(10**(exponent+1)), NumStrip(10**exponent))
 
     def get_default_time_period(self):
-        return time_period_center(0, 100)
+        return time_period_center(NumTime(0), NumTime(100))
 
     def now(self):
-        return 0
+        return NumTime(0)
 
     def get_min_zoom_delta(self):
-        return (5, _("Can't zoom deeper than 5"))
+        return (NumDelta(5), _("Can't zoom deeper than 5"))
 
     def get_name(self):
         return u"numtime"
@@ -141,27 +146,31 @@ class NumStrip(Strip):
         self.size = size
 
     def label(self, time, major=False):
-        return "%s" % (time)
+        return "%s" % time.value
 
     def start(self, time):
-        start = int((time / self.size)) * self.size
-        if time < 0:
+        start = int((time.value / self.size)) * self.size
+        if time < NumTime(0):
             start -= self.size
-        return start
+        return NumTime(start)
 
     def increment(self, time):
-        return time + self.size
+        return time + NumDelta(self.size)
 
 
 def go_to_zero_fn(main_frame, current_period, navigation_fn):
-    navigation_fn(lambda tp: tp.center(0))
+    navigation_fn(lambda tp: tp.center(NumTime(0)))
 
 
 def go_to_time_fn(main_frame, current_period, navigation_fn):
     def navigate_to(time):
         navigation_fn(lambda tp: tp.center(time))
     main_frame.display_time_editor_dialog(
-        NumTimeType(), current_period.mean_time(), navigate_to, _("Go to Time"))
+        NumTimeType(),
+        current_period.mean_time(),
+        navigate_to,
+        _("Go to Time")
+    )
 
 
 def backward_fn(main_frame, current_period, navigation_fn):

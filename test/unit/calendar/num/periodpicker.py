@@ -19,6 +19,7 @@
 from mock import Mock
 import humblewx
 
+from timelinelib.calendar.num.time import NumTime
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.config.dotfile import Config
@@ -53,7 +54,7 @@ class NumePeriodPickerTestDialog(Dialog):
             "time_type": NumTimeType(),
             "config": self._create_mock_config(),
         })
-        self.period_picker.SetValue(TimePeriod(10, 20))
+        self.period_picker.SetValue(TimePeriod(NumTime(10), NumTime(20)))
 
     def _create_mock_config(self):
         config = Mock(Config)
