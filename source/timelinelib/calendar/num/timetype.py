@@ -183,7 +183,8 @@ def forward_fn(main_frame, current_period, navigation_fn):
     navigation_fn(lambda tp: tp.move_delta(delta))
 
 
-def move_period(period, delta):
+def move_period(period, num):
+    delta = NumDelta(num)
     start_time = period.start_time + delta
     end_time = period.end_time + delta
     return TimePeriod(start_time, end_time)
