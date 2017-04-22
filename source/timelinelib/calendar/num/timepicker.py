@@ -17,6 +17,8 @@
 
 
 import wx
+
+from timelinelib.calendar.num.time import NumTime
 from timelinelib.wxgui.components.numctrl import NumCtrl
 
 
@@ -28,13 +30,13 @@ class NumTimePicker(wx.Panel):
         self.controller = NumTimePickerController(self, 0, on_change)
 
     def get_value(self):
-        return int(self.time_picker.GetValue())
+        return NumTime(int(self.time_picker.GetValue()))
 
     def set_value(self, num_time):
         if num_time is None:
             self.time_picker.SetValue('0')
         else:
-            self.time_picker.SetValue(str(int(num_time)))
+            self.time_picker.SetValue(str(int(num_time.value)))
 
     def select_all(self):
         self.time_picker.SetSelection(0, len(str(self.get_value())))

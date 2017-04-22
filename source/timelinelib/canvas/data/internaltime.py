@@ -16,11 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.time import ComparableValue
+from timelinelib.calendar.time import GenericDeltaMixin
+from timelinelib.calendar.time import GenericTimeMixin
+
+
 SECONDS_IN_DAY = 24 * 60 * 60
 MIN_JULIAN_DAY = 0
 
 
-class Time(object):
+class Time(GenericTimeMixin):
 
     def __init__(self, julian_day, seconds):
         if julian_day < MIN_JULIAN_DAY:
@@ -81,10 +86,11 @@ class Time(object):
         return (hours, minutes, seconds)
 
 
-class TimeDelta(object):
+class TimeDelta(ComparableValue, GenericDeltaMixin):
 
-    def __init__(self, seconds):
-        self.seconds = seconds
+    @property
+    def seconds(self):
+        return self.value
 
     def __div__(self, value):
         if isinstance(value, TimeDelta):
@@ -95,23 +101,8 @@ class TimeDelta(object):
     def __sub__(self, delta):
         return TimeDelta(self.seconds - delta.seconds)
 
-    def __neg__(self):
-        return TimeDelta(-self.seconds)
-
     def __mul__(self, value):
         return TimeDelta(int(self.seconds * value))
-
-    def __rmul__(self, value):
-        return self * value
-
-    def __eq__(self, d):
-        return isinstance(d, TimeDelta) and self.seconds == d.seconds
-
-    def __gt__(self, d):
-        return self.seconds > d.seconds
-
-    def __lt__(self, d):
-        return self.seconds < d.seconds
 
     def get_days(self):
         return self.seconds / SECONDS_IN_DAY
