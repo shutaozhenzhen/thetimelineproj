@@ -20,7 +20,7 @@ import mock
 import wx
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
-from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.calendar.gregorian.timetype import backward_fn
 from timelinelib.calendar.gregorian.timetype import backward_one_month_fn
@@ -64,11 +64,11 @@ class describe_gregoriantimetype(UnitTestCase):
     def test_converts_time_to_string(self):
         self.assertEqual(
             "-4713-11-24 00:00:00",
-            self.time_type.time_string(Time(julian_day=0, seconds=0)))
+            self.time_type.time_string(GregorianTime(julian_day=0, seconds=0)))
 
     def test_parses_time_from_string(self):
         self.assertEqual(
-            Time(julian_day=0, seconds=0),
+            GregorianTime(julian_day=0, seconds=0),
             self.time_type.parse_time("-4713-11-24 00:00:00"))
 
     def test_raises_ValueError_when_parsing_invalid_time(self):
@@ -89,7 +89,7 @@ class describe_gregoriantimetype(UnitTestCase):
             self.time_type.format_period(time_period))
 
     def test_returns_min_time(self):
-        self.assertEqual(Time(0, 0), self.time_type.get_min_time())
+        self.assertEqual(GregorianTime(0, 0), self.time_type.get_min_time())
 
     def test_returns_max_time(self):
         self.assertEqual(self.time_type.parse_time("9990-01-01 00:00:00"),

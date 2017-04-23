@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.time import TimeDelta
 
 
@@ -81,7 +81,7 @@ class BosparanianDateTime(object):
     def to_time(self):
         days = ymd_to_bosparanian_day(self.year, self.month, self.day)
         seconds = self.hour * 60 * 60 + self.minute * 60 + self.second
-        return Time(days, seconds)
+        return GregorianTime(days, seconds)
 
     def replace(self, year=None, month=None):
         if year is None:
