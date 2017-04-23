@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.data.internaltime import TimeDelta
 import timelinelib.canvas.data.internaltime as timeline
 
 
@@ -54,7 +55,7 @@ class GregorianDateTime(object):
             from timelinelib.calendar.gregorian.timetype import GregorianTimeType
             jan_4 = GregorianDateTime.from_ymd(year, 1, 4).to_time()
             jan_4_day_of_week = GregorianTimeType().get_day_of_week(jan_4)
-            return jan_4 - timeline.delta_from_days(jan_4_day_of_week)
+            return jan_4 - TimeDelta.from_days(jan_4_day_of_week)
         def days_between(end, start):
             return end.julian_day - start.julian_day
         def days_since_monday_week_1(time):
@@ -79,8 +80,14 @@ class GregorianDateTime(object):
             year = self.year
         if month is None:
             month = self.month
-        return self.__class__(year, month, self.day,
-                         self.hour, self.minute, self.second)
+        return self.__class__(
+            year,
+            month,
+            self.day,
+            self.hour,
+            self.minute,
+            self.second
+        )
 
     def days_in_month(self):
         return days_in_month(self.year, self.month)

@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.canvas.data.internaltime import get_min_time
 from timelinelib.canvas.data.internaltime import MIN_JULIAN_DAY
 from timelinelib.canvas.data.internaltime import Time
@@ -35,7 +34,7 @@ class describe_time_properties(UnitTestCase):
 
     def test_add(self):
         self.assertEqual(Time(10, 70), Time(10, 61) + TimeDelta.from_seconds(9))
-        self.assertEqual(Time(11, 61), Time(10, 61) + delta_from_days(1))
+        self.assertEqual(Time(11, 61), Time(10, 61) + TimeDelta.from_days(1))
 
     def test_sub_delta(self):
         self.assertEqual(Time(10, 60), Time(10, 61) - TimeDelta.from_seconds(1))
@@ -64,7 +63,7 @@ class describe_time_delta_properties(UnitTestCase):
 
     def test_can_create(self):
         self.assertEqual(TimeDelta.from_seconds(5), TimeDelta(5))
-        self.assertEqual(delta_from_days(5), TimeDelta(5 * 24 * 60 * 60))
+        self.assertEqual(TimeDelta.from_days(5), TimeDelta(5 * 24 * 60 * 60))
 
     def test_div(self):
         self.assertEqual(2.5, TimeDelta(5) / TimeDelta(2))
