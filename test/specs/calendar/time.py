@@ -18,8 +18,8 @@
 
 from timelinelib.calendar.bosparanian.time import BosparanianDelta
 from timelinelib.calendar.bosparanian.time import BosparanianTime
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.time import GregorianTime
-from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.calendar.num.time import NumDelta
 from timelinelib.calendar.num.time import NumTime
 from timelinelib.test.cases.unit import UnitTestCase
@@ -211,15 +211,15 @@ class GregorianTimeTest(UnitTestCase, TimeImplementationTestTemplate):
 
     @property
     def delta(self):
-        return GregorianTimeDelta(60*60*24)
+        return GregorianDelta(60*60*24)
 
     @property
     def delta_neg(self):
-        return GregorianTimeDelta(-60*60*24)
+        return GregorianDelta(-60*60*24)
 
     @property
     def double_delta(self):
-        return GregorianTimeDelta(60*60*24*2)
+        return GregorianDelta(60*60*24*2)
 
 
 class BosparanianTimeTest(UnitTestCase, TimeImplementationTestTemplate):

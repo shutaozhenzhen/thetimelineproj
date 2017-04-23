@@ -30,7 +30,7 @@ class GregorianTime(GenericTimeMixin):
 
     @property
     def DeltaClass(self):
-        return GregorianTimeDelta
+        return GregorianDelta
 
     @classmethod
     def min(cls):
@@ -108,7 +108,7 @@ class GregorianTime(GenericTimeMixin):
         return (hours, minutes, seconds)
 
 
-class GregorianTimeDelta(ComparableValue, GenericDeltaMixin):
+class GregorianDelta(ComparableValue, GenericDeltaMixin):
 
     @classmethod
     def from_seconds(cls, seconds):

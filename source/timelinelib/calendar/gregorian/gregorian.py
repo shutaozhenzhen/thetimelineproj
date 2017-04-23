@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.time import GregorianTime
-from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 
 
 class GregorianDateTime(object):
@@ -55,7 +55,7 @@ class GregorianDateTime(object):
             from timelinelib.calendar.gregorian.timetype import GregorianTimeType
             jan_4 = GregorianDateTime.from_ymd(year, 1, 4).to_time()
             jan_4_day_of_week = GregorianTimeType().get_day_of_week(jan_4)
-            return jan_4 - GregorianTimeDelta.from_days(jan_4_day_of_week)
+            return jan_4 - GregorianDelta.from_days(jan_4_day_of_week)
         def days_between(end, start):
             return end.julian_day - start.julian_day
         def days_since_monday_week_1(time):
