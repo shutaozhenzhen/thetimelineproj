@@ -19,11 +19,11 @@
 from mock import Mock
 import wx
 
+from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data.internaltime import Time
-from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.canvas import TimelineCanvas
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.test.cases.unit import UnitTestCase

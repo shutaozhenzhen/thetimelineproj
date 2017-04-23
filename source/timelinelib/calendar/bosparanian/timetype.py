@@ -22,12 +22,12 @@ from timelinelib.calendar.bosparanian.bosparanian import BosparanianDateTime
 from timelinelib.calendar.bosparanian.monthnames import bosp_abbreviated_name_of_month
 from timelinelib.calendar.bosparanian.monthnames import bosp_name_of_month
 from timelinelib.calendar.bosparanian.weekdaynames import bosp_abbreviated_name_of_weekday
+from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data.internaltime import Time
-from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.canvas.drawing.interface import Strip
 
 

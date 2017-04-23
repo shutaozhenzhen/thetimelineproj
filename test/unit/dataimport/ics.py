@@ -16,15 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
-
 import wx
 
+from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.canvas.data.exceptions import TimelineIOError
-from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.dataimport.ics import import_db_from_ics
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
-from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
 
 

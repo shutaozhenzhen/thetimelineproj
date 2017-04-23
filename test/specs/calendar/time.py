@@ -16,10 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.calendar.num.time import NumDelta
 from timelinelib.calendar.num.time import NumTime
-from timelinelib.canvas.data.internaltime import Time
-from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.test.cases.unit import UnitTestCase
 
 

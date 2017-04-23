@@ -28,6 +28,7 @@ import random
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.monthnames import ABBREVIATED_ENGLISH_MONTH_NAMES
+from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
@@ -35,7 +36,6 @@ from timelinelib.canvas.data import Era
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data.internaltime import TimeDelta
 
 
 ANY_TIME = "1 Jan 2010"
@@ -61,7 +61,7 @@ def numeric_period(start, end):
 
 def human_time_to_gregorian(human_time):
     """
-    Create a :doc:`Time <timelinelib_canvas_data_internaltime>` object
+    Create a :doc:`Time <timelinelib.calendar.gregorian.time>` object
     from a human readable date and time string.
     """
     (year, month, day, hour, minute, seconds) = human_time_to_ymdhm(human_time)

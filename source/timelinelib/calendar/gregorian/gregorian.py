@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.internaltime import Time
-from timelinelib.canvas.data.internaltime import TimeDelta
+from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import TimeDelta
 
 
 class GregorianDateTime(object):
