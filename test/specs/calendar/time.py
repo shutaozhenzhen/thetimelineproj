@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.bosparanian.time import BosparanianDelta
+from timelinelib.calendar.bosparanian.time import BosparanianTime
 from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.calendar.num.time import NumDelta
@@ -218,3 +220,26 @@ class GregorianTimeTest(UnitTestCase, TimeImplementationTestTemplate):
     @property
     def double_delta(self):
         return GregorianTimeDelta(60*60*24*2)
+
+
+class BosparanianTimeTest(UnitTestCase, TimeImplementationTestTemplate):
+
+    @property
+    def start(self):
+        return BosparanianTime(1, 30)
+
+    @property
+    def end(self):
+        return BosparanianTime(2, 30)
+
+    @property
+    def delta(self):
+        return BosparanianDelta(60*60*24)
+
+    @property
+    def delta_neg(self):
+        return BosparanianDelta(-60*60*24)
+
+    @property
+    def double_delta(self):
+        return BosparanianDelta(60*60*24*2)

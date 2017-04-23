@@ -28,6 +28,10 @@ class GregorianTime(GenericTimeMixin):
 
     MIN_JULIAN_DAY = 0
 
+    @property
+    def DeltaClass(self):
+        return GregorianTimeDelta
+
     @classmethod
     def min(cls):
         return cls(cls.MIN_JULIAN_DAY, 0)
@@ -48,7 +52,7 @@ class GregorianTime(GenericTimeMixin):
         self.seconds = seconds
 
     def __eq__(self, time):
-        return (isinstance(time, GregorianTime) and
+        return (isinstance(time, self.__class__) and
                 self.julian_day == time.julian_day and
                 self.seconds == time.seconds)
 
@@ -56,13 +60,15 @@ class GregorianTime(GenericTimeMixin):
         return not (self == time)
 
     def __add__(self, delta):
-        if isinstance(delta, GregorianTimeDelta):
+        if isinstance(delta, self.DeltaClass):
             seconds = self.seconds + delta.seconds
             return self.__class__(self.julian_day + seconds / SECONDS_IN_DAY, seconds % SECONDS_IN_DAY)
-        raise TypeError("GregorianTime + %s not supported" % type(delta))
+        raise TypeError(
+            "%s + %s not supported" % (self.__class__.__name__, type(delta))
+        )
 
     def __sub__(self, other):
-        if isinstance(other, GregorianTimeDelta):
+        if isinstance(other, self.DeltaClass):
             seconds = self.seconds - other.seconds
             if seconds < 0:
                 if seconds % SECONDS_IN_DAY == 0:
@@ -77,7 +83,7 @@ class GregorianTime(GenericTimeMixin):
         else:
             days_diff = self.julian_day - other.julian_day
             seconds_diff = self.seconds - other.seconds
-            return GregorianTimeDelta(days_diff * SECONDS_IN_DAY + seconds_diff)
+            return self.DeltaClass(days_diff * SECONDS_IN_DAY + seconds_diff)
 
     def __gt__(self, dt):
         return (self.julian_day, self.seconds) > (dt.julian_day, dt.seconds)
@@ -89,7 +95,11 @@ class GregorianTime(GenericTimeMixin):
         return (self.julian_day, self.seconds) < (dt.julian_day, dt.seconds)
 
     def __repr__(self):
-        return "GregorianTime<%s, %s>" % (self.julian_day, self.seconds)
+        return "{0}({1!r}, {2!r})".format(
+            self.__class__.__name__,
+            self.julian_day,
+            self.seconds
+        )
 
     def get_time_of_day(self):
         hours = self.seconds / 3600
@@ -113,16 +123,16 @@ class GregorianTimeDelta(ComparableValue, GenericDeltaMixin):
         return self.value
 
     def __div__(self, value):
-        if isinstance(value, GregorianTimeDelta):
+        if isinstance(value, self.__class__):
             return float(self.seconds) / float(value.seconds)
         else:
-            return GregorianTimeDelta(self.seconds / value)
+            return self.__class__(self.seconds / value)
 
     def __sub__(self, delta):
-        return GregorianTimeDelta(self.seconds - delta.seconds)
+        return self.__class__(self.seconds - delta.seconds)
 
     def __mul__(self, value):
-        return GregorianTimeDelta(int(self.seconds * value))
+        return self.__class__(int(self.seconds * value))
 
     def get_days(self):
         return self.seconds / SECONDS_IN_DAY
@@ -134,4 +144,7 @@ class GregorianTimeDelta(ComparableValue, GenericDeltaMixin):
         return (self.seconds / 60) % 60
 
     def __repr__(self):
-        return "GregorianTimeDelta[%s]" % self.seconds
+        return "{0}({1!r})".format(
+            self.__class__.__name__,
+            self.seconds
+        )
