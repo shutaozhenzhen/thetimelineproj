@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.time import TimeDelta
+from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.event import clone_event_list
@@ -193,7 +193,7 @@ class describe_event_functions(UnitTestCase):
 
     def test_zero_time_span(self):
         event = an_event()
-        self.assertEqual(TimeDelta.from_seconds(0), event.time_span())
+        self.assertEqual(GregorianTimeDelta.from_seconds(0), event.time_span())
 
 
 class describe_event_cloning(UnitTestCase):

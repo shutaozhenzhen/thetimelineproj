@@ -20,7 +20,7 @@ from mock import Mock
 import wx
 
 from timelinelib.calendar.gregorian.time import GregorianTime
-from timelinelib.calendar.gregorian.time import TimeDelta
+from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod
@@ -101,7 +101,7 @@ class ATimeType(TimeType):
         return "%s to %s" % (period.start_time, period.end_time)
 
     def get_min_zoom_delta(self):
-        return (TimeDelta(1), "Can't zoom deeper than 1")
+        return (GregorianTimeDelta(1), "Can't zoom deeper than 1")
 
     def __eq__(self, other):
         return isinstance(other, ATimeType)

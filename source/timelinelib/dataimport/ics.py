@@ -25,7 +25,7 @@ import random
 from icalendar import Calendar
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
-from timelinelib.calendar.gregorian.time import TimeDelta
+from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
@@ -202,9 +202,9 @@ class IcsLoader(object):
 
     def _convert_to_timedelta(self, t):
         if isinstance(t, timedelta):
-            return TimeDelta(t.seconds)
+            return GregorianTimeDelta(t.seconds)
         else:
-            return TimeDelta(0)
+            return GregorianTimeDelta(0)
 
     def _convert_to_datetime(self, d):
         if isinstance(d, datetime):

@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.gregorian.time import GregorianTime
-from timelinelib.calendar.gregorian.time import TimeDelta
+from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 
 
 class BosparanianDateTime(object):
@@ -58,7 +58,7 @@ class BosparanianDateTime(object):
             from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
             pra_4 = BosparanianDateTime.from_ymd(year, 1, 4).to_time()
             pra_4_day_of_week = BosparanianTimeType().get_day_of_week(pra_4)
-            return pra_4 - TimeDelta.from_days(pra_4_day_of_week)
+            return pra_4 - GregorianTimeDelta.from_days(pra_4_day_of_week)
         def days_between(end, start):
             return end.julian_day - start.julian_day
         def days_since_windsday_week_1(time):
