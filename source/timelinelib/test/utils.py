@@ -28,7 +28,7 @@ import random
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.monthnames import ABBREVIATED_ENGLISH_MONTH_NAMES
-from timelinelib.calendar.gregorian.time import TimeDelta
+from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
@@ -258,7 +258,7 @@ EVENT_MODIFIERS = [
     ("change id", lambda event:
         event.set_id(inc(event.get_id()))),
     ("change time period", lambda event:
-        event.set_time_period(event.get_time_period().move_delta(TimeDelta.from_days(1)))),
+        event.set_time_period(event.get_time_period().move_delta(GregorianTimeDelta.from_days(1)))),
     ("change text", lambda event:
         event.set_text("was: %s" % event.get_text())),
     ("change category", lambda event:
@@ -311,7 +311,7 @@ TIME_PERIOD_MODIFIERS = [
 
 ERA_MODIFIERS = [
     ("change id", lambda era: era.set_id(inc(era.get_id()))),
-    ("change time period", lambda era: era.set_time_period(era.get_time_period().move_delta(TimeDelta.from_days(1)))),
+    ("change time period", lambda era: era.set_time_period(era.get_time_period().move_delta(GregorianTimeDelta.from_days(1)))),
     ("change text", lambda era: era.set_name("was: %s" % era.get_name())),
     ("change color", lambda era: era.set_color(tuple([x + 1 for x in era.get_color()])))
 ]
@@ -325,7 +325,7 @@ NUM_ERA_MODIFIERS = [
 
 
 TIME_MODIFIERS = [
-    ("add", lambda time: time + TimeDelta(1)),
+    ("add", lambda time: time + GregorianTimeDelta(1)),
 ]
 
 

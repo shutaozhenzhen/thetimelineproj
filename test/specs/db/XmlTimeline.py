@@ -19,7 +19,7 @@
 
 import codecs
 
-from timelinelib.calendar.gregorian.time import TimeDelta
+from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.dataexport.timelinexml import alert_string
@@ -90,7 +90,7 @@ class XmlTimelineSpec(TmpDirTestCase):
 """
         self.write(self.tmp_path, contents)
         db = import_db_from_timeline_xml(self.tmp_path)
-        default_time_period_delta = TimeDelta.from_days(30)
+        default_time_period_delta = GregorianTimeDelta.from_days(30)
         self.assertFalse(default_time_period_delta == db.get_displayed_period().delta())
 
     def testAlertStringParsingGivesAlertData(self):

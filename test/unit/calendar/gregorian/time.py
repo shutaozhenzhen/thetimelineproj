@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.gregorian.time import GregorianTime
-from timelinelib.calendar.gregorian.time import TimeDelta
+from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import TIME_MODIFIERS
 
@@ -31,17 +31,17 @@ class describe_time_properties(UnitTestCase):
         self.assertEqual((2, 3, 5), GregorianTime(0, 60 * 60 * 2 + 60 * 3 + 5).get_time_of_day())
 
     def test_add(self):
-        self.assertEqual(GregorianTime(10, 70), GregorianTime(10, 61) + TimeDelta.from_seconds(9))
-        self.assertEqual(GregorianTime(11, 61), GregorianTime(10, 61) + TimeDelta.from_days(1))
+        self.assertEqual(GregorianTime(10, 70), GregorianTime(10, 61) + GregorianTimeDelta.from_seconds(9))
+        self.assertEqual(GregorianTime(11, 61), GregorianTime(10, 61) + GregorianTimeDelta.from_days(1))
 
     def test_sub_delta(self):
-        self.assertEqual(GregorianTime(10, 60), GregorianTime(10, 61) - TimeDelta.from_seconds(1))
-        self.assertEqual(GregorianTime(9, 24 * 60 * 60 - 1), GregorianTime(10, 0) - TimeDelta.from_seconds(1))
+        self.assertEqual(GregorianTime(10, 60), GregorianTime(10, 61) - GregorianTimeDelta.from_seconds(1))
+        self.assertEqual(GregorianTime(9, 24 * 60 * 60 - 1), GregorianTime(10, 0) - GregorianTimeDelta.from_seconds(1))
 
     def test_sub_time(self):
-        self.assertEqual(TimeDelta.from_seconds(5 * 24 * 60 * 60), GregorianTime(10, 0) - GregorianTime(5, 0))
-        self.assertEqual(TimeDelta.from_seconds(5 * 24 * 60 * 60 + 5), GregorianTime(10, 5) - GregorianTime(5, 0))
-        self.assertEqual(TimeDelta.from_seconds(4 * 24 * 60 * 60 + (24 * 60 * 60 - 5)), GregorianTime(10, 5) - GregorianTime(5, 10))
+        self.assertEqual(GregorianTimeDelta.from_seconds(5 * 24 * 60 * 60), GregorianTime(10, 0) - GregorianTime(5, 0))
+        self.assertEqual(GregorianTimeDelta.from_seconds(5 * 24 * 60 * 60 + 5), GregorianTime(10, 5) - GregorianTime(5, 0))
+        self.assertEqual(GregorianTimeDelta.from_seconds(4 * 24 * 60 * 60 + (24 * 60 * 60 - 5)), GregorianTime(10, 5) - GregorianTime(5, 10))
 
     def test_rejects_invalid_times(self):
         self.assertRaises(ValueError, GregorianTime, GregorianTime.MIN_JULIAN_DAY - 1, 0)
@@ -60,18 +60,18 @@ class describe_time_properties(UnitTestCase):
 class describe_time_delta_properties(UnitTestCase):
 
     def test_can_create(self):
-        self.assertEqual(TimeDelta.from_seconds(5), TimeDelta(5))
-        self.assertEqual(TimeDelta.from_days(5), TimeDelta(5 * 24 * 60 * 60))
+        self.assertEqual(GregorianTimeDelta.from_seconds(5), GregorianTimeDelta(5))
+        self.assertEqual(GregorianTimeDelta.from_days(5), GregorianTimeDelta(5 * 24 * 60 * 60))
 
     def test_div(self):
-        self.assertEqual(2.5, TimeDelta(5) / TimeDelta(2))
+        self.assertEqual(2.5, GregorianTimeDelta(5) / GregorianTimeDelta(2))
 
     def test_sub(self):
-        self.assertEqual(TimeDelta(2) - TimeDelta(1), TimeDelta(1))
+        self.assertEqual(GregorianTimeDelta(2) - GregorianTimeDelta(1), GregorianTimeDelta(1))
 
     def test_mul(self):
-        self.assertEqual(TimeDelta(2), TimeDelta(5) * 0.5)
-        self.assertEqual(TimeDelta(2), 0.5 * TimeDelta(5))
+        self.assertEqual(GregorianTimeDelta(2), GregorianTimeDelta(5) * 0.5)
+        self.assertEqual(GregorianTimeDelta(2), 0.5 * GregorianTimeDelta(5))
 
     def test_negate(self):
-        self.assertEqual(TimeDelta(-2), -TimeDelta(2))
+        self.assertEqual(GregorianTimeDelta(-2), -GregorianTimeDelta(2))
