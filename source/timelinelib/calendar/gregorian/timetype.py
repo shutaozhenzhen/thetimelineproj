@@ -28,9 +28,10 @@ from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
 from timelinelib.canvas.data.internaltime import delta_from_days
+from timelinelib.canvas.data.internaltime import SECONDS_IN_DAY
+from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.canvas.drawing.interface import Strip
 import timelinelib.canvas.data.internaltime as timeline
-from timelinelib.canvas.data.internaltime import SECONDS_IN_DAY
 
 
 BC = _("BC")
@@ -160,12 +161,18 @@ class GregorianTimeType(TimeType):
 
     def now(self):
         py = datetime.now()
-        gregorian = GregorianDateTime(py.year, py.month, py.day,
-                              py.hour, py.minute, py.second)
+        gregorian = GregorianDateTime(
+            py.year,
+            py.month,
+            py.day,
+            py.hour,
+            py.minute,
+            py.second
+        )
         return gregorian.to_time()
 
     def get_min_zoom_delta(self):
-        return (timeline.delta_from_seconds(60), _("Can't zoom deeper than 1 minute"))
+        return (TimeDelta.from_seconds(60), _("Can't zoom deeper than 1 minute"))
 
     def get_name(self):
         return u"gregoriantime"
@@ -791,7 +798,7 @@ class StripHour(Strip):
         return timeline.Time(time.julian_day, hours * 60 * 60)
 
     def increment(self, time):
-        return time + timeline.delta_from_seconds(60 * 60)
+        return time + TimeDelta.from_seconds(60 * 60)
 
 
 class StripMinute(Strip):
@@ -808,7 +815,7 @@ class StripMinute(Strip):
         return timeline.Time(time.julian_day, minutes * 60 + hours * 60 * 60)
 
     def increment(self, time):
-        return time + timeline.delta_from_seconds(60)
+        return time + TimeDelta.from_seconds(60)
 
 
 def format_year(year):

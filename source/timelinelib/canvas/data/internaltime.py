@@ -88,6 +88,10 @@ class Time(GenericTimeMixin):
 
 class TimeDelta(ComparableValue, GenericDeltaMixin):
 
+    @classmethod
+    def from_seconds(cls, seconds):
+        return cls(seconds)
+
     @property
     def seconds(self):
         return self.value
@@ -115,10 +119,6 @@ class TimeDelta(ComparableValue, GenericDeltaMixin):
 
     def __repr__(self):
         return "TimeDelta[%s]" % self.seconds
-
-
-def delta_from_seconds(seconds):
-    return TimeDelta(seconds)
 
 
 def delta_from_days(days):

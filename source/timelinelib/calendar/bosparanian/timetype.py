@@ -27,6 +27,7 @@ from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.internaltime import delta_from_days
+from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.canvas.drawing.interface import Strip
 import timelinelib.canvas.data.internaltime as timeline
 
@@ -131,7 +132,7 @@ class BosparanianTimeType(GregorianTimeType):
         elif one_day_width > 25:
             return (StripMonth(), StripDay())
         elif one_day_width > 10:
-            return (StripMonth(),StripWeek())
+            return (StripMonth(), StripWeek())
         elif one_day_width > 1.75:
             return (StripYear(), StripMonth())
         elif one_day_width > 0.5:
@@ -297,7 +298,7 @@ def backward_one_week_fn(main_frame, current_period, navigation_fn):
 def navigate_month_step(current_period, navigation_fn, direction):
     tm = current_period.mean_time()
     gt = BosparanianDateTime.from_time(tm)
-    mv=delta_from_days(gt.days_in_month())
+    mv = delta_from_days(gt.days_in_month())
     navigation_fn(lambda tp: tp.move_delta(direction * mv))
 
 
@@ -481,8 +482,8 @@ class StripMonth(Strip):
 
 class StripQuarter(Strip):
 
-    def get_quarter(self,time):
-        m = BosparanianDateTime.from_time(time).month;
+    def get_quarter(self, time):
+        m = BosparanianDateTime.from_time(time).month
         if m == 13:
             return 0
         return (m - 1) // 3 + 1
@@ -491,7 +492,7 @@ class StripQuarter(Strip):
         q = self.get_quarter(time)
         if q == 0:
             return "NLD"
-        return "Q%d"%q
+        return "Q%d" % q
 
     def start(self, time):
         q = self.get_quarter(time)
@@ -613,7 +614,7 @@ class StripHour(Strip):
         return timeline.Time(time.julian_day, hours * 60 * 60)
 
     def increment(self, time):
-        return time + timeline.delta_from_seconds(60 * 60)
+        return time + TimeDelta.from_seconds(60 * 60)
 
 
 class StripMinute(Strip):
@@ -630,7 +631,7 @@ class StripMinute(Strip):
         return timeline.Time(time.julian_day, minutes * 60 + hours * 60 * 60)
 
     def increment(self, time):
-        return time + timeline.delta_from_seconds(60)
+        return time + TimeDelta.from_seconds(60)
 
 
 def format_year(year):

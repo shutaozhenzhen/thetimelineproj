@@ -17,13 +17,11 @@
 
 
 from timelinelib.canvas.data.internaltime import delta_from_days
-from timelinelib.canvas.data.internaltime import delta_from_seconds
 from timelinelib.canvas.data.internaltime import get_min_time
 from timelinelib.canvas.data.internaltime import MIN_JULIAN_DAY
 from timelinelib.canvas.data.internaltime import Time
 from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.test.utils import TIME_MODIFIERS
 
 
@@ -36,17 +34,17 @@ class describe_time_properties(UnitTestCase):
         self.assertEqual((2, 3, 5), Time(0, 60 * 60 * 2 + 60 * 3 + 5).get_time_of_day())
 
     def test_add(self):
-        self.assertEqual(Time(10, 70), Time(10, 61) + delta_from_seconds(9))
+        self.assertEqual(Time(10, 70), Time(10, 61) + TimeDelta.from_seconds(9))
         self.assertEqual(Time(11, 61), Time(10, 61) + delta_from_days(1))
 
     def test_sub_delta(self):
-        self.assertEqual(Time(10, 60), Time(10, 61) - delta_from_seconds(1))
-        self.assertEqual(Time(9, 24 * 60 * 60 - 1), Time(10, 0) - delta_from_seconds(1))
+        self.assertEqual(Time(10, 60), Time(10, 61) - TimeDelta.from_seconds(1))
+        self.assertEqual(Time(9, 24 * 60 * 60 - 1), Time(10, 0) - TimeDelta.from_seconds(1))
 
     def test_sub_time(self):
-        self.assertEqual(delta_from_seconds(5 * 24 * 60 * 60), Time(10, 0) - Time(5, 0))
-        self.assertEqual(delta_from_seconds(5 * 24 * 60 * 60 + 5), Time(10, 5) - Time(5, 0))
-        self.assertEqual(delta_from_seconds(4 * 24 * 60 * 60 + (24 * 60 * 60 - 5)), Time(10, 5) - Time(5, 10))
+        self.assertEqual(TimeDelta.from_seconds(5 * 24 * 60 * 60), Time(10, 0) - Time(5, 0))
+        self.assertEqual(TimeDelta.from_seconds(5 * 24 * 60 * 60 + 5), Time(10, 5) - Time(5, 0))
+        self.assertEqual(TimeDelta.from_seconds(4 * 24 * 60 * 60 + (24 * 60 * 60 - 5)), Time(10, 5) - Time(5, 10))
 
     def test_rejects_invalid_times(self):
         self.assertRaises(ValueError, Time, MIN_JULIAN_DAY - 1, 0)
@@ -65,7 +63,7 @@ class describe_time_properties(UnitTestCase):
 class describe_time_delta_properties(UnitTestCase):
 
     def test_can_create(self):
-        self.assertEqual(delta_from_seconds(5), TimeDelta(5))
+        self.assertEqual(TimeDelta.from_seconds(5), TimeDelta(5))
         self.assertEqual(delta_from_days(5), TimeDelta(5 * 24 * 60 * 60))
 
     def test_div(self):
