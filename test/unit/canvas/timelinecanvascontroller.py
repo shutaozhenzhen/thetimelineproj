@@ -103,6 +103,9 @@ class ATimeType(TimeType):
     def get_min_zoom_delta(self):
         return (GregorianTimeDelta(1), "Can't zoom deeper than 1")
 
+    def now(self):
+        return GregorianTime(0, 0)
+
     def __eq__(self, other):
         return isinstance(other, ATimeType)
 
