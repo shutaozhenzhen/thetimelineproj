@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.calendar.num.time import NumDelta
 from timelinelib.calendar.num.time import NumTime
@@ -197,15 +197,15 @@ class NumTimeTest(UnitTestCase, TimeImplementationTestTemplate):
         return NumDelta(2)
 
 
-class InternalTimeTest(UnitTestCase, TimeImplementationTestTemplate):
+class GregorianTimeTest(UnitTestCase, TimeImplementationTestTemplate):
 
     @property
     def start(self):
-        return Time(1, 30)
+        return GregorianTime(1, 30)
 
     @property
     def end(self):
-        return Time(2, 30)
+        return GregorianTime(2, 30)
 
     @property
     def delta(self):

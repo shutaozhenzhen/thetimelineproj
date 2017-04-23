@@ -19,7 +19,7 @@
 from mock import Mock
 import wx
 
-from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data.db import MemoryDB
@@ -92,10 +92,10 @@ class describe_navigate(TimelineCanvasControllerTestCase):
 class ATimeType(TimeType):
 
     def get_min_time(self):
-        return Time(10, 0)
+        return GregorianTime(10, 0)
 
     def get_max_time(self):
-        return Time(20, 0)
+        return GregorianTime(20, 0)
 
     def format_period(self, period):
         return "%s to %s" % (period.start_time, period.end_time)
@@ -111,4 +111,4 @@ class ATimeType(TimeType):
 
 
 def time_period(start, end):
-    return TimePeriod(Time(start, 0), Time(end, 0))
+    return TimePeriod(GregorianTime(start, 0), GregorianTime(end, 0))

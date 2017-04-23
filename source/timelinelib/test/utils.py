@@ -61,7 +61,7 @@ def numeric_period(start, end):
 
 def human_time_to_gregorian(human_time):
     """
-    Create a :doc:`Time <timelinelib.calendar.gregorian.time>` object
+    Create a :doc:`GregorianTime <timelinelib.calendar.gregorian.time>` object
     from a human readable date and time string.
     """
     (year, month, day, hour, minute, seconds) = human_time_to_ymdhm(human_time)

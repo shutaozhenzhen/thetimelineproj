@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
@@ -121,7 +121,7 @@ class time_period_spec(UnitTestCase):
 
 
 def ATime(num):
-    return Time(num, 0)
+    return GregorianTime(num, 0)
 
 
 def ADelta(num):

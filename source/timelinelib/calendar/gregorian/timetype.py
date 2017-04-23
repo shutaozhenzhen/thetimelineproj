@@ -22,7 +22,7 @@ import re
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.gregorian.time import SECONDS_IN_DAY
-from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.calendar.gregorian.weekdaynames import abbreviated_name_of_weekday
 from timelinelib.calendar.timetype import TimeType
@@ -120,17 +120,17 @@ class GregorianTimeType(TimeType):
         return DurationFormatter([days, seconds]).format(delta_format)
 
     def get_min_time(self):
-        return Time.min()
+        return GregorianTime.min()
 
     def get_max_time(self):
-        return Time(5369833, 0)
+        return GregorianTime(5369833, 0)
 
     def choose_strip(self, metrics, appearance):
         """
         Return a tuple (major_strip, minor_strip) for current time period and
         window size.
         """
-        day_period = TimePeriod(Time(0, 0), Time(1, 0))
+        day_period = TimePeriod(GregorianTime(0, 0), GregorianTime(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         if one_day_width > 20000:
             return (StripHour(), StripMinute())
@@ -752,7 +752,7 @@ class StripWeek(Strip):
         else:
             # It is sunday
             days_to_subtract = (GregorianTimeType().get_day_of_week(time) + 1) % 7
-        return Time(time.julian_day - days_to_subtract, 0)
+        return GregorianTime(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
         return time + TimeDelta.from_days(7)
@@ -794,7 +794,7 @@ class StripHour(Strip):
 
     def start(self, time):
         (hours, _, _) = time.get_time_of_day()
-        return Time(time.julian_day, hours * 60 * 60)
+        return GregorianTime(time.julian_day, hours * 60 * 60)
 
     def increment(self, time):
         return time + TimeDelta.from_seconds(60 * 60)
@@ -811,7 +811,7 @@ class StripMinute(Strip):
 
     def start(self, time):
         (hours, minutes, _) = time.get_time_of_day()
-        return Time(time.julian_day, minutes * 60 + hours * 60 * 60)
+        return GregorianTime(time.julian_day, minutes * 60 + hours * 60 * 60)
 
     def increment(self, time):
         return time + TimeDelta.from_seconds(60)

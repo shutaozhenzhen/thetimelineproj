@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.time import Time
+from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
 
 
@@ -41,4 +41,4 @@ class ExperimentalFeatureNegativeJulianDays(ExperimentalFeature):
 
     def set_active(self, value):
         self.active = value
-        Time.set_min_julian_day(value)
+        GregorianTime.set_min_julian_day(value)

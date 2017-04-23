@@ -24,7 +24,7 @@ from timelinelib.calendar.time import GenericTimeMixin
 SECONDS_IN_DAY = 24 * 60 * 60
 
 
-class Time(GenericTimeMixin):
+class GregorianTime(GenericTimeMixin):
 
     MIN_JULIAN_DAY = 0
 
@@ -48,7 +48,7 @@ class Time(GenericTimeMixin):
         self.seconds = seconds
 
     def __eq__(self, time):
-        return (isinstance(time, Time) and
+        return (isinstance(time, GregorianTime) and
                 self.julian_day == time.julian_day and
                 self.seconds == time.seconds)
 
@@ -59,7 +59,7 @@ class Time(GenericTimeMixin):
         if isinstance(delta, TimeDelta):
             seconds = self.seconds + delta.seconds
             return self.__class__(self.julian_day + seconds / SECONDS_IN_DAY, seconds % SECONDS_IN_DAY)
-        raise TypeError("Time + %s not supported" % type(delta))
+        raise TypeError("GregorianTime + %s not supported" % type(delta))
 
     def __sub__(self, other):
         if isinstance(other, TimeDelta):
@@ -89,7 +89,7 @@ class Time(GenericTimeMixin):
         return (self.julian_day, self.seconds) < (dt.julian_day, dt.seconds)
 
     def __repr__(self):
-        return "Time<%s, %s>" % (self.julian_day, self.seconds)
+        return "GregorianTime<%s, %s>" % (self.julian_day, self.seconds)
 
     def get_time_of_day(self):
         hours = self.seconds / 3600
