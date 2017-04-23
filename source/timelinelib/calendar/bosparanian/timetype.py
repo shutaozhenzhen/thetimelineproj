@@ -21,9 +21,9 @@ import re
 from timelinelib.calendar.bosparanian.bosparanian import BosparanianDateTime
 from timelinelib.calendar.bosparanian.monthnames import bosp_abbreviated_name_of_month
 from timelinelib.calendar.bosparanian.monthnames import bosp_name_of_month
+from timelinelib.calendar.bosparanian.time import BosparanianDelta
+from timelinelib.calendar.bosparanian.time import BosparanianTime
 from timelinelib.calendar.bosparanian.weekdaynames import bosp_abbreviated_name_of_weekday
-from timelinelib.calendar.gregorian.time import GregorianTime
-from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
@@ -109,17 +109,17 @@ class BosparanianTimeType(GregorianTimeType):
         return label
 
     def get_min_time(self):
-        return GregorianTime.min()
+        return BosparanianTime.min()
 
     def get_max_time(self):
-        return GregorianTime(5369833, 0)
+        return BosparanianTime(5369833, 0)
 
     def choose_strip(self, metrics, appearance):
         """
         Return a tuple (major_strip, minor_strip) for current time period and
         window size.
         """
-        day_period = TimePeriod(GregorianTime(0, 0), GregorianTime(1, 0))
+        day_period = TimePeriod(BosparanianTime(0, 0), BosparanianTime(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         self.major_strip_is_decade = False
         if one_day_width > 20000:
@@ -285,19 +285,19 @@ def _months_to_year_and_month(months):
 
 
 def forward_one_week_fn(main_frame, current_period, navigation_fn):
-    wk = GregorianTimeDelta.from_days(7)
+    wk = BosparanianDelta.from_days(7)
     navigation_fn(lambda tp: tp.move_delta(wk))
 
 
 def backward_one_week_fn(main_frame, current_period, navigation_fn):
-    wk = GregorianTimeDelta.from_days(7)
+    wk = BosparanianDelta.from_days(7)
     navigation_fn(lambda tp: tp.move_delta(-1 * wk))
 
 
 def navigate_month_step(current_period, navigation_fn, direction):
     tm = current_period.mean_time()
     gt = BosparanianDateTime.from_time(tm)
-    mv = GregorianTimeDelta.from_days(gt.days_in_month())
+    mv = BosparanianDelta.from_days(gt.days_in_month())
     navigation_fn(lambda tp: tp.move_delta(direction * mv))
 
 
@@ -310,12 +310,12 @@ def backward_one_month_fn(main_frame, current_period, navigation_fn):
 
 
 def forward_one_year_fn(main_frame, current_period, navigation_fn):
-    yr = GregorianTimeDelta.from_days(365)
+    yr = BosparanianDelta.from_days(365)
     navigation_fn(lambda tp: tp.move_delta(yr))
 
 
 def backward_one_year_fn(main_frame, current_period, navigation_fn):
-    yr = GregorianTimeDelta.from_days(365)
+    yr = BosparanianDelta.from_days(365)
     navigation_fn(lambda tp: tp.move_delta(-1 * yr))
 
 
@@ -380,7 +380,7 @@ def fit_month_fn(main_frame, current_period, navigation_fn):
 def fit_day_fn(main_frame, current_period, navigation_fn):
     mean = BosparanianDateTime.from_time(current_period.mean_time())
     start = BosparanianDateTime.from_ymd(mean.year, mean.month, mean.day).to_time()
-    end = start + GregorianTimeDelta.from_days(1)
+    end = start + BosparanianDelta.from_days(1)
     navigation_fn(lambda tp: tp.update(start, end))
 
 
@@ -388,10 +388,10 @@ def fit_week_fn(main_frame, current_period, navigation_fn):
     mean = BosparanianDateTime.from_time(current_period.mean_time())
     start = BosparanianDateTime.from_ymd(mean.year, mean.month, mean.day).to_time()
     weekday = BosparanianTimeType().get_day_of_week(start)
-    start = start - GregorianTimeDelta.from_days(weekday)
+    start = start - BosparanianDelta.from_days(weekday)
     if not main_frame.week_starts_on_monday():
-        start = start - GregorianTimeDelta.from_days(1)
-    end = start + GregorianTimeDelta.from_days(7)
+        start = start - BosparanianDelta.from_days(1)
+    end = start + BosparanianDelta.from_days(7)
     navigation_fn(lambda tp: tp.update(start, end))
 
 
@@ -413,8 +413,8 @@ class StripCentury(Strip):
         return BosparanianDateTime.from_ymd(self._century_start_year(time.year), 1, 1).to_time()
 
     def increment(self, time):
-        gregorian_time = BosparanianDateTime.from_time(time)
-        return gregorian_time.replace(year=gregorian_time.year + 100).to_time()
+        time = BosparanianDateTime.from_time(time)
+        return time.replace(year=time.year + 100).to_time()
 
     def _century_start_year(self, year):
         year = (int(year) / 100) * 100
@@ -476,7 +476,7 @@ class StripMonth(Strip):
 
     def increment(self, time):
         days_in_month = BosparanianDateTime.from_time(time).days_in_month()
-        return time + GregorianTimeDelta.from_days(days_in_month)
+        return time + BosparanianDelta.from_days(days_in_month)
 
 
 class StripQuarter(Strip):
@@ -507,7 +507,7 @@ class StripQuarter(Strip):
             days_in_quarter = 5
         else:
             days_in_quarter = 30 * 3
-        return time + GregorianTimeDelta.from_days(days_in_quarter)
+        return time + BosparanianDelta.from_days(days_in_quarter)
 
 
 class StripDay(Strip):
@@ -526,7 +526,7 @@ class StripDay(Strip):
         return new_bosparanian.to_time()
 
     def increment(self, time):
-        return time + GregorianTimeDelta.from_days(1)
+        return time + BosparanianDelta.from_days(1)
 
     def is_day(self):
         return True
@@ -541,7 +541,7 @@ class StripWeek(Strip):
         if major:
             first_weekday = self.start(time)
             next_first_weekday = self.increment(first_weekday)
-            last_weekday = next_first_weekday - GregorianTimeDelta.from_days(1)
+            last_weekday = next_first_weekday - BosparanianDelta.from_days(1)
             range_string = self._time_range_string(first_weekday, last_weekday)
             return (_("Week") + " %s (%s)") % (BosparanianDateTime.from_time(time).week_number, range_string)
         return _("Week") + " %s" % BosparanianDateTime.from_time(time).week_number
@@ -568,10 +568,10 @@ class StripWeek(Strip):
 
     def start(self, time):
         days_to_subtract = BosparanianTimeType().get_day_of_week(time)
-        return GregorianTime(time.julian_day - days_to_subtract, 0)
+        return BosparanianTime(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
-        return time + GregorianTimeDelta.from_days(7)
+        return time + BosparanianDelta.from_days(7)
 
 
 class StripWeekday(Strip):
@@ -593,7 +593,7 @@ class StripWeekday(Strip):
         return new_bosparanian.to_time()
 
     def increment(self, time):
-        return time + GregorianTimeDelta.from_days(1)
+        return time + BosparanianDelta.from_days(1)
 
     def is_day(self):
         return True
@@ -610,10 +610,10 @@ class StripHour(Strip):
 
     def start(self, time):
         (hours, _, _) = time.get_time_of_day()
-        return GregorianTime(time.julian_day, hours * 60 * 60)
+        return BosparanianTime(time.julian_day, hours * 60 * 60)
 
     def increment(self, time):
-        return time + GregorianTimeDelta.from_seconds(60 * 60)
+        return time + BosparanianDelta.from_seconds(60 * 60)
 
 
 class StripMinute(Strip):
@@ -627,10 +627,10 @@ class StripMinute(Strip):
 
     def start(self, time):
         (hours, minutes, _) = time.get_time_of_day()
-        return GregorianTime(time.julian_day, minutes * 60 + hours * 60 * 60)
+        return BosparanianTime(time.julian_day, minutes * 60 + hours * 60 * 60)
 
     def increment(self, time):
-        return time + GregorianTimeDelta.from_seconds(60)
+        return time + BosparanianDelta.from_seconds(60)
 
 
 def format_year(year):
@@ -642,14 +642,14 @@ def format_decade(start_year):
 
 
 def move_period_num_days(period, num):
-    delta = GregorianTimeDelta.from_days(1) * num
+    delta = BosparanianDelta.from_days(1) * num
     start_time = period.start_time + delta
     end_time = period.end_time + delta
     return TimePeriod(start_time, end_time)
 
 
 def move_period_num_weeks(period, num):
-    delta = GregorianTimeDelta.from_days(7) * num
+    delta = BosparanianDelta.from_days(7) * num
     start_time = period.start_time + delta
     end_time = period.end_time + delta
     return TimePeriod(start_time, end_time)

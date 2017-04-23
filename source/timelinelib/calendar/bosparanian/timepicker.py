@@ -20,8 +20,8 @@ import wx
 
 from timelinelib.calendar.bosparanian.bosparanian import BosparanianDateTime, is_valid_time
 from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
+from timelinelib.calendar.bosparanian.time import BosparanianDelta
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 
 
 class BosparanianDateTimePicker(wx.Panel):
@@ -252,8 +252,8 @@ class BosparanianDatePickerController(object):
         def increment_day(date):
             year, month, day = date
             time = BosparanianDateTime.from_ymd(year, month, day).to_time()
-            if time < BosparanianTimeType().get_max_time() - GregorianTimeDelta.from_days(1):
-                return BosparanianDateTime.from_time(time + GregorianTimeDelta.from_days(1)).to_date_tuple()
+            if time < BosparanianTimeType().get_max_time() - BosparanianDelta.from_days(1):
+                return BosparanianDateTime.from_time(time + BosparanianDelta.from_days(1)).to_date_tuple()
             return date
         if not self._current_date_is_valid():
             return
