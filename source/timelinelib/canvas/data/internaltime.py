@@ -22,18 +22,26 @@ from timelinelib.calendar.time import GenericTimeMixin
 
 
 SECONDS_IN_DAY = 24 * 60 * 60
-MIN_JULIAN_DAY = 0
 
 
 class Time(GenericTimeMixin):
 
+    MIN_JULIAN_DAY = 0
+
     @classmethod
     def min(cls):
-        return cls(MIN_JULIAN_DAY, 0)
+        return cls(cls.MIN_JULIAN_DAY, 0)
+
+    @classmethod
+    def set_min_julian_day(cls, allow_negative_julian_yeras):
+        if allow_negative_julian_yeras:
+            cls.MIN_JULIAN_DAY = -1000000000000000000000000000000000000000000000000
+        else:
+            cls.MIN_JULIAN_DAY = 0
 
     def __init__(self, julian_day, seconds):
-        if julian_day < MIN_JULIAN_DAY:
-            raise ValueError("julian_day must be >= %d" % MIN_JULIAN_DAY)
+        if julian_day < self.MIN_JULIAN_DAY:
+            raise ValueError("julian_day must be >= %d" % self.MIN_JULIAN_DAY)
         if seconds < 0 or seconds >= SECONDS_IN_DAY:
             raise ValueError("seconds must be >= 0 and <= 24*60*60")
         self.julian_day = julian_day
@@ -127,11 +135,3 @@ class TimeDelta(ComparableValue, GenericDeltaMixin):
 
     def __repr__(self):
         return "TimeDelta[%s]" % self.seconds
-
-
-def set_min_julian_day(allow_negative_julian_yeras):
-    global MIN_JULIAN_DAY
-    if allow_negative_julian_yeras:
-        MIN_JULIAN_DAY = -1000000000000000000000000000000000000000000000000
-    else:
-        MIN_JULIAN_DAY = 0
