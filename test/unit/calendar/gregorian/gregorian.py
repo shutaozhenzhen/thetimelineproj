@@ -20,9 +20,9 @@ import datetime
 
 import wx
 
+from timelinelib.calendar.gregorian.time import Time
 from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.calendar.gregorian.gregorian as gregorian
-import timelinelib.canvas.data.internaltime as timeline
 
 
 class describe_gregorian(UnitTestCase):
@@ -42,19 +42,19 @@ class GregorianConversionsSpec(UnitTestCase):
 
     def test_can_convert_from_timeline_time_to_gregorian(self):
         self.assertEqual(
-            gregorian.GregorianDateTime.from_time(timeline.Time(julian_day=0, seconds=0)),
+            gregorian.GregorianDateTime.from_time(Time(julian_day=0, seconds=0)),
             gregorian.GregorianDateTime(-4713, 11, 24, 0, 0, 0))
         self.assertEqual(
-            gregorian.GregorianDateTime.from_time(timeline.Time(julian_day=1, seconds=0)),
+            gregorian.GregorianDateTime.from_time(Time(julian_day=1, seconds=0)),
             gregorian.GregorianDateTime(-4713, 11, 25, 0, 0, 0))
 
     def test_can_convert_from_gregorian_to_timeline_time(self):
         self.assertEqual(
             gregorian.GregorianDateTime(-4713, 11, 24, 0, 0, 0).to_time(),
-            timeline.Time(julian_day=0, seconds=0))
+            Time(julian_day=0, seconds=0))
         self.assertEqual(
             gregorian.GregorianDateTime(-4713, 11, 25, 0, 0, 0).to_time(),
-            timeline.Time(julian_day=1, seconds=0))
+            Time(julian_day=1, seconds=0))
 
     def test_roundtrip_julian_day_conversions(self):
         for julian_day in range(100):
@@ -86,7 +86,7 @@ class GregorianConversionsSpec(UnitTestCase):
         STEP = 10000
         STOP = 10 * STEP
         for i in range(0, STOP, STEP):
-            tm1 = timeline.Time(i, 0)
+            tm1 = Time(i, 0)
             gt = gregorian.GregorianDateTime.from_time(tm1)
             wt = wx.DateTime()
             wt.SetJDN(i)

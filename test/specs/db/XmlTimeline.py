@@ -19,8 +19,8 @@
 
 import codecs
 
+from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.dataexport.timelinexml import alert_string
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml

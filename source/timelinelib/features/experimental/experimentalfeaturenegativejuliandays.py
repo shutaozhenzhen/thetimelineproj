@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.internaltime import Time
+from timelinelib.calendar.gregorian.time import Time
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
 
 

@@ -17,6 +17,7 @@
 
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
+from timelinelib.calendar.gregorian.time import TimeDelta
 from timelinelib.calendar.num.time import NumDelta
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import Category
@@ -24,7 +25,6 @@ from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data.internaltime import TimeDelta
 
 
 def create_in_memory_tutorial_db():
