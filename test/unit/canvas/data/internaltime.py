@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.internaltime import get_min_time
 from timelinelib.canvas.data.internaltime import MIN_JULIAN_DAY
 from timelinelib.canvas.data.internaltime import Time
 from timelinelib.canvas.data.internaltime import TimeDelta
@@ -56,7 +55,7 @@ class describe_time_properties(UnitTestCase):
         self.assertEqNeImplementationIsCorrect(a_time, TIME_MODIFIERS)
 
     def test_can_return_min_time(self):
-        self.assertEqual(Time(MIN_JULIAN_DAY, 0), get_min_time())
+        self.assertEqual(Time(MIN_JULIAN_DAY, 0), Time.min())
 
 
 class describe_time_delta_properties(UnitTestCase):
