@@ -24,7 +24,7 @@ from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data.internaltime import delta_from_days
+from timelinelib.canvas.data.internaltime import TimeDelta
 
 
 def create_in_memory_tutorial_db():
@@ -299,7 +299,7 @@ class TutorialTimelineCreator(object):
 
     def get_days_delta(self, days):
         if self.db.get_time_type().get_name() == u"gregoriantime":
-            return delta_from_days(days)
+            return TimeDelta.from_days(days)
 
     def get_time(self, year, month, day):
         if self.db.get_time_type().get_name() == u"gregoriantime":

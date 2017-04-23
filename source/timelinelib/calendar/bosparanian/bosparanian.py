@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.data.internaltime import TimeDelta
 import timelinelib.canvas.data.internaltime as timeline
 
 
@@ -57,7 +58,7 @@ class BosparanianDateTime(object):
             from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
             pra_4 = BosparanianDateTime.from_ymd(year, 1, 4).to_time()
             pra_4_day_of_week = BosparanianTimeType().get_day_of_week(pra_4)
-            return pra_4 - timeline.delta_from_days(pra_4_day_of_week)
+            return pra_4 - TimeDelta.from_days(pra_4_day_of_week)
         def days_between(end, start):
             return end.julian_day - start.julian_day
         def days_since_windsday_week_1(time):
@@ -87,8 +88,14 @@ class BosparanianDateTime(object):
             year = self.year
         if month is None:
             month = self.month
-        return self.__class__(year, month, self.day,
-                         self.hour, self.minute, self.second)
+        return self.__class__(
+            year,
+            month,
+            self.day,
+            self.hour,
+            self.minute,
+            self.second
+        )
 
     def to_tuple(self):
         return (self.year, self.month, self.day, self.hour, self.minute,
@@ -126,7 +133,7 @@ def ymd_to_bosparanian_day(year, month, day):
     m = (month - 1) % 13
     bosp_day += m * 30
     bosp_day += day - 1
-    bosparanian_day=bosp_day+(365*100*73)-3 # shift by 73 centuries and align week
+    bosparanian_day = bosp_day+(365*100*73)-3  # shift by 73 centuries and align week
     return bosparanian_day
 
 
@@ -134,16 +141,16 @@ def bosparanian_day_to_ymd(bosparanian_day):
     """
     Converts a day number, counted from 1st PRA, 0 BF to standard bosparanian calendar date
     """
-    bosp_day=bosparanian_day-(365*100*73)+3 # shift by 73 centuries and align week
+    bosp_day = bosparanian_day-(365*100*73)+3  # shift by 73 centuries and align week
     year = bosp_day // 365
     d = bosp_day - (year * 365)
     if d >= 360:
         month = 13
         day = d-359
-        return (year,month,day)
+        return (year, month, day)
     month = d // 30 + 1
     day = d % 30 + 1
-    return (year,month,day)
+    return (year, month, day)
 
 
 def is_valid(year, month, day):

@@ -20,8 +20,7 @@
 import codecs
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.canvas.data import Event
-from timelinelib.canvas.data.internaltime import delta_from_days
+from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.dataexport.timelinexml import alert_string
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
@@ -91,7 +90,7 @@ class XmlTimelineSpec(TmpDirTestCase):
 """
         self.write(self.tmp_path, contents)
         db = import_db_from_timeline_xml(self.tmp_path)
-        default_time_period_delta = delta_from_days(30)
+        default_time_period_delta = TimeDelta.from_days(30)
         self.assertFalse(default_time_period_delta == db.get_displayed_period().delta())
 
     def testAlertStringParsingGivesAlertData(self):
@@ -226,5 +225,5 @@ class XmlTimelineSpec(TmpDirTestCase):
 
     def write(self, path, contents):
         f = codecs.open(path, "w", "utf-8")
-        content = f.write(contents)
+        f.write(contents)
         f.close()

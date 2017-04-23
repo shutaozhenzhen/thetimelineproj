@@ -21,7 +21,7 @@ import wx
 from timelinelib.calendar.bosparanian.bosparanian import BosparanianDateTime, is_valid_time
 from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-from timelinelib.canvas.data.internaltime import delta_from_days
+from timelinelib.canvas.data.internaltime import TimeDelta
 
 
 class BosparanianDateTimePicker(wx.Panel):
@@ -88,7 +88,7 @@ class BosparanianDateTimePickerController(object):
         return BosparanianDateTime(year, month, day, hour, minute, second).to_time()
 
     def set_value(self, time):
-        if time == None:
+        if time is None:
             time = self.now_fn()
         self.date_picker.set_value(BosparanianDateTime.from_time(time).to_date_tuple())
         self.time_picker.set_value(BosparanianDateTime.from_time(time).to_time_tuple())
@@ -235,7 +235,6 @@ class BosparanianDatePickerController(object):
                 self._save_preferred_day(current_date)
             self._on_change()
 
-
     def on_up(self):
         max_year = BosparanianDateTime.from_time(BosparanianTimeType().get_max_time()).year
         def increment_year(date):
@@ -253,8 +252,8 @@ class BosparanianDatePickerController(object):
         def increment_day(date):
             year, month, day = date
             time = BosparanianDateTime.from_ymd(year, month, day).to_time()
-            if time <  BosparanianTimeType().get_max_time() - delta_from_days(1):
-                return BosparanianDateTime.from_time(time + delta_from_days(1)).to_date_tuple()
+            if time < BosparanianTimeType().get_max_time() - TimeDelta.from_days(1):
+                return BosparanianDateTime.from_time(time + TimeDelta.from_days(1)).to_date_tuple()
             return date
         if not self._current_date_is_valid():
             return
@@ -327,14 +326,14 @@ class BosparanianDatePickerController(object):
         year, month, day = date
         time = BosparanianDateTime(year, month, day, 0, 0, 0).to_time()
         if (time >= BosparanianTimeType().get_max_time() or
-            time <  BosparanianTimeType().get_min_time()):
+            time < BosparanianTimeType().get_min_time()):
             raise ValueError()
 
     def _set_new_date_and_restore_selection(self, new_date, selection):
         def restore_selection(selection):
             self.date_picker.SetSelection(selection[0], selection[1])
         self.save_preferred_day = False
-        if self.preferred_day != None:
+        if self.preferred_day is not None:
             year, month, _ = new_date
             new_date = self._set_valid_day(year, month, self.preferred_day)
         self.set_value(new_date)

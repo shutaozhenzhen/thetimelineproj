@@ -35,7 +35,6 @@ from timelinelib.canvas.data import Era
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.canvas.data.internaltime import TimeDelta
 
 
@@ -259,7 +258,7 @@ EVENT_MODIFIERS = [
     ("change id", lambda event:
         event.set_id(inc(event.get_id()))),
     ("change time period", lambda event:
-        event.set_time_period(event.get_time_period().move_delta(delta_from_days(1)))),
+        event.set_time_period(event.get_time_period().move_delta(TimeDelta.from_days(1)))),
     ("change text", lambda event:
         event.set_text("was: %s" % event.get_text())),
     ("change category", lambda event:
@@ -312,7 +311,7 @@ TIME_PERIOD_MODIFIERS = [
 
 ERA_MODIFIERS = [
     ("change id", lambda era: era.set_id(inc(era.get_id()))),
-    ("change time period", lambda era: era.set_time_period(era.get_time_period().move_delta(delta_from_days(1)))),
+    ("change time period", lambda era: era.set_time_period(era.get_time_period().move_delta(TimeDelta.from_days(1)))),
     ("change text", lambda era: era.set_name("was: %s" % era.get_name())),
     ("change color", lambda era: era.set_color(tuple([x + 1 for x in era.get_color()])))
 ]

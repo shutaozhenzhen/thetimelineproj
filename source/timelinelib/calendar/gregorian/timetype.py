@@ -27,7 +27,6 @@ from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
-from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.canvas.data.internaltime import SECONDS_IN_DAY
 from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.canvas.drawing.interface import Strip
@@ -151,7 +150,7 @@ class GregorianTimeType(TimeType):
             return (StripCentury(), StripCentury())
 
     def get_default_time_period(self):
-        return time_period_center(self.now(), delta_from_days(30))
+        return time_period_center(self.now(), TimeDelta.from_days(30))
 
     def supports_saved_now(self):
         return False
@@ -343,12 +342,12 @@ def _months_to_year_and_month(months):
 
 
 def forward_one_week_fn(main_frame, current_period, navigation_fn):
-    wk = delta_from_days(7)
+    wk = TimeDelta.from_days(7)
     navigation_fn(lambda tp: tp.move_delta(wk))
 
 
 def backward_one_week_fn(main_frame, current_period, navigation_fn):
-    wk = delta_from_days(7)
+    wk = TimeDelta.from_days(7)
     navigation_fn(lambda tp: tp.move_delta(-1 * wk))
 
 
@@ -373,7 +372,7 @@ def navigate_month_step(current_period, navigation_fn, direction):
             d = 30
         else:
             d = 31
-    mv = delta_from_days(d)
+    mv = TimeDelta.from_days(d)
     navigation_fn(lambda tp: tp.move_delta(direction * mv))
 
 
@@ -386,12 +385,12 @@ def backward_one_month_fn(main_frame, current_period, navigation_fn):
 
 
 def forward_one_year_fn(main_frame, current_period, navigation_fn):
-    yr = delta_from_days(365)
+    yr = TimeDelta.from_days(365)
     navigation_fn(lambda tp: tp.move_delta(yr))
 
 
 def backward_one_year_fn(main_frame, current_period, navigation_fn):
-    yr = delta_from_days(365)
+    yr = TimeDelta.from_days(365)
     navigation_fn(lambda tp: tp.move_delta(-1 * yr))
 
 
@@ -418,10 +417,10 @@ def fit_week_fn(main_frame, current_period, navigation_fn):
     mean = GregorianDateTime.from_time(current_period.mean_time())
     start = GregorianDateTime.from_ymd(mean.year, mean.month, mean.day).to_time()
     weekday = GregorianTimeType().get_day_of_week(start)
-    start = start - delta_from_days(weekday)
+    start = start - TimeDelta.from_days(weekday)
     if not main_frame.week_starts_on_monday():
-        start = start - delta_from_days(1)
-    end = start + delta_from_days(7)
+        start = start - TimeDelta.from_days(1)
+    end = start + TimeDelta.from_days(7)
     navigation_fn(lambda tp: tp.update(start, end))
 
 
@@ -674,7 +673,7 @@ class StripMonth(Strip):
         ).to_time()
 
     def increment(self, time):
-        return time + delta_from_days(
+        return time + TimeDelta.from_days(
             GregorianDateTime.from_time(time).days_in_month()
         )
 
@@ -698,7 +697,7 @@ class StripDay(Strip):
         ).to_time()
 
     def increment(self, time):
-        return time + delta_from_days(1)
+        return time + TimeDelta.from_days(1)
 
     def is_day(self):
         return True
@@ -714,7 +713,7 @@ class StripWeek(Strip):
         if major:
             first_weekday = self.start(time)
             next_first_weekday = self.increment(first_weekday)
-            last_weekday = next_first_weekday - delta_from_days(1)
+            last_weekday = next_first_weekday - TimeDelta.from_days(1)
             range_string = self._time_range_string(first_weekday, last_weekday)
             if self.appearance.get_week_start() == "monday":
                 return (_("Week") + " %s (%s)") % (
@@ -756,7 +755,7 @@ class StripWeek(Strip):
         return timeline.Time(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
-        return time + delta_from_days(7)
+        return time + TimeDelta.from_days(7)
 
 
 class StripWeekday(Strip):
@@ -778,7 +777,7 @@ class StripWeekday(Strip):
         return new_gregorian.to_time()
 
     def increment(self, time):
-        return time + delta_from_days(1)
+        return time + TimeDelta.from_days(1)
 
     def is_day(self):
         return True
@@ -826,14 +825,14 @@ def format_year(year):
 
 
 def move_period_num_days(period, num):
-    delta = delta_from_days(1) * num
+    delta = TimeDelta.from_days(1) * num
     start_time = period.start_time + delta
     end_time = period.end_time + delta
     return TimePeriod(start_time, end_time)
 
 
 def move_period_num_weeks(period, num):
-    delta = delta_from_days(7) * num
+    delta = TimeDelta.from_days(7) * num
     start_time = period.start_time + delta
     end_time = period.end_time + delta
     return TimePeriod(start_time, end_time)
