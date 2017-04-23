@@ -27,6 +27,10 @@ MIN_JULIAN_DAY = 0
 
 class Time(GenericTimeMixin):
 
+    @classmethod
+    def min(cls):
+        return cls(MIN_JULIAN_DAY, 0)
+
     def __init__(self, julian_day, seconds):
         if julian_day < MIN_JULIAN_DAY:
             raise ValueError("julian_day must be >= %d" % MIN_JULIAN_DAY)
@@ -123,10 +127,6 @@ class TimeDelta(ComparableValue, GenericDeltaMixin):
 
     def __repr__(self):
         return "TimeDelta[%s]" % self.seconds
-
-
-def get_min_time():
-    return Time(MIN_JULIAN_DAY, 0)
 
 
 def set_min_julian_day(allow_negative_julian_yeras):

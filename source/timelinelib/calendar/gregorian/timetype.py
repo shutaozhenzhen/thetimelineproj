@@ -28,9 +28,9 @@ from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
 from timelinelib.canvas.data.internaltime import SECONDS_IN_DAY
+from timelinelib.canvas.data.internaltime import Time
 from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.canvas.drawing.interface import Strip
-import timelinelib.canvas.data.internaltime as timeline
 
 
 BC = _("BC")
@@ -120,17 +120,17 @@ class GregorianTimeType(TimeType):
         return DurationFormatter([days, seconds]).format(delta_format)
 
     def get_min_time(self):
-        return timeline.get_min_time()
+        return Time.min()
 
     def get_max_time(self):
-        return timeline.Time(5369833, 0)
+        return Time(5369833, 0)
 
     def choose_strip(self, metrics, appearance):
         """
         Return a tuple (major_strip, minor_strip) for current time period and
         window size.
         """
-        day_period = TimePeriod(timeline.Time(0, 0), timeline.Time(1, 0))
+        day_period = TimePeriod(Time(0, 0), Time(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         if one_day_width > 20000:
             return (StripHour(), StripMinute())
@@ -752,7 +752,7 @@ class StripWeek(Strip):
         else:
             # It is sunday
             days_to_subtract = (GregorianTimeType().get_day_of_week(time) + 1) % 7
-        return timeline.Time(time.julian_day - days_to_subtract, 0)
+        return Time(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
         return time + TimeDelta.from_days(7)
@@ -794,7 +794,7 @@ class StripHour(Strip):
 
     def start(self, time):
         (hours, _, _) = time.get_time_of_day()
-        return timeline.Time(time.julian_day, hours * 60 * 60)
+        return Time(time.julian_day, hours * 60 * 60)
 
     def increment(self, time):
         return time + TimeDelta.from_seconds(60 * 60)
@@ -811,7 +811,7 @@ class StripMinute(Strip):
 
     def start(self, time):
         (hours, minutes, _) = time.get_time_of_day()
-        return timeline.Time(time.julian_day, minutes * 60 + hours * 60 * 60)
+        return Time(time.julian_day, minutes * 60 + hours * 60 * 60)
 
     def increment(self, time):
         return time + TimeDelta.from_seconds(60)
