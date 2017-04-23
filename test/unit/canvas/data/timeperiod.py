@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.time import GregorianTime
-from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import TIME_PERIOD_MODIFIERS
@@ -125,4 +125,4 @@ def ATime(num):
 
 
 def ADelta(num):
-    return GregorianTimeDelta(num*60*60*24)
+    return GregorianDelta(num*60*60*24)

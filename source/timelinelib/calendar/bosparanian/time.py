@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.time import GregorianTime
-from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 
 
 class BosparanianTime(GregorianTime):
@@ -27,5 +27,5 @@ class BosparanianTime(GregorianTime):
         return BosparanianDelta
 
 
-class BosparanianDelta(GregorianTimeDelta):
+class BosparanianDelta(GregorianDelta):
     pass

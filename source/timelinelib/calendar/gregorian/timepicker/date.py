@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
-from timelinelib.calendar.gregorian.time import GregorianTimeDelta
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.timepicker.datecontroller import GregorianDatePickerController
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.wxgui.components.textctrl import TextCtrl
@@ -122,8 +122,8 @@ class DateModifier(object):
     def increment_day(self, date):
         year, month, day = date
         time = GregorianDateTime.from_ymd(year, month, day).to_time()
-        if time < GregorianTimeType().get_max_time() - GregorianTimeDelta.from_days(1):
-            return GregorianDateTime.from_time(time + GregorianTimeDelta.from_days(1)).to_date_tuple()
+        if time < GregorianTimeType().get_max_time() - GregorianDelta.from_days(1):
+            return GregorianDateTime.from_time(time + GregorianDelta.from_days(1)).to_date_tuple()
         return date
 
     def decrement_year(self, date):

@@ -20,8 +20,8 @@ import mock
 import wx
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.time import GregorianTime
-from timelinelib.calendar.gregorian.time import GregorianTimeDelta
 from timelinelib.calendar.gregorian.timetype import backward_fn
 from timelinelib.calendar.gregorian.timetype import backward_one_month_fn
 from timelinelib.calendar.gregorian.timetype import backward_one_week_fn
@@ -100,7 +100,7 @@ class describe_gregoriantimetype(UnitTestCase):
         self.assertEqual(2, self.time_type.get_day_of_week(dt))
 
     def test_get_min_zoom_delta(self):
-        self.assertEqual(GregorianTimeDelta(60), self.time_type.get_min_zoom_delta()[0])
+        self.assertEqual(GregorianDelta(60), self.time_type.get_min_zoom_delta()[0])
 
     def test_is_weekend_day(self):
         DAYS = [
@@ -583,7 +583,7 @@ class describe_gregorian_time_type_delta_formatting(UnitTestCase):
         return TimePeriod(dt, dt)
 
     def get_days_delta(self, days=0, hours=0, minutes=0):
-        return GregorianTimeDelta(days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60)
+        return GregorianDelta(days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60)
 
 
 class describe_gregorian_time_navigation_functions(UnitTestCase):

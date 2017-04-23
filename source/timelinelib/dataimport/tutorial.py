@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
-from timelinelib.calendar.gregorian.time import GregorianTimeDelta
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.num.time import NumDelta
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import Category
@@ -299,7 +299,7 @@ class TutorialTimelineCreator(object):
 
     def get_days_delta(self, days):
         if self.db.get_time_type().get_name() == u"gregoriantime":
-            return GregorianTimeDelta.from_days(days)
+            return GregorianDelta.from_days(days)
 
     def get_time(self, year, month, day):
         if self.db.get_time_type().get_name() == u"gregoriantime":
