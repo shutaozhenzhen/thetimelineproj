@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
@@ -75,11 +74,8 @@ class MemoryDB(Observable):
     def set_time_type(self, time_type):
         self.time_type = time_type
         if time_type is not None:
-            try:
-                self.saved_now = time_type.now()
-                self._eras.set_now_func(time_type.now)
-            except NotImplementedError:
-                self.saved_now = GregorianTime(0, 0)
+            self.saved_now = time_type.now()
+            self._eras.set_now_func(time_type.now)
 
     def is_read_only(self):
         return self.readonly
