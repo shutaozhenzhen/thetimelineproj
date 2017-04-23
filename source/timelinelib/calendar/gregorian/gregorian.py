@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.data.internaltime import Time
 from timelinelib.canvas.data.internaltime import TimeDelta
-import timelinelib.canvas.data.internaltime as timeline
 
 
 class GregorianDateTime(object):
@@ -105,7 +105,7 @@ class GregorianDateTime(object):
     def to_time(self):
         days = gregorian_ymd_to_julian_day(self.year, self.month, self.day)
         seconds = self.hour * 60 * 60 + self.minute * 60 + self.second
-        return timeline.Time(days, seconds)
+        return Time(days, seconds)
 
     def is_first_day_in_year(self):
         return (self.month == 1 and
@@ -232,8 +232,8 @@ def julian_day_to_gregorian_ymd(julian_day):
 
     This proves 1).
     """
-    if julian_day < timeline.MIN_JULIAN_DAY:
-        raise ValueError("julian_day_to_gregorian_ymd only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
+    if julian_day < Time.MIN_JULIAN_DAY:
+        raise ValueError("julian_day_to_gregorian_ymd only works for julian days >= %d, but was %d" % (Time.MIN_JULIAN_DAY, julian_day))
     a = julian_day + 32044
     b = ((4 * a) + 3) // 146097
     c = a - ((b * 146097) // 4)
@@ -313,6 +313,6 @@ def gregorian_ymd_to_julian_day(year, month, day):
                   - (y // 100)
                   + (y // 400)
                   - 32045)
-    if julian_day < timeline.MIN_JULIAN_DAY:
-        raise ValueError("gregorian_ymd_to_julian_day only works for julian days >= %d, but was %d" % (timeline.MIN_JULIAN_DAY, julian_day))
+    if julian_day < Time.MIN_JULIAN_DAY:
+        raise ValueError("gregorian_ymd_to_julian_day only works for julian days >= %d, but was %d" % (Time.MIN_JULIAN_DAY, julian_day))
     return julian_day

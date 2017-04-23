@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.internaltime import MIN_JULIAN_DAY
 from timelinelib.canvas.data.internaltime import Time
 from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.test.cases.unit import UnitTestCase
@@ -45,9 +44,9 @@ class describe_time_properties(UnitTestCase):
         self.assertEqual(TimeDelta.from_seconds(4 * 24 * 60 * 60 + (24 * 60 * 60 - 5)), Time(10, 5) - Time(5, 10))
 
     def test_rejects_invalid_times(self):
-        self.assertRaises(ValueError, Time, MIN_JULIAN_DAY - 1, 0)
-        self.assertRaises(ValueError, Time, MIN_JULIAN_DAY, -1)
-        self.assertRaises(ValueError, Time, MIN_JULIAN_DAY, 24 * 60 * 60)
+        self.assertRaises(ValueError, Time, Time.MIN_JULIAN_DAY - 1, 0)
+        self.assertRaises(ValueError, Time, Time.MIN_JULIAN_DAY, -1)
+        self.assertRaises(ValueError, Time, Time.MIN_JULIAN_DAY, 24 * 60 * 60)
 
     def test_can_be_compared(self):
         def a_time():
@@ -55,7 +54,7 @@ class describe_time_properties(UnitTestCase):
         self.assertEqNeImplementationIsCorrect(a_time, TIME_MODIFIERS)
 
     def test_can_return_min_time(self):
-        self.assertEqual(Time(MIN_JULIAN_DAY, 0), Time.min())
+        self.assertEqual(Time(Time.MIN_JULIAN_DAY, 0), Time.min())
 
 
 class describe_time_delta_properties(UnitTestCase):

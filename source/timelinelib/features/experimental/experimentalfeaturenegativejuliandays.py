@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.internaltime import set_min_julian_day
+from timelinelib.canvas.data.internaltime import Time
 from timelinelib.features.experimental.experimentalfeature import ExperimentalFeature
 
 
@@ -41,4 +41,4 @@ class ExperimentalFeatureNegativeJulianDays(ExperimentalFeature):
 
     def set_active(self, value):
         self.active = value
-        set_min_julian_day(value)
+        Time.set_min_julian_day(value)
