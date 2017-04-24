@@ -318,15 +318,15 @@ class GuiCreator(object):
             self.config.hide_events_done = evt.IsChecked()
 
         items = [self._create_view_toolbar_menu_item,
-                 (ID_SIDEBAR, sidebar, _("&Sidebar\tCtrl+I"), CHECKBOX),
+                 (ID_SIDEBAR, sidebar, _("&Sidebar") + "\tCtrl+I", CHECKBOX),
                  (ID_LEGEND, legend, _("&Legend"), CHECKBOX),
                  None,
                  (ID_BALLOONS, balloons, _("&Balloons on hover"), CHECKBOX),
                  None,
-                 (ID_ZOOMIN, zoomin, _("Zoom &In\tCtrl++"), NONE),
-                 (ID_ZOOMOUT, zoomout, _("Zoom &Out\tCtrl+-"), NONE),
-                 (ID_VERT_ZOOMIN, vert_zoomin, _("Vertical Zoom &In\tAlt++"), NONE),
-                 (ID_VERT_ZOOMOUT, vert_zoomout, _("Vertical Zoom &Out\tAlt+-"), NONE),
+                 (ID_ZOOMIN, zoomin, _("Zoom &In") + "\tCtrl++", NONE),
+                 (ID_ZOOMOUT, zoomout, _("Zoom &Out") + "\tCtrl+-", NONE),
+                 (ID_VERT_ZOOMIN, vert_zoomin, _("Vertical Zoom &In") + "\tAlt++", NONE),
+                 (ID_VERT_ZOOMOUT, vert_zoomout, _("Vertical Zoom &Out") + "\tAlt+-", NONE),
                  None,
                  self._create_view_point_event_alignment_menu,
                  None,
@@ -494,8 +494,8 @@ class GuiCreator(object):
                  (ID_EDIT_EVENT, edit_event, _("&Edit Selected Event..."), cbx),
                  (ID_DUPLICATE_EVENT, duplicate_event, _("&Duplicate Selected Event..."), cbx),
                  (ID_SET_CATEGORY_ON_SELECTED, set_categoryon_selected, _("Set Category on Selected Events..."), cbx),
-                 (ID_MOVE_EVENT_UP, move_up_handler, _("Move event up\tAlt+Up"), cbx),
-                 (ID_MOVE_EVENT_DOWN, move_down_handler, _("Move event down\tAlt+Down"), cbx),
+                 (ID_MOVE_EVENT_UP, move_up_handler, _("Move event up") + "\tAlt+Up", cbx),
+                 (ID_MOVE_EVENT_DOWN, move_down_handler, _("Move event down") + "\tAlt+Down", cbx),
                  None,
                  (ID_CREATE_MILESTONE, create_milestone, _("Create &Milestone..."), cbx),
                  None,
@@ -510,8 +510,8 @@ class GuiCreator(object):
                  None,
                  (ID_SET_READONLY, set_readonly, _("&Read Only"), cbx),
                  None,
-                 (ID_UNDO, undo, _("&Undo\tCtrl+Z"), cbx),
-                 (ID_REDO, redo, _("&Redo\tAlt+Z"), cbx))
+                 (ID_UNDO, undo, _("&Undo") + "\tCtrl+Z", cbx),
+                 (ID_REDO, redo, _("&Redo") + "\tAlt+Z", cbx))
         self.timeline_menu = wx.Menu()
         self._create_menu_items(self.timeline_menu, items)
         self._add_timeline_menu_items_to_controller(self.timeline_menu)
@@ -594,7 +594,7 @@ class GuiCreator(object):
             show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body="")
 
         cbx = NONE
-        items = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents\tF1"), cbx),
+        items = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents") + "\tF1", cbx),
                  None,
                  (ID_TUTORIAL, self.controller.open_tutorial_timeline, _("Getting started &tutorial"), cbx),
                  None,
