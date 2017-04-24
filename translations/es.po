@@ -1,4 +1,4 @@
-# Spanish translations for the Timeline application.
+﻿# Spanish translations for the Timeline application.
 # Copyright (C) YEAR Rickard Lindberg
 # This file is distributed under the same license as the Timeline package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -2776,7 +2776,7 @@ msgstr "&Editar"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:321
 msgid "&Sidebar\tCtrl+I"
-msgstr "&Barra lateral\tCtrl+l"
+msgstr "&Barra lateral\tCtrl+I"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:322
 msgid "&Legend"
