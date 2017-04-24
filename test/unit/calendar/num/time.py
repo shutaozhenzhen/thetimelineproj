@@ -16,32 +16,24 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar.num.time import NumDelta
 from timelinelib.calendar.num.time import NumTime
-from timelinelib.calendar.num.timetype import move_period
-from timelinelib.calendar.num.timetype import NumTimeType
-from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class describe_numtimetype(UnitTestCase):
+class desribe_num_time(UnitTestCase):
 
-    def test_format_delta_1(self):
-        self.assertEqual("1", NumTimeType().format_delta(NumDelta(1)))
+    def test_repr(self):
+        self.assertEqual(repr(NumTime(5)), "NumTime<5>")
 
-    def test_format_delta_2(self):
-        self.assertEqual("2", NumTimeType().format_delta(NumDelta(2)))
-
-    def test_equality(self):
-        self.assertEqual(NumTimeType(), NumTimeType())
-        self.assertNotEqual(NumTimeType(), GregorianTimeType())
+    def test_str(self):
+        self.assertEqual(str(NumTime(5)), "NumTime<5>")
 
 
-class decribe_num_time_duplicate_functions(UnitTestCase):
+class desribe_num_delta(UnitTestCase):
 
-    def test_move_period_adds_given_number_of_delta(self):
-        self.assertEqual(
-            TimePeriod(NumTime(7), NumTime(8)),
-            move_period(TimePeriod(NumTime(1), NumTime(2)), 6)
-        )
+    def test_repr(self):
+        self.assertEqual(repr(NumDelta(5)), "NumDelta<5>")
+
+    def test_str(self):
+        self.assertEqual(str(NumDelta(5)), "NumDelta<5>")

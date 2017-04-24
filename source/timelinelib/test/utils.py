@@ -28,6 +28,7 @@ import random
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.monthnames import ABBREVIATED_ENGLISH_MONTH_NAMES
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
@@ -35,8 +36,6 @@ from timelinelib.canvas.data import Era
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data.internaltime import delta_from_days
-from timelinelib.canvas.data.internaltime import TimeDelta
 
 
 ANY_TIME = "1 Jan 2010"
@@ -62,7 +61,7 @@ def numeric_period(start, end):
 
 def human_time_to_gregorian(human_time):
     """
-    Create a :doc:`Time <timelinelib_canvas_data_internaltime>` object
+    Create a :doc:`GregorianTime <timelinelib.calendar.gregorian.time>` object
     from a human readable date and time string.
     """
     (year, month, day, hour, minute, seconds) = human_time_to_ymdhm(human_time)
@@ -259,7 +258,7 @@ EVENT_MODIFIERS = [
     ("change id", lambda event:
         event.set_id(inc(event.get_id()))),
     ("change time period", lambda event:
-        event.set_time_period(event.get_time_period().move_delta(delta_from_days(1)))),
+        event.set_time_period(event.get_time_period().move_delta(GregorianDelta.from_days(1)))),
     ("change text", lambda event:
         event.set_text("was: %s" % event.get_text())),
     ("change category", lambda event:
@@ -312,7 +311,7 @@ TIME_PERIOD_MODIFIERS = [
 
 ERA_MODIFIERS = [
     ("change id", lambda era: era.set_id(inc(era.get_id()))),
-    ("change time period", lambda era: era.set_time_period(era.get_time_period().move_delta(delta_from_days(1)))),
+    ("change time period", lambda era: era.set_time_period(era.get_time_period().move_delta(GregorianDelta.from_days(1)))),
     ("change text", lambda era: era.set_name("was: %s" % era.get_name())),
     ("change color", lambda era: era.set_color(tuple([x + 1 for x in era.get_color()])))
 ]
@@ -326,7 +325,7 @@ NUM_ERA_MODIFIERS = [
 
 
 TIME_MODIFIERS = [
-    ("add", lambda time: time + TimeDelta(1)),
+    ("add", lambda time: time + GregorianDelta(1)),
 ]
 
 

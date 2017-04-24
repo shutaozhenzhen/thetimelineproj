@@ -17,6 +17,8 @@
 
 
 import wx
+
+from timelinelib.calendar.num.time import NumTime
 from timelinelib.wxgui.components.numctrl import NumCtrl
 
 
@@ -25,16 +27,15 @@ class NumTimePicker(wx.Panel):
     def __init__(self, parent, show_time=False, config=None, on_change=None):
         wx.Panel.__init__(self, parent)
         self.time_picker = self._create_gui()
-        self.controller = NumTimePickerController(self, 0, on_change)
 
     def get_value(self):
-        return int(self.time_picker.GetValue())
+        return NumTime(int(self.time_picker.GetValue()))
 
     def set_value(self, num_time):
         if num_time is None:
             self.time_picker.SetValue('0')
         else:
-            self.time_picker.SetValue(str(int(num_time)))
+            self.time_picker.SetValue(str(int(num_time.value)))
 
     def select_all(self):
         self.time_picker.SetSelection(0, len(str(self.get_value())))
@@ -46,22 +47,3 @@ class NumTimePicker(wx.Panel):
         sizer.Add(time_picker, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         self.SetSizerAndFit(sizer)
         return time_picker
-
-
-class NumTimePickerController(object):
-
-    def __init__(self, time_picker, default_num_time, on_change):
-        self.time_picker = time_picker
-        self.default_num_time = default_num_time
-        self.on_change = on_change
-
-    def get_value(self):
-        num_time = self.time_picker.get_value()
-        return num_time
-
-    def set_value(self, num_time):
-        if num_time is None:
-            num_time = self.default_num_time
-        self.time_picker.set_value(num_time)
-        if self.on_change is not None:
-            self.on_change()

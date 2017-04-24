@@ -16,9 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.internaltime import TimeDelta
-
-
 class TimePeriod(object):
     """
     Represents a period in time using a start and end time.

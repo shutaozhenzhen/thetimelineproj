@@ -26,14 +26,13 @@ class GregorianTimePicker(TextPatternControl):
     MINUTE_GROUP = 1
 
     def __init__(self, parent):
-        TextPatternControl.__init__(self, parent)
+        TextPatternControl.__init__(self, parent, fit_text="00:00")
         self.SetSeparators([":"])
         self.SetValidator(self._is_time_valid)
         self.SetUpHandler(self.HOUR_GROUP, self._increment_hour)
         self.SetUpHandler(self.MINUTE_GROUP, self._increment_minute)
         self.SetDownHandler(self.HOUR_GROUP, self._decrement_hour)
         self.SetDownHandler(self.MINUTE_GROUP, self._decrement_minute)
-        self._resize_to_fit_text()
 
     def GetGregorianTime(self):
         return parts_to_gregorian_time(self.GetParts())
@@ -60,11 +59,6 @@ class GregorianTimePicker(TextPatternControl):
 
     def _decrement_minute(self):
         self.SetGregorianTime(decrement_minute(self.GetGregorianTime()))
-
-    def _resize_to_fit_text(self):
-        w, _ = self.GetTextExtent("00:00")
-        width = w + 20
-        self.SetMinSize((width, -1))
 
 
 def gregorian_time_to_parts(time):

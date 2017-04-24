@@ -16,23 +16,24 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
-
-from timelinelib.calendar.num.timepicker import NumTimePicker
-from timelinelib.calendar.num.timepicker import NumTimePickerController
-from timelinelib.test.cases.unit import UnitTestCase
+import wx
 
 
-class desribe_num_time_picker(UnitTestCase):
+class TextCtrl(wx.TextCtrl):
 
-    def test_time_control_is_assigned_time_from_set_value(self):
-        self.controller.set_value(5)
-        self.time_picker.set_value.assert_called_with(5)
+    """
+    TextCtrl enhances wx.TextCtrl.
 
-    def test_time_control_is_assigned_zero_if_set_with_value_none(self):
-        self.controller.set_value(None)
-        self.time_picker.set_value.assert_called_with(0)
+    It takes an optional `fit_text` keyword argument. If given, the TextCtrl is
+    resized to fit that text.
+    """
 
-    def setUp(self):
-        self.time_picker = Mock(NumTimePicker)
-        self.controller = NumTimePickerController(self.time_picker, 0, None)
+    def __init__(self, *args, **kwargs):
+        fit_text = kwargs.pop("fit_text", None)
+        wx.TextCtrl.__init__(self, *args, **kwargs)
+        if fit_text is not None:
+            self._fit_text(fit_text)
+
+    def _fit_text(self, text):
+        (w, h) = self.GetTextExtent(text)
+        self.SetInitialSize((w + 20, -1))

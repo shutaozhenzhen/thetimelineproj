@@ -16,22 +16,43 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.time import ComparableValue
+from timelinelib.calendar.time import GenericDeltaMixin
+from timelinelib.calendar.time import GenericTimeMixin
+
+
 SECONDS_IN_DAY = 24 * 60 * 60
-MIN_JULIAN_DAY = 0
 
 
-class Time(object):
+class GregorianTime(GenericTimeMixin):
+
+    MIN_JULIAN_DAY = 0
+
+    @property
+    def DeltaClass(self):
+        return GregorianDelta
+
+    @classmethod
+    def min(cls):
+        return cls(cls.MIN_JULIAN_DAY, 0)
+
+    @classmethod
+    def set_min_julian_day(cls, allow_negative_julian_yeras):
+        if allow_negative_julian_yeras:
+            cls.MIN_JULIAN_DAY = -1000000000000000000000000000000000000000000000000
+        else:
+            cls.MIN_JULIAN_DAY = 0
 
     def __init__(self, julian_day, seconds):
-        if julian_day < MIN_JULIAN_DAY:
-            raise ValueError("julian_day must be >= %d" % MIN_JULIAN_DAY)
+        if julian_day < self.MIN_JULIAN_DAY:
+            raise ValueError("julian_day must be >= %d" % self.MIN_JULIAN_DAY)
         if seconds < 0 or seconds >= SECONDS_IN_DAY:
             raise ValueError("seconds must be >= 0 and <= 24*60*60")
         self.julian_day = julian_day
         self.seconds = seconds
 
     def __eq__(self, time):
-        return (isinstance(time, Time) and
+        return (isinstance(time, self.__class__) and
                 self.julian_day == time.julian_day and
                 self.seconds == time.seconds)
 
@@ -39,13 +60,15 @@ class Time(object):
         return not (self == time)
 
     def __add__(self, delta):
-        if isinstance(delta, TimeDelta):
+        if isinstance(delta, self.DeltaClass):
             seconds = self.seconds + delta.seconds
             return self.__class__(self.julian_day + seconds / SECONDS_IN_DAY, seconds % SECONDS_IN_DAY)
-        raise TypeError("Time + %s not supported" % type(delta))
+        raise TypeError(
+            "%s + %s not supported" % (self.__class__.__name__, type(delta))
+        )
 
     def __sub__(self, other):
-        if isinstance(other, TimeDelta):
+        if isinstance(other, self.DeltaClass):
             seconds = self.seconds - other.seconds
             if seconds < 0:
                 if seconds % SECONDS_IN_DAY == 0:
@@ -60,7 +83,7 @@ class Time(object):
         else:
             days_diff = self.julian_day - other.julian_day
             seconds_diff = self.seconds - other.seconds
-            return TimeDelta(days_diff * SECONDS_IN_DAY + seconds_diff)
+            return self.DeltaClass(days_diff * SECONDS_IN_DAY + seconds_diff)
 
     def __gt__(self, dt):
         return (self.julian_day, self.seconds) > (dt.julian_day, dt.seconds)
@@ -72,7 +95,11 @@ class Time(object):
         return (self.julian_day, self.seconds) < (dt.julian_day, dt.seconds)
 
     def __repr__(self):
-        return "Time<%s, %s>" % (self.julian_day, self.seconds)
+        return "{0}({1!r}, {2!r})".format(
+            self.__class__.__name__,
+            self.julian_day,
+            self.seconds
+        )
 
     def get_time_of_day(self):
         hours = self.seconds / 3600
@@ -81,37 +108,31 @@ class Time(object):
         return (hours, minutes, seconds)
 
 
-class TimeDelta(object):
+class GregorianDelta(ComparableValue, GenericDeltaMixin):
 
-    def __init__(self, seconds):
-        self.seconds = seconds
+    @classmethod
+    def from_seconds(cls, seconds):
+        return cls(seconds)
+
+    @classmethod
+    def from_days(cls, days):
+        return cls(SECONDS_IN_DAY * days)
+
+    @property
+    def seconds(self):
+        return self.value
 
     def __div__(self, value):
-        if isinstance(value, TimeDelta):
+        if isinstance(value, self.__class__):
             return float(self.seconds) / float(value.seconds)
         else:
-            return TimeDelta(self.seconds / value)
+            return self.__class__(self.seconds / value)
 
     def __sub__(self, delta):
-        return TimeDelta(self.seconds - delta.seconds)
-
-    def __neg__(self):
-        return TimeDelta(-self.seconds)
+        return self.__class__(self.seconds - delta.seconds)
 
     def __mul__(self, value):
-        return TimeDelta(int(self.seconds * value))
-
-    def __rmul__(self, value):
-        return self * value
-
-    def __eq__(self, d):
-        return isinstance(d, TimeDelta) and self.seconds == d.seconds
-
-    def __gt__(self, d):
-        return self.seconds > d.seconds
-
-    def __lt__(self, d):
-        return self.seconds < d.seconds
+        return self.__class__(int(self.seconds * value))
 
     def get_days(self):
         return self.seconds / SECONDS_IN_DAY
@@ -123,24 +144,7 @@ class TimeDelta(object):
         return (self.seconds / 60) % 60
 
     def __repr__(self):
-        return "TimeDelta[%s]" % self.seconds
-
-
-def delta_from_seconds(seconds):
-    return TimeDelta(seconds)
-
-
-def delta_from_days(days):
-    return TimeDelta(SECONDS_IN_DAY * days)
-
-
-def get_min_time():
-    return Time(MIN_JULIAN_DAY, 0)
-
-
-def set_min_julian_day(allow_negative_julian_yeras):
-    global MIN_JULIAN_DAY
-    if allow_negative_julian_yeras:
-        MIN_JULIAN_DAY = -1000000000000000000000000000000000000000000000000
-    else:
-        MIN_JULIAN_DAY = 0
+        return "{0}({1!r})".format(
+            self.__class__.__name__,
+            self.seconds
+        )

@@ -34,6 +34,7 @@ from .propertyeditors.descriptioneditor import DescriptionEditor
 from .propertyeditors.hyperlinkeditor import HyperlinkEditor
 from .propertyeditors.iconeditor import IconEditor
 from .propertyeditors.progresseditor import ProgressEditor
+from .textctrl import TextCtrl
 from .textctrlselect import TextCtrlSelect
 from .textpatterncontrol.view import TextPatternControl
 from .twostatebutton import TwoStateButton

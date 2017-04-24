@@ -20,6 +20,8 @@ import mock
 import wx
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
+from timelinelib.calendar.gregorian.time import GregorianDelta
+from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.timetype import backward_fn
 from timelinelib.calendar.gregorian.timetype import backward_one_month_fn
 from timelinelib.calendar.gregorian.timetype import backward_one_week_fn
@@ -51,7 +53,6 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
-import timelinelib.canvas.data.internaltime as timeline
 
 
 class describe_gregoriantimetype(UnitTestCase):
@@ -63,11 +64,11 @@ class describe_gregoriantimetype(UnitTestCase):
     def test_converts_time_to_string(self):
         self.assertEqual(
             "-4713-11-24 00:00:00",
-            self.time_type.time_string(timeline.Time(julian_day=0, seconds=0)))
+            self.time_type.time_string(GregorianTime(julian_day=0, seconds=0)))
 
     def test_parses_time_from_string(self):
         self.assertEqual(
-            timeline.Time(julian_day=0, seconds=0),
+            GregorianTime(julian_day=0, seconds=0),
             self.time_type.parse_time("-4713-11-24 00:00:00"))
 
     def test_raises_ValueError_when_parsing_invalid_time(self):
@@ -88,7 +89,7 @@ class describe_gregoriantimetype(UnitTestCase):
             self.time_type.format_period(time_period))
 
     def test_returns_min_time(self):
-        self.assertEqual(timeline.Time(0, 0), self.time_type.get_min_time())
+        self.assertEqual(GregorianTime(0, 0), self.time_type.get_min_time())
 
     def test_returns_max_time(self):
         self.assertEqual(self.time_type.parse_time("9990-01-01 00:00:00"),
@@ -99,7 +100,7 @@ class describe_gregoriantimetype(UnitTestCase):
         self.assertEqual(2, self.time_type.get_day_of_week(dt))
 
     def test_get_min_zoom_delta(self):
-        self.assertEqual(timeline.TimeDelta(60), self.time_type.get_min_zoom_delta()[0])
+        self.assertEqual(GregorianDelta(60), self.time_type.get_min_zoom_delta()[0])
 
     def test_is_weekend_day(self):
         DAYS = [
@@ -582,7 +583,7 @@ class describe_gregorian_time_type_delta_formatting(UnitTestCase):
         return TimePeriod(dt, dt)
 
     def get_days_delta(self, days=0, hours=0, minutes=0):
-        return timeline.TimeDelta(days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60)
+        return GregorianDelta(days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60)
 
 
 class describe_gregorian_time_navigation_functions(UnitTestCase):

@@ -17,14 +17,14 @@
 
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
+from timelinelib.calendar.gregorian.time import GregorianDelta
+from timelinelib.calendar.num.time import NumDelta
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data.internaltime import delta_from_days
-import timelinelib.calendar.gregorian.gregorian as gregorian
 
 
 def create_in_memory_tutorial_db():
@@ -299,7 +299,7 @@ class TutorialTimelineCreator(object):
 
     def get_days_delta(self, days):
         if self.db.get_time_type().get_name() == u"gregoriantime":
-            return delta_from_days(days)
+            return GregorianDelta.from_days(days)
 
     def get_time(self, year, month, day):
         if self.db.get_time_type().get_name() == u"gregoriantime":
@@ -313,7 +313,7 @@ class NumericTutorialTimelineCreator(object):
         from timelinelib.calendar.num.timetype import NumTimeType
         self.db.time_type = NumTimeType()
         self.start = self.db.time_type.now()
-        self.end = self.start + 30
+        self.end = self.start + NumDelta(30)
         self.db.set_displayed_period(TimePeriod(self.start, self.end))
         self.last_cat = None
         self.next_cid = 1
@@ -356,10 +356,10 @@ class NumericTutorialTimelineCreator(object):
         container.register_subevent(evt)
 
     def calc_start_end(self, start_add, end_add=None):
-        start = self.start + start_add
+        start = self.start + NumDelta(start_add)
         end = start
         if end_add is not None:
-            end = self.start + end_add
+            end = self.start + NumDelta(end_add)
         return (start, end)
 
     def get_db(self):

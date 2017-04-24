@@ -17,12 +17,11 @@
 
 
 from mock import Mock
-
 import wx
 
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event
 from timelinelib.wxgui.frames.mainframe.mainframe import AlertController
@@ -163,10 +162,10 @@ class describe_alert_controller(UnitTestCase):
         self.now = GregorianTimeType().now()
 
     def given_pytime_later(self):
-        self.tm = self.now + delta_from_days(1)
+        self.tm = self.now + GregorianDelta.from_days(1)
 
     def given_pytime_earlier(self):
-        self.tm = self.now + delta_from_days(-1)
+        self.tm = self.now + GregorianDelta.from_days(-1)
 
     def given_controller_time_type(self, time_type):
         self.controller.time_type = time_type
