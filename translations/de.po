@@ -1,4 +1,4 @@
-# SOME DESCRIPTIVE TITLE.
+﻿# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Rickard Lindberg
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -154,7 +154,7 @@ msgstr "'Jetzt' Editor öffnen \tCtrl+T"
 #: source\timelinelib\calendar\bosparanian\timetype.py:65
 #: source\timelinelib\calendar\gregorian\timetype.py:68
 msgid "Go to &Date...\tCtrl+G"
-msgstr "Gehe zu Datum...\tStrg+G"
+msgstr "Gehe zu Datum...\tCtrl+G"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:67
 #: source\timelinelib\calendar\gregorian\timetype.py:70
@@ -171,32 +171,32 @@ msgstr "Vorwärts\tBild-ab"
 #: source\timelinelib\calendar\bosparanian\timetype.py:69
 #: source\timelinelib\calendar\gregorian\timetype.py:72
 msgid "Forward One Wee&k\tCtrl+K"
-msgstr "Eine Woche vor\tStrg+K"
+msgstr "Eine Woche vor\tCtrl+K"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:70
 #: source\timelinelib\calendar\gregorian\timetype.py:73
 msgid "Back One &Week\tCtrl+W"
-msgstr "Eine Woche zurück\tStrg+W"
+msgstr "Eine Woche zurück\tCtrl+W"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:71
 #: source\timelinelib\calendar\gregorian\timetype.py:74
 msgid "Forward One Mont&h\tCtrl+H"
-msgstr "Ein Monat vorwärts\tStrg+H"
+msgstr "Ein Monat vorwärts\tCtrl+H"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:72
 #: source\timelinelib\calendar\gregorian\timetype.py:75
 msgid "Back One &Month\tCtrl+M"
-msgstr "Einen Monat zurück\tStrg+M"
+msgstr "Einen Monat zurück\tCtrl+M"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:73
 #: source\timelinelib\calendar\gregorian\timetype.py:76
 msgid "Forward One Yea&r\tCtrl+R"
-msgstr "Ein Jahr vor\tStrg+R"
+msgstr "Ein Jahr vor\tCtrl+R"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:74
 #: source\timelinelib\calendar\gregorian\timetype.py:77
 msgid "Back One &Year\tCtrl+Y"
-msgstr "Ein Jahr zurück\tStrg+Y"
+msgstr "Ein Jahr zurück\tCtrl+Y"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:76
 #: source\timelinelib\calendar\gregorian\timetype.py:79
@@ -328,7 +328,7 @@ msgstr "v. Chr."
 
 #: source\timelinelib\calendar\gregorian\timetype.py:67
 msgid "Go to &Today\tCtrl+T"
-msgstr "Zum heutigen Datum springen\tStrg+T"
+msgstr "Zum heutigen Datum springen\tCtrl+T"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:121
 msgid "day"
@@ -400,11 +400,11 @@ msgstr "So"
 
 #: source\timelinelib\calendar\num\timetype.py:56
 msgid "Go to &Zero\tCtrl+Z"
-msgstr "Gehe zu &Null\tStrg+Z"
+msgstr "Gehe zu &Null\tCtrl+Z"
 
 #: source\timelinelib\calendar\num\timetype.py:57
 msgid "Go to &Time\tCtrl+T"
-msgstr "Gehe zu &Zeit\tStrg+T"
+msgstr "Gehe zu &Zeit\tCtrl+T"
 
 #: source\timelinelib\calendar\num\timetype.py:106
 msgid "Can't zoom deeper than 5"
@@ -2924,7 +2924,7 @@ msgstr "&Bearbeiten"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:321
 msgid "&Sidebar\tCtrl+I"
-msgstr "&Seitenleiste\tStrg+I"
+msgstr "&Seitenleiste\tCtrl+I"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:322
 msgid "&Legend"
@@ -2936,11 +2936,11 @@ msgstr "Informationsblasen beim Bewegen über Elementen"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:326
 msgid "Zoom &In\tCtrl++"
-msgstr "&Vergrößern\tStrg++"
+msgstr "&Vergrößern\tCtrl++"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:327
 msgid "Zoom &Out\tCtrl+-"
-msgstr "V&erkleinern\tStrg+-"
+msgstr "V&erkleinern\tCtrl+-"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:328
 msgid "Vertical Zoom &In\tAlt++"
@@ -2948,7 +2948,7 @@ msgstr "Senkrecht ver&größern\tAlt++"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:329
 msgid "Vertical Zoom &Out\tAlt+-"
-msgstr "Senkrecht ver&kleinern\tAlt++"
+msgstr "Senkrecht ver&kleinern\tAlt+-"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:337
 msgid "&Hide Events done"
@@ -2994,11 +2994,11 @@ msgstr "Kategorie für ausgewählte Ereignisse festlegen …"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:497
 msgid "Move event up\tAlt+Up"
-msgstr "Ereignis nach oben schieben \tAlt+↑"
+msgstr "Ereignis nach oben schieben \tAlt+Up"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:498
 msgid "Move event down\tAlt+Down"
-msgstr "Ereignis nach unten schieben \tAlt+↓"
+msgstr "Ereignis nach unten schieben \tAlt+Down"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:500
 msgid "Create &Milestone..."
@@ -3030,7 +3030,7 @@ msgstr "&Nur lesbar"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:513
 msgid "&Undo\tCtrl+Z"
-msgstr "&Rückgängig\tStrg+Z"
+msgstr "&Rückgängig\tCtrl+Z"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:514
 msgid "&Redo\tAlt+Z"

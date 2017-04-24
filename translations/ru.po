@@ -1,4 +1,4 @@
-# Russian translation for thetimelineproj
+﻿# Russian translation for thetimelineproj
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the thetimelineproj package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
@@ -185,7 +185,7 @@ msgstr "Назад на один Месяц\tCtrl+M"
 #: source\timelinelib\calendar\bosparanian\timetype.py:73
 #: source\timelinelib\calendar\gregorian\timetype.py:76
 msgid "Forward One Yea&r\tCtrl+R"
-msgstr "Вперёд на один Год"
+msgstr "Вперёд на один Год\tCtrl+R"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:74
 #: source\timelinelib\calendar\gregorian\timetype.py:77
