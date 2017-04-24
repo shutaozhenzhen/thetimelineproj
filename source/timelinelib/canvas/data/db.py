@@ -22,7 +22,6 @@ from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Eras
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Events
-from timelinelib.canvas.data.internaltime import Time
 from timelinelib.canvas.data.undohandler import UndoHandler
 from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
 from timelinelib.features.experimental.experimentalfeatures import experimental_feature
@@ -75,11 +74,8 @@ class MemoryDB(Observable):
     def set_time_type(self, time_type):
         self.time_type = time_type
         if time_type is not None:
-            try:
-                self.saved_now = time_type.now()
-                self._eras.set_now_func(time_type.now)
-            except NotImplementedError:
-                self.saved_now = Time(0, 0)
+            self.saved_now = time_type.now()
+            self._eras.set_now_func(time_type.now)
 
     def is_read_only(self):
         return self.readonly

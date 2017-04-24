@@ -21,10 +21,10 @@ import os.path
 import wx.calendar
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
+from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.timepicker.date import GregorianDatePicker
 from timelinelib.calendar.gregorian.timepicker.time import GregorianTimePicker
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.canvas.data.internaltime import Time
 from timelinelib.config.paths import ICONS_DIR
 
 
@@ -186,7 +186,7 @@ class CalendarPopup(wx.PopupTransientWindow):
             return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
         except OverflowError:
             if year < 0:
-                year, month, day = GregorianDateTime.from_time(Time(0, 0)).to_date_tuple()
+                year, month, day = GregorianDateTime.from_time(GregorianTime(0, 0)).to_date_tuple()
                 return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
 
     def _bind_events(self):

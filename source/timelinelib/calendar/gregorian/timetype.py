@@ -21,16 +21,16 @@ import re
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.monthnames import abbreviated_name_of_month
+from timelinelib.calendar.gregorian.time import GregorianDelta
+from timelinelib.calendar.gregorian.time import GregorianTime
+from timelinelib.calendar.gregorian.time import SECONDS_IN_DAY
 from timelinelib.calendar.gregorian.weekdaynames import abbreviated_name_of_weekday
 from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
-from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.canvas.drawing.interface import Strip
-import timelinelib.canvas.data.internaltime as timeline
-from timelinelib.canvas.data.internaltime import SECONDS_IN_DAY
 
 
 BC = _("BC")
@@ -120,17 +120,17 @@ class GregorianTimeType(TimeType):
         return DurationFormatter([days, seconds]).format(delta_format)
 
     def get_min_time(self):
-        return timeline.get_min_time()
+        return GregorianTime.min()
 
     def get_max_time(self):
-        return timeline.Time(5369833, 0)
+        return GregorianTime(5369833, 0)
 
     def choose_strip(self, metrics, appearance):
         """
         Return a tuple (major_strip, minor_strip) for current time period and
         window size.
         """
-        day_period = TimePeriod(timeline.Time(0, 0), timeline.Time(1, 0))
+        day_period = TimePeriod(GregorianTime(0, 0), GregorianTime(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         if one_day_width > 20000:
             return (StripHour(), StripMinute())
@@ -150,7 +150,7 @@ class GregorianTimeType(TimeType):
             return (StripCentury(), StripCentury())
 
     def get_default_time_period(self):
-        return time_period_center(self.now(), delta_from_days(30))
+        return time_period_center(self.now(), GregorianDelta.from_days(30))
 
     def supports_saved_now(self):
         return False
@@ -160,12 +160,18 @@ class GregorianTimeType(TimeType):
 
     def now(self):
         py = datetime.now()
-        gregorian = GregorianDateTime(py.year, py.month, py.day,
-                              py.hour, py.minute, py.second)
+        gregorian = GregorianDateTime(
+            py.year,
+            py.month,
+            py.day,
+            py.hour,
+            py.minute,
+            py.second
+        )
         return gregorian.to_time()
 
     def get_min_zoom_delta(self):
-        return (timeline.delta_from_seconds(60), _("Can't zoom deeper than 1 minute"))
+        return (GregorianDelta.from_seconds(60), _("Can't zoom deeper than 1 minute"))
 
     def get_name(self):
         return u"gregoriantime"
@@ -336,12 +342,12 @@ def _months_to_year_and_month(months):
 
 
 def forward_one_week_fn(main_frame, current_period, navigation_fn):
-    wk = delta_from_days(7)
+    wk = GregorianDelta.from_days(7)
     navigation_fn(lambda tp: tp.move_delta(wk))
 
 
 def backward_one_week_fn(main_frame, current_period, navigation_fn):
-    wk = delta_from_days(7)
+    wk = GregorianDelta.from_days(7)
     navigation_fn(lambda tp: tp.move_delta(-1 * wk))
 
 
@@ -366,7 +372,7 @@ def navigate_month_step(current_period, navigation_fn, direction):
             d = 30
         else:
             d = 31
-    mv = delta_from_days(d)
+    mv = GregorianDelta.from_days(d)
     navigation_fn(lambda tp: tp.move_delta(direction * mv))
 
 
@@ -379,12 +385,12 @@ def backward_one_month_fn(main_frame, current_period, navigation_fn):
 
 
 def forward_one_year_fn(main_frame, current_period, navigation_fn):
-    yr = delta_from_days(365)
+    yr = GregorianDelta.from_days(365)
     navigation_fn(lambda tp: tp.move_delta(yr))
 
 
 def backward_one_year_fn(main_frame, current_period, navigation_fn):
-    yr = delta_from_days(365)
+    yr = GregorianDelta.from_days(365)
     navigation_fn(lambda tp: tp.move_delta(-1 * yr))
 
 
@@ -411,10 +417,10 @@ def fit_week_fn(main_frame, current_period, navigation_fn):
     mean = GregorianDateTime.from_time(current_period.mean_time())
     start = GregorianDateTime.from_ymd(mean.year, mean.month, mean.day).to_time()
     weekday = GregorianTimeType().get_day_of_week(start)
-    start = start - delta_from_days(weekday)
+    start = start - GregorianDelta.from_days(weekday)
     if not main_frame.week_starts_on_monday():
-        start = start - delta_from_days(1)
-    end = start + delta_from_days(7)
+        start = start - GregorianDelta.from_days(1)
+    end = start + GregorianDelta.from_days(7)
     navigation_fn(lambda tp: tp.update(start, end))
 
 
@@ -667,7 +673,7 @@ class StripMonth(Strip):
         ).to_time()
 
     def increment(self, time):
-        return time + delta_from_days(
+        return time + GregorianDelta.from_days(
             GregorianDateTime.from_time(time).days_in_month()
         )
 
@@ -691,7 +697,7 @@ class StripDay(Strip):
         ).to_time()
 
     def increment(self, time):
-        return time + delta_from_days(1)
+        return time + GregorianDelta.from_days(1)
 
     def is_day(self):
         return True
@@ -707,7 +713,7 @@ class StripWeek(Strip):
         if major:
             first_weekday = self.start(time)
             next_first_weekday = self.increment(first_weekday)
-            last_weekday = next_first_weekday - delta_from_days(1)
+            last_weekday = next_first_weekday - GregorianDelta.from_days(1)
             range_string = self._time_range_string(first_weekday, last_weekday)
             if self.appearance.get_week_start() == "monday":
                 return (_("Week") + " %s (%s)") % (
@@ -746,10 +752,10 @@ class StripWeek(Strip):
         else:
             # It is sunday
             days_to_subtract = (GregorianTimeType().get_day_of_week(time) + 1) % 7
-        return timeline.Time(time.julian_day - days_to_subtract, 0)
+        return GregorianTime(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
-        return time + delta_from_days(7)
+        return time + GregorianDelta.from_days(7)
 
 
 class StripWeekday(Strip):
@@ -771,7 +777,7 @@ class StripWeekday(Strip):
         return new_gregorian.to_time()
 
     def increment(self, time):
-        return time + delta_from_days(1)
+        return time + GregorianDelta.from_days(1)
 
     def is_day(self):
         return True
@@ -788,10 +794,10 @@ class StripHour(Strip):
 
     def start(self, time):
         (hours, _, _) = time.get_time_of_day()
-        return timeline.Time(time.julian_day, hours * 60 * 60)
+        return GregorianTime(time.julian_day, hours * 60 * 60)
 
     def increment(self, time):
-        return time + timeline.delta_from_seconds(60 * 60)
+        return time + GregorianDelta.from_seconds(60 * 60)
 
 
 class StripMinute(Strip):
@@ -805,10 +811,10 @@ class StripMinute(Strip):
 
     def start(self, time):
         (hours, minutes, _) = time.get_time_of_day()
-        return timeline.Time(time.julian_day, minutes * 60 + hours * 60 * 60)
+        return GregorianTime(time.julian_day, minutes * 60 + hours * 60 * 60)
 
     def increment(self, time):
-        return time + timeline.delta_from_seconds(60)
+        return time + GregorianDelta.from_seconds(60)
 
 
 def format_year(year):
@@ -819,14 +825,14 @@ def format_year(year):
 
 
 def move_period_num_days(period, num):
-    delta = delta_from_days(1) * num
+    delta = GregorianDelta.from_days(1) * num
     start_time = period.start_time + delta
     end_time = period.end_time + delta
     return TimePeriod(start_time, end_time)
 
 
 def move_period_num_weeks(period, num):
-    delta = delta_from_days(7) * num
+    delta = GregorianDelta.from_days(7) * num
     start_time = period.start_time + delta
     end_time = period.end_time + delta
     return TimePeriod(start_time, end_time)

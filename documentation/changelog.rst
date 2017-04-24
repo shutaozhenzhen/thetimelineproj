@@ -54,6 +54,10 @@ Fixed crash reports and bugs:
   This happened when trying to measure the distance between two overlapping
   events in a numeric timeline.
 
+* ``IndexError: list index out of range.``
+  This happened under some circumstances when zooming out far and scrolling to
+  the far left.
+
 Version 1.13.0
 --------------
 

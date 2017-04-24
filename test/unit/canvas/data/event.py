@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.event import clone_event_list
 from timelinelib.canvas.data import Container
@@ -31,7 +31,6 @@ from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import EVENT_MODIFIERS
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
-import timelinelib.canvas.data.internaltime as timeline
 
 
 class describe_event(UnitTestCase):
@@ -194,7 +193,7 @@ class describe_event_functions(UnitTestCase):
 
     def test_zero_time_span(self):
         event = an_event()
-        self.assertEqual(timeline.delta_from_seconds(0), event.time_span())
+        self.assertEqual(GregorianDelta.from_seconds(0), event.time_span())
 
 
 class describe_event_cloning(UnitTestCase):

@@ -307,19 +307,24 @@ class DefaultDrawingAlgorithm(Drawer):
     def _draw_major_strips(self):
         font.set_major_strip_text_font(self.appearance.get_major_strip_font(), self.dc)
         self.dc.SetPen(self.major_strip_pen)
-        self.use_major_strip_vertical_label = self._use_major_strip_vertical_label(self.scene.major_strip_data[0])
+        self._calculate_use_major_strip_vertical_label()
         for time_period in self.scene.major_strip_data:
             self._draw_major_strip_end_line(time_period)
             self._draw_major_strip_label(time_period)
 
+    def _calculate_use_major_strip_vertical_label(self):
+        if len(self.scene.major_strip_data) > 0:
+            strip_period = self.scene.major_strip_data[0]
+            label = self.scene.major_strip.label(strip_period.start_time, True)
+            strip_width = self.scene.width_of_period(strip_period)
+            tw, _ = self.dc.GetTextExtent(label)
+            self.use_major_strip_vertical_label = strip_width < (tw + 5)
+        else:
+            self.use_major_strip_vertical_label = False
+
     def _draw_major_strip_end_line(self, time_period):
         x = self.scene.x_pos_for_time(time_period.end_time)
         self.dc.DrawLine(x, 0, x, self.scene.height)
-
-    def _use_major_strip_vertical_label(self, time_period):
-        label = self.scene.major_strip.label(time_period.start_time, True)
-        tw, _ = self.dc.GetTextExtent(label)
-        return self._calculate_major_strip_width(time_period) < (tw + 5)
 
     def _draw_major_strip_label(self, time_period):
         label = self.scene.major_strip.label(time_period.start_time, True)
@@ -354,9 +359,6 @@ class DefaultDrawingAlgorithm(Drawer):
     def _calculate_major_strip_vertical_label_x(self, time_period, label):
         _, th = self.dc.GetTextExtent(label)
         return self.scene.x_pos_for_time(time_period.mean_time()) + th / 2
-
-    def _calculate_major_strip_width(self, time_period):
-        return self.scene.x_pos_for_time(time_period.end_time) - self.scene.x_pos_for_time(time_period.start_time)
 
     def _draw_divider_line(self):
         self.dc.SetPen(self.black_solid_pen)

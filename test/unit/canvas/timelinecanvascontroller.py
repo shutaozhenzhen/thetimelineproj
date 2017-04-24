@@ -19,11 +19,11 @@
 from mock import Mock
 import wx
 
+from timelinelib.calendar.gregorian.time import GregorianDelta
+from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data.internaltime import Time
-from timelinelib.canvas.data.internaltime import TimeDelta
 from timelinelib.canvas import TimelineCanvas
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.test.cases.unit import UnitTestCase
@@ -92,16 +92,19 @@ class describe_navigate(TimelineCanvasControllerTestCase):
 class ATimeType(TimeType):
 
     def get_min_time(self):
-        return Time(10, 0)
+        return GregorianTime(10, 0)
 
     def get_max_time(self):
-        return Time(20, 0)
+        return GregorianTime(20, 0)
 
     def format_period(self, period):
         return "%s to %s" % (period.start_time, period.end_time)
 
     def get_min_zoom_delta(self):
-        return (TimeDelta(1), "Can't zoom deeper than 1")
+        return (GregorianDelta(1), "Can't zoom deeper than 1")
+
+    def now(self):
+        return GregorianTime(0, 0)
 
     def __eq__(self, other):
         return isinstance(other, ATimeType)
@@ -111,4 +114,4 @@ class ATimeType(TimeType):
 
 
 def time_period(start, end):
-    return TimePeriod(Time(start, 0), Time(end, 0))
+    return TimePeriod(GregorianTime(start, 0), GregorianTime(end, 0))

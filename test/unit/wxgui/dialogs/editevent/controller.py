@@ -20,13 +20,10 @@ from mock import Mock
 from mock import sentinel
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data.event import Event
 from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.data.internaltime import delta_from_days
 from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.config.dotfile import Config
 from timelinelib.db import db_open
