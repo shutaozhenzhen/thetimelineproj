@@ -1,4 +1,4 @@
-﻿# Spanish translations for the Timeline application.
+# Spanish translations for the Timeline application.
 # Copyright (C) YEAR Rickard Lindberg
 # This file is distributed under the same license as the Timeline package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
