@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: thetimelineproj\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2017-04-24 19:13+0200\n"
+"POT-Creation-Date: 2017-04-25 06:42+0200\n"
 "PO-Revision-Date: 2015-10-28 13:20+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-04-25 04:16+0000\n"
+"X-Launchpad-Export-Date: 2017-04-25 15:58+0000\n"
 "X-Generator: Launchpad (build 18361)\n"
 
 #: source\timelinelib\calendar\bosparanian\monthnames.py:22
@@ -142,54 +142,56 @@ msgid "Show time"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:64
-msgid "Open &Now Date Editor\tCtrl+T"
+msgid "Open &Now Date Editor"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:65
 #: source\timelinelib\calendar\gregorian\timetype.py:69
-msgid "Go to &Date...\tCtrl+G"
+msgid "Go to &Date..."
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:67
 #: source\timelinelib\calendar\gregorian\timetype.py:71
-#: source\timelinelib\calendar\num\timetype.py:64
-msgid "Backward\tPgUp"
+#: source\timelinelib\calendar\num\timetype.py:65
+#: source\timelinelib\wxgui\dialogs\duplicateevent\view.py:89
+msgid "Backward"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:68
 #: source\timelinelib\calendar\gregorian\timetype.py:72
-#: source\timelinelib\calendar\num\timetype.py:65
-msgid "Forward\tPgDn"
+#: source\timelinelib\calendar\num\timetype.py:66
+#: source\timelinelib\wxgui\dialogs\duplicateevent\view.py:89
+msgid "Forward"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:69
 #: source\timelinelib\calendar\gregorian\timetype.py:73
-msgid "Forward One Wee&k\tCtrl+K"
+msgid "Forward One Wee&k"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:70
 #: source\timelinelib\calendar\gregorian\timetype.py:74
-msgid "Back One &Week\tCtrl+W"
+msgid "Back One &Week"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:71
 #: source\timelinelib\calendar\gregorian\timetype.py:75
-msgid "Forward One Mont&h\tCtrl+H"
+msgid "Forward One Mont&h"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:72
 #: source\timelinelib\calendar\gregorian\timetype.py:76
-msgid "Back One &Month\tCtrl+M"
+msgid "Back One &Month"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:73
 #: source\timelinelib\calendar\gregorian\timetype.py:77
-msgid "Forward One Yea&r\tCtrl+R"
+msgid "Forward One Yea&r"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:74
 #: source\timelinelib\calendar\gregorian\timetype.py:78
-msgid "Back One &Year\tCtrl+Y"
+msgid "Back One &Year"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:76
@@ -232,14 +234,14 @@ msgid "Change Now Date"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:186
-#: source\timelinelib\calendar\gregorian\timetype.py:213
+#: source\timelinelib\calendar\gregorian\timetype.py:215
 msgid "Go to Date"
 msgstr ""
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:546
 #: source\timelinelib\calendar\bosparanian\timetype.py:547
-#: source\timelinelib\calendar\gregorian\timetype.py:182
-#: source\timelinelib\calendar\gregorian\timetype.py:719
+#: source\timelinelib\calendar\gregorian\timetype.py:184
+#: source\timelinelib\calendar\gregorian\timetype.py:721
 msgid "Week"
 msgstr ""
 
@@ -321,78 +323,78 @@ msgid "BC"
 msgstr ""
 
 #: source\timelinelib\calendar\gregorian\timetype.py:68
-msgid "Go to &Today\tCtrl+T"
+msgid "Go to &Today"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:174
+#: source\timelinelib\calendar\gregorian\timetype.py:176
 msgid "Can't zoom deeper than 1 minute"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:181
+#: source\timelinelib\calendar\gregorian\timetype.py:183
 msgid "Day"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:183
+#: source\timelinelib\calendar\gregorian\timetype.py:185
 msgid "Month"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:184
+#: source\timelinelib\calendar\gregorian\timetype.py:186
 msgid "Year"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:903
+#: source\timelinelib\calendar\gregorian\timetype.py:906
 msgid "years"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:903
+#: source\timelinelib\calendar\gregorian\timetype.py:906
 msgid "year"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:906
+#: source\timelinelib\calendar\gregorian\timetype.py:909
 msgid "months"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:906
+#: source\timelinelib\calendar\gregorian\timetype.py:909
 msgid "month"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:909
+#: source\timelinelib\calendar\gregorian\timetype.py:912
 msgid "weeks"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:909
+#: source\timelinelib\calendar\gregorian\timetype.py:912
 msgid "week"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:912
+#: source\timelinelib\calendar\gregorian\timetype.py:915
 msgid "days"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:912
+#: source\timelinelib\calendar\gregorian\timetype.py:915
 msgid "day"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:915
+#: source\timelinelib\calendar\gregorian\timetype.py:918
 msgid "hours"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:915
+#: source\timelinelib\calendar\gregorian\timetype.py:918
 msgid "hour"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:918
+#: source\timelinelib\calendar\gregorian\timetype.py:921
 msgid "minutes"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:918
+#: source\timelinelib\calendar\gregorian\timetype.py:921
 msgid "minute"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:921
+#: source\timelinelib\calendar\gregorian\timetype.py:924
 msgid "seconds"
 msgstr ""
 
-#: source\timelinelib\calendar\gregorian\timetype.py:921
+#: source\timelinelib\calendar\gregorian\timetype.py:924
 msgid "second"
 msgstr ""
 
@@ -424,35 +426,35 @@ msgstr ""
 msgid "Sun"
 msgstr ""
 
-#: source\timelinelib\calendar\num\timetype.py:61
-msgid "Go to &Zero\tCtrl+Z"
-msgstr ""
-
 #: source\timelinelib\calendar\num\timetype.py:62
-msgid "Go to &Time\tCtrl+T"
+msgid "Go to &Zero"
 msgstr ""
 
-#: source\timelinelib\calendar\num\timetype.py:118
+#: source\timelinelib\calendar\num\timetype.py:63
+msgid "Go to &Time"
+msgstr ""
+
+#: source\timelinelib\calendar\num\timetype.py:119
 msgid "Can't zoom deeper than 5"
 msgstr ""
 
-#: source\timelinelib\calendar\num\timetype.py:125
+#: source\timelinelib\calendar\num\timetype.py:126
 msgid "1-period"
 msgstr ""
 
-#: source\timelinelib\calendar\num\timetype.py:126
+#: source\timelinelib\calendar\num\timetype.py:127
 msgid "10-period"
 msgstr ""
 
-#: source\timelinelib\calendar\num\timetype.py:127
+#: source\timelinelib\calendar\num\timetype.py:128
 msgid "100-period"
 msgstr ""
 
-#: source\timelinelib\calendar\num\timetype.py:128
+#: source\timelinelib\calendar\num\timetype.py:129
 msgid "1000-period"
 msgstr ""
 
-#: source\timelinelib\calendar\num\timetype.py:172
+#: source\timelinelib\calendar\num\timetype.py:173
 msgid "Go to Time"
 msgstr ""
 
@@ -2090,14 +2092,6 @@ msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\duplicateevent\view.py:88
 msgid "Frequency:"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\duplicateevent\view.py:89
-msgid "Forward"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\duplicateevent\view.py:89
-msgid "Backward"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\duplicateevent\view.py:89
