@@ -65,17 +65,17 @@ class GregorianTimeType(TimeType):
 
     def get_navigation_functions(self):
         return [
-            (_("Go to &Today\tCtrl+T"), go_to_today_fn),
-            (_("Go to &Date...\tCtrl+G"), go_to_date_fn),
+            (_("Go to &Today") + "\tCtrl+T", go_to_today_fn),
+            (_("Go to &Date...") + "\tCtrl+G", go_to_date_fn),
             ("SEP", None),
-            (_("Backward\tPgUp"), backward_fn),
-            (_("Forward\tPgDn"), forward_fn),
-            (_("Forward One Wee&k\tCtrl+K"), forward_one_week_fn),
-            (_("Back One &Week\tCtrl+W"), backward_one_week_fn),
-            (_("Forward One Mont&h\tCtrl+H"), forward_one_month_fn),
-            (_("Back One &Month\tCtrl+M"), backward_one_month_fn),
-            (_("Forward One Yea&r\tCtrl+R"), forward_one_year_fn),
-            (_("Back One &Year\tCtrl+Y"), backward_one_year_fn),
+            (_("Backward") + "\tPgUp", backward_fn),
+            (_("Forward") + "\tPgDn", forward_fn),
+            (_("Forward One Wee&k") + "\tCtrl+K", forward_one_week_fn),
+            (_("Back One &Week") + "\tCtrl+W", backward_one_week_fn),
+            (_("Forward One Mont&h") + "\tCtrl+H", forward_one_month_fn),
+            (_("Back One &Month") + "\tCtrl+M", backward_one_month_fn),
+            (_("Forward One Yea&r") + "\tCtrl+R", forward_one_year_fn),
+            (_("Back One &Year") + "\tCtrl+Y", backward_one_year_fn),
             ("SEP", None),
             (_("Fit Millennium"), fit_millennium_fn),
             (_("Fit Century"), create_strip_fitter(StripCentury)),
@@ -90,6 +90,7 @@ class GregorianTimeType(TimeType):
         """Returns a unicode string describing the time period."""
         def label_with_time(time):
             return u"%s %s" % (label_without_time(time), time_label(time))
+
         def label_without_time(time):
             gregorian_datetime = GregorianDateTime.from_time(time)
             return u"%s %s %s" % (
@@ -97,6 +98,7 @@ class GregorianTimeType(TimeType):
                 abbreviated_name_of_month(gregorian_datetime.month),
                 format_year(gregorian_datetime.year)
             )
+
         def time_label(time):
             return "%02d:%02d" % time.get_time_of_day()[:-1]
         if time_period.is_period():
@@ -877,6 +879,7 @@ def has_nonzero_time(time_period):
 
 
 class DurationType(object):
+
     def __init__(self, name, single_name, value_fn, remainder_fn):
         self._name = name
         self._single_name = single_name

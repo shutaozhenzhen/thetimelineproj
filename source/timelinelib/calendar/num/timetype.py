@@ -31,6 +31,7 @@ from timelinelib.canvas.drawing.interface import Strip
 
 
 class NumTimeType(TimeType):
+
     """The class."""
 
     def __eq__(self, other):
@@ -58,11 +59,11 @@ class NumTimeType(TimeType):
 
     def get_navigation_functions(self):
         return [
-            (_("Go to &Zero\tCtrl+Z"), go_to_zero_fn),
-            (_("Go to &Time\tCtrl+T"), go_to_time_fn),
+            (_("Go to &Zero") + "\tCtrl+Z", go_to_zero_fn),
+            (_("Go to &Time") + "\tCtrl+T", go_to_time_fn),
             ("SEP", None),
-            (_("Backward\tPgUp"), backward_fn),
-            (_("Forward\tPgDn"), forward_fn),
+            (_("Backward") + "\tPgUp", backward_fn),
+            (_("Forward") + "\tPgDn", forward_fn),
         ]
 
     def format_period(self, time_period):
@@ -99,14 +100,14 @@ class NumTimeType(TimeType):
             next_minor_strip_with_px = metrics.calc_exact_width(
                 TimePeriod(
                     NumTime(0),
-                    NumTime(10**(exponent-1))
+                    NumTime(10 ** (exponent - 1))
                 )
             )
             if next_minor_strip_with_px > 30:
                 exponent -= 1
             else:
                 break
-        return (NumStrip(10**(exponent+1)), NumStrip(10**exponent))
+        return (NumStrip(10 ** (exponent + 1)), NumStrip(10 ** exponent))
 
     def get_default_time_period(self):
         return time_period_center(NumTime(0), NumDelta(100))
