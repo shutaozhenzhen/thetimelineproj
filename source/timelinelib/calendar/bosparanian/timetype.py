@@ -28,6 +28,7 @@ from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.data import time_period_center
 from timelinelib.canvas.drawing.interface import Strip
 
 
@@ -143,6 +144,9 @@ class BosparanianTimeType(GregorianTimeType):
             return (StripCentury(), StripDecade())
         else:
             return (StripCentury(), StripCentury())
+
+    def get_default_time_period(self):
+        return time_period_center(self.now(), BosparanianDelta.from_days(30))
 
     def supports_saved_now(self):
         return True
