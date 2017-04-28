@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-04-25 15:58+0000\n"
-"X-Generator: Launchpad (build 18361)\n"
+"X-Launchpad-Export-Date: 2017-04-28 08:16+0000\n"
+"X-Generator: Launchpad (build 18364)\n"
 
 #: source\timelinelib\calendar\bosparanian\monthnames.py:22
 #: source\timelinelib\calendar\bosparanian\weekdaynames.py:25
@@ -3070,33 +3070,3 @@ msgstr ""
 #: source\timelinelib\wxgui\utils.py:161 source\timelinelib\wxgui\utils.py:167
 msgid "Question"
 msgstr "Вопрос"
-
-#~ msgid "Back One &Year\tCtrl+Y"
-#~ msgstr "Назад на один Год\tCtrl+Y"
-
-#~ msgid "Back One &Month\tCtrl+M"
-#~ msgstr "Назад на один Месяц\tCtrl+M"
-
-#~ msgid "Forward One Yea&r\tCtrl+R"
-#~ msgstr "Вперёд на один Год"
-
-#~ msgid "&Contents\tF1"
-#~ msgstr "Содержание\tF1"
-
-#~ msgid "Backward\tPgUp"
-#~ msgstr "Назад\tPgUp"
-
-#~ msgid "Forward\tPgDn"
-#~ msgstr "Вперёд\tPgDn"
-
-#~ msgid "Back One &Week\tCtrl+W"
-#~ msgstr "Назад на одну Неделю\tCtrl+W"
-
-#~ msgid "Forward One Wee&k\tCtrl+K"
-#~ msgstr "Вперёд на одну Неделю\tCtrl+K"
-
-#~ msgid "Go to &Today\tCtrl+T"
-#~ msgstr "Перейти к Сегодняшнему дню\tCtrl+T"
-
-#~ msgid "&Sidebar\tCtrl+I"
-#~ msgstr "&Боковая панель\tCtrl+I"

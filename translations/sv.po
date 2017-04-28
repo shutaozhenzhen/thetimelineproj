@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Timeline 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-25 06:42+0200\n"
-"PO-Revision-Date: 2016-07-08 15:33+0000\n"
+"PO-Revision-Date: 2017-04-28 08:15+0000\n"
 "Last-Translator: rogerlindberg <roger@rolidata.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-04-25 15:58+0000\n"
-"X-Generator: Launchpad (build 18361)\n"
+"X-Launchpad-Export-Date: 2017-04-28 08:16+0000\n"
+"X-Generator: Launchpad (build 18364)\n"
 
 #: source\timelinelib\calendar\bosparanian\monthnames.py:22
 #: source\timelinelib\calendar\bosparanian\weekdaynames.py:25
@@ -148,7 +148,7 @@ msgstr ""
 #: source\timelinelib\calendar\bosparanian\timetype.py:65
 #: source\timelinelib\calendar\gregorian\timetype.py:69
 msgid "Go to &Date..."
-msgstr ""
+msgstr "Gå till &Datum..."
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:67
 #: source\timelinelib\calendar\gregorian\timetype.py:71
@@ -167,32 +167,32 @@ msgstr "Framåt"
 #: source\timelinelib\calendar\bosparanian\timetype.py:69
 #: source\timelinelib\calendar\gregorian\timetype.py:73
 msgid "Forward One Wee&k"
-msgstr ""
+msgstr "Framåt en Vec&ka"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:70
 #: source\timelinelib\calendar\gregorian\timetype.py:74
 msgid "Back One &Week"
-msgstr ""
+msgstr "Bakåt en &Vecka"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:71
 #: source\timelinelib\calendar\gregorian\timetype.py:75
 msgid "Forward One Mont&h"
-msgstr ""
+msgstr "Framåt en Må&nad"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:72
 #: source\timelinelib\calendar\gregorian\timetype.py:76
 msgid "Back One &Month"
-msgstr ""
+msgstr "Bakåt en &Månad"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:73
 #: source\timelinelib\calendar\gregorian\timetype.py:77
 msgid "Forward One Yea&r"
-msgstr ""
+msgstr "Framåt ett Å&r"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:74
 #: source\timelinelib\calendar\gregorian\timetype.py:78
 msgid "Back One &Year"
-msgstr ""
+msgstr "Bakåt ett &År"
 
 #: source\timelinelib\calendar\bosparanian\timetype.py:76
 #: source\timelinelib\calendar\gregorian\timetype.py:80
@@ -324,7 +324,7 @@ msgstr ""
 
 #: source\timelinelib\calendar\gregorian\timetype.py:68
 msgid "Go to &Today"
-msgstr ""
+msgstr "Gå till &Idag"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:176
 msgid "Can't zoom deeper than 1 minute"
@@ -344,27 +344,27 @@ msgstr "År"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:906
 msgid "years"
-msgstr ""
+msgstr "år"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:906
 msgid "year"
-msgstr ""
+msgstr "år"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:909
 msgid "months"
-msgstr ""
+msgstr "månader"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:909
 msgid "month"
-msgstr ""
+msgstr "månad"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:912
 msgid "weeks"
-msgstr ""
+msgstr "veckor"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:912
 msgid "week"
-msgstr ""
+msgstr "vecka"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:915
 msgid "days"
@@ -392,11 +392,11 @@ msgstr "minut"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:924
 msgid "seconds"
-msgstr ""
+msgstr "sekunder"
 
 #: source\timelinelib\calendar\gregorian\timetype.py:924
 msgid "second"
-msgstr ""
+msgstr "sekund"
 
 #: source\timelinelib\calendar\gregorian\weekdaynames.py:22
 msgid "Mon"
@@ -428,11 +428,11 @@ msgstr "Sön"
 
 #: source\timelinelib\calendar\num\timetype.py:62
 msgid "Go to &Zero"
-msgstr ""
+msgstr "Gå till &Noll"
 
 #: source\timelinelib\calendar\num\timetype.py:63
 msgid "Go to &Time"
-msgstr ""
+msgstr "Gå till &Tid"
 
 #: source\timelinelib\calendar\num\timetype.py:119
 msgid "Can't zoom deeper than 5"
@@ -466,21 +466,21 @@ msgstr "Namn"
 
 #: source\timelinelib\canvas\data\category.py:22
 msgid "Color"
-msgstr ""
+msgstr "Färg"
 
 #: source\timelinelib\canvas\data\category.py:22
 #: source\timelinelib\canvas\data\event.py:26
 msgid "Progress Color"
-msgstr ""
+msgstr "Färg för Progress"
 
 #: source\timelinelib\canvas\data\category.py:22
 #: source\timelinelib\canvas\data\event.py:26
 msgid "Done Color"
-msgstr ""
+msgstr "Färg för Färdig"
 
 #: source\timelinelib\canvas\data\category.py:22
 msgid "Parent"
-msgstr ""
+msgstr "Förälder"
 
 #: source\timelinelib\canvas\data\db.py:226
 msgid "Displayed period must be > 0."
@@ -488,7 +488,7 @@ msgstr "Perioden måste vara större än 0."
 
 #: source\timelinelib\canvas\data\event.py:24
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: source\timelinelib\canvas\data\event.py:24
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:183
@@ -498,15 +498,15 @@ msgstr "Beskrivning"
 
 #: source\timelinelib\canvas\data\event.py:24
 msgid "Start"
-msgstr ""
+msgstr "Början"
 
 #: source\timelinelib\canvas\data\event.py:24
 msgid "End"
-msgstr ""
+msgstr "Slut"
 
 #: source\timelinelib\canvas\data\event.py:24
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: source\timelinelib\canvas\data\event.py:25
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:177
@@ -520,7 +520,7 @@ msgstr "Låst"
 
 #: source\timelinelib\canvas\data\event.py:25
 msgid "Ends Today"
-msgstr ""
+msgstr "Slutar idag"
 
 #: source\timelinelib\canvas\data\event.py:25
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:186
@@ -539,11 +539,11 @@ msgstr "Larm"
 
 #: source\timelinelib\canvas\data\event.py:27
 msgid "Is Container"
-msgstr ""
+msgstr "Är en Behållare"
 
 #: source\timelinelib\canvas\data\event.py:27
 msgid "Is Subevent"
-msgstr ""
+msgstr "Är en Underhändelse"
 
 #: source\timelinelib\canvas\data\event.py:248
 msgid "Duration"
@@ -551,11 +551,11 @@ msgstr "Varaktighet"
 
 #: source\timelinelib\canvas\data\timeperiod.py:93
 msgid "Invalid start time"
-msgstr ""
+msgstr "Ogiltig Starttid"
 
 #: source\timelinelib\canvas\data\timeperiod.py:95
 msgid "Invalid end time"
-msgstr ""
+msgstr "Ogiltig Sluttid"
 
 #: source\timelinelib\canvas\data\timeperiod.py:97
 msgid "Start time can't be after end time"
@@ -678,7 +678,7 @@ msgstr "Inställningar"
 #: source\timelinelib\config\shortcut.py:69
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:271
 msgid "Select All Events"
-msgstr ""
+msgstr "Markera alla Händelser"
 
 #: source\timelinelib\config\shortcut.py:70
 msgid "Shortcuts"
@@ -710,12 +710,12 @@ msgstr "Zooma in vertikalt"
 
 #: source\timelinelib\config\shortcut.py:78
 msgid "Vertical Zoom Out"
-msgstr "Zomma ut vertikalt"
+msgstr "Zooma ut vertikalt"
 
 #: source\timelinelib\config\shortcut.py:79
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:335
 msgid "Start slide show"
-msgstr ""
+msgstr "Starta bildspel"
 
 #: source\timelinelib\config\shortcut.py:81
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:361
@@ -802,7 +802,7 @@ msgstr "Det går inte att läsa filen '%s'"
 #: source\timelinelib\dataimport\ics.py:102
 #: source\timelinelib\dataimport\ics.py:175
 msgid "Location"
-msgstr ""
+msgstr "Position"
 
 #: source\timelinelib\dataimport\ics.py:118
 msgid "Unable to read calendar data."
@@ -1106,7 +1106,7 @@ msgstr "Kan inte radera backupen av databasfilen '%s'."
 
 #: source\timelinelib\features\experimental\experimentalfeaturecontainersize.py:25
 msgid "Extend Container height"
-msgstr ""
+msgstr "Utöka Behållarens höjd"
 
 #: source\timelinelib\features\experimental\experimentalfeaturecontainersize.py:26
 msgid ""
@@ -1125,7 +1125,7 @@ msgstr ""
 
 #: source\timelinelib\features\experimental\experimentalfeaturedone.py:23
 msgid "Mark Event as Done"
-msgstr ""
+msgstr "Klarmarkera Händelsen"
 
 #: source\timelinelib\features\experimental\experimentalfeaturedone.py:24
 msgid ""
@@ -1140,7 +1140,7 @@ msgstr ""
 
 #: source\timelinelib\features\experimental\experimentalfeatureextendedcontainerstrategy.py:23
 msgid "Use extended Container strategy"
-msgstr ""
+msgstr "Använd Behållarstrategin för utökad funktionalitet"
 
 #: source\timelinelib\features\experimental\experimentalfeatureextendedcontainerstrategy.py:24
 msgid ""
@@ -1155,7 +1155,7 @@ msgstr ""
 
 #: source\timelinelib\features\experimental\experimentalfeaturenegativejuliandays.py:24
 msgid "Accept negative Julian days"
-msgstr ""
+msgstr "Acceptera negativa värden på Julianska dagar"
 
 #: source\timelinelib\features\experimental\experimentalfeaturenegativejuliandays.py:25
 msgid ""
@@ -2855,23 +2855,23 @@ msgstr "&Ballonger vid hovring"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:326
 msgid "Zoom &In"
-msgstr ""
+msgstr "Zooma &in"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:327
 msgid "Zoom &Out"
-msgstr ""
+msgstr "Zooma &ut"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:328
 msgid "Vertical Zoom &In"
-msgstr ""
+msgstr "Zooma in vertikalt"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:329
 msgid "Vertical Zoom &Out"
-msgstr ""
+msgstr "Zooma ut vertikalt"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:337
 msgid "&Hide Events done"
-msgstr ""
+msgstr "Visa inte färdiga händelser"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:344
 msgid "&View"
@@ -2913,11 +2913,11 @@ msgstr "Sätt Kategori på valda Händelser..."
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:497
 msgid "Move event up"
-msgstr ""
+msgstr "Flytta händelser uppåt"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:498
 msgid "Move event down"
-msgstr ""
+msgstr "Flytta händelser nedåt"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:500
 msgid "Create &Milestone..."
@@ -2949,11 +2949,11 @@ msgstr "Sk&rivskyddad"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:513
 msgid "&Undo"
-msgstr ""
+msgstr "&Ångra"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:514
 msgid "&Redo"
-msgstr ""
+msgstr "&Gör om"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:518
 msgid "&Timeline"
@@ -2973,7 +2973,7 @@ msgstr "Visa &alla händelser"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:571
 msgid "Go to previous time period"
-msgstr ""
+msgstr "Gå till föregående tidsperiod"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframe.py:579
 msgid "&Navigate"
@@ -3162,69 +3162,3 @@ msgstr ""
 #: source\timelinelib\wxgui\utils.py:161 source\timelinelib\wxgui\utils.py:167
 msgid "Question"
 msgstr "Fråga"
-
-#~ msgid "&Sidebar\tCtrl+I"
-#~ msgstr "&Sidopanel\tCtrl+I"
-
-#~ msgid "&Contents\tF1"
-#~ msgstr "&Innehåll\tF1"
-
-#~ msgid "Backward\tPgUp"
-#~ msgstr "Bakåt\tPgUp"
-
-#~ msgid "Forward\tPgDn"
-#~ msgstr "Framåt\tPgDn"
-
-#~ msgid "Back One &Week\tCtrl+W"
-#~ msgstr "Bakåt En &Vecka\tCtrl+V"
-
-#~ msgid "Back One &Month\tCtrl+M"
-#~ msgstr "Bakåt en &Månad\tCtrl+M"
-
-#~ msgid "Forward One Yea&r\tCtrl+R"
-#~ msgstr "Framåt ett Å&r\tCtrl+R"
-
-#~ msgid "Forward One Wee&k\tCtrl+K"
-#~ msgstr "Framåt En Vec&ka\tCtrl+K"
-
-#~ msgid "Back One &Year\tCtrl+Y"
-#~ msgstr "Bakåt Ett &År\tCtrl+Å"
-
-#~ msgid "Go to &Today\tCtrl+T"
-#~ msgstr "Gå till &Idag \tCtrl+I"
-
-#~ msgid "Go to &Time\tCtrl+T"
-#~ msgstr "Gå till &Tid \t Ctrl+T"
-
-#~ msgid "Go to &Zero\tCtrl+Z"
-#~ msgstr "Gå till &Noll \t Ctrl+0"
-
-#~ msgid "Forward One Mont&h\tCtrl+H"
-#~ msgstr "Framåt en månad\tCtrl+H"
-
-#~ msgid "&Undo\tCtrl+Z"
-#~ msgstr "&Ångra\tCtrl+Z"
-
-#~ msgid "Go to &Date...\tCtrl+G"
-#~ msgstr "Hoppa till &Datum...\tCtrl+G"
-
-#~ msgid "Vertical Zoom &Out\tAlt+-"
-#~ msgstr "Zooma ut vertikalt\tAlt+-"
-
-#~ msgid "Vertical Zoom &In\tAlt++"
-#~ msgstr "Zooma in vertikalt\tAlt++"
-
-#~ msgid "Zoom &Out\tCtrl+-"
-#~ msgstr "Z&ooma Ut\tCtrl+-"
-
-#~ msgid "Zoom &In\tCtrl++"
-#~ msgstr "Zooma &In\tCtrl++"
-
-#~ msgid "&Redo\tAlt+Z"
-#~ msgstr "Gör om\tAlt+Z"
-
-#~ msgid "Move event down\tAlt+Down"
-#~ msgstr "Flytta händelse nedåt\tAlt+Down"
-
-#~ msgid "Move event up\tAlt+Up"
-#~ msgstr "Flytta händelse uppåt\tAlt+Up"
