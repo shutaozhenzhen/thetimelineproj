@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-04-25 15:58+0000\n"
-"X-Generator: Launchpad (build 18361)\n"
+"X-Launchpad-Export-Date: 2017-04-28 08:16+0000\n"
+"X-Generator: Launchpad (build 18364)\n"
 "X-Poedit-Language: German\n"
 
 #: source\timelinelib\wxgui\dialogs\editcategory\view.py:106
@@ -3263,72 +3263,3 @@ msgstr "Um Datenverlust zu vermeiden wird Timeline jetzt abstürzen."
 #: source\timelinelib\wxgui\utils.py:161 source\timelinelib\wxgui\utils.py:167
 msgid "Question"
 msgstr "Frage"
-
-#~ msgid "&Contents\tF1"
-#~ msgstr "&Inhalt\tF1"
-
-#~ msgid "Backward\tPgUp"
-#~ msgstr "Rückwärts\tBild-auf"
-
-#~ msgid "Forward\tPgDn"
-#~ msgstr "Vorwärts\tBild-ab"
-
-#~ msgid "Go to &Today\tCtrl+T"
-#~ msgstr "Zum heutigen Datum springen\tStrg+T"
-
-#~ msgid "Back One &Week\tCtrl+W"
-#~ msgstr "Eine Woche zurück\tStrg+W"
-
-#~ msgid "Back One &Year\tCtrl+Y"
-#~ msgstr "Ein Jahr zurück\tStrg+Y"
-
-#~ msgid "Back One &Month\tCtrl+M"
-#~ msgstr "Einen Monat zurück\tStrg+M"
-
-#~ msgid "Forward One Yea&r\tCtrl+R"
-#~ msgstr "Ein Jahr vor\tStrg+R"
-
-#~ msgid "Forward One Wee&k\tCtrl+K"
-#~ msgstr "Eine Woche vor\tStrg+K"
-
-#~ msgid "&Sidebar\tCtrl+I"
-#~ msgstr "&Seitenleiste\tStrg+I"
-
-#~ msgid "Vertical Zoom &Out\tAlt+-"
-#~ msgstr "Senkrecht ver&kleinern\tAlt++"
-
-#~ msgid "Vertical Zoom &In\tAlt++"
-#~ msgstr "Senkrecht ver&größern\tAlt++"
-
-#~ msgid "Zoom &In\tCtrl++"
-#~ msgstr "&Vergrößern\tStrg++"
-
-#~ msgid "Zoom &Out\tCtrl+-"
-#~ msgstr "V&erkleinern\tStrg+-"
-
-#~ msgid "&Undo\tCtrl+Z"
-#~ msgstr "&Rückgängig\tStrg+Z"
-
-#~ msgid "Go to &Time\tCtrl+T"
-#~ msgstr "Gehe zu &Zeit\tStrg+T"
-
-#~ msgid "Go to &Zero\tCtrl+Z"
-#~ msgstr "Gehe zu &Null\tStrg+Z"
-
-#~ msgid "Go to &Date...\tCtrl+G"
-#~ msgstr "Gehe zu Datum...\tStrg+G"
-
-#~ msgid "Forward One Mont&h\tCtrl+H"
-#~ msgstr "Ein Monat vorwärts\tStrg+H"
-
-#~ msgid "&Redo\tAlt+Z"
-#~ msgstr "&Wiederherstellen\tAlt+Z"
-
-#~ msgid "Open &Now Date Editor\tCtrl+T"
-#~ msgstr "'Jetzt' Editor öffnen \tCtrl+T"
-
-#~ msgid "Move event down\tAlt+Down"
-#~ msgstr "Ereignis nach unten schieben \tAlt+↓"
-
-#~ msgid "Move event up\tAlt+Up"
-#~ msgstr "Ereignis nach oben schieben \tAlt+↑"

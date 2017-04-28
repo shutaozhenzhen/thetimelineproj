@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2017-04-25 15:58+0000\n"
-"X-Generator: Launchpad (build 18361)\n"
+"X-Launchpad-Export-Date: 2017-04-28 08:16+0000\n"
+"X-Generator: Launchpad (build 18364)\n"
 
 #: source\timelinelib\calendar\bosparanian\monthnames.py:22
 #: source\timelinelib\calendar\bosparanian\weekdaynames.py:25
@@ -3479,72 +3479,3 @@ msgstr ""
 #: source\timelinelib\wxgui\utils.py:161 source\timelinelib\wxgui\utils.py:167
 msgid "Question"
 msgstr "Ερώτηση"
-
-#~ msgid "Forward One Yea&r\tCtrl+R"
-#~ msgstr "Εμπρός κατά ένα έτος\tCtrl+R"
-
-#~ msgid "Back One &Week\tCtrl+W"
-#~ msgstr "Πίσω κατά μία εβδομάδα\tCtrl+W"
-
-#~ msgid "Forward One Wee&k\tCtrl+K"
-#~ msgstr "Εμπρός κατά μία εβδομάδα\tCtrl+K"
-
-#~ msgid "Vertical Zoom &Out\tAlt+-"
-#~ msgstr "Κάθετη σμίκρυνση\tAlt+-"
-
-#~ msgid "Vertical Zoom &In\tAlt++"
-#~ msgstr "Κάθετη μεγέθυνση\tAlt++"
-
-#~ msgid "Zoom &In\tCtrl++"
-#~ msgstr "Μεγέθυνση \tCtrl++"
-
-#~ msgid "Zoom &Out\tCtrl+-"
-#~ msgstr "Σμίκρυνση \tCtrl+-"
-
-#~ msgid "&Sidebar\tCtrl+I"
-#~ msgstr "&Πλευρική μπάρα\tCtrl+I"
-
-#~ msgid "&Contents\tF1"
-#~ msgstr "&Περιεχόμενα\tF1"
-
-#~ msgid "Go to &Zero\tCtrl+Z"
-#~ msgstr "Μετάβαση στο έτος μηδέν\tCtrl+Z"
-
-#~ msgid "Go to &Time\tCtrl+T"
-#~ msgstr "Μετάβαση στην ώρα\tCtrl+T"
-
-#~ msgid "&Redo\tAlt+Z"
-#~ msgstr "&Ακύρωση αναίρεσης\tAlt+Z"
-
-#~ msgid "&Undo\tCtrl+Z"
-#~ msgstr "&Αναίρεση\tCtrl+Z"
-
-#~ msgid "Move event down\tAlt+Down"
-#~ msgstr "Μετακίνηση γεγονότος κάτω \tAlt+Down"
-
-#~ msgid "Move event up\tAlt+Up"
-#~ msgstr "Μετακίνηση γεγονότος επάνω \tAlt+Up"
-
-#~ msgid "Go to &Date...\tCtrl+G"
-#~ msgstr "Μετάβαση στην &ημερομηνία...\tCtrl+G"
-
-#~ msgid "Forward One Mont&h\tCtrl+H"
-#~ msgstr "Μπροστά κατά ένα μήνα\tCtrl+H"
-
-#~ msgid "Open &Now Date Editor\tCtrl+T"
-#~ msgstr "Άνοιγμα &Επεξεργαστή σημερινής ημέρας\tCtrl+T"
-
-#~ msgid "Back One &Year\tCtrl+Y"
-#~ msgstr "Πίσω κατά ένα έτος\tCtrl+Y"
-
-#~ msgid "Go to &Today\tCtrl+T"
-#~ msgstr "Μετάβαση στη σημερινή ημέρα\tCtrl+T"
-
-#~ msgid "Backward\tPgUp"
-#~ msgstr "Μετακίνηση πίσω\tPgUp"
-
-#~ msgid "Forward\tPgDn"
-#~ msgstr "Μετακίνηση εμπρός\tPgDn"
-
-#~ msgid "Back One &Month\tCtrl+M"
-#~ msgstr "Πίσω κατά ένα μήνα\tCtrl+M"
