@@ -58,6 +58,9 @@ Fixed crash reports and bugs:
   This happened under some circumstances when zooming out far and scrolling to
   the far left.
 
+* ``AttributeError: 'int' object has no attribute 'seconds'.``
+  This happened when starting a slideshow with a numeric timeline.
+
 Version 1.13.0
 --------------
 

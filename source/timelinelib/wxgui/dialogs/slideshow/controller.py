@@ -126,7 +126,7 @@ class SlideshowDialogController(Controller):
     def _calc_history_pos(self, w1, w2, events, event):
         w2 = event.get_start_time() - events[0].get_start_time()
         try:
-            return 2 + int(90 * float(w2.seconds) / float(w1.seconds))
+            return 2 + int(90 * (w2 / w1))
         except ZeroDivisionError:
             return 2
 
