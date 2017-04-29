@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.bosparanian.time import BosparanianDelta
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
@@ -28,7 +29,7 @@ class describe_bosparanian_time_type(UnitTestCase):
             ("11 Jan 2016", False),
             ("12 Jan 2016", False),
             ("13 Jan 2016", False),
-            ("14 Jan 2016", True), # Thursday
+            ("14 Jan 2016", True),  # Thursday
             ("15 Jan 2016", False),
             ("16 Jan 2016", False),
             ("17 Jan 2016", False),
@@ -54,6 +55,18 @@ class describe_bosparanian_time_type(UnitTestCase):
                 self.time_type.is_weekend_day(human_time_to_gregorian(day)),
                 expected_is_weekend
             )
+
+    def test_format_delta(self):
+        self.assertEqual(
+            self.time_type.format_delta(BosparanianDelta.from_seconds(
+                60*60 + 60 + 40
+            )),
+            "1 #hour# 1 #minute# 40 #seconds#"
+        )
+        self.assertEqual(
+            self.time_type.format_delta(BosparanianDelta.from_days(366)),
+            "1 #year# 1 #day#"
+        )
 
     def setUp(self):
         UnitTestCase.setUp(self)

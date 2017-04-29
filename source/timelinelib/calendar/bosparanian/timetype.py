@@ -24,7 +24,14 @@ from timelinelib.calendar.bosparanian.monthnames import bosp_name_of_month
 from timelinelib.calendar.bosparanian.time import BosparanianDelta
 from timelinelib.calendar.bosparanian.time import BosparanianTime
 from timelinelib.calendar.bosparanian.weekdaynames import bosp_abbreviated_name_of_weekday
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.calendar.gregorian.timetype import DAYS
+from timelinelib.calendar.gregorian.timetype import DurationFormatter
+from timelinelib.calendar.gregorian.timetype import HOURS
+from timelinelib.calendar.gregorian.timetype import MINUTES
+from timelinelib.calendar.gregorian.timetype import SECONDS
+from timelinelib.calendar.gregorian.timetype import SECONDS_IN_DAY
+from timelinelib.calendar.gregorian.timetype import YEARS
+from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
@@ -32,7 +39,7 @@ from timelinelib.canvas.data import time_period_center
 from timelinelib.canvas.drawing.interface import Strip
 
 
-class BosparanianTimeType(GregorianTimeType):
+class BosparanianTimeType(TimeType):
 
     def __init__(self):
         self.major_strip_is_decade = False
@@ -40,6 +47,9 @@ class BosparanianTimeType(GregorianTimeType):
 
     def __eq__(self, other):
         return isinstance(other, BosparanianTimeType)
+
+    def __ne__(self, other):
+        return not (self == other)
 
     def time_string(self, time):
         return "%d-%02d-%02d %02d:%02d:%02d" % BosparanianDateTime.from_time(time).to_tuple()
@@ -109,6 +119,12 @@ class BosparanianTimeType(GregorianTimeType):
                 label = u"%s" % label_without_time(time_period.start_time)
         return label
 
+    def format_delta(self, delta):
+        days = abs(delta.get_days())
+        seconds = abs(delta.seconds) - days * SECONDS_IN_DAY
+        delta_format = (YEARS, DAYS, HOURS, MINUTES, SECONDS)
+        return DurationFormatter([days, seconds]).format(delta_format)
+
     def get_min_time(self):
         return BosparanianTime.min()
 
@@ -159,14 +175,28 @@ class BosparanianTimeType(GregorianTimeType):
             return BosparanianDateTime(1000, 1, 1, 12, 0, 0).to_time()
         return self.saved_now
 
+    def get_min_zoom_delta(self):
+        return (BosparanianDelta.from_seconds(60), _("Can't zoom deeper than 1 minute"))
+
     def get_name(self):
         return u"bosparaniantime"
+
+    def get_duplicate_functions(self):
+        return [
+            (_("Day"), move_period_num_days),
+            (_("Week"), move_period_num_weeks),
+            (_("Month"), move_period_num_months),
+            (_("Year"), move_period_num_years),
+        ]
 
     def is_special_day(self, time):
         return self.get_day_of_week(time) == 3
 
     def is_weekend_day(self, time):
         return self.get_day_of_week(time) in (0, 3)
+
+    def get_day_of_week(self, time):
+        return time.julian_day % 7
 
     def create_time_picker(self, parent, *args, **kwargs):
         from timelinelib.calendar.bosparanian.timepicker import BosparanianDateTimePicker
