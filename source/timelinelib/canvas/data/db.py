@@ -23,8 +23,6 @@ from timelinelib.canvas.data import Eras
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Events
 from timelinelib.canvas.data.undohandler import UndoHandler
-from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
-from timelinelib.features.experimental.experimentalfeatures import experimental_feature
 from timelinelib.general.observer import Observable
 
 
@@ -149,7 +147,6 @@ class MemoryDB(Observable):
                 max_cid = max(event.cid(), max_cid)
         return max_cid
 
-    @experimental_feature(EVENT_DONE)
     def mark_event_as_done(self, event_or_id, save=True):
         def mark_as_done(event):
             if not event.is_container():

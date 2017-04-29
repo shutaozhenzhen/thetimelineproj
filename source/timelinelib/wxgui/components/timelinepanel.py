@@ -24,8 +24,6 @@ from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
 from timelinelib.canvas import EVT_TIMELINE_REDRAWN
 from timelinelib.db.utils import safe_locking
-from timelinelib.features.experimental.experimentalfeatures import EVENT_DONE
-from timelinelib.features.experimental.experimentalfeatures import experimental_feature
 from timelinelib.general.encodings import to_unicode
 from timelinelib.general.observer import Listener
 from timelinelib.wxgui.components.maincanvas.createperiodeventbydrag import CreatePeriodEventByDragInputHandler
@@ -256,8 +254,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         if nbr_of_selected_events == 1:
             menu_definitions.insert(0, (_("Edit"), self._context_menu_on_edit_event, None))
             menu_definitions.insert(1, (_("Duplicate..."), self._context_menu_on_duplicate_event, None))
-        if EVENT_DONE.enabled():
-            menu_definitions.append((EVENT_DONE.get_display_name(), self._context_menu_on_done_event, None))
+        menu_definitions.append((_("Mark Event as Done"), self._context_menu_on_done_event, None))
         menu_definitions.append((_("Select Category..."), self._context_menu_on_select_category, None))
         if nbr_of_selected_events == 1 and self.timeline_canvas.GetSelectedEvent().has_data():
             menu_definitions.append((_("Sticky Balloon"), self._context_menu_on_sticky_balloon_event, None))
@@ -290,6 +287,7 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _delete_selected_events(self):
         selected_events = self.timeline_canvas.GetSelectedEvents()
         number_of_selected_events = len(selected_events)
+
         def user_ack():
             if number_of_selected_events > 1:
                 text = _("Are you sure you want to delete %d events?" %
@@ -297,16 +295,20 @@ class TimelinePanelGuiCreator(wx.Panel):
             else:
                 text = _("Are you sure you want to delete this event?")
             return _ask_question(text) == wx.YES
+
         def exception_handler(ex):
             if isinstance(ex, TimelineIOError):
                 handle_db_error_by_crashing(ex, self)
             else:
                 raise(ex)
+
         def _last_event(event):
             return event.get_id() == selected_events[-1].get_id()
+
         def _delete_events():
             for event in selected_events:
                 self.timeline_canvas.GetDb().delete_event(event.get_id(), save=_last_event(event))
+
         def edit_function():
             if user_ack():
                 _delete_events()
@@ -322,15 +324,17 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.timeline_canvas.GetDb(),
             self.timeline_canvas.GetSelectedEvent())
 
-    @experimental_feature(EVENT_DONE)
+    #@experimental_feature(EVENT_DONE)
     def _context_menu_on_done_event(self, evt):
         def exception_handler(ex):
             if isinstance(ex, TimelineIOError):
                 handle_db_error_by_crashing(ex, self)
             else:
                 raise(ex)
+
         def _last_event(event):
             return event.get_id() == selected_events[-1].get_id()
+
         def edit_function():
             for event in selected_events:
                 self.timeline_canvas.GetDb().mark_event_as_done(event.get_id(), save=_last_event(event))
