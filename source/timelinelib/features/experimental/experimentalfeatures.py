@@ -36,17 +36,15 @@ To add a new experimental feature, do as follows:
 """
 
 
-from timelinelib.features.experimental.experimentalfeaturedone import ExperimentalFeatureDone
 from timelinelib.features.experimental.experimentalfeaturecontainersize import ExperimentalFeatureContainerSize
 from timelinelib.features.experimental.experimentalfeaturenegativejuliandays import ExperimentalFeatureNegativeJulianDays
 from timelinelib.features.experimental.experimentalfeatureextendedcontainerstrategy import ExperimentalFeatureExtendedContainerStrategy
 
 
-EVENT_DONE = ExperimentalFeatureDone()
 EXTENDED_CONTAINER_HEIGHT = ExperimentalFeatureContainerSize()
 NEGATIVE_JULIAN_DAYS = ExperimentalFeatureNegativeJulianDays()
 EXTENDED_CONTAINER_STRATEGY = ExperimentalFeatureExtendedContainerStrategy()
-FEATURES = (EVENT_DONE, EXTENDED_CONTAINER_HEIGHT, NEGATIVE_JULIAN_DAYS, EXTENDED_CONTAINER_STRATEGY)
+FEATURES = (EXTENDED_CONTAINER_HEIGHT, NEGATIVE_JULIAN_DAYS, EXTENDED_CONTAINER_STRATEGY)
 
 
 class ExperimentalFeatureException(Exception):
