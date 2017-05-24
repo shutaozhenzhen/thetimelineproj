@@ -35,6 +35,8 @@ class SystemInfoDialog(Dialog):
             <StaticText align="ALIGN_CENTER_VERTICAL" name="locale_setting" />
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(date_format)" />
             <StaticText align="ALIGN_CENTER_VERTICAL" name="date_format" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(config_file)" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" name="config_file" />
         </FlexGridSizer>
         <BoxSizerHorizontal>
             <StretchSpacer/>
@@ -50,8 +52,9 @@ class SystemInfoDialog(Dialog):
             "wxpython_version": _("wxPython version:"),
             "locale_setting": _("Locale setting:"),
             "date_format": _("Locale date format:"),
+            "config_file": _("Configuration file:"),
         }, title=_("System Information"))
-        self.controller.on_init()
+        self.controller.on_init(parent)
 
     def SetSystemVersion(self, value):
         self.system_version.SetLabel(value)
@@ -68,10 +71,21 @@ class SystemInfoDialog(Dialog):
     def SetDateFormat(self, value):
         self.date_format.SetLabel(value)
 
+    def SetConfigFile(self, value):
+        self.config_file.SetLabel(value)
+
 
 def show_system_info_dialog(*args, **kwargs):
-    dialog = SystemInfoDialog(None)
+    dialog = SystemInfoDialog(get_frame_window(args[0]))
     try:
         dialog.ShowModal()
     finally:
         dialog.Destroy()
+
+
+def get_frame_window(evt):
+    frame = None
+    evt_object = evt.GetEventObject()
+    if hasattr(evt_object, 'MenuBar'):
+        frame = evt_object.MenuBar.GetParent()
+    return frame
