@@ -26,12 +26,16 @@ from timelinelib.wxgui.framework import Controller
 
 class SystemInfoDialogController(Controller):
 
-    def on_init(self):
+    def on_init(self, parent):
         self.view.SetSystemVersion(self._get_system_version())
         self.view.SetPythonVersion(self._get_python_version())
         self.view.SetWxPythonVersion(self._get_wxpython_version())
         self.view.SetLocaleSetting(self._get_locale_setting())
         self.view.SetDateFormat(self._create_locale_sample_date())
+        if parent:
+            self.view.SetConfigFile(parent.config.path)
+        else:
+            self.view.SetConfigFile('?')
         self.view.Fit()
 
     def _get_system_version(self):
