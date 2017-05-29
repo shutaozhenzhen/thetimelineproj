@@ -31,11 +31,12 @@ class SystemInfoDialogController(Controller):
         self.view.SetPythonVersion(self._get_python_version())
         self.view.SetWxPythonVersion(self._get_wxpython_version())
         self.view.SetLocaleSetting(self._get_locale_setting())
-        self.view.SetDateFormat(self._create_locale_sample_date())
         if parent:
             self.view.SetConfigFile(parent.config.path)
+            self.view.SetDateFormat(parent.config.get_date_format())
         else:
             self.view.SetConfigFile('?')
+            self.view.SetDateFormat('?')
         self.view.Fit()
 
     def _get_system_version(self):
@@ -46,13 +47,6 @@ class SystemInfoDialogController(Controller):
 
     def _get_wxpython_version(self):
         return wx.version()
-
-    def _create_locale_sample_date(self):
-        sample = "3333-11-22"
-        sample = sample.replace("3", "y")
-        sample = sample.replace("2", "d")
-        sample = sample.replace("1", "m")
-        return sample
 
     def _get_locale_setting(self):
         return " ".join(locale.getlocale(locale.LC_TIME))
