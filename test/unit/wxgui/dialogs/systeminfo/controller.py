@@ -16,11 +16,22 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from sys import version as python_version
+import platform
+import locale
+
+import wx
+
 from mock import Mock
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.systeminfo.view import SystemInfoDialog
 from timelinelib.wxgui.dialogs.systeminfo.controller import SystemInfoDialogController
+from timelinelib.config.dotfile import Config
+
+
+DATE_FORMAT = 'dd-mm-yyyy'
+CONFIG_FILE_PATH = '\\foo\\bar\\_timeline.cfg'
 
 
 class describe_system_info_dialog_controller(UnitTestCase):
@@ -29,14 +40,19 @@ class describe_system_info_dialog_controller(UnitTestCase):
         pass
 
     def test_initiation(self):
-        self.view.SetSystemVersion.assert_called()
-        self.view.SetPythonVersion.assert_called()
-        self.view.SetWxPythonVersion.assert_called()
-        self.view.SetLocaleSetting.assert_called()
-        self.view.SetDateFormat.assert_called()
-        self.view.SetConfigFile.assert_called()
+        self.controller.on_init(self.view)
+        self.view.SetSystemVersion.assert_called_with(', '.join(platform.uname()))
+        self.view.SetLocaleSetting.assert_called_with(" ".join(locale.getlocale(locale.LC_TIME)))
+        self.view.SetPythonVersion.assert_called_with(python_version)
+        self.view.SetWxPythonVersion.assert_called_with(wx.version())
+        self.view.SetDateFormat.assert_called_with(DATE_FORMAT)
+        self.view.SetConfigFile.assert_called_with(CONFIG_FILE_PATH)
 
     def setUp(self):
         UnitTestCase.setUp(self)
         self.view = Mock(SystemInfoDialog)
+        config = Mock(Config)
+        config.path = CONFIG_FILE_PATH
+        config.get_date_format.return_value = DATE_FORMAT
+        self.view.config = config
         self.controller = SystemInfoDialogController(self.view)
