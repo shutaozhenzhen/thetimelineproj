@@ -31,12 +31,8 @@ class SystemInfoDialogController(Controller):
         self.view.SetPythonVersion(self._get_python_version())
         self.view.SetWxPythonVersion(self._get_wxpython_version())
         self.view.SetLocaleSetting(self._get_locale_setting())
-        if parent:
-            self.view.SetConfigFile(parent.config.path)
-            self.view.SetDateFormat(parent.config.get_date_format())
-        else:
-            self.view.SetConfigFile('?')
-            self.view.SetDateFormat('?')
+        self.view.SetConfigFile(self._get_config_file(parent))
+        self.view.SetDateFormat(self._get_date_format(parent))
         self.view.Fit()
 
     def _get_system_version(self):
@@ -50,3 +46,15 @@ class SystemInfoDialogController(Controller):
 
     def _get_locale_setting(self):
         return " ".join(locale.getlocale(locale.LC_TIME))
+
+    def _get_config_file(self, parent):
+        if parent:
+            return parent.config.path
+        else:
+            return '?'
+
+    def _get_date_format(self, parent):
+        if parent:
+            return parent.config.get_date_format()
+        else:
+            return '?'
