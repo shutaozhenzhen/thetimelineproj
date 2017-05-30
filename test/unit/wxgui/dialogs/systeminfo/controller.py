@@ -36,9 +36,6 @@ CONFIG_FILE_PATH = '\\foo\\bar\\_timeline.cfg'
 
 class describe_system_info_dialog_controller(UnitTestCase):
 
-    def test_instantiation(self):
-        pass
-
     def test_initiation(self):
         self.controller.on_init(self.view)
         self.view.SetSystemVersion.assert_called_with(', '.join(platform.uname()))
