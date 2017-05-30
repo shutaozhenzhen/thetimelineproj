@@ -34,6 +34,7 @@ class describe_system_info_dialog_controller(UnitTestCase):
         self.view.SetWxPythonVersion.assert_called()
         self.view.SetLocaleSetting.assert_called()
         self.view.SetDateFormat.assert_called()
+        self.view.SetConfigFile.assert_called()
 
     def setUp(self):
         UnitTestCase.setUp(self)
