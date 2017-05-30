@@ -45,6 +45,15 @@ class describe_system_info_dialog_controller(UnitTestCase):
         self.view.SetDateFormat.assert_called_with(DATE_FORMAT)
         self.view.SetConfigFile.assert_called_with(CONFIG_FILE_PATH)
 
+    def test_initiation_with_no_parent(self):
+        self.controller.on_init(None)
+        self.view.SetSystemVersion.assert_called_with(', '.join(platform.uname()))
+        self.view.SetLocaleSetting.assert_called_with(" ".join(locale.getlocale(locale.LC_TIME)))
+        self.view.SetPythonVersion.assert_called_with(python_version)
+        self.view.SetWxPythonVersion.assert_called_with(wx.version())
+        self.view.SetDateFormat.assert_called_with('?')
+        self.view.SetConfigFile.assert_called_with('?')
+
     def setUp(self):
         UnitTestCase.setUp(self)
         self.view = Mock(SystemInfoDialog)
