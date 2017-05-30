@@ -55,6 +55,7 @@ class describe_system_info_dialog_controller(UnitTestCase):
         self.view.SetConfigFile.assert_called_with('?')
 
     def setUp(self):
+        locale.setlocale(locale.LC_ALL, '')
         UnitTestCase.setUp(self)
         self.view = Mock(SystemInfoDialog)
         config = Mock(Config)
