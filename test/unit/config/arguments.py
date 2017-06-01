@@ -82,6 +82,7 @@ class describe_application_arguments(UnitTestCase):
 
     def test_invalid_option_causes_system_exit(self):
         try:
+            self.addCleanup(self.remove_stderr_file)
             e = sys.exit
             s = sys.stderr
             sys.exit = self.my_exit
@@ -98,6 +99,6 @@ class describe_application_arguments(UnitTestCase):
     def setUp(self):
         self.args = ApplicationArguments()
 
-    def tearDown(self):
+    def remove_stderr_file(self):
         if os.path.exists(STDERR):
             os.remove(STDERR)
