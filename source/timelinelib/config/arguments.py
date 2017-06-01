@@ -46,7 +46,10 @@ class ApplicationArguments(object):
         return self.arguments
 
     def get_first_file(self):
-        return self.arguments[0]
+        try:
+            return self.arguments[0]
+        except IndexError:
+            return None
 
     def has_files(self):
         return len(self.arguments) > 0
