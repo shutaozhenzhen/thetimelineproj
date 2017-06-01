@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -211,7 +213,9 @@ class describe_preferences_dialog(UnitTestCase):
         self.controller.config = self.config
         self.simulate_on_date_formatter_click()
         self.view.ShowSelectDateFormatDialog.assert_called_with(self.config)
-        self.view.SetCurrentDateFormat.assert_called_with("#Current#: %s" % self.config.date_format)
+        self.view.SetCurrentDateFormat.assert_called_with(
+            u"⟪Current⟫: %s" % self.config.date_format
+        )
 
     def test_uncheck_time_for_new_events(self):
         self.evt.IsChecked.return_value = True

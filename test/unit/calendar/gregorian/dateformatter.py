@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -41,7 +43,7 @@ class describe_new_date_formatter(UnitTestCase):
 
     def test_can_format_and_parse_with_month_name(self):
         self.formatter.use_abbreviated_name_for_month(True)
-        self.assert_format_parse((2016, 2, 13), ("2016-#Feb#-13", False))
+        self.assert_format_parse((2016, 2, 13), (u"2016-⟪Feb⟫-13", False))
 
     def test_can_get_next_region(self):
         self.assert_next_region_is(("2016-02-13", 0), (5, 2))
@@ -77,7 +79,10 @@ class describe_new_date_formatter(UnitTestCase):
 
     def test_can_get_region_type_for_abbreviated_month_name(self):
         self.formatter.use_abbreviated_name_for_month(True)
-        self.assert_region_type_is(("2015-#Feb#-10", 11), GregorianDateFormatter.DAY)
+        self.assert_region_type_is(
+            (u"2015-⟪Feb⟫-10", 11),
+            GregorianDateFormatter.DAY
+        )
 
     def test_fails_if_region_order_is_incorrect(self):
         self.assertRaises(ValueError, self.formatter.set_region_order,

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -90,12 +92,14 @@ class describe_shortcuts_editor_dialog(UnitTestCase):
     def test_shortcut_cant_be_used_for_more_than_one_function(self):
         self.given_a_view_with("Func", "Ctrl", "N")
         self.controller.on_apply_clicked(None)
-        self.view.DisplayWarningMessage.assert_called_with(u"#The shortcut Ctrl+N is already bound to function 'File->New...'!#")
+        self.view.DisplayWarningMessage.assert_called_with(
+            u"⟪The shortcut Ctrl+N is already bound to function 'File->New...'!⟫"
+        )
 
     def test_modifier_must_be_given_for_simple_key(self):
         self.given_a_view_with("Func", "", "N")
         self.controller.on_apply_clicked(None)
-        self.view.DisplayWarningMessage.assert_called_with("#Both Modifier and Shortcut key must be given!#")
+        self.view.DisplayWarningMessage.assert_called_with(u"⟪Both Modifier and Shortcut key must be given!⟫")
 
     def test_modifier_not_needed_for_function_keys(self):
         self.given_a_view_with("Func", "", "F1")
@@ -106,7 +110,7 @@ class describe_shortcuts_editor_dialog(UnitTestCase):
     def test_modifier_must_be_known(self):
         self.given_a_view_with("Func", "xxx", "N")
         self.controller.on_apply_clicked(None)
-        self.view.DisplayWarningMessage.assert_called_with("#Both Modifier and Shortcut key must be given!#")
+        self.view.DisplayWarningMessage.assert_called_with(u"⟪Both Modifier and Shortcut key must be given!⟫")
 
     def test_selection_changes_are_handled(self):
         self.given_a_view_with(u'File->New...', None, None)

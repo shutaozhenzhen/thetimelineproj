@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
@@ -73,7 +74,9 @@ def setup_paths():
 
 def install_gettext_in_builtin_namespace():
     def _(message):
-        return "#%s#" % message
+        # Make sure to return a non-ascii symbol to ensure that the caller
+        # handles the unicode object properly.
+        return u"⟪%s⟫" % message
     import __builtin__
     __builtin__.__dict__["_"] = _
 

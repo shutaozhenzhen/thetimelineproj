@@ -18,6 +18,11 @@ GUI:
 
 * Date format is now displayed in the System Info dialog, as configured.
 
+Fixed crash reports and bugs:
+
+* ``UnicodeEncodeError: 'ascii' codec can't encode character u'\u03c0' in
+  position 0: ordinal not in range(128)``
+  This happened when the BC label contained non-ascii characters.
 
 Version 1.14.0
 --------------

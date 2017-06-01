@@ -509,9 +509,9 @@ class StripCentury(Strip):
 
     def _format_century(self, century_number, is_bc):
         if is_bc:
-            return "{century}s {bc}".format(century=century_number, bc=BC)
+            return u"{century}s {bc}".format(century=century_number, bc=BC)
         else:
-            return "{century}s".format(century=century_number)
+            return u"{century}s".format(century=century_number)
 
     def _century_start_year(self, year):
         if year > 99:

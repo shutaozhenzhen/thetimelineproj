@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -34,7 +36,6 @@ class TimelineExporterTestCase(UnitTestCase):
 
     def setUp(self):
         self.plugin = TimelineExporter()
-        self.plugin.text_encoding = "cp1250"
         self.plugin.timeline = MemoryDB()
         self.plugin.timeline._events._events.append(an_event_with(text="foo\nbar", time="11 Jul 2014 10:11"))
         self.plugin.timeline._events._categories.append(a_category_with("Cat\"1\""))
@@ -67,7 +68,7 @@ class TimelineExporterTestCase(UnitTestCase):
         self.dlg.GetExportCategories.return_value = export_categories
         self.dlg.GetEventFields.return_value = event_fields
         self.dlg.GetCategoryFields.return_value = category_fields
-        self.dlg.GetTextEncoding.return_value = "cp1252"
+        self.dlg.GetTextEncoding.return_value = "utf-8"
         self.dlg.GetTextEncodingErrorStrategy.return_value = "strict"
 
 
@@ -81,11 +82,17 @@ class describe_timeline_exporter(TimelineExporterTestCase):
         self.simulate_dialog_entries(True, ["Text", "Start"], False, [])
         CsvExporter(self.plugin.timeline, CSV_FILE, self.dlg).export()
         content = self.get_tempfile_content()
-        self.assertEqual("\"#Events#\";\n\"Text\";\"Start\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n", content)
+        self.assertEqual(
+            u"\"⟪Events⟫\";\n\"Text\";\"Start\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n".encode("utf-8"),
+            content
+        )
 
     def test_category_csv_data_saved_in_file(self):
         self.open_tempfile_for_writing()
         self.simulate_dialog_entries(False, [], True, ["Name", "Color"])
         CsvExporter(self.plugin.timeline, CSV_FILE, self.dlg).export()
         content = self.get_tempfile_content()
-        self.assertEqual("\"#Categories#\";\n\"Name\";\"Color\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n", content)
+        self.assertEqual(
+            u"\"⟪Categories⟫\";\n\"Name\";\"Color\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n".encode("utf-8"),
+            content
+        )
