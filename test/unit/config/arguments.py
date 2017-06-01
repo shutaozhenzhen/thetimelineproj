@@ -47,7 +47,7 @@ class describe_application_arguments(UnitTestCase):
             sp = wx.StandardPaths
             wx.StandardPaths = SP()
             self.args.parse_from([])
-            self.assertEquals('FooBar\\.thetimelineproj.cfg', self.args.get_config_file_path())
+            self.assertEquals(os.path.join('FooBar', '.thetimelineproj.cfg'), self.args.get_config_file_path())
         finally:
             wx.StandardPaths = sp
 
