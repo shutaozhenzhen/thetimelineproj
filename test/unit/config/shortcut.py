@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -26,8 +28,8 @@ import timelinelib.config.shortcut as sc
 import timelinelib.wxgui.frames.mainframe.mainframe as mf
 
 
-NEW_FUNCTION = "#File#->#New...#"
-SIDEBAR_FUNCTION = "#View#->#Sidebar#"
+NEW_FUNCTION = u"⟪File⟫->⟪New...⟫"
+SIDEBAR_FUNCTION = u"⟪View⟫->⟪Sidebar⟫"
 
 
 class ShortcutControllerSpec(UnitTestCase):

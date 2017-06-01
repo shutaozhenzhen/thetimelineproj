@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -574,7 +576,9 @@ class describe_exceptions(EditEventDialogTestCase):
         self.view.SetPeriod.assert_called_with(
             gregorian_period("10 Jan 2010", "20 Jan 2010")
         )
-        self.view.DisplayInvalidPeriod.assert_called_with("#You can't change time when the Event is locked#")
+        self.view.DisplayInvalidPeriod.assert_called_with(
+            u"⟪You can't change time when the Event is locked⟫"
+        )
 
     def test_end_changed(self):
         event = an_event_with(
@@ -589,7 +593,9 @@ class describe_exceptions(EditEventDialogTestCase):
         self.view.SetPeriod.assert_called_with(
             gregorian_period("10 Jan 2010", "20 Jan 2010")
         )
-        self.view.DisplayInvalidPeriod.assert_called_with("#You can't change time when the Event is locked#")
+        self.view.DisplayInvalidPeriod.assert_called_with(
+            u"⟪You can't change time when the Event is locked⟫"
+        )
 
     def test_invalid_period(self):
         self.when_editing_a_new_event()
@@ -604,7 +610,9 @@ class describe_exceptions(EditEventDialogTestCase):
         self.view.GetLocked.return_value = False
         self.simulate_user_enters_period("10 Jan 2010", "20 Jan 2010")
         self.simulate_user_clicks_ok()
-        self.view.DisplayInvalidPeriod.assert_called_with("#End must be > Start#")
+        self.view.DisplayInvalidPeriod.assert_called_with(
+            u"⟪End must be > Start⟫"
+        )
 
     def test_save_to_db(self):
         e = Exception("")

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -61,11 +63,11 @@ class describe_bosparanian_time_type(UnitTestCase):
             self.time_type.format_delta(BosparanianDelta.from_seconds(
                 60*60 + 60 + 40
             )),
-            "1 #hour# 1 #minute# 40 #seconds#"
+            u"1 ⟪hour⟫ 1 ⟪minute⟫ 40 ⟪seconds⟫"
         )
         self.assertEqual(
             self.time_type.format_delta(BosparanianDelta.from_days(366)),
-            "1 #year# 1 #day#"
+            u"1 ⟪year⟫ 1 ⟪day⟫"
         )
 
     def setUp(self):

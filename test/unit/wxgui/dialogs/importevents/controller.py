@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -64,7 +66,7 @@ class describe_import_events_dialog_controller(describe_import_events_dialog):
         self.view.GetFilePath.return_value = "\n"
         event = Mock(Event)
         self.controller.on_file_path_changed(event)
-        self.view.SetError.assert_called_with("#File does not exist.#")
+        self.view.SetError.assert_called_with(u"⟪File does not exist.⟫")
         self.assertEqual(self.controller._db_to_import, None)
 
     def test_on_filepath_changed_with_non_timeline_file_generates_error_message(self):
@@ -73,7 +75,9 @@ class describe_import_events_dialog_controller(describe_import_events_dialog):
         self.view.GetFilePath.return_value = path
         event = Mock(Event)
         self.controller.on_file_path_changed(event)
-        self.view.SetError.assert_called_with("#Unable to load events: #Unable to open timeline '.\\dummy.txt'.#\n\n#Unknown format.#.#")
+        self.view.SetError.assert_called_with(
+            u"⟪Unable to load events: ⟪Unable to open timeline '.\\dummy.txt'.⟫\n\n⟪Unknown format.⟫.⟫"
+        )
         self.assertEqual(self.controller._db_to_import, None)
 
     def test_on_filepath_changed_different_timeline_timetypes_generates_error_message(self):
@@ -81,14 +85,18 @@ class describe_import_events_dialog_controller(describe_import_events_dialog):
         self.view.GetFilePath.return_value = ":tutorial:"
         event = Mock(Event)
         self.controller.on_file_path_changed(event)
-        self.view.SetError.assert_called_with("#The selected timeline has a different time type.#")
+        self.view.SetError.assert_called_with(
+            u"⟪The selected timeline has a different time type.⟫"
+        )
 
     def test_on_filepath_changed_ok_generates_success_message(self):
         self.db.get_time_type.return_value = NumTimeType()
         self.view.GetFilePath.return_value = ":numtutorial:"
         event = Mock(Event)
         self.controller.on_file_path_changed(event)
-        self.view.SetSuccess.assert_called_with("#15 events will be imported.#")
+        self.view.SetSuccess.assert_called_with(
+            u"⟪15 events will be imported.⟫"
+        )
         self.assertTrue(self.controller._db_to_import is not None)
 
     def test_on_ok_clicked_and_no_db(self):

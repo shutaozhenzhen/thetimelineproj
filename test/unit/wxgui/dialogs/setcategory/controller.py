@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -103,12 +105,18 @@ class describe_set_category_dialog(UnitTestCase):
         self.controller.on_init(self.db, [])
         self.view.GetSelectedCategory.return_value = None
         self.controller.on_ok_clicked(None)
-        self.view.DisplayErrorMessage.assert_called_with("#You must select a category!#")
+        self.view.DisplayErrorMessage.assert_called_with(
+            u"⟪You must select a category!⟫"
+        )
 
     def test_title_set_for_no_selected_events(self):
         self.controller.on_init(self.db, [])
-        self.view.SetTitle.assert_called_with("#Set Category on events without category#")
+        self.view.SetTitle.assert_called_with(
+            u"⟪Set Category on events without category⟫"
+        )
 
     def test_title_set_for_selected_events(self):
         self.controller.on_init(self.db, [1])
-        self.view.SetTitle.assert_called_with("#Set Category on selected events#")
+        self.view.SetTitle.assert_called_with(
+            u"⟪Set Category on selected events⟫"
+        )
