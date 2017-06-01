@@ -18,10 +18,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
+import os
+
 import wx
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.config.arguments import ApplicationArguments
+
+
+STDERR = 'stderr.txt'
 
 
 class Getter():
@@ -37,11 +43,13 @@ class SP():
 class describe_application_arguments(UnitTestCase):
 
     def test_app_has_default_config_path(self):
-        sp = wx.StandardPaths
-        wx.StandardPaths = SP()
-        self.args.parse_from([])
-        self.assertEquals('FooBar\\.thetimelineproj.cfg', self.args.get_config_file_path())
-        wx.StandardPaths = sp
+        try:
+            sp = wx.StandardPaths
+            wx.StandardPaths = SP()
+            self.args.parse_from([])
+            self.assertEquals('FooBar\\.thetimelineproj.cfg', self.args.get_config_file_path())
+        finally:
+            wx.StandardPaths = sp
 
     def test_can_return_path_to_cofig_file_(self):
         self.args.parse_from(['-c', 'c:\\AppData\\.thetimelineproj.cfg'])
@@ -72,5 +80,24 @@ class describe_application_arguments(UnitTestCase):
         self.args.parse_from([FILE1, FILE2])
         self.assertEquals([FILE1, FILE2], self.args.get_files())
 
+    def test_invalid_option_causes_system_exit(self):
+        try:
+            e = sys.exit
+            s = sys.stderr
+            sys.exit = self.my_exit
+            sys.stderr = open(STDERR, 'w')
+            self.args.parse_from(['--invalid'])
+            self.assertEqual(2, self.status)
+        finally:
+            sys.exit = e
+            sys.stderr = s
+
+    def my_exit(self, status):
+        self.status = status
+
     def setUp(self):
         self.args = ApplicationArguments()
+
+    def tearDown(self):
+        if os.path.exists(STDERR):
+            os.remove(STDERR)
