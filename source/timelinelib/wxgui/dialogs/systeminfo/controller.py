@@ -48,13 +48,7 @@ class SystemInfoDialogController(Controller):
         return " ".join(locale.getlocale(locale.LC_TIME))
 
     def _get_config_file(self, parent):
-        if parent:
-            return parent.config.path
-        else:
-            return '?'
+        return parent.config.path if parent is not None else '?'
 
     def _get_date_format(self, parent):
-        if parent:
-            return parent.config.get_date_format()
-        else:
-            return '?'
+        return parent.config.get_date_format() if parent is not None else '?'
