@@ -59,6 +59,7 @@ class describe_application_arguments(UnitTestCase):
         self.args.parse_from([])
         self.assertFalse(self.args.has_files())
         self.assertEquals([], self.args.get_files())
+        self.assertTrue(self.args.get_first_file() is None)
 
     def test_timeline_file_can_be_specified_at_start(self):
         FILE = 'test.timeline'
