@@ -19,6 +19,9 @@
 import wx
 
 
+FONT_FACE_ENCODING = "utf-8"
+
+
 class Font(wx.Font):
 
     def __init__(self, point_size=12, family=wx.FONTFAMILY_DEFAULT, style=wx.FONTSTYLE_NORMAL,
@@ -56,9 +59,10 @@ class Font(wx.Font):
             self.Style,
             self.Weight,
             self.GetUnderlined(),
-            self.FaceName,
+            self.FaceName.encode(FONT_FACE_ENCODING),
             self.Encoding,
-            self.WxColor)
+            self.WxColor,
+        )
 
     def increment(self, step=2):
         self.PointSize += step
@@ -92,10 +96,33 @@ font_cache = {}
 def deserialize_font(serialized_font):
     if serialized_font not in font_cache:
         bool_map = {"True": True, "False": False}
-        point_size, family, style, weight, underlined, facename, encoding, color = serialized_font.split(":")
+        (
+            point_size,
+            family,
+            style,
+            weight,
+            underlined,
+            facename,
+            encoding,
+            color,
+        ) = serialized_font.split(":")
         color_args = color[1:-1].split(",")
-        wxcolor = wx.Colour(int(color_args[0]), int(color_args[1]), int(color_args[2]), int(color_args[3]))
-        font = Font(int(point_size), int(family), int(style), int(weight), bool_map[underlined], facename, int(encoding), wxcolor)
+        wxcolor = wx.Colour(
+            int(color_args[0]),
+            int(color_args[1]),
+            int(color_args[2]),
+            int(color_args[3])
+        )
+        font = Font(
+            int(point_size),
+            int(family),
+            int(style),
+            int(weight),
+            bool_map[underlined],
+            facename.decode(FONT_FACE_ENCODING),
+            int(encoding),
+            wxcolor
+        )
         font_cache[serialized_font] = font
     return font_cache[serialized_font]
 
