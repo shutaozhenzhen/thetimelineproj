@@ -24,6 +24,10 @@ Fixed crash reports and bugs:
   position 0: ordinal not in range(128)``
   This happened when the BC label contained non-ascii characters.
 
+* ``UnicodeEncodeError: 'ascii' codec can't encode characters in position
+  18-21: ordinal not in range(128)``
+  This happened when a font face name contained non-ascii characters.
+
 Version 1.14.0
 --------------
 
