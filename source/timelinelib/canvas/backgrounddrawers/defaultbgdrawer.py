@@ -58,7 +58,7 @@ class DefaultBackgroundDrawer(object):
 
     def _draw_timeperiod_rect(self, timeperiod, h, colour, Offset):
         x, width = self._get_timeperiod_measures(timeperiod)
-        self._draw_backgound_rect(x, h, width, colour, Offset)
+        self._draw_backgound_rect(x, h, max(1, width), colour, Offset)
 
     def _draw_backgound_rect(self, x, h, width, colour, Offset):
         self._set_color(self.drawer.dc, colour)

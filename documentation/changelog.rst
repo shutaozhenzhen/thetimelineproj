@@ -18,6 +18,8 @@ GUI:
 
 * Date format is now displayed in the System Info dialog, as configured.
 
+* Era rectangle is always visible, even when zooming out far.
+
 Fixed crash reports and bugs:
 
 * ``UnicodeEncodeError: 'ascii' codec can't encode character u'\u03c0' in
