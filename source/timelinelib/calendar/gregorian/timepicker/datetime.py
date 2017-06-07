@@ -85,26 +85,29 @@ class GregorianDateTimePicker(wx.Panel):
         return GregorianDatePicker(self, self.config.get_date_formatter())
 
     def _date_button_on_click(self, evt):
+        ERROR_MESSAGE = _("The date control can't handle the given date")
         try:
             wx_date = self.controller.date_tuple_to_wx_date(self.date_picker.GetGregorianDate())
         except ValueError:
             wx_date = wx.DateTime.Now()
-        try:
-            calendar_popup = CalendarPopup(self, wx_date, self.config)
         except wx._core.PyAssertionError:
-            display_information_message('GUI control limitation',
-                                        'The date control cannot handle the given date')
+            display_information_message('wx.DateTime limitation', ERROR_MESSAGE)
         else:
-            calendar_popup.Bind(wx.calendar.EVT_CALENDAR_SEL_CHANGED,
-                                self._calendar_on_date_changed)
-            calendar_popup.Bind(wx.calendar.EVT_CALENDAR,
-                                self._calendar_on_date_changed_dclick)
-            btn = evt.GetEventObject()
-            pos = btn.ClientToScreen((0, 0))
-            sz = btn.GetSize()
-            calendar_popup.Position(pos, (0, sz[1]))
-            calendar_popup.Popup()
-            self.calendar_popup = calendar_popup
+            try:
+                calendar_popup = CalendarPopup(self, wx_date, self.config)
+            except wx._core.PyAssertionError:
+                display_information_message('GUI control limitation', ERROR_MESSAGE)
+            else:
+                calendar_popup.Bind(wx.calendar.EVT_CALENDAR_SEL_CHANGED,
+                                    self._calendar_on_date_changed)
+                calendar_popup.Bind(wx.calendar.EVT_CALENDAR,
+                                    self._calendar_on_date_changed_dclick)
+                btn = evt.GetEventObject()
+                pos = btn.ClientToScreen((0, 0))
+                sz = btn.GetSize()
+                calendar_popup.Position(pos, (0, sz[1]))
+                calendar_popup.Popup()
+                self.calendar_popup = calendar_popup
 
     def _out_of_date_range(self, wx_date):
         """It's is a limitation in the wx.calendar.CalendarCtrl class
