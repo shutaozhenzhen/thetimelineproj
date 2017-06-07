@@ -89,12 +89,12 @@ class GregorianDateTimePicker(wx.Panel):
             wx_date = self.controller.date_tuple_to_wx_date(self.date_picker.GetGregorianDate())
         except ValueError:
             wx_date = wx.DateTime.Now()
-        if self._out_of_date_range(wx_date):
-            display_information_message('GUI control limittaion',
-                                        'The date control can only take dates >= 1601-01-01')
-
-        else:
+        try:
             calendar_popup = CalendarPopup(self, wx_date, self.config)
+        except wx._core.PyAssertionError:
+            display_information_message('GUI control limitation',
+                                        'The date control cannot handle the given date')
+        else:
             calendar_popup.Bind(wx.calendar.EVT_CALENDAR_SEL_CHANGED,
                                 self._calendar_on_date_changed)
             calendar_popup.Bind(wx.calendar.EVT_CALENDAR,
