@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.framework import Controller
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.milestone import Milestone
+from timelinelib.wxgui.framework import Controller
 from timelinelib.wxgui.utils import display_error_message
 
 
@@ -33,7 +33,7 @@ class EditMilestoneDialogController(Controller):
         self._time_type = db.time_type
         if milestone is None:
             self._new_milestone = True
-            self._milestone = Milestone(db, self._time_type.now(), "")
+            self._milestone = Milestone(self._time_type.now(), "")
             self._milestone.set_description("")
         else:
             self._new_milestone = False

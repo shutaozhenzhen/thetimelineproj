@@ -233,7 +233,7 @@ class Parser(object):
             cid, text = self._extract_subid(text)
             event = Subevent(start, end, text, category, cid=cid, locked=locked, ends_today=ends_today)
         elif milestone:
-            event = Milestone(self.db, start, text)
+            event = Milestone(start, text)
             event.set_category(category)
         else:
             if self._text_starts_with_added_space(text):

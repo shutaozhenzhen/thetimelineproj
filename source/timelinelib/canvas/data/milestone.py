@@ -29,7 +29,7 @@ DEFAULT_COLOR = (255, 255, 128)
 
 class Milestone(Event):
 
-    def __init__(self, db, start_time, text):
+    def __init__(self, start_time, text):
         Event.__init__(self, start_time, start_time, text)
         self.set_default_color(DEFAULT_COLOR)
 
@@ -43,7 +43,8 @@ class Milestone(Event):
         # Objects of type datetime are immutable.
         new_event = Milestone(
             self.get_time_period().start_time,
-            self.get_time_period().start_time, self.get_text())
+            self.get_text()
+        )
         # Description is immutable
         new_event.set_data("description", self.get_data("description"))
         new_event.set_default_color(self.get_default_color())

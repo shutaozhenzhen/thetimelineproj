@@ -36,9 +36,10 @@ class describe_milestone_editor_dialog(UnitTestCase):
         db = Mock(MemoryDB)
         db.time_type = GregorianTimeType()
         db.get_categories.return_value = []
-        milestone = Milestone(db,
-                              human_time_to_gregorian("11 Jul 2014"),
-                              "Milestone:1")
+        milestone = Milestone(
+            human_time_to_gregorian("11 Jul 2014"),
+            "Milestone:1"
+        )
         milestone.set_description("a milestone")
         config = Mock(Config)
         config.get_date_formatter.return_value = GregorianDateFormatter()
