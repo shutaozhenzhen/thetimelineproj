@@ -29,16 +29,34 @@ from timelinelib.config.paths import ICONS_DIR
 from timelinelib.wxgui.utils import display_information_message
 
 
+ERROR_MESSAGE = _("The date control can't handle the given date")
+
+
 class GregorianDateTimePicker(wx.Panel):
 
     def __init__(self, parent, show_time=True, config=None, on_change=None):
         wx.Panel.__init__(self, parent)
         self.config = config
         self._create_gui()
-        self.controller = GregorianDateTimePickerController(
-            self.date_picker, self.time_picker, GregorianTimeType().now, on_change)
+        self.controller = GregorianDateTimePickerController(self,
+                                                            self.date_picker,
+                                                            self.time_picker,
+                                                            GregorianTimeType().now, on_change)
         self.show_time(show_time)
         self.parent = parent
+
+    def PopupCalendar(self, evt, wx_date):
+        calendar_popup = CalendarPopup(self, wx_date, self.config)
+        calendar_popup.Bind(wx.calendar.EVT_CALENDAR_SEL_CHANGED,
+                            self._calendar_on_date_changed)
+        calendar_popup.Bind(wx.calendar.EVT_CALENDAR,
+                            self._calendar_on_date_changed_dclick)
+        btn = evt.GetEventObject()
+        pos = btn.ClientToScreen((0, 0))
+        sz = btn.GetSize()
+        calendar_popup.Position(pos, (0, sz[1]))
+        calendar_popup.Popup()
+        self.calendar_popup = calendar_popup
 
     def on_return(self):
         try:
@@ -85,29 +103,7 @@ class GregorianDateTimePicker(wx.Panel):
         return GregorianDatePicker(self, self.config.get_date_formatter())
 
     def _date_button_on_click(self, evt):
-        ERROR_MESSAGE = _("The date control can't handle the given date")
-        try:
-            wx_date = self.controller.date_tuple_to_wx_date(self.date_picker.GetGregorianDate())
-        except ValueError:
-            wx_date = wx.DateTime.Now()
-        except wx._core.PyAssertionError:
-            display_information_message('wx.DateTime limitation', ERROR_MESSAGE)
-        else:
-            try:
-                calendar_popup = CalendarPopup(self, wx_date, self.config)
-            except wx._core.PyAssertionError:
-                display_information_message('GUI control limitation', ERROR_MESSAGE)
-            else:
-                calendar_popup.Bind(wx.calendar.EVT_CALENDAR_SEL_CHANGED,
-                                    self._calendar_on_date_changed)
-                calendar_popup.Bind(wx.calendar.EVT_CALENDAR,
-                                    self._calendar_on_date_changed_dclick)
-                btn = evt.GetEventObject()
-                pos = btn.ClientToScreen((0, 0))
-                sz = btn.GetSize()
-                calendar_popup.Position(pos, (0, sz[1]))
-                calendar_popup.Popup()
-                self.calendar_popup = calendar_popup
+        self.controller.date_button_on_click(evt)
 
     def _out_of_date_range(self, wx_date):
         """It's is a limitation in the wx.calendar.CalendarCtrl class
@@ -126,7 +122,8 @@ class GregorianDateTimePicker(wx.Panel):
 
 class GregorianDateTimePickerController(object):
 
-    def __init__(self, date_picker, time_picker, now_fn, on_change):
+    def __init__(self, view, date_picker, time_picker, now_fn, on_change):
+        self._view = view
         self.date_picker = date_picker
         self.time_picker = time_picker
         self.now_fn = now_fn
@@ -154,6 +151,20 @@ class GregorianDateTimePickerController(object):
 
     def wx_date_to_date_tuple(self, wx_date):
         return (wx_date.Year, wx_date.Month + 1, wx_date.Day)
+
+    def date_button_on_click(self, evt):
+        try:
+            dt = self.date_picker.GetGregorianDate()
+            wx_date = self.date_tuple_to_wx_date(dt)
+        except ValueError:
+            wx_date = wx.DateTime.Now()
+        except wx._core.PyAssertionError:
+            display_information_message('wx.DateTime limitation', ERROR_MESSAGE)
+        else:
+            try:
+                self._view.PopupCalendar(evt, wx_date)
+            except wx._core.PyAssertionError:
+                display_information_message('GUI control limitation', ERROR_MESSAGE)
 
 
 class CalendarPopup(wx.PopupTransientWindow):
