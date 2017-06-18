@@ -16,10 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
-
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.milestone import Milestone
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
@@ -37,8 +33,7 @@ class describe_milestone(UnitTestCase):
         self.assertTrue(self.milestone.is_milestone())
 
     def setUp(self):
-        self.db = Mock(MemoryDB)
-        self.db.time_type = GregorianTimeType()
-        self.milestone = Milestone(self.db,
-                                   human_time_to_gregorian("11 Jul 2014"),
-                                   "a day in my life")
+        self.milestone = Milestone(
+            human_time_to_gregorian("11 Jul 2014"),
+            "a day in my life"
+        )
