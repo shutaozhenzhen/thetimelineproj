@@ -47,6 +47,28 @@ class ViewProperties(Observable):
         self.legend_pos = 0
         self._hide_events_done = False
         self._all_events = []
+        self._event_highlight_counters = {}
+
+    def is_highlighted(self, event):
+        return event.get_id() in self._event_highlight_counters
+
+    def has_higlights(self):
+        return len(self._event_highlight_counters) > 0
+
+    def add_highlight(self, event, clear):
+        if clear:
+            self._event_highlight_counters.clear()
+        self._event_highlight_counters[event.get_id()] = 0
+
+    def get_highlight_count(self, event):
+        return self._event_highlight_counters[event.get_id()]
+
+    def tick_highlights(self, limit):
+        self._event_highlight_counters = {
+            event_id: count + 1
+            for event_id, count in self._event_highlight_counters.iteritems()
+            if count < limit
+        }
 
     @property
     def legend_pos(self):
@@ -107,6 +129,7 @@ class ViewProperties(Observable):
         self.hidden_categories = []
         self.period_selection = None
         self.displayed_period = None
+        self._event_highlight_counters = {}
         self._notify()
 
     def change_hovered_event(self, event):

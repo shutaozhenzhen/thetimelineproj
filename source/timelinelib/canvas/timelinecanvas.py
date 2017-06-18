@@ -287,19 +287,12 @@ class TimelineCanvas(wx.Panel):
     def _on_size(self, evt):
         self.controller.window_resized()
 
-    def highligt_event(self, event):
-        TIMER_ID = 100
-        TIMER_INTERVAL_MS = 180
-        event.highlight(True)
-        self._highlight_count = 0
-        self.highlight_event = event
-        self._highlight_timer.Start(TIMER_INTERVAL_MS)
-        wx.EVT_TIMER(self, TIMER_ID, self._on_highlight_timer)
+    def highligt_event(self, event, clear=False):
+        self.controller.view_properties.add_highlight(event, clear=clear)
+        self._highlight_timer.Start(milliseconds=180)
 
     def _on_highlight_timer(self, evt):
-        MAX_NBR_OF_TIMER_INTERVALS = 15
-        self._highlight_count += 1
-        if self._highlight_count > MAX_NBR_OF_TIMER_INTERVALS:
-            self._highlight_timer.Stop()
-            self.highlight_event.highlight(False)
         self.redraw_timeline()
+        self.controller.view_properties.tick_highlights(limit=15)
+        if not self.controller.view_properties.has_higlights():
+            self._highlight_timer.Stop()

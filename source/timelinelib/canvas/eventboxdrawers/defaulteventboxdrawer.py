@@ -76,11 +76,10 @@ class DefaultEventBoxDrawer(object):
 
     def _get_pen(self, dc, event):
         pen = self._get_thin_border_pen(event)
-        if event.is_highlighted():
-            if event.get_highlight_count() % 2 == 0:
+        if self.view_properties.is_highlighted(event):
+            if self.view_properties.get_highlight_count(event) % 2 == 0:
                 dc.DestroyClippingRegion()
                 pen = self._get_thick_border_pen(event)
-            event.increment_highlight_count()
         return pen
 
     def _draw_fuzzy_edges(self, dc, rect, event):
