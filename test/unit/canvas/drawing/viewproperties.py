@@ -123,3 +123,61 @@ class describe_event_filtering(Base):
         self.assertEqual(self.view_properties.filter_events(events), events)
         self.view_properties.set_category_visible(self.work, False)
         self.assertEqual(self.view_properties.filter_events(events), [])
+
+
+class describe_highlight(Base):
+
+    def test_can_add_highlight_to_events(self):
+        self.assertFalse(self.view_properties.is_highlighted(self.event1))
+        self.assertFalse(self.view_properties.is_highlighted(self.event2))
+        self.assertFalse(self.view_properties.has_higlights())
+        self.view_properties.add_highlight(self.event1, clear=False)
+        self.view_properties.add_highlight(self.event2, clear=False)
+        self.assertTrue(self.view_properties.is_highlighted(self.event1))
+        self.assertTrue(self.view_properties.is_highlighted(self.event2))
+        self.assertTrue(self.view_properties.has_higlights())
+
+    def test_can_clear_when_adding_highlight_to_event(self):
+        self.view_properties.add_highlight(self.event1, clear=False)
+        self.view_properties.add_highlight(self.event2, clear=True)
+        self.assertFalse(self.view_properties.is_highlighted(self.event1))
+        self.assertTrue(self.view_properties.is_highlighted(self.event2))
+
+    def test_can_tick_highlights(self):
+        self.view_properties.add_highlight(self.event1, clear=False)
+        self.assertEqual(
+            self.view_properties.get_highlight_count(self.event1),
+            0
+        )
+        self.view_properties.tick_highlights(10)
+        self.assertEqual(
+            self.view_properties.get_highlight_count(self.event1),
+            1
+        )
+
+    def test_tick_removes_highlight_when_limit_is_passed(self):
+        self.view_properties.add_highlight(self.event1, clear=False)
+        self.assertEqual(
+            self.view_properties.get_highlight_count(self.event1),
+            0
+        )
+        self.view_properties.tick_highlights(5)
+        self.view_properties.tick_highlights(5)
+        self.view_properties.tick_highlights(5)
+        self.view_properties.tick_highlights(5)
+        self.view_properties.tick_highlights(5)
+        self.view_properties.tick_highlights(5)
+        self.assertFalse(self.view_properties.is_highlighted(self.event1))
+
+    def test_clear_db_specific_removes_highligt(self):
+        self.view_properties.add_highlight(self.event1, clear=False)
+        self.assertTrue(self.view_properties.is_highlighted(self.event1))
+        self.view_properties.clear_db_specific()
+        self.assertFalse(self.view_properties.is_highlighted(self.event1))
+
+    def setUp(self):
+        Base.setUp(self)
+        self.event1 = an_event_with(text="1")
+        self.event1.set_id(get_process_unique_id())
+        self.event2 = an_event_with(text="2")
+        self.event2.set_id(get_process_unique_id())

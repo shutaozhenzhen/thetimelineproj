@@ -30,6 +30,8 @@ Fixed crash reports and bugs:
   18-21: ordinal not in range(128)``
   This happened when a font face name contained non-ascii characters.
 
+* Events highlighted during search sometimes get stuck in highlighted state.
+
 Version 1.14.0
 --------------
 

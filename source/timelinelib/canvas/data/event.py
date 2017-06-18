@@ -37,8 +37,6 @@ class Event(TimelineItem):
         self.id = None
         self.update(start_time, end_time, text, category)
         self._milestone = False
-        self._highlighted = False
-        self._highlight_count = 0
         self.data = {}
 
     def __eq__(self, other):
@@ -294,19 +292,6 @@ class Event(TimelineItem):
 
     def get_milestone(self):
         return self._milestone
-
-    def highlight(self, value):
-        self._highlighted = value
-        self._highlight_count = 0
-
-    def is_highlighted(self):
-        return self._highlighted
-
-    def get_highlight_count(self):
-        return self._highlight_count
-
-    def increment_highlight_count(self):
-        self._highlight_count += 1
 
 
 def clone_event_list(eventlist):
