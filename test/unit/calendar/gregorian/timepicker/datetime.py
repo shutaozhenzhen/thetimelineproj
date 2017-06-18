@@ -22,6 +22,7 @@ from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.timepicker.date import GregorianDatePicker
 from timelinelib.calendar.gregorian.timepicker.datetime import CalendarPopup
 from timelinelib.calendar.gregorian.timepicker.datetime import CalendarPopupController
+from timelinelib.calendar.gregorian.timepicker.datetime import GregorianDateTimePicker
 from timelinelib.calendar.gregorian.timepicker.datetime import GregorianDateTimePickerController
 from timelinelib.calendar.gregorian.timepicker.datetime import GregorianTimePicker
 from timelinelib.test.cases.unit import UnitTestCase
@@ -30,11 +31,12 @@ from timelinelib.test.cases.unit import UnitTestCase
 class AGregorianDateTimePicker(UnitTestCase):
 
     def setUp(self):
+        self.view = Mock(GregorianDateTimePicker)
         self.date_picker = Mock(GregorianDatePicker)
         self.time_picker = Mock(GregorianTimePicker)
         self.now_fn = Mock()
         self.controller = GregorianDateTimePickerController(
-            self.date_picker, self.time_picker, self.now_fn, None)
+            self.view, self.date_picker, self.time_picker, self.now_fn, None)
 
     def testDateControlIsAssignedDatePartFromSetValue(self):
         self.controller.set_value(GregorianDateTime(2010, 11, 20, 15, 33, 0).to_time())
