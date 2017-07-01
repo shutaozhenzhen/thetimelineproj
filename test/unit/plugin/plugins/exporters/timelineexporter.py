@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+
 import os
 
 from mock import Mock
@@ -24,7 +25,7 @@ from mock import Mock
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.plugin.plugins.exporters.timelineexporter import CsvExporter
 from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExporter
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import an_event_with
 
@@ -32,36 +33,15 @@ from timelinelib.test.utils import an_event_with
 CSV_FILE = "test.csv"
 
 
-class TimelineExporterTestCase(UnitTestCase):
+class TimelineExporterTestCase(TmpDirTestCase):
 
     def setUp(self):
+        TmpDirTestCase.setUp(self)
         db = MemoryDB()
         db.save_event(an_event_with(text="foo\nbar", time="11 Jul 2014 10:11"))
         db.save_category(a_category_with("Cat\"1\""))
         self.plugin = TimelineExporter()
         self.plugin.timeline = db
-        self.open_tempfile_for_writing()
-
-    def tearDown(self):
-        self.close_tempfile()
-        os.remove(CSV_FILE)
-        UnitTestCase.tearDown(self)
-
-    def open_tempfile_for_writing(self):
-        self.tempfile = open(CSV_FILE, "w")
-
-    def open_tempfile_for_reading(self):
-        self.tempfile = open(CSV_FILE, "r")
-
-    def close_tempfile(self):
-        self.tempfile.close()
-
-    def get_tempfile_content(self):
-        self.close_tempfile()
-        self.open_tempfile_for_reading()
-        content = self.tempfile.read()
-        self.close_tempfile()
-        return content
 
     def simulate_dialog_entries(self, export_events, event_fields, export_categories, category_fields):
         self.dlg = Mock()
@@ -79,21 +59,25 @@ class describe_timeline_exporter(TimelineExporterTestCase):
         self.assertTrue(self.plugin.isplugin())
 
     def test_event_csv_data_saved_in_file(self):
-        self.open_tempfile_for_writing()
         self.simulate_dialog_entries(True, ["Text", "Start"], False, [])
-        CsvExporter(self.plugin.timeline, CSV_FILE, self.dlg).export()
-        content = self.get_tempfile_content()
+        CsvExporter(
+            self.plugin.timeline,
+            self.get_tmp_path(CSV_FILE),
+            self.dlg
+        ).export()
         self.assertEqual(
-            u"\"⟪Events⟫\";\n\"Text\";\"Start\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n".encode("utf-8"),
-            content
+            self.read(CSV_FILE),
+            u"\"⟪Events⟫\";\n\"Text\";\"Start\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n".encode("utf-8")
         )
 
     def test_category_csv_data_saved_in_file(self):
-        self.open_tempfile_for_writing()
         self.simulate_dialog_entries(False, [], True, ["Name", "Color"])
-        CsvExporter(self.plugin.timeline, CSV_FILE, self.dlg).export()
-        content = self.get_tempfile_content()
+        CsvExporter(
+            self.plugin.timeline,
+            self.get_tmp_path(CSV_FILE),
+            self.dlg
+        ).export()
         self.assertEqual(
-            u"\"⟪Categories⟫\";\n\"Name\";\"Color\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n".encode("utf-8"),
-            content
+            self.read(CSV_FILE),
+            u"\"⟪Categories⟫\";\n\"Name\";\"Color\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n".encode("utf-8")
         )
