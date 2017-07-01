@@ -35,10 +35,11 @@ CSV_FILE = "test.csv"
 class TimelineExporterTestCase(UnitTestCase):
 
     def setUp(self):
+        db = MemoryDB()
+        db.save_event(an_event_with(text="foo\nbar", time="11 Jul 2014 10:11"))
+        db.save_category(a_category_with("Cat\"1\""))
         self.plugin = TimelineExporter()
-        self.plugin.timeline = MemoryDB()
-        self.plugin.timeline._events._events.append(an_event_with(text="foo\nbar", time="11 Jul 2014 10:11"))
-        self.plugin.timeline._events._categories.append(a_category_with("Cat\"1\""))
+        self.plugin.timeline = db
         self.open_tempfile_for_writing()
 
     def tearDown(self):
