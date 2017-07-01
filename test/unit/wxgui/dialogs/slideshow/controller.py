@@ -25,17 +25,16 @@ from mock import Mock
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.event import Event
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.dialogs.slideshow.controller import SlideshowDialogController
 from timelinelib.wxgui.dialogs.slideshow.view import SlideshowDialog
 
 
-PATH = "c:\\temp\\zyx"
 FILE = "foo.txt"
 
 
-class describe_slideshow_dialog_controller(UnitTestCase):
+class describe_slideshow_dialog_controller(TmpDirTestCase):
 
     def test_is_initialized(self):
         self.assertEqual(self.db, self.controller._db)
@@ -54,33 +53,33 @@ class describe_slideshow_dialog_controller(UnitTestCase):
         )
 
     def test_creation_of_target_directory_can_be_rejected(self):
-        self.view.GetTargetDir.return_value = PATH
+        self.view.GetTargetDir.return_value = self.PATH
         self.view.GetUserAck.return_value = False
         self.simuate_user_clicks_ok()
-        self.assertFalse(os.path.exists(PATH))
+        self.assertFalse(os.path.exists(self.PATH))
         self.assertEqual(0, self.view.EndModalOk.call_count)
 
     def test_creation_of_target_directory_can_be_accepted(self):
         vp = Mock()
         vp.filter_events.return_value = []
         self.canvas.get_view_properties.return_value = vp
-        self.view.GetTargetDir.return_value = PATH
+        self.view.GetTargetDir.return_value = self.PATH
         self.view.GetUserAck.return_value = True
         self.simuate_user_clicks_ok()
-        self.assertTrue(os.path.exists(PATH))
+        self.assertTrue(os.path.exists(self.PATH))
         self.view.EndModalOk.assert_called_with()
 
     def test_overwrite_of_target_directory_can_be_rejected(self):
         vp = Mock()
         vp.filter_events.return_value = []
         self.canvas.get_view_properties.return_value = vp
-        os.mkdir(PATH)
-        f = open(os.path.join(PATH, FILE), "w")
+        os.mkdir(self.PATH)
+        f = open(os.path.join(self.PATH, FILE), "w")
         f.close()
-        self.view.GetTargetDir.return_value = PATH
+        self.view.GetTargetDir.return_value = self.PATH
         self.view.GetUserAck.return_value = False
         self.simuate_user_clicks_ok()
-        self.assertTrue(os.path.exists(PATH))
+        self.assertTrue(os.path.exists(self.PATH))
         self.assertEqual(0, self.view.EndModalOk.call_count)
 
     def test_overwrite_of_target_directory_can_be_accepted(self):
@@ -90,14 +89,14 @@ class describe_slideshow_dialog_controller(UnitTestCase):
         vp = Mock()
         vp.filter_events.return_value = [event, ]
         self.canvas.get_view_properties.return_value = vp
-        os.mkdir(PATH)
-        f = open(os.path.join(PATH, FILE), "w")
+        os.mkdir(self.PATH)
+        f = open(os.path.join(self.PATH, FILE), "w")
         f.close()
-        self.view.GetTargetDir.return_value = PATH
+        self.view.GetTargetDir.return_value = self.PATH
         self.view.GetUserAck.return_value = True
         self.simuate_user_clicks_ok()
-        self.assertTrue(os.path.exists(PATH))
-        self.view.DisplayStartPage.assert_called_with(os.path.join(PATH, "page_1.html"))
+        self.assertTrue(os.path.exists(self.PATH))
+        self.view.DisplayStartPage.assert_called_with(os.path.join(self.PATH, "page_1.html"))
         self.view.EndModalOk.assert_called_with()
 
     def simulate_dialog_init(self, db, canvas):
@@ -112,6 +111,7 @@ class describe_slideshow_dialog_controller(UnitTestCase):
         self.controller.on_start(evt)
 
     def setUp(self):
+        TmpDirTestCase.setUp(self)
         self.db = Mock(MemoryDB)
         self.db.time_type = GregorianTimeType()
         self.start_time = human_time_to_gregorian("1 Jan 2010")
@@ -119,15 +119,7 @@ class describe_slideshow_dialog_controller(UnitTestCase):
         self.view = self._mock_view()
         self.controller = SlideshowDialogController(self.view)
         self.simulate_dialog_init(self.db, self.canvas)
-        if not os.path.exists("c:\\temp"):
-            os.mkdir("c:\\temp")
-
-    def tearDown(self):
-        if os.path.exists(PATH):
-            files = os.listdir(PATH)
-            for f in files:
-                os.remove(os.path.join(PATH, f))
-            os.rmdir(PATH)
+        self.PATH = self.get_tmp_path("zyx")
 
     def _mock_view(self):
         view = Mock(SlideshowDialog)
