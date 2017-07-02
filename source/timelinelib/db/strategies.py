@@ -31,56 +31,20 @@ class DefaultContainerStrategy(ContainerStrategy):
         if subevent not in self.container.events:
             self.container.events.append(subevent)
             subevent.register_container(self.container)
-            if len(self.container.events) == 1:
-                self._set_time_period()
-            else:
+            if len(self.container.events) != 1:
                 self._adjust_time_period(subevent)
 
     def unregister_subevent(self, subevent):
         if subevent not in self.container.events:
             return
         self.container.events.remove(subevent)
-        self._set_time_period()
 
     def update(self, subevent):
         self.unregister_subevent(subevent)
         self.register_subevent(subevent)
-        self._set_time_period()
 
     def allow_ends_today_on_subevents(self):
         return False
-
-    def _set_time_period(self):
-        """
-        The container time period starts where the subevent with the earliest
-        start time, starts, and it ends where the subevent whith the latest end
-        time ends.
-           Subevents   +------+  +--------+    +--+
-           Container   +--------------------------+
-        """
-        if len(self.container.events) == 0:
-            return
-        self._set_start_time(self.container.events[0])
-        self._set_end_time(self.container.events[0])
-        for event in self.container.events:
-            if self._container_starts_after_event(event):
-                self._set_start_time(event)
-            if self._container_ends_before_event(event):
-                self._set_end_time(event)
-
-    def _container_starts_after_event(self, subevent):
-        return (self.container.get_time_period().start_time >
-                subevent.get_time_period().start_time)
-
-    def _container_ends_before_event(self, event):
-        return (self.container.get_time_period().end_time <
-                event.get_time_period().end_time)
-
-    def _set_start_time(self, event):
-        self.container.get_time_period().start_time = event.get_time_period().start_time
-
-    def _set_end_time(self, event):
-        self.container.get_time_period().end_time = event.get_time_period().end_time
 
     def _adjust_time_period(self, new_event):
         """
@@ -95,7 +59,6 @@ class DefaultContainerStrategy(ContainerStrategy):
             events = self._events_overlapped_by_new_event(new_event)
             if len(events) > 0:
                 self._adjust_when_new_event_partially_overlaps_other_events(new_event, events)
-        self._set_time_period()
 
     def _adjust_when_new_event_is_totally_overlapped(self, new_event, event):
         # Situation:
@@ -242,7 +205,6 @@ class ExtendedContainerStrategy(DefaultContainerStrategy):
         if subevent not in self.container.events:
             self.container.events.append(subevent)
             subevent.register_container(self.container)
-            self._set_time_period()
 
     def allow_ends_today_on_subevents(self):
         return True
