@@ -17,6 +17,7 @@
 
 
 from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_STRATEGY
 
 
@@ -33,6 +34,20 @@ class Container(Event):
             self.strategy = timelinelib.db.strategies.ExtendedContainerStrategy(self)
         else:
             self.strategy = timelinelib.db.strategies.DefaultContainerStrategy(self)
+
+    @property
+    def _time_period(self):
+        if len(self.events) == 0:
+            return self.__time_period
+        else:
+            return TimePeriod(
+                min([event.get_start_time() for event in self.events]),
+                max([event.get_end_time() for event in self.events])
+            )
+
+    @_time_period.setter
+    def _time_period(self, value):
+        self.__time_period = value
 
     def __eq__(self, other):
         return (isinstance(other, Container) and

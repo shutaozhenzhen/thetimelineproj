@@ -37,11 +37,12 @@ CONTAINER_ID = 9
 class ContainerStrategiesTestCase(UnitTestCase):
 
     def setUp(self):
-        container = Mock(Container)
-        container.events = []
-        container.cid.return_value = CONTAINER_ID
-        container.get_time_period.return_value = TimePeriod(human_time_to_gregorian("1 Jul 2014"),
-                                                            human_time_to_gregorian("1 Jul 2014"))
+        container = Container(
+            human_time_to_gregorian("1 Jul 2014"),
+            human_time_to_gregorian("1 Jul 2014"),
+            "",
+            cid=CONTAINER_ID
+        )
         self.default_strategy = DefaultContainerStrategy(container)
         self.extended_strategy = ExtendedContainerStrategy(container)
 
@@ -98,7 +99,6 @@ class ContainerStrategiesTestCase(UnitTestCase):
         strategy.register_subevent(subevent)
         strategy.unregister_subevent(subevent)
         self.assertEqual(0, len(strategy.container.events))
-        self.assertEqual(subevent.get_time_period(), strategy.container.get_time_period())
 
     def _a_second_subevent_can_be_unregistred(self, strategy):
         subevent1 = self.a_subevent(time_period=gregorian_period("1 Jan 2014", "10 Jan 2014"))
