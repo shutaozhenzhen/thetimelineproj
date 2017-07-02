@@ -41,10 +41,10 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
                 self.event_periods.insert(0, period_pair)
             else:
                 self.event_periods.append(period_pair)
-        if event.is_container():
-            for subevent in event.events:
-                period_pair = (subevent, subevent.get_time_period())
-                self.event_periods.append(period_pair)
+            if event.is_container():
+                for subevent in event.events:
+                    period_pair = (subevent, subevent.get_time_period())
+                    self.event_periods.append(period_pair)
         assert self.event_periods[0][0] == event_being_dragged
 
     def mouse_moved(self, x, y, alt_down=False):
