@@ -278,14 +278,12 @@ class TutorialTimelineCreator(object):
 
     def add_subevent(self, container, text, description, start_add, end_add=None, hyperlink=None):
         start, end = self.calc_start_end(start_add, end_add)
-        evt = Subevent(start, end, text, self.last_cat)
+        evt = Subevent(start, end, text, self.last_cat, container=container)
         if description:
             evt.set_data("description", description)
         if hyperlink:
             evt.set_hyperlink(hyperlink)
-        evt.set_container_id(self.next_cid - 1)
         self.db.save_event(evt)
-        container.register_subevent(evt)
 
     def calc_start_end(self, start_add, end_add=None):
         start = self.start + start_add
@@ -346,14 +344,12 @@ class NumericTutorialTimelineCreator(object):
 
     def add_subevent(self, container, text, description, start_add, end_add=None, hyperlink=None):
         start, end = self.calc_start_end(start_add, end_add)
-        evt = Subevent(start, end, text, self.last_cat)
+        evt = Subevent(start, end, text, self.last_cat, container=container)
         if description:
             evt.set_data("description", description)
         if hyperlink:
             evt.set_hyperlink(hyperlink)
-        evt.set_container_id(self.next_cid - 1)
         self.db.save_event(evt)
-        container.register_subevent(evt)
 
     def calc_start_end(self, start_add, end_add=None):
         start = self.start + NumDelta(start_add)
