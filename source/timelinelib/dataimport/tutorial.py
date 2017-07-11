@@ -22,229 +22,19 @@ from timelinelib.calendar.num.time import NumDelta
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
+from timelinelib.canvas.data import Era
 from timelinelib.canvas.data import Event
+from timelinelib.canvas.data import Milestone
 from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
-
-
-def create_in_memory_tutorial_db():
-    tutcreator = TutorialTimelineCreator()
-    tutcreator.add_category(_("Welcome"), (255, 80, 80), (0, 0, 0))
-    tutcreator.add_event(
-        _("Welcome to Timeline"),
-        "",
-        tutcreator.get_days_delta(4))
-    tutcreator.add_category(_("Intro"), (250, 250, 20), (0, 0, 0))
-    tutcreator.add_event(
-        _("This event has hyperlinks"),
-        _("Right-click for context menu where the hyperlinks can be accessed."),
-        tutcreator.get_days_delta(11),
-        tutcreator.get_days_delta(19),
-        "https://sourceforge.net/projects/thetimelineproj/;http://thetimelineproj.sourceforge.net/")
-    tutcreator.add_event(
-        _("Hover me!"),
-        _("Hovering events with a triangle shows the event description."),
-        tutcreator.get_days_delta(5))
-    tutcreator.add_category(_("Features"), (100, 100, 250), (250, 250, 20))
-    tutcreator.add_event(
-        _("Scroll"),
-        _("Left click somewhere on the timeline and start dragging."
-          "\n\n"
-          "You can also use the mouse wheel."
-          "\n\n"
-          "You can also middle click with the mouse to center around that point."),
-        tutcreator.get_days_delta(5),
-        tutcreator.get_days_delta(10))
-    container = tutcreator.add_container(
-        _("Container"),
-        _("?"),
-        tutcreator.get_days_delta(5),
-        tutcreator.get_days_delta(10))
-    tutcreator.add_subevent(
-        container,
-        _("Resize me"),
-        _("Container Subevent 1\nClick on the event to get the resize handles"),
-        tutcreator.get_days_delta(5),
-        tutcreator.get_days_delta(10))
-    tutcreator.add_subevent(
-        container,
-        _("Drag me"),
-        _("Container Subevent 2\n\n"
-          "Click on the event to get the drag handle and drag it.\n\n"
-          "To drag the whole container, click on it while holding down the Alt key. "
-          "Keep the Alt key down and find the drag point at the center of the container and drag it."),
-        tutcreator.get_days_delta(12),
-        tutcreator.get_days_delta(18))
-    tutcreator.add_subevent(
-        container,
-        _("View Container demo video"),
-        _("Container Subevent 3\n\n"
-          "Select hyperlink to show demo video.\n\n"
-          "Right-click in the event and select 'Goto URL' in the popup menu and select the first (and only) link"),
-        tutcreator.get_days_delta(19),
-        tutcreator.get_days_delta(24),
-        "http://www.youtube.com/watch?v=dBwEQ3vqB_I")
-
-    tutcreator.add_event(
-        _("Zoom"),
-        _("Hold down Ctrl while scrolling the mouse wheel."
-          "\n\n"
-          "Hold down Shift while dragging with the mouse."),
-        tutcreator.get_days_delta(6),
-        tutcreator.get_days_delta(11))
-    tutcreator.add_event(
-        _("Create event"),
-        _("Double click somewhere on the timeline."
-          "\n\n"
-          "Hold down Ctrl while dragging the mouse to select a period."),
-        tutcreator.get_days_delta(12),
-        tutcreator.get_days_delta(18))
-    tutcreator.add_event(
-        _("Edit event"),
-        _("Double click on an event."),
-        tutcreator.get_days_delta(12),
-        tutcreator.get_days_delta(18))
-    tutcreator.add_event(
-        _("Select event"),
-        _("Click on it."
-          "\n\n"
-          "Hold down Ctrl while clicking events to select multiple."),
-        tutcreator.get_days_delta(20),
-        tutcreator.get_days_delta(25))
-    tutcreator.add_event(
-        _("Delete event"),
-        _("Select events to be deleted and press the Del key."),
-        tutcreator.get_days_delta(19),
-        tutcreator.get_days_delta(24))
-    tutcreator.add_event(
-        _("Resize and move me!"),
-        _("First select me and then drag the handles."),
-        tutcreator.get_days_delta(11),
-        tutcreator.get_days_delta(19))
-    tutcreator.add_category(_("Saving"), (50, 200, 50), (0, 0, 0))
-    tutcreator.add_event(
-        _("Saving"),
-        _("This timeline is stored in memory and modifications to it will not "
-          "be persisted between sessions."
-          "\n\n"
-          "Choose File/New/File Timeline to create a timeline that is saved on "
-          "disk."),
-        tutcreator.get_days_delta(23))
-    return tutcreator.get_db()
-
-
-def create_in_memory_numeric_tutorial_db():
-    tutcreator = NumericTutorialTimelineCreator()
-    tutcreator.add_category(_("Welcome"), (255, 80, 80), (0, 0, 0))
-    tutcreator.add_event(_("Welcome to Timeline"), "",  4)
-    tutcreator.add_category(_("Intro"), (250, 250, 20), (0, 0, 0))
-    tutcreator.add_event(
-        _("This event has hyperlinks"),
-        _("Right-click for context menu where the hyperlinks can be accessed."),
-        11,
-        19,
-        "https://sourceforge.net/projects/thetimelineproj/;http://thetimelineproj.sourceforge.net/")
-    tutcreator.add_event(
-        _("Hover me!"),
-        _("Hovering events with a triangle shows the event description."),
-        5)
-    tutcreator.add_category(_("Features"), (100, 100, 250), (250, 250, 20))
-    tutcreator.add_event(
-        _("Scroll"),
-        _("Left click somewhere on the timeline and start dragging."
-          "\n\n"
-          "You can also use the mouse wheel."
-          "\n\n"
-          "You can also middle click with the mouse to center around that point."),
-        5,
-        10)
-    container = tutcreator.add_container(
-        _("Container"),
-        _("?"),
-        5,
-        10)
-    tutcreator.add_subevent(
-        container,
-        _("Resize me"),
-        _("Container Subevent 1\nClick on the event to get the resize handles"),
-        5,
-        10)
-    tutcreator.add_subevent(
-        container,
-        _("Drag me"),
-        _("Container Subevent 2\n\n"
-          "Click on the event to get the drag handle and drag it.\n\n"
-          "To drag the whole container, click on it while holding down the Alt key. "
-          "Keep the Alt key down and find the drag point at the center of the container and drag it."),
-        12,
-        18)
-    tutcreator.add_subevent(
-        container,
-        _("View Container demo video"),
-        _("Container Subevent 3\n\n"
-          "Select hyperlink to show demo video.\n\n"
-          "Right-click in the event and select 'Goto URL' in the popup menu and select the first (and only) link"),
-        19,
-        24,
-        "http://www.youtube.com/watch?v=dBwEQ3vqB_I")
-
-    tutcreator.add_event(
-        _("Zoom"),
-        _("Hold down Ctrl while scrolling the mouse wheel."
-          "\n\n"
-          "Hold down Shift while dragging with the mouse."),
-        6,
-        11)
-    tutcreator.add_event(
-        _("Create event"),
-        _("Double click somewhere on the timeline."
-          "\n\n"
-          "Hold down Ctrl while dragging the mouse to select a period."),
-        12,
-        18)
-    tutcreator.add_event(
-        _("Edit event"),
-        _("Double click on an event."),
-        12,
-        18)
-    tutcreator.add_event(
-        _("Select event"),
-        _("Click on it."
-          "\n\n"
-          "Hold down Ctrl while clicking events to select multiple."),
-        20,
-        25)
-    tutcreator.add_event(
-        _("Delete event"),
-        _("Select events to be deleted and press the Del key."),
-        19,
-        24)
-    tutcreator.add_event(
-        _("Resize and move me!"),
-        _("First select me and then drag the handles."),
-        11,
-        19)
-    tutcreator.add_category(_("Saving"), (50, 200, 50), (0, 0, 0))
-    tutcreator.add_event(
-        _("Saving"),
-        _("This timeline is stored in memory and modifications to it will not "
-          "be persisted between sessions."
-          "\n\n"
-          "Choose File/New/File Timeline to create a timeline that is saved on "
-          "disk."),
-        23)
-    return tutcreator.get_db()
 
 
 class TutorialTimelineCreator(object):
 
     def __init__(self):
         self.db = MemoryDB()
-        from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-        self.db.time_type = GregorianTimeType()
-        now = GregorianDateTime.from_time(self.db.time_type.now())
-        self.start = self.get_time(now.year, now.month, 1)
-        self.end = self.start + self.get_days_delta(30)
+        self.db.time_type = self.get_time_type()
+        self.start, self.end = self.get_start_end()
         self.db.set_displayed_period(TimePeriod(self.start, self.end))
         self.last_cat = None
         self.next_cid = 1
@@ -258,8 +48,19 @@ class TutorialTimelineCreator(object):
         self.last_cat = Category(name, color, font_color, parent)
         self.db.save_category(self.last_cat)
 
+    def add_milestone(self, time_add, text, label):
+        start, end = self._calc_start_end(time_add, time_add)
+        milestone = Milestone(start, label)
+        milestone.set_data("description", text)
+        self.db.save_event(milestone)
+
+    def add_era(self, start_add, end_add, name):
+        start, end = self._calc_start_end(start_add, end_add)
+        era = Era(start, end, name, color=(250, 250, 230))
+        self.db.save_era(era)
+
     def add_event(self, text, description, start_add, end_add=None, hyperlink=None):
-        start, end = self.calc_start_end(start_add, end_add)
+        start, end = self._calc_start_end(start_add, end_add)
         evt = Event(start, end, text, self.last_cat)
         if description:
             evt.set_data("description", description)
@@ -269,7 +70,7 @@ class TutorialTimelineCreator(object):
         self.db.save_event(evt)
 
     def add_container(self, text, description, start_add, end_add=None):
-        start, end = self.calc_start_end(start_add, end_add)
+        start, end = self._calc_start_end(start_add, end_add)
         container = Container(start, end, text, self.prev_cat)
         container.set_cid(self.next_cid)
         self.next_cid += 1
@@ -277,7 +78,7 @@ class TutorialTimelineCreator(object):
         return container
 
     def add_subevent(self, container, text, description, start_add, end_add=None, hyperlink=None):
-        start, end = self.calc_start_end(start_add, end_add)
+        start, end = self._calc_start_end(start_add, end_add)
         evt = Subevent(start, end, text, self.last_cat, container=container)
         if description:
             evt.set_data("description", description)
@@ -285,78 +86,197 @@ class TutorialTimelineCreator(object):
             evt.set_hyperlink(hyperlink)
         self.db.save_event(evt)
 
-    def calc_start_end(self, start_add, end_add=None):
-        start = self.start + start_add
-        end = start
-        if end_add is not None:
-            end = self.start + end_add
-        return (start, end)
-
     def get_db(self):
         return self.db
 
-    def get_days_delta(self, days):
-        if self.db.get_time_type().get_name() == u"gregoriantime":
-            return GregorianDelta.from_days(days)
+    def _calc_start_end(self, start_add, end_add=None):
+        start = self.start + self.get_delta(start_add)
+        end = start
+        if end_add is not None:
+            end = self.start + self.get_delta(end_add)
+        return (start, end)
 
-    def get_time(self, year, month, day):
-        if self.db.get_time_type().get_name() == u"gregoriantime":
-            return GregorianDateTime(year, month, day, 0, 0, 0).to_time()
+
+class GregorianTutorialTimelineCreator(TutorialTimelineCreator):
+
+    def get_time_type(self):
+        from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+        return GregorianTimeType()
+
+    def get_start_end(self):
+        now = GregorianDateTime.from_time(self.db.time_type.now())
+        start = GregorianDateTime(
+            now.year,
+            now.month,
+            1,
+            0,
+            0,
+            0
+        ).to_time()
+        end = start + self.get_delta(30)
+        return (start, end)
+
+    def get_delta(self, value):
+        return GregorianDelta.from_days(value)
 
 
-class NumericTutorialTimelineCreator(object):
+class NumericTutorialTimelineCreator(TutorialTimelineCreator):
 
-    def __init__(self):
-        self.db = MemoryDB()
+    def get_time_type(self):
         from timelinelib.calendar.num.timetype import NumTimeType
-        self.db.time_type = NumTimeType()
-        self.start = self.db.time_type.now()
-        self.end = self.start + NumDelta(30)
-        self.db.set_displayed_period(TimePeriod(self.start, self.end))
-        self.last_cat = None
-        self.next_cid = 1
+        return NumTimeType()
 
-    def add_category(self, name, color, font_color, make_last_added_parent=False):
-        if make_last_added_parent:
-            parent = self.last_cat
-        else:
-            parent = None
-        self.prev_cat = self.last_cat
-        self.last_cat = Category(name, color, font_color, parent)
-        self.db.save_category(self.last_cat)
-
-    def add_event(self, text, description, start_add, end_add=None, hyperlink=None):
-        start, end = self.calc_start_end(start_add, end_add)
-        evt = Event(start, end, text, self.last_cat)
-        if description:
-            evt.set_data("description", description)
-        if hyperlink:
-            evt.set_hyperlink(hyperlink)
-        self.db.save_event(evt)
-
-    def add_container(self, text, description, start_add, end_add=None):
-        start, end = self.calc_start_end(start_add, end_add)
-        container = Container(start, end, text, self.prev_cat)
-        container.set_cid(self.next_cid)
-        self.next_cid += 1
-        self.db.save_event(container)
-        return container
-
-    def add_subevent(self, container, text, description, start_add, end_add=None, hyperlink=None):
-        start, end = self.calc_start_end(start_add, end_add)
-        evt = Subevent(start, end, text, self.last_cat, container=container)
-        if description:
-            evt.set_data("description", description)
-        if hyperlink:
-            evt.set_hyperlink(hyperlink)
-        self.db.save_event(evt)
-
-    def calc_start_end(self, start_add, end_add=None):
-        start = self.start + NumDelta(start_add)
-        end = start
-        if end_add is not None:
-            end = self.start + NumDelta(end_add)
+    def get_start_end(self):
+        start = self.db.time_type.now()
+        end = start + self.get_delta(30)
         return (start, end)
 
-    def get_db(self):
-        return self.db
+    def get_delta(self, value):
+        return NumDelta(value)
+
+
+def create_in_memory_gregorian_tutorial_db():
+    return create_in_memory_tutorial_db(GregorianTutorialTimelineCreator())
+
+
+def create_in_memory_numeric_tutorial_db():
+    return create_in_memory_tutorial_db(NumericTutorialTimelineCreator())
+
+
+def create_in_memory_tutorial_db(tutcreator):
+    tutcreator.add_milestone(
+        1,
+        _("Start"),
+        "<",
+    )
+    tutcreator.add_milestone(
+        29,
+        _("End"),
+        ">",
+    )
+    tutcreator.add_era(
+        20, 28,
+        _("Example era"),
+    )
+    tutcreator.add_category(
+        _("Welcome"), (255, 80, 80), (0, 0, 0)
+    )
+    tutcreator.add_event(
+        _("Welcome to Timeline"), "",  4
+    )
+    tutcreator.add_category(
+        _("Intro"), (250, 250, 20), (0, 0, 0)
+    )
+    tutcreator.add_event(
+        _("This event has hyperlinks"),
+        _("Right-click for context menu where the hyperlinks can be accessed."),
+        11,
+        19,
+        "https://sourceforge.net/projects/thetimelineproj/;http://thetimelineproj.sourceforge.net/"
+    )
+    tutcreator.add_event(
+        _("Hover me!"),
+        _("Hovering events with a triangle shows the event description."),
+        5
+    )
+    tutcreator.add_category(
+        _("Features"), (100, 100, 250), (250, 250, 20)
+    )
+    tutcreator.add_event(
+        _("Scroll"),
+        _("Left click somewhere on the timeline and start dragging."
+          "\n\n"
+          "You can also use the mouse wheel."
+          "\n\n"
+          "You can also middle click with the mouse to center around that point."),
+        5,
+        10
+    )
+    container = tutcreator.add_container(
+        _("Container"),
+        _("?"),
+        5,
+        10
+    )
+    tutcreator.add_subevent(
+        container,
+        _("Resize me"),
+        _("Container Subevent 1\nClick on the event to get the resize handles"),
+        5,
+        10
+    )
+    tutcreator.add_subevent(
+        container,
+        _("Drag me"),
+        _("Container Subevent 2\n\n"
+          "Click on the event to get the drag handle and drag it.\n\n"
+          "To drag the whole container, click on it while holding down the Alt key. "
+          "Keep the Alt key down and find the drag point at the center of the container and drag it."),
+        12,
+        18
+    )
+    tutcreator.add_subevent(
+        container,
+        _("View Container demo video"),
+        _("Container Subevent 3\n\n"
+          "Select hyperlink to show demo video.\n\n"
+          "Right-click in the event and select 'Goto URL' in the popup menu and select the first (and only) link"),
+        19,
+        24,
+        "http://www.youtube.com/watch?v=dBwEQ3vqB_I"
+    )
+    tutcreator.add_event(
+        _("Zoom"),
+        _("Hold down Ctrl while scrolling the mouse wheel."
+          "\n\n"
+          "Hold down Shift while dragging with the mouse."),
+        6,
+        11
+    )
+    tutcreator.add_event(
+        _("Create event"),
+        _("Double click somewhere on the timeline."
+          "\n\n"
+          "Hold down Ctrl while dragging the mouse to select a period."),
+        12,
+        18
+    )
+    tutcreator.add_event(
+        _("Edit event"),
+        _("Double click on an event."),
+        12,
+        18
+    )
+    tutcreator.add_event(
+        _("Select event"),
+        _("Click on it."
+          "\n\n"
+          "Hold down Ctrl while clicking events to select multiple."),
+        20,
+        25
+    )
+    tutcreator.add_event(
+        _("Delete event"),
+        _("Select events to be deleted and press the Del key."),
+        19,
+        24
+    )
+    tutcreator.add_event(
+        _("Resize and move me!"),
+        _("First select me and then drag the handles."),
+        11,
+        19
+    )
+    tutcreator.add_category(
+        _("Saving"), (50, 200, 50), (0, 0, 0)
+    )
+    tutcreator.add_event(
+        _("Saving"),
+        _("This timeline is stored in memory and modifications to it will not "
+          "be persisted between sessions."
+          "\n\n"
+          "Choose File/New/File Timeline to create a timeline that is saved on "
+          "disk."),
+        23
+    )
+    return tutcreator.get_db()

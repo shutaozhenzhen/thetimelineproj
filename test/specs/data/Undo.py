@@ -20,7 +20,7 @@ import random
 import subprocess
 
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
-from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
+from timelinelib.dataimport.tutorial import create_in_memory_gregorian_tutorial_db
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import a_container
@@ -34,7 +34,7 @@ class describe_undo(TmpDirTestCase):
 
     def test_a_series_of_operations_can_be_undone(self):
         db_operations = DBOperations(self.original_path, self.after_undo_path)
-        db = create_in_memory_tutorial_db()
+        db = create_in_memory_gregorian_tutorial_db()
         db.loaded()
         operation_log = db_operations.perform(db)
         if self.read(self.original_path) != self.read(self.after_undo_path):

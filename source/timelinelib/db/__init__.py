@@ -41,7 +41,7 @@ def db_open(path, timetype=None):
       - string denoting a directory
     """
     if path == ":tutorial:":
-        return open_tutorial_timeline(path)
+        return open_gregorian_tutorial_timeline(path)
     elif path == ":numtutorial:":
         return open_numeric_tutorial_timeline(path)
     elif os.path.isdir(path):
@@ -56,9 +56,9 @@ def db_open(path, timetype=None):
         raise TimelineIOError(msg_template % path)
 
 
-def open_tutorial_timeline(path):
-    from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
-    db = create_in_memory_tutorial_db()
+def open_gregorian_tutorial_timeline(path):
+    from timelinelib.dataimport.tutorial import create_in_memory_gregorian_tutorial_db
+    db = create_in_memory_gregorian_tutorial_db()
     db.path = path
     return db
 

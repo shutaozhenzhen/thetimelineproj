@@ -596,7 +596,7 @@ class GuiCreator(object):
         cbx = NONE
         items = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents") + "\tF1", cbx),
                  None,
-                 (ID_TUTORIAL, self.controller.open_tutorial_timeline, _("Getting started &tutorial"), cbx),
+                 (ID_TUTORIAL, self.controller.open_gregorian_tutorial_timeline, _("Getting started &tutorial"), cbx),
                  None,
                  (ID_FEEDBACK, feedback, _("Give &Feedback..."), cbx),
                  (ID_CONTACT, self.help_browser.show_contact_page, _("Co&ntact"), cbx),
