@@ -147,7 +147,7 @@ class DBOperations(object):
         return "change default color to %s %r" % (new_color, event)
 
     def _operation_change_progress(self, db):
-        event = self._get_random_event(db, container=False)
+        event = self._get_random_event(db, container=False, milestone=False)
         while True:
             new_progress = random.randint(0, 100)
             if new_progress != event.get_progress():
@@ -157,7 +157,7 @@ class DBOperations(object):
         return "change progress to %s %r" % (new_progress, event)
 
     def _operation_change_category(self, db):
-        event = self._get_random_event(db, container=False)
+        event = self._get_random_event(db, container=False, milestone=False)
         category = self._get_random_category(db, exclude=event.get_category())
         event.set_category(category)
         db.save_event(event)
@@ -180,19 +180,29 @@ class DBOperations(object):
         return "save category %r" % category
 
     def _operation_change_fuzzy(self, db):
-        event = self._get_random_event(db, container=False)
+        event = self._get_random_event(db, container=False, milestone=False)
         event.set_fuzzy(not event.get_fuzzy())
         db.save_event(event)
         return "change fuzzy to %s %r" % (event.get_fuzzy(), event)
 
     def _operation_change_ends_today(self, db):
-        event = self._get_random_event(db, container=False, subevent=False)
+        event = self._get_random_event(
+            db,
+            container=False,
+            subevent=False,
+            milestone=False
+        )
         event.set_ends_today(not event.get_ends_today())
         db.save_event(event)
         return "change ends-today to %s %r" % (event.get_ends_today(), event)
 
     def _operation_change_locked(self, db):
-        event = self._get_random_event(db, container=False, subevent=False)
+        event = self._get_random_event(
+            db,
+            container=False,
+            subevent=False,
+            milestone=False
+        )
         event.set_locked(not event.get_locked())
         db.save_event(event)
         return "change locked to %s %r" % (event.get_locked(), event)
@@ -220,13 +230,13 @@ class DBOperations(object):
         return "added event %r" % (event)
 
     def _operation_change_hyperlink(self, db):
-        event = self._get_random_event(db, container=False)
+        event = self._get_random_event(db, container=False, milestone=False)
         event.set_hyperlink("http://%s" % self._get_random_string(2, 7))
         db.save_event(event)
         return "changed hyperlink to %s %r" % (event.get_hyperlink(), event)
 
     def _operation_change_time_period(self, db):
-        event = self._get_random_event(db, container=False)
+        event = self._get_random_event(db, container=False, milestone=False)
         event.set_time_period(a_time_period())
         db.save_event(event)
         return "changed time_period to %s %r" % (db.get_time_type().format_period(event.get_time_period()), event)
@@ -241,7 +251,7 @@ class DBOperations(object):
         return ''.join(random.choice(string.ascii_lowercase + "     ") for _ in range(random.randint(min_length, max_length)))
 
     def _get_random_event(self, db, regular=True, subevent=True,
-                          container=True):
+                          container=True, milestone=True):
         possible_events = []
         for event in db.get_all_events():
             if event.is_container():
@@ -249,6 +259,9 @@ class DBOperations(object):
                     possible_events.append(event)
             elif event.is_subevent():
                 if subevent:
+                    possible_events.append(event)
+            elif event.is_milestone():
+                if milestone:
                     possible_events.append(event)
             else:
                 if regular:
