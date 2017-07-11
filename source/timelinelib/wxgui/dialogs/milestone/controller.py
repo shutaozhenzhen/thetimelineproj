@@ -32,11 +32,9 @@ class EditMilestoneDialogController(Controller):
         self._db = db
         self._time_type = db.time_type
         if milestone is None:
-            self._new_milestone = True
             self._milestone = Milestone(self._time_type.now(), "")
             self._milestone.set_description("")
         else:
-            self._new_milestone = False
             self._milestone = milestone
         self._populate_view()
 
@@ -64,8 +62,7 @@ class EditMilestoneDialogController(Controller):
         self._milestone.set_default_color(self.view.GetColour()[:3])
         self._set_milestone_time_period()
         self._milestone.set_category(self.view.GetCategory())
-        if self._new_milestone:
-            self._save_milestone_to_db()
+        self._save_milestone_to_db()
 
     def _set_milestone_description(self):
         if self.view.GetDescription() == "":
@@ -88,4 +85,3 @@ class EditMilestoneDialogController(Controller):
             self._db.save_event(self._milestone)
         except Exception as e:
             self.view.HandleDbError(e)
-
