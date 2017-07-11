@@ -157,7 +157,7 @@ class DBOperations(object):
         return "change progress to %s %r" % (new_progress, event)
 
     def _operation_change_category(self, db):
-        event = self._get_random_event(db, container=False, milestone=False)
+        event = self._get_random_event(db, container=False)
         category = self._get_random_category(db, exclude=event.get_category())
         event.set_category(category)
         db.save_event(event)
