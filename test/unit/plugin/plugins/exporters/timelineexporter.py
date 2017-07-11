@@ -59,7 +59,7 @@ class describe_timeline_exporter(TimelineExporterTestCase):
         self.assertTrue(self.plugin.isplugin())
 
     def test_event_csv_data_saved_in_file(self):
-        self.simulate_dialog_entries(True, ["Text", "Start"], False, [])
+        self.simulate_dialog_entries(True, [_("Text"), _("Start")], False, [])
         CsvExporter(
             self.plugin.timeline,
             self.get_tmp_path(CSV_FILE),
@@ -67,11 +67,11 @@ class describe_timeline_exporter(TimelineExporterTestCase):
         ).export()
         self.assertEqual(
             self.read(CSV_FILE),
-            u"\"⟪Events⟫\";\n\"Text\";\"Start\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n".encode("utf-8")
+            (u"\"⟪Events⟫\";\n\"%s\";\"%s\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n" % (_("Text"), _("Start"))).encode("utf-8")
         )
 
     def test_category_csv_data_saved_in_file(self):
-        self.simulate_dialog_entries(False, [], True, ["Name", "Color"])
+        self.simulate_dialog_entries(False, [], True, [_("Name"), _("Color")])
         CsvExporter(
             self.plugin.timeline,
             self.get_tmp_path(CSV_FILE),
@@ -79,5 +79,5 @@ class describe_timeline_exporter(TimelineExporterTestCase):
         ).export()
         self.assertEqual(
             self.read(CSV_FILE),
-            u"\"⟪Categories⟫\";\n\"Name\";\"Color\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n".encode("utf-8")
+            (u"\"⟪Categories⟫\";\n\"%s\";\"%s\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n" % (_("Name"), _("Color"))).encode("utf-8")
         )
