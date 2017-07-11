@@ -20,20 +20,20 @@ from mock import Mock
 
 import humblewx
 
-from timelinelib.canvas.drawing.viewproperties import ViewProperties
-from timelinelib.dataimport.tutorial import create_in_memory_tutorial_db
-from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.wxgui.framework import Dialog
 from timelinelib.canvas.data.idnumber import get_process_unique_id
+from timelinelib.canvas.drawing.viewproperties import ViewProperties
+from timelinelib.dataimport.tutorial import create_in_memory_gregorian_tutorial_db
+from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.utils import a_category_with
 from timelinelib.wxgui.components.categorytree import CategoriesFacade
 from timelinelib.wxgui.components.categorytree import CustomCategoryTreeModel
-from timelinelib.test.utils import a_category_with
+from timelinelib.wxgui.framework import Dialog
 
 
 class describe_custom_category_tree_component_test(UnitTestCase):
 
     def test_it_shows_in_dialog(self):
-        self.show_dialog(TestDialog, create_in_memory_tutorial_db(), ViewProperties())
+        self.show_dialog(TestDialog, create_in_memory_gregorian_tutorial_db(), ViewProperties())
 
 
 class TestDialog(Dialog):

@@ -95,7 +95,7 @@ class describe_import_events_dialog_controller(describe_import_events_dialog):
         event = Mock(Event)
         self.controller.on_file_path_changed(event)
         self.view.SetSuccess.assert_called_with(
-            u"⟪15 events will be imported.⟫"
+            u"⟪17 events will be imported.⟫"
         )
         self.assertTrue(self.controller._db_to_import is not None)
 

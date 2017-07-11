@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.dataimport.tutorial import TutorialTimelineCreator
+from timelinelib.dataimport.tutorial import GregorianTutorialTimelineCreator
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
@@ -42,7 +42,7 @@ class SelectperiodByDragInputHandler(UnitTestCase):
         canvas = Mock(MainCanvas)
         canvas.GetSizeTuple.return_value = (0, 0)
         canvas.Snap.return_value = human_time_to_gregorian("1 Dec 2013")
-        canvas.GetDb.return_value = TutorialTimelineCreator().db
+        canvas.GetDb.return_value = GregorianTutorialTimelineCreator().db
         state = Mock()
         self.handler = SelectPeriodByDragInputHandler(
             state, canvas, Mock(), None)
