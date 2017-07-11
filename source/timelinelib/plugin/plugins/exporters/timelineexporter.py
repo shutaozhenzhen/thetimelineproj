@@ -105,48 +105,48 @@ class CsvExporter(object):
             self._write_category(f, category, category_fields)
 
     def _write_event(self, f, event, event_fields):
-        if "Text" in event_fields:
+        if _("Text") in event_fields:
             self._write_encoded_text(f, event.get_text())
-        if "Description" in event_fields:
+        if _("Description") in event_fields:
             self._write_encoded_text(f, self._get_event_description(event))
-        if "Start" in event_fields:
+        if _("Start") in event_fields:
             self._write_time_value(f, event.get_time_period().start_time)
-        if "End" in event_fields:
+        if _("End") in event_fields:
             self._write_time_value(f, event.get_time_period().end_time)
-        if "Category" in event_fields:
+        if _("Category") in event_fields:
             self._write_encoded_text(f, self._get_event_category(event))
-        if "Fuzzy" in event_fields:
+        if _("Fuzzy") in event_fields:
             self._write_boolean_value(f, event.get_fuzzy())
-        if "Locked" in event_fields:
+        if _("Locked") in event_fields:
             self._write_boolean_value(f, event.get_locked())
-        if "Ends Today" in event_fields:
+        if _("Ends Today") in event_fields:
             self._write_boolean_value(f, event.get_ends_today())
-        if "Hyperlink" in event_fields:
+        if _("Hyperlink") in event_fields:
             f.write("%s;" % event.get_hyperlink())
-        if "Progress" in event_fields:
+        if _("Progress") in event_fields:
             f.write("%s;" % event.get_progress())
-        if "Progress Color" in event_fields:
+        if _("Progress Color") in event_fields:
             self._write_color_value(f, event.get_progress_color())
-        if "Done Color" in event_fields:
+        if _("Done Color") in event_fields:
             self._write_color_value(f, event.get_done_color())
-        if "Alert" in event_fields:
+        if _("Alert") in event_fields:
             f.write("%s;" % self._get_alert_string(event.get_alert()))
-        if "Is Container" in event_fields:
+        if _("Is Container") in event_fields:
             self._write_boolean_value(f, event.is_container())
-        if "Is Subevent" in event_fields:
+        if _("Is Subevent") in event_fields:
             self._write_boolean_value(f, event.is_subevent())
         f.write("\n")
 
     def _write_category(self, f, category, category_fields):
-        if "Name" in category_fields:
+        if _("Name") in category_fields:
             self._write_encoded_text(f, category.get_name())
-        if "Color" in category_fields:
+        if _("Color") in category_fields:
             self._write_color_value(f, category.get_color())
-        if "Progress Color" in category_fields:
+        if _("Progress Color") in category_fields:
             self._write_color_value(f, category.get_progress_color())
-        if "Done Color" in category_fields:
+        if _("Done Color") in category_fields:
             self._write_color_value(f, category.get_done_color())
-        if "Parent" in category_fields:
+        if _("Parent") in category_fields:
             self._write_encoded_text(f, self._get_parent(category))
         f.write("\n")
 
