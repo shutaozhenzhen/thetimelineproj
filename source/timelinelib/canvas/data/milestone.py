@@ -47,5 +47,6 @@ class Milestone(Event):
         )
         # Description is immutable
         new_event.set_data("description", self.get_data("description"))
+        new_event.set_category(self.get_category())
         new_event.set_default_color(self.get_default_color())
         return new_event
