@@ -39,7 +39,11 @@ class ErasEditorDialogController(Controller):
         self._edit(self.view.GetSelectedEra())
 
     def on_add(self, evt):
-        self._operate_with_modal_dialog(_("Add an Era"), self._create_era(), self._add)
+        self._operate_with_modal_dialog(
+            _("Add an Era"),
+            self._create_era(),
+            self._after_add
+        )
 
     def on_remove(self, evt):
         era = self.view.GetSelectedEra()
@@ -48,13 +52,21 @@ class ErasEditorDialogController(Controller):
             self.view.RemoveEra(era)
         self.db.delete_era(era)
 
-    def _add(self, era):
+    def _after_add(self, era):
         self.eras.append(era)
         self.view.AppendEra(era)
         self.db.save_era(era)
 
     def _edit(self, era):
-        self._operate_with_modal_dialog(_("Edit an Era"), era, self.view.UpdateEra)
+        self._operate_with_modal_dialog(
+            _("Edit an Era"),
+            era,
+            self._after_edit
+        )
+
+    def _after_edit(self, era):
+        self.view.UpdateEra(era)
+        self.db.save_era(era)
 
     def _create_era(self):
         start = self.db.time_type.now()
@@ -75,4 +87,3 @@ class ErasEditorDialogController(Controller):
         This function is used for test purposes only
         """
         self.editor_dialog = dialog
-
