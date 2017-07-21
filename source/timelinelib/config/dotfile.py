@@ -204,12 +204,12 @@ class Config(Observable):
     def set_window_maximized(self, maximized):
         self.config_parser.set(DEFAULTSECT, WINDOW_MAXIMIZED, str(maximized))
 
-    def get_show_toolbar(self):
-        return self.config_parser.getboolean(DEFAULTSECT, SHOW_TOOLBAR)
-
-    def set_show_toolbar(self, show):
-        self.config_parser.set(DEFAULTSECT, SHOW_TOOLBAR, str(show))
-        self._notify()
+#     def get_show_toolbar(self):
+#         return self.config_parser.getboolean(DEFAULTSECT, SHOW_TOOLBAR)
+#
+#     def set_show_toolbar(self, show):
+#         self.config_parser.set(DEFAULTSECT, SHOW_TOOLBAR, str(show))
+#         self._notify()
 
     def get_show_sidebar(self):
         return self.config_parser.getboolean(DEFAULTSECT, SHOW_SIDEBAR)
@@ -540,3 +540,34 @@ class Config(Observable):
             return str(value)
         except UnicodeEncodeError:
             display_information_message(_("Warning"), _("The selected value contains invalid characters and can't be saved"))
+
+    def _get(self, key):
+        if key in BOOLEANS:
+            return self._get_boolean(key)
+        else:
+            return self.config_parser.get(DEFAULTSECT, key)
+
+    def _get_int(self, key):
+        value = self.config_parser.get(DEFAULTSECT, key)
+        return int(value)
+
+    def _get_boolean(self, key):
+        return self.config_parser.getboolean(DEFAULTSECT, key)
+
+    def _set(self, key, value):
+        self.config_parser.set(DEFAULTSECT, key, str(value))
+        self._notify()
+
+BOOLEAN_CONFIGS = (
+    {'name': 'show_toolbar', 'default': 'True'},
+)
+BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
+
+
+def setatt(name):
+    setattr(Config, name, property(lambda self: self._get(name),
+                                   lambda self, value: self._set(name, str(value))))
+
+for data in BOOLEAN_CONFIGS:
+    setatt(data['name'])
+

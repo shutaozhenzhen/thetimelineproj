@@ -81,5 +81,5 @@ class ToolbarCreator(object):
         )
 
     def _set_visibility(self):
-        self.toolbar.Show(self.config.get_show_toolbar())
+        self.toolbar.Show(self.config.show_toolbar)
         self.parent.Layout()
