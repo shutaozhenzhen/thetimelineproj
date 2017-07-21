@@ -217,12 +217,12 @@ class Config(Observable):
 #     def set_show_sidebar(self, show):
 #         self.config_parser.set(DEFAULTSECT, SHOW_SIDEBAR, str(show))
 
-    def get_show_legend(self):
-        return self.config_parser.getboolean(DEFAULTSECT, SHOW_LEGEND)
-
-    def set_show_legend(self, show):
-        self.config_parser.set(DEFAULTSECT, SHOW_LEGEND, str(show))
-        self._notify()
+#     def get_show_legend(self):
+#         return self.config_parser.getboolean(DEFAULTSECT, SHOW_LEGEND)
+#
+#     def set_show_legend(self, show):
+#         self.config_parser.set(DEFAULTSECT, SHOW_LEGEND, str(show))
+#         self._notify()
 
     def get_never_use_time(self):
         return self.config_parser.getboolean(DEFAULTSECT, NEVER_USE_TIME)
@@ -561,6 +561,7 @@ class Config(Observable):
 BOOLEAN_CONFIGS = (
     {'name': 'show_toolbar', 'default': 'True'},
     {'name': 'show_sidebar', 'default': 'True'},
+    {'name': 'show_legend', 'default': 'True'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 

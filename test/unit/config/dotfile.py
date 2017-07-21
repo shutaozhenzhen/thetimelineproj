@@ -31,7 +31,7 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_window_size(), (900, 500))
         self.assertEqual(self.config.get_window_maximized(), False)
         self.assertEqual(self.config.show_sidebar, True)
-        self.assertEqual(self.config.get_show_legend(), True)
+        self.assertEqual(self.config.show_legend, True)
         self.assertEqual(self.config.get_sidebar_width(), 200)
         self.assertEqual(self.config.get_recently_opened(), [])
         self.assertEqual(self.config.get_open_recent_at_startup(), True)
@@ -122,7 +122,7 @@ class describe_config(TmpDirTestCase):
         settings = ["window_maximized",
                     # "show_toolbar",
                     # "show_sidebar",
-                    "show_legend",
+                    # "show_legend",
                     "open_recent_at_startup",
                     "balloon_on_hover",
                     "use_inertial_scrolling",
