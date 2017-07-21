@@ -160,7 +160,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_center_event_texts(self.config.get_center_event_texts())
             appearance.set_never_show_period_events_as_point_events(self.config.get_never_show_period_events_as_point_events())
             appearance.set_week_start(self.config.get_week_start())
-            appearance.set_use_inertial_scrolling(self.config.get_use_inertial_scrolling())
+            appearance.set_use_inertial_scrolling(self.config.use_inertial_scrolling)
             appearance.set_fuzzy_icon(self.config.get_fuzzy_icon())
             appearance.set_locked_icon(self.config.get_locked_icon())
             appearance.set_hyperlink_icon(self.config.get_hyperlink_icon())

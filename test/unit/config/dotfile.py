@@ -37,7 +37,7 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.open_recent_at_startup, True)
         self.assertEqual(self.config.balloon_on_hover, True)
         self.assertEqual(self.config.get_week_start(), "monday")
-        self.assertEqual(self.config.get_use_inertial_scrolling(), False)
+        self.assertEqual(self.config.use_inertial_scrolling, False)
         self.assertEqual(self.config.get_center_event_texts(), False)
         self.assertEqual(self.config.minor_strip_divider_line_colour, (200, 200, 200))
         self.assertEqual(self.config.get_never_use_time(), False)
@@ -79,12 +79,12 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.major_strip_divider_line_colour, (100, 0, 0))
 
     def test_config_returns_use_inertial_scrolling_is_true_when_set_to_true(self):
-        self.config.set_use_inertial_scrolling(True)
-        self.assertTrue(self.config.get_use_inertial_scrolling())
+        self.config.use_inertial_scrolling = True
+        self.assertTrue(self.config.use_inertial_scrolling)
 
     def test_config_returns_use_inertial_scrolling_is_false_when_set_to_false(self):
-        self.config.set_use_inertial_scrolling(False)
-        self.assertFalse(self.config.get_use_inertial_scrolling())
+        self.config.use_inertial_scrolling = False
+        self.assertFalse(self.config.use_inertial_scrolling)
 
     def test_recently_opened_contains_last_5_entries(self):
         self.config.append_recently_opened("1")
@@ -125,6 +125,7 @@ class describe_config(TmpDirTestCase):
                       self.config.show_legend,
                       self.config.open_recent_at_startup,
                       self.config.balloon_on_hover,
+                      self.config.use_inertial_scrolling
                       )
         for prop in properties:
             prop = True
@@ -133,14 +134,7 @@ class describe_config(TmpDirTestCase):
             self.assertFalse(prop)
 
     def test_boolean_settings_can_be_set_and_reset(self):
-        settings = [  # "window_maximized",
-                    # "show_toolbar",
-                    # "show_sidebar",
-                    # "show_legend",
-                    # "open_recent_at_startup",
-                    # "balloon_on_hover",
-                    "use_inertial_scrolling",
-                    "never_show_period_events_as_point_events",
+        settings = ["never_show_period_events_as_point_events",
                     "draw_period_events_to_right",
                     "event_editor_show_period",
                     "event_editor_show_time",
