@@ -198,11 +198,11 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, WINDOW_XPOS, str(xpos))
         self.config_parser.set(DEFAULTSECT, WINDOW_YPOS, str(ypos))
 
-    def get_window_maximized(self):
-        return self.config_parser.getboolean(DEFAULTSECT, WINDOW_MAXIMIZED)
-
-    def set_window_maximized(self, maximized):
-        self.config_parser.set(DEFAULTSECT, WINDOW_MAXIMIZED, str(maximized))
+#     def get_window_maximized(self):
+#         return self.config_parser.getboolean(DEFAULTSECT, WINDOW_MAXIMIZED)
+#
+#     def set_window_maximized(self, maximized):
+#         self.config_parser.set(DEFAULTSECT, WINDOW_MAXIMIZED, str(maximized))
 
 #     def get_show_toolbar(self):
 #         return self.config_parser.getboolean(DEFAULTSECT, SHOW_TOOLBAR)
@@ -562,6 +562,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'show_toolbar', 'default': 'True'},
     {'name': 'show_sidebar', 'default': 'True'},
     {'name': 'show_legend', 'default': 'True'},
+    {'name': 'window_maximized', 'default': 'False'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 
@@ -572,4 +573,3 @@ def setatt(name):
 
 for data in BOOLEAN_CONFIGS:
     setatt(data['name'])
-
