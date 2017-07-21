@@ -67,7 +67,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
     def _mock_config(self):
         config = Mock(Config)
         config.open_recent_at_startup = ""
-        config.get_use_inertial_scrolling.return_value = False
+        config.use_inertial_scrolling = False
         config.get_never_show_period_events_as_point_events.return_value = False
         config.get_center_event_texts.return_value = False
         config.get_week_start.return_value = "monday"
@@ -103,7 +103,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config = Mock(Config)
         self.config.get_week_start.return_value = "monday"
         self.config.open_recent_at_startup = True
-        self.config.get_use_inertial_scrolling.return_value = False
+        self.config.use_inertial_scrolling = False
         self.config.get_never_show_period_events_as_point_events.return_value = True
         self.config.get_center_event_texts.return_value = True
         self.config.get_display_checkmark_on_events_done.return_value = False
@@ -145,14 +145,14 @@ class describe_preferences_dialog(UnitTestCase):
         self.assertEqual(self.config.open_recent_at_startup, sentinel.OPEN_RECENT)
 
     def test_sets_inertial_scrolling_on_init(self):
-        self.config.get_use_inertial_scrolling.return_value = sentinel.INERTIAL_SCROLLING
+        self.config.use_inertial_scrolling = sentinel.INERTIAL_SCROLLING
         self.simulate_dialog_opens()
         self.view.SetInertialScrollingCheckboxValue.assert_called_with(sentinel.INERTIAL_SCROLLING)
 
     def test_sets_inertial_scrolling_on_change(self):
         self.simulate_dialog_opens()
         self.controller.on_inertial_scrolling_changed(event_is_checked(sentinel.INERTIAL_SCROLLING))
-        self.config.set_use_inertial_scrolling.assert_called_with(sentinel.INERTIAL_SCROLLING)
+        self.assertEqual(self.config.use_inertial_scrolling, sentinel.INERTIAL_SCROLLING)
 
     def test_sets_period_point_on_init(self):
         self.config.get_never_show_period_events_as_point_events.return_value = sentinel.PERIOD_POINT

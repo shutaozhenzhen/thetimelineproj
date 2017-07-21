@@ -274,13 +274,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, WEEK_START, week_start)
         self._notify()
 
-    def get_use_inertial_scrolling(self):
-        return self.config_parser.getboolean(DEFAULTSECT, USE_INERTIAL_SCROLLING)
-
-    def set_use_inertial_scrolling(self, value):
-        self.config_parser.set(DEFAULTSECT, USE_INERTIAL_SCROLLING, str(value))
-        self._notify()
-
     def get_shortcut_key(self, cfgid, default):
         try:
             return self.config_parser.get(DEFAULTSECT, cfgid)
@@ -526,6 +519,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'window_maximized', 'default': 'False'},
     {'name': 'open_recent_at_startup', 'default': 'True'},
     {'name': 'balloon_on_hover', 'default': 'True'},
+    {'name': 'use_inertial_scrolling', 'default': 'False'},
 
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
