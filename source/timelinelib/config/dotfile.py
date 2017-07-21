@@ -282,12 +282,12 @@ class Config(Observable):
 #     def set_open_recent_at_startup(self, value):
 #         self.config_parser.set(DEFAULTSECT, OPEN_RECENT_AT_STARTUP, str(value))
 
-    def get_balloon_on_hover(self):
-        return self.config_parser.getboolean(DEFAULTSECT, BALLOON_ON_HOVER)
-
-    def set_balloon_on_hover(self, balloon_on_hover):
-        self.config_parser.set(DEFAULTSECT, BALLOON_ON_HOVER, str(balloon_on_hover))
-        self._notify()
+#     def get_balloon_on_hover(self):
+#         return self.config_parser.getboolean(DEFAULTSECT, BALLOON_ON_HOVER)
+#
+#     def set_balloon_on_hover(self, balloon_on_hover):
+#         self.config_parser.set(DEFAULTSECT, BALLOON_ON_HOVER, str(balloon_on_hover))
+#         self._notify()
 
     @property
     def hide_events_done(self):
@@ -563,7 +563,8 @@ BOOLEAN_CONFIGS = (
     {'name': 'show_sidebar', 'default': 'True'},
     {'name': 'show_legend', 'default': 'True'},
     {'name': 'window_maximized', 'default': 'False'},
-    {'name': 'open_recent_at_startup', 'default': 'False'},
+    {'name': 'open_recent_at_startup', 'default': 'True'},
+    {'name': 'balloon_on_hover', 'default': 'True'},
 
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]

@@ -296,7 +296,7 @@ class GuiCreator(object):
             self.config.show_legend = evt.IsChecked()
 
         def balloons(evt):
-            self.config.set_balloon_on_hover(evt.IsChecked())
+            self.config.balloon_on_hover = evt.IsChecked()
 
         def zoomin(evt):
             DrawingAreaProxy(self).zoom_in()
@@ -398,7 +398,7 @@ class GuiCreator(object):
 
         item(ID_SIDEBAR).Check(self.config.show_sidebar)
         item(ID_LEGEND).Check(self.config.show_legend)
-        item(ID_BALLOONS).Check(self.config.get_balloon_on_hover())
+        item(ID_BALLOONS).Check(self.config.balloon_on_hover)
         item(ID_HIDE_DONE).Check(self.config.hide_events_done)
 
     def _add_view_menu_items_to_controller(self, view_menu):
