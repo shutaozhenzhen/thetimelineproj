@@ -125,7 +125,8 @@ class describe_config(TmpDirTestCase):
                       self.config.show_legend,
                       self.config.open_recent_at_startup,
                       self.config.balloon_on_hover,
-                      self.config.use_inertial_scrolling
+                      self.config.use_inertial_scrolling,
+                      self.config.never_show_period_events_as_point_events,
                       )
         for prop in properties:
             prop = True
@@ -134,8 +135,7 @@ class describe_config(TmpDirTestCase):
             self.assertFalse(prop)
 
     def test_boolean_settings_can_be_set_and_reset(self):
-        settings = ["never_show_period_events_as_point_events",
-                    "draw_period_events_to_right",
+        settings = ["draw_period_events_to_right",
                     "event_editor_show_period",
                     "event_editor_show_time",
                     "uncheck_time_for_new_events",

@@ -291,13 +291,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, EXPERIMENTAL_FEATURES, value)
         self._notify()
 
-    def get_never_show_period_events_as_point_events(self):
-        return self.config_parser.getboolean(DEFAULTSECT, NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS)
-
-    def set_never_show_period_events_as_point_events(self, value):
-        self.config_parser.set(DEFAULTSECT, NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS, str(value))
-        self._notify()
-
     def get_center_event_texts(self):
         return self.config_parser.getboolean(DEFAULTSECT, CENTER_EVENT_TEXTS)
 
@@ -520,6 +513,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'open_recent_at_startup', 'default': 'True'},
     {'name': 'balloon_on_hover', 'default': 'True'},
     {'name': 'use_inertial_scrolling', 'default': 'False'},
+    {'name': 'never_show_period_events_as_point_events', 'default': 'False'},
 
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
