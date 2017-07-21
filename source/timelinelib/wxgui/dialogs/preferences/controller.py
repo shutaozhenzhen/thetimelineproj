@@ -48,7 +48,7 @@ class PreferencesDialogController(Controller):
         self.config.use_inertial_scrolling = event.IsChecked()
 
     def on_never_period_point_changed(self, event):
-        self.config.set_never_show_period_events_as_point_events(event.IsChecked())
+        self.config.never_show_period_events_as_point_events = event.IsChecked()
 
     def on_center_text_changed(self, event):
         self.config.set_center_event_texts(event.IsChecked())
@@ -119,7 +119,7 @@ class PreferencesDialogController(Controller):
     def _set_initial_values(self):
         self.view.SetOpenRecentCheckboxValue(self.config.open_recent_at_startup)
         self.view.SetInertialScrollingCheckboxValue(self.config.use_inertial_scrolling)
-        self.view.SetNeverPeriodPointCheckboxValue(self.config.get_never_show_period_events_as_point_events())
+        self.view.SetNeverPeriodPointCheckboxValue(self.config.never_show_period_events_as_point_events)
         self.view.SetCenterTextCheckboxValue(self.config.get_center_event_texts())
         self.view.SetWeekStartSelection(self._week_index(self.config.get_week_start()))
         self.view.AddExperimentalFeatures(self.experimental_features.get_all_features())

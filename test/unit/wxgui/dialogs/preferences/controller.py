@@ -68,7 +68,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
         config = Mock(Config)
         config.open_recent_at_startup = ""
         config.use_inertial_scrolling = False
-        config.get_never_show_period_events_as_point_events.return_value = False
+        config.never_show_period_events_as_point_events = False
         config.get_center_event_texts.return_value = False
         config.get_week_start.return_value = "monday"
         config.get_uncheck_time_for_new_events.return_value = False
@@ -104,7 +104,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_week_start.return_value = "monday"
         self.config.open_recent_at_startup = True
         self.config.use_inertial_scrolling = False
-        self.config.get_never_show_period_events_as_point_events.return_value = True
+        self.config.never_show_period_events_as_point_events = True
         self.config.get_center_event_texts.return_value = True
         self.config.get_display_checkmark_on_events_done.return_value = False
         self.config.get_uncheck_time_for_new_events.return_value = False
@@ -155,14 +155,14 @@ class describe_preferences_dialog(UnitTestCase):
         self.assertEqual(self.config.use_inertial_scrolling, sentinel.INERTIAL_SCROLLING)
 
     def test_sets_period_point_on_init(self):
-        self.config.get_never_show_period_events_as_point_events.return_value = sentinel.PERIOD_POINT
+        self.config.never_show_period_events_as_point_events = sentinel.PERIOD_POINT
         self.simulate_dialog_opens()
         self.view.SetNeverPeriodPointCheckboxValue.assert_called_with(sentinel.PERIOD_POINT)
 
     def test_sets_period_point_on_change(self):
         self.simulate_dialog_opens()
         self.controller.on_never_period_point_changed(event_is_checked(sentinel.PERIOD_POINT))
-        self.config.set_never_show_period_events_as_point_events.assert_called_with(sentinel.PERIOD_POINT)
+        self.assertEqual(self.config.never_show_period_events_as_point_events, sentinel.PERIOD_POINT)
 
     def test_sets_center_text_on_init(self):
         self.config.get_center_event_texts.return_value = sentinel.CENTER_TEXT
