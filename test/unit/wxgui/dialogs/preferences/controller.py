@@ -66,7 +66,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
 
     def _mock_config(self):
         config = Mock(Config)
-        config.get_open_recent_at_startup.return_value = ""
+        config.open_recent_at_startup = ""
         config.get_use_inertial_scrolling.return_value = False
         config.get_never_show_period_events_as_point_events.return_value = False
         config.get_center_event_texts.return_value = False
@@ -102,7 +102,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.controller = PreferencesDialogController(self.view)
         self.config = Mock(Config)
         self.config.get_week_start.return_value = "monday"
-        self.config.get_open_recent_at_startup.return_value = True
+        self.config.open_recent_at_startup = True
         self.config.get_use_inertial_scrolling.return_value = False
         self.config.get_never_show_period_events_as_point_events.return_value = True
         self.config.get_center_event_texts.return_value = True
@@ -135,14 +135,14 @@ class describe_preferences_dialog(UnitTestCase):
         self.show_dialog(PreferencesDialog, None, self.config)
 
     def test_sets_open_recent_on_init(self):
-        self.config.get_open_recent_at_startup.return_value = sentinel.OPEN_RECENT
+        self.config.open_recent_at_startup = sentinel.OPEN_RECENT
         self.simulate_dialog_opens()
         self.view.SetOpenRecentCheckboxValue.assert_called_with(sentinel.OPEN_RECENT)
 
     def test_sets_open_recent_on_change(self):
         self.simulate_dialog_opens()
         self.controller.on_open_recent_change(event_is_checked(sentinel.OPEN_RECENT))
-        self.config.set_open_recent_at_startup.assert_called_with(sentinel.OPEN_RECENT)
+        self.assertEqual(self.config.open_recent_at_startup, sentinel.OPEN_RECENT)
 
     def test_sets_inertial_scrolling_on_init(self):
         self.config.get_use_inertial_scrolling.return_value = sentinel.INERTIAL_SCROLLING
