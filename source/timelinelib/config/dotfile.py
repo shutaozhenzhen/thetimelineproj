@@ -198,32 +198,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, WINDOW_XPOS, str(xpos))
         self.config_parser.set(DEFAULTSECT, WINDOW_YPOS, str(ypos))
 
-#     def get_window_maximized(self):
-#         return self.config_parser.getboolean(DEFAULTSECT, WINDOW_MAXIMIZED)
-#
-#     def set_window_maximized(self, maximized):
-#         self.config_parser.set(DEFAULTSECT, WINDOW_MAXIMIZED, str(maximized))
-
-#     def get_show_toolbar(self):
-#         return self.config_parser.getboolean(DEFAULTSECT, SHOW_TOOLBAR)
-#
-#     def set_show_toolbar(self, show):
-#         self.config_parser.set(DEFAULTSECT, SHOW_TOOLBAR, str(show))
-#         self._notify()
-
-#     def get_show_sidebar(self):
-#         return self.config_parser.getboolean(DEFAULTSECT, SHOW_SIDEBAR)
-#
-#     def set_show_sidebar(self, show):
-#         self.config_parser.set(DEFAULTSECT, SHOW_SIDEBAR, str(show))
-
-#     def get_show_legend(self):
-#         return self.config_parser.getboolean(DEFAULTSECT, SHOW_LEGEND)
-#
-#     def set_show_legend(self, show):
-#         self.config_parser.set(DEFAULTSECT, SHOW_LEGEND, str(show))
-#         self._notify()
-
     def get_never_use_time(self):
         return self.config_parser.getboolean(DEFAULTSECT, NEVER_USE_TIME)
 
@@ -275,19 +249,6 @@ class Config(Observable):
         current.insert(0, abs_path)
         self.config_parser.set(DEFAULTSECT, RECENT_FILES,
                                (",".join(current[:MAX_NBR_OF_RECENT_FILES_SAVED])).encode(ENCODING))
-
-#     def get_open_recent_at_startup(self):
-#         return self.config_parser.getboolean(DEFAULTSECT, OPEN_RECENT_AT_STARTUP)
-#
-#     def set_open_recent_at_startup(self, value):
-#         self.config_parser.set(DEFAULTSECT, OPEN_RECENT_AT_STARTUP, str(value))
-
-#     def get_balloon_on_hover(self):
-#         return self.config_parser.getboolean(DEFAULTSECT, BALLOON_ON_HOVER)
-#
-#     def set_balloon_on_hover(self, balloon_on_hover):
-#         self.config_parser.set(DEFAULTSECT, BALLOON_ON_HOVER, str(balloon_on_hover))
-#         self._notify()
 
     @property
     def hide_events_done(self):
