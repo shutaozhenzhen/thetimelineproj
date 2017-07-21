@@ -293,7 +293,7 @@ class GuiCreator(object):
                 self.main_panel.hide_sidebar()
 
         def legend(evt):
-            self.config.set_show_legend(evt.IsChecked())
+            self.config.show_legend = evt.IsChecked()
 
         def balloons(evt):
             self.config.set_balloon_on_hover(evt.IsChecked())
@@ -397,7 +397,7 @@ class GuiCreator(object):
             return view_menu.FindItemById(item_id)
 
         item(ID_SIDEBAR).Check(self.config.show_sidebar)
-        item(ID_LEGEND).Check(self.config.get_show_legend())
+        item(ID_LEGEND).Check(self.config.show_legend)
         item(ID_BALLOONS).Check(self.config.get_balloon_on_hover())
         item(ID_HIDE_DONE).Check(self.config.hide_events_done)
 
