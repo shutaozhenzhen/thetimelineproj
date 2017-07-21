@@ -324,7 +324,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.timeline_canvas.GetDb(),
             self.timeline_canvas.GetSelectedEvent())
 
-    #@experimental_feature(EVENT_DONE)
+    # @experimental_feature(EVENT_DONE)
     def _context_menu_on_done_event(self, evt):
         def exception_handler(ex):
             if isinstance(ex, TimelineIOError):
@@ -427,7 +427,7 @@ class TimelinePanel(TimelinePanelGuiCreator):
         self.splitter.Unsplit(self.sidebar)
 
     def activated(self):
-        if self.config.get_show_sidebar():
+        if self.config.show_sidebar:
             self.show_sidebar()
 
     def _on_db_changed(self, db):

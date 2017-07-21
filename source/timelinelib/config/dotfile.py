@@ -211,11 +211,11 @@ class Config(Observable):
 #         self.config_parser.set(DEFAULTSECT, SHOW_TOOLBAR, str(show))
 #         self._notify()
 
-    def get_show_sidebar(self):
-        return self.config_parser.getboolean(DEFAULTSECT, SHOW_SIDEBAR)
-
-    def set_show_sidebar(self, show):
-        self.config_parser.set(DEFAULTSECT, SHOW_SIDEBAR, str(show))
+#     def get_show_sidebar(self):
+#         return self.config_parser.getboolean(DEFAULTSECT, SHOW_SIDEBAR)
+#
+#     def set_show_sidebar(self, show):
+#         self.config_parser.set(DEFAULTSECT, SHOW_SIDEBAR, str(show))
 
     def get_show_legend(self):
         return self.config_parser.getboolean(DEFAULTSECT, SHOW_LEGEND)
@@ -560,6 +560,7 @@ class Config(Observable):
 
 BOOLEAN_CONFIGS = (
     {'name': 'show_toolbar', 'default': 'True'},
+    {'name': 'show_sidebar', 'default': 'True'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 
