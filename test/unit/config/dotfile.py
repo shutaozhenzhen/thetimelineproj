@@ -35,7 +35,7 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.get_sidebar_width(), 200)
         self.assertEqual(self.config.get_recently_opened(), [])
         self.assertEqual(self.config.open_recent_at_startup, True)
-        self.assertEqual(self.config.get_balloon_on_hover(), True)
+        self.assertEqual(self.config.balloon_on_hover, True)
         self.assertEqual(self.config.get_week_start(), "monday")
         self.assertEqual(self.config.get_use_inertial_scrolling(), False)
         self.assertEqual(self.config.get_center_event_texts(), False)
@@ -123,6 +123,8 @@ class describe_config(TmpDirTestCase):
                       self.config.show_toolbar,
                       self.config.show_sidebar,
                       self.config.show_legend,
+                      self.config.open_recent_at_startup,
+                      self.config.balloon_on_hover,
                       )
         for prop in properties:
             prop = True
@@ -136,7 +138,7 @@ class describe_config(TmpDirTestCase):
                     # "show_sidebar",
                     # "show_legend",
                     # "open_recent_at_startup",
-                    "balloon_on_hover",
+                    # "balloon_on_hover",
                     "use_inertial_scrolling",
                     "never_show_period_events_as_point_events",
                     "draw_period_events_to_right",
