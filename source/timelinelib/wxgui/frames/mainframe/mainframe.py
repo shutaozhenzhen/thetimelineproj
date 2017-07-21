@@ -286,7 +286,7 @@ class GuiCreator(object):
 
     def _create_view_menu(self, main_menu_bar):
         def sidebar(evt):
-            self.config.set_show_sidebar(evt.IsChecked())
+            self.config.show_sidebar = evt.IsChecked()
             if evt.IsChecked():
                 self.main_panel.show_sidebar()
             else:
@@ -396,7 +396,7 @@ class GuiCreator(object):
         def item(item_id):
             return view_menu.FindItemById(item_id)
 
-        item(ID_SIDEBAR).Check(self.config.get_show_sidebar())
+        item(ID_SIDEBAR).Check(self.config.show_sidebar)
         item(ID_LEGEND).Check(self.config.get_show_legend())
         item(ID_BALLOONS).Check(self.config.get_balloon_on_hover())
         item(ID_HIDE_DONE).Check(self.config.hide_events_done)

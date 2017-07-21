@@ -34,7 +34,7 @@ class describe_timelinepanel(UnitTestCase):
         self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
         self.parent = wx.Dialog(None)
         self.config = Mock()
-        self.config.get_show_toolbar.return_value = False
+        self.config.show_toolbar = False
         self.status_bar_adapter = Mock()
         self.main_frame = Mock(MainFrame)
         self.panel = TimelinePanel(self.parent, self.config, self.status_bar_adapter, self.main_frame)
