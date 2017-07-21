@@ -251,7 +251,7 @@ class Config(Observable):
         return ro_filtered
 
     def has_recently_opened_files(self):
-        if not self.get_open_recent_at_startup():
+        if not self.open_recent_at_startup:
             return False
         else:
             return len(self.get_recently_opened()) > 0
@@ -276,11 +276,11 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, RECENT_FILES,
                                (",".join(current[:MAX_NBR_OF_RECENT_FILES_SAVED])).encode(ENCODING))
 
-    def get_open_recent_at_startup(self):
-        return self.config_parser.getboolean(DEFAULTSECT, OPEN_RECENT_AT_STARTUP)
-
-    def set_open_recent_at_startup(self, value):
-        self.config_parser.set(DEFAULTSECT, OPEN_RECENT_AT_STARTUP, str(value))
+#     def get_open_recent_at_startup(self):
+#         return self.config_parser.getboolean(DEFAULTSECT, OPEN_RECENT_AT_STARTUP)
+#
+#     def set_open_recent_at_startup(self, value):
+#         self.config_parser.set(DEFAULTSECT, OPEN_RECENT_AT_STARTUP, str(value))
 
     def get_balloon_on_hover(self):
         return self.config_parser.getboolean(DEFAULTSECT, BALLOON_ON_HOVER)
@@ -563,6 +563,8 @@ BOOLEAN_CONFIGS = (
     {'name': 'show_sidebar', 'default': 'True'},
     {'name': 'show_legend', 'default': 'True'},
     {'name': 'window_maximized', 'default': 'False'},
+    {'name': 'open_recent_at_startup', 'default': 'False'},
+
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 

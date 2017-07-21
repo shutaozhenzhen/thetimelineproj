@@ -42,7 +42,7 @@ class PreferencesDialogController(Controller):
         self.config.legend_pos = self.view.GetLegendPos()
 
     def on_open_recent_change(self, event):
-        self.config.set_open_recent_at_startup(event.IsChecked())
+        self.config.open_recent_at_startup = event.IsChecked()
 
     def on_inertial_scrolling_changed(self, event):
         self.config.set_use_inertial_scrolling(event.IsChecked())
@@ -117,7 +117,7 @@ class PreferencesDialogController(Controller):
         self.config.set_never_use_time(self.view.GetNeverUseTime())
 
     def _set_initial_values(self):
-        self.view.SetOpenRecentCheckboxValue(self.config.get_open_recent_at_startup())
+        self.view.SetOpenRecentCheckboxValue(self.config.open_recent_at_startup)
         self.view.SetInertialScrollingCheckboxValue(self.config.get_use_inertial_scrolling())
         self.view.SetNeverPeriodPointCheckboxValue(self.config.get_never_show_period_events_as_point_events())
         self.view.SetCenterTextCheckboxValue(self.config.get_center_event_texts())
