@@ -870,7 +870,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         self._create_print_data()
         self._set_experimental_features()
         self._create_gui()
-        self.Maximize(self.config.get_window_maximized())
+        self.Maximize(self.config.window_maximized)
         self.SetTitle(APPLICATION_NAME)
         self.SetIcons(self._load_icon_bundle())
         self.main_panel.show_welcome_panel()
@@ -1035,7 +1035,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
     def _save_application_config(self):
         self.config.set_window_size(self.GetSize())
         self.config.set_window_pos(self.GetPosition())
-        self.config.set_window_maximized(self.IsMaximized())
+        self.config.window_maximized = self.IsMaximized()
         self.config.set_sidebar_width(self.main_panel.get_sidebar_width())
         try:
             self.config.write()
