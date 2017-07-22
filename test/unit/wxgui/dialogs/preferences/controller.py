@@ -71,7 +71,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
         config.never_show_period_events_as_point_events = False
         config.center_event_texts = False
         config.get_week_start.return_value = "monday"
-        config.get_uncheck_time_for_new_events.return_value = False
+        config.uncheck_time_for_new_events = False
         config.minor_strip_divider_line_colour = (100, 100, 100)
         config.major_strip_divider_line_colour = (100, 100, 100)
         config.now_line_colour = (100, 100, 100)
@@ -107,7 +107,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.never_show_period_events_as_point_events = True
         self.config.center_event_texts = True
         self.config.get_display_checkmark_on_events_done.return_value = False
-        self.config.get_uncheck_time_for_new_events.return_value = False
+        self.config.uncheck_time_for_new_events = False
         self.config.minor_strip_divider_line_colour = (100, 100, 100)
         self.config.major_strip_divider_line_colour = (100, 100, 100)
         self.config.now_line_colour = (200, 0, 0)
@@ -221,7 +221,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.evt.IsChecked.return_value = True
         self.controller.config = self.config
         self.controller.on_uncheck_time_for_new_events(self.evt)
-        self.config.set_uncheck_time_for_new_events.assert_called_with(self.evt.IsChecked.return_value)
+        self.assertEqual(self.config.uncheck_time_for_new_events, self.evt.IsChecked.return_value)
 
     def test_on_major_strip_click(self):
         font = Mock()

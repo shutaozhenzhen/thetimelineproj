@@ -126,7 +126,7 @@ class EditEventDialogController(Controller):
                 pass
         if self.config.get_never_use_time():
             self.view.DisableTime()
-        elif self.event is None and self.config.get_uncheck_time_for_new_events():
+        elif self.event is None and self.config.uncheck_time_for_new_events:
             self.view.SetShowTime(False)
 
     def _get_period(self, start, end):

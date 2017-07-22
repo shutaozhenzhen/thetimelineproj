@@ -64,7 +64,7 @@ class PreferencesDialogController(Controller):
         self.view.SetCurrentDateFormat("%s: %s" % (_("Current"), self.config.date_format))
 
     def on_uncheck_time_for_new_events(self, event):
-        self.config.set_uncheck_time_for_new_events(event.IsChecked())
+        self.config.uncheck_time_for_new_events = event.IsChecked()
 
     def on_tab_order_click(self, event):
         self.view.ShowSelectTabOrderDialog(self.config)
@@ -123,7 +123,7 @@ class PreferencesDialogController(Controller):
         self.view.SetCenterTextCheckboxValue(self.config.center_event_texts)
         self.view.SetWeekStartSelection(self._week_index(self.config.get_week_start()))
         self.view.AddExperimentalFeatures(self.experimental_features.get_all_features())
-        self.view.SetUncheckTimeForNewEventsCheckboxValue(self.config.get_uncheck_time_for_new_events())
+        self.view.SetUncheckTimeForNewEventsCheckboxValue(self.config.uncheck_time_for_new_events)
         self.view.SetMinorStripColor(wx.Colour(*self.config.minor_strip_divider_line_colour))
         self.view.SetMajorStripColor(wx.Colour(*self.config.major_strip_divider_line_colour))
         self.view.SetNowLineColor(wx.Colour(*self.config.now_line_colour))
