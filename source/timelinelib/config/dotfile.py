@@ -419,13 +419,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, VERTCAL_SPACE_BETWEEN_EVENTS, str(max(0, value)))
         self._notify()
 
-    def get_skip_s_in_decade_text(self):
-        return self.config_parser.getboolean(DEFAULTSECT, SKIP_S_IN_DECADE_TEXT)
-
-    def set_skip_s_in_decade_text(self, value):
-        self.config_parser.set(DEFAULTSECT, SKIP_S_IN_DECADE_TEXT, str(value))
-        self._notify()
-
     def get_display_checkmark_on_events_done(self):
         return self.config_parser.getboolean(DEFAULTSECT, DISPLAY_CHECKMARK_ON_EVENTS_DONE)
 
@@ -472,6 +465,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'uncheck_time_for_new_events', 'default': 'False'},
     {'name': 'text_below_icon', 'default': 'False'},
     {'name': 'colorize_weekends', 'default': 'False'},
+    {'name': 'skip_s_in_decade_text', 'default': 'False'},
 
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
