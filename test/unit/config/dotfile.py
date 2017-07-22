@@ -135,6 +135,7 @@ class describe_config(TmpDirTestCase):
                       self.config.text_below_icon,
                       self.config.colorize_weekends,
                       self.config.skip_s_in_decade_text,
+                      self.config.display_checkmark_on_events_done,
                       )
         for prop in properties:
             prop = True
@@ -143,8 +144,7 @@ class describe_config(TmpDirTestCase):
             self.assertFalse(prop)
 
     def test_boolean_settings_can_be_set_and_reset(self):
-        settings = ["display_checkmark_on_events_done",
-                    "never_use_time"]
+        settings = ["never_use_time"]
         for setting in settings:
             getter = getattr(self.config, "get_%s" % setting)
             setter = getattr(self.config, "set_%s" % setting)

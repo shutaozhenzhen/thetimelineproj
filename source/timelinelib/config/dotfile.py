@@ -81,7 +81,7 @@ DATE_FORMAT = "date_format"
 VERTCAL_SPACE_BETWEEN_EVENTS = "vertical_space_between_events"
 COLORIZE_WEEKENDS = "colorize_weekends"
 SKIP_S_IN_DECADE_TEXT = "skip_s_in_decade_text"
-DISPLAY_CHECKMARK_ON_EVENTS_DONE = "display_checkmark_on_events-done"
+DISPLAY_CHECKMARK_ON_EVENTS_DONE = "display_checkmark_on_events_done"
 NEVER_USE_TIME = "never_use_time"
 LEGEND_POS = "legend_pos"
 DEFAULTS = {
@@ -419,13 +419,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, VERTCAL_SPACE_BETWEEN_EVENTS, str(max(0, value)))
         self._notify()
 
-    def get_display_checkmark_on_events_done(self):
-        return self.config_parser.getboolean(DEFAULTSECT, DISPLAY_CHECKMARK_ON_EVENTS_DONE)
-
-    def set_display_checkmark_on_events_done(self, value):
-        self.config_parser.set(DEFAULTSECT, DISPLAY_CHECKMARK_ON_EVENTS_DONE, str(value))
-        self._notify()
-
     def _toStr(self, value):
         try:
             return str(value)
@@ -466,7 +459,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'text_below_icon', 'default': 'False'},
     {'name': 'colorize_weekends', 'default': 'False'},
     {'name': 'skip_s_in_decade_text', 'default': 'False'},
-
+    {'name': 'display_checkmark_on_events_done', 'default': 'False'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 
