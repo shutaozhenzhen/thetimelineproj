@@ -66,6 +66,11 @@ class PreferencesDialog(Dialog):
                             event_EVT_CHECKBOX="on_uncheck_time_for_new_events"
                             label="$(uncheck_time_for_new_events_text)"
                         />
+                        <CheckBox
+                            name="text_below_icon"
+                            event_EVT_CHECKBOX="on_text_below_icon"
+                            label="$(text_below_icon_text)"
+                        />
                         <Button
                             name="select_tab_order"
                             event_EVT_BUTTON="on_tab_order_click"
@@ -302,6 +307,7 @@ class PreferencesDialog(Dialog):
             "never_period_point_text": _("Never show period Events as point Events"),
             "center_text_text": _("Center Event texts"),
             "uncheck_time_for_new_events_text": _("Uncheck time checkbox for new events"),
+            "text_below_icon_text": _("Balloon text below icon"),
             "tab_order_text": _("Select Event Editor Tab Order"),
             "date_formatter_text": _("Select Date format"),
             "date_time_text": _("Date && Time"),
@@ -376,6 +382,9 @@ class PreferencesDialog(Dialog):
 
     def SetUncheckTimeForNewEventsCheckboxValue(self, value):
         self.uncheck_time_for_new_events.SetValue(value)
+
+    def SetTextBelowIconCheckboxValue(self, value):
+        self.text_below_icon.SetValue(value)
 
     def SetCenterTextCheckboxValue(self, value):
         self.center_text_checkbox.SetValue(value)
