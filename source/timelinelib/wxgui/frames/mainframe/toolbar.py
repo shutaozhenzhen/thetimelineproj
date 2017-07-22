@@ -64,7 +64,7 @@ class ToolbarCreator(object):
         def on_center_click(event):
             self.config.set_draw_period_events_to_right(False)
         def check_item_corresponding_to_config():
-            if self.config.get_draw_period_events_to_right():
+            if self.config.draw_point_events_to_right:
                 self.toolbar.ToggleTool(left_tool.GetId(), True)
             else:
                 self.toolbar.ToggleTool(center_tool.GetId(), True)

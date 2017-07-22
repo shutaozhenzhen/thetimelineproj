@@ -298,13 +298,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, CENTER_EVENT_TEXTS, str(value))
         self._notify()
 
-    def get_draw_period_events_to_right(self):
-        return self.config_parser.getboolean(DEFAULTSECT, DRAW_POINT_EVENTS_TO_RIGHT)
-
-    def set_draw_period_events_to_right(self, value):
-        self.config_parser.set(DEFAULTSECT, DRAW_POINT_EVENTS_TO_RIGHT, str(value))
-        self._notify()
-
     def get_major_strip_font(self):
         return self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_FONT)
 
@@ -514,6 +507,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'balloon_on_hover', 'default': 'True'},
     {'name': 'use_inertial_scrolling', 'default': 'False'},
     {'name': 'never_show_period_events_as_point_events', 'default': 'False'},
+    {'name': 'draw_point_events_to_right', 'default': 'False'},
 
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
