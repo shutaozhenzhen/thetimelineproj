@@ -124,7 +124,7 @@ class EditEventDialogController(Controller):
                 self.view.SetShowTime(self.config.event_editor_show_time)
             else:
                 pass
-        if self.config.get_never_use_time():
+        if self.config.never_use_time:
             self.view.DisableTime()
         elif self.event is None and self.config.uncheck_time_for_new_events:
             self.view.SetShowTime(False)

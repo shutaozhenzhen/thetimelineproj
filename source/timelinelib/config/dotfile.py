@@ -198,13 +198,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, WINDOW_XPOS, str(xpos))
         self.config_parser.set(DEFAULTSECT, WINDOW_YPOS, str(ypos))
 
-    def get_never_use_time(self):
-        return self.config_parser.getboolean(DEFAULTSECT, NEVER_USE_TIME)
-
-    def set_never_use_time(self, value):
-        self.config_parser.set(DEFAULTSECT, NEVER_USE_TIME, str(value))
-        self._notify()
-
     def get_sidebar_width(self):
         return self.config_parser.getint(DEFAULTSECT, SIDEBAR_WIDTH)
 
@@ -460,6 +453,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'colorize_weekends', 'default': 'False'},
     {'name': 'skip_s_in_decade_text', 'default': 'False'},
     {'name': 'display_checkmark_on_events_done', 'default': 'False'},
+    {'name': 'never_use_time', 'default': 'False'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 
