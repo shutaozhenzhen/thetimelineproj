@@ -38,7 +38,7 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.balloon_on_hover, True)
         self.assertEqual(self.config.get_week_start(), "monday")
         self.assertEqual(self.config.use_inertial_scrolling, False)
-        self.assertEqual(self.config.get_center_event_texts(), False)
+        self.assertEqual(self.config.center_event_texts, False)
         self.assertEqual(self.config.minor_strip_divider_line_colour, (200, 200, 200))
         self.assertEqual(self.config.get_never_use_time(), False)
 
@@ -130,7 +130,7 @@ class describe_config(TmpDirTestCase):
                       self.config.draw_point_events_to_right,
                       self.config.event_editor_show_period,
                       self.config.event_editor_show_time,
-
+                      self.config.center_event_texts,
                       )
         for prop in properties:
             prop = True
@@ -140,7 +140,6 @@ class describe_config(TmpDirTestCase):
 
     def test_boolean_settings_can_be_set_and_reset(self):
         settings = ["uncheck_time_for_new_events",
-                    "center_event_texts",
                     "text_below_icon",
                     "colorize_weekends",
                     "skip_s_in_decade_text",

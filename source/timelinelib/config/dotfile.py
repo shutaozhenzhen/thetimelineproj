@@ -291,13 +291,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, EXPERIMENTAL_FEATURES, value)
         self._notify()
 
-    def get_center_event_texts(self):
-        return self.config_parser.getboolean(DEFAULTSECT, CENTER_EVENT_TEXTS)
-
-    def set_center_event_texts(self, value):
-        self.config_parser.set(DEFAULTSECT, CENTER_EVENT_TEXTS, str(value))
-        self._notify()
-
     def get_major_strip_font(self):
         return self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_FONT)
 
@@ -496,6 +489,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'draw_point_events_to_right', 'default': 'False'},
     {'name': 'event_editor_show_period', 'default': 'False'},
     {'name': 'event_editor_show_time', 'default': 'False'},
+    {'name': 'center_event_texts', 'default': 'False'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 
