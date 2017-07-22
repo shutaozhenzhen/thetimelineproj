@@ -79,7 +79,7 @@ LOCKED_ICON = "locked_icon"
 HYPERLINK_ICON = "hyperlink_icon"
 DATE_FORMAT = "date_format"
 VERTCAL_SPACE_BETWEEN_EVENTS = "vertical_space_between_events"
-COLORIZE_WEEKENDS = "colorize_weekens"
+COLORIZE_WEEKENDS = "colorize_weekends"
 SKIP_S_IN_DECADE_TEXT = "skip_s_in_decade_text"
 DISPLAY_CHECKMARK_ON_EVENTS_DONE = "display_checkmark_on_events-done"
 NEVER_USE_TIME = "never_use_time"
@@ -419,13 +419,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, VERTCAL_SPACE_BETWEEN_EVENTS, str(max(0, value)))
         self._notify()
 
-    def get_colorize_weekends(self):
-        return self.config_parser.getboolean(DEFAULTSECT, COLORIZE_WEEKENDS)
-
-    def set_colorize_weekends(self, value):
-        self.config_parser.set(DEFAULTSECT, COLORIZE_WEEKENDS, str(value))
-        self._notify()
-
     def get_skip_s_in_decade_text(self):
         return self.config_parser.getboolean(DEFAULTSECT, SKIP_S_IN_DECADE_TEXT)
 
@@ -478,6 +471,8 @@ BOOLEAN_CONFIGS = (
     {'name': 'center_event_texts', 'default': 'False'},
     {'name': 'uncheck_time_for_new_events', 'default': 'False'},
     {'name': 'text_below_icon', 'default': 'False'},
+    {'name': 'colorize_weekends', 'default': 'False'},
+
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 
