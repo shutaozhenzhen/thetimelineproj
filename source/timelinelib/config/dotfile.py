@@ -327,13 +327,6 @@ class Config(Observable):
         DEFAULTS[MINOR_STRIP_FONT] = Font(8).serialize()
         DEFAULTS[LEGEND_FONT] = Font(8).serialize()
 
-    def get_event_editor_show_period(self):
-        return self.config_parser.getboolean(DEFAULTSECT, EVENT_EDITOR_SHOW_PERIOD)
-
-    def set_event_editor_show_period(self, value):
-        self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_SHOW_PERIOD, str(value))
-    event_editor_show_period = property(get_event_editor_show_period, set_event_editor_show_period)
-
     def get_event_editor_show_time(self):
         return self.config_parser.getboolean(DEFAULTSECT, EVENT_EDITOR_SHOW_TIME)
 
@@ -508,6 +501,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'use_inertial_scrolling', 'default': 'False'},
     {'name': 'never_show_period_events_as_point_events', 'default': 'False'},
     {'name': 'draw_point_events_to_right', 'default': 'False'},
+    {'name': 'event_editor_show_period', 'default': 'False'},
 
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]

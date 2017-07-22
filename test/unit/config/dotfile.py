@@ -128,7 +128,7 @@ class describe_config(TmpDirTestCase):
                       self.config.use_inertial_scrolling,
                       self.config.never_show_period_events_as_point_events,
                       self.config.draw_point_events_to_right,
-
+                      self.config.event_editor_show_period,
                       )
         for prop in properties:
             prop = True
@@ -137,8 +137,7 @@ class describe_config(TmpDirTestCase):
             self.assertFalse(prop)
 
     def test_boolean_settings_can_be_set_and_reset(self):
-        settings = ["event_editor_show_period",
-                    "event_editor_show_time",
+        settings = ["event_editor_show_time",
                     "uncheck_time_for_new_events",
                     "center_event_texts",
                     "text_below_icon",
