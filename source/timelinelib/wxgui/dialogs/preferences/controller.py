@@ -117,7 +117,7 @@ class PreferencesDialogController(Controller):
         self.config.skip_s_in_decade_text = self.view.GetSkipSInDecadeText()
 
     def on_never_use_time_change(self, event):
-        self.config.set_never_use_time(self.view.GetNeverUseTime())
+        self.config.never_use_time = self.view.GetNeverUseTime()
 
     def _set_initial_values(self):
         self.view.SetOpenRecentCheckboxValue(self.config.open_recent_at_startup)
@@ -144,7 +144,7 @@ class PreferencesDialogController(Controller):
         self.view.SetColorizeWeekends(self.config.colorize_weekends)
         self.view.SetSkipSInDecadeText(self.config.skip_s_in_decade_text)
         self.view.SetDisplayCheckmarkOnEventsDone(self.config.display_checkmark_on_events_done)
-        self.view.SetNeverUseTime(self.config.get_never_use_time())
+        self.view.SetNeverUseTime(self.config.never_use_time)
         self.view.SetMajorStripFont(deserialize_font(self.config.get_major_strip_font()))
         self.view.SetMinorStripFont(deserialize_font(self.config.get_minor_strip_font()))
         self.view.SetLegendFont(deserialize_font(self.config.get_legend_font()))

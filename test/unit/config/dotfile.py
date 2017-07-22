@@ -40,7 +40,7 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.use_inertial_scrolling, False)
         self.assertEqual(self.config.center_event_texts, False)
         self.assertEqual(self.config.minor_strip_divider_line_colour, (200, 200, 200))
-        self.assertEqual(self.config.get_never_use_time(), False)
+        self.assertEqual(self.config.never_use_time, False)
 
     def test_window_size_can_be_read_after_stored(self):
         self.config.set_window_size((3, 20))
@@ -136,22 +136,13 @@ class describe_config(TmpDirTestCase):
                       self.config.colorize_weekends,
                       self.config.skip_s_in_decade_text,
                       self.config.display_checkmark_on_events_done,
+                      self.config.never_use_time,
                       )
         for prop in properties:
             prop = True
             self.assertTrue(prop)
             prop = False
             self.assertFalse(prop)
-
-    def test_boolean_settings_can_be_set_and_reset(self):
-        settings = ["never_use_time"]
-        for setting in settings:
-            getter = getattr(self.config, "get_%s" % setting)
-            setter = getattr(self.config, "set_%s" % setting)
-            setter(True)
-            self.assertTrue(getter())
-            setter(False)
-            self.assertFalse(getter())
 
     def setUp(self):
         TmpDirTestCase.setUp(self)
