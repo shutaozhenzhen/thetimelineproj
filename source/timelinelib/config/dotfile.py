@@ -243,15 +243,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, RECENT_FILES,
                                (",".join(current[:MAX_NBR_OF_RECENT_FILES_SAVED])).encode(ENCODING))
 
-    @property
-    def hide_events_done(self):
-        return self.config_parser.getboolean(DEFAULTSECT, HIDE_EVENTS_DONE)
-
-    @hide_events_done.setter
-    def hide_events_done(self, value):
-        self.config_parser.set(DEFAULTSECT, HIDE_EVENTS_DONE, str(value))
-        self._notify()
-
     def get_week_start(self):
         return self.config_parser.get(DEFAULTSECT, WEEK_START)
 
@@ -454,6 +445,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'skip_s_in_decade_text', 'default': 'False'},
     {'name': 'display_checkmark_on_events_done', 'default': 'False'},
     {'name': 'never_use_time', 'default': 'False'},
+    {'name': 'hide_events_done', 'default': 'False'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 
