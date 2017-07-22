@@ -360,14 +360,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, BG_COLOUR, self._tuple_to_string(colour))
         self._notify()
 
-    def get_text_below_icon(self):
-        return self.config_parser.getboolean(DEFAULTSECT, TEXT_BELOW_ICON)
-
-    def set_text_below_icon(self, value):
-        self.config_parser.set(DEFAULTSECT, TEXT_BELOW_ICON, str(value))
-        self._notify()
-    text_below_icon = property(get_text_below_icon, set_text_below_icon)
-
     def _string_to_tuple(self, tuple_string):
         return tuple([int(x.strip()) for x in tuple_string[1:-1].split(",")])
 
@@ -485,6 +477,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'event_editor_show_time', 'default': 'False'},
     {'name': 'center_event_texts', 'default': 'False'},
     {'name': 'uncheck_time_for_new_events', 'default': 'False'},
+    {'name': 'text_below_icon', 'default': 'False'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 

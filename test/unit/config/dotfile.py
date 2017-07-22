@@ -132,6 +132,7 @@ class describe_config(TmpDirTestCase):
                       self.config.event_editor_show_time,
                       self.config.center_event_texts,
                       self.config.uncheck_time_for_new_events,
+                      self.config.text_below_icon,
                       )
         for prop in properties:
             prop = True
@@ -140,8 +141,7 @@ class describe_config(TmpDirTestCase):
             self.assertFalse(prop)
 
     def test_boolean_settings_can_be_set_and_reset(self):
-        settings = ["text_below_icon",
-                    "colorize_weekends",
+        settings = ["colorize_weekends",
                     "skip_s_in_decade_text",
                     "display_checkmark_on_events_done",
                     "never_use_time"]
