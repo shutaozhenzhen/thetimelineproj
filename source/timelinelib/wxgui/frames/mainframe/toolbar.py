@@ -47,7 +47,7 @@ class ToolbarCreator(object):
         def on_center_click(event):
             self.config.set_center_event_texts(True)
         def check_item_corresponding_to_config():
-            if self.config.get_center_event_texts():
+            if self.config.center_event_texts:
                 self.toolbar.ToggleTool(center_tool.GetId(), True)
             else:
                 self.toolbar.ToggleTool(left_tool.GetId(), True)

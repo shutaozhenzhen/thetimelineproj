@@ -69,7 +69,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
         config.open_recent_at_startup = ""
         config.use_inertial_scrolling = False
         config.never_show_period_events_as_point_events = False
-        config.get_center_event_texts.return_value = False
+        config.center_event_texts = False
         config.get_week_start.return_value = "monday"
         config.get_uncheck_time_for_new_events.return_value = False
         config.minor_strip_divider_line_colour = (100, 100, 100)
@@ -105,7 +105,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.open_recent_at_startup = True
         self.config.use_inertial_scrolling = False
         self.config.never_show_period_events_as_point_events = True
-        self.config.get_center_event_texts.return_value = True
+        self.config.center_event_texts = True
         self.config.get_display_checkmark_on_events_done.return_value = False
         self.config.get_uncheck_time_for_new_events.return_value = False
         self.config.minor_strip_divider_line_colour = (100, 100, 100)
@@ -165,14 +165,14 @@ class describe_preferences_dialog(UnitTestCase):
         self.assertEqual(self.config.never_show_period_events_as_point_events, sentinel.PERIOD_POINT)
 
     def test_sets_center_text_on_init(self):
-        self.config.get_center_event_texts.return_value = sentinel.CENTER_TEXT
+        self.config.center_event_texts = sentinel.CENTER_TEXT
         self.simulate_dialog_opens()
         self.view.SetCenterTextCheckboxValue.assert_called_with(sentinel.CENTER_TEXT)
 
     def test_sets_center_text_on_change(self):
         self.simulate_dialog_opens()
         self.controller.on_center_text_changed(event_is_checked(sentinel.CENTER_TEXT))
-        self.config.set_center_event_texts.assert_called_with(sentinel.CENTER_TEXT)
+        self.assertEqual(self.config.center_event_texts, sentinel.CENTER_TEXT)
 
     def test_sets_week_start_on_init_sunday(self):
         self.config.get_week_start.return_value = "sunday"
