@@ -119,7 +119,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_hyperlink_icon.return_value = "hyperlink.png"
         self.config.get_vertical_space_between_events.return_value = 5
         self.config.colorize_weekends = False
-        self.config.get_skip_s_in_decade_text.return_value = False
+        self.config.skip_s_in_decade_text = False
         self.config.get_major_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.get_minor_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.get_legend_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
@@ -279,7 +279,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.controller.config = self.config
         self.view.GetSkipSInDecadeText.return_value = sentinel.SKIP_S
         self.controller.on_skip_s_in_decade_text(self.evt)
-        self.config.set_skip_s_in_decade_text.assert_called_with(sentinel.SKIP_S)
+        self.assertEqual(self.config.skip_s_in_decade_text, sentinel.SKIP_S)
 
     def test_on_legend_click_ok(self):
         self.controller.config = self.config

@@ -165,7 +165,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_locked_icon(self.config.get_locked_icon())
             appearance.set_hyperlink_icon(self.config.get_hyperlink_icon())
             appearance.set_vertical_space_between_events(self.config.get_vertical_space_between_events())
-            appearance.set_skip_s_in_decade_text(self.config.get_skip_s_in_decade_text())
+            appearance.set_skip_s_in_decade_text(self.config.skip_s_in_decade_text)
             appearance.set_display_checkmark_on_events_done(self.config.get_display_checkmark_on_events_done())
             appearance.set_never_use_time(self.config.get_never_use_time())
             appearance.set_legend_pos(self.config.legend_pos)
