@@ -259,12 +259,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, HIDE_EVENTS_DONE, str(value))
         self._notify()
 
-    def get_uncheck_time_for_new_events(self):
-        return self.config_parser.getboolean(DEFAULTSECT, UNCHECK_TIME_FOR_NEW_EVENTS)
-
-    def set_uncheck_time_for_new_events(self, value):
-        self.config_parser.set(DEFAULTSECT, UNCHECK_TIME_FOR_NEW_EVENTS, str(value))
-
     def get_week_start(self):
         return self.config_parser.get(DEFAULTSECT, WEEK_START)
 
@@ -490,6 +484,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'event_editor_show_period', 'default': 'False'},
     {'name': 'event_editor_show_time', 'default': 'False'},
     {'name': 'center_event_texts', 'default': 'False'},
+    {'name': 'uncheck_time_for_new_events', 'default': 'False'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 
