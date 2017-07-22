@@ -1036,7 +1036,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         self.config.set_window_size(self.GetSize())
         self.config.set_window_pos(self.GetPosition())
         self.config.window_maximized = self.IsMaximized()
-        self.config.set_sidebar_width(self.main_panel.get_sidebar_width())
+        self.config.sidebar_width = self.main_panel.get_sidebar_width()
         try:
             self.config.write()
         except IOError as ex:
