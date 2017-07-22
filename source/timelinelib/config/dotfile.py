@@ -327,13 +327,6 @@ class Config(Observable):
         DEFAULTS[MINOR_STRIP_FONT] = Font(8).serialize()
         DEFAULTS[LEGEND_FONT] = Font(8).serialize()
 
-    def get_event_editor_show_time(self):
-        return self.config_parser.getboolean(DEFAULTSECT, EVENT_EDITOR_SHOW_TIME)
-
-    def set_event_editor_show_time(self, value):
-        self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_SHOW_TIME, str(value))
-    event_editor_show_time = property(get_event_editor_show_time, set_event_editor_show_time)
-
     def get_event_editor_tab_order(self):
         return self.config_parser.get(DEFAULTSECT, EVENT_EDITOR_TAB_ORDER)
 
@@ -502,7 +495,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'never_show_period_events_as_point_events', 'default': 'False'},
     {'name': 'draw_point_events_to_right', 'default': 'False'},
     {'name': 'event_editor_show_period', 'default': 'False'},
-
+    {'name': 'event_editor_show_time', 'default': 'False'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 
