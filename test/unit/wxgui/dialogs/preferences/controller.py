@@ -117,7 +117,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_fuzzy_icon.return_value = "fuzzy.png"
         self.config.get_locked_icon.return_value = "locked.png"
         self.config.get_hyperlink_icon.return_value = "hyperlink.png"
-        self.config.get_vertical_space_between_events.return_value = 5
+        self.config.vertical_space_between_events = 5
         self.config.colorize_weekends = False
         self.config.skip_s_in_decade_text = False
         self.config.get_major_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
@@ -267,7 +267,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.controller.config = self.config
         self.view.GetVerticalSpaceBetweenEvents.return_value = sentinel.SPACE
         self.controller.on_vertical_space_between_events_click(self.evt)
-        self.config.set_vertical_space_between_events.assert_called_with(sentinel.SPACE)
+        self.assertEqual(self.config.vertical_space_between_events, sentinel.SPACE)
 
     def test_on_colorize_weekends(self):
         self.controller.config = self.config
