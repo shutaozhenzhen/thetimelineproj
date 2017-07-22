@@ -345,15 +345,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, FUZZY_ICON, value)
         self._notify()
 
-    @property
-    def legend_pos(self):
-        return self.config_parser.getint(DEFAULTSECT, LEGEND_POS)
-
-    @legend_pos.setter
-    def legend_pos(self, pos):
-        self.config_parser.set(DEFAULTSECT, LEGEND_POS, str(min(3, max(0, pos))))
-        self._notify()
-
     def get_locked_icon(self):
         return self.config_parser.get(DEFAULTSECT, LOCKED_ICON)
 
@@ -434,6 +425,7 @@ INT_CONFIGS = (
     {'name': 'sidebar_width', 'default': '200'},
     {'name': 'divider_line_slider_pos', 'default': '50'},
     {'name': 'vertical_space_between_events', 'default': '5'},
+    {'name': 'legend_pos', 'default': '0'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 INTS = [d['name'] for d in INT_CONFIGS]
