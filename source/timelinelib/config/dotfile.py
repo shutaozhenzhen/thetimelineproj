@@ -198,12 +198,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, WINDOW_XPOS, str(xpos))
         self.config_parser.set(DEFAULTSECT, WINDOW_YPOS, str(ypos))
 
-    def get_divider_line_slider_pos(self):
-        return self.config_parser.getint(DEFAULTSECT, DIVIDER_LINE_SLIDER_POS)
-
-    def set_divider_line_slider_pos(self, pos):
-        self.config_parser.set(DEFAULTSECT, DIVIDER_LINE_SLIDER_POS, str(pos))
-
     def get_recently_opened(self):
         ro = self.config_parser.get(DEFAULTSECT, RECENT_FILES).decode(ENCODING).split(",")
         # Filter out empty elements: "".split(",") will return [""] but we want
@@ -445,6 +439,8 @@ BOOLEAN_CONFIGS = (
 )
 INT_CONFIGS = (
     {'name': 'sidebar_width', 'default': '200'},
+    {'name': 'divider_line_slider_pos', 'default': '50'},
+
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 INTS = [d['name'] for d in INT_CONFIGS]

@@ -70,7 +70,7 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _create_divider_line_slider(self):
 
         def on_slider(evt):
-            self.config.set_divider_line_slider_pos(evt.GetPosition())
+            self.config.divider_line_slider_pos = evt.GetPosition()
 
         style = wx.SL_LEFT | wx.SL_VERTICAL
         self.divider_line_slider = wx.Slider(self, size=(20, -1), style=style)
@@ -133,7 +133,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             EVT_TIMELINE_REDRAWN,
             self._timeline_canvas_on_timeline_redrawn
         )
-        self.timeline_canvas.SetDividerPosition(self.config.get_divider_line_slider_pos())
+        self.timeline_canvas.SetDividerPosition(self.config.divider_line_slider_pos)
         self.timeline_canvas.SetEventBoxDrawer(self._get_saved_event_box_drawer())
         self.timeline_canvas.SetInputHandler(NoOpInputHandler(
             InputHandlerState(
@@ -355,7 +355,7 @@ class TimelinePanelGuiCreator(wx.Panel):
 
     def _timeline_canvas_on_divider_position_changed(self, event):
         self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())
-        self.config.set_divider_line_slider_pos(self.timeline_canvas.GetDividerPosition())
+        self.config.divider_line_slider_pos = self.timeline_canvas.GetDividerPosition()
 
     def _timeline_canvas_on_timeline_redrawn(self, event):
         text = _("%s events hidden") % self.timeline_canvas.GetHiddenEventCount()
