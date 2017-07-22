@@ -378,11 +378,11 @@ class GuiCreator(object):
         center_item = sub_menu.Append(wx.ID_ANY, _("Center"), kind=wx.ITEM_RADIO)
         view_menu.AppendMenu(wx.ID_ANY, _("Point event alignment"), sub_menu)
         def on_left_click(event):
-            self.config.set_draw_period_events_to_right(True)
+            self.config.draw_point_events_to_right = True
         def on_center_click(event):
-            self.config.set_draw_period_events_to_right(False)
+            self.config.draw_point_events_to_right = False
         def check_item_corresponding_to_config():
-            if self.config.get_draw_period_events_to_right():
+            if self.config.draw_point_events_to_right:
                 left_item.Check()
             else:
                 center_item.Check()
