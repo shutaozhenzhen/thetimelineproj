@@ -384,13 +384,6 @@ class Config(Observable):
         self._notify()
     date_format = property(get_date_format, set_date_format)
 
-    def get_vertical_space_between_events(self):
-        return self.config_parser.getint(DEFAULTSECT, VERTCAL_SPACE_BETWEEN_EVENTS)
-
-    def set_vertical_space_between_events(self, value):
-        self.config_parser.set(DEFAULTSECT, VERTCAL_SPACE_BETWEEN_EVENTS, str(max(0, value)))
-        self._notify()
-
     def _toStr(self, value):
         try:
             return str(value)
@@ -440,7 +433,7 @@ BOOLEAN_CONFIGS = (
 INT_CONFIGS = (
     {'name': 'sidebar_width', 'default': '200'},
     {'name': 'divider_line_slider_pos', 'default': '50'},
-
+    {'name': 'vertical_space_between_events', 'default': '5'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 INTS = [d['name'] for d in INT_CONFIGS]
