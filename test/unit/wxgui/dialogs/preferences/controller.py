@@ -104,6 +104,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_week_start.return_value = "monday"
         self.config.open_recent_at_startup = True
         self.config.use_inertial_scrolling = False
+        self.config.text_below_icon = False
         self.config.never_show_period_events_as_point_events = True
         self.config.center_event_texts = True
         self.config.get_display_checkmark_on_events_done.return_value = False
