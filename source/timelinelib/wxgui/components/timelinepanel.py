@@ -50,7 +50,7 @@ LEFT_RIGHT_SCROLL_FACTOR = 1 / 200.0
 class TimelinePanelGuiCreator(wx.Panel):
 
     def __init__(self, parent):
-        self.sidebar_width = self.config.get_sidebar_width()
+        self.sidebar_width = self.config.sidebar_width
         wx.Panel.__init__(self, parent)
         self._create_gui()
 

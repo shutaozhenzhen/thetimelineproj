@@ -198,12 +198,6 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, WINDOW_XPOS, str(xpos))
         self.config_parser.set(DEFAULTSECT, WINDOW_YPOS, str(ypos))
 
-    def get_sidebar_width(self):
-        return self.config_parser.getint(DEFAULTSECT, SIDEBAR_WIDTH)
-
-    def set_sidebar_width(self, width):
-        self.config_parser.set(DEFAULTSECT, SIDEBAR_WIDTH, str(width))
-
     def get_divider_line_slider_pos(self):
         return self.config_parser.getint(DEFAULTSECT, DIVIDER_LINE_SLIDER_POS)
 
@@ -412,6 +406,8 @@ class Config(Observable):
     def _get(self, key):
         if key in BOOLEANS:
             return self._get_boolean(key)
+        elif key in INTS:
+            return self._get_int(key)
         else:
             return self.config_parser.get(DEFAULTSECT, key)
 
@@ -447,12 +443,16 @@ BOOLEAN_CONFIGS = (
     {'name': 'never_use_time', 'default': 'False'},
     {'name': 'hide_events_done', 'default': 'False'},
 )
+INT_CONFIGS = (
+    {'name': 'sidebar_width', 'default': '200'},
+)
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
+INTS = [d['name'] for d in INT_CONFIGS]
 
 
 def setatt(name):
     setattr(Config, name, property(lambda self: self._get(name),
                                    lambda self, value: self._set(name, str(value))))
 
-for data in BOOLEAN_CONFIGS:
+for data in BOOLEAN_CONFIGS + INT_CONFIGS:
     setatt(data['name'])
