@@ -111,7 +111,7 @@ class PreferencesDialogController(Controller):
         self.config.set_vertical_space_between_events(self.view.GetVerticalSpaceBetweenEvents())
 
     def on_colorize_weekends(self, event):
-        self.config.set_colorize_weekends(self.view.GetColorizeWeekends())
+        self.config.colorize_weekends = self.view.GetColorizeWeekends()
 
     def on_skip_s_in_decade_text(self, event):
         self.config.set_skip_s_in_decade_text(self.view.GetSkipSInDecadeText())
@@ -141,7 +141,7 @@ class PreferencesDialogController(Controller):
         self.view.SetCurrentDateFormat("%s: %s" % (_("Current"), self.config.date_format))
         self.view.DisplayIcons()
         self.view.SetVerticalSpaceBetweenEvents(self.config.get_vertical_space_between_events())
-        self.view.SetColorizeWeekends(self.config.get_colorize_weekends())
+        self.view.SetColorizeWeekends(self.config.colorize_weekends)
         self.view.SetSkipSInDecadeText(self.config.get_skip_s_in_decade_text())
         self.view.SetDisplayCheckmarkOnEventsDone(self.config.get_display_checkmark_on_events_done())
         self.view.SetNeverUseTime(self.config.get_never_use_time())

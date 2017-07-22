@@ -151,7 +151,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_now_line_colour(self.config.get_now_line_color())
             appearance.set_weekend_colour(self.config.get_weekend_color())
             appearance.set_bg_colour(self.config.get_bg_color())
-            appearance.set_colorize_weekends(self.config.get_colorize_weekends())
+            appearance.set_colorize_weekends(self.config.colorize_weekends)
             appearance.set_draw_period_events_to_right(self.config.draw_point_events_to_right)
             appearance.set_text_below_icon(self.config.text_below_icon)
             appearance.set_minor_strip_font(self.config.get_minor_strip_font())
