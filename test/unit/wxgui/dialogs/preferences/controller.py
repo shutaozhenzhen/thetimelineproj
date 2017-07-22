@@ -107,7 +107,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.text_below_icon = False
         self.config.never_show_period_events_as_point_events = True
         self.config.center_event_texts = True
-        self.config.get_display_checkmark_on_events_done.return_value = False
+        self.config.display_checkmark_on_events_done = False
         self.config.uncheck_time_for_new_events = False
         self.config.minor_strip_divider_line_colour = (100, 100, 100)
         self.config.major_strip_divider_line_colour = (100, 100, 100)
