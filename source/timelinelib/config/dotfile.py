@@ -50,11 +50,6 @@ WEEK_START = "week_start"
 MAJOR_STRIP_FONT = "major_strip_font"
 MINOR_STRIP_FONT = "minor_strip_font"
 LEGEND_FONT = "legend_font"
-MINOR_STRIP_DIVIDER_LINE_COLOUR = "minor_strip_divider_line_colour"
-MAJOR_STRIP_DIVIDER_LINE_COLOUR = "major_strip_divider_line_colour"
-NOW_LINE_COLOUR = "today_line_colour"
-WEEKEND_COLOUR = "weekend_colour"
-BG_COLOUR = "bg_colour"
 DATE_FORMAT = "date_format"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
@@ -64,11 +59,6 @@ DEFAULTS = {
     WINDOW_YPOS: "-1",
     RECENT_FILES: "",
     WEEK_START: "monday",
-    MINOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
-    MAJOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
-    NOW_LINE_COLOUR: "(200, 0, 0)",
-    WEEKEND_COLOUR: "(255, 255, 255)",
-    BG_COLOUR: "(255, 255, 255)",
     DATE_FORMAT: "yyyy-mm-dd",
 }
 # Some settings
