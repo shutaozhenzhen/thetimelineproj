@@ -279,13 +279,6 @@ class Config(Observable):
         DEFAULTS[MINOR_STRIP_FONT] = Font(8).serialize()
         DEFAULTS[LEGEND_FONT] = Font(8).serialize()
 
-    def get_event_editor_tab_order(self):
-        return self.config_parser.get(DEFAULTSECT, EVENT_EDITOR_TAB_ORDER)
-
-    def set_event_editor_tab_order(self, tab_order):
-        self.config_parser.set(DEFAULTSECT, EVENT_EDITOR_TAB_ORDER, tab_order)
-    event_editor_tab_order = property(get_event_editor_tab_order, set_event_editor_tab_order)
-
     def get_minor_strip_divider_line_colour(self):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR))
 
@@ -422,6 +415,7 @@ INT_CONFIGS = (
 )
 STR_CONFIGS = (
     {'name': 'experimental_features', 'default': ''},
+    {'name': 'event_editor_tab_order', 'default': '01234:'},
 )
 
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
