@@ -324,13 +324,6 @@ class Config(Observable):
     def _tuple_to_string(self, tuple_data):
         return str(tuple_data)
 
-    def get_hyperlink_icon(self):
-        return self.config_parser.get(DEFAULTSECT, HYPERLINK_ICON)
-
-    def set_hyperlink_icon(self, value):
-        self.config_parser.set(DEFAULTSECT, HYPERLINK_ICON, value)
-        self._notify()
-
     def get_date_formatter(self):
         parser = DateFormatParser().parse(self.get_date_format())
         date_formatter = GregorianDateFormatter()
@@ -404,6 +397,7 @@ STR_CONFIGS = (
     {'name': 'event_editor_tab_order', 'default': '01234:'},
     {'name': 'fuzzy_icon', 'default': 'fuzzy.png'},
     {'name': 'locked_icon', 'default': 'locked.png'},
+    {'name': 'hyperlink_icon', 'default': 'hyperlink.png'},
 )
 
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]

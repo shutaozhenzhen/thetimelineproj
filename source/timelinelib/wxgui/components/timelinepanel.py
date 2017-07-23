@@ -163,7 +163,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_use_inertial_scrolling(self.config.use_inertial_scrolling)
             appearance.set_fuzzy_icon(self.config.fuzzy_icon)
             appearance.set_locked_icon(self.config.locked_icon)
-            appearance.set_hyperlink_icon(self.config.get_hyperlink_icon())
+            appearance.set_hyperlink_icon(self.config.hyperlink_icon)
             appearance.set_vertical_space_between_events(self.config.vertical_space_between_events)
             appearance.set_skip_s_in_decade_text(self.config.skip_s_in_decade_text)
             appearance.set_display_checkmark_on_events_done(self.config.display_checkmark_on_events_done)

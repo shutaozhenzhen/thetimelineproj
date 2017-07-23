@@ -104,7 +104,7 @@ class PreferencesDialogController(Controller):
         self.view.DisplayIcons()
 
     def on_hyperlink_icon_changed(self, event):
-        self.config.set_hyperlink_icon(event.GetString())
+        self.config.hyperlink_icon = event.GetString()
         self.view.DisplayIcons()
 
     def on_vertical_space_between_events_click(self, event):
@@ -137,7 +137,7 @@ class PreferencesDialogController(Controller):
         self.view.SetIconsChoices(choices)
         self.view.SetFuzzyIcon(self.config.fuzzy_icon)
         self.view.SetLockedIcon(self.config.locked_icon)
-        self.view.SetHyperlinkIcon(self.config.get_hyperlink_icon())
+        self.view.SetHyperlinkIcon(self.config.hyperlink_icon)
         self.view.SetCurrentDateFormat("%s: %s" % (_("Current"), self.config.date_format))
         self.view.DisplayIcons()
         self.view.SetVerticalSpaceBetweenEvents(self.config.vertical_space_between_events)
