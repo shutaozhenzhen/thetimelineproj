@@ -272,8 +272,8 @@ class Config(Observable):
         self._notify()
 
 
-# To add a new boolean, integer or string configuration item you
-# only have to add that item to one of the dictionaries below.
+# To add a new boolean, integer, colour or string configuration item
+# you only have to add that item to one of the dictionaries below.
 BOOLEAN_CONFIGS = (
     {'name': 'show_toolbar', 'default': 'True'},
     {'name': 'show_sidebar', 'default': 'True'},
