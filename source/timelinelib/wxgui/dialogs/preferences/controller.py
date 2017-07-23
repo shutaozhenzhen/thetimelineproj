@@ -100,7 +100,7 @@ class PreferencesDialogController(Controller):
         self.view.DisplayIcons()
 
     def on_locked_icon_changed(self, event):
-        self.config.set_locked_icon(event.GetString())
+        self.config.locked_icon = event.GetString()
         self.view.DisplayIcons()
 
     def on_hyperlink_icon_changed(self, event):
@@ -136,7 +136,7 @@ class PreferencesDialogController(Controller):
         choices = [f for f in os.listdir(EVENT_ICONS_DIR) if f.endswith(".png")]
         self.view.SetIconsChoices(choices)
         self.view.SetFuzzyIcon(self.config.fuzzy_icon)
-        self.view.SetLockedIcon(self.config.get_locked_icon())
+        self.view.SetLockedIcon(self.config.locked_icon)
         self.view.SetHyperlinkIcon(self.config.get_hyperlink_icon())
         self.view.SetCurrentDateFormat("%s: %s" % (_("Current"), self.config.date_format))
         self.view.DisplayIcons()
