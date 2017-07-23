@@ -45,87 +45,31 @@ WINDOW_WIDTH = "window_width"
 WINDOW_HEIGHT = "window_height"
 WINDOW_XPOS = "window xpos"
 WINDOW_YPOS = "window ypos"
-WINDOW_MAXIMIZED = "window_maximized"
-SHOW_TOOLBAR = "show_toolbar"
-SHOW_SIDEBAR = "show_sidebar"
-SHOW_LEGEND = "show_legend"
-SIDEBAR_WIDTH = "sidebar_width"
 RECENT_FILES = "recent_files"
-OPEN_RECENT_AT_STARTUP = "open_recent_at_startup"
-BALLOON_ON_HOVER = "balloon_on_hover"
-HIDE_EVENTS_DONE = "hide_events_done"
 WEEK_START = "week_start"
-USE_INERTIAL_SCROLLING = "use_inertial_scrolling"
-EXPERIMENTAL_FEATURES = "experimental_features"
-DIVIDER_LINE_SLIDER_POS = "divider_line_slider_pos"
-NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS = "never_show_period_events_as_point_events"
-DRAW_POINT_EVENTS_TO_RIGHT = "draw_point_events_to_right"
 MAJOR_STRIP_FONT = "major_strip_font"
 MINOR_STRIP_FONT = "minor_strip_font"
 LEGEND_FONT = "legend_font"
-EVENT_EDITOR_SHOW_PERIOD = "event_editor_show_period"
-EVENT_EDITOR_SHOW_TIME = "event_editor_show_time"
-EVENT_EDITOR_TAB_ORDER = "event_editor_tab_order"
-CENTER_EVENT_TEXTS = "center_event_texts"
-UNCHECK_TIME_FOR_NEW_EVENTS = "uncheck_time_for_new_events"
 MINOR_STRIP_DIVIDER_LINE_COLOUR = "minor_strip_divider_line_colour"
 MAJOR_STRIP_DIVIDER_LINE_COLOUR = "major_strip_divider_line_colour"
 NOW_LINE_COLOUR = "today_line_colour"
 WEEKEND_COLOUR = "weekend_colour"
 BG_COLOUR = "bg_colour"
-TEXT_BELOW_ICON = "text_below_icon"
-FUZZY_ICON = "fuzzy_icon"
-LOCKED_ICON = "locked_icon"
-HYPERLINK_ICON = "hyperlink_icon"
 DATE_FORMAT = "date_format"
-VERTCAL_SPACE_BETWEEN_EVENTS = "vertical_space_between_events"
-COLORIZE_WEEKENDS = "colorize_weekends"
-SKIP_S_IN_DECADE_TEXT = "skip_s_in_decade_text"
-DISPLAY_CHECKMARK_ON_EVENTS_DONE = "display_checkmark_on_events_done"
-NEVER_USE_TIME = "never_use_time"
-LEGEND_POS = "legend_pos"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
     WINDOW_WIDTH: "900",
     WINDOW_HEIGHT: "500",
     WINDOW_XPOS: "-1",
     WINDOW_YPOS: "-1",
-    WINDOW_MAXIMIZED: "False",
-    SHOW_TOOLBAR: "True",
-    SHOW_SIDEBAR: "True",
-    SIDEBAR_WIDTH: "200",
-    SHOW_LEGEND: "True",
-    OPEN_RECENT_AT_STARTUP: "True",
     RECENT_FILES: "",
-    BALLOON_ON_HOVER: "True",
     WEEK_START: "monday",
-    USE_INERTIAL_SCROLLING: "False",
-    EXPERIMENTAL_FEATURES: "",
-    DIVIDER_LINE_SLIDER_POS: "50",
-    NEVER_SHOW_PERIOD_EVENTS_AS_POINT_EVENTS: "False",
-    DRAW_POINT_EVENTS_TO_RIGHT: "False",
-    EVENT_EDITOR_SHOW_PERIOD: "False",
-    EVENT_EDITOR_SHOW_TIME: "False",
-    EVENT_EDITOR_TAB_ORDER: "01234:",
-    CENTER_EVENT_TEXTS: "False",
-    UNCHECK_TIME_FOR_NEW_EVENTS: "False",
     MINOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
     MAJOR_STRIP_DIVIDER_LINE_COLOUR: "(200, 200, 200)",
     NOW_LINE_COLOUR: "(200, 0, 0)",
     WEEKEND_COLOUR: "(255, 255, 255)",
     BG_COLOUR: "(255, 255, 255)",
-    TEXT_BELOW_ICON: "False",
-    FUZZY_ICON: "fuzzy.png",
-    LOCKED_ICON: "locked.png",
-    HYPERLINK_ICON: "hyperlink.png",
     DATE_FORMAT: "yyyy-mm-dd",
-    VERTCAL_SPACE_BETWEEN_EVENTS: "5",
-    COLORIZE_WEEKENDS: "False",
-    SKIP_S_IN_DECADE_TEXT: "False",
-    DISPLAY_CHECKMARK_ON_EVENTS_DONE: "False",
-    NEVER_USE_TIME: "False",
-    LEGEND_POS: "0",
-    HIDE_EVENTS_DONE: "False"
 }
 # Some settings
 MAX_NBR_OF_RECENT_FILES_SAVED = 5
@@ -365,6 +309,9 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, key, str(value))
         self._notify()
 
+
+# To add a new boolean, integer or string configuration item you
+# only have to add that item to one of the dictionaries below.
 BOOLEAN_CONFIGS = (
     {'name': 'show_toolbar', 'default': 'True'},
     {'name': 'show_sidebar', 'default': 'True'},
@@ -399,7 +346,6 @@ STR_CONFIGS = (
     {'name': 'locked_icon', 'default': 'locked.png'},
     {'name': 'hyperlink_icon', 'default': 'hyperlink.png'},
 )
-
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 INTS = [d['name'] for d in INT_CONFIGS]
 
@@ -408,5 +354,7 @@ def setatt(name):
     setattr(Config, name, property(lambda self: self._get(name),
                                    lambda self, value: self._set(name, str(value))))
 
+# Create properties dynamically
 for data in BOOLEAN_CONFIGS + INT_CONFIGS + STR_CONFIGS:
     setatt(data['name'])
+    DEFAULTS[data['name']] = data['default']
