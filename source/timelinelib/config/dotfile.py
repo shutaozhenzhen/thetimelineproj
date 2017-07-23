@@ -223,45 +223,6 @@ class Config(Observable):
         DEFAULTS[MINOR_STRIP_FONT] = Font(8).serialize()
         DEFAULTS[LEGEND_FONT] = Font(8).serialize()
 
-    def get_minor_strip_divider_line_colour(self):
-        return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR))
-
-    def set_minor_strip_divider_line_colour(self, colour):
-        self.config_parser.set(DEFAULTSECT, MINOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
-        self._notify()
-    minor_strip_divider_line_colour = property(get_minor_strip_divider_line_colour, set_minor_strip_divider_line_colour)
-
-    def get_major_strip_divider_line_colour(self):
-        return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR))
-
-    def set_major_strip_divider_line_colour(self, colour):
-        self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_DIVIDER_LINE_COLOUR, self._tuple_to_string(colour))
-        self._notify()
-    major_strip_divider_line_colour = property(get_major_strip_divider_line_colour, set_major_strip_divider_line_colour)
-
-    def get_now_line_color(self):
-        return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, NOW_LINE_COLOUR))
-
-    def set_now_line_color(self, colour):
-        self.config_parser.set(DEFAULTSECT, NOW_LINE_COLOUR, self._tuple_to_string(colour))
-        self._notify()
-    now_line_colour = property(get_now_line_color, set_now_line_color)
-
-    def get_weekend_color(self):
-        return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, WEEKEND_COLOUR))
-
-    def set_weekend_color(self, colour):
-        self.config_parser.set(DEFAULTSECT, WEEKEND_COLOUR, self._tuple_to_string(colour))
-        self._notify()
-    weekend_colour = property(get_weekend_color, set_weekend_color)
-
-    def get_bg_color(self):
-        return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, BG_COLOUR))
-
-    def set_bg_color(self, colour):
-        self.config_parser.set(DEFAULTSECT, BG_COLOUR, self._tuple_to_string(colour))
-        self._notify()
-
     def _string_to_tuple(self, tuple_string):
         return tuple([int(x.strip()) for x in tuple_string[1:-1].split(",")])
 
@@ -295,6 +256,8 @@ class Config(Observable):
             return self._get_boolean(key)
         elif key in INTS:
             return self._get_int(key)
+        elif key in COLOURS:
+            return self._get_colour(key)
         else:
             return self.config_parser.get(DEFAULTSECT, key)
 
@@ -305,8 +268,17 @@ class Config(Observable):
     def _get_boolean(self, key):
         return self.config_parser.getboolean(DEFAULTSECT, key)
 
+    def _get_colour(self, key):
+        return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, key))
+
+    def _set_colour(self, key, value):
+        self.config_parser.set(DEFAULTSECT, key, self._tuple_to_string(value))
+
     def _set(self, key, value):
-        self.config_parser.set(DEFAULTSECT, key, str(value))
+        if key in COLOURS:
+            self._set_colour(key, value)
+        else:
+            self.config_parser.set(DEFAULTSECT, key, str(value))
         self._notify()
 
 
@@ -346,8 +318,16 @@ STR_CONFIGS = (
     {'name': 'locked_icon', 'default': 'locked.png'},
     {'name': 'hyperlink_icon', 'default': 'hyperlink.png'},
 )
+COLOUR_CONFIGS = (
+    {'name': 'now_line_colour', 'default': '(200, 0, 0)'},
+    {'name': 'weekend_colour', 'default': '(255, 255, 255)'},
+    {'name': 'bg_colour', 'default': '(255, 255, 255)'},
+    {'name': 'minor_strip_divider_line_colour', 'default': '(200, 200, 200)'},
+    {'name': 'major_strip_divider_line_colour', 'default': '(200, 200, 200)'},
+)
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 INTS = [d['name'] for d in INT_CONFIGS]
+COLOURS = [d['name'] for d in COLOUR_CONFIGS]
 
 
 def setatt(name):
@@ -355,6 +335,6 @@ def setatt(name):
                                    lambda self, value: self._set(name, str(value))))
 
 # Create properties dynamically
-for data in BOOLEAN_CONFIGS + INT_CONFIGS + STR_CONFIGS:
+for data in BOOLEAN_CONFIGS + INT_CONFIGS + STR_CONFIGS + COLOUR_CONFIGS:
     setatt(data['name'])
     DEFAULTS[data['name']] = data['default']
