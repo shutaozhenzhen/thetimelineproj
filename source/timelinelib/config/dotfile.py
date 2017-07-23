@@ -250,13 +250,6 @@ class Config(Observable):
     def set_shortcut_key(self, cfgid, value):
         self.config_parser.set(DEFAULTSECT, cfgid, value)
 
-    def get_experimental_features(self):
-        return self.config_parser.get(DEFAULTSECT, EXPERIMENTAL_FEATURES)
-
-    def set_experimental_features(self, value):
-        self.config_parser.set(DEFAULTSECT, EXPERIMENTAL_FEATURES, value)
-        self._notify()
-
     def get_major_strip_font(self):
         return self.config_parser.get(DEFAULTSECT, MAJOR_STRIP_FONT)
 
@@ -427,6 +420,10 @@ INT_CONFIGS = (
     {'name': 'vertical_space_between_events', 'default': '5'},
     {'name': 'legend_pos', 'default': '0'},
 )
+STR_CONFIGS = (
+    {'name': 'experimental_features', 'default': ''},
+)
+
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 INTS = [d['name'] for d in INT_CONFIGS]
 
@@ -435,5 +432,5 @@ def setatt(name):
     setattr(Config, name, property(lambda self: self._get(name),
                                    lambda self, value: self._set(name, str(value))))
 
-for data in BOOLEAN_CONFIGS + INT_CONFIGS:
+for data in BOOLEAN_CONFIGS + INT_CONFIGS + STR_CONFIGS:
     setatt(data['name'])

@@ -93,7 +93,7 @@ class PreferencesDialogController(Controller):
     def on_experimental_changed(self, event):
         self.experimental_features.set_active_state_on_feature_by_name(
             event.GetEventObject().GetLabel(), event.IsChecked())
-        self.config.set_experimental_features(str(self.experimental_features))
+        self.config.experimental_features = str(self.experimental_features)
 
     def on_fuzzy_icon_changed(self, event):
         self.config.set_fuzzy_icon(event.GetString())
