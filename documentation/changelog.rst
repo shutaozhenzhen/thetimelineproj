@@ -20,6 +20,8 @@ GUI:
 
 * Era rectangle is always visible, even when zooming out far.
 
+* Text in a balloon can now be displayed besides or under an icon.
+
 Fixed crash reports and bugs:
 
 * ``UnicodeEncodeError: 'ascii' codec can't encode character u'\u03c0' in
