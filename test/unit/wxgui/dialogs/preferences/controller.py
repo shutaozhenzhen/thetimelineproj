@@ -79,7 +79,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
         config.get_bg_color.return_value = (255, 255, 255)
         config.fuzzy_icon = CONFIG_FUZZY_ICON_NAME
         config.locked_icon = CONFIG_LOCKED_ICON_NAME
-        config.get_hyperlink_icon.return_value = CONFIG_HYPERINK_ICON_NAME
+        config.hyperlink_icon = CONFIG_HYPERINK_ICON_NAME
         config.never_use_time = False
         config.get_major_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         config.get_minor_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
@@ -116,7 +116,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.get_bg_color.return_value = (255, 255, 255)
         self.config.fuzzy_icon = "fuzzy.png"
         self.config.locked_icon = "locked.png"
-        self.config.get_hyperlink_icon.return_value = "hyperlink.png"
+        self.config.hyperlink_icon = "hyperlink.png"
         self.config.vertical_space_between_events = 5
         self.config.colorize_weekends = False
         self.config.skip_s_in_decade_text = False
@@ -260,7 +260,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.evt.GetString.return_value = sentinel.STRING
         self.controller.config = self.config
         self.controller.on_hyperlink_icon_changed(self.evt)
-        self.config.set_hyperlink_icon.assert_called_with(sentinel.STRING)
+        self.assertEqual(self.config.hyperlink_icon, sentinel.STRING)
         self.view.DisplayIcons.assert_called_with()
 
     def test_on_vertical_space_between_events_click(self):
