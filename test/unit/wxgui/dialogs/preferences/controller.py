@@ -77,7 +77,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
         config.now_line_colour = (100, 100, 100)
         config.weekend_colour = (255, 255, 255)
         config.get_bg_color.return_value = (255, 255, 255)
-        config.get_fuzzy_icon.return_value = CONFIG_FUZZY_ICON_NAME
+        config.fuzzy_icon = CONFIG_FUZZY_ICON_NAME
         config.get_locked_icon.return_value = CONFIG_LOCKED_ICON_NAME
         config.get_hyperlink_icon.return_value = CONFIG_HYPERINK_ICON_NAME
         config.never_use_time = False
@@ -114,7 +114,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.config.now_line_colour = (200, 0, 0)
         self.config.weekend_colour = (255, 255, 255)
         self.config.get_bg_color.return_value = (255, 255, 255)
-        self.config.get_fuzzy_icon.return_value = "fuzzy.png"
+        self.config.fuzzy_icon = "fuzzy.png"
         self.config.get_locked_icon.return_value = "locked.png"
         self.config.get_hyperlink_icon.return_value = "hyperlink.png"
         self.config.vertical_space_between_events = 5
@@ -246,7 +246,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.evt.GetString.return_value = sentinel.STRING
         self.controller.config = self.config
         self.controller.on_fuzzy_icon_changed(self.evt)
-        self.config.set_fuzzy_icon.assert_called_with(sentinel.STRING)
+        self.assertEqual(self.config.fuzzy_icon, sentinel.STRING)
         self.view.DisplayIcons.assert_called_with()
 
     def test_on_locked_icon_changed(self):

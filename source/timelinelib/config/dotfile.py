@@ -324,13 +324,6 @@ class Config(Observable):
     def _tuple_to_string(self, tuple_data):
         return str(tuple_data)
 
-    def get_fuzzy_icon(self):
-        return self.config_parser.get(DEFAULTSECT, FUZZY_ICON)
-
-    def set_fuzzy_icon(self, value):
-        self.config_parser.set(DEFAULTSECT, FUZZY_ICON, value)
-        self._notify()
-
     def get_locked_icon(self):
         return self.config_parser.get(DEFAULTSECT, LOCKED_ICON)
 
@@ -416,6 +409,7 @@ INT_CONFIGS = (
 STR_CONFIGS = (
     {'name': 'experimental_features', 'default': ''},
     {'name': 'event_editor_tab_order', 'default': '01234:'},
+    {'name': 'fuzzy_icon', 'default': 'fuzzy.png'},
 )
 
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
