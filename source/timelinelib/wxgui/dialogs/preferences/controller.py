@@ -96,7 +96,7 @@ class PreferencesDialogController(Controller):
         self.config.experimental_features = str(self.experimental_features)
 
     def on_fuzzy_icon_changed(self, event):
-        self.config.set_fuzzy_icon(event.GetString())
+        self.config.fuzzy_icon = event.GetString()
         self.view.DisplayIcons()
 
     def on_locked_icon_changed(self, event):
@@ -135,7 +135,7 @@ class PreferencesDialogController(Controller):
         self.view.SetBgColor(wx.Colour(*self.config.get_bg_color()))
         choices = [f for f in os.listdir(EVENT_ICONS_DIR) if f.endswith(".png")]
         self.view.SetIconsChoices(choices)
-        self.view.SetFuzzyIcon(self.config.get_fuzzy_icon())
+        self.view.SetFuzzyIcon(self.config.fuzzy_icon)
         self.view.SetLockedIcon(self.config.get_locked_icon())
         self.view.SetHyperlinkIcon(self.config.get_hyperlink_icon())
         self.view.SetCurrentDateFormat("%s: %s" % (_("Current"), self.config.date_format))
