@@ -73,6 +73,7 @@ def read_config(path):
 
 
 class Config(Observable):
+
     """
     Provide read and write access to application configuration settings.
 
@@ -268,8 +269,9 @@ class Config(Observable):
         if key in COLOURS:
             self._set_colour(key, value)
         else:
-            self.config_parser.set(DEFAULTSECT, key, str(value))
-        self._notify()
+            if self._toStr(value) is not None:
+                self.config_parser.set(DEFAULTSECT, key, self._toStr(value))
+                self._notify()
 
 
 # To add a new boolean, integer, colour or string configuration item
