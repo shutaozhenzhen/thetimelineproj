@@ -34,6 +34,11 @@ Fixed crash reports and bugs:
 
 * Events highlighted during search sometimes get stuck in highlighted state.
 
+* ``PyAssertionError: C++ assertion "!wxMouseCapture::stack.empty()" failed at 
+  ..\..\src\common\wincmn.cpp(3319) in wxWindowBase::ReleaseMouse(): 
+  Releasing mouse capture but capture stack empty?``
+  This happens in when dragging the mouse from the calendar control.
+
 Version 1.14.0
 --------------
 
