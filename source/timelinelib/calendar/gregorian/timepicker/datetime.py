@@ -246,5 +246,12 @@ class CalendarPopupController(object):
         # month or day. The control is closed on a double-click on a day or
         # a single click outside of the control
         if self.repop and not self.repoped:
-            self.calendar_popup.Popup()
+            try:
+                self.calendar_popup.Popup()
+            except wx.PyAssertionError:
+                # This happens if you open the calendar popup, clik and hold
+                # down the mouse on a day and thereafter drag the mouse outside
+                # of the calendar control, release the mouse, and click outside
+                # the clandar control.
+                pass
             self.repoped = True
