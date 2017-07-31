@@ -42,10 +42,13 @@ class ToolbarCreator(object):
     def _add_event_text_alignment(self):
         left_tool = self._add_radio(_("Left"), "format-justify-left.png")
         center_tool = self._add_radio(_("Center"), "format-justify-center.png")
+
         def on_left_click(event):
-            self.config.set_center_event_texts(False)
+            self.config.center_event_texts = False
+
         def on_center_click(event):
-            self.config.set_center_event_texts(True)
+            self.config.center_event_texts = True
+
         def check_item_corresponding_to_config():
             if self.config.center_event_texts:
                 self.toolbar.ToggleTool(center_tool.GetId(), True)
@@ -59,10 +62,13 @@ class ToolbarCreator(object):
     def _add_point_event_alignment(self):
         left_tool = self._add_radio(_("Left"), "event-line-left.png")
         center_tool = self._add_radio(_("Center"), "event-line-center.png")
+
         def on_left_click(event):
-            self.config.set_draw_period_events_to_right(True)
+            self.config.draw_point_events_to_right = True
+
         def on_center_click(event):
-            self.config.set_draw_period_events_to_right(False)
+            self.config.draw_point_events_to_right = False
+
         def check_item_corresponding_to_config():
             if self.config.draw_point_events_to_right:
                 self.toolbar.ToggleTool(left_tool.GetId(), True)
