@@ -1,16 +1,22 @@
 Changelog
 =========
 
-Version 1.15.0
+Version 1.16.0
 --------------
 
-**Released on 31 July 2017.**
+**Planned release on 31 October 2017.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
 * `Download source <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/>`_.
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
+
+
+Version 1.15.0
+--------------
+
+**Released on 31 July 2017.**
 
 GUI:
 
