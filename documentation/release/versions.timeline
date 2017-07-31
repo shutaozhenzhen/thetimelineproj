@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.13.0 (94d59f78b6a7 2017-01-30)</version>
+  <version>1.15.0 development</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -1228,6 +1228,67 @@ Bug fixes:
       <default_color>200,200,200</default_color>
     </event>
     <event>
+      <start>2017-04-30 00:00:00</start>
+      <end>2017-04-30 00:00:00</end>
+      <text>Timeline 1.14.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>**Released on 8 May 2017.**
+
+Calendar:
+
+* BC years are formatted correctly in status bar.
+
+* Decades and centuries are correctly represented around year 0 and in BC
+  years. (Centuries are now denoted 1900s and represent the years 1900-1999.)
+
+GUI:
+
+* The formatting of the time duration for Gragorian time is more intuitive.
+
+* All events can be selected with a menu command
+
+* View selection to hide/show events done (progress = 100%).
+
+* The limitation of number sizes has been removed in the numeric event editor.
+
+* Now the position of the legend can be changed.
+
+Fixed crash reports and bugs:
+
+* Now weekends can be colorized again.
+  (`#170 &lt;https://sourceforge.net/p/thetimelineproj/backlog/170/&gt;`_)
+
+* It's no longer possible to close the milestone editor dialog with an invalid
+  date/time.
+  (`#171 &lt;https://sourceforge.net/p/thetimelineproj/backlog/171/&gt;`_)
+
+* The event progress bar is now correctly drawn when event is partly outside of
+  screen.
+
+* ``OverflowError: long int too large to convert to float.``
+  (`#126 &lt;https://sourceforge.net/p/thetimelineproj/backlog/126/&gt;`_)
+
+* ``wx._core.PyAssertionError: C++ assertion "Assert failure" failed at
+  ../src/gtk/menu.cpp(1300) in GetGtkHotKey(): unknown keyboard accel.``
+  This was caused by incorrect translations.
+
+* ``TypeError: %d format: a number is required, not TimeDelta.``
+  This happened when trying to measure the distance between two overlapping
+  events in a numeric timeline.
+
+* ``IndexError: list index out of range.``
+  This happened under some circumstances when zooming out far and scrolling to
+  the far left.
+
+* ``AttributeError: 'int' object has no attribute 'seconds'.``
+  This happened when starting a slideshow with a numeric timeline.</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
       <start>2017-01-31 00:00:00</start>
       <end>2017-01-31 00:00:00</end>
       <text>Timeline 1.13.0</text>
@@ -1249,24 +1310,63 @@ Bug fixes:
       <default_color>192,192,192</default_color>
     </event>
     <event>
-      <start>2017-04-30 00:00:00</start>
-      <end>2017-04-30 00:00:00</end>
-      <text>Timeline 1.14.0</text>
+      <start>2017-10-31 00:00:00</start>
+      <end>2017-10-31 00:00:00</end>
+      <text>Timeline 1.16.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
       <category>Future Release</category>
-      <description>Version 1.14.0
--------------
+      <description>Version 1.16.0
+--------------
 
-**Planned release on 30 April 2017.**
+**Planned release on 31 October 2017.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
 * `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
 
 * `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2017-07-31 00:00:00</start>
+      <end>2017-07-31 00:00:00</end>
+      <text>Timeline 1.15.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>**Released on 31 July 2017.**
+
+GUI:
+
+* Path to the configuration file is displayed in the System Info dialog.
+
+* Date format is now displayed in the System Info dialog, as configured.
+
+* Era rectangle is always visible, even when zooming out far.
+
+* Text in a balloon can now be displayed besides or under an icon.
+
+Fixed crash reports and bugs:
+
+* ``UnicodeEncodeError: 'ascii' codec can't encode character u'\u03c0' in
+  position 0: ordinal not in range(128)``
+  This happened when the BC label contained non-ascii characters.
+
+* ``UnicodeEncodeError: 'ascii' codec can't encode characters in position
+  18-21: ordinal not in range(128)``
+  This happened when a font face name contained non-ascii characters.
+
+* Events highlighted during search sometimes get stuck in highlighted state.
+
+* ``PyAssertionError: C++ assertion "!wxMouseCapture::stack.empty()" failed at 
+  ..\..\src\common\wincmn.cpp(3319) in wxWindowBase::ReleaseMouse(): 
+  Releasing mouse capture but capture stack empty?``
+  This happens in when dragging the mouse from the calendar control.</description>
       <default_color>192,192,192</default_color>
     </event>
   </events>
