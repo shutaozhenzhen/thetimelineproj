@@ -16,11 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
-
 import wx
-
-from timelinelib.config.paths import ICONS_DIR
 
 
 class ToolbarCreator(object):
@@ -30,7 +26,7 @@ class ToolbarCreator(object):
         self.config = config
 
     def create(self):
-        self.toolbar = wx.ToolBar(self.parent, wx.ID_ANY)
+        self.toolbar = self.parent.CreateToolbar()
         self._add_event_text_alignment()
         self.toolbar.AddSeparator()
         self._add_point_event_alignment()
@@ -61,7 +57,7 @@ class ToolbarCreator(object):
         return self.toolbar.AddRadioLabelTool(
             wx.ID_ANY,
             text,
-            wx.Bitmap(os.path.join(ICONS_DIR, icon))
+            self.parent.BitmapFromIcon(icon)
         )
 
     def _set_visibility(self):
@@ -87,4 +83,3 @@ class ToolbarCreator(object):
         self.parent.Bind(wx.EVT_TOOL, on_center_click, center_tool)
         self.config.listen_for_any(check_item_corresponding_to_config)
         check_item_corresponding_to_config()
-
