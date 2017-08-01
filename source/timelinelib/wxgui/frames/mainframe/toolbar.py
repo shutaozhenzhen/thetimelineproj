@@ -22,17 +22,17 @@ import wx
 class ToolbarCreator(object):
 
     def __init__(self, parent, config):
-        self.parent = parent
-        self.config = config
+        self._parent = parent
+        self._config = config
 
     def create(self):
-        self.toolbar = self.parent.CreateToolbar()
+        self.toolbar = self._parent.CreateToolbar()
         self._add_event_text_alignment()
         self.toolbar.AddSeparator()
         self._add_point_event_alignment()
         self.toolbar.Realize()
         self._set_visibility()
-        self.config.listen_for_any(self._set_visibility)
+        self._config.listen_for_any(self._set_visibility)
         return self.toolbar
 
     def _add_event_text_alignment(self):
@@ -57,29 +57,29 @@ class ToolbarCreator(object):
         return self.toolbar.AddRadioLabelTool(
             wx.ID_ANY,
             text,
-            self.parent.BitmapFromIcon(icon)
+            self._parent.BitmapFromIcon(icon)
         )
 
     def _set_visibility(self):
-        self.toolbar.Show(self.config.show_toolbar)
-        self.parent.Layout()
+        self.toolbar.Show(self._config.show_toolbar)
+        self._parent.Layout()
 
     def _toggle_toolbar(self, spec):
         left_tool = self._add_radio(spec['tool-1-name'], spec['tool-1-image'])
         center_tool = self._add_radio(spec['tool-2-name'], spec['tool-2-image'])
 
         def on_left_click(event):
-            self.config._set(spec['config-name'], True)
+            self._config._set(spec['config-name'], True)
 
         def on_center_click(event):
-            self.config._set(spec['config-name'], False)
+            self._config._set(spec['config-name'], False)
 
         def check_item_corresponding_to_config():
-            if self.config._get(spec['config-name']):
+            if self._config._get(spec['config-name']):
                 self.toolbar.ToggleTool(left_tool.GetId(), True)
             else:
                 self.toolbar.ToggleTool(center_tool.GetId(), True)
-        self.parent.Bind(wx.EVT_TOOL, on_left_click, left_tool)
-        self.parent.Bind(wx.EVT_TOOL, on_center_click, center_tool)
-        self.config.listen_for_any(check_item_corresponding_to_config)
+        self._parent.Bind(wx.EVT_TOOL, on_left_click, left_tool)
+        self._parent.Bind(wx.EVT_TOOL, on_center_click, center_tool)
+        self._config.listen_for_any(check_item_corresponding_to_config)
         check_item_corresponding_to_config()
