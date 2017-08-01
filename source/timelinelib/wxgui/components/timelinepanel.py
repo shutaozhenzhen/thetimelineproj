@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
 import webbrowser
 
 import wx
@@ -42,6 +44,7 @@ from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 from timelinelib.wxgui.utils import _ask_question
 from timelinelib.wxgui.utils import handle_db_error_by_crashing
+from timelinelib.config.paths import ICONS_DIR
 
 
 LEFT_RIGHT_SCROLL_FACTOR = 1 / 200.0
@@ -53,6 +56,12 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.sidebar_width = self.config.sidebar_width
         wx.Panel.__init__(self, parent)
         self._create_gui()
+
+    def BitmapFromIcon(self, icon):
+        return wx.Bitmap(os.path.join(ICONS_DIR, icon))
+
+    def CreateToolbar(self):
+        return wx.ToolBar(self, wx.ID_ANY)
 
     def _create_gui(self):
         self._create_toolbar()
