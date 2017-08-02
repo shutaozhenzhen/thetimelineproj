@@ -128,7 +128,11 @@ class EditEventDialogTestCase(UnitTestCase):
 
     def simulate_user_selects_a_container(self, subevent):
         time_period = subevent.get_time_period()
-        container = Container(time_period.start_time, time_period.start_time, "container")
+        container = Container().update(
+            time_period.start_time,
+            time_period.start_time,
+            "container"
+        )
         container.register_subevent(subevent)
         self.view.GetContainer.return_value = container
         return container
@@ -343,9 +347,16 @@ class describe_additional_data(EditEventDialogTestCase):
 
     def test_is_populated_from_event(self):
         event = an_event()
-        event.data = sentinel.DATA
+        event.data = {"description": "hello"}
         self.when_editor_opened_with_event(event)
-        self.view.SetEventData.assert_called_with(sentinel.DATA)
+        self.view.SetEventData.assert_called_with({
+            "description": "hello",
+            "icon": None,
+            "hyperlink": None,
+            "alert": None,
+            "progress": None,
+            "default_color": None,
+        })
 
     def test_is_not_set_for_new_events(self):
         self.when_editing_a_new_event()
@@ -376,7 +387,7 @@ class describe_saving(object):
         self.view.GetEndsToday.return_value = self.ends_today_value
         self.view.GetName.return_value = "new event"
         self.view.GetCategory.return_value = sentinel.CATEGORY
-        self.view.GetEventData.return_value = sentinel.EVENT_DATA
+        self.view.GetEventData.return_value = {}
         self.view.GetContainer.return_value = None
         self.simulate_user_clicks_ok()
         self.saved_event = self.event_repository.save.call_args[0][0]
@@ -413,7 +424,14 @@ class describe_saving(object):
 
     def test_saves_data(self):
         self.given_saving_valid_event()
-        self.assertEqual(self.saved_event.data, sentinel.EVENT_DATA)
+        self.assertEqual(self.saved_event.data, {
+            "description": None,
+            "icon": None,
+            "hyperlink": None,
+            "alert": None,
+            "progress": None,
+            "default_color": None,
+        })
 
 
 class describe_saving_new(EditEventDialogTestCase, describe_saving):
@@ -479,7 +497,7 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
     def test_set_ends_today_on_subevent_extends_container_period(self):
         start = human_time_to_gregorian("1 Jan 2010")
         today = human_time_to_gregorian("1 Jan 2015")
-        subevent = Subevent(start, start, "subevent")
+        subevent = Subevent().update(start, start, "subevent")
         self.when_editor_opened_with_event(subevent)
         container = self.simulate_user_selects_a_container(subevent)
         self.db.time_type.now = lambda: today
@@ -549,16 +567,6 @@ class describe_changing_container(EditEventDialogTestCase):
         self.simulate_container_changed()
         self.assertEqual(1, self.view.EnableEndsToday.call_count)
         self.assertEqual(1, self.view.EnableLocked.call_count)
-
-    def test_max_cid(self):
-        MAX_CID = 99
-        container = Mock()
-        container.cid.return_value = MAX_CID - 1
-        self.controller.timeline = Mock()
-        self.controller.timeline.get_containers.return_value = [container]
-        self.view.GetContainer.return_value = container
-        self.controller._add_new_container()
-        container.set_cid.assert_called_with(MAX_CID)
 
 
 class describe_exceptions(EditEventDialogTestCase):

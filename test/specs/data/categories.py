@@ -19,7 +19,6 @@
 from mock import Mock
 
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
-from timelinelib.canvas.data.category import clone_categories_list
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.test.cases.unit import UnitTestCase
@@ -76,33 +75,3 @@ class queries(TestBase):
 
     def _is_category_visible(self, category):
         return category in self.checked_categories
-
-
-class cloning(TestBase):
-
-    def test_cloning_returns_new_object(self):
-        cloned_category = self.category_list[0].clone()
-        self.assertTrue(self.category_list[0] is not cloned_category)
-        self.assertEqual(cloned_category.get_name(),
-                         self.category_list[0].get_name())
-        self.assertEqual(cloned_category.get_color(),
-                         self.category_list[0].get_color())
-        self.assertEqual(cloned_category.get_font_color(),
-                         self.category_list[0].get_font_color())
-        self.assertEqual(cloned_category._get_parent(),
-                         self.category_list[0]._get_parent())
-
-    def test_cloning_list_of_categories_keeps_track_of_parents(self):
-        cloned_list, _ = clone_categories_list(self.category_list)
-        self.assertEquals(len(cloned_list), len(self.category_list))
-        for clone in cloned_list:
-            self.assertInstanceNotIn(clone, self.category_list)
-        for clone in cloned_list:
-            if clone.get_name() == "Football":
-                self.assertTrue(clone._get_parent() is not self.play)
-                self.assertTrue(clone._get_parent() is not None)
-                self.assertInstanceNotIn(clone._get_parent(), self.category_list)
-
-    def setUp(self):
-        self.category_list = []
-        self._create_example_tree()

@@ -50,6 +50,7 @@ class DefaultDrawingAlgorithm(Drawer):
         self._create_pens()
         self._create_brushes()
         self.fast_draw = False
+        self._fixed_ys = {}
 
     def set_event_box_drawer(self, event_box_drawer):
         self.event_box_drawer = event_box_drawer
@@ -125,6 +126,8 @@ class DefaultDrawingAlgorithm(Drawer):
         self.scene = self._create_scene(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
         if view_properties.use_fixed_event_vertical_pos():
             self._calc_fixed_event_rect_y(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
+        else:
+            self._fixed_ys = {}
         self._perform_drawing(timeline, view_properties)
         del self.dc  # Program crashes if we don't delete the dc reference.
 
@@ -143,7 +146,7 @@ class DefaultDrawingAlgorithm(Drawer):
         large_size = (size[0] * len(periods), size[1])
         scene = self._create_scene(large_size, db, view_properties, get_text_extent_fn)
         for (evt, rect) in scene.event_data:
-            evt.fixed_y = rect.GetY()
+            self._fixed_ys[evt.id] = rect.GetY()
 
     def _perform_drawing(self, timeline, view_properties):
         self.background_drawer.draw(self, self.dc, self.scene, timeline, self.colorize_weekends, self.weekend_color, self.bg_color)
@@ -408,15 +411,15 @@ class DefaultDrawingAlgorithm(Drawer):
         # Lines are only drawn for events shown as point events and the line length
         # is only dependent on the fact that an event is a subevent or not
         if event.is_subevent():
-            y = self._get_container_y(event.container_id)
+            y = self._get_container_y(event)
         else:
             y = self.scene.divider_y
         return y
 
-    def _get_container_y(self, cid):
+    def _get_container_y(self, subevent):
         for (event, rect) in self.scene.event_data:
             if event.is_container():
-                if event.container_id == cid:
+                if event is subevent.container:
                     return rect.y - 1
         return self.scene.divider_y
 
@@ -479,7 +482,7 @@ class DefaultDrawingAlgorithm(Drawer):
         for (event, rect) in self.scene.event_data:
             self.dc.SetFont(self.event_text_font)
             if view_properties.use_fixed_event_vertical_pos():
-                rect.SetY(event.fixed_y)
+                rect.SetY(self._fixed_ys[event.id])
             if event.is_container():
                 self._draw_container(event, rect, view_properties)
             else:

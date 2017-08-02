@@ -16,13 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.data.base import ItemBase
+from timelinelib.canvas.data.immutable import ImmutableEra
 from timelinelib.canvas.data.item import TimelineItem
 
 
 DEFAULT_ERA_COLOR = (200, 200, 200)
 
 
-class Era(TimelineItem):
+class Era(ItemBase, TimelineItem):
     """
     A clearly defined period of time of arbitrary but well-defined length.
     An Era is indicated in a timeline, by setting the background color
@@ -30,10 +32,18 @@ class Era(TimelineItem):
     drawn on the timeline within the Era time period.
     """
 
-    def __init__(self, start_time, end_time, name, color=DEFAULT_ERA_COLOR, ends_today=False):
+    def __init__(self, db=None, id_=None, immutable_value=ImmutableEra()):
+        ItemBase.__init__(self, db, id_, immutable_value)
+
+    def save(self):
+        with self._db.transaction("Save era") as t:
+            t.save_era(self._immutable_value, self.ensure_id())
+        return self
+
+    def delete(self):
+        with self._db.transaction("Delete era") as t:
+            t.delete_era(self.id)
         self.id = None
-        self._ends_today = ends_today
-        self.update(start_time, end_time, name, color)
 
     def __eq__(self, other):
         return (isinstance(other, Era) and
@@ -52,56 +62,37 @@ class Era(TimelineItem):
         return self.get_start_time() < other.get_start_time()
 
     def ends_today(self):
-        """ """
-        return self._ends_today
+        return self._immutable_value.ends_today
 
     def set_ends_today(self, value):
-        """ """
-        self._ends_today = value
+        self._immutable_value = self._immutable_value.update(ends_today=value)
+
+    _ends_today = property(ends_today, set_ends_today)
 
     def update(self, start_time, end_time, name, color=DEFAULT_ERA_COLOR):
         """ """
         self.update_period(start_time, end_time)
         self.name = name.strip()
         self.color = color
-
-    def clone(self):
-        """ """
-        new_era = Era(self.get_start_time(),
-                      self.get_end_time(), self.name, self.color)
-        new_era.set_ends_today(self._ends_today)
-        return new_era
-
-    def set_id(self, era_id):
-        """ """
-        self.id = era_id
         return self
 
-    def get_id(self):
-        """ """
-        return self.id
-
-    def has_id(self):
-        """ """
-        return self.id is not None
-
     def set_name(self, name):
-        """ """
-        self.name = name.strip()
+        self._immutable_value = self._immutable_value.update(name=name.strip())
         return self
 
     def get_name(self):
-        """ """
-        return self.name
+        return self._immutable_value.name
+
+    name = property(get_name, set_name)
 
     def set_color(self, color):
-        """ """
-        self.color = color
+        self._immutable_value = self._immutable_value.update(color=color)
         return self
 
     def get_color(self):
-        """ """
-        return self.color
+        return self._immutable_value.color
+
+    color = property(get_color, set_color)
 
     def overlapping(self, era):
         """ """

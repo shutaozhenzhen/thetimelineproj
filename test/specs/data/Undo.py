@@ -35,7 +35,6 @@ class describe_undo(TmpDirTestCase):
     def test_a_series_of_operations_can_be_undone(self):
         db_operations = DBOperations(self.original_path, self.after_undo_path)
         db = create_in_memory_gregorian_tutorial_db()
-        db.loaded()
         operation_log = db_operations.perform(db)
         if self.read(self.original_path) != self.read(self.after_undo_path):
             self.fail_with_diff(operation_log)
@@ -244,7 +243,7 @@ class DBOperations(object):
     def _operation_add_container_with_subevents(self, db):
         all_events = a_container("Container", None, [("sub1", None), ("sub2", None)])
         db.save_events(all_events)
-        return "added a cantainer with subevents %r" % (all_events[0])
+        return "added a container with subevents %r" % (all_events[0])
 
     def _get_random_string(self, min_length, max_length):
         import string

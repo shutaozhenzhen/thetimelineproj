@@ -88,5 +88,5 @@ class describe_edit_container_dialog(UnitTestCase):
     def given_editor_with_container(self, container_name):
         start = human_time_to_gregorian("3 Jan 2000 10:01")
         end = human_time_to_gregorian("3 Jan 2000 10:01")
-        container = Container(start, end, container_name)
+        container = Container().update(start, end, container_name)
         self.controller.on_init(self.db, container)

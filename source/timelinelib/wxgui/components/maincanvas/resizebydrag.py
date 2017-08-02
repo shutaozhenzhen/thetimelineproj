@@ -32,6 +32,9 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
         self.event = event
         self.direction = direction
         self.timer_running = False
+        self._transaction = self.timeline_canvas.GetDb().transaction(
+            "Resize events"
+        )
 
     def mouse_moved(self, x, y, alt_down=False):
         ScrollViewInputHandler.mouse_moved(self, x, y, alt_down)
@@ -40,10 +43,9 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
     def left_mouse_up(self):
         ScrollViewInputHandler.left_mouse_up(self)
         self._clear_status_text()
-        if self.timeline_canvas.GetDb() is not None:
-            self.timeline_canvas.GetDb()._save_if_not_disabled()
-        self._state.change_to_no_op()
+        self._transaction.commit()
         self._main_frame.edit_ends()
+        self._state.change_to_no_op()
 
     def view_scrolled(self):
         self._resize_event()
@@ -64,13 +66,9 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
             if new_end < new_start:
                 new_end = new_start
         self.event.update_period(new_start, new_end)
+        self.event.save()
         self._clear_status_text()
-        if self.event.is_container():
-            self._adjust_container_edges()
         self.timeline_canvas.Redraw()
-
-    def _adjust_container_edges(self):
-        self.event.strategy._set_time_period()
 
     def _clear_status_text(self):
         self.status_bar.set_text("")

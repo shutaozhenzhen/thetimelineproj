@@ -178,7 +178,12 @@ class describe_saving_an_old_category(EditCategoryDialogTestCase):
         self.view.GetColor.return_value = (255, 44, 0)
         self.view.GetFontColor.return_value = (0, 44, 255)
         self.view.GetParent.return_value = self.foo
-        self.controller._category = Category(None, (0, 0, 0), None, parent=None)
+        self.controller._category = Category().update(
+            None,
+            (0, 0, 0),
+            None,
+            parent=None
+        )
         self.controller.on_ok_clicked(None)
 
     def _getSavedCategory(self):

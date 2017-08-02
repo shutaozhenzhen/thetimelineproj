@@ -33,10 +33,6 @@ from timelinelib.wxgui.components.timelinepanel import InputHandlerState
 from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
 
 
-# TODO: testSavesEventAfterMove
-# TODO: testSavesEventAfterResize
-
-
 ANY_Y = 0
 
 
@@ -78,7 +74,7 @@ class TimelineViewSpec(UnitTestCase):
     def given_event_with(self, start="4 Aug 2010", end="10 Aug 2010",
                          text="Text", description=None,
                          pos=(0, 0), size=(0, 0)):
-        event = Event(human_time_to_gregorian(start), human_time_to_gregorian(end), text)
+        event = Event().update(human_time_to_gregorian(start), human_time_to_gregorian(end), text)
         if description is not None:
             event.set_data("description", description)
         self.db.save_event(event)

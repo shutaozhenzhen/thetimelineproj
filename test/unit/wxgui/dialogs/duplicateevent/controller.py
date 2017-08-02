@@ -18,29 +18,59 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
+from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data.exceptions import TimelineIOError
-from timelinelib.canvas.data import Container
-from timelinelib.canvas.data import Subevent
+from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import gregorian_period
-from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.dialogs.duplicateevent.controller import BACKWARD
 from timelinelib.wxgui.dialogs.duplicateevent.controller import BOTH
 from timelinelib.wxgui.dialogs.duplicateevent.controller import DuplicateEventDialogController
+from timelinelib.wxgui.dialogs.duplicateevent.controller import EventDuplicator
 from timelinelib.wxgui.dialogs.duplicateevent.controller import FORWARD
 from timelinelib.wxgui.dialogs.duplicateevent.view import DuplicateEventDialog
 
 
-class describe_duplicate_event_dialog(UnitTestCase):
+class DuplicateEventDialogTestCase(UnitTestCase):
 
-    #
-    # Construction
-    #
+    def setUp(self):
+        self.view = Mock(DuplicateEventDialog)
+        self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
+        self.event = an_event_with(time="1 Jan 2010", text="foo")
+        self.event_duplicator = Mock(EventDuplicator)
+        self.controller = DuplicateEventDialogController(self.view)
+        self.controller.on_init(self.event, event_duplicator=self.event_duplicator)
+
+    def _create_move_period_fn_mock(self):
+        self.move_period_fn = Mock()
+        self.move_period_fn.return_value = gregorian_period(
+            "1 Aug 2010",
+            "1 Aug 2010"
+        )
+        return self.move_period_fn
+
+    def duplicate_with(self, count, freq, direction):
+        self.view.GetCount.return_value = count
+        self.view.GetFrequency.return_value = freq
+        self.view.GetDirection.return_value = direction
+        self.controller.on_ok(None)
+
+    def assertMovedPeriod(self, num_list):
+        self.assertEqual(
+            self.move_period_fn.call_args_list,
+            [((self.event.get_time_period(), num), {}) for num in num_list]
+        )
+
+
+class describe_gui(DuplicateEventDialogTestCase):
+
     def test_it_can_be_created(self):
         self.show_dialog(DuplicateEventDialog, None, MemoryDB(), None)
+
+
+class describe_default_values(DuplicateEventDialogTestCase):
 
     def test_number_of_duplicates_should_be_1(self):
         self.view.SetCount.assert_called_with(1)
@@ -54,180 +84,158 @@ class describe_duplicate_event_dialog(UnitTestCase):
     def test_direction_should_be_forward(self):
         self.view.SetDirection.assert_called_with(FORWARD)
 
-    #
-    # when_duplicating_event_with_default_settings
-    #
-    def test_one_new_event_is_saved(self):
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
-        self.assertEqual(1, self.db.save_events.call_count)
 
-    def test_the_new_event_gets_period_from_move_period_fn(self):
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
-        new_events = self.db.save_events.call_args[0][0]
-        new_period = new_events[0].get_time_period()
-        self.assertEqual(
-            gregorian_period("1 Aug 2010", "1 Aug 2010"),
-            new_period
-        )
+class describe_duplicating(DuplicateEventDialogTestCase):
 
-    def test_the_new_event_should_not_be_the_same_as_the_existing(self):
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
-        new_events = self.db.save_events.call_args[0][0]
-        self.assertNotEquals(self.event, new_events[0])
+    def setUp(self):
+        DuplicateEventDialogTestCase.setUp(self)
+        self.duplicate_with(count=2, freq=1, direction=FORWARD)
+
+    def test_one_transaction_is_made(self):
+        self.assertEqual(1, self.event_duplicator.duplicate.call_count)
 
     def test_the_dialog_should_close(self):
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
         self.assertTrue(self.view.Close.assert_called)
 
-    #
-    # when_saving_duplicated_event_fails
-    #
-    def test_the_failure_is_handled(self):
-        self.db.save_events.side_effect = TimelineIOError
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
-        self.assertTrue(self.view.HandleDbError.called)
 
-    def test_the_dialog_is_not_closed(self):
-        self.db.save_events.side_effect = TimelineIOError
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
-        self.assertFalse(self.view.Close.called)
-
-    #
-    # when_event_can_not_be_duplicated
-    #
-    def test_None_period_failure_is_handled(self):
-        self.move_period_fn.return_value = None
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
-        self.view.HandleDateErrors.assert_called_with(1)
-
-    def test_the_dialog_is_closed(self):
-        self.move_period_fn.return_value = None
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
-        self.assertTrue(self.view.Close.called)
-
-    #
-    # a_diloag_with_different_settings
-    #
-    def _assert_move_period_called_with(self, num_list):
-        self.assertEqual(
-            [((self.event.get_time_period(), num), {}) for num in num_list],
-            self.move_period_fn.call_args_list)
-
-    def test_count_1_freq_1_direction_forward(self):
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
-        self._assert_move_period_called_with([1])
-
-    def test_count_1_freq_1_direction_backward(self):
-        self._duplicate_with(count=1, freq=1, direction=BACKWARD)
-        self._assert_move_period_called_with([-1])
-
-    def test_count_1_freq_1_direction_both(self):
-        self._duplicate_with(count=1, freq=1, direction=BOTH)
-        self._assert_move_period_called_with([-1, 1])
-
-    def test_count_2_freq_1_direction_forward(self):
-        self._duplicate_with(count=2, freq=1, direction=FORWARD)
-        self._assert_move_period_called_with([1, 2])
-
-    def test_count_2_freq_1_direction_backward(self):
-        self._duplicate_with(count=2, freq=1, direction=BACKWARD)
-        self._assert_move_period_called_with([-2, -1])
-
-    def test_count_2_freq_1_direction_both(self):
-        self._duplicate_with(count=2, freq=1, direction=BOTH)
-        self._assert_move_period_called_with([-2, -1, 1, 2])
-
-    def test_count_1_freq_2_direction_forward(self):
-        self._duplicate_with(count=1, freq=2, direction=FORWARD)
-        self._assert_move_period_called_with([2])
-
-    def test_count_1_freq_2_direction_backward(self):
-        self._duplicate_with(count=1, freq=2, direction=BACKWARD)
-        self._assert_move_period_called_with([-2])
-
-    def test_count_1_freq_2_direction_both(self):
-        self._duplicate_with(count=1, freq=2, direction=BOTH)
-        self._assert_move_period_called_with([-2, 2])
+class describe_duplicate_errors(DuplicateEventDialogTestCase):
 
     def test_invalid_direction_raises_exception(self):
-        self.assertRaises(Exception, self.controller._calc_indicies, None, None)
-
-    #
-    # Setup
-    #
-    def setUp(self):
-        self.db = Mock(MemoryDB)
-        self.db.get_time_type.return_value = GregorianTimeType()
-        self.view = Mock(DuplicateEventDialog)
-        self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
-        self.event = an_event_with(time="1 Jan 2010", text="foo")
-        self.controller = DuplicateEventDialogController(self.view)
-        self.controller.on_init(self.db, self.event)
-
-    def _create_move_period_fn_mock(self):
-        self.move_period_fn = Mock()
-        self.move_period_fn.return_value = gregorian_period(
-            "1 Aug 2010",
-            "1 Aug 2010"
+        self.assertRaises(
+            Exception,
+            self.controller._calculate_indicies, None, None
         )
-        return self.move_period_fn
 
-    def _duplicate_with(self, count, freq, direction):
-        self.view.GetCount.return_value = count
-        self.view.GetFrequency.return_value = freq
-        self.view.GetDirection.return_value = direction
-        self.controller.on_ok(None)
-
-
-class describe_duplicate_event_dialog_for_containers(UnitTestCase):
-
-    #
-    # when_duplicating_event_with_default_settings
-    #
-    def test_one_new_event_is_saved(self):
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
-        self.assertEqual(1, self.db.save_events.call_count)
-
-    def test_one_new_event_is_saved_when_date_errors(self):
-        self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock_returning_none()
-        self._duplicate_with(count=1, freq=1, direction=FORWARD)
-        self.assertEqual(self.db.save_events.call_count, 1)
-        self.assertEqual(self.view.HandleDateErrors.call_count, 1)
-        self.view.HandleDateErrors.assert_called_with(1)
-
-    #
-    # Setup
-    #
-    def setUp(self):
-        self.db = Mock(MemoryDB)
-        self.db.get_max_cid.return_value = 123
-        self.db.get_time_type.return_value = GregorianTimeType()
-        self.view = Mock(DuplicateEventDialog)
-        self.view.GetMovePeriodFn.return_value = self._create_move_period_fn_mock()
-        self.event = Container(
-            human_time_to_gregorian("1 Jan 2010"),
-            human_time_to_gregorian("1 Jan 2010"),
-            "foo",
-            category=None)
-        self.event.events = [Subevent(human_time_to_gregorian("1 Jan 2010"), human_time_to_gregorian("1 Jan 2010"), "")]
-        self.controller = DuplicateEventDialogController(self.view)
-        self.controller.on_init(self.db, self.event)
-
-    def _create_move_period_fn_mock(self):
-        self.move_period_fn = Mock()
-        self.move_period_fn.return_value = gregorian_period(
-            "1 Aug 2010",
-            "1 Aug 2010"
-        )
-        return self.move_period_fn
-
-    def _create_move_period_fn_mock_returning_none(self):
-        self.move_period_fn = Mock()
+    def test_none_period_failure_is_handled(self):
         self.move_period_fn.return_value = None
-        return self.move_period_fn
+        self.duplicate_with(count=1, freq=1, direction=FORWARD)
+        self.view.HandleDateErrors.assert_called_with(1)
+        self.assertTrue(self.view.Close.called)
 
-    def _duplicate_with(self, count, freq, direction):
-        self.view.GetCount.return_value = count
-        self.view.GetFrequency.return_value = freq
-        self.view.GetDirection.return_value = direction
-        self.controller.create_duplicates_and_save()
+
+class describe_duplicate_with_different_settings(DuplicateEventDialogTestCase):
+
+    def test_count_1_freq_1_direction_forward(self):
+        self.duplicate_with(count=1, freq=1, direction=FORWARD)
+        self.assertMovedPeriod([1])
+
+    def test_count_1_freq_1_direction_backward(self):
+        self.duplicate_with(count=1, freq=1, direction=BACKWARD)
+        self.assertMovedPeriod([-1])
+
+    def test_count_1_freq_1_direction_both(self):
+        self.duplicate_with(count=1, freq=1, direction=BOTH)
+        self.assertMovedPeriod([-1, 1])
+
+    def test_count_2_freq_1_direction_forward(self):
+        self.duplicate_with(count=2, freq=1, direction=FORWARD)
+        self.assertMovedPeriod([1, 2])
+
+    def test_count_2_freq_1_direction_backward(self):
+        self.duplicate_with(count=2, freq=1, direction=BACKWARD)
+        self.assertMovedPeriod([-2, -1])
+
+    def test_count_2_freq_1_direction_both(self):
+        self.duplicate_with(count=2, freq=1, direction=BOTH)
+        self.assertMovedPeriod([-2, -1, 1, 2])
+
+    def test_count_1_freq_2_direction_forward(self):
+        self.duplicate_with(count=1, freq=2, direction=FORWARD)
+        self.assertMovedPeriod([2])
+
+    def test_count_1_freq_2_direction_backward(self):
+        self.duplicate_with(count=1, freq=2, direction=BACKWARD)
+        self.assertMovedPeriod([-2])
+
+    def test_count_1_freq_2_direction_both(self):
+        self.duplicate_with(count=1, freq=2, direction=BOTH)
+        self.assertMovedPeriod([-2, 2])
+
+
+class describe_event_duplicator(UnitTestCase):
+
+    def test_duplicate_event(self):
+        event = self.db.new_event(
+            time_period=gregorian_period("1 Jan 2014", "31 Jan 2014")
+        ).save()
+        self.duplicate(event, [
+            gregorian_period("1 Jan 2015", "31 Jan 2015"),
+            gregorian_period("1 Jan 2016", "31 Jan 2016"),
+        ])
+        self.assertEqual(
+            [
+                gregorian_period("1 Jan 2014", "31 Jan 2014"),
+                gregorian_period("1 Jan 2015", "31 Jan 2015"),
+                gregorian_period("1 Jan 2016", "31 Jan 2016"),
+            ],
+            [
+                event.time_period
+                for event
+                in self.db.get_all_events()
+            ]
+        )
+
+    def test_duplicate_subevent(self):
+        container = self.db.new_container().save()
+        subevent = self.db.new_subevent(
+            time_period=gregorian_period("1 Jan 2015", "5 Jan 2015"),
+            container=container
+        ).save()
+        self.duplicate(subevent, [
+            gregorian_period("5 Jan 2015", "10 Jan 2015"),
+            gregorian_period("10 Jan 2015", "15 Jan 2015"),
+        ])
+        self.assertEqual(
+            [
+                gregorian_period("1 Jan 2015", "5 Jan 2015"),
+                gregorian_period("5 Jan 2015", "10 Jan 2015"),
+                gregorian_period("10 Jan 2015", "15 Jan 2015"),
+            ],
+            [
+                event.time_period
+                for event
+                in self.db.get_all_events()
+                if event.is_subevent()
+            ]
+        )
+
+    def test_duplicate_container(self, length=GregorianDelta.from_days(2),
+                                       days_apart=GregorianDelta.from_days(2),
+                                       move=GregorianDelta.from_days(3)):
+        start = GregorianDateTime.from_ymd(2017, 1, 1).to_time()
+        event_period = TimePeriod(start, start + length)
+        container = self.db.new_container().save()
+        self.db.new_subevent(
+            time_period=event_period,
+            container=container
+        ).save()
+        self.db.new_subevent(
+            time_period=event_period.move_delta(event_period.delta()).move_delta(days_apart),
+            container=container
+        ).save()
+        self.duplicate(container, [
+            container.time_period.move_delta(1 * move),
+            container.time_period.move_delta(2 * move),
+        ])
+        self.assertEqual(
+            [
+                container.time_period.move_delta(0 * move),
+                container.time_period.move_delta(1 * move),
+                container.time_period.move_delta(2 * move),
+            ],
+            [
+                event.time_period
+                for event
+                in self.db.get_all_events()
+                if event.is_container()
+            ]
+        )
+
+    def duplicate(self, *args, **kwargs):
+        index, is_in_transaction, history_before = self.db._transactions.status
+        EventDuplicator().duplicate(*args, **kwargs)
+        index, is_in_transaction, history_after = self.db._transactions.status
+        self.assertEqual(len(history_after), len(history_before) + 1)
+
+    def setUp(self):
+        self.db = MemoryDB()

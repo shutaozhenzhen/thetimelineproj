@@ -184,8 +184,9 @@ class TimelineCanvasController(object):
         return self.get_drawer().snap(time)
 
     def get_selected_events(self):
-        return [self.timeline.find_event_with_id(id_) for id_ in
-                self.view_properties.get_selected_event_ids()]
+        return self.timeline.find_event_with_ids(
+            self.view_properties.get_selected_event_ids()
+        )
 
     def _timeline_changed(self, state_change):
         self._redraw_timeline()
@@ -210,8 +211,9 @@ class TimelineCanvasController(object):
             self.monitoring.count_timeline_redraw()
             dc.SetTextForeground((255, 0, 0))
             dc.SetFont(Font(12, weight=wx.FONTWEIGHT_BOLD))
-            dc.DrawText("Undo buffer size: %d" % len(self.timeline._undo_handler._undo_buffer), width - 300, height - 100)
-            dc.DrawText("Undo buffer pos: %d" % self.timeline._undo_handler._pos, width - 300, height - 80)
+            index, is_in_transaction, history = self.timeline._transactions.status
+            dc.DrawText("Undo buffer size: %d" % len(history), width - 300, height - 100)
+            dc.DrawText("Undo buffer pos: %d" % index, width - 300, height - 80)
             dc.DrawText("Redraw count: %d" % self.monitoring._timeline_redraw_count, width - 300, height - 60)
             dc.DrawText("Last redraw time: %.3f ms" % redraw_time, width - 300, height - 40)
 

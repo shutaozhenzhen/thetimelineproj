@@ -21,7 +21,6 @@
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data.event import clone_event_list
 from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.data import Subevent
@@ -38,9 +37,11 @@ from timelinelib.test.utils import human_time_to_gregorian
 class describe_event(UnitTestCase):
 
     def test_can_get_values(self):
-        event = Event(start_time=human_time_to_gregorian("11 Jul 2014"),
-                      end_time=human_time_to_gregorian("12 Jul 2014"),
-                      text="a day in my life")
+        event = Event().update(
+            start_time=human_time_to_gregorian("11 Jul 2014"),
+            end_time=human_time_to_gregorian("12 Jul 2014"),
+            text="a day in my life"
+        )
         self.assertEqual(event.get_id(), None)
         self.assertEqual(event.get_time_period(),
                          gregorian_period("11 Jul 2014", "12 Jul 2014"))
@@ -130,11 +131,6 @@ class describe_event(UnitTestCase):
     def test_can_be_compared(self):
         self.assertEqNeImplementationIsCorrect(an_event, EVENT_MODIFIERS)
 
-    def test_can_be_cloned(self):
-        original = an_event()
-        clone = original.clone()
-        self.assertIsCloneOf(clone, original)
-
     def test_point_event_has_a_label(self):
         event = an_event_with(text="foo", time="11 Jul 2014 10:11")
         self.assertEqual(
@@ -171,6 +167,21 @@ class describe_event(UnitTestCase):
             event = an_event_with(human_start_time=start, human_end_time=end)
             self.assertEqual(label, event._get_duration_label(GregorianTimeType()))
 
+    def test_data_property(self):
+        data = {
+            "description": "d",
+            "icon": "i",
+            "hyperlink": "h",
+            "alert": "a",
+            "progress": "p",
+            "default_color": "dc",
+        }
+        event = an_event()
+        event.data = data
+        new_data = event.data
+        self.assertTrue(data is not new_data)
+        self.assertEqual(data, new_data)
+
 
 class describe_event_construction(UnitTestCase):
 
@@ -204,132 +215,6 @@ class describe_event_functions(UnitTestCase):
 
 class describe_event_cloning(UnitTestCase):
 
-    def test_cloning_returns_new_object(self):
-        event = an_event()
-        clone = event.clone()
-        self.assertTrue(clone is not event)
-
-    def test_cloning_returns_object_equal_to_event(self):
-        event = an_event()
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_id_of_clone_is_none(self):
-        event = an_event()
-        event.set_id(999)
-        clone = event.clone()
-        self.assertEqual(clone.get_id(), None)
-
-    def test_cloning_copies_fuzzy_attribute(self):
-        event = an_event()
-        event.set_fuzzy(True)
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloning_copies_locked_attribute(self):
-        event = an_event()
-        event.set_locked(True)
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloning_copies_ends_today_attribute(self):
-        event = an_event()
-        event.set_ends_today(True)
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloning_copies_progress_attribute(self):
-        event = an_event()
-        event.set_progress(75)
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloning_copies_icon_attribute(self):
-        event = an_event()
-        event.set_icon("icon")
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloning_copies_hyperlink_attribute(self):
-        event = an_event()
-        event.set_hyperlink("hyperlink")
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloning_copies_alert_attribute(self):
-        event = an_event()
-        event.set_alert("2015-01-07 00:00:00;hoho")
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloning_copies_description_attribute(self):
-        event = an_event()
-        event.set_description("Description")
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloning_copies_category_attribute(self):
-        event = an_event()
-        event.set_category("Category")
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloning_copies_text_attribute(self):
-        event = an_event()
-        event.set_text("Text")
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloning_copies_time_period_attribute(self):
-        event = an_event()
-        time_period = TimePeriod(GregorianTimeType().parse_time("2010-08-01 13:44:00"),
-                                 GregorianTimeType().parse_time("2014-08-01 13:44:00"))
-        event.set_time_period(time_period)
-        clone = event.clone()
-        self.assertEqual(clone, event)
-
-    def test_cloned_time_periods_are_not_the_same_object(self):
-        event = an_event()
-        time_period = TimePeriod(GregorianTimeType().parse_time("2010-08-01 13:44:00"),
-                                 GregorianTimeType().parse_time("2014-08-01 13:44:00"))
-        event.set_time_period(time_period)
-        clone = event.clone()
-        self.assertTrue(time_period is not clone.get_time_period())
-
-    def test_cloning_copies_default_color_attribute(self):
-        event = an_event()
-        event.set_default_color((255, 0, 0))
-        clone = event.clone()
-        self.assertEqual(clone, event)
-        self.assertEqual(clone.get_default_color(), event.get_default_color())
-
     def test_event_is_not_a_milestone(self):
         event = an_event()
         self.assertFalse(event.is_milestone())
-
-
-class describe_event_cloning_of_containers(UnitTestCase):
-
-    def test_container_relationships_are_maintained_when_cloning(self):
-        self.given_container_with_subevents()
-        cloned_event_list = clone_event_list(self.events)
-        self.assertListIsCloneOf(cloned_event_list, self.events)
-        self.assertTrue(isinstance(cloned_event_list[0], Container))
-        self.assertTrue(isinstance(cloned_event_list[1], Subevent))
-        self.assertTrue(isinstance(cloned_event_list[2], Subevent))
-        self.assertTrue(cloned_event_list[1] in cloned_event_list[0].events)
-        self.assertTrue(cloned_event_list[2] in cloned_event_list[0].events)
-        self.assertEquals(cloned_event_list[1].container_id, cloned_event_list[0].container_id)
-        self.assertEquals(cloned_event_list[2].container_id, cloned_event_list[0].container_id)
-
-    def given_container_with_subevents(self):
-        self.container = Container(self.now, self.now, "container", category=None, cid=1)
-        self.subevent1 = Subevent(self.now, self.now, "sub1", category=None, container=self.container, cid=1)
-        self.subevent2 = Subevent(self.now, self.now, "sub2", category=None, container=self.container)
-        self.container.register_subevent(self.subevent1)
-        self.container.register_subevent(self.subevent2)
-        self.events = [self.container, self.subevent1, self.subevent2]
-
-    def setUp(self):
-        self.db = MemoryDB()
-        self.now = self.db.get_time_type().now()

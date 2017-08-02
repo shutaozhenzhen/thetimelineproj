@@ -62,7 +62,6 @@ class MainFrameController(object):
         try:
             new_db = self.db_open_fn(path, timetype=timetype)
             self.timeline = new_db
-            self.timeline.loaded()
         except TimelineIOError as e:
             self.main_frame.HandleDbError(e)
             self.timelinepath = None

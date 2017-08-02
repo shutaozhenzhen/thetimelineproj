@@ -21,7 +21,6 @@ from mock import Mock
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.event import Event
-from timelinelib.canvas.data.idnumber import get_process_unique_id
 from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.db.strategies import DefaultContainerStrategy
@@ -31,17 +30,13 @@ from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 
 
-CONTAINER_ID = 9
-
-
 class ContainerStrategiesTestCase(UnitTestCase):
 
     def setUp(self):
-        container = Container(
+        container = Container().update(
             human_time_to_gregorian("1 Jul 2014"),
             human_time_to_gregorian("1 Jul 2014"),
             "",
-            cid=CONTAINER_ID
         )
         self.default_strategy = DefaultContainerStrategy(container)
         self.extended_strategy = ExtendedContainerStrategy(container)
@@ -49,9 +44,8 @@ class ContainerStrategiesTestCase(UnitTestCase):
     def _a_subevent_can_be_registred(self, strategy):
         subevent = self.a_subevent(time_period=gregorian_period("1 Jan 2014", "1 Jan 2015"))
         strategy.register_subevent(subevent)
-        self.assertEqual(1, len(strategy.container.events))
-        self.assertTrue(subevent in strategy.container.events)
-        self.assertEqual(CONTAINER_ID, subevent.cid())
+        self.assertEqual(1, len(strategy.container.subevents))
+        self.assertTrue(subevent in strategy.container.subevents)
         self.assertEqual(subevent.get_time_period(), strategy.container.get_time_period())
 
     def _two_nonoverlapping_subevents_can_be_registred(self, strategy):
@@ -59,11 +53,9 @@ class ContainerStrategiesTestCase(UnitTestCase):
         subevent2 = self.a_subevent(time_period=gregorian_period("20 Jan 2014", "30 Jan 2014"))
         strategy.register_subevent(subevent1)
         strategy.register_subevent(subevent2)
-        self.assertEqual(2, len(strategy.container.events))
-        self.assertTrue(subevent1 in strategy.container.events)
-        self.assertTrue(subevent2 in strategy.container.events)
-        self.assertEqual(CONTAINER_ID, subevent1.cid())
-        self.assertEqual(CONTAINER_ID, subevent2.cid())
+        self.assertEqual(2, len(strategy.container.subevents))
+        self.assertTrue(subevent1 in strategy.container.subevents)
+        self.assertTrue(subevent2 in strategy.container.subevents)
         self.assertEqual(gregorian_period("1 Jan 2014", "30 Jan 2014"), strategy.container.get_time_period())
 
     def _two_overlapping_subevents_can_be_registred(self, strategy):
@@ -71,34 +63,31 @@ class ContainerStrategiesTestCase(UnitTestCase):
         subevent2 = self.a_subevent(time_period=gregorian_period("11 Jan 2014", "16 Jan 2014"))
         strategy.register_subevent(subevent1)
         strategy.register_subevent(subevent2)
-        self.assertEqual(2, len(strategy.container.events))
-        self.assertTrue(subevent1 in strategy.container.events)
-        self.assertTrue(subevent2 in strategy.container.events)
-        self.assertEqual(CONTAINER_ID, subevent1.cid())
-        self.assertEqual(CONTAINER_ID, subevent2.cid())
+        self.assertEqual(2, len(strategy.container.subevents))
+        self.assertTrue(subevent1 in strategy.container.subevents)
+        self.assertTrue(subevent2 in strategy.container.subevents)
 
     def _a_subevent_is_only_registered_once(self, strategy):
         subevent = self.a_subevent()
         strategy.register_subevent(subevent)
         strategy.register_subevent(subevent)
-        self.assertEqual(1, len(strategy.container.events))
-        self.assertEqual(subevent, strategy.container.events[0])
-        self.assertEqual(CONTAINER_ID, subevent.cid())
+        self.assertEqual(1, len(strategy.container.subevents))
+        self.assertEqual(subevent, strategy.container.subevents[0])
 
     def _an_event_cannot_be_registred(self, strategy):
         subevent = Mock(Event)
         self.assertRaises(TypeError, strategy.register_subevent, subevent)
-        self.assertEqual(0, len(strategy.container.events))
+        self.assertEqual(0, len(strategy.container.subevents))
 
     def _none_cannot_be_registred(self, strategy):
         self.assertRaises(TypeError, strategy.register_subevent, None)
-        self.assertEqual(0, len(strategy.container.events))
+        self.assertEqual(0, len(strategy.container.subevents))
 
     def _a_subevent_can_be_unregistred(self, strategy):
         subevent = self.a_subevent()
         strategy.register_subevent(subevent)
         strategy.unregister_subevent(subevent)
-        self.assertEqual(0, len(strategy.container.events))
+        self.assertEqual(0, len(strategy.container.subevents))
 
     def _a_second_subevent_can_be_unregistred(self, strategy):
         subevent1 = self.a_subevent(time_period=gregorian_period("1 Jan 2014", "10 Jan 2014"))
@@ -106,14 +95,14 @@ class ContainerStrategiesTestCase(UnitTestCase):
         strategy.register_subevent(subevent1)
         strategy.register_subevent(subevent2)
         strategy.unregister_subevent(subevent2)
-        self.assertEqual(1, len(strategy.container.events))
-        self.assertTrue(subevent1 in strategy.container.events)
+        self.assertEqual(1, len(strategy.container.subevents))
+        self.assertTrue(subevent1 in strategy.container.subevents)
         self.assertEqual(gregorian_period("1 Jan 2014", "10 Jan 2014"), strategy.container.get_time_period())
 
     def _an_object_not_registered_is_ignored_when_unregistred(self, strategy):
         subevent = self.a_subevent()
         strategy.unregister_subevent(subevent)
-        self.assertEqual(0, len(strategy.container.events))
+        self.assertEqual(0, len(strategy.container.subevents))
 
     def _the_timeperiod_is_updated_when_the_subevent_time_period_changes(self, strategy):
         subevent = self.a_subevent(time_period=gregorian_period("1 Jan 2014", "10 Jan 2014"))
@@ -124,7 +113,11 @@ class ContainerStrategiesTestCase(UnitTestCase):
         self.assertEqual(subevent.get_time_period(), strategy.container.get_time_period())
 
     def a_subevent(self, time_period=gregorian_period("1 Jan 2014", "10 Jan 2014")):
-        return Subevent(time_period.start_time, time_period.end_time, "")
+        return Subevent().update(
+            time_period.start_time,
+            time_period.end_time,
+            ""
+        )
 
 
 class describe_default_container_strategy(ContainerStrategiesTestCase):
@@ -238,7 +231,7 @@ class describe_default_container_startegy_(UnitTestCase):
         # Container event:   +-------+
         # New sub-event:                 +-------+
         self.given_container_with_two_events_with_nonoverlapping_periods()
-        self.subevent2.get_time_period().end_time = self.time("2000-05-01 10:01:01")
+        self.subevent2.set_end_time(self.time("2000-05-01 10:01:01"))
         self.strategy.update(self.subevent2)
         self.assert_equal_start(self.container, self.subevent1)
         self.assert_equal_end(self.container, self.subevent2)
@@ -312,69 +305,109 @@ class describe_default_container_startegy_(UnitTestCase):
         self.strategy.register_subevent(self.subevent2)
 
     def given_strategy_with_container(self):
-        self.container = Container(self.time("2000-01-01 10:01:01"),
-                                   self.time("2000-01-01 10:01:01"),
-                                   "Container1")
-        self.container.set_id(get_process_unique_id())
+        self.container = Container().update(
+            self.time("2000-01-01 10:01:01"),
+            self.time("2000-01-01 10:01:01"),
+            "Container1"
+        )
+        self.container.set_id(self.new_id())
         self.strategy = DefaultContainerStrategy(self.container)
 
     def given_event_overlapping_point_event(self):
-        self.subevent1 = Subevent(self.time("2000-05-01 10:02:01"),
-                                  self.time("2000-05-01 10:02:01"),
-                                  "Container1")
-        self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time("2000-05-01 10:01:01"),
-                                  self.time("2000-07-01 10:01:01"), "Container1")
-        self.subevent2.set_id(get_process_unique_id())
+        self.subevent1 = Subevent().update(
+            self.time("2000-05-01 10:02:01"),
+            self.time("2000-05-01 10:02:01"),
+            "Container1"
+        )
+        self.subevent1.set_id(self.new_id())
+        self.subevent2 = Subevent().update(
+            self.time("2000-05-01 10:01:01"),
+            self.time("2000-07-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent2.set_id(self.new_id())
         self.strategy.register_subevent(self.subevent1)
         self.strategy.register_subevent(self.subevent2)
 
     def given_event_overlapping_point_event2(self):
-        self.subevent1 = Subevent(self.time("2000-07-01 10:00:01"),
-                                  self.time("2000-07-01 10:00:01"), "Container1")
-        self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time("2000-05-01 10:01:01"),
-                                  self.time("2000-07-01 10:01:01"), "Container1")
-        self.subevent2.set_id(get_process_unique_id())
+        self.subevent1 = Subevent().update(
+            self.time("2000-07-01 10:00:01"),
+            self.time("2000-07-01 10:00:01"),
+            "Container1"
+        )
+        self.subevent1.set_id(self.new_id())
+        self.subevent2 = Subevent().update(
+            self.time("2000-05-01 10:01:01"),
+            self.time("2000-07-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent2.set_id(self.new_id())
         self.strategy.register_subevent(self.subevent1)
         self.strategy.register_subevent(self.subevent2)
 
     def given_two_overlapping_events(self):
-        self.subevent1 = Subevent(self.time("2000-03-01 10:01:01"),
-                                  self.time("2000-06-01 10:01:01"), "Container1")
-        self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time("2000-05-01 10:01:01"),
-                                  self.time("2000-07-01 10:01:01"), "Container1")
-        self.subevent2.set_id(get_process_unique_id())
+        self.subevent1 = Subevent().update(
+            self.time("2000-03-01 10:01:01"),
+            self.time("2000-06-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent1.set_id(self.new_id())
+        self.subevent2 = Subevent().update(
+            self.time("2000-05-01 10:01:01"),
+            self.time("2000-07-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent2.set_id(self.new_id())
 
     def given_two_events_with_same_period(self):
-        self.subevent1 = Subevent(self.time("2000-03-01 10:01:01"),
-                                  self.time("2000-06-01 10:01:01"), "Container1")
-        self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time("2000-03-01 10:01:01"),
-                                  self.time("2000-06-01 10:01:01"), "Container1")
-        self.subevent2.set_id(get_process_unique_id())
+        self.subevent1 = Subevent().update(
+            self.time("2000-03-01 10:01:01"),
+            self.time("2000-06-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent1.set_id(self.new_id())
+        self.subevent2 = Subevent().update(
+            self.time("2000-03-01 10:01:01"),
+            self.time("2000-06-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent2.set_id(self.new_id())
 
     def given_two_events_with_same_start_time(self):
-        self.subevent1 = Subevent(self.time("2000-03-01 10:01:01"),
-                                  self.time("2000-06-01 10:01:01"), "Container1")
-        self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time("2000-03-01 10:01:01"),
-                                  self.time("2000-04-01 10:01:01"), "Container1")
-        self.subevent2.set_id(get_process_unique_id())
+        self.subevent1 = Subevent().update(
+            self.time("2000-03-01 10:01:01"),
+            self.time("2000-06-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent1.set_id(self.new_id())
+        self.subevent2 = Subevent().update(
+            self.time("2000-03-01 10:01:01"),
+            self.time("2000-04-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent2.set_id(self.new_id())
 
     def given_two_events_with_nonoverlapping_periods(self):
-        self.subevent1 = Subevent(self.time("2000-01-01 10:01:01"),
-                                  self.time("2000-02-01 10:01:01"), "Container1")
-        self.subevent1.set_id(get_process_unique_id())
-        self.subevent2 = Subevent(self.time("2000-03-01 10:01:01"),
-                                  self.time("2000-04-01 10:01:01"), "Container1")
-        self.subevent2.set_id(get_process_unique_id())
+        self.subevent1 = Subevent().update(
+            self.time("2000-01-01 10:01:01"),
+            self.time("2000-02-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent1.set_id(self.new_id())
+        self.subevent2 = Subevent().update(
+            self.time("2000-03-01 10:01:01"),
+            self.time("2000-04-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent2.set_id(self.new_id())
 
     def given_subevent1(self):
-        self.subevent1 = Subevent(self.time("2000-01-01 10:01:01"),
-                                  self.time("2000-02-01 10:01:01"), "Container1")
-        self.subevent1.set_id(get_process_unique_id())
+        self.subevent1 = Subevent().update(
+            self.time("2000-01-01 10:01:01"),
+            self.time("2000-02-01 10:01:01"),
+            "Container1"
+        )
+        self.subevent1.set_id(self.new_id())
 
     def assert_equal_start(self, obj1, obj2):
         self.assertEqual(obj1.get_time_period().start_time,
@@ -397,3 +430,8 @@ class describe_default_container_startegy_(UnitTestCase):
 
     def setUp(self):
         self.time_type = GregorianTimeType()
+        self.id_counter = 0
+
+    def new_id(self):
+        self.id_counter += 1
+        return self.id_counter

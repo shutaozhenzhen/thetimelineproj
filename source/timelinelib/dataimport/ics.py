@@ -65,7 +65,7 @@ class IcsLoader(object):
         try:
             start, end = self._extract_todo_start_end(vtodo)
             txt = self._get_event_name(vtodo)
-            event = Event(start, end, txt)
+            event = Event().update(start, end, txt)
             event.set_description(self._extract_todo_description(vtodo))
             event.set_alert(self._extract_todo_alert(vtodo))
             self.events.append(event)
@@ -142,7 +142,7 @@ class IcsLoader(object):
         try:
             start, end = self._extract_start_end(vevent)
             txt = self._get_event_name(vevent)
-            event = Event(start, end, txt)
+            event = Event().update(start, end, txt)
             event.set_description(self._get_description(vevent))
             self.events.append(event)
         except:
@@ -153,7 +153,11 @@ class IcsLoader(object):
             categories_names = [cat.strip() for cat in vevent["categories"].split(",") if len(cat.strip()) > 0]
             for category_name in categories_names:
                 if category_name not in self.category_names:
-                    self.categories.append(Category(category_name, self._get_random_color(), None))
+                    self.categories.append(Category().update(
+                        category_name,
+                        self._get_random_color(),
+                        None
+                    ))
                     self.category_names.append(category_name)
 
     def _get_random_color(self):
@@ -255,4 +259,5 @@ def import_db_from_ics(path, options_dialog=None, options=None):
                    dlg.get_trigger_as_alarm())
         dlg.Destroy()
     IcsLoader().load(db, path, options)
+    db.clear_transactions()
     return db

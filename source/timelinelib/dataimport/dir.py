@@ -31,6 +31,7 @@ def import_db_from_dir(path):
     db = MemoryDB()
     db.set_readonly()
     _load(db, path)
+    db.clear_transactions()
     return db
 
 
@@ -52,7 +53,6 @@ def _load(db, dir_path):
         # Nothing to load
         return
     try:
-        db.disable_save()
         color_ranges = {}  # Used to color categories
         color_ranges[dir_path] = (0.0, 1.0, 1.0)
         all_cats = []
@@ -72,7 +72,7 @@ def _load(db, dir_path):
             # Create the stuff
             p = parents.get(os.path.normpath(os.path.join(dirpath, "..")),
                             None)
-            cat = Category(dirpath, (233, 233, 233), None, parent=p)
+            cat = Category().update(dirpath, (233, 233, 233), None, parent=p)
             parents[os.path.normpath(dirpath)] = cat
             all_cats.append(cat)
             db.save_category(cat)
@@ -93,8 +93,6 @@ def _load(db, dir_path):
         whole_msg = "%s\n\n%s" % (msg, e)
         print(whole_msg)
         raise TimelineIOError(whole_msg)
-    finally:
-        db.enable_save(call_save=False)
 
 
 def get_unique_cat_name(name, used_names):
@@ -122,7 +120,7 @@ def _event_from_path(db, file_path):
         start_time, end_time = end_time, start_time
     text = os.path.basename(file_path)
     category = _category_from_path(db, file_path)
-    evt = Event(start_time, end_time, text, category)
+    evt = Event().update(start_time, end_time, text, category)
     return evt
 
 

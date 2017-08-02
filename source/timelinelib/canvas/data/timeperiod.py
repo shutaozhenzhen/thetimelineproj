@@ -25,10 +25,15 @@ class TimePeriod(object):
     """
 
     def __init__(self, start_time, end_time):
-        self.start_time, self.end_time = self._update(start_time, end_time)
+        self._start_time, self._end_time = self._update(start_time, end_time)
 
-    def clone(self):
-        return TimePeriod(self.start_time, self.end_time)
+    @property
+    def start_time(self):
+        return self._start_time
+
+    @property
+    def end_time(self):
+        return self._end_time
 
     def __eq__(self, other):
         return (isinstance(other, TimePeriod) and

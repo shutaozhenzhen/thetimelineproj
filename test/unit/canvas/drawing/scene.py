@@ -139,8 +139,12 @@ class describe_scene(UnitTestCase):
         category = self.get_unique_category()
         if end_time is None:
             end_time = start_time
-        event = Event(human_time_to_gregorian(start_time),
-                      human_time_to_gregorian(end_time), "event-text", category)
+        event = Event().update(
+            human_time_to_gregorian(start_time),
+            human_time_to_gregorian(end_time),
+            "event-text",
+            category
+        )
         self.db.save_category(category)
         self.db.save_event(event)
         self.view_properties.set_category_visible(category, visible)

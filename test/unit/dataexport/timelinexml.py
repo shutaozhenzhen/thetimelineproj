@@ -20,6 +20,7 @@ from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
+from timelinelib.test.utils import a_container
 from timelinelib.test.utils import an_event_with
 
 
@@ -38,6 +39,20 @@ class describe_export_db_to_timeline_xml(TmpDirTestCase):
         db = import_db_from_timeline_xml(self.export_path)
         self.assertEqual(len(db.get_all_events()), 1)
         self.assertEqual(db.get_all_events()[0].get_default_color(), (100, 100, 100))
+
+    def test_can_export_containers(self):
+        self.empty_db.save_events(
+            a_container(name="con", category=None, sub_events=[
+                ("sub1", None),
+            ])
+        )
+        content = self.export_and_read()
+        self.assertIn("[1]con", content)
+        self.assertIn("(1)sub1", content)
+
+    def export_and_read(self):
+        export_db_to_timeline_xml(self.empty_db, self.export_path)
+        return self.read("export.timeline")
 
     def setUp(self):
         TmpDirTestCase.setUp(self)

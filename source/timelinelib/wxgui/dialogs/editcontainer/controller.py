@@ -92,5 +92,9 @@ class EditContainerDialogController(Controller):
         time_type = self.db.get_time_type()
         start = time_type.now()
         end = start
-        self.container = Container(start, end, self.name,
-                                   self.category)
+        self.container = Container().update(
+            start,
+            end,
+            self.name,
+            self.category
+        )

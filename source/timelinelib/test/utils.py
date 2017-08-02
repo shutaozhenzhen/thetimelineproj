@@ -119,9 +119,15 @@ def an_event_with(human_start_time=None, human_end_time=None, time=ANY_TIME,
     else:
         start = human_time_to_gregorian(time)
         end = human_time_to_gregorian(time)
-    event = Event(
-        start, end, text, category=category,
-        fuzzy=fuzzy, locked=locked, ends_today=ends_today)
+    event = Event().update(
+        start,
+        end,
+        text,
+        category=category,
+        fuzzy=fuzzy,
+        locked=locked,
+        ends_today=ends_today
+    )
     event.set_default_color(default_color)
     return event
 
@@ -131,7 +137,7 @@ def a_subevent():
     return a_subevent_with()
 
 
-def a_subevent_with(start=None, end=None, time=ANY_TIME, text="sub", category=None, container=None, cid=-1):
+def a_subevent_with(start=None, end=None, time=ANY_TIME, text="sub", category=None, container=None):
     """Create a :doc:`Subevent <timelinelib_canvas_data_subevent>` object."""
     if start and end:
         start = human_time_to_gregorian(start)
@@ -139,29 +145,30 @@ def a_subevent_with(start=None, end=None, time=ANY_TIME, text="sub", category=No
     else:
         start = human_time_to_gregorian(time)
         end = human_time_to_gregorian(time)
-    return Subevent(start, end, text, category=category, container=container, cid=cid)
+    event = Subevent().update(start, end, text, category=category)
+    event.container = container
+    return event
 
 
 def a_container(name, category, sub_events):
     """Create a :doc:`Container <timelinelib_canvas_data_container>` object."""
-    cid = 99
     start = human_time_to_gregorian(ANY_TIME)
     end = human_time_to_gregorian(ANY_TIME)
-    container = Container(start, end, name,
-                          category=category, cid=cid)
+    container = Container().update(start, end, name, category=category)
     all_events = []
     all_events.append(container)
     for (name, category) in sub_events:
-        all_events.append(Subevent(start, end, name,
-                                   category=category, container=container))
+        event = Subevent().update(start, end, name, category=category)
+        event.container = container
+        all_events.append(event)
     return all_events
 
 
-def a_container_with(text="container", category=None, cid=-1):
+def a_container_with(text="container", category=None):
     """Create a :doc:`Container <timelinelib_canvas_data_container>` object."""
     start = human_time_to_gregorian(ANY_TIME)
     end = human_time_to_gregorian(ANY_TIME)
-    container = Container(start, end, text, category=category, cid=cid)
+    container = Container().update(start, end, text, category=category)
     return container
 
 
@@ -173,8 +180,12 @@ def a_category():
 def a_category_with(name, color=(255, 0, 0), font_color=(0, 255, 255),
                     parent=None):
     """Create a :doc:`Category <timelinelib_canvas_data_category>` object."""
-    return Category(name=name, color=color, font_color=font_color,
-                    parent=parent)
+    return Category().update(
+        name=name,
+        color=color,
+        font_color=font_color,
+        parent=parent
+    )
 
 
 def a_gregorian_era():
@@ -182,7 +193,9 @@ def a_gregorian_era():
     return a_gregorian_era_with()
 
 
-def a_gregorian_era_with(start=None, end=None, time=ANY_TIME, name="foo", color=(128, 128, 128), time_type=GregorianTimeType()):
+def a_gregorian_era_with(start=None, end=None, time=ANY_TIME, name="foo",
+                         color=(128, 128, 128), time_type=GregorianTimeType(),
+                         ends_today=False):
     """Create an :doc:`Era <timelinelib_canvas_data_era>` object."""
     if start and end:
         start = human_time_to_gregorian(start)
@@ -190,7 +203,9 @@ def a_gregorian_era_with(start=None, end=None, time=ANY_TIME, name="foo", color=
     else:
         start = human_time_to_gregorian(time)
         end = human_time_to_gregorian(time)
-    return Era(start, end, name, color)
+    era = Era().update(start, end, name, color)
+    era.set_ends_today(ends_today)
+    return era
 
 
 def a_numeric_era():
@@ -203,7 +218,7 @@ def a_numeric_era_with(start=None, end=None, time=ANY_NUM_TIME, name="foo", colo
     if not (start or end):
         start = time
         end = time
-    return Era(start, end, name, color)
+    return Era().update(start, end, name, color)
 
 
 def inc(number):
@@ -276,16 +291,17 @@ EVENT_MODIFIERS = [
 ]
 
 
-SUBEVENT_MODIFIERS = [
-    ("change container id", lambda event:
-        event.set_container_id(event.get_container_id() + 1)),
-] + EVENT_MODIFIERS
+SUBEVENT_MODIFIERS = EVENT_MODIFIERS
 
 
 CONTAINER_MODIFIERS = [
-    ("change container id", lambda event:
-        event.set_cid(event.cid() + 1)),
-] + EVENT_MODIFIERS
+    ("change time period", lambda event:
+        event.set_time_period(event.get_time_period().move_delta(GregorianDelta.from_days(1)))),
+    ("change text", lambda event:
+        event.set_text("was: %s" % event.get_text())),
+    ("change category", lambda event:
+        event.set_category(new_cat(event))),
+]
 
 
 CATEGORY_MODIFIERS = [

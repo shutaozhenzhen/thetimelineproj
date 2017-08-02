@@ -20,12 +20,6 @@ from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.num.time import NumDelta
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data import Category
-from timelinelib.canvas.data import Container
-from timelinelib.canvas.data import Era
-from timelinelib.canvas.data import Event
-from timelinelib.canvas.data import Milestone
-from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
 
 
@@ -37,7 +31,6 @@ class TutorialTimelineCreator(object):
         self.start, self.end = self.get_start_end()
         self.db.set_displayed_period(TimePeriod(self.start, self.end))
         self.last_cat = None
-        self.next_cid = 1
 
     def add_category(self, name, color, font_color, make_last_added_parent=False):
         if make_last_added_parent:
@@ -45,48 +38,53 @@ class TutorialTimelineCreator(object):
         else:
             parent = None
         self.prev_cat = self.last_cat
-        self.last_cat = Category(name, color, font_color, parent)
-        self.db.save_category(self.last_cat)
+        self.last_cat = self.db.new_category().update(
+            name=name,
+            color=color,
+            font_color=font_color,
+            parent=parent
+        ).save()
 
     def add_milestone(self, time_add, text, label):
         start, end = self._calc_start_end(time_add, time_add)
-        milestone = Milestone(start, label)
-        milestone.set_data("description", text)
-        self.db.save_event(milestone)
+        self.db.new_milestone(
+            description=text
+        ).update(start, start, label).save()
 
     def add_era(self, start_add, end_add, name):
         start, end = self._calc_start_end(start_add, end_add)
-        era = Era(start, end, name, color=(250, 250, 230))
-        self.db.save_era(era)
+        self.db.new_era(
+        ).update(start, end, name, color=(250, 250, 230)).save()
 
     def add_event(self, text, description, start_add, end_add=None, hyperlink=None):
         start, end = self._calc_start_end(start_add, end_add)
-        evt = Event(start, end, text, self.last_cat)
+        event = self.db.new_event().update(start, end, text, self.last_cat)
         if description:
-            evt.set_data("description", description)
+            event.set_data("description", description)
         if hyperlink:
-            evt.set_hyperlink(hyperlink)
-        evt.set_default_color((200, 200, 200))
-        self.db.save_event(evt)
+            event.set_hyperlink(hyperlink)
+        event.set_default_color((200, 200, 200))
+        event.save()
 
     def add_container(self, text, description, start_add, end_add=None):
         start, end = self._calc_start_end(start_add, end_add)
-        container = Container(start, end, text, self.prev_cat)
-        container.set_cid(self.next_cid)
-        self.next_cid += 1
-        self.db.save_event(container)
-        return container
+        return self.db.new_container(
+        ).update(start, end, text, self.prev_cat).save()
 
     def add_subevent(self, container, text, description, start_add, end_add=None, hyperlink=None):
         start, end = self._calc_start_end(start_add, end_add)
-        evt = Subevent(start, end, text, self.last_cat, container=container)
+        event = self.db.new_subevent(
+            container=container,
+            time_period=TimePeriod(start, end)
+        ).update(start, end, text, self.last_cat)
         if description:
-            evt.set_data("description", description)
+            event.set_data("description", description)
         if hyperlink:
-            evt.set_hyperlink(hyperlink)
-        self.db.save_event(evt)
+            event.set_hyperlink(hyperlink)
+        event.save()
 
     def get_db(self):
+        self.db.clear_transactions()
         return self.db
 
     def _calc_start_end(self, start_add, end_add=None):

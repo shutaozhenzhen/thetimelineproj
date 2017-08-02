@@ -18,14 +18,9 @@
 
 from mock import Mock
 
-from timelinelib.canvas.data.eras import InvalidOperationError
 from timelinelib.canvas.data import Eras
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import a_gregorian_era
 from timelinelib.test.utils import a_gregorian_era_with
-from timelinelib.test.utils import a_numeric_era_with
-from timelinelib.test.utils import gregorian_period
-from timelinelib.test.utils import numeric_period
 from timelinelib.test.utils import human_time_to_gregorian
 
 
@@ -42,35 +37,6 @@ class ErasTestCase(UnitTestCase):
         self.Dec_1_2015 = human_time_to_gregorian("1 Dec 2015")
         self.db = Mock()
         self.eras = Eras(self.db)
-
-
-class describe_cloning(ErasTestCase):
-
-    def test_eras_are_cloned(self):
-        self.eras.save_era(a_gregorian_era())
-        self.eras.save_era(a_gregorian_era())
-        clone = self.eras.clone()
-        self.assertListIsCloneOf(clone.get_all(), self.eras.get_all())
-
-
-class describe_saving_eras(ErasTestCase):
-
-    def test_can_save(self):
-        era = a_gregorian_era()
-        self.eras.save_era(era)
-        self.assertEqual(self.eras.get_all(), [era])
-
-    def test_can_update(self):
-        era = a_gregorian_era()
-        self.eras.save_era(era)
-        era.set_name("I'm the first era")
-        self.eras.save_era(era)
-        self.assertEqual(self.eras.get_all(), [era])
-
-    def test_fails_if_existing_era_does_not_seem_to_be_found(self):
-        era = a_gregorian_era()
-        era.set_id(15)
-        self.assertRaises(InvalidOperationError, self.eras.save_era, era)
 
 
 class describe_overlapping_eras(ErasTestCase):
@@ -224,69 +190,57 @@ class describe_overlapping_eras(ErasTestCase):
     def given_two_overlapping_eras_type_1(self):
         self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=self.color1)
         self.era2 = a_gregorian_era_with(start="15 Dec 2015", end="1 Feb 2016", color=self.color2)
-        self.eras.save_era(self.era2)
-        self.eras.save_era(self.era1)
+        self.eras = Eras(self.db, eras=[
+            self.era2,
+            self.era1,
+        ])
 
     def given_two_overlapping_eras_type_2(self):
         self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=self.color1)
         self.era2 = a_gregorian_era_with(start="1 Dec 2015", end="1 Feb 2016", color=self.color2)
-        self.eras.save_era(self.era1)
-        self.eras.save_era(self.era2)
+        self.eras = Eras(self.db, eras=[
+            self.era1,
+            self.era2,
+        ])
 
     def given_two_overlapping_eras_type_3(self):
         self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=self.color1)
         self.era2 = a_gregorian_era_with(start="1 Dec 2015", end="15 Dec 2015", color=self.color2)
-        self.eras.save_era(self.era1)
-        self.eras.save_era(self.era2)
+        self.eras = Eras(self.db, eras=[
+            self.era1,
+            self.era2,
+        ])
 
     def given_two_overlapping_eras_type_4(self):
         self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=self.color1)
         self.era2 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=self.color2)
-        self.eras.save_era(self.era1)
-        self.eras.save_era(self.era2)
+        self.eras = Eras(self.db, eras=[
+            self.era1,
+            self.era2,
+        ])
 
     def given_two_overlapping_eras_type_5(self):
         self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="1 Jan 2016", color=self.color1)
         self.era2 = a_gregorian_era_with(start="15 Dec 2015", end="1 Jan 2016", color=self.color2)
-        self.eras.save_era(self.era2)
-        self.eras.save_era(self.era1)
+        self.eras = Eras(self.db, eras=[
+            self.era2,
+            self.era1,
+        ])
 
     def given_two_overlapping_eras_type_6(self):
         self.era1 = a_gregorian_era_with(start="1 Dec 2015", end="30 Jan 2016", color=self.color1)
         self.era2 = a_gregorian_era_with(start="15 Dec 2015", end="15 Jan 2016", color=self.color2)
-        self.eras.save_era(self.era2)
-        self.eras.save_era(self.era1)
+        self.eras = Eras(self.db, eras=[
+            self.era2,
+            self.era1,
+        ])
 
     def given_three_overlapping_eras(self):
         self.era1 = a_gregorian_era_with(start="1 Jan 2016", end="30 Mar 2016", color=self.color1)
         self.era2 = a_gregorian_era_with(start="1 Feb 2016", end="30 Apr 2016", color=self.color2)
         self.era3 = a_gregorian_era_with(start="15 Jan 2016", end="15 Apr 2016", color=self.color3)
-        self.eras.save_era(self.era1)
-        self.eras.save_era(self.era2)
-        self.eras.save_era(self.era3)
-
-
-class describe_numeric_era_sublisting(ErasTestCase):
-
-    def test_can_return_eras_visible_in_a_period(self):
-        era1 = a_numeric_era_with(start=1, end=2)
-        era2 = a_numeric_era_with(start=4, end=6)
-        era3 = a_numeric_era_with(start=8, end=10)
-        self.eras.save_era(era1)
-        self.eras.save_era(era2)
-        self.eras.save_era(era3)
-        visible_eras = self.eras.get_in_period(numeric_period(3, 9))
-        self.assertEquals([era2, era3], visible_eras)
-
-
-class describe_gregorian_era_sublisting(ErasTestCase):
-
-    def test_can_return_eras_visible_in_a_period(self):
-        era1 = a_gregorian_era_with(start="1 Jan 2014", end="10 Jan 2014")
-        era2 = a_gregorian_era_with(start="12 Jan 2014", end="16 Jan 2014")
-        era3 = a_gregorian_era_with(start="18 Jan 2014", end="30 Jan 2014")
-        self.eras.save_era(era1)
-        self.eras.save_era(era2)
-        self.eras.save_era(era3)
-        visible_eras = self.eras.get_in_period(gregorian_period("16 Jan 2014", "20 Jan 2014"))
-        self.assertEquals([era2, era3], visible_eras)
+        self.eras = Eras(self.db, eras=[
+            self.era1,
+            self.era2,
+            self.era3,
+        ])

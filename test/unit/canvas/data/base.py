@@ -16,18 +16,22 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class _IdCounter(object):
+from mock import Mock
 
-    def __init__(self, initial_id=0):
-        self.id = initial_id
-
-    def get_next(self):
-        self.id += 1
-        return self.id
+from timelinelib.canvas.data.base import ItemBase
+from timelinelib.test.cases.unit import UnitTestCase
 
 
-_id_counter = _IdCounter()
+class describe_new_item_base(UnitTestCase):
 
-
-def get_process_unique_id():
-    return _id_counter.get_next()
+    def test_can_set_db(self):
+        mock_db = Mock()
+        another_mock_db = Mock()
+        category = ItemBase(None, None, None)
+        self.assertTrue(category.db is None)
+        category.db = mock_db
+        self.assertTrue(category.db is mock_db)
+        category.db = mock_db
+        self.assertTrue(category.db is mock_db)
+        with self.assertRaises(Exception):
+            category.db = another_mock_db

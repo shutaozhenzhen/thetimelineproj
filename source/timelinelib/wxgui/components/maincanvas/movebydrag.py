@@ -29,6 +29,9 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
         self.status_bar = status_bar
         self.start_drag_time = start_drag_time
         self._store_event_periods(event)
+        self._transaction = self.timeline_canvas.GetDb().transaction(
+            "Move events"
+        )
 
     def _store_event_periods(self, event_being_dragged):
         self.event_periods = []
@@ -42,7 +45,7 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
             else:
                 self.event_periods.append(period_pair)
             if event.is_container():
-                for subevent in event.events:
+                for subevent in event.subevents:
                     period_pair = (subevent, subevent.get_time_period())
                     self.event_periods.append(period_pair)
         assert self.event_periods[0][0] == event_being_dragged
@@ -54,10 +57,9 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
     def left_mouse_up(self):
         ScrollViewInputHandler.left_mouse_up(self)
         self.status_bar.set_text("")
-        if self.timeline_canvas.GetDb() is not None:
-            self.timeline_canvas.GetDb()._save_if_not_disabled()
-        self._state.change_to_no_op()
+        self._transaction.commit()
         self._main_frame.edit_ends()
+        self._state.change_to_no_op()
 
     def view_scrolled(self):
         self._move_event()
@@ -82,6 +84,7 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
             total_move_delta = self._get_total_move_delta()
             for (event, original_period) in self.event_periods:
                 event.update_period_o(original_period.move_delta(total_move_delta))
+                event.save()
         except ValueError as ex:
             self.status_bar.set_text("%s" % ex)
 

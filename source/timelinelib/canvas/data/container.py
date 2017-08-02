@@ -16,19 +16,20 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.data.base import create_noop_property
 from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data.event import DEFAULT_COLOR
+from timelinelib.canvas.data.immutable import ImmutableContainer
 from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_STRATEGY
 
 
 class Container(Event):
 
-    def __init__(self, start_time, end_time, text, category=None,
-                 cid=-1):
-        Event.__init__(self, start_time, end_time, text, category,
-                       False, False, False)
-        self.container_id = cid
-        self.events = []
+    def __init__(self, db=None, id_=None, immutable_value=ImmutableContainer()):
+        Event.__init__(self, db=db, id_=id_, immutable_value=immutable_value)
+        self._subevents = []
+        self._is_in_update = False
         import timelinelib.db.strategies
         if EXTENDED_CONTAINER_STRATEGY.enabled():
             self.strategy = timelinelib.db.strategies.ExtendedContainerStrategy(self)
@@ -36,22 +37,56 @@ class Container(Event):
             self.strategy = timelinelib.db.strategies.DefaultContainerStrategy(self)
 
     @property
-    def _time_period(self):
-        if len(self.events) == 0:
-            return self.__time_period
+    def subevents(self):
+        return self._subevents
+
+    @subevents.setter
+    def subevents(self, value):
+        self._subevents = value
+
+    def save(self):
+        self._update_category_id()
+        with self._db.transaction("Save container") as t:
+            t.save_container(self._immutable_value, self.ensure_id())
+        return self
+
+    def delete(self):
+        with self._db.transaction("Delete container") as t:
+            t.delete_container(self.id)
+        self.id = None
+
+    def get_time_period(self):
+        if len(self.subevents) == 0:
+            return self._immutable_value.time_period
         else:
             return TimePeriod(
-                min([event.get_start_time() for event in self.events]),
-                max([event.get_end_time() for event in self.events])
+                min([event.get_start_time() for event in self.subevents]),
+                max([event.get_end_time() for event in self.subevents])
             )
 
-    @_time_period.setter
-    def _time_period(self, value):
-        self.__time_period = value
+    def set_time_period(self, value):
+        self._immutable_value = self._immutable_value.update(time_period=value)
+        return self
+
+    time_period = property(get_time_period, set_time_period)
+
+    def get_sort_order(self):
+        if len(self.subevents) == 0:
+            return 0
+        else:
+            return min(
+                self.subevents,
+                key=lambda event: event.sort_order
+            ).sort_order
+
+    def set_sort_order(self, sort_order):
+        # Don't save it
+        return self
+
+    sort_order = property(get_sort_order, set_sort_order)
 
     def __eq__(self, other):
         return (isinstance(other, Container) and
-                self.container_id == other.cid() and
                 super(Container, self).__eq__(other))
 
     def is_container(self):
@@ -60,13 +95,6 @@ class Container(Event):
     def is_subevent(self):
         return False
 
-    def cid(self):
-        return self.container_id
-
-    def set_cid(self, cid):
-        self.container_id = cid
-        return self
-
     def register_subevent(self, subevent):
         self.strategy.register_subevent(subevent)
 
@@ -74,20 +102,28 @@ class Container(Event):
         self.strategy.unregister_subevent(subevent)
 
     def update_container(self, subevent):
-        self.strategy.update(subevent)
+        if self._is_in_update:
+            return
+        try:
+            self._is_in_update = True
+            self.strategy.update(subevent)
+        finally:
+            self._is_in_update = False
 
     def update_properties(self, text, category=None):
         self.set_text(text)
         self.set_category(category)
 
-    def clone(self):
-        return Container(
-            self.get_time_period().start_time,
-            self.get_time_period().end_time, self.get_text(),
-            self.get_category(), self.container_id)
-
-    def get_subevents(self):
-        return self.events
-
     def allow_ends_today_on_subevents(self):
         return self.strategy.allow_ends_today_on_subevents()
+
+
+create_noop_property(Container, "fuzzy", False)
+create_noop_property(Container, "locked", False)
+create_noop_property(Container, "ends_today", False)
+create_noop_property(Container, "description", None)
+create_noop_property(Container, "icon", None)
+create_noop_property(Container, "hyperlink", None)
+create_noop_property(Container, "alert", None)
+create_noop_property(Container, "progress", None)
+create_noop_property(Container, "default_color", DEFAULT_COLOR)

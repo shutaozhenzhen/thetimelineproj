@@ -33,7 +33,8 @@ class describe_milestone(UnitTestCase):
         self.assertTrue(self.milestone.is_milestone())
 
     def setUp(self):
-        self.milestone = Milestone(
+        self.milestone = Milestone().update(
+            human_time_to_gregorian("11 Jul 2014"),
             human_time_to_gregorian("11 Jul 2014"),
             "a day in my life"
         )

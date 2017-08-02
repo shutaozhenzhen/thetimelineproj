@@ -17,41 +17,37 @@
 
 
 from timelinelib.canvas.data.event import Event
+from timelinelib.canvas.data.immutable import ImmutableEvent
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_STRATEGY
 
 
 class Subevent(Event):
 
-    def __init__(self, start_time, end_time, text, category=None,
-                 container=None, cid=-1, locked=False, ends_today=False):
+    def __init__(self, db=None, id_=None, immutable_value=ImmutableEvent()):
+        Event.__init__(self, db=db, id_=id_, immutable_value=immutable_value)
         if not EXTENDED_CONTAINER_STRATEGY.enabled():
-            locked = False
-        Event.__init__(self, start_time, end_time, text, category,
-                       False, locked, ends_today)
-        self.container = container
-        if self.container is not None:
-            self.container_id = self.container.cid()
-        else:
-            self.container_id = cid
+            self.locked = False
 
-    def get_container_id(self):
-        return self.container_id
-
-    def set_container_id(self, container_id):
-        self.container_id = container_id
+    def save(self, save_all_subevents=True):
+        with self._db.transaction("Save event"):
+            if save_all_subevents and self.container is not None:
+                for subevent in self.container.subevents:
+                    subevent.db = self.container.db
+                    subevent.save(save_all_subevents=False)
+            else:
+                Event.save(self)
         return self
 
     def __eq__(self, other):
         return (isinstance(other, Subevent) and
-                self.container_id == other.cid() and
                 super(Subevent, self).__eq__(other))
 
     def __ne__(self, other):
         return not (self == other)
 
     def __repr__(self):
-        return "Subevent<id=%r, text=%r, container_id=%r, ...>" % (
-            self.get_id(), self.get_text(), self.get_container_id())
+        return "Subevent<id=%r, text=%r, ...>" % (
+            self.get_id(), self.get_text())
 
     def is_container(self):
         """Overrides parent method."""
@@ -61,39 +57,13 @@ class Subevent(Event):
         """Overrides parent method."""
         return True
 
-    def update_period(self, start_time, end_time):
-        """Overrides parent method."""
-        Event.update_period(self, start_time, end_time)
-        if hasattr(self, "container") and self.container is not None:
-            self.container.update_container(self)
+    def get_time_period(self):
+        return self._immutable_value.time_period
 
-    def update_period_o(self, new_period):
-        """Overrides parent method."""
-        Event.update_period(self, new_period.start_time, new_period.end_time)
+    def set_time_period(self, time_period):
+        self._immutable_value = self._immutable_value.update(time_period=time_period)
         if self.container is not None:
             self.container.update_container(self)
+        return self
 
-    def cid(self):
-        return self.container_id
-
-    def register_container(self, container):
-        self.container = container
-        self.container_id = container.cid()
-
-    def clone(self):
-        # Objects of type datetime are immutable.
-        new_event = Subevent(
-            self.get_time_period().start_time,
-            self.get_time_period().end_time, self.get_text(),
-            self.get_category(), None, self.container_id)
-        # Description is immutable
-        new_event.set_data("description", self.get_data("description"))
-        # Icon is immutable in the sense that it is never changed by our
-        # application.
-        new_event.set_data("icon", self.get_data("icon"))
-        new_event.set_data("hyperlink", self.get_data("hyperlink"))
-        new_event.set_data("progress", self.get_data("progress"))
-        new_event.set_data("alert", self.get_data("alert"))
-        new_event.set_data("default_color", self.get_data("default_color"))
-        new_event.set_fuzzy(self.get_fuzzy())
-        return new_event
+    time_period = property(get_time_period, set_time_period)

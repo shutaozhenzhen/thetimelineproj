@@ -18,12 +18,13 @@
 
 from mock import Mock
 
-from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import an_event_with, human_time_to_gregorian, gregorian_period
+from timelinelib.test.utils import an_event_with
+from timelinelib.test.utils import gregorian_period
+from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.maincanvas.movebydrag import MoveByDragInputHandler
-from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
 
 
 class MoveByDragInputHandlerSpec(UnitTestCase):
@@ -98,12 +99,14 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
                 if key == time:
                     return self.snap_times[key]
             raise KeyError()
+        self.db = MemoryDB()
         self.times_at = {}
         self.period_events = []
         self.snap_times = {}
         self.selected_events = []
         self.status_bar = Mock()
         self.canvas = Mock(MainCanvas)
+        self.canvas.GetDb.return_value = self.db
         self.canvas.GetSizeTuple.return_value = (0, 0)
         self.canvas.GetSelectedEvents.return_value = self.selected_events
         self.canvas.Snap.side_effect = x
@@ -114,11 +117,13 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
     def a_point_event(self, time):
         event = an_event_with(time=time)
         self.selected_events.append(event)
+        self.db.save_event(event)
         return event
 
     def a_period_event(self, start, end):
         event = an_event_with(human_start_time=start, human_end_time=end)
         self.selected_events.append(event)
+        self.db.save_event(event)
         return event
 
     def given_snaps(self, from_, to):
@@ -137,14 +142,22 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         handler = MoveByDragInputHandler(
             self.state,
             self.canvas,
-            self.status_bar, Mock(), event, human_time_to_gregorian(from_time))
+            self.status_bar,
+            Mock(),
+            event,
+            human_time_to_gregorian(from_time)
+        )
         handler.mouse_moved(to_x, 10)
 
     def when_move_done(self):
         handler = MoveByDragInputHandler(
             self.state,
             self.canvas,
-            self.status_bar, Mock(), self.a_point_event("1 Jan 2011"), None)
+            self.status_bar,
+            Mock(),
+            self.a_point_event("1 Jan 2011"),
+            None
+        )
         handler.left_mouse_up()
 
     def assert_event_has_period(self, start, end, event=None):

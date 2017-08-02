@@ -25,8 +25,15 @@ class SetCategoryDialog(Dialog):
     """
     <BoxSizerVertical>
         <FlexGridSizer columns="2" growableColumns="1" proportion="1" border="ALL">
-            <StaticText label="$(label)" align="ALIGN_CENTER_VERTICAL" />
-            <CategoryChoice name="category_choice" timeline="$(db)" align="ALIGN_CENTER_VERTICAL" />
+            <StaticText
+                label="$(label)"
+                align="ALIGN_CENTER_VERTICAL"
+            />
+            <CategoryChoice
+                name="category_choice"
+                timeline="$(db)"
+                align="ALIGN_CENTER_VERTICAL"
+            />
         </FlexGridSizer>
         <DialogButtonsOkCancelSizer
             border="LEFT|BOTTOM|RIGHT"
