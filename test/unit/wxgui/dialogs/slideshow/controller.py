@@ -83,9 +83,11 @@ class describe_slideshow_dialog_controller(TmpDirTestCase):
         self.assertEqual(0, self.view.EndModalOk.call_count)
 
     def test_overwrite_of_target_directory_can_be_accepted(self):
-        event = Event(start_time=human_time_to_gregorian("11 Jul 2014"),
-                      end_time=human_time_to_gregorian("12 Jul 2014"),
-                      text="a day in my life")
+        event = Event().update(
+            start_time=human_time_to_gregorian("11 Jul 2014"),
+            end_time=human_time_to_gregorian("12 Jul 2014"),
+            text="a day in my life"
+        )
         vp = Mock()
         vp.filter_events.return_value = [event, ]
         self.canvas.get_view_properties.return_value = vp

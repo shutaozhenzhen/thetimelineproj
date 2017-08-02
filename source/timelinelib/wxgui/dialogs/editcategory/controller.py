@@ -57,7 +57,11 @@ class EditCategoryDialogController(Controller):
     def on_ok_clicked(self, event):
         if self._category_name_is_valid():
             if self._category is None:
-                self._category = Category("", DEFAULT_COLOR, DEFAULT_FONT_COLOR)
+                self._category = Category().update(
+                    "",
+                    DEFAULT_COLOR,
+                    DEFAULT_FONT_COLOR
+                )
             self._update_category_properties()
             self._save()
 

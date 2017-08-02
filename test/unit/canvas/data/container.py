@@ -29,15 +29,15 @@ class describe_container(UnitTestCase):
         subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01")
         container = a_container_with(text="container")
         container.register_subevent(subevent)
-        self.assertEqual(1, len(container.events))
-        self.assertEqual(subevent, container.events[0])
+        self.assertEqual(1, len(container.subevents))
+        self.assertEqual(subevent, container.subevents[0])
 
     def test_subevents_can_be_unregistered(self):
         subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01")
         container = a_container_with(text="container")
         container.register_subevent(subevent)
         container.unregister_subevent(subevent)
-        self.assertEqual(0, len(container.events))
+        self.assertEqual(0, len(container.subevents))
 
     def test_name_can_be_updated(self):
         container = a_container_with(text="container")
@@ -52,15 +52,6 @@ class describe_container(UnitTestCase):
         container.update_properties(new_name, category=new_category)
         self.assertEqual(new_category, container.get_category())
 
-    def test_default_cid(self):
-        container = a_container_with(text="container")
-        self.assertEqual(-1, container.cid())
-
-    def test_cid_can_be_changed(self):
-        container = a_container_with(text="container")
-        container.set_cid(99)
-        self.assertEqual(99, container.cid())
-
     def test_can_be_compared(self):
         self.assertEqNeImplementationIsCorrect(a_container_with, CONTAINER_MODIFIERS)
 
@@ -72,23 +63,9 @@ class describe_container_construction(UnitTestCase):
 
     def test_properties_defaults(self):
         container = a_container_with(text="container")
-        self.assertEqual(-1, container.cid())
         self.assertEqual(False, container.get_fuzzy())
         self.assertEqual(False, container.get_locked())
         self.assertEqual(False, container.get_ends_today())
         self.assertEqual(True, container.is_container())
         self.assertEqual(False, container.is_subevent())
         self.assertEqual(None, container.get_category())
-
-    def test_cid_can_be_set_at_construction(self):
-        container = a_container_with(text="container", cid=99)
-        self.assertEqual(99, container.cid())
-
-
-class describe_container_cloning(UnitTestCase):
-
-    def test_cloning_returns_new_object(self):
-        container = a_container_with(text="container", cid=99)
-        cloned_container = container.clone()
-        self.assertTrue(container is not cloned_container)
-        self.assertEqual(cloned_container, container)

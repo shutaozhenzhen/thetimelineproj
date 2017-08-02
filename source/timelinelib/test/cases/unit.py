@@ -38,16 +38,6 @@ class UnitTestCase(unittest.TestCase):
         )
         self.assertEqual(first, second, message)
 
-    def assertListIsCloneOf(self, cloned_list, original_list):
-        self.assertEqual(cloned_list, original_list)
-        self.assertTrue(cloned_list is not original_list)
-        for i in range(len(cloned_list)):
-            self.assertIsCloneOf(cloned_list[i], original_list[i])
-
-    def assertIsCloneOf(self, clone, original):
-        self.assertEqual(clone, original)
-        self.assertTrue(clone is not original, "%r" % clone)
-
     def assertInstanceNotIn(self, object_, list_):
         for element in list_:
             if element is object_:

@@ -16,12 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.idnumber import get_process_unique_id
 from timelinelib.canvas.data.timeperiod import TimePeriod
-
-
-class InvalidOperationError(Exception):
-    pass
 
 
 class Eras(object):
@@ -39,33 +34,8 @@ class Eras(object):
         else:
             self._eras = eras
 
-    def set_now_func(self, now_func):
-        self.now_func = now_func
-
-    def clone(self):
-        return Eras(self.now_func, clone_era_list(self._eras))
-
     def get_all(self):
         return sorted(self._eras)
-
-    def get_in_period(self, time_period):
-        def include_era(era):
-            if not era.inside_period(time_period):
-                return False
-            return True
-        return [e for e in self._eras if include_era(e)]
-
-    def save_era(self, era):
-        self._ensure_era_exists_for_update(era)
-        if era not in self._eras:
-            self._eras.append(era)
-            era.set_id(get_process_unique_id())
-
-    def delete_era(self, era):
-        if era not in self._eras:
-            raise InvalidOperationError("era not in db.")
-        self._eras.remove(era)
-        era.set_id(None)
 
     def get_all_periods(self):
 
@@ -76,7 +46,7 @@ class Eras(object):
             return ((c1[0] + c2[0]) / 2, (c1[1] + c2[1]) / 2, (c1[2] + c2[2]) / 2)
 
         def create_overlapping_era(e0, e1, start, end):
-            era = e1.clone()
+            era = e1.duplicate()
             era.set_time_period(TimePeriod(start, end))
             era.set_color(merge_colors(e0.get_color(), e1.get_color()))
             era.set_name("%s + %s" % (e0.get_name(), e1.get_name()))
@@ -130,7 +100,7 @@ class Eras(object):
             return era
 
         def clone_all_eras():
-            return [e.clone() for e in self.get_all()]
+            return [e.duplicate() for e in self.get_all()]
 
         overlap_func = (None,
                         return_era_for_overlapping_type_1,
@@ -180,24 +150,3 @@ class Eras(object):
                 done = True
             if done:
                 return self.all_eras
-
-    def _ensure_era_exists_for_update(self, era):
-        message = "Updating an era that does not exist."
-        if era.has_id():
-            if not self._does_era_exists(era):
-                raise InvalidOperationError(message)
-
-    def _does_era_exists(self, an_era):
-        for stored_era in self.get_all():
-            if stored_era.get_id() == an_era.get_id():
-                return True
-        return False
-
-
-def clone_era_list(eralist):
-    eras = []
-    for era in eralist:
-        new_era = era.clone()
-        new_era.set_id(era.get_id())
-        eras.append(new_era)
-    return eras

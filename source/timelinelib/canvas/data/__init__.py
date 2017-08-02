@@ -20,7 +20,6 @@ from timelinelib.canvas.data.category import Category
 from timelinelib.canvas.data.category import sort_categories
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.event import Event
-from timelinelib.canvas.data.events import Events
 from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.canvas.data.era import Era
 from timelinelib.canvas.data.eras import Eras

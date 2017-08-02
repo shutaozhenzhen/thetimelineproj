@@ -29,17 +29,19 @@ class TimelineItem(object):
     """
 
     def get_time_period(self):
-        return self._time_period
+        return self._immutable_value.time_period
 
     def get_start_time(self):
-        return self._time_period.get_start_time()
+        return self.time_period.get_start_time()
 
     def get_end_time(self):
-        return self._time_period.get_end_time()
+        return self.time_period.get_end_time()
 
     def set_time_period(self, time_period):
-        self._time_period = time_period
+        self._immutable_value = self._immutable_value.update(time_period=time_period)
         return self
+
+    time_period = property(get_time_period, set_time_period)
 
     def update_period(self, start_time, end_time):
         self.set_time_period(TimePeriod(start_time, end_time))
@@ -48,31 +50,31 @@ class TimelineItem(object):
         self.update_period(new_period.start_time, new_period.end_time)
 
     def start_to_start(self, event):
-        return self._time_period.start_to_start(event.get_time_period())
+        return self.time_period.start_to_start(event.get_time_period())
 
     def start_to_end(self, event):
-        return self._time_period.start_to_end(event.get_time_period())
+        return self.time_period.start_to_end(event.get_time_period())
 
     def end_to_end(self, event):
-        return self._time_period.end_to_end(event.get_time_period())
+        return self.time_period.end_to_end(event.get_time_period())
 
     def move_delta(self, delta):
-        self.set_time_period(self._time_period.move_delta(delta))
+        self.set_time_period(self.time_period.move_delta(delta))
 
     def inside_period(self, time_period):
-        return self._time_period.inside_period(time_period)
+        return self.time_period.inside_period(time_period)
 
     def is_period(self):
-        return self._time_period.is_period()
+        return self.time_period.is_period()
 
     def mean_time(self):
-        return self._time_period.mean_time()
+        return self.time_period.mean_time()
 
     def time_span(self):
-        return self._time_period.end_time - self._time_period.start_time
+        return self.time_period.end_time - self.time_period.start_time
 
     def overlaps(self, event):
-        return self._time_period.overlaps(event.get_time_period())
+        return self.time_period.overlaps(event.get_time_period())
 
     def distance_to(self, event):
-        return self._time_period.distance_to(event.get_time_period())
+        return self.time_period.distance_to(event.get_time_period())

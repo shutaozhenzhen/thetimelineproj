@@ -416,8 +416,7 @@ class GuiCreator(object):
     def set_category_on_selected(self):
 
         def edit_function():
-                self._set_category_to_selected_events()
-                self.save_current_timeline_data()
+            self._set_category_to_selected_events()
 
         safe_locking(self, edit_function)
 
@@ -450,7 +449,7 @@ class GuiCreator(object):
         def set_categoryon_selected(evt):
 
             def edit_function():
-                    self._set_category_to_selected_events()
+                self._set_category_to_selected_events()
             safe_locking(self, edit_function)
 
         def measure_distance(evt):
@@ -1081,7 +1080,6 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         dialog = SetCategoryDialog(self, self.timeline, selected_event_ids)
         dialog.ShowModal()
         dialog.Destroy()
-        self.main_panel.redraw_timeline()
 
     def _edit_categories(self):
         display_categories_editor_moved_message(self)

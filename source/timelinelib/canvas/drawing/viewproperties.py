@@ -32,7 +32,7 @@ class ViewProperties(Observable):
         self.sticky_balloon_event_ids = []
         self.hovered_event = None
         self.selected_event_ids = []
-        self.hidden_categories = []
+        self._hidden_category_ids = []
         self.period_selection = None
         self.divider_position = 0.5
         self.displayed_period = None
@@ -126,7 +126,7 @@ class ViewProperties(Observable):
         self.sticky_balloon_event_ids = []
         self.hovered_event = None
         self.selected_event_ids = []
-        self.hidden_categories = []
+        self._hidden_category_ids = []
         self.period_selection = None
         self.displayed_period = None
         self._event_highlight_counters = {}
@@ -214,7 +214,7 @@ class ViewProperties(Observable):
                                   not self.is_category_visible(category))
 
     def is_category_visible(self, category):
-        return category.get_id() not in self.hidden_categories
+        return category.get_id() not in self._hidden_category_ids
 
     def is_event_with_category_visible(self, category):
         if category is None:
@@ -243,11 +243,11 @@ class ViewProperties(Observable):
     def _set_categories_with_ids_visible(self, category_ids, is_visible):
         need_notify = False
         for category_id in category_ids:
-            if is_visible is True and category_id in self.hidden_categories:
-                self.hidden_categories.remove(category_id)
+            if is_visible is True and category_id in self._hidden_category_ids:
+                self._hidden_category_ids.remove(category_id)
                 need_notify = True
-            elif is_visible is False and category_id not in self.hidden_categories:
-                self.hidden_categories.append(category_id)
+            elif is_visible is False and category_id not in self._hidden_category_ids:
+                self._hidden_category_ids.append(category_id)
                 need_notify = True
         if need_notify:
             self._notify()

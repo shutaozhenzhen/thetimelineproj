@@ -98,10 +98,9 @@ class Exporter(object):
 
     def _write_events(self, xmlfile):
         all_events = self.db.get_all_events()
-        subevents = [event for event in all_events if event.is_subevent()]
-        events = [event for event in all_events if not event.is_subevent()]
-        events.extend(subevents)
-        for evt in events:
+        containers = [event for event in all_events if event.is_container()]
+        rest = [event for event in all_events if not event.is_container()]
+        for evt in containers + rest:
             self._write_event(xmlfile, evt)
     _write_events = wrap_in_tag(_write_events, "events", INDENT1)
 
@@ -111,9 +110,9 @@ class Exporter(object):
         write_simple_tag(xmlfile, "end",
                          self._time_string(evt.get_time_period().end_time), INDENT3)
         if evt.is_container():
-            write_simple_tag(xmlfile, "text", "[%d]%s" % (evt.cid(), evt.get_text()), INDENT3)
+            write_simple_tag(xmlfile, "text", "[%d]%s" % (evt.id, evt.get_text()), INDENT3)
         elif evt.is_subevent():
-            write_simple_tag(xmlfile, "text", "(%d)%s" % (evt.cid(), evt.get_text()), INDENT3)
+            write_simple_tag(xmlfile, "text", "(%d)%s" % (evt.container.id, evt.get_text()), INDENT3)
         else:
             text = evt.get_text()
             if self._text_starts_with_container_tag(evt.get_text()):

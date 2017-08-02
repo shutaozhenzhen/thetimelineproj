@@ -77,7 +77,6 @@ class DuplicateEventDialog(Dialog):
     """
 
     def __init__(self, parent, db, event):
-        self.db = db
         self. move_period_config = db.get_time_type().get_duplicate_functions()
         period_list = [label for (label, fn) in self.move_period_config]
         Dialog.__init__(self, DuplicateEventDialogController, parent, {
@@ -88,7 +87,7 @@ class DuplicateEventDialog(Dialog):
             "frequency_text": _("Frequency:"),
             "direction_choices": [_("Forward"), _("Backward"), _("Both")],
         }, title=_("Duplicate Event"))
-        self.controller.on_init(db, event)
+        self.controller.on_init(event)
         self.sc_nbr_of_duplicates.SetSelection(-1, -1)
 
     def SetCount(self, count):

@@ -32,6 +32,31 @@ class describe_import_timeline_xml(TmpDirTestCase):
         </timeline>
         """.strip())
 
+    def test_can_import_containers(self):
+        db = self.import_file_with_content("""
+        <timeline>
+            <version>0.0.0</version>
+            <categories />
+            <events>
+                <event>
+                    <start>2017-01-01 00:00:00</start>
+                    <end>2017-01-01 00:00:00</end>
+                    <text>[1]con</text>
+                </event>
+                <event>
+                    <start>2017-01-01 00:00:00</start>
+                    <end>2017-01-01 00:00:00</end>
+                    <text>(1)sub1</text>
+                </event>
+            </events>
+            <view />
+        </timeline>
+        """.strip())
+        all_events = db.get_all_events()
+        containers = [e.text for e in all_events if e.is_container()]
+        subevents = [e.text for e in all_events if e.is_subevent()]
+        self.assertEqual((containers, subevents), (["con"], ["sub1"]))
+
     def import_file_with_content(self, content):
         path = self.get_tmp_path("tmp.timeline")
         with open(path, "w") as f:

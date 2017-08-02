@@ -69,7 +69,8 @@ class EditEventDialogController(Controller):
 
     def _create_or_update_event(self):
         try:
-            self._save_event()
+            with self.timeline.transaction("Save event"):
+                self._save_event()
             if self.view.IsAddMoreChecked():
                 self.event = None
                 self.view.SetName("")
@@ -194,7 +195,6 @@ class EditEventDialogController(Controller):
                 self.view.GetLocked(),
                 self.view.GetEndsToday()
             )
-            self.view.GetContainer().update_container(self.event)
         else:
             self._change_container()
 
@@ -214,8 +214,9 @@ class EditEventDialogController(Controller):
             )
 
     def _remove_event_from_container(self):
-        self.event.container.unregister_subevent(self.event)
-        self.timeline.delete_event(self.event)
+        self.event.container = None
+        if self.event.id is not None:
+            self.timeline.delete_event(self.event)
         self._create_new_event()
 
     def _add_event_to_container(self):
@@ -226,14 +227,14 @@ class EditEventDialogController(Controller):
         if self._is_new_container(self.view.GetContainer()):
             self._add_new_container()
         self._remove_event_from_container()
-        self.view.GetContainer().register_subevent(self.event)
+        self.event.container = self.view.GetContainer()
 
     def _create_new_event(self):
         if self.view.GetContainer() is not None:
             self._create_subevent()
         else:
             (start, end) = self._get_period_from_view()
-            self.event = Event(
+            self.event = Event().update(
                 start,
                 end,
                 self.view.GetName(),
@@ -247,25 +248,19 @@ class EditEventDialogController(Controller):
         if self._is_new_container(self.view.GetContainer()):
             self._add_new_container()
         (start, end) = self._get_period_from_view()
-        self.event = Subevent(
+        self.event = Subevent().update(
             start,
             end,
             self.view.GetName(),
             self.view.GetCategory(),
-            self.view.GetContainer(),
             ends_today=self.view.GetEndsToday()
         )
+        self.event.container = self.view.GetContainer()
 
     def _is_new_container(self, container):
         return container not in self.timeline.get_containers()
 
     def _add_new_container(self):
-        max_id = 0
-        for container in self.timeline.get_containers():
-            if container.cid() > max_id:
-                max_id = container.cid()
-        max_id += 1
-        self.view.GetContainer().set_cid(max_id)
         self._save_container_to_db()
 
     def _adjust_end_if_ends_today(self, start, end):

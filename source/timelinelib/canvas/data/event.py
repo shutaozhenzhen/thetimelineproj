@@ -16,8 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.drawing.drawers import get_progress_color
+from timelinelib.canvas.data.base import ItemBase
+from timelinelib.canvas.data.immutable import ImmutableEvent
 from timelinelib.canvas.data.item import TimelineItem
+from timelinelib.canvas.drawing.drawers import get_progress_color
 
 
 DEFAULT_COLOR = (200, 200, 200)
@@ -27,17 +29,64 @@ EXPORTABLE_FIELDS = (_("Text"), _("Description"), _("Start"), _("End"), _("Categ
                      _("Is Container"), _("Is Subevent"))
 
 
-class Event(TimelineItem):
+class Event(ItemBase, TimelineItem):
 
-    def __init__(self, start_time, end_time, text, category=None,
-                 fuzzy=False, locked=False, ends_today=False):
-        self.fuzzy = fuzzy
-        self.locked = locked
-        self.ends_today = ends_today
-        self.id = None
-        self.update(start_time, end_time, text, category)
+    def __init__(self, db=None, id_=None, immutable_value=ImmutableEvent()):
+        ItemBase.__init__(self, db, id_, immutable_value)
+        self._category = None
+        self._container = None
         self._milestone = False
-        self.data = {}
+
+    def duplicate(self, target_db=None):
+        duplicate = ItemBase.duplicate(self, target_db=target_db)
+        if duplicate.db is self.db:
+            duplicate.category = self.category
+        duplicate.sort_order = None
+        return duplicate
+
+    def save(self):
+        self._update_category_id()
+        self._update_container_id()
+        self._update_sort_order()
+        with self._db.transaction("Save event") as t:
+            t.save_event(self._immutable_value, self.ensure_id())
+        return self
+
+    def reload(self):
+        return self._db.find_event_with_id(self.id)
+
+    def _update_category_id(self):
+        if self.category is None:
+            self._immutable_value = self._immutable_value.update(
+                category_id=None
+            )
+        elif self.category.id is None:
+            raise Exception("Unknown category")
+        else:
+            self._immutable_value = self._immutable_value.update(
+                category_id=self.category.id
+            )
+
+    def _update_container_id(self):
+        if self.container is None:
+            self._immutable_value = self._immutable_value.update(
+                container_id=None
+            )
+        elif self.container.id is None:
+            raise Exception("Unknown container")
+        else:
+            self._immutable_value = self._immutable_value.update(
+                container_id=self.container.id
+            )
+
+    def _update_sort_order(self):
+        if self.sort_order is None:
+            self.sort_order = 1 + self.db.get_max_sort_order()
+
+    def delete(self):
+        with self._db.transaction("Delete event") as t:
+            t.delete_event(self.id)
+        self.id = None
 
     def __eq__(self, other):
         return (isinstance(other, Event) and
@@ -71,31 +120,27 @@ class Event(TimelineItem):
         raise NotImplementedError("I don't believe this is in use.")
 
     def __repr__(self):
-        return "Event<id=%r, text=%r, time_period=%r, ...>" % (
-            self.get_id(), self.get_text(), self.get_time_period())
-
-    def get_id(self):
-        return self.id
-
-    def has_id(self):
-        return self.id is not None
-
-    def set_id(self, event_id):
-        self.id = event_id
-        return self
+        return "%s<id=%r, text=%r, time_period=%r, ...>" % (
+            self.__class__.__name__,
+            self.get_id(),
+            self.get_text(),
+            self.get_time_period()
+        )
 
     def set_end_time(self, time):
         self.set_time_period(self.get_time_period().set_end_time(time))
 
     def get_text(self):
-        return self.text
+        return self._immutable_value.text
 
     def set_text(self, text):
-        self.text = text.strip()
+        self._immutable_value = self._immutable_value.update(text=text.strip())
         return self
 
+    text = property(get_text, set_text)
+
     def get_category(self):
-        return self.category
+        return self._category
 
     def get_category_name(self):
         if self.get_category():
@@ -104,75 +149,117 @@ class Event(TimelineItem):
             return None
 
     def set_category(self, category):
-        self.category = category
+        self._category = category
         return self
+
+    category = property(get_category, set_category)
+
+    def get_container(self):
+        return self._container
+
+    def set_container(self, container):
+        if self._container is not None:
+            self._container.unregister_subevent(self)
+        self._container = container
+        if self._container is not None:
+            self._container.register_subevent(self)
+        return self
+
+    container = property(get_container, set_container)
 
     def get_fuzzy(self):
-        return self.fuzzy
+        return self._immutable_value.fuzzy
 
     def set_fuzzy(self, fuzzy):
-        self.fuzzy = fuzzy
+        self._immutable_value = self._immutable_value.update(fuzzy=fuzzy)
         return self
+
+    fuzzy = property(get_fuzzy, set_fuzzy)
 
     def get_locked(self):
-        return self.locked
+        return self._immutable_value.locked
 
     def set_locked(self, locked):
-        self.locked = locked
+        self._immutable_value = self._immutable_value.update(locked=locked)
         return self
 
+    locked = property(get_locked, set_locked)
+
     def get_ends_today(self):
-        return self.ends_today
+        return self._immutable_value.ends_today
 
     def set_ends_today(self, ends_today):
         if not self.locked:
-            self.ends_today = ends_today
+            self._immutable_value = self._immutable_value.update(ends_today=ends_today)
         return self
+
+    ends_today = property(get_ends_today, set_ends_today)
 
     def get_description(self):
-        return self.get_data("description")
+        return self._immutable_value.description
 
     def set_description(self, description):
-        self.set_data("description", description)
+        self._immutable_value = self._immutable_value.update(description=description)
         return self
+
+    description = property(get_description, set_description)
 
     def get_icon(self):
-        return self.get_data("icon")
+        return self._immutable_value.icon
 
     def set_icon(self, icon):
-        self.set_data("icon", icon)
+        self._immutable_value = self._immutable_value.update(icon=icon)
         return self
+
+    icon = property(get_icon, set_icon)
 
     def get_hyperlink(self):
-        return self.get_data("hyperlink")
+        return self._immutable_value.hyperlink
 
     def set_hyperlink(self, hyperlink):
-        self.set_data("hyperlink", hyperlink)
+        self._immutable_value = self._immutable_value.update(hyperlink=hyperlink)
         return self
+
+    hyperlink = property(get_hyperlink, set_hyperlink)
 
     def get_alert(self):
-        return self.get_data("alert")
+        return self._immutable_value.alert
 
     def set_alert(self, alert):
-        self.set_data("alert", alert)
+        self._immutable_value = self._immutable_value.update(alert=alert)
         return self
+
+    alert = property(get_alert, set_alert)
 
     def get_progress(self):
-        return self.get_data("progress")
+        return self._immutable_value.progress
 
     def set_progress(self, progress):
-        self.set_data("progress", progress)
+        self._immutable_value = self._immutable_value.update(progress=progress)
         return self
 
+    progress = property(get_progress, set_progress)
+
+    def get_sort_order(self):
+        return self._immutable_value.sort_order
+
+    def set_sort_order(self, sort_order):
+        self._immutable_value = self._immutable_value.update(sort_order=sort_order)
+        return self
+
+    sort_order = property(get_sort_order, set_sort_order)
+
     def get_default_color(self):
-        color = self.get_data("default_color")
+        color = self._immutable_value.default_color
         if color is None:
             color = DEFAULT_COLOR
         return color
 
     def set_default_color(self, color):
-        self.set_data("default_color", color)
+        self._immutable_value = self._immutable_value.update(default_color=color)
         return self
+
+    default_color = property(get_default_color, set_default_color)
 
     def get_done_color(self):
         if self.category:
@@ -203,6 +290,7 @@ class Event(TimelineItem):
             self.fuzzy = fuzzy
         if locked is not None:
             self.locked = locked
+        return self
 
     def get_data(self, event_id):
         """
@@ -210,7 +298,23 @@ class Event(TimelineItem):
 
         See set_data for information how ids map to data.
         """
-        return self.data.get(event_id, None)
+        if event_id == "description":
+            return self.description
+        elif event_id == "icon":
+            return self.icon
+        elif event_id == "hyperlink":
+            return self.hyperlink
+        elif event_id == "alert":
+            return self.alert
+        elif event_id == "progress":
+            return self.progress
+        elif event_id == "default_color":
+            if "default_color" in self._immutable_value:
+                return self._immutable_value.default_color
+            else:
+                return None
+        else:
+            raise Exception("should not happen")
 
     def set_data(self, event_id, data):
         """
@@ -221,12 +325,37 @@ class Event(TimelineItem):
             description - string
             icon - wx.Bitmap
         """
-        self.data[event_id] = data
+        if event_id == "description":
+            self.description = data
+        elif event_id == "icon":
+            self.icon = data
+        elif event_id == "hyperlink":
+            self.hyperlink = data
+        elif event_id == "alert":
+            self.alert = data
+        elif event_id == "progress":
+            self.progress = data
+        elif event_id == "default_color":
+            self.default_color = data
+        else:
+            raise Exception("should not happen")
+
+    def get_whole_data(self):
+        data = {}
+        for event_id in DATA_FIELDS:
+            data[event_id] = self.get_data(event_id)
+        return data
+
+    def set_whole_data(self, data):
+        for event_id in DATA_FIELDS:
+            self.set_data(event_id, data.get(event_id, None))
+
+    data = property(get_whole_data, set_whole_data)
 
     def has_data(self):
         """Return True if the event has associated data, or False if not."""
-        for event_id in self.data:
-            if self.data[event_id] is not None:
+        for event_id in DATA_FIELDS:
+            if self.get_data(event_id) is not None:
                 return True
         return False
 
@@ -253,28 +382,6 @@ class Event(TimelineItem):
             label = ""
         return label
 
-    def clone(self):
-        # Objects of type datetime are immutable.
-        new_event = Event(
-            self.get_start_time(),
-            self.get_end_time(),
-            self.text,
-            self.category
-        )
-        # Description is immutable
-        new_event.set_data("description", self.get_data("description"))
-        # Icon is immutable in the sense that it is never changed by our
-        # application.
-        new_event.set_data("icon", self.get_data("icon"))
-        new_event.set_data("hyperlink", self.get_data("hyperlink"))
-        new_event.set_data("progress", self.get_data("progress"))
-        new_event.set_data("alert", self.get_data("alert"))
-        new_event.set_data("default_color", self.get_data("default_color"))
-        new_event.set_fuzzy(self.get_fuzzy())
-        new_event.set_ends_today(self.get_ends_today())
-        new_event.set_locked(self.get_locked())
-        return new_event
-
     def is_container(self):
         return False
 
@@ -294,41 +401,11 @@ class Event(TimelineItem):
         return self._milestone
 
 
-def clone_event_list(eventlist):
-    from timelinelib.canvas.data.container import Container
-    from timelinelib.canvas.data.subevent import Subevent
-
-    def clone_events():
-        events = []
-        for event in eventlist:
-            new_event = event.clone()
-            new_event.set_id(event.get_id())
-            events.append(new_event)
-        return events
-
-    def get_containers(cloned_events):
-        containers = {}
-        for event in cloned_events:
-            if isinstance(event, Container):
-                containers[event.container_id] = event
-        return containers
-
-    def get_subevents(cloned_events):
-        subevents = []
-        for event in cloned_events:
-            if isinstance(event, Subevent):
-                subevents.append(event)
-        return subevents
-
-    def update_container_subevent_relations(containers, subevents):
-        for subevent in subevents:
-            try:
-                subevent.container = containers[subevent.container_id]
-                subevent.container.events.append(subevent)
-            except:
-                pass
-    eventlist = clone_events()
-    containers = get_containers(eventlist)
-    subevents = get_subevents(eventlist)
-    update_container_subevent_relations(containers, subevents)
-    return eventlist
+DATA_FIELDS = [
+    "description",
+    "icon",
+    "hyperlink",
+    "alert",
+    "progress",
+    "default_color",
+]

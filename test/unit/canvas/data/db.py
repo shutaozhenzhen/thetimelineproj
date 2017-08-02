@@ -23,7 +23,12 @@ from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
+from timelinelib.test.utils import a_container
+from timelinelib.test.utils import a_container_with
+from timelinelib.test.utils import a_gregorian_era
+from timelinelib.test.utils import a_gregorian_era_with
 from timelinelib.test.utils import an_event_with
+from timelinelib.test.utils import a_subevent_with
 from timelinelib.test.utils import gregorian_period
 from timelinelib.wxgui.utils import category_tree
 
@@ -34,7 +39,7 @@ class describe_memory_db(UnitTestCase):
         db = MemoryDB()
         self.assertEqual(db.path, "")
         self.assertEqual(db.displayed_period, None)
-        self.assertEqual(db.hidden_categories, [])
+        self.assertEqual(db.get_hidden_categories(), [])
         self.assertEqual(db.is_read_only(), False)
         self.assertEqual(db.supported_event_data(), ["description", "icon", "alert", "hyperlink", "progress"])
         self.assertEqual(db.search(""), [])
@@ -57,7 +62,7 @@ class describe_memory_db(UnitTestCase):
         # correctly
         self.db.save_view_properties(vp)
         self.assertEqual(self.db.displayed_period, tp)
-        self.assertEqual(self.db.hidden_categories, [self.c1])
+        self.assertEqual(self.db.get_hidden_categories(), [self.c1])
         # Load view properties from db simulating that this db was just loaded
         # into memory and the view is being configured
         new_vp = ViewProperties()
@@ -186,12 +191,11 @@ class describe_memory_db(UnitTestCase):
         self.assertEqual(len(categories), 1)
         self.assertTrue(self.c2 in categories)
         self.assertFalse(self.c1.has_id())
-        self.assertFalse(self.c1 in self.db.hidden_categories)
+        self.assertFalse(self.c1 in self.db.get_hidden_categories())
         # Remove second (by id)
         self.db.delete_category(self.c2.get_id())
         categories = self.db.get_categories()
         self.assertEqual(len(categories), 0)
-        self.assertFalse(self.c2.has_id())
         # Check events
         self.assertEqual(self.db_listener.call_count, 4)  # 2 save, 2 delete
         # Assert save called: 2 save category, 1 save view
@@ -223,13 +227,13 @@ class describe_memory_db(UnitTestCase):
         self.db.save_category(c121)
         # Delete c12 should cause c121 to get c1 as parent
         self.db.delete_category(c12)
-        self.assertEqual(c121._get_parent(), c1)
+        self.assertEqual(c121.reload().parent, c1)
         # Delete c1 should cause c11, and c121 to be parentless
         self.db.delete_category(c1)
-        self.assertEqual(c11._get_parent(), None)
-        self.assertEqual(c121._get_parent(), None)
+        self.assertEqual(c11.reload().parent, None)
+        self.assertEqual(c121.reload().parent, None)
 
-    def testDelteCategoryWithEvent(self):
+    def testDeleteCategoryWithEvent(self):
         # Create hierarchy:
         # c1
         #   c11
@@ -242,10 +246,10 @@ class describe_memory_db(UnitTestCase):
         self.db.save_event(self.e1)
         # Delete c11 should cause e1 to get c1 as category
         self.db.delete_category(c11)
-        self.assertEqual(self.e1.category, c1)
+        self.assertEqual(self.e1.reload().category, c1)
         # Delete c1 should cause e1 to have no category
         self.db.delete_category(c1)
-        self.assertEqual(self.e1.category, None)
+        self.assertEqual(self.e1.reload().category, None)
 
     def testSaveEventUnknownCategory(self):
         # A new
@@ -304,7 +308,6 @@ class describe_memory_db(UnitTestCase):
         self.assertTrue(self.e2 in self.db.get_events(tp))
         # Delete second (by id)
         self.db.delete_event(self.e2.get_id())
-        self.assertFalse(self.e2.has_id())
         self.assertEqual(len(self.db.get_events(tp)), 0)
         # Check events
         self.assertEqual(self.db_listener.call_count, 4)  # 2 save, 2 delete
@@ -319,78 +322,6 @@ class describe_memory_db(UnitTestCase):
         self.assertRaises(TimelineIOError, self.db.delete_event, self.e2)
         # Assert save not called
         self.assertEqual(self.save_callback_mock.call_count, 0)
-
-    def testDisableEnableSave(self):
-        self.db.save_category(self.c1)
-        # Assert save called: save enabled by default
-        self.assertEqual(self.save_callback_mock.call_count, 1)
-        self.db.disable_save()
-        self.db.save_category(self.c1)
-        self.assertEqual(self.save_callback_mock.call_count, 1)  # still 1
-        self.db.enable_save()
-        self.assertEqual(self.save_callback_mock.call_count, 2)
-        # Now do the same thing but tell enable not to call save
-        self.db.disable_save()
-        self.db.save_category(self.c1)
-        self.db.enable_save(False)
-        self.assertEqual(self.save_callback_mock.call_count, 2)
-        # Enabling when enabled should not have any effect
-        self.db.enable_save()
-        self.assertEqual(self.save_callback_mock.call_count, 2)
-
-    def testMoveEventForward(self):
-        self.db.save_event(self.e1)
-        self.db.save_event(self.e2)
-        self.db.save_event(self.e3)
-        self.db.place_event_after_event(self.e1, self.e2)
-        self.assertTrue(self.db.get_all_events()[0] == self.e2)
-        self.assertTrue(self.db.get_all_events()[1] == self.e1)
-        self.assertTrue(self.db.get_all_events()[2] == self.e3)
-
-    def testMoveEventToEnd(self):
-        self.db.save_event(self.e1)
-        self.db.save_event(self.e2)
-        self.db.save_event(self.e3)
-        self.db.place_event_after_event(self.e1, self.e3)
-        self.assertTrue(self.db.get_all_events()[0] == self.e2)
-        self.assertTrue(self.db.get_all_events()[1] == self.e3)
-        self.assertTrue(self.db.get_all_events()[2] == self.e1)
-
-    def testMoveEventBackward(self):
-        self.db.save_event(self.e1)
-        self.db.save_event(self.e2)
-        self.db.save_event(self.e3)
-        self.db.place_event_before_event(self.e2, self.e1)
-        self.assertTrue(self.db.get_all_events()[0] == self.e2)
-        self.assertTrue(self.db.get_all_events()[1] == self.e1)
-        self.assertTrue(self.db.get_all_events()[2] == self.e3)
-
-    def testMoveEventToBeginning(self):
-        self.db.save_event(self.e1)
-        self.db.save_event(self.e2)
-        self.db.save_event(self.e3)
-        self.db.place_event_before_event(self.e3, self.e1)
-        self.assertTrue(self.db.get_all_events()[0] == self.e3)
-        self.assertTrue(self.db.get_all_events()[1] == self.e1)
-        self.assertTrue(self.db.get_all_events()[2] == self.e2)
-
-    def testMoveEventToOriginalPlaceBefore(self):
-        self.db.save_event(self.e1)
-        self.db.save_event(self.e2)
-        self.db.save_event(self.e3)
-        self.db.place_event_before_event(self.e2, self.e2)
-        self.assertTrue(self.db.get_all_events()[0] == self.e1)
-        self.assertTrue(self.db.get_all_events()[1] == self.e2)
-        self.assertTrue(self.db.get_all_events()[2] == self.e3)
-
-    def testMoveEventToOriginalPlaceAfter(self):
-        self.db.save_event(self.e1)
-        self.db.save_event(self.e2)
-        self.db.save_event(self.e3)
-        self.db.place_event_after_event(self.e2, self.e2)
-        self.assertTrue(self.db.get_all_events()[0] == self.e1)
-        self.assertTrue(self.db.get_all_events()[1] == self.e2)
-        self.assertTrue(self.db.get_all_events()[2] == self.e3)
 
     def testEventShouldNotBeFuzzyByDefault(self):
         self.assertFalse(self.e1.get_fuzzy())
@@ -427,6 +358,17 @@ class describe_querying(UnitTestCase):
         self.db.save_event(jan_event)
         self.assertEqual(self.db.get_last_event(), aug_event)
 
+    def test_can_get_subevents(self):
+        self.db.save_events(
+            a_container(name="con", category=None, sub_events=[
+                ("sub1", None),
+            ])
+        )
+        all_events = self.db.get_all_events()
+        containers = [e.text for e in all_events if e.is_container()]
+        subevents = [e.text for e in all_events if e.is_subevent()]
+        self.assertEqual((containers, subevents), (["con"], ["sub1"]))
+
     def setUp(self):
         self.db = MemoryDB()
 
@@ -445,6 +387,17 @@ class describe_searching(UnitTestCase):
 
 
 class describe_undo(UnitTestCase):
+
+    def test_undo_enabled(self):
+        self.assertFalse(self.db.undo_enabled())
+        self.db.save_event(an_event_with())
+        self.assertTrue(self.db.undo_enabled())
+
+    def test_redo_enabled(self):
+        self.assertFalse(self.db.redo_enabled())
+        self.db.save_event(an_event_with())
+        self.db.undo()
+        self.assertTrue(self.db.redo_enabled())
 
     def test_can_not_undo_non_modified_timeline(self):
         self.db.undo()
@@ -472,7 +425,6 @@ class describe_undo(UnitTestCase):
         self.db_changed_listener = Mock()
         self.db = MemoryDB()
         self.db.listen_for_any(self.db_changed_listener)
-        self.db.loaded()
 
 
 class describe_importing(UnitTestCase):
@@ -489,6 +441,16 @@ class describe_importing(UnitTestCase):
         self.assertEventListIs([
             "dentist ()",
             "golf ()",
+        ])
+
+    def test_subevents_are_imported(self):
+        category = self.import_db.new_category(name="cat").save()
+        container = self.import_db.new_container(text="cont").save()
+        self.import_db.new_subevent(text="sub1", container=container).save()
+        self.import_db.new_subevent(text="sub2", category=category, container=container).save()
+        self.base_db.import_db(self.import_db)
+        self.assertEventListIs([
+            "cont () [sub1 (), sub2 (cat)]",
         ])
 
     def test_events_are_imported_into_existing_categories(self):
@@ -578,13 +540,28 @@ class describe_importing(UnitTestCase):
         self.assertEqual(replace_category_with_name(tree), expected_tree)
 
     def assertEventListIs(self, expected_list):
+        def format_event(event):
+            parts = []
+            parts.append("%s" % event.get_text())
+            parts.append("(%s)" % category_name(event))
+            if event.is_container():
+                parts.append("[%s]" % ", ".join(
+                    format_event(subevent)
+                    for subevent
+                    in event.subevents
+                ))
+            return " ".join(parts)
         def category_name(event):
             if event.get_category():
                 return event.get_category().get_name()
             else:
                 return ""
-        actual_list = ["%s (%s)" % (event.get_text(), category_name(event))
-                       for event in self.base_db.get_all_events()]
+        actual_list = [
+            format_event(event)
+            for event
+            in self.base_db.get_all_events()
+            if not event.is_subevent()
+        ]
         self.assertEqual(sorted(actual_list), expected_list)
 
     def setUp(self):
@@ -594,6 +571,176 @@ class describe_importing(UnitTestCase):
         self.import_db_save_callback = Mock()
         self.import_db = MemoryDB()
         self.import_db.register_save_callback(self.import_db_save_callback)
+
+
+class describe_moving_events(UnitTestCase):
+
+    def test_place_after(self):
+        self.db.place_event_after_event(self.e1, self.e2)
+        self.assertEventOrderIs([
+            self.e2,
+            self.e1,
+            self.e3,
+        ])
+
+    def test_place_after_to_end(self):
+        self.db.place_event_after_event(self.e1, self.e3)
+        self.assertEventOrderIs([
+            self.e2,
+            self.e3,
+            self.e1,
+        ])
+
+    def test_place_after_when_already_after(self):
+        self.db.place_event_after_event(self.e3, self.e1)
+        self.assertEventOrderIs([
+            self.e1,
+            self.e2,
+            self.e3,
+        ])
+
+    def test_place_after_when_same(self):
+        self.db.place_event_after_event(self.e2, self.e2)
+        self.assertEventOrderIs([
+            self.e1,
+            self.e2,
+            self.e3,
+        ])
+
+    def test_place_before(self):
+        self.db.place_event_before_event(self.e2, self.e1)
+        self.assertEventOrderIs([
+            self.e2,
+            self.e1,
+            self.e3,
+        ])
+
+    def test_place_before_to_beginning(self):
+        self.db.place_event_before_event(self.e3, self.e1)
+        self.assertEventOrderIs([
+            self.e3,
+            self.e1,
+            self.e2,
+        ])
+
+    def test_place_before_when_already_before(self):
+        self.db.place_event_before_event(self.e1, self.e3)
+        self.assertEventOrderIs([
+            self.e1,
+            self.e2,
+            self.e3,
+        ])
+
+    def test_place_before_when_same(self):
+        self.db.place_event_before_event(self.e2, self.e2)
+        self.assertEventOrderIs([
+            self.e1,
+            self.e2,
+            self.e3,
+        ])
+
+    def assertEventOrderIs(self, expected_events):
+        # Check both get_all_events and get_events to ensure they are sorted
+        all_event_texts = [
+            event.text for event in self.db.get_all_events()
+        ]
+        whole_period_event_texts = [
+            event.text for event in self.db.get_events(self.whole_period)
+        ]
+        expected_event_texts = [
+            event.text for event in expected_events
+        ]
+        self.assertEqual(all_event_texts, whole_period_event_texts)
+        self.assertEqual(whole_period_event_texts, expected_event_texts)
+
+    def setUp(self):
+        self.db = MemoryDB()
+        self.e1 = an_event_with(text="e1")
+        self.e2 = an_event_with(text="e2")
+        self.e3 = an_event_with(text="e3")
+        self.whole_period = self.e1.time_period  # All events have same period
+        self.db.save_event(self.e1)
+        self.db.save_event(self.e2)
+        self.db.save_event(self.e3)
+        self.assertEventOrderIs([
+            self.e1,
+            self.e2,
+            self.e3,
+        ])
+
+
+class describe_query(UnitTestCase):
+
+    def test_get_container(self):
+        container = self.db.find_event_with_id(self.container.id)
+        # Check that it loads the container
+        self.assertEqual(container.text, "container")
+        # Check that it loads all subevents
+        self.assertEqual(
+            [subevent.text for subevent in container.subevents],
+            ["sub1", "sub2"]
+        )
+        # Check that the subevents refer to the same container
+        for subevent in container.subevents:
+            self.assertEqual(id(subevent.container), id(container))
+
+    def test_get_subevent(self):
+        sub1, sub2 = self.db.find_event_with_ids([self.sub1.id, self.sub2.id])
+        # Check that it loads the subevents
+        self.assertEqual(sub1.text, "sub1")
+        self.assertEqual(sub2.text, "sub2")
+        # Check that it loads the same container
+        self.assertTrue(sub1.container is sub2.container)
+        self.assertEqual(sub1.container.text, "container")
+        # Check that it loads the same category
+        self.assertTrue(sub1.category is sub2.category)
+        self.assertEqual(sub1.category.name, "category")
+        # Check that the subevents are referred to by the container
+        self.assertEqual(
+            [id(subevent) for subevent in sub1.container.subevents],
+            [id(sub1), id(sub2)]
+        )
+
+    def setUp(self):
+        self.db = MemoryDB()
+        self.container = self.db.new_container(
+            text="container"
+        ).save()
+        self.category = self.db.new_category(
+            name="category"
+        ).save()
+        self.sub1 = self.db.new_subevent(
+            text="sub1",
+            category=self.category,
+            container=self.container
+        ).save()
+        self.sub2 = self.db.new_subevent(
+            text="sub2",
+            category=self.category,
+            container=self.container
+        ).save()
+
+
+class describe_eras(UnitTestCase):
+
+    def test_save(self):
+        self.assertEqual(len(self.db.get_all_eras()), 0)
+        self.db.save_era(a_gregorian_era())
+        self.assertEqual(len(self.db.get_all_eras()), 1)
+
+    def test_delete(self):
+        self.db.save_era(a_gregorian_era())
+        all_eras = self.db.get_all_eras()
+        self.assertEqual(len(all_eras), 1)
+        self.db.delete_era(all_eras[0])
+        self.assertEqual(len(self.db.get_all_eras()), 0)
+
+    def test_retains_ends_today(self):
+        self.db.save_era(a_gregorian_era_with(ends_today=True))
+        self.assertEqual(self.db.get_all_eras()[0].ends_today(), True)
+
+    def setUp(self):
+        self.db = MemoryDB()
 
 
 def replace_category_with_name(tree):

@@ -51,6 +51,7 @@ def import_db_from_timeline_xml(path):
     db.path = path
     db.set_time_type(GregorianTimeType())
     Parser(db, path).parse()
+    db.clear_transactions()
     return db
 
 
@@ -64,10 +65,10 @@ class Parser(object):
     def __init__(self, db, path):
         self.db = db
         self.path = path
+        self._containers_by_cid = {}
 
     def parse(self):
         self._load()
-        self._fill_containers()
 
     def _load(self):
         try:
@@ -80,9 +81,7 @@ class Parser(object):
                 "category_map": {},
                 "hidden_categories": [],
             }
-            self.db.disable_save()
             parse(self.path, partial_schema, tmp_dict)
-            self.db.enable_save(call_save=False)
         except Exception as e:
             msg = _("Unable to read timeline data from '%s'.")
             whole_msg = (msg + "\n\n%s") % (abspath(self.path), ex_msg(e))
@@ -189,7 +188,7 @@ class Parser(object):
                 raise ParseException("Parent category '%s' not found." % parent_name)
         else:
             parent = None
-        category = Category(name, color, font_color, parent=parent)
+        category = Category().update(name, color, font_color, parent=parent)
         if progress_color:
             category.set_progress_color(progress_color)
         if done_color:
@@ -228,17 +227,26 @@ class Parser(object):
         milestone = self._parse_optional_bool(tmp_dict, "tmp_milestone")
         if self._is_container_event(text):
             cid, text = self._extract_container_id(text)
-            event = Container(start, end, text, category, cid=cid)
+            event = Container().update(start, end, text, category)
+            self._containers_by_cid[cid] = event
         elif self._is_subevent(text):
             cid, text = self._extract_subid(text)
-            event = Subevent(start, end, text, category, cid=cid, locked=locked, ends_today=ends_today)
+            event = Subevent().update(
+                start,
+                end,
+                text,
+                category,
+                locked=locked,
+                ends_today=ends_today
+            )
+            event.container = self._containers_by_cid[cid]
         elif milestone:
-            event = Milestone(start, text)
+            event = Milestone().update(start, start, text)
             event.set_category(category)
         else:
             if self._text_starts_with_added_space(text):
                 text = self._remove_added_space(text)
-            event = Event(start, end, text, category, fuzzy, locked, ends_today)
+            event = Event().update(start, end, text, category, fuzzy, locked, ends_today)
         default_color = tmp_dict.pop("tmp_default_color", "200,200,200")
         event.set_data("description", description)
         event.set_data("icon", icon)
@@ -254,7 +262,8 @@ class Parser(object):
         end = self._parse_time(tmp_dict.pop("tmp_end"))
         color = parse_color(tmp_dict.pop("tmp_color"))
         ends_today = self._parse_optional_bool(tmp_dict, "tmp_ends_today")
-        era = Era(start, end, name, color, ends_today)
+        era = Era().update(start, end, name, color)
+        era.set_ends_today(ends_today)
         self.db.save_era(era)
 
     def _text_starts_with_added_space(self, text):
@@ -324,22 +333,6 @@ class Parser(object):
     def _parse_saved_now(self, text, tmp_dict):
         time = self.db.time_type.parse_time(text)
         self.db.set_saved_now(time)
-
-    def _fill_containers(self):
-        container_events = [event for event in self.db.get_all_events()
-                            if event.is_container()]
-        subevents = [event for event in self.db.get_all_events()
-                     if event.is_subevent()]
-        containers = {}
-        for container in container_events:
-            containers[container.cid()] = container
-        for subevent in subevents:
-            try:
-                container = containers[subevent.cid()]
-                container.register_subevent(subevent)
-            except:
-                # TODO: Create container
-                pass
 
 
 def parse_color(color_string):

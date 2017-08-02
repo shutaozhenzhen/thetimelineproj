@@ -185,13 +185,17 @@ class TimelineScene(object):
         for event in events:
             if event.is_container():
                 result.append(event)
-                result.extend(self._get_container_subevents(event.cid(), events))
+                result.extend(self._get_container_subevents(event, events))
             elif not event.is_subevent():
                 result.append(event)
         return result
 
-    def _get_container_subevents(self, cid, events):
-        return [evt for evt in events if evt.is_subevent() and evt.get_container_id() == cid]
+    def _get_container_subevents(self, container, events):
+        return [
+            evt for evt
+            in events
+            if evt.is_subevent() and evt.container is container
+        ]
 
     def _calc_event_rects(self, events):
         self.event_data = self._calc_non_overlapping_event_rects(events)
@@ -376,11 +380,11 @@ class TimelineScene(object):
         rect = self._get_overlapping_subevent_rect_with_largest_y(subevent, event_rect)
         if rect is not None:
             event_rect.Y = rect.Y + rect.height
-            self._adjust_container_rect_height(subevent.get_container_id(), event_rect)
+            self._adjust_container_rect_height(subevent, event_rect)
 
-    def _adjust_container_rect_height(self, cid, event_rect):
+    def _adjust_container_rect_height(self, subevent, event_rect):
         for (evt, rect) in self.event_data:
-            if evt.is_container() and evt.cid() == cid:
+            if evt.is_container() and evt is subevent.container:
                 _, th = self._get_text_size(evt.get_text())
                 rh = th + 2 * (self._inner_padding + self._outer_padding)
                 h = event_rect.Y - rect.Y + rh
@@ -410,10 +414,9 @@ class TimelineScene(object):
                     rect.Y >= self.divider_y)]
 
     def _get_list_with_overlapping_subevents(self, subevent, event_rect):
-        container_id = subevent.get_container_id()
         ls = [(event, rect) for (event, rect) in self.event_data
               if (event.is_subevent() and
-              event.get_container_id() == container_id and
+              event.container is subevent.container and
               self._rects_overlap(event_rect, rect) and
               rect.Y >= self.divider_y)]
         return ls

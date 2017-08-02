@@ -43,7 +43,7 @@ class EraEditorTestCase(UnitTestCase):
 
     def when_editing_an_era(self):
         self.era = a_gregorian_era_with(start="1 Jan 2010", end="1 Jan 2020", name="Haha")
-        self.era_clone = self.era.clone()
+        self._original_comparison_data = self._get_comparison_data(self.era)
         self.controller = EraEditorDialogController(self.view)
         self.view.GetPeriod.return_value = self.era.get_time_period()
         self.simulate_user_enters_name(self.era.get_name())
@@ -51,7 +51,18 @@ class EraEditorTestCase(UnitTestCase):
         self.controller.on_init(self.era)
 
     def assert_era_unchanged(self):
-        self.assertEquals(self.era, self.era_clone)
+        self.assertEquals(
+            self._get_comparison_data(self.era),
+            self._original_comparison_data
+        )
+
+    def _get_comparison_data(self, era):
+        return (
+            era.time_period,
+            era.name,
+            era.color,
+            era.ends_today,
+        )
 
     def simulate_user_enters_period(self, start, end):
         self.view.GetPeriod.return_value = gregorian_period(start, end)

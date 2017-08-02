@@ -17,7 +17,6 @@
 
 
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
-from timelinelib.canvas.data.idnumber import get_process_unique_id
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with, a_container, a_category_with
 
@@ -26,11 +25,16 @@ class Base(UnitTestCase):
 
     def setUp(self):
         self.view_properties = ViewProperties()
+        self.id_counter = 0
 
     def create_category(self, name, parent=None):
         category = a_category_with(name=name, parent=parent)
-        category.set_id(get_process_unique_id())
+        category.set_id(self.new_id())
         return category
+
+    def new_id(self):
+        self.id_counter += 1
+        return self.id_counter
 
 
 class describe_category_visibility(Base):
@@ -93,7 +97,7 @@ class describe_event_filtering(Base):
 
     def create_event(self, text, category):
         event = an_event_with(text=text, category=category)
-        event.set_id(get_process_unique_id())
+        event.set_id(self.new_id())
         return event
 
     def test_none_filtered_by_default(self):
@@ -178,6 +182,6 @@ class describe_highlight(Base):
     def setUp(self):
         Base.setUp(self)
         self.event1 = an_event_with(text="1")
-        self.event1.set_id(get_process_unique_id())
+        self.event1.set_id(self.new_id())
         self.event2 = an_event_with(text="2")
-        self.event2.set_id(get_process_unique_id())
+        self.event2.set_id(self.new_id())

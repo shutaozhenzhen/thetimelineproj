@@ -244,15 +244,26 @@ class TimelinePanelGuiCreator(wx.Panel):
 
     def _move_event_vertically(self, event, up=True):
         def edit_function():
-            (overlapping_event, direction) = self.timeline_canvas.GetClosestOverlappingEvent(event, up=up)
+            (
+                overlapping_event,
+                direction
+            ) = self.timeline_canvas.GetClosestOverlappingEvent(event, up=up)
             if overlapping_event is None:
-                return
-            if direction > 0:
+                pass
+            elif direction > 0:
                 self.timeline_canvas.GetDb().place_event_after_event(
-                    event, overlapping_event)
+                    event,
+                    overlapping_event
+                )
             else:
                 self.timeline_canvas.GetDb().place_event_before_event(
-                    event, overlapping_event)
+                    event,
+                    overlapping_event
+                )
+            # GetClosestOverlappingEvent inflates rectangles, so subsequent
+            # calls do calculations on incorrect rectangles. A redraw
+            # recalculates all rectangles.
+            self.redraw_timeline()
         safe_locking(self.main_frame, edit_function)
 
     def _display_event_context_menu(self):
@@ -296,7 +307,12 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _delete_selected_events(self):
         selected_events = self.timeline_canvas.GetSelectedEvents()
         number_of_selected_events = len(selected_events)
-
+        def edit_function():
+            if user_ack():
+                with self.timeline_canvas.GetDb().transaction("Delete events"):
+                    for event in selected_events:
+                        event.delete()
+            self.timeline_canvas.ClearSelectedEvents()
         def user_ack():
             if number_of_selected_events > 1:
                 text = _("Are you sure you want to delete %d events?" %
@@ -304,24 +320,11 @@ class TimelinePanelGuiCreator(wx.Panel):
             else:
                 text = _("Are you sure you want to delete this event?")
             return _ask_question(text) == wx.YES
-
         def exception_handler(ex):
             if isinstance(ex, TimelineIOError):
                 handle_db_error_by_crashing(ex, self)
             else:
                 raise(ex)
-
-        def _last_event(event):
-            return event.get_id() == selected_events[-1].get_id()
-
-        def _delete_events():
-            for event in selected_events:
-                self.timeline_canvas.GetDb().delete_event(event.get_id(), save=_last_event(event))
-
-        def edit_function():
-            if user_ack():
-                _delete_events()
-            self.timeline_canvas.ClearSelectedEvents()
         safe_locking(self.main_frame, edit_function, exception_handler)
 
     def _context_menu_on_edit_event(self, evt):
@@ -335,20 +338,18 @@ class TimelinePanelGuiCreator(wx.Panel):
 
     # @experimental_feature(EVENT_DONE)
     def _context_menu_on_done_event(self, evt):
+        def edit_function():
+            with self.timeline_canvas.GetDb().transaction("Mark events done"):
+                for event in self.timeline_canvas.GetSelectedEvents():
+                    if not event.is_container():
+                        event.set_progress(100)
+                        event.save()
+            self.timeline_canvas.ClearSelectedEvents()
         def exception_handler(ex):
             if isinstance(ex, TimelineIOError):
                 handle_db_error_by_crashing(ex, self)
             else:
                 raise(ex)
-
-        def _last_event(event):
-            return event.get_id() == selected_events[-1].get_id()
-
-        def edit_function():
-            for event in selected_events:
-                self.timeline_canvas.GetDb().mark_event_as_done(event.get_id(), save=_last_event(event))
-            self.timeline_canvas.ClearSelectedEvents()
-        selected_events = self.timeline_canvas.GetSelectedEvents()
         safe_locking(self.main_frame, edit_function, exception_handler)
 
     def _context_menu_on_select_category(self, evt):

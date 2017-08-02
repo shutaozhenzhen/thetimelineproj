@@ -20,7 +20,6 @@ from mock import Mock
 
 import humblewx
 
-from timelinelib.canvas.data.idnumber import get_process_unique_id
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.dataimport.tutorial import create_in_memory_gregorian_tutorial_db
 from timelinelib.test.cases.unit import UnitTestCase
@@ -67,6 +66,11 @@ class Base(UnitTestCase):
         self.categories_facade.is_event_with_category_visible.side_effect = self._event_with_category_visible
 
         self.model = CustomCategoryTreeModel()
+        self.id_counter = 0
+
+    def new_id(self):
+        self.id_counter += 1
+        return self.id_counter
 
     def _category_visible(self, category):
         return category in self.visible_categories
@@ -76,7 +80,7 @@ class Base(UnitTestCase):
 
     def add_category(self, name, color=(0, 0, 0), visible=True, actually_visible=True, parent=None):
         category = a_category_with(name=name, color=color, parent=parent)
-        category.set_id(get_process_unique_id())
+        category.set_id(self.new_id())
         if visible:
             self.visible_categories.append(category)
         if actually_visible:

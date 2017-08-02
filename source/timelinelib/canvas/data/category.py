@@ -16,16 +16,28 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.data.base import ItemBase
+from timelinelib.canvas.data.immutable import ImmutableCategory
 from timelinelib.canvas.drawing.drawers import get_progress_color
 
 
 EXPORTABLE_FIELDS = FIELDS = (_("Name"), _("Color"), _("Progress Color"), _("Done Color"), _("Parent"))
 
 
-class Category(object):
+class Category(ItemBase):
 
-    def __init__(self, name, color, font_color, parent=None):
-        self.id = None
+    def __init__(self, db=None, id_=None, immutable_value=ImmutableCategory()):
+        ItemBase.__init__(self, db, id_, immutable_value)
+        self._parent = None
+
+    def duplicate(self, target_db=None):
+        duplicate = ItemBase.duplicate(self, target_db=target_db)
+        if duplicate.db is self.db:
+            duplicate.parent = self.parent
+        return duplicate
+
+    def update(self, name, color, font_color, parent=None):
+        self.parent = None
         self.name = name
         self.color = color
         self.progress_color = get_progress_color(color)
@@ -35,65 +47,87 @@ class Category(object):
         else:
             self.font_color = font_color
         self.parent = parent
-
-    def get_id(self):
-        return self.id
-
-    def has_id(self):
-        return self.id is not None
-
-    def set_id(self, category_id):
-        self.id = category_id
         return self
+
+    def save(self):
+        self._update_parent_id()
+        with self._db.transaction("Save category") as t:
+            t.save_category(self._immutable_value, self.ensure_id())
+        return self
+
+    def _update_parent_id(self):
+        if self.parent is None:
+            self._immutable_value = self._immutable_value.update(
+                parent_id=None
+            )
+        elif self.parent.id is None:
+            raise Exception("Unknown parent")
+        else:
+            self._immutable_value = self._immutable_value.update(
+                parent_id=self.parent.id
+            )
+
+    def delete(self):
+        with self._db.transaction("Delete category") as t:
+            t.delete_category(self.id)
+        self.id = None
+
+    def reload(self):
+        return self._db.get_category_by_id(self.id)
 
     def get_name(self):
-        return self.name
+        return self._immutable_value.name
 
     def set_name(self, name):
-        self.name = name
+        self._immutable_value = self._immutable_value.update(name=name)
         return self
+
+    name = property(get_name, set_name)
 
     def get_color(self):
-        return self.color
+        return self._immutable_value.color
 
     def set_color(self, color):
-        self.color = color
+        self._immutable_value = self._immutable_value.update(color=color)
         return self
+
+    color = property(get_color, set_color)
 
     def get_progress_color(self):
-        return self.progress_color
+        return self._immutable_value.progress_color
 
     def set_progress_color(self, color):
-        self.progress_color = color
+        self._immutable_value = self._immutable_value.update(progress_color=color)
         return self
+
+    progress_color = property(get_progress_color, set_progress_color)
 
     def get_done_color(self):
-        return self.done_color
+        return self._immutable_value.done_color
 
     def set_done_color(self, color):
-        self.done_color = color
+        self._immutable_value = self._immutable_value.update(done_color=color)
         return self
+
+    done_color = property(get_done_color, set_done_color)
 
     def get_font_color(self):
-        return self.font_color
+        return self._immutable_value.font_color
 
     def set_font_color(self, font_color):
-        self.font_color = font_color
+        self._immutable_value = self._immutable_value.update(font_color=font_color)
         return self
+
+    font_color = property(get_font_color, set_font_color)
 
     def _get_parent(self):
-        return self.parent
+        return self._parent
 
     def set_parent(self, parent):
-        self.parent = parent
+        self._parent = parent
         return self
 
-    def clone(self):
-        clone = Category(self.get_name(), self.get_color(),
-                         self.get_font_color(), self._get_parent())
-        clone.set_progress_color(self.get_progress_color())
-        clone.set_done_color(self.get_done_color())
-        return clone
+    parent = property(_get_parent, set_parent)
 
     def get_exportable_fields(self):
         return EXPORTABLE_FIELDS
@@ -121,17 +155,3 @@ class Category(object):
 
 def sort_categories(categories):
     return sorted(list(categories), key=lambda category: category.get_name().lower())
-
-
-def clone_categories_list(categories):
-    cloned_list = []
-    clones = {}
-    for category in categories:
-        clone = category.clone()
-        clone.set_id(category.get_id())
-        cloned_list.append(clone)
-        clones[category] = clone
-    for category in cloned_list:
-        if category._get_parent() is not None:
-            category.set_parent(clones[category._get_parent()])
-    return (cloned_list, clones)

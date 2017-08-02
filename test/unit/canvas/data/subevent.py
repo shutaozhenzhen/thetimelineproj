@@ -32,9 +32,11 @@ from timelinelib.test.utils import SUBEVENT_MODIFIERS
 class describe_subevent(UnitTestCase):
 
     def test_can_get_values(self):
-        event = Subevent(start_time=human_time_to_gregorian("11 Jul 2014"),
-                         end_time=human_time_to_gregorian("12 Jul 2014"),
-                         text="a day in my life")
+        event = Subevent().update(
+            start_time=human_time_to_gregorian("11 Jul 2014"),
+            end_time=human_time_to_gregorian("12 Jul 2014"),
+            text="a day in my life"
+        )
         self.assertEqual(event.get_id(), None)
         self.assertEqual(event.get_time_period(),
                          gregorian_period("11 Jul 2014", "12 Jul 2014"))
@@ -47,7 +49,7 @@ class describe_subevent(UnitTestCase):
         self.assertEqual(event.get_icon(), None)
         self.assertEqual(event.get_hyperlink(), None)
         self.assertEqual(event.get_progress(), None)
-        self.assertEqual(event.get_container_id(), -1)
+        self.assertEqual(event.get_container(), None)
 
     def test_can_set_values(self):
         self.assertEqual(
@@ -88,9 +90,6 @@ class describe_subevent(UnitTestCase):
         self.assertEqual(
             a_subevent().set_alert("2015-01-07 00:00:00;hoho").get_alert(),
             "2015-01-07 00:00:00;hoho")
-        self.assertEqual(
-            a_subevent().set_container_id(78).get_container_id(),
-            78)
 
     def test_can_be_compared(self):
         self.assertEqNeImplementationIsCorrect(a_subevent, SUBEVENT_MODIFIERS)
@@ -98,78 +97,16 @@ class describe_subevent(UnitTestCase):
     def test_is_not_a_milestone(self):
         self.assertFalse(a_subevent().is_milestone())
 
-    def test_can_be_cloned(self):
-        original = a_subevent()
-        clone = original.clone()
-        self.assertIsCloneOf(clone, original)
-
     def test_can_change_container(self):
         subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01")
-        container = a_container_with(text="container", cid=99)
-        subevent.register_container(container)
-        self.assertEqual(99, subevent.cid())
+        container = a_container_with(text="container")
+        subevent.container = container
         self.assertEqual(container, subevent.container)
 
     def test_properties_defaults(self):
         subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01")
-        self.assertEqual(-1, subevent.cid())
         self.assertEqual(False, subevent.get_fuzzy())
         self.assertEqual(False, subevent.get_locked())
         self.assertEqual(False, subevent.get_ends_today())
         self.assertEqual(False, subevent.is_container())
         self.assertEqual(True, subevent.is_subevent())
-
-    def test_cid_can_be_set_a_construction(self):
-        subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01", cid=99)
-        self.assertEqual(99, subevent.cid())
-
-
-class describe_subevent_cloning(UnitTestCase):
-
-    def test_cloning_returns_new_object(self):
-        subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01", cid=99)
-        cloned_subevent = subevent.clone()
-        self.assertTrue(subevent is not cloned_subevent)
-        self.assertTrue(cloned_subevent == subevent)
-
-    def test_cloning_copies_progress(self):
-        subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01", cid=99)
-        subevent.set_progress(85)
-        cloned_subevent = subevent.clone()
-        self.assertTrue(cloned_subevent == subevent)
-
-    def test_cloning_copies_alert(self):
-        subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01", cid=99)
-        subevent.set_alert("1 Jan 200 10:01;Wake up")
-        cloned_subevent = subevent.clone()
-        self.assertTrue(cloned_subevent == subevent)
-
-    def test_cloning_copies_icon(self):
-        subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01", cid=99)
-        subevent.set_icon("icon")
-        cloned_subevent = subevent.clone()
-        self.assertTrue(cloned_subevent == subevent)
-
-    def test_cloning_copies_hyperlink(self):
-        subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01", cid=99)
-        subevent.set_hyperlink("http://www.svd.se")
-        cloned_subevent = subevent.clone()
-        self.assertTrue(cloned_subevent == subevent)
-
-    def test_cloning_copies_fuzzy(self):
-        subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01", cid=99)
-        subevent.set_fuzzy(True)
-        cloned_subevent = subevent.clone()
-        self.assertTrue(cloned_subevent == subevent)
-
-    def test_cloning_dont_copies_locked(self):
-        subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01", cid=99)
-        subevent.set_locked(True)
-        cloned_subevent = subevent.clone()
-        self.assertFalse(cloned_subevent == subevent)
-
-    def test_cloning_dont_copies_ends_today(self):
-        subevent = a_subevent_with(start="1 Jan 200 10:01", end="3 Mar 200 10:01", cid=99)
-        subevent.set_ends_today(True)
-        cloned_subevent = subevent.clone()
-        self.assertFalse(cloned_subevent == subevent)

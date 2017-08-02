@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.wxgui.framework import Controller
 
 
@@ -27,111 +26,49 @@ BOTH = 2
 
 class DuplicateEventDialogController(Controller):
 
-    def on_init(self, db, event):
-        self.db = db
+    def on_init(self, event, event_duplicator=None):
+        if event_duplicator is None:
+            self.event_duplicator = EventDuplicator()
+        else:
+            self.event_duplicator = event_duplicator
         self.event = event
+        self._set_default_values()
+
+    def on_ok(self, evt):
+        self._create_duplicates()
+        self.view.Close()
+
+    def _set_default_values(self):
         self.view.SetCount(1)
         self.view.SetFrequency(1)
         self.view.SetDirection(FORWARD)
         self.view.SelectMovePeriodFnAtIndex(0)
 
-    def on_ok(self, evt):
-        self.create_duplicates_and_save()
-
-    def create_duplicates_and_save(self):
-        self.view.SetWaitCursor()
-        events, nbr_of_missing_dates = self._create_duplicates()
-        self._save_duplicates(events, nbr_of_missing_dates)
-        self.view.SetDefaultCursor()
-
     def _create_duplicates(self):
-        if self.event.is_container():
-            return self._create_container_duplicates(self.event)
-        else:
-            return self._create_event_duplicates(self.event)
+        missing_dates_count, periods = self._repeat_period(
+            self.event.time_period
+        )
+        self.event_duplicator.duplicate(self.event, periods)
+        if missing_dates_count > 0:
+            self.view.HandleDateErrors(missing_dates_count)
 
-    def _create_container_duplicates(self, container):
-        """
-        Duplicating a container is a little more complicated than duplicating an ordinary event
-        because you have to duplicate all subevents also.
-        For each cloned container (period) we calculate the periods of all subevents in this
-        container. This makes it possible to create one container and all it's subevents for
-        each container period.
-        The container must also get a unique id and the subevents has to be registered with
-        the container.
-        """
-        periods_with_subperiods, nbr_of_missing_dates = self._repeat_container_period(container)
-        events = []
-        cid = self.db.get_max_cid()
-        for period_with_subperiods in periods_with_subperiods:
-            cid += 1
-            container_period, sub_periods = period_with_subperiods
-            event = self._clone_and_add_event_to_list(container, container_period, events)
-            event.set_cid(cid)
-            for subevent, subevent_period in sub_periods:
-                new_subevent = self._clone_and_add_event_to_list(subevent, subevent_period, events)
-                event.register_subevent(new_subevent)
-        return events, nbr_of_missing_dates
-
-    def _create_event_duplicates(self, event):
-        periods, nbr_of_missing_dates = self._repeat_event_period(event)
-        events = []
-        for period in periods:
-            self._clone_and_add_event_to_list(event, period, events)
-        return events, nbr_of_missing_dates
-
-    def _clone_and_add_event_to_list(self, event, period, events):
-        evt = event.clone()
-        evt.update_period(period.start_time, period.end_time)
-        events.append(evt)
-        return evt
-
-    def _save_duplicates(self, events, nbr_of_missing_dates):
-        try:
-            self.db.save_events(events)
-            if nbr_of_missing_dates > 0:
-                self.view.HandleDateErrors(nbr_of_missing_dates)
-            self.view.Close()
-        except TimelineIOError as e:
-            self.view.HandleDbError(e)
-
-    def _repeat_container_period(self, event):
-        period = self.event.get_time_period()
-        move_period_fn, frequency, repetitions, direction = self._get_view_selections()
-        periods_with_subperiods = []
-        nbr_of_missing_dates = 0
-        for index in self._calc_indicies(direction, repetitions):
-            sub_periods = []
-            for subevent in event.get_subevents():
-                sub_period = move_period_fn(subevent.get_time_period(), index * frequency)
-                sub_periods.append((subevent, sub_period))
-            new_period = move_period_fn(period, index * frequency)
-            if new_period is None:
-                nbr_of_missing_dates += 1
-            else:
-                periods_with_subperiods.append((new_period, sub_periods))
-        return (periods_with_subperiods, nbr_of_missing_dates)
-
-    def _repeat_event_period(self, event):
-        period = event.get_time_period()
-        move_period_fn, frequency, repetitions, direction = self._get_view_selections()
+    def _repeat_period(self, period):
+        missing_dates_count = 0
         periods = []
-        nbr_of_missing_dates = 0
-        for index in self._calc_indicies(direction, repetitions):
-            new_period = move_period_fn(period, index * frequency)
+        for index in self._calculate_indicies():
+            new_period = self.view.GetMovePeriodFn()(
+                period,
+                index * self.view.GetFrequency()
+            )
             if new_period is None:
-                nbr_of_missing_dates += 1
+                missing_dates_count += 1
             else:
                 periods.append(new_period)
-        return (periods, nbr_of_missing_dates)
+        return (missing_dates_count, periods)
 
-    def _get_view_selections(self):
-        return (self.view.GetMovePeriodFn(),
-                self.view.GetFrequency(),
-                self.view.GetCount(),
-                self.view.GetDirection())
-
-    def _calc_indicies(self, direction, repetitions):
+    def _calculate_indicies(self):
+        direction = self.view.GetDirection()
+        repetitions = self.view.GetCount()
         if direction == FORWARD:
             return range(1, repetitions + 1)
         elif direction == BACKWARD:
@@ -142,3 +79,29 @@ class DuplicateEventDialogController(Controller):
             return indicies
         else:
             raise Exception("Invalid direction.")
+
+
+class EventDuplicator(object):
+
+    def duplicate(self, event, periods):
+        with event.db.transaction("Duplicate event"):
+            self._duplicate_events(event, periods)
+
+    def _duplicate_events(self, event, periods):
+        for period in periods:
+            self._duplicate_event(event, period)
+
+    def _duplicate_event(self, event, period):
+        duplicate = event.duplicate()
+        duplicate.time_period = period
+        duplicate.container = event.container
+        duplicate.save()
+        if event.is_container():
+            delta = period.get_start_time() - event.get_start_time()
+            for subevent in event.subevents:
+                duplicate_subevent = subevent.duplicate()
+                duplicate_subevent.time_period = subevent.time_period.move_delta(delta)
+                # It is important to set time period before container, because
+                # otherwise the strategy might move events unexpectedly.
+                duplicate_subevent.container = duplicate
+                duplicate_subevent.save()

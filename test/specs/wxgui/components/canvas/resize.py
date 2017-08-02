@@ -19,7 +19,7 @@
 from mock import Mock
 import wx
 
-from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event
 from timelinelib.test.utils import an_event_with
@@ -27,7 +27,6 @@ from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.maincanvas.resizebydrag import ResizeByDragInputHandler
-from timelinelib.wxgui.frames.mainframe.mainframe import StatusBarAdapter
 
 
 class ResizeEventSpec(UnitTestCase):
@@ -61,8 +60,10 @@ class ResizeEventSpec(UnitTestCase):
         self.state.change_to_no_op.assert_called_with()
 
     def setUp(self):
+        self.db = MemoryDB()
         self.canvas = Mock(MainCanvas)
         self.canvas.GetSizeTuple.return_value = (0, 0)
+        self.canvas.GetDb.return_value = self.db
         self.state = Mock()
         self.status_bar = Mock()
 
@@ -72,8 +73,15 @@ class ResizeEventSpec(UnitTestCase):
 
     def when_resizing(self, event, direction):
         self.event_being_resized = event
+        self.db.save_event(event)
         self.resizer = ResizeByDragInputHandler(
-            self.state, self.canvas, self.status_bar, Mock(), event, direction)
+            self.state,
+            self.canvas,
+            self.status_bar,
+            Mock(),
+            event,
+            direction
+        )
 
     def and_moving_mouse_to_x(self, x):
         any_y = 10
@@ -82,4 +90,5 @@ class ResizeEventSpec(UnitTestCase):
     def then_event_gets_period(self, start, end):
         self.assertEqual(
             gregorian_period(start, end),
-            self.event_being_resized.get_time_period())
+            self.event_being_resized.get_time_period()
+        )

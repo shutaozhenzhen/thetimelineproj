@@ -45,17 +45,20 @@ class SetCategoryDialogController(Controller):
         return category is not None
 
     def _save_category_in_events(self, category):
-        if self._selected_event_ids == []:
-            self._save_category_in_events_for_events_without_category(category)
-        else:
-            self._save_category_in_events_for_selected_events(category)
+        with self._db.transaction("Set category"):
+            if self._selected_event_ids == []:
+                self._save_category_in_events_for_events_without_category(category)
+            else:
+                self._save_category_in_events_for_selected_events(category)
 
     def _save_category_in_events_for_selected_events(self, category):
         for event_id in self._selected_event_ids:
             event = self._db.find_event_with_id(event_id)
             event.set_category(category)
+            event.save()
 
     def _save_category_in_events_for_events_without_category(self, category):
         for event in self._db.get_all_events():
             if event.get_category() is None:
                 event.set_category(category)
+                event.save()

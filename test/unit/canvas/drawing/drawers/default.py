@@ -54,7 +54,7 @@ class describe_default_drawer(UnitTestCase):
         self.assert_text_drawn_above("mike's birthday", BASELINE_Y_POS)
 
     def given_event(self, name, start, end, progress=0):
-        event = Event(start, end, name)
+        event = Event().update(start, end, name)
         event.set_progress(progress)
         self.timeline.save_event(event)
 

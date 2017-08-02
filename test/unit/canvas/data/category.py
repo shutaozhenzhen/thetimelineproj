@@ -19,7 +19,6 @@
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data.category import EXPORTABLE_FIELDS
 from timelinelib.canvas.data.category import sort_categories
-from timelinelib.canvas.data.category import clone_categories_list
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category
 from timelinelib.test.utils import a_category_with
@@ -29,7 +28,7 @@ from timelinelib.test.utils import CATEGORY_MODIFIERS
 class describe_category(UnitTestCase):
 
     def test_can_get_values(self):
-        category = Category("work", (50, 100, 150), (0, 0, 0))
+        category = Category().update("work", (50, 100, 150), (0, 0, 0))
         self.assertEqual(category.get_id(), None)
         self.assertEqual(category.get_name(), "work")
         self.assertEqual(category.get_color(), (50, 100, 150))
@@ -51,11 +50,6 @@ class describe_category(UnitTestCase):
 
     def test_can_be_compared(self):
         self.assertEqNeImplementationIsCorrect(a_category, CATEGORY_MODIFIERS)
-
-    def test_can_be_cloned(self):
-        original = a_category()
-        clone = original.clone()
-        self.assertIsCloneOf(clone, original)
 
 
 class describe_category_list_sorting(UnitTestCase):
@@ -79,15 +73,3 @@ class describe_category_list_sorting(UnitTestCase):
         self.assertEqual(
             names,
             [category.get_name() for category in self.sorted_categories])
-
-
-class describe_category_list_cloning(UnitTestCase):
-
-    def test_list_of_categories_can_be_cloned(self):
-        cat_a = a_category_with(name="aaa")
-        cat_b = a_category_with(name="bbb")
-        categories = [cat_b, cat_a]
-        cloned_categories = clone_categories_list(categories)
-        self.assertEqual(len(categories), len(cloned_categories))
-        self.assertTrue(cat_a not in cloned_categories)
-        self.assertTrue(cat_b not in cloned_categories)

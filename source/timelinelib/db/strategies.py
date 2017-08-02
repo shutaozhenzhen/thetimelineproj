@@ -28,16 +28,32 @@ class DefaultContainerStrategy(ContainerStrategy):
     def register_subevent(self, subevent):
         if not isinstance(subevent, Subevent):
             raise TypeError("Expected Subevent object")
-        if subevent not in self.container.events:
-            self.container.events.append(subevent)
-            subevent.register_container(self.container)
-            if len(self.container.events) != 1:
+        if self._is_subevent_missing(subevent):
+            self._append_subevent(subevent)
+            if len(self.container.subevents) != 1:
                 self._adjust_time_period(subevent)
 
+    def _append_subevent(self, subevent):
+        self.container.subevents.append(subevent)
+        self._sort_subevents()
+
+    def _sort_subevents(self):
+        without_sort_order = []
+        with_sort_order = []
+        for subevent in self.container.subevents:
+            if subevent.sort_order is None:
+                without_sort_order.append(subevent)
+            else:
+                with_sort_order.append(subevent)
+        self.container.subevents = sorted(
+            with_sort_order,
+            key=lambda subevent: subevent.sort_order
+        ) + without_sort_order
+
     def unregister_subevent(self, subevent):
-        if subevent not in self.container.events:
+        if self._is_subevent_missing(subevent):
             return
-        self.container.events.remove(subevent)
+        self.container.subevents.remove(subevent)
 
     def update(self, subevent):
         self.unregister_subevent(subevent)
@@ -119,7 +135,7 @@ class DefaultContainerStrategy(ContainerStrategy):
     def _some_event_in_new_event_threshold_time(self, new_event, events, end):
         start = new_event.get_time_period().start_time
         for event in events:
-            if event == new_event:
+            if event is new_event:
                 continue
             if (event.get_time_period().end_time >= start and event.get_time_period().end_time <= end):
                 return event
@@ -152,8 +168,8 @@ class DefaultContainerStrategy(ContainerStrategy):
         self._move_late_events_right(new_event, earliest_start, delta)
 
     def _event_totally_overlapping_new_event(self, new_event):
-        for event in self.container.events:
-            if event == new_event:
+        for event in self.container.subevents:
+            if event is new_event:
                 continue
             if (self._event_totally_overlaps_new_event(new_event, event)):
                 return event
@@ -165,8 +181,8 @@ class DefaultContainerStrategy(ContainerStrategy):
 
     def _events_overlapped_by_new_event(self, new_event):
         overlapping_events = []
-        for event in self.container.events:
-            if event != new_event:
+        for event in self.container.subevents:
+            if event is not new_event:
                 if (self._starts_within(event, new_event) or self._ends_within(event, new_event)):
                     overlapping_events.append(event)
         return overlapping_events
@@ -183,18 +199,24 @@ class DefaultContainerStrategy(ContainerStrategy):
 
     def _move_early_events_left(self, new_event, latest_start_time, delta):
         delta = -delta
-        for event in self.container.events:
-            if event == new_event:
+        for event in self.container.subevents:
+            if event is new_event:
                 continue
             if event.get_time_period().start_time <= latest_start_time:
                 event.move_delta(delta)
 
     def _move_late_events_right(self, new_event, earliest_start_time, delta):
-        for event in self.container.events:
-            if event == new_event:
+        for event in self.container.subevents:
+            if event is new_event:
                 continue
             if event.get_time_period().start_time >= earliest_start_time:
                 event.move_delta(delta)
+
+    def _is_subevent_missing(self, subevent):
+        for x in self.container.subevents:
+            if x is subevent:
+                return False
+        return True
 
 
 class ExtendedContainerStrategy(DefaultContainerStrategy):
@@ -202,9 +224,8 @@ class ExtendedContainerStrategy(DefaultContainerStrategy):
     def register_subevent(self, subevent):
         if not isinstance(subevent, Subevent):
             raise TypeError("Expected Subevent object")
-        if subevent not in self.container.events:
-            self.container.events.append(subevent)
-            subevent.register_container(self.container)
+        if self._is_subevent_missing(subevent):
+            self._append_subevent(subevent)
 
     def allow_ends_today_on_subevents(self):
         return True
