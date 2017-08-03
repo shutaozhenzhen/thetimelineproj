@@ -18,10 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data.exceptions import TimelineIOError
-from timelinelib.canvas.data import Container
 from timelinelib.db import db_open
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
@@ -31,14 +28,11 @@ from timelinelib.wxgui.dialogs.editcontainer.view import EditContainerDialog
 
 class describe_edit_container_dialog(UnitTestCase):
 
-    def setUp(self):
-        self.view = Mock(EditContainerDialog)
-        self.controller = EditContainerDialogController(self.view)
-        self.db = Mock(MemoryDB)
-        self.db.get_time_type.return_value = GregorianTimeType()
-
     def test_it_can_be_created(self):
-        self.show_dialog(EditContainerDialog, None, "test title", db_open(":tutorial:"))
+        self.show_dialog(
+            EditContainerDialog,
+            None, "test title", db_open(":tutorial:")
+        )
 
     def test_it_sets_default_values_when_opend_without_container(self):
         self.given_editor_without_container()
@@ -59,26 +53,20 @@ class describe_edit_container_dialog(UnitTestCase):
     def test_does_not_save_new_container(self):
         self.given_editor_without_container()
         self.controller.on_ok_clicked(None)
-        self.assertFalse(self.db.save_event.called)
+        self.assertEqual(self.db.get_all_events(), [])
 
     def test_saves_existing_container(self):
-        self.given_editor_with_container("existing container")
+        self.view.GetName.return_value = "bar"
+        self.given_editor_with_container("foo")
         self.controller.on_ok_clicked(None)
-        self.assertTrue(self.db.save_event.called)
-
-    def test_handles_db_error_if_saving_fails(self):
-        self.given_editor_with_container("existing container")
-        self.db.save_event.side_effect = TimelineIOError
-        self.controller.on_ok_clicked(None)
-        self.assertTrue(self.view.HandleDbError.called)
-        self.assertFalse(self.view.EndModalOk.called)
+        self.assertEqual([x.text for x in self.db.get_all_events()], ["bar"])
 
     def test_detects_invalid_names(self):
         self.controller.name = ""
-        self.assertRaises(ValueError, self.controller._verify_name)
+        self.controller.on_ok_clicked(None)
+        self.assertTrue(self.view.DisplayInvalidName.called)
 
     def test_the_dialog_is_not_closed_when_an_invalid_name_is_entered(self):
-        self.view.GetName.return_value = ""
         self.controller.on_ok_clicked(None)
         self.assertFalse(self.view.EndModalOk.called)
 
@@ -88,5 +76,12 @@ class describe_edit_container_dialog(UnitTestCase):
     def given_editor_with_container(self, container_name):
         start = human_time_to_gregorian("3 Jan 2000 10:01")
         end = human_time_to_gregorian("3 Jan 2000 10:01")
-        container = Container().update(start, end, container_name)
+        container = self.db.new_container().update(start, end, container_name)
         self.controller.on_init(self.db, container)
+
+    def setUp(self):
+        self.view = Mock(EditContainerDialog)
+        self.view.GetName.return_value = ""
+        self.view.GetCategory.return_value = None
+        self.controller = EditContainerDialogController(self.view)
+        self.db = MemoryDB()

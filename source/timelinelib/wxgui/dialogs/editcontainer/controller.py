@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.exceptions import TimelineIOError
-from timelinelib.canvas.data import Container
 from timelinelib.wxgui.framework import Controller
 
 
@@ -26,75 +24,53 @@ class EditContainerDialogController(Controller):
     """
     This controller is responsible for two things:
 
-    1. creating a new Container event
-    2. updating properties of an existing Container event
+    1. Creating a new container
+    2. Updating properties of an existing container
 
-    When creating a new Container event the result is NOT stored in the
-    timeline database. This happens later when the first event added to the
-    container is saved to the database.
+    When creating a new container the result is NOT stored in the database.
+    This happens later when the first event added to the container is saved to
+    the database.
 
     The reason for this behavior is that we don't want to have empty containers
-    in the database. When updating the properties of an existing Container
-    event the changes are stored in the timeline database.
+    in the database. When updating the properties of an existing container the
+    changes are stored in the timeline database.
     """
 
     def on_init(self, db, container):
         self.view.PopulateCategories()
-        self._set_initial_values_to_member_variables(db, container)
-        self._set_view_initial_values()
+        self._create_container(db, container)
+        self._populate_view()
 
     def on_ok_clicked(self, event):
-        self.name = self.view.GetName()
-        self.category = self.view.GetCategory()
-        try:
-            try:
-                self._verify_name()
-                if self.container_exists:
-                    self._update_container()
-                else:
-                    self._create_container()
-                self.view.EndModalOk()
-            except ValueError:
-                pass
-        except TimelineIOError as e:
-            self.view.HandleDbError(e)
+        if self._validate():
+            self._populate_container()
+            if self._is_updating:
+                self._container.save()
+            self.view.EndModalOk()
 
     def get_container(self):
-        return self.container
+        return self._container
 
-    def _set_initial_values_to_member_variables(self, db, container):
-        self.db = db
-        self.container = container
-        self.container_exists = (self.container is not None)
-        if self.container_exists:
-            self.name = self.container.get_text()
-            self.category = self.container.get_category()
+    def _create_container(self, db, container):
+        if container is None:
+            self._is_updating = False
+            self._container = db.new_container(text="", category=None)
         else:
-            self.name = ""
-            self.category = None
+            self._is_updating = True
+            self._container = container
 
-    def _set_view_initial_values(self):
-        self.view.SetName(self.name)
-        self.view.SetCategory(self.category)
+    def _populate_view(self):
+        self.view.SetName(self._container.get_text())
+        self.view.SetCategory(self._container.get_category())
 
-    def _verify_name(self):
-        name_is_invalid = (self.name == "")
-        if name_is_invalid:
-            msg = _("Field '%s' can't be empty.") % _("Name")
-            self.view.DisplayInvalidName(msg)
-            raise ValueError()
+    def _validate(self):
+        if self.view.GetName() == "":
+            self.view.DisplayInvalidName(
+                _("Field '%s' can't be empty.") % _("Name")
+            )
+            return False
+        return True
 
-    def _update_container(self):
-        self.container.update_properties(self.name, self.category)
-        self.db.save_event(self.container)
-
-    def _create_container(self):
-        time_type = self.db.get_time_type()
-        start = time_type.now()
-        end = start
-        self.container = Container().update(
-            start,
-            end,
-            self.name,
-            self.category
-        )
+    def _populate_container(self):
+        self._container.text = self.view.GetName()
+        self._container.category = self.view.GetCategory()

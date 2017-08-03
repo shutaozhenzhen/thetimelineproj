@@ -27,10 +27,24 @@ class EditContainerDialog(Dialog):
     """
     <BoxSizerVertical>
         <FlexGridSizer columns="2" growableColumns="1" proportion="1" border="ALL">
-            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(name_text)" />
-            <TextCtrl name="txt_name" width="150" />
-            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(category_text)" />
-            <CategoryChoice name="category_choice" allow_add="True" timeline="$(db)" align="ALIGN_CENTER_VERTICAL" />
+            <StaticText
+                align="ALIGN_CENTER_VERTICAL"
+                label="$(name_text)"
+            />
+            <TextCtrl
+                name="txt_name"
+                width="150"
+            />
+            <StaticText
+                align="ALIGN_CENTER_VERTICAL"
+                label="$(category_text)"
+            />
+            <CategoryChoice
+                name="category_choice"
+                allow_add="True"
+                timeline="$(db)"
+                align="ALIGN_CENTER_VERTICAL"
+            />
         </FlexGridSizer>
         <DialogButtonsOkCancelSizer
             border="LEFT|BOTTOM|RIGHT"
