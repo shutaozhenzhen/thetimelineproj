@@ -389,10 +389,10 @@ class MemoryDB(Observable):
             self._transactions.move(index)
 
     def undo_enabled(self):
-        return self._get_undo_index() is not None
+        return not self.is_read_only() and self._get_undo_index() is not None
 
     def redo_enabled(self):
-        return self._get_redo_index() is not None
+        return not self.is_read_only() and self._get_redo_index() is not None
 
     def _get_undo_index(self):
         index, is_in_transaction, history = self._transactions.status
