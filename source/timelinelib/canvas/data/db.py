@@ -133,9 +133,6 @@ class MemoryDB(Observable):
         self.readonly = True
         self._notify(STATE_CHANGE_ANY)
 
-    def supported_event_data(self):
-        return ["description", "icon", "alert", "hyperlink", "progress"]
-
     def search(self, search_string):
         return _generic_event_search(self.get_all_events(), search_string)
 
