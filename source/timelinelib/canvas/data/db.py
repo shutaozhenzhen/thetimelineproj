@@ -100,6 +100,9 @@ class MemoryDB(Observable):
     def clear_transactions(self):
         self._transactions.clear()
 
+    def transactions_status(self):
+        return self._transactions.status
+
     def display_in_canvas(self, canvas):
         canvas.set_timeline(self)
 
