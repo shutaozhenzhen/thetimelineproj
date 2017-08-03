@@ -232,9 +232,9 @@ class describe_event_duplicator(UnitTestCase):
         )
 
     def duplicate(self, *args, **kwargs):
-        index, is_in_transaction, history_before = self.db._transactions.status
+        index, is_in_transaction, history_before = self.db.transactions_status()
         EventDuplicator().duplicate(*args, **kwargs)
-        index, is_in_transaction, history_after = self.db._transactions.status
+        index, is_in_transaction, history_after = self.db.transactions_status()
         self.assertEqual(len(history_after), len(history_before) + 1)
 
     def setUp(self):

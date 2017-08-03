@@ -211,7 +211,7 @@ class TimelineCanvasController(object):
             self.monitoring.count_timeline_redraw()
             dc.SetTextForeground((255, 0, 0))
             dc.SetFont(Font(12, weight=wx.FONTWEIGHT_BOLD))
-            index, is_in_transaction, history = self.timeline._transactions.status
+            index, is_in_transaction, history = self.timeline.transactions_status()
             dc.DrawText("Undo buffer size: %d" % len(history), width - 300, height - 100)
             dc.DrawText("Undo buffer pos: %d" % index, width - 300, height - 80)
             dc.DrawText("Redraw count: %d" % self.monitoring._timeline_redraw_count, width - 300, height - 60)
