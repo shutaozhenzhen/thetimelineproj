@@ -25,15 +25,12 @@ from timelinelib.wxgui.dialogs.feedback.controller import FeedbackDialogControll
 from timelinelib.wxgui.dialogs.feedback.view import FeedbackDialog
 
 
-class describe_feedback_dialog(UnitTestCase):
+class describe_feedback_dialog_controller(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(FeedbackDialog)
         self.controller = FeedbackDialogController(self.view)
         self.webbrowser = Mock()
-
-    def test_it_can_be_created(self):
-        self.show_dialog(FeedbackDialog, None, "info", "this was fun", "very fun")
 
     def test_shows_parts_in_dialog(self):
         self.controller.on_init(self.webbrowser, info="info text", subject="subject text", body="body text")
