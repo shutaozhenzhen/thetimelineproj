@@ -1045,10 +1045,7 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
 
     def save_current_timeline_data(self):
         if self.timeline:
-            try:
-                self.main_panel.save_view_properties(self.timeline)
-            except TimelineIOError as e:
-                self.HandleDbError(e)
+            self.main_panel.save_view_properties(self.timeline)
 
     # Timeline Menu action handlers
     def _measure_distance_between_events(self):
