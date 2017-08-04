@@ -42,12 +42,6 @@ class EditCategoryDialogTestCase(UnitTestCase):
         self.controller = EditCategoryDialogController(self.view)
 
 
-class describe_edit_category_dialog(EditCategoryDialogTestCase):
-
-    def test_it_can_be_created(self):
-        self.show_dialog(EditCategoryDialog, None, "title", self.db, None)
-
-
 class describe_editing_a_new_category(EditCategoryDialogTestCase):
 
     def setUp(self):
