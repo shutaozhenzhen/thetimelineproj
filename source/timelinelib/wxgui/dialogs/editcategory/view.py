@@ -16,9 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
-from timelinelib.repositories.dbwrapper import DbWrapperCategoryRepository
 from timelinelib.wxgui.dialogs.editcategory.controller import EditCategoryDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import display_error_message
@@ -60,7 +57,7 @@ class EditCategoryDialog(Dialog):
             "font_color_text": _("Font Color:"),
             "parent_text": _("Parent:"),
         }, title=title)
-        self.controller.on_init(category, DbWrapperCategoryRepository(db))
+        self.controller.on_init(db, category)
 
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
