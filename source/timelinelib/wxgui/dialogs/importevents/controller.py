@@ -37,12 +37,8 @@ class ImportEventsDialogController(Controller):
     def on_ok_clicked(self, event):
         if not self._db_to_import:
             return
-        try:
-            self._db.import_db(self._db_to_import)
-        except TimelineIOError as e:
-            self.view.HandleDbError(e)
-        else:
-            self.view.Close()
+        self._db.import_db(self._db_to_import)
+        self.view.Close()
 
     def _show_preview(self):
         if self._path_exists():
