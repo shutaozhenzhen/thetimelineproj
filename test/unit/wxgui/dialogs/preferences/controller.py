@@ -25,16 +25,13 @@ import wx
 from mock import Mock
 from mock import sentinel
 
-from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
-from timelinelib.wxgui.dialogs.preferences.controller import PreferencesDialogController
 from timelinelib.config.dotfile import Config
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
+from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import ANY
+from timelinelib.wxgui.dialogs.preferences.controller import PreferencesDialogController
+from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 
-CONFIG_FUZZY_ICON_NAME = "fuzzy.png"
-CONFIG_LOCKED_ICON_NAME = "locked.png"
-CONFIG_HYPERINK_ICON_NAME = "hyperlink.png"
 
 if sys.platform == "win32":
     FONT = u"12:74:90:92:False:MS Shell Dlg 2:-1:(0, 0, 0, 255)"
@@ -43,57 +40,6 @@ else:
 
 
 class describe_preferences_dialog_controller(UnitTestCase):
-
-    def test_construction(self):
-        self.assertTrue(self.controller is not None)
-
-    def test_choices_are_set_by_controller(self):
-        self.view.SetIconsChoices.assert_called_with(ANY)
-
-    def test_icon_names_are_set_from_config_data(self):
-        self.view.SetFuzzyIcon.assert_called_once_with(CONFIG_FUZZY_ICON_NAME)
-        self.view.SetLockedIcon.assert_called_once_with(CONFIG_LOCKED_ICON_NAME)
-        self.view.SetHyperlinkIcon.assert_called_once_with(CONFIG_HYPERINK_ICON_NAME)
-
-    def setUp(self):
-        UnitTestCase.setUp(self)
-        self.app = wx.App()
-        self.view = Mock(PreferencesDialog)
-        self.controller = PreferencesDialogController(self.view)
-        self.config = self._mock_config()
-        self.features = self._mock_features()
-        self.controller.on_init(self.config, self.features)
-
-    def _mock_config(self):
-        config = Mock(Config)
-        config.open_recent_at_startup = ""
-        config.use_inertial_scrolling = False
-        config.never_show_period_events_as_point_events = False
-        config.center_event_texts = False
-        config.get_week_start.return_value = "monday"
-        config.uncheck_time_for_new_events = False
-        config.minor_strip_divider_line_colour = (100, 100, 100)
-        config.major_strip_divider_line_colour = (100, 100, 100)
-        config.now_line_colour = (100, 100, 100)
-        config.weekend_colour = (255, 255, 255)
-        config.bg_colour = (255, 255, 255)
-        config.fuzzy_icon = CONFIG_FUZZY_ICON_NAME
-        config.locked_icon = CONFIG_LOCKED_ICON_NAME
-        config.hyperlink_icon = CONFIG_HYPERINK_ICON_NAME
-        config.never_use_time = False
-        config.get_major_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
-        config.get_minor_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
-        config.get_legend_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
-        config.legend_pos = 0
-        return config
-
-    def _mock_features(self):
-        features = Mock(ExperimentalFeatures)
-        features.get_all_features.return_Value = ()
-        return features
-
-
-class describe_preferences_dialog(UnitTestCase):
 
     def setUp(self):
         self.app = wx.App()
@@ -132,8 +78,15 @@ class describe_preferences_dialog(UnitTestCase):
     def tearDown(self):
         self.app.Destroy()
 
-    def test_it_can_be_created(self):
-        self.show_dialog(PreferencesDialog, None, self.config)
+    def test_choices_are_set_by_controller(self):
+        self.simulate_dialog_opens()
+        self.view.SetIconsChoices.assert_called_with(ANY)
+
+    def test_icon_names_are_set_from_config_data(self):
+        self.simulate_dialog_opens()
+        self.view.SetFuzzyIcon.assert_called_once_with("fuzzy.png")
+        self.view.SetLockedIcon.assert_called_once_with("locked.png")
+        self.view.SetHyperlinkIcon.assert_called_once_with("hyperlink.png")
 
     def test_sets_open_recent_on_init(self):
         self.config.open_recent_at_startup = sentinel.OPEN_RECENT

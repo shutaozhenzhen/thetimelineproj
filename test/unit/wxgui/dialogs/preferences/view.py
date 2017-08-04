@@ -17,13 +17,15 @@
 
 
 import os
+
 import wx
-from timelinelib.test.cases.unit import UnitTestCase
+
 from timelinelib.config.dotfile import Config
+from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 
 
-class _describe_preferences_dialog(UnitTestCase):
+class describe_preferences_dialog(UnitTestCase):
 
     def test_it_can_be_created(self):
         path = os.path.join(
