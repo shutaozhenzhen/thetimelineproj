@@ -16,9 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.exceptions import TimelineIOError
-from timelinelib.canvas.data import Category
-from timelinelib.canvas.drawing.drawers import get_progress_color
 from timelinelib.wxgui.framework import Controller
 
 
@@ -28,44 +25,40 @@ DEFAULT_FONT_COLOR = (0, 0, 0)
 
 class EditCategoryDialogController(Controller):
 
+    def on_init(self, db, category):
+        self._db = db
+        self._create_category(category)
+        self.view.PopulateCategories(exclude=category)
+        self._populate_view()
+
+    def on_ok_clicked(self, event):
+        if self._validate():
+            self._populate_category()
+            self._category.save()
+            self.view.EndModalOk()
+
     def get_edited_category(self):
         return self._category
 
-    def on_init(self, category, category_repository):
-        self._category = category
-        self._category_repository = category_repository
-        try:
-            self.view.PopulateCategories(exclude=self._category)
-        except TimelineIOError as e:
-            self.view.HandleDbError(e)
+    def _create_category(self, category):
+        if category is None:
+            self._category = self._db.new_category().update(
+                "",
+                DEFAULT_COLOR,
+                DEFAULT_FONT_COLOR
+            )
         else:
-            if self._category is None:
-                self.view.SetName("")
-                self.view.SetColor(DEFAULT_COLOR)
-                self.view.SetProgressColor(get_progress_color(DEFAULT_COLOR))
-                self.view.SetDoneColor(get_progress_color(DEFAULT_COLOR))
-                self.view.SetFontColor(DEFAULT_FONT_COLOR)
-                self.view.SetParent(None)
-            else:
-                self.view.SetName(self._category.get_name())
-                self.view.SetColor(self._category.get_color())
-                self.view.SetProgressColor(self._category.get_progress_color())
-                self.view.SetDoneColor(self._category.get_done_color())
-                self.view.SetFontColor(self._category.get_font_color())
-                self.view.SetParent(self._category._get_parent())
+            self._category = category
 
-    def on_ok_clicked(self, event):
-        if self._category_name_is_valid():
-            if self._category is None:
-                self._category = Category().update(
-                    "",
-                    DEFAULT_COLOR,
-                    DEFAULT_FONT_COLOR
-                )
-            self._update_category_properties()
-            self._save()
+    def _populate_view(self):
+        self.view.SetName(self._category.name)
+        self.view.SetColor(self._category.color)
+        self.view.SetProgressColor(self._category.progress_color)
+        self.view.SetDoneColor(self._category.done_color)
+        self.view.SetFontColor(self._category.font_color)
+        self.view.SetParent(self._category.parent)
 
-    def _category_name_is_valid(self):
+    def _validate(self):
         new_name = self.view.GetName()
         if not self._is_name_valid(new_name):
             self.view.HandleInvalidName(new_name)
@@ -75,27 +68,19 @@ class EditCategoryDialogController(Controller):
             return False
         return True
 
-    def _update_category_properties(self):
+    def _is_name_valid(self, name):
+        return len(name) > 0
+
+    def _is_name_in_use(self, name):
+        for cat in self._db.get_categories():
+            if cat != self._category and cat.get_name() == name:
+                return True
+        return False
+
+    def _populate_category(self):
         self._category.name = self.view.GetName()
         self._category.color = self.view.GetColor()
         self._category.progress_color = self.view.GetProgressColor()
         self._category.done_color = self.view.GetDoneColor()
         self._category.font_color = self.view.GetFontColor()
         self._category.parent = self.view.GetParent()
-
-    def _is_name_valid(self, name):
-        return len(name) > 0
-
-    def _is_name_in_use(self, name):
-        for cat in self._category_repository.get_all():
-            if cat != self._category and cat.get_name() == name:
-                return True
-        return False
-
-    def _save(self):
-        try:
-            self._category_repository.save(self._category)
-        except TimelineIOError as e:
-            self.view.HandleDbError(e)
-        else:
-            self.view.EndModalOk()
