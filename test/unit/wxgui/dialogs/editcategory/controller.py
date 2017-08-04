@@ -24,7 +24,7 @@ from timelinelib.wxgui.dialogs.editcategory.controller import EditCategoryDialog
 from timelinelib.wxgui.dialogs.editcategory.view import EditCategoryDialog
 
 
-class EditCategoryDialogTestCase(UnitTestCase):
+class EditCategoryDialogControllerTestCase(UnitTestCase):
 
     def setUp(self):
         self.db = MemoryDB()
@@ -42,10 +42,10 @@ class EditCategoryDialogTestCase(UnitTestCase):
         self.controller = EditCategoryDialogController(self.view)
 
 
-class describe_editing_a_new_category(EditCategoryDialogTestCase):
+class describe_editing_a_new_category(EditCategoryDialogControllerTestCase):
 
     def setUp(self):
-        EditCategoryDialogTestCase.setUp(self)
+        EditCategoryDialogControllerTestCase.setUp(self)
         self.controller.on_init(self.db, None)
 
     def test_categories_are_populated(self):
@@ -64,10 +64,10 @@ class describe_editing_a_new_category(EditCategoryDialogTestCase):
         self.view.SetParent.assert_called_with(None)
 
 
-class describe_editing_an_existing_category(EditCategoryDialogTestCase):
+class describe_editing_an_existing_category(EditCategoryDialogControllerTestCase):
 
     def setUp(self):
-        EditCategoryDialogTestCase.setUp(self)
+        EditCategoryDialogControllerTestCase.setUp(self)
         self.controller.on_init(self.db, self.foofoo)
 
     def test_category_can_be_retrieved(self):
@@ -89,10 +89,10 @@ class describe_editing_an_existing_category(EditCategoryDialogTestCase):
         self.view.SetParent.assert_called_with(self.foo)
 
 
-class describe_saving_a_category(EditCategoryDialogTestCase):
+class describe_saving_a_category(EditCategoryDialogControllerTestCase):
 
     def setUp(self):
-        EditCategoryDialogTestCase.setUp(self)
+        EditCategoryDialogControllerTestCase.setUp(self)
         self.controller.on_init(self.db, None)
         self.view.GetName.return_value = "new_cat"
         self.view.GetColor.return_value = (255, 44, 0)
@@ -121,10 +121,10 @@ class describe_saving_a_category(EditCategoryDialogTestCase):
         self.assertTrue(self.view.EndModalOk.called)
 
 
-class describe_saving_a_category_with_an_invalid_name(EditCategoryDialogTestCase):
+class describe_saving_a_category_with_an_invalid_name(EditCategoryDialogControllerTestCase):
 
     def setUp(self):
-        EditCategoryDialogTestCase.setUp(self)
+        EditCategoryDialogControllerTestCase.setUp(self)
         self.controller.on_init(self.db, None)
         self.view.GetName.return_value = ""
         self.controller.on_ok_clicked(None)
@@ -139,10 +139,10 @@ class describe_saving_a_category_with_an_invalid_name(EditCategoryDialogTestCase
         self.assertFalse(self.view.EndModalOk.called)
 
 
-class describe_saving_a_category_with_a_used_name(EditCategoryDialogTestCase):
+class describe_saving_a_category_with_a_used_name(EditCategoryDialogControllerTestCase):
 
     def setUp(self):
-        EditCategoryDialogTestCase.setUp(self)
+        EditCategoryDialogControllerTestCase.setUp(self)
         self.controller.on_init(self.db, None)
         self.view.GetName.return_value = "foo"
         self.controller.on_ok_clicked(None)
