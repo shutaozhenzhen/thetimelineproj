@@ -16,19 +16,22 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
-
-from timelinelib.wxgui.dialogs.filenew.controller import FileNewDialogController
-from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
 
 
-class describe_file_new_dialog_controller(UnitTestCase):
+class describe_file_new_dialog(UnitTestCase):
 
-    def setUp(self):
-        self.view = Mock(FileNewDialog)
-        self.controller = FileNewDialogController(self.view)
-
-    def test_it_selects_the_first_item(self):
-        self.controller.on_init([])
-        self.view.SelectItem.assert_called_with(0)
+    def test_it_can_be_created(self):
+        items = [
+            {
+                "text": "hello",
+                "description": "hello is a standard phrase",
+            },
+            {
+                "text": "there",
+                "description": "there can be used after hello. but this is a "
+                               "long label\n\nand some newlines",
+            },
+        ]
+        self.show_dialog(FileNewDialog, None, items)
