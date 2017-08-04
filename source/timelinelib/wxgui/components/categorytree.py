@@ -27,7 +27,6 @@ from timelinelib.general.observer import Observable
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.wxgui.components.font import Font
 from timelinelib.wxgui.dialogs.editcategory.view import EditCategoryDialog
-from timelinelib.wxgui.utils import handle_db_error_by_crashing
 import timelinelib.wxgui.utils as gui_utils
 
 
@@ -492,7 +491,4 @@ def delete_category(parent_ctrl, db, cat):
                            "to '%s'.") % (cat.name, cat.parent.name)
     question = "%s\n\n%s" % (delete_warning, update_warning)
     if gui_utils._ask_question(question, parent_ctrl) == wx.YES:
-        try:
-            db.delete_category(cat)
-        except TimelineIOError as e:
-            handle_db_error_by_crashing(e, parent_ctrl)
+        db.delete_category(cat)
