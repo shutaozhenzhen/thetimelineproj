@@ -20,7 +20,6 @@ import wx
 
 from mock import Mock
 
-from timelinelib.wxgui.dialogs.eventeditortabselection.controller import EventEditorTabSelectionDialogController
 from timelinelib.wxgui.dialogs.eventeditortabselection.view import EventEditorTabSelectionDialog
 from timelinelib.test.cases.unit import UnitTestCase
 
@@ -35,8 +34,6 @@ class describe_event_editor_tab_selection_dialog(UnitTestCase):
     def setUp(self):
         self.app = wx.App(False)
         self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
-        self.view = Mock(EventEditorTabSelectionDialog)
-        self.controller = EventEditorTabSelectionDialogController(self.view)
 
     def tearDown(self):
         self.app.Destroy()
