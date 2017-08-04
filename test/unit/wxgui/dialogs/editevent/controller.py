@@ -21,14 +21,12 @@
 from mock import Mock
 from mock import sentinel
 
-from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.config.dotfile import Config
-from timelinelib.db import db_open
 from timelinelib.repositories.interface import EventRepository
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event
@@ -40,7 +38,7 @@ from timelinelib.wxgui.dialogs.editevent.controller import EditEventDialogContro
 from timelinelib.wxgui.dialogs.editevent.view import EditEventDialog
 
 
-class EditEventDialogTestCase(UnitTestCase):
+class EditEventDialogControllerTestCase(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(EditEventDialog)
@@ -165,34 +163,7 @@ class EditEventDialogTestCase(UnitTestCase):
         self.assertFalse(self.view.ClearEventData.called)
 
 
-class describe_edit_event_dialog(EditEventDialogTestCase):
-
-    def test_it_can_be_created(self):
-        config = Mock(Config)
-        config.get_date_formatter.return_value = GregorianDateFormatter()
-        config.event_editor_show_period = True
-        config.event_editor_show_time = False
-        config.event_editor_tab_order = ["0", "1", "2", "3", "4", ":"]
-        db = db_open(":tutorial:")
-        categories = db.get_categories()
-        categories[0].parent = categories[1]
-        db.save_category(categories[0])
-        self.show_dialog(EditEventDialog, None, config, "title", db)
-
-    def test_it_can_be_created_with_numeric_timeline(self):
-        config = Mock(Config)
-        config.get_date_format.return_value = "yyyy-mm-dd"
-        config.event_editor_show_period = True
-        config.event_editor_show_time = False
-        config.event_editor_tab_order = ["0", "1", "2", "3", "4", ":"]
-        db = db_open(":numtutorial:")
-        categories = db.get_categories()
-        categories[0].parent = categories[1]
-        db.save_category(categories[0])
-        self.show_dialog(EditEventDialog, None, config, "title", db)
-
-
-class describe_period_field(EditEventDialogTestCase):
+class describe_period_field(EditEventDialogControllerTestCase):
 
     def test_has_value_from_first_argument_if_only_one_given(self):
         self.when_editor_opened_with_time("1 Jan 2010")
@@ -216,7 +187,7 @@ class describe_period_field(EditEventDialogTestCase):
         )
 
 
-class describe_period_field_period(EditEventDialogTestCase):
+class describe_period_field_period(EditEventDialogControllerTestCase):
 
     def test_is_shown_if_shown_previous_time(self):
         self.config.event_editor_show_period = True
@@ -229,7 +200,7 @@ class describe_period_field_period(EditEventDialogTestCase):
         self.view.SetShowPeriod.assert_called_with(False)
 
 
-class describe_period_field_time(EditEventDialogTestCase):
+class describe_period_field_time(EditEventDialogControllerTestCase):
 
     def test_is_shown_if_shown_previous_time(self):
         self.config.event_editor_show_time = True
@@ -242,7 +213,7 @@ class describe_period_field_time(EditEventDialogTestCase):
         self.view.SetShowTime.assert_called_with(False)
 
 
-class describe_fuzzy_checkbox(EditEventDialogTestCase):
+class describe_fuzzy_checkbox(EditEventDialogControllerTestCase):
 
     def test_is_not_checked_by_default(self):
         self.when_editing_a_new_event()
@@ -255,7 +226,7 @@ class describe_fuzzy_checkbox(EditEventDialogTestCase):
         self.view.SetFuzzy.assert_called_with(sentinel.FUZZY)
 
 
-class describe_locked_checkbox(EditEventDialogTestCase):
+class describe_locked_checkbox(EditEventDialogControllerTestCase):
 
     def test_is_not_checked_by_default(self):
         self.when_editing_a_new_event()
@@ -280,7 +251,7 @@ class describe_locked_checkbox(EditEventDialogTestCase):
         self.view.EnableLocked.assert_called_with(True)
 
 
-class describe_start_is_in_history(EditEventDialogTestCase):
+class describe_start_is_in_history(EditEventDialogControllerTestCase):
 
     def test_new_event_starting_in_history(self):
         self.when_editor_opened_with_time("1 Jan 2010")
@@ -295,7 +266,7 @@ class describe_start_is_in_history(EditEventDialogTestCase):
         self.assertTrue(self.controller._start_is_in_history())
 
 
-class describe_ends_today_checkbox(EditEventDialogTestCase):
+class describe_ends_today_checkbox(EditEventDialogControllerTestCase):
 
     def test_is_not_checked_by_default(self):
         self.when_editing_a_new_event()
@@ -317,7 +288,7 @@ class describe_ends_today_checkbox(EditEventDialogTestCase):
         )
 
 
-class describe_text_field(EditEventDialogTestCase):
+class describe_text_field(EditEventDialogControllerTestCase):
 
     def test_has_no_value_by_default(self):
         self.when_editing_a_new_event()
@@ -330,7 +301,7 @@ class describe_text_field(EditEventDialogTestCase):
         self.view.SetName.assert_called_with("hello")
 
 
-class describe_category_field(EditEventDialogTestCase):
+class describe_category_field(EditEventDialogControllerTestCase):
 
     def test_has_no_value_by_default(self):
         self.when_editing_a_new_event()
@@ -343,7 +314,7 @@ class describe_category_field(EditEventDialogTestCase):
         self.view.SetCategory.assert_called_with(sentinel.CATEGORY)
 
 
-class describe_additional_data(EditEventDialogTestCase):
+class describe_additional_data(EditEventDialogControllerTestCase):
 
     def test_is_populated_from_event(self):
         event = an_event()
@@ -363,7 +334,7 @@ class describe_additional_data(EditEventDialogTestCase):
         self.assertFalse(self.view.SetEventData.called)
 
 
-class describe_add_more_checkbox(EditEventDialogTestCase):
+class describe_add_more_checkbox(EditEventDialogControllerTestCase):
 
     def test_is_hidden_when_editing_existing_event(self):
         self.when_editor_opened_with_event(an_event_with(time="1 Jan 2010"))
@@ -434,10 +405,10 @@ class describe_saving(object):
         })
 
 
-class describe_saving_new(EditEventDialogTestCase, describe_saving):
+class describe_saving_new(EditEventDialogControllerTestCase, describe_saving):
 
     def setUp(self):
-        EditEventDialogTestCase.setUp(self)
+        EditEventDialogControllerTestCase.setUp(self)
         self.when_editing_a_new_event()
 
     def test_dialog_closes_after_saving(self):
@@ -457,14 +428,14 @@ class describe_saving_new(EditEventDialogTestCase, describe_saving):
         self.view.EndModalOk.assert_called_with()
 
 
-class describe_saving_existing(EditEventDialogTestCase, describe_saving):
+class describe_saving_existing(EditEventDialogControllerTestCase, describe_saving):
 
     def setUp(self):
-        EditEventDialogTestCase.setUp(self)
+        EditEventDialogControllerTestCase.setUp(self)
         self.when_editor_opened_with_event(an_event_with(time="1 Jan 2010"))
 
 
-class describe_validation(EditEventDialogTestCase):
+class describe_validation(EditEventDialogControllerTestCase):
 
     def test_period_must_be_valid(self):
         self.when_editing_a_new_event()
@@ -492,7 +463,7 @@ class describe_validation(EditEventDialogTestCase):
         self.assert_no_event_saved()
 
 
-class describe_ends_today_in_container(EditEventDialogTestCase):
+class describe_ends_today_in_container(EditEventDialogControllerTestCase):
 
     def test_set_ends_today_on_subevent_extends_container_period(self):
         start = human_time_to_gregorian("1 Jan 2010")
@@ -545,7 +516,7 @@ class describe_ends_today_in_container(EditEventDialogTestCase):
         self.assertEqual(1, self.controller.timeline.delete_event.call_count)
 
 
-class describe_enlarging(EditEventDialogTestCase):
+class describe_enlarging(EditEventDialogControllerTestCase):
 
     def test_enlarging_click_changes_pos_and_size(self):
         self.when_editing_a_new_event()
@@ -560,7 +531,7 @@ class describe_enlarging(EditEventDialogTestCase):
         self.view.SetSize.assert_called_with(sentinel.REDUCE_SIZE)
 
 
-class describe_changing_container(EditEventDialogTestCase):
+class describe_changing_container(EditEventDialogControllerTestCase):
 
     def test(self):
         self.when_editing_a_new_event()
@@ -569,7 +540,7 @@ class describe_changing_container(EditEventDialogTestCase):
         self.assertEqual(1, self.view.EnableLocked.call_count)
 
 
-class describe_exceptions(EditEventDialogTestCase):
+class describe_exceptions(EditEventDialogControllerTestCase):
 
     def test_start_changed(self):
         event = an_event_with(
@@ -639,7 +610,7 @@ class describe_exceptions(EditEventDialogTestCase):
         self.view.HandleDbError.assert_called_with(e)
 
 
-class describe_save_and_duplicate(EditEventDialogTestCase):
+class describe_save_and_duplicate(EditEventDialogControllerTestCase):
 
     def test_on_duplicate(self):
         self.when_editing_a_new_event()
