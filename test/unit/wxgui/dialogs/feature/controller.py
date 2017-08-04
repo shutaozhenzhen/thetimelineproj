@@ -29,7 +29,7 @@ DISPLAY_NAME = "Feature display name"
 FEATURE_DESCRIPTION = "Feature description"
 
 
-class describe_feature_dialog(UnitTestCase):
+class describe_feature_dialog_controller(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(FeatureDialog)
@@ -37,9 +37,6 @@ class describe_feature_dialog(UnitTestCase):
         self.feature = Mock()
         self.feature.get_display_name.return_value = DISPLAY_NAME
         self.feature.get_description.return_value = FEATURE_DESCRIPTION
-
-    def test_it_can_be_created(self):
-        pass
 
     def test_view_is_populated_when_controller_inits(self):
         self.controller.on_init(self.feature)
@@ -54,7 +51,7 @@ class describe_feature_dialog(UnitTestCase):
         self.assertEqual("http://www.xxx.se", self.controller._get_url(evt))
 
 
-class decribe_featue_dialog_(UnitTestCase):
+class describe_feature_dialog_controller_(UnitTestCase):
 
     def test_shows_parts_in_dialog(self):
         self.dialog.SetFeatureName.assert_called_with(self.key.get_display_name())
