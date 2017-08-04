@@ -19,10 +19,6 @@
 from timelinelib.wxgui.framework import Controller
 
 
-DEFAULT_COLOR = (255, 0, 0)
-DEFAULT_FONT_COLOR = (0, 0, 0)
-
-
 class EditCategoryDialogController(Controller):
 
     def on_init(self, db, category):
@@ -42,11 +38,7 @@ class EditCategoryDialogController(Controller):
 
     def _create_category(self, category):
         if category is None:
-            self._category = self._db.new_category().update(
-                "",
-                DEFAULT_COLOR,
-                DEFAULT_FONT_COLOR
-            )
+            self._category = self._db.new_category()
         else:
             self._category = category
 
