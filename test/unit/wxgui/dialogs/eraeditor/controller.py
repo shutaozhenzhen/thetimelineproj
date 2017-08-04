@@ -21,12 +21,11 @@ from mock import Mock
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
 from timelinelib.test.utils import gregorian_period
-from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.dialogs.eraeditor.controller import EraEditorDialogController
 from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
 
 
-class EraEditorTestCase(UnitTestCase):
+class EraEditorDialogControllerTestCase(UnitTestCase):
 
     def when_editor_opened_with_era(self, era):
         self.editor = EraEditorDialogController(self.view, era)
@@ -80,7 +79,7 @@ class EraEditorTestCase(UnitTestCase):
         self.view = Mock(EraEditorDialog)
 
 
-class describe_era_editor_dialog__period_field(EraEditorTestCase):
+class describe_era_editor_dialog__period_field(EraEditorDialogControllerTestCase):
 
     def test_has_value_from_era(self):
         self.when_era_has_period("1 Jan 2010", "1 Jan 2020")
@@ -89,14 +88,14 @@ class describe_era_editor_dialog__period_field(EraEditorTestCase):
         )
 
 
-class describe_era_editor_dialog__name_field(EraEditorTestCase):
+class describe_era_editor_dialog__name_field(EraEditorDialogControllerTestCase):
 
     def test_has_value_from_era(self):
         self.when_editing_an_era()
         self.view.SetName.assert_called_with(self.era.get_name())
 
 
-class describe_era_editor__saving(EraEditorTestCase):
+class describe_era_editor__saving(EraEditorDialogControllerTestCase):
 
     def test_saves_period(self):
         self.when_editing_an_era()
@@ -123,7 +122,7 @@ class describe_era_editor__saving(EraEditorTestCase):
         self.simulate_user_clicks_ok()
 
 
-class describe_era_editor__validation(EraEditorTestCase):
+class describe_era_editor__validation(EraEditorDialogControllerTestCase):
 
     def test_name_field_must_not_be_empty(self):
         self.when_editing_an_era()
