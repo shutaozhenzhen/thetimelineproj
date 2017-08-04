@@ -16,19 +16,11 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
-
-from timelinelib.wxgui.dialogs.eventlist.controller import EventListDialogController
-from timelinelib.wxgui.dialogs.eventlist.view import EventListDialog
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.wxgui.dialogs.eventlist.view import EventListDialog
 
 
-class describe_event_list_dialog_controller(UnitTestCase):
+class describe_event_list_dialog(UnitTestCase):
 
-    def setUp(self):
-        self.view = Mock(EventListDialog)
-        self.controller = EventListDialogController(self.view)
-
-    def test_on_ok_click_the_view_is_closed(self):
-        self.controller.on_ok(None)
-        self.view.Close.assert_called_once_with()
+    def test_it_can_be_created(self):
+        self.show_dialog(EventListDialog, None, ["foo", "bar"])
