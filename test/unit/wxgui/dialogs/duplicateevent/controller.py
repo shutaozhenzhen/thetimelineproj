@@ -33,7 +33,7 @@ from timelinelib.wxgui.dialogs.duplicateevent.controller import FORWARD
 from timelinelib.wxgui.dialogs.duplicateevent.view import DuplicateEventDialog
 
 
-class DuplicateEventDialogTestCase(UnitTestCase):
+class DuplicateEventDialogControllerTestCase(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(DuplicateEventDialog)
@@ -64,7 +64,7 @@ class DuplicateEventDialogTestCase(UnitTestCase):
         )
 
 
-class describe_default_values(DuplicateEventDialogTestCase):
+class describe_default_values(DuplicateEventDialogControllerTestCase):
 
     def test_number_of_duplicates_should_be_1(self):
         self.view.SetCount.assert_called_with(1)
@@ -79,10 +79,10 @@ class describe_default_values(DuplicateEventDialogTestCase):
         self.view.SetDirection.assert_called_with(FORWARD)
 
 
-class describe_duplicating(DuplicateEventDialogTestCase):
+class describe_duplicating(DuplicateEventDialogControllerTestCase):
 
     def setUp(self):
-        DuplicateEventDialogTestCase.setUp(self)
+        DuplicateEventDialogControllerTestCase.setUp(self)
         self.duplicate_with(count=2, freq=1, direction=FORWARD)
 
     def test_one_transaction_is_made(self):
@@ -92,7 +92,7 @@ class describe_duplicating(DuplicateEventDialogTestCase):
         self.assertTrue(self.view.Close.assert_called)
 
 
-class describe_duplicate_errors(DuplicateEventDialogTestCase):
+class describe_duplicate_errors(DuplicateEventDialogControllerTestCase):
 
     def test_invalid_direction_raises_exception(self):
         self.assertRaises(
@@ -107,7 +107,7 @@ class describe_duplicate_errors(DuplicateEventDialogTestCase):
         self.assertTrue(self.view.Close.called)
 
 
-class describe_duplicate_with_different_settings(DuplicateEventDialogTestCase):
+class describe_duplicate_with_different_settings(DuplicateEventDialogControllerTestCase):
 
     def test_count_1_freq_1_direction_forward(self):
         self.duplicate_with(count=1, freq=1, direction=FORWARD)
