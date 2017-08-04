@@ -20,9 +20,7 @@
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.db import db_open
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import an_event_with
@@ -30,7 +28,7 @@ from timelinelib.wxgui.dialogs.setcategory.controller import SetCategoryDialogCo
 from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
 
 
-class describe_set_category_dialog(UnitTestCase):
+class describe_set_category_dialog_controller(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(SetCategoryDialog)
@@ -75,10 +73,6 @@ class describe_set_category_dialog(UnitTestCase):
             for event, category
             in events_categories
         })
-
-    def test_it_can_be_created(self):
-        db = db_open(":tutorial:")
-        self.show_dialog(SetCategoryDialog, None, db)
 
     def test_category_can_be_set_on_all_events_without_category(self):
         self.view.GetSelectedCategory.return_value = self.category2
