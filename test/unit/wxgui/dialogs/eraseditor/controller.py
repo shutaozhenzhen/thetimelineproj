@@ -21,7 +21,6 @@ import wx
 from mock import Mock
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.era import Era
 from timelinelib.test.cases.unit import UnitTestCase
@@ -31,7 +30,7 @@ from timelinelib.wxgui.dialogs.eraseditor.controller import ErasEditorDialogCont
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
 
 
-class describe_eras_editor_dialog(UnitTestCase):
+class describe_eras_editor_dialog_controller(UnitTestCase):
 
     def test_construction(self):
         self.assertEquals(2, len(self.controller.eras))
