@@ -33,7 +33,7 @@ A_CATEGORIES = [a_category_with("Aaaa"),
 CATEGORIES = A_CATEGORIES + [a_category_with("xxx")]
 
 
-class describe_category_finder_dialog(UnitTestCase):
+class describe_category_finder_dialog_controller(UnitTestCase):
 
     def setUp(self):
         self.mainframe = Mock(MainFrame)
@@ -45,9 +45,6 @@ class describe_category_finder_dialog(UnitTestCase):
         self.controller.on_init(self.db, None)
         self.proxy = Mock(SidebarProxy)
         self.controller.set_sidebar_proxy(self.proxy)
-
-    def test_dialog_can_be_created(self):
-        self.show_dialog(CategoryFinderDialog, None, self.db)
 
     def test_handles_char_entries(self):
         self.controller.on_char(None)
