@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.canvas.drawing.drawers import get_progress_color
 from timelinelib.general.immutable import Field
 from timelinelib.general.immutable import ImmutableDict
 from timelinelib.general.immutable import ImmutableRecord
@@ -59,11 +60,11 @@ class ImmutableEra(ImmutableRecord):
 
 class ImmutableCategory(ImmutableRecord):
 
-    name = Field(None)
-    color = Field(None)
-    progress_color = Field(None)
-    done_color = Field(None)
-    font_color = Field(None)
+    name = Field("")
+    color = Field((255, 0, 0))
+    progress_color = Field(get_progress_color((255, 0, 0)))
+    done_color = Field(get_progress_color((255, 0, 0)))
+    font_color = Field((0, 0, 0))
     parent_id = Field(None)
 
 
