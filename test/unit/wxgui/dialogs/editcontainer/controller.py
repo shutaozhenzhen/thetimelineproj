@@ -19,20 +19,13 @@
 from mock import Mock
 
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.db import db_open
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.dialogs.editcontainer.controller import EditContainerDialogController
 from timelinelib.wxgui.dialogs.editcontainer.view import EditContainerDialog
 
 
-class describe_edit_container_dialog(UnitTestCase):
-
-    def test_it_can_be_created(self):
-        self.show_dialog(
-            EditContainerDialog,
-            None, "test title", db_open(":tutorial:")
-        )
+class describe_edit_container_dialog_controller(UnitTestCase):
 
     def test_it_sets_default_values_when_opend_without_container(self):
         self.given_editor_without_container()
