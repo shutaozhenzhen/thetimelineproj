@@ -24,17 +24,7 @@ from timelinelib.wxgui.dialogs.fieldselection.view import FieldSelectionDialog
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class describe_field_selection_dialog(UnitTestCase):
-
-    def setUp(self):
-        self.view = Mock(FieldSelectionDialog)
-        self.controller = FieldSelectionDialogController(self.view)
-
-    def test_it_can_be_created(self):
-        self.show_dialog(FieldSelectionDialog, None, "Field Selection", "Event", FIELDS["Event"])
-
-
-class FieldSelectionEditorTestCase(UnitTestCase):
+class FieldSelectionDialogControllerTestCase(UnitTestCase):
 
     def a_controller_with(self, data, fields):
         self.selected_fields = []
@@ -52,9 +42,6 @@ class FieldSelectionEditorTestCase(UnitTestCase):
     def setUp(self):
         self.selected_fields = []
         self.view = Mock(FieldSelectionDialog)
-
-
-class describe_event_field_selection_editor_dialog_controller(FieldSelectionEditorTestCase):
 
     def test_construction_when_no_fields_selected(self):
         self.controller = self.a_controller_with("Event", [])
