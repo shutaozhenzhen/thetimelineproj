@@ -26,16 +26,13 @@ from timelinelib.wxgui.dialogs.fieldselection.controller import FIELDS
 from timelinelib.test.cases.unit import UnitTestCase
 
 
-class describe_export_dialog(UnitTestCase):
+class describe_export_dialog_controller(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(ExportDialog)
         self.controller = ExportDialogController(self.view)
         self.view.GetExportEvents.return_value = False
         self.view.GetExportCategories.return_value = False
-
-    def test_it_can_be_created(self):
-        self.show_dialog(ExportDialog, None)
 
     def when_event_type_selected(self):
         self.view.GetExportEvents.return_value = True
