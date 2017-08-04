@@ -20,15 +20,12 @@ import wx
 
 from mock import Mock
 
-from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
-from timelinelib.config.dotfile import Config
-from timelinelib.db import db_open
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.changenowdate.controller import ChangeNowDateDialogController
 from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
 
 
-class describe_change_now_date_dialog(UnitTestCase):
+class describe_change_now_date_dialog_controller(UnitTestCase):
 
     def setUp(self):
         self.view = Mock(ChangeNowDateDialog)
@@ -41,15 +38,6 @@ class describe_change_now_date_dialog(UnitTestCase):
 
     def tearDown(self):
         self.app.Destroy()
-
-    def test_it_can_be_created(self):
-        config = Mock(Config)
-        config.get_date_formatter.return_value = GregorianDateFormatter()
-        db = db_open(":tutorial:")
-        handle_new_time_fn = Mock()
-        title = "a dialog title"
-        self.show_dialog(
-            ChangeNowDateDialog, None, config, db, handle_new_time_fn, title)
 
     def test_can_check_show_time(self):
         self.view.IsShowTimeChecked.return_value = True
