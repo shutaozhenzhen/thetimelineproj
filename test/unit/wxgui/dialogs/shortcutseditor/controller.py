@@ -70,10 +70,7 @@ class ShortcutConfig(object):
             return modifier in MODIFIERS and shortcut_key in SHORTCUT_KEYS[1:]
 
 
-class describe_shortcuts_editor_dialog(UnitTestCase):
-
-    def test_it_can_be_created(self):
-        self.show_dialog(ShortcutsEditorDialog, None, self.shortcut_config)
+class describe_shortcuts_editor_dialog_controller(UnitTestCase):
 
     def test_shortcut_is_modifier_plus_key(self):
         self.given_a_view_with(None, "Ctrl", "X")
@@ -128,4 +125,3 @@ class describe_shortcuts_editor_dialog(UnitTestCase):
         self.shortcut_config = ShortcutConfig()
         self.controller = ShortcutsEditorDialogController(self.view)
         self.controller.shortcut_config = self.shortcut_config
-
