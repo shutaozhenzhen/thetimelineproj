@@ -20,18 +20,12 @@ import wx
 
 from mock import Mock
 
+from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.textdisplay.controller import TextDisplayDialogController
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
-from timelinelib.test.cases.unit import UnitTestCase
 
 
-class describe_text_display_dialog_gui(UnitTestCase):
-
-    def test_it_can_be_created(self):
-        self.show_dialog(TextDisplayDialog, "title", "text", None)
-
-
-class describe_text_display_dialog(UnitTestCase):
+class describe_text_display_dialog_controller(UnitTestCase):
 
     def test_set_text_on_init(self):
         self.controller.on_init("hello world")
