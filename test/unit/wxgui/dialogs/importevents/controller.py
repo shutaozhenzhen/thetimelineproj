@@ -25,13 +25,12 @@ from mock import Mock
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.event import Event
 from timelinelib.canvas.data.exceptions import TimelineIOError
-from timelinelib.db import db_open
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.importevents.controller import ImportEventsDialogController
 from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
 
 
-class describe_import_events_dialog(UnitTestCase):
+class describe_import_events_dialog_controller(UnitTestCase):
 
     def setUp(self):
         self.db = Mock()
@@ -52,15 +51,6 @@ class describe_import_events_dialog(UnitTestCase):
     def remove_file(self):
         if self.path is not None and os.path.exists(self.path):
             os.remove(self.path)
-
-
-class describe_import_events_dialog_gui(describe_import_events_dialog):
-
-    def test_it_can_be_created(self):
-        self.show_dialog(ImportEventsDialog, db_open(":tutorial:"))
-
-
-class describe_import_events_dialog_controller(describe_import_events_dialog):
 
     def test_on_filepath_changed_invalid_path_generates_error_message(self):
         self.view.GetFilePath.return_value = "\n"
