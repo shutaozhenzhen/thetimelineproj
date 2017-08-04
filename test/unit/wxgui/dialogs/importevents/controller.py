@@ -24,7 +24,6 @@ from mock import Mock
 
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.event import Event
-from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.importevents.controller import ImportEventsDialogController
 from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
@@ -101,11 +100,3 @@ class describe_import_events_dialog_controller(UnitTestCase):
         self.controller.on_ok_clicked(event)
         self.controller._db.import_db.assert_called_with(db_to_import)
         self.view.Close.assert_called_with()
-
-    def test_on_ok_clicked_db_io_error_raises_exception(self):
-        event = Mock(Event)
-        ex = TimelineIOError("")
-        self.controller._db_to_import = Mock()
-        self.db.import_db.side_effect = ex
-        self.controller.on_ok_clicked(event)
-        self.view.HandleDbError.assert_called_with(ex)
