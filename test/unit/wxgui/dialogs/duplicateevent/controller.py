@@ -64,12 +64,6 @@ class DuplicateEventDialogTestCase(UnitTestCase):
         )
 
 
-class describe_gui(DuplicateEventDialogTestCase):
-
-    def test_it_can_be_created(self):
-        self.show_dialog(DuplicateEventDialog, None, MemoryDB(), None)
-
-
 class describe_default_values(DuplicateEventDialogTestCase):
 
     def test_number_of_duplicates_should_be_1(self):
