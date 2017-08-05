@@ -21,7 +21,6 @@ import os.path
 
 import wx.lib.newevent
 
-from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.config.dotfile import read_config
 from timelinelib.config.paths import ICONS_DIR
@@ -877,6 +876,9 @@ class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
         self.controller.on_started(application_arguments)
         self._create_and_start_timer()
         self.prev_time_period = None
+
+    def DisplayErrorMessage(self, message):
+        display_error_message(message, parent=self)
 
     # API:s used by time types
     def week_starts_on_monday(self):
