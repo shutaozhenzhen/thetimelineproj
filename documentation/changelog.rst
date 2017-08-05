@@ -12,6 +12,12 @@ Version 1.16.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Fixed crash reports and bugs:
+
+* ``AttributeError: 'NoneType' object has no attribute 'GetParent'``
+  This happens when System info dialog is opened by context popup menu.
+
+
 
 Version 1.15.0
 --------------
