@@ -144,12 +144,12 @@ class GuiCreator(object):
 
     def _create_main_menu_bar(self):
         main_menu_bar = wx.MenuBar()
-        self._create_file_menu(main_menu_bar)
-        self._create_edit_menu(main_menu_bar)
-        self._create_view_menu(main_menu_bar)
-        self._create_timeline_menu(main_menu_bar)
-        self._create_navigate_menu(main_menu_bar)
-        self._create_help_menu(main_menu_bar)
+        main_menu_bar.Append(self._create_file_menu(), _("&File"))
+        main_menu_bar.Append(self._create_edit_menu(), _("&Edit"))
+        main_menu_bar.Append(self._create_view_menu(), _("&View"))
+        main_menu_bar.Append(self._create_timeline_menu(), _("&Timeline"))
+        main_menu_bar.Append(self._create_navigate_menu(), _("&Navigate"))
+        main_menu_bar.Append(self._create_help_menu(), _("&Help"))
         self._set_shortcuts()
         self.SetMenuBar(main_menu_bar)
 
@@ -161,7 +161,7 @@ class GuiCreator(object):
     def _bind_frame_events(self):
         self.Bind(wx.EVT_CLOSE, self._window_on_close)
 
-    def _create_file_menu(self, main_menu_bar):
+    def _create_file_menu(self):
         file_menu = wx.Menu()
         self._create_file_new_menu_item(file_menu)
         self._create_file_open_menu_item(file_menu)
@@ -174,8 +174,8 @@ class GuiCreator(object):
         self._create_export_menues(file_menu)
         file_menu.AppendSeparator()
         self._create_file_exit_menu_item(file_menu)
-        main_menu_bar.Append(file_menu, _("&File"))
         self.file_menu = file_menu
+        return file_menu
 
     def _create_export_menues(self, file_menu):
 
@@ -231,7 +231,7 @@ class GuiCreator(object):
         self.shortcut_items[wx.ID_EXIT] = file_menu.FindItemById(wx.ID_EXIT)
         self.Bind(wx.EVT_MENU, self._mnu_file_exit_on_click, id=wx.ID_EXIT)
 
-    def _create_edit_menu(self, main_menu_bar):
+    def _create_edit_menu(self):
         from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
 
         def create_category_find_dialog():
@@ -272,9 +272,9 @@ class GuiCreator(object):
                  (ID_EDIT_SHORTCUTS, edit_shortcuts, _("Shortcuts..."), cbx))
         edit_menu = wx.Menu()
         self._create_menu_items(edit_menu, items)
-        main_menu_bar.Append(edit_menu, _("&Edit"))
         self._add_edit_menu_items_to_controller(edit_menu)
         self.edit_menu = edit_menu
+        return edit_menu
 
     def _add_edit_menu_items_to_controller(self, edit_menu):
         find_item = edit_menu.FindItemById(ID_FIND)
@@ -282,7 +282,8 @@ class GuiCreator(object):
         self.menu_controller.add_menu_requiring_timeline(find_item)
         self.menu_controller.add_menu_requiring_timeline(find_categories_item)
 
-    def _create_view_menu(self, main_menu_bar):
+    def _create_view_menu(self):
+
         def sidebar(evt):
             self.config.show_sidebar = evt.IsChecked()
             if evt.IsChecked():
@@ -339,8 +340,8 @@ class GuiCreator(object):
         self._create_menu_items(view_menu, items)
         self._check_view_menu_items(view_menu)
         self._add_view_menu_items_to_controller(view_menu)
-        main_menu_bar.Append(view_menu, _("&View"))
         self.view_menu = view_menu
+        return view_menu
 
     def _create_view_toolbar_menu_item(self, view_menu):
         item = view_menu.Append(wx.ID_ANY, _("Toolbar"), kind=wx.ITEM_CHECK)
@@ -418,7 +419,7 @@ class GuiCreator(object):
 
         safe_locking(self, edit_function)
 
-    def _create_timeline_menu(self, main_menu_bar):
+    def _create_timeline_menu(self):
 
         def create_event(evt):
             open_create_event_editor(self, self.config, self.timeline)
@@ -512,7 +513,7 @@ class GuiCreator(object):
         self.timeline_menu = wx.Menu()
         self._create_menu_items(self.timeline_menu, items)
         self._add_timeline_menu_items_to_controller(self.timeline_menu)
-        main_menu_bar.Append(self.timeline_menu, _("&Timeline"))
+        return self.timeline_menu
 
     def _add_timeline_menu_items_to_controller(self, menu):
         self._add_to_controller_requiring_writeable_timeline(menu, ID_CREATE_EVENT)
@@ -531,7 +532,8 @@ class GuiCreator(object):
         mnu_item = menu.FindItemById(item_id)
         self.menu_controller.add_menu_requiring_writable_timeline(mnu_item)
 
-    def _create_navigate_menu(self, main_menu_bar):
+    def _create_navigate_menu(self):
+
         def find_first(evt):
             event = self.timeline.get_first_event()
             if event:
@@ -573,8 +575,8 @@ class GuiCreator(object):
         navigate_menu.AppendSeparator()
         self._create_menu_items(navigate_menu, items)
         self._add_navigate_menu_items_to_controller(navigate_menu)
-        main_menu_bar.Append(navigate_menu, _("&Navigate"))
         self.navigate_menu = navigate_menu
+        return navigate_menu
 
     def _add_navigate_menu_items_to_controller(self, menu):
         self._add_to_controller_requiring_timeline(menu, ID_FIND_FIRST)
@@ -585,7 +587,7 @@ class GuiCreator(object):
         mnu_item = menu.FindItemById(item_id)
         self.menu_controller.add_menu_requiring_timeline(mnu_item)
 
-    def _create_help_menu(self, main_menu_bar):
+    def _create_help_menu(self):
 
         def feedback(e):
             show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body="")
@@ -603,7 +605,7 @@ class GuiCreator(object):
                  (wx.ID_ABOUT, display_about_dialog, None, cbx)]
         self.help_menu = wx.Menu()
         self._create_menu_items(self.help_menu, items)
-        main_menu_bar.Append(self.help_menu, _("&Help"))
+        return self.help_menu
 
     def display_timeline_context_menu(self):
         try:
