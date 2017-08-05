@@ -174,7 +174,7 @@ class GuiCreator(object):
         self._create_export_menues(file_menu)
         file_menu.AppendSeparator()
         self._create_file_exit_menu_item(file_menu)
-        self.file_menu = file_menu
+        self._file_menu = file_menu
         return file_menu
 
     def _create_export_menues(self, file_menu):
@@ -270,9 +270,9 @@ class GuiCreator(object):
                       None,
                       (wx.ID_PREFERENCES, preferences, None, cbx),
                       (ID_EDIT_SHORTCUTS, edit_shortcuts, _("Shortcuts..."), cbx))
-        self.edit_menu = self._create_menu(items_spec)
-        self._add_edit_menu_items_to_controller(self.edit_menu)
-        return self.edit_menu
+        self._edit_menu = self._create_menu(items_spec)
+        self._add_edit_menu_items_to_controller(self._edit_menu)
+        return self._edit_menu
 
     def _add_edit_menu_items_to_controller(self, edit_menu):
         find_item = edit_menu.FindItemById(ID_FIND)
@@ -333,10 +333,10 @@ class GuiCreator(object):
                       None,
                       (ID_HIDE_DONE, hide_events_done, _("&Hide Events done"), CHECKBOX),
                       ]
-        self.view_menu = self._create_menu(items_spec)
-        self._check_view_menu_items(self.view_menu)
-        self._add_view_menu_items_to_controller(self.view_menu)
-        return self.view_menu
+        self._view_menu = self._create_menu(items_spec)
+        self._check_view_menu_items(self._view_menu)
+        self._add_view_menu_items_to_controller(self._view_menu)
+        return self._view_menu
 
     def _create_view_toolbar_menu_item(self, view_menu):
         item = view_menu.Append(wx.ID_ANY, _("Toolbar"), kind=wx.ITEM_CHECK)
@@ -504,9 +504,9 @@ class GuiCreator(object):
                       None,
                       (ID_UNDO, undo, _("&Undo") + "\tCtrl+Z", cbx),
                       (ID_REDO, redo, _("&Redo") + "\tAlt+Z", cbx))
-        self.timeline_menu = self._create_menu(items_spec)
-        self._add_timeline_menu_items_to_controller(self.timeline_menu)
-        return self.timeline_menu
+        self._timeline_menu = self._create_menu(items_spec)
+        self._add_timeline_menu_items_to_controller(self._timeline_menu)
+        return self._timeline_menu
 
     def _add_timeline_menu_items_to_controller(self, menu):
         self._add_to_controller_requiring_writeable_timeline(menu, ID_CREATE_EVENT)
@@ -565,9 +565,9 @@ class GuiCreator(object):
         self._navigation_menu_items = []
         self._navigation_functions_by_menu_item_id = {}
         self.update_navigation_menu_items()
-        self.navigate_menu = self._create_menu(items_spec)
-        self._add_navigate_menu_items_to_controller(self.navigate_menu)
-        return self.navigate_menu
+        self._navigate_menu = self._create_menu(items_spec)
+        self._add_navigate_menu_items_to_controller(self._navigate_menu)
+        return self._navigate_menu
 
     def _add_navigate_menu_items_to_controller(self, menu):
         self._add_to_controller_requiring_timeline(menu, ID_FIND_FIRST)
@@ -594,8 +594,8 @@ class GuiCreator(object):
                       (ID_SYSTEM_INFO, show_system_info_dialog, _("System information"), cbx),
                       None,
                       (wx.ID_ABOUT, display_about_dialog, None, cbx)]
-        self.help_menu = self._create_menu(items_spec)
-        return self.help_menu
+        self._help_menu = self._create_menu(items_spec)
+        return self._help_menu
 
     def display_timeline_context_menu(self):
         try:
@@ -608,13 +608,13 @@ class GuiCreator(object):
 
     def _create_timeline_context_menu(self):
             menu = wx.Menu()
-            menu_bar = self.file_menu.GetMenuBar()
-            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(0), self.file_menu)
-            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(1), self.edit_menu)
-            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(2), self.view_menu)
-            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(3), self.timeline_menu)
-            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(4), self.navigate_menu)
-            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(5), self.help_menu)
+            menu_bar = self._file_menu.GetMenuBar()
+            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(0), self._file_menu)
+            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(1), self._edit_menu)
+            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(2), self._view_menu)
+            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(3), self._timeline_menu)
+            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(4), self._navigate_menu)
+            menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(5), self._help_menu)
             return menu
 
     def _create_menu(self, items_spec):
@@ -752,7 +752,7 @@ class MainFrameApiUsedByController(object):
 
     def _clear_navigation_menu_items(self):
         while self._navigation_menu_items:
-            self.navigate_menu.RemoveItem(self._navigation_menu_items.pop())
+            self._navigate_menu.RemoveItem(self._navigation_menu_items.pop())
         self._navigation_functions_by_menu_item_id.clear()
 
     def _create_navigation_menu_items(self):
@@ -761,10 +761,10 @@ class MainFrameApiUsedByController(object):
         id_offset = self.get_navigation_id_offset()
         for (itemstr, fn) in item_data:
             if itemstr == "SEP":
-                item = self.navigate_menu.InsertSeparator(pos)
+                item = self._navigate_menu.InsertSeparator(pos)
             else:
                 wxid = ID_NAVIGATE + id_offset
-                item = self.navigate_menu.Insert(pos, wxid, itemstr)
+                item = self._navigate_menu.Insert(pos, wxid, itemstr)
                 self._navigation_functions_by_menu_item_id[item.GetId()] = fn
                 self.Bind(wx.EVT_MENU, self._navigation_menu_item_on_click, item)
                 self.shortcut_items[wxid] = item
@@ -809,21 +809,21 @@ class MainFrameApiUsedByController(object):
         nbr_of_selected_events = self.main_panel.get_nbr_of_selected_events()
         one_event_selected = nbr_of_selected_events == 1
         some_event_selected = nbr_of_selected_events > 0
-        mnu_edit_event = self. timeline_menu.FindItemById(ID_EDIT_EVENT)
-        mnu_duplicate_event = self. timeline_menu.FindItemById(ID_DUPLICATE_EVENT)
-        mnu_set_category = self. timeline_menu.FindItemById(ID_SET_CATEGORY_ON_SELECTED)
+        mnu_edit_event = self. _timeline_menu.FindItemById(ID_EDIT_EVENT)
+        mnu_duplicate_event = self. _timeline_menu.FindItemById(ID_DUPLICATE_EVENT)
+        mnu_set_category = self. _timeline_menu.FindItemById(ID_SET_CATEGORY_ON_SELECTED)
         mnu_edit_event.Enable(one_event_selected)
         mnu_duplicate_event.Enable(one_event_selected)
         mnu_set_category.Enable(some_event_selected)
-        self.timeline_menu.FindItemById(ID_MOVE_EVENT_UP).Enable(one_event_selected)
-        self.timeline_menu.FindItemById(ID_MOVE_EVENT_DOWN).Enable(one_event_selected)
+        self._timeline_menu.FindItemById(ID_MOVE_EVENT_UP).Enable(one_event_selected)
+        self._timeline_menu.FindItemById(ID_MOVE_EVENT_DOWN).Enable(one_event_selected)
         # self.mnu_timeline_edit_event.Enable(one_event_selected)
         # self.mnu_timeline_duplicate_event.Enable(one_event_selected)
         # self.mnu_timeline_set_event_category.Enable(some_event_selected)
 
     def _enable_disable_measure_distance_between_two_events_menu(self):
         two_events_selected = self.main_panel.get_nbr_of_selected_events() == 2
-        mnu_measure_distance = self.timeline_menu.FindItemById(ID_MEASURE_DISTANCE)
+        mnu_measure_distance = self._timeline_menu.FindItemById(ID_MEASURE_DISTANCE)
         mnu_measure_distance.Enable(two_events_selected)
         # self.mnu_timeline_measure_distance_between_events.Enable(two_events_selected)
 
@@ -832,8 +832,8 @@ class MainFrameApiUsedByController(object):
             self.main_panel.show_searchbar(False)
 
     def _enable_disable_undo(self):
-        mnu_undo = self.timeline_menu.FindItemById(ID_UNDO)
-        mnu_redo = self.timeline_menu.FindItemById(ID_REDO)
+        mnu_undo = self._timeline_menu.FindItemById(ID_UNDO)
+        mnu_redo = self._timeline_menu.FindItemById(ID_REDO)
         if self.timeline is not None:
             mnu_undo.Enable(self.timeline.undo_enabled())
             mnu_redo.Enable(self.timeline.redo_enabled())
