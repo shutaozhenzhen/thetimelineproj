@@ -274,16 +274,10 @@ class EditEventDialogController(Controller):
         return end_time
 
     def _save_event_to_db(self):
-        try:
-            self.event_repository.save(self.event)
-        except Exception as e:
-            self.view.HandleDbError(e)
+        self.event_repository.save(self.event)
 
     def _save_container_to_db(self):
-        try:
-            self.event_repository.save(self.view.GetContainer())
-        except Exception as e:
-            self.view.HandleDbError(e)
+        self.event_repository.save(self.view.GetContainer())
 
     def _enable_disable_ends_today(self):
         enable = ((self._container_not_selected() or self._container_allows_ends_today()) and
