@@ -12,6 +12,10 @@ Version 1.16.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+GUI:
+
+* Using context menu no longer causes toolbar menu to stop working.
+
 Fixed crash reports and bugs:
 
 * ``AttributeError: 'NoneType' object has no attribute 'GetParent'``

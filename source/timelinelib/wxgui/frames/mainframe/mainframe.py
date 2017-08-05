@@ -612,6 +612,7 @@ class GuiCreator(object):
             self.context_menu = self._create_timeline_context_menu()
             menu = self.context_menu
         self.PopupMenu(menu)
+        self._create_main_menu_bar()
 
     def _create_timeline_context_menu(self):
             menu = wx.Menu()
