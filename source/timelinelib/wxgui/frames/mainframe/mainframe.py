@@ -263,18 +263,16 @@ class GuiCreator(object):
                 dialog.Destroy()
             safe_locking(self, edit_function)
         cbx = NONE
-        items = ((wx.ID_FIND, find, None, cbx),
-                 (ID_FIND_CATEGORIES, find_categories, _("Find Categories..."), cbx),
-                 None,
-                 (ID_SELECT_ALL, select_all, _("Select All Events"), cbx),
-                 None,
-                 (wx.ID_PREFERENCES, preferences, None, cbx),
-                 (ID_EDIT_SHORTCUTS, edit_shortcuts, _("Shortcuts..."), cbx))
-        edit_menu = wx.Menu()
-        self._create_menu_items(edit_menu, items)
-        self._add_edit_menu_items_to_controller(edit_menu)
-        self.edit_menu = edit_menu
-        return edit_menu
+        items_spec = ((wx.ID_FIND, find, None, cbx),
+                      (ID_FIND_CATEGORIES, find_categories, _("Find Categories..."), cbx),
+                      None,
+                      (ID_SELECT_ALL, select_all, _("Select All Events"), cbx),
+                      None,
+                      (wx.ID_PREFERENCES, preferences, None, cbx),
+                      (ID_EDIT_SHORTCUTS, edit_shortcuts, _("Shortcuts..."), cbx))
+        self.edit_menu = self._create_menu(items_spec)
+        self._add_edit_menu_items_to_controller(self.edit_menu)
+        return self.edit_menu
 
     def _add_edit_menu_items_to_controller(self, edit_menu):
         find_item = edit_menu.FindItemById(ID_FIND)
@@ -316,32 +314,29 @@ class GuiCreator(object):
         def hide_events_done(evt):
             self.config.hide_events_done = evt.IsChecked()
 
-        items = [self._create_view_toolbar_menu_item,
-                 (ID_SIDEBAR, sidebar, _("&Sidebar") + "\tCtrl+I", CHECKBOX),
-                 (ID_LEGEND, legend, _("&Legend"), CHECKBOX),
-                 None,
-                 (ID_BALLOONS, balloons, _("&Balloons on hover"), CHECKBOX),
-                 None,
-                 (ID_ZOOMIN, zoomin, _("Zoom &In") + "\tCtrl++", NONE),
-                 (ID_ZOOMOUT, zoomout, _("Zoom &Out") + "\tCtrl+-", NONE),
-                 (ID_VERT_ZOOMIN, vert_zoomin, _("Vertical Zoom &In") + "\tAlt++", NONE),
-                 (ID_VERT_ZOOMOUT, vert_zoomout, _("Vertical Zoom &Out") + "\tAlt+-", NONE),
-                 None,
-                 self._create_view_point_event_alignment_menu,
-                 None,
-                 self._create_event_box_drawers_menu,
-                 None,
-                 (ID_PRESENTATION, start_slide_show, _("Start slide show") + "...", NONE),
-                 None,
-                 (ID_HIDE_DONE, hide_events_done, _("&Hide Events done"), CHECKBOX),
-                 ]
-
-        view_menu = wx.Menu()
-        self._create_menu_items(view_menu, items)
-        self._check_view_menu_items(view_menu)
-        self._add_view_menu_items_to_controller(view_menu)
-        self.view_menu = view_menu
-        return view_menu
+        items_spec = [self._create_view_toolbar_menu_item,
+                      (ID_SIDEBAR, sidebar, _("&Sidebar") + "\tCtrl+I", CHECKBOX),
+                      (ID_LEGEND, legend, _("&Legend"), CHECKBOX),
+                      None,
+                      (ID_BALLOONS, balloons, _("&Balloons on hover"), CHECKBOX),
+                      None,
+                      (ID_ZOOMIN, zoomin, _("Zoom &In") + "\tCtrl++", NONE),
+                      (ID_ZOOMOUT, zoomout, _("Zoom &Out") + "\tCtrl+-", NONE),
+                      (ID_VERT_ZOOMIN, vert_zoomin, _("Vertical Zoom &In") + "\tAlt++", NONE),
+                      (ID_VERT_ZOOMOUT, vert_zoomout, _("Vertical Zoom &Out") + "\tAlt+-", NONE),
+                      None,
+                      self._create_view_point_event_alignment_menu,
+                      None,
+                      self._create_event_box_drawers_menu,
+                      None,
+                      (ID_PRESENTATION, start_slide_show, _("Start slide show") + "...", NONE),
+                      None,
+                      (ID_HIDE_DONE, hide_events_done, _("&Hide Events done"), CHECKBOX),
+                      ]
+        self.view_menu = self._create_menu(items_spec)
+        self._check_view_menu_items(self.view_menu)
+        self._add_view_menu_items_to_controller(self.view_menu)
+        return self.view_menu
 
     def _create_view_toolbar_menu_item(self, view_menu):
         item = view_menu.Append(wx.ID_ANY, _("Toolbar"), kind=wx.ITEM_CHECK)
@@ -367,8 +362,7 @@ class GuiCreator(object):
                 items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), CHECKED_RB))
             else:
                 items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), UNCHECKED_RB))
-        sub_menu = wx.Menu()
-        self._create_menu_items(sub_menu, items)
+        sub_menu = self._create_menu(items)
         view_menu.AppendMenu(wx.ID_ANY, _("Event appearance"), sub_menu)
 
     def _create_view_point_event_alignment_menu(self, view_menu):
@@ -488,30 +482,29 @@ class GuiCreator(object):
             self.main_panel.timeline_panel.move_selected_event_down()
 
         cbx = NONE
-        items = ((ID_CREATE_EVENT, create_event, _("Create &Event..."), cbx),
-                 (ID_EDIT_EVENT, edit_event, _("&Edit Selected Event..."), cbx),
-                 (ID_DUPLICATE_EVENT, duplicate_event, _("&Duplicate Selected Event..."), cbx),
-                 (ID_SET_CATEGORY_ON_SELECTED, set_categoryon_selected, _("Set Category on Selected Events..."), cbx),
-                 (ID_MOVE_EVENT_UP, move_up_handler, _("Move event up") + "\tAlt+Up", cbx),
-                 (ID_MOVE_EVENT_DOWN, move_down_handler, _("Move event down") + "\tAlt+Down", cbx),
-                 None,
-                 (ID_CREATE_MILESTONE, create_milestone, _("Create &Milestone..."), cbx),
-                 None,
-                 (ID_COMPRESS, compress, _("&Compress timeline Events"), cbx),
-                 None,
-                 (ID_MEASURE_DISTANCE, measure_distance, _("&Measure Distance between two Events..."), cbx),
-                 None,
-                 (ID_SET_CATEGORY_ON_WITHOUT, set_category_on_without, _("Set Category on events &without category..."), cbx),
-                 (ID_EDIT_CATEGORIES, edit_categories, _("Edit &Categories"), cbx),
-                 None,
-                 (ID_EDIT_ERAS, edit_eras, _("Edit Era's..."), cbx),
-                 None,
-                 (ID_SET_READONLY, set_readonly, _("&Read Only"), cbx),
-                 None,
-                 (ID_UNDO, undo, _("&Undo") + "\tCtrl+Z", cbx),
-                 (ID_REDO, redo, _("&Redo") + "\tAlt+Z", cbx))
-        self.timeline_menu = wx.Menu()
-        self._create_menu_items(self.timeline_menu, items)
+        items_spec = ((ID_CREATE_EVENT, create_event, _("Create &Event..."), cbx),
+                      (ID_EDIT_EVENT, edit_event, _("&Edit Selected Event..."), cbx),
+                      (ID_DUPLICATE_EVENT, duplicate_event, _("&Duplicate Selected Event..."), cbx),
+                      (ID_SET_CATEGORY_ON_SELECTED, set_categoryon_selected, _("Set Category on Selected Events..."), cbx),
+                      (ID_MOVE_EVENT_UP, move_up_handler, _("Move event up") + "\tAlt+Up", cbx),
+                      (ID_MOVE_EVENT_DOWN, move_down_handler, _("Move event down") + "\tAlt+Down", cbx),
+                      None,
+                      (ID_CREATE_MILESTONE, create_milestone, _("Create &Milestone..."), cbx),
+                      None,
+                      (ID_COMPRESS, compress, _("&Compress timeline Events"), cbx),
+                      None,
+                      (ID_MEASURE_DISTANCE, measure_distance, _("&Measure Distance between two Events..."), cbx),
+                      None,
+                      (ID_SET_CATEGORY_ON_WITHOUT, set_category_on_without, _("Set Category on events &without category..."), cbx),
+                      (ID_EDIT_CATEGORIES, edit_categories, _("Edit &Categories"), cbx),
+                      None,
+                      (ID_EDIT_ERAS, edit_eras, _("Edit Era's..."), cbx),
+                      None,
+                      (ID_SET_READONLY, set_readonly, _("&Read Only"), cbx),
+                      None,
+                      (ID_UNDO, undo, _("&Undo") + "\tCtrl+Z", cbx),
+                      (ID_REDO, redo, _("&Redo") + "\tAlt+Z", cbx))
+        self.timeline_menu = self._create_menu(items_spec)
         self._add_timeline_menu_items_to_controller(self.timeline_menu)
         return self.timeline_menu
 
@@ -563,20 +556,18 @@ class GuiCreator(object):
             self._fit_all_events()
 
         cbx = NONE
-        items = ((ID_FIND_FIRST, find_first, _("Find &First Event"), cbx),
-                 (ID_FIND_LAST, find_last, _("Find &Last Event"), cbx),
-                 (ID_FIT_ALL, fit_all, _("Fit &All Events"), cbx),
-                 None,
-                 (ID_RESTORE_TIME_PERIOD, restore_time_period, _("Go to previous time period"), cbx),)
-        navigate_menu = wx.Menu()
+        items_spec = (None,
+                      (ID_FIND_FIRST, find_first, _("Find &First Event"), cbx),
+                      (ID_FIND_LAST, find_last, _("Find &Last Event"), cbx),
+                      (ID_FIT_ALL, fit_all, _("Fit &All Events"), cbx),
+                      None,
+                      (ID_RESTORE_TIME_PERIOD, restore_time_period, _("Go to previous time period"), cbx),)
         self._navigation_menu_items = []
         self._navigation_functions_by_menu_item_id = {}
         self.update_navigation_menu_items()
-        navigate_menu.AppendSeparator()
-        self._create_menu_items(navigate_menu, items)
-        self._add_navigate_menu_items_to_controller(navigate_menu)
-        self.navigate_menu = navigate_menu
-        return navigate_menu
+        self.navigate_menu = self._create_menu(items_spec)
+        self._add_navigate_menu_items_to_controller(self.navigate_menu)
+        return self.navigate_menu
 
     def _add_navigate_menu_items_to_controller(self, menu):
         self._add_to_controller_requiring_timeline(menu, ID_FIND_FIRST)
@@ -593,18 +584,17 @@ class GuiCreator(object):
             show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body="")
 
         cbx = NONE
-        items = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents") + "\tF1", cbx),
-                 None,
-                 (ID_TUTORIAL, self.controller.open_gregorian_tutorial_timeline, _("Getting started &tutorial"), cbx),
-                 None,
-                 (ID_FEEDBACK, feedback, _("Give &Feedback..."), cbx),
-                 (ID_CONTACT, self.help_browser.show_contact_page, _("Co&ntact"), cbx),
-                 None,
-                 (ID_SYSTEM_INFO, show_system_info_dialog, _("System information"), cbx),
-                 None,
-                 (wx.ID_ABOUT, display_about_dialog, None, cbx)]
-        self.help_menu = wx.Menu()
-        self._create_menu_items(self.help_menu, items)
+        items_spec = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents") + "\tF1", cbx),
+                      None,
+                      (ID_TUTORIAL, self.controller.open_gregorian_tutorial_timeline, _("Getting started &tutorial"), cbx),
+                      None,
+                      (ID_FEEDBACK, feedback, _("Give &Feedback..."), cbx),
+                      (ID_CONTACT, self.help_browser.show_contact_page, _("Co&ntact"), cbx),
+                      None,
+                      (ID_SYSTEM_INFO, show_system_info_dialog, _("System information"), cbx),
+                      None,
+                      (wx.ID_ABOUT, display_about_dialog, None, cbx)]
+        self.help_menu = self._create_menu(items_spec)
         return self.help_menu
 
     def display_timeline_context_menu(self):
@@ -627,12 +617,14 @@ class GuiCreator(object):
             menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(5), self.help_menu)
             return menu
 
-    def _create_menu_items(self, menu, items):
-        for item in items:
+    def _create_menu(self, items_spec):
+        menu = wx.Menu()
+        for item in items_spec:
             if item is not None:
                 self._create_menu_item(menu, item)
             else:
                 menu.AppendSeparator()
+        return menu
 
     def _create_menu_item(self, menu, item_spec):
         if isinstance(item_spec, collections.Callable):
