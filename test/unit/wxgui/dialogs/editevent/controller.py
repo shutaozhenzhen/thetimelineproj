@@ -593,22 +593,6 @@ class describe_exceptions(EditEventDialogControllerTestCase):
             u"⟪End must be > Start⟫"
         )
 
-    def test_save_to_db(self):
-        e = Exception("")
-        self.controller.event_repository = Mock()
-        self.controller.event_repository.save.side_effect = e
-        self.controller.event = Mock()
-        self.controller._save_event_to_db()
-        self.view.HandleDbError.assert_called_with(e)
-
-    def test_save_container_to_db(self):
-        e = Exception("")
-        self.controller.event_repository = Mock()
-        self.controller.event_repository.save.side_effect = e
-        self.controller.container = Mock()
-        self.controller._save_container_to_db()
-        self.view.HandleDbError.assert_called_with(e)
-
 
 class describe_save_and_duplicate(EditEventDialogControllerTestCase):
 
