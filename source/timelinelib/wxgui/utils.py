@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-
 import wx
 
 from timelinelib.canvas.data import sort_categories
@@ -139,22 +137,6 @@ def display_categories_editor_moved_message(parent):
         caption=_("Dialog moved"),
         message=_("This dialog has been removed. Edit categories in the sidebar instead."),
         parent=parent)
-
-
-def handle_db_error_by_crashing(e, parent=None):
-    try:
-        display_error_message("\n\n".join([
-            _("Timeline has encountered a fatal error:"),
-            unicode(e),
-            _("To prevent you from loosing data, Timeline will now crash."),
-        ]), parent=parent)
-        (error_type, value, traceback) = sys.exc_info()
-        from timelinelib.wxgui.setup import unhandled_exception_hook
-        unhandled_exception_hook(error_type, value, traceback)
-    finally:
-        if unlock_function is not None:
-            unlock_function()
-        sys.exit(1)
 
 
 def get_user_ack(question, parent=None):
