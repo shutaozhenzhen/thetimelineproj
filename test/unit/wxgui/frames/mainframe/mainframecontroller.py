@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -19,7 +20,6 @@
 from mock import Mock
 
 from timelinelib.calendar.num.timetype import NumTimeType
-from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
@@ -59,10 +59,11 @@ class describe_mainframe_controller(UnitTestCase):
         self.main_frame.update_open_recent_submenu.assert_called_with()
 
     def test_handles_open_timeline_failure(self):
-        error = TimelineIOError("")
-        self.db_open.side_effect = error
+        self.db_open.side_effect = Exception("file corrupt")
         self.controller.open_timeline("foo.timeline")
-        self.main_frame.HandleDbError.assert_called_with(error)
+        self.main_frame.DisplayErrorMessage.assert_called_with(
+            u"⟪Unable to open timeline 'foo.timeline'.⟫\n\nfile corrupt"
+        )
 
     def setUp(self):
         self.main_frame = Mock(MainFrame)

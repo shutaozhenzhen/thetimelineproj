@@ -60,11 +60,11 @@ class MainFrameController(object):
         if save_current_data:
             self.main_frame.save_current_timeline_data()
         try:
-            new_db = self.db_open_fn(path, timetype=timetype)
-            self.timeline = new_db
-        except TimelineIOError as e:
-            self.main_frame.HandleDbError(e)
-            self.timelinepath = None
+            self.timeline = self.db_open_fn(path, timetype=timetype)
+        except Exception as e:
+            self.main_frame.DisplayErrorMessage(
+                _("Unable to open timeline '%s'.") % path + "\n\n" + str(e)
+            )
         else:
             self.config.append_recently_opened(path)
             self.main_frame.update_open_recent_submenu()
@@ -72,10 +72,10 @@ class MainFrameController(object):
             self.main_frame.display_timeline(self.timeline)
             self.timelinepath = path
             self.last_changed = self._get_modification_date()
-        self.main_frame.update_navigation_menu_items()
-        self.main_frame.enable_disable_menus()
-        if path == ":numtutorial:":
-            self.main_frame._fit_all_events()
+            self.main_frame.update_navigation_menu_items()
+            self.main_frame.enable_disable_menus()
+            if path == ":numtutorial:":
+                self.main_frame._fit_all_events()
 
     def set_timeline_in_readonly_mode(self):
         try:
