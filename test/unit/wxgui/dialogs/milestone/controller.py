@@ -80,17 +80,6 @@ class describe_edit_milestone_dialog_controller(UnitTestCase):
         self.assertEqual(self.db.save_event.call_count, 1)
         self.assertEqual(self.controller.get_milestone().get_description(), None)
 
-    def test_db_update_fails_on_ok(self):
-        exception = Exception("test")
-        self.db.save_event.side_effect = exception
-        self.simulate_dialog_init(self.db, None)
-        self.simulate_user_enters_description("")
-        self.simulate_user_enters_colour((127, 127, 127))
-        self.simulate_user_enters_time(self.start_time)
-        self.simulate_ok_clicked()
-        self.assertEqual(self.db.save_event.call_count, 1)
-        self.view.HandleDbError.called_with(exception)
-
     def simulate_user_enters_description(self, description):
         self.view.GetDescription.return_value = description
 
