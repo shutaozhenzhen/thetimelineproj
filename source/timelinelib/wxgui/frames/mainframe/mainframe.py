@@ -61,7 +61,6 @@ from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
-from timelinelib.wxgui.framework import HandleDbErrorMixin
 from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_categories_editor_moved_message
 from timelinelib.wxgui.utils import display_error_message
@@ -848,8 +847,7 @@ class MainFrameApiUsedByController(object):
             mnu_redo.Enable(False)
 
 
-class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController,
-                HandleDbErrorMixin):
+class MainFrame(wx.Frame, GuiCreator, MainFrameApiUsedByController):
 
     def __init__(self, application_arguments):
         self.config = read_config(application_arguments.get_config_file_path())

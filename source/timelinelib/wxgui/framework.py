@@ -23,18 +23,10 @@ import wx
 
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
-from timelinelib.wxgui.utils import handle_db_error_by_crashing
 from timelinelib.wxgui.utils import _set_focus_and_select
 
 
-class HandleDbErrorMixin(object):
-
-    def HandleDbError(self, e):
-        assert isinstance(self, wx.Window)
-        handle_db_error_by_crashing(e, self)
-
-
-class Dialog(humblewx.Dialog, HandleDbErrorMixin):
+class Dialog(humblewx.Dialog):
 
     def EndModalOk(self):
         self.EndModal(wx.ID_OK)
