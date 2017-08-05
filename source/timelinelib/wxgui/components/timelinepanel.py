@@ -17,12 +17,10 @@
 
 
 import os
-
 import webbrowser
 
 import wx
 
-from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
 from timelinelib.canvas import EVT_TIMELINE_REDRAWN
 from timelinelib.db.utils import safe_locking
@@ -43,7 +41,6 @@ from timelinelib.wxgui.dialogs.editevent.view import open_event_editor_for
 from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 from timelinelib.wxgui.utils import _ask_question
-from timelinelib.wxgui.utils import handle_db_error_by_crashing
 from timelinelib.config.paths import ICONS_DIR
 
 
@@ -321,12 +318,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             else:
                 text = _("Are you sure you want to delete this event?")
             return _ask_question(text) == wx.YES
-        def exception_handler(ex):
-            if isinstance(ex, TimelineIOError):
-                handle_db_error_by_crashing(ex, self)
-            else:
-                raise(ex)
-        safe_locking(self.main_frame, edit_function, exception_handler)
+        safe_locking(self.main_frame, edit_function)
 
     def _context_menu_on_edit_event(self, evt):
         self.open_event_editor(self.timeline_canvas.GetSelectedEvent())
@@ -346,12 +338,7 @@ class TimelinePanelGuiCreator(wx.Panel):
                         event.set_progress(100)
                         event.save()
             self.timeline_canvas.ClearSelectedEvents()
-        def exception_handler(ex):
-            if isinstance(ex, TimelineIOError):
-                handle_db_error_by_crashing(ex, self)
-            else:
-                raise(ex)
-        safe_locking(self.main_frame, edit_function, exception_handler)
+        safe_locking(self.main_frame, edit_function)
 
     def _context_menu_on_select_category(self, evt):
         self.main_frame.set_category_on_selected()
