@@ -82,7 +82,4 @@ class EditMilestoneDialogController(Controller):
             raise(DateTimeError())
 
     def _save_milestone_to_db(self):
-        try:
-            self._db.save_event(self._milestone)
-        except Exception as e:
-            self.view.HandleDbError(e)
+        self._db.save_event(self._milestone)
