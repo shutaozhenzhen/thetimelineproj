@@ -73,9 +73,9 @@ class PreferencesDialogController(Controller):
         self.view.ShowSelectTabOrderDialog(self.config)
 
     def on_balloon_click(self, evt):
-        font = deserialize_font(self.config.get_balloon_font())
+        font = deserialize_font(self.config.balloon_font)
         if self.view.ShowEditFontDialog(font):
-            self.config.set_balloon_font(font.serialize())
+            self.config.balloon_font = font.serialize()
             self.view.SetBalloonFont(font)
 
     def on_major_strip_click(self, event):
@@ -154,7 +154,7 @@ class PreferencesDialogController(Controller):
         self.view.SetMajorStripFont(deserialize_font(self.config.get_major_strip_font()))
         self.view.SetMinorStripFont(deserialize_font(self.config.get_minor_strip_font()))
         self.view.SetLegendFont(deserialize_font(self.config.get_legend_font()))
-        self.view.SetBalloonFont(deserialize_font(self.config.get_balloon_font()))
+        self.view.SetBalloonFont(deserialize_font(self.config.balloon_font))
         self.view.SetLegendPos(self.config.legend_pos)
 
     def _week_index(self, week):

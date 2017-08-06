@@ -210,14 +210,6 @@ class Config(Observable):
             self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
             self._notify()
 
-    def get_balloon_font(self):
-        return self.config_parser.get(DEFAULTSECT, BALLOON_FONT)
-
-    def set_balloon_font(self, font):
-        if self._toStr(font) is not None:
-            self.config_parser.set(DEFAULTSECT, BALLOON_FONT, font)
-            self._notify()
-
     def _set_default_fonts(self):
         DEFAULTS[MAJOR_STRIP_FONT] = Font(12, weight=wx.FONTWEIGHT_BOLD).serialize()
         DEFAULTS[MINOR_STRIP_FONT] = Font(8).serialize()
@@ -259,6 +251,8 @@ class Config(Observable):
             return self._get_int(key)
         elif key in COLOURS:
             return self._get_colour(key)
+        elif key in FONTS:
+            return self._get_font(key)
         else:
             return self.config_parser.get(DEFAULTSECT, key)
 
@@ -272,16 +266,26 @@ class Config(Observable):
     def _get_colour(self, key):
         return self._string_to_tuple(self.config_parser.get(DEFAULTSECT, key))
 
-    def _set_colour(self, key, value):
-        self.config_parser.set(DEFAULTSECT, key, self._tuple_to_string(value))
+    def _get_font(self, key):
+        return self.config_parser.get(DEFAULTSECT, key)
 
     def _set(self, key, value):
         if key in COLOURS:
             self._set_colour(key, value)
+        elif key in FONTS:
+            self._set_font(key, value)
         else:
             if self._toStr(value) is not None:
                 self.config_parser.set(DEFAULTSECT, key, self._toStr(value))
                 self._notify()
+
+    def _set_colour(self, key, value):
+        self.config_parser.set(DEFAULTSECT, key, self._tuple_to_string(value))
+
+    def _set_font(self, key, value):
+        if self._toStr(value) is not None:
+            self.config_parser.set(DEFAULTSECT, key, value)
+            self._notify()
 
 
 # To add a new boolean, integer, colour or string configuration item
@@ -327,9 +331,13 @@ COLOUR_CONFIGS = (
     {'name': 'minor_strip_divider_line_colour', 'default': '(200, 200, 200)'},
     {'name': 'major_strip_divider_line_colour', 'default': '(200, 200, 200)'},
 )
+FONT_CONFIGS = (
+    {'name': 'balloon_font', 'default': '10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)'},
+)
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 INTS = [d['name'] for d in INT_CONFIGS]
 COLOURS = [d['name'] for d in COLOUR_CONFIGS]
+FONTS = [d['name'] for d in FONT_CONFIGS]
 
 
 def setatt(name):
@@ -337,6 +345,6 @@ def setatt(name):
                                    lambda self, value: self._set(name, str(value))))
 
 # Create properties dynamically
-for data in BOOLEAN_CONFIGS + INT_CONFIGS + STR_CONFIGS + COLOUR_CONFIGS:
+for data in BOOLEAN_CONFIGS + INT_CONFIGS + STR_CONFIGS + COLOUR_CONFIGS + FONT_CONFIGS:
     setatt(data['name'])
     DEFAULTS[data['name']] = data['default']
