@@ -593,7 +593,7 @@ class DefaultDrawingAlgorithm(Drawer):
             return w, h
 
         (inner_rect_w, inner_rect_h) = (iw, _) = get_icon_size()
-        self.dc.SetFont(Font(8))
+        font.set_balloon_text_font(self.appearance.get_balloon_font(), self.dc)
         max_text_width = max_text_width(iw)
         lines = get_description_lines(max_text_width, iw)
         if lines is not None:

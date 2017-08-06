@@ -50,6 +50,7 @@ WEEK_START = "week_start"
 MAJOR_STRIP_FONT = "major_strip_font"
 MINOR_STRIP_FONT = "minor_strip_font"
 LEGEND_FONT = "legend_font"
+BALLOON_FONT = "balloon_font"
 DATE_FORMAT = "date_format"
 DEFAULTS = {
     SELECTED_EVENT_BOX_DRAWER: "Default Event box drawer",
@@ -209,10 +210,19 @@ class Config(Observable):
             self.config_parser.set(DEFAULTSECT, LEGEND_FONT, font)
             self._notify()
 
+    def get_balloon_font(self):
+        return self.config_parser.get(DEFAULTSECT, BALLOON_FONT)
+
+    def set_balloon_font(self, font):
+        if self._toStr(font) is not None:
+            self.config_parser.set(DEFAULTSECT, BALLOON_FONT, font)
+            self._notify()
+
     def _set_default_fonts(self):
         DEFAULTS[MAJOR_STRIP_FONT] = Font(12, weight=wx.FONTWEIGHT_BOLD).serialize()
         DEFAULTS[MINOR_STRIP_FONT] = Font(8).serialize()
         DEFAULTS[LEGEND_FONT] = Font(8).serialize()
+        DEFAULTS[BALLOON_FONT] = Font(8).serialize()
 
     def _string_to_tuple(self, tuple_string):
         return tuple([int(x.strip()) for x in tuple_string[1:-1].split(",")])
