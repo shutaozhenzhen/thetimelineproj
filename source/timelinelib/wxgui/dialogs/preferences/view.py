@@ -179,6 +179,19 @@ class PreferencesDialog(Dialog):
                             label="Timeline"
                             align="ALIGN_CENTER_VERTICAL"
                         />
+                        <StaticText
+                            label="$(balloon_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <Button
+                            name="select_balloon"
+                            event_EVT_BUTTON="on_balloon_click"
+                            label="$(edit_text)"
+                        />
+                        <StaticText
+                            name="balloon_font_sample"
+                            label="Timeline"
+                        />
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -317,6 +330,7 @@ class PreferencesDialog(Dialog):
             "colours_text": _("Colours"),
             "major_strip_text": _("Major Strips:"),
             "minor_strip_text": _("Minor Strips:"),
+            "balloon_text": _("Balloons:"),
             "icons_text": _("Icons"),
             "fuzzy_icon_text": _("Fuzzy icon"),
             "locked_icon_text": _("Locked icon"),
@@ -471,6 +485,10 @@ class PreferencesDialog(Dialog):
 
     def GetSkipSInDecadeText(self):
         return self.skip_s_in_decade_text.IsChecked()
+
+    def SetBalloonFont(self, font):
+        self.balloon_font_sample.SetFont(font)
+        self.font_sizer.Layout()
 
     def SetMajorStripFont(self, font):
         self.major_strip_font_sample.SetFont(font)
