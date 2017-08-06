@@ -66,9 +66,9 @@ class describe_preferences_dialog_controller(UnitTestCase):
         self.config.vertical_space_between_events = 5
         self.config.colorize_weekends = False
         self.config.skip_s_in_decade_text = False
-        self.config.get_major_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
+        self.config.major_strip_font = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.minor_strip_font = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
-        self.config.get_legend_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
+        self.config.legend_font = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.balloon_font = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.legend_pos = 0
         self.config.date_format = "yyyy-mm-dd"
@@ -181,11 +181,11 @@ class describe_preferences_dialog_controller(UnitTestCase):
     def test_on_major_strip_click(self):
         font = Mock()
         font.serialize.return_value = FONT
-        self.config.get_major_strip_font.return_value = FONT
+        self.config.major_strip_font = FONT
         self.controller.config = self.config
         self.view.ShowEditFontDialog.return_value = True
         self.controller.on_major_strip_click(None)
-        self.config.set_major_strip_font.assert_called_with(FONT)
+        self.assertEqual(FONT, self.config.major_strip_font)
 
     def test_on_major_minor_click(self):
         font = Mock()
@@ -237,18 +237,18 @@ class describe_preferences_dialog_controller(UnitTestCase):
 
     def test_on_legend_click_ok(self):
         self.controller.config = self.config
-        self.config.get_legend_font.return_value = FONT
+        self.config.legend_font = FONT
         self.view.ShowEditFontDialog.return_value = True
         self.controller.on_legend_click(self.evt)
-        self.config.set_legend_font.assert_called_with(FONT)
+        self.assertEqual(FONT, self.config.legend_font)
 
     def test_on_legend_click_cancel(self):
         evt = Mock()
         self.controller.config = self.config
-        self.config.get_legend_font.return_value = FONT
+        self.config.legend_font = FONT
         self.view.ShowEditFontDialog.return_value = False
         self.controller.on_legend_click(evt)
-        self.assertEqual(self.config.set_legend_font.call_count, 0)
+        self.assertEqual(FONT, self.config.legend_font)
 
     def test_sets_never_use_time(self):
         self.config.never_use_time = sentinel.NEVER_USE_TIME
