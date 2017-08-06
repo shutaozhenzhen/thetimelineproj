@@ -16,6 +16,8 @@ GUI:
 
 * Using context menu no longer causes toolbar menu to stop working.
 
+* Balloon text font is now settable in prefernces dialog.
+
 Fixed crash reports and bugs:
 
 * ``AttributeError: 'NoneType' object has no attribute 'GetParent'``
