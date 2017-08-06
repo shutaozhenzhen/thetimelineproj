@@ -194,14 +194,6 @@ class Config(Observable):
             self.config_parser.set(DEFAULTSECT, MAJOR_STRIP_FONT, font)
             self._notify()
 
-    def get_minor_strip_font(self):
-        return self.config_parser.get(DEFAULTSECT, MINOR_STRIP_FONT)
-
-    def set_minor_strip_font(self, font):
-        if self._toStr(font) is not None:
-            self.config_parser.set(DEFAULTSECT, MINOR_STRIP_FONT, font)
-            self._notify()
-
     def get_legend_font(self):
         return self.config_parser.get(DEFAULTSECT, LEGEND_FONT)
 
@@ -332,6 +324,7 @@ COLOUR_CONFIGS = (
     {'name': 'major_strip_divider_line_colour', 'default': '(200, 200, 200)'},
 )
 FONT_CONFIGS = (
+    {'name': 'minor_strip_font', 'default': '10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)'},
     {'name': 'balloon_font', 'default': '10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
