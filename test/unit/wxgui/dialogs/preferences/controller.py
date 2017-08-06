@@ -67,7 +67,7 @@ class describe_preferences_dialog_controller(UnitTestCase):
         self.config.colorize_weekends = False
         self.config.skip_s_in_decade_text = False
         self.config.get_major_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
-        self.config.get_minor_strip_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
+        self.config.minor_strip_font = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.get_legend_font.return_value = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.balloon_font = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
         self.config.legend_pos = 0
@@ -190,11 +190,11 @@ class describe_preferences_dialog_controller(UnitTestCase):
     def test_on_major_minor_click(self):
         font = Mock()
         font.serialize.return_value = FONT
-        self.config.get_minor_strip_font.return_value = FONT
+        self.config.minor_strip_font = FONT
         self.controller.config = self.config
         self.view.ShowEditFontDialog.return_value = True
         self.controller.on_minor_strip_click(None)
-        self.config.set_minor_strip_font.assert_called_with(FONT)
+        self.assertEqual(FONT, self.config.minor_strip_font)
 
     def test_on_fuzzy_icon_changed(self):
         self.evt.GetString.return_value = sentinel.STRING

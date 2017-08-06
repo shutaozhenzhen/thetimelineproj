@@ -85,9 +85,9 @@ class PreferencesDialogController(Controller):
             self.view.SetMajorStripFont(font)
 
     def on_minor_strip_click(self, event):
-        font = deserialize_font(self.config.get_minor_strip_font())
+        font = deserialize_font(self.config.minor_strip_font)
         if self.view.ShowEditFontDialog(font):
-            self.config.set_minor_strip_font(font.serialize())
+            self.config.minor_strip_font = font.serialize()
             self.view.SetMinorStripFont(font)
 
     def on_legend_click(self, event):
@@ -152,7 +152,7 @@ class PreferencesDialogController(Controller):
         self.view.SetDisplayCheckmarkOnEventsDone(self.config.display_checkmark_on_events_done)
         self.view.SetNeverUseTime(self.config.never_use_time)
         self.view.SetMajorStripFont(deserialize_font(self.config.get_major_strip_font()))
-        self.view.SetMinorStripFont(deserialize_font(self.config.get_minor_strip_font()))
+        self.view.SetMinorStripFont(deserialize_font(self.config.minor_strip_font))
         self.view.SetLegendFont(deserialize_font(self.config.get_legend_font()))
         self.view.SetBalloonFont(deserialize_font(self.config.balloon_font))
         self.view.SetLegendPos(self.config.legend_pos)
