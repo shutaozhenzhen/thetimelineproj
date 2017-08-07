@@ -486,24 +486,25 @@ class PreferencesDialog(Dialog):
     def GetSkipSInDecadeText(self):
         return self.skip_s_in_decade_text.IsChecked()
 
-    def SetBalloonFont(self, font):
-        self.balloon_font_sample.SetFont(font)
-        self.font_sizer.Layout()
-
     def SetMajorStripFont(self, font):
-        self.major_strip_font_sample.SetFont(font)
-        self.font_sizer.Layout()
+        self._SetFont(self.major_strip_font_sample, font)
 
     def SetMinorStripFont(self, font):
-        self.minor_strip_font_sample.SetFont(font)
-        self.font_sizer.Layout()
+        self._SetFont(self.minor_strip_font_sample, font)
 
     def SetLegendFont(self, font):
-        self.legend_font_sample.SetFont(font)
-        self.font_sizer.Layout()
+        self._SetFont(self.legend_font_sample, font)
+
+    def SetBalloonFont(self, font):
+        self._SetFont(self.balloon_font_sample, font)
 
     def GetLegendPos(self):
         return self.legend_positions.GetSelection()
 
     def SetLegendPos(self, pos):
         self.legend_positions.SetSelection(pos)
+
+    def _SetFont(self, control, font):
+        control.SetFont(font)
+        control.SetForegroundColour(font.WxColor)
+        self.font_sizer.Layout()
