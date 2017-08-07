@@ -18,6 +18,8 @@ GUI:
 
 * Balloon text font is now settable in prefernces dialog.
 
+* Sample text for font prefrences are now coloured also.
+
 Fixed crash reports and bugs:
 
 * ``AttributeError: 'NoneType' object has no attribute 'GetParent'``
