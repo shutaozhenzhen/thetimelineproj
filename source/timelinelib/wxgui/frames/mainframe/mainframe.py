@@ -335,10 +335,13 @@ class GuiCreator(object):
 
     def _create_view_toolbar_menu_item(self, view_menu):
         item = view_menu.Append(wx.ID_ANY, _("Toolbar"), kind=wx.ITEM_CHECK)
+
         def on_click(event):
             self.config.show_toolbar = event.IsChecked()
+
         def check_item_corresponding_to_config():
             item.Check(self.config.show_toolbar)
+
         self.Bind(wx.EVT_MENU, on_click, item)
         self.config.listen_for_any(check_item_corresponding_to_config)
         check_item_corresponding_to_config()
