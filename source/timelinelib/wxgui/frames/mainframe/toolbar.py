@@ -38,8 +38,8 @@ class ToolbarCreator(object):
     def _add_event_text_alignment(self):
         spec = {'tool-1-name': _("Left"),
                 'tool-2-name': _("Center"),
-                'tool-1-image': 'format-justify-left.png',
-                'tool-2-image': 'format-justify-center.png',
+                'tool-1-image': 'format-justify-center.png',
+                'tool-2-image': 'format-justify-left.png',
                 'config-name': 'center_event_texts',
                 }
         self._toggle_toolbar(spec)
