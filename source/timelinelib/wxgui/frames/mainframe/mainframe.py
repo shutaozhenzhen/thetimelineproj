@@ -370,17 +370,17 @@ class GuiCreator(object):
         left_item = sub_menu.Append(wx.ID_ANY, _("Left"), kind=wx.ITEM_RADIO)
         center_item = sub_menu.Append(wx.ID_ANY, _("Center"), kind=wx.ITEM_RADIO)
         view_menu.AppendMenu(wx.ID_ANY, _("Point event alignment"), sub_menu)
-        def on_left_tool_click(event):
+        def on_first_tool_click(event):
             self.config.draw_point_events_to_right = True
-        def on_center_tool_click(event):
+        def on_second_tool_click(event):
             self.config.draw_point_events_to_right = False
         def check_item_corresponding_to_config():
             if self.config.draw_point_events_to_right:
                 left_item.Check()
             else:
                 center_item.Check()
-        self.Bind(wx.EVT_MENU, on_left_tool_click, left_item)
-        self.Bind(wx.EVT_MENU, on_center_tool_click, center_item)
+        self.Bind(wx.EVT_MENU, on_first_tool_click, left_item)
+        self.Bind(wx.EVT_MENU, on_second_tool_click, center_item)
         self.config.listen_for_any(check_item_corresponding_to_config)
         check_item_corresponding_to_config()
 
