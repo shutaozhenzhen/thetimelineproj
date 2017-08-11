@@ -29,14 +29,12 @@ from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.db import db_open
 from timelinelib.db.utils import safe_locking
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
-from timelinelib.features.installed.installedfeatures import InstalledFeatures
 from timelinelib.meta.about import APPLICATION_NAME
 from timelinelib.meta.about import display_about_dialog
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin.factory import EXPORTER
 from timelinelib.plugin import factory
 from timelinelib.proxies.drawingarea import DrawingAreaProxy
-from timelinelib.proxies.sidebar import SidebarProxy
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.utils import ex_msg
@@ -46,7 +44,6 @@ from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
-from timelinelib.wxgui.dialogs.feature.view import show_feature_feedback_dialog
 from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
 from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
 from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
@@ -55,7 +52,6 @@ from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
 from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.systeminfo.view import show_system_info_dialog
-from timelinelib.wxgui.dialogs.systeminfo.view import SystemInfoDialog
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
@@ -66,7 +62,6 @@ from timelinelib.wxgui.utils import display_categories_editor_moved_message
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.utils import WildcardHelper
-import timelinelib.wxgui.utils as gui_utils
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
