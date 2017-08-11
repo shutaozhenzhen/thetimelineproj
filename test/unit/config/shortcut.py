@@ -25,7 +25,7 @@ from timelinelib.config.dotfile import Config
 from timelinelib.config.shortcut import ShortcutController
 from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.config.shortcut as sc
-import timelinelib.wxgui.frames.mainframe.mainframe as mf
+import timelinelib.wxgui.frames.mainframe.guicreator as mf
 
 
 NEW_FUNCTION = u"⟪File⟫->⟪New...⟫"
