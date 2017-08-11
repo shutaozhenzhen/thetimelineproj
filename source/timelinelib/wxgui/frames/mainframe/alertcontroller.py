@@ -23,13 +23,16 @@ from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 
 class AlertController(object):
 
-    def display_events_alerts(self, all_events, time_type):
+    def display_events_alerts(self, all_events, time_type, dialog=None):
+        self._active = True
+        self._dialog = dialog
         self.time_type = time_type
-        for event in all_events:
+        for event in [event for event in all_events
+                      if event.get_data("alert") is not None]:
+            print event.get_text(), event.get_data('alert')
             alert = event.get_data("alert")
-            if alert is not None:
-                if self._time_has_expired(alert[0]):
-                    self._display_and_delete_event_alert(event, alert)
+            if self._time_has_expired(alert[0]):
+                self._display_and_delete_event_alert(event, alert)
 
     def _display_and_delete_event_alert(self, event, alert):
         self._display_alert_dialog(alert, event)
@@ -40,11 +43,13 @@ class AlertController(object):
 
     def _display_alert_dialog(self, alert, event):
         text = self._format_alert_text(alert, event)
-        dialog = TextDisplayDialog("Alert", text)
-        dialog.SetWindowStyleFlag(dialog.GetWindowStyleFlag() | wx.STAY_ON_TOP)
-        wx.Bell()
-        dialog.ShowModal()
-        dialog.Destroy()
+        if self._dialog is None:
+            self._dialog = TextDisplayDialog("Alert")
+            wx.Bell()
+        self._dialog.SetText(text)
+        self._dialog.SetWindowStyleFlag(self._dialog.GetWindowStyleFlag() | wx.STAY_ON_TOP)
+        self._dialog.ShowModal()
+        self._dialog.Destroy()
 
     def _format_alert_text(self, alert, event):
         text1 = "Trigger time: %s\n\n" % alert[0]
