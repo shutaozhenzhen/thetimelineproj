@@ -35,9 +35,6 @@ class AlertController(object):
         self._display_alert_dialog(alert, event)
         event.set_data("alert", None)
 
-    def _alert_time_as_text(self, alert):
-        return "%s" % alert[0]
-
     def _time_has_expired(self, time):
         return time <= self.time_type.now()
 
