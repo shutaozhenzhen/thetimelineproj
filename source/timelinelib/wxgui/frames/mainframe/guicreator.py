@@ -39,9 +39,6 @@ from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.systeminfo.view import show_system_info_dialog
 
 
-CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
-
-
 NONE = 0
 CHECKBOX = 1
 CHECKED_RB = 2
