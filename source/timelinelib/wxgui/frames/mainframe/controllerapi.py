@@ -138,15 +138,11 @@ class MainFrameApiUsedByController(object):
         mnu_set_category.Enable(some_event_selected)
         self._timeline_menu.FindItemById(guic.ID_MOVE_EVENT_UP).Enable(one_event_selected)
         self._timeline_menu.FindItemById(guic.ID_MOVE_EVENT_DOWN).Enable(one_event_selected)
-        # self.mnu_timeline_edit_event.Enable(one_event_selected)
-        # self.mnu_timeline_duplicate_event.Enable(one_event_selected)
-        # self.mnu_timeline_set_event_category.Enable(some_event_selected)
 
     def _enable_disable_measure_distance_between_two_events_menu(self):
         two_events_selected = self.main_panel.get_nbr_of_selected_events() == 2
         mnu_measure_distance = self._timeline_menu.FindItemById(guic.ID_MEASURE_DISTANCE)
         mnu_measure_distance.Enable(two_events_selected)
-        # self.mnu_timeline_measure_distance_between_events.Enable(two_events_selected)
 
     def _enable_disable_searchbar(self):
         if self.timeline is None:
