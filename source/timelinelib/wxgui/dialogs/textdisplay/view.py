@@ -35,7 +35,7 @@ class TextDisplayDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, title, text, parent=None):
+    def __init__(self, title, text='', parent=None):
         Dialog.__init__(self, TextDisplayDialogController, parent, {
             "id_copy": wx.ID_COPY,
         }, title=title)

@@ -18,6 +18,8 @@
 
 import wx
 
+from mock import Mock
+
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.test.cases.unit import UnitTestCase
@@ -27,11 +29,27 @@ from timelinelib.wxgui.frames.mainframe.mainframe import AlertController
 
 class describe_alert_controller(UnitTestCase):
 
-    def test_alert_text_formatting(self):
-        self.controller.time_type = GregorianTimeType()
-        text = self.controller._format_alert_text(self.alert, self.event)
-        expected_text = "Trigger time: %s\n\nEvent: %s\n\nTime to go" % (self.now, self.event.get_label(GregorianTimeType()))
-        self.assertEqual(expected_text, text)
+    def test_display_events_alerts(self):
+
+        def assert_prequisites():
+            self.assertFalse(self.event.get_data("alert") is None)
+
+        def assert_dialog_calls(dlg):
+            expected_text = "Trigger time: %s\n\nEvent: %s\n\nTime to go" % (
+                self.now, self.event.get_label(GregorianTimeType()))
+            dlg.SetText.assert_called_with(expected_text)
+            dlg.SetWindowStyleFlag.assert_called_with(wx.STAY_ON_TOP)
+            dlg.ShowModal.assert_called_with()
+            dlg.Destroy.assert_called_with()
+
+        def assert_event_data():
+            self.assertTrue(self.event.get_data("alert") is None)
+
+        dlg = self.a_dialog_mock()
+        assert_prequisites()
+        self.controller.display_events_alerts([self.event, an_event()], GregorianTimeType(), dialog=dlg)
+        assert_dialog_calls(dlg)
+        assert_event_data()
 
     def test_pytime_has_expired(self):
         self.given_early_pytimes()
@@ -44,6 +62,11 @@ class describe_alert_controller(UnitTestCase):
         expired = self.controller._time_has_expired(self.tm)
         self.assertFalse(expired)
 
+    def a_dialog_mock(self):
+        dlg = Mock()
+        dlg.GetWindowStyleFlag.return_value = 0
+        return dlg
+
     def given_early_pytimes(self):
         self.given_pytime_now()
         self.given_pytime_earlier()
@@ -55,12 +78,6 @@ class describe_alert_controller(UnitTestCase):
         self.given_pytime_later()
         self.given_controller_time_type(GregorianTimeType())
         self.alert = (self.now, "Time to go")
-
-    def given_wxtime_later(self):
-        self.tm = self.now + wx.TimeSpan(hours=12)
-
-    def given_wxtime_earlier(self):
-        self.tm = self.now - wx.TimeSpan(hours=12)
 
     def given_pytime_now(self):
         self.now = GregorianTimeType().now()
@@ -78,4 +95,5 @@ class describe_alert_controller(UnitTestCase):
         self.now = GregorianTimeType().now()
         self.alert = (self.now, "Time to go")
         self.event = an_event()
+        self.event.set_data('alert', self.alert)
         self.controller = AlertController()
