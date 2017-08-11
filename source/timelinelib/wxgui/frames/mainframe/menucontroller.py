@@ -20,12 +20,14 @@ class MenuController(object):
 
     def __init__(self):
         self.current_timeline = None
+        self._has_timeline = False
         self.menus_requiring_timeline = []
         self.menus_requiring_writable_timeline = []
         self.menus_requiring_visible_timeline_view = []
 
     def on_timeline_change(self, timeline):
         self.current_timeline = timeline
+        self._has_timeline = self.current_timeline is not None
 
     def add_menu_requiring_writable_timeline(self, menu):
         self.menus_requiring_writable_timeline.append(menu)
@@ -45,7 +47,7 @@ class MenuController(object):
             self._enable_disable_menu_requiring_visible_timeline_view(menu, timeline_view_visible)
 
     def _enable_disable_menu_requiring_writable_timeline(self, menu):
-        if self.current_timeline is None:
+        if not self._has_timeline:
             menu.Enable(False)
         elif self.current_timeline.is_read_only():
             menu.Enable(False)
@@ -53,8 +55,7 @@ class MenuController(object):
             menu.Enable(True)
 
     def _enable_disable_menu_requiring_timeline(self, menu):
-        menu.Enable(self.current_timeline is not None)
+        menu.Enable(self._has_timeline)
 
     def _enable_disable_menu_requiring_visible_timeline_view(self, menu, timeline_view_visible):
-        has_timeline = self.current_timeline is not None
-        menu.Enable(has_timeline and timeline_view_visible)
+        menu.Enable(self._has_timeline and timeline_view_visible)
