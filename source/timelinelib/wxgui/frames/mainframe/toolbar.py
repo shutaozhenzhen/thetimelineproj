@@ -68,10 +68,10 @@ class ToolbarCreator(object):
         left_tool = self._add_radio(spec['tool-1-name'], spec['tool-1-image'])
         center_tool = self._add_radio(spec['tool-2-name'], spec['tool-2-image'])
 
-        def on_left_click(event):
+        def on_left_tool_click(event):
             self._config._set(spec['config-name'], True)
 
-        def on_center_click(event):
+        def on_center_tool_click(event):
             self._config._set(spec['config-name'], False)
 
         def check_item_corresponding_to_config():
@@ -79,7 +79,7 @@ class ToolbarCreator(object):
                 self.toolbar.ToggleTool(left_tool.GetId(), True)
             else:
                 self.toolbar.ToggleTool(center_tool.GetId(), True)
-        self._parent.Bind(wx.EVT_TOOL, on_left_click, left_tool)
-        self._parent.Bind(wx.EVT_TOOL, on_center_click, center_tool)
+        self._parent.Bind(wx.EVT_TOOL, on_left_tool_click, left_tool)
+        self._parent.Bind(wx.EVT_TOOL, on_center_tool_click, center_tool)
         self._config.listen_for_any(check_item_corresponding_to_config)
         check_item_corresponding_to_config()
