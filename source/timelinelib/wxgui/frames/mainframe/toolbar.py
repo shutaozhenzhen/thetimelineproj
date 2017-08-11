@@ -66,21 +66,21 @@ class ToolbarCreator(object):
         self._parent.Layout()
 
     def _toggle_toolbar(self, spec):
-        left_tool = self._add_radio(spec['tool-1-name'], spec['tool-1-image'])
-        center_tool = self._add_radio(spec['tool-2-name'], spec['tool-2-image'])
+        first_tool = self._add_radio(spec['tool-1-name'], spec['tool-1-image'])
+        second_tool = self._add_radio(spec['tool-2-name'], spec['tool-2-image'])
 
-        def on_left_tool_click(event):
+        def on_first_tool_click(event):
             self._config._set(spec['config-name'], True)
 
-        def on_center_tool_click(event):
+        def on_second_tool_click(event):
             self._config._set(spec['config-name'], False)
 
         def check_item_corresponding_to_config():
             if self._config._get(spec['config-name']):
-                self.toolbar.ToggleTool(left_tool.GetId(), True)
+                self.toolbar.ToggleTool(first_tool.GetId(), True)
             else:
-                self.toolbar.ToggleTool(center_tool.GetId(), True)
-        self._parent.Bind(wx.EVT_TOOL, on_left_tool_click, left_tool)
-        self._parent.Bind(wx.EVT_TOOL, on_center_tool_click, center_tool)
+                self.toolbar.ToggleTool(second_tool.GetId(), True)
+        self._parent.Bind(wx.EVT_TOOL, on_first_tool_click, first_tool)
+        self._parent.Bind(wx.EVT_TOOL, on_second_tool_click, second_tool)
         self._config.listen_for_any(check_item_corresponding_to_config)
         check_item_corresponding_to_config()
