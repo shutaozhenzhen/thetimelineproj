@@ -57,7 +57,8 @@ class ToolbarCreator(object):
         return self.toolbar.AddRadioLabelTool(
             wx.ID_ANY,
             text,
-            self._parent.BitmapFromIcon(icon)
+            self._parent.BitmapFromIcon(icon),
+            shortHelp=text
         )
 
     def _set_visibility(self):
