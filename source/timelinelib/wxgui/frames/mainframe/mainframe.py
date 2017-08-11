@@ -304,7 +304,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         try:
             visible_events = self._all_visible_events()
             if len(visible_events) > 0:
-                time_type = self.timeline.get_time_type()
                 start = self._first_time(visible_events)
                 end = self._last_time(visible_events)
                 return TimePeriod(start, end).zoom(-1)
