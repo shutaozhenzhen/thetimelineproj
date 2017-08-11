@@ -46,6 +46,7 @@ from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.utils import WildcardHelper
 import timelinelib.wxgui.frames.mainframe.guicreator as guic
 from timelinelib.wxgui.frames.mainframe.controllerapi import MainFrameApiUsedByController
+from timelinelib.wxgui.frames.mainframe.alertcontroller import AlertController
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -344,41 +345,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.alert_dialog_open = True
         all_events = self.timeline.get_all_events()
         AlertController().display_events_alerts(all_events, self.timeline.get_time_type())
-
-
-class AlertController(object):
-
-    def display_events_alerts(self, all_events, time_type):
-        self.time_type = time_type
-        for event in all_events:
-            alert = event.get_data("alert")
-            if alert is not None:
-                if self._time_has_expired(alert[0]):
-                    self._display_and_delete_event_alert(event, alert)
-
-    def _display_and_delete_event_alert(self, event, alert):
-        self._display_alert_dialog(alert, event)
-        event.set_data("alert", None)
-
-    def _alert_time_as_text(self, alert):
-        return "%s" % alert[0]
-
-    def _time_has_expired(self, time):
-        return time <= self.time_type.now()
-
-    def _display_alert_dialog(self, alert, event):
-        text = self._format_alert_text(alert, event)
-        dialog = TextDisplayDialog("Alert", text)
-        dialog.SetWindowStyleFlag(dialog.GetWindowStyleFlag() | wx.STAY_ON_TOP)
-        wx.Bell()
-        dialog.ShowModal()
-        dialog.Destroy()
-
-    def _format_alert_text(self, alert, event):
-        text1 = "Trigger time: %s\n\n" % alert[0]
-        text2 = "Event: %s\n\n" % event.get_label(self.time_type)
-        text = "%s%s%s" % (text1, text2, alert[1])
-        return text
 
 
 class MenuController(object):
