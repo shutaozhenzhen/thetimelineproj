@@ -53,7 +53,7 @@ class GregorianDatePicker(wx.Panel):
     def _create_bc_button(self):
         label = _("BC")
         self.bc_button = wx.ToggleButton(self, label=label)
-        (label_width, label_height) = self.bc_button.GetTextExtent(label)
+        label_width = self.bc_button.GetTextExtent(label)[0]
         self.bc_button.SetMinSize((label_width + 20, -1))
 
     def _layout(self):
