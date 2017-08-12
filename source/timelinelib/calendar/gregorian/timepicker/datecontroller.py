@@ -34,10 +34,8 @@ class GregorianDatePickerController(humblewx.Controller):
         if event.GetKeyCode() == wx.WXK_TAB:
             if event.ShiftDown():
                 tab_handled = self.on_shift_tab()
-                flag = wx.NavigationKeyEvent.IsBackward
             else:
                 tab_handled = self.on_tab()
-                flag = wx.NavigationKeyEvent.IsForward
             skip = not tab_handled
         elif event.GetKeyCode() == wx.WXK_UP:
             self.on_key_up()
