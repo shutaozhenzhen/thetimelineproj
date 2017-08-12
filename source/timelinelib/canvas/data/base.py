@@ -68,6 +68,7 @@ class ItemBase(object):
 def create_noop_property(klass, name, value):
     def getter(self):
         return value
+
     def setter(self, value):
         return self
     setattr(klass, "get_{0}".format(name), getter)
