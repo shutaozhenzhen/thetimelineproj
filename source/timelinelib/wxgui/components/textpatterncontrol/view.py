@@ -67,3 +67,4 @@ class TextPatternControl(TextCtrl):
 
     def _on_set_focus(self, event):
         wx.CallAfter(self.controller.on_after_set_focus)
+        event.Skip()
