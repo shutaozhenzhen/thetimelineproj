@@ -19,7 +19,6 @@
 import getpass
 import os
 
-from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.wxgui.dialogs.slideshow.view import open_slideshow_dialog
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_warning_message
