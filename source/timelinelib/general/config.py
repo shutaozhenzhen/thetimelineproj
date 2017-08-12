@@ -46,6 +46,7 @@ class Config(Observable):
                 item.get_section(),
                 item.get_config_name()
             ))
+
         def setter(value):
             self._config_parser.set(
                 item.get_section(),
