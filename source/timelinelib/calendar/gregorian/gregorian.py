@@ -56,8 +56,10 @@ class GregorianDateTime(object):
             jan_4 = GregorianDateTime.from_ymd(year, 1, 4).to_time()
             jan_4_day_of_week = GregorianTimeType().get_day_of_week(jan_4)
             return jan_4 - GregorianDelta.from_days(jan_4_day_of_week)
+
         def days_between(end, start):
             return end.julian_day - start.julian_day
+
         def days_since_monday_week_1(time):
             year = GregorianDateTime.from_time(time).year
             diff = days_between(end=time, start=monday_week_1(year + 1))
