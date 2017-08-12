@@ -71,7 +71,7 @@ class Transactions(Observable):
         self.ensure_is_current(transaction)
         self._current_transaction = transaction.parent
         if self._current_transaction is None:
-            self._history = self._history[:self._current_index+1]
+            self._history = self._history[:self._current_index + 1]
             self._history.append((transaction.name, transaction.value))
             self._history = self._history[-self._history_size:]
             self._current_index = len(self._history) - 1
