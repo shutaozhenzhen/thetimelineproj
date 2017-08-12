@@ -136,11 +136,13 @@ class ImmutableDB(ImmutableRecord):
     def delete_category(self, delete_id):
         self._ensure_category_exists(delete_id)
         new_parent_id = self.categories.get(delete_id).parent_id
+
         def update_parent_id(category):
             if category.parent_id == delete_id:
                 return category.update(parent_id=new_parent_id)
             else:
                 return category
+
         def update_category_id(thing):
             if thing.category_id == delete_id:
                 return thing.update(category_id=new_parent_id)
@@ -161,6 +163,7 @@ class ImmutableDB(ImmutableRecord):
 
     def delete_container(self, delete_id):
         self._ensure_container_exists(delete_id)
+
         def update_container_id(event):
             if event.container_id == delete_id:
                 return event.update(container_id=None)
