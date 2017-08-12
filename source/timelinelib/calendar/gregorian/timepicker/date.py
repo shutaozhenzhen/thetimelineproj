@@ -29,9 +29,9 @@ class GregorianDatePicker(wx.Panel):
 
     def __init__(self, parent, date_formatter, name=None):
         wx.Panel.__init__(self, parent)
-        self.controller = GregorianDatePickerController(self)
+        self._controller = GregorianDatePickerController(self)
         self._create_gui(date_formatter)
-        self.controller.on_init(
+        self._controller.on_init(
             date_formatter,
             DateModifier()
         )
@@ -47,8 +47,8 @@ class GregorianDatePicker(wx.Panel):
             style=wx.TE_PROCESS_ENTER,
             fit_text=self._format_sample_date(date_formatter)
         )
-        self.date_text.Bind(wx.EVT_CHAR, self.controller.on_char)
-        self.date_text.Bind(wx.EVT_TEXT, self.controller.on_text)
+        self.date_text.Bind(wx.EVT_CHAR, self._controller.on_char)
+        self.date_text.Bind(wx.EVT_TEXT, self._controller.on_text)
 
     def _create_bc_button(self):
         label = _("BC")
@@ -70,10 +70,10 @@ class GregorianDatePicker(wx.Panel):
         )[0]
 
     def GetGregorianDate(self):
-        return self.controller.get_gregorian_date()
+        return self._controller.get_gregorian_date()
 
     def SetGregorianDate(self, date):
-        self.controller.set_gregorian_date(date)
+        self._controller.set_gregorian_date(date)
 
     def GetText(self):
         return self.date_text.GetValue()
