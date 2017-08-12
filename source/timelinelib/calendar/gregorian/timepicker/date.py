@@ -85,7 +85,7 @@ class GregorianDatePicker(wx.Panel):
 
     def SetSelection(self, pos_lenght_tuple):
         (pos, lenght) = pos_lenght_tuple
-        self.date_text.SetSelection(pos, pos+lenght)
+        self.date_text.SetSelection(pos, pos + lenght)
 
     def GetCursorPosition(self):
         return self.date_text.GetInsertionPoint()
