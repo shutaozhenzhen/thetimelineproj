@@ -22,6 +22,7 @@ from mock import Mock
 
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event
 from timelinelib.wxgui.frames.mainframe.mainframe import AlertController
@@ -47,7 +48,11 @@ class describe_alert_controller(UnitTestCase):
 
         dlg = self.a_dialog_mock()
         assert_prequisites()
-        self.controller.display_events_alerts([self.event, an_event()], GregorianTimeType(), dialog=dlg)
+        self.controller.display_events_alerts(
+            [self.event, an_event()],
+            GregorianTimeType(),
+            dialog=dlg
+        )
         assert_dialog_calls(dlg)
         assert_event_data()
 
@@ -94,6 +99,8 @@ class describe_alert_controller(UnitTestCase):
     def setUp(self):
         self.now = GregorianTimeType().now()
         self.alert = (self.now, "Time to go")
+        self.db = MemoryDB()
         self.event = an_event()
         self.event.set_data('alert', self.alert)
+        self.event.db = self.db
         self.controller = AlertController()

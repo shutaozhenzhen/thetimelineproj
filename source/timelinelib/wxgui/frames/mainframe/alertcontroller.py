@@ -37,6 +37,7 @@ class AlertController(object):
     def _display_and_delete_event_alert(self, event, alert):
         self._display_alert_dialog(alert, event)
         event.set_data("alert", None)
+        event.save()
 
     def _time_has_expired(self, time):
         return time <= self.time_type.now()
