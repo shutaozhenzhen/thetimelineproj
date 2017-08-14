@@ -343,4 +343,4 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def _display_events_alerts(self):
         self.alert_dialog_open = True
         all_events = self.timeline.get_all_events()
-        AlertController().display_events_alerts(all_events, self.timeline.get_time_type())
+        AlertController(self).display_events_alerts(all_events, self.timeline.get_time_type())

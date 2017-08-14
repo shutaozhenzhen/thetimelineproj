@@ -23,6 +23,9 @@ from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 
 class AlertController(object):
 
+    def __init__(self, main_frame):
+        self._main_frame = main_frame
+
     def display_events_alerts(self, all_events, time_type, dialog=None):
         self._active = True
         self._dialog = dialog
@@ -36,7 +39,9 @@ class AlertController(object):
     def _display_and_delete_event_alert(self, event, alert):
         self._display_alert_dialog(alert, event)
         event.set_data("alert", None)
-        event.save()
+        if self._main_frame.ok_to_edit():
+            event.save()
+            self._main_frame.edit_ends()
 
     def _time_has_expired(self, time):
         return time <= self.time_type.now()

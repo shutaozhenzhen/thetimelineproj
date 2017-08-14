@@ -103,4 +103,5 @@ class describe_alert_controller(UnitTestCase):
         self.event = an_event()
         self.event.set_data('alert', self.alert)
         self.event.db = self.db
-        self.controller = AlertController()
+        self.main_frame = Mock()
+        self.controller = AlertController(self.main_frame)
