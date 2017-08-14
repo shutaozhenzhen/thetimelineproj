@@ -29,7 +29,6 @@ class AlertController(object):
         self.time_type = time_type
         for event in [event for event in all_events
                       if event.get_data("alert") is not None]:
-            print event.get_text(), event.get_data('alert')
             alert = event.get_data("alert")
             if self._time_has_expired(alert[0]):
                 self._display_and_delete_event_alert(event, alert)
