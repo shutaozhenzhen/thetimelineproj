@@ -40,8 +40,10 @@ class AlertController(object):
         self._display_alert_dialog(alert, event)
         event.set_data("alert", None)
         if self._main_frame.ok_to_edit():
-            event.save()
-            self._main_frame.edit_ends()
+            try:
+                event.save()
+            finally:
+                self._main_frame.edit_ends()
 
     def _time_has_expired(self, time):
         return time <= self.time_type.now()
