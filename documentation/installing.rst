@@ -99,7 +99,7 @@ http://www.wxpython.org
 
 There is probably a binary package or installer for your platform.
 
-Timeline requires version 2.8.9.2 or greater.
+Timeline requires version 3.0 or greater.
 
 humblewx (Python package)
 #########################
