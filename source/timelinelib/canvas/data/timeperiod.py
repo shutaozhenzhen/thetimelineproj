@@ -14,9 +14,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 
 
 class TimePeriod(object):
+
     """
     Represents a period in time using a start and end time.
 
@@ -99,7 +101,9 @@ class TimePeriod(object):
         if new_end is None:
             raise ValueError(_("Invalid end time"))
         if new_start > new_end:
-            raise ValueError(_("Start time can't be after end time"))
+            raise ValueError(_("Start time can't be after end time. Start:%s End:%s" %
+                               (GregorianDateTime.from_time(new_start),
+                                GregorianDateTime.from_time(new_end))))
 
     def inside(self, time):
         """
