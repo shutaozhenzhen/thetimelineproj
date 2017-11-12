@@ -84,8 +84,21 @@ def show_system_info_dialog(*args, **kwargs):
 
 
 def get_frame_window(evt):
-    frame = None
+    frame = get_frame_from_invoking_window(evt)
+    if frame is None:
+        frame = get_frame_from_menu_bar(evt)
+    return frame
+
+
+def get_frame_from_invoking_window(evt):
     evt_object = evt.GetEventObject()
     if hasattr(evt_object, 'InvokingWindow'):
-        frame = evt_object.InvokingWindow
-    return frame
+        return evt_object.InvokingWindow
+
+
+def get_frame_from_menu_bar(evt):
+    evt_object = evt.GetEventObject()
+    if hasattr(evt_object, 'MenuBar'):
+        menu_bar = evt_object.MenuBar
+        if hasattr(menu_bar, 'Parent'):
+            return menu_bar.Parent
