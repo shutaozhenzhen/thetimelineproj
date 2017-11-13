@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.15.0 development</version>
+  <version>1.16.0 (400493e48573 2017-11-13)</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -1310,24 +1310,31 @@ Fixed crash reports and bugs:
       <default_color>192,192,192</default_color>
     </event>
     <event>
-      <start>2017-10-31 00:00:00</start>
-      <end>2017-10-31 00:00:00</end>
+      <start>2017-11-13 00:00:00</start>
+      <end>2017-11-13 00:00:00</end>
       <text>Timeline 1.16.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
+      <category>Planned Release</category>
       <description>Version 1.16.0
 --------------
 
-**Planned release on 31 October 2017.**
+**Released on 13 November 2017.**
 
-*Don't want to wait for the final release? Try the beta version!*
+GUI:
 
-* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+* Using context menu no longer causes toolbar menu to stop working.
 
-* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.</description>
+* Balloon text font is now settable in prefernces dialog.
+
+* Sample text for font prefrences are now coloured also.
+
+Fixed crash reports and bugs:
+
+* ``AttributeError: 'NoneType' object has no attribute 'GetParent'``
+  This happens when System info dialog is opened by context popup menu.</description>
       <default_color>192,192,192</default_color>
     </event>
     <event>
@@ -1367,6 +1374,27 @@ Fixed crash reports and bugs:
   ..\..\src\common\wincmn.cpp(3319) in wxWindowBase::ReleaseMouse(): 
   Releasing mouse capture but capture stack empty?``
   This happens in when dragging the mouse from the calendar control.</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2018-02-25 00:00:00</start>
+      <end>2018-02-25 00:00:00</end>
+      <text>Timeline 1.17.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Future Release</category>
+      <description>Version 1.17.0
+--------------
+
+**Planned release on 25 February 2018.**
+
+*Don't want to wait for the final release? Try the beta version!*
+
+* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+
+* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.</description>
       <default_color>192,192,192</default_color>
     </event>
   </events>
