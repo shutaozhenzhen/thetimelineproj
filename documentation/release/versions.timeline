@@ -147,30 +147,6 @@
       <default_color>200,200,200</default_color>
     </event>
     <event>
-      <start>2011-01-30 12:30:00</start>
-      <end>2011-01-30 12:30:00</end>
-      <text>Timeline 0.12.1</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Correction Release</category>
-      <description>Timeline 0.12.1, released on 30 January 2011 ============================================ This is a translation update and bugfix release. Bug fixes: * Menu items are correctly disabled if no timeline is open * Clicking calendar button when an invalid date is entered gives error message instead of exception * LANG environment variable is only set on Windows to prevent locale error at startup on Linux systems * Fit all events ignores hidden events</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
-      <start>2011-01-09 12:29:00</start>
-      <end>2011-01-09 12:29:00</end>
-      <text>Timeline 0.12.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Timeline 0.12.0, released on 9 January 2011 =========================================== This is a new feature release. New features, enhancements: * Experimental support for extended date range (before 1 AD) Bug fixes: * Centuries before 10th are displayed correctly (9 instead of 90) * Correct translations are used on Windows New translations: * Lithuanian * Vietnamese</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
       <start>2010-10-24 12:29:00</start>
       <end>2010-10-24 12:29:00</end>
       <text>Timeline 0.11.1</text>
@@ -192,6 +168,30 @@
       <ends_today>False</ends_today>
       <category>Planned Release</category>
       <description>Timeline 0.11.0, released on 12 October 2010 ============================================ This is a new feature release. New features, enhancements: * New improved date and time entry control * New navigation function: fit millennium Bug fixes: * Remove import of wx.lib.wordwrap that caused a crash on Ubuntu New translations: * Italian * Turkish</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
+      <start>2011-01-30 12:30:00</start>
+      <end>2011-01-30 12:30:00</end>
+      <text>Timeline 0.12.1</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Correction Release</category>
+      <description>Timeline 0.12.1, released on 30 January 2011 ============================================ This is a translation update and bugfix release. Bug fixes: * Menu items are correctly disabled if no timeline is open * Clicking calendar button when an invalid date is entered gives error message instead of exception * LANG environment variable is only set on Windows to prevent locale error at startup on Linux systems * Fit all events ignores hidden events</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
+      <start>2011-01-09 12:29:00</start>
+      <end>2011-01-09 12:29:00</end>
+      <text>Timeline 0.12.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Timeline 0.12.0, released on 9 January 2011 =========================================== This is a new feature release. New features, enhancements: * Experimental support for extended date range (before 1 AD) Bug fixes: * Centuries before 10th are displayed correctly (9 instead of 90) * Correct translations are used on Windows New translations: * Lithuanian * Vietnamese</description>
       <default_color>200,200,200</default_color>
     </event>
     <event>
@@ -231,6 +231,18 @@
       <default_color>200,200,200</default_color>
     </event>
     <event>
+      <start>2010-01-01 12:27:00</start>
+      <end>2010-01-01 12:27:00</end>
+      <text>Timeline 0.8.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Timeline 0.8.0, released on 1 January 2010 ========================================== This is a new minor feature release. New features, enhancements: * Basic search function * Weekend day numbers are drawn in bold in month view * Experimental read-only support for ics files * Timeline that shows last modified dates of files in a directory * Allow balloons to stick * Write files in a safer way without permanent backups * New navigation functions: find first, find last, fit century, fit decade, fit all * New icons in help browser (Windows) * Man page (GNU/Linux) Bug fixes: * Fit month and fit day now work for December and last day of month * The same help page can now be opened again after the help browser is closed * Recently opened list can't contain the same file twice now New translations: * Hebrew (Yaron Shahrabani) * Catalan (BennyBeat)</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
       <start>2009-10-01 12:28:00</start>
       <end>2009-10-01 12:28:00</end>
       <text>Timeline 0.5.0</text>
@@ -240,6 +252,30 @@
       <ends_today>False</ends_today>
       <category>Planned Release</category>
       <description>Timeline 0.5.0, released on 1 October 2009 ========================================== This is a new feature release. New features, enhancements: * Added 'Open Recent' menu * Replaced manual with a wiki-like help system * Visualize description of selected events in balloons * Improved error messages when reading or writing timeline data fails * Added functionality for printing timeline * Added new navigation functions: Backward/Forward * Added welcome panel that shows if no timeline is open New translations: * Dutch (Koert Loret) Bug fixes: * Fixed problem on Windows where you could not enter dates before 1752-09-14</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
+      <start>2010-05-09 12:27:00</start>
+      <end>2010-05-09 12:27:00</end>
+      <text>Timeline 0.10.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Timeline 0.10.0, released on 9 May 2010 ======================================= This is a new feature release. New features, enhancements: * Switch to XML-based file format for storing timeline data * Support hierarchical categories * Function to duplicate events according to a pattern * More user friendly error when application crashes * Save window position * More shortcuts for navigation commands * Selected event gets highlighted line Bug fixes: * Application shows error message in category editor instead of crashing</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
+      <start>2010-02-07 12:29:00</start>
+      <end>2010-02-07 12:29:00</end>
+      <text>Timeline 0.9.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Timeline 0.9.0, released on 7 February 2010 =========================================== This is a new minor feature and bugfix release. New features, enhancements: * Timeline scrolls when creating period events, resizing events, and moving events * Option to start weeks on Sundays * Balloon shown shorter time after mouse out * New navigation functions: year, month, week forward/backward * Middle mouse click centers timeline on that spot * Shift+Scroll moves horizontal line up/down Bug fixes: * Fixed issues with 'Go to Date' dialog * Balloon now visible even if event stretches outside screen * All keys now work in the search bar * Prevent crash if long period events are used * Small corrections to documentation</description>
       <default_color>200,200,200</default_color>
     </event>
     <event>
@@ -267,27 +303,15 @@
       <default_color>200,200,200</default_color>
     </event>
     <event>
-      <start>2010-01-01 12:27:00</start>
-      <end>2010-01-01 12:27:00</end>
-      <text>Timeline 0.8.0</text>
+      <start>2010-05-25 12:26:00</start>
+      <end>2010-05-25 12:26:00</end>
+      <text>Timeline 0.10.1</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Timeline 0.8.0, released on 1 January 2010 ========================================== This is a new minor feature release. New features, enhancements: * Basic search function * Weekend day numbers are drawn in bold in month view * Experimental read-only support for ics files * Timeline that shows last modified dates of files in a directory * Allow balloons to stick * Write files in a safer way without permanent backups * New navigation functions: find first, find last, fit century, fit decade, fit all * New icons in help browser (Windows) * Man page (GNU/Linux) Bug fixes: * Fit month and fit day now work for December and last day of month * The same help page can now be opened again after the help browser is closed * Recently opened list can't contain the same file twice now New translations: * Hebrew (Yaron Shahrabani) * Catalan (BennyBeat)</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
-      <start>2010-02-07 12:29:00</start>
-      <end>2010-02-07 12:29:00</end>
-      <text>Timeline 0.9.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Timeline 0.9.0, released on 7 February 2010 =========================================== This is a new minor feature and bugfix release. New features, enhancements: * Timeline scrolls when creating period events, resizing events, and moving events * Option to start weeks on Sundays * Balloon shown shorter time after mouse out * New navigation functions: year, month, week forward/backward * Middle mouse click centers timeline on that spot * Shift+Scroll moves horizontal line up/down Bug fixes: * Fixed issues with 'Go to Date' dialog * Balloon now visible even if event stretches outside screen * All keys now work in the search bar * Prevent crash if long period events are used * Small corrections to documentation</description>
+      <category>Correction Release</category>
+      <description>Timeline 0.10.1, released on 25 May 2010 ======================================== This is a translation update release. New translations: * Polish * French</description>
       <default_color>200,200,200</default_color>
     </event>
     <event>
@@ -303,30 +327,6 @@
       <default_color>200,200,200</default_color>
     </event>
     <event>
-      <start>2010-05-25 12:26:00</start>
-      <end>2010-05-25 12:26:00</end>
-      <text>Timeline 0.10.1</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Correction Release</category>
-      <description>Timeline 0.10.1, released on 25 May 2010 ======================================== This is a translation update release. New translations: * Polish * French</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
-      <start>2010-05-09 12:27:00</start>
-      <end>2010-05-09 12:27:00</end>
-      <text>Timeline 0.10.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Timeline 0.10.0, released on 9 May 2010 ======================================= This is a new feature release. New features, enhancements: * Switch to XML-based file format for storing timeline data * Support hierarchical categories * Function to duplicate events according to a pattern * More user friendly error when application crashes * Save window position * More shortcuts for navigation commands * Selected event gets highlighted line Bug fixes: * Application shows error message in category editor instead of crashing</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
       <start>2009-04-11 12:28:00</start>
       <end>2009-04-11 12:28:00</end>
       <text>Timeline 0.1.0</text>
@@ -336,18 +336,6 @@
       <ends_today>False</ends_today>
       <category>Planned Release</category>
       <description>Timeline 0.1.0, released on 11 April 2009 ========================================= First usable version.</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
-      <start>2013-09-30 12:28:00</start>
-      <end>2013-09-30 12:28:00</end>
-      <text>Timeline 1.0.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Timeline 1.0.0, released on 30 September 2013 ============================================= New features, enhancements: * Get rid of printing. Printing does not work very well. A better way to print is to generate an image and then print the image from another program. * Get rid of old file formats. It was a long time since the old file format was used. It would be nice to get rid of that code. * Get rid of extended date ranges / Think of a better solution. Extended date ranges does not work very well and it added lots of complexity to the code. It would be nice to get rid of it all together. Perhaps we can come up with a better way to handle extended dates? * Adjustments made to be able to use wxpython version 2.9 Bug fixes:</description>
       <default_color>200,200,200</default_color>
     </event>
     <event>
@@ -385,14 +373,15 @@ Bug fixes:
       <default_color>200,200,200</default_color>
     </event>
     <event>
-      <start>2013-10-04 00:00:00</start>
-      <end>2013-10-04 00:00:00</end>
-      <text>Timeline 1.0.1</text>
+      <start>2013-09-30 12:28:00</start>
+      <end>2013-09-30 12:28:00</end>
+      <text>Timeline 1.0.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Correction Release</category>
+      <category>Planned Release</category>
+      <description>Timeline 1.0.0, released on 30 September 2013 ============================================= New features, enhancements: * Get rid of printing. Printing does not work very well. A better way to print is to generate an image and then print the image from another program. * Get rid of old file formats. It was a long time since the old file format was used. It would be nice to get rid of that code. * Get rid of extended date ranges / Think of a better solution. Extended date ranges does not work very well and it added lots of complexity to the code. It would be nice to get rid of it all together. Perhaps we can come up with a better way to handle extended dates? * Adjustments made to be able to use wxpython version 2.9 Bug fixes:</description>
       <default_color>200,200,200</default_color>
     </event>
     <event>
@@ -498,6 +487,17 @@ Bug fixes:
       <default_color>200,200,200</default_color>
     </event>
     <event>
+      <start>2013-10-04 00:00:00</start>
+      <end>2013-10-04 00:00:00</end>
+      <text>Timeline 1.0.1</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Correction Release</category>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
       <start>2014-04-06 09:54:00</start>
       <end>2014-04-06 09:54:00</end>
       <text>Timeline 1.2.3</text>
@@ -537,6 +537,38 @@ New features, enhancements:
 Bug fixes:
 
 * Exception in event editors when "Add more events after this one" is checked</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
+      <start>2015-01-31 21:01:00</start>
+      <end>2015-01-31 21:01:00</end>
+      <text>Timeline 1.5.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Version 1.5.0
+-------------
+
+**Released on 31 January 2015.**
+
+New features, enhancements:
+
+ * Made progress bar thinner to improve visibility
+ * Made progress- and done-colors selectable
+ * Deeper zooming, to one minute, enabled
+ * Introduced the concept of 'Experimental features'
+ * Experimental feature - Mark event as done
+ * Experimental feature - Extend container height
+ * Experimental feature - Locale date formats
+ 
+Bug fixes:
+
+ * Fixed: Crash report: Duplication subevent
+ * Fixed: Crash report: Clicking Return in datetimepicker in Event alert editor
+ * Fixed problem with duplication of containers
+ * Fixed problem with menus requiring a timeline</description>
       <default_color>200,200,200</default_color>
     </event>
     <event>
@@ -767,6 +799,88 @@ Fixed crash reports:
       <default_color>200,200,200</default_color>
     </event>
     <event>
+      <start>2016-01-31 00:00:00</start>
+      <end>2016-01-31 00:00:00</end>
+      <text>Timeline 1.9.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Version 1.9.0
+-------------
+
+**Released on 31 January 2016.**
+
+Calendar:
+
+* Locale date formats correctly at start of timeline.
+  (`#116 &lt;https://sourceforge.net/p/thetimelineproj/backlog/116/&gt;`_)
+
+GUI:
+
+* There is an optional tool bar that contains buttons for toggling some
+  settings.
+
+* "To time" in event editor is correctly laid out when checking "Period".
+
+* Images can be dragged and dropped on an event to change icon.
+  (`#103 &lt;https://sourceforge.net/p/thetimelineproj/backlog/103/&gt;`_)
+
+* A preference decides if the time checkbox is checked for new events.
+  (`#119 &lt;https://sourceforge.net/p/thetimelineproj/backlog/119/&gt;`_)
+
+* Subevents in a container can be locked if the extended container strategy is
+  used.
+  (`#110 &lt;https://sourceforge.net/p/thetimelineproj/backlog/110/&gt;`_)
+
+* The description text in the event editor can be selected with Ctrl+A.
+  (`#115 &lt;https://sourceforge.net/p/thetimelineproj/backlog/115/&gt;`_)
+
+* The ends-today checkbox in the event editor is enabled when the editor is
+  opened from the menu.
+  (`#114 &lt;https://sourceforge.net/p/thetimelineproj/backlog/114/&gt;`_)
+
+* The events in the exported list are sorted by start date.
+  (`#106 &lt;https://sourceforge.net/p/thetimelineproj/backlog/106/&gt;`_)
+
+* Shortcuts to quickly toggle some settings are present in a toolbar.
+
+* Colors can be selected for major strip lines, minor strip lines and now line.
+  (`#111 &lt;https://sourceforge.net/p/thetimelineproj/backlog/111/&gt;`_)
+
+* Overlapping eras are now displayed in a mixed color.
+  (`#108 &lt;https://sourceforge.net/p/thetimelineproj/backlog/108/&gt;`_)
+
+* Colors can now be selected for events without an associated category.
+  (`#81 &lt;https://sourceforge.net/p/thetimelineproj/backlog/81/&gt;`_)
+
+* The Ends-today property can be set on subevents if the extended container
+  strategy is used.
+
+* A new dialog in the help menu displays System information.
+
+Translations:
+
+* The wx stock items are translated correctly in the Windows binary.
+  (`#109 &lt;https://sourceforge.net/p/thetimelineproj/backlog/109/&gt;`_)
+
+* The strip text 'Century' is translatable.
+  (`#107 &lt;https://sourceforge.net/p/thetimelineproj/backlog/107/&gt;`_)
+
+Bug fixes:
+
+* Edit event dialog does not crash when there is a db error.
+  (`#127 &lt;https://sourceforge.net/p/thetimelineproj/backlog/127/&gt;`_)
+
+* Application does not crash at startup if system has locale zh_CN (Chinese).
+  (Merged from 1.5.1.)
+
+* Application does not crash when duplicating container events.
+  (`#125 &lt;https://sourceforge.net/p/thetimelineproj/backlog/125/&gt;`_)</description>
+      <default_color>200,200,200</default_color>
+    </event>
+    <event>
       <start>2015-11-10 00:00:00</start>
       <end>2015-11-10 00:00:00</end>
       <text>Timeline 1.8.1</text>
@@ -857,38 +971,6 @@ Fixed crash reports:
 
 * ``LockedException: Unable to take lock on ...``
   (`#105 &lt;https://sourceforge.net/p/thetimelineproj/backlog/105/&gt;`_)</description>
-      <default_color>200,200,200</default_color>
-    </event>
-    <event>
-      <start>2015-01-31 21:01:00</start>
-      <end>2015-01-31 21:01:00</end>
-      <text>Timeline 1.5.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Version 1.5.0
--------------
-
-**Released on 31 January 2015.**
-
-New features, enhancements:
-
- * Made progress bar thinner to improve visibility
- * Made progress- and done-colors selectable
- * Deeper zooming, to one minute, enabled
- * Introduced the concept of 'Experimental features'
- * Experimental feature - Mark event as done
- * Experimental feature - Extend container height
- * Experimental feature - Locale date formats
- 
-Bug fixes:
-
- * Fixed: Crash report: Duplication subevent
- * Fixed: Crash report: Clicking Return in datetimepicker in Event alert editor
- * Fixed problem with duplication of containers
- * Fixed problem with menus requiring a timeline</description>
       <default_color>200,200,200</default_color>
     </event>
     <event>
@@ -1013,6 +1095,27 @@ Bug fixes:
 
 *  Float division by zero when mouse moved..
   (`#150 &lt;https://sourceforge.net/p/thetimelineproj/backlog/150/&gt;`_)</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2017-01-31 00:00:00</start>
+      <end>2017-01-31 00:00:00</end>
+      <text>Timeline 1.13.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Version 1.13.0
+-------------
+
+**Planned release on 31 January 2016.**
+
+*Don't want to wait for the final release? Try the beta version!*
+
+* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+
+* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.</description>
       <default_color>192,192,192</default_color>
     </event>
     <event>
@@ -1146,86 +1249,43 @@ Export:
       <default_color>192,192,192</default_color>
     </event>
     <event>
-      <start>2016-01-31 00:00:00</start>
-      <end>2016-01-31 00:00:00</end>
-      <text>Timeline 1.9.0</text>
+      <start>2017-07-31 00:00:00</start>
+      <end>2017-07-31 00:00:00</end>
+      <text>Timeline 1.15.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
       <category>Planned Release</category>
-      <description>Version 1.9.0
--------------
-
-**Released on 31 January 2016.**
-
-Calendar:
-
-* Locale date formats correctly at start of timeline.
-  (`#116 &lt;https://sourceforge.net/p/thetimelineproj/backlog/116/&gt;`_)
+      <description>**Released on 31 July 2017.**
 
 GUI:
 
-* There is an optional tool bar that contains buttons for toggling some
-  settings.
+* Path to the configuration file is displayed in the System Info dialog.
 
-* "To time" in event editor is correctly laid out when checking "Period".
+* Date format is now displayed in the System Info dialog, as configured.
 
-* Images can be dragged and dropped on an event to change icon.
-  (`#103 &lt;https://sourceforge.net/p/thetimelineproj/backlog/103/&gt;`_)
+* Era rectangle is always visible, even when zooming out far.
 
-* A preference decides if the time checkbox is checked for new events.
-  (`#119 &lt;https://sourceforge.net/p/thetimelineproj/backlog/119/&gt;`_)
+* Text in a balloon can now be displayed besides or under an icon.
 
-* Subevents in a container can be locked if the extended container strategy is
-  used.
-  (`#110 &lt;https://sourceforge.net/p/thetimelineproj/backlog/110/&gt;`_)
+Fixed crash reports and bugs:
 
-* The description text in the event editor can be selected with Ctrl+A.
-  (`#115 &lt;https://sourceforge.net/p/thetimelineproj/backlog/115/&gt;`_)
+* ``UnicodeEncodeError: 'ascii' codec can't encode character u'\u03c0' in
+  position 0: ordinal not in range(128)``
+  This happened when the BC label contained non-ascii characters.
 
-* The ends-today checkbox in the event editor is enabled when the editor is
-  opened from the menu.
-  (`#114 &lt;https://sourceforge.net/p/thetimelineproj/backlog/114/&gt;`_)
+* ``UnicodeEncodeError: 'ascii' codec can't encode characters in position
+  18-21: ordinal not in range(128)``
+  This happened when a font face name contained non-ascii characters.
 
-* The events in the exported list are sorted by start date.
-  (`#106 &lt;https://sourceforge.net/p/thetimelineproj/backlog/106/&gt;`_)
+* Events highlighted during search sometimes get stuck in highlighted state.
 
-* Shortcuts to quickly toggle some settings are present in a toolbar.
-
-* Colors can be selected for major strip lines, minor strip lines and now line.
-  (`#111 &lt;https://sourceforge.net/p/thetimelineproj/backlog/111/&gt;`_)
-
-* Overlapping eras are now displayed in a mixed color.
-  (`#108 &lt;https://sourceforge.net/p/thetimelineproj/backlog/108/&gt;`_)
-
-* Colors can now be selected for events without an associated category.
-  (`#81 &lt;https://sourceforge.net/p/thetimelineproj/backlog/81/&gt;`_)
-
-* The Ends-today property can be set on subevents if the extended container
-  strategy is used.
-
-* A new dialog in the help menu displays System information.
-
-Translations:
-
-* The wx stock items are translated correctly in the Windows binary.
-  (`#109 &lt;https://sourceforge.net/p/thetimelineproj/backlog/109/&gt;`_)
-
-* The strip text 'Century' is translatable.
-  (`#107 &lt;https://sourceforge.net/p/thetimelineproj/backlog/107/&gt;`_)
-
-Bug fixes:
-
-* Edit event dialog does not crash when there is a db error.
-  (`#127 &lt;https://sourceforge.net/p/thetimelineproj/backlog/127/&gt;`_)
-
-* Application does not crash at startup if system has locale zh_CN (Chinese).
-  (Merged from 1.5.1.)
-
-* Application does not crash when duplicating container events.
-  (`#125 &lt;https://sourceforge.net/p/thetimelineproj/backlog/125/&gt;`_)</description>
-      <default_color>200,200,200</default_color>
+* ``PyAssertionError: C++ assertion "!wxMouseCapture::stack.empty()" failed at 
+  ..\..\src\common\wincmn.cpp(3319) in wxWindowBase::ReleaseMouse(): 
+  Releasing mouse capture but capture stack empty?``
+  This happens in when dragging the mouse from the calendar control.</description>
+      <default_color>192,192,192</default_color>
     </event>
     <event>
       <start>2017-04-30 00:00:00</start>
@@ -1289,18 +1349,18 @@ Fixed crash reports and bugs:
       <default_color>192,192,192</default_color>
     </event>
     <event>
-      <start>2017-01-31 00:00:00</start>
-      <end>2017-01-31 00:00:00</end>
-      <text>Timeline 1.13.0</text>
+      <start>2018-02-25 00:00:00</start>
+      <end>2018-02-25 00:00:00</end>
+      <text>Timeline 1.17.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>Version 1.13.0
--------------
+      <category>Future Release</category>
+      <description>Version 1.17.0
+--------------
 
-**Planned release on 31 January 2016.**
+**Planned release on 25 February 2018.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
@@ -1337,71 +1397,11 @@ Fixed crash reports and bugs:
   This happens when System info dialog is opened by context popup menu.</description>
       <default_color>192,192,192</default_color>
     </event>
-    <event>
-      <start>2017-07-31 00:00:00</start>
-      <end>2017-07-31 00:00:00</end>
-      <text>Timeline 1.15.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Planned Release</category>
-      <description>**Released on 31 July 2017.**
-
-GUI:
-
-* Path to the configuration file is displayed in the System Info dialog.
-
-* Date format is now displayed in the System Info dialog, as configured.
-
-* Era rectangle is always visible, even when zooming out far.
-
-* Text in a balloon can now be displayed besides or under an icon.
-
-Fixed crash reports and bugs:
-
-* ``UnicodeEncodeError: 'ascii' codec can't encode character u'\u03c0' in
-  position 0: ordinal not in range(128)``
-  This happened when the BC label contained non-ascii characters.
-
-* ``UnicodeEncodeError: 'ascii' codec can't encode characters in position
-  18-21: ordinal not in range(128)``
-  This happened when a font face name contained non-ascii characters.
-
-* Events highlighted during search sometimes get stuck in highlighted state.
-
-* ``PyAssertionError: C++ assertion "!wxMouseCapture::stack.empty()" failed at 
-  ..\..\src\common\wincmn.cpp(3319) in wxWindowBase::ReleaseMouse(): 
-  Releasing mouse capture but capture stack empty?``
-  This happens in when dragging the mouse from the calendar control.</description>
-      <default_color>192,192,192</default_color>
-    </event>
-    <event>
-      <start>2018-02-25 00:00:00</start>
-      <end>2018-02-25 00:00:00</end>
-      <text>Timeline 1.17.0</text>
-      <progress>0</progress>
-      <fuzzy>False</fuzzy>
-      <locked>False</locked>
-      <ends_today>False</ends_today>
-      <category>Future Release</category>
-      <description>Version 1.17.0
---------------
-
-**Planned release on 25 February 2018.**
-
-*Don't want to wait for the final release? Try the beta version!*
-
-* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
-
-* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.</description>
-      <default_color>192,192,192</default_color>
-    </event>
   </events>
   <view>
     <displayed_period>
-      <start>2013-06-27 17:41:37</start>
-      <end>2019-04-13 06:10:52</end>
+      <start>2011-10-21 07:30:56</start>
+      <end>2017-08-05 20:00:11</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
