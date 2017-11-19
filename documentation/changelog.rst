@@ -12,6 +12,11 @@ Version 1.17.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Fixed crash reports and bugs:
+
+* ``ValueError: Start time can't be after end time``
+  This happened when ends-today flag was set, and start-time was in future.
+
 
 Version 1.16.0
 --------------
