@@ -46,7 +46,7 @@ class Appearance(Observable):
         self._build_property("week_start", "monday")
         self._build_property("use_inertial_scrolling", False)
         self._build_property("fuzzy_icon", "fuzzy.png")
-        self._build_property("locked_icon", "lock.png")
+        self._build_property("locked_icon", "locked.png")
         self._build_property("hyperlink_icon", "hyperlink.png")
         self._build_property("vertical_space_between_events", 5)
         self._build_property("skip_s_in_decade_text", False)
