@@ -105,6 +105,13 @@ class describe_scene(UnitTestCase):
         except Exception:
             self.assertTrue(False)
 
+    def test_ends_today_is_reset_when_start_date_is_in_future(self):
+        self.given_displayed_period("1 Jan 2010", "10 Jan 3018")
+        self.given_visible_event_at("1 Jan 3017", "1 Feb 3017", ends_today=True)
+        self.assertTrue(self.db.get_first_event().ends_today)
+        self.when_scene_is_created()
+        self.assertFalse(self.scene.event_data[0][0].ends_today)
+
     def setUp(self):
         self.app = wx.App()
         self.db = MemoryDB()
@@ -129,13 +136,13 @@ class describe_scene(UnitTestCase):
     def given_displayed_period(self, start, end):
         self.view_properties.displayed_period = gregorian_period(start, end)
 
-    def given_visible_event_at(self, start_time, end_time=None):
-        self.given_event_at(start_time, end_time, visible=True)
+    def given_visible_event_at(self, start_time, end_time=None, ends_today=False):
+        self.given_event_at(start_time, end_time, visible=True, ends_today=ends_today)
 
     def given_hidden_event_at(self, time):
         self.given_event_at(time, visible=False)
 
-    def given_event_at(self, start_time, end_time=None, visible=True):
+    def given_event_at(self, start_time, end_time=None, visible=True, ends_today=False):
         category = self.get_unique_category()
         if end_time is None:
             end_time = start_time
@@ -143,7 +150,8 @@ class describe_scene(UnitTestCase):
             human_time_to_gregorian(start_time),
             human_time_to_gregorian(end_time),
             "event-text",
-            category
+            category,
+            ends_today=ends_today
         )
         self.db.save_category(category)
         self.db.save_event(event)
