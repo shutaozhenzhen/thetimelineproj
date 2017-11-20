@@ -149,7 +149,8 @@ class DefaultDrawingAlgorithm(Drawer):
             self._fixed_ys[evt.id] = rect.GetY()
 
     def _perform_drawing(self, timeline, view_properties):
-        self.background_drawer.draw(self, self.dc, self.scene, timeline, self.colorize_weekends, self.weekend_color, self.bg_color)
+        self.background_drawer.draw(
+            self, self.dc, self.scene, timeline, self.colorize_weekends, self.weekend_color, self.bg_color)
         if self.fast_draw:
             self._perform_fast_drawing(view_properties)
         else:
@@ -202,6 +203,8 @@ class DefaultDrawingAlgorithm(Drawer):
     def event_at(self, x, y, alt_down=False):
         container_event = None
         for (event, rect) in self.scene.event_data:
+            if event.is_container():
+                rect = self._adjust_container_rect_for_hittest(rect)
             if rect.Contains(wx.Point(x, y)):
                 if event.is_container():
                     if alt_down:
@@ -210,6 +213,12 @@ class DefaultDrawingAlgorithm(Drawer):
                 else:
                     return event
         return container_event
+
+    def _adjust_container_rect_for_hittest(self, rect):
+        if EXTENDED_CONTAINER_HEIGHT.enabled():
+            return EXTENDED_CONTAINER_HEIGHT.get_vertical_larger_box_rect(rect)
+        else:
+            return rect
 
     def event_with_rect_at(self, x, y, alt_down=False):
         container_event = None
@@ -303,7 +312,8 @@ class DefaultDrawingAlgorithm(Drawer):
                 bold = True
             if self.time_type.is_special_day(strip_period.start_time):
                 italic = True
-            font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc, force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
+            font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc,
+                                           force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
         else:
             font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
 
