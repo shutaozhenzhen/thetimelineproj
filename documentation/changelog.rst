@@ -12,6 +12,15 @@ Version 1.17.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+
+Problem: User want's the container to have a description (to display a balloon)
+Solution: Open up for using a description field in the xml
+
+GUI:
+
+* If the xml contains a description field for a container, it will now be
+  displayed in a balloon, when hooverd.
+
 Fixed crash reports and bugs:
 
 * ``ValueError: Start time can't be after end time``
