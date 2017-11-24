@@ -71,7 +71,7 @@ class NoOpInputHandler(InputHandler):
                                 2 if shift else 0 +
                                 1 if alt else 0)
             return {0: self._scroll,
-                    1: self._noop,
+                    1: self._select,
                     2: self._zoom,
                     3: self._noop,
                     4: self._create_event,
@@ -91,6 +91,9 @@ class NoOpInputHandler(InputHandler):
     def _zoom(self, x, y):
         self.timeline_canvas.ClearSelectedEvents()
         self._state.change_to_zoom_by_drag(self.timeline_canvas.GetTimeAt(x))
+
+    def _select(self, x, y):
+        pass
 
     def _noop(self, x, y):
         pass
