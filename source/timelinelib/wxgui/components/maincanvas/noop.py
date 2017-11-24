@@ -39,6 +39,12 @@ class NoOpInputHandler(InputHandler):
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
         self._toggle_balloon_stickyness(x, y)
+        if self.timeline_canvas.GetEventAt(x, y, alt_down):
+            self._left_mouse_down_on_event(x, y, ctrl_down, shift_down, alt_down)
+        else:
+            self._left_mouse_down_on_timeline(x, y, ctrl_down, shift_down, alt_down)
+
+    def _left_mouse_down_on_event(self, x, y, ctrl_down, shift_down, alt_down=False):
         event = self.timeline_canvas.GetEventAt(x, y, alt_down)
         time_at_x = self.timeline_canvas.GetTimeAt(x)
         if self._hit_resize_handle(x, y, alt_down) is not None:
@@ -49,28 +55,30 @@ class NoOpInputHandler(InputHandler):
                 except:
                     self._main_frame.edit_ends()
                     raise
-            return
-        if self._hit_move_handle(x, y, alt_down) and not event.get_ends_today():
+        elif self._hit_move_handle(x, y, alt_down) and not event.get_ends_today():
             if self._main_frame.ok_to_edit():
                 try:
                     self._state.change_to_move_by_drag(event, time_at_x)
                 except:
                     self._main_frame.edit_ends()
                     raise
-            return
-        if (event is None and ctrl_down is False and shift_down is False):
+        else:
+            self._toggle_event_selection(x, y, ctrl_down, alt_down)
+
+    def _left_mouse_down_on_timeline(self, x, y, ctrl_down, shift_down, alt_down=False):
+        time_at_x = self.timeline_canvas.GetTimeAt(x)
+        if (ctrl_down is False and shift_down is False):
             self._toggle_event_selection(x, y, ctrl_down)
             self._state.change_to_scroll_by_drag(time_at_x, y)
             return
-        if (event is None and ctrl_down is True):
+        if (ctrl_down is True):
             self._toggle_event_selection(x, y, ctrl_down)
             self._state.change_to_create_period_event_by_drag(time_at_x)
             return
-        if (event is None and shift_down is True):
+        if (shift_down is True):
             self._toggle_event_selection(x, y, ctrl_down)
             self._state.change_to_zoom_by_drag(time_at_x)
             return
-        self._toggle_event_selection(x, y, ctrl_down, alt_down)
 
     def _toggle_balloon_stickyness(self, x, y):
         event_with_balloon = self.timeline_canvas.GetBalloonAt(x, y)
