@@ -38,8 +38,8 @@ class SelectBase(InputHandler):
 
     def left_mouse_up(self):
         self.timeline_canvas.stop_dragscroll_timer()
-        self.timeline_canvas.RemoveRect()
+        self.timeline_canvas.RemoveSelectionRect()
         self.end_action()
 
     def dragscroll_timer_fired(self):
-        self.timeline_canvas.DrawRect(self.start_pos, self.last_pos)
+        self.timeline_canvas.DrawSelectionRect(self.start_pos, self.last_pos)

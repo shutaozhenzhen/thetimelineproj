@@ -65,14 +65,14 @@ class TimelineCanvas(wx.Panel):
     def Scroll(self, factor):
         self.Navigate(lambda tp: tp.move_delta(-tp.delta() * factor))
 
-    def DrawRect(self, start, end):
+    def DrawSelectionRect(self, start, end):
         x0, y0 = start
         x1, y1 = end
         rect = (x0, y0, x1 - x0, y1 - y0)
         self.controller.view_properties.set_selection_rect(rect)
         self.UseFastDraw(True)
 
-    def RemoveRect(self):
+    def RemoveSelectionRect(self):
         self.controller.view_properties.set_selection_rect(None)
         self.UseFastDraw(True)
 
