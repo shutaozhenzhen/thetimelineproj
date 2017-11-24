@@ -70,15 +70,12 @@ class NoOpInputHandler(InputHandler):
         if (ctrl_down is False and shift_down is False):
             self._toggle_event_selection(x, y, ctrl_down)
             self._state.change_to_scroll_by_drag(time_at_x, y)
-            return
-        if (ctrl_down is True):
+        elif (ctrl_down is True):
             self._toggle_event_selection(x, y, ctrl_down)
             self._state.change_to_create_period_event_by_drag(time_at_x)
-            return
-        if (shift_down is True):
+        elif (shift_down is True):
             self._toggle_event_selection(x, y, ctrl_down)
             self._state.change_to_zoom_by_drag(time_at_x)
-            return
 
     def _toggle_balloon_stickyness(self, x, y):
         event_with_balloon = self.timeline_canvas.GetBalloonAt(x, y)
