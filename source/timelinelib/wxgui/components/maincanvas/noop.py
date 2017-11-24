@@ -93,7 +93,7 @@ class NoOpInputHandler(InputHandler):
         self._state.change_to_zoom_by_drag(self.timeline_canvas.GetTimeAt(x))
 
     def _select(self, x, y):
-        pass
+        self._state.change_to_select(x, y)
 
     def _noop(self, x, y):
         pass
