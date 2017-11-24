@@ -82,18 +82,15 @@ class NoOpInputHandler(InputHandler):
         select_function()(x, y)
 
     def _scroll(self, x, y):
-        time_at_x = self.timeline_canvas.GetTimeAt(x)
-        self._state.change_to_scroll_by_drag(time_at_x, y)
+        self._state.change_to_scroll_by_drag(self.timeline_canvas.GetTimeAt(x), y)
 
     def _create_event(self, x, y):
         self.timeline_canvas.ClearSelectedEvents()
-        time_at_x = self.timeline_canvas.GetTimeAt(x)
-        self._state.change_to_create_period_event_by_drag(time_at_x)
+        self._state.change_to_create_period_event_by_drag(self.timeline_canvas.GetTimeAt(x))
 
     def _zoom(self, x, y):
         self.timeline_canvas.ClearSelectedEvents()
-        time_at_x = self.timeline_canvas.GetTimeAt(x)
-        self._state.change_to_zoom_by_drag(time_at_x)
+        self._state.change_to_zoom_by_drag(self.timeline_canvas.GetTimeAt(x))
 
     def _noop(self, x, y):
         pass
