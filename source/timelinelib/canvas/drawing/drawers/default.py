@@ -164,7 +164,8 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_selection_rect(self, view_properties):
         if view_properties._selection_rect:
-            self.dc.SetBrush(wx.Brush(wx.WHITE, style=wx.BRUSHSTYLE_TRANSPARENT))
+            self.dc.SetPen(wx.BLACK_PEN)
+            self.dc.SetBrush(wx.Brush(wx.WHITE, style=BRUSHSTYLE_TRANSPARENT))
             self.dc.DrawRectangle(*view_properties._selection_rect)
 
     def _perform_normal_drawing(self, view_properties):
