@@ -68,7 +68,6 @@ class NoOpInputHandler(InputHandler):
     def _left_mouse_down_on_timeline(self, x, y, ctrl_down, shift_down, alt_down=False):
         time_at_x = self.timeline_canvas.GetTimeAt(x)
         if (ctrl_down is False and shift_down is False):
-            self._toggle_event_selection(x, y, ctrl_down)
             self._state.change_to_scroll_by_drag(time_at_x, y)
         elif (ctrl_down is True):
             self._toggle_event_selection(x, y, ctrl_down)
