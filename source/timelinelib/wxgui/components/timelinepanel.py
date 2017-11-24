@@ -33,6 +33,7 @@ from timelinelib.wxgui.components.maincanvas.noop import NoOpInputHandler
 from timelinelib.wxgui.components.maincanvas.resizebydrag import ResizeByDragInputHandler
 from timelinelib.wxgui.components.maincanvas.scrollbydrag import ScrollByDragInputHandler
 from timelinelib.wxgui.components.maincanvas.zoombydrag import ZoomByDragInputHandler
+from timelinelib.wxgui.components.maincanvas.selectevents import SelectEventsInputHandler
 from timelinelib.wxgui.components.messagebar import MessageBar
 from timelinelib.wxgui.components.sidebar import Sidebar
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
@@ -465,6 +466,9 @@ class InputHandlerState(object):
             start_time))
 
     def change_to_select(self, x, y):
+        self._timeline_canvas.SetInputHandler(SelectEventsInputHandler(
+            self, self._timeline_canvas, self._main_frame, self._status_bar,
+            x, y))
         pass
 
     def change_to_resize_by_drag(self, event, direction):
