@@ -164,11 +164,8 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_selection_rect(self, view_properties):
         if view_properties._selection_rect:
-            start, end = view_properties._selection_rect
-            x0, y0 = start
-            x1, y1 = end
             self.dc.SetBrush(wx.Brush(wx.WHITE, style=wx.BRUSHSTYLE_TRANSPARENT))
-            self.dc.DrawRectangle(x0, y0, x1 - x0, y1 - y0)
+            self.dc.DrawRectangle(*view_properties._selection_rect)
 
     def _perform_normal_drawing(self, view_properties):
         self._draw_period_selection(view_properties)
