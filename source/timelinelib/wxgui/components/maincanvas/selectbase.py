@@ -42,10 +42,4 @@ class SelectBase(InputHandler):
         self.end_action()
 
     def dragscroll_timer_fired(self):
-        # self.timeline_canvas.Scroll(direction * 0.1)
         self.timeline_canvas.DrawRect(self.start_pos, self.last_pos)
-        # self.view_scrolled()
-        pass
-
-# def view_scrolled(self):
-#    raise Exception("view_scrolled not implemented in subclass.")
