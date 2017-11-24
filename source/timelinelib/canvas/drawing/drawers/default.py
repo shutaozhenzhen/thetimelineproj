@@ -30,6 +30,7 @@ from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONT
 from timelinelib.wxgui.components.font import Font
 import timelinelib.wxgui.components.font as font
 from timelinelib.canvas.drawing.drawers.legenddrawer import LegendDrawer
+from wx import BRUSHSTYLE_TRANSPARENT
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -159,6 +160,12 @@ class DefaultDrawingAlgorithm(Drawer):
     def _perform_fast_drawing(self, view_properties):
         self._draw_bg()
         self._draw_events(view_properties)
+        if view_properties._selection_rect:
+            start, end = view_properties._selection_rect
+            x0, y0 = start
+            x1, y1 = end
+            self.dc.SetBrush(wx.Brush(wx.WHITE, style=wx.BRUSHSTYLE_TRANSPARENT))
+            self.dc.DrawRectangle(x0, y0, x1 - x0, y1 - y0)
 
     def _perform_normal_drawing(self, view_properties):
         self._draw_period_selection(view_properties)
