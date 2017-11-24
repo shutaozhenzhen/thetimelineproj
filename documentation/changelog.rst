@@ -21,6 +21,8 @@ GUI:
 * If the xml contains a description field for a container, it will now be
   displayed in a balloon, when hooverd.
 
+* Selected events are not deselected when scrolling timeline with mouse.
+
 Fixed crash reports and bugs:
 
 * ``ValueError: Start time can't be after end time``
