@@ -160,6 +160,9 @@ class DefaultDrawingAlgorithm(Drawer):
     def _perform_fast_drawing(self, view_properties):
         self._draw_bg()
         self._draw_events(view_properties)
+        self._draw_selection_rect(view_properties)
+
+    def _draw_selection_rect(self, view_properties):
         if view_properties._selection_rect:
             start, end = view_properties._selection_rect
             x0, y0 = start
