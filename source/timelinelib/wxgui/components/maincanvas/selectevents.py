@@ -23,16 +23,16 @@ class SelectEventsInputHandler(SelectBase):
 
     def __init__(self, state, timeline_canvas, main_frame, status_bar, x, y):
         SelectBase.__init__(self, timeline_canvas, x, y)
+        self._state = state
         self._status_bar = status_bar
         self._set_statusbar_tex(_("Select events"))
 
     def end_action(self):
         self._set_statusbar_tex("")
-        # period = self.get_last_valid_period()
-        # start = period.start_time
-        # end = period.end_time
-        # self.timeline_canvas.Navigate(lambda tp: tp.update(start, end))
-        pass
+        x0, y0 = self.start_pos
+        x1, y1 = self.last_pos
+        rect = (min(x0, x1), min(y0, y1), abs(x1 - x0), abs(y0 - y1))
+        self.timeline_canvas.SelectEventsInRect(rect)
 
     def _set_statusbar_tex(self, text):
         self._status_bar.set_text(text)

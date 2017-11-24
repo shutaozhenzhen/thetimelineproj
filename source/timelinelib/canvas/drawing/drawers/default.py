@@ -221,6 +221,10 @@ class DefaultDrawingAlgorithm(Drawer):
                     return event
         return container_event
 
+    def get_events_in_rect(self, rect):
+        wx_rect = wx.Rect(*rect)
+        return [event for (event, rect) in self.scene.event_data if rect.Intersects(wx_rect)]
+
     def _adjust_container_rect_for_hittest(self, rect):
         if EXTENDED_CONTAINER_HEIGHT.enabled():
             return EXTENDED_CONTAINER_HEIGHT.get_vertical_larger_box_rect(rect)
