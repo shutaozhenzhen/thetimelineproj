@@ -66,7 +66,10 @@ class TimelineCanvas(wx.Panel):
         self.Navigate(lambda tp: tp.move_delta(-tp.delta() * factor))
 
     def DrawRect(self, start, end):
-        self.controller.view_properties.set_selection_rect((start, end))
+        x0, y0 = start
+        x1, y1 = end
+        rect = (x0, y0, x1 - x0, y1 - y0)
+        self.controller.view_properties.set_selection_rect(rect)
         self.UseFastDraw(True)
 
     def RemoveRect(self):
