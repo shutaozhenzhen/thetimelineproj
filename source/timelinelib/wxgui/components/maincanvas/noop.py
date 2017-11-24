@@ -65,16 +65,38 @@ class NoOpInputHandler(InputHandler):
         else:
             self._toggle_event_selection(x, y, ctrl_down, alt_down)
 
-    def _left_mouse_down_on_timeline(self, x, y, ctrl_down, shift_down, alt_down=False):
+    def _left_mouse_down_on_timeline(self, x, y, ctrl, shift, alt):
+        def select_function():
+            keys_combination = (4 if ctrl else 0 +
+                                2 if shift else 0 +
+                                1 if alt else 0)
+            return {0: self._scroll,
+                    1: self._noop,
+                    2: self._zoom,
+                    3: self._noop,
+                    4: self._create_event,
+                    5: self._noop,
+                    6: self._noop,
+                    7: self._noop}[keys_combination]
+
+        select_function()(x, y)
+
+    def _scroll(self, x, y):
         time_at_x = self.timeline_canvas.GetTimeAt(x)
-        if (ctrl_down is False and shift_down is False):
-            self._state.change_to_scroll_by_drag(time_at_x, y)
-        elif (ctrl_down is True):
-            self._toggle_event_selection(x, y, ctrl_down)
-            self._state.change_to_create_period_event_by_drag(time_at_x)
-        elif (shift_down is True):
-            self._toggle_event_selection(x, y, ctrl_down)
-            self._state.change_to_zoom_by_drag(time_at_x)
+        self._state.change_to_scroll_by_drag(time_at_x, y)
+
+    def _create_event(self, x, y):
+        time_at_x = self.timeline_canvas.GetTimeAt(x)
+        self._toggle_event_selection(x, y, True)
+        self._state.change_to_create_period_event_by_drag(time_at_x)
+
+    def _zoom(self, x, y):
+        time_at_x = self.timeline_canvas.GetTimeAt(x)
+        self._toggle_event_selection(x, y, False)
+        self._state.change_to_zoom_by_drag(time_at_x)
+
+    def _noop(self, x, y):
+        pass
 
     def _toggle_balloon_stickyness(self, x, y):
         event_with_balloon = self.timeline_canvas.GetBalloonAt(x, y)
