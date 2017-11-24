@@ -29,6 +29,7 @@ class ScrollByDragInputHandler(InputHandler):
         self._main_frame = main_frame
         self.start_slider_pos = self.timeline_canvas.GetDividerPosition()
         self.start_mouse_pos = y
+        self.last_mouse_pos = y
         self.view_height = self.timeline_canvas.GetSize()[1]
         self.start_time = start_time
         self.last_clock_time = time.clock()
@@ -40,12 +41,15 @@ class ScrollByDragInputHandler(InputHandler):
         self.INERTIAL_SCROLLING_SPEED_THRESHOLD = 200
 
     def mouse_moved(self, x, y, alt_down=False):
+        self.last_mouse_pos = y
         self._calculate_sped(x)
         self._scroll_timeline(x)
         percentage_distance = 100 * (y - self.start_mouse_pos) / self.view_height
         self.timeline_canvas.SetDividerPosition(self.start_slider_pos + percentage_distance)
 
     def left_mouse_up(self):
+        if self.start_mouse_pos == self.last_mouse_pos:
+            self.timeline_canvas.ClearSelectedEvents()
         self._state.change_to_no_op()
         self._main_frame.edit_ends()
         if self.timeline_canvas.GetAppearance().get_use_inertial_scrolling():
