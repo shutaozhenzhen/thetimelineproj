@@ -32,6 +32,25 @@ another event handler
 """
 
 
+class Pos():
+
+    def __init__(self, x, y):
+        self._x = x
+        self._y = y
+
+    @property
+    def x(self):
+        return self._x
+
+    @property
+    def y(self):
+        return self._y
+
+    @property
+    def pos(self):
+        return self._x, self._y
+
+
 class NoOpInputHandler(InputHandler):
 
     def __init__(self, state, status_bar, main_frame, timeline_canvas):
@@ -57,7 +76,8 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.set_default_cursor()
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
-        self._toggle_balloon_stickyness(x, y)
+        cursor_pos = Pos(x, y)
+        self._toggle_balloon_stickyness(cursor_pos)
         if self.timeline_canvas.GetEventAt(x, y, alt_down):
             self._left_mouse_down_on_event(x, y, ctrl_down, shift_down, alt_down)
         else:
@@ -164,8 +184,8 @@ class NoOpInputHandler(InputHandler):
     def _noop(self, x, y):
         pass
 
-    def _toggle_balloon_stickyness(self, x, y):
-        event_with_balloon = self.timeline_canvas.GetBalloonAt(x, y)
+    def _toggle_balloon_stickyness(self, cursor):
+        event_with_balloon = self.timeline_canvas.GetBalloonAt(*cursor.pos)
         if event_with_balloon:
             stick = not self.timeline_canvas.EventHasStickyBalloon(event_with_balloon)
             self.timeline_canvas.SetEventStickyBalloon(event_with_balloon, stick)
