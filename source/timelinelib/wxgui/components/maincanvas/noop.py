@@ -155,25 +155,25 @@ class NoOpInputHandler(InputHandler):
         x, y = cursor.pos
         event = self.timeline_canvas.GetEventAt(x, y, keyboard.alt)
         if self._hit_resize_handle(x, y, keyboard.alt) is not None:
-            self._resize_event(x, y, keyboard.alt)
+            self._resize_event(cursor, keyboard)
         elif self._hit_move_handle(x, y, keyboard.alt) and not event.get_ends_today():
-            self._move_event(x, y, keyboard.alt)
+            self._move_event(cursor, keyboard)
         else:
             self._toggle_event_selection(x, y, keyboard.ctrl, keyboard.alt)
 
-    def _resize_event(self, x, y, alt_down):
-        event = self.timeline_canvas.GetEventAt(x, y, alt_down)
+    def _resize_event(self, cursor, keyboard):
+        event = self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
         if self._main_frame.ok_to_edit():
             try:
-                direction = self._hit_resize_handle(x, y, alt_down)
+                direction = self._hit_resize_handle(cursor.x, cursor.y, keyboard.alt)
                 self._state.change_to_resize_by_drag(event, direction)
             except:
                 self._main_frame.edit_ends()
                 raise
 
-    def _move_event(self, x, y, alt_down):
-        time_at_x = self.timeline_canvas.GetTimeAt(x)
-        event = self.timeline_canvas.GetEventAt(x, y, alt_down)
+    def _move_event(self, cursor, keyboard):
+        time_at_x = self.timeline_canvas.GetTimeAt(cursor.x)
+        event = self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
         if self._main_frame.ok_to_edit():
             try:
                 self._state.change_to_move_by_drag(event, time_at_x)
