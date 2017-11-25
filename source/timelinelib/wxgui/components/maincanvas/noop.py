@@ -46,24 +46,32 @@ class NoOpInputHandler(InputHandler):
 
     def _left_mouse_down_on_event(self, x, y, ctrl_down, shift_down, alt_down=False):
         event = self.timeline_canvas.GetEventAt(x, y, alt_down)
-        time_at_x = self.timeline_canvas.GetTimeAt(x)
         if self._hit_resize_handle(x, y, alt_down) is not None:
-            if self._main_frame.ok_to_edit():
-                try:
-                    direction = self._hit_resize_handle(x, y, alt_down)
-                    self._state.change_to_resize_by_drag(event, direction)
-                except:
-                    self._main_frame.edit_ends()
-                    raise
+            self._resize_event(x, y, alt_down)
         elif self._hit_move_handle(x, y, alt_down) and not event.get_ends_today():
-            if self._main_frame.ok_to_edit():
-                try:
-                    self._state.change_to_move_by_drag(event, time_at_x)
-                except:
-                    self._main_frame.edit_ends()
-                    raise
+            self._move_event(x, y, alt_down)
         else:
             self._toggle_event_selection(x, y, ctrl_down, alt_down)
+
+    def _resize_event(self, x, y, alt_down):
+        event = self.timeline_canvas.GetEventAt(x, y, alt_down)
+        if self._main_frame.ok_to_edit():
+            try:
+                direction = self._hit_resize_handle(x, y, alt_down)
+                self._state.change_to_resize_by_drag(event, direction)
+            except:
+                self._main_frame.edit_ends()
+                raise
+
+    def _move_event(self, x, y, alt_down):
+        time_at_x = self.timeline_canvas.GetTimeAt(x)
+        event = self.timeline_canvas.GetEventAt(x, y, alt_down)
+        if self._main_frame.ok_to_edit():
+            try:
+                self._state.change_to_move_by_drag(event, time_at_x)
+            except:
+                self._main_frame.edit_ends()
+                raise
 
     def _left_mouse_down_on_timeline(self, x, y, ctrl, shift, alt):
         def select_function():
