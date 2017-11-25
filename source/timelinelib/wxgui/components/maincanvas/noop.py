@@ -166,7 +166,7 @@ class NoOpInputHandler(InputHandler):
         elif self._hit_move_handle(cursor, keyboard) and not event.get_ends_today():
             self._move_event(cursor, keyboard)
         else:
-            self._toggle_event_selection(x, y, keyboard.ctrl, keyboard.alt)
+            self._toggle_event_selection(cursor, keyboard)
 
     def _get_event_at_cursor(self, cursor, keyboard):
         return self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
@@ -340,11 +340,14 @@ class NoOpInputHandler(InputHandler):
             return wx.RIGHT
         return None
 
-    def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
+    def _toggle_event_selection(self, cursor, keyboard):
+        xpixelpos, ypixelpos = cursor.pos
+        alt_down = keyboard.alt
+        ctrl_down = keyboard.ctrl
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
         if event:
             selected = not self.timeline_canvas.IsEventSelected(event)
-            if control_down:
+            if ctrl_down:
                 self.timeline_canvas.SetEventSelected(event, selected)
             else:
                 self.timeline_canvas.ClearSelectedEvents()
