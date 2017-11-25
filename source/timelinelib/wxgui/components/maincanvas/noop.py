@@ -159,7 +159,6 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.Scroll(direction * 0.1)
 
     def _left_mouse_down_on_event(self, cursor, keyboard):
-        x, y = cursor.pos
         event = self._get_event_at_cursor(cursor, keyboard)
         if self._hit_resize_handle(cursor, keyboard) is not None:
             self._resize_event(cursor, keyboard)
