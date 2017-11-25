@@ -32,7 +32,7 @@ another event handler
 """
 
 
-class Cursor():
+class Cursor(object):
 
     def __init__(self, x, y):
         self._x = x
@@ -49,6 +49,32 @@ class Cursor():
     @property
     def pos(self):
         return self._x, self._y
+
+
+class Keyboard(object):
+
+    def __init__(self, ctrl, shift, alt):
+        self._ctrl = ctrl
+        self._shift = shift
+        self._alt = alt
+
+    @property
+    def ctrl(self):
+        return self._ctrl
+
+    @property
+    def shift(self):
+        return self._shift
+
+    @property
+    def alt(self):
+        return self._alt
+
+    @property
+    def keys_combination(self):
+        return (4 if self._ctrl else 0 +
+                2 if self._shift else 0 +
+                1 if self._alt else 0)
 
 
 class NoOpInputHandler(InputHandler):
@@ -77,11 +103,12 @@ class NoOpInputHandler(InputHandler):
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
         cursor = Cursor(x, y)
+        keyboard = Keyboard(ctrl_down, shift_down, alt_down)
         self._toggle_balloon_stickyness(cursor)
         if self.timeline_canvas.GetEventAt(x, y, alt_down):
-            self._left_mouse_down_on_event(cursor, ctrl_down, shift_down, alt_down)
+            self._left_mouse_down_on_event(cursor, keyboard)
         else:
-            self._left_mouse_down_on_timeline(cursor, ctrl_down, shift_down, alt_down)
+            self._left_mouse_down_on_timeline(cursor, keyboard)
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """
@@ -122,15 +149,15 @@ class NoOpInputHandler(InputHandler):
         else:
             self.timeline_canvas.Scroll(direction * 0.1)
 
-    def _left_mouse_down_on_event(self, cursor, ctrl_down, shift_down, alt_down=False):
+    def _left_mouse_down_on_event(self, cursor, keyboard):
         x, y = cursor.pos
-        event = self.timeline_canvas.GetEventAt(x, y, alt_down)
-        if self._hit_resize_handle(x, y, alt_down) is not None:
-            self._resize_event(x, y, alt_down)
-        elif self._hit_move_handle(x, y, alt_down) and not event.get_ends_today():
-            self._move_event(x, y, alt_down)
+        event = self.timeline_canvas.GetEventAt(x, y, keyboard.alt)
+        if self._hit_resize_handle(x, y, keyboard.alt) is not None:
+            self._resize_event(x, y, keyboard.alt)
+        elif self._hit_move_handle(x, y, keyboard.alt) and not event.get_ends_today():
+            self._move_event(x, y, keyboard.alt)
         else:
-            self._toggle_event_selection(x, y, ctrl_down, alt_down)
+            self._toggle_event_selection(x, y, keyboard.ctrl, keyboard.alt)
 
     def _resize_event(self, x, y, alt_down):
         event = self.timeline_canvas.GetEventAt(x, y, alt_down)
@@ -152,11 +179,8 @@ class NoOpInputHandler(InputHandler):
                 self._main_frame.edit_ends()
                 raise
 
-    def _left_mouse_down_on_timeline(self, cursor, ctrl, shift, alt):
+    def _left_mouse_down_on_timeline(self, cursor, keyboard):
         def select_function():
-            keys_combination = (4 if ctrl else 0 +
-                                2 if shift else 0 +
-                                1 if alt else 0)
             return {0: self._scroll,
                     1: self._select,
                     2: self._zoom,
@@ -164,7 +188,7 @@ class NoOpInputHandler(InputHandler):
                     4: self._create_event,
                     5: self._noop,
                     6: self._noop,
-                    7: self._noop}[keys_combination]
+                    7: self._noop}[keyboard.keys_combination]
 
         select_function()(*cursor.pos)
 
