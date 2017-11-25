@@ -104,13 +104,17 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.set_default_cursor()
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
+        def method(cursor):
+            return {True: self._left_mouse_down_on_event,
+                    False: self._left_mouse_down_on_timeline
+                    }[self._cursor_over_event(cursor)]
+
         cursor = Cursor(x, y)
-        keyboard = Keyboard(ctrl_down, shift_down, alt_down)
         self._toggle_balloon_stickyness(cursor)
-        if self.timeline_canvas.GetEventAt(x, y, alt_down):
-            self._left_mouse_down_on_event(cursor, keyboard)
-        else:
-            self._left_mouse_down_on_timeline(cursor, keyboard)
+        method(cursor)(cursor, Keyboard(ctrl_down, shift_down, alt_down))
+
+    def _cursor_over_event(self, cursor):
+        return self.timeline_canvas.GetEventAt(cursor.x, cursor.y, False) is not None
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """
@@ -183,7 +187,6 @@ class NoOpInputHandler(InputHandler):
 
     def _left_mouse_down_on_timeline(self, cursor, keyboard):
         def select_function():
-            print keyboard.keys_combination
             return defaultdict(lambda: self._noop,
                                [(0, self._scroll),
                                 (1, self._select),
