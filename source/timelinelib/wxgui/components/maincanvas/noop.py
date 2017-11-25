@@ -92,11 +92,14 @@ class NoOpInputHandler(InputHandler):
         self.last_hovered_balloon_event = None
 
     def mouse_moved(self, x, y, alt_down=False):
+        cursor = Cursor(x, y)
+        keyboard = Keyboard(False, False, alt_down)
         self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
         self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(x, y)
         self._start_balloon_timers()
         self._display_eventinfo_in_statusbar(x, y, alt_down)
-        if self._hit_resize_handle(x, y, alt_down) is not None:
+        cursor = Cursor(x, y)
+        if self._hit_resize_handle(cursor, keyboard) is not None:
             self.timeline_canvas.set_size_cursor()
         elif self._hit_move_handle(x, y, alt_down) and not self.last_hovered_event.get_ends_today():
             self.timeline_canvas.set_move_cursor()
@@ -158,7 +161,7 @@ class NoOpInputHandler(InputHandler):
     def _left_mouse_down_on_event(self, cursor, keyboard):
         x, y = cursor.pos
         event = self._get_event_at_cursor(cursor, keyboard)
-        if self._hit_resize_handle(x, y, keyboard.alt) is not None:
+        if self._hit_resize_handle(cursor, keyboard) is not None:
             self._resize_event(cursor, keyboard)
         elif self._hit_move_handle(x, y, keyboard.alt) and not event.get_ends_today():
             self._move_event(cursor, keyboard)
@@ -316,7 +319,9 @@ class NoOpInputHandler(InputHandler):
             return False
         return hit_info == MOVE_HANDLE
 
-    def _hit_resize_handle(self, x, y, alt_down=False):
+    def _hit_resize_handle(self, cursor, keyboard):
+        x, y = cursor.pos
+        alt_down = keyboard.alt
         event_and_hit_info = self.timeline_canvas.GetEventWithHitInfoAt(x, y, alt_down)
         if event_and_hit_info is None:
             return None
