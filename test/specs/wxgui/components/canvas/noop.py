@@ -19,7 +19,6 @@
 from mock import Mock
 import wx
 
-from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event, an_event_with, human_time_to_gregorian
