@@ -157,13 +157,16 @@ class NoOpInputHandler(InputHandler):
 
     def _left_mouse_down_on_event(self, cursor, keyboard):
         x, y = cursor.pos
-        event = self.timeline_canvas.GetEventAt(x, y, keyboard.alt)
+        event = self._get_event_at_cursor(cursor, keyboard)
         if self._hit_resize_handle(x, y, keyboard.alt) is not None:
             self._resize_event(cursor, keyboard)
         elif self._hit_move_handle(x, y, keyboard.alt) and not event.get_ends_today():
             self._move_event(cursor, keyboard)
         else:
             self._toggle_event_selection(x, y, keyboard.ctrl, keyboard.alt)
+
+    def _get_event_at_cursor(self, cursor, keyboard):
+        return self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
 
     def _resize_event(self, cursor, keyboard):
         event = self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
