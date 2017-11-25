@@ -79,9 +79,9 @@ class NoOpInputHandler(InputHandler):
         cursor = Cursor(x, y)
         self._toggle_balloon_stickyness(cursor)
         if self.timeline_canvas.GetEventAt(x, y, alt_down):
-            self._left_mouse_down_on_event(x, y, ctrl_down, shift_down, alt_down)
+            self._left_mouse_down_on_event(cursor, ctrl_down, shift_down, alt_down)
         else:
-            self._left_mouse_down_on_timeline(x, y, ctrl_down, shift_down, alt_down)
+            self._left_mouse_down_on_timeline(cursor, ctrl_down, shift_down, alt_down)
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """
@@ -122,7 +122,8 @@ class NoOpInputHandler(InputHandler):
         else:
             self.timeline_canvas.Scroll(direction * 0.1)
 
-    def _left_mouse_down_on_event(self, x, y, ctrl_down, shift_down, alt_down=False):
+    def _left_mouse_down_on_event(self, cursor, ctrl_down, shift_down, alt_down=False):
+        x, y = cursor.pos
         event = self.timeline_canvas.GetEventAt(x, y, alt_down)
         if self._hit_resize_handle(x, y, alt_down) is not None:
             self._resize_event(x, y, alt_down)
@@ -151,7 +152,7 @@ class NoOpInputHandler(InputHandler):
                 self._main_frame.edit_ends()
                 raise
 
-    def _left_mouse_down_on_timeline(self, x, y, ctrl, shift, alt):
+    def _left_mouse_down_on_timeline(self, cursor, ctrl, shift, alt):
         def select_function():
             keys_combination = (4 if ctrl else 0 +
                                 2 if shift else 0 +
@@ -165,7 +166,7 @@ class NoOpInputHandler(InputHandler):
                     6: self._noop,
                     7: self._noop}[keys_combination]
 
-        select_function()(x, y)
+        select_function()(*cursor.pos)
 
     def _scroll(self, x, y):
         self._state.change_to_scroll_by_drag(self.timeline_canvas.GetTimeAt(x), y)
