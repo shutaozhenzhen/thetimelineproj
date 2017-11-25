@@ -57,9 +57,8 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.set_default_cursor()
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
-        if self.timeline_canvas.GetBalloonAt(x, y):
-            self._toggle_balloon_stickyness(x, y)
-        elif self.timeline_canvas.GetEventAt(x, y, alt_down):
+        self._toggle_balloon_stickyness(x, y)
+        if self.timeline_canvas.GetEventAt(x, y, alt_down):
             self._left_mouse_down_on_event(x, y, ctrl_down, shift_down, alt_down)
         else:
             self._left_mouse_down_on_timeline(x, y, ctrl_down, shift_down, alt_down)
