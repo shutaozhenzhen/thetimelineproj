@@ -25,6 +25,13 @@ from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 
 
+"""
+A NoOpInputHandler gets messages about the start of a user input, such as a
+mouse move action, and delegates the workload to fulfill the user action, to
+another event handler
+"""
+
+
 class NoOpInputHandler(InputHandler):
 
     def __init__(self, state, status_bar, main_frame, timeline_canvas):
@@ -37,12 +44,63 @@ class NoOpInputHandler(InputHandler):
         self.last_hovered_event = None
         self.last_hovered_balloon_event = None
 
+    def mouse_moved(self, x, y, alt_down=False):
+        self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
+        self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(x, y)
+        self._start_balloon_timers()
+        self._display_eventinfo_in_statusbar(x, y, alt_down)
+        if self._hit_resize_handle(x, y, alt_down) is not None:
+            self.timeline_canvas.set_size_cursor()
+        elif self._hit_move_handle(x, y, alt_down) and not self.last_hovered_event.get_ends_today():
+            self.timeline_canvas.set_move_cursor()
+        else:
+            self.timeline_canvas.set_default_cursor()
+
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
         self._toggle_balloon_stickyness(x, y)
         if self.timeline_canvas.GetEventAt(x, y, alt_down):
             self._left_mouse_down_on_event(x, y, ctrl_down, shift_down, alt_down)
         else:
             self._left_mouse_down_on_timeline(x, y, ctrl_down, shift_down, alt_down)
+
+    def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
+        """
+        Event handler used when the left mouse button has been double clicked.
+
+        If the timeline is readonly, no action is taken.
+        If the mouse hits an event, a dialog opens for editing this event.
+        Otherwise a dialog for creating a new event is opened.
+        """
+        if self.timeline_canvas.GetDb().is_read_only():
+            return
+        # Since the event sequence is, 1. EVT_LEFT_DOWN  2. EVT_LEFT_UP
+        # 3. EVT_LEFT_DCLICK we must compensate for the toggle_event_selection
+        # that occurs in the handling of EVT_LEFT_DOWN, since we still want
+        # the event(s) selected or deselected after a left doubleclick
+        # It doesn't look too god but I havent found any other way to do it.
+        self._toggle_event_selection(x, y, ctrl_down, alt_down)
+
+    def middle_mouse_down(self, x):
+        time = self.timeline_canvas.GetTimeAt(x)
+        self.timeline_canvas.Navigate(lambda tp: tp.center(time))
+
+    def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
+        direction = _step_function(rotation)
+        if ctrl_down:
+            if shift_down:
+                self.timeline_canvas.Scrollvertically(direction)
+            else:
+                self.timeline_canvas.Zoom(direction, x)
+        elif shift_down:
+            self.timeline_canvas.SetDividerPosition(self.timeline_canvas.GetDividerPosition() + direction)
+        elif alt_down:
+            if direction > 0:
+                self.timeline_canvas.IncrementEventTextFont()
+            else:
+                self.timeline_canvas.DecrementEventTextFont()
+            self.timeline_canvas.Redraw()
+        else:
+            self.timeline_canvas.Scroll(direction * 0.1)
 
     def _left_mouse_down_on_event(self, x, y, ctrl_down, shift_down, alt_down=False):
         event = self.timeline_canvas.GetEventAt(x, y, alt_down)
@@ -118,18 +176,6 @@ class NoOpInputHandler(InputHandler):
                     self._redraw_balloons(event_with_balloon)
                 else:
                     self._redraw_balloons(None)
-
-    def mouse_moved(self, x, y, alt_down=False):
-        self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
-        self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(x, y)
-        self._start_balloon_timers()
-        self._display_eventinfo_in_statusbar(x, y, alt_down)
-        if self._hit_resize_handle(x, y, alt_down) is not None:
-            self.timeline_canvas.set_size_cursor()
-        elif self._hit_move_handle(x, y, alt_down) and not self.last_hovered_event.get_ends_today():
-            self.timeline_canvas.set_move_cursor()
-        else:
-            self.timeline_canvas.set_default_cursor()
 
     def _display_eventinfo_in_statusbar(self, xpixelpos, ypixelpos, alt_down=False):
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
@@ -236,45 +282,6 @@ class NoOpInputHandler(InputHandler):
         if hit_info == RIGHT_RESIZE_HANDLE:
             return wx.RIGHT
         return None
-
-    def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
-        """
-        Event handler used when the left mouse button has been double clicked.
-
-        If the timeline is readonly, no action is taken.
-        If the mouse hits an event, a dialog opens for editing this event.
-        Otherwise a dialog for creating a new event is opened.
-        """
-        if self.timeline_canvas.GetDb().is_read_only():
-            return
-        # Since the event sequence is, 1. EVT_LEFT_DOWN  2. EVT_LEFT_UP
-        # 3. EVT_LEFT_DCLICK we must compensate for the toggle_event_selection
-        # that occurs in the handling of EVT_LEFT_DOWN, since we still want
-        # the event(s) selected or deselected after a left doubleclick
-        # It doesn't look too god but I havent found any other way to do it.
-        self._toggle_event_selection(x, y, ctrl_down, alt_down)
-
-    def middle_mouse_down(self, x):
-        time = self.timeline_canvas.GetTimeAt(x)
-        self.timeline_canvas.Navigate(lambda tp: tp.center(time))
-
-    def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
-        direction = _step_function(rotation)
-        if ctrl_down:
-            if shift_down:
-                self.timeline_canvas.Scrollvertically(direction)
-            else:
-                self.timeline_canvas.Zoom(direction, x)
-        elif shift_down:
-            self.timeline_canvas.SetDividerPosition(self.timeline_canvas.GetDividerPosition() + direction)
-        elif alt_down:
-            if direction > 0:
-                self.timeline_canvas.IncrementEventTextFont()
-            else:
-                self.timeline_canvas.DecrementEventTextFont()
-            self.timeline_canvas.Redraw()
-        else:
-            self.timeline_canvas.Scroll(direction * 0.1)
 
     def _toggle_event_selection(self, xpixelpos, ypixelpos, control_down, alt_down=False):
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
