@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from collections import defaultdict
+
 import wx
 
 from timelinelib.canvas.data import TimePeriod
@@ -72,9 +74,9 @@ class Keyboard(object):
 
     @property
     def keys_combination(self):
-        return (4 if self._ctrl else 0 +
-                2 if self._shift else 0 +
-                1 if self._alt else 0)
+        return ((4 if self._ctrl else 0) +
+                (2 if self._shift else 0) +
+                (1 if self._alt else 0))
 
 
 class NoOpInputHandler(InputHandler):
@@ -181,15 +183,12 @@ class NoOpInputHandler(InputHandler):
 
     def _left_mouse_down_on_timeline(self, cursor, keyboard):
         def select_function():
-            return {0: self._scroll,
-                    1: self._select,
-                    2: self._zoom,
-                    3: self._noop,
-                    4: self._create_event,
-                    5: self._noop,
-                    6: self._noop,
-                    7: self._noop}[keyboard.keys_combination]
-
+            print keyboard.keys_combination
+            return defaultdict(lambda: self._noop,
+                               [(0, self._scroll),
+                                (1, self._select),
+                                (2, self._zoom),
+                                (4, self._create_event)])[keyboard.keys_combination]
         select_function()(*cursor.pos)
 
     def _scroll(self, x, y):
