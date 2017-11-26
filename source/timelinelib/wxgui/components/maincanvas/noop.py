@@ -121,7 +121,10 @@ class NoOpInputHandler(InputHandler):
         select_method()()
 
     def _cursor_over_event(self):
-        return self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, False) is not None
+        return self._event_at_cursor() is not None
+
+    def _event_at_cursor(self):
+        return self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, self._keyboard.alt)
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """
