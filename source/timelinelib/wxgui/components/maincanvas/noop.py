@@ -115,13 +115,13 @@ class NoOpInputHandler(InputHandler):
         def select_method():
             return {True: self._left_mouse_down_on_event,
                     False: self._left_mouse_down_on_timeline
-                    }[self._cursor_over_event(self._cursor)]
+                    }[self._cursor_over_event()]
 
         self._toggle_balloon_stickyness(self._cursor)
         select_method()()
 
-    def _cursor_over_event(self, cursor):
-        return self.timeline_canvas.GetEventAt(cursor.x, cursor.y, False) is not None
+    def _cursor_over_event(self):
+        return self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, False) is not None
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """
@@ -203,21 +203,21 @@ class NoOpInputHandler(InputHandler):
                                 (1, self._select),
                                 (2, self._zoom),
                                 (4, self._create_event)])[self._keyboard.keys_combination]
-        select_function()(*self._cursor.pos)
+        select_function()()
 
-    def _scroll(self, x, y):
-        self._state.change_to_scroll_by_drag(self.timeline_canvas.GetTimeAt(x), y)
+    def _scroll(self):
+        self._state.change_to_scroll_by_drag(self.timeline_canvas.GetTimeAt(self._cursor.x), self._cursor.y)
 
-    def _create_event(self, x, y):
+    def _create_event(self):
         self.timeline_canvas.ClearSelectedEvents()
-        self._state.change_to_create_period_event_by_drag(self.timeline_canvas.GetTimeAt(x))
+        self._state.change_to_create_period_event_by_drag(self.timeline_canvas.GetTimeAt(self._cursor.x))
 
-    def _zoom(self, x, y):
+    def _zoom(self):
         self.timeline_canvas.ClearSelectedEvents()
-        self._state.change_to_zoom_by_drag(self.timeline_canvas.GetTimeAt(x))
+        self._state.change_to_zoom_by_drag(self.timeline_canvas.GetTimeAt(self._cursor.x))
 
-    def _select(self, x, y):
-        self._state.change_to_select(x, y)
+    def _select(self):
+        self._state.change_to_select(self._cursor.x, self._cursor.y)
 
     def _noop(self, x, y):
         pass
