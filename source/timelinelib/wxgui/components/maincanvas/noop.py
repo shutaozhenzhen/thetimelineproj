@@ -197,13 +197,13 @@ class NoOpInputHandler(InputHandler):
                 raise
 
     def _left_mouse_down_on_timeline(self):
-        def select_function():
+        def select_method():
             return defaultdict(lambda: self._noop,
                                [(0, self._scroll),
                                 (1, self._select),
                                 (2, self._zoom),
                                 (4, self._create_event)])[self._keyboard.keys_combination]
-        select_function()()
+        select_method()()
 
     def _scroll(self):
         self._state.change_to_scroll_by_drag(self.timeline_canvas.GetTimeAt(self._cursor.x), self._cursor.y)
