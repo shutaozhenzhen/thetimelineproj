@@ -119,15 +119,6 @@ class NoOpInputHandler(InputHandler):
         self._toggle_balloon_stickyness(self._cursor)
         select_method()()
 
-    def _cursor_over_event(self):
-        return self._event_at_cursor() is not None
-
-    def _event_at_cursor(self):
-        return self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, self._keyboard.alt)
-
-    def _time_at_cursor(self):
-        return self.timeline_canvas.GetTimeAt(self._cursor.x)
-
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """
         Event handler used when the left mouse button has been double clicked.
@@ -168,6 +159,15 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.Redraw()
         else:
             self.timeline_canvas.Scroll(direction * 0.1)
+
+    def _cursor_over_event(self):
+        return self._event_at_cursor() is not None
+
+    def _event_at_cursor(self):
+        return self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, self._keyboard.alt)
+
+    def _time_at_cursor(self):
+        return self.timeline_canvas.GetTimeAt(self._cursor.x)
 
     def _left_mouse_down_on_event(self):
         if self._is_resize_command():
