@@ -90,6 +90,8 @@ class NoOpInputHandler(InputHandler):
         self.hide_timer_running = False
         self.last_hovered_event = None
         self.last_hovered_balloon_event = None
+        self._cursor = None
+        self._keyboard = None
 
     def mouse_moved(self, x, y, alt_down=False):
         cursor = Cursor(x, y)
@@ -107,14 +109,16 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.set_default_cursor()
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
-        def method(cursor):
+        self._cursor = Cursor(x, y)
+        self._keyboard = Keyboard(ctrl_down, shift_down, alt_down)
+
+        def select_method():
             return {True: self._left_mouse_down_on_event,
                     False: self._left_mouse_down_on_timeline
-                    }[self._cursor_over_event(cursor)]
+                    }[self._cursor_over_event(self._cursor)]
 
-        cursor = Cursor(x, y)
-        self._toggle_balloon_stickyness(cursor)
-        method(cursor)(cursor, Keyboard(ctrl_down, shift_down, alt_down))
+        self._toggle_balloon_stickyness(self._cursor)
+        select_method()()
 
     def _cursor_over_event(self, cursor):
         return self.timeline_canvas.GetEventAt(cursor.x, cursor.y, False) is not None
@@ -134,7 +138,9 @@ class NoOpInputHandler(InputHandler):
         # that occurs in the handling of EVT_LEFT_DOWN, since we still want
         # the event(s) selected or deselected after a left doubleclick
         # It doesn't look too god but I havent found any other way to do it.
-        self._toggle_event_selection(x, y, ctrl_down, alt_down)
+        self._cursor = Cursor(x, y)
+        self._keyboard = Keyboard(ctrl_down, False, alt_down)
+        self._toggle_event_selection()
 
     def middle_mouse_down(self, x):
         time = self.timeline_canvas.GetTimeAt(x)
@@ -158,31 +164,31 @@ class NoOpInputHandler(InputHandler):
         else:
             self.timeline_canvas.Scroll(direction * 0.1)
 
-    def _left_mouse_down_on_event(self, cursor, keyboard):
-        if self._is_resize_command(cursor, keyboard):
-            self._resize_event(cursor, keyboard)
-        elif self._is_move_command(cursor, keyboard):
-            self._move_event(cursor, keyboard)
+    def _left_mouse_down_on_event(self):
+        if self._is_resize_command():
+            self._resize_event()
+        elif self._is_move_command():
+            self._move_event()
         else:
-            self._toggle_event_selection(cursor, keyboard)
+            self._toggle_event_selection()
 
-    def _is_resize_command(self, cursor, keyboard):
-        return self._hit_resize_handle(cursor, keyboard) is not None
+    def _is_resize_command(self):
+        return self._hit_resize_handle(self._cursor, self._keyboard) is not None
 
-    def _is_move_command(self, cursor, keyboard):
-        event = self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
-        return self._hit_move_handle(cursor, keyboard) and not event.get_ends_today()
+    def _is_move_command(self):
+        event = self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, self._keyboard.alt)
+        return self._hit_move_handle(self._cursor, self._keyboard) and not event.get_ends_today()
 
-    def _resize_event(self, cursor, keyboard):
-        direction = self._hit_resize_handle(cursor, keyboard)
-        self._start_event_action(self._state.change_to_resize_by_drag, cursor, keyboard, direction)
+    def _resize_event(self):
+        direction = self._hit_resize_handle(self._cursor, self._keyboard)
+        self._start_event_action(self._state.change_to_resize_by_drag, direction)
 
-    def _move_event(self, cursor, keyboard):
-        time_at_x = self.timeline_canvas.GetTimeAt(cursor.x)
-        self._start_event_action(self._state.change_to_move_by_drag, cursor, keyboard, time_at_x)
+    def _move_event(self):
+        time_at_x = self.timeline_canvas.GetTimeAt(self._cursor.x)
+        self._start_event_action(self._state.change_to_move_by_drag, time_at_x)
 
-    def _start_event_action(self, action_method, cursor, keyboard, action_arg):
-        event = self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
+    def _start_event_action(self, action_method, action_arg):
+        event = self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, self._keyboard.alt)
         if self._main_frame.ok_to_edit():
             try:
                 action_method(event, action_arg)
@@ -190,14 +196,14 @@ class NoOpInputHandler(InputHandler):
                 self._main_frame.edit_ends()
                 raise
 
-    def _left_mouse_down_on_timeline(self, cursor, keyboard):
+    def _left_mouse_down_on_timeline(self):
         def select_function():
             return defaultdict(lambda: self._noop,
                                [(0, self._scroll),
                                 (1, self._select),
                                 (2, self._zoom),
-                                (4, self._create_event)])[keyboard.keys_combination]
-        select_function()(*cursor.pos)
+                                (4, self._create_event)])[self._keyboard.keys_combination]
+        select_function()(*self._cursor.pos)
 
     def _scroll(self, x, y):
         self._state.change_to_scroll_by_drag(self.timeline_canvas.GetTimeAt(x), y)
@@ -339,10 +345,10 @@ class NoOpInputHandler(InputHandler):
             return wx.RIGHT
         return None
 
-    def _toggle_event_selection(self, cursor, keyboard):
-        xpixelpos, ypixelpos = cursor.pos
-        alt_down = keyboard.alt
-        ctrl_down = keyboard.ctrl
+    def _toggle_event_selection(self):
+        xpixelpos, ypixelpos = self._cursor.pos
+        alt_down = self._keyboard.alt
+        ctrl_down = self._keyboard.ctrl
         event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
         if event:
             selected = not self.timeline_canvas.IsEventSelected(event)
