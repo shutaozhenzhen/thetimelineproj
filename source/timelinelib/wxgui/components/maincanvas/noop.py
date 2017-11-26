@@ -206,7 +206,8 @@ class NoOpInputHandler(InputHandler):
         select_method()()
 
     def _scroll(self):
-        self._state.change_to_scroll_by_drag(self.timeline_canvas.GetTimeAt(self._cursor.x), self._cursor.y)
+        self._state.change_to_scroll_by_drag(self.timeline_canvas.GetTimeAt(self._cursor.x),
+                                             self._cursor.y)
 
     def _create_event(self):
         self.timeline_canvas.ClearSelectedEvents()
@@ -219,7 +220,7 @@ class NoOpInputHandler(InputHandler):
     def _select(self):
         self._state.change_to_select(self._cursor.x, self._cursor.y)
 
-    def _noop(self, x, y):
+    def _noop(self):
         pass
 
     def _toggle_balloon_stickyness(self, cursor):
