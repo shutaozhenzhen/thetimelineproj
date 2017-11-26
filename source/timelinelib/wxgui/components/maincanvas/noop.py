@@ -125,6 +125,9 @@ class NoOpInputHandler(InputHandler):
     def _event_at_cursor(self):
         return self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, self._keyboard.alt)
 
+    def _time_at_cursor(self):
+        return self.timeline_canvas.GetTimeAt(self._cursor.x)
+
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """
         Event handler used when the left mouse button has been double clicked.
@@ -188,8 +191,8 @@ class NoOpInputHandler(InputHandler):
         self._start_event_action(self._state.change_to_resize_by_drag, direction)
 
     def _move_event(self):
-        time_at_x = self.timeline_canvas.GetTimeAt(self._cursor.x)
-        self._start_event_action(self._state.change_to_move_by_drag, time_at_x)
+        self._start_event_action(self._state.change_to_move_by_drag,
+                                 self._time_at_cursor())
 
     def _start_event_action(self, action_method, action_arg):
         if self._main_frame.ok_to_edit():
@@ -209,16 +212,16 @@ class NoOpInputHandler(InputHandler):
         select_method()()
 
     def _scroll(self):
-        self._state.change_to_scroll_by_drag(self.timeline_canvas.GetTimeAt(self._cursor.x),
+        self._state.change_to_scroll_by_drag(self._time_at_cursor(),
                                              self._cursor.y)
 
     def _create_event(self):
         self.timeline_canvas.ClearSelectedEvents()
-        self._state.change_to_create_period_event_by_drag(self.timeline_canvas.GetTimeAt(self._cursor.x))
+        self._state.change_to_create_period_event_by_drag(self._time_at_cursor())
 
     def _zoom(self):
         self.timeline_canvas.ClearSelectedEvents()
-        self._state.change_to_zoom_by_drag(self.timeline_canvas.GetTimeAt(self._cursor.x))
+        self._state.change_to_zoom_by_drag(self._time_at_cursor())
 
     def _select(self):
         self._state.change_to_select(self._cursor.x, self._cursor.y)
