@@ -174,24 +174,18 @@ class NoOpInputHandler(InputHandler):
         return self._hit_move_handle(cursor, keyboard) and not event.get_ends_today()
 
     def _resize_event(self, cursor, keyboard):
-        event = self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
         direction = self._hit_resize_handle(cursor, keyboard)
-        self._start_resizing(event, direction)
-
-    def _start_resizing(self, event, direction):
-        if self._main_frame.ok_to_edit():
-            try:
-                self._state.change_to_resize_by_drag(event, direction)
-            except:
-                self._main_frame.edit_ends()
-                raise
+        self._start_event_action(self._state.change_to_resize_by_drag, cursor, keyboard, direction)
 
     def _move_event(self, cursor, keyboard):
         time_at_x = self.timeline_canvas.GetTimeAt(cursor.x)
+        self._start_event_action(self._state.change_to_move_by_drag, cursor, keyboard, time_at_x)
+
+    def _start_event_action(self, action_method, cursor, keyboard, action_arg):
         event = self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
         if self._main_frame.ok_to_edit():
             try:
-                self._state.change_to_move_by_drag(event, time_at_x)
+                action_method(event, action_arg)
             except:
                 self._main_frame.edit_ends()
                 raise
