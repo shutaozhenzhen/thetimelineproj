@@ -94,16 +94,15 @@ class NoOpInputHandler(InputHandler):
         self._keyboard = None
 
     def mouse_moved(self, x, y, alt_down=False):
-        cursor = Cursor(x, y)
-        keyboard = Keyboard(False, False, alt_down)
+        self._cursor = Cursor(x, y)
+        self._keyboard = Keyboard(False, False, alt_down)
         self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
         self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(x, y)
         self._start_balloon_timers()
         self._display_eventinfo_in_statusbar(x, y, alt_down)
-        cursor = Cursor(x, y)
-        if self._hit_resize_handle(cursor, keyboard) is not None:
+        if self._hit_resize_handle() is not None:
             self.timeline_canvas.set_size_cursor()
-        elif self._hit_move_handle(cursor, keyboard) and not self.last_hovered_event.get_ends_today():
+        elif self._hit_move_handle() and not self.last_hovered_event.get_ends_today():
             self.timeline_canvas.set_move_cursor()
         else:
             self.timeline_canvas.set_default_cursor()
@@ -176,14 +175,16 @@ class NoOpInputHandler(InputHandler):
             self._toggle_event_selection()
 
     def _is_resize_command(self):
-        return self._hit_resize_handle(self._cursor, self._keyboard) is not None
+        return self._hit_resize_handle() is not None
 
     def _is_move_command(self):
-        event = self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, self._keyboard.alt)
-        return self._hit_move_handle(self._cursor, self._keyboard) and not event.get_ends_today()
+        if self._event_at_cursor().get_ends_today():
+            return False
+        else:
+            return self._hit_move_handle()
 
     def _resize_event(self):
-        direction = self._hit_resize_handle(self._cursor, self._keyboard)
+        direction = self._hit_resize_handle()
         self._start_event_action(self._state.change_to_resize_by_drag, direction)
 
     def _move_event(self):
@@ -316,9 +317,9 @@ class NoOpInputHandler(InputHandler):
         if hevt != cevt and hevt != bevt:
             self._redraw_balloons(None)
 
-    def _hit_move_handle(self, cursor, keyboard):
-        x, y = cursor.pos
-        alt_down = keyboard.alt
+    def _hit_move_handle(self):
+        x, y = self._cursor.pos
+        alt_down = self._keyboard.alt
         event_and_hit_info = self.timeline_canvas.GetEventWithHitInfoAt(x, y, alt_down)
         if event_and_hit_info is None:
             return False
@@ -329,9 +330,9 @@ class NoOpInputHandler(InputHandler):
             return False
         return hit_info == MOVE_HANDLE
 
-    def _hit_resize_handle(self, cursor, keyboard):
-        x, y = cursor.pos
-        alt_down = keyboard.alt
+    def _hit_resize_handle(self):
+        x, y = self._cursor.pos
+        alt_down = self._keyboard.alt
         event_and_hit_info = self.timeline_canvas.GetEventWithHitInfoAt(x, y, alt_down)
         if event_and_hit_info is None:
             return None
