@@ -159,22 +159,25 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.Scroll(direction * 0.1)
 
     def _left_mouse_down_on_event(self, cursor, keyboard):
-        event = self._get_event_at_cursor(cursor, keyboard)
-        if self._hit_resize_handle(cursor, keyboard) is not None:
+        if self._do_resize_event(cursor, keyboard):
             self._resize_event(cursor, keyboard)
-        elif self._hit_move_handle(cursor, keyboard) and not event.get_ends_today():
+        elif self._do_move_event(cursor, keyboard):
             self._move_event(cursor, keyboard)
         else:
             self._toggle_event_selection(cursor, keyboard)
 
-    def _get_event_at_cursor(self, cursor, keyboard):
-        return self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
+    def _do_resize_event(self, cursor, keyboard):
+        return self._hit_resize_handle(cursor, keyboard) is not None
+
+    def _do_move_event(self, cursor, keyboard):
+        event = self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
+        return self._hit_move_handle(cursor, keyboard) and not event.get_ends_today()
 
     def _resize_event(self, cursor, keyboard):
         event = self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
         if self._main_frame.ok_to_edit():
             try:
-                direction = self._hit_resize_handle(cursor.x, cursor.y, keyboard.alt)
+                direction = self._hit_resize_handle(cursor, keyboard)
                 self._state.change_to_resize_by_drag(event, direction)
             except:
                 self._main_frame.edit_ends()
