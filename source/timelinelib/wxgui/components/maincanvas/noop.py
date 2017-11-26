@@ -175,9 +175,12 @@ class NoOpInputHandler(InputHandler):
 
     def _resize_event(self, cursor, keyboard):
         event = self.timeline_canvas.GetEventAt(cursor.x, cursor.y, keyboard.alt)
+        direction = self._hit_resize_handle(cursor, keyboard)
+        self._start_resizing(event, direction)
+
+    def _start_resizing(self, event, direction):
         if self._main_frame.ok_to_edit():
             try:
-                direction = self._hit_resize_handle(cursor, keyboard)
                 self._state.change_to_resize_by_drag(event, direction)
             except:
                 self._main_frame.edit_ends()
