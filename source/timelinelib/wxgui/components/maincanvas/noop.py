@@ -191,10 +191,9 @@ class NoOpInputHandler(InputHandler):
         self._start_event_action(self._state.change_to_move_by_drag, time_at_x)
 
     def _start_event_action(self, action_method, action_arg):
-        event = self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, self._keyboard.alt)
         if self._main_frame.ok_to_edit():
             try:
-                action_method(event, action_arg)
+                action_method(self._event_at_cursor(), action_arg)
             except:
                 self._main_frame.edit_ends()
                 raise
