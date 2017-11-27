@@ -57,12 +57,7 @@ class NoOpInputHandler(InputHandler):
         self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(self._cursor)
         self._start_balloon_timers()
         self._display_eventinfo_in_statusbar(x, y, alt_down)
-        if self._hit_resize_handle() is not None:
-            self.timeline_canvas.set_size_cursor()
-        elif self._hit_move_handle() and not self.last_hovered_event.get_ends_today():
-            self.timeline_canvas.set_move_cursor()
-        else:
-            self.timeline_canvas.set_default_cursor()
+        self._select_cursor_shape()
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
         self._cursor = Cursor(x, y)
@@ -116,6 +111,14 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.Redraw()
         else:
             self.timeline_canvas.Scroll(direction * 0.1)
+
+    def _select_cursor_shape(self):
+        if self._hit_resize_handle() is not None:
+            self.timeline_canvas.set_size_cursor()
+        elif self._hit_move_handle() and not self.last_hovered_event.get_ends_today():
+            self.timeline_canvas.set_move_cursor()
+        else:
+            self.timeline_canvas.set_default_cursor()
 
     def _cursor_over_event(self):
         return self._event_at_cursor() is not None
