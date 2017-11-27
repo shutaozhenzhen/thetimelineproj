@@ -17,11 +17,6 @@
 
 
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
-from timelinelib.wxgui.cursor import Cursor
-
-
-# dragscroll timer interval in milliseconds
-DRAGSCROLL_TIMER_MSINTERVAL = 150
 
 
 class SelectBase(InputHandler):
@@ -29,16 +24,12 @@ class SelectBase(InputHandler):
     def __init__(self, timeline_canvas, cursor):
         self._cursor = cursor
         InputHandler.__init__(self, timeline_canvas)
-        self.timer_running = False
 
     def mouse_moved(self, x, y, alt_down=False):
         self._cursor.move(x, y)
-        if not self.timer_running:
-            self.timeline_canvas.start_dragscroll_timer(milliseconds=DRAGSCROLL_TIMER_MSINTERVAL)
-            self.timer_running = True
+        self.timeline_canvas.DrawSelectionRect(self._cursor)
 
     def left_mouse_up(self):
-        self.timeline_canvas.stop_dragscroll_timer()
         self.timeline_canvas.RemoveSelectionRect()
         self._state.change_to_no_op()
         self.end_action()
