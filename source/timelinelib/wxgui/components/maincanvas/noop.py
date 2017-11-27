@@ -25,6 +25,7 @@ from timelinelib.canvas.timelinecanvas import LEFT_RESIZE_HANDLE
 from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
 from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
+from timelinelib.wxgui.cursor import Cursor
 
 
 """
@@ -32,25 +33,6 @@ A NoOpInputHandler gets messages about the start of a user input, such as a
 mouse move action, and delegates the workload to fulfill the user action, to
 another event handler
 """
-
-
-class Cursor(object):
-
-    def __init__(self, x, y):
-        self._x = x
-        self._y = y
-
-    @property
-    def x(self):
-        return self._x
-
-    @property
-    def y(self):
-        return self._y
-
-    @property
-    def pos(self):
-        return self._x, self._y
 
 
 class Keyboard(object):
