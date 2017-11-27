@@ -26,6 +26,7 @@ from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
 from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 from timelinelib.wxgui.cursor import Cursor
+from timelinelib.wxgui.keyboard import Keyboard
 
 
 """
@@ -33,43 +34,6 @@ A NoOpInputHandler gets messages about the start of a user input, such as a
 mouse move action, and delegates the workload to fulfill the user action, to
 another event handler
 """
-
-
-class Keyboard(object):
-
-    CTRL = 4
-    SHIFT = 2
-    ALT = 1
-    NONE = 0
-
-    def __init__(self, ctrl, shift, alt):
-        self._ctrl = ctrl
-        self._shift = shift
-        self._alt = alt
-
-    @property
-    def ctrl(self):
-        return self._ctrl
-
-    @property
-    def shift(self):
-        return self._shift
-
-    @property
-    def alt(self):
-        return self._alt
-
-    @property
-    def keys_combination(self):
-        """
-        This function returns a unique integer value for each combination
-        of control keys. It may seem a little odd to use the if statements
-        but that has been proven to be the most efficient way of converting
-        a boolean to an int.
-        """
-        return ((Keyboard.CTRL if self._ctrl else 0) +
-                (Keyboard.SHIFT if self._shift else 0) +
-                (Keyboard.ALT if self._alt else 0))
 
 
 class NoOpInputHandler(InputHandler):
