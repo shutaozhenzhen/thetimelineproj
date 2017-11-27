@@ -184,8 +184,9 @@ class NoOpInputHandler(InputHandler):
         self._start_event_action(self._state.change_to_resize_by_drag, direction)
 
     def _move_event(self):
-        self._start_event_action(self._state.change_to_move_by_drag,
-                                 self._time_at_cursor())
+        self._start_event_action(
+            self._state.change_to_move_by_drag,
+            self._time_at_cursor())
 
     def _start_event_action(self, action_method, action_arg):
         if self._main_frame.ok_to_edit():
@@ -197,16 +198,16 @@ class NoOpInputHandler(InputHandler):
 
     def _left_mouse_down_on_timeline(self):
         def select_method():
-            return defaultdict(lambda: self._noop,
-                               [(Keyboard.NONE, self._scroll),
-                                (Keyboard.ALT, self._select),
-                                (Keyboard.SHIFT, self._zoom),
-                                (Keyboard.CTRL, self._create_event)])[self._keyboard.keys_combination]
+            return defaultdict(
+                lambda: self._noop,
+                [(Keyboard.NONE, self._scroll),
+                 (Keyboard.ALT, self._select),
+                 (Keyboard.SHIFT, self._zoom),
+                 (Keyboard.CTRL, self._create_event)])[self._keyboard.keys_combination]
         select_method()()
 
     def _scroll(self):
-        self._state.change_to_scroll_by_drag(self._time_at_cursor(),
-                                             self._cursor.y)
+        self._state.change_to_scroll_by_drag(self._time_at_cursor(), self._cursor.y)
 
     def _create_event(self):
         self.timeline_canvas.ClearSelectedEvents()
