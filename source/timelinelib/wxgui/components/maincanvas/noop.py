@@ -217,7 +217,7 @@ class NoOpInputHandler(InputHandler):
         self._state.change_to_zoom_by_drag(self._time_at_cursor())
 
     def _select(self):
-        self._state.change_to_select(self._cursor.x, self._cursor.y)
+        self._state.change_to_select(self._cursor)
 
     def _noop(self):
         pass
