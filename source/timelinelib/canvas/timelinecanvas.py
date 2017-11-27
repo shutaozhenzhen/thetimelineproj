@@ -165,8 +165,8 @@ class TimelineCanvas(wx.Panel):
                 return (event, RIGHT_RESIZE_HANDLE)
         return None
 
-    def GetBalloonAt(self, x, y):
-        return self.controller.drawing_algorithm.balloon_at(x, y)
+    def GetBalloonAt(self, cursor):
+        return self.controller.drawing_algorithm.balloon_at(*cursor.pos)
 
     def EventHasStickyBalloon(self, event):
         return self.controller.view_properties.event_has_sticky_balloon(event)

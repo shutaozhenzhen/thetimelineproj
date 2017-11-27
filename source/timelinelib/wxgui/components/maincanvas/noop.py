@@ -54,7 +54,7 @@ class NoOpInputHandler(InputHandler):
         self._cursor = Cursor(x, y)
         self._keyboard = Keyboard(False, False, alt_down)
         self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
-        self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(x, y)
+        self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(self._cursor)
         self._start_balloon_timers()
         self._display_eventinfo_in_statusbar(x, y, alt_down)
         if self._hit_resize_handle() is not None:
@@ -188,7 +188,7 @@ class NoOpInputHandler(InputHandler):
         pass
 
     def _toggle_balloon_stickyness(self, cursor):
-        event_with_balloon = self.timeline_canvas.GetBalloonAt(*cursor.pos)
+        event_with_balloon = self.timeline_canvas.GetBalloonAt(cursor)
         if event_with_balloon:
             stick = not self.timeline_canvas.EventHasStickyBalloon(event_with_balloon)
             self.timeline_canvas.SetEventStickyBalloon(event_with_balloon, stick)
