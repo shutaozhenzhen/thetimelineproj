@@ -55,6 +55,11 @@ class Cursor(object):
 
 class Keyboard(object):
 
+    CTRL = 4
+    SHIFT = 2
+    ALT = 1
+    NONE = 0
+
     def __init__(self, ctrl, shift, alt):
         self._ctrl = ctrl
         self._shift = shift
@@ -74,9 +79,15 @@ class Keyboard(object):
 
     @property
     def keys_combination(self):
-        return ((4 if self._ctrl else 0) +
-                (2 if self._shift else 0) +
-                (1 if self._alt else 0))
+        """
+        This function returns a unique integer value for each combination
+        of control keys. It may seem a little odd to use the if statements
+        but that has been proven to be the most efficient way of converting
+        a boolean to an int.
+        """
+        return ((Keyboard.CTRL if self._ctrl else 0) +
+                (Keyboard.SHIFT if self._shift else 0) +
+                (Keyboard.ALT if self._alt else 0))
 
 
 class NoOpInputHandler(InputHandler):
@@ -205,10 +216,10 @@ class NoOpInputHandler(InputHandler):
     def _left_mouse_down_on_timeline(self):
         def select_method():
             return defaultdict(lambda: self._noop,
-                               [(0, self._scroll),
-                                (1, self._select),
-                                (2, self._zoom),
-                                (4, self._create_event)])[self._keyboard.keys_combination]
+                               [(Keyboard.NONE, self._scroll),
+                                (Keyboard.ALT, self._select),
+                                (Keyboard.SHIFT, self._zoom),
+                                (Keyboard.CTRL, self._create_event)])[self._keyboard.keys_combination]
         select_method()()
 
     def _scroll(self):
