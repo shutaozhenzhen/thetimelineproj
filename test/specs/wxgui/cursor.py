@@ -61,5 +61,9 @@ class describe_cursor(UnitTestCase):
         self.cursor.reset_move()
         self.assertFalse(self.cursor.has_moved())
 
+    def test_can_calculate_rect(self):
+        self.cursor.move(XX, YY)
+        self.assertEqual((XX, YY, X - XX, Y - YY), self.cursor.rect)
+
     def setUp(self):
         self.cursor = Cursor(X, Y)
