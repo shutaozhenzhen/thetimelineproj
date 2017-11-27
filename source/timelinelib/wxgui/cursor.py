@@ -44,6 +44,12 @@ class Cursor(object):
     def start(self):
         return self._start_pos
 
+    @property
+    def rect(self):
+        x0, y0 = self._start_pos
+        x1, y1 = self._current_pos
+        return (min(x0, x1), min(y0, y1), abs(x1 - x0), abs(y0 - y1))
+
     def has_moved(self):
         return self._has_moved
 
