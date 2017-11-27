@@ -29,8 +29,8 @@ class SelectEventsInputHandler(SelectBase):
 
     def end_action(self):
         self._set_statusbar_tex("")
-        x0, y0 = self.start_pos
-        x1, y1 = self.last_pos
+        x0, y0 = self._cursor.start
+        x1, y1 = self._cursor.pos
         rect = (min(x0, x1), min(y0, y1), abs(x1 - x0), abs(y0 - y1))
         self.timeline_canvas.SelectEventsInRect(rect)
 
