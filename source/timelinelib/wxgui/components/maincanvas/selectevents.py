@@ -22,7 +22,7 @@ from timelinelib.wxgui.components.maincanvas.selectbase import SelectBase
 class SelectEventsInputHandler(SelectBase):
 
     def __init__(self, state, timeline_canvas, main_frame, status_bar, cursor):
-        SelectBase.__init__(self, timeline_canvas, cursor.x, cursor.y)
+        SelectBase.__init__(self, timeline_canvas, cursor)
         self._state = state
         self._status_bar = status_bar
         self._set_statusbar_tex(_("Select events"))

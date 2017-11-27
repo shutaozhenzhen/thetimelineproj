@@ -26,8 +26,8 @@ DRAGSCROLL_TIMER_MSINTERVAL = 150
 
 class SelectBase(InputHandler):
 
-    def __init__(self, timeline_canvas, x, y):
-        self._cursor = Cursor(x, y)
+    def __init__(self, timeline_canvas, cursor):
+        self._cursor = cursor
         InputHandler.__init__(self, timeline_canvas)
         self.timer_running = False
 
