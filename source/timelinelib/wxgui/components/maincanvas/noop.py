@@ -152,12 +152,18 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.Scroll(direction * 0.1)
 
     def _select_cursor_shape(self):
-        if self._hit_resize_handle() is not None:
+        if self._over_resize_handle():
             self.timeline_canvas.set_size_cursor()
-        elif self._hit_move_handle() and not self.last_hovered_event.get_ends_today():
+        elif self._over_move_handle():
             self.timeline_canvas.set_move_cursor()
         else:
             self.timeline_canvas.set_default_cursor()
+
+    def _over_resize_handle(self):
+        return self._hit_resize_handle() is not None
+
+    def _over_move_handle(self):
+        return self._hit_move_handle() and not self.last_hovered_event.get_ends_today()
 
     def _cursor_over_event(self):
         return self._event_at_cursor() is not None
