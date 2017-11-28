@@ -16,10 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from collections import defaultdict
-
 import wx
 
+from timelinelib.general.methodcontainer import MethodContainer
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.timelinecanvas import LEFT_RESIZE_HANDLE
 from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
@@ -34,46 +33,6 @@ A NoOpInputHandler gets messages about the start of a user input, such as a
 mouse move action, and delegates the workload to fulfill the user action, to
 another event handler
 """
-
-
-class MethodContainer(object):
-
-    def __init__(self, methods_kvp, default_method=None):
-        self._default_method = default_method
-        if self._all_keys_are_booleans(methods_kvp):
-            self._container = {True: self._first_truthy_method(methods_kvp),
-                               False: self._first_falsy_method(methods_kvp)}
-        else:
-            self._container = defaultdict(self._default, methods_kvp)
-
-    def select(self, key):
-        return self._container[key]
-
-    def _all_keys_are_booleans(self, methods_kvp):
-        return len([m for k, m in methods_kvp if not isinstance(k, bool)]) == 0
-
-    def _first_truthy_method(self, methods_kvp):
-        for key, method in methods_kvp:
-            if key:
-                return method
-        return self._noop
-
-    def _first_falsy_method(self, methods_kvp):
-        if self._default_method:
-            return self._default_method
-        for key, method in methods_kvp:
-            if not key:
-                return method
-        return self._noop
-
-    def _default(self):
-        if self._default_method is None:
-            return self._noop
-        else:
-            return self._default_method
-
-    def _noop(self, *args, **kwargs):
-        pass
 
 
 class NoOpInputHandler(InputHandler):
@@ -106,8 +65,8 @@ class NoOpInputHandler(InputHandler):
         self._left_mouse_down_action()
 
     def _left_mouse_down_action(self):
-        methods = MethodContainer([(True, self._left_mouse_down_on_event),
-                                   (False, self._left_mouse_down_on_timeline)])
+        methods = MethodContainer([(True, self._left_mouse_down_on_event)],
+                                  default_method=self._left_mouse_down_on_timeline)
         methods.select(self._cursor_over_event())()
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
@@ -152,12 +111,13 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.Scroll(direction * 0.1)
 
     def _select_cursor_shape(self):
-        if self._over_resize_handle():
-            self.timeline_canvas.set_size_cursor()
-        elif self._over_move_handle():
-            self.timeline_canvas.set_move_cursor()
-        else:
-            self.timeline_canvas.set_default_cursor()
+        methods = MethodContainer(
+            [
+                (self._over_resize_handle(), self.timeline_canvas.set_size_cursor),
+                (self._over_move_handle(), self.timeline_canvas.set_move_cursor)
+            ],
+            default_method=self.timeline_canvas.set_default_cursor)
+        methods.select(True)()
 
     def _over_resize_handle(self):
         return self._hit_resize_handle() is not None
