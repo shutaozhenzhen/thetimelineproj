@@ -28,6 +28,12 @@ class Cursor(object):
         self._current_pos = (x, y)
         self._has_moved = False
 
+    def __repr__(self):
+        return 'Cursor from (%d, %d) at %d, %d' % (self._start_pos[0],
+                                                   self._start_pos[1],
+                                                   self._current_pos[0],
+                                                   self._current_pos[1])
+
     @property
     def x(self):
         return self._current_pos[0]
