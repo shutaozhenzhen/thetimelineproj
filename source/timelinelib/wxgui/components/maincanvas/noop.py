@@ -135,12 +135,10 @@ class NoOpInputHandler(InputHandler):
         return self.timeline_canvas.GetTimeAt(self._cursor.x)
 
     def _left_mouse_down_on_event(self):
-        if self._is_resize_command():
-            self._resize_event()
-        elif self._is_move_command():
-            self._move_event()
-        else:
-            self._toggle_event_selection()
+        methods = MethodContainer([(self._is_resize_command(), self._resize_event),
+                                   (self._is_move_command(), self._move_event)],
+                                  default_method=self._toggle_event_selection)
+        methods.select(True)()
 
     def _is_resize_command(self):
         return self._hit_resize_handle() is not None
