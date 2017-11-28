@@ -36,6 +36,46 @@ another event handler
 """
 
 
+class MethodContainer(object):
+
+    def __init__(self, methods_kvp, default_method=None):
+        self._default_method = default_method
+        if self._all_keys_are_booleans(methods_kvp):
+            self._container = {True: self._first_truthy_method(methods_kvp),
+                               False: self._first_falsy_method(methods_kvp)}
+        else:
+            self._container = defaultdict(self._default, methods_kvp)
+
+    def select(self, key):
+        return self._container[key]
+
+    def _all_keys_are_booleans(self, methods_kvp):
+        return len([m for k, m in methods_kvp if not isinstance(k, bool)]) == 0
+
+    def _first_truthy_method(self, methods_kvp):
+        for key, method in methods_kvp:
+            if key:
+                return method
+        return self._noop
+
+    def _first_falsy_method(self, methods_kvp):
+        if self._default_method:
+            return self._default_method
+        for key, method in methods_kvp:
+            if not key:
+                return method
+        return self._noop
+
+    def _default(self):
+        if self._default_method is None:
+            return self._noop
+        else:
+            return self._default_method
+
+    def _noop(self, *args, **kwargs):
+        pass
+
+
 class NoOpInputHandler(InputHandler):
 
     def __init__(self, state, status_bar, main_frame, timeline_canvas):
@@ -62,14 +102,10 @@ class NoOpInputHandler(InputHandler):
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
         self._cursor = Cursor(x, y)
         self._keyboard = Keyboard(ctrl_down, shift_down, alt_down)
-
-        def select_method():
-            return {True: self._left_mouse_down_on_event,
-                    False: self._left_mouse_down_on_timeline
-                    }[self._cursor_over_event()]
-
         self._toggle_balloon_stickyness(self._cursor)
-        select_method()()
+        methods = MethodContainer([(True, self._left_mouse_down_on_event),
+                                   (False, self._left_mouse_down_on_timeline)])
+        methods.select(self._cursor_over_event())()
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """
@@ -164,14 +200,14 @@ class NoOpInputHandler(InputHandler):
                 raise
 
     def _left_mouse_down_on_timeline(self):
-        def select_method():
-            return defaultdict(
-                lambda: self._noop,
-                [(Keyboard.NONE, self._scroll),
-                 (Keyboard.ALT, self._select),
-                 (Keyboard.SHIFT, self._zoom),
-                 (Keyboard.CTRL, self._create_event)])[self._keyboard.keys_combination]
-        select_method()()
+        methods = MethodContainer(
+            [
+                (Keyboard.NONE, self._scroll),
+                (Keyboard.ALT, self._select),
+                (Keyboard.SHIFT, self._zoom),
+                (Keyboard.CTRL, self._create_event)
+            ])
+        methods.select(self._keyboard.keys_combination)()
 
     def _scroll(self):
         self._state.change_to_scroll_by_drag(self._time_at_cursor(), self._cursor.y)
