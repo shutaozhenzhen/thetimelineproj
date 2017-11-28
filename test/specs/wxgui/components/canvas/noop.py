@@ -24,6 +24,7 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event, an_event_with, human_time_to_gregorian
 from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.maincanvas.noop import NoOpInputHandler
+from timelinelib.wxgui.cursor import Cursor
 
 
 class NoOpInputHandlerSpec(UnitTestCase):
@@ -32,7 +33,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
         event = an_event()
         time = human_time_to_gregorian("1 Jan 2011")
         self.given_time_at_x_is(10, time)
-        self.given_event_with_rect_at(10, 10, event, wx.Rect(0, 0, 20, 20))
+        self.given_event_with_rect_at(Cursor(10, 10), event, wx.Rect(0, 0, 20, 20))
         self.given_event_selected(event)
         self.handler.left_mouse_down(10, 10, False, False)
         self.state.change_to_move_by_drag.assert_called_with(event, time)
@@ -41,7 +42,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
         event = an_event_with(ends_today=True)
         time = human_time_to_gregorian("1 Jan 2011")
         self.given_time_at_x_is(10, time)
-        self.given_event_with_rect_at(10, 10, event, wx.Rect(0, 0, 20, 20))
+        self.given_event_with_rect_at(Cursor(10, 10), event, wx.Rect(0, 0, 20, 20))
         self.given_event_selected(event)
         self.handler.left_mouse_down(10, 10, False, False)
         self.assertEqual(0, self.canvas.SetInputHandler.call_count)
@@ -50,7 +51,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
         event = an_event_with(ends_today=True)
         time = human_time_to_gregorian("1 Jan 2011")
         self.given_time_at_x_is(10, time)
-        self.given_event_with_rect_at(10, 10, event, wx.Rect(0, 0, 20, 20))
+        self.given_event_with_rect_at(Cursor(10, 10), event, wx.Rect(0, 0, 20, 20))
         self.given_event_selected(event)
         self.handler.mouse_moved(10, 10)
         self.assertEqual(0, self.canvas.set_move_cursor.call_count)
@@ -58,7 +59,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
     def setUp(self):
         self.setup_timeline_canvas_controller_mock()
         self.canvas = Mock(MainCanvas)
-        self.canvas.GetEventAt.side_effect = lambda x, y, alt: self.events_at[(x, y)][0]
+        self.canvas.GetEventAt.side_effect = lambda cursor, alt: self.events_at[(cursor.x, cursor.y)][0]
         self.canvas.GetEventWithHitInfoAt.side_effect = lambda x, y, alt: (self.events_at[(x, y)][0], MOVE_HANDLE)
         self.canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
         self.canvas.GetSelectedEvents.return_value = []
@@ -76,8 +77,8 @@ class NoOpInputHandlerSpec(UnitTestCase):
     def given_time_at_x_is(self, x, time):
         self.times_at[x] = time
 
-    def given_event_with_rect_at(self, x, y, event, rect):
-        self.events_at[(x, y)] = (event, rect)
+    def given_event_with_rect_at(self, cursor, event, rect):
+        self.events_at[(cursor.x, cursor.y)] = (event, rect)
 
     def given_event_selected(self, event):
         self.selected_events.append(event)

@@ -43,6 +43,7 @@ from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 from timelinelib.wxgui.utils import _ask_question
 from timelinelib.config.paths import ICONS_DIR
+from timelinelib.wxgui.cursor import Cursor
 
 
 LEFT_RIGHT_SCROLL_FACTOR = 1 / 200.0
@@ -190,9 +191,9 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _timeline_canvas_on_double_clicked(self, event):
         if self.timeline_canvas.GetDb().is_read_only():
             return
-        (x, y) = (event.GetX(), event.GetY())
-        timeline_event = self.timeline_canvas.GetEventAt(x, y)
-        time = self.timeline_canvas.GetTimeAt(x)
+        cursor = Cursor(event.GetX(), event.GetY())
+        timeline_event = self.timeline_canvas.GetEventAt(cursor)
+        time = self.timeline_canvas.GetTimeAt(cursor.x)
         if timeline_event is not None:
             if timeline_event.is_milestone():
                 self.open_milestone_editor(timeline_event)
@@ -208,8 +209,8 @@ class TimelinePanelGuiCreator(wx.Panel):
         event.Skip()
 
     def _timeline_canvas_on_right_down(self, event):
-        (x, y) = (event.GetX(), event.GetY())
-        timeline_event = self.timeline_canvas.GetEventAt(x, y)
+        cursor = Cursor(event.GetX(), event.GetY())
+        timeline_event = self.timeline_canvas.GetEventAt(cursor)
         if timeline_event is not None and not self.timeline_canvas.GetDb().is_read_only():
             self.timeline_canvas.SetEventSelected(timeline_event, True)
             self._display_event_context_menu()
