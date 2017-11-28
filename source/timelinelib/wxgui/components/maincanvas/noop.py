@@ -65,8 +65,11 @@ class NoOpInputHandler(InputHandler):
         self._left_mouse_down_action()
 
     def _left_mouse_down_action(self):
-        methods = MethodContainer([(True, self._left_mouse_down_on_event)],
-                                  default_method=self._left_mouse_down_on_timeline)
+        methods = MethodContainer(
+            [
+                (True, self._left_mouse_down_on_event)
+            ],
+            default_method=self._left_mouse_down_on_timeline)
         methods.select(self._cursor_over_event())()
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
@@ -135,9 +138,12 @@ class NoOpInputHandler(InputHandler):
         return self.timeline_canvas.GetTimeAt(self._cursor.x)
 
     def _left_mouse_down_on_event(self):
-        methods = MethodContainer([(self._is_resize_command(), self._resize_event),
-                                   (self._is_move_command(), self._move_event)],
-                                  default_method=self._toggle_event_selection)
+        methods = MethodContainer(
+            [
+                (self._is_resize_command(), self._resize_event),
+                (self._is_move_command(), self._move_event)
+            ],
+            default_method=self._toggle_event_selection)
         methods.select(True)()
 
     def _is_resize_command(self):
