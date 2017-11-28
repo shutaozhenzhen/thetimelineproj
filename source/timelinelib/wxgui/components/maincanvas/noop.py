@@ -323,20 +323,21 @@ class NoOpInputHandler(InputHandler):
         return None
 
     def _toggle_event_selection(self):
-        xpixelpos, ypixelpos = self._cursor.pos
-        alt_down = self._keyboard.alt
-        ctrl_down = self._keyboard.ctrl
-        event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
+        x, y = self._cursor.pos
+        event = self.timeline_canvas.GetEventAt(x, y, self._keyboard.alt)
         if event:
-            selected = not self.timeline_canvas.IsEventSelected(event)
-            if ctrl_down:
-                self.timeline_canvas.SetEventSelected(event, selected)
-            else:
-                self.timeline_canvas.ClearSelectedEvents()
-                self.timeline_canvas.SetEventSelected(event, selected)
+            self._toggle_event_selection_when_event_is_hit(event)
         else:
             self.timeline_canvas.ClearSelectedEvents()
         return event is not None
+
+    def _toggle_event_selection_when_event_is_hit(self, event):
+        selected = not self.timeline_canvas.IsEventSelected(event)
+        if self._keyboard.ctrl:
+            self.timeline_canvas.SetEventSelected(event, selected)
+        else:
+            self.timeline_canvas.ClearSelectedEvents()
+            self.timeline_canvas.SetEventSelected(event, selected)
 
     def _redraw_balloons(self, event):
         self.timeline_canvas.SetHoveredEvent(event)
