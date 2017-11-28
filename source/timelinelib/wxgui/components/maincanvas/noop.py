@@ -52,7 +52,7 @@ class NoOpInputHandler(InputHandler):
     def mouse_moved(self, x, y, alt_down=False):
         self._cursor = Cursor(x, y)
         self._keyboard = Keyboard(False, False, alt_down)
-        self.last_hovered_event = self.timeline_canvas.GetEventAt(x, y, alt_down)
+        self.last_hovered_event = self.timeline_canvas.GetEventAt(self._cursor, alt_down)
         self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(self._cursor)
         self._start_balloon_timers()
         self._display_eventinfo_in_statusbar(x, y, alt_down)
@@ -132,7 +132,7 @@ class NoOpInputHandler(InputHandler):
         return self._event_at_cursor() is not None
 
     def _event_at_cursor(self):
-        return self.timeline_canvas.GetEventAt(self._cursor.x, self._cursor.y, self._keyboard.alt)
+        return self.timeline_canvas.GetEventAt(self._cursor, self._keyboard.alt)
 
     def _time_at_cursor(self):
         return self.timeline_canvas.GetTimeAt(self._cursor.x)
@@ -213,7 +213,7 @@ class NoOpInputHandler(InputHandler):
                     self._redraw_balloons(None)
 
     def _display_eventinfo_in_statusbar(self, xpixelpos, ypixelpos, alt_down=False):
-        event = self.timeline_canvas.GetEventAt(xpixelpos, ypixelpos, alt_down)
+        event = self.timeline_canvas.GetEventAt(Cursor(xpixelpos, ypixelpos), alt_down)
         time_string = self._format_current_pos_datetime_string(xpixelpos)
         if event is None:
             self._status_bar.set_text(time_string)
@@ -323,8 +323,7 @@ class NoOpInputHandler(InputHandler):
         return None
 
     def _toggle_event_selection(self):
-        x, y = self._cursor.pos
-        event = self.timeline_canvas.GetEventAt(x, y, self._keyboard.alt)
+        event = self.timeline_canvas.GetEventAt(self._cursor, self._keyboard.alt)
         if event:
             self._toggle_event_selection_when_event_is_hit(event)
         else:

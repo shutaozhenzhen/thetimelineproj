@@ -142,8 +142,8 @@ class TimelineCanvas(wx.Panel):
     def GetDb(self):
         return self.get_timeline()
 
-    def GetEventAt(self, x, y, prefer_container=False):
-        return self.controller.drawing_algorithm.event_at(x, y, prefer_container)
+    def GetEventAt(self, cursor, prefer_container=False):
+        return self.controller.drawing_algorithm.event_at(cursor.x, cursor.y, prefer_container)
 
     def SelectEventsInRect(self, rect):
         self.controller.view_properties.set_all_selected(
