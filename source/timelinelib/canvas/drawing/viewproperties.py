@@ -197,6 +197,12 @@ class ViewProperties(Observable):
             self.selected_event_ids.remove(event.get_id())
             self._notify()
 
+    def set_all_selected(self, events):
+        for event in events:
+            if not event.get_id() in self.selected_event_ids:
+                self.selected_event_ids.append(event.get_id())
+        self._notify()
+
     def set_only_selected(self, event, is_selected):
         if is_selected:
             if self.selected_event_ids != [event.get_id()]:
