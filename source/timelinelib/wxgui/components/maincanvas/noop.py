@@ -96,22 +96,8 @@ class NoOpInputHandler(InputHandler):
         self.timeline_canvas.Navigate(lambda tp: tp.center(time))
 
     def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
-        direction = _step_function(rotation)
-        if ctrl_down:
-            if shift_down:
-                self.timeline_canvas.Scrollvertically(direction)
-            else:
-                self.timeline_canvas.Zoom(direction, x)
-        elif shift_down:
-            self.timeline_canvas.SetDividerPosition(self.timeline_canvas.GetDividerPosition() + direction)
-        elif alt_down:
-            if direction > 0:
-                self.timeline_canvas.IncrementEventTextFont()
-            else:
-                self.timeline_canvas.DecrementEventTextFont()
-            self.timeline_canvas.Redraw()
-        else:
-            self.timeline_canvas.Scroll(direction * 0.1)
+        self.timeline_canvas.on_mouse_wheel_rotated(
+            rotation, Cursor(x, 0), Keyboard(ctrl_down, shift_down, alt_down))
 
     def _select_cursor_shape(self):
         methods = MethodContainer(
