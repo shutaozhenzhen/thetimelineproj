@@ -20,6 +20,7 @@ import wx
 
 from timelinelib.canvas.events import create_divider_position_changed_event
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
+from timelinelib.wxgui.keyboard import Keyboard
 
 
 MOVE_HANDLE = 0
@@ -151,8 +152,10 @@ class TimelineCanvas(wx.Panel):
         self.controller.view_properties.set_all_selected(
             self.controller.drawing_algorithm.get_events_in_rect(rect))
 
-    def GetEventWithHitInfoAt(self, x, y, prefer_container=False):
-        event_and_rect = self.controller.event_with_rect_at(x, y, prefer_container)
+    def GetEventWithHitInfoAt(self, cursor, keyboard=Keyboard()):
+        x, y = cursor.pos
+        prefer_container = keyboard
+        event_and_rect = self.controller.event_with_rect_at(x, y, prefer_container.alt)
         if event_and_rect is not None:
             event, rect = event_and_rect
             center = rect.X + rect.Width / 2

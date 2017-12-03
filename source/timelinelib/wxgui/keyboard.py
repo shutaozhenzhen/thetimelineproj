@@ -28,7 +28,7 @@ class Keyboard(object):
     ALT = 1
     NONE = 0
 
-    def __init__(self, ctrl, shift, alt):
+    def __init__(self, ctrl=False, shift=False, alt=False):
         self._ctrl = ctrl
         self._shift = shift
         self._alt = alt

@@ -272,9 +272,7 @@ class NoOpInputHandler(InputHandler):
             self._redraw_balloons(None)
 
     def _hit_move_handle(self):
-        x, y = self._cursor.pos
-        alt_down = self._keyboard.alt
-        event_and_hit_info = self.timeline_canvas.GetEventWithHitInfoAt(x, y, alt_down)
+        event_and_hit_info = self.timeline_canvas.GetEventWithHitInfoAt(self._cursor, self._keyboard)
         if event_and_hit_info is None:
             return False
         (event, hit_info) = event_and_hit_info
@@ -285,23 +283,21 @@ class NoOpInputHandler(InputHandler):
         return hit_info == MOVE_HANDLE
 
     def _hit_resize_handle(self):
-        x, y = self._cursor.pos
-        alt_down = self._keyboard.alt
-        event_and_hit_info = self.timeline_canvas.GetEventWithHitInfoAt(x, y, alt_down)
-        if event_and_hit_info is None:
+        try:
+            event, hit_info = self.timeline_canvas.GetEventWithHitInfoAt(self._cursor, self._keyboard)
+            if event.get_locked():
+                return None
+            if event.is_milestone():
+                return None
+            if not self.timeline_canvas.IsEventSelected(event):
+                return None
+            if hit_info == LEFT_RESIZE_HANDLE:
+                return wx.LEFT
+            if hit_info == RIGHT_RESIZE_HANDLE:
+                return wx.RIGHT
             return None
-        (event, hit_info) = event_and_hit_info
-        if event.get_locked():
+        except:
             return None
-        if event.is_milestone():
-            return None
-        if not self.timeline_canvas.IsEventSelected(event):
-            return None
-        if hit_info == LEFT_RESIZE_HANDLE:
-            return wx.LEFT
-        if hit_info == RIGHT_RESIZE_HANDLE:
-            return wx.RIGHT
-        return None
 
     def _toggle_event_selection(self):
         self.timeline_canvas.toggle_event_selection(self._cursor, self._keyboard)
