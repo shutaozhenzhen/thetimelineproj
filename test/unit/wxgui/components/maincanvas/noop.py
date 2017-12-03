@@ -33,11 +33,11 @@ class describe_hit_resize_handle(UnitTestCase):
         self.assertEqual(None, self.handler._hit_resize_handle())
 
     def test_returns_none_when_a_locked_event_is_hit(self):
-        self.canvas.GetEventWithHitInfoAt.return_value = self.a_locked_event(), None
+        self.canvas.GetEventWithHitInfoAt.return_value = self.a_locked_event(), 1
         self.assertEqual(None, self.handler._hit_resize_handle())
 
     def test_returns_none_when_a_milestone_event_is_hit(self):
-        self.canvas.GetEventWithHitInfoAt.return_value = self.a_milestone_event(), None
+        self.canvas.GetEventWithHitInfoAt.return_value = self.a_milestone_event(), 1
         self.assertEqual(None, self.handler._hit_resize_handle())
 
     def test_returns_none_when_the_event_isnt_selected(self):
