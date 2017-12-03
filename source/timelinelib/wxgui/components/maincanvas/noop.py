@@ -62,15 +62,10 @@ class NoOpInputHandler(InputHandler):
         self._cursor = Cursor(x, y)
         self._keyboard = Keyboard(ctrl_down, shift_down, alt_down)
         self._toggle_balloon_stickyness(self._cursor)
-        self._left_mouse_down_action()
-
-    def _left_mouse_down_action(self):
-        methods = MethodContainer(
-            [
-                (True, self._left_mouse_down_on_event)
-            ],
-            default_method=self._left_mouse_down_on_timeline)
-        methods.select(self._cursor_over_event())()
+        if self._cursor_over_event():
+            self._left_mouse_down_on_event()
+        else:
+            self._left_mouse_down_on_timeline()
 
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         """
