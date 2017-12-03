@@ -326,12 +326,3 @@ class NoOpInputHandler(InputHandler):
 
     def _redraw_balloons(self, event):
         self.timeline_canvas.SetHoveredEvent(event)
-
-
-def _step_function(x_value):
-    y_value = 0
-    if x_value < 0:
-        y_value = -1
-    elif x_value > 0:
-        y_value = 1
-    return y_value
