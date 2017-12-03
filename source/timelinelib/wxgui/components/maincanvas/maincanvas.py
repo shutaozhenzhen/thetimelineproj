@@ -142,6 +142,22 @@ class MainCanvas(TimelineCanvas):
         direction = step_function(rotation)
         methods.select(keyboard.keys_combination)(direction)
 
+    def toggle_event_selection(self, cursor, keyboard):
+
+        def toggle_event_selection_when_event_is_hit(event):
+            selected = not self.IsEventSelected(event)
+            if keyboard.ctrl:
+                self.SetEventSelected(event, selected)
+            else:
+                self.ClearSelectedEvents()
+                self.SetEventSelected(event, selected)
+
+        event = self.GetEventAt(cursor, keyboard.alt)
+        if event:
+            toggle_event_selection_when_event_is_hit(event)
+        else:
+            self.ClearSelectedEvents()
+
 
 def step_function(x_value):
     y_value = 0
