@@ -54,12 +54,17 @@ class NoOpInputHandler(InputHandler):
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
 
+        def toggle_balloon_stickyness():
+            event_with_balloon = self._balloon_at_cursor()
+            if event_with_balloon:
+                self.timeline_canvas.toggle_balloon_stickyness(event_with_balloon)
+
         def cursor_over_event():
             return self._event_at_cursor() is not None
 
         self._cursor = Cursor(x, y)
         self._keyboard = Keyboard(ctrl_down, shift_down, alt_down)
-        self._toggle_balloon_stickyness()
+        toggle_balloon_stickyness()
         if cursor_over_event():
             self._left_mouse_down_on_event()
         else:
@@ -170,11 +175,6 @@ class NoOpInputHandler(InputHandler):
                 (Keyboard.CTRL, create_event)
             ])
         methods.select(self._keyboard.keys_combination)()
-
-    def _toggle_balloon_stickyness(self):
-        event_with_balloon = self._balloon_at_cursor()
-        if event_with_balloon:
-            self.timeline_canvas.toggle_balloon_stickyness(event_with_balloon)
 
     def _display_info_in_statusbar(self, event):
         if event is None:
