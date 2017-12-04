@@ -120,12 +120,21 @@ class NoOpInputHandler(InputHandler):
             else:
                 return self._hit_move_handle()
 
+        def start_event_action(action_method, action_arg):
+            if self._main_frame.ok_to_edit():
+                try:
+                    action_method(self._event_at_cursor(), action_arg)
+                except:
+                    self._main_frame.edit_ends()
+                    raise
+
         def resize_event():
-            direction = self._hit_resize_handle()
-            self._start_event_action(self._state.change_to_resize_by_drag, direction)
+            start_event_action(
+                self._state.change_to_resize_by_drag,
+                self._hit_resize_handle())
 
         def move_event():
-            self._start_event_action(
+            start_event_action(
                 self._state.change_to_move_by_drag,
                 self._time_at_cursor())
 
@@ -136,14 +145,6 @@ class NoOpInputHandler(InputHandler):
             ],
             default_method=self._toggle_event_selection)
         methods.select(True)()
-
-    def _start_event_action(self, action_method, action_arg):
-        if self._main_frame.ok_to_edit():
-            try:
-                action_method(self._event_at_cursor(), action_arg)
-            except:
-                self._main_frame.edit_ends()
-                raise
 
     def _left_mouse_down_on_timeline(self):
         methods = MethodContainer(
