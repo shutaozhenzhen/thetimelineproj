@@ -52,7 +52,7 @@ class NoOpInputHandler(InputHandler):
     def mouse_moved(self, x, y, alt_down=False):
         self._cursor = Cursor(x, y)
         self._keyboard = Keyboard(False, False, alt_down)
-        self.last_hovered_event = self.timeline_canvas.GetEventAt(self._cursor, alt_down)
+        self.last_hovered_event = self._event_at_cursor()
         self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(self._cursor)
         self._start_balloon_timers()
         self._display_info_in_statusbar(self.last_hovered_event)
