@@ -81,8 +81,8 @@ class NoOpInputHandler(InputHandler):
         self._toggle_event_selection()
 
     def middle_mouse_down(self, x):
-        time = self.timeline_canvas.GetTimeAt(x)
-        self.timeline_canvas.Navigate(lambda tp: tp.center(time))
+        self._cursor = Cursor(x, 0)
+        self._navigate()
 
     def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
         self._cursor = Cursor(x, 0)
@@ -246,6 +246,10 @@ class NoOpInputHandler(InputHandler):
 
     def _on_wheel_rotated(self, rotation):
         self.timeline_canvas.on_mouse_wheel_rotated(rotation, self._cursor, self._keyboard)
+
+    def _navigate(self):
+        time = self.timeline_canvas.GetTimeAt(self._cursor.x)
+        self.timeline_canvas.Navigate(lambda tp: tp.center(time))
 
     #
     # Getters delegated to canvas object
