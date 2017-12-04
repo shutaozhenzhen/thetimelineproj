@@ -19,7 +19,6 @@
 import wx
 
 from timelinelib.general.methodcontainer import MethodContainer
-from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.timelinecanvas import LEFT_RESIZE_HANDLE
 from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
 from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
@@ -290,4 +289,3 @@ class NoOpInputHandler(InputHandler):
 
     def _toggle_event_selection(self):
         self.timeline_canvas.toggle_event_selection(self._cursor, self._keyboard)
-
