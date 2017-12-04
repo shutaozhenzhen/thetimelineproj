@@ -271,21 +271,7 @@ class NoOpInputHandler(InputHandler):
         return hit_info == MOVE_HANDLE
 
     def _hit_resize_handle(self):
-        try:
-            event, hit_info = self.timeline_canvas.GetEventWithHitInfoAt(self._cursor, self._keyboard)
-            if event.get_locked():
-                return None
-            if event.is_milestone():
-                return None
-            if not self.timeline_canvas.IsEventSelected(event):
-                return None
-            if hit_info == LEFT_RESIZE_HANDLE:
-                return wx.LEFT
-            if hit_info == RIGHT_RESIZE_HANDLE:
-                return wx.RIGHT
-            return None
-        except:
-            return None
+        return self.timeline_canvas.hit_resize_handle(self._cursor, self._keyboard)
 
     def _toggle_event_selection(self):
         self.timeline_canvas.toggle_event_selection(self._cursor, self._keyboard)

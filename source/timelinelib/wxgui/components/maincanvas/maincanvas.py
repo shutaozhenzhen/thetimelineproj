@@ -26,6 +26,8 @@ from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 from timelinelib.general.methodcontainer import MethodContainer
 from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.timelinecanvas import LEFT_RESIZE_HANDLE
+from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
 
 
 class MainCanvas(TimelineCanvas):
@@ -173,6 +175,23 @@ class MainCanvas(TimelineCanvas):
                 self.SetHoveredEvent(event_with_balloon)
             else:
                 self.SetHoveredEvent(None)
+
+    def hit_resize_handle(self, cursor, keyboard):
+        try:
+            event, hit_info = self.GetEventWithHitInfoAt(cursor, keyboard)
+            if event.get_locked():
+                return None
+            if event.is_milestone():
+                return None
+            if not self.IsEventSelected(event):
+                return None
+            if hit_info == LEFT_RESIZE_HANDLE:
+                return wx.LEFT
+            if hit_info == RIGHT_RESIZE_HANDLE:
+                return wx.RIGHT
+            return None
+        except:
+            return None
 
 
 def step_function(x_value):
