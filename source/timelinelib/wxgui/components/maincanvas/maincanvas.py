@@ -25,6 +25,7 @@ from timelinelib.utils import ex_msg
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 from timelinelib.general.methodcontainer import MethodContainer
 from timelinelib.wxgui.keyboard import Keyboard
+from timelinelib.canvas.data import TimePeriod
 
 
 class MainCanvas(TimelineCanvas):
@@ -157,6 +158,10 @@ class MainCanvas(TimelineCanvas):
             toggle_event_selection_when_event_is_hit(event)
         else:
             self.ClearSelectedEvents()
+
+    def format_current_pos_time_string(self, x):
+        tm = self.GetTimeAt(x)
+        return self.GetTimeType().format_period(TimePeriod(tm, tm))
 
 
 def step_function(x_value):
