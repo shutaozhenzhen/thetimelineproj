@@ -78,7 +78,7 @@ class NoOpInputHandler(InputHandler):
         If the mouse hits an event, a dialog opens for editing this event.
         Otherwise a dialog for creating a new event is opened.
         """
-        if self.timeline_canvas.GetDb().is_read_only():
+        if self.timeline_canvas.IsReadOnly():
             return
         # Since the event sequence is, 1. EVT_LEFT_DOWN  2. EVT_LEFT_UP
         # 3. EVT_LEFT_DCLICK we must compensate for the toggle_event_selection
@@ -99,10 +99,12 @@ class NoOpInputHandler(InputHandler):
         self._on_wheel_rotated(rotation)
 
     def balloon_show_timer_fired(self):
+        """Callback function that the canvas object fires."""
         self.show_timer_running = False
         self._redraw_balloons(self.last_hovered_event)
 
     def balloon_hide_timer_fired(self):
+        """Callback function that the canvas object fires."""
         self.hide_timer_running = False
         hevt = self.timeline_canvas.GetHoveredEvent()
         # If there is no balloon visible we don't have to do anything
