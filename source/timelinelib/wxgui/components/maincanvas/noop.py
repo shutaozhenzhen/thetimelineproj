@@ -17,7 +17,6 @@
 
 
 from timelinelib.general.methodcontainer import MethodContainer
-from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 from timelinelib.wxgui.cursor import Cursor
 from timelinelib.wxgui.keyboard import Keyboard
