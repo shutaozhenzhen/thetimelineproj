@@ -194,8 +194,8 @@ class NoOpInputHandler(InputHandler):
                     self._redraw_balloons(None)
 
     def _display_eventinfo_in_statusbar(self, event, cursor):
-        time_string = self._format_current_pos_datetime_string(cursor.x)
         if event is None:
+            time_string = self._format_current_pos_datetime_string(cursor.x)
             self._status_bar.set_text(time_string)
         else:
             self._status_bar.set_text(event.get_label(self.timeline_canvas.GetTimeType()))
