@@ -90,19 +90,20 @@ class NoOpInputHandler(InputHandler):
         self._on_wheel_rotated(rotation)
 
     def _select_cursor_shape(self):
+
+        def over_resize_handle():
+            return self._hit_resize_handle() is not None
+
+        def over_move_handle():
+            return self._hit_move_handle() and not self.last_hovered_event.get_ends_today()
+
         methods = MethodContainer(
             [
-                (self._over_resize_handle(), self.timeline_canvas.set_size_cursor),
-                (self._over_move_handle(), self.timeline_canvas.set_move_cursor)
+                (over_resize_handle(), self.timeline_canvas.set_size_cursor),
+                (over_move_handle(), self.timeline_canvas.set_move_cursor)
             ],
             default_method=self.timeline_canvas.set_default_cursor)
         methods.select(True)()
-
-    def _over_resize_handle(self):
-        return self._hit_resize_handle() is not None
-
-    def _over_move_handle(self):
-        return self._hit_move_handle() and not self.last_hovered_event.get_ends_today()
 
     def _cursor_over_event(self):
         return self._event_at_cursor() is not None
