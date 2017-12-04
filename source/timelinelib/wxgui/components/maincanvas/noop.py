@@ -186,15 +186,10 @@ class NoOpInputHandler(InputHandler):
     def _toggle_balloon_stickyness(self):
         event_with_balloon = self._balloon_at_cursor()
         if event_with_balloon:
-            stick = not self.timeline_canvas.EventHasStickyBalloon(event_with_balloon)
-            self.timeline_canvas.SetEventStickyBalloon(event_with_balloon, stick)
-            if stick:
-                self.timeline_canvas.Redraw()
-            else:
-                if self.timeline_canvas.GetAppearance().get_balloons_visible():
-                    self._redraw_balloons(event_with_balloon)
-                else:
-                    self._redraw_balloons(None)
+            self.timeline_canvas.toggle_balloon_stickyness(event_with_balloon)
+
+    def _redraw_balloons(self, event):
+        self.timeline_canvas.SetHoveredEvent(event)
 
     def _display_info_in_statusbar(self, event):
         if event is None:
@@ -296,5 +291,3 @@ class NoOpInputHandler(InputHandler):
     def _toggle_event_selection(self):
         self.timeline_canvas.toggle_event_selection(self._cursor, self._keyboard)
 
-    def _redraw_balloons(self, event):
-        self.timeline_canvas.SetHoveredEvent(event)

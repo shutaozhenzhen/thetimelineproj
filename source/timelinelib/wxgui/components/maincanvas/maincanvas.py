@@ -163,6 +163,17 @@ class MainCanvas(TimelineCanvas):
         tm = self.GetTimeAt(x)
         return self.GetTimeType().format_period(TimePeriod(tm, tm))
 
+    def toggle_balloon_stickyness(self, event_with_balloon):
+        stick = not self.EventHasStickyBalloon(event_with_balloon)
+        self.SetEventStickyBalloon(event_with_balloon, stick)
+        if stick:
+            self.Redraw()
+        else:
+            if self.GetAppearance().get_balloons_visible():
+                self.SetHoveredEvent(event_with_balloon)
+            else:
+                self.SetHoveredEvent(None)
+
 
 def step_function(x_value):
     y_value = 0
