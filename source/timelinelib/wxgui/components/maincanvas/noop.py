@@ -195,10 +195,11 @@ class NoOpInputHandler(InputHandler):
 
     def _display_info_in_statusbar(self, event, cursor):
         if event is None:
-            time_string = self._format_current_pos_datetime_string(cursor.x)
-            self._status_bar.set_text(time_string)
+            info_text = self._format_current_pos_datetime_string(cursor.x)
+            self._status_bar.set_text(info_text)
         else:
-            self._status_bar.set_text(event.get_label(self.timeline_canvas.GetTimeType()))
+            info_text = event.get_label(self.timeline_canvas.GetTimeType())
+            self._status_bar.set_text(info_text)
 
     def _format_current_pos_datetime_string(self, xpos):
         return self.timeline_canvas.GetTimeType().format_period(
