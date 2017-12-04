@@ -120,23 +120,22 @@ class NoOpInputHandler(InputHandler):
             else:
                 return self._hit_move_handle()
 
+        def resize_event():
+            direction = self._hit_resize_handle()
+            self._start_event_action(self._state.change_to_resize_by_drag, direction)
+
+        def move_event():
+            self._start_event_action(
+                self._state.change_to_move_by_drag,
+                self._time_at_cursor())
+
         methods = MethodContainer(
             [
-                (is_resize_command(), self._resize_event),
-                (is_move_command(), self._move_event)
+                (is_resize_command(), resize_event),
+                (is_move_command(), move_event)
             ],
             default_method=self._toggle_event_selection)
         methods.select(True)()
-
-
-    def _resize_event(self):
-        direction = self._hit_resize_handle()
-        self._start_event_action(self._state.change_to_resize_by_drag, direction)
-
-    def _move_event(self):
-        self._start_event_action(
-            self._state.change_to_move_by_drag,
-            self._time_at_cursor())
 
     def _start_event_action(self, action_method, action_arg):
         if self._main_frame.ok_to_edit():
