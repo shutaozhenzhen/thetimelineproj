@@ -184,40 +184,37 @@ class NoOpInputHandler(InputHandler):
         self._status_bar.set_text(info_text)
 
     def _start_balloon_timers(self):
+
+        def mouse_is_over_event():
+            return self.last_hovered_event is not None
+
+        def mouse_is_over_balloon():
+            return self.last_hovered_balloon_event is not None
+
+        def should_start_balloon_show_timer():
+            return (mouse_is_over_event() and
+                    not mouse_is_over_balloon() and
+                    not self._balloon_shown_for_event(self.last_hovered_event))
+
+        def should_start_balloon_hide_timer():
+            return (self._balloon_is_shown() and
+                    not mouse_is_over_event() and
+                    not self._balloon_shown_for_event(self.last_hovered_balloon_event))
+
         if self._balloons_disabled():
             return
-        if self._current_event_selected():
+        if self._is_selected(self.last_hovered_event):
             return
         if self.show_timer_running:
             return
         if self.hide_timer_running:
             return
-        if self._should_start_balloon_show_timer():
+        if should_start_balloon_show_timer():
             self.timeline_canvas.start_balloon_show_timer(milliseconds=500, oneShot=True)
             self.show_timer_running = True
-        elif self._should_start_balloon_hide_timer():
+        elif should_start_balloon_hide_timer():
             self.timeline_canvas.start_balloon_hide_timer(milliseconds=100, oneShot=True)
             self.hide_timer_running = True
-
-    def _current_event_selected(self):
-        return (self.last_hovered_event is not None and
-                self.timeline_canvas.IsEventSelected(self.last_hovered_event))
-
-    def _should_start_balloon_show_timer(self):
-        return (self._mouse_is_over_event() and
-                not self._mouse_is_over_balloon() and
-                not self._balloon_shown_for_event(self.last_hovered_event))
-
-    def _should_start_balloon_hide_timer(self):
-        return (self._balloon_is_shown() and
-                not self._mouse_is_over_event() and
-                not self._balloon_shown_for_event(self.last_hovered_balloon_event))
-
-    def _mouse_is_over_event(self):
-        return self.last_hovered_event is not None
-
-    def _mouse_is_over_balloon(self):
-        return self.last_hovered_balloon_event is not None
 
     def balloon_show_timer_fired(self):
         self.show_timer_running = False
@@ -280,3 +277,6 @@ class NoOpInputHandler(InputHandler):
 
     def _time_at_cursor(self):
         return self.timeline_canvas.GetTimeAt(self._cursor.x)
+
+    def _is_selected(self, event):
+        return event is not None and self.timeline_canvas.IsEventSelected(event)
