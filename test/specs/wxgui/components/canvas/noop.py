@@ -35,6 +35,8 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.given_time_at_x_is(10, time)
         self.given_event_with_rect_at(Cursor(10, 10), event, wx.Rect(0, 0, 20, 20))
         self.given_event_selected(event)
+        self.canvas.hit_resize_handle.return_value = None
+        self.canvas.hit_move_handle.return_value = True
         self.handler.left_mouse_down(10, 10, False, False)
         self.state.change_to_move_by_drag.assert_called_with(event, time)
 
