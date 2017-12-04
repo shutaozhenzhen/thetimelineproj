@@ -53,10 +53,14 @@ class NoOpInputHandler(InputHandler):
         self._select_cursor_shape()
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
+
+        def cursor_over_event():
+            return self._event_at_cursor() is not None
+
         self._cursor = Cursor(x, y)
         self._keyboard = Keyboard(ctrl_down, shift_down, alt_down)
         self._toggle_balloon_stickyness()
-        if self._cursor_over_event():
+        if cursor_over_event():
             self._left_mouse_down_on_event()
         else:
             self._left_mouse_down_on_timeline()
@@ -105,26 +109,25 @@ class NoOpInputHandler(InputHandler):
             default_method=self.timeline_canvas.set_default_cursor)
         methods.select(True)()
 
-    def _cursor_over_event(self):
-        return self._event_at_cursor() is not None
-
     def _left_mouse_down_on_event(self):
+
+        def is_resize_command():
+            return self._hit_resize_handle() is not None
+
+        def is_move_command():
+            if self._event_at_cursor().get_ends_today():
+                return False
+            else:
+                return self._hit_move_handle()
+
         methods = MethodContainer(
             [
-                (self._is_resize_command(), self._resize_event),
-                (self._is_move_command(), self._move_event)
+                (is_resize_command(), self._resize_event),
+                (is_move_command(), self._move_event)
             ],
             default_method=self._toggle_event_selection)
         methods.select(True)()
 
-    def _is_resize_command(self):
-        return self._hit_resize_handle() is not None
-
-    def _is_move_command(self):
-        if self._event_at_cursor().get_ends_today():
-            return False
-        else:
-            return self._hit_move_handle()
 
     def _resize_event(self):
         direction = self._hit_resize_handle()
