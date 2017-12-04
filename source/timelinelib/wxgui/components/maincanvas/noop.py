@@ -256,15 +256,7 @@ class NoOpInputHandler(InputHandler):
             self._redraw_balloons(None)
 
     def _hit_move_handle(self):
-        event_and_hit_info = self.timeline_canvas.GetEventWithHitInfoAt(self._cursor, self._keyboard)
-        if event_and_hit_info is None:
-            return False
-        (event, hit_info) = event_and_hit_info
-        if event.get_locked():
-            return False
-        if not self.timeline_canvas.IsEventSelected(event):
-            return False
-        return hit_info == MOVE_HANDLE
+        return self.timeline_canvas.hit_move_handle(self._cursor, self._keyboard)
 
     def _hit_resize_handle(self):
         return self.timeline_canvas.hit_resize_handle(self._cursor, self._keyboard)

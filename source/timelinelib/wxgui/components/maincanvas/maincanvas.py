@@ -28,6 +28,7 @@ from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.timelinecanvas import LEFT_RESIZE_HANDLE
 from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
+from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
 
 
 class MainCanvas(TimelineCanvas):
@@ -192,6 +193,17 @@ class MainCanvas(TimelineCanvas):
             return None
         except:
             return None
+
+    def hit_move_handle(self, cursor, keyboard):
+        event_and_hit_info = self.GetEventWithHitInfoAt(cursor, keyboard)
+        if event_and_hit_info is None:
+            return False
+        (event, hit_info) = event_and_hit_info
+        if event.get_locked():
+            return False
+        if not self.IsEventSelected(event):
+            return False
+        return hit_info == MOVE_HANDLE
 
 
 def step_function(x_value):
