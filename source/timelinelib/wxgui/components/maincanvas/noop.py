@@ -98,6 +98,23 @@ class NoOpInputHandler(InputHandler):
         self._keyboard = Keyboard(ctrl_down, shift_down, alt_down)
         self._on_wheel_rotated(rotation)
 
+    def balloon_show_timer_fired(self):
+        self.show_timer_running = False
+        self._redraw_balloons(self.last_hovered_event)
+
+    def balloon_hide_timer_fired(self):
+        self.hide_timer_running = False
+        hevt = self.timeline_canvas.GetHoveredEvent()
+        # If there is no balloon visible we don't have to do anything
+        if hevt is None:
+            return
+        cevt = self.last_hovered_event
+        bevt = self.last_hovered_balloon_event
+        # If the visible balloon doesn't belong to the event pointed to
+        # we remove the ballloon.
+        if hevt != cevt and hevt != bevt:
+            self._redraw_balloons(None)
+
     def _select_cursor_shape(self):
 
         def over_resize_handle():
@@ -215,23 +232,6 @@ class NoOpInputHandler(InputHandler):
         elif should_start_balloon_hide_timer():
             self.timeline_canvas.start_balloon_hide_timer(milliseconds=100, oneShot=True)
             self.hide_timer_running = True
-
-    def balloon_show_timer_fired(self):
-        self.show_timer_running = False
-        self._redraw_balloons(self.last_hovered_event)
-
-    def balloon_hide_timer_fired(self):
-        self.hide_timer_running = False
-        hevt = self.timeline_canvas.GetHoveredEvent()
-        # If there is no balloon visible we don't have to do anything
-        if hevt is None:
-            return
-        cevt = self.last_hovered_event
-        bevt = self.last_hovered_balloon_event
-        # If the visible balloon doesn't belong to the event pointed to
-        # we remove the ballloon.
-        if hevt != cevt and hevt != bevt:
-            self._redraw_balloons(None)
 
     #
     # Actions delegated to canvas object
