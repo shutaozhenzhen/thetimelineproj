@@ -106,15 +106,6 @@ class NoOpInputHandler(InputHandler):
     def _cursor_over_event(self):
         return self._event_at_cursor() is not None
 
-    def _event_at_cursor(self):
-        return self.timeline_canvas.GetEventAt(self._cursor, self._keyboard.alt)
-
-    def _balloon_at_cursor(self):
-        return self.timeline_canvas.GetBalloonAt(self._cursor)
-
-    def _time_at_cursor(self):
-        return self.timeline_canvas.GetTimeAt(self._cursor.x)
-
     def _left_mouse_down_on_event(self):
         methods = MethodContainer(
             [
@@ -182,9 +173,6 @@ class NoOpInputHandler(InputHandler):
         if event_with_balloon:
             self.timeline_canvas.toggle_balloon_stickyness(event_with_balloon)
 
-    def _redraw_balloons(self, event):
-        self.timeline_canvas.SetHoveredEvent(event)
-
     def _display_info_in_statusbar(self, event):
         if event is None:
             info_text = self.timeline_canvas.format_current_pos_time_string(self._cursor.x)
@@ -208,9 +196,6 @@ class NoOpInputHandler(InputHandler):
             self.timeline_canvas.start_balloon_hide_timer(milliseconds=100, oneShot=True)
             self.hide_timer_running = True
 
-    def _balloons_disabled(self):
-        return not self.timeline_canvas.GetAppearance().get_balloons_visible()
-
     def _current_event_selected(self):
         return (self.last_hovered_event is not None and
                 self.timeline_canvas.IsEventSelected(self.last_hovered_event))
@@ -231,12 +216,6 @@ class NoOpInputHandler(InputHandler):
     def _mouse_is_over_balloon(self):
         return self.last_hovered_balloon_event is not None
 
-    def _balloon_is_shown(self):
-        return self.timeline_canvas.GetHoveredEvent() is not None
-
-    def _balloon_shown_for_event(self, event):
-        return self.timeline_canvas.GetHoveredEvent() == event
-
     def balloon_show_timer_fired(self):
         self.show_timer_running = False
         self._redraw_balloons(self.last_hovered_event)
@@ -254,11 +233,40 @@ class NoOpInputHandler(InputHandler):
         if hevt != cevt and hevt != bevt:
             self._redraw_balloons(None)
 
+    #
+    # Actions delegated to canvas object
+    #
+
+    def _toggle_event_selection(self):
+        self.timeline_canvas.toggle_event_selection(self._cursor, self._keyboard)
+
+    def _redraw_balloons(self, event):
+        self.timeline_canvas.SetHoveredEvent(event)
+
+    #
+    # Getters delegated to canvas object
+    #
+
     def _hit_move_handle(self):
         return self.timeline_canvas.hit_move_handle(self._cursor, self._keyboard)
 
     def _hit_resize_handle(self):
         return self.timeline_canvas.hit_resize_handle(self._cursor, self._keyboard)
 
-    def _toggle_event_selection(self):
-        self.timeline_canvas.toggle_event_selection(self._cursor, self._keyboard)
+    def _balloon_is_shown(self):
+        return self.timeline_canvas.GetHoveredEvent() is not None
+
+    def _balloon_shown_for_event(self, event):
+        return self.timeline_canvas.GetHoveredEvent() == event
+
+    def _balloons_disabled(self):
+        return not self.timeline_canvas.GetAppearance().get_balloons_visible()
+
+    def _event_at_cursor(self):
+        return self.timeline_canvas.GetEventAt(self._cursor, self._keyboard.alt)
+
+    def _balloon_at_cursor(self):
+        return self.timeline_canvas.GetBalloonAt(self._cursor)
+
+    def _time_at_cursor(self):
+        return self.timeline_canvas.GetTimeAt(self._cursor.x)
