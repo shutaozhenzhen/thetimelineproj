@@ -85,8 +85,9 @@ class NoOpInputHandler(InputHandler):
         self.timeline_canvas.Navigate(lambda tp: tp.center(time))
 
     def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
-        self.timeline_canvas.on_mouse_wheel_rotated(
-            rotation, Cursor(x, 0), Keyboard(ctrl_down, shift_down, alt_down))
+        self._cursor = Cursor(x, 0)
+        self._keyboard = Keyboard(ctrl_down, shift_down, alt_down)
+        self._on_wheel_rotated(rotation)
 
     def _select_cursor_shape(self):
         methods = MethodContainer(
@@ -242,6 +243,9 @@ class NoOpInputHandler(InputHandler):
 
     def _redraw_balloons(self, event):
         self.timeline_canvas.SetHoveredEvent(event)
+
+    def _on_wheel_rotated(self, rotation):
+        self.timeline_canvas.on_mouse_wheel_rotated(rotation, self._cursor, self._keyboard)
 
     #
     # Getters delegated to canvas object
