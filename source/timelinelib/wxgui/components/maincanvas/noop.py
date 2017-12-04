@@ -171,9 +171,6 @@ class NoOpInputHandler(InputHandler):
             ])
         methods.select(self._keyboard.keys_combination)()
 
-    def _noop(self):
-        pass
-
     def _toggle_balloon_stickyness(self):
         event_with_balloon = self._balloon_at_cursor()
         if event_with_balloon:
