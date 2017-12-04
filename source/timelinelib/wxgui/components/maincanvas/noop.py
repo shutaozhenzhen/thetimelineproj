@@ -55,7 +55,7 @@ class NoOpInputHandler(InputHandler):
         self.last_hovered_event = self.timeline_canvas.GetEventAt(self._cursor, alt_down)
         self.last_hovered_balloon_event = self.timeline_canvas.GetBalloonAt(self._cursor)
         self._start_balloon_timers()
-        self._display_eventinfo_in_statusbar(self.last_hovered_event, self._cursor)
+        self._display_info_in_statusbar(self.last_hovered_event, self._cursor)
         self._select_cursor_shape()
 
     def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
@@ -193,7 +193,7 @@ class NoOpInputHandler(InputHandler):
                 else:
                     self._redraw_balloons(None)
 
-    def _display_eventinfo_in_statusbar(self, event, cursor):
+    def _display_info_in_statusbar(self, event, cursor):
         if event is None:
             time_string = self._format_current_pos_datetime_string(cursor.x)
             self._status_bar.set_text(time_string)
