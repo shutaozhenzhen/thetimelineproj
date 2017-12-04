@@ -147,28 +147,29 @@ class NoOpInputHandler(InputHandler):
         methods.select(True)()
 
     def _left_mouse_down_on_timeline(self):
+
+        def scroll():
+            self._state.change_to_scroll_by_drag(self._time_at_cursor(), self._cursor.y)
+
+        def create_event():
+            self.timeline_canvas.ClearSelectedEvents()
+            self._state.change_to_create_period_event_by_drag(self._time_at_cursor())
+
+        def zoom():
+            self.timeline_canvas.ClearSelectedEvents()
+            self._state.change_to_zoom_by_drag(self._time_at_cursor())
+
+        def select():
+            self._state.change_to_select(self._cursor)
+
         methods = MethodContainer(
             [
-                (Keyboard.NONE, self._scroll),
-                (Keyboard.ALT, self._select),
-                (Keyboard.SHIFT, self._zoom),
-                (Keyboard.CTRL, self._create_event)
+                (Keyboard.NONE, scroll),
+                (Keyboard.ALT, select),
+                (Keyboard.SHIFT, zoom),
+                (Keyboard.CTRL, create_event)
             ])
         methods.select(self._keyboard.keys_combination)()
-
-    def _scroll(self):
-        self._state.change_to_scroll_by_drag(self._time_at_cursor(), self._cursor.y)
-
-    def _create_event(self):
-        self.timeline_canvas.ClearSelectedEvents()
-        self._state.change_to_create_period_event_by_drag(self._time_at_cursor())
-
-    def _zoom(self):
-        self.timeline_canvas.ClearSelectedEvents()
-        self._state.change_to_zoom_by_drag(self._time_at_cursor())
-
-    def _select(self):
-        self._state.change_to_select(self._cursor)
 
     def _noop(self):
         pass
