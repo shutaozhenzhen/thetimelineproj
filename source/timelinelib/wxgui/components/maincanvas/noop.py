@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 from timelinelib.wxgui.cursor import Cursor
 from timelinelib.wxgui.keyboard import Keyboard
@@ -60,8 +61,6 @@ class NoOpInputHandler(InputHandler):
         self._keyboard = None
 
     def mouse_moved(self, cursor, keyboard):
-        self._cursor = cursor
-        self._keyboard = keyboard
         delegate = self._delegates(MOUSE_MOVED,
                                    self.timeline_canvas,
                                    cursor,
@@ -97,10 +96,14 @@ class NoOpInputHandler(InputHandler):
         delegate.run(rotation)
 
     def balloon_show_timer_fired(self):
+        self._cursor = Cursor(*self.timeline_canvas.ScreenToClient(wx.GetMousePosition()))
+        self._keyboard = Keyboard()
         """Callback function that the canvas object fires."""
         self._redraw_balloons()
 
     def balloon_hide_timer_fired(self):
+        self._cursor = Cursor(*self.timeline_canvas.ScreenToClient(wx.GetMousePosition()))
+        self._keyboard = Keyboard()
         """Callback function that the canvas object fires."""
         hevt = self.timeline_canvas.GetHoveredEvent()
         # If there is no balloon visible we don't have to do anything
