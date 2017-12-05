@@ -89,8 +89,9 @@ class MainCanvas(TimelineCanvas):
     def _on_left_up(self, event):
         self._input_handler.left_mouse_up()
 
-    def _on_motion(self, event):
-        self._input_handler.mouse_moved(event.GetX(), event.GetY(), event.AltDown())
+    def _on_motion(self, evt):
+        self._input_handler.mouse_moved(self._get_cursor(evt),
+                                        self._get_keyboard(evt))
 
     def _on_balloon_show_timer(self, event):
         self._input_handler.balloon_show_timer_fired()

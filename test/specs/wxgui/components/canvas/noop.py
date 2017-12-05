@@ -56,7 +56,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.given_time_at_x_is(10, time)
         self.given_event_with_rect_at(Cursor(10, 10), event, wx.Rect(0, 0, 20, 20))
         self.given_event_selected(event)
-        self.handler.mouse_moved(10, 10)
+        self.handler.mouse_moved(Cursor(10, 10), Keyboard(False, False, False))
         self.assertEqual(0, self.canvas.set_move_cursor.call_count)
 
     def setUp(self):

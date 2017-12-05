@@ -49,13 +49,13 @@ class NoOpInputHandler(InputHandler):
         self._cursor = None
         self._keyboard = None
 
-    def mouse_moved(self, x, y, alt_down=False):
-        self._cursor = Cursor(x, y)
-        self._keyboard = Keyboard(False, False, alt_down)
+    def mouse_moved(self, cursor, keyboard):
+        self._cursor = cursor
+        self._keyboard = keyboard
         delegate = self._delegates(self.mouse_moved.__name__,
                                    self.timeline_canvas,
-                                   self._cursor,
-                                   self._keyboard)
+                                   cursor,
+                                   keyboard)
         delegate.run(self._status_bar)
 
     def left_mouse_down(self, cursor, keyboard):
