@@ -22,9 +22,10 @@ from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas import TimelineCanvas
 from timelinelib.utils import ex_msg
+from timelinelib.wxgui.cursor import Cursor
+from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 from timelinelib.general.methodcontainer import MethodContainer
-from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.timelinecanvas import LEFT_RESIZE_HANDLE
 from timelinelib.canvas.timelinecanvas import RIGHT_RESIZE_HANDLE
@@ -76,9 +77,15 @@ class MainCanvas(TimelineCanvas):
             event.GetX(), event.GetY(), event.ControlDown(), event.ShiftDown(),
             event.AltDown())
 
-    def _on_left_dclick(self, event):
-        self._input_handler.left_mouse_dclick(
-            event.GetX(), event.GetY(), event.ControlDown(), event.AltDown())
+    def _on_left_dclick(self, evt):
+        self._input_handler.left_mouse_dclick(self._get_cursor(evt),
+                                              self._get_keyboard(evt))
+
+    def _get_cursor(self, evt):
+        return Cursor(evt.GetX(), evt.GetY())
+
+    def _get_keyboard(self, evt):
+        return Keyboard(evt.ControlDown(), evt.ShiftDown, evt.AltDown())
 
     def _on_left_up(self, event):
         self._input_handler.left_mouse_up()
