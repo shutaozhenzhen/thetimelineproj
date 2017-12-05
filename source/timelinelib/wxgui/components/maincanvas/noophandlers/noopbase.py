@@ -22,3 +22,21 @@ class NoopBaseHandler(object):
         self._canvas = canvas
         self._cursor = cursor
         self._keyboard = keyboard
+
+    def time_at_cursor(self):
+        return self._canvas.GetTimeAt(self._cursor.x)
+
+    def event_at_cursor(self):
+        return self._canvas.GetEventAt(self._cursor, self._keyboard.alt)
+
+    def balloon_at_cursor(self):
+        return self._canvas.GetBalloonAt(self._cursor)
+
+    def hit_resize_handle(self):
+        return self._canvas.hit_resize_handle(self._cursor, self._keyboard)
+
+    def hit_move_handle(self):
+        return self._canvas.hit_move_handle(self._cursor, self._keyboard)
+
+    def toggle_event_selection(self):
+        self._canvas.toggle_event_selection(self._cursor, self._keyboard)
