@@ -61,38 +61,23 @@ class NoOpInputHandler(InputHandler):
         self._keyboard = None
 
     def mouse_moved(self, cursor, keyboard):
-        delegate = self._delegates(MOUSE_MOVED,
-                                   self.timeline_canvas,
-                                   cursor,
-                                   keyboard)
+        delegate = self._delegates(MOUSE_MOVED, self._canvas, cursor, keyboard)
         delegate.run(self._status_bar)
 
     def left_mouse_down(self, cursor, keyboard):
-        delegate = self._delegates(LEFT_MOUSE_DOWN,
-                                   self.timeline_canvas,
-                                   cursor,
-                                   keyboard)
+        delegate = self._delegates(LEFT_MOUSE_DOWN, self._canvas, cursor, keyboard)
         delegate.run(self._main_frame, self._state)
 
     def left_mouse_dclick(self, cursor, keyboard):
-        delegate = self._delegates(LEFT_MOUSE_DCLICK,
-                                   self.timeline_canvas,
-                                   cursor,
-                                   keyboard)
+        delegate = self._delegates(LEFT_MOUSE_DCLICK, self._canvas, cursor, keyboard)
         delegate.run()
 
     def middle_mouse_down(self, cursor, keyboard):
-        delegate = self._delegates(MIDDLE_MOUSE_DOWN,
-                                   self.timeline_canvas,
-                                   cursor,
-                                   keyboard)
+        delegate = self._delegates(MIDDLE_MOUSE_DOWN, self._canvas, cursor, keyboard)
         delegate.run()
 
     def mouse_wheel_moved(self, cursor, keyboard, rotation):
-        delegate = self._delegates(MOUSE_WHEEL,
-                                   self.timeline_canvas,
-                                   cursor,
-                                   keyboard)
+        delegate = self._delegates(MOUSE_WHEEL, self._canvas, cursor, keyboard)
         delegate.run(rotation)
 
     def balloon_show_timer_fired(self):
