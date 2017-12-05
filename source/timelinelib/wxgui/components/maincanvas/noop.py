@@ -23,6 +23,7 @@ from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import N
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedclick import NoopLeftMouseDclick
 from timelinelib.wxgui.components.maincanvas.noophandlers.mousemoved import NoopMouseMoved
 from timelinelib.wxgui.components.maincanvas.noophandlers.mousewheelmoved import NoopMouseWheelMoved
+from timelinelib.wxgui.components.maincanvas.noophandlers.middlemousedown import NoopMiddleMouseDown
 
 
 """
@@ -37,6 +38,7 @@ def delegates(key, canvas, cursor, keyboard):
             'left_mouse_dclick': NoopLeftMouseDclick,
             'mouse_moved': NoopMouseMoved,
             'mouse_wheel_moved': NoopMouseWheelMoved,
+            'middle_mouse_down': NoopMiddleMouseDown,
             }[key](canvas, cursor, keyboard)
 
 
@@ -74,11 +76,12 @@ class NoOpInputHandler(InputHandler):
                                    keyboard)
         delegate.run()
 
-    def middle_mouse_down(self, x):
-        self._cursor = Cursor(x, 0)
-        self._navigate()
-        time_at_cursor = self.timeline_canvas.GetTimeAt(self._cursor.x)
-        self.timeline_canvas.Navigate(lambda tp: tp.center(time_at_cursor))
+    def middle_mouse_down(self, cursor, keyboard):
+        delegate = self._delegates(self.middle_mouse_down.__name__,
+                                   self.timeline_canvas,
+                                   cursor,
+                                   keyboard)
+        delegate.run()
 
     def mouse_wheel_moved(self, cursor, keyboard, rotation):
         delegate = self._delegates(self.mouse_wheel_moved.__name__,
