@@ -102,8 +102,9 @@ class MainCanvas(TimelineCanvas):
     def _on_dragscroll(self, event):
         self._input_handler.dragscroll_timer_fired()
 
-    def _on_middle_down(self, event):
-        self._input_handler.middle_mouse_down(event.GetX())
+    def _on_middle_down(self, evt):
+        self._input_handler.middle_mouse_down(self._get_cursor(evt),
+                                              self._get_keyboard(evt))
 
     def _on_mousewheel(self, evt):
         self.main_frame.save_time_period()
