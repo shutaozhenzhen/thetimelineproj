@@ -36,8 +36,8 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
             "Resize events"
         )
 
-    def mouse_moved(self, x, y, alt_down=False):
-        ScrollViewInputHandler.mouse_moved(self, x, y, alt_down)
+    def mouse_moved(self, cursor, keyboard):
+        ScrollViewInputHandler.mouse_moved(self, cursor, keyboard)
         self._resize_event()
 
     def left_mouse_up(self):

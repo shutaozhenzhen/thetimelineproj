@@ -31,8 +31,8 @@ class SelectPeriodByDragInputHandler(ScrollViewInputHandler):
         self.last_valid_time = initial_time
         self.current_time = initial_time
 
-    def mouse_moved(self, x, y, alt_down=False):
-        ScrollViewInputHandler.mouse_moved(self, x, y, alt_down)
+    def mouse_moved(self, cursor, keyboard):
+        ScrollViewInputHandler.mouse_moved(self, cursor, keyboard)
         self._move_current_time()
 
     def view_scrolled(self):

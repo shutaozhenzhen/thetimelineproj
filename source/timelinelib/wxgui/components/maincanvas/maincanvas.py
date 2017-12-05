@@ -107,9 +107,9 @@ class MainCanvas(TimelineCanvas):
 
     def _on_mousewheel(self, evt):
         self.main_frame.save_time_period()
-        self._input_handler.mouse_wheel_moved(
-            evt.GetWheelRotation(), evt.ControlDown(), evt.ShiftDown(),
-            evt.AltDown(), evt.GetX())
+        self._input_handler.mouse_wheel_moved(self._get_cursor(evt),
+                                              self._get_keyboard(evt),
+                                              evt.GetWheelRotation())
 
     def start_balloon_show_timer(self, milliseconds=-1, oneShot=False):
         self.balloon_show_timer.Start(milliseconds, oneShot)

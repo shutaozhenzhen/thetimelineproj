@@ -22,6 +22,7 @@ from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedclick import NoopLeftMouseDclick
 from timelinelib.wxgui.components.maincanvas.noophandlers.mousemoved import NoopMouseMoved
+from timelinelib.wxgui.components.maincanvas.noophandlers.mousewheelmoved import NoopMouseWheelMoved
 
 
 """
@@ -35,6 +36,7 @@ def delegates(key, canvas, cursor, keyboard):
     return {'left_mouse_down': NoopLeftMouseDown,
             'left_mouse_dclick': NoopLeftMouseDclick,
             'mouse_moved': NoopMouseMoved,
+            'mouse_wheel_moved': NoopMouseWheelMoved,
             }[key](canvas, cursor, keyboard)
 
 
@@ -78,10 +80,12 @@ class NoOpInputHandler(InputHandler):
         time_at_cursor = self.timeline_canvas.GetTimeAt(self._cursor.x)
         self.timeline_canvas.Navigate(lambda tp: tp.center(time_at_cursor))
 
-    def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
-        self._cursor = Cursor(x, 0)
-        self._keyboard = Keyboard(ctrl_down, shift_down, alt_down)
-        self.timeline_canvas.on_mouse_wheel_rotated(rotation, self._cursor, self._keyboard)
+    def mouse_wheel_moved(self, cursor, keyboard, rotation):
+        delegate = self._delegates(self.mouse_wheel_moved.__name__,
+                                   self.timeline_canvas,
+                                   cursor,
+                                   keyboard)
+        delegate.run(rotation)
 
     def balloon_show_timer_fired(self):
         """Callback function that the canvas object fires."""

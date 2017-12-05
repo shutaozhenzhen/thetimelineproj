@@ -25,8 +25,8 @@ class SelectBase(InputHandler):
         self._cursor = cursor
         InputHandler.__init__(self, timeline_canvas)
 
-    def mouse_moved(self, x, y, alt_down=False):
-        self._cursor.move(x, y)
+    def mouse_moved(self, cursor, keyboard):
+        self._cursor.move(*cursor.pos)
         self.timeline_canvas.DrawSelectionRect(self._cursor)
 
     def left_mouse_up(self):

@@ -25,6 +25,8 @@ from timelinelib.test.utils import an_event
 from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.wxgui.cursor import Cursor
+from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.maincanvas.resizebydrag import ResizeByDragInputHandler
 
@@ -85,7 +87,7 @@ class ResizeEventSpec(UnitTestCase):
 
     def and_moving_mouse_to_x(self, x):
         any_y = 10
-        self.resizer.mouse_moved(x, any_y)
+        self.resizer.mouse_moved(Cursor(x, any_y), Keyboard())
 
     def then_event_gets_period(self, start, end):
         self.assertEqual(

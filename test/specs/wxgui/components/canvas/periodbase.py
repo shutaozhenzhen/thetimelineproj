@@ -21,6 +21,8 @@ from mock import Mock
 from timelinelib.dataimport.tutorial import GregorianTutorialTimelineCreator
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.wxgui.cursor import Cursor
+from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.maincanvas.periodbase import SelectPeriodByDragInputHandler
 
@@ -36,7 +38,7 @@ class SelectperiodByDragInputHandler(UnitTestCase):
             self.assert_(False)
 
     def when_mouse_moved(self):
-        self.handler.mouse_moved(10, 10)
+        self.handler.mouse_moved(Cursor(10, 10), Keyboard())
 
     def simulate_drag_where_julian_day_becomes_lt_zero(self):
         canvas = Mock(MainCanvas)
