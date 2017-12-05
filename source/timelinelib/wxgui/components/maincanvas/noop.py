@@ -32,13 +32,19 @@ mouse move action, and delegates the workload to fulfill the user action, to
 another event handler
 """
 
+LEFT_MOUSE_DOWN = 1
+MIDDLE_MOUSE_DOWN = 2
+LEFT_MOUSE_DCLICK = 3
+MOUSE_MOVED = 4
+MOUSE_WHEEL = 5
+
 
 def delegates(key, canvas, cursor, keyboard):
-    return {'left_mouse_down': NoopLeftMouseDown,
-            'left_mouse_dclick': NoopLeftMouseDclick,
-            'mouse_moved': NoopMouseMoved,
-            'mouse_wheel_moved': NoopMouseWheelMoved,
-            'middle_mouse_down': NoopMiddleMouseDown,
+    return {LEFT_MOUSE_DOWN: NoopLeftMouseDown,
+            LEFT_MOUSE_DCLICK: NoopLeftMouseDclick,
+            MOUSE_MOVED: NoopMouseMoved,
+            MOUSE_WHEEL: NoopMouseWheelMoved,
+            MIDDLE_MOUSE_DOWN: NoopMiddleMouseDown,
             }[key](canvas, cursor, keyboard)
 
 
@@ -56,35 +62,35 @@ class NoOpInputHandler(InputHandler):
     def mouse_moved(self, cursor, keyboard):
         self._cursor = cursor
         self._keyboard = keyboard
-        delegate = self._delegates(self.mouse_moved.__name__,
+        delegate = self._delegates(MOUSE_MOVED,
                                    self.timeline_canvas,
                                    cursor,
                                    keyboard)
         delegate.run(self._status_bar)
 
     def left_mouse_down(self, cursor, keyboard):
-        delegate = self._delegates(self.left_mouse_down.__name__,
+        delegate = self._delegates(LEFT_MOUSE_DOWN,
                                    self.timeline_canvas,
                                    cursor,
                                    keyboard)
         delegate.run(self._main_frame, self._state)
 
     def left_mouse_dclick(self, cursor, keyboard):
-        delegate = self._delegates(self.left_mouse_dclick.__name__,
+        delegate = self._delegates(LEFT_MOUSE_DCLICK,
                                    self.timeline_canvas,
                                    cursor,
                                    keyboard)
         delegate.run()
 
     def middle_mouse_down(self, cursor, keyboard):
-        delegate = self._delegates(self.middle_mouse_down.__name__,
+        delegate = self._delegates(MIDDLE_MOUSE_DOWN,
                                    self.timeline_canvas,
                                    cursor,
                                    keyboard)
         delegate.run()
 
     def mouse_wheel_moved(self, cursor, keyboard, rotation):
-        delegate = self._delegates(self.mouse_wheel_moved.__name__,
+        delegate = self._delegates(MOUSE_WHEEL,
                                    self.timeline_canvas,
                                    cursor,
                                    keyboard)
