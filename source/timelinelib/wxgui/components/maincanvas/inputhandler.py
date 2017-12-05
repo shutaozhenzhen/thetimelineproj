@@ -21,7 +21,7 @@ class InputHandler(object):
     def __init__(self, timeline_canvas):
         self.timeline_canvas = timeline_canvas
 
-    def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
+    def left_mouse_down(self, cursor, keyboard):
         pass
 
     def mouse_moved(self, cursor, keyboard):
