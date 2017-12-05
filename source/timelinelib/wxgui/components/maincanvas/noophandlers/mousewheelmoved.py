@@ -16,34 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class InputHandler(object):
+from timelinelib.wxgui.components.maincanvas.noophandlers.noopbase import NoopBaseHandler
 
-    def __init__(self, timeline_canvas):
-        self.timeline_canvas = timeline_canvas
 
-    def left_mouse_down(self, x, y, ctrl_down, shift_down, alt_down=False):
-        pass
+class NoopMouseWheelMoved(NoopBaseHandler):
 
-    def mouse_moved(self, cursor, keyboard):
-        pass
+    def __init__(self, canvas, cursor, keyboard):
+        NoopBaseHandler.__init__(self, canvas, cursor, keyboard)
 
-    def left_mouse_up(self):
-        pass
-
-    def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
-        pass
-
-    def middle_mouse_down(self, x):
-        pass
-
-    def mouse_wheel_moved(self, rotation, ctrl_down, shift_down, alt_down, x):
-        pass
-
-    def dragscroll_timer_fired(self):
-        pass
-
-    def balloon_show_timer_fired(self):
-        pass
-
-    def balloon_hide_timer_fired(self):
-        pass
+    def run(self, rotation):
+        self._canvas.on_mouse_wheel_rotated(rotation, self._cursor, self._keyboard)

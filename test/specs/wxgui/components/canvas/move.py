@@ -23,6 +23,8 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
+from timelinelib.wxgui.cursor import Cursor
+from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.maincanvas.movebydrag import MoveByDragInputHandler
 
@@ -147,7 +149,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
             event,
             human_time_to_gregorian(from_time)
         )
-        handler.mouse_moved(to_x, 10)
+        handler.mouse_moved(Cursor(to_x, 10), Keyboard())
 
     def when_move_done(self):
         handler = MoveByDragInputHandler(

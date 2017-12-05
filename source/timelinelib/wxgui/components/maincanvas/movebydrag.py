@@ -50,8 +50,8 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
                     self.event_periods.append(period_pair)
         assert self.event_periods[0][0] == event_being_dragged
 
-    def mouse_moved(self, x, y, alt_down=False):
-        ScrollViewInputHandler.mouse_moved(self, x, y, alt_down)
+    def mouse_moved(self, cursor, keyboard):
+        ScrollViewInputHandler.mouse_moved(self, cursor, keyboard)
         self._move_event()
 
     def left_mouse_up(self):
