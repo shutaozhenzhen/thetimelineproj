@@ -36,7 +36,7 @@ class describe_noop_mouse_move(UnitTestCase):
                                    None,
                                    None,
                                    delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.mouse_moved(10, 10, False)
+        handler.mouse_moved(Cursor(10, 10), Keyboard(False, False, False))
         delegate.run.assert_called_with(status_bar)
 
 
