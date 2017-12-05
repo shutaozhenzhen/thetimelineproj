@@ -67,13 +67,11 @@ class NoOpInputHandler(InputHandler):
                                    self._keyboard)
         delegate.run(self._main_frame, self._state)
 
-    def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
-        self._cursor = Cursor(x, y)
-        self._keyboard = Keyboard(ctrl_down, False, alt_down)
+    def left_mouse_dclick(self, cursor, keyboard):
         delegate = self._delegates(self.left_mouse_dclick.__name__,
                                    self.timeline_canvas,
-                                   self._cursor,
-                                   self._keyboard)
+                                   cursor,
+                                   keyboard)
         delegate.run()
 
     def middle_mouse_down(self, x):

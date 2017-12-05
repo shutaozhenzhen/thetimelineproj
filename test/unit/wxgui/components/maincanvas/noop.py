@@ -18,6 +18,8 @@
 
 from mock import Mock
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.wxgui.cursor import Cursor
+from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.noop import NoOpInputHandler
 from timelinelib.wxgui.components.maincanvas.noophandlers.mousemoved import NoopMouseMoved
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
@@ -62,5 +64,5 @@ class describe_left_dclick(UnitTestCase):
                                    None,
                                    None,
                                    delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.left_mouse_dclick(0, 0, False, False)
+        handler.left_mouse_dclick(Cursor(0, 0), Keyboard(False, False, False))
         delegate.run.assert_called_with()
