@@ -25,6 +25,7 @@ from timelinelib.test.utils import an_event, an_event_with, human_time_to_gregor
 from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
 from timelinelib.wxgui.components.maincanvas.noop import NoOpInputHandler
 from timelinelib.wxgui.cursor import Cursor
+from timelinelib.wxgui.keyboard import Keyboard
 
 
 class NoOpInputHandlerSpec(UnitTestCase):
@@ -37,7 +38,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.given_event_selected(event)
         self.canvas.hit_resize_handle.return_value = None
         self.canvas.hit_move_handle.return_value = True
-        self.handler.left_mouse_down(10, 10, False, False)
+        self.handler.left_mouse_down(Cursor(10, 10), Keyboard(False, False, False))
         self.state.change_to_move_by_drag.assert_called_with(event, time)
 
     def test_disables_move_handler_when_event_ends_today(self):
@@ -46,7 +47,7 @@ class NoOpInputHandlerSpec(UnitTestCase):
         self.given_time_at_x_is(10, time)
         self.given_event_with_rect_at(Cursor(10, 10), event, wx.Rect(0, 0, 20, 20))
         self.given_event_selected(event)
-        self.handler.left_mouse_down(10, 10, False, False)
+        self.handler.left_mouse_down(Cursor(10, 10), Keyboard(False, False, False))
         self.assertEqual(0, self.canvas.SetInputHandler.call_count)
 
     def test_disables_mouse_cursor_when_event_ends_today(self):

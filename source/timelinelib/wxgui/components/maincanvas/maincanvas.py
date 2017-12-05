@@ -70,12 +70,11 @@ class MainCanvas(TimelineCanvas):
     def SetInputHandler(self, input_handler):
         self._input_handler = input_handler
 
-    def _on_left_down(self, event):
+    def _on_left_down(self, evt):
         self.main_frame.save_time_period()
         self.SetFocus()
-        self._input_handler.left_mouse_down(
-            event.GetX(), event.GetY(), event.ControlDown(), event.ShiftDown(),
-            event.AltDown())
+        self._input_handler.left_mouse_down(self._get_cursor(evt),
+                                            self._get_keyboard(evt))
 
     def _on_left_dclick(self, evt):
         self._input_handler.left_mouse_dclick(self._get_cursor(evt),
@@ -85,7 +84,7 @@ class MainCanvas(TimelineCanvas):
         return Cursor(evt.GetX(), evt.GetY())
 
     def _get_keyboard(self, evt):
-        return Keyboard(evt.ControlDown(), evt.ShiftDown, evt.AltDown())
+        return Keyboard(evt.ControlDown(), evt.ShiftDown(), evt.AltDown())
 
     def _on_left_up(self, event):
         self._input_handler.left_mouse_up()
