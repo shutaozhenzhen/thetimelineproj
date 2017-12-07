@@ -95,8 +95,7 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
 
     def _get_moved_delta(self):
         current_time = self.timeline_canvas.GetTimeAt(self.last_x)
-        delta = current_time - self.start_drag_time
-        return delta
+        return current_time - self.start_drag_time
 
     def _snap(self, period):
         start = period.start_time
