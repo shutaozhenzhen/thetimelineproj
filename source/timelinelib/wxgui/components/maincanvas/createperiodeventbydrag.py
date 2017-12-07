@@ -29,10 +29,10 @@ class CreatePeriodEventByDragInputHandler(SelectPeriodByDragInputHandler):
 
     def end_action(self):
         self._main_frame.DisplayStatus("")
-        period = self.get_last_valid_period()
+        start, end = self.get_last_valid_period().start_and_end_time
         open_create_event_editor(
             self._main_frame,
             self._config,
             self.timeline_canvas.GetDb(),
-            period.start_time,
-            period.end_time)
+            start,
+            end)
