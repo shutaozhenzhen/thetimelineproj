@@ -36,7 +36,6 @@ class SelectBase(InputHandler):
         self.end_action()
 
     def dragscroll_timer_fired(self):
-        # if self.last_pos != self._drawn_pos:
         if self._cursor.has_moved():
             self.timeline_canvas.DrawSelectionRect(self._cursor.start, self._cursor.pos)
             self._cursor.reset_move()
