@@ -24,15 +24,13 @@ class CreatePeriodEventByDragInputHandler(SelectPeriodByDragInputHandler):
 
     def __init__(self, state, view, main_frame, config, initial_time):
         SelectPeriodByDragInputHandler.__init__(self, state, view, main_frame, initial_time)
-        self._main_frame = main_frame
         self._config = config
-        self._timeline_canvas = view
 
     def end_action(self):
         period = self.get_last_valid_period()
         open_create_event_editor(
             self._main_frame,
             self._config,
-            self._timeline_canvas.GetDb(),
+            self.timeline_canvas.GetDb(),
             period.start_time,
             period.end_time)
