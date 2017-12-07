@@ -27,7 +27,5 @@ class ZoomByDragInputHandler(SelectPeriodByDragInputHandler):
 
     def end_action(self):
         self._main_frame.DisplayStatus("")
-        period = self.get_last_valid_period()
-        start = period.start_time
-        end = period.end_time
+        start, end = self.get_last_valid_period().start_and_end_time
         self.timeline_canvas.Navigate(lambda tp: tp.update(start, end))
