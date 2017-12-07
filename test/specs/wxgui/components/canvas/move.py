@@ -83,11 +83,11 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         event_2.set_locked(True)
         self.given_time_at_x_is(50, "5 Jan 2011")
         self.when_moving(event_1, from_time="1 Jan 2011", to_x=50)
-        self.assertTrue(self.status_bar.set_text.called)
+        self.main_frame.DisplayStatus.assert_called_with(u"\u27eaCan't move locked event\u27eb")
 
     def test_clears_hint_when_done_moving(self):
         self.when_move_done()
-        self.status_bar.set_text.assert_called_with("")
+        self.main_frame.DisplayStatus.assert_called_with("")
 
     def test_redraws_timeline_after_move(self):
         self.given_time_at_x_is(50, "5 Jan 2011")
@@ -102,6 +102,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
                     return self.snap_times[key]
             raise KeyError()
         self.db = MemoryDB()
+        self.main_frame = Mock()
         self.times_at = {}
         self.period_events = []
         self.snap_times = {}
@@ -144,8 +145,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         handler = MoveByDragInputHandler(
             self.state,
             self.canvas,
-            self.status_bar,
-            Mock(),
+            self.main_frame,
             event,
             human_time_to_gregorian(from_time)
         )
@@ -155,8 +155,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         handler = MoveByDragInputHandler(
             self.state,
             self.canvas,
-            self.status_bar,
-            Mock(),
+            self.main_frame,
             self.a_point_event("1 Jan 2011"),
             None
         )
