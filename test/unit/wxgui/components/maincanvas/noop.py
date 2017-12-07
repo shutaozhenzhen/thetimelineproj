@@ -61,12 +61,7 @@ class describe_left_dclick(UnitTestCase):
 
     def test_deleagte_is_called(self):
         delegate = Mock(NoopLeftMouseDclick)
-        handler = NoOpInputHandler(None,
-                                   None,
-                                   None,
-                                   None,
-                                   delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.left_mouse_dclick(Cursor(), Keyboard())
+        noop_handler(delegate).left_mouse_dclick(Cursor(), Keyboard())
         delegate.run.assert_called_with()
 
 
@@ -74,12 +69,7 @@ class describe_middle_mouse_down(UnitTestCase):
 
     def test_deleagte_is_called(self):
         delegate = Mock(NoopMiddleMouseDown)
-        handler = NoOpInputHandler(None,
-                                   None,
-                                   None,
-                                   None,
-                                   delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.middle_mouse_down(Cursor(), Keyboard())
+        noop_handler(delegate).middle_mouse_down(Cursor(), Keyboard())
         delegate.run.assert_called_with()
 
 
@@ -88,10 +78,13 @@ class describe_mouse_wheel_moved(UnitTestCase):
     def test_deleagte_is_called(self):
         delegate = Mock(NoopMouseWheelMoved)
         rotation = Mock()
-        handler = NoOpInputHandler(None,
-                                   None,
-                                   None,
-                                   None,
-                                   delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.mouse_wheel_moved(Cursor(0, 0), Keyboard(), rotation)
+        noop_handler(delegate).mouse_wheel_moved(Cursor(0, 0), Keyboard(), rotation)
         delegate.run.assert_called_with(rotation)
+
+
+def noop_handler(delegate):
+    return NoOpInputHandler(None,
+                            None,
+                            None,
+                            None,
+                            delegates=lambda key, canvas, cursor, keyboard: delegate)
