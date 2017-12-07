@@ -472,8 +472,7 @@ class InputHandlerState(object):
 
     def change_to_resize_by_drag(self, event, direction):
         self._timeline_canvas.SetInputHandler(ResizeByDragInputHandler(
-            self, self._timeline_canvas, self._status_bar, self._main_frame,
-            event, direction))
+            self, self._timeline_canvas, self._main_frame, event, direction))
 
     def change_to_scroll_by_drag(self, start_time, y):
         self._timeline_canvas.SetInputHandler(ScrollByDragInputHandler(
