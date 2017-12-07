@@ -21,13 +21,12 @@ from timelinelib.wxgui.components.maincanvas.periodbase import SelectPeriodByDra
 
 class ZoomByDragInputHandler(SelectPeriodByDragInputHandler):
 
-    def __init__(self, state, timeline_canvas, main_frame, status_bar, initial_time):
+    def __init__(self, state, timeline_canvas, main_frame, initial_time):
         SelectPeriodByDragInputHandler.__init__(self, state, timeline_canvas, main_frame, initial_time)
-        self._status_bar = status_bar
-        self._status_bar.set_text(_("Select region to zoom into"))
+        self._main_frame.DisplayStatus(_("Select region to zoom into"))
 
     def end_action(self):
-        self._status_bar.set_text("")
+        self._main_frame.DisplayStatus("")
         period = self.get_last_valid_period()
         start = period.start_time
         end = period.end_time
