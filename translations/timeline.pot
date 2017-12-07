@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-24 09:11+0100\n"
+"POT-Creation-Date: 2017-12-07 19:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -593,12 +593,12 @@ msgid "Start time can't be after end time. Start:%s End:%s"
 msgstr ""
 
 #: source\timelinelib\canvas\timelinecanvascontroller.py:103
-#: source\timelinelib\wxgui\components\maincanvas\maincanvas.py:55
+#: source\timelinelib\wxgui\components\maincanvas\maincanvas.py:62
 msgid "Can't scroll more to the left"
 msgstr ""
 
 #: source\timelinelib\canvas\timelinecanvascontroller.py:106
-#: source\timelinelib\wxgui\components\maincanvas\maincanvas.py:57
+#: source\timelinelib\wxgui\components\maincanvas\maincanvas.py:64
 msgid "Can't scroll more to the right"
 msgstr ""
 
@@ -639,7 +639,7 @@ msgid "File"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:50
-#: source\timelinelib\wxgui\components\timelinepanel.py:275
+#: source\timelinelib\wxgui\components\timelinepanel.py:276
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:339
 msgid "Edit"
 msgstr ""
@@ -1849,7 +1849,7 @@ msgid "Add..."
 msgstr ""
 
 #: source\timelinelib\wxgui\components\categorytree.py:205
-#: source\timelinelib\wxgui\components\timelinepanel.py:271
+#: source\timelinelib\wxgui\components\timelinepanel.py:272
 msgid "Delete"
 msgstr ""
 
@@ -1920,6 +1920,10 @@ msgstr ""
 msgid "Choose file"
 msgstr ""
 
+#: source\timelinelib\wxgui\components\maincanvas\createperiodeventbydrag.py:29
+msgid "Select region for event"
+msgstr ""
+
 #: source\timelinelib\wxgui\components\maincanvas\movebydrag.py:71
 msgid "Can't move locked event"
 msgstr ""
@@ -1928,7 +1932,7 @@ msgstr ""
 msgid "Select events"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\maincanvas\zoombydrag.py:28
+#: source\timelinelib\wxgui\components\maincanvas\zoombydrag.py:27
 msgid "Select region to zoom into"
 msgstr ""
 
@@ -1989,60 +1993,60 @@ msgstr ""
 msgid "View Categories Individually"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:94
+#: source\timelinelib\wxgui\components\timelinepanel.py:95
 #: source\timelinelib\wxgui\frames\mainframe\guicreator.py:341
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:39
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:49
 msgid "Center"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:276
+#: source\timelinelib\wxgui\components\timelinepanel.py:277
 msgid "Duplicate..."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:277
+#: source\timelinelib\wxgui\components\timelinepanel.py:278
 msgid "Mark Event as Done"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:278
+#: source\timelinelib\wxgui\components\timelinepanel.py:279
 msgid "Select Category..."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:280
+#: source\timelinelib\wxgui\components\timelinepanel.py:281
 msgid "Sticky Balloon"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:289
+#: source\timelinelib\wxgui\components\timelinepanel.py:290
 msgid "Goto URL"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:318
+#: source\timelinelib\wxgui\components\timelinepanel.py:319
 #, python-format
 msgid "Are you sure you want to delete %d events?"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:321
+#: source\timelinelib\wxgui\components\timelinepanel.py:322
 msgid "Are you sure you want to delete this event?"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:361
+#: source\timelinelib\wxgui\components\timelinepanel.py:362
 #, python-format
 msgid "%s events hidden"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:435
+#: source\timelinelib\wxgui\components\timelinepanel.py:436
 msgid "This timeline is read-only."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:436
+#: source\timelinelib\wxgui\components\timelinepanel.py:437
 msgid "To edit this timeline, save it to a new file: File -> Save As."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:439
+#: source\timelinelib\wxgui\components\timelinepanel.py:440
 msgid "This timeline is not being saved."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:440
+#: source\timelinelib\wxgui\components\timelinepanel.py:441
 msgid "To save this timeline, save it to a new file: File -> Save As."
 msgstr ""
 

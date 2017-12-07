@@ -485,5 +485,6 @@ class InputHandlerState(object):
             self,
             self._timeline_canvas,
             self._main_frame,
+            self._status_bar,
             self._config,
             time_at_x))
