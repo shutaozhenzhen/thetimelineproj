@@ -38,7 +38,7 @@ class describe_noop_mouse_move(UnitTestCase):
                                    None,
                                    None,
                                    delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.mouse_moved(Cursor(10, 10), Keyboard(False, False, False))
+        handler.mouse_moved(Cursor(), Keyboard())
         delegate.run.assert_called_with(status_bar)
 
 
@@ -53,7 +53,7 @@ class describe_left_mouse_down(UnitTestCase):
                                    main_frame,
                                    None,
                                    delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.left_mouse_down(Cursor(0, 0), Keyboard(False, False, False))
+        handler.left_mouse_down(Cursor(), Keyboard())
         delegate.run.assert_called_with(main_frame, state)
 
 
@@ -66,7 +66,7 @@ class describe_left_dclick(UnitTestCase):
                                    None,
                                    None,
                                    delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.left_mouse_dclick(Cursor(0, 0), Keyboard(False, False, False))
+        handler.left_mouse_dclick(Cursor(), Keyboard())
         delegate.run.assert_called_with()
 
 
@@ -79,7 +79,7 @@ class describe_middle_mouse_down(UnitTestCase):
                                    None,
                                    None,
                                    delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.middle_mouse_down(Cursor(0, 0), Keyboard())
+        handler.middle_mouse_down(Cursor(), Keyboard())
         delegate.run.assert_called_with()
 
 
