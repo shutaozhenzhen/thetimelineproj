@@ -25,7 +25,6 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
         ScrollViewInputHandler.__init__(self, timeline_canvas)
         self._state = state
         self._main_frame = main_frame
-        self.timeline_canvas = timeline_canvas
         self.start_drag_time = start_drag_time
         self._store_event_periods(event)
         self._transaction = self.timeline_canvas.GetDb().transaction("Move events")
