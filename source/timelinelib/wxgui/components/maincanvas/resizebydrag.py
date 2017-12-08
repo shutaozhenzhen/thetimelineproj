@@ -31,7 +31,7 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
         self.event = event
         self.direction = direction
         self.timer_running = False
-        self._transaction = self.timeline_canvas.GetDb().transaction("Resize events")
+        self._transaction = self.timeline_canvas.GetDb().transaction(_("Resize events"))
 
     def mouse_moved(self, cursor, keyboard):
         ScrollViewInputHandler.mouse_moved(self, cursor, keyboard)
