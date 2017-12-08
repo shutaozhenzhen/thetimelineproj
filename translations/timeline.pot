@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-07 19:00+0100\n"
+"POT-Creation-Date: 2017-12-08 06:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -579,15 +579,15 @@ msgstr ""
 msgid "Duration"
 msgstr ""
 
-#: source\timelinelib\canvas\data\timeperiod.py:100
+#: source\timelinelib\canvas\data\timeperiod.py:104
 msgid "Invalid start time"
 msgstr ""
 
-#: source\timelinelib\canvas\data\timeperiod.py:102
+#: source\timelinelib\canvas\data\timeperiod.py:106
 msgid "Invalid end time"
 msgstr ""
 
-#: source\timelinelib\canvas\data\timeperiod.py:104
+#: source\timelinelib\canvas\data\timeperiod.py:108
 #, python-format
 msgid "Start time can't be after end time. Start:%s End:%s"
 msgstr ""
@@ -1801,7 +1801,7 @@ msgid "Could not find pysvg Python package. It is needed to export to SVG."
 msgstr ""
 
 #: source\timelinelib\plugin\plugins\exporters\exporttosvg.py:46
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:127
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:130
 msgid "SVG files"
 msgstr ""
 
@@ -1920,19 +1920,23 @@ msgstr ""
 msgid "Choose file"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\maincanvas\createperiodeventbydrag.py:29
+#: source\timelinelib\wxgui\components\maincanvas\createperiodeventbydrag.py:28
 msgid "Select region for event"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\maincanvas\movebydrag.py:71
+#: source\timelinelib\wxgui\components\maincanvas\movebydrag.py:67
 msgid "Can't move locked event"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\maincanvas\selectevents.py:28
+#: source\timelinelib\wxgui\components\maincanvas\resizebydrag.py:34
+msgid "Resize events"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\maincanvas\selectevents.py:27
 msgid "Select events"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\maincanvas\zoombydrag.py:27
+#: source\timelinelib\wxgui\components\maincanvas\zoombydrag.py:26
 msgid "Select region to zoom into"
 msgstr ""
 
@@ -2389,8 +2393,8 @@ msgid "Select timeline to import from:"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importevents\view.py:54
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:125
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:213
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:128
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:216
 msgid "Timeline files"
 msgstr ""
 
@@ -2973,40 +2977,40 @@ msgid ""
 "German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:176
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:190
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:179
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:193
 msgid "Create Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:181
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:184
 msgid "The specified timeline already exists."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:182
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:185
 msgid "Opening timeline instead of creating new."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:184
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:187
 msgid "Information"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:200
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:203
 msgid "Open Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:216
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:219
 msgid "Save Timeline As"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:246
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:249
 msgid "Unable to write configuration file."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:266
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:269
 msgid "Distance between selected events"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:268
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:271
 msgid "Events are overlapping or distance is 0"
 msgstr ""
 
