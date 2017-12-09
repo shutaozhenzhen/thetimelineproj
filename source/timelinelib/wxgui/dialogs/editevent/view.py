@@ -349,6 +349,7 @@ def open_event_editor_for(parent, config, db, event):
         else:
             return EditEventDialog(
                 parent, config, _("Edit Event"), db, event=event)
+
     def edit_function():
         dialog = create_event_editor()
         dialog.ShowModal()
@@ -360,6 +361,7 @@ def open_create_event_editor(parent, config, db, start=None, end=None):
     def create_event_editor():
         label = _("Create Event")
         return EditEventDialog(parent, config, label, db, start, end)
+
     def edit_function():
         dialog = create_event_editor()
         dialog.ShowModal()
