@@ -308,12 +308,14 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _delete_selected_events(self):
         selected_events = self.timeline_canvas.GetSelectedEvents()
         number_of_selected_events = len(selected_events)
+
         def edit_function():
             if user_ack():
                 with self.timeline_canvas.GetDb().transaction("Delete events"):
                     for event in selected_events:
                         event.delete()
             self.timeline_canvas.ClearSelectedEvents()
+
         def user_ack():
             if number_of_selected_events > 1:
                 text = _("Are you sure you want to delete %d events?" %
