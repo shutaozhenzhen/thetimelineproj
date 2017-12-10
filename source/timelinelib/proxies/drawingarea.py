@@ -32,5 +32,5 @@ class DrawingAreaProxy():
     def VertZoomIn(self):
         self.timeline_canvas.VertZoomIn()
 
-    def vert_zoom_out(self):
-        self.timeline_canvas.vert_zoom_out()
+    def VertZoomOut(self):
+        self.timeline_canvas.VertZoomOut()
