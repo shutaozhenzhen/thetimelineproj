@@ -107,7 +107,7 @@ class TimelineCanvas(wx.Panel):
 
     def SetEventBoxDrawer(self, event_box_drawer):
         self.controller.set_event_box_drawer(event_box_drawer)
-        self.redraw_timeline()
+        self.Redraw()
 
     def SetEventSelected(self, event, is_selected):
         self.controller.view_properties.set_selected(event, is_selected)
@@ -178,7 +178,7 @@ class TimelineCanvas(wx.Panel):
 
     def SetEventStickyBalloon(self, event, is_sticky):
         self.controller.view_properties.set_event_has_sticky_balloon(event, is_sticky)
-        self.redraw_timeline()
+        self.Redraw()
 
     def GetTimeAt(self, x):
         return self.controller.get_time(x)
@@ -210,8 +210,8 @@ class TimelineCanvas(wx.Panel):
     def Redraw(self):
         self.controller.redraw_timeline()
 
-    def redraw_timeline(self):
-        self.controller.redraw_timeline()
+#     def redraw_timeline(self):
+#         self.controller.redraw_timeline()
 
     def EventIsPeriod(self, event):
         return self.controller.event_is_period(event)
@@ -310,7 +310,7 @@ class TimelineCanvas(wx.Panel):
             self._highlight_timer.Start(milliseconds=180)
 
     def _on_highlight_timer(self, evt):
-        self.redraw_timeline()
+        self.Redraw()
         self.controller.view_properties.tick_highlights(limit=15)
         if not self.controller.view_properties.has_higlights():
             self._highlight_timer.Stop()
