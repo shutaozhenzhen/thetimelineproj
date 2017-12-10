@@ -29,12 +29,9 @@ class MessageBar(wx.Panel):
 
     def _create_gui(self):
         self._inner_panel = wx.Panel(self)
-        self._label = wx.StaticText(self._inner_panel,
-                                    style=wx.ALIGN_CENTRE_HORIZONTAL)
-        self._add_with_border(self, self._inner_panel, 2,
-                              style=wx.EXPAND)
-        self._add_with_border(self._inner_panel, self._label, 5,
-                              style=wx.ALIGN_CENTER)
+        self._label = wx.StaticText(self._inner_panel, style=wx.ALIGN_CENTRE_HORIZONTAL)
+        self._add_with_border(self, self._inner_panel, 2, style=wx.EXPAND)
+        self._add_with_border(self._inner_panel, self._label, 5, style=wx.ALIGN_CENTER)
 
     def _add_with_border(self, parent, child, border, style=0):
         sizer = wx.BoxSizer(wx.VERTICAL)
