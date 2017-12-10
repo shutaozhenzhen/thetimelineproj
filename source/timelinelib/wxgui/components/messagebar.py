@@ -42,16 +42,10 @@ class MessageBar(wx.Panel):
         self._create_gui()
 
     def ShowWarningMessage(self, message):
-        self._set_colour(WARNING_BG_COLOR)
-        self._label.SetLabel(message)
-        self._show()
-        self.GetParent().Layout()
+        self._show_message(message, WARNING_BG_COLOR)
 
     def ShowInformationMessage(self, message):
-        self._set_colour(INFO_BG_COLOR)
-        self._label.SetLabel(message)
-        self._show()
-        self.GetParent().Layout()
+        self._show_message(message, INFO_BG_COLOR)
 
     def ShowNoMessage(self):
         self.Hide()
@@ -67,6 +61,12 @@ class MessageBar(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(child, proportion=1, flag=wx.ALL | style, border=border)
         parent.SetSizer(sizer)
+
+    def _show_message(self, message, color):
+        self._set_colour(color)
+        self._label.SetLabel(message)
+        self._show()
+        self.GetParent().Layout()
 
     def _show(self):
         self.Refresh()
