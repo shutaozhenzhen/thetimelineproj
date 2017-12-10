@@ -41,17 +41,6 @@ class MessageBar(wx.Panel):
         wx.Panel.__init__(self, parent, style=wx.BORDER_NONE)
         self._create_gui()
 
-    def _create_gui(self):
-        self._inner_panel = wx.Panel(self)
-        self._label = wx.StaticText(self._inner_panel, style=wx.ALIGN_CENTRE_HORIZONTAL)
-        self._add_with_border(self, self._inner_panel, 2, style=wx.EXPAND)
-        self._add_with_border(self._inner_panel, self._label, 5, style=wx.ALIGN_CENTER)
-
-    def _add_with_border(self, parent, child, border, style=0):
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(child, proportion=1, flag=wx.ALL | style, border=border)
-        parent.SetSizer(sizer)
-
     def ShowWarningMessage(self, message):
         self._set_colour(WARNING_BG_COLOR)
         self._label.SetLabel(message)
@@ -67,6 +56,17 @@ class MessageBar(wx.Panel):
     def ShowNoMessage(self):
         self.Hide()
         self.GetParent().Layout()
+
+    def _create_gui(self):
+        self._inner_panel = wx.Panel(self)
+        self._label = wx.StaticText(self._inner_panel, style=wx.ALIGN_CENTRE_HORIZONTAL)
+        self._add_with_border(self, self._inner_panel, 2, style=wx.EXPAND)
+        self._add_with_border(self._inner_panel, self._label, 5, style=wx.ALIGN_CENTER)
+
+    def _add_with_border(self, parent, child, border, style=0):
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(child, proportion=1, flag=wx.ALL | style, border=border)
+        parent.SetSizer(sizer)
 
     def _show(self):
         self.Refresh()
