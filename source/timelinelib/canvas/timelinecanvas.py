@@ -143,7 +143,7 @@ class TimelineCanvas(wx.Panel):
         return self.get_timeline().get_time_type()
 
     def GetDb(self):
-        return self.get_timeline()
+        return self.controller.get_timeline()
 
     def IsReadOnly(self):
         return self.get_timeline().is_read_only()
