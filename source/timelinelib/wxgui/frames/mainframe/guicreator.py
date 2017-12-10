@@ -269,7 +269,7 @@ class GuiCreator(object):
             DrawingAreaProxy(self).zoom_out()
 
         def vert_zoomin(evt):
-            DrawingAreaProxy(self).vert_zoom_in()
+            DrawingAreaProxy(self).VertZoomIn()
 
         def vert_zoomout(evt):
             DrawingAreaProxy(self).vert_zoom_out()
