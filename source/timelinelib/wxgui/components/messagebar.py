@@ -65,11 +65,17 @@ class MessageBar(wx.Panel):
 
     def _show_message(self, message, color):
         self._set_colour(color)
-        self._label.SetLabel(message)
-        self.Refresh()
-        self.Show()
-        self.GetParent().Layout()
+        self._set_message(message)
+        self._repaint_window()
 
     def _set_colour(self, colour):
         self.SetBackgroundColour(darken_color(colour))
         self._inner_panel.SetBackgroundColour(colour)
+
+    def _set_message(self, message):
+        self._label.SetLabel(message)
+
+    def _repaint_window(self):
+        self.Refresh()
+        self.Show()
+        self.GetParent().Layout()
