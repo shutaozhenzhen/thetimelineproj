@@ -251,7 +251,7 @@ class TimelineCanvas(wx.Panel):
         x_percent_of_width = float(x) / width
         self.Navigate(lambda tp: tp.zoom(direction, x_percent_of_width))
 
-    def vert_zoom_in(self):
+    def VertZoomIn(self):
         self.ZoomVertically(1)
 
     def vert_zoom_out(self):
