@@ -208,13 +208,13 @@ class TimelineCanvas(wx.Panel):
         self.controller.navigate(navigation_fn)
 
     def Redraw(self):
-        self.redraw_timeline()
-
-    def EventIsPeriod(self, event):
-        return self.controller.event_is_period(event)
+        self.controller.redraw_timeline()
 
     def redraw_timeline(self):
         self.controller.redraw_timeline()
+
+    def EventIsPeriod(self, event):
+        return self.controller.event_is_period(event)
 
     def redraw_surface(self, fn_draw):
         width, height = self.GetSizeTuple()
