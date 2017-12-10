@@ -140,13 +140,13 @@ class TimelineCanvas(wx.Panel):
         return self.controller.drawing_algorithm.get_closest_overlapping_event(event, up=up)
 
     def GetTimeType(self):
-        return self.get_timeline().get_time_type()
+        return self.GetDb().get_time_type()
 
     def GetDb(self):
         return self.controller.get_timeline()
 
     def IsReadOnly(self):
-        return self.get_timeline().is_read_only()
+        return self.GetDb().is_read_only()
 
     def GetEventAt(self, cursor, prefer_container=False):
         return self.controller.drawing_algorithm.event_at(cursor.x, cursor.y, prefer_container)
@@ -183,9 +183,6 @@ class TimelineCanvas(wx.Panel):
     def GetTimeAt(self, x):
         return self.controller.get_time(x)
 
-    def get_timeline(self):
-        return self.controller.get_timeline()
-
     def set_timeline(self, timeline):
         self.controller.set_timeline(timeline)
 
@@ -201,7 +198,7 @@ class TimelineCanvas(wx.Panel):
                self.controller.view_properties, self.GetAppearance())
 
     def get_filtered_events(self, search_target):
-        events = self.get_timeline().search(search_target)
+        events = self.GetDb().search(search_target)
         return self.get_view_properties().filter_events(events)
 
     def get_time_period(self):
