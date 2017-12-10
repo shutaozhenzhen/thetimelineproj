@@ -245,17 +245,17 @@ class TimelineCanvas(wx.Panel):
     def zoom_out(self):
         self.Zoom(-1, self._get_half_width())
 
-    def vert_zoom_in(self):
-        self.ZoomVertically(1)
-
-    def vert_zoom_out(self):
-        self.ZoomVertically(-1)
-
     def Zoom(self, direction, x):
         """ zoom time line at position x """
         width, _ = self.GetSizeTuple()
         x_percent_of_width = float(x) / width
         self.Navigate(lambda tp: tp.zoom(direction, x_percent_of_width))
+
+    def vert_zoom_in(self):
+        self.ZoomVertically(1)
+
+    def vert_zoom_out(self):
+        self.ZoomVertically(-1)
 
     def ZoomVertically(self, direction):
         if direction > 0:
