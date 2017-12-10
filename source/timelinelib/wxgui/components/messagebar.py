@@ -21,6 +21,10 @@ import wx
 from timelinelib.canvas.drawing.utils import darken_color
 
 
+WARNING_BG_COLOR = (251, 100, 100)
+INFO_BG_COLOR = ((251, 203, 58))
+
+
 class MessageBar(wx.Panel):
 
     """
@@ -49,13 +53,13 @@ class MessageBar(wx.Panel):
         parent.SetSizer(sizer)
 
     def ShowWarningMessage(self, message):
-        self._set_colour((251, 100, 100))
+        self._set_colour(WARNING_BG_COLOR)
         self._label.SetLabel(message)
         self._show()
         self.GetParent().Layout()
 
     def ShowInformationMessage(self, message):
-        self._set_colour((251, 203, 58))
+        self._set_colour(INFO_BG_COLOR)
         self._label.SetLabel(message)
         self._show()
         self.GetParent().Layout()
