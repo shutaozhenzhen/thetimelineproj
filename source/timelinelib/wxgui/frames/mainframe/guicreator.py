@@ -272,7 +272,7 @@ class GuiCreator(object):
             DrawingAreaProxy(self).VertZoomIn()
 
         def vert_zoomout(evt):
-            DrawingAreaProxy(self).vert_zoom_out()
+            DrawingAreaProxy(self).VertZoomOut()
 
         def start_slide_show(evt):
             canvas = self.main_panel.get_timeline_canvas()

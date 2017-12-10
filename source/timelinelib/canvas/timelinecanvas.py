@@ -254,7 +254,7 @@ class TimelineCanvas(wx.Panel):
     def VertZoomIn(self):
         self.ZoomVertically(1)
 
-    def vert_zoom_out(self):
+    def VertZoomOut(self):
         self.ZoomVertically(-1)
 
     def ZoomVertically(self, direction):
