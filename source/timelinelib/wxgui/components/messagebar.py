@@ -23,6 +23,16 @@ from timelinelib.canvas.drawing.utils import darken_color
 
 class MessageBar(wx.Panel):
 
+    """
+    This class is used to create (or hide) a message text displayed
+    at the top of the Timeline window.
+    A message comes in two flavors:
+       - Information message
+       - Warning message
+    What distinguishes the two flavors is the background color of the
+    message text area.
+    """
+
     def __init__(self, parent, name=None):
         wx.Panel.__init__(self, parent, style=wx.BORDER_NONE)
         self._create_gui()
