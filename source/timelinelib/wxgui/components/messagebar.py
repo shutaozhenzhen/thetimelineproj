@@ -38,6 +38,7 @@ class MessageBar(wx.Panel):
     """
 
     def __init__(self, parent, name=None):
+        """The name parameter is needed for testing purposes."""
         wx.Panel.__init__(self, parent, style=wx.BORDER_NONE)
         self._create_gui()
 
@@ -65,12 +66,9 @@ class MessageBar(wx.Panel):
     def _show_message(self, message, color):
         self._set_colour(color)
         self._label.SetLabel(message)
-        self._show()
-        self.GetParent().Layout()
-
-    def _show(self):
         self.Refresh()
         self.Show()
+        self.GetParent().Layout()
 
     def _set_colour(self, colour):
         self.SetBackgroundColour(darken_color(colour))
