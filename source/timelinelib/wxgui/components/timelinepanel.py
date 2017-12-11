@@ -347,7 +347,7 @@ class TimelinePanelGuiCreator(wx.Panel):
                         event.set_progress(100)
                         event.save()
             self.timeline_canvas.ClearSelectedEvents()
-        safe_locking(self.main_frame, edit_function)
+        safe_locking(self._edit_controller, edit_function)
 
     def _context_menu_on_select_category(self, evt):
         self.main_frame.set_category_on_selected()
