@@ -23,9 +23,9 @@ class ZoomByDragInputHandler(SelectPeriodByDragInputHandler):
 
     def __init__(self, state, timeline_canvas, main_frame, initial_time):
         SelectPeriodByDragInputHandler.__init__(self, state, timeline_canvas, main_frame, initial_time)
-        self._main_frame.DisplayStatus(_("Select region to zoom into"))
+        self._state.display_status(_("Select region to zoom into"))
 
     def end_action(self):
-        self._main_frame.DisplayStatus("")
+        self._state.display_status("")
         start, end = self.get_last_valid_period().start_and_end_time
         self.timeline_canvas.Navigate(lambda tp: tp.update(start, end))
