@@ -326,7 +326,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             else:
                 text = _("Are you sure you want to delete this event?")
             return _ask_question(text) == wx.YES
-        safe_locking(self.main_frame, edit_function)
+        safe_locking(self._edit_controller, edit_function)
 
     def _context_menu_on_edit_event(self, evt):
         self.open_event_editor(self.timeline_canvas.GetSelectedEvent())
