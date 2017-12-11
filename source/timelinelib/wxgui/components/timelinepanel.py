@@ -201,7 +201,7 @@ class TimelinePanelGuiCreator(wx.Panel):
                 self.open_event_editor(timeline_event)
         else:
             open_create_event_editor(
-                self.main_frame,
+                self._edit_controller,
                 self.main_frame,
                 self.config,
                 self.timeline_canvas.GetDb(),
