@@ -43,18 +43,18 @@ class ResizeEventSpec(UnitTestCase):
         self.given_time_at_x_is(50, "1 Jan 5000")
         self.when_resizing(an_event_with(time="1 Jan 2000"), wx.RIGHT)
         self.and_moving_mouse_to_x(50)
-        self.assertEqual(1, self.main_frame.DisplayStatus.call_count)
+        self.assertEqual(1, self.state.display_status.call_count)
 
     def test_clears_hint_if_resize_is_valid(self):
         self.given_time_at_x_is(50, "2 Jan 2000")
         self.when_resizing(an_event_with(time="1 Jan 2000"), wx.RIGHT)
         self.and_moving_mouse_to_x(50)
-        self.main_frame.DisplayStatus("")
+        self.state.display_status("")
 
     def test_clears_hint_when_resize_is_done(self):
         self.when_resizing(an_event(), wx.RIGHT)
         self.resizer.left_mouse_up()
-        self.main_frame.DisplayStatus("")
+        self.state.display_status("")
 
     def test_changes_input_handler_when_resize_is_done(self):
         self.when_resizing(an_event(), wx.RIGHT)
@@ -68,7 +68,6 @@ class ResizeEventSpec(UnitTestCase):
         self.canvas.GetDb.return_value = self.db
         self.state = Mock()
         self.status_bar = Mock()
-        self.main_frame = Mock()
 
     def given_time_at_x_is(self, x, time):
         self.canvas.GetTimeAt.return_value = human_time_to_gregorian(time)
@@ -80,7 +79,6 @@ class ResizeEventSpec(UnitTestCase):
         self.resizer = ResizeByDragInputHandler(
             self.state,
             self.canvas,
-            self.main_frame,
             event,
             direction
         )
