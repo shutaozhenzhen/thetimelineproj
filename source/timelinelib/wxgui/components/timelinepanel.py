@@ -350,7 +350,11 @@ class TimelinePanelGuiCreator(wx.Panel):
         safe_locking(self._edit_controller, edit_function)
 
     def _context_menu_on_select_category(self, evt):
-        self.main_frame.set_category_on_selected()
+        # TODO: Disable the context menu if the main_frame don't have
+        #       a set_category_on_selected() method
+        set_category_on_selected = getattr(self.main_frame, 'set_category_on_selected', None)
+        if callable(set_category_on_selected):
+            set_category_on_selected()
 
     def _context_menu_on_sticky_balloon_event(self, evt):
         self.timeline_canvas.SetEventStickyBalloon(self.timeline_canvas.GetSelectedEvent(), True)
