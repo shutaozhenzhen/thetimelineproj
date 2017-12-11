@@ -23,10 +23,9 @@ from timelinelib.wxgui.components.maincanvas.scrollbase import ScrollViewInputHa
 
 class ResizeByDragInputHandler(ScrollViewInputHandler):
 
-    def __init__(self, state, timeline_canvas, main_frame, event, direction):
+    def __init__(self, state, timeline_canvas, event, direction):
         ScrollViewInputHandler.__init__(self, timeline_canvas)
         self._state = state
-        self._main_frame = main_frame
         self.timeline_canvas = timeline_canvas
         self.event = event
         self.direction = direction
@@ -39,9 +38,9 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
 
     def left_mouse_up(self):
         ScrollViewInputHandler.left_mouse_up(self)
-        self._main_frame.DisplayStatus("")
+        self._state.display_status("")
         self._transaction.commit()
-        self._main_frame.edit_ends()
+        self._state.edit_ends()
         self._state.change_to_no_op()
 
     def view_scrolled(self):
@@ -64,5 +63,5 @@ class ResizeByDragInputHandler(ScrollViewInputHandler):
                 new_end = new_start
         self.event.update_period(new_start, new_end)
         self.event.save()
-        self._main_frame.DisplayStatus("")
+        self._state.display_status("")
         self.timeline_canvas.Redraw()
