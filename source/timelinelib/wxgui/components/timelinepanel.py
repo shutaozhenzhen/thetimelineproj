@@ -268,7 +268,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             # calls do calculations on incorrect rectangles. A redraw
             # recalculates all rectangles.
             self.redraw_timeline()
-        safe_locking(self.main_frame, edit_function)
+        safe_locking(self._edit_controller, edit_function)
 
     def _display_event_context_menu(self):
         menu_definitions = [
