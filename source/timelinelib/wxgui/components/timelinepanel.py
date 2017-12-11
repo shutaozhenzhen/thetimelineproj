@@ -467,34 +467,29 @@ class InputHandlerState(object):
         return self._main_frame.DisplayStatus(message)
 
     def change_to_no_op(self):
-        self._timeline_canvas.SetInputHandler(NoOpInputHandler(
-            self, self._status_bar, self._timeline_canvas))
+        self._timeline_canvas.SetInputHandler(
+            NoOpInputHandler(self, self._status_bar, self._timeline_canvas))
 
     def change_to_move_by_drag(self, event, start_drag_time):
-        self._timeline_canvas.SetInputHandler(MoveByDragInputHandler(
-            self, self._timeline_canvas, self._main_frame,
-            event, start_drag_time))
+        self._timeline_canvas.SetInputHandler(
+            MoveByDragInputHandler(self, self._timeline_canvas, self._main_frame, event, start_drag_time))
 
     def change_to_zoom_by_drag(self, start_time):
-        self._timeline_canvas.SetInputHandler(ZoomByDragInputHandler(
-            self, self._timeline_canvas, self._main_frame, start_time))
+        self._timeline_canvas.SetInputHandler(
+            ZoomByDragInputHandler(self, self._timeline_canvas, self._main_frame, start_time))
 
     def change_to_select(self, cursor):
-        self._timeline_canvas.SetInputHandler(SelectEventsInputHandler(
-            self, self._timeline_canvas, self._main_frame, cursor))
+        self._timeline_canvas.SetInputHandler(
+            SelectEventsInputHandler(self, self._timeline_canvas, self._main_frame, cursor))
 
     def change_to_resize_by_drag(self, event, direction):
-        self._timeline_canvas.SetInputHandler(ResizeByDragInputHandler(
-            self, self._timeline_canvas, self._main_frame, event, direction))
+        self._timeline_canvas.SetInputHandler(
+            ResizeByDragInputHandler(self, self._timeline_canvas, self._main_frame, event, direction))
 
     def change_to_scroll_by_drag(self, start_time, y):
-        self._timeline_canvas.SetInputHandler(ScrollByDragInputHandler(
-            self, self._timeline_canvas, self._main_frame, start_time, y))
+        self._timeline_canvas.SetInputHandler(
+            ScrollByDragInputHandler(self, self._timeline_canvas, self._main_frame, start_time, y))
 
     def change_to_create_period_event_by_drag(self, time_at_x):
-        self._timeline_canvas.SetInputHandler(CreatePeriodEventByDragInputHandler(
-            self,
-            self._timeline_canvas,
-            self._main_frame,
-            self._config,
-            time_at_x))
+        self._timeline_canvas.SetInputHandler(
+            CreatePeriodEventByDragInputHandler(self, self._timeline_canvas, self._main_frame, self._config, time_at_x))
