@@ -454,6 +454,18 @@ class InputHandlerState(object):
         self._main_frame = main_frame
         self._config = config
 
+    def ok_to_edit(self):
+        print 'ok_to_edit'
+        return self._main_frame.ok_to_edit()
+
+    def edit_ends(self):
+        print 'edit_ends'
+        return self._main_frame.edit_ends()
+
+    def display_status(self, message):
+        print 'display_status'
+        return self._main_frame.DisplayStatus(message)
+
     def change_to_no_op(self):
         self._timeline_canvas.SetInputHandler(NoOpInputHandler(
             self, self._status_bar, self._main_frame, self._timeline_canvas))
