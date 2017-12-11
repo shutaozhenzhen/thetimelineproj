@@ -416,7 +416,8 @@ class TimelinePanel(TimelinePanelGuiCreator):
 
     def open_milestone_editor(self, event):
         open_milestone_editor_for(
-            self.main_frame,
+            self._edit_controller,
+            self,
             self.config,
             self.timeline_canvas.GetDb(),
             event)

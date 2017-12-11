@@ -411,7 +411,7 @@ class GuiCreator(object):
             open_duplicate_event_dialog_for_event(self, self.timeline, event)
 
         def create_milestone(evt):
-            open_milestone_editor_for(self, self.config, self.timeline)
+            open_milestone_editor_for(self, self, self.config, self.timeline)
 
         def set_categoryon_selected(evt):
 
