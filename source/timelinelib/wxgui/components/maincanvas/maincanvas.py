@@ -34,9 +34,9 @@ from timelinelib.canvas.timelinecanvas import MOVE_HANDLE
 
 class MainCanvas(TimelineCanvas):
 
-    def __init__(self, parent, main_frame, status_bar):
+    def __init__(self, parent, edit_controller, status_bar):
         TimelineCanvas.__init__(self, parent)
-        self.main_frame = main_frame
+        self._edit_controller = edit_controller
         self._status_bar = status_bar
         self.SetInputHandler(InputHandler(self))
         self.balloon_show_timer = wx.Timer(self, -1)
@@ -71,7 +71,7 @@ class MainCanvas(TimelineCanvas):
         self._input_handler = input_handler
 
     def _on_left_down(self, evt):
-        self.main_frame.save_time_period()
+        self._edit_controller.save_time_period()
         self.SetFocus()
         self._input_handler.left_mouse_down(self._get_cursor(evt),
                                             self._get_keyboard(evt))
@@ -107,7 +107,7 @@ class MainCanvas(TimelineCanvas):
                                               self._get_keyboard(evt))
 
     def _on_mousewheel(self, evt):
-        self.main_frame.save_time_period()
+        self._edit_controller.save_time_period()
         self._input_handler.mouse_wheel_moved(self._get_cursor(evt),
                                               self._get_keyboard(evt),
                                               evt.GetWheelRotation())
