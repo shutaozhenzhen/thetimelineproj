@@ -21,10 +21,9 @@ from timelinelib.wxgui.components.maincanvas.scrollbase import ScrollViewInputHa
 
 class MoveByDragInputHandler(ScrollViewInputHandler):
 
-    def __init__(self, state, timeline_canvas, main_frame, event, start_drag_time):
+    def __init__(self, state, timeline_canvas, event, start_drag_time):
         ScrollViewInputHandler.__init__(self, timeline_canvas)
         self._state = state
-        self._main_frame = main_frame
         self.start_drag_time = start_drag_time
         self._store_event_periods(event)
         self._transaction = self.timeline_canvas.GetDb().transaction("Move events")
@@ -52,9 +51,9 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
 
     def left_mouse_up(self):
         ScrollViewInputHandler.left_mouse_up(self)
-        self._main_frame.DisplayStatus("")
+        self._state.display_status("")
         self._transaction.commit()
-        self._main_frame.edit_ends()
+        self._state.edit_ends()
         self._state.change_to_no_op()
 
     def view_scrolled(self):
@@ -64,7 +63,7 @@ class MoveByDragInputHandler(ScrollViewInputHandler):
         if len(self.event_periods) == 0:
             return
         if self._any_event_locked():
-            self._main_frame.DisplayStatus(_("Can't move locked event"))
+            self._state.display_status(_("Can't move locked event"))
             return
         self._move_selected_events()
         self.timeline_canvas.Redraw()

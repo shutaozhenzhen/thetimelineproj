@@ -36,7 +36,6 @@ class describe_noop_mouse_move(UnitTestCase):
         handler = NoOpInputHandler(None,
                                    status_bar,
                                    None,
-                                   None,
                                    delegates=lambda key, canvas, cursor, keyboard: delegate)
         handler.mouse_moved(Cursor(), Keyboard())
         delegate.run.assert_called_with(status_bar)
@@ -46,15 +45,13 @@ class describe_left_mouse_down(UnitTestCase):
 
     def test_deleagte_is_called(self):
         delegate = Mock(NoopLeftMouseDown)
-        main_frame = Mock()
         state = Mock()
         handler = NoOpInputHandler(state,
                                    None,
-                                   main_frame,
                                    None,
                                    delegates=lambda key, canvas, cursor, keyboard: delegate)
         handler.left_mouse_down(Cursor(), Keyboard())
-        delegate.run.assert_called_with(main_frame, state)
+        delegate.run.assert_called_with(state)
 
 
 class describe_left_dclick(UnitTestCase):
@@ -84,7 +81,6 @@ class describe_mouse_wheel_moved(UnitTestCase):
 
 def noop_handler(delegate):
     return NoOpInputHandler(None,
-                            None,
                             None,
                             None,
                             delegates=lambda key, canvas, cursor, keyboard: delegate)

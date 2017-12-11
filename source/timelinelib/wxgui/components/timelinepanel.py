@@ -116,11 +116,11 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.sidebar_width = self.splitter.GetSashPosition()
 
     def _create_sidebar(self):
-        self.sidebar = Sidebar(self.main_frame, self.splitter)
+        self.sidebar = Sidebar(self._edit_controller, self.splitter)
 
     def _create_timeline_canvas(self):
         self.timeline_canvas = MainCanvas(
-            self.splitter, self.main_frame, self.status_bar_adapter)
+            self.splitter, self._edit_controller, self.status_bar_adapter)
         self.timeline_canvas.Bind(
             wx.EVT_LEFT_DCLICK,
             self._timeline_canvas_on_double_clicked
@@ -146,8 +146,8 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.timeline_canvas.SetInputHandler(NoOpInputHandler(
             InputHandlerState(
                 self.timeline_canvas, self.status_bar_adapter,
-                self.main_frame, self.config),
-            self.status_bar_adapter, self.main_frame, self.timeline_canvas))
+                self._edit_controller, self.config),
+            self.status_bar_adapter, self.timeline_canvas))
 
         def update_appearance():
             appearance = self.timeline_canvas.GetAppearance()
@@ -201,7 +201,8 @@ class TimelinePanelGuiCreator(wx.Panel):
                 self.open_event_editor(timeline_event)
         else:
             open_create_event_editor(
-                self.main_frame,
+                self._edit_controller,
+                self,
                 self.config,
                 self.timeline_canvas.GetDb(),
                 time,
@@ -215,7 +216,9 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.timeline_canvas.SetEventSelected(timeline_event, True)
             self._display_event_context_menu()
         else:
-            self.main_frame.display_timeline_context_menu()
+            display_timeline_context_menu = getattr(self.main_frame, "display_timeline_context_menu", None)
+            if callable(display_timeline_context_menu):
+                display_timeline_context_menu()
         event.Skip()
 
     def _timeline_canvas_on_key_down(self, event):
@@ -265,7 +268,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             # calls do calculations on incorrect rectangles. A redraw
             # recalculates all rectangles.
             self.redraw_timeline()
-        safe_locking(self.main_frame, edit_function)
+        safe_locking(self._edit_controller, edit_function)
 
     def _display_event_context_menu(self):
         menu_definitions = [
@@ -323,14 +326,15 @@ class TimelinePanelGuiCreator(wx.Panel):
             else:
                 text = _("Are you sure you want to delete this event?")
             return _ask_question(text) == wx.YES
-        safe_locking(self.main_frame, edit_function)
+        safe_locking(self._edit_controller, edit_function)
 
     def _context_menu_on_edit_event(self, evt):
         self.open_event_editor(self.timeline_canvas.GetSelectedEvent())
 
     def _context_menu_on_duplicate_event(self, evt):
         open_duplicate_event_dialog_for_event(
-            self.main_frame,
+            self._edit_controller,
+            self,
             self.timeline_canvas.GetDb(),
             self.timeline_canvas.GetSelectedEvent())
 
@@ -343,10 +347,14 @@ class TimelinePanelGuiCreator(wx.Panel):
                         event.set_progress(100)
                         event.save()
             self.timeline_canvas.ClearSelectedEvents()
-        safe_locking(self.main_frame, edit_function)
+        safe_locking(self._edit_controller, edit_function)
 
     def _context_menu_on_select_category(self, evt):
-        self.main_frame.set_category_on_selected()
+        # TODO: Disable the context menu if the main_frame don't have
+        #       a set_category_on_selected() method
+        set_category_on_selected = getattr(self.main_frame, 'set_category_on_selected', None)
+        if callable(set_category_on_selected):
+            set_category_on_selected()
 
     def _context_menu_on_sticky_balloon_event(self, evt):
         self.timeline_canvas.SetEventStickyBalloon(self.timeline_canvas.GetSelectedEvent(), True)
@@ -363,7 +371,9 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _timeline_canvas_on_timeline_redrawn(self, event):
         text = _("%s events hidden") % self.timeline_canvas.GetHiddenEventCount()
         self.status_bar_adapter.set_hidden_event_count_text(text)
-        self.main_frame.enable_disable_menus()
+        enable_disable_menus = getattr(self.main_frame, 'enable_disable_menus')
+        if callable(enable_disable_menus):
+            enable_disable_menus()
 
     def _layout_components(self):
         hsizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -382,6 +392,7 @@ class TimelinePanel(TimelinePanelGuiCreator):
         self.config = config
         self.status_bar_adapter = status_bar_adapter
         self.main_frame = main_frame
+        self._edit_controller = main_frame
         TimelinePanelGuiCreator.__init__(self, parent)
         self._db_listener = Listener(self._on_db_changed)
 
@@ -397,14 +408,16 @@ class TimelinePanel(TimelinePanelGuiCreator):
 
     def open_event_editor(self, event):
         open_event_editor_for(
-            self.main_frame,
+            self._edit_controller,
+            self,
             self.config,
             self.timeline_canvas.GetDb(),
             event)
 
     def open_milestone_editor(self, event):
         open_milestone_editor_for(
-            self.main_frame,
+            self._edit_controller,
+            self,
             self.config,
             self.timeline_canvas.GetDb(),
             event)
@@ -448,41 +461,45 @@ class TimelinePanel(TimelinePanelGuiCreator):
 
 class InputHandlerState(object):
 
-    def __init__(self, timeline_canvas, status_bar, main_frame, config):
-        self._timeline_canvas = timeline_canvas
+    def __init__(self, canvas, status_bar, edit_controller, config):
+        self._timeline_canvas = canvas
         self._status_bar = status_bar
-        self._main_frame = main_frame
+        self._edit_controller = edit_controller
         self._config = config
 
+    def ok_to_edit(self):
+        return self._edit_controller.ok_to_edit()
+
+    def edit_ends(self):
+        return self._edit_controller.edit_ends()
+
+    def display_status(self, message):
+        return self._edit_controller.DisplayStatus(message)
+
     def change_to_no_op(self):
-        self._timeline_canvas.SetInputHandler(NoOpInputHandler(
-            self, self._status_bar, self._main_frame, self._timeline_canvas))
+        self._timeline_canvas.SetInputHandler(
+            NoOpInputHandler(self, self._status_bar, self._timeline_canvas))
 
     def change_to_move_by_drag(self, event, start_drag_time):
-        self._timeline_canvas.SetInputHandler(MoveByDragInputHandler(
-            self, self._timeline_canvas, self._main_frame,
-            event, start_drag_time))
+        self._timeline_canvas.SetInputHandler(
+            MoveByDragInputHandler(self, self._timeline_canvas, event, start_drag_time))
 
     def change_to_zoom_by_drag(self, start_time):
-        self._timeline_canvas.SetInputHandler(ZoomByDragInputHandler(
-            self, self._timeline_canvas, self._main_frame, start_time))
+        self._timeline_canvas.SetInputHandler(
+            ZoomByDragInputHandler(self, self._timeline_canvas, start_time))
 
     def change_to_select(self, cursor):
-        self._timeline_canvas.SetInputHandler(SelectEventsInputHandler(
-            self, self._timeline_canvas, self._main_frame, cursor))
+        self._timeline_canvas.SetInputHandler(
+            SelectEventsInputHandler(self, self._timeline_canvas, cursor))
 
     def change_to_resize_by_drag(self, event, direction):
-        self._timeline_canvas.SetInputHandler(ResizeByDragInputHandler(
-            self, self._timeline_canvas, self._main_frame, event, direction))
+        self._timeline_canvas.SetInputHandler(
+            ResizeByDragInputHandler(self, self._timeline_canvas, event, direction))
 
     def change_to_scroll_by_drag(self, start_time, y):
-        self._timeline_canvas.SetInputHandler(ScrollByDragInputHandler(
-            self, self._timeline_canvas, self._main_frame, start_time, y))
+        self._timeline_canvas.SetInputHandler(
+            ScrollByDragInputHandler(self, self._timeline_canvas, start_time, y))
 
     def change_to_create_period_event_by_drag(self, time_at_x):
-        self._timeline_canvas.SetInputHandler(CreatePeriodEventByDragInputHandler(
-            self,
-            self._timeline_canvas,
-            self._main_frame,
-            self._config,
-            time_at_x))
+        self._timeline_canvas.SetInputHandler(
+            CreatePeriodEventByDragInputHandler(self, self._timeline_canvas, self._config, time_at_x))
