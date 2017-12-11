@@ -357,7 +357,7 @@ def open_event_editor_for(parent, config, db, event):
     safe_locking(parent, edit_function)
 
 
-def open_create_event_editor(parent, config, db, start=None, end=None):
+def open_create_event_editor(edit_controller, parent, config, db, start=None, end=None):
     def create_event_editor():
         label = _("Create Event")
         return EditEventDialog(parent, config, label, db, start, end)
@@ -366,4 +366,4 @@ def open_create_event_editor(parent, config, db, start=None, end=None):
         dialog = create_event_editor()
         dialog.ShowModal()
         dialog.Destroy()
-    safe_locking(parent, edit_function)
+    safe_locking(edit_controller, edit_function)

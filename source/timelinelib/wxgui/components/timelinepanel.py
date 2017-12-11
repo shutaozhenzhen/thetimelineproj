@@ -202,6 +202,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         else:
             open_create_event_editor(
                 self.main_frame,
+                self.main_frame,
                 self.config,
                 self.timeline_canvas.GetDb(),
                 time,
@@ -492,4 +493,4 @@ class InputHandlerState(object):
 
     def change_to_create_period_event_by_drag(self, time_at_x):
         self._timeline_canvas.SetInputHandler(
-            CreatePeriodEventByDragInputHandler(self, self._timeline_canvas, self._main_frame, self._config, time_at_x))
+            CreatePeriodEventByDragInputHandler(self, self._timeline_canvas, self._config, time_at_x))
