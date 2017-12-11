@@ -51,12 +51,11 @@ def delegates(key, canvas, cursor, keyboard):
 
 class NoOpInputHandler(InputHandler):
 
-    def __init__(self, state, status_bar, main_frame, timeline_canvas, delegates=delegates):
+    def __init__(self, state, status_bar, timeline_canvas, delegates=delegates):
         InputHandler.__init__(self, timeline_canvas)
         self._delegates = delegates
         self._state = state
         self._status_bar = status_bar
-        self._main_frame = main_frame
         self._cursor = None
         self._keyboard = None
 
