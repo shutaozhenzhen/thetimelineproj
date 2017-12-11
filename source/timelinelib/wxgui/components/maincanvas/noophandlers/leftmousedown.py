@@ -44,7 +44,7 @@ class NoopLeftMouseDown(NoopBaseHandler):
 
     def _left_mouse_down_on_event(self, main_frame, state):
         delegate = NoopLeftMouseDownOnEvent(self._canvas, self._cursor, self._keyboard)
-        delegate.run(main_frame, state)
+        delegate.run(state)
 
     def _left_mouse_down_on_timeline(self, state):
         delegate = NoopLeftMouseDownOnTimeline(self._canvas, self._cursor, self._keyboard)

@@ -25,7 +25,7 @@ class NoopLeftMouseDownOnEvent(NoopBaseHandler):
     def __init__(self, canvas, cursor, keyboard):
         NoopBaseHandler.__init__(self, canvas, cursor, keyboard)
 
-    def run(self, main_frame, state):
+    def run(self, state):
 
         def is_resize_command():
             return self.hit_resize_handle() is not None
