@@ -54,7 +54,7 @@ class describe_left_mouse_down(UnitTestCase):
                                    None,
                                    delegates=lambda key, canvas, cursor, keyboard: delegate)
         handler.left_mouse_down(Cursor(), Keyboard())
-        delegate.run.assert_called_with(main_frame, state)
+        delegate.run.assert_called_with(state)
 
 
 class describe_left_dclick(UnitTestCase):

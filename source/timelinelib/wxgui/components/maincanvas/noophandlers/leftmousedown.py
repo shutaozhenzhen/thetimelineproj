@@ -26,7 +26,7 @@ class NoopLeftMouseDown(NoopBaseHandler):
     def __init__(self, canvas, cursor, keyboard):
         NoopBaseHandler.__init__(self, canvas, cursor, keyboard)
 
-    def run(self, main_frame, state):
+    def run(self, state):
 
         def toggle_balloon_stickyness():
             event_with_balloon = self.balloon_at_cursor()
