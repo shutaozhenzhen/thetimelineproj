@@ -51,11 +51,3 @@ class NoopLeftMouseDownOnTimeline(NoopBaseHandler):
                 (Keyboard.CTRL, create_event)
             ])
         methods.select(self._keyboard.keys_combination)()
-
-    def _left_mouse_down_on_event(self):
-        delegate = NoopLeftMouseDownOnEvent(self.timeline_canvas, self._cursor, self._keyboard)
-        delegate.run(self._state)
-
-    def _left_mouse_down_on_timeline(self):
-        delegate = NoopLeftMouseDownOnTimeline(self.timeline_canvas, self._cursor, self._keyboard)
-        delegate.run(self._state)
