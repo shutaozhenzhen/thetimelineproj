@@ -449,10 +449,10 @@ class TimelinePanel(TimelinePanelGuiCreator):
 
 class InputHandlerState(object):
 
-    def __init__(self, edit_controller, status_bar, main_frame, config):
-        self._timeline_canvas = edit_controller
+    def __init__(self, canvas, status_bar, edit_controller, config):
+        self._timeline_canvas = canvas
         self._status_bar = status_bar
-        self._edit_controller = main_frame
+        self._edit_controller = edit_controller
         self._config = config
 
     def ok_to_edit(self):
