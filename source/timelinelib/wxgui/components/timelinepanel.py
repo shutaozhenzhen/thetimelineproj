@@ -216,7 +216,9 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.timeline_canvas.SetEventSelected(timeline_event, True)
             self._display_event_context_menu()
         else:
-            self.main_frame.display_timeline_context_menu()
+            display_timeline_context_menu = getattr(self.main_frame, "display_timeline_context_menu", None)
+            if callable(display_timeline_context_menu):
+                display_timeline_context_menu()
         event.Skip()
 
     def _timeline_canvas_on_key_down(self, event):
