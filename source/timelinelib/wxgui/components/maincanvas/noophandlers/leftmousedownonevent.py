@@ -37,11 +37,11 @@ class NoopLeftMouseDownOnEvent(NoopBaseHandler):
                 return self.hit_move_handle()
 
         def start_event_action(action_method, action_arg):
-            if main_frame.ok_to_edit():
+            if state.ok_to_edit():
                 try:
                     action_method(self.event_at_cursor(), action_arg)
                 except:
-                    main_frame.edit_ends()
+                    state.edit_ends()
                     raise
 
         def resize_event():
