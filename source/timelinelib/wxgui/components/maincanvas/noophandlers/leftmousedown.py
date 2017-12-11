@@ -38,11 +38,11 @@ class NoopLeftMouseDown(NoopBaseHandler):
 
         toggle_balloon_stickyness()
         if cursor_over_event():
-            self._left_mouse_down_on_event(main_frame, state)
+            self._left_mouse_down_on_event(state)
         else:
             self._left_mouse_down_on_timeline(state)
 
-    def _left_mouse_down_on_event(self, main_frame, state):
+    def _left_mouse_down_on_event(self, state):
         delegate = NoopLeftMouseDownOnEvent(self._canvas, self._cursor, self._keyboard)
         delegate.run(state)
 
