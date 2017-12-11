@@ -116,7 +116,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.sidebar_width = self.splitter.GetSashPosition()
 
     def _create_sidebar(self):
-        self.sidebar = Sidebar(self.main_frame, self.splitter)
+        self.sidebar = Sidebar(self._edit_controller, self.splitter)
 
     def _create_timeline_canvas(self):
         self.timeline_canvas = MainCanvas(
@@ -383,6 +383,7 @@ class TimelinePanel(TimelinePanelGuiCreator):
         self.config = config
         self.status_bar_adapter = status_bar_adapter
         self.main_frame = main_frame
+        self._edit_controller = main_frame
         TimelinePanelGuiCreator.__init__(self, parent)
         self._db_listener = Listener(self._on_db_changed)
 
