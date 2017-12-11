@@ -22,7 +22,7 @@ from timelinelib.wxgui.components.maincanvas.scrollbase import ScrollViewInputHa
 
 class SelectPeriodByDragInputHandler(ScrollViewInputHandler):
 
-    def __init__(self, state, timeline_canvas, main_frame, initial_time):
+    def __init__(self, state, timeline_canvas, initial_time):
         ScrollViewInputHandler.__init__(self, timeline_canvas)
         self._state = state
         self.timeline_canvas = timeline_canvas
