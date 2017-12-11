@@ -375,8 +375,6 @@ class TimelinePanelGuiCreator(wx.Panel):
         if callable(enable_disable_menus):
             enable_disable_menus()
 
-        self.main_frame.enable_disable_menus()
-
     def _layout_components(self):
         hsizer = wx.BoxSizer(wx.HORIZONTAL)
         hsizer.Add(self.splitter, proportion=1, flag=wx.EXPAND)
