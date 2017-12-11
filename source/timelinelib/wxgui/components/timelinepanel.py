@@ -472,7 +472,7 @@ class InputHandlerState(object):
 
     def change_to_move_by_drag(self, event, start_drag_time):
         self._timeline_canvas.SetInputHandler(
-            MoveByDragInputHandler(self, self._timeline_canvas, self._main_frame, event, start_drag_time))
+            MoveByDragInputHandler(self, self._timeline_canvas, event, start_drag_time))
 
     def change_to_zoom_by_drag(self, start_time):
         self._timeline_canvas.SetInputHandler(
