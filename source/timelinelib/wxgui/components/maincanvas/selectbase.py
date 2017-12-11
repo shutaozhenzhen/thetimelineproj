@@ -21,8 +21,7 @@ from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 
 class SelectBase(InputHandler):
 
-    def __init__(self, main_frame, timeline_canvas, cursor):
-        self._main_frame = main_frame
+    def __init__(self, timeline_canvas, cursor):
         self._cursor = cursor
         InputHandler.__init__(self, timeline_canvas)
 

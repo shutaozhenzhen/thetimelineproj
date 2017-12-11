@@ -480,7 +480,7 @@ class InputHandlerState(object):
 
     def change_to_select(self, cursor):
         self._timeline_canvas.SetInputHandler(
-            SelectEventsInputHandler(self, self._timeline_canvas, self._main_frame, cursor))
+            SelectEventsInputHandler(self, self._timeline_canvas, cursor))
 
     def change_to_resize_by_drag(self, event, direction):
         self._timeline_canvas.SetInputHandler(
