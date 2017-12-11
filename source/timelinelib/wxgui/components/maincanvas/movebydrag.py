@@ -21,7 +21,7 @@ from timelinelib.wxgui.components.maincanvas.scrollbase import ScrollViewInputHa
 
 class MoveByDragInputHandler(ScrollViewInputHandler):
 
-    def __init__(self, state, timeline_canvas, main_frame, event, start_drag_time):
+    def __init__(self, state, timeline_canvas, event, start_drag_time):
         ScrollViewInputHandler.__init__(self, timeline_canvas)
         self._state = state
         self.start_drag_time = start_drag_time

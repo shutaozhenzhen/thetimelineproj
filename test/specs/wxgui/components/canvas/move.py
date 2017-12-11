@@ -101,7 +101,6 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
                     return self.snap_times[key]
             raise KeyError()
         self.db = MemoryDB()
-        self.main_frame = Mock()
         self.times_at = {}
         self.period_events = []
         self.snap_times = {}
@@ -144,7 +143,6 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         handler = MoveByDragInputHandler(
             self.state,
             self.canvas,
-            self.main_frame,
             event,
             human_time_to_gregorian(from_time)
         )
@@ -154,7 +152,6 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         handler = MoveByDragInputHandler(
             self.state,
             self.canvas,
-            self.main_frame,
             self.a_point_event("1 Jan 2011"),
             None
         )
