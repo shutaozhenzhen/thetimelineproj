@@ -202,7 +202,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         else:
             open_create_event_editor(
                 self._edit_controller,
-                self.main_frame,
+                self,
                 self.config,
                 self.timeline_canvas.GetDb(),
                 time,
