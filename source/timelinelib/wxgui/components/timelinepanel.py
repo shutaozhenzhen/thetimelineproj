@@ -146,7 +146,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         self.timeline_canvas.SetInputHandler(NoOpInputHandler(
             InputHandlerState(
                 self.timeline_canvas, self.status_bar_adapter,
-                self.main_frame, self.config),
+                self._edit_controller, self.config),
             self.status_bar_adapter, self.timeline_canvas))
 
         def update_appearance():
