@@ -371,6 +371,10 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _timeline_canvas_on_timeline_redrawn(self, event):
         text = _("%s events hidden") % self.timeline_canvas.GetHiddenEventCount()
         self.status_bar_adapter.set_hidden_event_count_text(text)
+        enable_disable_menus = getattr(self.main_frame, 'enable_disable_menus')
+        if callable(enable_disable_menus):
+            enable_disable_menus()
+
         self.main_frame.enable_disable_menus()
 
     def _layout_components(self):
