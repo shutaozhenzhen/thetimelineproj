@@ -120,7 +120,7 @@ class TimelinePanelGuiCreator(wx.Panel):
 
     def _create_timeline_canvas(self):
         self.timeline_canvas = MainCanvas(
-            self.splitter, self.main_frame, self.status_bar_adapter)
+            self.splitter, self._edit_controller, self.status_bar_adapter)
         self.timeline_canvas.Bind(
             wx.EVT_LEFT_DCLICK,
             self._timeline_canvas_on_double_clicked
