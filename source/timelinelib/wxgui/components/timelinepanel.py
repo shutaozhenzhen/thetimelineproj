@@ -333,7 +333,8 @@ class TimelinePanelGuiCreator(wx.Panel):
 
     def _context_menu_on_duplicate_event(self, evt):
         open_duplicate_event_dialog_for_event(
-            self.main_frame,
+            self._edit_controller,
+            self,
             self.timeline_canvas.GetDb(),
             self.timeline_canvas.GetSelectedEvent())
 
