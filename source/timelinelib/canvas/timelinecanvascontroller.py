@@ -231,6 +231,7 @@ class TimelineCanvasController(object):
         """
         The drawer interface:
             methods:
+                draw(d, t, p, a)
                 use_fast_draw(f)
                 set_event_box_drawer(d)
                 set_background_drawer(d)
