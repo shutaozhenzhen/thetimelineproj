@@ -45,7 +45,7 @@ class TimelineCanvasController(object):
         self.set_appearance(Appearance())
         self.set_event_box_drawer(DefaultEventBoxDrawer())
         self.set_background_drawer(self.get_saved_background_drawer())
-        self.drawing_algorithm.use_fast_draw(False)
+        self._fast_draw = False
         self._set_initial_values_to_member_variables()
         self._set_colors_and_styles()
 
@@ -87,7 +87,7 @@ class TimelineCanvasController(object):
             self._set_non_null_timeline(timeline)
 
     def use_fast_draw(self, value):
-        self.drawing_algorithm.use_fast_draw(value)
+        self._fast_draw = value
 
     def navigate(self, navigation_fn):
         old_period = self.view_properties.displayed_period
@@ -216,11 +216,11 @@ class TimelineCanvasController(object):
 
         def fn_draw(dc):
             self.monitoring.timer_start()
-            self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.appearance)
+            self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.appearance, fast_draw=self._fast_draw)
             self.monitoring.timer_end()
             if DEBUG_ENABLED:
                 display_monitor_result(dc)
-            self.drawing_algorithm.use_fast_draw(False)
+            self._fast_draw = False
 
         if self.timeline and self.view_properties.displayed_period:
             self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
@@ -231,8 +231,7 @@ class TimelineCanvasController(object):
         """
         The drawer interface:
             methods:
-                draw(d, t, p, a)
-                use_fast_draw(f)
+                draw(d, t, p, a, f)
                 set_event_box_drawer(d)
                 set_background_drawer(d)
                 get_time(x)

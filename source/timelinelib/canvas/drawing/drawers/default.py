@@ -50,7 +50,6 @@ class DefaultDrawingAlgorithm(Drawer):
         self.event_text_font = Font(8)
         self._create_pens()
         self._create_brushes()
-        self.fast_draw = False
         self._fixed_ys = {}
 
     def set_event_box_drawer(self, event_box_drawer):
@@ -103,7 +102,8 @@ class DefaultDrawingAlgorithm(Drawer):
     def get_closest_overlapping_event(self, event_to_move, up=True):
         return self.scene.get_closest_overlapping_event(event_to_move, up=up)
 
-    def draw(self, dc, timeline, view_properties, appearance):
+    def draw(self, dc, timeline, view_properties, appearance, fast_draw=False):
+        self.fast_draw = fast_draw
         view_properties.hide_events_done = appearance.get_hide_events_done()
         view_properties.legend_pos = appearance.get_legend_pos()
         view_properties.set_fuzzy_icon(appearance.get_fuzzy_icon())
