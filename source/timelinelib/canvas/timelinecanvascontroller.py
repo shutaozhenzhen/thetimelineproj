@@ -228,6 +228,20 @@ class TimelineCanvasController(object):
             self.view.PostEvent(create_timeline_redrawn_event())
 
     def _set_drawing_algorithm(self, drawer):
+        """
+        The drawer interface:
+            methods:
+                use_fast_draw(f)
+                set_event_box_drawer(d)
+                set_background_drawer(d)
+                get_time(x)
+                event_with_rect_at(x, y, k)
+                event_at(x, y, k)
+                event_is_period(p)
+                snap(t)
+            properties:
+                scene
+        """
         if drawer is not None:
             self.drawing_algorithm = drawer
         else:
