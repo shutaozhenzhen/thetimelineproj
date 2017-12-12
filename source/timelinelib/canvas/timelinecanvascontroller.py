@@ -185,6 +185,9 @@ class TimelineCanvasController(object):
             self.view_properties.get_selected_event_ids()
         )
 
+    def get_events_in_rect(self, rect):
+        return self.drawing_algorithm.get_events_in_rect(rect)
+
     def _timeline_changed(self, state_change):
         self._redraw_timeline()
 
@@ -239,6 +242,7 @@ class TimelineCanvasController(object):
                 event_at(x, y, k)
                 event_is_period(p)
                 snap(t)
+                get_events_in_rect(...)
             properties:
                 scene
         """
