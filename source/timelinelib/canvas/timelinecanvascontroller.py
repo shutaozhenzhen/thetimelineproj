@@ -215,6 +215,13 @@ class TimelineCanvasController(object):
     def select_events_in_rect(self, rect):
         self.view_properties.set_all_selected(self.get_events_in_rect(rect))
 
+    def event_has_sticky_balloon(self, event):
+        return self.view_properties.event_has_sticky_balloon(event)
+
+    def set_event_sticky_balloon(self, event, is_sticky):
+        self.view_properties.set_event_has_sticky_balloon(event, is_sticky)
+        self.redraw_timeline()
+
     def event_is_period(self, event):
         return self.drawing_algorithm.event_is_period(event.get_time_period())
 
