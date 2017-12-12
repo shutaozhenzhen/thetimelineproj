@@ -135,7 +135,7 @@ class TimelineCanvas(wx.Panel):
         return self.controller.get_selected_events()
 
     def GetClosestOverlappingEvent(self, event, up):
-        return self.controller.drawing_algorithm.get_closest_overlapping_event(event, up=up)
+        return self.controller.get_closest_overlapping_event(event, up=up)
 
     def GetTimeType(self):
         return self.GetDb().get_time_type()
