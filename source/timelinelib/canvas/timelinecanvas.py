@@ -85,12 +85,10 @@ class TimelineCanvas(wx.Panel):
         self.controller.view_properties.hscroll_amount = amount
 
     def IncrementEventTextFont(self):
-        self.controller.drawing_algorithm.increment_font_size()
-        self.controller._redraw_timeline()
+        self.controller.increment_font_size()
 
     def DecrementEventTextFont(self):
-        self.controller.drawing_algorithm.decrement_font_size()
-        self.controller._redraw_timeline()
+        self.controller.decrement_font_size()
 
     def SetPeriodSelection(self, period):
         if period is None:
