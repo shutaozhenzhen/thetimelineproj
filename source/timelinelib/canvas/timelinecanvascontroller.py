@@ -225,6 +225,12 @@ class TimelineCanvasController(object):
     def add_highlight(self, event, clear):
         self.view_properties.add_highlight(event, clear)
 
+    def tick_highlights(self):
+        self.view_properties.tick_highlights(limit=15)
+
+    def has_higlights(self):
+        return self.view_properties.has_higlights()
+
     def event_is_period(self, event):
         return self.drawing_algorithm.event_is_period(event.get_time_period())
 

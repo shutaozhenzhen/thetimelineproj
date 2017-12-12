@@ -298,6 +298,6 @@ class TimelineCanvas(wx.Panel):
 
     def _on_highlight_timer(self, evt):
         self.Redraw()
-        self.controller.view_properties.tick_highlights(limit=15)
-        if not self.controller.view_properties.has_higlights():
+        self.controller.tick_highlights()
+        if not self.controller.has_higlights():
             self._highlight_timer.Stop()
