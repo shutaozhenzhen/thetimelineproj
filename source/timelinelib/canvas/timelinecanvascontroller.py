@@ -40,10 +40,7 @@ class TimelineCanvasController(object):
         self.appearance = None
         self.monitoring = Monitoring()
         self.view = view
-        if drawer is not None:
-            self.drawing_algorithm = drawer
-        else:
-            self.drawing_algorithm = get_drawer()
+        self._set_drawing_algorithm(drawer)
         self.timeline = None
         self.set_appearance(Appearance())
         self.set_event_box_drawer(DefaultEventBoxDrawer())
@@ -229,3 +226,9 @@ class TimelineCanvasController(object):
             self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
             self.view.redraw_surface(fn_draw)
             self.view.PostEvent(create_timeline_redrawn_event())
+
+    def _set_drawing_algorithm(self, drawer):
+        if drawer is not None:
+            self.drawing_algorithm = drawer
+        else:
+            self.drawing_algorithm = get_drawer()
