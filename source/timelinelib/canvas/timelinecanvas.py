@@ -89,11 +89,7 @@ class TimelineCanvas(wx.Panel):
         self.controller.decrement_font_size()
 
     def SetPeriodSelection(self, period):
-        if period is None:
-            self.controller.view_properties.period_selection = None
-        else:
-            self.controller.view_properties.period_selection = (period.start_time, period.end_time)
-        self.controller._redraw_timeline()
+        self.controller.set_period_selection(period)
 
     def Snap(self, time):
         return self.controller.snap(time)

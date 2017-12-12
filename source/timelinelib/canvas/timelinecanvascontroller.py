@@ -205,6 +205,13 @@ class TimelineCanvasController(object):
     def set_hscroll_amount(self, amount):
         self.view_properties.hscroll_amount = amount
 
+    def set_period_selection(self, period):
+        if period is None:
+            self.view_properties.period_selection = None
+        else:
+            self.view_properties.period_selection = (period.start_time, period.end_time)
+        self._redraw_timeline()
+
 
     def event_is_period(self, event):
         return self.drawing_algorithm.event_is_period(event.get_time_period())
