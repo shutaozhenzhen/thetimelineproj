@@ -191,6 +191,15 @@ class TimelineCanvasController(object):
     def get_hidden_event_count(self):
         return self.drawing_algorithm.get_hidden_event_count()
 
+    def increment_font_size(self):
+        self.drawing_algorithm.increment_font_size()
+        self._redraw_timeline()
+
+    def decrement_font_size(self):
+        self.drawing_algorithm.decrement_font_size()
+        self._redraw_timeline()
+
+
     def _timeline_changed(self, state_change):
         self._redraw_timeline()
 
@@ -245,8 +254,10 @@ class TimelineCanvasController(object):
                 event_at(x, y, k)
                 event_is_period(p)
                 snap(t)
-                get_events_in_rect(...)
-                get_hidden_event_count(...)
+                get_events_in_rect(r)
+                get_hidden_event_count()
+                increment_font_size()
+                decrement_font_size()
             properties:
                 scene
         """
