@@ -222,6 +222,9 @@ class TimelineCanvasController(object):
         self.view_properties.set_event_has_sticky_balloon(event, is_sticky)
         self.redraw_timeline()
 
+    def add_highlight(self, event, clear):
+        self.view_properties.add_highlight(event, clear)
+
     def event_is_period(self, event):
         return self.drawing_algorithm.event_is_period(event.get_time_period())
 

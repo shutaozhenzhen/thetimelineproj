@@ -292,7 +292,7 @@ class TimelineCanvas(wx.Panel):
         self.controller.window_resized()
 
     def highligt_event(self, event, clear=False):
-        self.controller.view_properties.add_highlight(event, clear=clear)
+        self.controller.add_highlight(event, clear)
         if not self._highlight_timer.IsRunning():
             self._highlight_timer.Start(milliseconds=180)
 
