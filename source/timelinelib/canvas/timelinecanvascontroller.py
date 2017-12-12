@@ -188,6 +188,9 @@ class TimelineCanvasController(object):
     def get_events_in_rect(self, rect):
         return self.drawing_algorithm.get_events_in_rect(rect)
 
+    def get_hidden_event_count(self):
+        return self.drawing_algorithm.get_hidden_event_count()
+
     def _timeline_changed(self, state_change):
         self._redraw_timeline()
 
@@ -243,6 +246,7 @@ class TimelineCanvasController(object):
                 event_is_period(p)
                 snap(t)
                 get_events_in_rect(...)
+                get_hidden_event_count(...)
             properties:
                 scene
         """

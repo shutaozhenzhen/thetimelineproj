@@ -61,7 +61,7 @@ class TimelineCanvas(wx.Panel):
         self.controller.redraw_timeline()
 
     def GetHiddenEventCount(self):
-        return self.controller.drawing_algorithm.get_hidden_event_count()
+        return self.controller.get_hidden_event_count()
 
     def Scroll(self, factor):
         self.Navigate(lambda tp: tp.move_delta(-tp.delta() * factor))
