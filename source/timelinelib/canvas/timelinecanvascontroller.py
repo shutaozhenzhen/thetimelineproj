@@ -171,8 +171,23 @@ class TimelineCanvasController(object):
     def event_at(self, x, y, alt_down=False):
         return self.drawing_algorithm.event_at(x, y, alt_down)
 
+    def set_selected(self, event, is_selected):
+        self.view_properties.set_selected(event, is_selected)
+
+    def clear_selected(self):
+        self.view_properties.clear_selected()
+
+    def select_all_events(self):
+        self.view_properties.select_all_events()
+
     def is_selected(self, event):
         return self.view_properties.is_selected(event)
+
+    def set_hovered_event(self, event):
+        self.view_properties.change_hovered_event(event)
+
+    def get_hovered_event(self):
+        return self.view_properties.hovered_event
 
     def event_is_period(self, event):
         return self.drawing_algorithm.event_is_period(event.get_time_period())
