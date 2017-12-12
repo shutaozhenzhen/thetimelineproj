@@ -108,22 +108,22 @@ class TimelineCanvas(wx.Panel):
         self.Redraw()
 
     def SetEventSelected(self, event, is_selected):
-        self.controller.view_properties.set_selected(event, is_selected)
+        self.controller.set_selected(event, is_selected)
 
     def ClearSelectedEvents(self):
-        self.controller.view_properties.clear_selected()
+        self.controller.clear_selected()
 
     def SelectAllEvents(self):
-        self.controller.view_properties.select_all_events()
+        self.controller.select_all_events()
 
     def IsEventSelected(self, event):
         return self.controller.is_selected(event)
 
     def SetHoveredEvent(self, event):
-        self.controller.view_properties.change_hovered_event(event)
+        self.controller.set_hovered_event(event)
 
     def GetHoveredEvent(self):
-        return self.controller.view_properties.hovered_event
+        return self.controller.get_hovered_event
 
     def GetSelectedEvent(self):
         selected_events = self.GetSelectedEvents()
