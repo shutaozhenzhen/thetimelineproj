@@ -20,7 +20,6 @@ import wx
 
 from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
-from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.drawing import get_drawer
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
