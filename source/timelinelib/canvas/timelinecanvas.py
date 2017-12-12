@@ -252,7 +252,6 @@ class TimelineCanvas(wx.Panel):
             self.IncrementEventTextFont()
         else:
             self.DecrementEventTextFont()
-        self.Redraw()
 
     def Scrollvertically(self, direction):
         if direction > 0:
