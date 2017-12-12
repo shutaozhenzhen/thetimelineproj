@@ -53,6 +53,10 @@ class TimelineCanvasController(object):
         self._set_initial_values_to_member_variables()
         self._set_colors_and_styles()
 
+    @property
+    def scene(self):
+        return self.get_drawer().scene
+
     def get_appearance(self):
         return self.appearance
 
