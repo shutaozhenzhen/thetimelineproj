@@ -189,6 +189,16 @@ class TimelineCanvasController(object):
     def get_hovered_event(self):
         return self.view_properties.hovered_event
 
+    def set_selection_rect(self, cursor):
+        self.view_properties.set_selection_rect(cursor.rect)
+        self._fast_draw = True
+        self.redraw_timeline()
+
+    def remove_selection_rect(self):
+        self.view_properties.set_selection_rect(None)
+        self._fast_draw = True
+        self.redraw_timeline()
+
     def event_is_period(self, event):
         return self.drawing_algorithm.event_is_period(event.get_time_period())
 
