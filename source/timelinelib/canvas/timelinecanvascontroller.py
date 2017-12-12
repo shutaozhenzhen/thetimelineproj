@@ -55,7 +55,7 @@ class TimelineCanvasController(object):
 
     @property
     def scene(self):
-        return self.get_drawer().scene
+        return self.drawing_algorithm.scene
 
     def get_appearance(self):
         return self.appearance
@@ -75,9 +75,6 @@ class TimelineCanvasController(object):
 
     def set_background_drawer(self, drawer):
         self.drawing_algorithm.set_background_drawer(drawer)
-
-    def get_drawer(self):
-        return self.drawing_algorithm
 
     def get_timeline(self):
         return self.timeline
@@ -182,10 +179,10 @@ class TimelineCanvasController(object):
         return self.view_properties.is_selected(event)
 
     def event_is_period(self, event):
-        return self.get_drawer().event_is_period(event.get_time_period())
+        return self.drawing_algorithm.event_is_period(event.get_time_period())
 
     def snap(self, time):
-        return self.get_drawer().snap(time)
+        return self.drawing_algorithm.snap(time)
 
     def get_selected_events(self):
         return self.timeline.find_event_with_ids(

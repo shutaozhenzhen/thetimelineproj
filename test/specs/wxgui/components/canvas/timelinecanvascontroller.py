@@ -244,9 +244,6 @@ class DrawingAreaSpec(UnitTestCase):
         self.timeline_canvas.set_default_cursor.assert_called()
         self.timeline_canvas.Disable.assert_called()
 
-    def test_get_drawer_returns_default_drawing_algorithm(self):
-        self.assertEqual(self.drawing_algorithm, self.controller.get_drawer())
-
     def test_get_timeline_returns_given_null_timeline(self):
         self.controller.set_timeline(None)
         self.assertEqual(None, self.controller.get_timeline())
