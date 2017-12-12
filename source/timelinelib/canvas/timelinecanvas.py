@@ -165,11 +165,10 @@ class TimelineCanvas(wx.Panel):
         return self.controller.balloon_at(cursor)
 
     def EventHasStickyBalloon(self, event):
-        return self.controller.view_properties.event_has_sticky_balloon(event)
+        return self.controller.event_has_sticky_balloon(event)
 
     def SetEventStickyBalloon(self, event, is_sticky):
-        self.controller.view_properties.set_event_has_sticky_balloon(event, is_sticky)
-        self.Redraw()
+        self.controller.set_event_sticky_balloon(event, is_sticky)
 
     def GetTimeAt(self, x):
         return self.controller.get_time(x)
