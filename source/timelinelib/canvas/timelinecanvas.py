@@ -77,10 +77,10 @@ class TimelineCanvas(wx.Panel):
         self.Redraw()
 
     def GetHScrollAmount(self):
-        return self.controller.view_properties.hscroll_amount
+        return self.controller.get_hscroll_amount()
 
     def SetHScrollAmount(self, amount):
-        self.controller.view_properties.hscroll_amount = amount
+        self.controller.set_hscroll_amount(amount)
 
     def IncrementEventTextFont(self):
         self.controller.increment_font_size()

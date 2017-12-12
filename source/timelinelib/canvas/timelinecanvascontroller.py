@@ -199,6 +199,13 @@ class TimelineCanvasController(object):
         self._fast_draw = True
         self.redraw_timeline()
 
+    def get_hscroll_amount(self):
+        return self.view_properties.hscroll_amount
+
+    def set_hscroll_amount(self, amount):
+        self.view_properties.hscroll_amount = amount
+
+
     def event_is_period(self, event):
         return self.drawing_algorithm.event_is_period(event.get_time_period())
 
