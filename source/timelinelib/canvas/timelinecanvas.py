@@ -100,7 +100,7 @@ class TimelineCanvas(wx.Panel):
         self.controller._redraw_timeline()
 
     def Snap(self, time):
-        return self.controller.get_drawer().snap(time)
+        return self.controller.snap(time)
 
     def PostEvent(self, event):
         wx.PostEvent(self, event)
