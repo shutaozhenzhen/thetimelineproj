@@ -231,6 +231,9 @@ class TimelineCanvasController(object):
     def has_higlights(self):
         return self.view_properties.has_higlights()
 
+    def filter_events(self, events):
+        return self.view_properties.filter_events(events)
+
     def event_is_period(self, event):
         return self.drawing_algorithm.event_is_period(event.get_time_period())
 

@@ -189,7 +189,7 @@ class TimelineCanvas(wx.Panel):
 
     def get_filtered_events(self, search_target):
         events = self.GetDb().search(search_target)
-        return self.get_view_properties().filter_events(events)
+        return self.controller.filter_events(events)
 
     def get_time_period(self):
         return self.controller.get_time_period()
