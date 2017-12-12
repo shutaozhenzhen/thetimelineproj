@@ -149,7 +149,7 @@ class TimelineCanvas(wx.Panel):
         return self.GetDb().is_read_only()
 
     def GetEventAt(self, cursor, prefer_container=False):
-        return self.controller.drawing_algorithm.event_at(cursor.x, cursor.y, prefer_container)
+        return self.controller.event_at(cursor.x, cursor.y, prefer_container)
 
     def SelectEventsInRect(self, rect):
         self.controller.view_properties.set_all_selected(
