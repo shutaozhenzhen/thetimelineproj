@@ -199,6 +199,8 @@ class TimelineCanvasController(object):
         self.drawing_algorithm.decrement_font_size()
         self._redraw_timeline()
 
+    def get_closest_overlapping_event(self, event, up):
+        return self.drawing_algorithm.get_closest_overlapping_event(event, up=up)
 
     def _timeline_changed(self, state_change):
         self._redraw_timeline()
@@ -258,6 +260,7 @@ class TimelineCanvasController(object):
                 get_hidden_event_count()
                 increment_font_size()
                 decrement_font_size()
+                get_closest_overlapping_event(...)
             properties:
                 scene
         """
