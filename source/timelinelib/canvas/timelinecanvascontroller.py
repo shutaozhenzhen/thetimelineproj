@@ -212,6 +212,8 @@ class TimelineCanvasController(object):
             self.view_properties.period_selection = (period.start_time, period.end_time)
         self._redraw_timeline()
 
+    def select_events_in_rect(self, rect):
+        self.view_properties.set_all_selected(self.get_events_in_rect(rect))
 
     def event_is_period(self, event):
         return self.drawing_algorithm.event_is_period(event.get_time_period())

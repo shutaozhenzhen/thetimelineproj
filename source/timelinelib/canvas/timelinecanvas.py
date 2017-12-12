@@ -144,8 +144,7 @@ class TimelineCanvas(wx.Panel):
         return self.controller.event_at(cursor.x, cursor.y, prefer_container)
 
     def SelectEventsInRect(self, rect):
-        self.controller.view_properties.set_all_selected(
-            self.controller.get_events_in_rect(rect))
+        self.controller.select_events_in_rect(rect)
 
     def GetEventWithHitInfoAt(self, cursor, keyboard=Keyboard()):
         x, y = cursor.pos
