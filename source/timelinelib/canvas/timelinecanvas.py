@@ -194,7 +194,7 @@ class TimelineCanvas(wx.Panel):
 
     def SaveAsSvg(self, path):
         from timelinelib.canvas.svg import export
-        export(path, self.controller.get_timeline(), self.controller.get_drawer().scene,
+        export(path, self.controller.get_timeline(), self.controller.scene,
                self.controller.view_properties, self.GetAppearance())
 
     def get_filtered_events(self, search_target):
