@@ -260,6 +260,22 @@ class TimelineCanvas(wx.Panel):
             self._scroll_down()
         self.Redraw()
 
+    #----(Helper functions simplifying usage of timeline component)--------
+
+    def ZoomInOut(self, evt):
+        rotation = evt.GetWheelRotation()
+        direction = 1 if rotation > 0 else -1 if rotation < 0 else 0
+        self.Zoom(direction, evt.GetX())
+
+    def SetStartTime(self, evt):
+        self._start_time = self.GetTimeAt(evt.GetX())
+
+    def MoveLeftRight(self, evt):
+        current_time = self.GetTimeAt(evt.GetX())
+        self.Navigate(lambda tp: tp.move_delta(self._start_time - current_time))
+
+    #------------
+
     def _scroll_up(self):
         self.SetHScrollAmount(max(0, self.GetHScrollAmount() - HSCROLL_STEP))
 
