@@ -27,6 +27,8 @@ Fixed crash reports and bugs:
 * ``ValueError: Start time can't be after end time``
   This happened when ends-today flag was set, and start-time was in future.
 
+* A change by another user is now detected when Timeline is closing.
+
 
 Version 1.16.0
 --------------
