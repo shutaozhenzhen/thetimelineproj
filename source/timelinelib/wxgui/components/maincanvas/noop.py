@@ -23,7 +23,6 @@ from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedclick import NoopLeftMouseDclick
 from timelinelib.wxgui.components.maincanvas.noophandlers.mousemoved import NoopMouseMoved
-from timelinelib.wxgui.components.maincanvas.noophandlers.mousewheelmoved import NoopMouseWheelMoved
 from timelinelib.wxgui.components.maincanvas.noophandlers.middlemousedown import NoopMiddleMouseDown
 
 
@@ -44,7 +43,7 @@ def delegates(key, canvas, cursor, keyboard):
     return {LEFT_MOUSE_DOWN: NoopLeftMouseDown,
             LEFT_MOUSE_DCLICK: NoopLeftMouseDclick,
             MOUSE_MOVED: NoopMouseMoved,
-            MOUSE_WHEEL: NoopMouseWheelMoved,
+            # MOUSE_WHEEL: NoopMouseWheelMoved,
             MIDDLE_MOUSE_DOWN: NoopMiddleMouseDown,
             }[key](canvas, cursor, keyboard)
 
@@ -74,10 +73,6 @@ class NoOpInputHandler(InputHandler):
     def middle_mouse_down(self, cursor, keyboard):
         delegate = self._delegates(MIDDLE_MOUSE_DOWN, self._canvas, cursor, keyboard)
         delegate.run()
-
-    def mouse_wheel_moved(self, cursor, keyboard, rotation):
-        delegate = self._delegates(MOUSE_WHEEL, self._canvas, cursor, keyboard)
-        delegate.run(rotation)
 
     def balloon_show_timer_fired(self):
         self._cursor = Cursor(*self.timeline_canvas.ScreenToClient(wx.GetMousePosition()))

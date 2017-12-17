@@ -25,7 +25,6 @@ from timelinelib.wxgui.components.maincanvas.noophandlers.mousemoved import Noop
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedclick import NoopLeftMouseDclick
 from timelinelib.wxgui.components.maincanvas.noophandlers.middlemousedown import NoopMiddleMouseDown
-from timelinelib.wxgui.components.maincanvas.noophandlers.mousewheelmoved import NoopMouseWheelMoved
 
 
 class describe_noop_mouse_move(UnitTestCase):
@@ -68,15 +67,6 @@ class describe_middle_mouse_down(UnitTestCase):
         delegate = Mock(NoopMiddleMouseDown)
         noop_handler(delegate).middle_mouse_down(Cursor(), Keyboard())
         delegate.run.assert_called_with()
-
-
-class describe_mouse_wheel_moved(UnitTestCase):
-
-    def test_deleagte_is_called(self):
-        delegate = Mock(NoopMouseWheelMoved)
-        rotation = Mock()
-        noop_handler(delegate).mouse_wheel_moved(Cursor(0, 0), Keyboard(), rotation)
-        delegate.run.assert_called_with(rotation)
 
 
 def noop_handler(delegate):
