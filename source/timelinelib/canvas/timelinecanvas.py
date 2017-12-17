@@ -32,6 +32,7 @@ HSCROLL_STEP = 25
 
 
 class TimelineCanvas(wx.Panel):
+
     """
     This is the surface on which a timeline is drawn. It is also the object that handles user
     input events such as mouse and keyboard actions.
@@ -262,17 +263,30 @@ class TimelineCanvas(wx.Panel):
 
     #----(Helper functions simplifying usage of timeline component)--------
 
-    def ZoomInOut(self, evt):
-        rotation = evt.GetWheelRotation()
-        direction = 1 if rotation > 0 else -1 if rotation < 0 else 0
-        self.Zoom(direction, evt.GetX())
-
     def SetStartTime(self, evt):
         self._start_time = self.GetTimeAt(evt.GetX())
 
-    def MoveLeftRight(self, evt):
-        current_time = self.GetTimeAt(evt.GetX())
-        self.Navigate(lambda tp: tp.move_delta(self._start_time - current_time))
+    def _direction(self, evt):
+        rotation = evt.GetWheelRotation()
+        return 1 if rotation > 0 else -1 if rotation < 0 else 0
+
+    def ZoomHorizontallyOnMouseWheel(self, evt):
+        self.Zoom(self._direction(evt), evt.GetX())
+
+    def ZoomVerticallyOnMouseWheel(self, evt):
+        if self._direction(evt) > 0:
+            self.IncrementEventTextFont()
+        else:
+            self.DecrementEventTextFont()
+
+    def ScrollHorizontallyOnMouseWheel(self, evt):
+        self.Scroll(evt.GetWheelRotation() / 1200.0)
+
+    def ScrollVerticallyOnMouseWheel(self, evt):
+        self.SetDividerPosition(self.GetDividerPosition() + self._direction(evt))
+
+    def SpecialScrollVerticallyOnMouseWheel(self, evt):
+        self.Scrollvertically(self._direction(evt))
 
     #------------
 

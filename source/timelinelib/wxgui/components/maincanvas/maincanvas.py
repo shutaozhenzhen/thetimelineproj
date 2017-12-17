@@ -108,38 +108,15 @@ class MainCanvas(TimelineCanvas):
 
     def _on_mousewheel(self, evt):
         self._edit_controller.save_time_period()
-        #-------------
-
-        def direction(evt):
-            rotation = evt.GetWheelRotation()
-            return 1 if rotation > 0 else -1 if rotation < 0 else 0
-
-        def ZoomHorizontallyOnMouseWheel(evt):
-            self.Zoom(direction(evt), evt.GetX())
-
-        def ZoomVerticallyOnMouseWheel(evt):
-            if direction(evt) > 0:
-                self.IncrementEventTextFont()
-            else:
-                self.DecrementEventTextFont()
-
-        def ScrollHorizontallyOnMouseWheel(evt):
-            self.Scroll(evt.GetWheelRotation() / 1200.0)
-
-        def ScrollVerticallyOnMouseWheel(evt):
-            self.SetDividerPosition(self.GetDividerPosition() + direction(evt))
-
-        def SpecialScrollVerticallyOnMouseWheel(evt):
-            self.Scrollvertically(direction(evt))
 
         keyboard = self._get_keyboard(evt)
         methods = MethodContainer(
             [
-                (Keyboard.CTRL, ZoomHorizontallyOnMouseWheel),
-                (Keyboard.SHIFT + Keyboard.CTRL, SpecialScrollVerticallyOnMouseWheel),
-                (Keyboard.SHIFT, ScrollVerticallyOnMouseWheel),
-                (Keyboard.ALT, ZoomVerticallyOnMouseWheel),
-            ], default_method=ScrollHorizontallyOnMouseWheel
+                (Keyboard.CTRL, self.ZoomHorizontallyOnMouseWheel),
+                (Keyboard.SHIFT + Keyboard.CTRL, self.SpecialScrollVerticallyOnMouseWheel),
+                (Keyboard.SHIFT, self.ScrollVerticallyOnMouseWheel),
+                (Keyboard.ALT, self.ZoomVerticallyOnMouseWheel),
+            ], default_method=self.ScrollHorizontallyOnMouseWheel
         )
         methods.select(keyboard.keys_combination)(evt)
 
