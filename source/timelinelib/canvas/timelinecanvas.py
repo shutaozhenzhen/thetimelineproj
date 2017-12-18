@@ -396,6 +396,15 @@ class TimelineCanvas(wx.Panel):
         time_at_cursor = self.GetTimeAt(evt.GetX())
         self.Navigate(lambda tp: tp.center(time_at_cursor))
 
+    def ToggleEventSelection(self, evt):
+
+        def get_cursor():
+            return Cursor(evt.GetX(), evt.GetY())
+
+        event = self.GetEventAt(get_cursor(), evt.AltDown())
+        if event:
+            self.SetEventSelected(event, not self.IsEventSelected(event))
+
     # ------------
 
     def _scroll_up(self):

@@ -73,8 +73,21 @@ class MainCanvas(TimelineCanvas):
                                             self._get_keyboard(evt))
 
     def _on_left_dclick(self, evt):
-        self._input_handler.left_mouse_dclick(self._get_cursor(evt),
-                                              self._get_keyboard(evt))
+        """
+        Event handler used when the left mouse button has been double clicked.
+
+        If the timeline is readonly, no action is taken.
+        If the mouse hits an event, a dialog opens for editing this event.
+        Otherwise a dialog for creating a new event is opened.
+        """
+        if self.IsReadOnly():
+            return
+        # Since the event sequence is, 1. EVT_LEFT_DOWN  2. EVT_LEFT_UP
+        # 3. EVT_LEFT_DCLICK we must compensate for the toggle_event_selection
+        # that occurs in the handling of EVT_LEFT_DOWN, since we still want
+        # the event(s) selected or deselected after a left doubleclick
+        # It doesn't look too god but I havent found any other way to do it.
+        self.ToggleEventSelection(evt)
 
     def _get_cursor(self, evt):
         return Cursor(evt.GetX(), evt.GetY())

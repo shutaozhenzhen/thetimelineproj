@@ -16,38 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
-from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.wxgui.cursor import Cursor
-from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.noop import NoOpInputHandler
-from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
-from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedclick import NoopLeftMouseDclick
-
-
-class describe_left_mouse_down(UnitTestCase):
-
-    def test_deleagte_is_called(self):
-        delegate = Mock(NoopLeftMouseDown)
-        state = Mock()
-        handler = NoOpInputHandler(state,
-                                   None,
-                                   None,
-                                   delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.left_mouse_down(Cursor(), Keyboard())
-        delegate.run.assert_called_with(state)
-
-
-class describe_left_dclick(UnitTestCase):
-
-    def test_deleagte_is_called(self):
-        delegate = Mock(NoopLeftMouseDclick)
-        noop_handler(delegate).left_mouse_dclick(Cursor(), Keyboard())
-        delegate.run.assert_called_with()
 
 
 def noop_handler(delegate):
-    return NoOpInputHandler(None,
-                            None,
-                            None,
-                            delegates=lambda key, canvas, cursor, keyboard: delegate)
+    return NoOpInputHandler(None, None, None)

@@ -18,7 +18,6 @@
 
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
-from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedclick import NoopLeftMouseDclick
 
 
 """
@@ -27,30 +26,15 @@ mouse move action, and delegates the workload to fulfill the user action, to
 another event handler
 """
 
-LEFT_MOUSE_DOWN = 1
-LEFT_MOUSE_DCLICK = 3
-
-
-def delegates(key, canvas, cursor, keyboard):
-    return {LEFT_MOUSE_DOWN: NoopLeftMouseDown,
-            LEFT_MOUSE_DCLICK: NoopLeftMouseDclick,
-            }[key](canvas, cursor, keyboard)
-
 
 class NoOpInputHandler(InputHandler):
 
-    def __init__(self, state, status_bar, timeline_canvas, delegates=delegates):
+    def __init__(self, state, status_bar, timeline_canvas):
         InputHandler.__init__(self, timeline_canvas)
-        self._delegates = delegates
         self._state = state
         self._status_bar = status_bar
         self._cursor = None
         self._keyboard = None
 
     def left_mouse_down(self, cursor, keyboard):
-        delegate = self._delegates(LEFT_MOUSE_DOWN, self._canvas, cursor, keyboard)
-        delegate.run(self._state)
-
-    def left_mouse_dclick(self, cursor, keyboard):
-        delegate = self._delegates(LEFT_MOUSE_DCLICK, self._canvas, cursor, keyboard)
-        delegate.run()
+        NoopLeftMouseDown(self._canvas, cursor, keyboard).run(self._state)
