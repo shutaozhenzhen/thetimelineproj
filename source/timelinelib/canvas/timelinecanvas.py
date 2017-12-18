@@ -49,6 +49,7 @@ class TimelineCanvas(wx.Panel):
         self._highlight_timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self._on_highlight_timer, self._highlight_timer)
         self._last_balloon_event = None
+        self._waiting = False
 
     def GetAppearance(self):
         return self.controller.get_appearance()
@@ -304,7 +305,7 @@ class TimelineCanvas(wx.Panel):
         def cursor_has_left_event():
             # TODO: Can't figure out why self.GetEventAtCursor() returns None
             # in this situation. The LeftDown check saves us for the moment.
-            if wx.GetMouseState().LeftDown():
+            if wx.GetMouseState().LeftIsDown():
                 return False
             else:
                 return self.GetEventAtCursor() != self._last_balloon_event
@@ -319,8 +320,16 @@ class TimelineCanvas(wx.Panel):
                 self._last_balloon_event = None
             return self._last_balloon_event
 
+        def delayed_call():
+            self.SetHoveredEvent(self._last_balloon_event)
+            self._waiting = False
+
         # Same delay as when we used timers
-        wx.CallLater(500, self.SetHoveredEvent, update_last_seen_event())
+        # Don't issue call when in wait state, to avoid flicker
+        if not self._waiting:
+            update_last_seen_event()
+            self._wating = True
+            wx.CallLater(500, delayed_call)
 
     def GetTimelineInfoText(self, evt):
 
@@ -333,6 +342,55 @@ class TimelineCanvas(wx.Panel):
             return event.get_label(self.GetTimeType())
         else:
             return format_current_pos_time_string(evt.GetX())
+
+    def SetCursorShape(self, evt):
+
+        def get_cursor():
+            return Cursor(evt.GetX(), evt.GetY())
+
+        def get_keyboard():
+            return Keyboard(evt.ControlDown(), evt.ShiftDown(), evt.AltDown())
+
+        def hit_resize_handle():
+            try:
+                event, hit_info = self.GetEventWithHitInfoAt(get_cursor(), get_keyboard())
+                if event.get_locked():
+                    return None
+                if event.is_milestone():
+                    return None
+                if not self.IsEventSelected(event):
+                    return None
+                if hit_info == LEFT_RESIZE_HANDLE:
+                    return wx.LEFT
+                if hit_info == RIGHT_RESIZE_HANDLE:
+                    return wx.RIGHT
+                return None
+            except:
+                return None
+
+        def hit_move_handle():
+            event_and_hit_info = self.GetEventWithHitInfoAt(get_cursor(), get_keyboard())
+            if event_and_hit_info is None:
+                return False
+            (event, hit_info) = event_and_hit_info
+            if event.get_locked():
+                return False
+            if not self.IsEventSelected(event):
+                return False
+            return hit_info == MOVE_HANDLE
+
+        def over_resize_handle():
+            return hit_resize_handle() is not None
+
+        def over_move_handle():
+            return hit_move_handle() and not self.GetEventAtCursor(False).get_ends_today()
+
+        if over_resize_handle():
+            self.set_size_cursor()
+        elif over_move_handle():
+            self.set_move_cursor()
+        else:
+            self.set_default_cursor()
 
     # ------------
 

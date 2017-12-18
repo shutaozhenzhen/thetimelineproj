@@ -88,6 +88,7 @@ class MainCanvas(TimelineCanvas):
     def _on_motion(self, evt):
         self.DisplayBalloons(evt)
         self._status_bar.set_text(self.GetTimelineInfoText(evt))
+        self.SetCursorShape(evt)
         self._input_handler.mouse_moved(self._get_cursor(evt),
                                         self._get_keyboard(evt))
 

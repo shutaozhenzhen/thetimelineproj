@@ -21,23 +21,9 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.cursor import Cursor
 from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.noop import NoOpInputHandler
-from timelinelib.wxgui.components.maincanvas.noophandlers.mousemoved import NoopMouseMoved
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedclick import NoopLeftMouseDclick
 from timelinelib.wxgui.components.maincanvas.noophandlers.middlemousedown import NoopMiddleMouseDown
-
-
-class describe_noop_mouse_move(UnitTestCase):
-
-    def test_deleagte_is_called(self):
-        delegate = Mock(NoopMouseMoved)
-        status_bar = Mock()
-        handler = NoOpInputHandler(None,
-                                   status_bar,
-                                   None,
-                                   delegates=lambda key, canvas, cursor, keyboard: delegate)
-        handler.mouse_moved(Cursor(), Keyboard())
-        delegate.run.assert_called_with(status_bar)
 
 
 class describe_left_mouse_down(UnitTestCase):
