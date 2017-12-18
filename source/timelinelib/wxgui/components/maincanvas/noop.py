@@ -36,14 +36,12 @@ LEFT_MOUSE_DOWN = 1
 MIDDLE_MOUSE_DOWN = 2
 LEFT_MOUSE_DCLICK = 3
 MOUSE_MOVED = 4
-MOUSE_WHEEL = 5
 
 
 def delegates(key, canvas, cursor, keyboard):
     return {LEFT_MOUSE_DOWN: NoopLeftMouseDown,
             LEFT_MOUSE_DCLICK: NoopLeftMouseDclick,
             MOUSE_MOVED: NoopMouseMoved,
-            # MOUSE_WHEEL: NoopMouseWheelMoved,
             MIDDLE_MOUSE_DOWN: NoopMiddleMouseDown,
             }[key](canvas, cursor, keyboard)
 
