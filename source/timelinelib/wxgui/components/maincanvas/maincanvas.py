@@ -39,15 +39,11 @@ class MainCanvas(TimelineCanvas):
         self._edit_controller = edit_controller
         self._status_bar = status_bar
         self.SetInputHandler(InputHandler(self))
-        self.balloon_show_timer = wx.Timer(self, -1)
-        self.balloon_hide_timer = wx.Timer(self, -1)
         self.dragscroll_timer = wx.Timer(self, -1)
         self.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
         self.Bind(wx.EVT_LEFT_DCLICK, self._on_left_dclick)
         self.Bind(wx.EVT_LEFT_UP, self._on_left_up)
         self.Bind(wx.EVT_MOTION, self._on_motion)
-        self.Bind(wx.EVT_TIMER, self._on_balloon_show_timer, self.balloon_show_timer)
-        self.Bind(wx.EVT_TIMER, self._on_balloon_hide_timer, self.balloon_hide_timer)
         self.Bind(wx.EVT_TIMER, self._on_dragscroll, self.dragscroll_timer)
         self.Bind(wx.EVT_MIDDLE_DOWN, self._on_middle_down)
         self.Bind(wx.EVT_MOUSEWHEEL, self._on_mousewheel)
@@ -94,12 +90,6 @@ class MainCanvas(TimelineCanvas):
         self._input_handler.mouse_moved(self._get_cursor(evt),
                                         self._get_keyboard(evt))
 
-    def _on_balloon_show_timer(self, event):
-        self._input_handler.balloon_show_timer_fired()
-
-    def _on_balloon_hide_timer(self, event):
-        self._input_handler.balloon_hide_timer_fired()
-
     def _on_dragscroll(self, event):
         self._input_handler.dragscroll_timer_fired()
 
@@ -120,12 +110,6 @@ class MainCanvas(TimelineCanvas):
             ], default_method=self.ScrollHorizontallyOnMouseWheel
         )
         methods.select(keyboard.keys_combination)(evt)
-
-    def start_balloon_show_timer(self, milliseconds=-1, oneShot=False):
-        self.balloon_show_timer.Start(milliseconds, oneShot)
-
-    def start_balloon_hide_timer(self, milliseconds=-1, oneShot=False):
-        self.balloon_hide_timer.Start(milliseconds, oneShot)
 
     def start_dragscroll_timer(self, milliseconds=-1, oneShot=False):
         self.dragscroll_timer.Start(milliseconds, oneShot)
