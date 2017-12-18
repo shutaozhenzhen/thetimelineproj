@@ -22,6 +22,7 @@ from timelinelib.canvas.events import create_divider_position_changed_event
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.cursor import Cursor
+from timelinelib.canvas.data import TimePeriod
 
 
 MOVE_HANDLE = 0
@@ -271,7 +272,7 @@ class TimelineCanvas(wx.Panel):
             self._scroll_down()
         self.Redraw()
 
-    #----(Helper functions simplifying usage of timeline component)--------
+    # ----(Helper functions simplifying usage of timeline component)--------
 
     def SetStartTime(self, evt):
         self._start_time = self.GetTimeAt(evt.GetX())
@@ -315,7 +316,19 @@ class TimelineCanvas(wx.Panel):
 
         self.SetHoveredEvent(update_last_seen_event())
 
-    #------------
+    def GetTimelineInfoText(self, evt):
+
+        def format_current_pos_time_string(x):
+            tm = self.GetTimeAt(x)
+            return self.GetTimeType().format_period(TimePeriod(tm, tm))
+
+        event = self.GetEventAtCursor()
+        if event:
+            return event.get_label(self.GetTimeType())
+        else:
+            return format_current_pos_time_string(evt.GetX())
+
+    # ------------
 
     def _scroll_up(self):
         self.SetHScrollAmount(max(0, self.GetHScrollAmount() - HSCROLL_STEP))
