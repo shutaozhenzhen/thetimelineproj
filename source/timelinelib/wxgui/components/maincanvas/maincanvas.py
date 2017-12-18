@@ -132,37 +132,6 @@ class MainCanvas(TimelineCanvas):
     def stop_dragscroll_timer(self):
         self.dragscroll_timer.Stop()
 
-    def on_mouse_wheel_rotated(self, rotation, cursor, keyboard):
-
-        def _zoom(direction):
-            self.Zoom(direction, cursor.x)
-
-        def _scroll_vertically(direction):
-            self.Scrollvertically(direction)
-
-        def _set_divider_pos(direction):
-            self.SetDividerPosition(self.GetDividerPosition() + direction)
-
-        def _set_event_text_font(direction):
-            if direction > 0:
-                self.IncrementEventTextFont()
-            else:
-                self.DecrementEventTextFont()
-
-        def _scroll(direction):
-            self.Scroll(direction * 0.1)
-
-        methods = MethodContainer(
-            [
-                (Keyboard.CTRL, _zoom),
-                (Keyboard.SHIFT + Keyboard.CTRL, _scroll_vertically),
-                (Keyboard.SHIFT, _set_divider_pos),
-                (Keyboard.ALT, _set_event_text_font),
-            ], default_method=_scroll
-        )
-        direction = step_function(rotation)
-        methods.select(keyboard.keys_combination)(direction)
-
     def toggle_event_selection(self, cursor, keyboard):
 
         def toggle_event_selection_when_event_is_hit(event):
