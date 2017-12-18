@@ -19,7 +19,6 @@
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedclick import NoopLeftMouseDclick
-from timelinelib.wxgui.components.maincanvas.noophandlers.mousemoved import NoopMouseMoved
 from timelinelib.wxgui.components.maincanvas.noophandlers.middlemousedown import NoopMiddleMouseDown
 
 
@@ -32,13 +31,11 @@ another event handler
 LEFT_MOUSE_DOWN = 1
 MIDDLE_MOUSE_DOWN = 2
 LEFT_MOUSE_DCLICK = 3
-MOUSE_MOVED = 4
 
 
 def delegates(key, canvas, cursor, keyboard):
     return {LEFT_MOUSE_DOWN: NoopLeftMouseDown,
             LEFT_MOUSE_DCLICK: NoopLeftMouseDclick,
-            MOUSE_MOVED: NoopMouseMoved,
             MIDDLE_MOUSE_DOWN: NoopMiddleMouseDown,
             }[key](canvas, cursor, keyboard)
 
@@ -54,8 +51,7 @@ class NoOpInputHandler(InputHandler):
         self._keyboard = None
 
     def mouse_moved(self, cursor, keyboard):
-        delegate = self._delegates(MOUSE_MOVED, self._canvas, cursor, keyboard)
-        delegate.run(self._status_bar)
+        pass
 
     def left_mouse_down(self, cursor, keyboard):
         delegate = self._delegates(LEFT_MOUSE_DOWN, self._canvas, cursor, keyboard)
