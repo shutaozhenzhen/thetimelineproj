@@ -21,6 +21,7 @@ import wx
 from timelinelib.canvas.events import create_divider_position_changed_event
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.keyboard import Keyboard
+from timelinelib.wxgui.cursor import Cursor
 
 
 MOVE_HANDLE = 0
@@ -46,6 +47,7 @@ class TimelineCanvas(wx.Panel):
         self.SetDividerPosition(50)
         self._highlight_timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self._on_highlight_timer, self._highlight_timer)
+        self._last_balloon_event = None
 
     def GetAppearance(self):
         return self.controller.get_appearance()
@@ -141,6 +143,10 @@ class TimelineCanvas(wx.Panel):
     def IsReadOnly(self):
         return self.GetDb().is_read_only()
 
+    def GetEventAtCursor(self, prefer_container=False):
+        cursor = Cursor(*self.ScreenToClient(wx.GetMousePosition()))
+        return self.GetEventAt(cursor, prefer_container)
+
     def GetEventAt(self, cursor, prefer_container=False):
         return self.controller.event_at(cursor.x, cursor.y, prefer_container)
 
@@ -161,6 +167,10 @@ class TimelineCanvas(wx.Panel):
             elif abs(rect.X + rect.Width - x) < HIT_REGION_PX_WITH:
                 return (event, RIGHT_RESIZE_HANDLE)
         return None
+
+    def GetBalloonAtCursor(self):
+        cursor = Cursor(*self.ScreenToClient(wx.GetMousePosition()))
+        return self.controller.balloon_at(cursor)
 
     def GetBalloonAt(self, cursor):
         return self.controller.balloon_at(cursor)
@@ -287,6 +297,23 @@ class TimelineCanvas(wx.Panel):
 
     def SpecialScrollVerticallyOnMouseWheel(self, evt):
         self.Scrollvertically(self._direction(evt))
+
+    def DisplayBalloons(self, evt):
+
+        def cursor_has_left_event():
+            return self.GetEventAtCursor() != self._last_balloon_event
+
+        def no_balloon_at_cursor():
+            return not self.GetBalloonAtCursor()
+
+        def update_last_seen_event():
+            if self._last_balloon_event is None:
+                self._last_balloon_event = self.GetEventAtCursor()
+            elif cursor_has_left_event() and no_balloon_at_cursor():
+                self._last_balloon_event = None
+            return self._last_balloon_event
+
+        self.SetHoveredEvent(update_last_seen_event())
 
     #------------
 

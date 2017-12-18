@@ -53,7 +53,7 @@ class NoopMouseMoved(NoopBaseHandler):
                 default_method=self._canvas.set_default_cursor)
             methods.select(True)()
 
-        self._start_balloon_timers()
+        # self._start_balloon_timers()
         display_info_in_statusbar()
         select_cursor_shape()
 
