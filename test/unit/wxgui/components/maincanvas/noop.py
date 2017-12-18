@@ -23,7 +23,6 @@ from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.noop import NoOpInputHandler
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedclick import NoopLeftMouseDclick
-from timelinelib.wxgui.components.maincanvas.noophandlers.middlemousedown import NoopMiddleMouseDown
 
 
 class describe_left_mouse_down(UnitTestCase):
@@ -44,14 +43,6 @@ class describe_left_dclick(UnitTestCase):
     def test_deleagte_is_called(self):
         delegate = Mock(NoopLeftMouseDclick)
         noop_handler(delegate).left_mouse_dclick(Cursor(), Keyboard())
-        delegate.run.assert_called_with()
-
-
-class describe_middle_mouse_down(UnitTestCase):
-
-    def test_deleagte_is_called(self):
-        delegate = Mock(NoopMiddleMouseDown)
-        noop_handler(delegate).middle_mouse_down(Cursor(), Keyboard())
         delegate.run.assert_called_with()
 
 
