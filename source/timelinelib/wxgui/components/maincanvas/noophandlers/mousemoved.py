@@ -29,14 +29,6 @@ class NoopMouseMoved(NoopBaseHandler):
 
     def run(self, status_bar):
 
-        def display_info_in_statusbar():
-            event = self.event_at_cursor()
-            if event is None:
-                info_text = self._canvas.format_current_pos_time_string(self._cursor.x)
-            else:
-                info_text = event.get_label(self._canvas.GetTimeType())
-            status_bar.set_text(info_text)
-
         def select_cursor_shape():
 
             def over_resize_handle():
@@ -53,5 +45,4 @@ class NoopMouseMoved(NoopBaseHandler):
                 default_method=self._canvas.set_default_cursor)
             methods.select(True)()
 
-        display_info_in_statusbar()
         select_cursor_shape()
