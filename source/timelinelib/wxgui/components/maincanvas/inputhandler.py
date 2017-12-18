@@ -36,9 +36,3 @@ class InputHandler(object):
 
     def dragscroll_timer_fired(self):
         pass
-
-    def balloon_show_timer_fired(self):
-        pass
-
-    def balloon_hide_timer_fired(self):
-        pass
