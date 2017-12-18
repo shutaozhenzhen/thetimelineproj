@@ -392,6 +392,10 @@ class TimelineCanvas(wx.Panel):
         else:
             self.set_default_cursor()
 
+    def CenterAtCursor(self, evt):
+        time_at_cursor = self.GetTimeAt(evt.GetX())
+        self.Navigate(lambda tp: tp.center(time_at_cursor))
+
     # ------------
 
     def _scroll_up(self):
