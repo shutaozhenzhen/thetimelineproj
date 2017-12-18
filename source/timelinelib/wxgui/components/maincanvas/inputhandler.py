@@ -34,9 +34,6 @@ class InputHandler(object):
     def left_mouse_dclick(self, x, y, ctrl_down, alt_down=False):
         pass
 
-    def middle_mouse_down(self, x):
-        pass
-
     def dragscroll_timer_fired(self):
         pass
 
