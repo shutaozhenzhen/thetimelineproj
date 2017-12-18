@@ -16,10 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
-from timelinelib.wxgui.cursor import Cursor
-from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedclick import NoopLeftMouseDclick
 from timelinelib.wxgui.components.maincanvas.noophandlers.mousemoved import NoopMouseMoved
@@ -71,30 +68,3 @@ class NoOpInputHandler(InputHandler):
     def middle_mouse_down(self, cursor, keyboard):
         delegate = self._delegates(MIDDLE_MOUSE_DOWN, self._canvas, cursor, keyboard)
         delegate.run()
-
-    def balloon_show_timer_fired(self):
-        self._cursor = Cursor(*self.timeline_canvas.ScreenToClient(wx.GetMousePosition()))
-        self._keyboard = Keyboard()
-        """Callback function that the canvas object fires."""
-        self._redraw_balloons()
-
-    def balloon_hide_timer_fired(self):
-        self._cursor = Cursor(*self.timeline_canvas.ScreenToClient(wx.GetMousePosition()))
-        self._keyboard = Keyboard()
-        """Callback function that the canvas object fires."""
-        hevt = self.timeline_canvas.GetHoveredEvent()
-        # If there is no balloon visible we don't have to do anything
-        if hevt is None:
-            return
-        cevt = self._event_at_cursor()
-        bevt = self.timeline_canvas.GetBalloonAt(self._cursor)
-        # If the visible balloon doesn't belong to the event pointed to
-        # we remove the ballloon.
-        if hevt != cevt and hevt != bevt:
-            self._redraw_balloons()
-
-    def _redraw_balloons(self):
-        self.timeline_canvas.SetHoveredEvent(self._event_at_cursor())
-
-    def _event_at_cursor(self):
-        return self.timeline_canvas.GetEventAt(self._cursor, self._keyboard.alt)
