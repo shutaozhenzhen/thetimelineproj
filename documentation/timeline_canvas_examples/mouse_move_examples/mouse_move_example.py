@@ -8,7 +8,11 @@ class MainFrame(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, size=(800, 400))
         self._create_canvas()
+        self.statusbar = self.CreateStatusBar(1)
         self._display_example_timeline()
+
+    def SetStatusText(self, text):
+        self.statusbar.SetStatusText(text)
 
     def _create_canvas(self):
         self.canvas = Canvas(self)
