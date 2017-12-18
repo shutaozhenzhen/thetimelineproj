@@ -90,14 +90,6 @@ class TimelineViewSpec(UnitTestCase):
     def init_view_with_db(self):
         self.controller.set_timeline(self.db)
 
-    def fire_balloon_show_timer(self):
-        self.assertTrue(self.timeline_canvas.start_balloon_show_timer.called)
-        self.controller.balloon_show_timer_fired()
-
-    def fire_balloon_hide_timer(self):
-        self.assertTrue(self.timeline_canvas.start_balloon_hide_timer.called)
-        self.controller.balloon_hide_timer_fired()
-
     def start_shift_drag_at_x(self, x):
         ctrl_down = False
         shift_down = True
