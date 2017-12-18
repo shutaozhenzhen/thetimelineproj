@@ -50,9 +50,6 @@ class NoOpInputHandler(InputHandler):
         self._cursor = None
         self._keyboard = None
 
-    def mouse_moved(self, cursor, keyboard):
-        pass
-
     def left_mouse_down(self, cursor, keyboard):
         delegate = self._delegates(LEFT_MOUSE_DOWN, self._canvas, cursor, keyboard)
         delegate.run(self._state)
