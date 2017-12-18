@@ -302,7 +302,12 @@ class TimelineCanvas(wx.Panel):
     def DisplayBalloons(self, evt):
 
         def cursor_has_left_event():
-            return self.GetEventAtCursor() != self._last_balloon_event
+            # TODO: Can't figure out why self.GetEventAtCursor() returns None
+            # in this situation. The LeftDown check saves us for the moment.
+            if wx.GetMouseState().LeftDown():
+                return False
+            else:
+                return self.GetEventAtCursor() != self._last_balloon_event
 
         def no_balloon_at_cursor():
             return not self.GetBalloonAtCursor()
@@ -314,7 +319,8 @@ class TimelineCanvas(wx.Panel):
                 self._last_balloon_event = None
             return self._last_balloon_event
 
-        self.SetHoveredEvent(update_last_seen_event())
+        # Same delay as when we used timers
+        wx.CallLater(500, self.SetHoveredEvent, update_last_seen_event())
 
     def GetTimelineInfoText(self, evt):
 
