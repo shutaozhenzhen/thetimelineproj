@@ -17,7 +17,9 @@
 
 
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
-from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
+# from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
+from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedownontimeline import NoopLeftMouseDownOnTimeline
+from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedownonevent import NoopLeftMouseDownOnEvent
 
 
 """
@@ -37,4 +39,33 @@ class NoOpInputHandler(InputHandler):
         self._keyboard = None
 
     def left_mouse_down(self, cursor, keyboard):
-        NoopLeftMouseDown(self._canvas, cursor, keyboard).run(self._state)
+
+        def toggle_balloon_stickyness():
+            event_with_balloon = self.balloon_at_cursor()
+            if event_with_balloon:
+                self._canvas.toggle_balloon_stickyness(event_with_balloon)
+
+        def cursor_over_event():
+            return self.event_at_cursor() is not None
+
+        self._cursor = cursor
+        self._keyboard = keyboard
+        toggle_balloon_stickyness()
+        if cursor_over_event():
+            self._left_mouse_down_on_event(self._state)
+        else:
+            self._left_mouse_down_on_timeline(self._state)
+
+    def _left_mouse_down_on_event(self, state):
+        delegate = NoopLeftMouseDownOnEvent(self._canvas, self._cursor, self._keyboard)
+        delegate.run(state)
+
+    def _left_mouse_down_on_timeline(self, state):
+        delegate = NoopLeftMouseDownOnTimeline(self._canvas, self._cursor, self._keyboard)
+        delegate.run(state)
+
+    def event_at_cursor(self):
+        return self._canvas.GetEventAt(self._cursor, self._keyboard.alt)
+
+    def balloon_at_cursor(self):
+        return self._canvas.GetBalloonAt(self._cursor)
