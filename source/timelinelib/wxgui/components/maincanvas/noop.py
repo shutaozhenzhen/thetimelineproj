@@ -33,38 +33,34 @@ class NoOpInputHandler(InputHandler):
     def __init__(self, state, timeline_canvas):
         InputHandler.__init__(self, timeline_canvas)
         self._state = state
-        self._cursor = None
-        self._keyboard = None
 
     def left_mouse_down(self, cursor, keyboard):
 
         def toggle_balloon_stickyness():
-            event_with_balloon = self._canvas.GetBalloonAt(self._cursor)
+            event_with_balloon = self._canvas.GetBalloonAt(cursor)
             if event_with_balloon:
                 self._canvas.toggle_balloon_stickyness(event_with_balloon)
 
         def event_at_cursor():
-            return self._canvas.GetEventAt(self._cursor, self._keyboard.alt)
+            return self._canvas.GetEventAt(cursor, keyboard.alt)
 
-        self._cursor = cursor
-        self._keyboard = keyboard
         toggle_balloon_stickyness()
         event = event_at_cursor()
         if event:
-            self._left_mouse_down_on_event(self._state, event)
+            self._left_mouse_down_on_event(self._state, event, cursor, keyboard)
         else:
-            self._left_mouse_down_on_timeline(self._state, cursor)
+            self._left_mouse_down_on_timeline(self._state, cursor, keyboard)
 
-    def _left_mouse_down_on_event(self, state, event):
+    def _left_mouse_down_on_event(self, state, event, cursor, keyboard):
 
         def hit_resize_handle():
-            return self._canvas.hit_resize_handle(self._cursor, self._keyboard)
+            return self._canvas.hit_resize_handle(cursor, keyboard)
 
         def is_resize_command():
             return hit_resize_handle() is not None
 
         def hit_move_handle():
-            return self._canvas.hit_move_handle(self._cursor, self._keyboard)
+            return self._canvas.hit_move_handle(cursor, keyboard)
 
         def is_move_command():
             if event.get_ends_today():
@@ -84,10 +80,10 @@ class NoOpInputHandler(InputHandler):
             start_event_action(state.change_to_resize_by_drag, hit_resize_handle())
 
         def move_event():
-            start_event_action(state.change_to_move_by_drag, self._canvas.GetTimeAt(self._cursor.x))
+            start_event_action(state.change_to_move_by_drag, self._canvas.GetTimeAt(cursor.x))
 
         def toggle_event_selection():
-            self._canvas.toggle_event_selection(self._cursor, self._keyboard)
+            self._canvas.toggle_event_selection(cursor, keyboard)
 
         methods = MethodContainer(
             [
@@ -97,7 +93,7 @@ class NoOpInputHandler(InputHandler):
             default_method=toggle_event_selection)
         methods.select(True)()
 
-    def _left_mouse_down_on_timeline(self, state, cursor):
+    def _left_mouse_down_on_timeline(self, state, cursor, keyboard):
 
         def scroll():
             state.change_to_scroll_by_drag(cursor)
@@ -120,4 +116,4 @@ class NoOpInputHandler(InputHandler):
                 (Keyboard.SHIFT, zoom),
                 (Keyboard.CTRL, create_event)
             ])
-        methods.select(self._keyboard.keys_combination)()
+        methods.select(keyboard.keys_combination)()
