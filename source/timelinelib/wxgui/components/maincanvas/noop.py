@@ -100,7 +100,7 @@ class NoOpInputHandler(InputHandler):
     def _left_mouse_down_on_timeline(self, state):
 
         def scroll():
-            state.change_to_scroll_by_drag(self._canvas.GetTimeAt(self._cursor.x), self._cursor.y)
+            state.change_to_scroll_by_drag(self._cursor)
 
         def create_event():
             self._canvas.ClearSelectedEvents()
