@@ -393,8 +393,8 @@ class TimelineCanvas(wx.Panel):
             self.set_default_cursor()
 
     def CenterAtCursor(self, evt):
-        time_at_cursor = self.GetTimeAt(evt.GetX())
-        self.Navigate(lambda tp: tp.center(time_at_cursor))
+        _time_at_cursor = self.GetTimeAt(evt.GetX())
+        self.Navigate(lambda tp: tp.center(_time_at_cursor))
 
     def ToggleEventSelection(self, evt):
 

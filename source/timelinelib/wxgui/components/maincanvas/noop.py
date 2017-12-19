@@ -44,10 +44,13 @@ class NoOpInputHandler(InputHandler):
             if event_with_balloon:
                 self._canvas.toggle_balloon_stickyness(event_with_balloon)
 
+        def event_at_cursor():
+            return self._canvas.GetEventAt(self._cursor, self._keyboard.alt)
+
         self._cursor = cursor
         self._keyboard = keyboard
         toggle_balloon_stickyness()
-        event = self.event_at_cursor()
+        event = event_at_cursor()
         if event:
             self._left_mouse_down_on_event(self._state, event)
         else:
@@ -82,7 +85,7 @@ class NoOpInputHandler(InputHandler):
             start_event_action(state.change_to_resize_by_drag, hit_resize_handle())
 
         def move_event():
-            start_event_action(state.change_to_move_by_drag, self.time_at_cursor())
+            start_event_action(state.change_to_move_by_drag, self._time_at_cursor())
 
         def toggle_event_selection():
             self._canvas.toggle_event_selection(self._cursor, self._keyboard)
@@ -98,15 +101,15 @@ class NoOpInputHandler(InputHandler):
     def _left_mouse_down_on_timeline(self, state):
 
         def scroll():
-            state.change_to_scroll_by_drag(self.time_at_cursor(), self._cursor.y)
+            state.change_to_scroll_by_drag(self._time_at_cursor(), self._cursor.y)
 
         def create_event():
             self._canvas.ClearSelectedEvents()
-            state.change_to_create_period_event_by_drag(self.time_at_cursor())
+            state.change_to_create_period_event_by_drag(self._time_at_cursor())
 
         def zoom():
             self._canvas.ClearSelectedEvents()
-            state.change_to_zoom_by_drag(self.time_at_cursor())
+            state.change_to_zoom_by_drag(self._time_at_cursor())
 
         def select():
             state.change_to_select(self._cursor)
@@ -120,10 +123,7 @@ class NoOpInputHandler(InputHandler):
             ])
         methods.select(self._keyboard.keys_combination)()
 
-    def event_at_cursor(self):
-        return self._canvas.GetEventAt(self._cursor, self._keyboard.alt)
-
-    def time_at_cursor(self):
+    def _time_at_cursor(self):
         return self._canvas.GetTimeAt(self._cursor.x)
 
 
