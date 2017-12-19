@@ -29,9 +29,6 @@ class NoopBaseHandler(object):
     def event_at_cursor(self):
         return self._canvas.GetEventAt(self._cursor, self._keyboard.alt)
 
-    def balloon_at_cursor(self):
-        return self._canvas.GetBalloonAt(self._cursor)
-
     def hit_resize_handle(self):
         return self._canvas.hit_resize_handle(self._cursor, self._keyboard)
 
