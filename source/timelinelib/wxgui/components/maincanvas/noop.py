@@ -104,7 +104,7 @@ class NoOpInputHandler(InputHandler):
 
         def create_event():
             self._canvas.ClearSelectedEvents()
-            state.change_to_create_period_event_by_drag(self._canvas.GetTimeAt(self._cursor.x))
+            state.change_to_create_period_event_by_drag(self._cursor)
 
         def zoom():
             self._canvas.ClearSelectedEvents()
