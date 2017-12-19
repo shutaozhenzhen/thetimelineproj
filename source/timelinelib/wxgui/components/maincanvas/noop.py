@@ -44,18 +44,16 @@ class NoOpInputHandler(InputHandler):
             if event_with_balloon:
                 self._canvas.toggle_balloon_stickyness(event_with_balloon)
 
-        def cursor_over_event():
-            return self._canvas.GetEventAt(self._cursor, self._keyboard.alt) is not None
-
         self._cursor = cursor
         self._keyboard = keyboard
         toggle_balloon_stickyness()
-        if cursor_over_event():
-            self._left_mouse_down_on_event(self._state)
+        event = self.event_at_cursor()
+        if event:
+            self._left_mouse_down_on_event(self._state, event)
         else:
             self._left_mouse_down_on_timeline(self._state)
 
-    def _left_mouse_down_on_event(self, state):
+    def _left_mouse_down_on_event(self, state, event):
 
         def hit_resize_handle():
             return self._canvas.hit_resize_handle(self._cursor, self._keyboard)
@@ -63,14 +61,11 @@ class NoOpInputHandler(InputHandler):
         def is_resize_command():
             return hit_resize_handle() is not None
 
-        def event_at_cursor():
-            return self._canvas.GetEventAt(self._cursor, self._keyboard.alt)
-
         def hit_move_handle():
             return self._canvas.hit_move_handle(self._cursor, self._keyboard)
 
         def is_move_command():
-            if event_at_cursor().get_ends_today():
+            if event.get_ends_today():
                 return False
             else:
                 return hit_move_handle()
@@ -78,7 +73,7 @@ class NoOpInputHandler(InputHandler):
         def start_event_action(action_method, action_arg):
             if state.ok_to_edit():
                 try:
-                    action_method(event_at_cursor(), action_arg)
+                    action_method(event, action_arg)
                 except:
                     state.edit_ends()
                     raise
@@ -124,6 +119,9 @@ class NoOpInputHandler(InputHandler):
                 (Keyboard.CTRL, create_event)
             ])
         methods.select(self._keyboard.keys_combination)()
+
+    def event_at_cursor(self):
+        return self._canvas.GetEventAt(self._cursor, self._keyboard.alt)
 
     def time_at_cursor(self):
         return self._canvas.GetTimeAt(self._cursor.x)
