@@ -405,6 +405,29 @@ class TimelineCanvas(wx.Panel):
         if event:
             self.SetEventSelected(event, not self.IsEventSelected(event))
 
+    def InitDragScroll(self, direction=wx.HORIZONTAL):
+        self._scrolling = False
+        self._scrolling_direction = direction
+
+    def StartDragScroll(self, evt):
+        self._scrolling = True
+        self._drag_scroll_start_time = self.GetTimeAt(evt.GetX())
+        self._start_mouse_pos = evt.GetY()
+        self._start_divider_pos = self.GetDividerPosition()
+
+    def DragScroll(self, evt):
+        if self._scrolling:
+            if self._scrolling_direction in (wx.HORIZONTAL, wx.BOTH):
+                delta = self._drag_scroll_start_time - self.GetTimeAt(evt.GetX())
+                self.Navigate(lambda tp: tp.move_delta(delta))
+            if self._scrolling_direction in (wx.VERTICAL, wx.BOTH):
+                percentage_distance = 100 * float(evt.GetY() - self._start_mouse_pos) / float(self.GetSize()[1])
+                new_pos = self._start_divider_pos + percentage_distance
+                self.SetDividerPosition(new_pos)
+
+    def StopDragScroll(self):
+        self._scrolling = False
+
     # ------------
 
     def _scroll_up(self):
