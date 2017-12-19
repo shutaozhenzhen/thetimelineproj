@@ -53,7 +53,7 @@ class NoOpInputHandler(InputHandler):
         if event:
             self._left_mouse_down_on_event(self._state, event)
         else:
-            self._left_mouse_down_on_timeline(self._state)
+            self._left_mouse_down_on_timeline(self._state, cursor)
 
     def _left_mouse_down_on_event(self, state, event):
 
@@ -97,21 +97,21 @@ class NoOpInputHandler(InputHandler):
             default_method=toggle_event_selection)
         methods.select(True)()
 
-    def _left_mouse_down_on_timeline(self, state):
+    def _left_mouse_down_on_timeline(self, state, cursor):
 
         def scroll():
-            state.change_to_scroll_by_drag(self._cursor)
+            state.change_to_scroll_by_drag(cursor)
 
         def create_event():
             self._canvas.ClearSelectedEvents()
-            state.change_to_create_period_event_by_drag(self._cursor)
+            state.change_to_create_period_event_by_drag(cursor)
 
         def zoom():
             self._canvas.ClearSelectedEvents()
-            state.change_to_zoom_by_drag(self._cursor)
+            state.change_to_zoom_by_drag(cursor)
 
         def select():
-            state.change_to_select(self._cursor)
+            state.change_to_select(cursor)
 
         methods = MethodContainer(
             [
