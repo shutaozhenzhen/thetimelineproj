@@ -17,7 +17,6 @@
 
 
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
-from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedownonevent import NoopLeftMouseDownOnEvent
 from timelinelib.general.methodcontainer import MethodContainer
 from timelinelib.wxgui.keyboard import Keyboard
 
@@ -57,8 +56,49 @@ class NoOpInputHandler(InputHandler):
             self._left_mouse_down_on_timeline(self._state)
 
     def _left_mouse_down_on_event(self, state):
-        delegate = NoopLeftMouseDownOnEvent(self._canvas, self._cursor, self._keyboard)
-        delegate.run(state)
+
+        def hit_resize_handle():
+            return self._canvas.hit_resize_handle(self._cursor, self._keyboard)
+
+        def is_resize_command():
+            return hit_resize_handle() is not None
+
+        def event_at_cursor():
+            return self._canvas.GetEventAt(self._cursor, self._keyboard.alt)
+
+        def hit_move_handle():
+            return self._canvas.hit_move_handle(self._cursor, self._keyboard)
+
+        def is_move_command():
+            if event_at_cursor().get_ends_today():
+                return False
+            else:
+                return hit_move_handle()
+
+        def start_event_action(action_method, action_arg):
+            if state.ok_to_edit():
+                try:
+                    action_method(event_at_cursor(), action_arg)
+                except:
+                    state.edit_ends()
+                    raise
+
+        def resize_event():
+            start_event_action(state.change_to_resize_by_drag, hit_resize_handle())
+
+        def move_event():
+            start_event_action(state.change_to_move_by_drag, self.time_at_cursor())
+
+        def toggle_event_selection():
+            self._canvas.toggle_event_selection(self._cursor, self._keyboard)
+
+        methods = MethodContainer(
+            [
+                (is_resize_command(), resize_event),
+                (is_move_command(), move_event)
+            ],
+            default_method=toggle_event_selection)
+        methods.select(True)()
 
     def _left_mouse_down_on_timeline(self, state):
 
@@ -87,4 +127,5 @@ class NoOpInputHandler(InputHandler):
 
     def time_at_cursor(self):
         return self._canvas.GetTimeAt(self._cursor.x)
+
 
