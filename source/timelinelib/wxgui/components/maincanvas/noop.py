@@ -84,7 +84,7 @@ class NoOpInputHandler(InputHandler):
             start_event_action(state.change_to_resize_by_drag, hit_resize_handle())
 
         def move_event():
-            start_event_action(state.change_to_move_by_drag, self._time_at_cursor())
+            start_event_action(state.change_to_move_by_drag, self._canvas.GetTimeAt(self._cursor.x))
 
         def toggle_event_selection():
             self._canvas.toggle_event_selection(self._cursor, self._keyboard)
@@ -100,15 +100,15 @@ class NoOpInputHandler(InputHandler):
     def _left_mouse_down_on_timeline(self, state):
 
         def scroll():
-            state.change_to_scroll_by_drag(self._time_at_cursor(), self._cursor.y)
+            state.change_to_scroll_by_drag(self._canvas.GetTimeAt(self._cursor.x), self._cursor.y)
 
         def create_event():
             self._canvas.ClearSelectedEvents()
-            state.change_to_create_period_event_by_drag(self._time_at_cursor())
+            state.change_to_create_period_event_by_drag(self._canvas.GetTimeAt(self._cursor.x))
 
         def zoom():
             self._canvas.ClearSelectedEvents()
-            state.change_to_zoom_by_drag(self._time_at_cursor())
+            state.change_to_zoom_by_drag(self._canvas.GetTimeAt(self._cursor.x))
 
         def select():
             state.change_to_select(self._cursor)
@@ -121,8 +121,3 @@ class NoOpInputHandler(InputHandler):
                 (Keyboard.CTRL, create_event)
             ])
         methods.select(self._keyboard.keys_combination)()
-
-    def _time_at_cursor(self):
-        return self._canvas.GetTimeAt(self._cursor.x)
-
-
