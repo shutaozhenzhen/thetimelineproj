@@ -18,8 +18,9 @@
 
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 # from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
-from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedownontimeline import NoopLeftMouseDownOnTimeline
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedownonevent import NoopLeftMouseDownOnEvent
+from timelinelib.general.methodcontainer import MethodContainer
+from timelinelib.wxgui.keyboard import Keyboard
 
 
 """
@@ -61,5 +62,30 @@ class NoOpInputHandler(InputHandler):
         delegate.run(state)
 
     def _left_mouse_down_on_timeline(self, state):
-        delegate = NoopLeftMouseDownOnTimeline(self._canvas, self._cursor, self._keyboard)
-        delegate.run(state)
+
+        def scroll():
+            state.change_to_scroll_by_drag(self.time_at_cursor(), self._cursor.y)
+
+        def create_event():
+            self._canvas.ClearSelectedEvents()
+            state.change_to_create_period_event_by_drag(self.time_at_cursor())
+
+        def zoom():
+            self._canvas.ClearSelectedEvents()
+            state.change_to_zoom_by_drag(self.time_at_cursor())
+
+        def select():
+            state.change_to_select(self._cursor)
+
+        methods = MethodContainer(
+            [
+                (Keyboard.NONE, scroll),
+                (Keyboard.ALT, select),
+                (Keyboard.SHIFT, zoom),
+                (Keyboard.CTRL, create_event)
+            ])
+        methods.select(self._keyboard.keys_combination)()
+
+    def time_at_cursor(self):
+        return self._canvas.GetTimeAt(self._cursor.x)
+
