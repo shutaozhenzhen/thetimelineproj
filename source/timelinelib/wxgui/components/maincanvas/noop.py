@@ -30,10 +30,9 @@ another event handler
 
 class NoOpInputHandler(InputHandler):
 
-    def __init__(self, state, status_bar, timeline_canvas):
+    def __init__(self, state, timeline_canvas):
         InputHandler.__init__(self, timeline_canvas)
         self._state = state
-        self._status_bar = status_bar
         self._cursor = None
         self._keyboard = None
 
