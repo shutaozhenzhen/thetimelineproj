@@ -108,7 +108,7 @@ class NoOpInputHandler(InputHandler):
 
         def zoom():
             self._canvas.ClearSelectedEvents()
-            state.change_to_zoom_by_drag(self._canvas.GetTimeAt(self._cursor.x))
+            state.change_to_zoom_by_drag(self._cursor)
 
         def select():
             state.change_to_select(self._cursor)
