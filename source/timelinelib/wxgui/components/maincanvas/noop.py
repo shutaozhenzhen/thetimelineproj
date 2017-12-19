@@ -17,7 +17,6 @@
 
 
 from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
-# from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedown import NoopLeftMouseDown
 from timelinelib.wxgui.components.maincanvas.noophandlers.leftmousedownonevent import NoopLeftMouseDownOnEvent
 from timelinelib.general.methodcontainer import MethodContainer
 from timelinelib.wxgui.keyboard import Keyboard
