@@ -428,6 +428,25 @@ class TimelineCanvas(wx.Panel):
     def StopDragScroll(self):
         self._scrolling = False
 
+    def InitDragSelect(self):
+        self._selecting = False
+
+    def StartDragSelect(self, evt):
+        self._selecting = True
+        self._cursor = self.get_cursor(evt)
+
+    def DragSelect(self, evt):
+        if self._selecting:
+            cursor = self.get_cursor(evt)
+            self._cursor.move(*cursor.pos)
+            self.DrawSelectionRect(self._cursor)
+
+    def StopDragSelect(self):
+        if self._selecting:
+            self.SelectEventsInRect(self._cursor.rect)
+            self.RemoveSelectionRect()
+            self._selecting = False
+
     # ------------
 
     def _scroll_up(self):
