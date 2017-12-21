@@ -447,6 +447,24 @@ class TimelineCanvas(wx.Panel):
             self.RemoveSelectionRect()
             self._selecting = False
 
+    def InitZoomSelect(self):
+        self._zooming = False
+
+    def StartZoomSelect(self, evt):
+        self._zooming = True
+        self._start_time = self.GetTimeAt(evt.GetX())
+        self._end_time = self.GetTimeAt(evt.GetX())
+
+    def DragZoom(self, evt):
+        if self._zooming:
+            self._end_time = self.GetTimeAt(evt.GetX())
+            self.SetPeriodSelection(TimePeriod(self._start_time, self._end_time))
+
+    def StopDragZoom(self):
+        self._zooming = False
+        self.SetPeriodSelection(None)
+        self.Navigate(lambda tp: tp.update(self._start_time, self._end_time))
+
     # ------------
 
     def _scroll_up(self):
