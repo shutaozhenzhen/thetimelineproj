@@ -5,7 +5,7 @@ import wx
 from timelinelib.canvas import TimelineCanvas
 
 
-class Canvas(TimelineCanvas):
+class CanvasScroll(TimelineCanvas):
 
     def __init__(self, parent):
         TimelineCanvas.__init__(self, parent)
