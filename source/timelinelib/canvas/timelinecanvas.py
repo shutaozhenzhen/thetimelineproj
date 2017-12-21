@@ -465,6 +465,24 @@ class TimelineCanvas(wx.Panel):
         self.SetPeriodSelection(None)
         self.Navigate(lambda tp: tp.update(self._start_time, self._end_time))
 
+    def InitDragPeriodSelect(self):
+        self._period_select = False
+
+    def StartDragPeriodSelect(self, evt):
+        self._period_select = True
+        self._start_time = self.GetTimeAt(evt.GetX())
+        self._end_time = self.GetTimeAt(evt.GetX())
+
+    def DragPeriodSelect(self, evt):
+        if self._period_select:
+            self._end_time = self.GetTimeAt(evt.GetX())
+            self.SetPeriodSelection(TimePeriod(self._start_time, self._end_time))
+
+    def StopDragPeriodSelect(self):
+        self._period_select = False
+        self.SetPeriodSelection(None)
+        return self._start_time, self._end_time
+
     # ------------
 
     def _scroll_up(self):
