@@ -6,7 +6,7 @@ from timelinelib.canvas import TimelineCanvas
 from timelinelib.wxgui.cursor import Cursor
 
 
-class Canvas2(TimelineCanvas):
+class CanvasSelect(TimelineCanvas):
 
     def __init__(self, parent):
         TimelineCanvas.__init__(self, parent)

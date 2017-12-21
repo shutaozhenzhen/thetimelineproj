@@ -1,6 +1,6 @@
 import wx
 
-from canvas2 import Canvas2
+from canvas_select import CanvasSelect
 
 from timelinelib.db import db_open
 
@@ -13,7 +13,7 @@ class MainFrame(wx.Frame):
         self._display_example_timeline()
 
     def _create_canvas(self):
-        self.canvas = Canvas2(self)
+        self.canvas = CanvasSelect(self)
 
     def _display_example_timeline(self):
         db_open(":tutorial:").display_in_canvas(self.canvas)
