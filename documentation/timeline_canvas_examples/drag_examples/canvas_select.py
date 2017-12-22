@@ -24,5 +24,3 @@ class CanvasSelect(TimelineCanvas):
     def _on_left_up(self, evt):
         self.StopDragSelect()
 
-    def get_cursor(self, evt):
-        return Cursor(evt.GetX(), evt.GetY())
