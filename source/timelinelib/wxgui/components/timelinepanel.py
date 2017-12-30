@@ -423,7 +423,7 @@ class TimelinePanel(TimelinePanelGuiCreator):
             event)
 
     def redraw_timeline(self):
-        self.timeline_canvas.edraw()
+        self.timeline_canvas.Redraw()
 
     def Navigate(self, navigation_fn):
         return self.timeline_canvas.Navigate(navigation_fn)
