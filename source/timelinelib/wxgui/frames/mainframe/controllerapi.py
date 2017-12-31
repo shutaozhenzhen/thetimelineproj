@@ -73,8 +73,9 @@ class MainFrameApiUsedByController(object):
 
     def _clear_navigation_menu_items(self):
         while self._navigation_menu_items:
-            if self._navigation_menu_items.pop() in self._navigate_menu.MenuItems:
-                self._navigate_menu.RemoveItem(self._navigation_menu_items.pop())
+            item = self._navigation_menu_items.pop()
+            if item in self._navigate_menu.MenuItems:
+                self._navigate_menu.RemoveItem(item)
         self._navigation_functions_by_menu_item_id.clear()
 
     def _create_navigation_menu_items(self):
