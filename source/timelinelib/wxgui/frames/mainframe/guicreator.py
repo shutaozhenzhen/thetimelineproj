@@ -119,6 +119,9 @@ class GuiCreator(object):
         main_menu_bar.Append(self._create_help_menu(), _("&Help"))
         self._set_shortcuts()
         self.SetMenuBar(main_menu_bar)
+        self.update_navigation_menu_items()
+        self.enable_disable_menus()
+
 
     def _set_shortcuts(self):
         from timelinelib.config.shortcut import ShortcutController
@@ -580,6 +583,9 @@ class GuiCreator(object):
             menu = self.context_menu
         self.PopupMenu(menu)
         self._create_main_menu_bar()
+
+    def create_timeline_context_menu(self):
+        self.context_menu = self._create_timeline_context_menu()
 
     def _create_timeline_context_menu(self):
         menu = wx.Menu()
