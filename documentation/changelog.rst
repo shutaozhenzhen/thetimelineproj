@@ -29,6 +29,8 @@ Fixed crash reports and bugs:
 
 * A change by another user is now detected when Timeline is closing.
 
+* ``PyAssertionError: C++ assertion "node" failed at ..\..\src\msw\menu.cpp(863) in wxMenu::DoRemove(): bug in wxMenu::Remove logic``
+  This happened when context menu has been used and another timeline is opened.
 
 Version 1.16.0
 --------------
