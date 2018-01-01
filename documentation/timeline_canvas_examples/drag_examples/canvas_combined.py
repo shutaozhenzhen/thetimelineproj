@@ -13,13 +13,13 @@ class CanvasCombined(TimelineCanvas):
         self.Bind(wx.EVT_MOTION, self._on_motion)
         self.Bind(wx.EVT_LEFT_UP, self._on_left_up)
         self.InitDragScroll(direction=wx.BOTH)
-        self.InitDragSelect()
+        self.InitDragEventSelect()
         self.InitZoomSelect()
         self.InitDragPeriodSelect()
 
     def _on_left_down(self, evt):
         if evt.ControlDown() and evt.ShiftDown():
-            self.StartDragSelect(evt)
+            self.StartDragEventSelect(evt)
         elif evt.ControlDown():
             self.StartDragPeriodSelect(evt)
         elif evt.ShiftDown():
@@ -29,7 +29,7 @@ class CanvasCombined(TimelineCanvas):
 
     def _on_motion(self, evt):
         if evt.ControlDown() and evt.ShiftDown():
-            self.DragSelect(evt)
+            self.DragEventSelect(evt)
         elif evt.ControlDown():
             self.DragPeriodSelect(evt)
         elif evt.ShiftDown():
@@ -39,7 +39,7 @@ class CanvasCombined(TimelineCanvas):
 
     def _on_left_up(self, evt):
         if evt.ControlDown() and evt.ShiftDown():
-            self.StopDragSelect()
+            self.StopDragEventSelect()
         elif evt.ControlDown():
             self.StopDragPeriodSelect()
         elif evt.ShiftDown():
