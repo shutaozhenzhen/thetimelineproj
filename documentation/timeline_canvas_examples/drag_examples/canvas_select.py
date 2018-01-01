@@ -13,14 +13,14 @@ class CanvasSelect(TimelineCanvas):
         self.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
         self.Bind(wx.EVT_MOTION, self._on_motion)
         self.Bind(wx.EVT_LEFT_UP, self._on_left_up)
-        self.InitDragSelect()
+        self.InitDragEventSelect()
 
     def _on_left_down(self, evt):
-        self.StartDragSelect(evt)
+        self.StartDragEventSelect(evt)
 
     def _on_motion(self, evt):
-        self.DragSelect(evt)
+        self.DragEventSelect(evt)
 
     def _on_left_up(self, evt):
-        self.StopDragSelect()
+        self.StopDragEventSelect()
 
