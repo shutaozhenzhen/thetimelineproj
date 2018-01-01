@@ -112,8 +112,8 @@ class NoOpInputHandler(InputHandler):
         methods = MethodContainer(
             [
                 (Keyboard.NONE, scroll),
-                (Keyboard.ALT, select),
                 (Keyboard.SHIFT, zoom),
-                (Keyboard.CTRL, create_event)
+                (Keyboard.CTRL, create_event),
+                (Keyboard.SHIFT | Keyboard.CTRL, select),
             ])
         methods.select(keyboard.keys_combination)()
