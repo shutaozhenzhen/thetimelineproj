@@ -122,7 +122,6 @@ class GuiCreator(object):
         self.update_navigation_menu_items()
         self.enable_disable_menus()
 
-
     def _set_shortcuts(self):
         from timelinelib.config.shortcut import ShortcutController
         self.shortcut_controller = ShortcutController(self.config, self.shortcut_items)
