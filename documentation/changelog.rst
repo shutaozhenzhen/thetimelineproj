@@ -32,6 +32,8 @@ Fixed crash reports and bugs:
 * ``PyAssertionError: C++ assertion "node" failed at ..\..\src\msw\menu.cpp(863) in wxMenu::DoRemove(): bug in wxMenu::Remove logic``
   This happened when context menu has been used and another timeline is opened.
 
+* It's now possible to change the background colour again.
+
 Version 1.16.0
 --------------
 
