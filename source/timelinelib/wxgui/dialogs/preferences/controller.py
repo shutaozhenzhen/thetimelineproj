@@ -38,7 +38,7 @@ class PreferencesDialogController(Controller):
         self.config.major_strip_divider_line_colour = str(self.view.GetMajorStripColor())
         self.config.now_line_colour = str(self.view.GetNowLineColor())
         self.config.weekend_colour = str(self.view.GetWeekendColor())
-        self.config.bg_color = str(self.view.GetBgColor())
+        self.config.bg_colour = str(self.view.GetBgColor())
         self.config.legend_pos = self.view.GetLegendPos()
 
     def on_open_recent_change(self, event):
