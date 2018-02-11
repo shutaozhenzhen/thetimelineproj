@@ -30,8 +30,7 @@ class describe_timelinepanel(UnitTestCase):
         self.assertTrue(self.panel is not None)
 
     def setUp(self):
-        self.app = wx.App(False)
-        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        self.app = self.get_wxapp()
         self.parent = wx.Dialog(None)
         self.config = Mock()
         self.config.show_toolbar = False

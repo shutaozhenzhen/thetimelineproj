@@ -43,8 +43,7 @@ class describe_time_editor_dialog_for_gregorian_time(UnitTestCase):
         )
 
     def setUp(self):
-        self.app = wx.App(False)
-        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        self.app = self.get_wxapp()
 
     def tearDown(self):
         self.app.Destroy()

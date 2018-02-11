@@ -42,8 +42,7 @@ else:
 class describe_preferences_dialog_controller(UnitTestCase):
 
     def setUp(self):
-        self.app = wx.App()
-        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        self.app = self.get_wxapp()
         self.view = Mock(PreferencesDialog)
         self.controller = PreferencesDialogController(self.view)
         self.config = Mock(Config)
