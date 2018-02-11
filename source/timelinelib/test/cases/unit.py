@@ -88,8 +88,10 @@ class UnitTestCase(unittest.TestCase):
         app = wx.App(False)
         import locale
         locale.setlocale(locale.LC_ALL, 'C')
-        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        self.locale = wx.Locale()
+        self.locale.Init(wx.LANGUAGE_DEFAULT)
         return app
+
 
 def get_random_modifier(modifiers):
     return random.choice(modifiers)
