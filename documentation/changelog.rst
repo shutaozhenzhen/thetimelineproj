@@ -22,6 +22,8 @@ GUI:
 
 * Events can be selected with alt + mouse drag.
 
+* Events exported to listbox can now be filtered by visible categories
+
 Fixed crash reports and bugs:
 
 * ``ValueError: Start time can't be after end time``
