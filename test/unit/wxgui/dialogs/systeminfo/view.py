@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import locale
-
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.systeminfo.view import SystemInfoDialog
 
@@ -25,5 +23,4 @@ from timelinelib.wxgui.dialogs.systeminfo.view import SystemInfoDialog
 class describe_system_info_dialog(UnitTestCase):
 
     def test_it_can_be_created(self):
-        locale.setlocale(locale.LC_ALL, '')
         self.show_dialog(SystemInfoDialog, None)

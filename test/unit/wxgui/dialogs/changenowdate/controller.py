@@ -33,8 +33,7 @@ class describe_change_now_date_dialog_controller(UnitTestCase):
         self.db = Mock()
         self.callback_function = Mock()
         self.controller.on_init(self.db, self.callback_function)
-        self.app = wx.App(False)
-        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        self.app = self.get_wxapp()
 
     def tearDown(self):
         self.app.Destroy()

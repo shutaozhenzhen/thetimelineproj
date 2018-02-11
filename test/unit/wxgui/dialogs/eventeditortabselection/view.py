@@ -32,8 +32,7 @@ class describe_event_editor_tab_selection_dialog(UnitTestCase):
         self.show_dialog(EventEditorTabSelectionDialog, None, config)
 
     def setUp(self):
-        self.app = wx.App(False)
-        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        self.app = self.get_wxapp()
 
     def tearDown(self):
         self.app.Destroy()

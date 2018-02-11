@@ -54,8 +54,7 @@ class describe_milestone_editor_dialog(UnitTestCase):
         )
 
     def setUp(self):
-        self.app = wx.App(False)
-        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        self.app = self.get_wxapp()
 
     def tearDown(self):
         self.app.Destroy()

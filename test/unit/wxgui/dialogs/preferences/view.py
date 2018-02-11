@@ -35,8 +35,7 @@ class describe_preferences_dialog(UnitTestCase):
         self.show_dialog(PreferencesDialog, None, config)
 
     def setUp(self):
-        self.app = wx.App()
-        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
+        self.app = self.get_wxapp()
 
     def tearDown(self):
         self.app.Destroy()
