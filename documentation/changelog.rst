@@ -26,6 +26,9 @@ GUI:
 
 Fixed crash reports and bugs:
 
+* ``PyAssertionError: C++ assertion "(itemid >= 0 && itemid < SHRT_MAX)``
+  Eliminated menu id creation by using constant values.
+
 * ``ValueError: Start time can't be after end time``
   This happened when ends-today flag was set, and start-time was in future.
 
