@@ -1349,24 +1349,44 @@ Fixed crash reports and bugs:
       <default_color>192,192,192</default_color>
     </event>
     <event>
-      <start>2018-02-25 00:00:00</start>
-      <end>2018-02-25 00:00:00</end>
+      <start>2018-03-25 00:00:00</start>
+      <end>2018-03-25 00:00:00</end>
       <text>Timeline 1.17.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
+      <category>Planned Release</category>
       <description>Version 1.17.0
 --------------
 
-**Planned release on 25 February 2018.**
+**Released on 25 Mars 2018.**
 
-*Don't want to wait for the final release? Try the beta version!*
+GUI:
 
-* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+* If the xml contains a description field for a container, it will now be
+  displayed in a balloon, when hooverd.
 
-* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.</description>
+* Selected events are not deselected when scrolling timeline with mouse.
+
+* Events can be selected with alt + mouse drag.
+
+* Events exported to listbox can now be filtered by visible categories
+
+Fixed crash reports and bugs:
+
+* ``PyAssertionError: C++ assertion "(itemid &gt;= 0 &amp;&amp; itemid &lt; SHRT_MAX)``
+  Eliminated menu id creation by using constant values.
+
+* ``ValueError: Start time can't be after end time``
+  This happened when ends-today flag was set, and start-time was in future.
+
+* A change by another user is now detected when Timeline is closing.
+
+* ``PyAssertionError: C++ assertion "node" failed at ..\..\src\msw\menu.cpp(863) in wxMenu::DoRemove(): bug in wxMenu::Remove logic``
+  This happened when context menu has been used and another timeline is opened.
+
+* It's now possible to change the background colour again.</description>
       <default_color>192,192,192</default_color>
     </event>
     <event>
@@ -1397,11 +1417,32 @@ Fixed crash reports and bugs:
   This happens when System info dialog is opened by context popup menu.</description>
       <default_color>192,192,192</default_color>
     </event>
+    <event>
+      <start>2018-06-30 00:00:00</start>
+      <end>2018-06-30 00:00:00</end>
+      <text>Timeline 1.18.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Future Release</category>
+      <description>Version 1.17.0
+--------------
+
+**Planned release on 30 June 2018.**
+
+*Don't want to wait for the final release? Try the beta version!*
+
+* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+
+* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.</description>
+      <default_color>192,192,192</default_color>
+    </event>
   </events>
   <view>
     <displayed_period>
-      <start>2011-10-21 07:30:56</start>
-      <end>2017-08-05 20:00:11</end>
+      <start>2014-04-23 09:13:19</start>
+      <end>2020-02-06 21:42:34</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
