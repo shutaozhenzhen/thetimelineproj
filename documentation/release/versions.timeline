@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.17.0 development</version>
+  <version>1.17.0 (cb821d29f002 2018-03-25)</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -1441,8 +1441,8 @@ Fixed crash reports and bugs:
   </events>
   <view>
     <displayed_period>
-      <start>2014-04-23 09:13:19</start>
-      <end>2020-02-06 21:42:34</end>
+      <start>2012-11-07 22:55:43</start>
+      <end>2018-08-24 11:24:58</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
