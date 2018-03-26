@@ -3,7 +3,6 @@ import timelineadaptor
 import wx
 
 from timelinelib.canvas import TimelineCanvas
-from idlelib.ZoomHeight import zoom_height
 from timelinelib.wxgui.keyboard import Keyboard
 
 
@@ -27,4 +26,3 @@ class CanvasCombined2(TimelineCanvas):
 
     def _on_left_up(self, evt):
         self.CallDragMethod(self.STOP, evt)
-
