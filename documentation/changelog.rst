@@ -17,6 +17,9 @@ Fixed crash reports and bugs:
 * ``Wrong editor is opened when right-click and selecting edit, on a milestone.``
   Check if event is milestone before selecting editor.
 
+* ``Milestones can convert to ordinary events when a timeline is compressed.``
+  Milestones is no longer part of the compression algorithm..
+
 Version 1.17.0
 --------------
 
