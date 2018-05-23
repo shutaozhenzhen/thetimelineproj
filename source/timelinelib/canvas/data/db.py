@@ -523,7 +523,7 @@ class MemoryDB(Observable):
             event
             for event
             in all_events
-            if not event.is_subevent()
+            if not event.is_subevent() and not event.is_milestone()
         ]
         reordered_events = self._sort_by_length(reordered_events)
         return reordered_events
