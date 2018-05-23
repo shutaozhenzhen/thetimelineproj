@@ -12,6 +12,10 @@ Version 1.18.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Fixed crash reports and bugs:
+
+* ``Wrong editor is opened when right-click and selecting edit, on a milestone.``
+  Check if event is milestone before selecting editor.
 
 Version 1.17.0
 --------------
