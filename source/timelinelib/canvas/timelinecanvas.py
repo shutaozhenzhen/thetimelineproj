@@ -329,8 +329,9 @@ class TimelineCanvas(wx.Panel):
             return self._last_balloon_event
 
         def delayed_call():
-            self.SetHoveredEvent(self._last_balloon_event)
-            self._waiting = False
+            if self.GetAppearance().get_balloons_visible():
+                self.SetHoveredEvent(self._last_balloon_event)
+                self._waiting = False
 
         # Same delay as when we used timers
         # Don't issue call when in wait state, to avoid flicker

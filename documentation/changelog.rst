@@ -20,6 +20,9 @@ Fixed crash reports and bugs:
 * ``Milestones can convert to ordinary events when a timeline is compressed.``
   Milestones is no longer part of the compression algorithm..
 
+* ``Balloons are always shown for hooverd events.``
+  Balloons are not shown if menu "View/Balloons on hover" is disabled.
+
 Version 1.17.0
 --------------
 
