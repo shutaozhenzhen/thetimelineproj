@@ -409,12 +409,15 @@ class TimelinePanel(TimelinePanelGuiCreator):
         return self.timeline_canvas.get_time_period()
 
     def open_event_editor(self, event):
-        open_event_editor_for(
-            self._edit_controller,
-            self,
-            self.config,
-            self.timeline_canvas.GetDb(),
-            event)
+        if event.is_milestone():
+            self.open_milestone_editor(event)
+        else:
+            open_event_editor_for(
+                self._edit_controller,
+                self,
+                self.config,
+                self.timeline_canvas.GetDb(),
+                event)
 
     def open_milestone_editor(self, event):
         open_milestone_editor_for(
