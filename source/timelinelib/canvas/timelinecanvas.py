@@ -386,13 +386,15 @@ class TimelineCanvas(wx.Panel):
                 return False
             if not self.IsEventSelected(event):
                 return False
+            if event.get_ends_today():
+                return False
             return hit_info == MOVE_HANDLE
 
         def over_resize_handle():
             return hit_resize_handle() is not None
 
         def over_move_handle():
-            return hit_move_handle() and not self.GetEventAtCursor(False).get_ends_today()
+            return hit_move_handle()
 
         if over_resize_handle():
             self.set_size_cursor()
@@ -549,7 +551,6 @@ class TimelineCanvas(wx.Panel):
             init_period_select()
         if event_select:
             init_event_select()
-
 
     def CallDragMethod(self, index, evt):
 
