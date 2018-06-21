@@ -23,6 +23,9 @@ Fixed crash reports and bugs:
 * ``Balloons are always shown for hooverd events.``
   Balloons are not shown if menu "View/Balloons on hover" is disabled.
 
+* ``AttributeError: 'NoneType' object has no attribute 'get_ends_today'.``
+  Event object existance is checked before getting attribute.
+
 Version 1.17.0
 --------------
 
