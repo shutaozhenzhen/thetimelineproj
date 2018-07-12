@@ -31,6 +31,10 @@ Fixed crash reports and bugs:
 * ``AttributeError: 'NoneType' object has no attribute 'get_ends_today'.``
   Event object existance is checked before getting attribute.
 
+* ``InvalidOperationError: Circular category parent.``
+  A circular parent is no longer possible to select. (This bug was introduced
+  in the 1.16.0 release.)
+
 Version 1.17.0
 --------------
 

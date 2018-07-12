@@ -42,6 +42,11 @@ command::
 The version included in Fedora is often not the latest. If you want the latest
 version, you have to install from source.
 
+Installing from Snapcraft
+-------------------------
+
+https://snapcraft.io/timeline
+
 Installing from source
 ----------------------
 
