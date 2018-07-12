@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-17 16:16+0200\n"
+"POT-Creation-Date: 2018-07-12 10:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1751,6 +1750,10 @@ msgstr ""
 
 #: source\timelinelib\plugin\plugins\eventboxdrawers\gradienteventboxdrawer.py:29
 msgid "Gradient Event box drawer"
+msgstr ""
+
+#: source\timelinelib\plugin\plugins\eventboxdrawers\othergradienteventboxdrawefuzzyedges.py:29
+msgid "Other Gradient Event box drawer with fuzzy edges"
 msgstr ""
 
 #: source\timelinelib\plugin\plugins\eventboxdrawers\othergradienteventboxdrawer.py:29
