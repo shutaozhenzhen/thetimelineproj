@@ -12,6 +12,11 @@ Version 1.18.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+GUI:
+
+* ``Added new representation of fuzzy edges when selecting view: Other Gradient Event box drawer with fuzzy edges.``
+  (`#174 <https://sourceforge.net/p/thetimelineproj/backlog/174/>`_)
+  
 Fixed crash reports and bugs:
 
 * ``Wrong editor is opened when right-click and selecting edit, on a milestone.``
