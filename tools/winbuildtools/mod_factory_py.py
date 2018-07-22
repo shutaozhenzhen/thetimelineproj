@@ -65,15 +65,16 @@ def main():
                 state = 1
             else:
                 f.write(line + "\n")
-    f.write("\n")        
+    f.write("\n")
     f.write("import timelinelib.plugin.plugins.eventboxdrawers.defaulteventboxdrawer\n")
     f.write("import timelinelib.plugin.plugins.eventboxdrawers.gradienteventboxdrawer\n")
     f.write("import timelinelib.plugin.plugins.eventboxdrawers.othergradienteventboxdrawer\n")
+    f.write("import timelinelib.plugin.plugins.eventboxdrawers.othergradienteventboxdrawerfuzzyedges\n")
     f.write("import timelinelib.plugin.plugins.exporters.exporttobitmap\n")
     f.write("import timelinelib.plugin.plugins.exporters.exporttolist\n")
     f.write("import timelinelib.plugin.plugins.exporters.exporttosvg\n")
     f.write("import timelinelib.plugin.plugins.exporters.timelineexporter\n")
-    
+
     f.close()
 
 
