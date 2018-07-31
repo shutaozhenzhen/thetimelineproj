@@ -4,7 +4,7 @@ Changelog
 Version 1.18.0
 --------------
 
-**Planned release on 30 June 2018.**
+**Release on 30 July 2018.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
