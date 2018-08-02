@@ -52,7 +52,7 @@ class ListExporter(PluginBase):
                 self.db.get_all_events(),
                 key=lambda event: event.get_start_time()
             )
-            if event.get_category() in visible_categories
+            if (main_frame.config.filtered_listbox_export and event.get_category() in visible_categories) or not main_frame.config.filtered_listbox_export
         ]
 
     def _get_visible_categories(self, main_frame):
