@@ -12,6 +12,10 @@ Version 1.19.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Export:
+* ``Not all events are shown in export listbox when filtering is turned off.``
+  Include events without category when filtering is turned off.
+
 Version 1.18.0
 --------------
 
