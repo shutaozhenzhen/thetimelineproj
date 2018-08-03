@@ -19,6 +19,8 @@ Export:
 Version 1.18.0
 --------------
 
+**Released on 30 July 2018.**
+
 GUI:
 
 * ``Added new representation of fuzzy edges when selecting view: Other Gradient Event box drawer with fuzzy edges.``
