@@ -19,14 +19,6 @@ Export:
 Version 1.18.0
 --------------
 
-**Release on 30 July 2018.**
-
-*Don't want to wait for the final release? Try the beta version!*
-
-* `Download source <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/>`_.
-
-* `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
-
 GUI:
 
 * ``Added new representation of fuzzy edges when selecting view: Other Gradient Event box drawer with fuzzy edges.``
