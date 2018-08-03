@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.17.0 (cb821d29f002 2018-03-25)</version>
+  <version>1.19.0 development</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -1418,18 +1418,62 @@ Fixed crash reports and bugs:
       <default_color>192,192,192</default_color>
     </event>
     <event>
-      <start>2018-06-30 00:00:00</start>
-      <end>2018-06-30 00:00:00</end>
+      <start>2018-07-30 00:00:00</start>
+      <end>2018-07-30 00:00:00</end>
       <text>Timeline 1.18.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
-      <description>Version 1.17.0
+      <category>Planned Release</category>
+      <description>Version 1.18.0
 --------------
 
-**Planned release on 30 June 2018.**
+**Release on 30 July 2018.**
+
+*Don't want to wait for the final release? Try the beta version!*
+
+* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+
+* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.
+
+GUI:
+
+* ``Added new representation of fuzzy edges when selecting view: Other Gradient Event box drawer with fuzzy edges.``
+  (`#174 &lt;https://sourceforge.net/p/thetimelineproj/backlog/174/&gt;`_)
+  
+Fixed crash reports and bugs:
+
+* ``Wrong editor is opened when right-click and selecting edit, on a milestone.``
+  Check if event is milestone before selecting editor.
+
+* ``Milestones can convert to ordinary events when a timeline is compressed.``
+  Milestones is no longer part of the compression algorithm..
+
+* ``Balloons are always shown for hooverd events.``
+  Balloons are not shown if menu "View/Balloons on hover" is disabled.
+
+* ``AttributeError: 'NoneType' object has no attribute 'get_ends_today'.``
+  Event object existance is checked before getting attribute.
+
+* ``InvalidOperationError: Circular category parent.``
+  A circular parent is no longer possible to select. (This bug was introduced
+  in the 1.16.0 release.)</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2018-12-31 16:17:00</start>
+      <end>2018-12-31 16:17:00</end>
+      <text>Timeline 1.19.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Future Release</category>
+      <description>Version 1.19.0
+--------------
+
+**Planned release on 31 December 2018.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
@@ -1441,8 +1485,8 @@ Fixed crash reports and bugs:
   </events>
   <view>
     <displayed_period>
-      <start>2012-11-07 22:55:43</start>
-      <end>2018-08-24 11:24:58</end>
+      <start>2015-01-18 06:55:54</start>
+      <end>2020-11-02 19:25:09</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
