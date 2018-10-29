@@ -12,6 +12,10 @@ Version 1.19.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Duplication of events:
+* ``TypeError: open_duplicate_event_dialog_for_event() takes exactly 4 arguments (3 given)``
+  Added missing argument
+
 Export:
 * ``Not all events are shown in export listbox when filtering is turned off.``
   Include events without category when filtering is turned off.
