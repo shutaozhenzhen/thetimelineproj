@@ -12,6 +12,13 @@ Version 1.19.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Fixed crash reports and bugs:
+
+Moving event vertically:
+* ``AttributeError: 'NoneType' object has no attribute 'Y'``
+  Occurs when an event ends-today.
+  Fixed by changing the == operator of an event
+  
 Duplication of events:
 * ``TypeError: open_duplicate_event_dialog_for_event() takes exactly 4 arguments (3 given)``
   Added missing argument
