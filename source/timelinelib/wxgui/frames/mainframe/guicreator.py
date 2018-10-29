@@ -410,7 +410,7 @@ class GuiCreator(object):
             except IndexError:
                 # No event selected so do nothing!
                 return
-            open_duplicate_event_dialog_for_event(self, self.timeline, event)
+            open_duplicate_event_dialog_for_event(self, self, self.timeline, event)
 
         def create_milestone(evt):
             open_milestone_editor_for(self, self, self.config, self.timeline)
