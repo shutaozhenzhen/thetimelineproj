@@ -142,7 +142,6 @@ class TimelineScene(object):
         event_data = self._get_overlapping_events_list(period, rect)
         event = self._get_overlapping_event_from_list(event_data, direction,
                                                       selected_event)
-        print "Overlapping event: %s" % event
         return event
 
     def _get_overlapping_events_list(self, period, rect):
