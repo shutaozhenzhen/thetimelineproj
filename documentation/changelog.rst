@@ -13,8 +13,14 @@ Version 1.19.0
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
 Export:
+
 * ``Not all events are shown in export listbox when filtering is turned off.``
   Include events without category when filtering is turned off.
+
+Fixed crash reports and bugs:
+
+* ``AttributeError: 'NoneType' object has no attribute 'Y'``
+  Check if event is visible before trying to find overlapping events.
 
 Version 1.18.0
 --------------
