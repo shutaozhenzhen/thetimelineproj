@@ -66,17 +66,27 @@ class GregorianDateFormatter(object):
         (date, is_bc) = date_bc_tuple
         regions = self._split(date)
         if self.use_date_default_values:
-            if regions == ['', '', '']:
-                minpos = min(self._year_position, self._month_position, self._day_position)
-                regions[self._year_position] = self.default_year
-                regions[self._month_position] = self.default_month
-                regions[self._day_position] = self.default_day
-                regions[minpos] = date
+            self.set_default_regions(regions, date)
         year = self._parse_year(regions[self._year_position], is_bc)
         month = self._parse_month(regions[self._month_position])
         day = self._parse_day(regions[self._day_position], year, month)
         return (year, month, day)
 
+    def set_default_regions(self, regions, date):
+        if regions == ['', '', '']:
+            regions[0] = date
+        for n in range(3):
+            if regions[n] == '':
+                self.set_default_for_region(regions, n)
+
+    def set_default_for_region(self, regions, n):
+        if self._year_position == n:
+            regions[n] = self.default_year
+        elif self._month_position == n:
+            regions[n] = self.default_month
+        elif self._day_position == n:
+            regions[n] = self.default_day
+          
     def get_region_type(self, date_string, cursor_position):
         return {
             self._year_position: self.YEAR,
