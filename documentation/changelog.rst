@@ -4,13 +4,18 @@ Changelog
 Version 1.19.0
 --------------
 
-**Planned release on 31 December 2018.**
+**Planned release on 30 April 2019.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
 * `Download source <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/>`_.
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
+
+Default Dates:
+
+* ``For Gregorian dates, default values for year, month and day can be used in input fields.``
+  The feature can be selected with a preference setting.
 
 Export:
 
