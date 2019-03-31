@@ -137,6 +137,36 @@ class PreferencesDialog(Dialog):
                             label="$(never_use_time_text)"
                         />
                         <Spacer />
+                        <CheckBox
+                            name="use_date_default_values_checkbox"
+                            event_EVT_CHECKBOX="on_use_date_default_values"
+                            label="$(use_date_default_values)"
+                        />
+                        <Spacer />
+                        <StaticText
+                            label="$(default_year)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <TextCtrl 
+                            name="txt_default_year" 
+                            fit_text="MMMM" 
+                        />                        
+                        <StaticText
+                            label="$(default_month)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <TextCtrl 
+                            name="txt_default_month" 
+                            fit_text="MM" 
+                        />                        
+                        <StaticText
+                            label="$(default_day)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <TextCtrl 
+                            name="txt_default_day" 
+                            fit_text="MM" 
+                        />                        
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -356,6 +386,10 @@ class PreferencesDialog(Dialog):
             "never_use_time_text": _("Never use time precision for events"),
             "legend_positions_text": _("Legend Position"),
             "legend_positions": [_("Bottom-Left"), _("Top-Left"), _("Top-Right"), _("Bottom-Right")],
+            "default_year": _("Default Year"),
+            "default_month": _("Default Month"),
+            "default_day": _("Default Day"),
+            "use_date_default_values": _("Use date default values")
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
         self.font_sizer.Layout()
@@ -421,9 +455,33 @@ class PreferencesDialog(Dialog):
     def SetNeverUseTime(self, value):
         self.never_use_time_checkbox.SetValue(value)
 
+    def SetUseDateDefaultValues(self, value):
+        self.use_date_default_values_checkbox.SetValue(value)
+        
+    def SetDefaultYear(self, value):
+        self.txt_default_year.SetValue(value)
+        
+    def SetDefaultMonth(self, value):
+        self.txt_default_month.SetValue(value)
+
+    def SetDefaultDay(self, value):
+        self.txt_default_day.SetValue(value)
+        
+    def GetDefaultYear(self):
+        return self.txt_default_year.GetValue()
+        
+    def GetDefaultMonth(self):
+        return self.txt_default_month.GetValue()
+
+    def GetDefaultDay(self):
+        return self.txt_default_day.GetValue()
+        
     def GetNeverUseTime(self):
         return self.never_use_time_checkbox.GetValue()
 
+    def GetUseDateDefaultValues(self):
+        return self.use_date_default_values_checkbox.GetValue()
+        
     def AddExperimentalFeatures(self, features):
         for feature in features:
             name = feature.get_display_name()
