@@ -191,6 +191,7 @@ class Config(Observable):
     def get_date_formatter(self):
         parser = DateFormatParser().parse(self.get_date_format())
         date_formatter = GregorianDateFormatter()
+        date_formatter.set_defaults(self.use_date_default_values, self.default_year, self.default_month, self.default_day)
         date_formatter.set_separators(*parser.get_separators())
         date_formatter.set_region_order(*parser.get_region_order())
         date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())
@@ -276,6 +277,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'skip_s_in_decade_text', 'default': 'False'},
     {'name': 'display_checkmark_on_events_done', 'default': 'False'},
     {'name': 'never_use_time', 'default': 'False'},
+    {'name': 'use_date_default_values', 'default': 'False'},
     {'name': 'hide_events_done', 'default': 'False'},
 )
 INT_CONFIGS = (
@@ -290,6 +292,9 @@ STR_CONFIGS = (
     {'name': 'fuzzy_icon', 'default': 'fuzzy.png'},
     {'name': 'locked_icon', 'default': 'locked.png'},
     {'name': 'hyperlink_icon', 'default': 'hyperlink.png'},
+    {'name': 'default_year', 'default': '2020'},
+    {'name': 'default_month', 'default': '02'},
+    {'name': 'default_day', 'default': '03'},
 )
 COLOUR_CONFIGS = (
     {'name': 'now_line_colour', 'default': '(200, 0, 0)'},
