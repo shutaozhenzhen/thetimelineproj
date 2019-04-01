@@ -36,6 +36,10 @@ Duplication of events:
 * ``AttributeError: 'NoneType' object has no attribute 'Y'``
   Check if event is visible before trying to find overlapping events.
 
+* ``PyAssertionError: C++ assertion "strcmp(setlocale(LC_ALL, NULL), "C") == 0"... ``
+  Occurs when date format is changed and then when Event editor is opened.
+  A bmp works better than a png image when locale is used outside of wx.
+
 Version 1.18.0
 --------------
 
