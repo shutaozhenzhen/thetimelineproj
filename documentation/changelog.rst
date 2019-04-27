@@ -12,6 +12,11 @@ Version 1.19.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Time scale position:
+
+* ``The position of the time scale can be changed with a preference value.``
+  The position can be at top, at bottom or at the center line.
+
 Default Dates:
 
 * ``For Gregorian dates, default values for year, month and day can be used in input fields.``
