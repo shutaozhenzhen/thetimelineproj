@@ -166,7 +166,12 @@ class PreferencesDialog(Dialog):
                         <TextCtrl 
                             name="txt_default_day" 
                             fit_text="MM" 
-                        />                        
+                        />                      
+                        <RadioBox
+                            name="time_scale_positions"
+                            choices="$(time_scale_positions)"
+                            label="$(time_scale_positions_text)"
+                        />
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -386,10 +391,12 @@ class PreferencesDialog(Dialog):
             "never_use_time_text": _("Never use time precision for events"),
             "legend_positions_text": _("Legend Position"),
             "legend_positions": [_("Bottom-Left"), _("Top-Left"), _("Top-Right"), _("Bottom-Right")],
+            "time_scale_positions": [_("Top"), _("Center"), _("Bottom")],
+            "time_scale_positions_text": _("Time scale position"),
             "default_year": _("Default Year"),
             "default_month": _("Default Month"),
             "default_day": _("Default Day"),
-            "use_date_default_values": _("Use date default values")
+            "use_date_default_values": _("Use date default values"),
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
         self.font_sizer.Layout()
@@ -570,6 +577,12 @@ class PreferencesDialog(Dialog):
 
     def SetLegendPos(self, pos):
         self.legend_positions.SetSelection(pos)
+
+    def GetTimeScalePos(self):
+        return self.time_scale_positions.GetSelection()
+
+    def SetTimeScalePos(self, pos):
+        self.time_scale_positions.SetSelection(pos)
 
     def _SetFont(self, control, font):
         control.SetFont(font)

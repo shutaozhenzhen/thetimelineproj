@@ -40,6 +40,7 @@ class PreferencesDialogController(Controller):
         self.config.weekend_colour = str(self.view.GetWeekendColor())
         self.config.bg_colour = str(self.view.GetBgColor())
         self.config.legend_pos = self.view.GetLegendPos()
+        self.config.time_scale_pos = self.view.GetTimeScalePos()
         self.config.default_year = self.view.GetDefaultYear()
         self.config.default_month = self.view.GetDefaultMonth()
         self.config.default_day = self.view.GetDefaultDay()
@@ -170,6 +171,7 @@ class PreferencesDialogController(Controller):
         self.view.SetLegendFont(deserialize_font(self.config.legend_font))
         self.view.SetBalloonFont(deserialize_font(self.config.balloon_font))
         self.view.SetLegendPos(self.config.legend_pos)
+        self.view.SetTimeScalePos(self.config.time_scale_pos)
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:

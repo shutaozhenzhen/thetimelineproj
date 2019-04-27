@@ -285,6 +285,7 @@ INT_CONFIGS = (
     {'name': 'divider_line_slider_pos', 'default': '50'},
     {'name': 'vertical_space_between_events', 'default': '5'},
     {'name': 'legend_pos', 'default': '0'},
+    {'name': 'time_scale_pos', 'default': '1'},
 )
 STR_CONFIGS = (
     {'name': 'experimental_features', 'default': ''},
