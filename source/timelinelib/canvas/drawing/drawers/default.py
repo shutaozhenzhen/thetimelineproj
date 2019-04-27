@@ -31,6 +31,8 @@ from timelinelib.wxgui.components.font import Font
 import timelinelib.wxgui.components.font as font
 from timelinelib.canvas.drawing.drawers.legenddrawer import LegendDrawer
 from wx import BRUSHSTYLE_TRANSPARENT
+from timelinelib.canvas.drawing.drawers.dividerline import DividerLine
+from timelinelib.canvas.drawing.drawers.minorstrip import MinorStripDrawer
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -51,6 +53,9 @@ class DefaultDrawingAlgorithm(Drawer):
         self._create_pens()
         self._create_brushes()
         self._fixed_ys = {}
+        self._do_draw_top_scale = False
+        self._do_draw_bottom_scale = True
+        self._do_draw_divider_line = False
 
     def set_event_box_drawer(self, event_box_drawer):
         self.event_box_drawer = event_box_drawer
@@ -105,7 +110,8 @@ class DefaultDrawingAlgorithm(Drawer):
     def draw(self, dc, timeline, view_properties, appearance, fast_draw=False):
         self.fast_draw = fast_draw
         view_properties.hide_events_done = appearance.get_hide_events_done()
-        view_properties.legend_pos = appearance.get_legend_pos()
+        view_properties._legend_pos = appearance.get_legend_pos()
+        view_properties._time_scale_pos = appearance.get_time_scale_pos()
         view_properties.set_fuzzy_icon(appearance.get_fuzzy_icon())
         view_properties.set_locked_icon(appearance.get_locked_icon())
         view_properties.set_hyperlink_icon(appearance.get_hyperlink_icon())
@@ -291,43 +297,50 @@ class DefaultDrawingAlgorithm(Drawer):
         self._draw_divider_line()
 
     def _draw_normal_bg(self):
-        self._draw_minor_strips()
         self._draw_major_strips()
+        self._draw_minor_strips()
         self._draw_divider_line()
         self._draw_now_line()
 
     def _draw_minor_strips(self):
+        drawer = MinorStripDrawer(self)
         for strip_period in self.scene.minor_strip_data:
-            self._draw_minor_strip_divider_line_at(strip_period.end_time)
-            self._draw_minor_strip_label(strip_period)
+            label = self.scene.minor_strip.label(strip_period.start_time)
+            drawer.draw(label, strip_period.start_time, strip_period.end_time)
+            #self._draw_minor_strip_divider_line_at(strip_period.end_time)
+            #self._draw_minor_strip_label(strip_period)
 
-    def _draw_minor_strip_divider_line_at(self, time):
-        x = self.scene.x_pos_for_time(time)
-        self.dc.SetPen(self.minor_strip_pen)
-        self.dc.DrawLine(x, 0, x, self.scene.height)
-
-    def _draw_minor_strip_label(self, strip_period):
-        label = self.scene.minor_strip.label(strip_period.start_time)
-        self._set_minor_strip_font(strip_period)
-        (tw, th) = self.dc.GetTextExtent(label)
-        start_x = self.scene.x_pos_for_time(strip_period.get_start_time())
-        end_x = self.scene.x_pos_for_time(strip_period.get_end_time())
-        middle = (start_x + end_x) / 2
-        middley = self.scene.divider_y
-        self.dc.DrawText(label, middle - tw / 2, middley - th)
-
-    def _set_minor_strip_font(self, strip_period):
-        if self.scene.minor_strip_is_day():
-            bold = False
-            italic = False
-            if self.time_type.is_weekend_day(strip_period.start_time):
-                bold = True
-            if self.time_type.is_special_day(strip_period.start_time):
-                italic = True
-            font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc,
-                                           force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
-        else:
-            font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
+#     def _draw_minor_strip_divider_line_at(self, time):
+#         x = self.scene.x_pos_for_time(time)
+#         self.dc.SetPen(self.minor_strip_pen)
+#         self.dc.DrawLine(x, 0, x, self.scene.height)
+# 
+#     def _draw_minor_strip_label(self, strip_period):
+#         label = self.scene.minor_strip.label(strip_period.start_time)
+#         self._set_minor_strip_font(strip_period)
+#         (tw, th) = self.dc.GetTextExtent(label)
+#         start_x = self.scene.x_pos_for_time(strip_period.get_start_time())
+#         end_x = self.scene.x_pos_for_time(strip_period.get_end_time())
+#         middle = (start_x + end_x) / 2
+#         if self._do_draw_divider_line:
+#             middley = self.scene.divider_y
+#             self.dc.DrawText(label, middle - tw / 2, middley - th)
+#         if self._do_draw_bottom_scale:
+#             middley = self.scene.height
+#             self.dc.DrawText(label, middle - tw / 2, middley - th)
+#             
+#     def _set_minor_strip_font(self, strip_period):
+#         if self.scene.minor_strip_is_day():
+#             bold = False
+#             italic = False
+#             if self.time_type.is_weekend_day(strip_period.start_time):
+#                 bold = True
+#             if self.time_type.is_special_day(strip_period.start_time):
+#                 italic = True
+#             font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc,
+#                                            force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
+#         else:
+#             font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
 
     def _draw_major_strips(self):
         font.set_major_strip_text_font(self.appearance.get_major_strip_font(), self.dc)
@@ -386,9 +399,7 @@ class DefaultDrawingAlgorithm(Drawer):
         return self.scene.x_pos_for_time(time_period.mean_time()) + th / 2
 
     def _draw_divider_line(self):
-        self.dc.SetPen(self.black_solid_pen)
-        self.dc.DrawLine(0, self.scene.divider_y, self.scene.width,
-                         self.scene.divider_y)
+        DividerLine(self).draw()
 
     def _draw_lines_to_non_period_events(self, view_properties):
         for (event, rect) in self.scene.event_data:

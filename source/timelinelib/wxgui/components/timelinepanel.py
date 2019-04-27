@@ -178,6 +178,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_display_checkmark_on_events_done(self.config.display_checkmark_on_events_done)
             appearance.set_never_use_time(self.config.never_use_time)
             appearance.set_legend_pos(self.config.legend_pos)
+            appearance.set_time_scale_pos(self.config.time_scale_pos)
         self.config.listen_for_any(update_appearance)
         update_appearance()
 
