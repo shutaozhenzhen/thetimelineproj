@@ -30,26 +30,25 @@ DIVIDER_LABEL = 'Divider-Label'
 class describe_minor_strip_drawer(describe_drawers):
     
     def test_can_draw_divider_line(self):
+        self._drawer._appearance.get_tim_scale_pos = lambda : 1
         self._drawer.draw(DIVIDER_LABEL, 1, 2)
         self.assertEqual(1, self._dc.draw_text_call_count)
         self.assertEqual(DIVIDER_LABEL, self._dc.text)
         self.assertEqual(130, self._dc.text_y)
 
     def test_can_draw_top_line(self):
-        self._drawer._drawer._do_draw_divider_line = False
-        self._drawer._drawer._do_draw_top_scale = True
+        self._drawer._appearance.get_tim_scale_pos = lambda : 0
         self._drawer.draw(TOP_LABEL, 1, 2)
         self.assertEqual(1, self._dc.draw_text_call_count)
         self.assertEqual(TOP_LABEL, self._dc.text)
-        self.assertEqual(21, self._dc.text_y)
+        self.assertEqual(130, self._dc.text_y)
 
     def test_can_draw_bottom_line(self):
-        self._drawer._drawer._do_draw_divider_line = False
-        self._drawer._drawer._do_draw_bottom_scale = True
+        self._drawer._appearance.get_tim_scale_pos = lambda : 2
         self._drawer.draw(BOTTOM_LABEL, 1, 2)
         self.assertEqual(1, self._dc.draw_text_call_count)
         self.assertEqual(BOTTOM_LABEL, self._dc.text)
-        self.assertEqual(220, self._dc.text_y - 2 * self._text_height)
+        self.assertEqual(90, self._dc.text_y - 2 * self._text_height)
 
     def setUp(self):
         # self.install_gettext() # Needed when test is run standalone
@@ -89,4 +88,7 @@ class Appearance():
     
     def get_minor_strip_font(self):
         return '10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)'
+    
+    def get_time_scale_pos(self):
+        return 1
     
