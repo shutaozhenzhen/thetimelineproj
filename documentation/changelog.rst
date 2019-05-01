@@ -1,6 +1,17 @@
 Changelog
 =========
 
+Version 1.20.0
+--------------
+
+**Planned release on 31 October 2019.**
+
+*Don't want to wait for the final release? Try the beta version!*
+
+* `Download source <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/>`_.
+
+* `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
+
 Version 1.19.0
 --------------
 
