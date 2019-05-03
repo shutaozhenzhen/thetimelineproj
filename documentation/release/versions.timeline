@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.19.0 development</version>
+  <version>1.19.0 (a5f8103cf2d3 2019-04-27)</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -1462,18 +1462,66 @@ Fixed crash reports and bugs:
       <default_color>192,192,192</default_color>
     </event>
     <event>
-      <start>2018-12-31 16:17:00</start>
-      <end>2018-12-31 16:17:00</end>
+      <start>2019-04-30 12:00:00</start>
+      <end>2019-04-30 12:00:00</end>
       <text>Timeline 1.19.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
+      <category>Planned Release</category>
       <description>Version 1.19.0
 --------------
 
-**Planned release on 31 December 2018.**
+**Released 30 April 2019.**
+
+Time scale position:
+
+* ``The position of the time scale can be changed with a preference value.``
+  The position can be at top, at bottom or at the center line.
+
+Default Dates:
+
+* ``For Gregorian dates, default values for year, month and day can be used in input fields.``
+  The feature can be selected with a preference setting.
+
+Export:
+
+* ``Not all events are shown in export listbox when filtering is turned off.``
+  Include events without category when filtering is turned off.
+
+Fixed crash reports and bugs:
+
+Moving event vertically:
+* ``AttributeError: 'NoneType' object has no attribute 'Y'``
+  Occurs when an event ends-today.
+  Fixed by changing the == operator of an event
+  
+Duplication of events:
+* ``TypeError: open_duplicate_event_dialog_for_event() takes exactly 4 arguments (3 given)``
+  Added missing argument
+
+* ``AttributeError: 'NoneType' object has no attribute 'Y'``
+  Check if event is visible before trying to find overlapping events.
+
+* ``PyAssertionError: C++ assertion "strcmp(setlocale(LC_ALL, NULL), "C") == 0"... ``
+  Occurs when date format is changed and then when Event editor is opened.
+  A bmp works better than a png image when locale is used outside of wx.</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2019-10-31 11:02:00</start>
+      <end>2019-10-31 11:02:00</end>
+      <text>Timeline 1.20.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Future Release</category>
+      <description>Version 1.20.0
+--------------
+
+**Planned release on 31 October 2019.**
 
 *Don't want to wait for the final release? Try the beta version!*
 
