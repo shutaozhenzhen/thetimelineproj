@@ -33,10 +33,13 @@ class GuiCreator(object):
         self._create_prev_button()
         self._create_next_button()
         self._create_list_button()
+        self._create_period_button()
         self._create_no_match_label()
         self._create_single_match_label()
         self.Realize()
-
+        self.lbl_no_match.Show(False)
+        self.lbl_single_match.Show(False)
+        
     def set_focus(self):
         self.search.SetFocus()
 
@@ -53,33 +56,40 @@ class GuiCreator(object):
             close_bmp = wx.Bitmap(os.path.join(ICONS_DIR, "close.png"))
         else:
             close_bmp = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_TOOLBAR, self.icon_size)
-        self.AddLabelTool(wx.ID_CLOSE, "", close_bmp, shortHelp="")
+        self.AddLabelTool(wx.ID_CLOSE, "", close_bmp, shortHelp=_("Close"))
         self.Bind(wx.EVT_TOOL, self._btn_close_on_click, id=wx.ID_CLOSE)
 
     def _create_prev_button(self):
         prev_bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_BACK, wx.ART_TOOLBAR,
                                             self.icon_size)
-        self.AddLabelTool(wx.ID_BACKWARD, "", prev_bmp, shortHelp="")
+        self.AddLabelTool(wx.ID_BACKWARD, "", prev_bmp, shortHelp=_("Prevoius match"))
         self.Bind(wx.EVT_TOOL, self._btn_prev_on_click, id=wx.ID_BACKWARD)
 
     def _create_next_button(self):
         next_bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_FORWARD, wx.ART_TOOLBAR, self.icon_size)
-        self.AddLabelTool(wx.ID_FORWARD, "", next_bmp, shortHelp="")
+        self.AddLabelTool(wx.ID_FORWARD, "", next_bmp, shortHelp=_("Next match"))
         self.Bind(wx.EVT_TOOL, self._btn_next_on_click, id=wx.ID_FORWARD)
 
     def _create_list_button(self):
         list_bmp = wx.ArtProvider.GetBitmap(wx.ART_LIST_VIEW, wx.ART_TOOLBAR, self.icon_size)
-        self.AddLabelTool(wx.ID_MORE, "", list_bmp, shortHelp="")
+        self.AddLabelTool(wx.ID_MORE, "", list_bmp, shortHelp=_("List matches"))
         self.Bind(wx.EVT_TOOL, self._btn_list_on_click, id=wx.ID_MORE)
+
+    def _create_period_button(self):
+        choices = [_('Whole timeline'), _('This year'), _('Visible period')]
+        self.AddControl(wx.StaticText(self, wx.ID_ANY, _("In: ")))
+        self.period = wx.Choice(self, wx.ID_ANY, size=(150, -1), choices=choices,
+                                name = _("Select period"))
+        self.Bind(wx.EVT_CHOICE, self._btn_period_on_click, self.period)
+        self.AddControl(self.period)
+        self.period.SetSelection(0)
 
     def _create_no_match_label(self):
         self.lbl_no_match = wx.StaticText(self, label=_("No match"))
-        self.lbl_no_match.Show(False)
         self.AddControl(self.lbl_no_match)
 
     def _create_single_match_label(self):
         self.lbl_single_match = wx.StaticText(self, label=_("Only one match"))
-        self.lbl_single_match.Show(False)
         self.AddControl(self.lbl_single_match)
 
     def _btn_close_on_click(self, e):
@@ -101,7 +111,10 @@ class GuiCreator(object):
     def _btn_list_on_click(self, e):
         self.controller.list()
 
-
+    def _btn_period_on_click(self, e):
+        pass
+    
+    
 class SearchBarController(object):
 
     def __init__(self, view):

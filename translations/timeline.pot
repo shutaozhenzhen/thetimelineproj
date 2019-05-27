@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-27 22:09+0200\n"
+"POT-Creation-Date: 2019-05-27 23:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1990,11 +1990,47 @@ msgstr ""
 msgid "Progress %:"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\search.py:76
+#: source\timelinelib\wxgui\components\search.py:59
+msgid "Close"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\search.py:65
+msgid "Prevoius match"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\search.py:70
+msgid "Next match"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\search.py:75
+msgid "List matches"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\search.py:79
+msgid "Whole timeline"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\search.py:79
+msgid "This year"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\search.py:79
+msgid "Visible period"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\search.py:80
+msgid "In: "
+msgstr ""
+
+#: source\timelinelib\wxgui\components\search.py:82
+msgid "Select period"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\search.py:88
 msgid "No match"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\search.py:81
+#: source\timelinelib\wxgui\components\search.py:92
 msgid "Only one match"
 msgstr ""
 
