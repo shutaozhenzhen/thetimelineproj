@@ -272,12 +272,20 @@ class PreferencesDialog(Dialog):
                             label="$(now_line_colour_text)"
                             align="ALIGN_CENTER_VERTICAL"
                         />
-                        <ColourSelect
-                            name="now_line_colorpicker"
-                            align="ALIGN_CENTER_VERTICAL"
-                            width="60"
-                            height="30"
-                        />
+                        <BoxSizerHorizontal>
+                            <ColourSelect
+                                name="now_line_colorpicker"
+                                align="ALIGN_CENTER_VERTICAL"
+                                width="60"
+                                height="30"
+                            />
+                            <Spacer />
+                            <CheckBox
+                                name="use_bold_nowline"
+                                event_EVT_CHECKBOX="on_use_bold_nowline"
+                                label="$(use_bold_nowline_text)"
+                            />
+                        </BoxSizerHorizontal>
                         <StaticText
                             label="$(weekend_colour_text)"
                             align="ALIGN_CENTER_VERTICAL"
@@ -383,6 +391,7 @@ class PreferencesDialog(Dialog):
             "major_strip_colour_text": _("Major strip divider line:"),
             "now_line_colour_text": _("Now line:"),
             "weekend_colour_text": _("Weekends:"),
+            "use_bold_nowline_text": _("Use bold line"),
             "bg_colour_text": _("Background"),
             "vertical_space_between_events_text": _("Vertical space between Events (px)"),
             "colorize_weekends_text": _("Colorize weekends"),
@@ -550,6 +559,12 @@ class PreferencesDialog(Dialog):
 
     def SetColorizeWeekends(self, value):
         return self.colorize_weekends.SetValue(value)
+
+    def GetUseBoldNowline(self):
+        return self.use_bold_nowline.IsChecked()
+
+    def SetUseBoldNowline(self, value):
+        return self.use_bold_nowline.SetValue(value)
 
     def GetColorizeWeekends(self):
         return self.colorize_weekends.IsChecked()

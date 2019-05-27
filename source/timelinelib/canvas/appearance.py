@@ -54,6 +54,7 @@ class Appearance(Observable):
         self._build_property("never_use_time", False)
         self._build_property("legend_pos", 0)
         self._build_property("time_scale_pos", 1)
+        self._build_property("use_bold_nowline", False)
 
     def _build_property(self, name, initial_value):
 
