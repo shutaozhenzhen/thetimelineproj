@@ -123,6 +123,9 @@ class PreferencesDialogController(Controller):
     def on_vertical_space_between_events_click(self, event):
         self.config.vertical_space_between_events = self.view.GetVerticalSpaceBetweenEvents()
 
+    def on_use_bold_nowline(self, event):
+        self.config.use_bold_nowline = self.view.GetUseBoldNowline()
+    
     def on_colorize_weekends(self, event):
         self.config.colorize_weekends = self.view.GetColorizeWeekends()
 
@@ -159,6 +162,7 @@ class PreferencesDialogController(Controller):
         self.view.DisplayIcons()
         self.view.SetVerticalSpaceBetweenEvents(self.config.vertical_space_between_events)
         self.view.SetColorizeWeekends(self.config.colorize_weekends)
+        self.view.SetUseBoldNowline(self.config.use_bold_nowline)
         self.view.SetSkipSInDecadeText(self.config.skip_s_in_decade_text)
         self.view.SetDisplayCheckmarkOnEventsDone(self.config.display_checkmark_on_events_done)
         self.view.SetNeverUseTime(self.config.never_use_time)

@@ -274,6 +274,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'text_below_icon', 'default': 'False'},
     {'name': 'filtered_listbox_export', 'default': 'False'},
     {'name': 'colorize_weekends', 'default': 'False'},
+    {'name': 'use_bold_nowline', 'default': 'False'},
     {'name': 'skip_s_in_decade_text', 'default': 'False'},
     {'name': 'display_checkmark_on_events_done', 'default': 'False'},
     {'name': 'never_use_time', 'default': 'False'},

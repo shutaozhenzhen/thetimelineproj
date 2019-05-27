@@ -33,6 +33,7 @@ from timelinelib.canvas.drawing.drawers.legenddrawer import LegendDrawer
 from wx import BRUSHSTYLE_TRANSPARENT
 from timelinelib.canvas.drawing.drawers.dividerline import DividerLine
 from timelinelib.canvas.drawing.drawers.minorstrip import MinorStripDrawer
+from timelinelib.canvas.drawing.drawers.nowline import NowLine
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -465,11 +466,7 @@ class DefaultDrawingAlgorithm(Drawer):
             self.dc.SetPen(self.black_solid_pen)
 
     def _draw_now_line(self):
-        now_time = self.time_type.now()
-        x = self.scene.x_pos_for_time(now_time)
-        if x > 0 and x < self.scene.width:
-            self.dc.SetPen(self.now_pen)
-            self.dc.DrawLine(x, 0, x, self.scene.height)
+        NowLine(self).draw()
 
     def _extract_categories(self):
         categories = []

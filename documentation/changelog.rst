@@ -12,6 +12,12 @@ Version 1.20.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Graphics:
+
+* ``The with of the now-line can be 2 pix wider to help old eyes.``
+  A preference can be checked in the color tab to make the now-line wider.
+
+
 Version 1.19.0
 --------------
 

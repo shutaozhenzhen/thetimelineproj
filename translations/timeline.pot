@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-27 17:05+0200\n"
+"POT-Creation-Date: 2019-05-27 22:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -640,8 +640,8 @@ msgid "File"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:50
-#: source\timelinelib\wxgui\components\timelinepanel.py:280
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:380
+#: source\timelinelib\wxgui\components\timelinepanel.py:281
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:388
 msgid "Edit"
 msgstr ""
 
@@ -703,7 +703,7 @@ msgid "Find"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:68
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:400
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:409
 msgid "Preferences"
 msgstr ""
 
@@ -1423,7 +1423,7 @@ msgid ""
 msgstr ""
 
 #: source\timelinelib\help\pages.py:271
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:381
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:389
 msgid "Experimental Features"
 msgstr ""
 
@@ -1854,7 +1854,7 @@ msgid "Add..."
 msgstr ""
 
 #: source\timelinelib\wxgui\components\categorytree.py:205
-#: source\timelinelib\wxgui\components\timelinepanel.py:276
+#: source\timelinelib\wxgui\components\timelinepanel.py:277
 msgid "Delete"
 msgstr ""
 
@@ -2003,60 +2003,60 @@ msgid "View Categories Individually"
 msgstr ""
 
 #: source\timelinelib\wxgui\components\timelinepanel.py:95
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:394
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:403
 #: source\timelinelib\wxgui\frames\mainframe\guicreator.py:343
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:39
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:49
 msgid "Center"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:281
+#: source\timelinelib\wxgui\components\timelinepanel.py:282
 msgid "Duplicate..."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:282
+#: source\timelinelib\wxgui\components\timelinepanel.py:283
 msgid "Mark Event as Done"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:283
+#: source\timelinelib\wxgui\components\timelinepanel.py:284
 msgid "Select Category..."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:285
+#: source\timelinelib\wxgui\components\timelinepanel.py:286
 msgid "Sticky Balloon"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:294
+#: source\timelinelib\wxgui\components\timelinepanel.py:295
 msgid "Goto URL"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:327
+#: source\timelinelib\wxgui\components\timelinepanel.py:328
 #, python-format
 msgid "Are you sure you want to delete %d events?"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:330
+#: source\timelinelib\wxgui\components\timelinepanel.py:331
 msgid "Are you sure you want to delete this event?"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:375
+#: source\timelinelib\wxgui\components\timelinepanel.py:376
 #, python-format
 msgid "%s events hidden"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:457
+#: source\timelinelib\wxgui\components\timelinepanel.py:458
 msgid "This timeline is read-only."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:458
+#: source\timelinelib\wxgui\components\timelinepanel.py:459
 msgid "To edit this timeline, save it to a new file: File -> Save As."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:461
+#: source\timelinelib\wxgui\components\timelinepanel.py:462
 msgid "This timeline is not being saved."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:462
+#: source\timelinelib\wxgui\components\timelinepanel.py:463
 msgid "To save this timeline, save it to a new file: File -> Save As."
 msgstr ""
 
@@ -2449,191 +2449,195 @@ msgid "Edit Milestone"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\preferences\controller.py:68
-#: source\timelinelib\wxgui\dialogs\preferences\controller.py:158
+#: source\timelinelib\wxgui\dialogs\preferences\controller.py:161
 msgid "Current"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:357
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:365
 msgid "General"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:358
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:366
 msgid "Open most recent timeline on startup"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:359
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:367
 msgid "Use inertial scrolling"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:360
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:368
 msgid "Never show period Events as point Events"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:361
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:369
 msgid "Center Event texts"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:362
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:370
 msgid "Uncheck time checkbox for new events"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:363
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:371
 msgid "Balloon text below icon"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:364
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:372
 msgid "Filter items in listbox export, on categories"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:365
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:373
 msgid "Select Event Editor Tab Order"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:366
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:374
 msgid "Select Date format"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:367
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:375
 msgid "Date && Time"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:368
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:376
 msgid "Week start on:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:369
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:377
 msgid "Monday"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:369
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:377
 msgid "Sunday"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:370
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:378
 msgid "Fonts"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:371
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:379
 msgid "Colours"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:372
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:380
 msgid "Major Strips:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:373
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:381
 msgid "Minor Strips:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:374
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:382
 msgid "Balloons:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:375
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:383
 msgid "Icons"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:376
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:384
 msgid "Fuzzy icon"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:377
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:385
 msgid "Locked icon"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:378
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:386
 msgid "Hyperlink icon"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:379
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:387
 msgid "Legends:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:382
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:390
 msgid "Minor strip divider line:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:383
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:391
 msgid "Major strip divider line:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:384
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:392
 msgid "Now line:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:385
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:393
 msgid "Weekends:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:386
-msgid "Background"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:387
-msgid "Vertical space between Events (px)"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:388
-msgid "Colorize weekends"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:389
-msgid "Skip s in decade text"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:390
-msgid "Display checkmark when events are done"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:391
-msgid "Never use time precision for events"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:392
-msgid "Legend Position"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:393
-msgid "Bottom-Left"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:393
-msgid "Top-Left"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:393
-msgid "Top-Right"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:393
-msgid "Bottom-Right"
-msgstr ""
-
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:394
-msgid "Top"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\preferences\view.py:394
-msgid "Bottom"
+msgid "Use bold line"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:395
-msgid "Time scale position"
+msgid "Background"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:396
-msgid "Default Year"
+msgid "Vertical space between Events (px)"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:397
-msgid "Default Month"
+msgid "Colorize weekends"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:398
-msgid "Default Day"
+msgid "Skip s in decade text"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:399
+msgid "Display checkmark when events are done"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:400
+msgid "Never use time precision for events"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:401
+msgid "Legend Position"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:402
+msgid "Bottom-Left"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:402
+msgid "Top-Left"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:402
+msgid "Top-Right"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:402
+msgid "Bottom-Right"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:403
+msgid "Top"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:403
+msgid "Bottom"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:404
+msgid "Time scale position"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:405
+msgid "Default Year"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:406
+msgid "Default Month"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:407
+msgid "Default Day"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\preferences\view.py:408
 msgid "Use date default values"
 msgstr ""
 
