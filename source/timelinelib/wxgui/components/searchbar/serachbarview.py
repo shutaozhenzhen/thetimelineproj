@@ -39,7 +39,7 @@ class GuiCreator(object):
         self._lbl_single_match.Show(False)
         
     def set_focus(self):
-        self.search.SetFocus()
+        self._search.SetFocus()
 
     def set_period_selections(self, values):
         if values:
@@ -54,12 +54,12 @@ class GuiCreator(object):
             self.period_label.Show(False)
             
     def _create_search_box(self):
-        self.search = wx.SearchCtrl(self, size=(150, -1),
+        self._search = wx.SearchCtrl(self, size=(150, -1),
                                     style=wx.TE_PROCESS_ENTER)
         self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN,
-                  self._search_on_search_btn, self.search)
-        self.Bind(wx.EVT_TEXT_ENTER, self._search_on_text_enter, self.search)
-        self.AddControl(self.search)
+                  self._search_on_search_btn, self._search)
+        self.Bind(wx.EVT_TEXT_ENTER, self._search_on_text_enter, self._search)
+        self.AddControl(self._search)
 
     def _create_close_button(self):
         if 'wxMSW' in wx.PlatformInfo:
@@ -138,7 +138,7 @@ class SearchBar(wx.ToolBar, GuiCreator):
         self._controller.SetTimelineCanvas(timeline_canvas)
 
     def GetValue(self):
-        return self.search.GetValue()
+        return self._search.GetValue()
 
     def GetPeriod(self):
         return self.period.GetString(self.period.GetSelection())
