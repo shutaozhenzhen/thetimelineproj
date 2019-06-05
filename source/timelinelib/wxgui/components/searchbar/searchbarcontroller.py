@@ -35,8 +35,8 @@ class SearchBarController(object):
         self.view.Enable(timeline_canvas is not None)
 
     def Search(self):
-        new_search = self.view.get_value()
-        new_period = self.view.get_period()
+        new_search = self.view.GetValue()
+        new_period = self.view.GetPeriod()
         if (
             (self.last_search is not None and self.last_search == new_search) and 
             (self.last_period is not None and self.last_period == new_period)):
@@ -50,21 +50,21 @@ class SearchBarController(object):
                 self.result = []
             self.result_index = 0
             self.navigate_to_match()
-            self.view.update_nomatch_labels(len(self.result) == 0)
-            self.view.update_singlematch_label(len(self.result) == 1)
-        self.view.update_buttons()
+            self.view.UpdateNomatchLabels(len(self.result) == 0)
+            self.view.UpdateSinglematchLabel(len(self.result) == 1)
+        self.view.UpdateButtons()
 
     def Next(self):
         if not self._on_last_match():
             self.result_index += 1
             self.navigate_to_match()
-            self.view.update_buttons()
+            self.view.UpdateButtons()
 
     def Prev(self):
         if not self._on_first_match():
             self.result_index -= 1
             self.navigate_to_match()
-            self.view.update_buttons()
+            self.view.UpdateButtons()
 
     def List(self):
         event_list = [event.get_label(self.timeline_canvas.GetTimeType()) for event in self.result]
