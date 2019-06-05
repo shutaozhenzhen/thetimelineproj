@@ -18,7 +18,7 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.components.searchbar.searchbarcontroller import SearchBar
+from timelinelib.wxgui.components.searchbar.serachbarview import SearchBar
 from timelinelib.wxgui.components.searchbar.searchbarcontroller import SearchBarController
 from timelinelib.test.cases.unit import UnitTestCase
 
@@ -27,35 +27,35 @@ class describe_search_bar(UnitTestCase):
 
     def test_no_events_found_displays_nomatch_label(self):
         self.view.get_value.return_value = ""
-        self.controller.searchbarcontroller()
+        self.controller.search()
         self.view.update_nomatch_labels.assert_called_with(True)
         self.view.update_singlematch_label.assert_called_with(False)
 
     def test_no_events_found_no_navigation_call(self):
         self.view.get_value.return_value = ""
-        self.controller.searchbarcontroller()
+        self.controller.search()
         self.assertFalse(self.timeline_canvas.navigate)
 
     def test_on_event_found_displays_singlematch_label(self):
         self.view.get_value.return_value = "one"
-        self.controller.searchbarcontroller()
+        self.controller.search()
         self.view.update_nomatch_labels.assert_called_with(False)
         self.view.update_singlematch_label.assert_called_with(True)
 
     def test_on_event_found_navigation_called(self):
         self.view.get_value.return_value = "one"
-        self.controller.searchbarcontroller()
+        self.controller.search()
         self.assertTrue(self.timeline_canvas.navigate)
 
     def test_two_events_found_displays_no_label(self):
         self.view.get_value.return_value = "two"
-        self.controller.searchbarcontroller()
+        self.controller.search()
         self.view.update_nomatch_labels.assert_called_with(False)
         self.view.update_singlematch_label.assert_called_with(False)
 
     def test_three_events_makes_it_possible_to_move_to_next(self):
         self.view.get_value.return_value = "three"
-        self.controller.searchbarcontroller()
+        self.controller.search()
         self.assertTrue(self.controller.result_index == 0)
         self.controller.next()
         self.assertTrue(self.controller.result_index == 1)
@@ -66,7 +66,7 @@ class describe_search_bar(UnitTestCase):
 
     def test_three_events_makes_it_possible_to_move_to_prev(self):
         self.view.get_value.return_value = "three"
-        self.controller.searchbarcontroller()
+        self.controller.search()
         self.controller.next()
         self.controller.next()
         self.assertTrue(self.controller.result_index == 2)
@@ -79,8 +79,8 @@ class describe_search_bar(UnitTestCase):
 
     def test_searching_for_same_term_twice_goes_to_next_match(self):
         self.view.get_value.return_value = "three"
-        self.controller.searchbarcontroller()
-        self.controller.searchbarcontroller()
+        self.controller.search()
+        self.controller.search()
         self.assertEqual(self.controller.result_index, 1)
 
     def test_no_timeline_canvas_hides_search_bar(self):
