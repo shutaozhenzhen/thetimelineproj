@@ -108,19 +108,19 @@ class GuiCreator(object):
         self.GetParent().Layout()
 
     def _search_on_search_btn(self, e):
-        self.controller.Search()
+        self._controller.Search()
 
     def _search_on_text_enter(self, e):
-        self.controller.Search()
+        self._controller.Search()
 
     def _btn_prev_on_click(self, e):
-        self.controller.Prev()
+        self._controller.Prev()
 
     def _btn_next_on_click(self, e):
-        self.controller.Next()
+        self._controller.Next()
 
     def _btn_list_on_click(self, e):
-        self.controller.List()
+        self._controller.List()
 
     def _btn_period_on_click(self, e):
         pass
@@ -130,12 +130,12 @@ class SearchBar(wx.ToolBar, GuiCreator):
 
     def __init__(self, parent):
         wx.ToolBar.__init__(self, parent, style=wx.TB_HORIZONTAL | wx.TB_BOTTOM)
-        self.controller = SearchBarController(self)
+        self._controller = SearchBarController(self)
         self._create_gui()
         self.UpdateButtons()
 
     def SetTimelineCanvas(self, timeline_canvas):
-        self.controller.SetTimelineCanvas(timeline_canvas)
+        self._controller.SetTimelineCanvas(timeline_canvas)
 
     def GetValue(self):
         return self.search.GetValue()
@@ -150,6 +150,6 @@ class SearchBar(wx.ToolBar, GuiCreator):
         self.lbl_single_match.Show(singlematch)
 
     def UpdateButtons(self):
-        self.EnableTool(wx.ID_BACKWARD, self.controller.enable_backward())
-        self.EnableTool(wx.ID_FORWARD, self.controller.enable_forward())
-        self.EnableTool(wx.ID_MORE, self.controller.enable_list())
+        self.EnableTool(wx.ID_BACKWARD, self._controller.enable_backward())
+        self.EnableTool(wx.ID_FORWARD, self._controller.enable_forward())
+        self.EnableTool(wx.ID_MORE, self._controller.enable_list())
