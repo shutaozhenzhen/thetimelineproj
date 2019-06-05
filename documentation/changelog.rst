@@ -17,6 +17,10 @@ Graphics:
 * ``The with of the now-line can be 2 pix wider to help old eyes.``
   A preference can be checked in the color tab to make the now-line wider.
 
+Search:
+
+* ``When only one event is found, pressing Enter has no effect.``
+  On Enter, if we are on the last event found, the first event found is highlighted.
 
 Version 1.19.0
 --------------
