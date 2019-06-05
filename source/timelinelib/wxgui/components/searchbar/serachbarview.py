@@ -35,8 +35,8 @@ class GuiCreator(object):
         self._create_no_match_label()
         self._create_single_match_label()
         self.Realize()
-        self.lbl_no_match.Show(False)
-        self.lbl_single_match.Show(False)
+        self._lbl_no_match.Show(False)
+        self._lbl_single_match.Show(False)
         
     def set_focus(self):
         self.search.SetFocus()
@@ -96,12 +96,12 @@ class GuiCreator(object):
         self.period.SetSelection(0)
 
     def _create_no_match_label(self):
-        self.lbl_no_match = wx.StaticText(self, label=_("No match"))
-        self.AddControl(self.lbl_no_match)
+        self._lbl_no_match = wx.StaticText(self, label=_("No match"))
+        self.AddControl(self._lbl_no_match)
 
     def _create_single_match_label(self):
-        self.lbl_single_match = wx.StaticText(self, label=_("Only one match"))
-        self.AddControl(self.lbl_single_match)
+        self._lbl_single_match = wx.StaticText(self, label=_("Only one match"))
+        self.AddControl(self._lbl_single_match)
 
     def _btn_close_on_click(self, e):
         self.Show(False)
@@ -144,10 +144,10 @@ class SearchBar(wx.ToolBar, GuiCreator):
         return self.period.GetString(self.period.GetSelection())
 
     def UpdateNomatchLabels(self, nomatch):
-        self.lbl_no_match.Show(nomatch)
+        self._lbl_no_match.Show(nomatch)
 
     def UpdateSinglematchLabel(self, singlematch):
-        self.lbl_single_match.Show(singlematch)
+        self._lbl_single_match.Show(singlematch)
 
     def UpdateButtons(self):
         self.EnableTool(wx.ID_BACKWARD, self._controller.enable_backward())
