@@ -43,10 +43,8 @@ class SearchBarController(object):
         if (
             (self.last_search is not None and self.last_search == new_search) and 
             (self.last_period is not None and self.last_period == new_period)):
-            print("Using old search")
             self.next()
         else:
-            print("New search")
             self.last_search = new_search
             self.last_period = new_period
             if self.timeline_canvas is not None:
