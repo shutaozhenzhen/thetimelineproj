@@ -99,7 +99,7 @@ class TimelineCanvas():
     def __init__(self):
         self.navigate = False
 
-    def get_filtered_events(self, search):
+    def GetFilteredEvents(self, search):
         if search == "":
             return []
         elif search == "one":

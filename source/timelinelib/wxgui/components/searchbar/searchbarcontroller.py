@@ -45,7 +45,7 @@ class SearchBarController(object):
             self.last_search = new_search
             self.last_period = new_period
             if self.timeline_canvas is not None:
-                self.result = self.timeline_canvas.get_filtered_events(new_search)
+                self.result = self.timeline_canvas.GetFilteredEvents(new_search)
             else:
                 self.result = []
             self.result_index = 0
