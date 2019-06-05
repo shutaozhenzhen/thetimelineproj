@@ -25,8 +25,8 @@ class SearchBarController(object):
 
     def __init__(self, view):
         self._view = view
-        self.result = []
-        self.result_index = 0
+        self._result = []
+        self._result_index = 0
         self.last_search = None
         self.last_period = None
 
@@ -45,56 +45,56 @@ class SearchBarController(object):
             self.last_search = new_search
             self.last_period = new_period
             if self.timeline_canvas is not None:
-                self.result = self.timeline_canvas.GetFilteredEvents(new_search)
+                self._result = self.timeline_canvas.GetFilteredEvents(new_search)
             else:
-                self.result = []
-            self.result_index = 0
+                self._result = []
+            self._result_index = 0
             self.navigate_to_match()
-            self._view.UpdateNomatchLabels(len(self.result) == 0)
-            self._view.UpdateSinglematchLabel(len(self.result) == 1)
+            self._view.UpdateNomatchLabels(len(self._result) == 0)
+            self._view.UpdateSinglematchLabel(len(self._result) == 1)
         self._view.UpdateButtons()
 
     def Next(self):
         if self._on_last_match():
-            self.result_index = 0
+            self._result_index = 0
         else:
-            self.result_index += 1
+            self._result_index += 1
         self.navigate_to_match()
         self._view.UpdateButtons()
 
     def Prev(self):
         if not self._on_first_match():
-            self.result_index -= 1
+            self._result_index -= 1
             self.navigate_to_match()
             self._view.UpdateButtons()
 
     def List(self):
-        event_list = [event.get_label(self.timeline_canvas.GetTimeType()) for event in self.result]
+        event_list = [event.get_label(self.timeline_canvas.GetTimeType()) for event in self._result]
         dlg = EventListDialog(self._view, event_list)
         if dlg.ShowModal() == wx.ID_OK:
-            self.result_index = dlg.GetSelectedIndex()
+            self._result_index = dlg.GetSelectedIndex()
             self.navigate_to_match()
         dlg.Destroy()
 
     def navigate_to_match(self):
-        if (self.timeline_canvas is not None and self.result_index in range(len(self.result))):
-            event = self.result[self.result_index]
+        if (self.timeline_canvas is not None and self._result_index in range(len(self._result))):
+            event = self._result[self._result_index]
             self.timeline_canvas.Navigate(lambda tp: tp.center(event.mean_time()))
             self.timeline_canvas.HighligtEvent(event, clear=True)
 
     def enable_backward(self):
-        return bool(self.result and self.result_index > 0)
+        return bool(self._result and self._result_index > 0)
 
     def enable_forward(self):
-        return bool(self.result and self.result_index < (len(self.result) - 1))
+        return bool(self._result and self._result_index < (len(self._result) - 1))
 
     def enable_list(self):
-        return bool(len(self.result) > 0)
+        return bool(len(self._result) > 0)
 
     def _on_first_match(self):
-        return self.result > 0 and self.result_index == 0
+        return self._result > 0 and self._result_index == 0
 
     def _on_last_match(self):
-        return self.result > 0 and self.result_index == (len(self.result) - 1)
+        return self._result > 0 and self._result_index == (len(self._result) - 1)
 
 

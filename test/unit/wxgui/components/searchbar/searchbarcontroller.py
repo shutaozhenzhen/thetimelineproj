@@ -56,32 +56,32 @@ class describe_search_bar(UnitTestCase):
     def test_three_events_makes_it_possible_to_move_to_next(self):
         self.view.GetValue.return_value = "three"
         self.controller.Search()
-        self.assertTrue(self.controller.result_index == 0)
+        self.assertTrue(self.controller._result_index == 0)
         self.controller.Next()
-        self.assertTrue(self.controller.result_index == 1)
+        self.assertTrue(self.controller._result_index == 1)
         self.controller.Next()
-        self.assertTrue(self.controller.result_index == 2)
+        self.assertTrue(self.controller._result_index == 2)
         self.controller.Next()
-        self.assertTrue(self.controller.result_index == 0)
+        self.assertTrue(self.controller._result_index == 0)
 
     def test_three_events_makes_it_possible_to_move_to_prev(self):
         self.view.GetValue.return_value = "three"
         self.controller.Search()
         self.controller.Next()
         self.controller.Next()
-        self.assertTrue(self.controller.result_index == 2)
+        self.assertTrue(self.controller._result_index == 2)
         self.controller.Prev()
-        self.assertTrue(self.controller.result_index == 1)
+        self.assertTrue(self.controller._result_index == 1)
         self.controller.Prev()
-        self.assertTrue(self.controller.result_index == 0)
+        self.assertTrue(self.controller._result_index == 0)
         self.controller.Prev()
-        self.assertTrue(self.controller.result_index == 0)
+        self.assertTrue(self.controller._result_index == 0)
 
     def test_searching_for_same_term_twice_goes_to_next_match(self):
         self.view.GetValue.return_value = "three"
         self.controller.Search()
         self.controller.Search()
-        self.assertEqual(self.controller.result_index, 1)
+        self.assertEqual(self.controller._result_index, 1)
 
     def test_no_timeline_canvas_hides_search_bar(self):
         self.controller.SetTimelineCanvas(None)
