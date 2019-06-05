@@ -176,7 +176,7 @@ class MainPanel(wx.Panel):
         return visible_events
 
     def set_searchbar_timeline_canvas(self, timeline_canvas):
-        self.searchbar.set_timeline_canvas(timeline_canvas)
+        self.searchbar.SetTimelineCanvas(timeline_canvas)
 
     def get_view_properties(self):
         return self.timeline_panel.get_view_properties()
