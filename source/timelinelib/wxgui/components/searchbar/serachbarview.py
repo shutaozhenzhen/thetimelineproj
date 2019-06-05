@@ -132,24 +132,24 @@ class SearchBar(wx.ToolBar, GuiCreator):
         wx.ToolBar.__init__(self, parent, style=wx.TB_HORIZONTAL | wx.TB_BOTTOM)
         self.controller = SearchBarController(self)
         self._create_gui()
-        self.update_buttons()
+        self.UpdateButtons()
 
     def SetTimelineCanvas(self, timeline_canvas):
         self.controller.SetTimelineCanvas(timeline_canvas)
 
-    def get_value(self):
+    def GetValue(self):
         return self.search.GetValue()
 
-    def get_period(self):
+    def GetPeriod(self):
         return self.period.GetString(self.period.GetSelection())
 
-    def update_nomatch_labels(self, nomatch):
+    def UpdateNomatchLabels(self, nomatch):
         self.lbl_no_match.Show(nomatch)
 
-    def update_singlematch_label(self, singlematch):
+    def UpdateSinglematchLabel(self, singlematch):
         self.lbl_single_match.Show(singlematch)
 
-    def update_buttons(self):
+    def UpdateButtons(self):
         self.EnableTool(wx.ID_BACKWARD, self.controller.enable_backward())
         self.EnableTool(wx.ID_FORWARD, self.controller.enable_forward())
         self.EnableTool(wx.ID_MORE, self.controller.enable_list())
