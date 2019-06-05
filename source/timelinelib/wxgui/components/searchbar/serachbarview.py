@@ -57,7 +57,7 @@ class GuiCreator(object):
         self._search = wx.SearchCtrl(self, size=(150, -1), style=wx.TE_PROCESS_ENTER)
         self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN,
                   self._search_on_search_btn, self._search)
-        self.Bind(wx.EVT_TEXT_ENTER, self._search_on_text_enter, self._search)
+        self.Bind(wx.EVT_TEXT_ENTER, self._search_on_search_btn, self._search)
         self.AddControl(self._search)
 
     def _create_close_button(self):
@@ -106,9 +106,6 @@ class GuiCreator(object):
         self.GetParent().Layout()
 
     def _search_on_search_btn(self, e):
-        self._controller.Search()
-
-    def _search_on_text_enter(self, e):
         self._controller.Search()
 
     def _btn_prev_on_click(self, e):
