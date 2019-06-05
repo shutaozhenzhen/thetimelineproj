@@ -43,6 +43,18 @@ class GuiCreator(object):
     def set_focus(self):
         self.search.SetFocus()
 
+    def set_period_selections(self, values):
+        if values:
+            self.period.Clear()
+            for value in values:
+                self.period.Append(value)
+            self.period.SetSelection(0)
+            self.period.Show(True)
+            self.period_label.Show(True)
+        else:
+            self.period.Show(False)
+            self.period_label.Show(False)
+            
     def _create_search_box(self):
         self.search = wx.SearchCtrl(self, size=(150, -1),
                                     style=wx.TE_PROCESS_ENTER)
@@ -76,8 +88,9 @@ class GuiCreator(object):
         self.Bind(wx.EVT_TOOL, self._btn_list_on_click, id=wx.ID_MORE)
 
     def _create_period_button(self):
-        choices = [_('Whole timeline'), _('This year'), _('Visible period')]
-        self.AddControl(wx.StaticText(self, wx.ID_ANY, _("In: ")))
+        choices = [_('Whole timeline'), _('Visible period'), _('This year')]
+        self.period_label = wx.StaticText(self, wx.ID_ANY, _("In: ")) 
+        self.AddControl(self.period_label)
         self.period = wx.Choice(self, wx.ID_ANY, size=(150, -1), choices=choices,
                                 name = _("Select period"))
         self.Bind(wx.EVT_CHOICE, self._btn_period_on_click, self.period)
@@ -122,6 +135,7 @@ class SearchBarController(object):
         self.result = []
         self.result_index = 0
         self.last_search = None
+        self.last_period = None
 
     def set_timeline_canvas(self, timeline_canvas):
         self.timeline_canvas = timeline_canvas
@@ -129,12 +143,18 @@ class SearchBarController(object):
 
     def search(self):
         new_search = self.view.get_value()
-        if self.last_search is not None and self.last_search == new_search:
+        new_period = self.view.get_period()
+        if (
+            (self.last_search is not None and self.last_search == new_search) and 
+            (self.last_period is not None and self.last_period == new_period)):
+            print("Using old search")
             self.next()
         else:
+            print("New search")
             self.last_search = new_search
+            self.last_period = new_period
             if self.timeline_canvas is not None:
-                self.result = self.timeline_canvas.get_filtered_events(new_search)
+                self.result = self.timeline_canvas.get_filtered_events(new_search, new_period)
             else:
                 self.result = []
             self.result_index = 0
@@ -198,6 +218,9 @@ class SearchBar(wx.ToolBar, GuiCreator):
 
     def get_value(self):
         return self.search.GetValue()
+
+    def get_period(self):
+        return self.period.GetString(self.period.GetSelection())
 
     def update_nomatch_labels(self, nomatch):
         self.lbl_no_match.Show(nomatch)
