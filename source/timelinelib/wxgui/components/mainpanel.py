@@ -92,7 +92,7 @@ class MainPanel(wx.Panel):
                 period = TimePeriod(start_time, end_time)
                 periods.append(period)
         return periods, current_period
-
+        
     def timeline_panel_visible(self):
         return self.timeline_panel.IsShown()
 
@@ -106,6 +106,12 @@ class MainPanel(wx.Panel):
         self.searchbar.Show(show)
         if show is True:
             self.searchbar.set_focus()
+            time_type = self.main_frame.timeline.get_time_type()
+            try:
+                periods = time_type.get_search_periods()
+                self.searchbar.set_period_selections(periods)
+            except AttributeError:
+                self.searchbar.set_period_selections(None)
         self.GetSizer().Layout()
 
     def _remove_timeline_and_show_welcome_panel(self):
