@@ -134,8 +134,8 @@ class SearchBar(wx.ToolBar, GuiCreator):
         self._create_gui()
         self.update_buttons()
 
-    def set_timeline_canvas(self, timeline_canvas):
-        self.controller.set_timeline_canvas(timeline_canvas)
+    def SetTimelineCanvas(self, timeline_canvas):
+        self.controller.SetTimelineCanvas(timeline_canvas)
 
     def get_value(self):
         return self.search.GetValue()

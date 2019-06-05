@@ -30,7 +30,7 @@ class SearchBarController(object):
         self.last_search = None
         self.last_period = None
 
-    def set_timeline_canvas(self, timeline_canvas):
+    def SetTimelineCanvas(self, timeline_canvas):
         self.timeline_canvas = timeline_canvas
         self.view.Enable(timeline_canvas is not None)
 
