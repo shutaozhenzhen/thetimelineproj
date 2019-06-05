@@ -34,13 +34,13 @@ class SearchBarController(object):
         self.timeline_canvas = timeline_canvas
         self.view.Enable(timeline_canvas is not None)
 
-    def search(self):
+    def Search(self):
         new_search = self.view.get_value()
         new_period = self.view.get_period()
         if (
             (self.last_search is not None and self.last_search == new_search) and 
             (self.last_period is not None and self.last_period == new_period)):
-            self.next()
+            self.Next()
         else:
             self.last_search = new_search
             self.last_period = new_period
@@ -54,19 +54,19 @@ class SearchBarController(object):
             self.view.update_singlematch_label(len(self.result) == 1)
         self.view.update_buttons()
 
-    def next(self):
+    def Next(self):
         if not self._on_last_match():
             self.result_index += 1
             self.navigate_to_match()
             self.view.update_buttons()
 
-    def prev(self):
+    def Prev(self):
         if not self._on_first_match():
             self.result_index -= 1
             self.navigate_to_match()
             self.view.update_buttons()
 
-    def list(self):
+    def List(self):
         event_list = [event.get_label(self.timeline_canvas.GetTimeType()) for event in self.result]
         dlg = EventListDialog(self.view, event_list)
         if dlg.ShowModal() == wx.ID_OK:
