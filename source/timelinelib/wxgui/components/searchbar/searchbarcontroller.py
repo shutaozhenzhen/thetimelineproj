@@ -24,7 +24,7 @@ from timelinelib.wxgui.dialogs.eventlist.view import EventListDialog
 class SearchBarController(object):
 
     def __init__(self, view):
-        self.view = view
+        self._view = view
         self.result = []
         self.result_index = 0
         self.last_search = None
@@ -32,11 +32,11 @@ class SearchBarController(object):
 
     def SetTimelineCanvas(self, timeline_canvas):
         self.timeline_canvas = timeline_canvas
-        self.view.Enable(timeline_canvas is not None)
+        self._view.Enable(timeline_canvas is not None)
 
     def Search(self):
-        new_search = self.view.GetValue()
-        new_period = self.view.GetPeriod()
+        new_search = self._view.GetValue()
+        new_period = self._view.GetPeriod()
         if (
             (self.last_search is not None and self.last_search == new_search) and 
             (self.last_period is not None and self.last_period == new_period)):
@@ -50,9 +50,9 @@ class SearchBarController(object):
                 self.result = []
             self.result_index = 0
             self.navigate_to_match()
-            self.view.UpdateNomatchLabels(len(self.result) == 0)
-            self.view.UpdateSinglematchLabel(len(self.result) == 1)
-        self.view.UpdateButtons()
+            self._view.UpdateNomatchLabels(len(self.result) == 0)
+            self._view.UpdateSinglematchLabel(len(self.result) == 1)
+        self._view.UpdateButtons()
 
     def Next(self):
         if self._on_last_match():
@@ -60,17 +60,17 @@ class SearchBarController(object):
         else:
             self.result_index += 1
         self.navigate_to_match()
-        self.view.UpdateButtons()
+        self._view.UpdateButtons()
 
     def Prev(self):
         if not self._on_first_match():
             self.result_index -= 1
             self.navigate_to_match()
-            self.view.UpdateButtons()
+            self._view.UpdateButtons()
 
     def List(self):
         event_list = [event.get_label(self.timeline_canvas.GetTimeType()) for event in self.result]
-        dlg = EventListDialog(self.view, event_list)
+        dlg = EventListDialog(self._view, event_list)
         if dlg.ShowModal() == wx.ID_OK:
             self.result_index = dlg.GetSelectedIndex()
             self.navigate_to_match()
