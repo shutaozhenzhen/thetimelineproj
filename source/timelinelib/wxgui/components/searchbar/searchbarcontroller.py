@@ -16,11 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
-
 import wx
 
-from timelinelib.config.paths import ICONS_DIR
 from timelinelib.wxgui.dialogs.eventlist.view import EventListDialog
 
 
