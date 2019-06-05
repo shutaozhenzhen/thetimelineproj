@@ -106,16 +106,16 @@ class GuiCreator(object):
         self.GetParent().Layout()
 
     def _search_on_search_btn(self, e):
-        self._controller.Search()
+        self._controller.search()
 
     def _btn_prev_on_click(self, e):
-        self._controller.Prev()
+        self._controller.prev()
 
     def _btn_next_on_click(self, e):
-        self._controller.Next()
+        self._controller.next()
 
     def _btn_list_on_click(self, e):
-        self._controller.List()
+        self._controller.list()
 
     def _btn_period_on_click(self, e):
         pass
@@ -130,7 +130,7 @@ class SearchBar(wx.ToolBar, GuiCreator):
         self.UpdateButtons()
 
     def SetTimelineCanvas(self, timeline_canvas):
-        self._controller.SetTimelineCanvas(timeline_canvas)
+        self._controller.set_timeline_canvas(timeline_canvas)
 
     def GetValue(self):
         return self._search.GetValue()
