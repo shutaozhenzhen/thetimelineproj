@@ -55,10 +55,12 @@ class SearchBarController(object):
         self.view.UpdateButtons()
 
     def Next(self):
-        if not self._on_last_match():
+        if self._on_last_match():
+            self.result_index = 0
+        else:
             self.result_index += 1
-            self.navigate_to_match()
-            self.view.UpdateButtons()
+        self.navigate_to_match()
+        self.view.UpdateButtons()
 
     def Prev(self):
         if not self._on_first_match():
