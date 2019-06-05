@@ -43,15 +43,15 @@ class GuiCreator(object):
 
     def set_period_selections(self, values):
         if values:
-            self.period.Clear()
+            self._period.Clear()
             for value in values:
-                self.period.Append(value)
-            self.period.SetSelection(0)
-            self.period.Show(True)
-            self.period_label.Show(True)
+                self._period.Append(value)
+            self._period.SetSelection(0)
+            self._period.Show(True)
+            self._period_label.Show(True)
         else:
-            self.period.Show(False)
-            self.period_label.Show(False)
+            self._period.Show(False)
+            self._period_label.Show(False)
             
     def _create_search_box(self):
         self._search = wx.SearchCtrl(self, size=(150, -1),
@@ -87,13 +87,13 @@ class GuiCreator(object):
 
     def _create_period_button(self):
         choices = [_('Whole timeline'), _('Visible period'), _('This year')]
-        self.period_label = wx.StaticText(self, wx.ID_ANY, _("In: ")) 
-        self.AddControl(self.period_label)
-        self.period = wx.Choice(self, wx.ID_ANY, size=(150, -1), choices=choices,
+        self._period_label = wx.StaticText(self, wx.ID_ANY, _("In: ")) 
+        self.AddControl(self._period_label)
+        self._period = wx.Choice(self, wx.ID_ANY, size=(150, -1), choices=choices,
                                 name = _("Select period"))
-        self.Bind(wx.EVT_CHOICE, self._btn_period_on_click, self.period)
-        self.AddControl(self.period)
-        self.period.SetSelection(0)
+        self.Bind(wx.EVT_CHOICE, self._btn_period_on_click, self._period)
+        self.AddControl(self._period)
+        self._period.SetSelection(0)
 
     def _create_no_match_label(self):
         self._lbl_no_match = wx.StaticText(self, label=_("No match"))
@@ -141,7 +141,7 @@ class SearchBar(wx.ToolBar, GuiCreator):
         return self._search.GetValue()
 
     def GetPeriod(self):
-        return self.period.GetString(self.period.GetSelection())
+        return self._period.GetString(self._period.GetSelection())
 
     def UpdateNomatchLabels(self, nomatch):
         self._lbl_no_match.Show(nomatch)
