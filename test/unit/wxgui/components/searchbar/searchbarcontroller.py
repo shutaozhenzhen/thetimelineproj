@@ -62,7 +62,7 @@ class describe_search_bar(UnitTestCase):
         self.controller.Next()
         self.assertTrue(self.controller.result_index == 2)
         self.controller.Next()
-        self.assertTrue(self.controller.result_index == 2)
+        self.assertTrue(self.controller.result_index == 0)
 
     def test_three_events_makes_it_possible_to_move_to_prev(self):
         self.view.GetValue.return_value = "three"
