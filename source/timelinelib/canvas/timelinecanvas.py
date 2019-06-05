@@ -208,7 +208,7 @@ class TimelineCanvas(wx.Panel):
         export(path, self.controller.get_timeline(), self.controller.scene,
                self.controller.get_view_properties(), self.GetAppearance())
 
-    def get_filtered_events(self, search_target):
+    def GetFilteredEvents(self, search_target):
         events = self.GetDb().search(search_target)
         return self.controller.filter_events(events)
 
