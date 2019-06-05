@@ -108,19 +108,19 @@ class GuiCreator(object):
         self.GetParent().Layout()
 
     def _search_on_search_btn(self, e):
-        self.controller.search()
+        self.controller.Search()
 
     def _search_on_text_enter(self, e):
-        self.controller.search()
+        self.controller.Search()
 
     def _btn_prev_on_click(self, e):
-        self.controller.prev()
+        self.controller.Prev()
 
     def _btn_next_on_click(self, e):
-        self.controller.next()
+        self.controller.Next()
 
     def _btn_list_on_click(self, e):
-        self.controller.list()
+        self.controller.List()
 
     def _btn_period_on_click(self, e):
         pass
