@@ -109,7 +109,7 @@ class TimelineCanvas():
         elif search == "three":
             return [1, 2, 3]
 
-    def highligt_event(self, event, clear=False):
+    def HighligtEvent(self, event, clear=False):
         pass
 
     def Navigate(self, fn):
