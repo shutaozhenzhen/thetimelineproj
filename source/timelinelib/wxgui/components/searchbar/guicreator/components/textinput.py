@@ -16,5 +16,20 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.searchbar.guicreator.components.closebutton import CloseButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.textinput import TextInput
+import wx
+
+
+class TextInput:
+    
+    def __init__(self, parent, event_handler_fn):
+        self._search = wx.SearchCtrl(parent, size=(150, -1), style=wx.TE_PROCESS_ENTER)
+        parent.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, event_handler_fn, self._search)
+        parent.Bind(wx.EVT_TEXT_ENTER, event_handler_fn, self._search)
+        parent.AddControl(self._search)
+        
+    def SetFocus(self):
+        self._search.SetFocus()
+        
+    def GetValue(self):
+        return self._search.GetValue()
+        
