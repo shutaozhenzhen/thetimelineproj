@@ -105,13 +105,13 @@ class MainPanel(wx.Panel):
     def show_searchbar(self, show=True):
         self.searchbar.Show(show)
         if show is True:
-            self.searchbar.set_focus()
+            self.searchbar.Focus()
             time_type = self.main_frame.timeline.get_time_type()
             try:
                 periods = time_type.get_search_periods()
-                self.searchbar.set_period_selections(periods)
+                self.searchbar.SetPeriodSelections(periods)
             except AttributeError:
-                self.searchbar.set_period_selections(None)
+                self.searchbar.SetPeriodSelections(None)
         self.GetSizer().Layout()
 
     def _remove_timeline_and_show_welcome_panel(self):
