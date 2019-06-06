@@ -19,7 +19,6 @@
 import wx
 
 
-IMAGE = "close.png"
 HELP_TEXT = _("Prevoius match")
 LABEL = ""
 
