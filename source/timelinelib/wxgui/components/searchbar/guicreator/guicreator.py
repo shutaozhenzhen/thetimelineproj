@@ -18,7 +18,6 @@
 
 import os
 import wx
-from timelinelib.wxgui.components.searchbar.searchbarcontroller import SearchBarController
 from timelinelib.config.paths import ICONS_DIR
 
 
@@ -119,32 +118,3 @@ class GuiCreator(object):
 
     def _btn_period_on_click(self, e):
         pass
-
-
-class SearchBar(wx.ToolBar, GuiCreator):
-
-    def __init__(self, parent):
-        wx.ToolBar.__init__(self, parent, style=wx.TB_HORIZONTAL | wx.TB_BOTTOM)
-        self._controller = SearchBarController(self)
-        self._create_gui()
-        self.UpdateButtons()
-
-    def SetTimelineCanvas(self, timeline_canvas):
-        self._controller.set_timeline_canvas(timeline_canvas)
-
-    def GetValue(self):
-        return self._search.GetValue()
-
-    def GetPeriod(self):
-        return self._period.GetString(self._period.GetSelection())
-
-    def UpdateNomatchLabels(self, nomatch):
-        self._lbl_no_match.Show(nomatch)
-
-    def UpdateSinglematchLabel(self, singlematch):
-        self._lbl_single_match.Show(singlematch)
-
-    def UpdateButtons(self):
-        self.EnableTool(wx.ID_BACKWARD, self._controller.enable_backward())
-        self.EnableTool(wx.ID_FORWARD, self._controller.enable_forward())
-        self.EnableTool(wx.ID_MORE, self._controller.enable_list())

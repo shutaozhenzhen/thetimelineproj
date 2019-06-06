@@ -21,7 +21,7 @@ import wx
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.wxgui.components.welcomepanel import WelcomePanel
 from timelinelib.wxgui.components.timelinepanel import TimelinePanel
-from timelinelib.wxgui.components.searchbar.serachbarview import SearchBar
+from timelinelib.wxgui.components.searchbar.view import SearchBar
 from timelinelib.wxgui.components.propertyeditors.iconeditor import FileToBitmapConverter
 
 
