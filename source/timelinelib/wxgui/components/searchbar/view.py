@@ -36,7 +36,7 @@ class SearchBar(wx.ToolBar, GuiCreator):
         return self._search.GetValue()
 
     def GetPeriod(self):
-        return self._period.GetString(self._period.GetSelection())
+        return self._period.GetString()
 
     def UpdateNomatchLabels(self, nomatch):
         self._lbl_no_match.Show(nomatch)
