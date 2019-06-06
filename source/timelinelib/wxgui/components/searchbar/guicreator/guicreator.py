@@ -47,10 +47,8 @@ class GuiCreator(object):
                 self._period.Append(value)
             self._period.SetSelection(0)
             self._period.Show(True)
-            self._period_label.Show(True)
         else:
             self._period.Show(False)
-            self._period_label.Show(False)
             
     def _create_search_box(self):
         self._search = components.TextInput(self, self._search_on_search_btn)
@@ -68,14 +66,7 @@ class GuiCreator(object):
         components.ShowListButton(self, self._btn_list_on_click)
 
     def _create_period_button(self):
-        choices = [_('Whole timeline'), _('Visible period'), _('This year')]
-        self._period_label = wx.StaticText(self, wx.ID_ANY, _("In: ")) 
-        self.AddControl(self._period_label)
-        self._period = wx.Choice(self, wx.ID_ANY, size=(150, -1), choices=choices,
-                                name = _("Select period"))
-        self.Bind(wx.EVT_CHOICE, self._btn_period_on_click, self._period)
-        self.AddControl(self._period)
-        self._period.SetSelection(0)
+        self._period = components.PeriodSelection(self, self._btn_period_on_click)
 
     def _create_no_match_label(self):
         self._lbl_no_match = components.TextLabel(self, _("No match"))

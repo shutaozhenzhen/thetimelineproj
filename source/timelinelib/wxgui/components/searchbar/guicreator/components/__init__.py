@@ -22,3 +22,4 @@ from timelinelib.wxgui.components.searchbar.guicreator.components.nextbutton imp
 from timelinelib.wxgui.components.searchbar.guicreator.components.showlistbutton import ShowListButton
 from timelinelib.wxgui.components.searchbar.guicreator.components.textinput import TextInput
 from timelinelib.wxgui.components.searchbar.guicreator.components.textlabel import TextLabel
+from timelinelib.wxgui.components.searchbar.guicreator.components.periodselection import PeriodSelection
