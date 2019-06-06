@@ -65,9 +65,7 @@ class GuiCreator(object):
         components.NextButton(self, self._btn_next_on_click)
 
     def _create_list_button(self):
-        list_bmp = wx.ArtProvider.GetBitmap(wx.ART_LIST_VIEW, wx.ART_TOOLBAR, self._icon_size)
-        self.AddLabelTool(wx.ID_MORE, "", list_bmp, shortHelp=_("List matches"))
-        self.Bind(wx.EVT_TOOL, self._btn_list_on_click, id=wx.ID_MORE)
+        components.ShowListButton(self, self._btn_list_on_click)
 
     def _create_period_button(self):
         choices = [_('Whole timeline'), _('Visible period'), _('This year')]
@@ -80,12 +78,10 @@ class GuiCreator(object):
         self._period.SetSelection(0)
 
     def _create_no_match_label(self):
-        self._lbl_no_match = wx.StaticText(self, label=_("No match"))
-        self.AddControl(self._lbl_no_match)
+        self._lbl_no_match = components.TextLabel(self, _("No match"))
 
     def _create_single_match_label(self):
-        self._lbl_single_match = wx.StaticText(self, label=_("Only one match"))
-        self.AddControl(self._lbl_single_match)
+        self._lbl_single_match = components.TextLabel(self, _("Only one match"))
 
     def _btn_close_on_click(self, e):
         self.Show(False)

@@ -16,9 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.searchbar.guicreator.components.closebutton import CloseButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.prevbutton import PrevButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.nextbutton import NextButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.showlistbutton import ShowListButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.textinput import TextInput
-from timelinelib.wxgui.components.searchbar.guicreator.components.textlabel import TextLabel
+import wx
+
+
+class TextLabel:
+    
+    def __init__(self, parent, text):
+        self._lbl = wx.StaticText(parent, label=text)
+        parent.AddControl(self._lbl)        
+        
+    def Show(self, value):
+        self._lbl.Show(value)
+        

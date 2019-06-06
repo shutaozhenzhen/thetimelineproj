@@ -26,7 +26,7 @@ LABEL = ""
 class NextButton:
     
     def __init__(self, parent, event_handler_fn):
-        next_bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_FORWARD, wx.ART_TOOLBAR, parent._icon_size)
-        parent.AddLabelTool(wx.ID_FORWARD, LABEL, next_bmp, shortHelp=HELP_TEXT)
+        bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_FORWARD, wx.ART_TOOLBAR, parent._icon_size)
+        parent.AddLabelTool(wx.ID_FORWARD, LABEL, bmp, shortHelp=HELP_TEXT)
         parent.Bind(wx.EVT_TOOL, event_handler_fn, id=wx.ID_FORWARD)
         
