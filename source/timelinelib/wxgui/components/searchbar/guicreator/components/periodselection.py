@@ -25,15 +25,26 @@ NAME = _("Select period")
 
 class PeriodSelection:
     
-    def __init__(self, parent, event_handler_fn):
+    def __init__(self, parent, controller):
+        self._controller = controller
         choices = []
         self._period_label = wx.StaticText(parent, wx.ID_ANY, LABEL) 
         parent.AddControl(self._period_label)
         self._period = wx.Choice(parent, wx.ID_ANY, size=(150, -1), choices=choices, name=NAME)
-        parent.Bind(wx.EVT_CHOICE, event_handler_fn, self._period)
+        parent.Bind(wx.EVT_CHOICE, self._event_handler, self._period)
         parent.AddControl(self._period)
         self._period.SetSelection(0)
-                
+
+    def SetPeriodSelections(self, values):
+        if values:
+            self.Clear()
+            for value in values:
+                self._period.Append(value)
+            self.SetSelection(0)
+            self.Show(True)
+        else:
+            self.Show(False)
+                            
     def Clear(self):
         self._period.Clear()
         
@@ -46,4 +57,6 @@ class PeriodSelection:
         
     def GetString(self):
         return self._period.GetString(self._period.GetSelection())        
-                                  
+                        
+    def _event_handler(self, evt):
+        pass

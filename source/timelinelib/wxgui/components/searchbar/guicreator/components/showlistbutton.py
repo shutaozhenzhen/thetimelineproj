@@ -25,8 +25,12 @@ LABEL = ""
 
 class ShowListButton:
     
-    def __init__(self, parent, event_handler_fn):
+    def __init__(self, parent, controller):
+        self._controller = controller
         bmp = wx.ArtProvider.GetBitmap(wx.ART_LIST_VIEW, wx.ART_TOOLBAR, parent._icon_size)
         parent.AddLabelTool(wx.ID_MORE, LABEL, bmp, shortHelp=HELP_TEXT)
-        parent.Bind(wx.EVT_TOOL, event_handler_fn, id=wx.ID_MORE)
+        parent.Bind(wx.EVT_TOOL, self._event_handler, id=wx.ID_MORE)
         
+    def _event_handler(self, evt):
+        self._controller.list()
+                
