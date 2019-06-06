@@ -17,6 +17,7 @@
 
 
 import wx
+
 from timelinelib.wxgui.components.searchbar.controller import SearchBarController
 from timelinelib.wxgui.components.searchbar.guicreator.guicreator import GuiCreator
 
@@ -29,9 +30,17 @@ class SearchBar(wx.ToolBar, GuiCreator):
         self._create_gui()
         self.UpdateButtons()
 
+    #
+    # Parent API
+    #
+    
     def SetTimelineCanvas(self, timeline_canvas):
         self._controller.set_timeline_canvas(timeline_canvas)
 
+    #
+    # Controller APIs
+    #
+    
     def GetValue(self):
         return self._search.GetValue()
 
