@@ -19,6 +19,7 @@
 import wx
 
 from timelinelib.wxgui.components.searchbar.guicreator.components import CloseButton
+from timelinelib.wxgui.components.searchbar.guicreator.components import PrevButton
 from timelinelib.wxgui.components.searchbar.guicreator.components import TextInput
 
 
@@ -60,9 +61,7 @@ class GuiCreator(object):
         CloseButton(self, self._btn_close_on_click)
 
     def _create_prev_button(self):
-        prev_bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_BACK, wx.ART_TOOLBAR, self._icon_size)
-        self.AddLabelTool(wx.ID_BACKWARD, "", prev_bmp, shortHelp=_("Prevoius match"))
-        self.Bind(wx.EVT_TOOL, self._btn_prev_on_click, id=wx.ID_BACKWARD)
+        PrevButton(self, self._btn_prev_on_click)
 
     def _create_next_button(self):
         next_bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_FORWARD, wx.ART_TOOLBAR, self._icon_size)

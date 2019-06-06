@@ -16,6 +16,18 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.searchbar.guicreator.components.closebutton import CloseButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.prevbutton import PrevButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.textinput import TextInput
+import wx
+
+
+IMAGE = "close.png"
+HELP_TEXT = _("Prevoius match")
+LABEL = ""
+
+
+class PrevButton:
+    
+    def __init__(self, parent, event_handler_fn):
+        bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_BACK, wx.ART_TOOLBAR, parent._icon_size)
+        parent.AddLabelTool(wx.ID_BACKWARD, LABEL, bmp, shortHelp=HELP_TEXT)
+        parent.Bind(wx.EVT_TOOL, event_handler_fn, id=wx.ID_BACKWARD)
+        
