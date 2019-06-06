@@ -16,9 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
 import wx
-from timelinelib.config.paths import ICONS_DIR
+
+from timelinelib.wxgui.components.searchbar.guicreator.components import CloseButton
 
 
 class GuiCreator(object):
@@ -60,12 +60,7 @@ class GuiCreator(object):
         self.AddControl(self._search)
 
     def _create_close_button(self):
-        if 'wxMSW' in wx.PlatformInfo:
-            close_bmp = wx.Bitmap(os.path.join(ICONS_DIR, "close.png"))
-        else:
-            close_bmp = wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_TOOLBAR, self._icon_size)
-        self.AddLabelTool(wx.ID_CLOSE, "", close_bmp, shortHelp=_("Close"))
-        self.Bind(wx.EVT_TOOL, self._btn_close_on_click, id=wx.ID_CLOSE)
+        CloseButton(self, self._btn_close_on_click)
 
     def _create_prev_button(self):
         prev_bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_BACK, wx.ART_TOOLBAR, self._icon_size)
