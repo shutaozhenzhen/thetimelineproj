@@ -32,27 +32,14 @@ class GuiCreator(object):
         self._search.SetFocus()
 
     def set_period_selections(self, values):
-        if values:
-            self._period.Clear()
-            for value in values:
-                self._period.Append(value)
-            self._period.SetSelection(0)
-            self._period.Show(True)
-        else:
-            self._period.Show(False)
+        self._period.SetPeriodSelections(values)
             
     def _create_components(self):
         components.CloseButton(self)
         self._search = components.TextInput(self, self._controller)
         components.PrevButton(self, self._controller)
         components.NextButton(self, self._controller)
-        components.ShowListButton(self, self._btn_list_on_click)
-        self._period = components.PeriodSelection(self, self._btn_period_on_click)
+        components.ShowListButton(self, self._controller)
+        self._period = components.PeriodSelection(self, self._controller)
         self._lbl_no_match = components.TextLabel(self, _("No match"))
         self._lbl_single_match = components.TextLabel(self, _("Only one match"))
-
-    def _btn_list_on_click(self, e):
-        self._controller.list()
-
-    def _btn_period_on_click(self, e):
-        pass
