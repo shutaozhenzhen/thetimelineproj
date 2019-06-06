@@ -16,9 +16,17 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.components.searchbar.guicreator.components.closebutton import CloseButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.prevbutton import PrevButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.nextbutton import NextButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.showlistbutton import ShowListButton
-from timelinelib.wxgui.components.searchbar.guicreator.components.textinput import TextInput
-from timelinelib.wxgui.components.searchbar.guicreator.components.textlabel import TextLabel
+import wx
+
+
+HELP_TEXT = _("List matches")
+LABEL = ""
+
+
+class ShowListButton:
+    
+    def __init__(self, parent, event_handler_fn):
+        bmp = wx.ArtProvider.GetBitmap(wx.ART_LIST_VIEW, wx.ART_TOOLBAR, parent._icon_size)
+        parent.AddLabelTool(wx.ID_MORE, LABEL, bmp, shortHelp=HELP_TEXT)
+        parent.Bind(wx.EVT_TOOL, event_handler_fn, id=wx.ID_MORE)
+        
