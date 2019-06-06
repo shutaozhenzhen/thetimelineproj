@@ -43,16 +43,13 @@ class GuiCreator(object):
             
     def _create_components(self):
         components.CloseButton(self)
-        self._search = components.TextInput(self, self._search_on_search_btn)
+        self._search = components.TextInput(self, self._controller)
         components.PrevButton(self, self._btn_prev_on_click)
         components.NextButton(self, self._btn_next_on_click)
         components.ShowListButton(self, self._btn_list_on_click)
         self._period = components.PeriodSelection(self, self._btn_period_on_click)
         self._lbl_no_match = components.TextLabel(self, _("No match"))
         self._lbl_single_match = components.TextLabel(self, _("Only one match"))
-
-    def _search_on_search_btn(self, e):
-        self._controller.search()
 
     def _btn_prev_on_click(self, e):
         self._controller.prev()
