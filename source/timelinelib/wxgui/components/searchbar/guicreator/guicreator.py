@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
 import timelinelib.wxgui.components.searchbar.guicreator.components as components
 
 
@@ -25,14 +23,7 @@ class GuiCreator(object):
 
     def _create_gui(self):
         self._icon_size = (16, 16)
-        self._create_close_button()
-        self._create_search_box()
-        self._create_prev_button()
-        self._create_next_button()
-        self._create_list_button()
-        self._create_period_button()
-        self._create_no_match_label()
-        self._create_single_match_label()
+        self._create_components()
         self.Realize()
         self._lbl_no_match.Show(False)
         self._lbl_single_match.Show(False)
@@ -50,28 +41,14 @@ class GuiCreator(object):
         else:
             self._period.Show(False)
             
-    def _create_search_box(self):
+    def _create_components(self):
         self._search = components.TextInput(self, self._search_on_search_btn)
-
-    def _create_close_button(self):
         components.CloseButton(self, self._btn_close_on_click)
-
-    def _create_prev_button(self):
         components.PrevButton(self, self._btn_prev_on_click)
-
-    def _create_next_button(self):
         components.NextButton(self, self._btn_next_on_click)
-
-    def _create_list_button(self):
         components.ShowListButton(self, self._btn_list_on_click)
-
-    def _create_period_button(self):
         self._period = components.PeriodSelection(self, self._btn_period_on_click)
-
-    def _create_no_match_label(self):
         self._lbl_no_match = components.TextLabel(self, _("No match"))
-
-    def _create_single_match_label(self):
         self._lbl_single_match = components.TextLabel(self, _("Only one match"))
 
     def _btn_close_on_click(self, e):
