@@ -18,9 +18,7 @@
 
 import wx
 
-from timelinelib.wxgui.components.searchbar.guicreator.components import CloseButton
-from timelinelib.wxgui.components.searchbar.guicreator.components import PrevButton
-from timelinelib.wxgui.components.searchbar.guicreator.components import TextInput
+import timelinelib.wxgui.components.searchbar.guicreator.components as components
 
 
 class GuiCreator(object):
@@ -55,18 +53,16 @@ class GuiCreator(object):
             self._period_label.Show(False)
             
     def _create_search_box(self):
-        self._search = TextInput(self, self._search_on_search_btn)
+        self._search = components.TextInput(self, self._search_on_search_btn)
 
     def _create_close_button(self):
-        CloseButton(self, self._btn_close_on_click)
+        components.CloseButton(self, self._btn_close_on_click)
 
     def _create_prev_button(self):
-        PrevButton(self, self._btn_prev_on_click)
+        components.PrevButton(self, self._btn_prev_on_click)
 
     def _create_next_button(self):
-        next_bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_FORWARD, wx.ART_TOOLBAR, self._icon_size)
-        self.AddLabelTool(wx.ID_FORWARD, "", next_bmp, shortHelp=_("Next match"))
-        self.Bind(wx.EVT_TOOL, self._btn_next_on_click, id=wx.ID_FORWARD)
+        components.NextButton(self, self._btn_next_on_click)
 
     def _create_list_button(self):
         list_bmp = wx.ArtProvider.GetBitmap(wx.ART_LIST_VIEW, wx.ART_TOOLBAR, self._icon_size)
