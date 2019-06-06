@@ -19,6 +19,7 @@
 import wx
 
 from timelinelib.wxgui.components.searchbar.guicreator.components import CloseButton
+from timelinelib.wxgui.components.searchbar.guicreator.components import TextInput
 
 
 class GuiCreator(object):
@@ -53,11 +54,7 @@ class GuiCreator(object):
             self._period_label.Show(False)
             
     def _create_search_box(self):
-        self._search = wx.SearchCtrl(self, size=(150, -1), style=wx.TE_PROCESS_ENTER)
-        self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN,
-                  self._search_on_search_btn, self._search)
-        self.Bind(wx.EVT_TEXT_ENTER, self._search_on_search_btn, self._search)
-        self.AddControl(self._search)
+        self._search = TextInput(self, self._search_on_search_btn)
 
     def _create_close_button(self):
         CloseButton(self, self._btn_close_on_click)
