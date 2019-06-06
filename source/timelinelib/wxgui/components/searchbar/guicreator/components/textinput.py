@@ -21,10 +21,11 @@ import wx
 
 class TextInput:
     
-    def __init__(self, parent, event_handler_fn):
+    def __init__(self, parent, controller):
+        self._controller = controller
         self._search = wx.SearchCtrl(parent, size=(150, -1), style=wx.TE_PROCESS_ENTER)
-        parent.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, event_handler_fn, self._search)
-        parent.Bind(wx.EVT_TEXT_ENTER, event_handler_fn, self._search)
+        parent.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self._event_handler, self._search)
+        parent.Bind(wx.EVT_TEXT_ENTER, self._event_handler, self._search)
         parent.AddControl(self._search)
         
     def SetFocus(self):
@@ -32,4 +33,7 @@ class TextInput:
         
     def GetValue(self):
         return self._search.GetValue()
+        
+    def _event_handler(self, evt):
+        self._controller.search()        
         
