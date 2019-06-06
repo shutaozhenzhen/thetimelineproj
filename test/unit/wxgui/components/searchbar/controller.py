@@ -18,8 +18,8 @@
 
 from mock import Mock
 
-from timelinelib.wxgui.components.searchbar.serachbarview import SearchBar
-from timelinelib.wxgui.components.searchbar.searchbarcontroller import SearchBarController
+from timelinelib.wxgui.components.searchbar.view import SearchBar
+from timelinelib.wxgui.components.searchbar.controller import SearchBarController
 from timelinelib.test.cases.unit import UnitTestCase
 
 
