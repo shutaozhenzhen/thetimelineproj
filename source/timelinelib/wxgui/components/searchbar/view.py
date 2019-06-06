@@ -16,6 +16,28 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+"""
+The search bar is a gui component displayed in the status bar whenever 
+the user presses Ctrl+F. It consists of the following visual components.
+    * A close button
+    * A search button
+    * A text field
+    * A backward navigation button
+    * A forward navigation button
+    * A 'display list' button
+    * Report labels for 'no event found' and 'one event found'
+
+The parent of the component is the TimelinePanel.
+   
+As with all gui components all business logic is handles by a controller.
+Actions on the components are directly delegated to the controller.
+
+The component (or actually the controller) needs a Canvas object in order 
+to find events containing the given text. The Canvas object is injected 
+with the SetTimelineCanvas() function.
+        
+"""
+
 import wx
 
 from timelinelib.wxgui.components.searchbar.controller import SearchBarController
