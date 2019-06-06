@@ -28,10 +28,10 @@ class GuiCreator(object):
         self._lbl_no_match.Show(False)
         self._lbl_single_match.Show(False)
         
-    def set_focus(self):
+    def Focus(self):
         self._search.SetFocus()
 
-    def set_period_selections(self, values):
+    def SetPeriodSelections(self, values):
         self._period.SetPeriodSelections(values)
             
     def _create_components(self):
