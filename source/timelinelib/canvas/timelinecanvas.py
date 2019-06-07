@@ -224,7 +224,7 @@ class TimelineCanvas(wx.Panel):
     def EventIsPeriod(self, event):
         return self._controller.event_is_period(event)
 
-    def redraw_surface(self, fn_draw):
+    def RedrawSurface(self, fn_draw):
         width, height = self.GetSizeTuple()
         self._surface_bitmap = wx.EmptyBitmap(width, height)
         memdc = wx.MemoryDC()

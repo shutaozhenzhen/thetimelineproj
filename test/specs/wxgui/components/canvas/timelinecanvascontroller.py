@@ -139,7 +139,7 @@ class TimelineViewSpec(UnitTestCase):
             gregorian_period(start, end), view_properties.displayed_period)
 
     def assert_timeline_redrawn(self):
-        self.assertTrue(self.timeline_canvas.redraw_surface.called)
+        self.assertTrue(self.timeline_canvas.RedrawSurface.called)
 
     def assert_created_event_with_period(self, start, end):
         self.timeline_canvas.open_create_event_editor.assert_called_with(
@@ -157,8 +157,8 @@ class TimelineViewSpec(UnitTestCase):
         self.controller.post_hint_event.assert_called_with(text)
 
     def get_view_properties_used_when_drawing(self):
-        self.assertTrue(self.timeline_canvas.redraw_surface.called)
-        draw_fn = self.timeline_canvas.redraw_surface.call_args[0][0]
+        self.assertTrue(self.timeline_canvas.RedrawSurface.called)
+        draw_fn = self.timeline_canvas.RedrawSurface.call_args[0][0]
         draw_fn(Mock())
         return self.mock_drawer.draw_view_properties
 
