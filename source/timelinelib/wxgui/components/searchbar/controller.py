@@ -31,9 +31,9 @@ class SearchBarController(object):
         self._last_period = None
 
     def set_timeline_canvas(self, timeline_canvas):
-        self.timeline_canvas = timeline_canvas
+        self._timeline_canvas = timeline_canvas
         self._view.Enable(timeline_canvas is not None)
-        self._view.SetPeriodChoices(self.timeline_canvas.GetPeriodChoices())
+        self._view.SetPeriodChoices(self._timeline_canvas.GetPeriodChoices())
 
     def search(self):
         new_search = self._view.GetValue()
@@ -45,8 +45,8 @@ class SearchBarController(object):
         else:
             self._last_search = new_search
             self._last_period = new_period
-            if self.timeline_canvas is not None:
-                self._result = self.timeline_canvas.GetFilteredEvents(new_search, new_period)
+            if self._timeline_canvas is not None:
+                self._result = self._timeline_canvas.GetFilteredEvents(new_search, new_period)
             else:
                 self._result = []
             self._result_index = 0
@@ -70,7 +70,7 @@ class SearchBarController(object):
             self._view.UpdateButtons()
 
     def list(self):
-        event_list = [event.get_label(self.timeline_canvas.GetTimeType()) for event in self._result]
+        event_list = [event.get_label(self._timeline_canvas.GetTimeType()) for event in self._result]
         dlg = EventListDialog(self._view, event_list)
         if dlg.ShowModal() == wx.ID_OK:
             self._result_index = dlg.GetSelectedIndex()
@@ -78,10 +78,10 @@ class SearchBarController(object):
         dlg.Destroy()
 
     def navigate_to_match(self):
-        if (self.timeline_canvas is not None and self._result_index in range(len(self._result))):
+        if (self._timeline_canvas is not None and self._result_index in range(len(self._result))):
             event = self._result[self._result_index]
-            self.timeline_canvas.Navigate(lambda tp: tp.center(event.mean_time()))
-            self.timeline_canvas.HighligtEvent(event, clear=True)
+            self._timeline_canvas.Navigate(lambda tp: tp.center(event.mean_time()))
+            self._timeline_canvas.HighligtEvent(event, clear=True)
 
     def enable_backward(self):
         return bool(self._result and self._result_index > 0)
