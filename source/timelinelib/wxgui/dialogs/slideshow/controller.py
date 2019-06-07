@@ -88,7 +88,7 @@ class SlideshowDialogController(Controller):
         return self._db.get_all_events()
 
     def _get_visible_events(self):
-        vp = self._canvas.get_view_properties()
+        vp = self._canvas.GetViewProperties()
         return vp.filter_events(self._db.get_events(vp.displayed_period))
 
     def _create_images(self, events):

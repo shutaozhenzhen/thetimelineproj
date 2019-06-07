@@ -408,7 +408,7 @@ class TimelinePanel(TimelinePanelGuiCreator):
         return self.timeline_canvas
 
     def get_time_period(self):
-        return self.timeline_canvas.get_time_period()
+        return self.timeline_canvas.GetTimePeriod()
 
     def open_event_editor(self, event):
         if event.is_milestone():

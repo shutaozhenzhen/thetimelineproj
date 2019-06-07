@@ -134,7 +134,7 @@ class MainFrameController(object):
 
     def reload_from_disk(self):
         timeline_canvas = self._main_frame.main_panel.timeline_panel.timeline_canvas
-        vp = timeline_canvas.get_view_properties()
+        vp = timeline_canvas.GetViewProperties()
         displayed_period = vp.get_displayed_period()
         self.open_timeline(self._timelinepath, save_current_data=False)
         vp.set_displayed_period(displayed_period)

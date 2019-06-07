@@ -62,7 +62,7 @@ class describe_slideshow_dialog_controller(TmpDirTestCase):
     def test_creation_of_target_directory_can_be_accepted(self):
         vp = Mock()
         vp.filter_events.return_value = []
-        self.canvas.get_view_properties.return_value = vp
+        self.canvas.GetViewProperties.return_value = vp
         self.view.GetTargetDir.return_value = self.PATH
         self.view.GetUserAck.return_value = True
         self.simuate_user_clicks_ok()
@@ -72,7 +72,7 @@ class describe_slideshow_dialog_controller(TmpDirTestCase):
     def test_overwrite_of_target_directory_can_be_rejected(self):
         vp = Mock()
         vp.filter_events.return_value = []
-        self.canvas.get_view_properties.return_value = vp
+        self.canvas.GetViewProperties.return_value = vp
         os.mkdir(self.PATH)
         f = open(os.path.join(self.PATH, FILE), "w")
         f.close()
@@ -90,7 +90,7 @@ class describe_slideshow_dialog_controller(TmpDirTestCase):
         )
         vp = Mock()
         vp.filter_events.return_value = [event, ]
-        self.canvas.get_view_properties.return_value = vp
+        self.canvas.GetViewProperties.return_value = vp
         os.mkdir(self.PATH)
         f = open(os.path.join(self.PATH, FILE), "w")
         f.close()
