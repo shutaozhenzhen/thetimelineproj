@@ -23,6 +23,7 @@ from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
 from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.cursor import Cursor
 from timelinelib.canvas.data import TimePeriod
+from timelinelib.canvas.highlighttimer import HighlightTimer
 
 
 MOVE_HANDLE = 0
@@ -54,7 +55,7 @@ class TimelineCanvas(wx.Panel):
         self._surface_bitmap = None
         self._create_gui()
         self.SetDividerPosition(50)
-        self._highlight_timer = self._create_highlight_timer()
+        self._highlight_timer = HighlightTimer(self._highlight_timer_tick)
         self._last_balloon_event = None
         self._waiting = False
 
@@ -607,15 +608,9 @@ class TimelineCanvas(wx.Panel):
 
     def HighligtEvent(self, event, clear=False):
         self._controller.add_highlight(event, clear)
-        if not self._highlight_timer.IsRunning():
-            self._highlight_timer.Start(milliseconds=180)
+        self._highlight_timer.StartHighlighting()
 
-    def _create_highlight_timer(self):
-        timer = wx.Timer(self)
-        self.Bind(wx.EVT_TIMER, self._on_highlight_timer, timer)
-        return timer
-        
-    def _on_highlight_timer(self, evt):
+    def _highlight_timer_tick(self):
         self.Redraw()
         self._controller.tick_highlights()
         if not self._controller.has_higlights():
