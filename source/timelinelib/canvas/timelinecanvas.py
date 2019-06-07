@@ -208,9 +208,9 @@ class TimelineCanvas(wx.Panel):
         export(path, self.controller.get_timeline(), self.controller.scene,
                self.controller.get_view_properties(), self.GetAppearance())
 
-    def GetFilteredEvents(self, search_target):
+    def GetFilteredEvents(self, search_target, search_period):
         events = self.GetDb().search(search_target)
-        return self.controller.filter_events(events)
+        return self.controller.filter_events(events, search_period)
 
     def get_time_period(self):
         return self.controller.get_time_period()
@@ -571,6 +571,9 @@ class TimelineCanvas(wx.Panel):
             else:
                 self._methods[combo][index](evt)
 
+    def GetPeriodChoices(self):
+        return self.controller.get_period_choices()
+    
     # ------------
 
     def _scroll_up(self):
