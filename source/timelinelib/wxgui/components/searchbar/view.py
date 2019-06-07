@@ -79,3 +79,6 @@ class SearchBar(wx.ToolBar, GuiCreator):
         self.EnableTool(wx.ID_BACKWARD, self._controller.enable_backward())
         self.EnableTool(wx.ID_FORWARD, self._controller.enable_forward())
         self.EnableTool(wx.ID_MORE, self._controller.enable_list())
+
+    def SetPeriodChoices(self, choices):
+        self._period.SetPeriodChoices(choices)
