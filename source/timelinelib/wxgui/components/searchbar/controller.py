@@ -33,6 +33,7 @@ class SearchBarController(object):
     def set_timeline_canvas(self, timeline_canvas):
         self.timeline_canvas = timeline_canvas
         self._view.Enable(timeline_canvas is not None)
+        self._view.SetPeriodChoices(self.timeline_canvas.GetPeriodChoices())
 
     def search(self):
         new_search = self._view.GetValue()
@@ -45,7 +46,7 @@ class SearchBarController(object):
             self._last_search = new_search
             self._last_period = new_period
             if self.timeline_canvas is not None:
-                self._result = self.timeline_canvas.GetFilteredEvents(new_search)
+                self._result = self.timeline_canvas.GetFilteredEvents(new_search, new_period)
             else:
                 self._result = []
             self._result_index = 0
