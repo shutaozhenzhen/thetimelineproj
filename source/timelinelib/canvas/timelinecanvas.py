@@ -24,6 +24,7 @@ from timelinelib.wxgui.keyboard import Keyboard
 from timelinelib.wxgui.cursor import Cursor
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.highlighttimer import HighlightTimer
+import timelinelib.wxgui.utils as guiutils
 
 
 MOVE_HANDLE = 0
@@ -248,7 +249,7 @@ class TimelineCanvas(wx.Panel):
         self.SetCursor(wx.StockCursor(wx.CURSOR_SIZING))
 
     def set_default_cursor(self):
-        self.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
+        guiutils.set_default_cursor(self)
 
     def zoom_in(self):
         self.Zoom(1, self._get_half_width())
