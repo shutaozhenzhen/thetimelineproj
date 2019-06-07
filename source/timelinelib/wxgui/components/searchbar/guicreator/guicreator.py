@@ -32,7 +32,7 @@ class GuiCreator(object):
         self._search.SetFocus()
 
     def SetPeriodSelections(self, values):
-        self._period.SetPeriodSelections(values)
+        self._period.SetPeriodChoices(values)
             
     def _create_components(self):
         components.CloseButton(self)
