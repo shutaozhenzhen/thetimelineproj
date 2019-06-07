@@ -436,7 +436,7 @@ class TimelinePanel(TimelinePanelGuiCreator):
         return self.timeline_canvas.Navigate(navigation_fn)
 
     def get_view_properties(self):
-        return self.timeline_canvas.get_view_properties()
+        return self.timeline_canvas.GetViewProperties()
 
     def get_sidebar_width(self):
         return self.sidebar_width

@@ -194,10 +194,10 @@ class TimelineCanvas(wx.Panel):
     def GetTimeAt(self, x):
         return self._controller.get_time(x)
 
-    def set_timeline(self, timeline):
+    def SetTimeline(self, timeline):
         self._controller.set_timeline(timeline)
 
-    def get_view_properties(self):
+    def GetViewProperties(self):
         return self._controller.get_view_properties()
 
     def SaveAsPng(self, path):
