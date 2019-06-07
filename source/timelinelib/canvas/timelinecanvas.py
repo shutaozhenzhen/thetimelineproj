@@ -212,7 +212,7 @@ class TimelineCanvas(wx.Panel):
         events = self.GetDb().search(search_target)
         return self._controller.filter_events(events, search_period)
 
-    def get_time_period(self):
+    def GetTimePeriod(self):
         return self._controller.get_time_period()
 
     def Navigate(self, navigation_fn):
