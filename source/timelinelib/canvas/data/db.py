@@ -104,7 +104,7 @@ class MemoryDB(Observable):
         return self._transactions.status
 
     def display_in_canvas(self, canvas):
-        canvas.set_timeline(self)
+        canvas.SetTimeline(self)
 
     def is_saved(self):
         return self._save_callback is not None
