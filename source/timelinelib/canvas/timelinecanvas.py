@@ -239,9 +239,6 @@ class TimelineCanvas(wx.Panel):
         self.Refresh()
         self.Update()
 
-    def set_select_period_cursor(self):
-        self.SetCursor(wx.StockCursor(wx.CURSOR_IBEAM))
-
     def set_size_cursor(self):
         self.SetCursor(wx.StockCursor(wx.CURSOR_SIZEWE))
 
@@ -464,7 +461,7 @@ class TimelineCanvas(wx.Panel):
 
     def InitZoomSelect(self):
         self._zooming = False
-
+        
     def StartZoomSelect(self, evt):
         self._zooming = True
         self._start_time = self.GetTimeAt(evt.GetX())
