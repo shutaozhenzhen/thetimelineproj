@@ -17,7 +17,6 @@
 
 
 import wx
-from wx._gdi_ import DC_MinX
 
 
 LABEL = _("In: ")
@@ -27,36 +26,16 @@ class PeriodSelection:
     
     def __init__(self, parent, controller):
         self._controller = controller
-        choices = []
         self._period_label = wx.StaticText(parent, wx.ID_ANY, LABEL) 
         parent.AddControl(self._period_label)
-        self._period = wx.Choice(parent, wx.ID_ANY, size=(150, -1), choices=choices, name=NAME)
-        parent.Bind(wx.EVT_CHOICE, self._event_handler, self._period)
+        self._period = wx.Choice(parent, wx.ID_ANY, size=(150, -1), choices=[], name=NAME)
         parent.AddControl(self._period)
-        self._period.SetSelection(0)
 
-    def SetPeriodSelections(self, values):
-        if values:
-            self.Clear()
-            for value in values:
-                self._period.Append(value)
-            self.SetSelection(0)
-            self.Show(True)
-        else:
-            self.Show(False)
-                            
-    def Clear(self):
+    def SetPeriodChoices(self, values):
         self._period.Clear()
-        
-    def Show(self, value):
-        self._period.Show(value)
-        self._period_label.Show(value)
-        
-    def SetSelection(self, inx):
-        self._period.SetSelection(inx)
-        
+        for value in values:
+            self._period.Append(value)
+        self._period.SetSelection(0)
+                            
     def GetString(self):
         return self._period.GetString(self._period.GetSelection())        
-                        
-    def _event_handler(self, evt):
-        pass
