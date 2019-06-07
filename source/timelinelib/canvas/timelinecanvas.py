@@ -51,7 +51,7 @@ class TimelineCanvas(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent, style=wx.NO_BORDER | wx.WANTS_CHARS)
         self._controller = TimelineCanvasController(self)
-        self.surface_bitmap = None
+        self._surface_bitmap = None
         self._create_gui()
         self.SetDividerPosition(50)
         self._highlight_timer = wx.Timer(self)
@@ -201,7 +201,7 @@ class TimelineCanvas(wx.Panel):
         return self._controller.get_view_properties()
 
     def SaveAsPng(self, path):
-        wx.ImageFromBitmap(self.surface_bitmap).SaveFile(path, wx.BITMAP_TYPE_PNG)
+        wx.ImageFromBitmap(self._surface_bitmap).SaveFile(path, wx.BITMAP_TYPE_PNG)
 
     def SaveAsSvg(self, path):
         from timelinelib.canvas.svg import export
@@ -226,9 +226,9 @@ class TimelineCanvas(wx.Panel):
 
     def redraw_surface(self, fn_draw):
         width, height = self.GetSizeTuple()
-        self.surface_bitmap = wx.EmptyBitmap(width, height)
+        self._surface_bitmap = wx.EmptyBitmap(width, height)
         memdc = wx.MemoryDC()
-        memdc.SelectObject(self.surface_bitmap)
+        memdc.SelectObject(self._surface_bitmap)
         memdc.BeginDrawing()
         memdc.SetBackground(wx.Brush(wx.WHITE, wx.PENSTYLE_SOLID))
         memdc.Clear()
@@ -597,8 +597,8 @@ class TimelineCanvas(wx.Panel):
     def _on_paint(self, event):
         dc = wx.AutoBufferedPaintDC(self)
         dc.BeginDrawing()
-        if self.surface_bitmap:
-            dc.DrawBitmap(self.surface_bitmap, 0, 0, True)
+        if self._surface_bitmap:
+            dc.DrawBitmap(self._surface_bitmap, 0, 0, True)
         else:
             pass  # TODO: Fill with white?
         dc.EndDrawing()
