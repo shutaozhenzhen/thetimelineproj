@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-27 23:05+0200\n"
+"POT-Creation-Date: 2019-06-07 08:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -593,17 +593,25 @@ msgstr ""
 msgid "Start time can't be after end time. Start:%s End:%s"
 msgstr ""
 
-#: source\timelinelib\canvas\timelinecanvascontroller.py:100
+#: source\timelinelib\canvas\timelinecanvascontroller.py:32
+msgid "Whole Timeline"
+msgstr ""
+
+#: source\timelinelib\canvas\timelinecanvascontroller.py:33
+msgid "Visible Period"
+msgstr ""
+
+#: source\timelinelib\canvas\timelinecanvascontroller.py:106
 #: source\timelinelib\wxgui\components\maincanvas\maincanvas.py:58
 msgid "Can't scroll more to the left"
 msgstr ""
 
-#: source\timelinelib\canvas\timelinecanvascontroller.py:103
+#: source\timelinelib\canvas\timelinecanvascontroller.py:109
 #: source\timelinelib\wxgui\components\maincanvas\maincanvas.py:60
 msgid "Can't scroll more to the right"
 msgstr ""
 
-#: source\timelinelib\canvas\timelinecanvascontroller.py:144
+#: source\timelinelib\canvas\timelinecanvascontroller.py:150
 msgid "No timeline set"
 msgstr ""
 
@@ -1990,47 +1998,35 @@ msgstr ""
 msgid "Progress %:"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\search.py:59
+#: source\timelinelib\wxgui\components\searchbar\guicreator\components\closebutton.py:26
 msgid "Close"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\search.py:65
-msgid "Prevoius match"
-msgstr ""
-
-#: source\timelinelib\wxgui\components\search.py:70
+#: source\timelinelib\wxgui\components\searchbar\guicreator\components\nextbutton.py:22
 msgid "Next match"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\search.py:75
-msgid "List matches"
-msgstr ""
-
-#: source\timelinelib\wxgui\components\search.py:79
-msgid "Whole timeline"
-msgstr ""
-
-#: source\timelinelib\wxgui\components\search.py:79
-msgid "This year"
-msgstr ""
-
-#: source\timelinelib\wxgui\components\search.py:79
-msgid "Visible period"
-msgstr ""
-
-#: source\timelinelib\wxgui\components\search.py:80
+#: source\timelinelib\wxgui\components\searchbar\guicreator\components\periodselection.py:22
 msgid "In: "
 msgstr ""
 
-#: source\timelinelib\wxgui\components\search.py:82
+#: source\timelinelib\wxgui\components\searchbar\guicreator\components\periodselection.py:23
 msgid "Select period"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\search.py:88
+#: source\timelinelib\wxgui\components\searchbar\guicreator\components\prevbutton.py:22
+msgid "Prevoius match"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\searchbar\guicreator\components\showlistbutton.py:22
+msgid "List matches"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\searchbar\guicreator\guicreator.py:44
 msgid "No match"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\search.py:92
+#: source\timelinelib\wxgui\components\searchbar\guicreator\guicreator.py:45
 msgid "Only one match"
 msgstr ""
 
