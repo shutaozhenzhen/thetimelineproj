@@ -54,8 +54,7 @@ class TimelineCanvas(wx.Panel):
         self._surface_bitmap = None
         self._create_gui()
         self.SetDividerPosition(50)
-        self._highlight_timer = wx.Timer(self)
-        self.Bind(wx.EVT_TIMER, self._on_highlight_timer, self._highlight_timer)
+        self._highlight_timer = self._create_highlight_timer()
         self._last_balloon_event = None
         self._waiting = False
 
@@ -611,6 +610,11 @@ class TimelineCanvas(wx.Panel):
         if not self._highlight_timer.IsRunning():
             self._highlight_timer.Start(milliseconds=180)
 
+    def _create_highlight_timer(self):
+        timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self._on_highlight_timer, timer)
+        return timer
+        
     def _on_highlight_timer(self, evt):
         self.Redraw()
         self._controller.tick_highlights()
