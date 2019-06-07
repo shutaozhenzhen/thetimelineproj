@@ -327,7 +327,7 @@ class TimelineCanvasController(object):
 
         if self.timeline and self.view_properties.displayed_period:
             self.view_properties.divider_position = (float(self.view.GetDividerPosition()) / 100.0)
-            self.view.redraw_surface(fn_draw)
+            self.view.RedrawSurface(fn_draw)
             self.view.PostEvent(create_timeline_redrawn_event())
 
     def _set_drawing_algorithm(self, drawer):
