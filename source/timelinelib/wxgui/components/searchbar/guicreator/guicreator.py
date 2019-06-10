@@ -30,6 +30,9 @@ class GuiCreator(object):
     def Focus(self):
         self._search.SetFocus()
 
+    def OnChoice(self, evt):
+        self.Focus()
+        
     def SetPeriodSelections(self, values):
         self._period.SetPeriodChoices(values)
             
