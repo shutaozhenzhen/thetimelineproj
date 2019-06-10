@@ -29,8 +29,7 @@ class describe_search_bar(UnitTestCase):
         self.view.GetValue.return_value = ""
         self.view.GetPeriod.return_value = ""
         self.controller.search()
-        self.view.UpdateNomatchLabels.assert_called_with(True)
-        self.view.UpdateSinglematchLabel.assert_called_with(False)
+        self.view.UpdateNbrOfMatchesLabel.assert_called_with(' ' * 4 + _('No matches found'))
 
     def test_no_events_found_no_navigation_call(self):
         self.view.GetValue.return_value = ""
@@ -42,8 +41,7 @@ class describe_search_bar(UnitTestCase):
         self.view.GetValue.return_value = "one"
         self.view.GetPeriod.return_value = ""
         self.controller.search()
-        self.view.UpdateNomatchLabels.assert_called_with(False)
-        self.view.UpdateSinglematchLabel.assert_called_with(True)
+        self.view.UpdateNbrOfMatchesLabel.assert_called_with(' ' * 4 + _('Only one match found'))
 
     def test_on_event_found_navigation_called(self):
         self.view.GetValue.return_value = "one"
@@ -55,8 +53,7 @@ class describe_search_bar(UnitTestCase):
         self.view.GetValue.return_value = "two"
         self.view.GetPeriod.return_value = ""
         self.controller.search()
-        self.view.UpdateNomatchLabels.assert_called_with(False)
-        self.view.UpdateSinglematchLabel.assert_called_with(False)
+        self.view.UpdateNbrOfMatchesLabel.assert_called_with(' ' * 4 + '2 ' + _('matches found'))
 
     def test_three_events_makes_it_possible_to_move_to_next(self):
         self.view.GetValue.return_value = "three"
