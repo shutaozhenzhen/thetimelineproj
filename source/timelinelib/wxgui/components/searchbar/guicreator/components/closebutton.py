@@ -41,5 +41,4 @@ class CloseButton:
             return wx.ArtProvider.GetBitmap(wx.ART_CROSS_MARK, wx.ART_TOOLBAR, parent._icon_size)
         
     def _event_handler(self, evt):
-        self._parent.Show(False)
-        self._parent.GetParent().Layout()        
+        self._parent.Close()

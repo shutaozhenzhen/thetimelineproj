@@ -28,3 +28,6 @@ class TextLabel:
     def Show(self, value):
         self._lbl.Show(value)
         
+    def SetLabel(self, label):
+        self._lbl.SetLabel(label)
+        
