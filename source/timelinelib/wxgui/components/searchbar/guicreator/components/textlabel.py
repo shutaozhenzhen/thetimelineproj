@@ -19,15 +19,9 @@
 import wx
 
 
-class TextLabel:
+class TextLabel(wx.StaticText):
     
     def __init__(self, parent, text):
-        self._lbl = wx.StaticText(parent, label=text)
-        parent.AddControl(self._lbl)        
-        
-    def Show(self, value):
-        self._lbl.Show(value)
-        
-    def SetLabel(self, label):
-        self._lbl.SetLabel(label)
+        wx.StaticText.__init__(self, parent, label=text)
+        parent.AddControl(self)        
         
