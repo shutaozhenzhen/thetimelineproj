@@ -22,6 +22,12 @@ Search:
 * ``When only one event is found, pressing Enter has no effect.``
   On Enter, if we are on the last event found, the first event found is highlighted.
 
+* ``Period selection is added to the Search control.``
+  The search period can be limited to the visible time period.
+
+* ``Result label is always shown.``
+  Now the result label is shown even when more than 1 match.
+
 Version 1.19.0
 --------------
 
