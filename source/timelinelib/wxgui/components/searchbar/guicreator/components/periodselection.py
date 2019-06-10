@@ -30,6 +30,7 @@ class PeriodSelection:
         parent.AddControl(self._period_label)
         self._period = wx.Choice(parent, wx.ID_ANY, size=(150, -1), choices=[], name=NAME)
         parent.AddControl(self._period)
+        parent.Bind(wx.EVT_CHOICE, parent.OnChoice, self._period)
 
     def SetPeriodChoices(self, values):
         self._period.Clear()
