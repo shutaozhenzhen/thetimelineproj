@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-07 08:39+0200\n"
+"POT-Creation-Date: 2019-06-10 19:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1998,6 +1998,18 @@ msgstr ""
 msgid "Progress %:"
 msgstr ""
 
+#: source\timelinelib\wxgui\components\searchbar\controller.py:64
+msgid "No matches found"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\searchbar\controller.py:66
+msgid "Only one match found"
+msgstr ""
+
+#: source\timelinelib\wxgui\components\searchbar\controller.py:68
+msgid "matches found"
+msgstr ""
+
 #: source\timelinelib\wxgui\components\searchbar\guicreator\components\closebutton.py:26
 msgid "Close"
 msgstr ""
@@ -2020,14 +2032,6 @@ msgstr ""
 
 #: source\timelinelib\wxgui\components\searchbar\guicreator\components\showlistbutton.py:22
 msgid "List matches"
-msgstr ""
-
-#: source\timelinelib\wxgui\components\searchbar\guicreator\guicreator.py:44
-msgid "No match"
-msgstr ""
-
-#: source\timelinelib\wxgui\components\searchbar\guicreator\guicreator.py:45
-msgid "Only one match"
 msgstr ""
 
 #: source\timelinelib\wxgui\components\sidebar.py:34
