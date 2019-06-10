@@ -25,8 +25,7 @@ class GuiCreator(object):
         self._icon_size = (16, 16)
         self._create_components()
         self.Realize()
-        self._lbl_no_match.Show(False)
-        self._lbl_single_match.Show(False)
+        self._result_label.Show(False)
         
     def Focus(self):
         self._search.SetFocus()
@@ -41,5 +40,4 @@ class GuiCreator(object):
         components.NextButton(self, self._controller)
         components.ShowListButton(self, self._controller)
         self._period = components.PeriodSelection(self, self._controller)
-        self._lbl_no_match = components.TextLabel(self, _("No match"))
-        self._lbl_single_match = components.TextLabel(self, _("Only one match"))
+        self._result_label = components.TextLabel(self, '')

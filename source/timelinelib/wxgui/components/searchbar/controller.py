@@ -46,15 +46,26 @@ class SearchBarController(object):
         else:
             self._last_search = new_search
             self._last_period = new_period
-            if self._timeline_canvas is not None:
-                self._result = self._timeline_canvas.GetFilteredEvents(new_search, new_period)
-            else:
-                self._result = []
+            self._search_for_events(new_search, new_period)
             self._result_index = 0
             self.navigate_to_match()
-            self._view.UpdateNomatchLabels(len(self._result) == 0)
-            self._view.UpdateSinglematchLabel(len(self._result) == 1)
-        self._view.UpdateButtons()
+            self._set_result_label()
+            self._view.UpdateButtons()
+
+    def _search_for_events(self, new_search, new_period):
+        if self._timeline_canvas is not None:
+            self._result = self._timeline_canvas.GetFilteredEvents(new_search, new_period)
+        else:
+            self._result = []
+        
+    def _set_result_label(self):
+        nbr_of_matches = len(self._result)
+        if nbr_of_matches == 0:
+            self._view.UpdateNbrOfMatchesLabel(' ' * 4 + _('No matches found'))
+        elif nbr_of_matches == 1:
+            self._view.UpdateNbrOfMatchesLabel(' ' * 4 + _('Only one match found'))
+        else:
+            self._view.UpdateNbrOfMatchesLabel(' ' * 4 + '%d ' % nbr_of_matches + _('matches found'))
 
     def next(self):
         if self._on_last_match():

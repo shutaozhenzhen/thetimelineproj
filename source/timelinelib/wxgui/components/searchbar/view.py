@@ -69,11 +69,9 @@ class SearchBar(wx.ToolBar, GuiCreator):
     def GetPeriod(self):
         return self._period.GetString()
 
-    def UpdateNomatchLabels(self, nomatch):
-        self._lbl_no_match.Show(nomatch)
-
-    def UpdateSinglematchLabel(self, singlematch):
-        self._lbl_single_match.Show(singlematch)
+    def UpdateNbrOfMatchesLabel(self, label):
+        self._result_label.SetLabel(label)
+        self._result_label.Show(True)
 
     def UpdateButtons(self):
         self.EnableTool(wx.ID_BACKWARD, self._controller.enable_backward())
@@ -82,3 +80,8 @@ class SearchBar(wx.ToolBar, GuiCreator):
 
     def SetPeriodChoices(self, choices):
         self._period.SetPeriodChoices(choices)
+
+    def Close(self):
+        self._result_label.Show(False)
+        self.Show(False)
+        self.GetParent().Layout()       
