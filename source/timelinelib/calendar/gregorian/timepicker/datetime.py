@@ -88,7 +88,7 @@ class GregorianDateTimePicker(wx.Panel):
         image = wx.Bitmap(os.path.join(ICONS_DIR, "calendar.bmp"))
         self.date_button = wx.BitmapButton(self, bitmap=image)
         self.Bind(wx.EVT_BUTTON, self._date_button_on_click, self.date_button)
-        self.time_picker = GregorianTimePicker(self)
+        self.time_picker = GregorianTimePicker(self, self.config)
         # Layout
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(self.date_picker, proportion=1,
