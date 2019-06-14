@@ -136,6 +136,12 @@ class PreferencesDialog(Dialog):
                             event_EVT_CHECKBOX="on_never_use_time_change"
                             label="$(never_use_time_text)"
                         />
+			<Spacer />
+                        <CheckBox
+                            name="use_second_checkbox"
+                            event_EVT_CHECKBOX="on_use_second_change"
+                            label="$(use_second_text)"
+                        />
                         <Spacer />
                         <CheckBox
                             name="use_date_default_values_checkbox"
@@ -398,6 +404,7 @@ class PreferencesDialog(Dialog):
             "skip_s_in_decade_text_text": _("Skip s in decade text"),
             "display_checkmark_on_events_done_text": _("Display checkmark when events are done"),
             "never_use_time_text": _("Never use time precision for events"),
+            "use_second_text": _("Use second precision for time"),
             "legend_positions_text": _("Legend Position"),
             "legend_positions": [_("Bottom-Left"), _("Top-Left"), _("Top-Right"), _("Bottom-Right")],
             "time_scale_positions": [_("Top"), _("Center"), _("Bottom")],
@@ -471,6 +478,9 @@ class PreferencesDialog(Dialog):
     def SetNeverUseTime(self, value):
         self.never_use_time_checkbox.SetValue(value)
 
+    def SetUseSecond(self, value):
+        self.use_second_checkbox.SetValue(value)
+
     def SetUseDateDefaultValues(self, value):
         self.use_date_default_values_checkbox.SetValue(value)
         
@@ -494,6 +504,9 @@ class PreferencesDialog(Dialog):
         
     def GetNeverUseTime(self):
         return self.never_use_time_checkbox.GetValue()
+
+    def GetUseSecond(self):
+        return self.use_second_checkbox.GetValue()
 
     def GetUseDateDefaultValues(self):
         return self.use_date_default_values_checkbox.GetValue()

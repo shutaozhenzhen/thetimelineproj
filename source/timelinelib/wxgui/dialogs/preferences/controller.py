@@ -135,6 +135,9 @@ class PreferencesDialogController(Controller):
     def on_never_use_time_change(self, event):
         self.config.never_use_time = self.view.GetNeverUseTime()
 
+    def on_use_second_change(self, event):
+        self.config.use_second = self.view.GetUseSecond()
+
     def on_use_date_default_values(self, event):
         self.config.use_date_default_values = self.view.GetUseDateDefaultValues()
 
@@ -166,6 +169,7 @@ class PreferencesDialogController(Controller):
         self.view.SetSkipSInDecadeText(self.config.skip_s_in_decade_text)
         self.view.SetDisplayCheckmarkOnEventsDone(self.config.display_checkmark_on_events_done)
         self.view.SetNeverUseTime(self.config.never_use_time)
+        self.view.SetUseSecond(self.config.use_second)
         self.view.SetUseDateDefaultValues(self.config.use_date_default_values)
         self.view.SetDefaultYear(self.config.default_year)
         self.view.SetDefaultMonth(self.config.default_month)
