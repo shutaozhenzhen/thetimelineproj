@@ -38,8 +38,8 @@ Name: "startmenu";   Description: "Create a start menu"; GroupDescription: "{cm:
 [Files]
 Source: "dist\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
 Source: "dist\icons\event_icons\*"; DestDir: "{app}\icons\event_icons"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\MSVCP90.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\gdiplus.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\MSVCP90.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\gdiplus.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -49,57 +49,57 @@ Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\gdiplus.dll"; DestDir: "{ap
 ;
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source: "dist\translations\ca\LC_MESSAGES\*"; DestDir: "{app}\translations\ca\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\ca\LC_MESSAGES\*"; DestDir: "{app}\translations\ca\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\ca\LC_MESSAGES\*"; DestDir: "{app}\translations\ca\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\de\LC_MESSAGES\*"; DestDir: "{app}\translations\de\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\de\LC_MESSAGES\*"; DestDir: "{app}\translations\de\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\de\LC_MESSAGES\*"; DestDir: "{app}\translations\de\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\el\LC_MESSAGES\*"; DestDir: "{app}\translations\el\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\el\LC_MESSAGES\*"; DestDir: "{app}\translations\el\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\el\LC_MESSAGES\*"; DestDir: "{app}\translations\el\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\es\LC_MESSAGES\*"; DestDir: "{app}\translations\es\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\es\LC_MESSAGES\*"; DestDir: "{app}\translations\es\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\es\LC_MESSAGES\*"; DestDir: "{app}\translations\es\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\eu\LC_MESSAGES\*"; DestDir: "{app}\translations\eu\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\eu\LC_MESSAGES\*"; DestDir: "{app}\translations\eu\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\eu\LC_MESSAGES\*"; DestDir: "{app}\translations\eu\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\fr\LC_MESSAGES\*"; DestDir: "{app}\translations\fr\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\fr\LC_MESSAGES\*"; DestDir: "{app}\translations\fr\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\fr\LC_MESSAGES\*"; DestDir: "{app}\translations\fr\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\gl\LC_MESSAGES\*"; DestDir: "{app}\translations\gl\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\he\LC_MESSAGES\*"; DestDir: "{app}\translations\he\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\it\LC_MESSAGES\*"; DestDir: "{app}\translations\it\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\it\LC_MESSAGES\*"; DestDir: "{app}\translations\it\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\it\LC_MESSAGES\*"; DestDir: "{app}\translations\it\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\he\LC_MESSAGES\*"; DestDir: "{app}\translations\ko\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\lt\LC_MESSAGES\*"; DestDir: "{app}\translations\lt\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\pl\LC_MESSAGES\*"; DestDir: "{app}\translations\pl\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\pl\LC_MESSAGES\*"; DestDir: "{app}\translations\pl\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\pl\LC_MESSAGES\*"; DestDir: "{app}\translations\pl\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\pt\LC_MESSAGES\*"; DestDir: "{app}\translations\pt\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\pt\LC_MESSAGES\*"; DestDir: "{app}\translations\pt\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\pt\LC_MESSAGES\*"; DestDir: "{app}\translations\pt\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\translations\pt_BR\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\translations\pt_BR\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\pt_BR\LC_MESSAGES\*"; DestDir: "{app}\translations\pt_BR\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\ru\LC_MESSAGES\*"; DestDir: "{app}\translations\ru\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\ru\LC_MESSAGES\*"; DestDir: "{app}\translations\ru\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\ru\LC_MESSAGES\*"; DestDir: "{app}\translations\ru\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\sv\LC_MESSAGES\*"; DestDir: "{app}\translations\sv\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\sv\LC_MESSAGES\*"; DestDir: "{app}\translations\sv\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\sv\LC_MESSAGES\*"; DestDir: "{app}\translations\sv\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\tr\LC_MESSAGES\*"; DestDir: "{app}\translations\tr\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\tr\LC_MESSAGES\*"; DestDir: "{app}\translations\tr\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\tr\LC_MESSAGES\*"; DestDir: "{app}\translations\tr\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\vi\LC_MESSAGES\*"; DestDir: "{app}\translations\vi\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\vi\LC_MESSAGES\*"; DestDir: "{app}\translations\vi\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\vi\LC_MESSAGES\*"; DestDir: "{app}\translations\vi\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\zh_CN\LC_MESSAGES\*"; DestDir: "{app}\translations\zh_CN\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Python27\lib\site-packages\wx-3.0-msw\wx\locale\zh_CN\LC_MESSAGES\*"; DestDir: "{app}\translations\zh_CN\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\zh_CN\LC_MESSAGES\*"; DestDir: "{app}\translations\zh_CN\LC_MESSAGES"; Flags: ignoreversion
 
 
 
