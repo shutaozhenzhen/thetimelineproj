@@ -33,6 +33,13 @@ Search:
 * ``Result label is always shown.``
   Now the result label is shown even when more than 1 match.
 
+Fixed crash reports and bugs:
+
+NumTime period error report:
+* ``AttributeError: 'NumTime' object has no attribute 'julian_day'``
+  Added to_str() function to time base class GenericTimeMixin.
+  Own implementation of to_str in GregorianTime.
+
 Version 1.19.0
 --------------
 

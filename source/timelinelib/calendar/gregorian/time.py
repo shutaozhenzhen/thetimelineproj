@@ -100,7 +100,11 @@ class GregorianTime(GenericTimeMixin):
             self.julian_day,
             self.seconds
         )
-
+    
+    def to_str(self):
+        from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
+        return GregorianDateTime.from_time(self)
+    
     def get_time_of_day(self):
         hours = self.seconds / 3600
         minutes = (self.seconds / 60) % 60
