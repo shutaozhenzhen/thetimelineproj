@@ -99,7 +99,7 @@ Source: "dist\translations\vi\LC_MESSAGES\*"; DestDir: "{app}\translations\vi\LC
 Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\vi\LC_MESSAGES\*"; DestDir: "{app}\translations\vi\LC_MESSAGES"; Flags: ignoreversion
 
 Source: "dist\translations\zh_CN\LC_MESSAGES\*"; DestDir: "{app}\translations\zh_CN\LC_MESSAGES"; Flags: ignoreversion
-Source: "C:\Pgm\Python27C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\zh_CN\LC_MESSAGES\*"; DestDir: "{app}\translations\zh_CN\LC_MESSAGES"; Flags: ignoreversion
+Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\locale\zh_CN\LC_MESSAGES\*"; DestDir: "{app}\translations\zh_CN\LC_MESSAGES"; Flags: ignoreversion
 
 
 
