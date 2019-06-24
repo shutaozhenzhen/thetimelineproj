@@ -36,6 +36,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "startmenu";   Description: "Create a start menu"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
+Source: "dist\*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "dist\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion
 Source: "dist\icons\event_icons\*"; DestDir: "{app}\icons\event_icons"; Flags: ignoreversion
 Source: "C:\Pgm\Python27\lib\site-packages\wx-3.0-msw\wx\MSVCP90.dll"; DestDir: "{app}"; Flags: ignoreversion
