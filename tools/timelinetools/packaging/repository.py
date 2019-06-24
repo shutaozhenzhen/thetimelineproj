@@ -53,7 +53,11 @@ class Repository(object):
             "hg", "id",
             "-r", revision,
             "-R", self.root,
-        ]).strip().split(" ")
+        ])
+        if isinstance(parts, bytes):
+            parts = parts.decode('utf-8')
+        parts = parts.strip().split(" ")
+        print('Revision-parts: %s' % parts)
         if len(parts) == 1:
             return (parts[0], None)
         elif len(parts) == 2:
