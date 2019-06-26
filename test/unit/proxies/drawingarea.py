@@ -45,11 +45,11 @@ class describe_drawingarea_proxy(unittest.TestCase):
     
     def setUp(self):
         self.canvas = Mock(TimelineCanvas)
-        timeline_panel = Mock(TimelinePanel)
-        timeline_panel.timeline_canvas = self.canvas
-        main_panel = Mock(MainPanel)
-        main_panel.timeline_panel = timeline_panel
-        mf = Mock(MainFrame)
-        mf.main_panel = main_panel
-        self.proxy = DrawingAreaProxy(mf)
+        self.proxy = DrawingAreaProxy(self.create_mainframe_object())
         
+    def create_mainframe_object(self):
+        mf = Mock(MainFrame)
+        mf.main_panel = Mock(MainPanel)
+        mf.main_panel.timeline_panel = Mock(TimelinePanel)
+        mf.main_panel.timeline_panel.timeline_canvas = self.canvas
+        return mf
