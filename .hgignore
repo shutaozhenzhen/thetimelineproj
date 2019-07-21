@@ -33,3 +33,5 @@ launchpad-export.tar.gz
 profiling/*
 icons/event_icons/48.png
 sysdoc/_build/doctrees/*
+.idea/*
+tools/htmlcov/*
