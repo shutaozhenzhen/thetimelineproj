@@ -12,6 +12,11 @@ Version 1.20.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
 
+Calendars:
+
+* ``Two new calendars added.``
+  The Pharaonic and Coptic calendars added, thanks to Guyrandy Jean-Gilles.
+
 Time:
 
 * ``The time for an event can be entered with seconds precision.``
