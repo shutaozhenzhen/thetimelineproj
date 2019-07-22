@@ -161,34 +161,22 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         return bundle
 
     # File Menu action handlers
-    def _create_new_timeline(self):
+    def _create_new_timeline(self, timetype=None):
         path = self._get_file_path()
         if path is not None:
-            self.controller.open_timeline(path)
+            self.controller.open_timeline(path, timetype)
 
     def _create_new_bosparanian_timeline(self):
-        path = self._get_file_path()
-        if path is not None:
-            timetype = BosparanianTimeType()
-            self.controller.open_timeline(path, timetype)
+        self._create_new_timeline(BosparanianTimeType())
     
     def _create_new_coptic_timeline(self):
-        path = self._get_file_path()
-        if path is not None:
-            timetype = CopticTimeType()
-            self.controller.open_timeline(path, timetype)
+        self._create_new_timeline(CopticTimeType())
             
     def _create_new_pharaonic_timeline(self):
-        path = self._get_file_path()
-        if path is not None:
-            timetype = PharaonicTimeType()
-            self.controller.open_timeline(path, timetype)
+        self._create_new_timeline(PharaonicTimeType())
         
     def _create_new_numeric_timeline(self):
-        path = self._get_file_path()
-        if path is not None:
-            timetype = NumTimeType()
-            self.controller.open_timeline(path, timetype)
+        self._create_new_timeline(NumTimeType())
 
     def _get_file_path(self):
         path = None
