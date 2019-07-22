@@ -1,0 +1,11 @@
+The sysdoc is generated with sphinx. The used version of sphinx is v1.8.5
+
+To generate the documentation, first run the the script 
+    generate-sysdoc-rst-files.py
+followed by running the script
+    generate-sysdoc.py
+    
+The html files generated can be found in the directory
+    main/documentation/sysdoc/_build/html
+    
+The start file is index.html

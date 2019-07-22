@@ -1,5 +1,7 @@
 @ECHO OFF
 
+set PATH=c:\Pgm\Python27;c:\Pgm\Python27\Scripts;%PATH%
+
 REM Command file for Sphinx documentation
 
 if "%SPHINXBUILD%" == "" (
