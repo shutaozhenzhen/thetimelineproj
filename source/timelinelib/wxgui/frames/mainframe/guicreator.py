@@ -15,9 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
-
 import collections
-
 import wx.lib.newevent
 
 from timelinelib.db.utils import safe_locking
@@ -650,6 +648,16 @@ class GuiCreator(object):
                 "text": _("Bosparanian"),
                 "description": _("This creates a timeline using the fictuous Bosparanian calendar from the German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."),
                 "create_fn": self._create_new_bosparanian_timeline,
+            },
+            {
+                "text": _("Pharaonic"),
+                "description": _("This creates a timeline using the ancient egypt pharaonic calendar"),
+                "create_fn": self._create_new_pharaonic_timeline,
+            },
+            {
+                "text": _("Coptic"),
+                "description": _("This creates a timeline using the coptic calendar"),
+                "create_fn": self._create_new_coptic_timeline,
             },
         ]
         dialog = FileNewDialog(self, items)

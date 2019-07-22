@@ -27,6 +27,8 @@ import wx
 from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar.num.timetype import NumTimeType
+from timelinelib.calendar.coptic.timetype import CopticTimeType
+from timelinelib.calendar.pharaonic.timetype import PharaonicTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
@@ -167,7 +169,7 @@ class Parser(object):
 
     def _parse_timetype(self, text, tmp_dict):
         self.db.set_time_type(None)
-        valid_time_types = (GregorianTimeType(), BosparanianTimeType(), NumTimeType())
+        valid_time_types = (GregorianTimeType(), BosparanianTimeType(), NumTimeType(), CopticTimeType(), PharaonicTimeType())
         for timetype in valid_time_types:
             if text == timetype.get_name():
                 self.db.set_time_type(timetype)

@@ -47,6 +47,8 @@ import timelinelib.wxgui.frames.mainframe.guicreator as guic
 from timelinelib.wxgui.frames.mainframe.controllerapi import MainFrameApiUsedByController
 from timelinelib.wxgui.frames.mainframe.alertcontroller import AlertController
 from timelinelib.wxgui.frames.mainframe.menucontroller import MenuController
+from timelinelib.calendar.coptic.timetype import CopticTimeType
+from timelinelib.calendar.pharaonic.timetype import PharaonicTimeType
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
 
@@ -169,7 +171,19 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         if path is not None:
             timetype = BosparanianTimeType()
             self.controller.open_timeline(path, timetype)
-
+    
+    def _create_new_coptic_timeline(self):
+        path = self._get_file_path()
+        if path is not None:
+            timetype = CopticTimeType()
+            self.controller.open_timeline(path, timetype)
+            
+    def _create_new_pharaonic_timeline(self):
+        path = self._get_file_path()
+        if path is not None:
+            timetype = PharaonicTimeType()
+            self.controller.open_timeline(path, timetype)
+        
     def _create_new_numeric_timeline(self):
         path = self._get_file_path()
         if path is not None:
