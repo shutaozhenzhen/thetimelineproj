@@ -37,6 +37,7 @@ DEVELOPERS = [
     u"    Thomas Mohr",
     u"    Linostar",
     u"    Norbert Langermann",
+    u"    Jean-Gilles Guyrandy",
 ]
 TRANSLATORS = [
     u"Basque:",
