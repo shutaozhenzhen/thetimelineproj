@@ -16,14 +16,22 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Contains the GregorianDateTime class and static functions related
+to the class.
+
+:doc:`Tests are found here <unit_calendar_gregorian_gregorian>`.
+"""
 
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.time import GregorianTime
 
 
 class GregorianDateTime(object):
+    """ """
 
     def __init__(self, year, month, day, hour, minute, second):
+        """ """
         if not is_valid(year, month, day):
             raise ValueError("Invalid gregorian date %s-%s-%s" % (year, month, day))
         self.year = year
@@ -34,24 +42,30 @@ class GregorianDateTime(object):
         self.second = second
 
     def __eq__(self, other):
+        """ """
         return (isinstance(other, self.__class__) and
                 self.to_tuple() == other.to_tuple())
 
     def __ne__(self, other):
+        """ """
         return not (self == other)
 
     @classmethod
     def from_ymd(cls, year, month, day):
+        """ """
         return cls(year, month, day, 0, 0, 0)
 
     @classmethod
     def from_time(cls, time):
+        """ """
         (year, month, day) = julian_day_to_gregorian_ymd(time.julian_day)
         (hour, minute, second) = time.get_time_of_day()
         return cls(year, month, day, hour, minute, second)
 
     @property
     def week_number(self):
+        """ """
+
         def monday_week_1(year):
             from timelinelib.calendar.gregorian.timetype import GregorianTimeType
             jan_4 = GregorianDateTime.from_ymd(year, 1, 4).to_time()
@@ -76,9 +90,11 @@ class GregorianDateTime(object):
         return days_since_monday_week_1(self.to_time()) / 7 + 1
 
     def is_bc(self):
+        """ """
         return self.year <= 0
 
     def replace(self, year=None, month=None):
+        """ """
         if year is None:
             year = self.year
         if month is None:
@@ -93,24 +109,30 @@ class GregorianDateTime(object):
         )
 
     def days_in_month(self):
+        """ """
         return days_in_month(self.year, self.month)
 
     def to_tuple(self):
+        """ """
         return (self.year, self.month, self.day, self.hour, self.minute,
                 self.second)
 
     def to_date_tuple(self):
+        """ """
         return (self.year, self.month, self.day)
 
     def to_time_tuple(self):
+        """ """
         return (self.hour, self.minute, self.second)
 
     def to_time(self):
+        """ """
         days = gregorian_ymd_to_julian_day(self.year, self.month, self.day)
         seconds = self.hour * 60 * 60 + self.minute * 60 + self.second
         return GregorianTime(days, seconds)
 
     def is_first_day_in_year(self):
+        """ """
         return (self.month == 1 and
                 self.day == 1 and
                 self.hour == 0 and
@@ -118,16 +140,19 @@ class GregorianDateTime(object):
                 self.second == 0)
 
     def is_first_of_month(self):
+        """ """
         return (self.day == 1 and
                 self.hour == 0 and
                 self.minute == 0 and
                 self.second == 0)
 
     def __repr__(self):
+        """ """
         return "GregorianDateTime<%d-%02d-%02d %02d:%02d:%02d>" % self.to_tuple()
 
 
 def days_in_month(year, month):
+    """ """
     if month in [4, 6, 9, 11]:
         return 30
     if month in [1, 3, 5, 7, 8, 10, 12]:
@@ -138,10 +163,12 @@ def days_in_month(year, month):
 
 
 def is_leap_year(year):
+    """ """
     return year % 4 == 0 and (year % 400 == 0 or not year % 100 == 0)
 
 
 def is_valid_time(hour, minute, second):
+    """ """
     return (
         hour >= 0 and hour < 24 and
         minute >= 0 and minute < 60 and
@@ -150,6 +177,7 @@ def is_valid_time(hour, minute, second):
 
 
 def is_valid(year, month, day):
+    """ """
     return (
         month >= 1 and month <= 12 and
         day >= 1 and day <= days_in_month(year, month)
@@ -325,7 +353,7 @@ def gregorian_ymd_to_julian_day_alt(year, month, day):
     """
     Table 15.14 Selected arithmetic calendars, with parameters for algorithms
         Calendar a         y   j   m  n  r   p    q  v   u    s  t  w  A  B       C
-        -----------------------------------------------------------------------------
+        
         1 Egyptian      3968   47  0 13  1   365  0  0   1   30  0  0
         2 Ethiopian     4720  124  0 13  4  1461  0  3   1   30  0  0
         3 Coptic        4996  124  0 13  4  1461  0  3   1   30  0  0
