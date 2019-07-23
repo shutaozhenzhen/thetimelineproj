@@ -17,8 +17,12 @@
 
 """Unittests of the class :doc:`Monitoring <timelinelib_monitoring>`."""
 
+import sys
 from timelinelib.test.cases.unit import UnitTestCase
-from mock import Mock
+if sys.version_info >= (3, 3):
+    from unittest.mock import Mock
+else:
+    from mock import Mock
 from timelinelib.monitoring import Monitoring
 from timelinelib.timer import Timer
 
