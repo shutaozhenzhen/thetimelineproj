@@ -24,24 +24,30 @@ from timelinelib.timer import Timer
 
 
 class desribe_timer(UnitTestCase):
+    """ """
 
     def test_has_a_default_timer_on_windows(self):
+        """ """
         sys.platform = "win32"
         self.assertEquals(time.clock, Timer().default_timer)
 
     def test_has_a_default_timer_on_any_os(self):
+        """ """
         sys.platform = "any_os"
         self.assertEquals(time.time, Timer().default_timer)
 
     def test_can_start_timing(self):
+        """ """
         self.timer.start()
         self.assertEqual(1, self.counter)
 
     def test_can_stop_timing(self):
+        """ """
         self.timer.end()
         self.assertEqual(1, self.counter)
 
     def test_can_measure_elapsed_time(self):
+        """ """
         self.timer.start()
         self.timer.end()
         self.assertEqual(1000, self.timer.elapsed_ms)
