@@ -10,6 +10,12 @@ Timeline is a cross-platform application for displaying and navigating events on
 
 .. toctree::
    :maxdepth: 1
+   :caption: Entry point:
+
+   timeline
+   
+.. toctree::
+   :maxdepth: 1
    :caption: Code:
    
    timelinelib
