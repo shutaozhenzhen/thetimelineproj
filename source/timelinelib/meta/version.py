@@ -16,6 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
+
+
 TYPE_DEV = "development"
 TYPE_BETA = "beta"
 TYPE_FINAL = ""
@@ -61,3 +64,7 @@ def is_dev():
 
 def is_final():
     return TYPE == TYPE_FINAL
+
+
+def is_python3():
+    return sys.version_info >= (3, 3)
