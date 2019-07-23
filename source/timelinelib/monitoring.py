@@ -19,11 +19,12 @@
 Contains the Monitoring class.
 
 The monitoring functions comes into action if the flag DEBUG_ENABLED,
-in the :doc:`timelinelib module <timelinelib>`, is set to True. This happens if the 
-application argument --debug is used at start of Timeline. 
+in the :doc:`timelinelib module <timelinelib>`, is set to True. 
+This happens if the application argument --debug is used at start of Timeline. 
 When DEBUG_ENABLED is True, timer and counting statistics are shown 
 in the main panel.
 
+:doc:`Tests are found here <unit_monitoring>`.
 """
 
 from timelinelib.timer import Timer
