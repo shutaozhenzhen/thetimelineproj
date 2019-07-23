@@ -28,9 +28,11 @@ import timelinelib.calendar.gregorian.gregorian as gregorian
 class describe_gregorian(UnitTestCase):
 
     def test_rejects_invalid_dates(self):
+        """ """
         self.assertRaises(ValueError, gregorian.GregorianDateTime, 2013, 0, 1, 0, 0, 0)
 
     def test_can_replace(self):
+        """ """
         g = gregorian.GregorianDateTime(2013, 7, 12, 10, 16, 12)
         self.assertEqual(g.replace(year=1990), gregorian.GregorianDateTime(1990, 7, 12, 10, 16, 12))
         self.assertEqual(g.replace(month=6), gregorian.GregorianDateTime(2013, 6, 12, 10, 16, 12))
@@ -41,6 +43,7 @@ class describe_gregorian(UnitTestCase):
 class GregorianConversionsSpec(UnitTestCase):
 
     def test_can_convert_from_timeline_time_to_gregorian(self):
+        """ """
         self.assertEqual(
             gregorian.GregorianDateTime.from_time(GregorianTime(julian_day=0, seconds=0)),
             gregorian.GregorianDateTime(-4713, 11, 24, 0, 0, 0))
@@ -49,6 +52,7 @@ class GregorianConversionsSpec(UnitTestCase):
             gregorian.GregorianDateTime(-4713, 11, 25, 0, 0, 0))
 
     def test_can_convert_from_gregorian_to_timeline_time(self):
+        """ """
         self.assertEqual(
             gregorian.GregorianDateTime(-4713, 11, 24, 0, 0, 0).to_time(),
             GregorianTime(julian_day=0, seconds=0))
@@ -57,12 +61,14 @@ class GregorianConversionsSpec(UnitTestCase):
             GregorianTime(julian_day=1, seconds=0))
 
     def test_roundtrip_julian_day_conversions(self):
+        """ """
         for julian_day in range(100):
             (year, month, day) = gregorian.julian_day_to_gregorian_ymd(julian_day)
             roundtrip = gregorian.gregorian_ymd_to_julian_day(year, month, day)
             self.assertEqual(roundtrip, julian_day)
 
     def test_roundtrip_gregorian_dates_conversions(self):
+        """ """
         dates = [
             (2013, 1, 1),
             (2013, 1, 31),
@@ -74,6 +80,7 @@ class GregorianConversionsSpec(UnitTestCase):
             self.assertEqual(roundtrip, gregorian_date)
 
     def test_works_same_as_python_date(self):
+        """ """
         py_date = datetime.date(1900, 1, 1)
         jd = gregorian.gregorian_ymd_to_julian_day(1900, 1, 1)
         for _ in range(365 * 200):
@@ -83,6 +90,7 @@ class GregorianConversionsSpec(UnitTestCase):
             jd += 1
 
     def test_works_same_as_wx_date(self):
+        """ """
         STEP = 10000
         STOP = 10 * STEP
         for i in range(0, STOP, STEP):
@@ -97,6 +105,7 @@ class GregorianConversionsSpec(UnitTestCase):
             self.assertEqual(tm1, tm2)
 
     def test_new_to_julian_day(self):
+        """ """
         julian_day2 = gregorian.gregorian_ymd_to_julian_day_alt(2019, 06, 24)
         julian_day1 = gregorian.gregorian_ymd_to_julian_day(2019, 06, 24)
         self.assertEqual(julian_day1, julian_day2)
@@ -105,6 +114,7 @@ class GregorianConversionsSpec(UnitTestCase):
 class describe_gregorian_primitives(UnitTestCase):
 
     def test_is_valid(self):
+        """ """
         self.assertTrue(gregorian.is_valid(2013, 1, 1))
         self.assertFalse(gregorian.is_valid(2013, 0, 1))
         self.assertFalse(gregorian.is_valid(2013, 13, 1))
@@ -113,6 +123,7 @@ class describe_gregorian_primitives(UnitTestCase):
         self.assertFalse(gregorian.is_valid(2013, 2, 30))
 
     def test_days_in_month(self):
+        """ """
         self.assertEqual(31, gregorian.days_in_month(2013, 1))
         self.assertEqual(28, gregorian.days_in_month(2013, 2))
         self.assertEqual(31, gregorian.days_in_month(2013, 3))
@@ -128,12 +139,14 @@ class describe_gregorian_primitives(UnitTestCase):
         self.assertEqual(29, gregorian.days_in_month(2016, 2))
 
     def test_is_leap_year(self):
+        """ """
         self.assertFalse(gregorian.is_leap_year(2013))
         self.assertFalse(gregorian.is_leap_year(1900))
         self.assertTrue(gregorian.is_leap_year(2016))
         self.assertTrue(gregorian.is_leap_year(2000))
 
     def test_week_number(self):
+        """ """
         def assert_is_week(date_tuple, w):
             (y, m, d) = date_tuple
             date = gregorian.GregorianDateTime.from_ymd(y, m, d)
@@ -146,6 +159,7 @@ class describe_gregorian_primitives(UnitTestCase):
         assert_is_week((2013, 7, 2), 27)
 
     def test_week_number_against_python(self):
+        """ """
         self.longMessage = True
         time = datetime.date(1900, 1, 1)
         for _ in range(365 * 50):
