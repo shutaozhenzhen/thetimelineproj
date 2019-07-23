@@ -57,7 +57,6 @@ class desribe_monitoring(UnitTestCase):
         self.assertEquals(3, self.monitoring.timer_elapsed_ms)
 
     def setUp(self):
-        """ """
         self.timer = Mock(Timer)
         self.timer.elapsed_ms = 3
         self.monitoring = Monitoring(self.timer)
