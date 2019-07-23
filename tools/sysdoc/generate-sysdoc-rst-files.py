@@ -87,6 +87,10 @@ class Sysdoc(object):
         print('packagefile', os.path.abspath(path))
 
     def create_module_file(self, module, filename):
+        if module.startswith('.'):
+            module = module[1:]
+        if filename.startswith('_'):
+            filename = filename[1:]
         path = '..\\..\\documentation\\sysdoc\\%s.rst' % filename
         print('modulefile', os.path.abspath(path))
         with open(path, 'w') as f:
