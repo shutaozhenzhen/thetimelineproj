@@ -19,10 +19,6 @@
 
 import sys
 from timelinelib.test.cases.unit import UnitTestCase
-if sys.version_info >= (3, 3):
-    from unittest.mock import Mock
-else:
-    from mock import Mock
 from timelinelib.monitoring import Monitoring
 from timelinelib.timer import Timer
 
@@ -57,6 +53,10 @@ class desribe_monitoring(UnitTestCase):
 
     def setUp(self):
         """ """
+        if sys.version_info >= (3, 3):
+            from unittest.mock import Mock
+        else:
+            from mock import Mock
         self.timer = Mock(Timer)
         self.timer.elapsed_ms = 3
         self.monitoring = Monitoring(self.timer)
