@@ -147,7 +147,7 @@ class Config(Observable):
         return self.get_recently_opened()[0]
 
     def append_recently_opened(self, path):
-        if path in [":tutorial:"]:
+        if path in [":tutorial:", ":numtutorial:"]:
             # Special timelines should not be saved
             return
         if isinstance(path, str):
