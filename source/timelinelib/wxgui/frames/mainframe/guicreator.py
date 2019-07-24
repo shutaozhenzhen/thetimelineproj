@@ -15,8 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+A base class for the mainframe window, responsible for creating the GUI.
+"""
+
+
 import collections
-import wx.lib.newevent
+import wx
 
 from timelinelib.db.utils import safe_locking
 from timelinelib.meta.about import display_about_dialog
@@ -65,6 +70,7 @@ ID_FIND_LAST = wx.NewId()
 ID_FIT_ALL = wx.NewId()
 ID_EDIT_SHORTCUTS = wx.NewId()
 ID_TUTORIAL = wx.NewId()
+ID_NUMTUTORIAL = wx.NewId()
 ID_FEEDBACK = wx.NewId()
 ID_CONTACT = wx.NewId()
 ID_SYSTEM_INFO = wx.NewId()
@@ -562,6 +568,7 @@ class GuiCreator(object):
         items_spec = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents") + "\tF1", cbx),
                       None,
                       (ID_TUTORIAL, self.controller.open_gregorian_tutorial_timeline, _("Getting started &tutorial"), cbx),
+                      (ID_NUMTUTORIAL, self.controller.open_numeric_tutorial_timeline, _("Getting started numeric &tutorial"), cbx),
                       None,
                       (ID_FEEDBACK, feedback, _("Give &Feedback..."), cbx),
                       (ID_CONTACT, self.help_browser.show_contact_page, _("Co&ntact"), cbx),
