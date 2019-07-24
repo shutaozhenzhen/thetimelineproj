@@ -15,6 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Defines plugin application components.
+"""
+
 
 from factory import PluginFactory
 
