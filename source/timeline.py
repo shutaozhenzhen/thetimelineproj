@@ -27,6 +27,8 @@ import locale
 import os
 import platform
 import sys
+from timelinelib.meta.version import is_python2
+
 
 def start():
     if platform.system() != "Windows":
@@ -56,7 +58,10 @@ def start():
         language, encoding = locale.getdefaultlocale()
         os.environ['LANG'] = language
     
-    gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR, unicode=True)
+    if is_python2():
+        gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR, unicode=True)
+    else:
+        gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR)
     
     from timelinelib.config.arguments import ApplicationArguments
     
