@@ -43,6 +43,7 @@ class SP():
 class describe_application_arguments(UnitTestCase):
 
     def test_app_has_default_config_path(self):
+        """ """
         try:
             sp = wx.StandardPaths
             wx.StandardPaths = SP()
@@ -52,35 +53,42 @@ class describe_application_arguments(UnitTestCase):
             wx.StandardPaths = sp
 
     def test_can_return_path_to_cofig_file_(self):
+        """ """
         self.args.parse_from(['-c', 'c:\\AppData\\.thetimelineproj.cfg'])
         self.assertEquals('c:\\AppData\\.thetimelineproj.cfg', self.args.get_config_file_path())
 
     def test_debug_is_not_on_by_default(self):
+        """ """
         self.args.parse_from([])
         self.assertFalse(self.args.get_debug_flag())
 
     def test_debug_can_be_turned_on(self):
+        """ """
         self.args.parse_from(['--debug'])
         self.assertTrue(self.args.get_debug_flag())
 
     def test_timeline_file_dont_have_to_be_pecified_at_start(self):
+        """ """
         self.args.parse_from([])
         self.assertFalse(self.args.has_files())
         self.assertEquals([], self.args.get_files())
         self.assertTrue(self.args.get_first_file() is None)
 
     def test_timeline_file_can_be_specified_at_start(self):
+        """ """
         FILE = 'test.timeline'
         self.args.parse_from([FILE, "FooBar"])
         self.assertEquals(FILE, self.args.get_first_file())
 
     def test_multiple_timeline_files_can_be_specified_at_start(self):
+        """ """
         FILE1 = 'test.timeline'
         FILE2 = 'FooBar'
         self.args.parse_from([FILE1, FILE2])
         self.assertEquals([FILE1, FILE2], self.args.get_files())
 
     def test_invalid_option_causes_system_exit(self):
+        """ """
         try:
             self.addCleanup(self.remove_stderr_file)
             e = sys.exit
