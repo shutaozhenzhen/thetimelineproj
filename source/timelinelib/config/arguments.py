@@ -44,11 +44,6 @@ class ApplicationArguments(object):
         self._create_config_file_option()
         self._create_debug_option()
 
-    def _create_option_parser(self):
-        return OptionParser(
-            usage="%prog [options] [filename]",
-            version=self._create_version_string())
-
     def parse_from(self, arguments):
         (self.options, self.arguments) = self._option_parser.parse_args(arguments)
 
@@ -75,6 +70,11 @@ class ApplicationArguments(object):
                 wx.StandardPaths.Get().GetUserConfigDir(),
                 ".thetimelineproj.cfg")
 
+    def _create_option_parser(self):
+        return OptionParser(
+            usage="%prog [options] [filename]",
+            version=self._create_version_string())
+        
     def _create_version_string(self):
         return "%prog " + get_full_version()
     
