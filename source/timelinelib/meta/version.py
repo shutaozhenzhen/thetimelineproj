@@ -68,3 +68,7 @@ def is_final():
 
 def is_python3():
     return sys.version_info >= (3, 3)
+
+
+def is_python2():
+    return sys.version_info <= (2, 7)
