@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Defining paths for resources needed by the application.
+"""
 
 import os.path
 
