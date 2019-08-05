@@ -24,6 +24,9 @@ Time:
 
 Graphics:
 
+* ``The font in the event description editor has a fixed size.``
+  When the text control has focus the font size can be changed with Ctrl+/Ctrl-.
+
 * ``The with of the now-line can be 2 pix wider to help old eyes.``
   A preference can be checked in the color tab to make the now-line wider.
 
