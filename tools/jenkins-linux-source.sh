@@ -7,5 +7,5 @@ virtualenv venv -p python3 --system-site-packages
 pip install git+https://github.com/thetimelineproj/humblewx.git
 pip install icalendar
 pip install markdown
-pip install pysvg
+pip install pysvg-py3
 python tools/build-source-zip.py --revision $1
