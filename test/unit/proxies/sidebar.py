@@ -17,7 +17,7 @@
 
 
 import unittest
-from mock import Mock
+from unittest.mock import Mock
 from timelinelib.proxies.sidebar import SidebarProxy
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 from timelinelib.wxgui.components.mainpanel import MainPanel

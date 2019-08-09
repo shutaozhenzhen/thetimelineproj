@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.wxgui.dialogs.fieldselection.controller import FIELDS
 from timelinelib.wxgui.dialogs.fieldselection.controller import FieldSelectionDialogController

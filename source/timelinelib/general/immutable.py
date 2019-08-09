@@ -48,7 +48,7 @@ class ImmutableDict(tuple):
         return self.__class__(_AlreadyCopiedDict({
             key: fn(value)
             for key, value
-            in self._internal.iteritems()
+            in self._internal.items()
         }))
 
     def get(self, name, default=None):

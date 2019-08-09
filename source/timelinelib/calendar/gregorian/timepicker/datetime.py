@@ -185,7 +185,7 @@ class CalendarPopup(wx.PopupTransientWindow):
     def _create_calendar_control(self, wx_date, border):
         style = self._get_cal_style()
         cal = wx.adv.CalendarCtrl(self, -1, wx_date,
-                                       pos=(border, border), style=style)
+                                  pos=(border, border), style=style)
         self._set_cal_range(cal)
         return cal
 
