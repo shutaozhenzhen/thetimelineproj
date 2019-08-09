@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from types import UnicodeType
 from xml.sax.saxutils import escape as xmlescape
 
 from pysvg.filter import feGaussianBlur
@@ -415,7 +414,7 @@ class SVGDrawingAlgorithm(object):
         return self._encode_unicode_text(xmlescape(text))
 
     def _encode_unicode_text(self, text):
-        if type(text) is UnicodeType:
+        if isinstance(text, str):
             return text.encode(ENCODING)
         else:
             return text
@@ -446,7 +445,7 @@ class SVGDrawingAlgorithm(object):
         return style
 
     def _get_shadow_filter(self):
-        filterShadow = filter(x="-.3", y="-.5", width=1.9, height=1.9)
+        filterShadow = list(filter(x="-.3", y="-.5", width=1.9, height=1.9))
         filtBlur = feGaussianBlur(stdDeviation="4")
         filtBlur.set_in("SourceAlpha")
         filtBlur.set_result("out1")
