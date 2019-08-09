@@ -18,7 +18,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import mock
+import unittest.mock
 import wx
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
@@ -712,7 +712,7 @@ class describe_gregorian_time_navigation_functions(UnitTestCase):
         def navigation_fn(fn):
             self.new_period = fn(self.time_period)
         self.time_period = gregorian_period(start, end)
-        main_frame = mock.Mock(MainFrame)
+        main_frame = unittest.mock.Mock(MainFrame)
         main_frame.week_starts_on_monday.return_value = week_starts_on_monday
         fn(main_frame, self.time_period, navigation_fn)
 

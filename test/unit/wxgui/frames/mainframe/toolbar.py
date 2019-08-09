@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator

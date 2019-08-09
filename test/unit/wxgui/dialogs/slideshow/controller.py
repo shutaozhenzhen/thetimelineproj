@@ -20,7 +20,7 @@
 
 import os
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB

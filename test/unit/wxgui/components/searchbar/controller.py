@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.wxgui.components.searchbar.view import SearchBar
 from timelinelib.wxgui.components.searchbar.controller import SearchBarController

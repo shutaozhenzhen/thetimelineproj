@@ -17,7 +17,7 @@
 
 
 import wx
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.wxgui.dialogs.feature.controller import FeatureDialogController
 from timelinelib.wxgui.dialogs.feature.view import FeatureDialog

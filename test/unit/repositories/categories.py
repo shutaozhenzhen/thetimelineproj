@@ -17,7 +17,7 @@
 
 
 import unittest
-from mock import Mock
+from unittest.mock import Mock
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.repositories.categories import CategoriesFacade
 
