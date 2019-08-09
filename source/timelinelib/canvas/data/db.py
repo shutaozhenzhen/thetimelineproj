@@ -84,7 +84,7 @@ class MemoryDB(Observable):
             container = kwargs.pop("container")
         else:
             container = None
-        for name, value in kwargs.iteritems():
+        for name, value in kwargs.items():
             setattr(wrapper, name, value)
         if container is not None:
             wrapper.container = container
@@ -183,8 +183,8 @@ class MemoryDB(Observable):
         else:
             id_, immutable_event = min(
                 self._transactions.value.events,
-                key=lambda (id_, immutable_event):
-                    immutable_event.time_period.start_time
+                key=lambda id__immutable_event:
+                    id__immutable_event[1].time_period.start_time
             )
             with self._query() as query:
                 return query.get_event(id_)
@@ -195,8 +195,8 @@ class MemoryDB(Observable):
         else:
             id_, immutable_event = max(
                 self._transactions.value.events,
-                key=lambda (id_, immutable_event):
-                    immutable_event.time_period.end_time
+                key=lambda id__immutable_event1:
+                    id__immutable_event1[1].time_period.end_time
             )
             with self._query() as query:
                 return query.get_event(id_)
