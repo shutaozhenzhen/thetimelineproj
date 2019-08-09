@@ -64,7 +64,6 @@ def setup_paths():
     sys.path.insert(0, os.path.join(ROOT_DIR, "source"))
     sys.path.insert(0, os.path.join(ROOT_DIR, "test"))
     sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "pysvg-0.2.1"))
-    sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "pytz-2012j"))
     sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "humblewx-master", "source"))
     sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "Pillow-3.2.0"))
 
