@@ -38,17 +38,17 @@ class CopticConversionsSpec(UnitTestCase):
     def test_can_convert_from_timeline_time_to_coptic(self):
         self.assertEqual(
             coptic.CopticDateTime.from_time(CopticTime(julian_day=0, seconds=0)),
-            coptic.CopticDateTime(-4996, 05, 05, 0, 0, 0))
+            coptic.CopticDateTime(-4996, 5, 5, 0, 0, 0))
         self.assertEqual(
             coptic.CopticDateTime.from_time(CopticTime(julian_day=1, seconds=0)),
-            coptic.CopticDateTime(-4996, 05, 06, 0, 0, 0))
+            coptic.CopticDateTime(-4996, 5, 6, 0, 0, 0))
 
     def test_can_convert_from_coptic_to_timeline_time(self):
         self.assertEqual(
-            coptic.CopticDateTime(-4996, 05, 05, 0, 0, 0).to_time(),
+            coptic.CopticDateTime(-4996, 5, 5, 0, 0, 0).to_time(),
             CopticTime(julian_day=0, seconds=0))
         self.assertEqual(
-            coptic.CopticDateTime(-4996, 05, 06, 0, 0, 0).to_time(),
+            coptic.CopticDateTime(-4996, 5, 6, 0, 0, 0).to_time(),
             CopticTime(julian_day=1, seconds=0))
 
     def test_roundtrip_julian_day_conversions(self):
