@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from ConfigParser import DEFAULTSECT
-from ConfigParser import SafeConfigParser
+from configparser import DEFAULTSECT
+from configparser import SafeConfigParser
 
 from timelinelib.general.observer import Observable
 
@@ -94,7 +94,7 @@ class Item(object):
         return self._item_dict.get("data_type", "text")
 
     def _text_to_string(self, text):
-        if isinstance(text, unicode):
+        if isinstance(text, str):
             return text.encode("utf-8")
         else:
             return text
