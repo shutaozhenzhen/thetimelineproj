@@ -119,7 +119,7 @@ def deserialize_font(serialized_font):
             int(style),
             int(weight),
             bool_map[underlined],
-            facename.decode(FONT_FACE_ENCODING),
+            facename,
             int(encoding),
             wxcolor
         )

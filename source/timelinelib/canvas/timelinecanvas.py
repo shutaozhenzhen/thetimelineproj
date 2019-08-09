@@ -226,24 +226,22 @@ class TimelineCanvas(wx.Panel):
         return self._controller.event_is_period(event)
 
     def RedrawSurface(self, fn_draw):
-        width, height = self.GetSizeTuple()
-        self._surface_bitmap = wx.EmptyBitmap(width, height)
+        width, height = self.GetSize()
+        self._surface_bitmap = wx.Bitmap(width, height)
         memdc = wx.MemoryDC()
         memdc.SelectObject(self._surface_bitmap)
-        memdc.BeginDrawing()
-        memdc.SetBackground(wx.Brush(wx.WHITE, wx.PENSTYLE_SOLID))
+        memdc.SetBackground(wx.Brush(wx.WHITE, wx.BRUSHSTYLE_SOLID))
         memdc.Clear()
         fn_draw(memdc)
-        memdc.EndDrawing()
         del memdc
         self.Refresh()
         self.Update()
 
     def set_size_cursor(self):
-        self.SetCursor(wx.StockCursor(wx.CURSOR_SIZEWE))
+        self.SetCursor(wx.Cursor(wx.CURSOR_SIZEWE))
 
     def set_move_cursor(self):
-        self.SetCursor(wx.StockCursor(wx.CURSOR_SIZING))
+        self.SetCursor(wx.Cursor(wx.CURSOR_SIZING))
 
     def set_default_cursor(self):
         guiutils.set_default_cursor(self)
@@ -594,12 +592,10 @@ class TimelineCanvas(wx.Panel):
 
     def _on_paint(self, event):
         dc = wx.AutoBufferedPaintDC(self)
-        dc.BeginDrawing()
         if self._surface_bitmap:
             dc.DrawBitmap(self._surface_bitmap, 0, 0, True)
         else:
             pass  # TODO: Fill with white?
-        dc.EndDrawing()
 
     def _on_size(self, evt):
         self._controller.window_resized()

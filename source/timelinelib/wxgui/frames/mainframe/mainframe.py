@@ -156,7 +156,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         bundle = wx.IconBundle()
         for size in ["16", "32", "48"]:
             iconpath = os.path.join(ICONS_DIR, "%s.png" % size)
-            icon = wx.IconFromBitmap(wx.BitmapFromImage(wx.Image(iconpath)))
+            icon = wx.Icon(wx.Bitmap(wx.Image(iconpath)))
             bundle.AddIcon(icon)
         return bundle
 

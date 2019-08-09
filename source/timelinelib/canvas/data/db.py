@@ -183,8 +183,7 @@ class MemoryDB(Observable):
         else:
             id_, immutable_event = min(
                 self._transactions.value.events,
-                key=lambda (id_, immutable_event):
-                    immutable_event.time_period.start_time
+                key=lambda id_, immutable_event: immutable_event.time_period.start_time
             )
             with self._query() as query:
                 return query.get_event(id_)
@@ -195,8 +194,7 @@ class MemoryDB(Observable):
         else:
             id_, immutable_event = max(
                 self._transactions.value.events,
-                key=lambda (id_, immutable_event):
-                    immutable_event.time_period.end_time
+                key=lambda id_, immutable_event: immutable_event.time_period.end_time
             )
             with self._query() as query:
                 return query.get_event(id_)

@@ -158,7 +158,7 @@ class GuiCreator(object):
             return event_handler
 
         submenu = wx.Menu()
-        file_menu.AppendMenu(wx.ID_ANY, _("Export"), submenu)
+        file_menu.Append(wx.ID_ANY, _("Export"), submenu)
         for plugin in factory.get_plugins(EXPORTER):
             mnu = submenu.Append(wx.ID_ANY, plugin.display_name(), plugin.display_name())
             self.menu_controller.add_menu_requiring_timeline(mnu)
@@ -184,7 +184,7 @@ class GuiCreator(object):
 
     def _create_file_open_recent_menu(self, file_menu):
         self.mnu_file_open_recent_submenu = wx.Menu()
-        file_menu.AppendMenu(wx.ID_ANY, _("Open &Recent"), self.mnu_file_open_recent_submenu)
+        file_menu.Append(wx.ID_ANY, _("Open &Recent"), self.mnu_file_open_recent_submenu)
         self.update_open_recent_submenu()
 
     def _create_file_save_as_menu(self, file_menu):
@@ -339,13 +339,13 @@ class GuiCreator(object):
             else:
                 items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), UNCHECKED_RB))
         sub_menu = self._create_menu(items)
-        view_menu.AppendMenu(wx.ID_ANY, _("Event appearance"), sub_menu)
+        view_menu.Append(wx.ID_ANY, _("Event appearance"), sub_menu)
 
     def _create_view_point_event_alignment_menu(self, view_menu):
         sub_menu = wx.Menu()
         left_item = sub_menu.Append(wx.ID_ANY, _("Left"), kind=wx.ITEM_RADIO)
         center_item = sub_menu.Append(wx.ID_ANY, _("Center"), kind=wx.ITEM_RADIO)
-        view_menu.AppendMenu(wx.ID_ANY, _("Point event alignment"), sub_menu)
+        view_menu.Append(wx.ID_ANY, _("Point event alignment"), sub_menu)
 
         def on_first_tool_click(event):
             self.config.draw_point_events_to_right = True
@@ -593,13 +593,13 @@ class GuiCreator(object):
 
     def _create_timeline_context_menu(self):
         menu = wx.Menu()
-        menu_bar = self._file_menu.GetMenuBar()
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(0), self._file_menu)
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(1), self._edit_menu)
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(2), self._view_menu)
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(3), self._timeline_menu)
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(4), self._navigate_menu)
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(5), self._help_menu)
+        menu_bar = self.GetMenuBar()
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(0), self._file_menu)
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(1), self._edit_menu)
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(2), self._view_menu)
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(3), self._timeline_menu)
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(4), self._navigate_menu)
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(5), self._help_menu)
         return menu
 
     def _create_menu(self, items_spec):

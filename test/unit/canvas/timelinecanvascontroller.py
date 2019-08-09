@@ -78,7 +78,7 @@ class describe_navigate(TimelineCanvasControllerTestCase):
         try:
             self.controller.navigate(navigate_fn)
         except ValueError, e:
-            self.assertEqual(pattern, unicode(e))
+            self.assertEqual(pattern, e)
             self.assertEqual(
                 self.controller.get_time_period(),
                 self.original_period

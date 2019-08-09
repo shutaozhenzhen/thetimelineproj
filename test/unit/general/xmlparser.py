@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from StringIO import StringIO
+from io import StringIO
 import xml.sax
 
 from timelinelib.test.cases.unit import UnitTestCase
