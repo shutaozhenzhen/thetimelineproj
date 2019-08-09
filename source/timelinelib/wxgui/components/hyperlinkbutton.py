@@ -16,10 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
+import wx.adv.HyperlinkCtrl
 
 
-class HyperlinkButton(wx.HyperlinkCtrl):
+class HyperlinkButton(wx.adv.HyperlinkCtrl):
 
     def __init__(self, parent, label, url=""):
         wx.HyperlinkCtrl.__init__(self, parent, wx.ID_ANY, label=label,
