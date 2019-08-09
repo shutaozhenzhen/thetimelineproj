@@ -77,8 +77,8 @@ def install_gettext_in_builtin_namespace():
         # Make sure to return a non-ascii symbol to ensure that the caller
         # handles the unicode object properly.
         return u"⟪%s⟫" % message
-    import __builtin__
-    __builtin__.__dict__["_"] = _
+    import builtins
+    builtins.__dict__["_"] = _
 
 
 def setup_humblewx():
