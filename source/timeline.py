@@ -37,14 +37,6 @@ def start():
     
     # Make sure that we can import timelinelib
     sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
-    # Make sure that we can import pysvg
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "pysvg-0.2.1"))
-    # Make sure that we can import icalendar
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "icalendar-3.2"))
-    # Make sure that we can import markdown
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "markdown-2.0.3"))
-    # Make sure that we can import humblewx
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "humblewx-master", "source"))
     # Make sure that we can import Pillow
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "Pillow-3.2.0"))
     
