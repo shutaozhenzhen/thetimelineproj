@@ -18,7 +18,7 @@
 
 from xml.sax.saxutils import escape as xmlescape
 import base64
-import StringIO
+import io
 
 import wx
 
@@ -210,7 +210,7 @@ def color_string(color):
 
 
 def icon_string(bitmap):
-    output = StringIO.StringIO()
+    output = io.StringIO()
     image = wx.ImageFromBitmap(bitmap)
     image.SaveStream(output, wx.BITMAP_TYPE_PNG)
     return base64.b64encode(output.getvalue())
