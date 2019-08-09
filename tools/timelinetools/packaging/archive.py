@@ -41,7 +41,7 @@ class Archive(timelinetools.packaging.path.Path):
             "-c",
                 "import timelinelib.meta.version;"
                 "print(timelinelib.meta.version.get_filename_version());"
-        ], cwd=self._get_source_path()).strip()
+        ], cwd=self._get_source_path()).strip().decode("utf-8")
 
     def get_version_number_string(self):
         return subprocess.check_output([
