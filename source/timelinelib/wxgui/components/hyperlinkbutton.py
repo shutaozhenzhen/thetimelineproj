@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx.adv.HyperlinkCtrl
+import wx.adv
 
 
 class HyperlinkButton(wx.adv.HyperlinkCtrl):
