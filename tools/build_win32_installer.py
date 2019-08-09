@@ -128,7 +128,7 @@ class Target():
             self.setup_and_create_directories(arguments, artifact_dir, temp_dir)
             self.execute_actions()
         finally:
-            # shutil.rmtree(temp_dir)
+            shutil.rmtree(temp_dir)
             pass
 
     def assert_that_target_is_known(self):
