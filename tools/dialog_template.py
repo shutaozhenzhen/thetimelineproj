@@ -33,7 +33,7 @@ from timelinelib.wxgui.framework import Dialog
 """
 
 TEST_IMPORTS = """\
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.wxgui.dialogs.%s.controller import %sController
 from timelinelib.wxgui.dialogs.%s.view import %s

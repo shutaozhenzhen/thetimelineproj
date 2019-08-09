@@ -17,7 +17,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.canvas.svg import SVGDrawingAlgorithm
 from timelinelib.canvas.drawing.scene import TimelineScene

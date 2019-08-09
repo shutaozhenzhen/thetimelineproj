@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
-from mock import sentinel
+from unittest.mock import Mock
+from unittest.mock import sentinel
 import wx
 
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter

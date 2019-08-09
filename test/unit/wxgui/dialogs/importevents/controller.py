@@ -20,7 +20,7 @@
 
 import os
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.event import Event
