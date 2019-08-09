@@ -25,8 +25,8 @@ configuration back to file, call the write method.
 """
 
 
-from ConfigParser import ConfigParser
-from ConfigParser import DEFAULTSECT
+from configparser import ConfigParser
+from configparser import DEFAULTSECT
 import os.path
 import sys
 
