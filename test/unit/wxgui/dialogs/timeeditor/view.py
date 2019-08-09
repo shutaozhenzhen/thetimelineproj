@@ -18,7 +18,7 @@
 
 import wx
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType

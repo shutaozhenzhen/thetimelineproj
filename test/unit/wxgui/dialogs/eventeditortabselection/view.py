@@ -18,7 +18,7 @@
 
 import wx
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.wxgui.dialogs.eventeditortabselection.view import EventEditorTabSelectionDialog
 from timelinelib.test.cases.unit import UnitTestCase

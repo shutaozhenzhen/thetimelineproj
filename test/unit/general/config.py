@@ -17,7 +17,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.general.config import Config
 from timelinelib.test.cases.tmpdir import TmpDirTestCase

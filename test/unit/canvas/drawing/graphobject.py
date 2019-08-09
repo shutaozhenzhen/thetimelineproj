@@ -21,8 +21,8 @@ Contains tests of the class
 """
 
 
-from mock import Mock
-from mock import sentinel
+from unittest.mock import Mock
+from unittest.mock import sentinel
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.canvas.drawing.graphobject import GraphObject
 

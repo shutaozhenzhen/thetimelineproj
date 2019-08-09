@@ -22,8 +22,8 @@ import sys
 
 import wx
 
-from mock import Mock
-from mock import sentinel
+from unittest.mock import Mock
+from unittest.mock import sentinel
 
 from timelinelib.config.dotfile import Config
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
