@@ -28,7 +28,7 @@ class PrevButton:
     def __init__(self, parent, controller):
         self._controller = controller
         bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_BACK, wx.ART_TOOLBAR, parent._icon_size)
-        parent.AddLabelTool(wx.ID_BACKWARD, LABEL, bmp, shortHelp=HELP_TEXT)
+        parent.AddTool(wx.ID_BACKWARD, LABEL, bmp, shortHelp=HELP_TEXT)
         parent.Bind(wx.EVT_TOOL, self._event_handler, id=wx.ID_BACKWARD)
         
     def _event_handler(self, evt):

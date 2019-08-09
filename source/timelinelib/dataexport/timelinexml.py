@@ -18,7 +18,7 @@
 
 from xml.sax.saxutils import escape as xmlescape
 import base64
-import StringIO
+import io
 
 import wx
 
@@ -57,7 +57,7 @@ class Exporter(object):
         self.db = db
 
     def export(self, path):
-        safe_write(path, ENCODING, self._write_xml_doc)
+        safe_write(path, None, self._write_xml_doc)
 
     def _time_string(self, time):
         return self.db.get_time_type().time_string(time)
@@ -206,7 +206,7 @@ def write_simple_tag(xmlfile, name, content, indent=""):
 
 
 def color_string(color):
-    return "%i,%i,%i" % color
+    return "%i,%i,%i" % color[:3]
 
 
 def icon_string(bitmap):

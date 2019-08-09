@@ -20,7 +20,7 @@ from os.path import abspath
 import base64
 import re
 import shutil
-import StringIO
+import io
 
 import wx
 

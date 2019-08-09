@@ -28,7 +28,7 @@ class DefaultBackgroundDrawer(object):
         self._draw_weekend_days(dc, drawer, scene, colorize_weekends, weekend_colour)
 
     def _erase_background(self, dc, bg_colour):
-        w, h = dc.GetSizeTuple()
+        w, h = dc.GetSize()
         self._set_color(dc, bg_colour)
         dc.DrawRectangle(0, 0, w, h)
 
@@ -40,7 +40,7 @@ class DefaultBackgroundDrawer(object):
                     self._draw_weekend_rect(strip_period, h, weekend_colour)
 
     def _draw_eras(self, dc, scene, timeline):
-        _, h = dc.GetSizeTuple()
+        _, h = dc.GetSize()
         for era in timeline.get_all_periods():
             if self.drawer.period_is_visible(era.get_time_period()):
                 self._draw_era(era, h)

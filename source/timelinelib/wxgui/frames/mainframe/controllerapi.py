@@ -109,7 +109,7 @@ class MainFrameApiUsedByController(object):
 
     def _clear_recent_menu_items(self):
         for item in self.mnu_file_open_recent_submenu.GetMenuItems():
-            self.mnu_file_open_recent_submenu.DeleteItem(item)
+            self.mnu_file_open_recent_submenu.Delete(item)
 
     def _create_recent_menu_items(self):
         self.open_recent_map = {}

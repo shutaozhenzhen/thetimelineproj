@@ -257,10 +257,6 @@ def parse(xml, schema, tmp_dict):
     tmp_dict is used by parser functions in Tag objects to share data. It can
     be pre-populated with values.
     """
-    if isinstance(xml, unicode):
-        # Workaround for "Sax parser crashes if given unicode file name" bug:
-        # http://bugs.python.org/issue11159
-        xml = xml.encode(sys.getfilesystemencoding())
     sax_parse(xml, SaxHandler(schema, tmp_dict))
 
 
