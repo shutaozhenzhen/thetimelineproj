@@ -74,3 +74,4 @@ setup_humblewx()
 from timelinelib.wxgui.setup import start_wx_application
 
 start_wx_application(application_arguments)
+
