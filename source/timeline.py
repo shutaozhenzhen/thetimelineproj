@@ -39,8 +39,6 @@ def start():
     sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
     # Make sure that we can import pysvg
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "pysvg-0.2.1"))
-    # Make sure that we can import pytz which icalendar is dependant on
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "pytz-2012j"))
     # Make sure that we can import icalendar
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "icalendar-3.2"))
     # Make sure that we can import markdown
