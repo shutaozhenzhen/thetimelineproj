@@ -98,7 +98,7 @@ class GregorianConversionsSpec(UnitTestCase):
             gt = gregorian.GregorianDateTime.from_time(tm1)
             wt = wx.DateTime()
             wt.SetJDN(i)
-            ws = "%d-%02d-%02d" % (wt.Year, wt.Month + 1, wt.Day)
+            ws = "%d-%02d-%02d" % (wt.year, wt.month + 1, wt.day)
             gs = "%d-%02d-%02d" % (gt.year, gt.month, gt.day)
             self.assertEqual(ws, gs)
             tm2 = gt.to_time()

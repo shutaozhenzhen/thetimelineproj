@@ -64,11 +64,3 @@ def is_dev():
 
 def is_final():
     return TYPE == TYPE_FINAL
-
-
-def is_python3():
-    return sys.version_info[0] >= 3
-
-
-def is_python2():
-    return sys.version_info[0] <= 2
