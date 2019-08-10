@@ -19,9 +19,6 @@
 import wx
 
 
-FONT_FACE_ENCODING = "utf-8"
-
-
 class Font(wx.Font):
 
     def __init__(self, point_size=12, family=wx.FONTFAMILY_DEFAULT, style=wx.FONTSTYLE_NORMAL,
@@ -59,7 +56,7 @@ class Font(wx.Font):
             self.Style,
             self.Weight,
             self.GetUnderlined(),
-            self.FaceName.encode(FONT_FACE_ENCODING),
+            self.FaceName,
             self.Encoding,
             self.WxColor,
         )
