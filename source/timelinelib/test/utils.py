@@ -350,7 +350,7 @@ class ObjectWithTruthValue(object):
     def __init__(self, truth_value):
         self.truth_value = truth_value
 
-    def __nonzero__(self):
+    def __bool__(self):
         return self.truth_value
 
 
@@ -366,7 +366,7 @@ def select_language(language):
         import gettext
         import os
         os.environ['LANG'] = language
-        gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR, unicode=True)
+        gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR)
 
 
 class _ANY(object):
