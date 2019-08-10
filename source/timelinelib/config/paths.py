@@ -23,7 +23,6 @@ import os.path
 
 
 _ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-_ROOT = _ROOT.decode("utf-8")
 ICONS_DIR = os.path.join(_ROOT, u"icons")
 EVENT_ICONS_DIR = os.path.join(_ROOT, u"icons", u"event_icons")
 LOCALE_DIR = os.path.join(_ROOT, u"translations")
