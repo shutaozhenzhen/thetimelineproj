@@ -32,7 +32,7 @@ First we create a file-like object containing the XML data (any file-like
 object is fine, but we create a StringIO for the purpose of making a working
 example):
 
-    >>> from StringIO import StringIO
+    >>> from io import StringIO
 
     >>> xml_stream = StringIO('''
     ... <db>

@@ -28,25 +28,8 @@ import os
 import platform
 import sys
 
-
-if platform.system() != "Windows":
-    import wxversion
-    wxversion.ensureMinimal('2.8')
-
 # Make sure that we can import timelinelib
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
-# Make sure that we can import pysvg
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "pysvg-0.2.1"))
-# Make sure that we can import pytz which icalendar is dependant on
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "pytz-2012j"))
-# Make sure that we can import icalendar
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "icalendar-3.2"))
-# Make sure that we can import markdown
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "markdown-3.1.1"))
-# Make sure that we can import humblewx
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "humblewx-master", "source"))
-# Make sure that we can import Pillow
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "dependencies", "timelinelib", "Pillow-3.2.0"))
 
 from timelinelib.config.paths import LOCALE_DIR
 from timelinelib.meta.about import APPLICATION_NAME
@@ -74,4 +57,3 @@ setup_humblewx()
 from timelinelib.wxgui.setup import start_wx_application
 
 start_wx_application(application_arguments)
-

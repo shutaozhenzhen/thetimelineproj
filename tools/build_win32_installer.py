@@ -58,47 +58,47 @@ known_targets = ("win32Installer")
 
 
 win32InstallerActions = (
-                 (ANNOTATE, "Run Tests", ""),
-                 (RUNPYTEST, ["tools", "execute-specs.py"], ""),
+    (ANNOTATE, "Run Tests", ""),
+    (RUNPYTEST, ["tools", "execute-specs.py"], ""),
 
-                 (ANNOTATE, "Modify source files", ""),
-                 (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_py.py"], ""),
-                 (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_paths_py.py"], ""),
-                 (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_version_py.py"], ""),
-                 (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_factory_py.py"], ""),
-                 (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_iss_win32.py"], ""),
+    (ANNOTATE, "Modify source files", ""),
+    (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_py.py"], ""),
+    (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_paths_py.py"], ""),
+    (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_version_py.py"], ""),
+    (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_factory_py.py"], ""),
+    (RUNPYSCRIPT, ["tools", "winbuildtools", "mod_timeline_iss_win32.py"], ""),
 
-                 (ANNOTATE, "Create a target directory for the build", ""),
-                 (COPYDIR, ["source", "timelinelib"], ["builddir", "timelinelib"]),
-                 (COPYDIR, ["dependencies", "timelinelib", "icalendar-3.2\icalendar"], ["builddir", "icalendar"]),
-                 (COPYDIR, ["dependencies", "timelinelib", "pytz-2012j\pytz"], ["builddir", "pytz"]),
-                 (COPYDIR, ["dependencies", "timelinelib", "pysvg-0.2.1\pysvg"], ["builddir", "pysvg"]),
-                 (COPYDIR, ["dependencies", "timelinelib", "markdown-2.0.3", "markdown"], ["builddir", "markdown"]),
-                 (COPYDIR, ["dependencies", "timelinelib", "Pillow-3.2.0", "PIL"], ["builddir", "pillow"]),
-                 (COPYDIR, ["tools", "winbuildtools", "inno"], ["builddir", "inno"]),
-                 (COPYFILE, ["source", "timeline.py"], ["builddir", "timeline.py"]),
-                 (COPYFILE, ["tools", "winbuildtools", "setup.py"], ["builddir", "setup.py"]),
-                 (COPYFILE, ["COPYING"], ["builddir", "COPYING"]),
-                 (COPYFILE, ["tools", "winbuildtools", "inno", "WINSTALL"], ["builddir", "WINSTALL"]),
+    (ANNOTATE, "Create a target directory for the build", ""),
+    (COPYDIR, ["source", "timelinelib"], ["builddir", "timelinelib"]),
+    (COPYDIR, ["dependencies", "timelinelib", "icalendar-3.2\icalendar"], ["builddir", "icalendar"]),
+    (COPYDIR, ["dependencies", "timelinelib", "pytz-2012j\pytz"], ["builddir", "pytz"]),
+    (COPYDIR, ["dependencies", "timelinelib", "pysvg-0.2.1\pysvg"], ["builddir", "pysvg"]),
+    (COPYDIR, ["dependencies", "timelinelib", "markdown-2.0.3", "markdown"], ["builddir", "markdown"]),
+    (COPYDIR, ["dependencies", "timelinelib", "Pillow-3.2.0", "PIL"], ["builddir", "pillow"]),
+    (COPYDIR, ["tools", "winbuildtools", "inno"], ["builddir", "inno"]),
+    (COPYFILE, ["source", "timeline.py"], ["builddir", "timeline.py"]),
+    (COPYFILE, ["tools", "winbuildtools", "setup.py"], ["builddir", "setup.py"]),
+    (COPYFILE, ["COPYING"], ["builddir", "COPYING"]),
+    (COPYFILE, ["tools", "winbuildtools", "inno", "WINSTALL"], ["builddir", "WINSTALL"]),
 
-                 (ANNOTATE, "Create distribution directory", ""),
-                 (COPYDIR, ["icons"], ["builddir", "icons"]),
-                 (RUNPYSCRIPT, ["builddir", "setup.py"], "py2exe"),
-                 (COPYDIR, ["translations"], ["builddir", "dist", "translations"]),
-                 (COPYDIR, ["icons"], ["builddir", "dist", "icons"]),
-                 (COPYDIR, ["tools"], ["builddir", "dist", "tools"]),
+    (ANNOTATE, "Create distribution directory", ""),
+    (COPYDIR, ["icons"], ["builddir", "icons"]),
+    (RUNPYSCRIPT, ["builddir", "setup.py"], "py2exe"),
+    (COPYDIR, ["translations"], ["builddir", "dist", "translations"]),
+    (COPYDIR, ["icons"], ["builddir", "dist", "icons"]),
+    (COPYDIR, ["tools"], ["builddir", "dist", "tools"]),
 
-                 (ANNOTATE, "Create installer executable", ""),
-                 (RUNCMD, "python", ["builddir", "dist", "tools", "generate-mo-files.py"]),
+    (ANNOTATE, "Create installer executable", ""),
+    (RUNCMD, "python", ["builddir", "dist", "tools", "generate-mo-files.py"]),
 
-                 (ANNOTATE, "Create Setup executable", ""),
-                 (RUNCMD, "iscc.exe", ["builddir", "inno", "timelineWin32.iss"]),
+    (ANNOTATE, "Create Setup executable", ""),
+    (RUNCMD, "iscc.exe", ["builddir", "inno", "timelineWin32.iss"]),
 
-                 (ANNOTATE, "Deliver executable artifact", ""),
-                 (COPYFILE, [ARTIFACT], [ARTIFACT]),
+    (ANNOTATE, "Deliver executable artifact", ""),
+    (COPYFILE, [ARTIFACT], [ARTIFACT]),
 
-                 (ANNOTATE, "Done", ""),
-                 )
+    (ANNOTATE, "Done", ""),
+)
 
 
 actions = {"win32Installer": win32InstallerActions}
@@ -129,6 +129,7 @@ class Target():
             self.execute_actions()
         finally:
             shutil.rmtree(temp_dir)
+            pass
 
     def assert_that_target_is_known(self):
         if self.target not in known_targets:
@@ -270,6 +271,7 @@ class Target():
 
     def get_artifact_target_name(self):
         return "%s-Win32Setup.exe" % self.archive.get_filename_version()
+
 
 def main():
     artifactdir = os.path.join(sys.path[0], "..")

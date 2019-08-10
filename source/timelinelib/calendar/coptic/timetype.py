@@ -901,22 +901,22 @@ class DurationType(object):
 
 
 YEARS = DurationType(_('years'), _('year'),
-                     lambda ds: ds[0] / 365,
+                     lambda ds: ds[0] // 365,
                      lambda ds: (ds[0] % 365, ds[1]))
 MONTHS = DurationType(_('months'), _('month'),
-                      lambda ds: ds[0] / 30,
+                      lambda ds: ds[0] // 30,
                       lambda ds: (ds[0] % 30, ds[1]))
 WEEKS = DurationType(_('weeks'), _('week'),
-                     lambda ds: ds[0] / 7,
+                     lambda ds: ds[0] // 7,
                      lambda ds: (ds[0] % 7, ds[1]))
 DAYS = DurationType(_('days'), _('day'),
                     lambda ds: ds[0],
                     lambda ds: (0, ds[1]))
 HOURS = DurationType(_('hours'), _('hour'),
-                     lambda ds: ds[0] * 24 + ds[1] / 3600,
+                     lambda ds: ds[0] * 24 + ds[1] // 3600,
                      lambda ds: (0, ds[1] % 3600))
 MINUTES = DurationType(_('minutes'), _('minute'),
-                       lambda ds: ds[0] * 1440 + ds[1] / 60,
+                       lambda ds: ds[0] * 1440 + ds[1] // 60,
                        lambda ds: (0, ds[1] % 60))
 SECONDS = DurationType(_('seconds'), _('second'),
                        lambda ds: ds[0] * 86400 + ds[1],
