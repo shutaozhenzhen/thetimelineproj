@@ -36,3 +36,4 @@ sysdoc/_build/doctrees/*
 .idea/*
 tools/htmlcov/*
 .coverage
+tools/autodoc/*
