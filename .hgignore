@@ -36,8 +36,4 @@ sysdoc/_build/doctrees/*
 .idea/*
 tools/htmlcov/*
 .coverage
-documentation/sysdoc/_build/*
-documentation/sysdoc/*.rst
-documentation/sysdoc/conf.py
-documentation/sysdoc/make.bat
-documentation/sysdoc/Makefile
+tools/autodoc/*
