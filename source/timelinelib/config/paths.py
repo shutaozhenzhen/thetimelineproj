@@ -20,12 +20,10 @@ Defining paths for resources needed by the application.
 """
 
 import os.path
-from timelinelib.meta.version import is_python2
 
 
 _ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-if is_python2():
-    _ROOT = _ROOT.decode("utf-8")
+_ROOT = _ROOT.decode("utf-8")
 ICONS_DIR = os.path.join(_ROOT, u"icons")
 EVENT_ICONS_DIR = os.path.join(_ROOT, u"icons", u"event_icons")
 LOCALE_DIR = os.path.join(_ROOT, u"translations")
