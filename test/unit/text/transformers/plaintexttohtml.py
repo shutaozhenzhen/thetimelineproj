@@ -32,7 +32,7 @@ class describe_plain_text_to_html_transformer(UnitTestCase):
         self.assertEqual("", self.transformer.transform("\n"))
 
     def test_lt_and_gt_are_converted_html_codes(self):
-        self.assertEqual("&lt;&gt;", self.transformer.transform("<>"))
+        self.assertEqual("<p>&lt;&gt;</p>", self.transformer.transform("<>"))
 
     def test_lt_and_gt_preserved_for_br(self):
         self.assertEqual("<blockquote>\n<p>&lt;</p>\n</blockquote>", self.transformer.transform(">\n<"))
