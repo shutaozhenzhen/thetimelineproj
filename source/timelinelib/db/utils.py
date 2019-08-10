@@ -21,7 +21,6 @@ import os.path
 
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.wxgui.utils import register_unlock_function
-from timelinelib.general.encodings import to_unicode
 
 
 def safe_write(path, encoding, write_fn):
