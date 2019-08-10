@@ -322,7 +322,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             else:
                 return None
         except ValueError as ex:
-            display_error_message(ex.message)
+            display_error_message(str(ex))
         return None
 
     def _all_visible_events(self):
