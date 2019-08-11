@@ -18,19 +18,32 @@
 
 from xml.sax.saxutils import escape as xmlescape
 
-from pysvg.filter import FeGaussianBlur
-from pysvg.filter import FeOffset
-from pysvg.filter import FeMerge
-from pysvg.filter import FeMergeNode
-from pysvg.filter import Filter
+try:
+    from pysvg.filter import FeGaussianBlur
+    from pysvg.filter import FeOffset
+    from pysvg.filter import FeMerge
+    from pysvg.filter import FeMergeNode
+    from pysvg.filter import Filter
+    from pysvg.structure import G
+    from pysvg.structure import Svg
+    from pysvg.structure import Defs
+    from pysvg.shape import Path
+    from pysvg.structure import ClipPath
+    from pysvg.text import Text
+except ImportError:
+    from pysvg.filter import feGaussianBlur as FeGaussianBlur
+    from pysvg.filter import feOffset as FeOffset
+    from pysvg.filter import feMerge as FeMerge
+    from pysvg.filter import feMergeNode as FeMergeNode
+    from pysvg.filter import filter as Filter
+    from pysvg.structure import g as G
+    from pysvg.structure import svg as Svg
+    from pysvg.structure import defs as Defs
+    from pysvg.shape import path as Path
+    from pysvg.structure import clipPath as ClipPath
+    from pysvg.text import text as Text
 from pysvg.builders import StyleBuilder
 from pysvg.builders import ShapeBuilder
-from pysvg.structure import G
-from pysvg.structure import Svg
-from pysvg.structure import Defs
-from pysvg.shape import Path
-from pysvg.structure import ClipPath
-from pysvg.text import Text
 
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.data import sort_categories
