@@ -66,8 +66,8 @@ class describe_timeline_exporter(TimelineExporterTestCase):
             self.dlg
         ).export()
         self.assertEqual(
-            self.read(CSV_FILE),
-            (u"\"⟪Events⟫\";\n\"%s\";\"%s\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n" % (_("Text"), _("Start"))).encode("utf-8")
+            self.read(CSV_FILE, encoding="utf-8"),
+            "\"⟪Events⟫\";\n\"%s\";\"%s\";\n\"foo\nbar\";2014-07-11 10:11:00;\n\n" % (_("Text"), _("Start"))
         )
 
     def test_category_csv_data_saved_in_file(self):
@@ -78,6 +78,6 @@ class describe_timeline_exporter(TimelineExporterTestCase):
             self.dlg
         ).export()
         self.assertEqual(
-            self.read(CSV_FILE),
-            (u"\"⟪Categories⟫\";\n\"%s\";\"%s\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n" % (_("Name"), _("Color"))).encode("utf-8")
+            self.read(CSV_FILE, encoding="utf-8"),
+            "\"⟪Categories⟫\";\n\"%s\";\"%s\";\n\"Cat\"\"1\"\"\";(255, 0, 0);\n" % (_("Name"), _("Color"))
         )
