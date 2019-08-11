@@ -150,7 +150,7 @@ class PharaonicDateTimePickerController(object):
         return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
 
     def wx_date_to_date_tuple(self, wx_date):
-        return (wx_date.Year, wx_date.Month + 1, wx_date.Day)
+        return (wx_date.year, wx_date.month + 1, wx_date.day)
 
     def date_button_on_click(self, evt):
         try:
