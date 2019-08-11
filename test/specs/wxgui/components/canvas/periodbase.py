@@ -42,7 +42,7 @@ class SelectperiodByDragInputHandler(UnitTestCase):
 
     def simulate_drag_where_julian_day_becomes_lt_zero(self):
         canvas = Mock(MainCanvas)
-        canvas.GetSizeTuple.return_value = (0, 0)
+        canvas.GetSize.return_value = (0, 0)
         canvas.Snap.return_value = human_time_to_gregorian("1 Dec 2013")
         canvas.GetDb.return_value = GregorianTutorialTimelineCreator().db
         canvas.GetTimeAt.return_value = human_time_to_gregorian("1 Dec 2013")
