@@ -396,7 +396,7 @@ class DefaultEventBoxDrawer(object):
             half_size = rect.width / 2
             dc.DestroyClippingRegion()
             dc.SetPen(self._black_solid_pen(1))
-            dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.PENSTYLE_SOLID))
+            dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.BRUSHSTYLE_SOLID))
             dc.DrawCircle(rect.x + half_size, rect.y + half_size, 2 * rect.width / 3)
 
         def draw_diamond_shape():
@@ -410,7 +410,7 @@ class DefaultEventBoxDrawer(object):
                       wx.Point(x + half_size, y + rect.width + SIZE))
             dc.DestroyClippingRegion()
             dc.SetPen(self._black_solid_pen(1))
-            dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.PENSTYLE_SOLID))
+            dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.BUSHSTYLE_SOLID))
             dc.DrawPolygon(points)
 
         def draw_label():
@@ -437,4 +437,4 @@ class DefaultEventBoxDrawer(object):
         return wx.Pen(wx.Colour(0, 0, 0), size, wx.PENSTYLE_SOLID)
 
     def _black_solid_brush(self):
-        return wx.Brush(wx.Colour(0, 0, 0), wx.PENSTYLE_SOLID)
+        return wx.Brush(wx.Colour(0, 0, 0), wx.BRUSHSTYLE_SOLID)
