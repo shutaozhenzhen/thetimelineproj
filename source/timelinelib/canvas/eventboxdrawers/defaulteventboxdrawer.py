@@ -425,7 +425,7 @@ class DefaultEventBoxDrawer(object):
         def draw_move_handle():
             dc.SetBrush(self._black_solid_brush())
             handle_rect = create_handle_rect()
-            handle_rect.OffsetXY(rect.Width / 2, 0)
+            handle_rect.Offset(rect.Width / 2, 0)
             dc.DrawRectangle(handle_rect)
 
         draw_shape()
