@@ -103,7 +103,7 @@ def get_msgids(pot_file):
 
 
 def get_po_entries(path):
-    with open(path) as f:
+    with open(path, "rb") as f:
         return parse_po_entries(f.readlines())
 
 
@@ -112,19 +112,19 @@ def parse_po_entries(lines):
     msgstr = None
     while len(lines) > 0:
         line = lines.pop(0)
-        if line.startswith("msgid"):
+        if line.startswith(b"msgid"):
             lines.insert(0, line[6:])
             msgid = parse_string(lines)
-        if line.startswith("msgstr"):
+        if line.startswith(b"msgstr"):
             lines.insert(0, line[7:])
             msgstr = parse_string(lines)
             yield (msgid, msgstr)
 
 
 def parse_string(lines):
-    string = ""
+    string = b""
     while (len(lines) > 0 and
-           lines[0].startswith("\"") and
-           lines[0].rstrip().endswith("\"")):
+           lines[0].startswith(b"\"") and
+           lines[0].rstrip().endswith(b"\"")):
         string += lines.pop(0).rstrip()[1:-1]
-    return string.decode("string-escape").decode("utf-8")
+    return string.decode("utf-8")
