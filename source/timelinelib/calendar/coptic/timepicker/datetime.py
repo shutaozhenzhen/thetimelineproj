@@ -147,7 +147,7 @@ class CopticDateTimePickerController(object):
 
     def date_tuple_to_wx_date(self, date):
         year, month, day = date
-        return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
+        return wx.DateTime.FromDMY(day, month - 1, year, 0, 0, 0)
 
     def wx_date_to_date_tuple(self, wx_date):
         return (wx_date.year, wx_date.month + 1, wx_date.day)
@@ -208,11 +208,11 @@ class CalendarPopup(wx.PopupTransientWindow):
     def time_to_wx_date(self, time):
         year, month, day = CopticDateTime.from_time(time).to_date_tuple()
         try:
-            return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
+            return wx.DateTime.FromDMY(day, month - 1, year, 0, 0, 0)
         except OverflowError:
             if year < 0:
                 year, month, day = CopticDateTime.from_time(CopticTime(0, 0)).to_date_tuple()
-                return wx.DateTimeFromDMY(day, month - 1, year, 0, 0, 0)
+                return wx.DateTime.FromDMY(day, month - 1, year, 0, 0, 0)
 
     def _bind_events(self):
         def on_month(evt):
