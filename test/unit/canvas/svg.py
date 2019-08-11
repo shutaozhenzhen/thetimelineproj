@@ -29,13 +29,15 @@ from timelinelib.test.cases.unit import UnitTestCase
 
 class describe_svg_drawing_algorithm(UnitTestCase):
 
+    maxDiff = None
+
     def test_can_draw_divider_line(self):
         shape = self.svg._draw_divider_line()
-        self.assertEqual(shape.getXML(), '<line y1="200" x2="400" style="stroke:grey; stroke-width:0.5; " x1="0" y2="200"  />\n')
+        self.assertSvgEqual(shape.getXML(), '<line y1="200" x2="400" style="stroke:grey; stroke-width:0.5; " x1="0" y2="200"  />\n')
 
     def test_can_draw_now_line(self):
         shape = self.svg._draw_now_line()
-        self.assertEqual(shape.getXML(), '<line y1="0" x2="150" style="stroke:darkred; stroke-width:0.5; " x1="150" y2="200"  />\n')
+        self.assertSvgEqual(shape.getXML(), '<line y1="0" x2="150" style="stroke:darkred; stroke-width:0.5; " x1="150" y2="200"  />\n')
 
     def test_can_draw_line_to_selected_non_period_events(self):
         from pysvg.structure import g
@@ -43,26 +45,26 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.scene.event_data = ((self.point_event, self.point_event_rect),)
         group = g()
         self.svg._draw_lines_to_non_period_events(group, self.view_properties)
-        self.assertEqual(group.getXML(), '<g  >\n<line y1="106" x2="200" style="stroke:red; stroke-width:1; " x1="200" y2="200"  />\n<circle cy="200" cx="200" r="2" style="stroke:black; stroke-width:1; fill:none; "  />\n</g>\n')
+        self.assertSvgEqual(group.getXML(), '<g  >\n<line y1="106.0" x2="200" style="stroke:red; stroke-width:1; " x1="200" y2="200"  />\n<circle cy="200" cx="200" r="2" style="stroke:black; stroke-width:1; fill:none; "  />\n</g>\n')
 
     def test_can_draw_major_strip_divider_line(self):
         time = Mock()
         self.scene.x_pos_for_time.return_value = 170
         line = self.svg._draw_major_strip_divider_line(time)
-        self.assertEqual(line.getXML(), '<line y1="0" x2="170" style="stroke:black; stroke-width:0.5; " x1="170" y2="200"  />\n')
+        self.assertSvgEqual(line.getXML(), '<line y1="0" x2="170" style="stroke:black; stroke-width:0.5; " x1="170" y2="200"  />\n')
 
     def test_can_draw_minor_strip_divider_line(self):
         time = Mock()
         self.scene.x_pos_for_time.return_value = 170
         line = self.svg._draw_minor_strip_divider_line(time)
-        self.assertEqual(line.getXML(), '<line y1="0" x2="170" style="stroke:lightgrey; stroke-width:0.5; " x1="170" y2="200"  />\n')
+        self.assertSvgEqual(line.getXML(), '<line y1="0" x2="170" style="stroke:lightgrey; stroke-width:0.5; " x1="170" y2="200"  />\n')
 
     def test_can_draw_line_to_nonselected_non_period_events(self):
         from pysvg.structure import g
         self.scene.event_data = ((self.point_event, self.point_event_rect),)
         group = g()
         self.svg._draw_lines_to_non_period_events(group, self.view_properties)
-        self.assertEqual(group.getXML(), '<g  >\n<line y1="106" x2="200" style="stroke:black; stroke-width:1; " x1="200" y2="200"  />\n<circle cy="200" cx="200" r="2" style="stroke:black; stroke-width:1; fill:none; "  />\n</g>\n')
+        self.assertSvgEqual(group.getXML(), '<g  >\n<line y1="106.0" x2="200" style="stroke:black; stroke-width:1; " x1="200" y2="200"  />\n<circle cy="200" cx="200" r="2" style="stroke:black; stroke-width:1; fill:none; "  />\n</g>\n')
 
     def test_can_draw_minor_strip_label(self):
         strip = Mock()
@@ -71,7 +73,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.scene.x_pos_for_time.return_value = 100
         self.scene.minor_strip = strip
         text = self.svg._draw_minor_strip_label(strip_period)
-        self.assertEqual(text.getXML(), '<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="195" x="89"  >\nLabel</text>\n')
+        self.assertSvgEqual(text.getXML(), '<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="195" x="89.0"  >\nLabel</text>\n')
 
     def test_can_draw_major_strip_label(self):
         strip = Mock()
@@ -80,7 +82,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.scene.x_pos_for_time.return_value = 100
         self.scene.major_strip = strip
         text = self.svg._draw_major_strip_label(strip_period)
-        self.assertEqual(text.getXML(), '<text style="font-size:14px; font-family:Verdana; text-anchor:left; " y="19" x="100"  >\n2016</text>\n')
+        self.assertSvgEqual(text.getXML(), '<text style="font-size:14px; font-family:Verdana; text-anchor:left; " y="19" x="100.0"  >\n2016</text>\n')
 
     def test_now_line_is_visible(self):
         self.scene.x_pos_for_now.return_value = 100
@@ -106,7 +108,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         rect.GetHeight.return_value = 8
         rect.Get.return_value = (10, 20, 50, 8)
         group = self.svg._draw_event(event, rect)
-        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:#8C8C8C; stroke-width:1; fill:#C8C8C8; " height="8" width="50" y="20" x="10"  />\n<g clip-path="url(#path10_20_50)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="25" x="13" lengthAdjust="spacingAndGlyphs"  >\nFoo</text>\n</g>\n<polygon style="stroke:#787878; stroke-width:1; fill:#787878; " points="50,20 60,20 60,30"  />\n</g>\n')
+        self.assertSvgEqual(group.getXML(), '<g  >\n<rect style="stroke:#8C8C8C; stroke-width:1; fill:#C8C8C8; " height="8" width="50" y="20" x="10"  />\n<g clip-path="url(#path10_20_50)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="25" x="13" lengthAdjust="spacingAndGlyphs"  >\nFoo</text>\n</g>\n<polygon style="stroke:#787878; stroke-width:1; fill:#787878; " points="50,20 60,20 60,30"  />\n</g>\n')
 
     def test_can_draw_event_with_centered_text(self):
         self.scene.center_text.return_value = True
@@ -123,7 +125,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         rect.GetHeight.return_value = 8
         rect.Get.return_value = (10, 20, 50, 8)
         group = self.svg._draw_event(event, rect)
-        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:#8C8C8C; stroke-width:1; fill:#C8C8C8; " height="8" width="50" y="20" x="10"  />\n<g clip-path="url(#path10_20_50)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:middle; " y="25" x="35" lengthAdjust="spacingAndGlyphs"  >\nFoo</text>\n</g>\n<polygon style="stroke:#787878; stroke-width:1; fill:#787878; " points="50,20 60,20 60,30"  />\n</g>\n')
+        self.assertSvgEqual(group.getXML(), '<g  >\n<rect style="stroke:#8C8C8C; stroke-width:1; fill:#C8C8C8; " height="8" width="50" y="20" x="10"  />\n<g clip-path="url(#path10_20_50)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:middle; " y="25" x="35.0" lengthAdjust="spacingAndGlyphs"  >\nFoo</text>\n</g>\n<polygon style="stroke:#787878; stroke-width:1; fill:#787878; " points="50,20 60,20 60,30"  />\n</g>\n')
 
     def test_can_draw_legend(self):
         category = Mock()
@@ -131,15 +133,15 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         category.name = "First Category"
         categories = (category,)
         group = self.svg._draw_legend(categories)
-        self.assertEqual(group.getXML(), '<g  >\n<rect style="stroke:black; stroke-width:1; fill:white; " height="26" width="60" y="169" x="335"  />\n<rect style="stroke:#585858; stroke-width:1; fill:#7F7F7F; " height="16" width="16" y="174" x="340"  />\n<g clip-path="url(#path359_174_36)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="187" x="362" lengthAdjust="spacingAndGlyphs"  >\nFirst Category</text>\n</g>\n</g>\n')
+        self.assertSvgEqual(group.getXML(), '<g  >\n<rect style="stroke:black; stroke-width:1; fill:white; " height="26" width="60" y="169" x="335"  />\n<rect style="stroke:#585858; stroke-width:1; fill:#7F7F7F; " height="16" width="16" y="174" x="340"  />\n<g clip-path="url(#path359_174_36)"  >\n<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:left; " y="187" x="362" lengthAdjust="spacingAndGlyphs"  >\nFirst Category</text>\n</g>\n</g>\n')
 
     def test_can_define_shadow_filter(self):
         d = self.svg._define_shadow_filter()
-        self.assertEqual(d.getXML(), '<defs  >\n<filter height="1.9" width="1.9" y="-.5" x="-.3" id="filterShadow"  >\n<feGaussianBlur result="out1" in="SourceAlpha" stdDeviation="4"  />\n<feOffset dy="-4" result="out2" dx="4" in="out1"  />\n<feMerge  >\n<feMergeNode in="out2"  />\n<feMergeNode in="SourceGraphic"  />\n</feMerge>\n</filter>\n</defs>\n')
+        self.assertSvgEqual(d.getXML(), '<defs  >\n<filter height="1.9" width="1.9" y="-.5" x="-.3" id="filterShadow"  >\n<feGaussianBlur result="out1" in="SourceAlpha" stdDeviation="4"  />\n<feOffset dy="-4" result="out2" dx="4" in="out1"  />\n<feMerge  >\n<feMergeNode in="out2"  />\n<feMergeNode in="SourceGraphic"  />\n</feMerge>\n</filter>\n</defs>\n')
 
-    def test__encode_unicode_text(self):
-        self.assertEqual("", self.svg._encode_unicode_text(u""))
-        self.assertEqual("åäö", self.svg._encode_unicode_text(u"åäö"))
+    def test_encode_unicode_text(self):
+        self.assertEqual(b"", self.svg._encode_unicode_text(u""))
+        self.assertEqual("åäö".encode("utf-8"), self.svg._encode_unicode_text(u"åäö"))
 
     def test_legend_should_be_drawn(self):
         self.svg._appearence.get_legend_visible.return_value = True
@@ -166,7 +168,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
     def test_can_draw_background(self):
         self.appearence.get_bg_colour.return_value = (1, 2, 3, 4)
         rect = self.svg._draw_background()
-        self.assertEqual(rect.getXML(), '<rect style="stroke:black; stroke-width:1; fill:#010203; " height="200" width="400" y="0" x="0"  />\n')
+        self.assertSvgEqual(rect.getXML(), '<rect style="stroke:black; stroke-width:1; fill:#010203; " height="200" width="400" y="0" x="0"  />\n')
 
     def test_can_draw_era_background(self):
 
@@ -181,7 +183,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         era = Mock(Era)
         era.get_color.return_value = (127, 127, 127, 4)
         era = self.svg._draw_era_strip(era)
-        self.assertEqual(era.getXML(), '<rect style="stroke:black; stroke-width:0; fill:#7F7F7F; " height="194" width="25" y="3" x="50"  />\n')
+        self.assertSvgEqual(era.getXML(), '<rect style="stroke:black; stroke-width:0; fill:#7F7F7F; " height="194" width="25" y="3" x="50"  />\n')
 
     def test_can_draw_era_text(self):
 
@@ -196,7 +198,7 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         era = Mock(Era)
         era.get_name.return_value = "foobar"
         text = self.svg._draw_era_text(era)
-        self.assertEqual(text.getXML(), '<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:middle; " y="195" x="87"  >\nfoobar</text>\n')
+        self.assertSvgEqual(text.getXML(), '<text style="font-size:11px; font-family:Verdana; stroke-dasharray:(2, 2); text-anchor:middle; " y="195" x="87.5"  >\nfoobar</text>\n')
 
     def test_calc_clip_path(self):
         """
@@ -213,11 +215,11 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         rect = (100, 100, 200, 20)
         path_id, path = self.svg._calc_clip_path(rect)
         self.assertEqual('path100_100_200', path_id)
-        self.assertEqual('<path d="M 100 120 H 300 V 100 H 100 "  />\n', path.getXML())
+        self.assertSvgEqual('<path d="M 100 120 H 300 V 100 H 100 "  />\n', path.getXML())
         rect = (-100, 100, 500, 20)
         path_id, path = self.svg._calc_clip_path(rect)
         self.assertEqual('path0_100_400', path_id)
-        self.assertEqual('<path d="M 0 120 H 400 V 100 H 0 "  />\n', path.getXML())
+        self.assertSvgEqual('<path d="M 0 120 H 400 V 100 H 0 "  />\n', path.getXML())
 
     def test_calc_text_pos(self):
         """
