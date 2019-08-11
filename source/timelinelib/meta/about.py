@@ -101,7 +101,7 @@ along with Timeline.  If not, see <http://www.gnu.org/licenses/>."""
 
 
 def display_about_dialog(args, *kwargs):
-    info = wx.AboutDialogInfo()
+    info = wx.adv.AboutDialogInfo()
     info.Name = APPLICATION_NAME
     info.Version = get_full_version()
     info.Copyright = COPYRIGHT_TEXT
@@ -111,4 +111,4 @@ def display_about_dialog(args, *kwargs):
     info.Translators = TRANSLATORS
     info.Artists = ARTISTS
     info.License = LICENSE
-    wx.AboutBox(info)
+    wx.adv.AboutBox(info)
