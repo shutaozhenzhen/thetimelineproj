@@ -22,12 +22,16 @@ import unittest
 import wx
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.test.utils import svg_to_dict
 
 
 class UnitTestCase(unittest.TestCase):
 
     HALT_GUI = False
     AUTO_CLOSE = False
+
+    def assertSvgEqual(self, left, right):
+        self.assertEqual(svg_to_dict(left), svg_to_dict(right), "\nLeft:  {!r}\nRight: {!r}".format(left, right))
 
     def assertPeriodsEqual(self, first, second, time_type=GregorianTimeType()):
         message = "Periods not equal.\n  First:  %s \"%s\"\n  Second: %s \"%s\"" % (

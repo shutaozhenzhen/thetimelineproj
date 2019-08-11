@@ -25,6 +25,7 @@ Such a string has a day, month, year and an optional time like this::
 """
 
 import random
+import xml.etree.ElementTree as ET
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.monthnames import ABBREVIATED_ENGLISH_MONTH_NAMES
@@ -376,3 +377,23 @@ class _ANY(object):
         return True
 ANY = _ANY()
 """This object is always considered equal to any other object."""
+
+
+def svg_to_dict(xml):
+    def node_to_dict(node):
+        return {
+            "name": node.tag,
+            "attributes": {key: attribute(key, value) for key, value in node.attrib.items()},
+            "children": [node_to_dict(child) for child in node]
+        }
+    def attribute(key, value):
+        if key == "style":
+            styles = {}
+            for style in value.strip().split(";"):
+                if style.strip():
+                    name, value = style.split(":")
+                    styles[name.strip()] = value.strip()
+            return styles
+        else:
+            return value
+    return node_to_dict(ET.fromstring(xml))
