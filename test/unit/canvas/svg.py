@@ -40,10 +40,10 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.assertSvgEqual(shape.getXML(), '<line y1="0" x2="150" style="stroke:darkred; stroke-width:0.5; " x1="150" y2="200"  />\n')
 
     def test_can_draw_line_to_selected_non_period_events(self):
-        from pysvg.structure import g
+        from pysvg.structure import G
         self.view_properties.is_selected.return_value = True
         self.scene.event_data = ((self.point_event, self.point_event_rect),)
-        group = g()
+        group = G()
         self.svg._draw_lines_to_non_period_events(group, self.view_properties)
         self.assertSvgEqual(group.getXML(), '<g  >\n<line y1="106.0" x2="200" style="stroke:red; stroke-width:1; " x1="200" y2="200"  />\n<circle cy="200" cx="200" r="2" style="stroke:black; stroke-width:1; fill:none; "  />\n</g>\n')
 
@@ -60,9 +60,9 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         self.assertSvgEqual(line.getXML(), '<line y1="0" x2="170" style="stroke:lightgrey; stroke-width:0.5; " x1="170" y2="200"  />\n')
 
     def test_can_draw_line_to_nonselected_non_period_events(self):
-        from pysvg.structure import g
+        from pysvg.structure import G
         self.scene.event_data = ((self.point_event, self.point_event_rect),)
-        group = g()
+        group = G()
         self.svg._draw_lines_to_non_period_events(group, self.view_properties)
         self.assertSvgEqual(group.getXML(), '<g  >\n<line y1="106.0" x2="200" style="stroke:black; stroke-width:1; " x1="200" y2="200"  />\n<circle cy="200" cx="200" r="2" style="stroke:black; stroke-width:1; fill:none; "  />\n</g>\n')
 
