@@ -82,7 +82,7 @@ class describe_default_drawer(UnitTestCase):
         self.drawer.set_event_box_drawer(DefaultEventBoxDrawer())
         self.drawer.set_background_drawer(DefaultBackgroundDrawer())
         self.dc = Mock(wx.DC)
-        self.dc.GetSizeTuple.return_value = IMAGE_SIZE
+        self.dc.GetSize.return_value = IMAGE_SIZE
         self.dc.GetTextExtent.return_value = TEXT_SIZE
         self.timeline = MemoryDB()
         self.view_properties = ViewProperties()

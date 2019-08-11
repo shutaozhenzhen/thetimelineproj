@@ -64,7 +64,7 @@ class ResizeEventSpec(UnitTestCase):
     def setUp(self):
         self.db = MemoryDB()
         self.canvas = Mock(MainCanvas)
-        self.canvas.GetSizeTuple.return_value = (0, 0)
+        self.canvas.GetSize.return_value = (0, 0)
         self.canvas.GetDb.return_value = self.db
         self.state = Mock()
         self.status_bar = Mock()

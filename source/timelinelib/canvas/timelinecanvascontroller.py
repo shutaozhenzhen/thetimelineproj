@@ -306,7 +306,7 @@ class TimelineCanvasController(object):
     def _redraw_timeline(self):
 
         def display_monitor_result(dc):
-            (width, height) = self.view.GetSizeTuple()
+            (width, height) = self.view.GetSize()
             redraw_time = self.monitoring.timer_elapsed_ms
             self.monitoring.count_timeline_redraw()
             dc.SetTextForeground((255, 0, 0))

@@ -60,7 +60,7 @@ class TimelineViewSpec(UnitTestCase):
         self.timeline_canvas.GetDb.return_value = self.db
         self.width = 10
         self.middle_x = self.width / 2
-        self.timeline_canvas.GetSizeTuple.return_value = (self.width, 10)
+        self.timeline_canvas.GetSize.return_value = (self.width, 10)
         self.timeline_canvas.GetDividerPosition.return_value = 50
         self.timeline_canvas.GetSelectedEvents.return_value = []
         self.controller = TimelineCanvasController(

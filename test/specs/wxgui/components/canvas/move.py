@@ -108,7 +108,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.status_bar = Mock()
         self.canvas = Mock(MainCanvas)
         self.canvas.GetDb.return_value = self.db
-        self.canvas.GetSizeTuple.return_value = (0, 0)
+        self.canvas.GetSize.return_value = (0, 0)
         self.canvas.GetSelectedEvents.return_value = self.selected_events
         self.canvas.Snap.side_effect = x
         self.canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]

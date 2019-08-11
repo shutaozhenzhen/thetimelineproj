@@ -169,7 +169,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
         self.renderer.render(memdc)
         self.monitoring.timer_end()
         if DEBUG_ENABLED:
-            (width, height) = self.GetSizeTuple()
+            (width, height) = self.GetSize()
             redraw_time = self.monitoring.timer_elapsed_ms
             self.monitoring.count_category_redraw()
             memdc.SetTextForeground((255, 0, 0))
