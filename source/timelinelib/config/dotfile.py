@@ -147,6 +147,10 @@ class Config(Observable):
         if path in [":tutorial:", ":numtutorial:"]:
             # Special timelines should not be saved
             return
+        if isinstance(path, bytes):
+            # This path might have come from the command line so we need to convert
+            # it to unicode
+            path = path.decode(sys.getfilesystemencoding())
         abs_path = os.path.abspath(path)
         current = self.get_recently_opened()
         # Just keep one entry of the same path in the list
