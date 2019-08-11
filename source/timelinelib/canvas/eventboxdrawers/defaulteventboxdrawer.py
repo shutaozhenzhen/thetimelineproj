@@ -70,7 +70,7 @@ class DefaultEventBoxDrawer(object):
         self._draw_hyperlink(dc, rect, event)
 
     def _draw_background(self, dc, rect, event):
-        dc.SetBrush(wx.Brush(self._get_event_color(event), wx.PENSTYLE_SOLID))
+        dc.SetBrush(wx.Brush(self._get_event_color(event), wx.BRUSHSTYLE_SOLID))
         dc.SetPen(self._get_pen(dc, event))
         dc.DrawRectangle(rect)
 
