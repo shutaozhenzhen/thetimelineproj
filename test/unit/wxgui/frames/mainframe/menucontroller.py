@@ -27,8 +27,8 @@ from timelinelib.wxgui.frames.mainframe.mainframe import MenuController
 class describe_menu_controller(UnitTestCase):
 
     def test_menu_requiering_update_is_disabled_when_no_timeline_exists(self):
-        self.given_menu_item_requires_update()
         self.given_no_timeline_exists()
+        self.given_menu_item_requires_update()
         self.when_menu_state_possibly_has_changed()
         self.menu_item.Enable.assert_called_with(False)
 
@@ -45,34 +45,34 @@ class describe_menu_controller(UnitTestCase):
         self.menu_item.Enable.assert_called_with(False)
 
     def test_menu_requiering_timeline_is_disabled_when_no_timeline_exists(self):
-        self.given_menu_item_requires_timeline()
         self.given_no_timeline_exists()
+        self.given_menu_item_requires_timeline()
         self.when_menu_state_possibly_has_changed()
         self.menu_item.Enable.assert_called_with(False)
 
     def test_menu_requiering_timeline_is_enabled_when_timeline_exists(self):
-        self.given_menu_item_requires_timeline()
         self.given_timeline_exists()
+        self.given_menu_item_requires_timeline()
         self.when_menu_state_possibly_has_changed()
         self.menu_item.Enable.assert_called_with(True)
 
     def test_menu_requiering_timeline_view_is_disabled_when_no_timeline_exists(self):
-        self.given_menu_item_requires_timeline_view()
         self.given_no_timeline_exists()
+        self.given_menu_item_requires_timeline_view()
         self.when_menu_state_possibly_has_changed()
         self.menu_item.Enable.assert_called_with(False)
 
     def test_menu_requiering_timeline_view_is_disabled_when_no_timeline_view_exists(self):
-        self.given_menu_item_requires_timeline_view()
         self.given_timeline_exists()
         self.given_no_timeline_view_exists()
+        self.given_menu_item_requires_timeline_view()
         self.when_menu_state_possibly_has_changed()
         self.menu_item.Enable.assert_called_with(False)
 
     def test_menu_requiering_timeline_view_is_enabled_when_timeline_view_exists(self):
-        self.given_menu_item_requires_timeline_view()
         self.given_timeline_exists()
         self.given_timeline_view_exists()
+        self.given_menu_item_requires_timeline_view()
         self.when_menu_state_possibly_has_changed()
         self.menu_item.Enable.assert_called_with(True)
 
