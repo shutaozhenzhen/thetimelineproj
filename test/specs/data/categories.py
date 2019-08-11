@@ -61,8 +61,10 @@ class queries(TestBase):
 
     def test_get_parents_for_checked_childs(self):
         self.checked_categories = (self.monthly_report,)
-        self.assertEqual(set(self.categories.get_parents_for_checked_childs()),
-                         set([self.work, self.report]))
+        result = self.categories.get_parents_for_checked_childs()
+        self.assertEqual(len(result), 2)
+        self.assertIn(self.work, result)
+        self.assertIn(self.report, result)
 
     def setUp(self):
         self.category_list = []
