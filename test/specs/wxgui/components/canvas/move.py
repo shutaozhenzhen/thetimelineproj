@@ -97,7 +97,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
     def setUp(self):
         def x(time):
             for key in self.snap_times.keys():
-                if key == time:
+                if key == (time.julian_day, time.seconds):
                     return self.snap_times[key]
             raise KeyError()
         self.db = MemoryDB()
@@ -128,7 +128,8 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         return event
 
     def given_snaps(self, from_, to):
-        self.snap_times[human_time_to_gregorian(from_)] = human_time_to_gregorian(to)
+        x = human_time_to_gregorian(from_)
+        self.snap_times[(x.julian_day, x.seconds)] = human_time_to_gregorian(to)
 
     def given_no_snap(self):
         self.canvas.Snap.side_effect = lambda x: x
