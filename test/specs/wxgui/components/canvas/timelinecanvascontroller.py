@@ -26,7 +26,7 @@ from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas import TimelineCanvas
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.components.timelinepanel import InputHandlerState
@@ -35,7 +35,7 @@ from timelinelib.wxgui.components.timelinepanel import InputHandlerState
 ANY_Y = 0
 
 
-class TimelineViewSpec(UnitTestCase):
+class TimelineViewSpec(WxAppTestCase):
 
     def test_initializes_displayed_period_from_db(self):
         self.init_view_with_db_with_period("1 Aug 2010", "2 Aug 2010")
@@ -46,8 +46,8 @@ class TimelineViewSpec(UnitTestCase):
         self.timeline_canvas.Disable.assert_called_with()
 
     def setUp(self):
+        WxAppTestCase.setUp(self)
         self.mock_drawer = MockDrawer()
-        self.app = wx.App()
         self.db = MemoryDB()
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSize.return_value = (200, 100)
@@ -229,7 +229,7 @@ class MockDrawer(object):
         self.draw_view_properties = view_properties
 
 
-class DrawingAreaSpec(UnitTestCase):
+class DrawingAreaSpec(WxAppTestCase):
 
     def test_construction_works(self):
         self.timeline_canvas.SetBackgroundColour.assert_called_with(wx.WHITE)
@@ -247,7 +247,7 @@ class DrawingAreaSpec(UnitTestCase):
         self.assertEqual(db, self.controller.get_timeline())
 
     def setUp(self):
-        self.app = wx.App()  # a stored app is needed to create fonts
+        WxAppTestCase.setUp(self)
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetDividerPosition.return_value = 1
         self.timeline_canvas.PostEvent = lambda e: None # Don't store the wx event since it causes a crash

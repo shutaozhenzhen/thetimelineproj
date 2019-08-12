@@ -270,9 +270,9 @@ class describe_import_vtodo_from_ics(describe_import_ics):
 
     def setUp(self):
         describe_import_ics.setUp(self)
-        self.app = wx.App(False)
+        self.app = self.get_wxapp()
         self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
 
     def tearDown(self):
-        describe_import_ics.tearDown(self)
         self.app.Destroy()
+        describe_import_ics.tearDown(self)

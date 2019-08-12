@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import contextlib
 import random
 import unittest
 
@@ -73,19 +74,26 @@ class UnitTestCase(unittest.TestCase):
         self.assertFalse(modified == one, fail_message_modified_one)
 
     def show_dialog(self, dialog_class, *args, **kwargs):
+        with self.wxapp() as app:
+            try:
+                dialog = dialog_class(*args, **kwargs)
+                try:
+                    if self.HALT_GUI:
+                        if self.AUTO_CLOSE:
+                            wx.CallLater(2000, dialog.Close)
+                        dialog.ShowModal()
+                finally:
+                    dialog.Destroy()
+            finally:
+                if app.GetTopWindow():
+                    app.GetTopWindow().Destroy()
+
+    @contextlib.contextmanager
+    def wxapp(self):
         app = self.get_wxapp()
         try:
-            dialog = dialog_class(*args, **kwargs)
-            try:
-                if self.HALT_GUI:
-                    if self.AUTO_CLOSE:
-                        wx.CallLater(2000, dialog.Close)
-                    dialog.ShowModal()
-            finally:
-                dialog.Destroy()
+            yield app
         finally:
-            if app.GetTopWindow():
-                app.GetTopWindow().Destroy()
             app.Destroy()
 
     def get_wxapp(self):
