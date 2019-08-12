@@ -28,15 +28,15 @@ from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas import TimelineCanvas
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 
 
-class TimelineCanvasControllerTestCase(UnitTestCase):
+class TimelineCanvasControllerTestCase(WxAppTestCase):
 
     def setUp(self):
+        WxAppTestCase.setUp(self)
         self.setUpView()
         self.setUpDb()
-        self.app = wx.App()
         self.drawer = Mock()
         self.controller = TimelineCanvasController(self.view, self.drawer)
         self.time_type = self.db.get_time_type()

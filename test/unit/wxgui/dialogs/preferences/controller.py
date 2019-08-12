@@ -27,7 +27,7 @@ from unittest.mock import sentinel
 
 from timelinelib.config.dotfile import Config
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import ANY
 from timelinelib.wxgui.dialogs.preferences.controller import PreferencesDialogController
 from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
@@ -39,10 +39,10 @@ else:
     FONT = u"12:70:90:92:False:MS Shell Dlg 2:43:(0, 0, 0, 255)"
 
 
-class describe_preferences_dialog_controller(UnitTestCase):
+class describe_preferences_dialog_controller(WxAppTestCase):
 
     def setUp(self):
-        self.app = self.get_wxapp()
+        WxAppTestCase.setUp(self)
         self.view = Mock(PreferencesDialog)
         self.controller = PreferencesDialogController(self.view)
         self.config = Mock(Config)

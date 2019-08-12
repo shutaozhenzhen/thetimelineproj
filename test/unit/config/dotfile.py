@@ -146,8 +146,9 @@ class describe_config(TmpDirTestCase):
 
     def setUp(self):
         TmpDirTestCase.setUp(self)
-        self.app = wx.App()
+        self.app = self.get_wxapp()
         self.config = Config(self.get_tmp_path("test.config"))
 
     def tearDown(self):
+        self.app.Destroy()
         TmpDirTestCase.tearDown(self)
