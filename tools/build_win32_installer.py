@@ -107,9 +107,9 @@ actions = {"win32Installer": win32InstallerActions}
 class Target():
 
     def __init__(self, target):
-        print "-------------------------------------------------------"
-        print "  %s" % ("Building target %s" % target)
-        print "-------------------------------------------------------"
+        print("-------------------------------------------------------")
+        print("  %s" % ("Building target %s" % target))
+        print("-------------------------------------------------------")
         self.target = target
         self.actions = actions[target]
         self.ACTION_METHODS = {COPYFILE: self.copyfile,
@@ -133,19 +133,19 @@ class Target():
 
     def assert_that_target_is_known(self):
         if self.target not in known_targets:
-            print "The target %s is unknown" % self.target
-            print "BUILD FAILED"
+            print("The target %s is unknown" % self.target)
+            print("BUILD FAILED")
             sys.exit(1)
 
     def setup_and_create_directories(self, arguments, artifact_dir, temp_dir):
         self.artifact_dir = artifact_dir
         self.project_dir = self.create_project_directory(arguments, temp_dir)
-        print "Artifact dir: %s" % self.artifact_dir
-        print "Project dir:  %s" % self.project_dir
-        print "Working dir:  %s" % os.getcwd()
+        print("Artifact dir: %s" % self.artifact_dir)
+        print("Project dir:  %s" % self.project_dir)
+        print("Working dir:  %s" % os.getcwd())
 
     def create_project_directory(self, arguments, temp_dir):
-        print "Create project directory"
+        print("Create project directory")
         repository = timelinetools.packaging.repository.Repository()
         self.archive = repository.archive(arguments.revision, temp_dir, ARCHIVE)
         return os.path.join(temp_dir, ARCHIVE)
@@ -157,12 +157,12 @@ class Target():
             for action, src, dst in self.actions:
                 if action is not ANNOTATE:
                     count += 1
-                    print "Action %2d(%2d): %s" % (count, total, ACTION_NAMES[action])
+                    print("Action %2d(%2d): %s" % (count, total, ACTION_NAMES[action]))
                 self.ACTION_METHODS[action](src, dst)
-            print "BUILD DONE"
-        except Exception, ex:
-            print str(ex)
-            print "BUILD FAILED"
+            print("BUILD DONE")
+        except Exception as ex:
+            print(str(ex))
+            print("BUILD FAILED")
             sys.exit(1)
 
     def annotate(self, src, dst):
@@ -196,7 +196,7 @@ class Target():
                 success, msg = self.run_pyscript(script_path, [self.project_dir, arg])
             if not success:
                 raise Exception(msg)
-        except Exception, ex:
+        except Exception as ex:
             pass
 
     def runpytest(self, src, dst):
@@ -224,7 +224,7 @@ class Target():
 
     def popd(self, src, dst):
         self.print_src_dst(None, self.cwd)
-        print "    dst: %s" % self.cwd
+        print("    dst: %s" % self.cwd)
         os.chdir(self.cwd)
 
     def run_pyscript(self, script, args=[], display_stderr=False):
@@ -237,22 +237,22 @@ class Target():
         else:
             p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out = p.communicate()
-            print out
+            print(out)
             if p.returncode == 0:
                 return True, out[0]
             else:
                 return False, out[1]
 
     def print_header(self, message):
-        print "-------------------------------------------------------"
-        print "  %s" % message
-        print "-------------------------------------------------------"
+        print("-------------------------------------------------------")
+        print("  %s" % message)
+        print("-------------------------------------------------------")
 
     def print_src_dst(self, src, dst):
         if src is not None:
-            print "    src: %s" % src
+            print("    src: %s" % src)
         if dst is not None:
-            print "    dst: %s" % dst
+            print("    dst: %s" % dst)
 
     def get_artifact_src_name(self):
         versionfile = os.path.join(self.project_dir, "source", "timelinelib", "meta", "version.py")
