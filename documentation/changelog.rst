@@ -43,10 +43,15 @@ Search:
 
 Fixed crash reports and bugs:
 
-NumTime period error report:
 * ``AttributeError: 'NumTime' object has no attribute 'julian_day'``
   Added to_str() function to time base class GenericTimeMixin.
   Own implementation of to_str in GregorianTime.
+
+* ``AttributeError: 'NoneType' object has no attribute 'get_time_period'``
+  Removed None objects from event list.
+
+* ``AttributeError: 'NoneType' object has no attribute 'delete'``
+  Removed None objects from event list.
 
 Version 1.19.0
 --------------

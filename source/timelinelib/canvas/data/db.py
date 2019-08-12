@@ -410,7 +410,9 @@ class MemoryDB(Observable):
 
     def find_event_with_ids(self, ids):
         with self._query() as query:
-            return [self.find_event_with_id(id_) for id_ in ids]
+            events = [self.find_event_with_id(id_) for id_ in ids]
+            events = [e for e in events if e is not None]
+            return events
 
     def find_event_with_id(self, event_id):
         with self._query() as query:
