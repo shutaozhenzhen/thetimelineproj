@@ -23,12 +23,12 @@ from unittest.mock import Mock
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.config.dotfile import Config
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import a_gregorian_era
 from timelinelib.wxgui.dialogs.eraeditor.view import EraEditorDialog
 
 
-class describe_era_editor_dialog(UnitTestCase):
+class describe_era_editor_dialog(WxAppTestCase):
 
     def test_show_manual_test_dialog(self):
         config = Mock(Config)
@@ -41,9 +41,3 @@ class describe_era_editor_dialog(UnitTestCase):
             config,
             a_gregorian_era()
         )
-
-    def setUp(self):
-        self.app = self.get_wxapp()
-
-    def tearDown(self):
-        self.app.Destroy()

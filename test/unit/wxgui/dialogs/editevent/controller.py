@@ -136,16 +136,14 @@ class EditEventDialogControllerTestCase(UnitTestCase):
         return container
 
     def simulate_user_clicks_enlarge_button(self, enlarged=True):
-        import wx
-        app = wx.App()
-        evt = Mock()
-        if enlarged:
-            self.controller.reduced_size = sentinel.REDUCE_SIZE
-            self.controller.reduced_pos = sentinel.REDUCE_POS
-            self.controller.on_reduce_click(evt)
-        else:
-            self.controller.on_enlarge_click(evt)
-        app.Destroy()
+        with self.wxapp():
+            evt = Mock()
+            if enlarged:
+                self.controller.reduced_size = sentinel.REDUCE_SIZE
+                self.controller.reduced_pos = sentinel.REDUCE_POS
+                self.controller.on_reduce_click(evt)
+            else:
+                self.controller.on_enlarge_click(evt)
 
     def get_saved_event(self):
         self.assertEqual(len(self.event_repository.save.call_args_list), 1)

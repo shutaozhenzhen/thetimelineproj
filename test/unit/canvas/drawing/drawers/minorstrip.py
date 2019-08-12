@@ -28,7 +28,7 @@ DIVIDER_LABEL = 'Divider-Label'
 
 
 class describe_minor_strip_drawer(describe_drawers):
-    
+
     def test_can_draw_divider_line(self):
         self._drawer._appearance.get_tim_scale_pos = lambda : 1
         self._drawer.draw(DIVIDER_LABEL, 1, 2)
@@ -51,20 +51,17 @@ class describe_minor_strip_drawer(describe_drawers):
         self.assertEqual(90, self._dc.text_y - 2 * self._text_height)
 
     def setUp(self):
+        describe_drawers.setUp(self)
         # self.install_gettext() # Needed when test is run standalone
-        self._app = wx.App()
         from timelinelib.canvas.drawing.drawers.minorstrip import MinorStripDrawer
         self._dc = self.create_dc()
         self._scene = self.create_scene(400, 300, 150)
         self._drawer = MinorStripDrawer(ParentDrawer(self._dc, self._scene))
         self._text_height = 20
-    
-    def tearDown(self):
-        self._app.Destroy()
-        
-        
+
+
 class ParentDrawer():
-    
+
     def __init__(self, dc, scene):
         self.dc = dc
         self.scene = scene
@@ -73,22 +70,21 @@ class ParentDrawer():
         self._do_draw_divider_line = True
         self._do_draw_top_scale = False
         self._do_draw_bottom_scale = False
-        
+
 
 class TimeType():
-    
+
     def is_weekend_day(self, time):
         return True
-    
+
     def is_special_day(self, time):
         return False
-            
-            
+
+
 class Appearance():
-    
+
     def get_minor_strip_font(self):
         return '10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)'
-    
+
     def get_time_scale_pos(self):
         return 1
-    
