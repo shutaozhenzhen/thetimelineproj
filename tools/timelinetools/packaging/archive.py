@@ -54,8 +54,8 @@ class Archive(timelinetools.packaging.path.Path):
     def generate_mo_files(self):
         self._run_tool("generate-mo-files.py")
 
-    def execute_specs_repeat(self):
-        self._run_tool("execute-specs-repeat.py")
+    def execute_specs(self):
+        self._run_tool("execute-specs.py")
 
     def create_zip_archive(self):
         self._clean_pyc_files()
