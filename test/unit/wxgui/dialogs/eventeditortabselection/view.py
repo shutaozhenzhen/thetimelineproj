@@ -30,9 +30,3 @@ class describe_event_editor_tab_selection_dialog(UnitTestCase):
         config = Mock()
         config.event_editor_tab_order = "01234:"
         self.show_dialog(EventEditorTabSelectionDialog, None, config)
-
-    def setUp(self):
-        self.app = self.get_wxapp()
-
-    def tearDown(self):
-        self.app.Destroy()
