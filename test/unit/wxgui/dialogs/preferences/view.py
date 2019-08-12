@@ -15,11 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
-
-import os
-
-import wx
-
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
@@ -28,14 +23,5 @@ from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 class describe_preferences_dialog(UnitTestCase):
 
     def test_it_can_be_created(self):
-        path = os.path.join(
-            wx.StandardPaths.Get().GetUserConfigDir(),
-            ".thetimelineproj.cfg")
-        config = Config(path)
+        config = Config(None)
         self.show_dialog(PreferencesDialog, None, config)
-
-    def setUp(self):
-        self.app = self.get_wxapp()
-
-    def tearDown(self):
-        self.app.Destroy()
