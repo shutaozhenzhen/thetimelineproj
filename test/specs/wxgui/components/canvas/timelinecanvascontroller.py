@@ -249,6 +249,7 @@ class DrawingAreaSpec(UnitTestCase):
         self.app = wx.App()  # a stored app is needed to create fonts
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetDividerPosition.return_value = 1
+        self.timeline_canvas.PostEvent = lambda e: None # Don't store the wx event since it causes a crash
         self.drawing_algorithm = DefaultDrawingAlgorithm()
         self.controller = TimelineCanvasController(
             self.timeline_canvas, drawer=self.drawing_algorithm)
