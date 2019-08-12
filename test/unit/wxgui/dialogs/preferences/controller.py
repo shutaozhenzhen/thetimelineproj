@@ -76,7 +76,7 @@ class describe_preferences_dialog_controller(WxAppTestCase):
         self.evt = Mock()
 
     def tearDown(self):
-        self.app.Destroy()
+        self.destroy_wxapp(self.app)
 
     def test_choices_are_set_by_controller(self):
         self.simulate_dialog_opens()

@@ -27,4 +27,4 @@ class WxAppTestCase(UnitTestCase):
         self.app = self.get_wxapp()
 
     def tearDown(self):
-        self.app.Destroy()
+        self.destroy_wxapp(self.app)
