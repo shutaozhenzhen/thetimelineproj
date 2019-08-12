@@ -17,6 +17,7 @@
 
 
 import contextlib
+import gc
 import platform
 import random
 import unittest
@@ -112,6 +113,7 @@ class UnitTestCase(unittest.TestCase):
         # open.
         app.MainLoop()
         app.Destroy()
+        gc.collect()
 
 
 def get_random_modifier(modifiers):
