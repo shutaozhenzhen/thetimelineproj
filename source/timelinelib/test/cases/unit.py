@@ -76,18 +76,14 @@ class UnitTestCase(unittest.TestCase):
 
     def show_dialog(self, dialog_class, *args, **kwargs):
         with self.wxapp() as app:
+            dialog = dialog_class(*args, **kwargs)
             try:
-                dialog = dialog_class(*args, **kwargs)
-                try:
-                    if self.HALT_GUI:
-                        if self.AUTO_CLOSE:
-                            wx.CallLater(2000, dialog.Close)
-                        dialog.ShowModal()
-                finally:
-                    dialog.Destroy()
+                if self.HALT_GUI:
+                    if self.AUTO_CLOSE:
+                        wx.CallLater(2000, dialog.Close)
+                    dialog.ShowModal()
             finally:
-                if app.GetTopWindow():
-                    app.GetTopWindow().Destroy()
+                dialog.Destroy()
 
     @contextlib.contextmanager
     def wxapp(self):
@@ -95,7 +91,7 @@ class UnitTestCase(unittest.TestCase):
         try:
             yield app
         finally:
-            app.Destroy()
+            self.destroy_wxapp(app)
 
     def get_wxapp(self):
         app = wx.App(False)
@@ -105,6 +101,17 @@ class UnitTestCase(unittest.TestCase):
             self.locale = wx.Locale()
             self.locale.Init(wx.LANGUAGE_DEFAULT)
         return app
+
+    def destroy_wxapp(self, app):
+        if app.GetTopWindow():
+            app.GetTopWindow().Destroy()
+        # I sometimes got a segfault at what appeared to be when Python tried
+        # to garbage collect wx events. The MainLoop here is meant to process
+        # all remaining events. It appears to work better, but I'm not sure it
+        # works as I think. MainLoop should exit immediately if no windows are
+        # open.
+        app.MainLoop()
+        app.Destroy()
 
 
 def get_random_modifier(modifiers):
