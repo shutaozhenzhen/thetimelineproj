@@ -8,4 +8,5 @@ pip install git+https://github.com/thetimelineproj/humblewx.git
 pip install icalendar
 pip install markdown
 pip install pysvg-py3
+python tools/execute-specs-repeat.py --write-testlist testlist.txt
 python tools/build-source-zip.py --revision $1
