@@ -44,6 +44,7 @@ class TimelineCanvasControllerTestCase(WxAppTestCase):
     def setUpView(self):
         self.view = Mock(TimelineCanvas)
         self.view.GetDividerPosition.return_value = 0
+        self.view.PostEvent = lambda e: None # Don't store the wx event since it causes a segfault when garbage collected
 
     def setUpDb(self):
         self.db = MemoryDB()
