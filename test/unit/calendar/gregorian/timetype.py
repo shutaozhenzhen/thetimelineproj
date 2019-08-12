@@ -52,6 +52,7 @@ from timelinelib.calendar.gregorian.timetype import TimeOutOfRangeRightError
 from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
@@ -121,7 +122,7 @@ class describe_gregoriantimetype(UnitTestCase):
             )
 
 
-class describe_gregorian_strip_week(UnitTestCase):
+class describe_gregorian_strip_week(WxAppTestCase):
 
     def test_start_when_week_starts_on_sunday(self):
         self.appearance.set_week_start("sunday")
@@ -180,8 +181,7 @@ class describe_gregorian_strip_week(UnitTestCase):
         )
 
     def setUp(self):
-        UnitTestCase.setUp(self)
-        self.app = wx.App()
+        WxAppTestCase.setUp(self)
         self.time_type = GregorianTimeType()
         self.appearance = Appearance()
         self.strip = StripWeek(self.appearance)

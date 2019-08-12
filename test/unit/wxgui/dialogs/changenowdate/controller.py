@@ -20,23 +20,20 @@ import wx
 
 from unittest.mock import Mock
 
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.wxgui.dialogs.changenowdate.controller import ChangeNowDateDialogController
 from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
 
 
-class describe_change_now_date_dialog_controller(UnitTestCase):
+class describe_change_now_date_dialog_controller(WxAppTestCase):
 
     def setUp(self):
+        WxAppTestCase.setUp(self)
         self.view = Mock(ChangeNowDateDialog)
         self.controller = ChangeNowDateDialogController(self.view)
         self.db = Mock()
         self.callback_function = Mock()
         self.controller.on_init(self.db, self.callback_function)
-        self.app = self.get_wxapp()
-
-    def tearDown(self):
-        self.app.Destroy()
 
     def test_can_check_show_time(self):
         self.view.IsShowTimeChecked.return_value = True
