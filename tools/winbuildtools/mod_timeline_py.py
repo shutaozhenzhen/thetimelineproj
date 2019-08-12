@@ -26,8 +26,8 @@ FILE = "timeline.py"
 def main():
     project_dir = sys.argv[1]
     target = os.path.join(project_dir, "source", "timeline.py")
-    print "Script: mod2_timeline_py.py"
-    print "Target:", target
+    print("Script: mod2_timeline_py.py")
+    print("Target:", target)
     
     f = open(target, "r")
     text = f.read()
