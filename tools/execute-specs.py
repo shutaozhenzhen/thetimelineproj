@@ -98,9 +98,17 @@ def create_include_test_function(arguments):
 def create_suite(arguments):
     whole_suite = suite_from_modules(find_test_modules())
     if arguments.read_testlist:
-        return read_testlist(arguments, shuffled_suite(whole_suite))
+        return read_testlist(arguments, whole_suite)
     else:
-        return write_testlist(arguments, shuffled_suite(filter_suite(whole_suite, create_include_test_function(arguments))))
+        return write_testlist(
+            arguments,
+            shuffled_suite(
+                filter_suite(
+                    whole_suite,
+                    create_include_test_function(arguments)
+                )
+            )
+        )
     return suite
 
 
@@ -114,7 +122,7 @@ def write_testlist(arguments, suite):
 
 def read_testlist(arguments, whole_suite):
     test_by_id = {}
-    for test in whole_suite:
+    for test in extract_test_cases(whole_suite):
         test_by_id[test.id()] = test
     suite = unittest.TestSuite()
     with open(arguments.read_testlist) as f:
