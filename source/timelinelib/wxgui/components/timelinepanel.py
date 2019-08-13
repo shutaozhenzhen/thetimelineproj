@@ -93,7 +93,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         menu = wx.Menu()
         menu_item = wx.MenuItem(menu, wx.NewId(), _("Center"))
         self.Bind(wx.EVT_MENU, self._context_menu_on_menu_center, id=menu_item.GetId())
-        menu.AppendItem(menu_item)
+        menu.Append(menu_item)
         self.PopupMenu(menu)
         menu.Destroy()
 
@@ -303,7 +303,7 @@ class TimelinePanelGuiCreator(wx.Panel):
                 menu.AppendMenu(wx.ID_ANY, text, imp)
             else:
                 self.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
-                menu.AppendItem(menu_item)
+                menu.Append(menu_item)
             mid += 1
         self.PopupMenu(menu)
         menu.Destroy()
