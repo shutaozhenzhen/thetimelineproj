@@ -175,10 +175,10 @@ def execute():
         if class_name == "":
             raise Exception("Name can't be empty")
         create_py_files(class_name)
-    except Exception, ex:
-        print ex
+    except Exception as ex:
+        print(ex)
         pass
-        print "None"
+        print("None")
 
 
 if __name__ == "__main__":
