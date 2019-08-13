@@ -37,11 +37,11 @@ if len(sys.argv) != 2:
 
 # extract from
 archive_path = sys.argv[1]
-print archive_path
+print(archive_path)
 
 # extract to
 tmp_dir = tempfile.mkdtemp()
-print tmp_dir
+print(tmp_dir)
 
 # extract
 Popen(["tar", "xvvz", "-C", tmp_dir, "--file", archive_path]).wait()
