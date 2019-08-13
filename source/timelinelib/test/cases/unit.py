@@ -18,6 +18,7 @@
 
 import contextlib
 import gc
+import locale
 import platform
 import random
 import unittest
@@ -96,11 +97,9 @@ class UnitTestCase(unittest.TestCase):
 
     def get_wxapp(self):
         app = wx.App(False)
-        if platform.system() == "Windows":
-            import locale
-            locale.setlocale(locale.LC_ALL, 'C')
-            self.locale = wx.Locale()
-            self.locale.Init(wx.LANGUAGE_DEFAULT)
+        locale.setlocale(locale.LC_ALL, 'C')
+        self.locale = wx.Locale()
+        self.locale.Init(wx.LANGUAGE_DEFAULT)
         return app
 
     def destroy_wxapp(self, app):
