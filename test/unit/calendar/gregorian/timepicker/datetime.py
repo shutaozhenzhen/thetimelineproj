@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.timepicker.date import GregorianDatePicker
@@ -72,7 +72,7 @@ class AGregorianDateTimePicker(UnitTestCase):
 
     def testControllerCanConverDateTupleToWxDate(self):
         wx_date = self.controller.date_tuple_to_wx_date((2010, 8, 31))
-        self.assertEqual((2010, 8, 31), (wx_date.Year, wx_date.Month + 1, wx_date.Day))
+        self.assertEqual((2010, 8, 31), (wx_date.year, wx_date.month + 1, wx_date.day))
 
     def testControllerCanConverWxdateToDateTuple(self):
         wx_date = self.controller.date_tuple_to_wx_date((2010, 8, 31))

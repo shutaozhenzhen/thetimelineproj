@@ -1,5 +1,3 @@
-
-
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -18,19 +16,15 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
+import wx
+
+from timelinelib.test.cases.unit import UnitTestCase
 
 
-def to_unicode(string_data):
-    """
-    Tru to encode a string into unicode.
-    """
-    if isinstance(string_data, unicode):
-        return(string_data)
-    else:
-        for encoding in [sys.getdefaultencoding(), "utf-8", "cp1250", "cp850"]:
-            try:
-                return unicode(string_data, encoding)
-            except:
-                pass
-        return string_data
+class WxAppTestCase(UnitTestCase):
+
+    def setUp(self):
+        self.app = self.get_wxapp()
+
+    def tearDown(self):
+        self.destroy_wxapp(self.app)

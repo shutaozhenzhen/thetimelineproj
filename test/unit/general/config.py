@@ -17,7 +17,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.general.config import Config
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
@@ -51,8 +51,8 @@ class describe_config(TmpDirTestCase):
 
     def test_can_get_and_set_text(self):
         self.assertEqual(self.config.get_name(), "Rickard")
-        self.config.set_name(u"Motörhead")
-        self.assertEqual(self.config.get_name(), u"Motörhead")
+        self.config.set_name("Motörhead")
+        self.assertEqual(self.config.get_name(), "Motörhead")
 
     def test_can_get_and_set_integer(self):
         self.assertEqual(self.config.get_age(), 30)
@@ -66,17 +66,17 @@ class describe_config(TmpDirTestCase):
 
     def test_can_read_from_file(self):
         with open(self.get_tmp_path("test.cfg"), "wb") as f:
-            f.write("[DEFAULT]\n")
-            f.write(u"name = Göran\n".encode("utf-8"))
-            f.write("age = 3\n")
+            f.write(b"[DEFAULT]\n")
+            f.write("name = Göran\n".encode("utf-8"))
+            f.write(b"age = 3\n")
         self.config.read(self.get_tmp_path("test.cfg"))
-        self.assertEqual(self.config.get_name(), u"Göran")
+        self.assertEqual(self.config.get_name(), "Göran")
         self.assertEqual(self.config.get_age(), 3)
 
     def test_specify_different_name_in_config_file(self):
         with open(self.get_tmp_path("test.cfg"), "wb") as f:
-            f.write("[DEFAULT]\n")
-            f.write("deprecated other name = George\n")
+            f.write(b"[DEFAULT]\n")
+            f.write(b"deprecated other name = George\n")
         self.config.read(self.get_tmp_path("test.cfg"))
         self.assertEqual(self.config.get_other_name(), "George")
 

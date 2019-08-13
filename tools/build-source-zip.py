@@ -51,7 +51,7 @@ def create_source_zip(arguments, tempdir):
     archive.generate_mo_files()
     zip_file = archive.create_zip_archive()
     extracted_archive = zip_file.extract_to(os.path.join(tempdir, "test"))
-    extracted_archive.execute_specs_repeat()
+    extracted_archive.execute_specs()
     zip_file.move_to_directory(".")
 
 

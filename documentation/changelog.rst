@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 2.0.0
+--------------
+
+Port of Timeline to Python 3.
+
 Version 1.20.0
 --------------
 

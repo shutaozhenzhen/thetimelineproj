@@ -18,19 +18,19 @@
 
 import wx
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.milestone import Milestone
 from timelinelib.config.dotfile import Config
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.dialogs.milestone.view import EditMilestoneDialog
 
 
-class describe_milestone_editor_dialog(UnitTestCase):
+class describe_milestone_editor_dialog(WxAppTestCase):
 
     def test_layout(self):
         db = Mock(MemoryDB)
@@ -52,9 +52,3 @@ class describe_milestone_editor_dialog(UnitTestCase):
             config,
             milestone
         )
-
-    def setUp(self):
-        self.app = self.get_wxapp()
-
-    def tearDown(self):
-        self.app.Destroy()

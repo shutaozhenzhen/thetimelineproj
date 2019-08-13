@@ -28,7 +28,7 @@ class NextButton:
     def __init__(self, parent, controller):
         self._controller = controller
         bmp = wx.ArtProvider.GetBitmap(wx.ART_GO_FORWARD, wx.ART_TOOLBAR, parent._icon_size)
-        parent.AddLabelTool(wx.ID_FORWARD, LABEL, bmp, shortHelp=HELP_TEXT)
+        parent.AddTool(wx.ID_FORWARD, LABEL, bmp, shortHelp=HELP_TEXT)
         parent.Bind(wx.EVT_TOOL, self._event_handler, id=wx.ID_FORWARD)
         
     def _event_handler(self, evt):

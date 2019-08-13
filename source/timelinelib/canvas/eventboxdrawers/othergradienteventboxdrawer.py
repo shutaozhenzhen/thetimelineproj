@@ -36,7 +36,7 @@ class OtherGradientEventBoxDrawer(DefaultEventBoxDrawer):
             self._draw_background_no_fuzzy_edges(dc, rect, event)
 
     def _draw_background_no_fuzzy_edges(self, dc, rect, event):
-        dc.DrawRectangleRect(rect)
+        dc.DrawRectangle(rect)
         inner_rect = wx.Rect(*rect)
         inner_rect.Deflate(1, 1)
         dc.GradientFillLinear(inner_rect, self._get_light_color(event), self._get_dark_color(event), wx.WEST)

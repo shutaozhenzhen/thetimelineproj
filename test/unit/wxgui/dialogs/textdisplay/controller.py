@@ -18,7 +18,7 @@
 
 import wx
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.textdisplay.controller import TextDisplayDialogController

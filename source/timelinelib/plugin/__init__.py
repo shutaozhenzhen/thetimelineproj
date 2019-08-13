@@ -20,7 +20,7 @@ Defines plugin application components.
 """
 
 
-from factory import PluginFactory
+from timelinelib.plugin.factory import PluginFactory
 
 
 factory = PluginFactory()

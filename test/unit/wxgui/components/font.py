@@ -15,22 +15,20 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+
 import wx
 
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.wxgui.components.font import Font
 from timelinelib.wxgui.components.font import deserialize_font
 
 
-class FontsTestCase(UnitTestCase):
+class FontsTestCase(WxAppTestCase):
 
     def setUp(self):
-        self.app = wx.App()
+        WxAppTestCase.setUp(self)
         self.font = Font()
         self.wx_default_font = wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
-
-    def tearDown(self):
-        self.app.Destroy()
 
 
 class describe_font_instantiation(FontsTestCase):

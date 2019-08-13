@@ -156,7 +156,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         bundle = wx.IconBundle()
         for size in ["16", "32", "48"]:
             iconpath = os.path.join(ICONS_DIR, "%s.png" % size)
-            icon = wx.IconFromBitmap(wx.BitmapFromImage(wx.Image(iconpath)))
+            icon = wx.Icon(wx.Bitmap(wx.Image(iconpath)))
             bundle.AddIcon(icon)
         return bundle
 
@@ -322,7 +322,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             else:
                 return None
         except ValueError as ex:
-            display_error_message(ex.message)
+            display_error_message(str(ex))
         return None
 
     def _all_visible_events(self):

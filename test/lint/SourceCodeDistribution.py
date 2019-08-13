@@ -38,7 +38,7 @@ class SourceCodeDistributionSpec(UnitTestCase):
 
     def test_py_files_should_have_copyright(self):
         for py_file in self.get_py_files(["source", "test", "tools"]):
-            with open(py_file) as f:
+            with open(py_file, encoding="utf-8") as f:
                 content = f.read()
                 if content:
                     self.assertIn(COPYRIGHT_HEADER, content, "%s lacks proper copyright notice." % py_file)

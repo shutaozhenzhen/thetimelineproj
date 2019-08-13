@@ -18,17 +18,17 @@
 
 import wx
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.config.dotfile import Config
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 
 
-class describe_time_editor_dialog_for_gregorian_time(UnitTestCase):
+class describe_time_editor_dialog_for_gregorian_time(WxAppTestCase):
 
     def test_it_can_be_created(self):
         config = Mock(Config)
@@ -41,9 +41,3 @@ class describe_time_editor_dialog_for_gregorian_time(UnitTestCase):
             human_time_to_gregorian("31 Dec 2010 00:00"),
             "Go to Date"
         )
-
-    def setUp(self):
-        self.app = self.get_wxapp()
-
-    def tearDown(self):
-        self.app.Destroy()

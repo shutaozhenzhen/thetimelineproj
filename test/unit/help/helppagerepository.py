@@ -62,7 +62,7 @@ class describe_help_page_repoistory_page_creation(HelpPageRepositoryUnitTestCase
     def test_created_pages_are_of_correct_type(self):
         self.repository.install_page(None, None, None, None)
         keys = self.repository.help_pages.keys()
-        page = self.repository.help_pages[keys[0]]
+        page = self.repository.help_pages[next(iter(keys))]
         self.assertTrue(isinstance(page, HelpPage))
 
     def test_pages_are_defined_by_id_header_body_and_related_pages(self):

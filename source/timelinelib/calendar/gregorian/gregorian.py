@@ -87,7 +87,7 @@ class GregorianDateTime(object):
             if diff >= 0:
                 return diff
             raise ValueError("should not end up here")
-        return days_since_monday_week_1(self.to_time()) / 7 + 1
+        return days_since_monday_week_1(self.to_time()) // 7 + 1
 
     def is_bc(self):
         """ """
@@ -390,9 +390,9 @@ def gregorian_ymd_to_julian_day_alt(year, month, day):
     B = 274277
     C = -38
     h = month - m
-    g = year + y - (n - h) / n
+    g = year + y - (n - h) // n
     f = (h -1 + n) % n
-    e = (p * g + q) / r + day -1 - j
-    julian_day = e + (s * f + t) / u
-    julian_day = julian_day - (3 * ((g + A) / 100)) / 4 - C
+    e = (p * g + q) // r + day -1 - j
+    julian_day = e + (s * f + t) // u
+    julian_day = julian_day - (3 * ((g + A) // 100)) // 4 - C
     return julian_day
