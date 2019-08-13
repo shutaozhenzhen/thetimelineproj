@@ -106,12 +106,6 @@ class UnitTestCase(unittest.TestCase):
     def destroy_wxapp(self, app):
         if app.GetTopWindow():
             app.GetTopWindow().Destroy()
-        # I sometimes got a segfault at what appeared to be when Python tried
-        # to garbage collect wx events. The MainLoop here is meant to process
-        # all remaining events. It appears to work better, but I'm not sure it
-        # works as I think. MainLoop should exit immediately if no windows are
-        # open.
-        app.MainLoop()
         app.Destroy()
         gc.collect()
 
