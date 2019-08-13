@@ -73,7 +73,7 @@ class describe_pot_file(TmpDirTestCase):
             "Missing msgids:",
         ] + ["- %s" % x for x in missing_msgids] + [
             "Steps to fix:",
-            "1. Generate a new pot-file: python tools/generate-pot-file.py",
+            "1. Generate a new pot-file: python3 tools/generate-pot-file.py",
             "2. Commit it (translations/timeline.pot)",
             "3. Upload it to Launchpad: https://translations.launchpad.net/thetimelineproj/trunk/+translations-upload",
         ]))

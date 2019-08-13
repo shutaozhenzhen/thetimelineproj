@@ -66,14 +66,14 @@ yourself. See the next section for instructions how to do that. Once that is
 done, and you have extracted the zip file, you should be able to run Timeline
 with this command::
 
-    python <path-to-timeline-directory>/source/timeline.py
+    python3 <path-to-timeline-directory>/source/timeline.py
 
 .. HINT::
 
     If you get an error similar to the one bellow, there is probably a
     dependency missing::
 
-        $ python source/timeline.py
+        $ python3 source/timeline.py
         Traceback (most recent call last):
           File "source/timeline.py", line 64, in <module>
             setup_humblewx()

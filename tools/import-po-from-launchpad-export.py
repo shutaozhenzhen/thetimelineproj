@@ -32,7 +32,7 @@ import sys
 from timelinetools.paths import TRANSLATIONS_DIR
 
 if len(sys.argv) != 2:
-    print("Usage: python import-po-from-launchpad-export.py /path/to/launchpad-export.tar.gz")
+    print("Usage: python3 import-po-from-launchpad-export.py /path/to/launchpad-export.tar.gz")
     raise SystemExit()
 
 # extract from
