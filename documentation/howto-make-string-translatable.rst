@@ -13,7 +13,7 @@ Example of enclosed string::
 
 To generate a pot file, run ::
 
-    python tools/generate-pot-file.py
+    python3 tools/generate-pot-file.py
 
 It requires the ``xgettext`` program to be on the path. See :ref:`label-gettext`
 for instructions how to install it.

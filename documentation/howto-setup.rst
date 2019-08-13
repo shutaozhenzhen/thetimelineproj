@@ -12,7 +12,7 @@ section).
 
 Then make sure you can run all tests::
 
-    python tools/execute-specs.py
+    python3 tools/execute-specs.py
 
 If that works, you have the basic environment set up.
 
