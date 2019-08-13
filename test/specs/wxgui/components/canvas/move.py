@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.test.cases.unit import UnitTestCase
@@ -97,7 +97,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
     def setUp(self):
         def x(time):
             for key in self.snap_times.keys():
-                if key == time:
+                if key == (time.julian_day, time.seconds):
                     return self.snap_times[key]
             raise KeyError()
         self.db = MemoryDB()
@@ -108,7 +108,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         self.status_bar = Mock()
         self.canvas = Mock(MainCanvas)
         self.canvas.GetDb.return_value = self.db
-        self.canvas.GetSizeTuple.return_value = (0, 0)
+        self.canvas.GetSize.return_value = (0, 0)
         self.canvas.GetSelectedEvents.return_value = self.selected_events
         self.canvas.Snap.side_effect = x
         self.canvas.GetTimeAt.side_effect = lambda x: self.times_at[x]
@@ -128,7 +128,8 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         return event
 
     def given_snaps(self, from_, to):
-        self.snap_times[human_time_to_gregorian(from_)] = human_time_to_gregorian(to)
+        x = human_time_to_gregorian(from_)
+        self.snap_times[(x.julian_day, x.seconds)] = human_time_to_gregorian(to)
 
     def given_no_snap(self):
         self.canvas.Snap.side_effect = lambda x: x

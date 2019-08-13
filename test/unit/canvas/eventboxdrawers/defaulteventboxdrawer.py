@@ -17,7 +17,7 @@
 
 
 import wx
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
@@ -45,7 +45,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         rect = wx.Rect(0, 0, WIDTH, HEIGHT)
         self.drawer.center_text = False
         self.drawer._draw_text(self.dc, rect, self.event)
-        self.dc.SetClippingRect.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
+        self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
         self.dc.DrawText.assert_called_with(DEFAULT_TEXT, INNER_PADDING, INNER_PADDING)
 
     def test_centered_text_is_not_left_aligned(self):
@@ -54,7 +54,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         rect = wx.Rect(0, 0, WIDTH, HEIGHT)
         self.drawer.center_text = True
         self.drawer._draw_text(self.dc, rect, self.event)
-        self.dc.SetClippingRect.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
+        self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
         self.dc.DrawText.assert_called_with(DEFAULT_TEXT, (WIDTH - 2 * INNER_PADDING - 50) / 2 + INNER_PADDING, INNER_PADDING)
 
     def test_centered_text_is_left_aligned_if_text_is_too_long_to_fit(self):
@@ -64,7 +64,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.dc.GetTextExtent.return_value = (500, 0)
         self.drawer.center_text = True
         self.drawer._draw_text(self.dc, rect, self.event)
-        self.dc.SetClippingRect.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
+        self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
         self.dc.DrawText.assert_called_with(DEFAULT_TEXT, INNER_PADDING, INNER_PADDING)
 
     def test_non_centered_text_is_left_ajusted_when_fuzzy(self):
@@ -74,7 +74,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         rect = wx.Rect(0, 0, WIDTH, HEIGHT)
         self.drawer.center_text = False
         self.drawer._draw_text(self.dc, rect, self.event)
-        self.dc.SetClippingRect.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
+        self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
         self.dc.DrawText.assert_called_with(DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
 
     def test_non_centered_text_is_left_ajusted_when_locked(self):
@@ -84,7 +84,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         rect = wx.Rect(0, 0, WIDTH, HEIGHT)
         self.drawer.center_text = False
         self.drawer._draw_text(self.dc, rect, self.event)
-        self.dc.SetClippingRect.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
+        self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
         self.dc.DrawText.assert_called_with(DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
 
     def test_if_checkmark_is_to_be_used_it_is_placed_as_first_char_in_text(self):
@@ -96,23 +96,21 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.drawer.center_text = False
         self.drawer.view_properties.get_display_checkmark_on_events_done.return_value = True
         self.drawer._draw_text(self.dc, rect, self.event)
-        self.dc.SetClippingRect.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
+        self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
         self.dc.DrawText.assert_called_with(u"\u2714" + DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
 
     def test_milestone_with_no_text_can_be_drawn(self):
-        app = wx.App()
-        self.event.get_text.return_value = ""
-        self.event.get_default_color.return_value = (127, 127, 127)
-        self.event.get_category.return_value = None
-        rect = wx.Rect(0, 0, 100, 20)
-        scene = Mock()
-        try:
-            self.drawer._draw_milestone_event(self.dc, rect, scene, self.event, False)
-            self.dc.DrawText.assert_called_with(" ", 6, 2)
-        except IndexError:
-            self.fail("Exception was not expected")
-        finally:
-            app.Destroy()
+        with self.wxapp():
+            self.event.get_text.return_value = ""
+            self.event.get_default_color.return_value = (127, 127, 127)
+            self.event.get_category.return_value = None
+            rect = wx.Rect(0, 0, 100, 20)
+            scene = Mock()
+            try:
+                self.drawer._draw_milestone_event(self.dc, rect, scene, self.event, False)
+                self.dc.DrawText.assert_called_with(" ", 6, 2)
+            except IndexError:
+                self.fail("Exception was not expected")
 
     def setUp(self):
         self.drawer = DefaultEventBoxDrawer()

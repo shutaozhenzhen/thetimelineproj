@@ -155,7 +155,7 @@ def set_wait_cursor(parent):
 
 
 def set_default_cursor(parent):
-    parent.SetCursor(wx.StockCursor(wx.CURSOR_DEFAULT))
+    parent.SetCursor(wx.Cursor(wx.CURSOR_DEFAULT))
 
 
 def set_focus(parent, name):

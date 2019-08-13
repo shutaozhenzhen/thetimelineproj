@@ -20,8 +20,8 @@ if __name__ == "__main__":
     import sys
     import os.path
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", "source"))
-    import __builtin__
-    __builtin__.__dict__["_"] = lambda x: x
+    import builtins
+    builtins.__dict__["_"] = lambda x: x
     from timelinelib.calendar.gregorian.gregorian import julian_day_to_gregorian_ymd
     from timelinelib.calendar.gregorian.gregorian import gregorian_ymd_to_julian_day
     for julian_day in range(10000000):

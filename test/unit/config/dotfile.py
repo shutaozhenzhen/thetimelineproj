@@ -106,8 +106,8 @@ class describe_config(TmpDirTestCase):
             [abspath("foo"), abspath("bar")])
 
     def test_converts_recently_opened_path_to_unicode(self):
-        self.config.append_recently_opened("non-unicode-path")
-        self.assertTrue(isinstance(self.config.get_recently_opened()[0], unicode))
+        self.config.append_recently_opened(b"non-unicode-path")
+        self.assertTrue(isinstance(self.config.get_recently_opened()[0], str))
 
     def test_recently_opened_does_not_store_special_tutorial_file(self):
         self.config.append_recently_opened(":tutorial:")
@@ -146,8 +146,9 @@ class describe_config(TmpDirTestCase):
 
     def setUp(self):
         TmpDirTestCase.setUp(self)
-        self.app = wx.App()
+        self.app = self.get_wxapp()
         self.config = Config(self.get_tmp_path("test.config"))
 
     def tearDown(self):
+        self.destroy_wxapp(self.app)
         TmpDirTestCase.tearDown(self)

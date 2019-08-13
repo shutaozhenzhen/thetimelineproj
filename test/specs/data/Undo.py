@@ -45,7 +45,7 @@ class describe_undo(TmpDirTestCase):
         self.after_undo_path = self.get_tmp_path("after_undo.timeline")
 
     def read(self, path):
-        f = open(path)
+        f = open(path, "rb")
         try:
             return f.read()
         finally:

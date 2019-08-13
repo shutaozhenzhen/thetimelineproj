@@ -16,27 +16,25 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 import wx
 
 from timelinelib.wxgui.components.timelinepanel import TimelinePanel
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 
 
-class describe_timelinepanel(UnitTestCase):
+class describe_timelinepanel(WxAppTestCase):
 
     def test_can_be_created(self):
         self.assertTrue(self.panel is not None)
 
     def setUp(self):
-        self.app = self.get_wxapp()
+        WxAppTestCase.setUp(self)
         self.parent = wx.Dialog(None)
         self.config = Mock()
         self.config.show_toolbar = False
+        self.config.divider_line_slider_pos = 0
         self.status_bar_adapter = Mock()
         self.main_frame = Mock(MainFrame)
         self.panel = TimelinePanel(self.parent, self.config, self.status_bar_adapter, self.main_frame)
-
-    def tearDown(self):
-        self.app.Destroy()

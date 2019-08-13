@@ -44,8 +44,8 @@ CODE = """\
 def main():
     project_dir = sys.argv[1]
     target = os.path.join(project_dir, "source", "timelinelib", "plugin", "factory.py")
-    print "Script: mod2_factory_py.py"
-    print "Target:", target
+    print("Script: mod2_factory_py.py")
+    print("Target:", target)
 
     f = open(target, "r")
     text = f.read()

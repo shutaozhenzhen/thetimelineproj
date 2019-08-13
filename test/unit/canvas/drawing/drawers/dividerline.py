@@ -46,27 +46,24 @@ class describe_dividerline(describe_drawers):
         self._assert_common_values()
         self.assertEqual(SCENE_HEIGHT - TEXT_HEIGHT, self._dc.y1)
         self.assertEqual(SCENE_HEIGHT - TEXT_HEIGHT, self._dc.y2)
-    
+
     def _assert_common_values(self):
         self.assertEqual(1, self._dc.pen_call_count)
         self.assertEqual(1, self._dc.draw_line_call_count)
         self.assertEqual(0, self._dc.x1)
         self.assertEqual(SCENE_WIDTH, self._dc.x2)
-        
+
     def setUp(self):
+        describe_drawers.setUp(self)
         # self.install_gettext() # Needed when test is run standalone
-        self._app = wx.App()
         from timelinelib.canvas.drawing.drawers.dividerline import DividerLine
         self._dc = self.create_dc()
         self._scene = self.create_scene(SCENE_WIDTH, SCENE_HEIGHT, SCENE_DIVIDER_Y)
         self._drawer = DividerLine(Drawer(self._dc, self._scene))
-    
-    def tearDown(self):
-        self._app.Destroy()
-        
-        
+
+
 class Drawer:
-    
+
     def __init__(self, dc, scene):
         self.dc = dc
         self.scene = scene
@@ -74,7 +71,6 @@ class Drawer:
 
 
 class Appearance:
-    
+
     def get_time_scale_pos(self):
         return 0
-    

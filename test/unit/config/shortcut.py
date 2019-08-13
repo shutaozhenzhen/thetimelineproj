@@ -18,12 +18,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 import wx
 
 from timelinelib.config.dotfile import Config
 from timelinelib.config.shortcut import ShortcutController
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 import timelinelib.config.shortcut as sc
 import timelinelib.wxgui.frames.mainframe.guicreator as mf
 
@@ -32,7 +32,7 @@ NEW_FUNCTION = u"⟪File⟫->⟪New...⟫"
 SIDEBAR_FUNCTION = u"⟪View⟫->⟪Sidebar⟫"
 
 
-class ShortcutControllerSpec(UnitTestCase):
+class ShortcutControllerSpec(WxAppTestCase):
 
     def test_get_functions_returns_list(self):
         func_list = self.controller.get_functions()
@@ -82,10 +82,7 @@ class ShortcutControllerSpec(UnitTestCase):
         self.assertEqual(SIDEBAR_FUNCTION, function)
 
     def setUp(self):
-        self.app = wx.App()  # a stored app is needed to create a menu item
+        WxAppTestCase.setUp(self)
         config = Mock(Config)
         menuitem = wx.MenuItem(wx.Menu("title"), -1, "label")
         self.controller = ShortcutController(config, {mf.ID_SIDEBAR: menuitem, })
-
-    def tearDown(self):
-        self.controller = None

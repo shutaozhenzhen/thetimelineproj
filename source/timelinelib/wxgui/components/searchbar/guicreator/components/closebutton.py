@@ -31,7 +31,7 @@ class CloseButton:
     
     def __init__(self, parent):
         self._parent = parent
-        parent.AddLabelTool(wx.ID_CLOSE, LABEL, self._bmp(parent), shortHelp=HELP_TEXT)
+        parent.AddTool(wx.ID_CLOSE, LABEL, self._bmp(parent), shortHelp=HELP_TEXT)
         parent.Bind(wx.EVT_TOOL, self._event_handler, id=wx.ID_CLOSE)
 
     def _bmp(self, parent):

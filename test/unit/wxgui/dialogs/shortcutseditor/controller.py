@@ -18,7 +18,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.config.shortcut import FUNCTION_KEYS
 from timelinelib.config.shortcut import MODIFIERS

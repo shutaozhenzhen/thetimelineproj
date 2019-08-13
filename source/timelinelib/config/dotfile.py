@@ -25,8 +25,8 @@ configuration back to file, call the write method.
 """
 
 
-from ConfigParser import ConfigParser
-from ConfigParser import DEFAULTSECT
+from configparser import ConfigParser
+from configparser import DEFAULTSECT
 import os.path
 import sys
 
@@ -98,7 +98,7 @@ class Config(Observable):
             f.close()
 
     def get_selected_event_box_drawer(self):
-        return self.config_parser.get(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER).decode("utf-8")
+        return self.config_parser.get(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER)
 
     def set_selected_event_box_drawer(self, selected):
         self.config_parser.set(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER, str(selected.encode("utf-8")))
@@ -128,7 +128,7 @@ class Config(Observable):
         self.config_parser.set(DEFAULTSECT, WINDOW_YPOS, str(ypos))
 
     def get_recently_opened(self):
-        ro = self.config_parser.get(DEFAULTSECT, RECENT_FILES).decode(ENCODING).split(",")
+        ro = self.config_parser.get(DEFAULTSECT, RECENT_FILES).split(",")
         # Filter out empty elements: "".split(",") will return [""] but we want
         # the empty list
         ro_filtered = [x for x in ro if x]
@@ -147,7 +147,7 @@ class Config(Observable):
         if path in [":tutorial:", ":numtutorial:"]:
             # Special timelines should not be saved
             return
-        if isinstance(path, str):
+        if isinstance(path, bytes):
             # This path might have come from the command line so we need to convert
             # it to unicode
             path = path.decode(sys.getfilesystemencoding())
@@ -158,7 +158,7 @@ class Config(Observable):
             current.remove(abs_path)
         current.insert(0, abs_path)
         self.config_parser.set(DEFAULTSECT, RECENT_FILES,
-                               (",".join(current[:MAX_NBR_OF_RECENT_FILES_SAVED])).encode(ENCODING))
+                               (",".join(current[:MAX_NBR_OF_RECENT_FILES_SAVED])))
 
     def get_week_start(self):
         return self.config_parser.get(DEFAULTSECT, WEEK_START)

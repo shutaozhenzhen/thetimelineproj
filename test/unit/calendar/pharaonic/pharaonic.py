@@ -38,17 +38,17 @@ class PharaonicConversionsSpec(UnitTestCase):
     def test_can_convert_from_timeline_time_to_pharaonic(self):
         self.assertEqual(
             pharaonic.PharaonicDateTime.from_time(PharaonicTime(julian_day=0, seconds=0)),
-            pharaonic.PharaonicDateTime(-3968, 02, 18, 0, 0, 0))
+            pharaonic.PharaonicDateTime(-3968, 2, 18, 0, 0, 0))
         self.assertEqual(
             pharaonic.PharaonicDateTime.from_time(PharaonicTime(julian_day=1, seconds=0)),
-            pharaonic.PharaonicDateTime(-3968, 02, 19, 0, 0, 0))
+            pharaonic.PharaonicDateTime(-3968, 2, 19, 0, 0, 0))
 
     def test_can_convert_from_pharaonic_to_timeline_time(self):
         self.assertEqual(
-            pharaonic.PharaonicDateTime(-3968, 02, 18, 0, 0, 0).to_time(),
+            pharaonic.PharaonicDateTime(-3968, 2, 18, 0, 0, 0).to_time(),
             PharaonicTime(julian_day=0, seconds=0))
         self.assertEqual(
-            pharaonic.PharaonicDateTime(-3968, 02, 19, 0, 0, 0).to_time(),
+            pharaonic.PharaonicDateTime(-3968, 2, 19, 0, 0, 0).to_time(),
             PharaonicTime(julian_day=1, seconds=0))
 
     def test_roundtrip_julian_day_conversions(self):

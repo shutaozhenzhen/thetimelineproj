@@ -41,7 +41,7 @@ class Archive(timelinetools.packaging.path.Path):
             "-c",
                 "import timelinelib.meta.version;"
                 "print(timelinelib.meta.version.get_filename_version());"
-        ], cwd=self._get_source_path()).strip()
+        ], cwd=self._get_source_path()).decode("utf-8").strip()
 
     def get_version_number_string(self):
         return subprocess.check_output([
@@ -49,13 +49,13 @@ class Archive(timelinetools.packaging.path.Path):
             "-c",
                 "import timelinelib.meta.version;"
                 "print(timelinelib.meta.version.get_version_number_string());"
-        ], cwd=self._get_source_path()).strip()
+        ], cwd=self._get_source_path()).decode("utf-8").strip()
 
     def generate_mo_files(self):
         self._run_tool("generate-mo-files.py")
 
-    def execute_specs_repeat(self):
-        self._run_tool("execute-specs-repeat.py")
+    def execute_specs(self):
+        self._run_tool("execute-specs.py")
 
     def create_zip_archive(self):
         self._clean_pyc_files()

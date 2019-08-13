@@ -17,7 +17,7 @@
 
 
 import unittest
-from mock import Mock
+from unittest.mock import Mock
 from timelinelib.proxies.drawingarea import DrawingAreaProxy
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 from timelinelib.wxgui.components.mainpanel import MainPanel

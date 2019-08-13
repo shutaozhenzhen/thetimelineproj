@@ -20,7 +20,7 @@ from os.path import abspath
 import base64
 import re
 import shutil
-import StringIO
+import io
 
 import wx
 
@@ -366,7 +366,7 @@ def parse_icon(string):
     Return a wx.Bitmap.
     """
     try:
-        icon_string = StringIO.StringIO(base64.b64decode(string))
+        icon_string = io.StringIO(base64.b64decode(string))
         image = wx.ImageFromStream(icon_string, wx.BITMAP_TYPE_PNG)
         return image.ConvertToBitmap()
     except:

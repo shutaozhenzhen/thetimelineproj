@@ -91,10 +91,10 @@ class DefaultDrawingAlgorithm(Drawer):
         self.red_solid_pen = wx.Pen(wx.Colour(255, 0, 0), 1, wx.PENSTYLE_SOLID)
 
     def _create_brushes(self):
-        self.white_solid_brush = wx.Brush(wx.Colour(255, 255, 255), wx.PENSTYLE_SOLID)
-        self.black_solid_brush = wx.Brush(wx.Colour(0, 0, 0), wx.PENSTYLE_SOLID)
-        self.red_solid_brush = wx.Brush(wx.Colour(255, 0, 0), wx.PENSTYLE_SOLID)
-        self.lightgrey_solid_brush = wx.Brush(wx.Colour(230, 230, 230), wx.PENSTYLE_SOLID)
+        self.white_solid_brush = wx.Brush(wx.Colour(255, 255, 255), wx.BRUSHSTYLE_SOLID)
+        self.black_solid_brush = wx.Brush(wx.Colour(0, 0, 0), wx.BRUSHSTYLE_SOLID)
+        self.red_solid_brush = wx.Brush(wx.Colour(255, 0, 0), wx.BRUSHSTYLE_SOLID)
+        self.lightgrey_solid_brush = wx.Brush(wx.Colour(230, 230, 230), wx.BRUSHSTYLE_SOLID)
 
     def event_is_period(self, time_period):
         period_width_in_pixels = self.scene.width_of_period(time_period)
@@ -131,9 +131,9 @@ class DefaultDrawingAlgorithm(Drawer):
         self.appearance = appearance
         self.dc = dc
         self.time_type = timeline.get_time_type()
-        self.scene = self._create_scene(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
+        self.scene = self._create_scene(dc.GetSize(), timeline, view_properties, self._get_text_extent)
         if view_properties.use_fixed_event_vertical_pos():
-            self._calc_fixed_event_rect_y(dc.GetSizeTuple(), timeline, view_properties, self._get_text_extent)
+            self._calc_fixed_event_rect_y(dc.GetSize(), timeline, view_properties, self._get_text_extent)
         else:
             self._fixed_ys = {}
         self._perform_drawing(timeline, view_properties)
@@ -525,7 +525,7 @@ class DefaultDrawingAlgorithm(Drawer):
         self._draw_box(box_rect, event, view_properties)
 
     def _draw_box(self, rect, event, view_properties):
-        self.dc.SetClippingRect(rect)
+        self.dc.SetClippingRegion(rect)
         self.event_box_drawer.draw(self.dc, self.scene, rect, event, view_properties)
         self.dc.DestroyClippingRegion()
 
@@ -637,7 +637,7 @@ class DefaultDrawingAlgorithm(Drawer):
         # Write data so we know where the balloon was drawn
         # Following two lines can be used when debugging the rectangle
         # self.dc.SetBrush(wx.TRANSPARENT_BRUSH)
-        # self.dc.DrawRectangleRect(bounding_rect)
+        # self.dc.DrawRectangle(bounding_rect)
         self.balloon_data.append((event, bounding_rect))
 
     def _draw_balloon_bg(self, dc, inner_size, tip_pos, above, sticky):
@@ -691,27 +691,27 @@ class DefaultDrawingAlgorithm(Drawer):
         path.AddLineToPoint(p2.x, p2.y)
         # The lower left rounded corner. p3 is the center of the arc
         p3 = wx.Point(p2.x, p2.y - R)
-        path.AddArc(p3.x, p3.y, R, math.radians(90), math.radians(180))
+        path.AddArc(p3.x, p3.y, R, math.radians(90), math.radians(180), True)
         # The left side
         p4 = wx.Point(p3.x - R, p3.y - H + R)
         left_x = p4.x
         path.AddLineToPoint(p4.x, p4.y)
         # The upper left rounded corner. p5 is the center of the arc
         p5 = wx.Point(p4.x + R, p4.y)
-        path.AddArc(p5.x, p5.y, R, math.radians(180), math.radians(-90))
+        path.AddArc(p5.x, p5.y, R, math.radians(180), math.radians(-90), True)
         # The upper side
         p6 = wx.Point(p5.x + W - R, p5.y - R)
         top_y = p6.y
         path.AddLineToPoint(p6.x, p6.y)
         # The upper right rounded corner. p7 is the center of the arc
         p7 = wx.Point(p6.x, p6.y + R)
-        path.AddArc(p7.x, p7.y, R, math.radians(-90), math.radians(0))
+        path.AddArc(p7.x, p7.y, R, math.radians(-90), math.radians(0), True)
         # The right side
         p8 = wx.Point(p7.x + R, p7.y + H - R)
         path.AddLineToPoint(p8.x, p8.y)
         # The lower right rounded corner. p9 is the center of the arc
         p9 = wx.Point(p8.x - R, p8.y)
-        path.AddArc(p9.x, p9.y, R, math.radians(0), math.radians(90))
+        path.AddArc(p9.x, p9.y, R, math.radians(0), math.radians(90), True)
         # The lower side
         p10 = wx.Point(p9.x - W + W_ARROW + ARROW_OFFSET, p9.y + R)
         path.AddLineToPoint(p10.x, p10.y)
@@ -723,7 +723,7 @@ class DefaultDrawingAlgorithm(Drawer):
         BORDER_COLOR = wx.Colour(127, 127, 127)
         BG_COLOR = wx.Colour(255, 255, 231)
         PEN = wx.Pen(BORDER_COLOR, 1, wx.PENSTYLE_SOLID)
-        BRUSH = wx.Brush(BG_COLOR, wx.PENSTYLE_SOLID)
+        BRUSH = wx.Brush(BG_COLOR, wx.BRUSHSTYLE_SOLID)
         gc.SetPen(PEN)
         gc.SetBrush(BRUSH)
         gc.DrawPath(path)
@@ -743,12 +743,12 @@ class DefaultDrawingAlgorithm(Drawer):
         return (bounding_rect, left_x + BALLOON_RADIUS, top_y + BALLOON_RADIUS)
 
     def get_period_xpos(self, time_period):
-        w, _ = self.dc.GetSizeTuple()
+        w, _ = self.dc.GetSize()
         return (max(0, self.scene.x_pos_for_time(time_period.start_time)),
                 min(w, self.scene.x_pos_for_time(time_period.end_time)))
 
     def period_is_visible(self, time_period):
-        w, _ = self.dc.GetSizeTuple()
+        w, _ = self.dc.GetSize()
         return (self.scene.x_pos_for_time(time_period.start_time) < w and
                 self.scene.x_pos_for_time(time_period.end_time) > 0)
 

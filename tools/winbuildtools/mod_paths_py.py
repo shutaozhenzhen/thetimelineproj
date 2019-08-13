@@ -23,8 +23,8 @@ import os
 def main():
     project_dir = sys.argv[1]
     target = os.path.join(project_dir, "source", "timelinelib", "config", "paths.py")
-    print "Script: mod2_paths_py.py"
-    print "Target:", target
+    print("Script: mod2_paths_py.py")
+    print("Target:", target)
 
     f = open(target, "r")
     text = f.read()

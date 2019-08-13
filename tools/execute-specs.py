@@ -35,6 +35,8 @@ def parse_arguments():
     parser.add_argument("--only", default=[], nargs="*")
     parser.add_argument("--halt-gui", default=False, action="store_true")
     parser.add_argument("--auto-close", default=False, action="store_true")
+    parser.add_argument("--write-testlist", default=None)
+    parser.add_argument("--read-testlist", default=None)
     parser.add_argument("-v", default=False, action="store_true")
     return parser.parse_args()
 
@@ -45,7 +47,7 @@ def execute_specs(arguments):
     install_gettext_in_builtin_namespace()
     setup_humblewx()
     set_halt_gui_flag(arguments)
-    suite = create_suite(create_include_test_function(arguments))
+    suite = create_suite(arguments)
     all_pass = execute_suite(suite, select_verbosity(arguments))
     return all_pass
 
@@ -63,13 +65,6 @@ def setup_displayhook():
 def setup_paths():
     sys.path.insert(0, os.path.join(ROOT_DIR, "source"))
     sys.path.insert(0, os.path.join(ROOT_DIR, "test"))
-    sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "dev", "mock-0.7.2"))
-    sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "icalendar-3.2"))
-    sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "markdown-2.0.3"))
-    sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "pysvg-0.2.1"))
-    sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "pytz-2012j"))
-    sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "humblewx-master", "source"))
-    sys.path.insert(0, os.path.join(ROOT_DIR, "dependencies", "timelinelib", "Pillow-3.2.0"))
 
 
 def install_gettext_in_builtin_namespace():
@@ -77,8 +72,8 @@ def install_gettext_in_builtin_namespace():
         # Make sure to return a non-ascii symbol to ensure that the caller
         # handles the unicode object properly.
         return u"⟪%s⟫" % message
-    import __builtin__
-    __builtin__.__dict__["_"] = _
+    import builtins
+    builtins.__dict__["_"] = _
 
 
 def setup_humblewx():
@@ -100,10 +95,40 @@ def create_include_test_function(arguments):
         return lambda test: True
 
 
-def create_suite(include_test_function):
+def create_suite(arguments):
     whole_suite = suite_from_modules(find_test_modules())
-    filtered_suite = filter_suite(whole_suite, include_test_function)
-    return shuffled_suite(filtered_suite)
+    if arguments.read_testlist:
+        return read_testlist(arguments, whole_suite)
+    else:
+        return write_testlist(
+            arguments,
+            shuffled_suite(
+                filter_suite(
+                    whole_suite,
+                    create_include_test_function(arguments)
+                )
+            )
+        )
+    return suite
+
+
+def write_testlist(arguments, suite):
+    if arguments.write_testlist:
+        with open(arguments.write_testlist, "w") as f:
+            for test in suite:
+                f.write("{}\n".format(test.id()))
+    return suite
+
+
+def read_testlist(arguments, whole_suite):
+    test_by_id = {}
+    for test in extract_test_cases(whole_suite):
+        test_by_id[test.id()] = test
+    suite = unittest.TestSuite()
+    with open(arguments.read_testlist) as f:
+        for test_id in f:
+            suite.addTest(test_by_id[test_id.strip()])
+    return suite
 
 
 def suite_from_modules(modules):

@@ -62,9 +62,9 @@ class PharaonicDateTime(object):
         days_into_year = ((self.month - 1)*30) + self.day
                
         if self.day % length_of_week > 0:
-        	return (days_into_year / length_of_week) + 1
+        	return (days_into_year // length_of_week) + 1
         	
-        return days_into_year / length_of_week
+        return days_into_year // length_of_week
          
     def is_bc(self):
         return self.year <= 0
@@ -162,7 +162,7 @@ def julian_day_to_pharaonic_ymd(julian_day):
     h = u * g + w
     day = ((h % s)/u) + 1
     month = (((h // s) + m) % n) + 1
-    year = (e // p) - y + (n + m - month)/n
+    year = (e // p) - y + (n + m - month)//n
     return (year, month, day)
 
 
