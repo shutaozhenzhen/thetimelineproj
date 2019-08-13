@@ -106,6 +106,20 @@ class UnitTestCase(unittest.TestCase):
         if app.GetTopWindow():
             app.GetTopWindow().Destroy()
         app.Destroy()
+        # A problem was seen when running these two tests in sequence:
+        #
+        # unit.calendar.num.periodpicker.TestNumPeriodPicker.test_show_manual_test_dialog
+        # timelinelib.general.xmlparser
+        #
+        # The first one uses wx.App. The doctest failed because it did not seem
+        # to capture stdout. I suspect that wx.App does something with stdout,
+        # and a clean shutdown is needed to restore it. For some reason a
+        # gc.collect() seems to fix it. I'm not sure why, but this seems to
+        # work.
+        #
+        # The failure did not always happen, so I suspect it was a timing
+        # issue. If the gc.collect() happened in time, the error did not
+        # occur.
         gc.collect()
 
 
