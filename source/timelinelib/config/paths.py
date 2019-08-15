@@ -29,8 +29,4 @@ ICONS_DIR = os.path.join(_ROOT, u"icons")
 EVENT_ICONS_DIR = os.path.join(_ROOT, u"icons", u"event_icons")
 LOCALE_DIR = os.path.join(_ROOT, u"translations")
 HELP_RESOURCES_DIR = os.path.join(_ROOT, u"help_resources")
-print('ICONS_DIR', ICONS_DIR)
-print('EVENT_ICONS_DIR', EVENT_ICONS_DIR)
-print('LOCALE_DIR', LOCALE_DIR)
-print('HELP_RESOURCES_DIR', HELP_RESOURCES_DIR)
 
