@@ -38,7 +38,7 @@ Name: "startmenu";   Description: "Create a start menu"; GroupDescription: "{cm:
 
 [Files]
 Source: "..\dist\timeline\*"; DestDir: "{app}\timeline"; Flags: ignoreversion  recursesubdirs
-Source: "..\dist\timeline\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion  
+Source: "..\dist\timeline\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion  recursesubdirs
 
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ;
