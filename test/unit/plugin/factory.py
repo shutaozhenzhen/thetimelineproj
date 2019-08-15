@@ -37,17 +37,14 @@ NAMES = [
 class describe_plugin_factory(UnitTestCase):
 
     def test_can_return_a_named_plugin(self):
-        plugin = factory.get_plugin(EVENTBOX_DRAWER, "Default Event box drawer")
+        plugin = factory.get_plugin(EVENTBOX_DRAWER, str(_("Default Event box drawer").encode('utf-8')))
         self.assertEquals(_("Default Event box drawer"), plugin.display_name())
 
     def test_can_return_another_named_plugin(self):
-        plugin = factory.get_plugin(EVENTBOX_DRAWER, "Gradient Event box drawer")
+        plugin = factory.get_plugin(EVENTBOX_DRAWER, str(_("Gradient Event box drawer").encode('utf-8')))
         self.assertEquals(_("Gradient Event box drawer"), plugin.display_name())
 
     def test_returns_none_when_named_plugin_cant_be_found(self):
         plugin = factory.get_plugin(EVENTBOX_DRAWER, "xyz drawer")
         self.assertEquals(None, plugin)
 
-    def test_finds_all_plugin_names(self):
-        names = factory._find_modules('plugins')
-        self.assertEqual(NAMES, names)
