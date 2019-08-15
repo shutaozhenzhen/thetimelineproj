@@ -10,7 +10,7 @@ AppName=Timeline
 ; the version number of the executable to be built.
 ;
 AppVerName=Ver2
-OutputBaseFilename=TimelineSetup
+OutputBaseFilename=Timeline200BetaSetup
 ;
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -25,7 +25,8 @@ LicenseFile=..\..\..\COPYING
 InfoBeforeFile=WINSTALL
 OutputDir=out
 Compression=lzma
-SolidCompression=yes
+SolidCompression=yes     
+DisableDirPage=no
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -53,12 +54,12 @@ Type: files; Name: "{app}\*.log"
 
 
 [Icons]
-Name: "{commondesktop}\Timeline"; Filename:"{app}\timeline.exe"; IconFilename: "{app}\icons\Timeline.ico"; Tasks: desktopicon
-Name: "{group}\Timeline";         Filename:"{app}\timeline.exe"; IconFilename: "{app}\icons\Timeline.ico"; WorkingDir: "{app}"; Tasks: startmenu
+Name: "{commondesktop}\Timeline"; Filename:"{app}\timeline\timeline.exe"; IconFilename: "{app}\icons\Timeline.ico"; Tasks: desktopicon
+Name: "{group}\Timeline";         Filename:"{app}\timeline\timeline.exe"; IconFilename: "{app}\icons\Timeline.ico"; WorkingDir: "{app}\timeline"; Tasks: startmenu
 
 
 
 
 [Run]
-Filename: "{app}\timeline.exe"; Description: "{cm:LaunchProgram,Timeline}"; Flags: shellexec postinstall skipifsilent;
+Filename: "{app}\timeline\timeline.exe"; Description: "{cm:LaunchProgram,Timeline}"; Flags: shellexec postinstall skipifsilent;
 
