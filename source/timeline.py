@@ -31,8 +31,8 @@ import sys
 # Make sure that we can import timelinelib
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
-# from timelinelib.config.paths import LOCALE_DIR
-# from timelinelib.meta.about import APPLICATION_NAME
+from timelinelib.config.paths import LOCALE_DIR
+from timelinelib.meta.about import APPLICATION_NAME
 
 
 if platform.system() == "Windows":
@@ -40,8 +40,7 @@ if platform.system() == "Windows":
     language, encoding = locale.getdefaultlocale()
     os.environ['LANG'] = language
 
-#gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR)
-gettext.install('timeline')
+gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR)
 
 from timelinelib.config.arguments import ApplicationArguments
 
