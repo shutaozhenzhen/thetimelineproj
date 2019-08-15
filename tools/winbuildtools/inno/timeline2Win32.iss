@@ -10,7 +10,7 @@ AppName=Timeline
 ; the version number of the executable to be built.
 ;
 AppVerName=Ver2
-OutputBaseFilename=Timeline200BetaSetup
+OutputBaseFilename=Timeline200WinBetaSetup
 ;
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
