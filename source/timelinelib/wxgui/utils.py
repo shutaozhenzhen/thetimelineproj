@@ -18,7 +18,6 @@
 
 import wx
 
-from timelinelib.canvas.data import sort_categories
 
 
 # Border, in pixels, between controls in a window (should always be used when
@@ -86,28 +85,6 @@ class PopupTextWindow(wx.PopupTransientWindow):
         wx.CallLater(self.timeout, self.Dismiss)
 
 
-def category_tree(category_list, parent=None, remove=None):
-    """
-    Transform flat list of categories to a tree based on parent attribute.
-
-    The top-level categories have the given parent and each level in the tree
-    is sorted.
-
-    If remove is given then the subtree with remove as root will not be
-    included.
-
-    The tree is represented as a list of tuples, (cat, sub-tree), where cat is
-    the parent category and subtree is the same tree representation of the
-    children.
-    """
-    children = [child for child in category_list
-                if (child.parent == parent and child != remove)]
-    sorted_children = sort_categories(children)
-    tree = [(x, category_tree(category_list, x, remove))
-            for x in sorted_children]
-    return tree
-
-
 def _set_focus_and_select(ctrl):
     ctrl.SetFocus()
     if hasattr(ctrl, "SelectAll"):
@@ -168,3 +145,7 @@ def set_focus(parent, name):
 def register_unlock_function(function):
     global unlock_function
     unlock_function = function
+
+
+
+

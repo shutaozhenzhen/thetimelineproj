@@ -34,6 +34,7 @@ sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 from timelinelib.config.paths import LOCALE_DIR
 from timelinelib.meta.about import APPLICATION_NAME
 
+
 if platform.system() == "Windows":
     # The appropriate environment variables are set on other systems
     language, encoding = locale.getdefaultlocale()
