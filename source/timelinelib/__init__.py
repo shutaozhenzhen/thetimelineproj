@@ -29,23 +29,3 @@ timer and counting statistics are shown in the main panel.
 
 
 DEBUG_ENABLED = False
-
-
-import pkgutil
-
-prefix = __name__ + "."
-
-toc = set()
-for importer in pkgutil.iter_importers('timelinelib'):
-    if hasattr(importer, 'toc'):
-        toc |= importer.toc
-for name in toc:
-    if name.startswith('timelinelib.plugin.plugins'):
-        print(name)
-        __import__(name)
-
-import gettext
-from timelinelib.config.paths import LOCALE_DIR
-from timelinelib.meta.about import APPLICATION_NAME
-
-gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR)
