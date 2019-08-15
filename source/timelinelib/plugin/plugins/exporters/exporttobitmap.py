@@ -24,7 +24,7 @@ from timelinelib.wxgui.utils import _ask_question
 from timelinelib.wxgui.utils import WildcardHelper
 from timelinelib.wxgui.utils import display_warning_message
 from timelinelib.plugin.pluginbase import PluginBase
-from timelinelib.plugin.factory import EXPORTER
+from timelinelib.plugin.plugins.exporters import EXPORTER
 
 
 class BitmapExporter(PluginBase):
