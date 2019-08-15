@@ -40,3 +40,4 @@ tools/htmlcov/*
 tools/autodoc/*
 tools/winbuildtools/build/*
 tools/winbuildtools/dist/*
+tools/winbuildtools/inno/out/*
