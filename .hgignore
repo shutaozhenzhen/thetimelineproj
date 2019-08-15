@@ -38,3 +38,5 @@ sysdoc/_build/doctrees/*
 tools/htmlcov/*
 .coverage
 tools/autodoc/*
+tools/winbuildtools/build/*
+tools/winbuildtools/dist/*
