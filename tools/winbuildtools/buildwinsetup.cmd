@@ -1,6 +1,11 @@
 @echo off
 
 echo --------------------------------------
+echo Revision: %1
+echo --------------------------------------
+
+
+echo --------------------------------------
 echo Remove old build and dist directories
 echo --------------------------------------
 rmdir /S /Q build >> nul
