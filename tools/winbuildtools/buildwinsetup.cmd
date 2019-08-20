@@ -20,8 +20,7 @@ pyinstaller timeline.spec
 echo --------------------------------------
 echo Package distribution
 echo --------------------------------------
+python mod_iss_timeline_version.py .
 pushd inno
 iscc.exe timeline2Win32.iss
 popd
-
-pause
