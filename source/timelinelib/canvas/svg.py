@@ -45,9 +45,10 @@ except ImportError:
 from pysvg.builders import StyleBuilder
 from pysvg.builders import ShapeBuilder
 
-from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.data import sort_categories
+from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
+from timelinelib.utils import unique_based_on_eq
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -252,9 +253,11 @@ class SVGDrawingAlgorithm(object):
         return self._appearence.get_legend_visible() and len(categories) > 0
 
     def _extract_categories(self):
-        categories = set([event.category for (event, _) in self._scene.event_data
-                          if event.category])
-        return sort_categories(list(categories))
+        return sort_categories(unique_based_on_eq(
+            event.category
+            for (event, _) in self._scene.event_data
+            if event.category
+        ))
 
     def _draw_legend(self, categories):
         """
