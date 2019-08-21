@@ -427,13 +427,7 @@ class SVGDrawingAlgorithm(object):
         return Text(encoded_text, x, y)
 
     def _encode_text(self, text):
-        return self._encode_unicode_text(xmlescape(text))
-
-    def _encode_unicode_text(self, text):
-        if isinstance(text, str):
-            return text.encode(ENCODING)
-        else:
-            return text
+        return xmlescape(text)
 
     def _define_shadow_filter(self):
         return self._create_defs(self._get_shadow_filter())
