@@ -136,10 +136,6 @@ class describe_svg_drawing_algorithm(UnitTestCase):
         d = self.svg._define_shadow_filter()
         self.assertSvgEqual(d.getXML(), '<defs  >\n<filter height="1.9" width="1.9" y="-.5" x="-.3" id="filterShadow"  >\n<feGaussianBlur result="out1" in="SourceAlpha" stdDeviation="4"  />\n<feOffset dy="-4" result="out2" dx="4" in="out1"  />\n<feMerge  >\n<feMergeNode in="out2"  />\n<feMergeNode in="SourceGraphic"  />\n</feMerge>\n</filter>\n</defs>\n')
 
-    def test_encode_unicode_text(self):
-        self.assertEqual(b"", self.svg._encode_unicode_text(u""))
-        self.assertEqual("åäö".encode("utf-8"), self.svg._encode_unicode_text(u"åäö"))
-
     def test_legend_should_be_drawn(self):
         self.svg._appearence.get_legend_visible.return_value = True
         categories = []
