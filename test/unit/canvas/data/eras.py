@@ -182,7 +182,11 @@ class describe_overlapping_eras(ErasTestCase):
                           self.color2], [e.color for e in periods])
 
     def mix_colors(self, c0, c1):
-        return ((c0[0] + c1[0]) / 2, (c0[1] + c1[1]) / 2, (c0[2] + c1[2]) / 2)
+        return (
+            (c0[0] + c1[0]) // 2,
+            (c0[1] + c1[1]) // 2,
+            (c0[2] + c1[2]) // 2
+        )
 
     def mix_3colors(self, c1, c2, c3):
         return self.mix_colors(self.mix_colors(c1, c2), c3)
