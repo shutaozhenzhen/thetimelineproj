@@ -572,6 +572,10 @@ class TimelineCanvas(wx.Panel):
     def GetPeriodChoices(self):
         return self._controller.get_period_choices()
     
+    @property
+    def view_properties(self):
+        return self._controller.view_properties
+    
     # ------------
 
     def _scroll_up(self):
