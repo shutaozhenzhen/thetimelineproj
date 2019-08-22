@@ -36,12 +36,12 @@ class describe_drawingarea_proxy(unittest.TestCase):
         self.canvas.zoom_out.assert_called_once_with()
     
     def test_canvas_VertZoomIn_called(self):
-        self.proxy.VertZoomIn()
-        self.canvas.VertZoomIn.assert_called_once_with()
+        self.proxy.vertical_zoom_in()
+        self.canvas.vertical_zoom_in.assert_called_once_with()
     
     def test_canvas_VertZoomOut_called(self):
-        self.proxy.VertZoomOut()
-        self.canvas.VertZoomOut.assert_called_once_with()
+        self.proxy.vertical_zoom_out()
+        self.canvas.vertical_zoom_out.assert_called_once_with()
     
     def setUp(self):
         self.canvas = Mock(TimelineCanvas)

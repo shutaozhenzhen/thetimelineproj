@@ -25,6 +25,7 @@ from timelinelib.wxgui.utils import WildcardHelper
 from timelinelib.wxgui.utils import display_warning_message
 from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.plugins.exporters import EXPORTER
+from timelinelib.proxies.drawingarea import DrawingAreaProxy
 
 
 class BitmapExporter(PluginBase):
@@ -74,7 +75,7 @@ def export_to_images(main_frame):
             msg = _("The first image contains a Julian day < 0\n\nNavigate to first event or\nUse the feature 'Accept negative Julian days'")
             display_warning_message(msg)
             return
-        view_properties = main_frame.main_panel.timeline_panel.timeline_canvas.view_properties
+        view_properties = DrawingAreaProxy(main_frame).view_properties
         view_properties.set_use_fixed_event_vertical_pos(True)
         path_without_extension, extension = path.rsplit(".", 1)
         view_properties.set_use_fixed_event_vertical_pos(True)
