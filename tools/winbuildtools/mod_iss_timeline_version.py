@@ -18,12 +18,36 @@
 
 import sys
 import os
+import subprocess
 
 
 USAGE = """
     Usage:
-        python mod_iss_timeline_version.py   project-tools-dir
+        python mod_iss_timeline_version.py   project-tools-dir   revision
 """
+
+
+def get_hash(revision):
+    try:
+        return subprocess.check_output([
+            "hg", "id111",
+            "-r", revision,
+        ]).decode("utf-8").strip().split(" ")[0]
+    except subprocess.CalledProcessError as e:
+        print("ERROR:", str(e))
+        raise
+
+
+def get_revision_date(revision):
+    try:
+        return subprocess.check_output([
+            "hg", "log",
+            "-r", revision,
+            "--template", "{date|shortdate}",
+        ]).decode("utf-8").strip()
+    except subprocess.CalledProcessError as e:
+        print("ERROR:", str(e))
+        raise
 
 
 def get_version(versionfile):
@@ -37,7 +61,14 @@ def get_version(versionfile):
     line = line.split(")", 1)[0]
     major, minor, bug = line. split(", ")
     app_ver_name = "Timeline %s.%s.%s" % (major, minor, bug)
-    output_base_filename = "SetupTimeline%s%s%sWin32" % (major, minor, bug)
+    revision = sys.argv[2]
+    if revision.isalnum():
+        beta = "-beta"
+    else:
+        beta = ""
+    hash_value = get_hash(sys.argv[2])
+    revision_date = get_revision_date(sys.argv[2])
+    output_base_filename = "timeline-%s.%s.%s%s-%s-%s-Win32Setup" % (major, minor, bug, beta, hash_value, revision_date)
     print("[INFO] Version found: %s" % app_ver_name)
     print("[INFO] Filename: %s" % output_base_filename)
     return app_ver_name, output_base_filename
@@ -64,22 +95,22 @@ def modify_iss_file(target, app_ver_name, output_base_filename):
 def main():
     project_dir = sys.argv[1]
     target = os.path.join(project_dir, "inno", "timeline2Win32.iss")
-    version = os.path.join(project_dir, "..", "..", "source", "timelinelib", "meta", "version.py")
+    versionfile_path = os.path.join(project_dir, "..", "..", "source", "timelinelib", "meta", "version.py")
     print("Script: mod2_timeline_iss_win32.py")
     print("Target:", target)
-    print("Version:", version)
+    print("Version:", versionfile_path)
     if not os.path.exists(target):
         print("[ERROR] Can't find target file: %s" % target)
         return
-    if not os.path.exists(version):
-        print("[ERROR] Can't find version file: %s" % version)
+    if not os.path.exists(versionfile_path):
+        print("[ERROR] Can't find version file: %s" % versionfile_path)
         return
-    app_ver_name, output_base_filename = get_version(version)
+    app_ver_name, output_base_filename = get_version(versionfile_path)
     modify_iss_file(target, app_ver_name, output_base_filename)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 3:
         print(USAGE)
     else:
         if not os.path.exists(sys.argv[1]):
