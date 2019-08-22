@@ -30,7 +30,7 @@ USAGE = """
 def get_hash(revision):
     try:
         return subprocess.check_output([
-            "hg", "id111",
+            "hg", "id",
             "-r", revision,
         ]).decode("utf-8").strip().split(" ")[0]
     except subprocess.CalledProcessError as e:
