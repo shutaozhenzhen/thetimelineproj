@@ -32,7 +32,7 @@ from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExport
 from timelinelib.plugin.plugins.exporters.exporttosvg import SvgExporter
 from timelinelib.plugin.plugins.exporters.exporttolist import ListExporter
 from timelinelib.plugin.plugins.exporters.exporttobitmap import BitmapExporter
-from timelinelib.plugin.plugins.exporters.exporttobitmap import MultiBitmapExporter
+from timelinelib.plugin.plugins.exporters.exporttobitmaps import MultiBitmapExporter
 from timelinelib.plugin.plugins.texttransformers.defaulttexttransformer import DefaultTextTransformer
 from timelinelib.plugin.plugins.texttransformers.plaintexttohtml import PlainTextToHtml
 
