@@ -38,7 +38,7 @@ if platform.system() == "Windows":
     # The appropriate environment variables are set on other systems
     import wx
     loc = wx.Locale()
-    language = loc.GetLanguageInfo(loc.GetSystemLanguage()).CanonicalName
+    language = loc.GetLanguageName(loc.GetSystemLanguage())
     os.environ['LANG'] = language
 
 gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR)
