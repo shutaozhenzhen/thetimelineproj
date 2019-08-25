@@ -62,7 +62,6 @@ ID_SET_CATEGORY_ON_SELECTED = wx.NewId()
 ID_MEASURE_DISTANCE = wx.NewId()
 ID_COMPRESS = wx.NewId()
 ID_SET_CATEGORY_ON_WITHOUT = wx.NewId()
-ID_EDIT_CATEGORIES = wx.NewId()
 ID_EDIT_ERAS = wx.NewId()
 ID_SET_READONLY = wx.NewId()
 ID_FIND_FIRST = wx.NewId()
@@ -435,11 +434,6 @@ class GuiCreator(object):
                 self._set_category()
             safe_locking(self, edit_function)
 
-        def edit_categories(evt):
-            def edit_function():
-                self._edit_categories()
-            safe_locking(self, edit_function)
-
         def edit_eras(evt):
             def edit_function():
                 self._edit_eras()
@@ -479,7 +473,6 @@ class GuiCreator(object):
                       None,
                       (ID_SET_CATEGORY_ON_WITHOUT, set_category_on_without,
                        _("Set Category on events &without category..."), cbx),
-                      (ID_EDIT_CATEGORIES, edit_categories, _("Edit &Categories"), cbx),
                       None,
                       (ID_EDIT_ERAS, edit_eras, _("Edit Era's..."), cbx),
                       None,
@@ -499,7 +492,6 @@ class GuiCreator(object):
         self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_CATEGORY_ON_SELECTED)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_MEASURE_DISTANCE)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_CATEGORY_ON_WITHOUT)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_EDIT_CATEGORIES)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_READONLY)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_EDIT_ERAS)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_COMPRESS)
