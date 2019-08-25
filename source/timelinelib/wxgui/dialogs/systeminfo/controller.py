@@ -48,7 +48,7 @@ class SystemInfoDialogController(Controller):
             loc = wx.Locale()
             language_name = loc.GetLanguageName(loc.GetSystemLanguage())
             encoding_name = loc.GetSystemEncodingName()
-            return "%s %s " % (language_name, encoding_name)
+            return "%s %s" % (language_name, encoding_name)
         except TypeError:
             return " "
 
