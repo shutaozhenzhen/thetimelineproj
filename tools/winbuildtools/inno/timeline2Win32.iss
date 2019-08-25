@@ -39,6 +39,7 @@ Name: "startmenu";   Description: "Create a start menu"; GroupDescription: "{cm:
 [Files]
 Source: "..\dist\timeline\*"; DestDir: "{app}\timeline"; Flags: ignoreversion  recursesubdirs
 Source: "..\dist\timeline\icons\*"; DestDir: "{app}\icons"; Flags: ignoreversion  recursesubdirs
+Source: "..\dist\timeline\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion  recursesubdirs
 
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ;
@@ -62,4 +63,6 @@ Name: "{group}\Timeline";         Filename:"{app}\timeline\timeline.exe"; IconFi
 
 [Run]
 Filename: "{app}\timeline\timeline.exe"; Description: "{cm:LaunchProgram,Timeline}"; Flags: shellexec postinstall skipifsilent;
+
+
 

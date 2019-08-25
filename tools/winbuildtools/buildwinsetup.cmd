@@ -13,6 +13,13 @@ rmdir /S /Q dist >> nul
 del /S /Q inno\out >> nul
 
 echo --------------------------------------
+echo Create translations
+echo --------------------------------------
+pushd ..
+python generate-mo-files.py
+popd
+
+echo --------------------------------------
 echo Building distribution
 echo --------------------------------------
 pyinstaller timeline.spec
