@@ -21,20 +21,20 @@
 
 
 from timelinelib.plugin.pluginbase import PluginBase
-from .import EXPORTER, export_to_image
+from .import EXPORTER, export_to_images
 
 
-class BitmapExporter(PluginBase):
+class MultiBitmapExporter(PluginBase):
 
     def service(self):
         return EXPORTER
 
     def display_name(self):
-        return _("Export Current view to Image...")
+        return _("Export Whole Timeline to Images...")
 
     def wxid(self):
-        from timelinelib.wxgui.frames.mainframe.guicreator import ID_EXPORT
-        return ID_EXPORT
+        from timelinelib.wxgui.frames.mainframe.guicreator import ID_EXPORT_ALL
+        return ID_EXPORT_ALL
 
     def run(self, main_frame):
-        export_to_image(main_frame)
+        export_to_images(main_frame)
