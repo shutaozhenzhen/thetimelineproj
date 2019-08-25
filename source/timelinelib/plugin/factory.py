@@ -16,11 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-import os
-from inspect import isclass
-import pkgutil
-# import timelinelib
 from timelinelib.plugin.plugins.eventboxdrawers import EVENTBOX_DRAWER
 from timelinelib.plugin.plugins.exporters import EXPORTER
 from timelinelib.plugin.plugins.texttransformers import TEXT_TRANSFORMER
