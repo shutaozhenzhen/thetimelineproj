@@ -23,7 +23,6 @@ This is the module used to start Timeline.
 
 
 import gettext
-import locale
 import os
 import platform
 import sys
@@ -37,7 +36,9 @@ from timelinelib.meta.about import APPLICATION_NAME
 
 if platform.system() == "Windows":
     # The appropriate environment variables are set on other systems
-    language, encoding = locale.getdefaultlocale()
+    import wx
+    loc = wx.Locale()
+    language = loc.GetLanguageInfo(loc.GetSystemLanguage()).CanonicalName
     os.environ['LANG'] = language
 
 gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR)
