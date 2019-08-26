@@ -17,7 +17,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
+import wx.adv
 
 from timelinelib.meta.version import get_full_version
 
