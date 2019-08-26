@@ -25,43 +25,30 @@ from timelinelib.repositories.categories import CategoriesFacade
 class describe_categories_repository(unittest.TestCase):
     
     def test_return_all_categories(self):
-        categories = self.repo.get_all()
-        self.assertEqual(self.all_categories, categories)
+        self.assertEqual(self.all_categories, self.repo.get_all())
 
     def test_returns_visibility(self):
         category = Mock()
-        self.set_visibility(True)
-        self.assertTrue(self.repo.is_visible(category))
-        self.set_visibility(False)
-        self.assertFalse(self.repo.is_visible(category))
+        for case in (True, False):
+            self.set_visibility(case)
+            self.assertEqual(case, self.repo.is_visible(category))
 
     def test_returns_event_visibility(self):
         category = Mock()
-        self.set_event_visibility(True)
-        self.assertTrue(self.repo.is_event_with_category_visible(category))
-        self.set_event_visibility(False)
-        self.assertFalse(self.repo.is_event_with_category_visible(category))
+        for case in (True, False):
+            self.set_event_visibility(case)
+            self.assertEqual(case, self.repo.is_event_with_category_visible(category))
 
     def test_get_parents_returns_empty_list(self):
-        child = Mock()
-        child._get_parent.return_value = None
-        parents = self.repo.get_parents(child)
-        self.assertEqual([], parents)
-        
+        self.assertEqual([], self.repo.get_parents(self.get_child_without_parents()))
+
     def test_get_parents_returns_list(self):
-        child = Mock()
-        parent = Mock()
-        child._get_parent.return_value = parent
-        parent._get_parent.return_value = None
-        parents = self.repo.get_parents(child)
-        self.assertEqual([parent], parents)
+        parent, child = self.get_parent_and_child()
+        self.assertEqual([parent], self.repo.get_parents(child))
 
     def test_get_parents_for_checked_childs_returns_list(self):
         self.set_visibility(True)
-        child = Mock()
-        parent = Mock()
-        child._get_parent.return_value = parent
-        parent._get_parent.return_value = None
+        parent, child = self.get_parent_and_child()
         self.db.get_categories.return_value = [child]
         parents = self.repo.get_parents_for_checked_childs()
         self.assertEqual([parent], parents)
@@ -78,4 +65,15 @@ class describe_categories_repository(unittest.TestCase):
 
     def set_event_visibility(self, value):
         self.view_properties.is_event_with_category_visible.return_value = value
-        
+
+    def get_parent_and_child(self):
+        child = Mock()
+        parent = Mock()
+        child._get_parent.return_value = parent
+        parent._get_parent.return_value = None
+        return parent, child
+
+    def get_child_without_parents(self):
+        child = Mock()
+        child._get_parent.return_value = None
+        return child
