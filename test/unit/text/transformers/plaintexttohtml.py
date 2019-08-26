@@ -22,10 +22,10 @@ from timelinelib.text.transformers.plaintexttohtml import PlainTextToHtml
 
 class describe_plain_text_to_html_transformer(UnitTestCase):
 
-    def test_simple_text_is_retruned_asis(self):
+    def test_simple_text_is_returned_asis(self):
         self.assertEqual("", self.transformer.transform(""))
 
-    def test_none_text_is_retruned_as_empty_string(self):
+    def test_none_text_is_returned_as_empty_string(self):
         self.assertEqual("", self.transformer.transform(None))
 
     def test_newline_chars_are_converted_to_breaks(self):
