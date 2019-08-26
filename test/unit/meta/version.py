@@ -20,7 +20,25 @@ from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.meta.version as version
 
 
-class describe_beta_version_formatting(UnitTestCase):
+class VersionTestCase(UnitTestCase):
+
+    def _save_version_values(self):
+        self.VERSION = version.VERSION
+        self.TYPE = version.TYPE
+        self.REVISION_HASH = version.REVISION_HASH
+        self.REVISION_DATE = version.REVISION_DATE
+
+    def _restore_version_values(self):
+        version.VERSION = self.VERSION
+        version.TYPE = self.TYPE
+        version.REVISION_HASH = self.REVISION_HASH
+        version.REVISION_DATE = self.REVISION_DATE
+
+    def tearDown(self):
+        self._restore_version_values()
+
+
+class describe_beta_version_formatting(VersionTestCase):
 
     def test_full(self):
         self.assertEqual(
@@ -53,23 +71,8 @@ class describe_beta_version_formatting(UnitTestCase):
         version.REVISION_HASH = "abc123"
         version.REVISION_DATE = "2015-11-11"
 
-    def tearDown(self):
-        self._restore_version_values()
 
-    def _save_version_values(self):
-        self.VERSION = version.VERSION
-        self.TYPE = version.TYPE
-        self.REVISION_HASH = version.REVISION_HASH
-        self.REVISION_DATE = version.REVISION_DATE
-
-    def _restore_version_values(self):
-        version.VERSION = self.VERSION
-        version.TYPE = self.TYPE
-        version.REVISION_HASH = self.REVISION_HASH
-        version.REVISION_DATE = self.REVISION_DATE
-
-
-class describe_development_version_formatting(UnitTestCase):
+class describe_development_version_formatting(VersionTestCase):
 
     def test_full(self):
         self.assertEqual(
@@ -102,23 +105,8 @@ class describe_development_version_formatting(UnitTestCase):
         version.REVISION_HASH = "abc123"
         version.REVISION_DATE = "2015-11-11"
 
-    def tearDown(self):
-        self._restore_version_values()
 
-    def _save_version_values(self):
-        self.VERSION = version.VERSION
-        self.TYPE = version.TYPE
-        self.REVISION_HASH = version.REVISION_HASH
-        self.REVISION_DATE = version.REVISION_DATE
-
-    def _restore_version_values(self):
-        version.VERSION = self.VERSION
-        version.TYPE = self.TYPE
-        version.REVISION_HASH = self.REVISION_HASH
-        version.REVISION_DATE = self.REVISION_DATE
-
-
-class describe_final_version_formatting(UnitTestCase):
+class describe_final_version_formatting(VersionTestCase):
 
     def test_full(self):
         self.assertEqual(
@@ -150,18 +138,3 @@ class describe_final_version_formatting(UnitTestCase):
         version.TYPE = version.TYPE_FINAL
         version.REVISION_HASH = "abc123"
         version.REVISION_DATE = "2015-11-11"
-
-    def tearDown(self):
-        self._restore_version_values()
-
-    def _save_version_values(self):
-        self.VERSION = version.VERSION
-        self.TYPE = version.TYPE
-        self.REVISION_HASH = version.REVISION_HASH
-        self.REVISION_DATE = version.REVISION_DATE
-
-    def _restore_version_values(self):
-        version.VERSION = self.VERSION
-        version.TYPE = self.TYPE
-        version.REVISION_HASH = self.REVISION_HASH
-        version.REVISION_DATE = self.REVISION_DATE
