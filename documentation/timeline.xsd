@@ -8,7 +8,7 @@
             <xs:element name="start" type="xs:string"/>
             <xs:element name="end" type="xs:string"/>
             <xs:element name="color" type="xs:string"/>
-            <xs:element name="ends_today" type="xs:string"/>
+            <xs:element name="ends_today" type="xs:string" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
 
