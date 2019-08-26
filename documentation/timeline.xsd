@@ -6,7 +6,17 @@
 			<xs:pattern value="(\d+).(\d+).(\d+)(.*)( development)?"/>
 		</xs:restriction>
 	</xs:simpleType>
-                
+                 
+    <xs:simpleType name="timetype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="gregoriantime"/>
+            <xs:enumeration value="bosparaniantime"/>
+            <xs:enumeration value="numtime"/>
+            <xs:enumeration value="coptic"/>
+            <xs:enumeration value="pharaonic"/>
+        </xs:restriction>
+    </xs:simpleType>
+                  
     <xs:complexType name="era">
         <xs:sequence>
             <xs:element name="name" type="xs:string"/>
@@ -98,7 +108,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="version" type="version"/>
-                <xs:element name="timetype" type="xs:string"/>
+                <xs:element name="timetype" type="timetype"/>
                 <xs:element name="eras" type="eras-list"/>
                 <xs:element name="categories" type="category-list"/>
                 <xs:element name="events" type="event-list"/>
