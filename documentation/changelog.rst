@@ -48,6 +48,9 @@ Search:
 
 Fixed crash reports and bugs:
 
+* ``AttributeError: 'MainCanvas' object has no attribute 'controller'``
+Fixed controller that had changed name crom _controller.
+
 * ``AttributeError: 'NumTime' object has no attribute 'julian_day'``
   Added to_str() function to time base class GenericTimeMixin.
   Own implementation of to_str in GregorianTime.
