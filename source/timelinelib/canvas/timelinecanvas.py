@@ -170,7 +170,7 @@ class TimelineCanvas(wx.Panel):
         event_and_rect = self._controller.event_with_rect_at(x, y, prefer_container.alt)
         if event_and_rect is not None:
             event, rect = event_and_rect
-            center = rect.X + rect.Width / 2
+            center = rect.X + rect.Width // 2
             if abs(x - center) <= HIT_REGION_PX_WITH:
                 return (event, MOVE_HANDLE)
             elif abs(x - rect.X) < HIT_REGION_PX_WITH:
