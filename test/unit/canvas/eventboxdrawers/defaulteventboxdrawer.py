@@ -97,7 +97,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.drawer.view_properties.get_display_checkmark_on_events_done.return_value = True
         self.drawer._draw_text(self.dc, rect, self.event)
         self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
-        self.dc.DrawText.assert_called_with(u"\u2714" + DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
+        self.dc.DrawText.assert_called_with("\u2714" + DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
 
     def test_milestone_with_no_text_can_be_drawn(self):
         with self.wxapp():
