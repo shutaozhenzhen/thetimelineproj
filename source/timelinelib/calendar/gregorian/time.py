@@ -131,7 +131,7 @@ class GregorianDelta(ComparableValue, GenericDeltaMixin):
         if isinstance(value, self.__class__):
             return self.seconds / value.seconds
         else:
-            return self.__class__(self.seconds // value)
+            return self.__class__(int(self.seconds // value))
 
     def __sub__(self, delta):
         return self.__class__(self.seconds - delta.seconds)
