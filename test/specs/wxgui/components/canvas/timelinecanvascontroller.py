@@ -59,9 +59,7 @@ class TimelineViewSpec(WxAppTestCase):
         self.timeline_canvas.IsEventSelected.side_effect = lambda x: self.controller.view_properties.is_selected(x)
         self.timeline_canvas.GetDb.return_value = self.db
         self.timeline_canvas.PostEvent = lambda e: None # Don't store the wx event since it causes a segfault when garbage collected
-        self.width = 10
-        self.middle_x = self.width / 2
-        self.timeline_canvas.GetSize.return_value = (self.width, 10)
+        self.timeline_canvas.GetSize.return_value = (10, 10)
         self.timeline_canvas.GetDividerPosition.return_value = 50
         self.timeline_canvas.GetSelectedEvents.return_value = []
         self.controller = TimelineCanvasController(
