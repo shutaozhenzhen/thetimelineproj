@@ -6,9 +6,9 @@ def make_sure_timelinelib_can_be_imported():
 def install_gettext_in_builtin_namespace():
     def _(message):
         return message
-    import __builtin__
-    if not "_" in __builtin__.__dict__:
-        __builtin__.__dict__["_"] = _
+    import builtins
+    if not "_" in builtins.__dict__:
+        builtins.__dict__["_"] = _
 
 
 make_sure_timelinelib_can_be_imported()
