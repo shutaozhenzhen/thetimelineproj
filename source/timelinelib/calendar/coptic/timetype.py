@@ -341,7 +341,7 @@ def _move_page_months(curret_period, navigation_fn, direction):
 
 
 def _months_to_year_and_month(months):
-    years = int(months / 13)
+    years = int(months // 13)
     month = months - years * 13
     if month == 0:
         month = 13
@@ -398,7 +398,7 @@ def fit_millennium_fn(main_frame, current_period, navigation_fn):
     if mean.year > get_millenium_max_year():
         year = get_millenium_max_year()
     else:
-        year = max(get_min_year_containing_jan_1(), int(mean.year / 1000) * 1000)
+        year = max(get_min_year_containing_jan_1(), int(mean.year // 1000) * 1000)
     start = CopticDateTime.from_ymd(year, 1, 1).to_time()
     end = CopticDateTime.from_ymd(year + 1000, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
