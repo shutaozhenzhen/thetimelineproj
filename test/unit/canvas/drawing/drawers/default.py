@@ -33,7 +33,7 @@ from timelinelib.test.utils import human_time_to_gregorian
 
 IMAGE_SIZE = (500, 200)
 IMAGE_WIDTH, IMAGE_HEIGHT = IMAGE_SIZE
-BASELINE_Y_POS = IMAGE_HEIGHT / 2
+BASELINE_Y_POS = IMAGE_HEIGHT // 2
 TEXT_SIZE = (50, 10)
 
 
