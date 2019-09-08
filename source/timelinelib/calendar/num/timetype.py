@@ -150,7 +150,7 @@ class NumStrip(Strip):
         return "%s" % time.value
 
     def start(self, time):
-        start = int((time.value / self.size)) * self.size
+        start = int(time.value / self.size) * self.size
         if time < NumTime(0):
             start -= self.size
         return NumTime(start)
