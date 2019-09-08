@@ -583,7 +583,7 @@ class TimelineCanvas(wx.Panel):
         self.SetHScrollAmount(self.GetHScrollAmount() + HSCROLL_STEP)
 
     def _get_half_width(self):
-        return self.GetSize()[0] / 2
+        return self.GetSize()[0] // 2
 
     def _create_gui(self):
         self.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
