@@ -255,7 +255,7 @@ class TimelineCanvas(wx.Panel):
     def Zoom(self, direction, x):
         """ zoom time line at position x """
         width, _ = self.GetSize()
-        x_percent_of_width = float(x) / width
+        x_percent_of_width = x / width
         self.Navigate(lambda tp: tp.zoom(direction, x_percent_of_width))
 
     def vertical_zoom_in(self):
