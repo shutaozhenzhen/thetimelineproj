@@ -358,7 +358,7 @@ def fit_millennium_fn(main_frame, current_period, navigation_fn):
     if mean.year > get_millenium_max_year():
         year = get_millenium_max_year()
     else:
-        year = max(get_min_year_containing_praios_1(), int(mean.year / 1000) * 1000)
+        year = max(get_min_year_containing_praios_1(), int(mean.year // 1000) * 1000)
     start = BosparanianDateTime.from_ymd(year, 1, 1).to_time()
     end = BosparanianDateTime.from_ymd(year + 1000, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
@@ -381,7 +381,7 @@ def fit_century_fn(main_frame, current_period, navigation_fn):
     if mean.year > get_century_max_year():
         year = get_century_max_year()
     else:
-        year = max(get_min_year_containing_praios_1(), int(mean.year / 100) * 100)
+        year = max(get_min_year_containing_praios_1(), int(mean.year // 100) * 100)
     start = BosparanianDateTime.from_ymd(year, 1, 1).to_time()
     end = BosparanianDateTime.from_ymd(year + 100, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
@@ -389,8 +389,8 @@ def fit_century_fn(main_frame, current_period, navigation_fn):
 
 def fit_decade_fn(main_frame, current_period, navigation_fn):
     mean = BosparanianDateTime.from_time(current_period.mean_time())
-    start = BosparanianDateTime.from_ymd(int(mean.year / 10) * 10, 1, 1).to_time()
-    end = BosparanianDateTime.from_ymd(int(mean.year / 10) * 10 + 10, 1, 1).to_time()
+    start = BosparanianDateTime.from_ymd(int(mean.year // 10) * 10, 1, 1).to_time()
+    end = BosparanianDateTime.from_ymd(int(mean.year // 10) * 10 + 10, 1, 1).to_time()
     navigation_fn(lambda tp: tp.update(start, end))
 
 
@@ -436,7 +436,7 @@ class StripCentury(Strip):
             # TODO: This only works for English. Possible to localize?
             time = BosparanianDateTime.from_time(time)
             start_year = self._century_start_year(time.year)
-            century = (start_year + 100) / 100
+            century = int((start_year + 100) // 100)
             if century <= 0:
                 century -= 1
             return str(century) + " century BF"
@@ -451,7 +451,7 @@ class StripCentury(Strip):
         return time.replace(year=time.year + 100).to_time()
 
     def _century_start_year(self, year):
-        year = (int(year) / 100) * 100
+        year = int(year // 100) * 100
         return year
 
 
@@ -474,7 +474,7 @@ class StripDecade(Strip):
         # The first start year must be to the left of the first visible
         # year on the timeline in order to draw the first vertical decade
         # line correctly. Therefore -10 in the calculation below
-        return (int(year) / 10) * 10 - 10
+        return int(year // 10) * 10 - 10
 
 
 class StripYear(Strip):
@@ -692,7 +692,7 @@ def move_period_num_weeks(period, num):
 def move_period_num_months(period, num):
     try:
         delta = num
-        years = abs(delta) / 13
+        years = int(abs(delta)) // 13
         bosparanian_start = BosparanianDateTime.from_time(period.start_time)
         bosparanian_end = BosparanianDateTime.from_time(period.end_time)
         if num < 0:
