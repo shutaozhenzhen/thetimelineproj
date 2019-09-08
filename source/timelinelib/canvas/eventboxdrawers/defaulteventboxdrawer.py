@@ -28,7 +28,7 @@ from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONT
 
 
 HANDLE_SIZE = 4
-HALF_HANDLE_SIZE = HANDLE_SIZE / 2
+HALF_HANDLE_SIZE = HANDLE_SIZE // 2
 DATA_INDICATOR_SIZE = 10
 INNER_PADDING = 3  # Space inside event box to text (pixels)
 GRAY = (200, 200, 200)
