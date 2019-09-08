@@ -67,7 +67,7 @@ class NumDelta(ComparableValue, GenericDeltaMixin):
     def __truediv__(self, other):
         if isinstance(other, self.__class__):
             # Delta / Delta
-            return float(self.value) / float(other.value)
+            return self.value / other.value
         else:
             # Delta / number
             return self.__class__(int(self.value // other))
