@@ -55,7 +55,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.drawer.center_text = True
         self.drawer._draw_text(self.dc, rect, self.event)
         self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
-        self.dc.DrawText.assert_called_with(DEFAULT_TEXT, (WIDTH - 2 * INNER_PADDING - 50) / 2 + INNER_PADDING, INNER_PADDING)
+        self.dc.DrawText.assert_called_with(DEFAULT_TEXT, (WIDTH - 2 * INNER_PADDING - 50) // 2 + INNER_PADDING, INNER_PADDING)
 
     def test_centered_text_is_left_aligned_if_text_is_too_long_to_fit(self):
         WIDTH = 100
@@ -75,7 +75,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.drawer.center_text = False
         self.drawer._draw_text(self.dc, rect, self.event)
         self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
-        self.dc.DrawText.assert_called_with(DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
+        self.dc.DrawText.assert_called_with(DEFAULT_TEXT, INNER_PADDING + HEIGHT // 2, INNER_PADDING)
 
     def test_non_centered_text_is_left_ajusted_when_locked(self):
         WIDTH = 100
@@ -85,7 +85,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.drawer.center_text = False
         self.drawer._draw_text(self.dc, rect, self.event)
         self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
-        self.dc.DrawText.assert_called_with(DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
+        self.dc.DrawText.assert_called_with(DEFAULT_TEXT, INNER_PADDING + HEIGHT // 2, INNER_PADDING)
 
     def test_if_checkmark_is_to_be_used_it_is_placed_as_first_char_in_text(self):
         WIDTH = 100
@@ -97,7 +97,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.drawer.view_properties.get_display_checkmark_on_events_done.return_value = True
         self.drawer._draw_text(self.dc, rect, self.event)
         self.dc.SetClippingRegion.assert_called_with(wx.Rect(INNER_PADDING, INNER_PADDING, WIDTH - 2 * INNER_PADDING, HEIGHT - 2 * INNER_PADDING))
-        self.dc.DrawText.assert_called_with("\u2714" + DEFAULT_TEXT, INNER_PADDING + HEIGHT / 2, INNER_PADDING)
+        self.dc.DrawText.assert_called_with("\u2714" + DEFAULT_TEXT, INNER_PADDING + HEIGHT // 2, INNER_PADDING)
 
     def test_milestone_with_no_text_can_be_drawn(self):
         with self.wxapp():
