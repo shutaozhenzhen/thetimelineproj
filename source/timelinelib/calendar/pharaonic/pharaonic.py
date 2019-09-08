@@ -160,7 +160,7 @@ def julian_day_to_pharaonic_ymd(julian_day):
     e = r * f + v
     g = (e % p)//r
     h = u * g + w
-    day = ((h % s)/u) + 1
+    day = ((h % s)//u) + 1
     month = (((h // s) + m) % n) + 1
     year = (e // p) - y + (n + m - month)//n
     return (year, month, day)
