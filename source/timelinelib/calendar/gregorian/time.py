@@ -62,7 +62,7 @@ class GregorianTime(GenericTimeMixin):
     def __add__(self, delta):
         if isinstance(delta, self.DeltaClass):
             seconds = self.seconds + delta.seconds
-            seconds_in_day = int(self.julian_day + seconds / SECONDS_IN_DAY)
+            seconds_in_day = int(self.julian_day + seconds // SECONDS_IN_DAY)
             return self.__class__(seconds_in_day, seconds % SECONDS_IN_DAY)
         raise TypeError(
             "%s + %s not supported" % (self.__class__.__name__, type(delta))
