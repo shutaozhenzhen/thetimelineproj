@@ -310,7 +310,7 @@ def _move_page_months(curret_period, navigation_fn, direction):
 
 
 def _months_to_year_and_month(months):
-    years = int(months / 13)
+    years = int(months // 13)
     month = months - years * 13
     if month == 0:
         month = 13
