@@ -157,7 +157,7 @@ def is_leap_year(year):
         return False
         
 def num_leap_years(year):
-	return int(abs(year/4))
+	return int(abs(year//4))
 
 def is_valid_time(hour, minute, second):
     return (
@@ -199,7 +199,7 @@ def julian_day_to_coptic_ymd(julian_day):
     e = r * f + v
     g = (e % p)//r
     h = u * g + w
-    day = ((h % s)/u) + 1
+    day = ((h % s)//u) + 1
     month = (((h // s) + m) % n) + 1
     year = (e // p) - y + (n + m - month)//n
     return (year, month, day)
