@@ -129,7 +129,7 @@ class GregorianDelta(ComparableValue, GenericDeltaMixin):
 
     def __truediv__(self, value):
         if isinstance(value, self.__class__):
-            return float(self.seconds) / float(value.seconds)
+            return self.seconds / value.seconds
         else:
             return self.__class__(self.seconds // value)
 
