@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018  Rickard Lindberg, Roger Lindberg
 #
@@ -18,17 +18,21 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
 import os.path
 import subprocess
 import sys
 
 
 TIMES_TO_REPEAT = 100
+GDB_PREFIX = ["gdb", "-ex='set confirm on'", "-ex=r", "-ex=quit", "--args"]
 
 
 if __name__ == "__main__":
     path = os.path.join(os.path.dirname(__file__), "execute-specs.py")
     cmd = [sys.executable, path] + sys.argv[1:]
+    if os.environ.get("GDB") == "on":
+        cmd = GDB_PREFIX + cmd
     print("Running %s x %d" % (cmd, TIMES_TO_REPEAT))
     sys.stdout.flush()
     for i in range(TIMES_TO_REPEAT):

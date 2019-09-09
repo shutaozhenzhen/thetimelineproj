@@ -38,7 +38,7 @@ Features for the next version (x.y+1) can continue to be developed in main.
     1. Request download from here (login required)
        http://translations.launchpad.net/thetimelineproj/trunk/+translations
        Format: PO format
-    2. Run "python tools/import-po-from-launchpad-export.py /path/to/launchpad-export.tar.gz"
+    2. Run "python3 tools/import-po-from-launchpad-export.py /path/to/launchpad-export.tar.gz"
     3. This script updates the .po files
     4. Commit "import translations"
 
@@ -65,12 +65,12 @@ Features for the next version (x.y+1) can continue to be developed in main.
     4. Commit "Updated about"
     5. Pull these changes into main.
 
-7. Run "python tools/execute-specs.py" to find possible errors
+7. Run "python3 tools/execute-specs.py" to find possible errors
     1. Fix errors
     2. Commit
     3. Pull these changes into main.
 
-8. Run "python release/make-source-release.py"
+8. Run "python3 release/make-source-release.py"
     1. This script creates the file timeline-x.y.0.zip file
     2. It also runs the tests as in section 5.
 
@@ -104,7 +104,7 @@ Work on main
      1. version.py
      2. changelog.rst
      3. README
-     4. Run "python tools/execute-specs.py" to find where else you need to modify
+     4. Run "python3 tools/execute-specs.py" to find where else you need to modify
 
 3. Commit and push
 

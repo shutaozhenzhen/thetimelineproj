@@ -106,7 +106,7 @@ class SlideshowDialogController(Controller):
 
     def _create_css(self):
         f = open(os.path.join(self.view.GetTargetDir(), "slideshow.css"), "w")
-        f.write(CSS.encode('utf8', 'ignore'))
+        f.write(CSS.encode('utf8', 'ignore').decode('utf-8'))
         f.close()
 
     def _create_pages(self, events):
@@ -157,7 +157,7 @@ class SlideshowDialogController(Controller):
                               prev_page_nbr,
                               next_page_nbr,
                               pos_history)
-        f.write(pg.encode('utf8', 'ignore'))
+        f.write(pg.encode('utf8', 'ignore').decode('utf-8'))
         f.close()
 
     def _install_text_transformer_plugin(self):

@@ -83,8 +83,8 @@ class DbOpenSpec(TmpDirTestCase):
         self.writeContentToTmpFile(CONTENT_010)
         try:
             db_open(self.tmp_path)
-        except TimelineIOError, e:
-            self.assertTrue(u"old file with a new version" in unicode(e))
+        except TimelineIOError as e:
+            self.assertTrue("old file with a new version" in str(e))
 
     def testRead0100File(self):
         self.writeContentToTmpFile(CONTENT_0100)

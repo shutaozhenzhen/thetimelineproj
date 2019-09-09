@@ -1,1 +1,3 @@
-cd tools && c:\python27\python build_win32_installer.py --revision %1
+cd tools\winbuildtools
+set path=c:\pgm\python37;c:\pgm\python37\Scripts;%PATH%
+buildwinsetup.cmd %1

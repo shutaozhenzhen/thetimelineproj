@@ -1,9 +1,0 @@
-The file boot_common.py should reside in the python directory 
-under Lib/site_packages/py2exe.
-
-The Timeline version of boot_common.py changes the log directory 
-to a temp dir on the system that is always writeable.
-
-So even if the program is installed in the "Program files" 
-directory, the log file can be written without any access problems.
- 

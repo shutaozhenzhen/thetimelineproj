@@ -27,11 +27,13 @@ from timelinelib.text.transformers.defaulttransformer import DefaultTextTransfor
 class describe_default_text_transformer(UnitTestCase):
     """ """
 
-    def test_simple_text_is_retruned_asis(self):
+    def test_simple_text_is_returned_asis(self):
         """ """
-        self.assertEqual("", self.transformer.transform(""))
+        texts = ("", "abc", "123", "!\"¤%&/()=")
+        for text in texts:
+            self.assertEqual(text, self.transformer.transform(text))
 
-    def test_none_text_is_retruned_as_empty_string(self):
+    def test_none_text_is_returned_as_empty_string(self):
         """ """
         self.assertEqual("", self.transformer.transform(None))
 

@@ -22,17 +22,17 @@ from timelinelib.text.transformers.plaintexttohtml import PlainTextToHtml
 
 class describe_plain_text_to_html_transformer(UnitTestCase):
 
-    def test_simple_text_is_retruned_asis(self):
+    def test_simple_text_is_returned_asis(self):
         self.assertEqual("", self.transformer.transform(""))
 
-    def test_none_text_is_retruned_as_empty_string(self):
+    def test_none_text_is_returned_as_empty_string(self):
         self.assertEqual("", self.transformer.transform(None))
 
     def test_newline_chars_are_converted_to_breaks(self):
         self.assertEqual("", self.transformer.transform("\n"))
 
     def test_lt_and_gt_are_converted_html_codes(self):
-        self.assertEqual("&lt;&gt;", self.transformer.transform("<>"))
+        self.assertEqual("<p>&lt;&gt;</p>", self.transformer.transform("<>"))
 
     def test_lt_and_gt_preserved_for_br(self):
         self.assertEqual("<blockquote>\n<p>&lt;</p>\n</blockquote>", self.transformer.transform(">\n<"))

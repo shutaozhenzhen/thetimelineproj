@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -20,7 +18,7 @@
 
 import os
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.event import Event

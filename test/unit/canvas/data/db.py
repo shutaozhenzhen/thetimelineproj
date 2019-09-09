@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
@@ -30,7 +30,7 @@ from timelinelib.test.utils import a_gregorian_era_with
 from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import a_subevent_with
 from timelinelib.test.utils import gregorian_period
-from timelinelib.wxgui.utils import category_tree
+from timelinelib.repositories.dbwrapper import category_tree
 
 
 class describe_memory_db(UnitTestCase):

@@ -62,7 +62,6 @@ ID_SET_CATEGORY_ON_SELECTED = wx.NewId()
 ID_MEASURE_DISTANCE = wx.NewId()
 ID_COMPRESS = wx.NewId()
 ID_SET_CATEGORY_ON_WITHOUT = wx.NewId()
-ID_EDIT_CATEGORIES = wx.NewId()
 ID_EDIT_ERAS = wx.NewId()
 ID_SET_READONLY = wx.NewId()
 ID_FIND_FIRST = wx.NewId()
@@ -158,7 +157,7 @@ class GuiCreator(object):
             return event_handler
 
         submenu = wx.Menu()
-        file_menu.AppendMenu(wx.ID_ANY, _("Export"), submenu)
+        file_menu.Append(wx.ID_ANY, _("Export"), submenu)
         for plugin in factory.get_plugins(EXPORTER):
             mnu = submenu.Append(wx.ID_ANY, plugin.display_name(), plugin.display_name())
             self.menu_controller.add_menu_requiring_timeline(mnu)
@@ -184,7 +183,7 @@ class GuiCreator(object):
 
     def _create_file_open_recent_menu(self, file_menu):
         self.mnu_file_open_recent_submenu = wx.Menu()
-        file_menu.AppendMenu(wx.ID_ANY, _("Open &Recent"), self.mnu_file_open_recent_submenu)
+        file_menu.Append(wx.ID_ANY, _("Open &Recent"), self.mnu_file_open_recent_submenu)
         self.update_open_recent_submenu()
 
     def _create_file_save_as_menu(self, file_menu):
@@ -275,10 +274,10 @@ class GuiCreator(object):
             DrawingAreaProxy(self).zoom_out()
 
         def vert_zoomin(evt):
-            DrawingAreaProxy(self).VertZoomIn()
+            DrawingAreaProxy(self).vertical_zoom_in()
 
         def vert_zoomout(evt):
-            DrawingAreaProxy(self).VertZoomOut()
+            DrawingAreaProxy(self).vertical_zoom_out()
 
         def start_slide_show(evt):
             canvas = self.main_panel.get_timeline_canvas()
@@ -334,18 +333,20 @@ class GuiCreator(object):
 
         items = []
         for plugin in factory.get_plugins(EVENTBOX_DRAWER):
-            if (plugin.display_name() == self.config.get_selected_event_box_drawer()):
+            plugin_name = str(plugin.display_name().encode('utf-8'))
+            selected_name = self.config.get_selected_event_box_drawer()
+            if plugin_name == selected_name:
                 items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), CHECKED_RB))
             else:
                 items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), UNCHECKED_RB))
         sub_menu = self._create_menu(items)
-        view_menu.AppendMenu(wx.ID_ANY, _("Event appearance"), sub_menu)
+        view_menu.Append(wx.ID_ANY, _("Event appearance"), sub_menu)
 
     def _create_view_point_event_alignment_menu(self, view_menu):
         sub_menu = wx.Menu()
         left_item = sub_menu.Append(wx.ID_ANY, _("Left"), kind=wx.ITEM_RADIO)
         center_item = sub_menu.Append(wx.ID_ANY, _("Center"), kind=wx.ITEM_RADIO)
-        view_menu.AppendMenu(wx.ID_ANY, _("Point event alignment"), sub_menu)
+        view_menu.Append(wx.ID_ANY, _("Point event alignment"), sub_menu)
 
         def on_first_tool_click(event):
             self.config.draw_point_events_to_right = True
@@ -433,11 +434,6 @@ class GuiCreator(object):
                 self._set_category()
             safe_locking(self, edit_function)
 
-        def edit_categories(evt):
-            def edit_function():
-                self._edit_categories()
-            safe_locking(self, edit_function)
-
         def edit_eras(evt):
             def edit_function():
                 self._edit_eras()
@@ -477,7 +473,6 @@ class GuiCreator(object):
                       None,
                       (ID_SET_CATEGORY_ON_WITHOUT, set_category_on_without,
                        _("Set Category on events &without category..."), cbx),
-                      (ID_EDIT_CATEGORIES, edit_categories, _("Edit &Categories"), cbx),
                       None,
                       (ID_EDIT_ERAS, edit_eras, _("Edit Era's..."), cbx),
                       None,
@@ -497,7 +492,6 @@ class GuiCreator(object):
         self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_CATEGORY_ON_SELECTED)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_MEASURE_DISTANCE)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_CATEGORY_ON_WITHOUT)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_EDIT_CATEGORIES)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_READONLY)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_EDIT_ERAS)
         self._add_to_controller_requiring_writeable_timeline(menu, ID_COMPRESS)
@@ -593,13 +587,13 @@ class GuiCreator(object):
 
     def _create_timeline_context_menu(self):
         menu = wx.Menu()
-        menu_bar = self._file_menu.GetMenuBar()
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(0), self._file_menu)
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(1), self._edit_menu)
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(2), self._view_menu)
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(3), self._timeline_menu)
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(4), self._navigate_menu)
-        menu.AppendMenu(wx.ID_ANY, menu_bar.GetMenuLabel(5), self._help_menu)
+        menu_bar = self.GetMenuBar()
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(0), self._file_menu)
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(1), self._edit_menu)
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(2), self._view_menu)
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(3), self._timeline_menu)
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(4), self._navigate_menu)
+        menu.Append(wx.ID_ANY, menu_bar.GetMenuLabel(5), self._help_menu)
         return menu
 
     def _create_menu(self, items_spec):

@@ -70,11 +70,6 @@ win32InstallerActions = (
 
     (ANNOTATE, "Create a target directory for the build", ""),
     (COPYDIR, ["source", "timelinelib"], ["builddir", "timelinelib"]),
-    (COPYDIR, ["dependencies", "timelinelib", "icalendar-3.2\icalendar"], ["builddir", "icalendar"]),
-    (COPYDIR, ["dependencies", "timelinelib", "pytz-2012j\pytz"], ["builddir", "pytz"]),
-    (COPYDIR, ["dependencies", "timelinelib", "pysvg-0.2.1\pysvg"], ["builddir", "pysvg"]),
-    (COPYDIR, ["dependencies", "timelinelib", "markdown-2.0.3", "markdown"], ["builddir", "markdown"]),
-    (COPYDIR, ["dependencies", "timelinelib", "Pillow-3.2.0", "PIL"], ["builddir", "pillow"]),
     (COPYDIR, ["tools", "winbuildtools", "inno"], ["builddir", "inno"]),
     (COPYFILE, ["source", "timeline.py"], ["builddir", "timeline.py"]),
     (COPYFILE, ["tools", "winbuildtools", "setup.py"], ["builddir", "setup.py"]),
@@ -107,9 +102,9 @@ actions = {"win32Installer": win32InstallerActions}
 class Target():
 
     def __init__(self, target):
-        print "-------------------------------------------------------"
-        print "  %s" % ("Building target %s" % target)
-        print "-------------------------------------------------------"
+        print("-------------------------------------------------------")
+        print("  %s" % ("Building target %s" % target))
+        print("-------------------------------------------------------")
         self.target = target
         self.actions = actions[target]
         self.ACTION_METHODS = {COPYFILE: self.copyfile,
@@ -128,24 +123,24 @@ class Target():
             self.setup_and_create_directories(arguments, artifact_dir, temp_dir)
             self.execute_actions()
         finally:
-            shutil.rmtree(temp_dir)
+            #shutil.rmtree(temp_dir)
             pass
 
     def assert_that_target_is_known(self):
         if self.target not in known_targets:
-            print "The target %s is unknown" % self.target
-            print "BUILD FAILED"
+            print("The target %s is unknown" % self.target)
+            print("BUILD FAILED")
             sys.exit(1)
 
     def setup_and_create_directories(self, arguments, artifact_dir, temp_dir):
         self.artifact_dir = artifact_dir
         self.project_dir = self.create_project_directory(arguments, temp_dir)
-        print "Artifact dir: %s" % self.artifact_dir
-        print "Project dir:  %s" % self.project_dir
-        print "Working dir:  %s" % os.getcwd()
+        print("Artifact dir: %s" % self.artifact_dir)
+        print("Project dir:  %s" % self.project_dir)
+        print("Working dir:  %s" % os.getcwd())
 
     def create_project_directory(self, arguments, temp_dir):
-        print "Create project directory"
+        print("Create project directory")
         repository = timelinetools.packaging.repository.Repository()
         self.archive = repository.archive(arguments.revision, temp_dir, ARCHIVE)
         return os.path.join(temp_dir, ARCHIVE)
@@ -157,12 +152,12 @@ class Target():
             for action, src, dst in self.actions:
                 if action is not ANNOTATE:
                     count += 1
-                    print "Action %2d(%2d): %s" % (count, total, ACTION_NAMES[action])
+                    print("Action %2d(%2d): %s" % (count, total, ACTION_NAMES[action]))
                 self.ACTION_METHODS[action](src, dst)
-            print "BUILD DONE"
-        except Exception, ex:
-            print str(ex)
-            print "BUILD FAILED"
+            print("BUILD DONE")
+        except Exception as ex:
+            print(str(ex))
+            print("BUILD FAILED")
             sys.exit(1)
 
     def annotate(self, src, dst):
@@ -196,7 +191,7 @@ class Target():
                 success, msg = self.run_pyscript(script_path, [self.project_dir, arg])
             if not success:
                 raise Exception(msg)
-        except Exception, ex:
+        except Exception as ex:
             pass
 
     def runpytest(self, src, dst):
@@ -205,7 +200,9 @@ class Target():
         self.print_src_dst(src, os.path.abspath(dst))
         success, msg = self.run_pyscript(script_path, [], display_stderr=True)
         if not success:
-            raise Exception(msg)
+            print('Msg:', msg)
+            if msg:
+                raise Exception(msg)
         self.popd(None, None)
 
     def runcmd(self, src, dst):
@@ -224,7 +221,7 @@ class Target():
 
     def popd(self, src, dst):
         self.print_src_dst(None, self.cwd)
-        print "    dst: %s" % self.cwd
+        print("    dst: %s" % self.cwd)
         os.chdir(self.cwd)
 
     def run_pyscript(self, script, args=[], display_stderr=False):
@@ -237,22 +234,22 @@ class Target():
         else:
             p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out = p.communicate()
-            print out
+            print(out)
             if p.returncode == 0:
                 return True, out[0]
             else:
                 return False, out[1]
 
     def print_header(self, message):
-        print "-------------------------------------------------------"
-        print "  %s" % message
-        print "-------------------------------------------------------"
+        print("-------------------------------------------------------")
+        print("  %s" % message)
+        print("-------------------------------------------------------")
 
     def print_src_dst(self, src, dst):
         if src is not None:
-            print "    src: %s" % src
+            print("    src: %s" % src)
         if dst is not None:
-            print "    dst: %s" % dst
+            print("    dst: %s" % dst)
 
     def get_artifact_src_name(self):
         versionfile = os.path.join(self.project_dir, "source", "timelinelib", "meta", "version.py")

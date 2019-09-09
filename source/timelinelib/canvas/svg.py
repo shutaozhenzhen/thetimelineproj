@@ -16,26 +16,39 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from types import UnicodeType
 from xml.sax.saxutils import escape as xmlescape
 
-from pysvg.filter import feGaussianBlur
-from pysvg.filter import feOffset
-from pysvg.filter import feMerge
-from pysvg.filter import feMergeNode
-from pysvg.filter import filter
+try:
+    from pysvg.filter import FeGaussianBlur
+    from pysvg.filter import FeOffset
+    from pysvg.filter import FeMerge
+    from pysvg.filter import FeMergeNode
+    from pysvg.filter import Filter
+    from pysvg.structure import G
+    from pysvg.structure import Svg
+    from pysvg.structure import Defs
+    from pysvg.shape import Path
+    from pysvg.structure import ClipPath
+    from pysvg.text import Text
+except ImportError:
+    from pysvg.filter import feGaussianBlur as FeGaussianBlur
+    from pysvg.filter import feOffset as FeOffset
+    from pysvg.filter import feMerge as FeMerge
+    from pysvg.filter import feMergeNode as FeMergeNode
+    from pysvg.filter import filter as Filter
+    from pysvg.structure import g as G
+    from pysvg.structure import svg as Svg
+    from pysvg.structure import defs as Defs
+    from pysvg.shape import path as Path
+    from pysvg.structure import clipPath as ClipPath
+    from pysvg.text import text as Text
 from pysvg.builders import StyleBuilder
 from pysvg.builders import ShapeBuilder
-from pysvg.structure import g
-from pysvg.structure import svg
-from pysvg.structure import defs
-from pysvg.shape import path
-from pysvg.structure import clipPath
-from pysvg.text import text
 
-from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.data import sort_categories
+from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
+from timelinelib.utils import unique_based_on_eq
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -63,7 +76,7 @@ class SVGDrawingAlgorithm(object):
         self._scene = scene
         self._appearence = appearence
         self._view_properties = view_properties
-        self._svg = svg(width=scene.width, height=scene.height)
+        self._svg = Svg(width=scene.width, height=scene.height)
         self._small_font_style = self._get_small_font_style()
         self._small_centered_font_style = self._get_small_centered_font_style()
         self._larger_font_style = self._get_larger_font_style()
@@ -105,7 +118,7 @@ class SVGDrawingAlgorithm(object):
         Both major and minor strips have divider lines and labels.
         Draw now line if it is visible
         """
-        group = g()
+        group = G()
         group.addElement(self._draw_background())
         for era in self._timeline.get_all_periods():
             group.addElement(self._draw_era_strip(era))
@@ -123,11 +136,11 @@ class SVGDrawingAlgorithm(object):
         return group
 
     def _draw_background(self):
-        svg_color = self._map_svg_color(self._appearence.get_bg_colour()[:3])
+        svg_color = self._map_svg_color(self._appearence.get_bg_colour())
         return ShapeBuilder().createRect(0, 0, self._scene.width, self._scene.height, fill=svg_color)
 
     def _draw_era_strip(self, era):
-        svg_color = self._map_svg_color(era.get_color()[:3])
+        svg_color = self._map_svg_color(era.get_color())
         x, width = self._calc_era_strip_metrics(era)
         return ShapeBuilder().createRect(x, INNER_PADDING, width,
                                          self._scene.height - 2 * INNER_PADDING,
@@ -146,7 +159,7 @@ class SVGDrawingAlgorithm(object):
     def _calc_era_text_metrics(self, era):
         period = era.get_time_period()
         _, width = self._calc_era_strip_metrics(era)
-        x = self._scene.x_pos_for_time(period.start_time) + width / 2
+        x = self._scene.x_pos_for_time(period.start_time) + width // 2
         y = self._scene.height - OUTER_PADDING
         return x, y
 
@@ -161,7 +174,7 @@ class SVGDrawingAlgorithm(object):
 
     def _calc_x_for_minor_strip_label(self, strip_period):
         return (self._scene.x_pos_for_time(strip_period.start_time) +
-                self._scene.x_pos_for_time(strip_period.end_time)) / 2 - SMALL_FONT_SIZE_PX
+                self._scene.x_pos_for_time(strip_period.end_time)) // 2 - SMALL_FONT_SIZE_PX
 
     def _calc_y_for_minor_strip_label(self):
         return self._scene.divider_y - OUTER_PADDING
@@ -185,7 +198,7 @@ class SVGDrawingAlgorithm(object):
         # since there is no function like textwidth() for SVG, just take into account that text can be overwritten
         # do not perform a special handling for right border, SVG is unlimited
         x = (max(0, self._scene.x_pos_for_time(tp.start_time)) +
-             min(self._scene.width, self._scene.x_pos_for_time(tp.end_time))) / 2
+             min(self._scene.width, self._scene.x_pos_for_time(tp.end_time))) // 2
         y = LARGER_FONT_SIZE_PX + OUTER_PADDING
         return self._draw_label(label, x, y, self._larger_font_style)
 
@@ -202,7 +215,7 @@ class SVGDrawingAlgorithm(object):
 
     def _draw_line_to_non_period_event(self, view_properties, event, rect):
         x = self._scene.x_pos_for_time(event.mean_time())
-        y = rect.Y + rect.Height / 2
+        y = rect.Y + rect.Height // 2
         stroke = {True: "red", False: "black"}[view_properties.is_selected(event)]
         line = ShapeBuilder().createLine(x, y, x, self._scene.divider_y, stroke=stroke)
         circle = ShapeBuilder().createCircle(x, self._scene.divider_y, 2)
@@ -234,15 +247,17 @@ class SVGDrawingAlgorithm(object):
         """
         map (r,g,b) color to svg string
         """
-        return "#%02X%02X%02X" % color
+        return "#%02X%02X%02X" % color[:3]
 
     def _legend_should_be_drawn(self, categories):
         return self._appearence.get_legend_visible() and len(categories) > 0
 
     def _extract_categories(self):
-        categories = set([event.category for (event, _) in self._scene.event_data
-                          if event.category])
-        return sort_categories(list(categories))
+        return sort_categories(unique_based_on_eq(
+            event.category
+            for (event, _) in self._scene.event_data
+            if event.category
+        ))
 
     def _draw_legend(self, categories):
         """
@@ -262,7 +277,7 @@ class SVGDrawingAlgorithm(object):
           | Name   O |
           +----------+
         """
-        group = g()
+        group = G()
         group.addElement(self._draw_categories_box(len(categories)))
         cur_y = self._get_categories_box_y(len(categories)) + OUTER_PADDING
         for cat in categories:
@@ -320,7 +335,7 @@ class SVGDrawingAlgorithm(object):
             style = self._small_centered_font_style
         else:
             style = self._small_font_style
-        group = g()
+        group = G()
         group.addElement(self._draw_event_rect(event, rect))
         text_rect = rect.Get()
         if event.is_container() and EXTENDED_CONTAINER_HEIGHT.enabled():
@@ -362,14 +377,14 @@ class SVGDrawingAlgorithm(object):
         return indicator
 
     def _svg_clipped_text(self, text, rect, style, center_text=False):
-        group = g()
+        group = G()
         group.set_clip_path("url(#%s)" % self._create_clip_path(rect))
         group.addElement(self._draw_text(text, rect, style, center_text))
         return group
 
     def _create_clip_path(self, rect):
         path_id, path = self._calc_clip_path(rect)
-        clip = clipPath()
+        clip = ClipPath()
         clip.addElement(path)
         clip.set_id(path_id)
         self._svg.addElement(self._create_defs(clip))
@@ -381,14 +396,14 @@ class SVGDrawingAlgorithm(object):
             width += rx
             rx = 0
         pathId = "path%d_%d_%d" % (rx, ry, width)
-        p = path(pathData="M %d %d H %d V %d H %d" %
+        p = Path(pathData="M %d %d H %d V %d H %d" %
                  (rx, ry + height, rx + width, ry, rx))
         return pathId, p
 
     def _draw_text(self, my_text, rect, style, center_text=False):
         my_text = self._encode_text(my_text)
         x, y = self._calc_text_pos(rect, center_text)
-        label = text(my_text, x, y)
+        label = Text(my_text, x, y)
         label.set_style(style.getStyle())
         label.set_lengthAdjust("spacingAndGlyphs")
         return label
@@ -403,28 +418,22 @@ class SVGDrawingAlgorithm(object):
         else:
             x = rx + INNER_PADDING
         if center_text:
-            x += (width - 2 * INNER_PADDING) / 2
+            x += (width - 2 * INNER_PADDING) // 2
         y = ry + height - INNER_PADDING
         return x, y
 
     def _text(self, the_text, x, y):
         encoded_text = self._encode_text(the_text)
-        return text(encoded_text, x, y)
+        return Text(encoded_text, x, y)
 
     def _encode_text(self, text):
-        return self._encode_unicode_text(xmlescape(text))
-
-    def _encode_unicode_text(self, text):
-        if type(text) is UnicodeType:
-            return text.encode(ENCODING)
-        else:
-            return text
+        return xmlescape(text)
 
     def _define_shadow_filter(self):
         return self._create_defs(self._get_shadow_filter())
 
     def _create_defs(self, definition):
-        d = defs()
+        d = Defs()
         d.addElement(definition)
         return d
 
@@ -446,20 +455,20 @@ class SVGDrawingAlgorithm(object):
         return style
 
     def _get_shadow_filter(self):
-        filterShadow = filter(x="-.3", y="-.5", width=1.9, height=1.9)
-        filtBlur = feGaussianBlur(stdDeviation="4")
+        filterShadow = Filter(x="-.3", y="-.5", width=1.9, height=1.9)
+        filtBlur = FeGaussianBlur(stdDeviation="4")
         filtBlur.set_in("SourceAlpha")
         filtBlur.set_result("out1")
-        filtOffset = feOffset()
+        filtOffset = FeOffset()
         filtOffset.set_in("out1")
         filtOffset.set_dx(4)
         filtOffset.set_dy(-4)
         filtOffset.set_result("out2")
-        filtMergeNode1 = feMergeNode()
+        filtMergeNode1 = FeMergeNode()
         filtMergeNode1.set_in("out2")
-        filtMergeNode2 = feMergeNode()
+        filtMergeNode2 = FeMergeNode()
         filtMergeNode2.set_in("SourceGraphic")
-        filtMerge = feMerge()
+        filtMerge = FeMerge()
         filtMerge.addElement(filtMergeNode1)
         filtMerge.addElement(filtMergeNode2)
         filterShadow.addElement(filtBlur)  # here i get an error from python. It is not allowed to add a primitive filter

@@ -20,7 +20,7 @@ The ApplicationArguments class parses the command line arguments and
 options when the application is started.
 
 If the application is started with:
-    python timeline.py -h
+    python3 timeline.py -h
     
 a text will be displayed that describes valid arguments and valid
 options.

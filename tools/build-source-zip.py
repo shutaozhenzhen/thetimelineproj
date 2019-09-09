@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018  Rickard Lindberg, Roger Lindberg
 #
@@ -51,7 +51,7 @@ def create_source_zip(arguments, tempdir):
     archive.generate_mo_files()
     zip_file = archive.create_zip_archive()
     extracted_archive = zip_file.extract_to(os.path.join(tempdir, "test"))
-    extracted_archive.execute_specs_repeat()
+    extracted_archive.execute_specs()
     zip_file.move_to_directory(".")
 
 

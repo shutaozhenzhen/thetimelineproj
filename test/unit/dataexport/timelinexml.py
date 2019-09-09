@@ -22,6 +22,7 @@ from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.utils import a_container
 from timelinelib.test.utils import an_event_with
+from timelinelib.test.utils import a_category_with
 
 
 class describe_export_db_to_timeline_xml(TmpDirTestCase):
@@ -49,6 +50,63 @@ class describe_export_db_to_timeline_xml(TmpDirTestCase):
         content = self.export_and_read()
         self.assertIn("[1]con", content)
         self.assertIn("(1)sub1", content)
+
+    def test_can_export_categories(self):
+        cat1 = a_category_with(name='cat1')
+        cat2 = a_category_with(name='cat2')
+        cat3 = a_category_with(name='cat3')
+        self.empty_db.save_category(cat1)
+        self.empty_db.save_category(cat2)
+        self.empty_db.save_category(cat3)
+        self.empty_db.save_event(
+            an_event_with(category=cat1, categories=[cat3, cat2])
+        )
+        content = self.export_and_read()
+        expected = """\
+      <category>cat1</category>
+      <categories>
+        <category>cat3</category>
+        <category>cat2</category>
+      </categories>"""
+        self.assertIn(expected, content)
+
+    def test_can_export_categories_and_set_missing_category(self):
+        cat1 = a_category_with(name='cat1')
+        cat2 = a_category_with(name='cat2')
+        cat3 = a_category_with(name='cat3')
+        self.empty_db.save_category(cat1)
+        self.empty_db.save_category(cat2)
+        self.empty_db.save_category(cat3)
+        self.empty_db.save_event(
+            an_event_with(category=None, categories=[cat1, cat3, cat2])
+        )
+        content = self.export_and_read()
+        expected = """\
+      <category>cat1</category>
+      <categories>
+        <category>cat3</category>
+        <category>cat2</category>
+      </categories>"""
+        self.assertIn(expected, content)
+
+    def test_removing_category_takes_next_from_list(self):
+        cat1 = a_category_with(name='cat1')
+        cat2 = a_category_with(name='cat2')
+        cat3 = a_category_with(name='cat3')
+        self.empty_db.save_category(cat1)
+        self.empty_db.save_category(cat2)
+        self.empty_db.save_category(cat3)
+        evt = an_event_with(category=None, categories=[cat1, cat3, cat2])
+        self.empty_db.save_event(evt)
+        evt.category = None
+        self.empty_db.save_event(evt)
+        content = self.export_and_read()
+        expected = """\
+      <category>cat3</category>
+      <categories>
+        <category>cat2</category>
+      </categories>"""
+        self.assertIn(expected, content)
 
     def export_and_read(self):
         export_db_to_timeline_xml(self.empty_db, self.export_path)

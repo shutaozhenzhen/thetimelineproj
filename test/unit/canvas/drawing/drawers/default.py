@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 import wx
 
 from timelinelib.canvas.appearance import Appearance
@@ -27,18 +27,18 @@ from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas.drawing.drawers import get_progress_color
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 
 
 IMAGE_SIZE = (500, 200)
 IMAGE_WIDTH, IMAGE_HEIGHT = IMAGE_SIZE
-BASELINE_Y_POS = IMAGE_HEIGHT / 2
+BASELINE_Y_POS = IMAGE_HEIGHT // 2
 TEXT_SIZE = (50, 10)
 
 
-class describe_default_drawer(UnitTestCase):
+class describe_default_drawer(WxAppTestCase):
 
     def test_draws_period_event_below_baseline(self):
         self.given_event(name="vacation",
@@ -78,12 +78,12 @@ class describe_default_drawer(UnitTestCase):
         self.fail("Text '%s' never drawn." % text_to_look_for)
 
     def setUp(self):
-        self.app = wx.App()  # a stored app is needed to create fonts
+        WxAppTestCase.setUp(self)
         self.drawer = DefaultDrawingAlgorithm()
         self.drawer.set_event_box_drawer(DefaultEventBoxDrawer())
         self.drawer.set_background_drawer(DefaultBackgroundDrawer())
         self.dc = Mock(wx.DC)
-        self.dc.GetSizeTuple.return_value = IMAGE_SIZE
+        self.dc.GetSize.return_value = IMAGE_SIZE
         self.dc.GetTextExtent.return_value = TEXT_SIZE
         self.timeline = MemoryDB()
         self.view_properties = ViewProperties()

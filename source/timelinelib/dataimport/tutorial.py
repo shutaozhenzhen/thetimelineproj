@@ -28,7 +28,7 @@ def create_in_memory_gregorian_tutorial_db():
     Creates a Gregorian calender, tutorial timeline.
     
     This function is called if the timeline application is started with:
-       python timeline.py :tutorial:
+       python3 timeline.py :tutorial:
     or if the menu Help -> Getting started tutorial is selected.
     """
     return create_in_memory_tutorial_db(GregorianTutorialTimelineCreator())
@@ -39,7 +39,7 @@ def create_in_memory_numeric_tutorial_db():
     Creates a numeric tutorial timeline.
     
     This function is called if the timeline application is started with:
-       python timeline.py :numtutorial:
+       python3 timeline.py :numtutorial:
     """
     return create_in_memory_tutorial_db(NumericTutorialTimelineCreator())
 

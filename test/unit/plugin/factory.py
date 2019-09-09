@@ -21,16 +21,30 @@ from timelinelib.plugin import factory
 from timelinelib.test.cases.unit import UnitTestCase
 
 
+NAMES = [
+    'plugins.eventboxdrawers.defaulteventboxdrawer',
+    'plugins.eventboxdrawers.gradienteventboxdrawer',
+    'plugins.eventboxdrawers.othergradienteventboxdrawer',
+    'plugins.eventboxdrawers.othergradienteventboxdrawerfuzzyedges',
+    'plugins.exporters.exporttobitmap',
+    'plugins.exporters.exporttolist',
+    'plugins.exporters.exporttosvg',
+    'plugins.exporters.timelineexporter',
+    'plugins.texttransformers.defaulttexttransformer',
+    'plugins.texttransformers.plaintexttohtml']
+
+
 class describe_plugin_factory(UnitTestCase):
 
     def test_can_return_a_named_plugin(self):
-        plugin = factory.get_plugin(EVENTBOX_DRAWER, "Default Event box drawer")
+        plugin = factory.get_plugin(EVENTBOX_DRAWER, _("Default Event box drawer"))
         self.assertEquals(_("Default Event box drawer"), plugin.display_name())
 
     def test_can_return_another_named_plugin(self):
-        plugin = factory.get_plugin(EVENTBOX_DRAWER, "Gradient Event box drawer")
+        plugin = factory.get_plugin(EVENTBOX_DRAWER, _("Gradient Event box drawer"))
         self.assertEquals(_("Gradient Event box drawer"), plugin.display_name())
 
     def test_returns_none_when_named_plugin_cant_be_found(self):
         plugin = factory.get_plugin(EVENTBOX_DRAWER, "xyz drawer")
         self.assertEquals(None, plugin)
+
