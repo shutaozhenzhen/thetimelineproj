@@ -309,7 +309,7 @@ class TimelineScene(object):
 
     def _calc_y_pos_for_non_period_event(self, event, rh):
         if event.is_milestone():
-            return self._metrics.half_height - rh / 2
+            return self._metrics.half_height - rh // 2
         else:
             return self._metrics.half_height - rh - self._baseline_padding
 
