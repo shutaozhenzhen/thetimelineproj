@@ -367,7 +367,7 @@ class DefaultEventBoxDrawer(object):
             dc.DestroyClippingRegion()
             dc.SetPen(self._black_solid_pen(1))
             dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.BRUSHSTYLE_SOLID))
-            dc.DrawCircle(rect.x + half_size, rect.y + half_size, 2 * rect.width / 3)
+            dc.DrawCircle(rect.x + half_size, rect.y + half_size, 2 * rect.width // 3)
 
         def draw_diamond_shape():
             SIZE = 2
