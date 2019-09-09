@@ -284,7 +284,7 @@ class TimelineScene(object):
             ry = self._calc_y_pos_for_non_period_event(event, rh)
             if event.is_milestone():
                 rw = rh
-                rx = self._metrics.calc_x(event.get_time_period().start_time) - rw / 2
+                rx = self._metrics.calc_x(event.get_time_period().start_time) - rw // 2
                 return wx.Rect(rx, ry, rw, rh)
             return self._calc_ideal_wx_rect(rx, ry, rw, rh)
 
