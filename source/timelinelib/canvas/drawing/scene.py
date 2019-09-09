@@ -305,7 +305,7 @@ class TimelineScene(object):
         if self._appearance.get_draw_period_events_to_right():
             return self._metrics.calc_x(event.get_time_period().start_time) - self._outer_padding
         else:
-            return self._metrics.calc_x(event.mean_time()) - rw / 2
+            return self._metrics.calc_x(event.mean_time()) - rw // 2
 
     def _calc_y_pos_for_non_period_event(self, event, rh):
         if event.is_milestone():
