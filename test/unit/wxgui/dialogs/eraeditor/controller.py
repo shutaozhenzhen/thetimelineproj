@@ -50,7 +50,7 @@ class EraEditorDialogControllerTestCase(UnitTestCase):
         self.controller.on_init(self.era)
 
     def assert_era_unchanged(self):
-        self.assertEquals(
+        self.assertEqual(
             self._get_comparison_data(self.era),
             self._original_comparison_data
         )

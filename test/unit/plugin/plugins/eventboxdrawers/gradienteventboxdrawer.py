@@ -27,7 +27,7 @@ class describe_gradient_event_box_drawer(UnitTestCase):
         self.assertTrue(self.plugin.isplugin())
 
     def test_is_an_event_box_drawer(self):
-        self.assertEquals(EVENTBOX_DRAWER, self.plugin.service())
+        self.assertEqual(EVENTBOX_DRAWER, self.plugin.service())
 
     def test_has_a_display_name(self):
         self.assertTrue(len(self.plugin.display_name()) > 0)

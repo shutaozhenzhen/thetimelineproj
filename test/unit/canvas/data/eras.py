@@ -78,31 +78,31 @@ class describe_overlapping_eras(ErasTestCase):
     def test_eras_can_detect_overlapping_type2(self):
         self.given_two_overlapping_eras_type_2()
         eras = self.eras.get_all()
-        self.assertEquals(eras[0], self.era1)
+        self.assertEqual(eras[0], self.era1)
         self.assertEqual(2, eras[0].overlapping(eras[1]))
 
     def test_eras_can_detect_overlapping_type3(self):
         self.given_two_overlapping_eras_type_3()
         eras = self.eras.get_all()
-        self.assertEquals(eras[0], self.era1)
+        self.assertEqual(eras[0], self.era1)
         self.assertEqual(3, eras[0].overlapping(eras[1]))
 
     def test_eras_can_detect_overlapping_type4(self):
         self.given_two_overlapping_eras_type_4()
         eras = self.eras.get_all()
-        self.assertEquals(eras[0], self.era1)
+        self.assertEqual(eras[0], self.era1)
         self.assertEqual(4, eras[0].overlapping(eras[1]))
 
     def test_eras_can_detect_overlapping_type5(self):
         self.given_two_overlapping_eras_type_5()
         eras = self.eras.get_all()
-        self.assertEquals(eras[0], self.era1)
+        self.assertEqual(eras[0], self.era1)
         self.assertEqual(5, eras[0].overlapping(eras[1]))
 
     def test_eras_can_detect_overlapping_type6(self):
         self.given_two_overlapping_eras_type_6()
         eras = self.eras.get_all()
-        self.assertEquals(eras[0], self.era1)
+        self.assertEqual(eras[0], self.era1)
         self.assertEqual(6, eras[0].overlapping(eras[1]))
 
     def test_eras_can_return_a_list_with_added_overlapping_type1_eras(self):

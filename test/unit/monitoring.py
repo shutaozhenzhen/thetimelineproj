@@ -29,20 +29,20 @@ class desribe_monitoring(UnitTestCase):
 
     def test_counters_are_zero_at_start(self):
         """ """
-        self.assertEquals(0, self.monitoring._timeline_redraw_count)
-        self.assertEquals(0, self.monitoring._category_redraw_count)
+        self.assertEqual(0, self.monitoring._timeline_redraw_count)
+        self.assertEqual(0, self.monitoring._category_redraw_count)
 
     def test_timeline_redraw_counter_increments(self):
         """ """
         self.monitoring.count_timeline_redraw()
-        self.assertEquals(1, self.monitoring._timeline_redraw_count)
-        self.assertEquals(0, self.monitoring._category_redraw_count)
+        self.assertEqual(1, self.monitoring._timeline_redraw_count)
+        self.assertEqual(0, self.monitoring._category_redraw_count)
 
     def test_category_redraw_counter_increments(self):
         """ """
         self.monitoring.count_category_redraw()
-        self.assertEquals(0, self.monitoring._timeline_redraw_count)
-        self.assertEquals(1, self.monitoring._category_redraw_count)
+        self.assertEqual(0, self.monitoring._timeline_redraw_count)
+        self.assertEqual(1, self.monitoring._category_redraw_count)
 
     def test_returns_elapsed_time(self):
         """ """
@@ -50,7 +50,7 @@ class desribe_monitoring(UnitTestCase):
         self.monitoring.timer_end()
         self.timer.start.assert_called_with()
         self.timer.end.assert_called_with()
-        self.assertEquals(3, self.monitoring.timer_elapsed_ms)
+        self.assertEqual(3, self.monitoring.timer_elapsed_ms)
 
     def setUp(self):
         self.timer = Mock(Timer)

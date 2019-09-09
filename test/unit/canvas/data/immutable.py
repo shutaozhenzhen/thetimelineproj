@@ -66,7 +66,7 @@ class describe_saving_event(DBTestCase):
 
     def test_fails_if_category_does_not_exist(self):
         db = ImmutableDB()
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Category with id 99 does not exist$",
             db.save_event, ImmutableEvent(category_id=99), 1
@@ -74,7 +74,7 @@ class describe_saving_event(DBTestCase):
 
     def test_fails_if_container_does_not_exist(self):
         db = ImmutableDB()
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Container with id 99 does not exist$",
             db.save_event, ImmutableEvent(container_id=99), 1
@@ -101,7 +101,7 @@ class describe_deleting_event(DBTestCase):
 
     def test_fails_if_event_does_not_exist(self):
         db = ImmutableDB()
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Event with id 99 does not exist$",
             db.delete_event, 99
@@ -141,7 +141,7 @@ class describe_saving_category(DBTestCase):
     def test_fails_if_name_exists(self):
         db = ImmutableDB()
         db = db.save_category(ImmutableCategory(name="foo"), 1)
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Category name 'foo' is not unique$",
             db.save_category, ImmutableCategory(name="foo"), 2
@@ -149,7 +149,7 @@ class describe_saving_category(DBTestCase):
 
     def test_fails_if_parent_does_not_exist(self):
         db = ImmutableDB()
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Category with id 99 does not exist$",
             db.save_category, ImmutableCategory(parent_id=99), 1
@@ -159,7 +159,7 @@ class describe_saving_category(DBTestCase):
         db = ImmutableDB()
         db = db.save_category(ImmutableCategory(name="root"), 1)
         db = db.save_category(ImmutableCategory(name="child", parent_id=1), 2)
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Circular category parent$",
             db.save_category, ImmutableCategory(parent_id=2), 1
@@ -252,7 +252,7 @@ class describe_deleting_category(DBTestCase):
 
     def test_fails_if_category_does_not_exist(self):
         db = ImmutableDB()
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Category with id 99 does not exist$",
             db.delete_category, 99
@@ -308,7 +308,7 @@ class describe_deleting_era(DBTestCase):
 
     def test_fails_if_era_does_not_exist(self):
         db = ImmutableDB()
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Era with id 99 does not exist$",
             db.delete_era, 99
@@ -347,7 +347,7 @@ class describe_saving_milestone(DBTestCase):
 
     def test_fails_if_category_does_not_exist(self):
         db = ImmutableDB()
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Category with id 99 does not exist$",
             db.save_milestone, ImmutableMilestone(category_id=99), 1
@@ -374,7 +374,7 @@ class describe_deleting_milestone(DBTestCase):
 
     def test_fails_if_milestone_does_not_exist(self):
         db = ImmutableDB()
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Milestone with id 99 does not exist$",
             db.delete_milestone, 99
@@ -417,7 +417,7 @@ class describe_saving_container(DBTestCase):
 
     def test_fails_if_category_does_not_exist(self):
         db = ImmutableDB()
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Category with id 99 does not exist$",
             db.save_container, ImmutableContainer(category_id=99), 1
@@ -463,7 +463,7 @@ class describe_deleting_container(DBTestCase):
 
     def test_fails_if_container_does_not_exist(self):
         db = ImmutableDB()
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             InvalidOperationError,
             r"^Container with id 99 does not exist$",
             db.delete_container, 99

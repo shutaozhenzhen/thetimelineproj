@@ -33,8 +33,8 @@ from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
 class describe_eras_editor_dialog_controller(UnitTestCase):
 
     def test_construction(self):
-        self.assertEquals(2, len(self.controller.eras))
-        self.assertEquals(self.view, self.controller.view)
+        self.assertEqual(2, len(self.controller.eras))
+        self.assertEqual(self.view, self.controller.view)
 
     def test_listbox_is_populated_at_construction(self):
         self.view.SetEras.assert_called_with(self.db.get_all_eras())
@@ -43,7 +43,7 @@ class describe_eras_editor_dialog_controller(UnitTestCase):
         era = self.db.get_all_eras()[0]
         self._simulate_delete_button_clicked_on(era)
         self.view.RemoveEra.assert_called_with(era)
-        self.assertEquals(self.db.get_all_eras(), self.controller.eras)
+        self.assertEqual(self.db.get_all_eras(), self.controller.eras)
 
     def test_when_added_the_add_operation_function_is_called(self):
         count = len(self.db.get_all_eras.return_value)

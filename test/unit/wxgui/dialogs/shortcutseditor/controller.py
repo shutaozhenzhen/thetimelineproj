@@ -72,17 +72,17 @@ class describe_shortcuts_editor_dialog_controller(UnitTestCase):
 
     def test_shortcut_is_modifier_plus_key(self):
         self.given_a_view_with(None, "Ctrl", "X")
-        self.assertEquals("Ctrl+X", self.controller._get_shortcut())
+        self.assertEqual("Ctrl+X", self.controller._get_shortcut())
 
     def test_shortcut_is_key_only(self):
         self.given_a_view_with(None, "", "X")
-        self.assertEquals("X", self.controller._get_shortcut())
+        self.assertEqual("X", self.controller._get_shortcut())
 
     def test_shortcut_is_saved(self):
         self.given_a_view_with("Func", "Ctrl", "X")
         self.controller.on_apply_clicked(None)
-        self.assertEquals("Func", self.shortcut_config.function)
-        self.assertEquals("Ctrl+X", self.shortcut_config.shortcut)
+        self.assertEqual("Func", self.shortcut_config.function)
+        self.assertEqual("Ctrl+X", self.shortcut_config.shortcut)
 
     def test_shortcut_cant_be_used_for_more_than_one_function(self):
         self.given_a_view_with("Func", "Ctrl", "N")
@@ -99,8 +99,8 @@ class describe_shortcuts_editor_dialog_controller(UnitTestCase):
     def test_modifier_not_needed_for_function_keys(self):
         self.given_a_view_with("Func", "", "F1")
         self.controller.on_apply_clicked(None)
-        self.assertEquals("Func", self.shortcut_config.function)
-        self.assertEquals("F1", self.shortcut_config.shortcut)
+        self.assertEqual("Func", self.shortcut_config.function)
+        self.assertEqual("F1", self.shortcut_config.shortcut)
 
     def test_modifier_must_be_known(self):
         self.given_a_view_with("Func", "xxx", "N")
