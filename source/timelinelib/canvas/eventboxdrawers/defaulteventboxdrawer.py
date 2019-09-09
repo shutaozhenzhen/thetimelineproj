@@ -218,7 +218,7 @@ class DefaultEventBoxDrawer(object):
 
     def _get_text(self, event):
         if event.get_progress() == 100 and self.view_properties.get_display_checkmark_on_events_done():
-            return u"\u2714" + event.get_text()
+            return "\u2714" + event.get_text()
         else:
             return event.get_text()
 

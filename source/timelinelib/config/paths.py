@@ -25,8 +25,8 @@ import os.path
 _ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 
 
-ICONS_DIR = os.path.join(_ROOT, u"icons")
-EVENT_ICONS_DIR = os.path.join(_ROOT, u"icons", u"event_icons")
-LOCALE_DIR = os.path.join(_ROOT, u"translations")
-HELP_RESOURCES_DIR = os.path.join(_ROOT, u"help_resources")
+ICONS_DIR = os.path.join(_ROOT, "icons")
+EVENT_ICONS_DIR = os.path.join(_ROOT, "icons", "event_icons")
+LOCALE_DIR = os.path.join(_ROOT, "translations")
+HELP_RESOURCES_DIR = os.path.join(_ROOT, "help_resources")
 

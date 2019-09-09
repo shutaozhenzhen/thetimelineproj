@@ -109,7 +109,7 @@ class describe_help_page_repoistory_page_search(HelpPageRepositoryUnitTestCase):
     def test_serach_result_page_rendered_when_no_matches_found(self):
         serach_result_page = self.repository.get_search_results_page("body")
         self.assertEqual(
-            u"<h1>⟪Search results for 'body'⟫</h1><ul></ul>",
+            "<h1>⟪Search results for 'body'⟫</h1><ul></ul>",
             serach_result_page
         )
 
@@ -117,7 +117,7 @@ class describe_help_page_repoistory_page_search(HelpPageRepositoryUnitTestCase):
         self.repository.install_page(PAGE_ID, PAGE_HEADER, PAGE_BODY, [])
         serach_result_page = self.repository.get_search_results_page("body")
         self.assertEqual(
-            u'<h1>⟪Search results for \'body\'⟫</h1><ul><li><a href="page:id">header</a></li></ul>',
+            '<h1>⟪Search results for \'body\'⟫</h1><ul><li><a href="page:id">header</a></li></ul>',
             serach_result_page
         )
 
@@ -149,13 +149,13 @@ class describe_help_page(HelpPageUnitTestCase):
         self.repository.install_page("bar", PAGE_HEADER, PAGE_BODY, [])
         self.help_page = HelpPage(self.repository, PAGE_ID, PAGE_HEADER, PAGE_BODY, ["foo", "bar"])
         self.assertEqual(
-            u'<h1>header</h1><p>body</p><h2>⟪Related pages⟫</h2><ul><li><a href="page:foo">header</a></li><li><a href="page:bar">header</a></li></ul>',
+            '<h1>header</h1><p>body</p><h2>⟪Related pages⟫</h2><ul><li><a href="page:foo">header</a></li><li><a href="page:bar">header</a></li></ul>',
             self.help_page.render_to_html()
         )
 
     def test_can_be_rendered_to_html_with_related_pages_not_found(self):
         self.help_page = HelpPage(self.repository, PAGE_ID, PAGE_HEADER, PAGE_BODY, ["foo", "bar"])
         self.assertEqual(
-            u'<h1>%s</h1><p>%s</p><h2>⟪Related pages⟫</h2><ul></ul>' % (PAGE_HEADER, PAGE_BODY),
+            '<h1>%s</h1><p>%s</p><h2>⟪Related pages⟫</h2><ul></ul>' % (PAGE_HEADER, PAGE_BODY),
             self.help_page.render_to_html()
         )

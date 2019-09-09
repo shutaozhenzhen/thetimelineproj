@@ -165,7 +165,7 @@ class XmlTimelineSpec(TmpDirTestCase):
             text="Event 1",
             category=cat1
         )
-        ev1.set_data("description", u"The <b>first</b> event Ã¥Ã¤Ã¶.")
+        ev1.set_data("description", "The <b>first</b> event Ã¥Ã¤Ã¶.")
         ev1.set_data("alert", (human_time_to_gregorian("31 Dec 2012"), "Time to go"))
         db.save_event(ev1)
         # Create view properties
@@ -183,7 +183,7 @@ class XmlTimelineSpec(TmpDirTestCase):
         self.assertEqual(event.get_text(), "Event 1")
         self.assertEqual(event.get_time_period(), gregorian_period("3 Mar 2010", "6 Mar 2010"))
         self.assertEqual(event.get_category().get_name(), "Category 1")
-        self.assertEqual(event.get_data("description"), u"The <b>first</b> event Ã¥Ã¤Ã¶.")
+        self.assertEqual(event.get_data("description"), "The <b>first</b> event Ã¥Ã¤Ã¶.")
         self.assertEqual(event.get_data("alert"), (human_time_to_gregorian("31 Dec 2012"), "Time to go"))
         self.assertEqual(event.get_data("icon"), None)
         # Assert that correct view properties are loaded (category visibility

@@ -47,7 +47,7 @@ class describe_feedback_dialog_controller(UnitTestCase):
     def test_can_send_unicode_characters(self):
         self.view.GetToText.return_value = "foo@example.com"
         self.view.GetSubjectText.return_value = "subject"
-        self.view.GetBodyText.return_value = u"������"
+        self.view.GetBodyText.return_value = "������"
         self.controller.on_init(self.webbrowser, info="", subject="", body="")
         self.controller.on_default_click(None)
         self.webbrowser.open.assert_called_with("mailto:foo%40example.com?subject=subject&body=%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD")

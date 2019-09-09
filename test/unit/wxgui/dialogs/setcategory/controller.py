@@ -108,17 +108,17 @@ class describe_set_category_dialog_controller(UnitTestCase):
         self.view.GetSelectedCategory.return_value = None
         self.controller.on_ok_clicked(None)
         self.view.DisplayErrorMessage.assert_called_with(
-            u"⟪You must select a category!⟫"
+            "⟪You must select a category!⟫"
         )
 
     def test_title_set_for_no_selected_events(self):
         self.controller.on_init(self.db, [])
         self.view.SetTitle.assert_called_with(
-            u"⟪Set Category on events without category⟫"
+            "⟪Set Category on events without category⟫"
         )
 
     def test_title_set_for_selected_events(self):
         self.controller.on_init(self.db, [self.event1.id])
         self.view.SetTitle.assert_called_with(
-            u"⟪Set Category on selected events⟫"
+            "⟪Set Category on selected events⟫"
         )

@@ -26,9 +26,9 @@ from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 class ShortcutConfig(object):
 
     def __init__(self):
-        self.functions = [u'File->New...', u'File->Save As...']
-        self.shc_and_keys = {u'File->New...': ('Ctrl', 'N'),
-                             u'File->Save As...': ('Ctrl', 'S')}
+        self.functions = ['File->New...', 'File->Save As...']
+        self.shc_and_keys = {'File->New...': ('Ctrl', 'N'),
+                             'File->Save As...': ('Ctrl', 'S')}
 
     def get_functions(self):
         return self.functions
