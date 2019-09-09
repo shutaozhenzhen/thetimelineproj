@@ -162,15 +162,6 @@ class DefaultEventBoxDrawer(object):
         self._inflate_clipping_region(dc, rect)
         dc.DrawBitmap(self._get_lock_bitmap(), rect.x + rect.width - 8, rect.y + 3, True)
 
-    def _draw_locked(self, dc, event, rect, x, start_angle, end_angle):
-        y = rect.y + rect.height / 2
-        r = rect.height / 2.5
-        dc.SetBrush(wx.WHITE_BRUSH)
-        dc.SetPen(wx.WHITE_PEN)
-        dc.DrawCircle(x, y, r)
-        dc.SetPen(self._get_thin_border_pen(event))
-        self.draw_segment(dc, event, x, y, r, start_angle, end_angle)
-
     def draw_segment(self, dc, event, x0, y0, r, start_angle, end_angle):
         gc = wx.GraphicsContext.Create(dc)
         path = gc.CreatePath()
