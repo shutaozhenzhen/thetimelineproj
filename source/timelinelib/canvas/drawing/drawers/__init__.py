@@ -98,7 +98,7 @@ def _hsl2rgb(h, s, l):
         r = 255 * _hue_2_rgb(var_1, var_2, h + (1.0 / 3.0))
         g = 255 * _hue_2_rgb(var_1, var_2, h)
         b = 255 * _hue_2_rgb(var_1, var_2, h - (1.0 / 3.0))
-    return (r, g, b)
+    return (int(r), int(g), int(b))
 
 
 def _hue_2_rgb(v1, v2, vh):

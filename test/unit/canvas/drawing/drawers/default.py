@@ -99,4 +99,4 @@ class describe_progress_color(UnitTestCase):
     def test_progress_color(self):
         self.assertEqual(get_progress_color((255, 255, 255)), (255, 255, 255))
         self.assertEqual(get_progress_color((100, 100, 100)), (120, 120, 120))
-        self.assertEqual(get_progress_color((100, 150, 200)), (50.88435374149661, 97.14285714285714, 143.40136054421765))
+        self.assertEqual(get_progress_color((100, 150, 200)), (50, 97, 143))
