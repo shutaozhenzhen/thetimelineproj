@@ -296,7 +296,7 @@ class TimelineScene(object):
         rw = tw + 2 * self._inner_padding + 2 * self._outer_padding
         rh = th + 2 * self._inner_padding + 2 * self._outer_padding
         if event.has_data():
-            rw += self._data_indicator_size / 3
+            rw += self._data_indicator_size // 3
         if event.get_fuzzy() or event.get_locked():
             rw += th + 2 * self._inner_padding
         return rw, rh
