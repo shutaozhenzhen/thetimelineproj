@@ -306,7 +306,7 @@ class DefaultEventBoxDrawer(object):
             dc.DrawRectangle(handle_rect)
 
         def draw_handle_rects(handle_rect):
-            HALF_EVENT_WIDTH = rect.Width / 2
+            HALF_EVENT_WIDTH = rect.Width // 2
             EVENT_WIDTH = rect.Width
             draw_rect(handle_rect, 0)
             draw_rect(handle_rect, EVENT_WIDTH - 2)
