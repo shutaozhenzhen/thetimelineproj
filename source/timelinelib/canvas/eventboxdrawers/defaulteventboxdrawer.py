@@ -343,7 +343,7 @@ class DefaultEventBoxDrawer(object):
     def _draw_milestone_event(self, dc, rect, scene, event, selected):
 
         def create_handle_rect():
-            HALF_EVENT_HEIGHT = rect.Height / 2
+            HALF_EVENT_HEIGHT = rect.Height // 2
             y = rect.Y + HALF_EVENT_HEIGHT - HALF_HANDLE_SIZE
             x = rect.X - HALF_HANDLE_SIZE + 1
             return wx.Rect(x, y, HANDLE_SIZE, HANDLE_SIZE)
@@ -363,7 +363,7 @@ class DefaultEventBoxDrawer(object):
             dc.DrawRectangle(rect)
 
         def draw_circle_shape():
-            half_size = rect.width / 2
+            half_size = rect.width // 2
             dc.DestroyClippingRegion()
             dc.SetPen(self._black_solid_pen(1))
             dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.BRUSHSTYLE_SOLID))
@@ -373,7 +373,7 @@ class DefaultEventBoxDrawer(object):
             SIZE = 2
             x = rect.x
             y = rect.y
-            half_size = rect.width / 2
+            half_size = rect.width // 2
             points = (wx.Point(x - SIZE, y + half_size),
                       wx.Point(x + half_size, y - SIZE),
                       wx.Point(x + rect.width + SIZE, y + half_size),
@@ -395,7 +395,7 @@ class DefaultEventBoxDrawer(object):
         def draw_move_handle():
             dc.SetBrush(self._black_solid_brush())
             handle_rect = create_handle_rect()
-            handle_rect.Offset(rect.Width / 2, 0)
+            handle_rect.Offset(rect.Width // 2, 0)
             dc.DrawRectangle(handle_rect)
 
         draw_shape()
