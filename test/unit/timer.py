@@ -29,12 +29,12 @@ class desribe_timer(UnitTestCase):
     def test_has_a_default_timer_on_windows(self):
         """ """
         sys.platform = "win32"
-        self.assertEquals(time.clock, Timer().default_timer)
+        self.assertEqual(time.clock, Timer().default_timer)
 
     def test_has_a_default_timer_on_any_os(self):
         """ """
         sys.platform = "any_os"
-        self.assertEquals(time.time, Timer().default_timer)
+        self.assertEqual(time.time, Timer().default_timer)
 
     def test_can_start_timing(self):
         """ """

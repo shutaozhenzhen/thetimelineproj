@@ -218,7 +218,7 @@ class describe_transactions(UnitTestCase):
         self.assertEqual(self.transactions.value, value)
 
     def assertRaisesTransactionError(self, name):
-        return self.assertRaisesRegexp(
+        return self.assertRaisesRegex(
             TransactionError,
             re.escape("Transaction(name='{0}', ...)".format(name))
         )

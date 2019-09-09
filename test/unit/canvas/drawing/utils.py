@@ -59,11 +59,11 @@ class describe_gregorian_overflow_error(MetricsTestCase):
 
     def test_x_is_zero_at_period_start(self):
         self.given_a_gregorian_scene_period()
-        self.assertEquals(0, self.metrics.calc_x(START_TIME))
+        self.assertEqual(0, self.metrics.calc_x(START_TIME))
 
     def test_x_is_width_at_period_end(self):
         self.given_a_gregorian_scene_period()
-        self.assertEquals(WIDTH, self.metrics.calc_x(END_TIME))
+        self.assertEqual(WIDTH, self.metrics.calc_x(END_TIME))
 
     def test_x_can_be_negative(self):
         self.given_a_gregorian_scene_period()
@@ -75,11 +75,11 @@ class describe_numeric_overflow_error(MetricsTestCase):
 
     def test_x_is_zero_at_period_start(self):
         self.given_a_numeric_scene_period()
-        self.assertEquals(0, self.metrics.calc_x(START_NUM_TIME))
+        self.assertEqual(0, self.metrics.calc_x(START_NUM_TIME))
 
     def test_x_is_width_at_period_end(self):
         self.given_a_numeric_scene_period()
-        self.assertEquals(WIDTH, self.metrics.calc_x(END_NUM_TIME))
+        self.assertEqual(WIDTH, self.metrics.calc_x(END_NUM_TIME))
 
     def test_x_can_be_negative(self):
         self.given_a_numeric_scene_period()
@@ -89,12 +89,12 @@ class describe_numeric_overflow_error(MetricsTestCase):
     def test_negative_overflow_is_handled(self):
         self.given_a_numeric_scene_period()
         time = -1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-        self.assertEquals(-1, self.metrics.calc_x(time))
+        self.assertEqual(-1, self.metrics.calc_x(time))
 
     def test_positive_overflow_is_handled(self):
         self.given_a_numeric_scene_period()
         time = 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-        self.assertEquals(WIDTH + 1, self.metrics.calc_x(time))
+        self.assertEqual(WIDTH + 1, self.metrics.calc_x(time))
 
 
 class describe_drawing_utils(UnitTestCase):

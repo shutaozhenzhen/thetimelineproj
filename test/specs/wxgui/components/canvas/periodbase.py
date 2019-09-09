@@ -33,9 +33,9 @@ class SelectperiodByDragInputHandler(UnitTestCase):
         try:
             self.simulate_drag_where_julian_day_becomes_lt_zero()
             self.when_mouse_moved()
-            self.assert_(True)
+            self.assertTrue(True)
         except ValueError:
-            self.assert_(False)
+            self.assertTrue(False)
 
     def when_mouse_moved(self):
         self.handler.mouse_moved(Cursor(10, 10), Keyboard())

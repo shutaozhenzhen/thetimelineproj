@@ -61,20 +61,20 @@ class describe_gregorian_era_getters(GregorianEraTestCase):
 
     def test_can_get_id(self):
         """ """
-        self.assertEquals(None, self.era.get_id())
+        self.assertEqual(None, self.era.get_id())
         self.assertFalse(self.era.has_id())
 
     def test_can_get_name(self):
         """ """
-        self.assertEquals(NAME, self.era.get_name())
+        self.assertEqual(NAME, self.era.get_name())
 
     def test_can_get_color(self):
         """ """
-        self.assertEquals(COLOR, self.era.get_color())
+        self.assertEqual(COLOR, self.era.get_color())
 
     def test_can_get_time_period(self):
         """ """
-        self.assertEquals(gregorian_period(GREGORIAN_START, GREGORIAN_END), self.era.get_time_period())
+        self.assertEqual(gregorian_period(GREGORIAN_START, GREGORIAN_END), self.era.get_time_period())
 
 
 class describe_numeric_era_getters(NumericEraTestCase):
@@ -82,20 +82,20 @@ class describe_numeric_era_getters(NumericEraTestCase):
 
     def test_can_get_id(self):
         """ """
-        self.assertEquals(None, self.era.get_id())
+        self.assertEqual(None, self.era.get_id())
         self.assertFalse(self.era.has_id())
 
     def test_can_get_name(self):
         """ """
-        self.assertEquals(NAME, self.era.get_name())
+        self.assertEqual(NAME, self.era.get_name())
 
     def test_can_get_color(self):
         """ """
-        self.assertEquals(COLOR, self.era.get_color())
+        self.assertEqual(COLOR, self.era.get_color())
 
     def test_can_get_time_period(self):
         """ """
-        self.assertEquals(numeric_period(NUM_START, NUM_END), self.era.get_time_period())
+        self.assertEqual(numeric_period(NUM_START, NUM_END), self.era.get_time_period())
 
 
 class describe_gregorian_era_setters(GregorianEraTestCase):
@@ -105,20 +105,20 @@ class describe_gregorian_era_setters(GregorianEraTestCase):
         """ """
         era_id = 100
         self.era.set_id(era_id)
-        self.assertEquals(era_id, self.era.get_id())
+        self.assertEqual(era_id, self.era.get_id())
         self.assertTrue(self.era.has_id())
 
     def test_can_set_name(self):
         """ """
         name = "New Era name"
         self.era.set_name(name)
-        self.assertEquals(name, self.era.get_name())
+        self.assertEqual(name, self.era.get_name())
 
     def test_can_set_color(self):
         """ """
         color = (122, 123, 124)
         self.era.set_color(color)
-        self.assertEquals(color, self.era.get_color())
+        self.assertEqual(color, self.era.get_color())
 
     def test_can_set_time_period(self):
         """ """
@@ -126,7 +126,7 @@ class describe_gregorian_era_setters(GregorianEraTestCase):
         end = "1 Aug 2011"
         period = gregorian_period(start, end)
         self.era.set_time_period(period)
-        self.assertEquals(period, self.era.get_time_period())
+        self.assertEqual(period, self.era.get_time_period())
 
 
 class describe_numeric_era_setters(NumericEraTestCase):
@@ -136,20 +136,20 @@ class describe_numeric_era_setters(NumericEraTestCase):
         """ """
         era_id = 100
         self.era.set_id(era_id)
-        self.assertEquals(era_id, self.era.get_id())
+        self.assertEqual(era_id, self.era.get_id())
         self.assertTrue(self.era.has_id())
 
     def test_can_set_name(self):
         """ """
         name = "New Era name"
         self.era.set_name(name)
-        self.assertEquals(name, self.era.get_name())
+        self.assertEqual(name, self.era.get_name())
 
     def test_can_set_color(self):
         """ """
         color = (122, 123, 124)
         self.era.set_color(color)
-        self.assertEquals(color, self.era.get_color())
+        self.assertEqual(color, self.era.get_color())
 
     def test_can_set_time_period(self):
         """ """
@@ -157,7 +157,7 @@ class describe_numeric_era_setters(NumericEraTestCase):
         end = -10
         period = numeric_period(start, end)
         self.era.set_time_period(period)
-        self.assertEquals(period, self.era.get_time_period())
+        self.assertEqual(period, self.era.get_time_period())
 
 
 class describe_gregorian_era_update(GregorianEraTestCase):
@@ -171,9 +171,9 @@ class describe_gregorian_era_update(GregorianEraTestCase):
         name = "Updated name"
         color = (111, 110, 109)
         self.era.update(human_time_to_gregorian(start), human_time_to_gregorian(end), name, color)
-        self.assertEquals(name, self.era.get_name())
-        self.assertEquals(color, self.era.get_color())
-        self.assertEquals(period, self.era.get_time_period())
+        self.assertEqual(name, self.era.get_name())
+        self.assertEqual(color, self.era.get_color())
+        self.assertEqual(period, self.era.get_time_period())
 
 
 class describe_numeric_era_update(NumericEraTestCase):
@@ -187,9 +187,9 @@ class describe_numeric_era_update(NumericEraTestCase):
         name = "Updated name"
         color = (111, 110, 109)
         self.era.update(start, end, name, color)
-        self.assertEquals(name, self.era.get_name())
-        self.assertEquals(color, self.era.get_color())
-        self.assertEquals(period, self.era.get_time_period())
+        self.assertEqual(name, self.era.get_name())
+        self.assertEqual(color, self.era.get_color())
+        self.assertEqual(period, self.era.get_time_period())
 
 
 class describe_gregorian_era_comparision(NumericEraTestCase):
