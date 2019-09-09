@@ -395,13 +395,13 @@ class Event(ItemBase, TimelineItem):
 
     def get_label(self, time_type):
         """Returns a unicode label describing the event."""
-        event_label = u"%s (%s)" % (
+        event_label = "%s (%s)" % (
             self.text,
             time_type.format_period(self.get_time_period()),
         )
         duration_label = self._get_duration_label(time_type)
         if duration_label != "":
-            return u"%s  %s: %s" % (event_label, _("Duration"), duration_label)
+            return "%s  %s: %s" % (event_label, _("Duration"), duration_label)
         else:
             return event_label
 

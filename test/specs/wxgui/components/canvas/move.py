@@ -83,7 +83,7 @@ class MoveByDragInputHandlerSpec(UnitTestCase):
         event_2.set_locked(True)
         self.given_time_at_x_is(50, "5 Jan 2011")
         self.when_moving(event_1, from_time="1 Jan 2011", to_x=50)
-        self.state.display_status.assert_called_with(u"\u27eaCan't move locked event\u27eb")
+        self.state.display_status.assert_called_with("\u27eaCan't move locked event\u27eb")
 
     def test_clears_hint_when_done_moving(self):
         self.when_move_done()

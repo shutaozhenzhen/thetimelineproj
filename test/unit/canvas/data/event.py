@@ -132,34 +132,34 @@ class describe_event(UnitTestCase):
     def test_point_event_has_a_label(self):
         event = an_event_with(text="foo", time="11 Jul 2014 10:11")
         self.assertEqual(
-            u"foo (11 ⟪Jul⟫ 2014 10:11)",
+            "foo (11 ⟪Jul⟫ 2014 10:11)",
             event.get_label(GregorianTimeType())
         )
 
     def test_point_event_has_an_empty_duration_label(self):
         event = an_event_with(text="foo", time="11 Jul 2014 10:11")
-        self.assertEqual(u"", event._get_duration_label(GregorianTimeType()))
+        self.assertEqual("", event._get_duration_label(GregorianTimeType()))
 
     def test_duration_label_for_period_events(self):
         cases = (
-            ("11 Jul 2014 10:11", "11 Jul 2014 10:12", u"1 ⟪minute⟫"),
-            ("11 Jul 2014 10:11", "11 Jul 2014 11:11", u"1 ⟪hour⟫"),
-            ("11 Jul 2014 10:11", "12 Jul 2014 10:11", u"1 ⟪day⟫"),
-            ("11 Jul 2014 10:11", "11 Jul 2014 11:12", u"1 ⟪hour⟫ 1 ⟪minute⟫"),
-            ("11 Jul 2014 10:11", "12 Jul 2014 10:12", u"1 ⟪day⟫ 1 ⟪minute⟫"),
-            ("11 Jul 2014 10:11", "12 Jul 2014 11:11", u"1 ⟪day⟫ 1 ⟪hour⟫"),
-            ("11 Jul 2014 10:11", "12 Jul 2014 11:12", u"1 ⟪day⟫ 1 ⟪hour⟫ 1 ⟪minute⟫"),
-            ("11 Jul 2014 10:11", "11 Jul 2014 10:13", u"2 ⟪minutes⟫"),
-            ("11 Jul 2014 10:11", "11 Jul 2014 12:11", u"2 ⟪hours⟫"),
-            ("11 Jul 2014 10:11", "13 Jul 2014 10:11", u"2 ⟪days⟫"),
-            ("11 Jul 2014 10:11", "11 Jul 2014 12:13", u"2 ⟪hours⟫ 2 ⟪minutes⟫"),
-            ("11 Jul 2014 10:11", "13 Jul 2014 10:13", u"2 ⟪days⟫ 2 ⟪minutes⟫"),
-            ("11 Jul 2014 10:11", "13 Jul 2014 12:11", u"2 ⟪days⟫ 2 ⟪hours⟫"),
-            ("11 Jul 2014 10:11", "13 Jul 2014 12:13", u"2 ⟪days⟫ 2 ⟪hours⟫ 2 ⟪minutes⟫"),
-            ("11 Jul 2014 10:11", "11 Jul 2014 11:13", u"1 ⟪hour⟫ 2 ⟪minutes⟫"),
-            ("11 Jul 2014 10:11", "12 Jul 2014 10:13", u"1 ⟪day⟫ 2 ⟪minutes⟫"),
-            ("11 Jul 2014 10:11", "12 Jul 2014 12:11", u"1 ⟪day⟫ 2 ⟪hours⟫"),
-            ("11 Jul 2014 10:11", "12 Jul 2014 12:13", u"1 ⟪day⟫ 2 ⟪hours⟫ 2 ⟪minutes⟫"),
+            ("11 Jul 2014 10:11", "11 Jul 2014 10:12", "1 ⟪minute⟫"),
+            ("11 Jul 2014 10:11", "11 Jul 2014 11:11", "1 ⟪hour⟫"),
+            ("11 Jul 2014 10:11", "12 Jul 2014 10:11", "1 ⟪day⟫"),
+            ("11 Jul 2014 10:11", "11 Jul 2014 11:12", "1 ⟪hour⟫ 1 ⟪minute⟫"),
+            ("11 Jul 2014 10:11", "12 Jul 2014 10:12", "1 ⟪day⟫ 1 ⟪minute⟫"),
+            ("11 Jul 2014 10:11", "12 Jul 2014 11:11", "1 ⟪day⟫ 1 ⟪hour⟫"),
+            ("11 Jul 2014 10:11", "12 Jul 2014 11:12", "1 ⟪day⟫ 1 ⟪hour⟫ 1 ⟪minute⟫"),
+            ("11 Jul 2014 10:11", "11 Jul 2014 10:13", "2 ⟪minutes⟫"),
+            ("11 Jul 2014 10:11", "11 Jul 2014 12:11", "2 ⟪hours⟫"),
+            ("11 Jul 2014 10:11", "13 Jul 2014 10:11", "2 ⟪days⟫"),
+            ("11 Jul 2014 10:11", "11 Jul 2014 12:13", "2 ⟪hours⟫ 2 ⟪minutes⟫"),
+            ("11 Jul 2014 10:11", "13 Jul 2014 10:13", "2 ⟪days⟫ 2 ⟪minutes⟫"),
+            ("11 Jul 2014 10:11", "13 Jul 2014 12:11", "2 ⟪days⟫ 2 ⟪hours⟫"),
+            ("11 Jul 2014 10:11", "13 Jul 2014 12:13", "2 ⟪days⟫ 2 ⟪hours⟫ 2 ⟪minutes⟫"),
+            ("11 Jul 2014 10:11", "11 Jul 2014 11:13", "1 ⟪hour⟫ 2 ⟪minutes⟫"),
+            ("11 Jul 2014 10:11", "12 Jul 2014 10:13", "1 ⟪day⟫ 2 ⟪minutes⟫"),
+            ("11 Jul 2014 10:11", "12 Jul 2014 12:11", "1 ⟪day⟫ 2 ⟪hours⟫"),
+            ("11 Jul 2014 10:11", "12 Jul 2014 12:13", "1 ⟪day⟫ 2 ⟪hours⟫ 2 ⟪minutes⟫"),
         )
         for start, end, label in cases:
             event = an_event_with(human_start_time=start, human_end_time=end)

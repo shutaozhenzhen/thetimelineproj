@@ -32,9 +32,9 @@ from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 
 
 if sys.platform == "win32":
-    FONT = u"12:74:90:92:False:MS Shell Dlg 2:-1:(0, 0, 0, 255)"
+    FONT = "12:74:90:92:False:MS Shell Dlg 2:-1:(0, 0, 0, 255)"
 else:
-    FONT = u"12:70:90:92:False:MS Shell Dlg 2:43:(0, 0, 0, 255)"
+    FONT = "12:70:90:92:False:MS Shell Dlg 2:43:(0, 0, 0, 255)"
 
 
 class describe_preferences_dialog_controller(WxAppTestCase):
@@ -166,7 +166,7 @@ class describe_preferences_dialog_controller(WxAppTestCase):
         self.simulate_on_date_formatter_click()
         self.view.ShowSelectDateFormatDialog.assert_called_with(self.config)
         self.view.SetCurrentDateFormat.assert_called_with(
-            u"⟪Current⟫: %s" % self.config.date_format
+            "⟪Current⟫: %s" % self.config.date_format
         )
 
     def test_uncheck_time_for_new_events(self):

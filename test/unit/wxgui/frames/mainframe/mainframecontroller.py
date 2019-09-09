@@ -61,7 +61,7 @@ class describe_mainframe_controller(UnitTestCase):
         self.db_open.side_effect = Exception("file corrupt")
         self.controller.open_timeline("foo.timeline")
         self.main_frame.DisplayErrorMessage.assert_called_with(
-            u"⟪Unable to open timeline 'foo.timeline'.⟫\n\nfile corrupt"
+            "⟪Unable to open timeline 'foo.timeline'.⟫\n\nfile corrupt"
         )
 
     def setUp(self):

@@ -47,7 +47,7 @@ class describe_slideshow_dialog_controller(TmpDirTestCase):
         self.view.GetTargetDir.return_value = ""
         self.simuate_user_clicks_ok()
         self.view.InvalidTargetDir.assert_called_with(
-            u"⟪The html pages directory is mandatory⟫"
+            "⟪The html pages directory is mandatory⟫"
         )
 
     def test_creation_of_target_directory_can_be_rejected(self):

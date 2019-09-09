@@ -26,7 +26,7 @@ from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.utils import a_category_with
 
 
-CONTENT_010 = u"""
+CONTENT_010 = """
 # Written by Timeline 0.1.0 on 2009-11-15 19:28:7
 PREFERRED-PERIOD:2009-10-17 22:38:32;2009-12-2 16:22:4
 CATEGORY:Category 1;188,129,224;True
@@ -35,7 +35,7 @@ CATEGORY:Category 3;173,216,230;False
 EVENT:2009-11-4 22:52:0;2009-11-11 22:52:0;Event 1;Category 1
 """.strip()
 
-CONTENT_0100 = u"""
+CONTENT_0100 = """
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
     <version>0.10.0</version>

@@ -86,7 +86,7 @@ class describe_gregoriantimetype(UnitTestCase):
         time_period = TimePeriod(self.time_type.parse_time("2010-08-01 13:44:00"),
                                  self.time_type.parse_time("2010-08-02 13:30:00"))
         self.assertEqual(
-            u"1 %s 2010 13:44 to 2 %s 2010 13:30" % (_("Aug"), _("Aug")),
+            "1 %s 2010 13:44 to 2 %s 2010 13:30" % (_("Aug"), _("Aug")),
             self.time_type.format_period(time_period))
 
     def test_returns_min_time(self):
@@ -148,34 +148,34 @@ class describe_gregorian_strip_week(WxAppTestCase):
         self.appearance.set_week_start("sunday")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00"), True),
-            u"7-13 ⟪Jul⟫ 2013"
+            "7-13 ⟪Jul⟫ 2013"
         )
 
     def test_label_major_when_week_starts_on_monday(self):
         self.appearance.set_week_start("monday")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00"), True),
-            u"⟪Week⟫ 27 (1-7 ⟪Jul⟫ 2013)"
+            "⟪Week⟫ 27 (1-7 ⟪Jul⟫ 2013)"
         )
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-4-07-07 00:00:00"), True),
-            u"⟪Week⟫ 27 (1-7 ⟪Jul⟫ 5 ⟪BC⟫)"
+            "⟪Week⟫ 27 (1-7 ⟪Jul⟫ 5 ⟪BC⟫)"
         )
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-11-25 00:00:00"), True),
-            u"⟪Week⟫ 48 (25 ⟪Nov⟫-1 ⟪Dec⟫ 2013)"
+            "⟪Week⟫ 48 (25 ⟪Nov⟫-1 ⟪Dec⟫ 2013)"
         )
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-4-11-25 00:00:00"), True),
-            u"⟪Week⟫ 48 (25 ⟪Nov⟫-1 ⟪Dec⟫ 5 ⟪BC⟫)"
+            "⟪Week⟫ 48 (25 ⟪Nov⟫-1 ⟪Dec⟫ 5 ⟪BC⟫)"
         )
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-12-30 00:00:00"), True),
-            u"⟪Week⟫ 1 (30 ⟪Dec⟫ 2013-5 ⟪Jan⟫ 2014)"
+            "⟪Week⟫ 1 (30 ⟪Dec⟫ 2013-5 ⟪Jan⟫ 2014)"
         )
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-4-12-30 00:00:00"), True),
-            u"⟪Week⟫ 1 (30 ⟪Dec⟫ 5 ⟪BC⟫-5 ⟪Jan⟫ 4 ⟪BC⟫)"
+            "⟪Week⟫ 1 (30 ⟪Dec⟫ 5 ⟪BC⟫-5 ⟪Jan⟫ 4 ⟪BC⟫)"
         )
 
     def setUp(self):
@@ -200,17 +200,17 @@ class describe_gregorian_strip_weekday(UnitTestCase):
     def test_label_minor(self):
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00")),
-            u"⟪Sun⟫ 7"
+            "⟪Sun⟫ 7"
         )
 
     def test_label_major(self):
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00"), True),
-            u"⟪Sun⟫ 7 ⟪Jul⟫ 2013"
+            "⟪Sun⟫ 7 ⟪Jul⟫ 2013"
         )
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00"), True),
-            u"⟪Fri⟫ 7 ⟪Jul⟫ 6 ⟪BC⟫"
+            "⟪Fri⟫ 7 ⟪Jul⟫ 6 ⟪BC⟫"
         )
 
     def setUp(self):
@@ -239,11 +239,11 @@ class describe_gregorian_strip_hour(UnitTestCase):
     def test_label_major(self):
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-07-07 12:00:00"), True),
-            u"7 ⟪Jul⟫ 2013: 12h"
+            "7 ⟪Jul⟫ 2013: 12h"
         )
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 12:00:00"), True),
-            u"7 ⟪Jul⟫ 6 ⟪BC⟫: 12h"
+            "7 ⟪Jul⟫ 6 ⟪BC⟫: 12h"
         )
 
     def setUp(self):
@@ -272,11 +272,11 @@ class describe_gregorian_strip_day(UnitTestCase):
     def test_label_major(self):
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00"), True),
-            u"7 ⟪Jul⟫ 2013"
+            "7 ⟪Jul⟫ 2013"
         )
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00"), True),
-            u"7 ⟪Jul⟫ 6 ⟪BC⟫"
+            "7 ⟪Jul⟫ 6 ⟪BC⟫"
         )
 
     def setUp(self):
@@ -305,11 +305,11 @@ class describe_gregorian_strip_month(UnitTestCase):
     def test_label_major(self):
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00"), True),
-            u"⟪Jul⟫ 2013"
+            "⟪Jul⟫ 2013"
         )
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00"), True),
-            u"⟪Jul⟫ 6 ⟪BC⟫"
+            "⟪Jul⟫ 6 ⟪BC⟫"
         )
 
     def setUp(self):
@@ -336,7 +336,7 @@ class describe_gregorian_strip_year(UnitTestCase):
             "2013")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00")),
-            u"6 ⟪BC⟫"
+            "6 ⟪BC⟫"
         )
 
     def test_label_major(self):
@@ -345,7 +345,7 @@ class describe_gregorian_strip_year(UnitTestCase):
             "2013")
         self.assertEqual(
             self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00"), True),
-            u"6 ⟪BC⟫"
+            "6 ⟪BC⟫"
         )
 
     def setUp(self):
@@ -358,17 +358,17 @@ class describe_gregorian_strip_decade(UnitTestCase):
 
     def test_label(self):
         for (time, expected_label) in [
-            ("7 Jul -19", u"20s ⟪BC⟫"),
-            ("7 Jul -18", u"10s ⟪BC⟫"),
-            ("7 Jul -9", u"10s ⟪BC⟫"),
-            ("7 Jul -8", u"0s ⟪BC⟫"),
-            ("7 Jul 0", u"0s ⟪BC⟫"),
-            ("7 Jul 1", u"0s"),
-            ("7 Jul 9", u"0s"),
-            ("7 Jul 10", u"10s"),
-            ("7 Jul 19", u"10s"),
-            ("7 Jul 20", u"20s"),
-            ("7 Jul 2013", u"2010s"),
+            ("7 Jul -19", "20s ⟪BC⟫"),
+            ("7 Jul -18", "10s ⟪BC⟫"),
+            ("7 Jul -9", "10s ⟪BC⟫"),
+            ("7 Jul -8", "0s ⟪BC⟫"),
+            ("7 Jul 0", "0s ⟪BC⟫"),
+            ("7 Jul 1", "0s"),
+            ("7 Jul 9", "0s"),
+            ("7 Jul 10", "10s"),
+            ("7 Jul 19", "10s"),
+            ("7 Jul 20", "20s"),
+            ("7 Jul 2013", "2010s"),
         ]:
             self.assertEqual(
                 self.strip.label(human_time_to_gregorian(time)),
@@ -439,17 +439,17 @@ class describe_gregorian_strip_century(UnitTestCase):
 
     def test_label_major(self):
         for (time, expected_label) in [
-            ("7 Jul -199", u"200s ⟪BC⟫"),
-            ("7 Jul -198", u"100s ⟪BC⟫"),
-            ("7 Jul -99", u"100s ⟪BC⟫"),
-            ("7 Jul -98", u"0s ⟪BC⟫"),
-            ("7 Jul 0", u"0s ⟪BC⟫"),
-            ("7 Jul 1", u"0s"),
-            ("7 Jul 99", u"0s"),
-            ("7 Jul 100", u"100s"),
-            ("7 Jul 199", u"100s"),
-            ("7 Jul 200", u"200s"),
-            ("7 Jul 2013", u"2000s"),
+            ("7 Jul -199", "200s ⟪BC⟫"),
+            ("7 Jul -198", "100s ⟪BC⟫"),
+            ("7 Jul -99", "100s ⟪BC⟫"),
+            ("7 Jul -98", "0s ⟪BC⟫"),
+            ("7 Jul 0", "0s ⟪BC⟫"),
+            ("7 Jul 1", "0s"),
+            ("7 Jul 99", "0s"),
+            ("7 Jul 100", "100s"),
+            ("7 Jul 199", "100s"),
+            ("7 Jul 200", "200s"),
+            ("7 Jul 2013", "2000s"),
         ]:
             self.assertEqual(
                 self.strip.label(human_time_to_gregorian(time), major=True),
@@ -524,70 +524,70 @@ class describe_gregorian_time_type_delta_formatting(UnitTestCase):
         time_period2 = TimePeriod(self.time_type.parse_time("2010-08-02 13:44:00"),
                                   self.time_type.parse_time("2010-08-02 13:44:00"))
         delta = time_period2.start_time - time_period1.start_time
-        self.assertEqual(u"1 %s" % _("day"), self.time_type.format_delta(delta))
+        self.assertEqual("1 %s" % _("day"), self.time_type.format_delta(delta))
 
     def test_format_one_minute_delta(self):
         delta = self.get_days_delta(days=0, hours=0, minutes=1)
-        self.assertEqual(u"1 %s" % _("minute"), self.time_type.format_delta(delta))
+        self.assertEqual("1 %s" % _("minute"), self.time_type.format_delta(delta))
 
     def test_format_two_minutes_delta(self):
         delta = self.get_days_delta(days=0, hours=0, minutes=2)
-        self.assertEqual(u"2 %s" % _("minutes"), self.time_type.format_delta(delta))
+        self.assertEqual("2 %s" % _("minutes"), self.time_type.format_delta(delta))
 
     def test_format_one_hour_delta(self):
         delta = self.get_days_delta(days=0, hours=1, minutes=0)
-        self.assertEqual(u"1 %s" % _("hour"), self.time_type.format_delta(delta))
+        self.assertEqual("1 %s" % _("hour"), self.time_type.format_delta(delta))
 
     def test_format_two_hour_delta(self):
         delta = self.get_days_delta(days=0, hours=2, minutes=0)
-        self.assertEqual(u"2 %s" % _("hours"), self.time_type.format_delta(delta))
+        self.assertEqual("2 %s" % _("hours"), self.time_type.format_delta(delta))
 
     def test_format_one_day_delta(self):
         delta = self.get_days_delta(days=1, hours=0, minutes=0)
-        self.assertEqual(u"1 %s" % _("day"), self.time_type.format_delta(delta))
+        self.assertEqual("1 %s" % _("day"), self.time_type.format_delta(delta))
 
     def test_format_two_days_delta(self):
         delta = self.get_days_delta(days=2, hours=0, minutes=0)
-        self.assertEqual(u"2 %s" % _("days"), self.time_type.format_delta(delta))
+        self.assertEqual("2 %s" % _("days"), self.time_type.format_delta(delta))
 
     def test_format_one_hour_one_minute_delta(self):
         delta = self.get_days_delta(days=0, hours=1, minutes=1)
-        self.assertEqual(u"1 %s 1 %s" % (_("hour"), _("minute")), self.time_type.format_delta(delta))
+        self.assertEqual("1 %s 1 %s" % (_("hour"), _("minute")), self.time_type.format_delta(delta))
 
     def test_format_one_hour_two_minutes_delta(self):
         delta = self.get_days_delta(days=0, hours=1, minutes=2)
-        self.assertEqual(u"1 %s 2 %s" % (_("hour"), _("minutes")), self.time_type.format_delta(delta))
+        self.assertEqual("1 %s 2 %s" % (_("hour"), _("minutes")), self.time_type.format_delta(delta))
 
     def test_format_one_day_one_hour_delta(self):
         delta = self.get_days_delta(days=1, hours=1, minutes=0)
-        self.assertEqual(u"1 %s 1 %s" % (_("day"), _("hour")), self.time_type.format_delta(delta))
+        self.assertEqual("1 %s 1 %s" % (_("day"), _("hour")), self.time_type.format_delta(delta))
 
     def test_format_one_day_two_hour_delta(self):
         delta = self.get_days_delta(days=1, hours=2, minutes=0)
-        self.assertEqual(u"1 %s 2 %s" % (_("day"), _("hours")), self.time_type.format_delta(delta))
+        self.assertEqual("1 %s 2 %s" % (_("day"), _("hours")), self.time_type.format_delta(delta))
 
     def test_format_two_days_two_hour_delta(self):
         delta = self.get_days_delta(days=2, hours=2, minutes=0)
-        self.assertEqual(u"2 %s 2 %s" % (_("days"), _("hours")), self.time_type.format_delta(delta))
+        self.assertEqual("2 %s 2 %s" % (_("days"), _("hours")), self.time_type.format_delta(delta))
 
     def test_format_two_days_two_hour_one_minute_delta(self):
         delta = self.get_days_delta(days=2, hours=2, minutes=1)
-        self.assertEqual(u"2 %s 2 %s 1 %s" % (_("days"), _("hours"), _("minute")), self.time_type.format_delta(delta))
+        self.assertEqual("2 %s 2 %s 1 %s" % (_("days"), _("hours"), _("minute")), self.time_type.format_delta(delta))
 
     def test_format_two_days_two_hour_two_minutes_delta(self):
         delta = self.get_days_delta(days=2, hours=2, minutes=2)
-        self.assertEqual(u"2 %s 2 %s 2 %s" % (_("days"), _("hours"), _("minutes")), self.time_type.format_delta(delta))
+        self.assertEqual("2 %s 2 %s 2 %s" % (_("days"), _("hours"), _("minutes")), self.time_type.format_delta(delta))
 
     def test_format_hundred_days_one_minute_delta(self):
         delta = self.get_days_delta(days=100, hours=0, minutes=0)
-        self.assertEqual(u"100 %s" % _("days"), self.time_type.format_delta(delta))
+        self.assertEqual("100 %s" % _("days"), self.time_type.format_delta(delta))
 
     def test_format_2_years_2_months(self):
         time_period1 = self.create_point_period(1, 1, 1999, 0, 0)
         time_period2 = self.create_point_period(1, 3, 2001, 0, 0)
         delta = time_period2.start_time - time_period1.start_time
         self.assertEqual(
-            u'2 ⟪years⟫ 60 ⟪days⟫',
+            '2 ⟪years⟫ 60 ⟪days⟫',
             self.time_type.format_delta(delta)
         )
 
@@ -598,7 +598,7 @@ class describe_gregorian_time_type_delta_formatting(UnitTestCase):
                                   self.time_type.parse_time("2010-08-03 13:44:00"))
         delta = time_period2.start_time - time_period1.end_time
         self.assertEqual(
-            u'2 ⟪days⟫',
+            '2 ⟪days⟫',
             self.time_type.format_delta(delta)
         )
 

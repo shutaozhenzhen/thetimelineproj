@@ -70,7 +70,7 @@ def install_gettext_in_builtin_namespace():
     def _(message):
         # Make sure to return a non-ascii symbol to ensure that the caller
         # handles the unicode object properly.
-        return u"⟪%s⟫" % message
+        return "⟪%s⟫" % message
     import builtins
     builtins.__dict__["_"] = _
 

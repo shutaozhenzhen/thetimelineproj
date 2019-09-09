@@ -53,7 +53,7 @@ class describe_import_events_dialog_controller(UnitTestCase):
         self.view.GetFilePath.return_value = "\n"
         event = Mock(Event)
         self.controller.on_file_path_changed(event)
-        self.view.SetError.assert_called_with(u"⟪File does not exist.⟫")
+        self.view.SetError.assert_called_with("⟪File does not exist.⟫")
         self.assertEqual(self.controller._db_to_import, None)
 
     def test_on_filepath_changed_with_non_timeline_file_generates_error_message(self):
@@ -63,7 +63,7 @@ class describe_import_events_dialog_controller(UnitTestCase):
         event = Mock(Event)
         self.controller.on_file_path_changed(event)
         self.view.SetError.assert_called_with(
-            u"⟪Unable to load events: ⟪Unable to open timeline '.\\dummy.txt'.⟫\n\n⟪Unknown format.⟫.⟫"
+            "⟪Unable to load events: ⟪Unable to open timeline '.\\dummy.txt'.⟫\n\n⟪Unknown format.⟫.⟫"
         )
         self.assertEqual(self.controller._db_to_import, None)
 
@@ -73,7 +73,7 @@ class describe_import_events_dialog_controller(UnitTestCase):
         event = Mock(Event)
         self.controller.on_file_path_changed(event)
         self.view.SetError.assert_called_with(
-            u"⟪The selected timeline has a different time type.⟫"
+            "⟪The selected timeline has a different time type.⟫"
         )
 
     def test_on_filepath_changed_ok_generates_success_message(self):
@@ -82,7 +82,7 @@ class describe_import_events_dialog_controller(UnitTestCase):
         event = Mock(Event)
         self.controller.on_file_path_changed(event)
         self.view.SetSuccess.assert_called_with(
-            u"⟪17 events will be imported.⟫"
+            "⟪17 events will be imported.⟫"
         )
         self.assertTrue(self.controller._db_to_import is not None)
 

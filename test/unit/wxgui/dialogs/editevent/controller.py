@@ -552,7 +552,7 @@ class describe_exceptions(EditEventDialogControllerTestCase):
             gregorian_period("10 Jan 2010", "20 Jan 2010")
         )
         self.view.DisplayInvalidPeriod.assert_called_with(
-            u"⟪You can't change time when the Event is locked⟫"
+            "⟪You can't change time when the Event is locked⟫"
         )
 
     def test_end_changed(self):
@@ -569,7 +569,7 @@ class describe_exceptions(EditEventDialogControllerTestCase):
             gregorian_period("10 Jan 2010", "20 Jan 2010")
         )
         self.view.DisplayInvalidPeriod.assert_called_with(
-            u"⟪You can't change time when the Event is locked⟫"
+            "⟪You can't change time when the Event is locked⟫"
         )
 
     def test_invalid_period(self):
@@ -586,7 +586,7 @@ class describe_exceptions(EditEventDialogControllerTestCase):
         self.simulate_user_enters_period("10 Jan 2010", "20 Jan 2010")
         self.simulate_user_clicks_ok()
         self.view.DisplayInvalidPeriod.assert_called_with(
-            u"⟪End must be > Start⟫"
+            "⟪End must be > Start⟫"
         )
 
 

@@ -50,8 +50,8 @@ class describe_config(TmpDirTestCase):
         self.assertEqual(self.config.sidebar_width, 20)
 
     def test_recently_opened_can_be_read_after_stored(self):
-        self.config.append_recently_opened(u"foo")
-        self.assertEqual(self.config.get_recently_opened(), [abspath(u"foo")])
+        self.config.append_recently_opened("foo")
+        self.assertEqual(self.config.get_recently_opened(), [abspath("foo")])
 
     def test_week_start_can_be_read_after_stored(self):
         self.config.set_week_start("sunday")

@@ -23,13 +23,13 @@ class describe_raise_error_message_assembly(UnitTestCase):
 
     def test_can_assemble_bytestrings(self):
         import sys
-        specific_msg = u"specific_msg_\xe9"
+        specific_msg = "specific_msg_\xe9"
         cause_exception = "cause_exception"
         path = "foobar"
         err_general = _("Unable to save timeline data to '%s'. File left unmodified.") % path
         err_template = "%s\n\n%%s\n\n%%s" % err_general
         message = err_template % (specific_msg, cause_exception)
         self.assertEqual(
-            u"⟪Unable to save timeline data to 'foobar'. File left unmodified.⟫\n\nspecific_msg_\xe9\n\ncause_exception",
+            "⟪Unable to save timeline data to 'foobar'. File left unmodified.⟫\n\nspecific_msg_\xe9\n\ncause_exception",
             message
         )

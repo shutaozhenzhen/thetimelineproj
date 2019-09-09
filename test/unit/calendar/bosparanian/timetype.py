@@ -61,11 +61,11 @@ class describe_bosparanian_time_type(UnitTestCase):
             self.time_type.format_delta(BosparanianDelta.from_seconds(
                 60*60 + 60 + 40
             )),
-            u"1 ⟪hour⟫ 1 ⟪minute⟫ 40 ⟪seconds⟫"
+            "1 ⟪hour⟫ 1 ⟪minute⟫ 40 ⟪seconds⟫"
         )
         self.assertEqual(
             self.time_type.format_delta(BosparanianDelta.from_days(366)),
-            u"1 ⟪year⟫ 1 ⟪day⟫"
+            "1 ⟪year⟫ 1 ⟪day⟫"
         )
 
     def setUp(self):

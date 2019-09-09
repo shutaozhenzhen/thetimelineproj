@@ -26,8 +26,8 @@ import timelinelib.config.shortcut as sc
 import timelinelib.wxgui.frames.mainframe.guicreator as mf
 
 
-NEW_FUNCTION = u"⟪File⟫->⟪New...⟫"
-SIDEBAR_FUNCTION = u"⟪View⟫->⟪Sidebar⟫"
+NEW_FUNCTION = "⟪File⟫->⟪New...⟫"
+SIDEBAR_FUNCTION = "⟪View⟫->⟪Sidebar⟫"
 
 
 class ShortcutControllerSpec(WxAppTestCase):

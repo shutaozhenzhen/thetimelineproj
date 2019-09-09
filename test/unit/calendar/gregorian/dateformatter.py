@@ -41,7 +41,7 @@ class describe_new_date_formatter(UnitTestCase):
 
     def test_can_format_and_parse_with_month_name(self):
         self.formatter.use_abbreviated_name_for_month(True)
-        self.assert_format_parse((2016, 2, 13), (u"2016-⟪Feb⟫-13", False))
+        self.assert_format_parse((2016, 2, 13), ("2016-⟪Feb⟫-13", False))
 
     def test_can_get_next_region(self):
         self.assert_next_region_is(("2016-02-13", 0), (5, 2))
@@ -78,7 +78,7 @@ class describe_new_date_formatter(UnitTestCase):
     def test_can_get_region_type_for_abbreviated_month_name(self):
         self.formatter.use_abbreviated_name_for_month(True)
         self.assert_region_type_is(
-            (u"2015-⟪Feb⟫-10", 11),
+            ("2015-⟪Feb⟫-10", 11),
             GregorianDateFormatter.DAY
         )
 

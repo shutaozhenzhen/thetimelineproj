@@ -29,9 +29,9 @@ from timelinelib.test.cases.unit import UnitTestCase
 class ShortcutConfig(object):
 
     def __init__(self):
-        self.functions = [u'File->New...', u'File->Save As...']
-        self.shc_and_keys = {u'File->New...': ('Ctrl', 'N'),
-                             u'File->Save As...': ('Ctrl', 'S')}
+        self.functions = ['File->New...', 'File->Save As...']
+        self.shc_and_keys = {'File->New...': ('Ctrl', 'N'),
+                             'File->Save As...': ('Ctrl', 'S')}
 
     def get_functions(self):
         return self.functions
@@ -88,13 +88,13 @@ class describe_shortcuts_editor_dialog_controller(UnitTestCase):
         self.given_a_view_with("Func", "Ctrl", "N")
         self.controller.on_apply_clicked(None)
         self.view.DisplayWarningMessage.assert_called_with(
-            u"⟪The shortcut Ctrl+N is already bound to function 'File->New...'!⟫"
+            "⟪The shortcut Ctrl+N is already bound to function 'File->New...'!⟫"
         )
 
     def test_modifier_must_be_given_for_simple_key(self):
         self.given_a_view_with("Func", "", "N")
         self.controller.on_apply_clicked(None)
-        self.view.DisplayWarningMessage.assert_called_with(u"⟪Both Modifier and Shortcut key must be given!⟫")
+        self.view.DisplayWarningMessage.assert_called_with("⟪Both Modifier and Shortcut key must be given!⟫")
 
     def test_modifier_not_needed_for_function_keys(self):
         self.given_a_view_with("Func", "", "F1")
@@ -105,10 +105,10 @@ class describe_shortcuts_editor_dialog_controller(UnitTestCase):
     def test_modifier_must_be_known(self):
         self.given_a_view_with("Func", "xxx", "N")
         self.controller.on_apply_clicked(None)
-        self.view.DisplayWarningMessage.assert_called_with(u"⟪Both Modifier and Shortcut key must be given!⟫")
+        self.view.DisplayWarningMessage.assert_called_with("⟪Both Modifier and Shortcut key must be given!⟫")
 
     def test_selection_changes_are_handled(self):
-        self.given_a_view_with(u'File->New...', None, None)
+        self.given_a_view_with('File->New...', None, None)
         self.controller.on_selection_changed(None)
         self.view.SetModifier.assert_called_once_with("Ctrl")
         self.view.SetShortcutKey.assert_called_once_with("N")

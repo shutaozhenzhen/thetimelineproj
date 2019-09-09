@@ -90,11 +90,11 @@ class PharaonicTimeType(GregorianTimeType):
     def format_period(self, time_period):
         """Returns a unicode string describing the time period."""
         def label_with_time(time):
-            return u"%s %s" % (label_without_time(time), time_label(time))
+            return "%s %s" % (label_without_time(time), time_label(time))
 
         def label_without_time(time):
             pharaonic_datetime = PharaonicDateTime.from_time(time)
-            return u"%s %s %s" % (
+            return "%s %s %s" % (
                 pharaonic_datetime.day,
                 abbreviated_name_of_month(pharaonic_datetime.month),
                 format_year(pharaonic_datetime.year)
@@ -104,16 +104,16 @@ class PharaonicTimeType(GregorianTimeType):
             return "%02d:%02d" % time.get_time_of_day()[:-1]
         if time_period.is_period():
             if has_nonzero_time(time_period):
-                label = u"%s to %s" % (label_with_time(time_period.start_time),
-                                       label_with_time(time_period.end_time))
+                label = "%s to %s" % (label_with_time(time_period.start_time),
+                                      label_with_time(time_period.end_time))
             else:
-                label = u"%s to %s" % (label_without_time(time_period.start_time),
-                                       label_without_time(time_period.end_time))
+                label = "%s to %s" % (label_without_time(time_period.start_time),
+                                      label_without_time(time_period.end_time))
         else:
             if has_nonzero_time(time_period):
-                label = u"%s" % label_with_time(time_period.start_time)
+                label = "%s" % label_with_time(time_period.start_time)
             else:
-                label = u"%s" % label_without_time(time_period.start_time)
+                label = "%s" % label_without_time(time_period.start_time)
         return label
 
     def format_delta(self, delta):
@@ -179,7 +179,7 @@ class PharaonicTimeType(GregorianTimeType):
         return (PharaonicDelta.from_seconds(60), _("Can't zoom deeper than 1 minute"))
 
     def get_name(self):
-        return u"pharaonic"
+        return "pharaonic"
 
     def get_duplicate_functions(self):
         return [
@@ -505,9 +505,9 @@ class StripCentury(Strip):
 
     def _format_century(self, century_number, is_bc):
         if is_bc:
-            return u"{century}s {bc}".format(century=century_number, bc=BC)
+            return "{century}s {bc}".format(century=century_number, bc=BC)
         else:
-            return u"{century}s".format(century=century_number)
+            return "{century}s".format(century=century_number)
 
     def _century_start_year(self, year):
         if year > 99:
