@@ -101,7 +101,7 @@ class Config(Observable):
         return self.config_parser.get(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER)
 
     def set_selected_event_box_drawer(self, selected):
-        self.config_parser.set(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER, str(selected.encode("utf-8")))
+        self.config_parser.set(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER, selected)
 
     def get_window_size(self):
         return (self.config_parser.getint(DEFAULTSECT, WINDOW_WIDTH),
