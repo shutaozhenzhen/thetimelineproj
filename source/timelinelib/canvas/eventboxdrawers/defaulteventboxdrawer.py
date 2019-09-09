@@ -179,7 +179,7 @@ class DefaultEventBoxDrawer(object):
         rw, _ = self.scene._calc_width_and_height_for_period_event(event)
         rx = self.scene._calc_x_pos_for_period_event(event)
         w = rw * event.get_data("progress") / 100.0
-        return wx.Rect(rx, y, w, h)
+        return wx.Rect(int(rx), int(y), int(w), int(h))
 
     def _draw_balloon_indicator(self, dc, event, rect):
         """
