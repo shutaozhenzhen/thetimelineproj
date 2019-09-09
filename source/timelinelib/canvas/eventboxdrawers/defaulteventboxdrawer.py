@@ -258,7 +258,7 @@ class DefaultEventBoxDrawer(object):
 
     def _center_text(self, dc, event, inner_rect, text_x):
         width, _ = dc.GetTextExtent(self._get_text(event))
-        return max(text_x, text_x + (inner_rect.width - width) / 2)
+        return max(text_x, text_x + (inner_rect.width - width) // 2)
 
     def _set_text_foreground_color(self, dc, event):
         try:
