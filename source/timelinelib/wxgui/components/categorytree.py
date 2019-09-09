@@ -154,40 +154,38 @@ class CustomCategoryTree(wx.ScrolledWindow):
 
     def _redraw(self):
         self.SetVirtualSize((-1, self.model.ITEM_HEIGHT_PX * len(self.model.items)))
-        self.SetScrollRate(0, self.model.ITEM_HEIGHT_PX / 2)
+        self.SetScrollRate(0, self.model.ITEM_HEIGHT_PX // 2)
         self._draw_bitmap()
         self.Refresh()
         self.Update()
 
     def _draw_bitmap(self):
-        width, height = self.GetVirtualSizeTuple()
-        self.buffer_image = wx.EmptyBitmap(width, height)
+        width, height = self.GetVirtualSize()
+        self.buffer_image = wx.Bitmap(width, height)
         memdc = wx.BufferedDC(None, self.buffer_image)
-        memdc.SetBackground(wx.Brush(self.GetBackgroundColour(), wx.PENSTYLE_SOLID))
+        memdc.SetBackground(wx.Brush(self.GetBackgroundColour(), wx.BRUSHSTYLE_SOLID))
         memdc.Clear()
-        memdc.BeginDrawing()
         self.monitoring.timer_start()
         self.renderer.render(memdc)
         self.monitoring.timer_end()
         if DEBUG_ENABLED:
-            (width, height) = self.GetSizeTuple()
+            (width, height) = self.GetSize()
             redraw_time = self.monitoring.timer_elapsed_ms
             self.monitoring.count_category_redraw()
             memdc.SetTextForeground((255, 0, 0))
             memdc.SetFont(Font(10, weight=wx.FONTWEIGHT_BOLD))
             memdc.DrawText("Redraw count: %d" % self.monitoring._category_redraw_count, 10, height - 35)
             memdc.DrawText("Last redraw time: %.3f ms" % redraw_time, 10, height - 20)
-        memdc.EndDrawing()
         del memdc
 
     def _size_to_model(self):
-        (view_width, view_height) = self.GetVirtualSizeTuple()
+        (view_width, view_height) = self.GetVirtualSize()
         self.model.set_view_size(view_width, view_height)
 
     def _create_context_menu(self):
         def add_item(name, callback, should_be_enabled_fn):
             item = wx.MenuItem(self.context_menu, wx.ID_ANY, name)
-            self.context_menu.AppendItem(item)
+            self.context_menu.Append(item)
             self.Bind(wx.EVT_MENU, callback, item)
             self.context_menu_items.append((item, should_be_enabled_fn))
             return item
@@ -272,11 +270,11 @@ class CustomCategoryTreeRenderer(object):
         self._render_color_box(item)
 
     def _render_arrow(self, item):
-        self.dc.SetBrush(wx.Brush(wx.Colour(100, 100, 100), wx.PENSTYLE_SOLID))
+        self.dc.SetBrush(wx.Brush(wx.Colour(100, 100, 100), wx.BRUSHSTYLE_SOLID))
         self.dc.SetPen(wx.Pen(wx.Colour(100, 100, 100), 0, wx.PENSTYLE_SOLID))
-        offset = self.TRIANGLE_SIZE / 2
+        offset = self.TRIANGLE_SIZE // 2
         center_x = item["x"] + 2 * self.INNER_PADDING + offset
-        center_y = item["y"] + self.model.ITEM_HEIGHT_PX / 2 - 1
+        center_y = item["y"] + self.model.ITEM_HEIGHT_PX // 2 - 1
         if item["expanded"]:
             open_polygon = [
                 wx.Point(center_x - offset, center_y - offset),
@@ -301,12 +299,12 @@ class CustomCategoryTreeRenderer(object):
             self.dc.SetTextForeground((150, 150, 150))
         self.dc.DrawText(item["name"],
                          x + self.INNER_PADDING,
-                         item["y"] + (self.model.ITEM_HEIGHT_PX - h) / 2)
+                         item["y"] + (self.model.ITEM_HEIGHT_PX - h) // 2)
 
     def _render_checkbox(self, item):
         (w, h) = (17, 17)
         bouning_rect = wx.Rect(item["x"] + self.model.INDENT_PX,
-                               item["y"] + (self.model.ITEM_HEIGHT_PX - h) / 2,
+                               item["y"] + (self.model.ITEM_HEIGHT_PX - h) // 2,
                                w,
                                h)
         if item["visible"]:
@@ -318,12 +316,12 @@ class CustomCategoryTreeRenderer(object):
 
     def _render_color_box(self, item):
         color = item.get("color", None)
-        self.dc.SetBrush(wx.Brush(color, wx.PENSTYLE_SOLID))
+        self.dc.SetBrush(wx.Brush(color, wx.BRUSHSTYLE_SOLID))
         self.dc.SetPen(wx.Pen(darken_color(color), 1, wx.PENSTYLE_SOLID))
         (w, h) = (16, 16)
         self.dc.DrawRectangle(
             item["x"] + item["width"] - w - self.INNER_PADDING,
-            item["y"] + self.model.ITEM_HEIGHT_PX / 2 - h / 2,
+            item["y"] + self.model.ITEM_HEIGHT_PX // 2 - h // 2,
             w,
             h)
 

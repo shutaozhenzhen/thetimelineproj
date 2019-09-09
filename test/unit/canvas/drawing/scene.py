@@ -23,13 +23,13 @@ from timelinelib.canvas.drawing.scene import TimelineScene
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import Event
-from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 
 
-class describe_scene(UnitTestCase):
+class describe_scene(WxAppTestCase):
 
     def test_has_no_hidden_events_when_all_events_belong_to_visible_categories(self):
         self.given_displayed_period("1 Jan 2010", "10 Jan 2010")
@@ -113,14 +113,11 @@ class describe_scene(UnitTestCase):
         self.assertFalse(self.scene.event_data[0][0].ends_today)
 
     def setUp(self):
-        self.app = wx.App()
+        WxAppTestCase.setUp(self)
         self.db = MemoryDB()
         self.view_properties = ViewProperties()
         self.given_number_of_events_stackable_is(5)
         self.MAX_OUTSIDE_SCREEN = 20
-
-    def tearDown(self):
-        self.app.Destroy()
 
     def get_text_size_fn(self, text):
         return (len(text), self.event_height)

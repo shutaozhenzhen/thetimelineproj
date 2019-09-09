@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -18,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import mock
+import unittest.mock
 import wx
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
@@ -52,6 +50,7 @@ from timelinelib.calendar.gregorian.timetype import TimeOutOfRangeRightError
 from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
@@ -121,7 +120,7 @@ class describe_gregoriantimetype(UnitTestCase):
             )
 
 
-class describe_gregorian_strip_week(UnitTestCase):
+class describe_gregorian_strip_week(WxAppTestCase):
 
     def test_start_when_week_starts_on_sunday(self):
         self.appearance.set_week_start("sunday")
@@ -180,8 +179,7 @@ class describe_gregorian_strip_week(UnitTestCase):
         )
 
     def setUp(self):
-        UnitTestCase.setUp(self)
-        self.app = wx.App()
+        WxAppTestCase.setUp(self)
         self.time_type = GregorianTimeType()
         self.appearance = Appearance()
         self.strip = StripWeek(self.appearance)
@@ -712,7 +710,7 @@ class describe_gregorian_time_navigation_functions(UnitTestCase):
         def navigation_fn(fn):
             self.new_period = fn(self.time_period)
         self.time_period = gregorian_period(start, end)
-        main_frame = mock.Mock(MainFrame)
+        main_frame = unittest.mock.Mock(MainFrame)
         main_frame.week_starts_on_monday.return_value = week_starts_on_monday
         fn(main_frame, self.time_period, navigation_fn)
 

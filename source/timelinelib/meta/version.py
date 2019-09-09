@@ -22,35 +22,26 @@ import sys
 TYPE_DEV = "development"
 TYPE_BETA = "beta"
 TYPE_FINAL = ""
-VERSION = (1, 20, 0)
+VERSION = (2, 0, 0)
 TYPE = TYPE_DEV
 REVISION_HASH = ""
 REVISION_DATE = ""
 
 
 def get_full_version():
-    parts = []
-    parts.append(get_version_number_string())
+    parts = [get_version_number_string()]
     if TYPE:
         parts.append(TYPE)
-    if (REVISION_HASH or REVISION_DATE):
-        revision_parts = []
-        if REVISION_HASH:
-            revision_parts.append(REVISION_HASH)
-        if REVISION_DATE:
-            revision_parts.append(REVISION_DATE)
+    if REVISION_HASH or REVISION_DATE:
+        revision_parts = [item for item in (REVISION_HASH, REVISION_DATE) if item]
         parts.append("(%s)" % " ".join(revision_parts))
     return " ".join(parts)
 
 
 def get_filename_version():
-    parts = []
-    parts.append("timeline")
-    parts.append(get_version_number_string())
+    parts = ["timeline", get_version_number_string()]
     if not is_final():
-        parts.append(TYPE)
-        parts.append(REVISION_HASH)
-        parts.append(REVISION_DATE)
+        parts.extend([TYPE, REVISION_HASH, REVISION_DATE])
     return "-".join(parts)
 
 

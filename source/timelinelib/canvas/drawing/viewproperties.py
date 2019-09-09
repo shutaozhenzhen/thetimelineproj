@@ -68,7 +68,7 @@ class ViewProperties(Observable):
     def tick_highlights(self, limit):
         self._event_highlight_counters = {
             event_id: count + 1
-            for event_id, count in self._event_highlight_counters.iteritems()
+            for event_id, count in self._event_highlight_counters.items()
             if count < limit
         }
 

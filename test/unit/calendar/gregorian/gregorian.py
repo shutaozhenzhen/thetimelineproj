@@ -98,7 +98,7 @@ class GregorianConversionsSpec(UnitTestCase):
             gt = gregorian.GregorianDateTime.from_time(tm1)
             wt = wx.DateTime()
             wt.SetJDN(i)
-            ws = "%d-%02d-%02d" % (wt.Year, wt.Month + 1, wt.Day)
+            ws = "%d-%02d-%02d" % (wt.year, wt.month + 1, wt.day)
             gs = "%d-%02d-%02d" % (gt.year, gt.month, gt.day)
             self.assertEqual(ws, gs)
             tm2 = gt.to_time()
@@ -106,8 +106,8 @@ class GregorianConversionsSpec(UnitTestCase):
 
     def test_new_to_julian_day(self):
         """ """
-        julian_day2 = gregorian.gregorian_ymd_to_julian_day_alt(2019, 06, 24)
-        julian_day1 = gregorian.gregorian_ymd_to_julian_day(2019, 06, 24)
+        julian_day2 = gregorian.gregorian_ymd_to_julian_day_alt(2019, 6, 24)
+        julian_day1 = gregorian.gregorian_ymd_to_julian_day(2019, 6, 24)
         self.assertEqual(julian_day1, julian_day2)
 
 

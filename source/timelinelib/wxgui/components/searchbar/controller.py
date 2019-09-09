@@ -105,9 +105,9 @@ class SearchBarController(object):
         return bool(len(self._result) > 0)
 
     def _on_first_match(self):
-        return self._result > 0 and self._result_index == 0
+        return self._result and self._result_index == 0
 
     def _on_last_match(self):
-        return self._result > 0 and self._result_index == (len(self._result) - 1)
+        return self._result and self._result_index == (len(self._result) - 1)
 
 

@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-#
 # Copyright (C) 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018  Rickard Lindberg, Roger Lindberg
 #
 # This file is part of Timeline.
@@ -60,7 +58,7 @@ class MinorStripDrawer:
         width = self._get_label_width(label)
         start_x = self._scene.x_pos_for_time(start_time)
         end_x = self._scene.x_pos_for_time(end_time)
-        return (start_x + end_x - width) / 2
+        return (start_x + end_x - width) // 2
 
     def _get_label_width(self, label):
         return self._dc.GetTextExtent(label)[0]

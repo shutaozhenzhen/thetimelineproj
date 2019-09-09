@@ -39,7 +39,6 @@ from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrows
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.timer import TimelineTimer
-from timelinelib.wxgui.utils import display_categories_editor_moved_message
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.utils import WildcardHelper
@@ -156,7 +155,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         bundle = wx.IconBundle()
         for size in ["16", "32", "48"]:
             iconpath = os.path.join(ICONS_DIR, "%s.png" % size)
-            icon = wx.IconFromBitmap(wx.BitmapFromImage(wx.Image(iconpath)))
+            icon = wx.Icon(wx.Bitmap(wx.Image(iconpath)))
             bundle.AddIcon(icon)
         return bundle
 
@@ -294,9 +293,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         dialog.ShowModal()
         dialog.Destroy()
 
-    def _edit_categories(self):
-        display_categories_editor_moved_message(self)
-
     def _edit_eras(self):
         dialog = ErasEditorDialog(self, self.timeline, self.config)
         dialog.ShowModal()
@@ -322,7 +318,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             else:
                 return None
         except ValueError as ex:
-            display_error_message(ex.message)
+            display_error_message(str(ex))
         return None
 
     def _all_visible_events(self):

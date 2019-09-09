@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from mock import Mock
+from unittest.mock import Mock
 
 from timelinelib.dataimport.tutorial import GregorianTutorialTimelineCreator
 from timelinelib.test.cases.unit import UnitTestCase
@@ -42,8 +42,9 @@ class SelectperiodByDragInputHandler(UnitTestCase):
 
     def simulate_drag_where_julian_day_becomes_lt_zero(self):
         canvas = Mock(MainCanvas)
-        canvas.GetSizeTuple.return_value = (0, 0)
+        canvas.GetSize.return_value = (0, 0)
         canvas.Snap.return_value = human_time_to_gregorian("1 Dec 2013")
         canvas.GetDb.return_value = GregorianTutorialTimelineCreator().db
+        canvas.GetTimeAt.return_value = human_time_to_gregorian("1 Dec 2013")
         state = Mock()
-        self.handler = SelectPeriodByDragInputHandler(state, canvas, None)
+        self.handler = SelectPeriodByDragInputHandler(state, canvas, human_time_to_gregorian("1 Dec 2013"))

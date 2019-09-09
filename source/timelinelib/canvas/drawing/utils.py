@@ -26,8 +26,8 @@ class Metrics(object):
 
     def __init__(self, size, time_type, time_period, divider_line_slider):
         self.width, self.height = size
-        self.half_width = self.width / 2
-        self.half_height = self.height / 2
+        self.half_width = self.width // 2
+        self.half_height = self.height // 2
         self.half_height = int(round(divider_line_slider * self.height))
         self.time_type = time_type
         self.time_period = time_period

@@ -24,7 +24,6 @@ import wx
 from timelinelib.canvas import EVT_DIVIDER_POSITION_CHANGED
 from timelinelib.canvas import EVT_TIMELINE_REDRAWN
 from timelinelib.db.utils import safe_locking
-from timelinelib.general.encodings import to_unicode
 from timelinelib.general.observer import Listener
 from timelinelib.wxgui.components.maincanvas.createperiodeventbydrag import CreatePeriodEventByDragInputHandler
 from timelinelib.wxgui.components.maincanvas.maincanvas import MainCanvas
@@ -94,7 +93,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         menu = wx.Menu()
         menu_item = wx.MenuItem(menu, wx.NewId(), _("Center"))
         self.Bind(wx.EVT_MENU, self._context_menu_on_menu_center, id=menu_item.GetId())
-        menu.AppendItem(menu_item)
+        menu.Append(menu_item)
         self.PopupMenu(menu)
         menu.Destroy()
 
@@ -304,7 +303,7 @@ class TimelinePanelGuiCreator(wx.Panel):
                 menu.AppendMenu(wx.ID_ANY, text, imp)
             else:
                 self.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
-                menu.AppendItem(menu_item)
+                menu.Append(menu_item)
             mid += 1
         self.PopupMenu(menu)
         menu.Destroy()
@@ -366,7 +365,7 @@ class TimelinePanelGuiCreator(wx.Panel):
     def _context_menu_on_goto_hyperlink_event(self, evt):
         hyperlinks = self.timeline_canvas.GetSelectedEvent().get_data("hyperlink")
         hyperlink = hyperlinks.split(";")[evt.Id]
-        webbrowser.open(to_unicode(hyperlink))
+        webbrowser.open(hyperlink)
 
     def _timeline_canvas_on_divider_position_changed(self, event):
         self.divider_line_slider.SetValue(self.timeline_canvas.GetDividerPosition())

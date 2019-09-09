@@ -170,7 +170,7 @@ class TimelineCanvas(wx.Panel):
         event_and_rect = self._controller.event_with_rect_at(x, y, prefer_container.alt)
         if event_and_rect is not None:
             event, rect = event_and_rect
-            center = rect.X + rect.Width / 2
+            center = rect.X + rect.Width // 2
             if abs(x - center) <= HIT_REGION_PX_WITH:
                 return (event, MOVE_HANDLE)
             elif abs(x - rect.X) < HIT_REGION_PX_WITH:
@@ -202,7 +202,7 @@ class TimelineCanvas(wx.Panel):
         return self._controller.get_view_properties()
 
     def SaveAsPng(self, path):
-        wx.ImageFromBitmap(self._surface_bitmap).SaveFile(path, wx.BITMAP_TYPE_PNG)
+        self._surface_bitmap.ConvertToImage().SaveFile(path, wx.BITMAP_TYPE_PNG)
 
     def SaveAsSvg(self, path):
         from timelinelib.canvas.svg import export
@@ -226,24 +226,22 @@ class TimelineCanvas(wx.Panel):
         return self._controller.event_is_period(event)
 
     def RedrawSurface(self, fn_draw):
-        width, height = self.GetSizeTuple()
-        self._surface_bitmap = wx.EmptyBitmap(width, height)
+        width, height = self.GetSize()
+        self._surface_bitmap = wx.Bitmap(width, height)
         memdc = wx.MemoryDC()
         memdc.SelectObject(self._surface_bitmap)
-        memdc.BeginDrawing()
-        memdc.SetBackground(wx.Brush(wx.WHITE, wx.PENSTYLE_SOLID))
+        memdc.SetBackground(wx.Brush(wx.WHITE, wx.BRUSHSTYLE_SOLID))
         memdc.Clear()
         fn_draw(memdc)
-        memdc.EndDrawing()
         del memdc
         self.Refresh()
         self.Update()
 
     def set_size_cursor(self):
-        self.SetCursor(wx.StockCursor(wx.CURSOR_SIZEWE))
+        self.SetCursor(wx.Cursor(wx.CURSOR_SIZEWE))
 
     def set_move_cursor(self):
-        self.SetCursor(wx.StockCursor(wx.CURSOR_SIZING))
+        self.SetCursor(wx.Cursor(wx.CURSOR_SIZING))
 
     def set_default_cursor(self):
         guiutils.set_default_cursor(self)
@@ -256,14 +254,14 @@ class TimelineCanvas(wx.Panel):
 
     def Zoom(self, direction, x):
         """ zoom time line at position x """
-        width, _ = self.GetSizeTuple()
-        x_percent_of_width = float(x) / width
+        width, _ = self.GetSize()
+        x_percent_of_width = x / width
         self.Navigate(lambda tp: tp.zoom(direction, x_percent_of_width))
 
-    def VertZoomIn(self):
+    def vertical_zoom_in(self):
         self.ZoomVertically(1)
 
-    def VertZoomOut(self):
+    def vertical_zoom_out(self):
         self.ZoomVertically(-1)
 
     def ZoomVertically(self, direction):
@@ -571,11 +569,11 @@ class TimelineCanvas(wx.Panel):
 
     def GetPeriodChoices(self):
         return self._controller.get_period_choices()
-    
+
     @property
     def view_properties(self):
         return self._controller.view_properties
-    
+
     # ------------
 
     def _scroll_up(self):
@@ -585,7 +583,7 @@ class TimelineCanvas(wx.Panel):
         self.SetHScrollAmount(self.GetHScrollAmount() + HSCROLL_STEP)
 
     def _get_half_width(self):
-        return self.GetSize()[0] / 2
+        return self.GetSize()[0] // 2
 
     def _create_gui(self):
         self.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
@@ -598,12 +596,10 @@ class TimelineCanvas(wx.Panel):
 
     def _on_paint(self, event):
         dc = wx.AutoBufferedPaintDC(self)
-        dc.BeginDrawing()
         if self._surface_bitmap:
             dc.DrawBitmap(self._surface_bitmap, 0, 0, True)
         else:
             pass  # TODO: Fill with white?
-        dc.EndDrawing()
 
     def _on_size(self, evt):
         self._controller.window_resized()

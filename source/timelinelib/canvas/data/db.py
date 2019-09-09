@@ -84,7 +84,7 @@ class MemoryDB(Observable):
             container = kwargs.pop("container")
         else:
             container = None
-        for name, value in kwargs.iteritems():
+        for name, value in kwargs.items():
             setattr(wrapper, name, value)
         if container is not None:
             wrapper.container = container
@@ -183,8 +183,8 @@ class MemoryDB(Observable):
         else:
             id_, immutable_event = min(
                 self._transactions.value.events,
-                key=lambda (id_, immutable_event):
-                    immutable_event.time_period.start_time
+                key=lambda id__immutable_event:
+                    id__immutable_event[1].time_period.start_time
             )
             with self._query() as query:
                 return query.get_event(id_)
@@ -195,8 +195,8 @@ class MemoryDB(Observable):
         else:
             id_, immutable_event = max(
                 self._transactions.value.events,
-                key=lambda (id_, immutable_event):
-                    immutable_event.time_period.end_time
+                key=lambda id__immutable_event1:
+                    id__immutable_event1[1].time_period.end_time
             )
             with self._query() as query:
                 return query.get_event(id_)
@@ -623,6 +623,10 @@ class Query(object):
             immutable_value=immutable_container,
         )
         wrapper.category = self._get_maybe_category(immutable_container.category_id)
+        lst = []
+        for key in immutable_container.category_ids:
+            lst.append(self._get_maybe_category(key))
+        wrapper.set_categories(lst)
         return wrapper
 
     def _create_event_wrapper(self, id_):
@@ -637,6 +641,10 @@ class Query(object):
             immutable_value=immutable_event,
         )
         wrapper.category = self._get_maybe_category(immutable_event.category_id)
+        lst = []
+        for key in immutable_event.category_ids:
+            lst.append(self._get_maybe_category(key))
+        wrapper.set_categories(lst)
         return wrapper
 
     def _create_milestone_wrapper(self, id_):
@@ -647,6 +655,10 @@ class Query(object):
             immutable_value=immutable_milestone,
         )
         wrapper.category = self._get_maybe_category(immutable_milestone.category_id)
+        lst = []
+        for key in immutable_milestone.category_ids:
+            lst.append(self._get_maybe_category(key))
+        wrapper.set_categories(lst)
         return wrapper
 
     def _create_era_wrapper(self, id_):

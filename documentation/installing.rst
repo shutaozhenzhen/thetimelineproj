@@ -66,14 +66,14 @@ yourself. See the next section for instructions how to do that. Once that is
 done, and you have extracted the zip file, you should be able to run Timeline
 with this command::
 
-    python <path-to-timeline-directory>/source/timeline.py
+    python3 <path-to-timeline-directory>/source/timeline.py
 
 .. HINT::
 
     If you get an error similar to the one bellow, there is probably a
     dependency missing::
 
-        $ python source/timeline.py
+        $ python3 source/timeline.py
         Traceback (most recent call last):
           File "source/timeline.py", line 64, in <module>
             setup_humblewx()
@@ -95,7 +95,7 @@ http://www.python.org
 
 There is most definitely a binary package or installer for your platform.
 
-Timeline requires version 2.6 or greater.
+Timeline requires Python 3.
 
 wxPython (Python package)
 #########################
@@ -104,7 +104,7 @@ http://www.wxpython.org
 
 There is probably a binary package or installer for your platform.
 
-Timeline requires version 3.0 or greater.
+Timeline requires version 4.0.0 or greater.
 
 humblewx (Python package)
 #########################
@@ -123,21 +123,17 @@ icalendar (Python package)
 
 http://pypi.python.org/pypi/icalendar
 
-At the moment, this is included in the Timeline repository and does not have to
-be installed.
-
 markdown (Python package)
 #########################
 
 http://pypi.python.org/pypi/Markdown
 
-At the moment, this is included in the Timeline repository and does not have to
-be installed.
-
 pysvg (Python package)
 ######################
 
-http://code.google.com/p/pysvg/downloads/list
+http://pypi.python.org/pypi/pysvg-py3
 
-At the moment, this is included in the Timeline repository and does not have to
-be installed.
+Pillow (Python package)
+#######################
+
+http://pypi.python.org/pypi/Pillow

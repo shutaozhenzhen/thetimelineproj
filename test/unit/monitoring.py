@@ -19,7 +19,7 @@
 
 import sys
 from timelinelib.test.cases.unit import UnitTestCase
-from mock import Mock
+from unittest.mock import Mock
 from timelinelib.monitoring import Monitoring
 from timelinelib.timer import Timer
 
