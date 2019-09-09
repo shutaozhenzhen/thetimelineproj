@@ -76,7 +76,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _adjust_outer_padding_to_font_size(self):
         if self.event_text_font.PointSize < 8:
-            self.outer_padding = OUTER_PADDING * self.event_text_font.PointSize / 8
+            self.outer_padding = OUTER_PADDING * self.event_text_font.PointSize // 8
         else:
             self.outer_padding = OUTER_PADDING
 
