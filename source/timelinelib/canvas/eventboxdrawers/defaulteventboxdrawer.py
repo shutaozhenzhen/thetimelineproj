@@ -242,7 +242,7 @@ class DefaultEventBoxDrawer(object):
 
     def _adjust_x_for_edge_icons(self, event, rect, text_x):
         if self._event_has_edge_icons(event):
-            text_x += rect.Height / 2
+            text_x += rect.Height // 2
         return text_x
 
     def _adjust_x_for_centered_text(self, dc, event, inner_rect, text_x):
