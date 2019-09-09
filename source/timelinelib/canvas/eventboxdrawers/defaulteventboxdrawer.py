@@ -162,27 +162,6 @@ class DefaultEventBoxDrawer(object):
         self._inflate_clipping_region(dc, rect)
         dc.DrawBitmap(self._get_lock_bitmap(), rect.x + rect.width - 8, rect.y + 3, True)
 
-    def draw_segment(self, dc, event, x0, y0, r, start_angle, end_angle):
-        gc = wx.GraphicsContext.Create(dc)
-        path = gc.CreatePath()
-        segment_length = 2.0 * (end_angle - start_angle) * r
-        delta = (end_angle - start_angle) / segment_length
-        angle = start_angle
-        x1 = r * math.cos(angle) + x0
-        y1 = r * math.sin(angle) + y0
-        path.MoveToPoint(x1, y1)
-        while angle < end_angle:
-            angle += delta
-            if angle > end_angle:
-                angle = end_angle
-            x2 = r * math.cos(angle) + x0
-            y2 = r * math.sin(angle) + y0
-            path.AddLineToPoint(x2, y2)
-            x1 = x2
-            y1 = y2
-        gc.SetPen(self._get_thin_border_pen(event))
-        gc.StrokePath(path)
-
     def _draw_progress_box(self, dc, rect, event):
         if event.get_data("progress"):
             self._set_progress_color(dc, event)
