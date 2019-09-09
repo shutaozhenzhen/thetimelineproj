@@ -296,7 +296,7 @@ class DefaultEventBoxDrawer(object):
             dc.SetPen(wx.BLACK_PEN)
 
         def create_handle_rect():
-            HALF_EVENT_HEIGHT = rect.Height / 2
+            HALF_EVENT_HEIGHT = rect.Height // 2
             y = rect.Y + HALF_EVENT_HEIGHT - HALF_HANDLE_SIZE
             x = rect.X - HALF_HANDLE_SIZE + 1
             return wx.Rect(x, y, HANDLE_SIZE, HANDLE_SIZE)
