@@ -333,9 +333,7 @@ class GuiCreator(object):
 
         items = []
         for plugin in factory.get_plugins(EVENTBOX_DRAWER):
-            plugin_name = str(plugin.display_name().encode('utf-8'))
-            selected_name = self.config.get_selected_event_box_drawer()
-            if plugin_name == selected_name:
+            if plugin.display_name() == self.config.get_selected_event_box_drawer():
                 items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), CHECKED_RB))
             else:
                 items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), UNCHECKED_RB))
