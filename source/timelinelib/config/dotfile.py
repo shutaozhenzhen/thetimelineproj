@@ -120,7 +120,7 @@ class Config(Observable):
                    self.config_parser.getint(DEFAULTSECT, WINDOW_XPOS))
         # Titlebar must not be above the upper screen border
         ypos = max(0, self.config_parser.getint(DEFAULTSECT, WINDOW_YPOS))
-        return (xpos, ypos)
+        return xpos, ypos
 
     def set_window_pos(self, pos):
         xpos, ypos = pos
@@ -318,6 +318,7 @@ FONTS = [d['name'] for d in FONT_CONFIGS]
 def setatt(name):
     setattr(Config, name, property(lambda self: self._get(name),
                                    lambda self, value: self._set(name, str(value))))
+
 
 # Create properties dynamically
 for data in BOOLEAN_CONFIGS + INT_CONFIGS + STR_CONFIGS + COLOUR_CONFIGS + FONT_CONFIGS:
