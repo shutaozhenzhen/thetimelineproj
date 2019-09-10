@@ -6,6 +6,10 @@ Version 2.0.0
 
 Port of Timeline to Python 3.
 
+Removed features:
+
+* The main menu is no longer available as a context menu.
+
 Version 1.20.0
 --------------
 
