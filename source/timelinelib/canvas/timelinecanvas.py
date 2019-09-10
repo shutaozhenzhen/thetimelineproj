@@ -606,7 +606,7 @@ class TimelineCanvas(wx.Panel):
 
     def HighligtEvent(self, event, clear=False):
         self._controller.add_highlight(event, clear)
-        self._highlight_timer.StartHighlighting()
+        self._highlight_timer.start_highlighting()
 
     def _highlight_timer_tick(self):
         self.Redraw()
