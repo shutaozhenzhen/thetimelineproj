@@ -136,21 +136,21 @@ class PharaonicTimeType(GregorianTimeType):
         day_period = TimePeriod(PharaonicTime(0, 0),PharaonicTime(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         if one_day_width > 20000:
-            return (StripHour(), StripMinute())
+            return StripHour(), StripMinute()
         elif one_day_width > 600:
-            return (StripDay(), StripHour())
+            return StripDay(), StripHour()
         elif one_day_width > 45:
-            return (StripWeek(appearance), StripWeekday())
+            return StripWeek(appearance), StripWeekday()
         elif one_day_width > 25:
-            return (StripMonth(), StripDay())
+            return StripMonth(), StripDay()
         elif one_day_width > 1.5:
-            return (StripYear(), StripMonth())
+            return StripYear(), StripMonth()
         elif one_day_width > 0.12:
-            return (StripDecade(), StripYear())
+            return StripDecade(), StripYear()
         elif one_day_width > 0.012:
-            return (StripCentury(), StripDecade())
+            return StripCentury(), StripDecade()
         else:
-            return (StripCentury(), StripCentury())
+            return StripCentury(), StripCentury()
 
     def get_default_time_period(self):
         return time_period_center(self.now(), PharaonicDelta.from_days(30))
@@ -176,7 +176,7 @@ class PharaonicTimeType(GregorianTimeType):
         return pharaonic.to_time()
 
     def get_min_zoom_delta(self):
-        return (PharaonicDelta.from_seconds(60), _("Can't zoom deeper than 1 minute"))
+        return PharaonicDelta.from_seconds(60), _("Can't zoom deeper than 1 minute")
 
     def get_name(self):
         return "pharaonic"
@@ -196,7 +196,7 @@ class PharaonicTimeType(GregorianTimeType):
     """
     def is_weekend_day(self, time):
         pharaonic_time = PharaonicDateTime.from_time(time)
-        return pharaonic_time.day in (9,10,19,20,29,30)
+        return pharaonic_time.day in (9, 10, 19, 20, 29, 30)
 
     def get_day_of_week(self, time):
         return time.julian_day % 10
