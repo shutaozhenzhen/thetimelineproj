@@ -80,7 +80,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.config.divider_line_slider_pos = evt.GetPosition()
 
         style = wx.SL_LEFT | wx.SL_VERTICAL
-        self.divider_line_slider = wx.Slider(self, size=(20, -1), style=style)
+        self.divider_line_slider = wx.Slider(self, style=style)
         self.Bind(wx.EVT_SCROLL, on_slider, self.divider_line_slider)
 
         self.divider_line_slider.Bind(wx.EVT_SLIDER, self._slider_on_slider)
