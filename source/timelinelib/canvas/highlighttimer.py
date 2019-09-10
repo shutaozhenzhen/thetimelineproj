@@ -32,4 +32,3 @@ class HighlightTimer(wx.Timer):
 
     def _on_highlight_timer(self, evt):
         self._callback()
-        
