@@ -216,10 +216,6 @@ class TimelinePanelGuiCreator(wx.Panel):
         if timeline_event is not None and not self.timeline_canvas.GetDb().is_read_only():
             self.timeline_canvas.SetEventSelected(timeline_event, True)
             self._display_event_context_menu()
-        else:
-            display_timeline_context_menu = getattr(self.main_frame, "display_timeline_context_menu", None)
-            if callable(display_timeline_context_menu):
-                display_timeline_context_menu()
         event.Skip()
 
     def _timeline_canvas_on_key_down(self, event):
