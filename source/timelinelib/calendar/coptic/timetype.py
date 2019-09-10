@@ -20,14 +20,12 @@ from datetime import datetime
 import re
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.calendar.coptic.coptic import CopticDateTime,\
-    julian_day_to_coptic_ymd
+from timelinelib.calendar.coptic.coptic import CopticDateTime
 from timelinelib.calendar.coptic.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.coptic.time import CopticDelta
 from timelinelib.calendar.coptic.time import CopticTime
 from timelinelib.calendar.coptic.time import SECONDS_IN_DAY
 from timelinelib.calendar.coptic.weekdaynames import abbreviated_name_of_weekday
-from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
