@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
