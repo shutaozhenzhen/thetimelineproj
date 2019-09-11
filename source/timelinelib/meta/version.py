@@ -16,9 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import sys
-
-
 TYPE_DEV = "development"
 TYPE_BETA = "beta"
 TYPE_FINAL = ""
