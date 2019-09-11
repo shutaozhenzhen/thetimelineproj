@@ -19,7 +19,7 @@
 from timelinelib.calendar.pharaonic.time import PharaonicDelta
 from timelinelib.calendar.pharaonic.time import PharaonicTime
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import TIME_MODIFIERS
+
 
 class describe_time_properties(UnitTestCase):
 
