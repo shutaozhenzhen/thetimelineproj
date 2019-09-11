@@ -21,8 +21,6 @@ import wx
 
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import Event
-from timelinelib.canvas.data import TimeOutOfRangeLeftError
-from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas import TimelineCanvas
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController
