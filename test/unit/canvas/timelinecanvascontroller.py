@@ -17,7 +17,6 @@
 
 
 from unittest.mock import Mock
-import wx
 
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.time import GregorianTime
