@@ -18,8 +18,6 @@
 
 from os.path import abspath
 
-import wx
-
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
 
