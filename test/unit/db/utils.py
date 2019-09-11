@@ -22,7 +22,6 @@ from timelinelib.test.cases.unit import UnitTestCase
 class describe_raise_error_message_assembly(UnitTestCase):
 
     def test_can_assemble_bytestrings(self):
-        import sys
         specific_msg = "specific_msg_\xe9"
         cause_exception = "cause_exception"
         path = "foobar"
