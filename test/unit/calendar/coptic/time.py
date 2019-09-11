@@ -19,7 +19,7 @@
 from timelinelib.calendar.coptic.time import CopticDelta
 from timelinelib.calendar.coptic.time import CopticTime
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.utils import TIME_MODIFIERS
+
 
 class describe_time_properties(UnitTestCase):
 
