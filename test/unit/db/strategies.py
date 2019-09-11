@@ -22,7 +22,6 @@ from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.event import Event
 from timelinelib.canvas.data.subevent import Subevent
-from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.db.strategies import DefaultContainerStrategy
 from timelinelib.db.strategies import ExtendedContainerStrategy
 from timelinelib.test.cases.unit import UnitTestCase
