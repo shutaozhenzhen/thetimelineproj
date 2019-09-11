@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
 from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
