@@ -181,6 +181,11 @@ class describe_overlapping_eras(ErasTestCase):
                           self.mix_colors(self.color2, self.color3),
                           self.color2], [e.color for e in periods])
 
+    def test_eras_with_no_duration_are_excluded(self):
+        self.given_two_eras_with_no_duration()
+        result = self.eras.get_all_periods()
+        self.assertEqual([], result)
+
     def mix_colors(self, c0, c1):
         return (
             (c0[0] + c1[0]) // 2,
@@ -239,6 +244,14 @@ class describe_overlapping_eras(ErasTestCase):
             self.era1,
         ])
 
+    def given_two_eras_with_no_duration(self):
+        self.era1 = a_gregorian_era_with(start="30 Jan 2016", end="30 Jan 2016", color=self.color1)
+        self.era2 = a_gregorian_era_with(start="1 Dec 2015", end="1 Dec 2015", color=self.color2)
+        self.eras = Eras(self.db, eras=[
+            self.era2,
+            self.era1,
+        ])
+
     def given_three_overlapping_eras(self):
         self.era1 = a_gregorian_era_with(start="1 Jan 2016", end="30 Mar 2016", color=self.color1)
         self.era2 = a_gregorian_era_with(start="1 Feb 2016", end="30 Apr 2016", color=self.color2)
@@ -248,3 +261,5 @@ class describe_overlapping_eras(ErasTestCase):
             self.era2,
             self.era3,
         ])
+
+
