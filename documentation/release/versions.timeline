@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>1.19.0 (a5f8103cf2d3 2019-04-27)</version>
+  <version>2.0.0 development</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -1510,31 +1510,99 @@ Duplication of events:
       <default_color>192,192,192</default_color>
     </event>
     <event>
-      <start>2019-10-31 11:02:00</start>
-      <end>2019-10-31 11:02:00</end>
+      <start>2019-11-03 11:02:00</start>
+      <end>2019-11-03 11:02:00</end>
       <text>Timeline 1.20.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
+      <category>Planned Release</category>
       <description>Version 1.20.0
 --------------
 
-**Planned release on 31 October 2019.**
+**Release on 3 Novemberr 2019.**
 
-*Don't want to wait for the final release? Try the beta version!*
+Versions:
 
-* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/&gt;`_.
+This is the last release in the 1.x version series.
+The application has bas been ported to Python 3 and releases will continue
+in the 2.0 version.
 
-* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/&gt;`_.</description>
+Calendars:
+
+* ``Two new calendars added.``
+  The Pharaonic and Coptic calendars added, thanks to Guyrandy Jean-Gilles.
+
+Time:
+
+* ``The time for an event can be entered with seconds precision.``
+  A preference can be checked in the date/time tab to make the time-picker show seconds.
+
+Graphics:
+
+* ``The font in the event description editor has a fixed size.``
+  When the text control has focus the font size can be changed with Ctrl+/Ctrl-.
+
+* ``The with of the now-line can be 2 pix wider to help old eyes.``
+  A preference can be checked in the color tab to make the now-line wider.
+
+Search:
+
+* ``When only one event is found, pressing Enter has no effect.``
+  On Enter, if we are on the last event found, the first event found is highlighted.
+
+* ``Period selection is added to the Search control.``
+  The search period can be limited to the visible time period.
+
+* ``Result label is always shown.``
+  Now the result label is shown even when more than 1 match.
+
+Fixed crash reports and bugs:
+
+* ``AttributeError: 'MainCanvas' object has no attribute 'controller'``
+Fixed controller that had changed name crom _controller.
+
+* ``AttributeError: 'NumTime' object has no attribute 'julian_day'``
+  Added to_str() function to time base class GenericTimeMixin.
+  Own implementation of to_str in GregorianTime.
+
+* ``AttributeError: 'NoneType' object has no attribute 'get_time_period'``
+  Removed None objects from event list.
+
+* ``AttributeError: 'NoneType' object has no attribute 'delete'``
+  Removed None objects from event list.</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2019-11-03 17:08:56</start>
+      <end>2019-11-03 17:08:56</end>
+      <text>2.0.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Planned Release</category>
+      <description>Version 2.0.0
+--------------
+
+Port of Timeline to Python 3.
+
+Removed features:
+
+* The main menu is no longer available as a context menu.
+
+Eras:
+
+* ``Tha application don't start if the timeline has Era's with no duration.``
+  Removed Era's with no duration from drawing.</description>
       <default_color>192,192,192</default_color>
     </event>
   </events>
   <view>
     <displayed_period>
-      <start>2015-01-18 06:55:54</start>
-      <end>2020-11-02 19:25:09</end>
+      <start>2016-04-22 17:07:40</start>
+      <end>2022-02-06 05:36:55</end>
     </displayed_period>
     <hidden_categories>
     </hidden_categories>
