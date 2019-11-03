@@ -62,6 +62,10 @@ def get_version(versionfile):
     major, minor, bug = line. split(", ")
     app_ver_name = "Timeline %s.%s.%s" % (major, minor, bug)
     revision = sys.argv[2]
+    if revision == 'tip':
+        beta = "-beta"
+    else:
+        beta = ""
     beta = "-beta"
     hash_value = get_hash(sys.argv[2])
     revision_date = get_revision_date(sys.argv[2])
