@@ -24,6 +24,7 @@ from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgrou
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
+from timelinelib.canvas.drawing.drawers import get_progress_color
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.test.cases.unit import UnitTestCase
@@ -90,3 +91,11 @@ class describe_default_drawer(UnitTestCase):
             "1 Jan 2010",
             "1 Jan 2011"
         )
+
+
+class describe_progress_color(UnitTestCase):
+
+    def test_progress_color(self):
+        self.assertEqual(get_progress_color((255, 255, 255)), (255, 255, 255))
+        self.assertEqual(get_progress_color((100, 100, 100)), (120, 120, 120))
+        self.assertEqual(get_progress_color((100, 150, 200)), (50.88435374149661, 97.14285714285714, 143.40136054421765))
