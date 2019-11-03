@@ -72,8 +72,8 @@ def get_version(versionfile):
         with open(versionfile, "r") as f:
             text = f.read()
         text = text.replace('TYPE = TYPE_DEV', 'TYPE = TYPE_FINAL')
-        text = text.replace('REVISION_DATE = ""', f'REVISION_HASH = "{revision_date}"')
-        text = text.replace('REVISION_DATE = ""', f'REVISION_HASH = "{revision_date}"')
+        text = text.replace('REVISION_HASH = ""', f'REVISION_HASH = "{hash_value}"')
+        text = text.replace('REVISION_DATE = ""', f'REVISION_DATE = "{revision_date}"')
         with open(versionfile, "w") as f:
             f.write(text)
     print("[INFO] Version found: %s" % app_ver_name)
