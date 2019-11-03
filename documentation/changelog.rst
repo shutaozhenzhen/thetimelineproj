@@ -4,7 +4,7 @@ Changelog
 Version 2.0.0
 --------------
 
-**Released 3 November 2019.**
+**Released on 3 November 2019.**
 
 Port of Timeline to Python 3.
 
@@ -21,7 +21,7 @@ Eras:
 Version 1.20.0
 --------------
 
-**Release on 3 Novemberr 2019.**
+**Released on 3 November 2019.**
 
 Versions:
 
@@ -76,7 +76,7 @@ Fixed controller that had changed name crom _controller.
 Version 1.19.0
 --------------
 
-**Released 30 April 2019.**
+**Released on 30 April 2019.**
 
 Time scale position:
 
