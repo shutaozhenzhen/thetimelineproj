@@ -4,13 +4,13 @@ Changelog
 Version 1.20.0
 --------------
 
-**Planned release on 31 October 2019.**
+**Release on 3 Novemberr 2019.**
 
-*Don't want to wait for the final release? Try the beta version!*
+Versions:
 
-* `Download source <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact/>`_.
-
-* `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/>`_.
+This is the last release in the 1.x version series.
+The application has bas been ported to Python 3 and releases will continue
+in the 2.0 version.
 
 Calendars:
 
