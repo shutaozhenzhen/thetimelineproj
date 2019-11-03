@@ -21,7 +21,7 @@ Eras:
 Version 1.20.0
 --------------
 
-**Released on 3 Novemberr 2019.**
+**Release on 3 Novemberr 2019.**
 
 Versions:
 
