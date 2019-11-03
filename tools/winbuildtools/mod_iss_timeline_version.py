@@ -65,11 +65,12 @@ def get_version(versionfile):
     print("Revision:", revision)
     if revision == 'tip':
         beta = "-beta"
+        hash_value = get_hash(sys.argv[2])
+        revision_date = get_revision_date(sys.argv[2])
+        output_base_filename = "timeline-%s.%s.%s%s-%s-%s-Win32Setup" % (major, minor, bug, beta, hash_value, revision_date)
     else:
         beta = ""
-    hash_value = get_hash(sys.argv[2])
-    revision_date = get_revision_date(sys.argv[2])
-    output_base_filename = "timeline-%s.%s.%s%s-%s-%s-Win32Setup" % (major, minor, bug, beta, hash_value, revision_date)
+        output_base_filename = "timeline-%s.%s.%s-Win32Setup" % (major, minor, bug)
     print("[INFO] Version found: %s" % app_ver_name)
     print("[INFO] Filename: %s" % output_base_filename)
     return app_ver_name, output_base_filename
