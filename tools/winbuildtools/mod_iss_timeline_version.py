@@ -71,7 +71,8 @@ def get_version(versionfile):
         output_base_filename = "timeline-%s.%s.%s-Win32Setup" % (major, minor, bug)
         with open(versionfile, "r") as f:
             text = f.read()
-        text = text.replace('REVISION_HASH = ""', f'REVISION_HASH = "{hash_value}"')
+        text = text.replace('TYPE = TYPE_DEV', 'TYPE = TYPE_FINAL')
+        text = text.replace('REVISION_DATE = ""', f'REVISION_HASH = "{revision_date}"')
         text = text.replace('REVISION_DATE = ""', f'REVISION_HASH = "{revision_date}"')
         with open(versionfile, "w") as f:
             f.write(text)
