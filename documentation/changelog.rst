@@ -4,6 +4,8 @@ Changelog
 Version 2.0.0
 --------------
 
+**Released 3 November 2019.**
+
 Port of Timeline to Python 3.
 
 Removed features:
