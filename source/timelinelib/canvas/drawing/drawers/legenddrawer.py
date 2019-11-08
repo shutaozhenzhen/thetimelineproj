@@ -107,7 +107,7 @@ class LegendDrawer:
         Return the text width of the longest category text and the
         height of the first category text.
         """
-        font.set_legend_text_font(self._scene._appearance.get_legend_font(), self._dc)
+        font.set_legend_text_font(self._scene.appearance.get_legend_font(), self._dc)
         twth = [self._dc.GetTextExtent(cat.name) for cat in categories]
         maxw = max(twth, key=lambda x: x[0])[0]
         return maxw, twth[0][1]
@@ -138,7 +138,7 @@ class LegendDrawer:
                  TOP_RIGHT: (x, 0),
                  BOTTOM_LEFT: (0, y),
                  BOTTOM_RIGHT: (x, y)}
-        go.translate(*poses[self._scene._view_properties.legend_pos])
+        go.translate(*poses[self._scene.view_properties.legend_pos])
 
 
 def color_box(tw, th, y, category):
