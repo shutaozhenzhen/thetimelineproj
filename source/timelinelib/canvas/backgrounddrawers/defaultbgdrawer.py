@@ -21,6 +21,8 @@ import wx
 
 class DefaultBackgroundDrawer(object):
 
+    OFFSET = 15
+
     def draw(self, drawer, dc, scene, timeline, colorize_weekends, weekend_colour, bg_colour):
         self.drawer = drawer
         self._erase_background(dc, bg_colour)
@@ -50,19 +52,18 @@ class DefaultBackgroundDrawer(object):
         self._draw_era_name_in_center_of_visible_era(era, h)
 
     def _draw_era_rect(self, era, h):
-        self._draw_timeperiod_rect(era.get_time_period(), h, era.get_color(), 0)
+        self._draw_timeperiod_rect(era.get_time_period(), h, era.get_color())
 
     def _draw_weekend_rect(self, timeperiod, h, weekend_colour):
-        OFFSET = 15
-        self._draw_timeperiod_rect(timeperiod, h, weekend_colour, OFFSET)
+        self._draw_timeperiod_rect(timeperiod, h, weekend_colour, self.OFFSET)
 
-    def _draw_timeperiod_rect(self, timeperiod, h, colour, Offset):
+    def _draw_timeperiod_rect(self, timeperiod, h, colour, offset=0):
         x, width = self._get_timeperiod_measures(timeperiod)
-        self._draw_backgound_rect(x, h, max(1, width), colour, Offset)
+        self._draw_backgound_rect(x, h, max(1, width), colour, offset)
 
-    def _draw_backgound_rect(self, x, h, width, colour, Offset):
+    def _draw_backgound_rect(self, x, h, width, colour, offset):
         self._set_color(self.drawer.dc, colour)
-        self.drawer.dc.DrawRectangle(x, Offset, width, h - 2 * Offset)
+        self.drawer.dc.DrawRectangle(x, offset, width, h - 2 * offset)
 
     def _draw_era_name_in_center_of_visible_era(self, era, h):
         x, width = self._get_timeperiod_measures(era.get_time_period())
