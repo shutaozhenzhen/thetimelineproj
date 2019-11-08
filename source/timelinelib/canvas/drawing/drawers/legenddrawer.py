@@ -126,16 +126,10 @@ class LegendDrawer:
         for i in range(len(self._categories)):
             y = i * (th + IP)
             go = GraphObject(y=y, text=self._categories[i].name)
-            go.add_child(self._color_box(tw, th, y, self._categories[i]))
+            go.add_child(color_box(tw, th, y, self._categories[i]))
             go.translate(IP, IP)
             collector.append(go)
         return collector
-
-    def _color_box(self, tw, th, y, category):
-        go = GraphObject(x=tw + OP, y=y, w=th, h=th)
-        go.brush_color = wx.Brush(wx.Colour(*category.color))
-        go.pen_color = wx.Pen(wx.Colour(*darken_color(category.color)))
-        return go
 
     def _set_legend_pos(self, go):
         x = self._scene.width - 2 * OP - go.width
@@ -145,3 +139,10 @@ class LegendDrawer:
                  BOTTOM_LEFT: (0, y),
                  BOTTOM_RIGHT: (x, y)}
         go.translate(*poses[self._scene._view_properties.legend_pos])
+
+
+def color_box(tw, th, y, category):
+    go = GraphObject(x=tw + OP, y=y, w=th, h=th)
+    go.brush_color = wx.Brush(wx.Colour(*category.color))
+    go.pen_color = wx.Pen(wx.Colour(*darken_color(category.color)))
+    return go
