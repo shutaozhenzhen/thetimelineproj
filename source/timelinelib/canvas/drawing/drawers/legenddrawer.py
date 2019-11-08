@@ -86,9 +86,9 @@ class LegendDrawer:
 
     def _draw_legend_item(self, go):
         self._dc.DrawText(go.text, *go.point)
-        self._draw_Legend_item_color_box(go.first_child)
+        self._draw_legend_item_color_box(go.first_child)
 
-    def _draw_Legend_item_color_box(self, go):
+    def _draw_legend_item_color_box(self, go):
         self._draw_rectangle(go)
 
     def _draw_rectangle(self, go):
