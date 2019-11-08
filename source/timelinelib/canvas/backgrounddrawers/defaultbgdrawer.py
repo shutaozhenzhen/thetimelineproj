@@ -27,14 +27,14 @@ class DefaultBackgroundDrawer(object):
         self.drawer = drawer
         self._erase_background(dc, bg_colour)
         self._draw_eras(dc, scene, timeline)
-        self._draw_weekend_days(dc, drawer, scene, colorize_weekends, weekend_colour)
+        self._draw_weekend_days(dc, scene, colorize_weekends, weekend_colour)
 
     def _erase_background(self, dc, bg_colour):
         w, h = dc.GetSize()
         self._set_color(dc, bg_colour)
         dc.DrawRectangle(0, 0, w, h)
 
-    def _draw_weekend_days(self, dc, drawer, scene, colorize_weekends, weekend_colour):
+    def _draw_weekend_days(self, dc, scene, colorize_weekends, weekend_colour):
         if colorize_weekends and scene.minor_strip_is_day():
             _, h = dc.GetSize()
             for strip_period in scene.minor_strip_data:
