@@ -78,5 +78,6 @@ class describe_legend_drawer(UnitTestCase):
         self.scene.width = 100
         self.scene.height = 50
         self.scene._view_properties.legend_pos = 1
+        self.scene.view_properties = self.scene._view_properties
         self.categories = Mock()
         self.drawer = LegendDrawer(self.dc, self.scene, self.categories)

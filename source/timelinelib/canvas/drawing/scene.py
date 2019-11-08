@@ -49,6 +49,14 @@ class TimelineScene(object):
         self.major_strip_data = []
         self.minor_strip_data = []
 
+    @property
+    def view_properties(self):
+        return self._view_properties
+
+    @property
+    def appearance(self):
+        return self._appearance
+
     def set_outer_padding(self, outer_padding):
         self._outer_padding = outer_padding
 
