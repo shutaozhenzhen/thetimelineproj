@@ -28,14 +28,9 @@ class DefaultBackgroundDrawer(object):
 
     def draw(self, drawer, dc, scene, timeline, colorize_weekends, weekend_colour, bg_colour):
         self._drawer = drawer
-        self._erase_background(dc, bg_colour)
+        erase_dc_background(dc, bg_colour)
         self._draw_eras(dc, timeline)
         self._draw_weekend_days(dc, scene, colorize_weekends, weekend_colour)
-
-    def _erase_background(self, dc, bg_colour):
-        w, h = dc.GetSize()
-        self._set_color(dc, bg_colour)
-        dc.DrawRectangle(0, 0, w, h)
 
     def _draw_weekend_days(self, dc, scene, colorize_weekends, weekend_colour):
         if colorize_weekends and scene.minor_strip_is_day():
@@ -65,7 +60,7 @@ class DefaultBackgroundDrawer(object):
         self._draw_backgound_rect(x, h, max(1, width), colour, offset)
 
     def _draw_backgound_rect(self, x, h, width, colour, offset):
-        self._set_color(self._drawer.dc, colour)
+        set_dc_color(self._drawer.dc, colour)
         self._drawer.dc.DrawRectangle(x, offset, width, h - 2 * offset)
 
     def _draw_era_name_in_center_of_visible_era(self, era, h):
@@ -77,6 +72,13 @@ class DefaultBackgroundDrawer(object):
         x1, x2 = self._drawer.get_period_xpos(time_period)
         return x1, x2 - x1
 
-    def _set_color(self, dc, color):
-        dc.SetPen(wx.Pen(color))
-        dc.SetBrush(wx.Brush(color))
+
+def erase_dc_background(dc, bg_colour):
+    w, h = dc.GetSize()
+    set_dc_color(dc, bg_colour)
+    dc.DrawRectangle(0, 0, w, h)
+
+
+def set_dc_color(dc, color):
+    dc.SetPen(wx.Pen(color))
+    dc.SetBrush(wx.Brush(color))
