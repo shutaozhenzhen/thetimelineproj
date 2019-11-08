@@ -34,7 +34,7 @@ class NowLine:
         return self._scene.x_pos_for_time(now_time)
         
     def _now_line_is_visible(self, x):
-        return x > 0 and x < self._scene.width
+        return 0 < x < self._scene.width
 
     def _draw_line(self, x):
         self._dc.SetPen(self._drawer.now_pen)
