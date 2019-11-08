@@ -41,7 +41,7 @@ BOTTOM_RIGHT = 3
 """."""
 
 
-class LegendDrawer():
+class LegendDrawer:
     """
     The legend is a box containing one item row for each category
     displayed in a timeline. An item contains a text and colored
