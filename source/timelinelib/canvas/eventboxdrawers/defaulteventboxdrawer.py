@@ -124,7 +124,7 @@ class DefaultEventBoxDrawer(object):
     def _get_event_color(self, event):
         try:
             return event.get_category().color
-        except AttributeError as e:
+        except AttributeError:
             return event.get_default_color()
 
     def _draw_fuzzy_start(self, dc, rect, event):
@@ -263,7 +263,7 @@ class DefaultEventBoxDrawer(object):
     def _set_text_foreground_color(self, dc, event):
         try:
             dc.SetTextForeground(get_colour(event.get_category().font_color))
-        except:
+        except AttributeError:
             dc.SetTextForeground(wx.BLACK)
 
     def _draw_handles(self, dc, event, rect):
