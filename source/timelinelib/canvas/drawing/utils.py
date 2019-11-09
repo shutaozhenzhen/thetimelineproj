@@ -87,3 +87,11 @@ def lighten_color(color, factor=1.5):
 
 def get_colour(rgb_tuple):
     return wx.Colour(rgb_tuple[0], rgb_tuple[1], rgb_tuple[2])
+
+
+def black_solid_pen(size):
+    return wx.Pen(wx.Colour(0, 0, 0), size, wx.PENSTYLE_SOLID)
+
+
+def black_solid_brush():
+    return wx.Brush(wx.Colour(0, 0, 0), wx.BRUSHSTYLE_SOLID)
