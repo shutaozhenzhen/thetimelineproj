@@ -64,7 +64,7 @@ class DateFormatParser(object):
         return self.regions[1][REGION_SEPARATOR], self.regions[2][REGION_SEPARATOR]
 
     def get_region_order(self):
-        return (self._get_region_type_index(YEAR), self._get_region_type_index(MONTH), self._get_region_type_index(DAY))
+        return self._get_region_type_index(YEAR), self._get_region_type_index(MONTH), self._get_region_type_index(DAY)
 
     def use_abbreviated_month_names(self):
         for i in range(len(self.regions)):
