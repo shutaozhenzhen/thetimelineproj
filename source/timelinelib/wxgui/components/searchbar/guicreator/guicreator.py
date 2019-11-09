@@ -26,7 +26,11 @@ class GuiCreator(object):
         self._create_components()
         self.Realize()
         self._result_label.Show(False)
-        
+
+    @property
+    def icon_size(self):
+        return self._icon_size
+
     def Focus(self):
         self._search.SetFocus()
 
