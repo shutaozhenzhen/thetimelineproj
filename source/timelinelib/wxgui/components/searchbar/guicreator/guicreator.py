@@ -24,7 +24,6 @@ class GuiCreator(object):
     def _create_gui(self):
         self._icon_size = (16, 16)
         self._create_components()
-        self.Realize()
         self._result_label.Show(False)
 
     @property
