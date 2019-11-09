@@ -32,7 +32,7 @@ class describe_experimental_feature_done(UnitTestCase):
         self.assertEqual(CONFIG_NAME, self.ef.get_config_name())
 
     def test_has_description(self):
-        self.assertEqual(DESCRIPTION, self.ef.get_description())
+        self.assertEqual(DESCRIPTION, self.ef.description)
 
     def setUp(self):
         self.ef = ExperimentalFeatureExtendedContainerStrategy()

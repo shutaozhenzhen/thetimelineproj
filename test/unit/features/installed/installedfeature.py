@@ -30,7 +30,7 @@ class describe_installed_feature(UnitTestCase):
         self.assertEqual(DISPLAY_NAME, self.feature.display_name)
 
     def test_has_a_description(self):
-        self.assertEqual(DESCRIPTION, self.feature.get_description())
+        self.assertEqual(DESCRIPTION, self.feature.description)
 
     def setUp(self):
         self.feature = InstalledFeature(DISPLAY_NAME, DESCRIPTION)
