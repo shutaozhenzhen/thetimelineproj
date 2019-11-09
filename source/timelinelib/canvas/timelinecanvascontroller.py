@@ -49,7 +49,7 @@ class TimelineCanvasController(object):
         self.timeline = None
         self.set_appearance(Appearance())
         self.set_event_box_drawer(DefaultEventBoxDrawer())
-        self.set_background_drawer(self.get_saved_background_drawer())
+        self.set_background_drawer(DefaultBackgroundDrawer())
         self._fast_draw = False
         self._set_initial_values_to_member_variables()
         self._set_colors_and_styles()
@@ -68,9 +68,6 @@ class TimelineCanvasController(object):
         self.appearance = appearance
         self.appearance.listen_for_any(self._redraw_timeline)
         self.redraw_timeline()
-
-    def get_saved_background_drawer(self):
-        return DefaultBackgroundDrawer()
 
     def set_event_box_drawer(self, event_box_drawer):
         self.drawing_algorithm.set_event_box_drawer(event_box_drawer)
