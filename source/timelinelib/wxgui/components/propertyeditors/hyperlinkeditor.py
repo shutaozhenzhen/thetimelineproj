@@ -37,7 +37,7 @@ class HyperlinkEditorGuiCreator(wx.Panel):
         self.btn_remove = self._create_button(_("&Remove"), self._btn_remove_on_click)
         self.btn_test = self._create_button(_("Te&st"), self._btn_test_on_click)
         self.url_panel = self._create_input_controls()
-        return (self.btn_add, self.btn_clear, self.btn_test, self.url_panel)
+        return self.btn_add, self.btn_clear, self.btn_test, self.url_panel
 
     def put_controls_in_sizer(self, sizer, controls):
         self.btn_add, self.btn_clear, self.btn_test, self.url_panel = controls
@@ -158,4 +158,3 @@ class HyperlinkEditor(BaseEditor, HyperlinkEditorGuiCreator):
             self.btn_remove.Enable(True)
             self.btn_test.Enable(True)
             self.btn_append.Enable(False)
-
