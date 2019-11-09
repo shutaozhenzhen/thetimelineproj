@@ -88,10 +88,10 @@ class DefaultEventBoxDrawer(object):
 
     def _draw_locked_edges(self, dc, rect, event):
         if event.get_ends_today():
-            self._draw_locked_end(dc, event, rect)
+            self._draw_locked_end(dc, rect)
         if event.get_locked():
-            self._draw_locked_start(dc, event, rect)
-            self._draw_locked_end(dc, event, rect)
+            self._draw_locked_start(dc, rect)
+            self._draw_locked_end(dc, rect)
 
     def _draw_contents_indicator(self, dc, event, rect):
         if event.has_balloon_data():
@@ -143,11 +143,11 @@ class DefaultEventBoxDrawer(object):
         gc.SetPen(self._get_thin_border_pen(event))
         gc.StrokePath(path)
 
-    def _draw_locked_start(self, dc, event, rect):
+    def _draw_locked_start(self, dc, rect):
         self._inflate_clipping_region(dc, rect)
         dc.DrawBitmap(self._get_lock_bitmap(), rect.x - 7, rect.y + 3, True)
 
-    def _draw_locked_end(self, dc, event, rect):
+    def _draw_locked_end(self, dc, rect):
         self._inflate_clipping_region(dc, rect)
         dc.DrawBitmap(self._get_lock_bitmap(), rect.x + rect.width - 8, rect.y + 3, True)
 
