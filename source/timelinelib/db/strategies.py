@@ -171,7 +171,7 @@ class DefaultContainerStrategy(ContainerStrategy):
         for event in self.container.subevents:
             if event is new_event:
                 continue
-            if (self._event_totally_overlaps_new_event(new_event, event)):
+            if self._event_totally_overlaps_new_event(new_event, event):
                 return event
         return None
 
@@ -183,19 +183,19 @@ class DefaultContainerStrategy(ContainerStrategy):
         overlapping_events = []
         for event in self.container.subevents:
             if event is not new_event:
-                if (self._starts_within(event, new_event) or self._ends_within(event, new_event)):
+                if self._starts_within(event, new_event) or self._ends_within(event, new_event):
                     overlapping_events.append(event)
         return overlapping_events
 
     def _starts_within(self, event, new_event):
         s1 = event.get_time_period().start_time >= new_event.get_time_period().start_time
         s2 = event.get_time_period().start_time <= new_event.get_time_period().end_time
-        return (s1 and s2)
+        return s1 and s2
 
     def _ends_within(self, event, new_event):
         s1 = event.get_time_period().end_time >= new_event.get_time_period().start_time
         s2 = event.get_time_period().end_time <= new_event.get_time_period().end_time
-        return (s1 and s2)
+        return s1 and s2
 
     def _move_early_events_left(self, new_event, latest_start_time, delta):
         delta = -delta
