@@ -513,7 +513,7 @@ class PreferencesDialog(Dialog):
         
     def AddExperimentalFeatures(self, features):
         for feature in features:
-            name = feature.get_display_name()
+            name = feature.display_name
             cb = wx.CheckBox(self.experimental_panel, label=name, name=name)
             cb.SetValue(feature.enabled())
             self.experimental_panel_sizer.Add(cb)

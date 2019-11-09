@@ -30,7 +30,8 @@ class Feature(object):
         self._description = description
         self._config_name = config_name
 
-    def get_display_name(self):
+    @property
+    def display_name(self):
         return self._display_name
 
     def get_description(self):

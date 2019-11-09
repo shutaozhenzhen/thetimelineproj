@@ -26,11 +26,11 @@ class FeatureDialogController(Controller):
 
     def on_init(self, feature):
         self.feature = feature
-        self.view.SetFeatureName(feature.get_display_name())
+        self.view.SetFeatureName(feature.display_name)
         self.view.SetFeatureDescription(feature.get_description())
 
     def on_give_feedback(self, evt):
-        show_feedback_dialog("", self.feature.get_display_name(), "")
+        show_feedback_dialog("", self.feature.display_name, "")
 
     def on_text_url(self, evt):
         if evt.MouseEvent.LeftUp():

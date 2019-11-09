@@ -26,7 +26,7 @@ from timelinelib.test.cases.unit import UnitTestCase
 class describe_experimental_feature_negative_julian_days(UnitTestCase):
 
     def test_has_a_display_name(self):
-        self.assertEqual(DISPLAY_NAME, self.feature.get_display_name())
+        self.assertEqual(DISPLAY_NAME, self.feature.display_name)
 
     def test_has_a_description(self):
         self.assertEqual(DESCRIPTION, self.feature.get_description())

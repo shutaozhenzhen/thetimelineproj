@@ -82,7 +82,7 @@ class ExperimentalFeatures(object):
             if feature.get_config_name() == name:
                 feature.set_active(value)
                 return
-            elif feature.get_display_name() == name:
+            elif feature.display_name == name:
                 feature.set_active(value)
                 return
 
@@ -103,6 +103,6 @@ def experimental_feature(feature):
     """
     def deco(foo):
         if feature not in FEATURES:
-            raise ExperimentalFeatureException("Feature '%s', not implemented" % feature.get_display_name())
+            raise ExperimentalFeatureException("Feature '%s', not implemented" % feature.display_name())
         return foo
     return deco
