@@ -50,6 +50,7 @@ class SearchBar(wx.ToolBar, GuiCreator):
         wx.ToolBar.__init__(self, parent, style=wx.TB_HORIZONTAL | wx.TB_BOTTOM)
         self._controller = SearchBarController(self)
         self._create_gui()
+        self.Realize()
         self.UpdateButtons()
 
     #
