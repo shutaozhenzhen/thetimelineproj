@@ -124,7 +124,7 @@ class DefaultEventBoxDrawer(object):
     def _get_event_color(self, event):
         try:
             return event.get_category().color
-        except:
+        except AttributeError as e:
             return event.get_default_color()
 
     def _draw_fuzzy_start(self, dc, rect, event):
