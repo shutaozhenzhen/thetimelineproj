@@ -93,8 +93,8 @@ class Exporter(object):
         write_simple_tag(xmlfile, "progress_color", color_string(cat.get_progress_color()), INDENT3)
         write_simple_tag(xmlfile, "done_color", color_string(cat.get_done_color()), INDENT3)
         write_simple_tag(xmlfile, "font_color", color_string(cat.get_font_color()), INDENT3)
-        if cat._get_parent():
-            write_simple_tag(xmlfile, "parent", cat._get_parent().get_name(), INDENT3)
+        if cat.parent:
+            write_simple_tag(xmlfile, "parent", cat.parent.get_name(), INDENT3)
     _write_category = wrap_in_tag(_write_category, "category", INDENT2)
 
     def _write_events(self, xmlfile):
