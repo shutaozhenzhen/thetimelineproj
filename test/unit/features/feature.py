@@ -31,7 +31,7 @@ class describe_feature(UnitTestCase):
         self.assertEqual(DISPLAY_NAME, self.feature.display_name)
 
     def test_has_a_description(self):
-        self.assertEqual(DESCRIPTION, self.feature.get_description())
+        self.assertEqual(DESCRIPTION, self.feature.description)
 
     def test_has_a_config_name(self):
         self.assertEqual(CONFIG_NAME, self.feature.get_config_name())

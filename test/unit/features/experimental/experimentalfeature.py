@@ -34,7 +34,7 @@ class describe_experimental_feature(UnitTestCase):
         self.assertEqual(CONFIG_NAME, self.feature.get_config_name())
 
     def test_has_a_description(self):
-        self.assertEqual(DESCRIPTION, self.feature.get_description())
+        self.assertEqual(DESCRIPTION, self.feature.description)
 
     def test_is_not_activated_by_default(self):
         self.assertFalse(self.feature.enabled())

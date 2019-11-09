@@ -27,7 +27,7 @@ class FeatureDialogController(Controller):
     def on_init(self, feature):
         self.feature = feature
         self.view.SetFeatureName(feature.display_name)
-        self.view.SetFeatureDescription(feature.get_description())
+        self.view.SetFeatureDescription(feature.description)
 
     def on_give_feedback(self, evt):
         show_feedback_dialog("", self.feature.display_name, "")

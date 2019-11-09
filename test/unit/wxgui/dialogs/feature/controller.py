@@ -36,7 +36,7 @@ class describe_feature_dialog_controller(UnitTestCase):
         self.controller = FeatureDialogController(self.view)
         self.feature = Mock()
         self.feature.display_name = DISPLAY_NAME
-        self.feature.get_description.return_value = FEATURE_DESCRIPTION
+        self.feature.description = FEATURE_DESCRIPTION
 
     def test_view_is_populated_when_controller_inits(self):
         self.controller.on_init(self.feature)
@@ -55,7 +55,7 @@ class describe_feature_dialog_controller_(UnitTestCase):
 
     def test_shows_parts_in_dialog(self):
         self.dialog.SetFeatureName.assert_called_with(self.key.display_name)
-        self.dialog.SetFeatureDescription.assert_called_with(self.key.get_description())
+        self.dialog.SetFeatureDescription.assert_called_with(self.key.description)
 
     def setUp(self):
         self.key = InstalledFeatures().get_all_features()[0]
