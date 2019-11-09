@@ -45,7 +45,6 @@ class FileDropTarget(wx.FileDropTarget):
             return wx.DragNone
 
 
-
 class MainPanel(wx.Panel):
     """
     Panel that covers the whole client area of MainFrame.
