@@ -72,7 +72,7 @@ class OtherGradientEventBoxDrawer(DefaultEventBoxDrawer):
             super(OtherGradientEventBoxDrawer, self)._draw_fuzzy_edges(dc, rect, event)
 
     def _get_light_color(self, event):
-        return lighten_color(self._get_event_color(event))
+        return lighten_color(event.get_color())
 
     def _get_dark_color(self, event):
-        return darken_color(self._get_event_color(event), factor=0.8)
+        return darken_color(event.get_color(), factor=0.8)

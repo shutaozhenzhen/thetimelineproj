@@ -122,3 +122,6 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.event.get_fuzzy.return_value = False
         self.event.get_locked.return_value = False
         self.event.get_text.return_value = DEFAULT_TEXT
+        self.cat = Mock()
+        self.cat.font_color = (0, 0, 0)
+        self.event.get_category.return_value = self.cat

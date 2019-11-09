@@ -290,6 +290,12 @@ class Event(ItemBase, TimelineItem):
 
     default_color = property(get_default_color, set_default_color)
 
+    def get_color(self):
+        try:
+            return self.get_category().color
+        except AttributeError:
+            return self.get_default_color()
+
     def get_done_color(self):
         if self.category:
             return self.category.get_done_color()

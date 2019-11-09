@@ -70,7 +70,7 @@ class DefaultEventBoxDrawer(object):
         self._draw_hyperlink(dc, rect, event)
 
     def _draw_background(self, dc, rect, event):
-        dc.SetBrush(wx.Brush(self._get_event_color(event), wx.BRUSHSTYLE_SOLID))
+        dc.SetBrush(wx.Brush(event.get_color(), wx.BRUSHSTYLE_SOLID))
         dc.SetPen(self._get_pen(dc, event))
         dc.DrawRectangle(rect)
 
@@ -113,19 +113,13 @@ class DefaultEventBoxDrawer(object):
         return wx.Pen(self._get_border_color(event), thickness, wx.PENSTYLE_SOLID)
 
     def _get_balloon_indicator_brush(self, event):
-        base_color = self._get_event_color(event)
+        base_color = event.get_color()
         darker_color = darken_color(base_color, 0.6)
         brush = wx.Brush(darker_color, wx.BRUSHSTYLE_SOLID)
         return brush
 
     def _get_border_color(self, event):
-        return darken_color(self._get_event_color(event))
-
-    def _get_event_color(self, event):
-        try:
-            return event.get_category().color
-        except AttributeError:
-            return event.get_default_color()
+        return darken_color(event.get_color())
 
     def _draw_fuzzy_start(self, dc, rect, event):
         self._inflate_clipping_region(dc, rect)
