@@ -180,7 +180,6 @@ class Exporter(object):
         self._write_hidden_categories(xmlfile)
     _write_view = wrap_in_tag(_write_view, "view", INDENT1)
 
-
     def _write_displayed_period(self, xmlfile):
         period = self.db.get_displayed_period()
         write_simple_tag(xmlfile, "start",
