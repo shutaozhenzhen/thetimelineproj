@@ -22,6 +22,7 @@ import wx
 LABEL = _("In: ")
 NAME = _("Select period")
 
+
 class PeriodSelection:
     
     def __init__(self, parent, controller):
