@@ -65,7 +65,7 @@ class IconEditorGuiCreator(wx.Panel):
         description = self._create_description()
         btn_select = self._create_select_button()
         btn_clear = self._create_clear_button()
-        return (description, btn_select, btn_clear, self.img_icon)
+        return description, btn_select, btn_clear, self.img_icon
 
     def put_controls_in_sizer(self, sizer, controls):
         description, btn_select, btn_clear, img_icon = controls
