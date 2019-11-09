@@ -45,12 +45,12 @@ class describe_default_event_box_drawer(UnitTestCase):
 
     def test_border_color_is_dark_gray_when_event_has_no_category(self):
         event = an_event_with(category=None)
-        self.assertEqual((140, 140, 140), self.plugin.run()._get_border_color(event))
+        self.assertEqual((140, 140, 140), event.get_border_color())
 
     def test_base_color_is_dark_category_color_when_event_has_category(self):
         category = a_category_with(name="test", color=(100, 100, 100))
         event = an_event_with(category=category)
-        self.assertEqual((70, 70, 70), self.plugin.run()._get_border_color(event))
+        self.assertEqual((70, 70, 70), event.get_border_color())
 
     def setUp(self):
         self.plugin = DefaultEventBoxDrawer()

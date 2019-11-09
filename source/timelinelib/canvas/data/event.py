@@ -20,6 +20,7 @@ from timelinelib.canvas.data.base import ItemBase
 from timelinelib.canvas.data.immutable import ImmutableEvent
 from timelinelib.canvas.data.item import TimelineItem
 from timelinelib.canvas.drawing.drawers import get_progress_color
+from timelinelib.canvas.drawing.utils import darken_color
 
 
 DEFAULT_COLOR = (200, 200, 200)
@@ -295,6 +296,9 @@ class Event(ItemBase, TimelineItem):
             return self.get_category().color
         except AttributeError:
             return self.get_default_color()
+
+    def get_border_color(self):
+        return darken_color(self.get_color())
 
     def get_done_color(self):
         if self.category:

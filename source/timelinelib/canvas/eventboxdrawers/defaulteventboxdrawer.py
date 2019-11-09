@@ -110,16 +110,13 @@ class DefaultEventBoxDrawer(object):
         return self._get_border_pen(event, thickness=8)
 
     def _get_border_pen(self, event, thickness=1):
-        return wx.Pen(self._get_border_color(event), thickness, wx.PENSTYLE_SOLID)
+        return wx.Pen(event.get_border_color(), thickness, wx.PENSTYLE_SOLID)
 
     def _get_balloon_indicator_brush(self, event):
         base_color = event.get_color()
         darker_color = darken_color(base_color, 0.6)
         brush = wx.Brush(darker_color, wx.BRUSHSTYLE_SOLID)
         return brush
-
-    def _get_border_color(self, event):
-        return darken_color(event.get_color())
 
     def _draw_fuzzy_start(self, dc, rect, event):
         self._inflate_clipping_region(dc, rect)
@@ -265,7 +262,7 @@ class DefaultEventBoxDrawer(object):
         def draw_frame_around_event():
             small_rect = wx.Rect(*rect)
             small_rect.Deflate(1, 1)
-            border_color = self._get_border_color(event)
+            border_color = event.get_border_color()
             border_color = darken_color(border_color)
             pen = wx.Pen(border_color, 1, wx.PENSTYLE_SOLID)
             dc.SetBrush(wx.TRANSPARENT_BRUSH)
