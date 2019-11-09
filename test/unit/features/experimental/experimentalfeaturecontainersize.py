@@ -26,7 +26,7 @@ from timelinelib.test.cases.unit import UnitTestCase
 class describe_experimental_feature_done(UnitTestCase):
 
     def test_has_display_name(self):
-        self.assertEqual(DISPLAY_NAME, self.ef.get_display_name())
+        self.assertEqual(DISPLAY_NAME, self.ef.display_name)
 
     def test_has_config_name(self):
         self.assertEqual(CONFIG_NAME, self.ef.get_config_name())
