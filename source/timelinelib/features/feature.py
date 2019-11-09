@@ -41,4 +41,3 @@ class Feature(object):
     @property
     def config_name(self):
         return self._config_name
-
