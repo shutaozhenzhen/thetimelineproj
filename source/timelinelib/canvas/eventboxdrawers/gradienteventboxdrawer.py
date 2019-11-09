@@ -33,7 +33,7 @@ class GradientEventBoxDrawer(DefaultEventBoxDrawer):
         dc.GradientFillLinear(inner_rect, self._get_light_color(event), self._get_dark_color(event), wx.SOUTH)
 
     def _get_light_color(self, event):
-        return lighten_color(self._get_event_color(event))
+        return lighten_color(event.get_color())
 
     def _get_dark_color(self, event):
-        return darken_color(self._get_event_color(event), factor=0.8)
+        return darken_color(event.get_color(), factor=0.8)
