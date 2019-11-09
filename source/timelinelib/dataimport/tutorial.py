@@ -114,7 +114,7 @@ class TutorialTimelineCreator(object):
         end = start
         if end_add is not None:
             end = self.start + self.get_delta(end_add)
-        return (start, end)
+        return start, end
 
 
 class GregorianTutorialTimelineCreator(TutorialTimelineCreator):
@@ -135,7 +135,7 @@ class GregorianTutorialTimelineCreator(TutorialTimelineCreator):
             0
         ).to_time()
         end = start + self.get_delta(30)
-        return (start, end)
+        return start, end
 
     def get_delta(self, value):
         return GregorianDelta.from_days(value)
@@ -151,7 +151,7 @@ class NumericTutorialTimelineCreator(TutorialTimelineCreator):
     def get_start_end(self):
         start = self.db.time_type.now()
         end = start + self.get_delta(30)
-        return (start, end)
+        return start, end
 
     def get_delta(self, value):
         return NumDelta(value)
