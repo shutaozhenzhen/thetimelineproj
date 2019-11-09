@@ -82,9 +82,9 @@ class DefaultEventBoxDrawer(object):
 
     def _draw_fuzzy_edges(self, dc, rect, event):
         if event.get_fuzzy():
-            self._draw_fuzzy_start(dc, rect, event)
+            self._draw_fuzzy_start(dc, rect)
             if not event.get_ends_today():
-                self._draw_fuzzy_end(dc, rect, event)
+                self._draw_fuzzy_end(dc, rect)
 
     def _draw_locked_edges(self, dc, rect, event):
         if event.get_ends_today():
@@ -116,11 +116,11 @@ class DefaultEventBoxDrawer(object):
         brush = wx.Brush(darker_color, wx.BRUSHSTYLE_SOLID)
         return brush
 
-    def _draw_fuzzy_start(self, dc, rect, event):
+    def _draw_fuzzy_start(self, dc, rect):
         self._inflate_clipping_region(dc, rect)
         dc.DrawBitmap(self._get_fuzzy_bitmap(), rect.x - 4, rect.y + 4, True)
 
-    def _draw_fuzzy_end(self, dc, rect, event):
+    def _draw_fuzzy_end(self, dc, rect):
         self._inflate_clipping_region(dc, rect)
         dc.DrawBitmap(self._get_fuzzy_bitmap(), rect.x + rect.width - 8, rect.y + 4, True)
 
