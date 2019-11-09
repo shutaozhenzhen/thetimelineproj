@@ -133,7 +133,7 @@ class TextPatternControlController(humblewx.Controller):
         return groups
 
     def _extract_section(self, start, end):
-        return (self.view.GetValue()[start:end], start, end)
+        return self.view.GetValue()[start:end], start, end
 
     def _is_text_valid(self):
         if self.get_parts() is None:
