@@ -137,9 +137,9 @@ class DefaultContainerStrategy(ContainerStrategy):
         for event in events:
             if event is new_event:
                 continue
-            if (event.get_time_period().end_time >= start and event.get_time_period().end_time <= end):
+            if start <= event.get_time_period().end_time <= end:
                 return event
-            if (event.get_time_period().start_time <= start and event.get_time_period().end_time > end):
+            if event.get_time_period().start_time <= start and event.get_time_period().end_time > end:
                 return event
         return None
 
