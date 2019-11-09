@@ -23,5 +23,4 @@ class TextLabel(wx.StaticText):
     
     def __init__(self, parent, text):
         wx.StaticText.__init__(self, parent, label=text)
-        parent.AddControl(self)        
-        
+        parent.AddControl(self)
