@@ -102,7 +102,7 @@ class AlertEditor(BaseEditor, AlertEditorGuiCreator):
         if self.input_visible:
             time = self.dtp_start.get_value()
             text = self.text_data.GetValue()
-            return (time, text)
+            return time, text
         else:
             return None
 
