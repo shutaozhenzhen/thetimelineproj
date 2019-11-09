@@ -155,7 +155,7 @@ class DefaultContainerStrategy(ContainerStrategy):
             if not event.is_period():
                 if event.get_time_period().start_time < thr:
                     continue
-            if (event.get_time_period().start_time >= start and event.get_time_period().start_time <= end):
+            if start <= event.get_time_period().start_time <= end:
                 if min_start is None:
                     min_start = event.get_time_period().start_time
                 else:
