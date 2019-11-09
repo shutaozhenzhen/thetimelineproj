@@ -26,16 +26,16 @@ All types of Timeline features must inherit from this bas class
 class Feature(object):
 
     def __init__(self, display_name, description, config_name=""):
-        self.display_name = display_name
-        self.description = description
-        self.config_name = config_name
+        self._display_name = display_name
+        self._description = description
+        self._config_name = config_name
 
     def get_display_name(self):
-        return self.display_name
+        return self._display_name
 
     def get_description(self):
-        return self.description
+        return self._description
 
     def get_config_name(self):
-        return self.config_name
+        return self._config_name
 
