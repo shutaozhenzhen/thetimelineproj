@@ -29,4 +29,3 @@ ICONS_DIR = os.path.join(_ROOT, "icons")
 EVENT_ICONS_DIR = os.path.join(_ROOT, "icons", "event_icons")
 LOCALE_DIR = os.path.join(_ROOT, "translations")
 HELP_RESOURCES_DIR = os.path.join(_ROOT, "help_resources")
-
