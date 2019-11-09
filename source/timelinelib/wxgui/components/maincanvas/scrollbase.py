@@ -62,4 +62,3 @@ class ScrollViewInputHandler(InputHandler):
         if width - x < SCROLL_ZONE_WIDTH or x < SCROLL_ZONE_WIDTH:
             return True
         return False
-
