@@ -90,7 +90,7 @@ class SearchBarController(object):
         dlg.Destroy()
 
     def navigate_to_match(self):
-        if (self._timeline_canvas is not None and self._result_index in range(len(self._result))):
+        if self._timeline_canvas is not None and self._result_index in range(len(self._result)):
             event = self._result[self._result_index]
             self._timeline_canvas.Navigate(lambda tp: tp.center(event.mean_time()))
             self._timeline_canvas.HighligtEvent(event, clear=True)
@@ -109,5 +109,3 @@ class SearchBarController(object):
 
     def _on_last_match(self):
         return self._result and self._result_index == (len(self._result) - 1)
-
-
