@@ -17,12 +17,10 @@
 
 
 import os
-import math
 
 import wx
 
-from timelinelib.canvas.drawing.utils import darken_color
-from timelinelib.canvas.drawing.utils import get_colour
+from timelinelib.canvas.drawing.utils import black_solid_pen, black_solid_brush, get_colour, darken_color
 from timelinelib.config.paths import EVENT_ICONS_DIR
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
 
@@ -53,8 +51,8 @@ class DefaultEventBoxDrawer(object):
         x = scene.x_pos_for_time(event.mean_time())
         y0 = scene.divider_y
         y1 = y0 + 10
-        dc.SetBrush(self._black_solid_brush())
-        dc.SetPen(self._black_solid_pen(1))
+        dc.SetBrush(black_solid_brush())
+        dc.SetPen(black_solid_pen(1))
         dc.DrawLine(x, y0, x, y1)
         dc.DrawCircle(x, y1, 2)
 
@@ -346,7 +344,7 @@ class DefaultEventBoxDrawer(object):
 
         def draw_rectangle_shape():
             dc.DestroyClippingRegion()
-            dc.SetPen(self._black_solid_pen(1))
+            dc.SetPen(black_solid_pen(1))
             if event.get_category() is None:
                 dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.BRUSHSTYLE_SOLID))
             else:
@@ -356,7 +354,7 @@ class DefaultEventBoxDrawer(object):
         def draw_circle_shape():
             half_size = rect.width // 2
             dc.DestroyClippingRegion()
-            dc.SetPen(self._black_solid_pen(1))
+            dc.SetPen(black_solid_pen(1))
             dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.BRUSHSTYLE_SOLID))
             dc.DrawCircle(rect.x + half_size, rect.y + half_size, 2 * rect.width // 3)
 
@@ -370,7 +368,7 @@ class DefaultEventBoxDrawer(object):
                       wx.Point(x + rect.width + SIZE, y + half_size),
                       wx.Point(x + half_size, y + rect.width + SIZE))
             dc.DestroyClippingRegion()
-            dc.SetPen(self._black_solid_pen(1))
+            dc.SetPen(black_solid_pen(1))
             dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.BUSHSTYLE_SOLID))
             dc.DrawPolygon(points)
 
@@ -384,7 +382,7 @@ class DefaultEventBoxDrawer(object):
             dc.DrawText(label, rect.x + x_offset, rect.y + y_offset)
 
         def draw_move_handle():
-            dc.SetBrush(self._black_solid_brush())
+            dc.SetBrush(black_solid_brush())
             handle_rect = create_handle_rect()
             handle_rect.Offset(rect.Width // 2, 0)
             dc.DrawRectangle(handle_rect)
@@ -393,9 +391,3 @@ class DefaultEventBoxDrawer(object):
         draw_label()
         if selected:
             draw_move_handle()
-
-    def _black_solid_pen(self, size):
-        return wx.Pen(wx.Colour(0, 0, 0), size, wx.PENSTYLE_SOLID)
-
-    def _black_solid_brush(self):
-        return wx.Brush(wx.Colour(0, 0, 0), wx.BRUSHSTYLE_SOLID)
