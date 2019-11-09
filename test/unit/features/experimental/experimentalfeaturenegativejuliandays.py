@@ -32,7 +32,7 @@ class describe_experimental_feature_negative_julian_days(UnitTestCase):
         self.assertEqual(DESCRIPTION, self.feature.description)
 
     def test_has_a_config_name(self):
-        self.assertEqual(CONFIG_NAME, self.feature.get_config_name())
+        self.assertEqual(CONFIG_NAME, self.feature.config_name)
 
     def test_get_config_contains_config_name(self):
         self.assertEqual(CONFIG_NAME, self.feature.get_config().split("=")[0])
