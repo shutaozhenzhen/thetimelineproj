@@ -83,7 +83,7 @@ class TextPatternControlController(humblewx.Controller):
         (selection_start, _) = self.view.GetSelection()
         if self._get_groups() is not None:
             for (index, (_, start, end)) in enumerate(self._get_groups()):
-                if selection_start >= start and selection_start <= end:
+                if start <= selection_start <= end:
                     return index
         return 0
 
