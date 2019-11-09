@@ -34,7 +34,7 @@ class describe_feature(UnitTestCase):
         self.assertEqual(DESCRIPTION, self.feature.description)
 
     def test_has_a_config_name(self):
-        self.assertEqual(CONFIG_NAME, self.feature.get_config_name())
+        self.assertEqual(CONFIG_NAME, self.feature.config_name)
 
     def setUp(self):
         self.feature = Feature(DISPLAY_NAME, DESCRIPTION, CONFIG_NAME)

@@ -38,6 +38,7 @@ class Feature(object):
     def description(self):
         return self._description
 
-    def get_config_name(self):
+    @property
+    def config_name(self):
         return self._config_name
 

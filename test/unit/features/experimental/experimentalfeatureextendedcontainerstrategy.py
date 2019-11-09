@@ -29,7 +29,7 @@ class describe_experimental_feature_done(UnitTestCase):
         self.assertEqual(DISPLAY_NAME, self.ef.display_name)
 
     def test_has_config_name(self):
-        self.assertEqual(CONFIG_NAME, self.ef.get_config_name())
+        self.assertEqual(CONFIG_NAME, self.ef.config_name)
 
     def test_has_description(self):
         self.assertEqual(DESCRIPTION, self.ef.description)

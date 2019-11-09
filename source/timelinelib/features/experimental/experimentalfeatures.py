@@ -79,7 +79,7 @@ class ExperimentalFeatures(object):
 
     def set_active_state_on_feature_by_name(self, name, value):
         for feature in FEATURES:
-            if feature.get_config_name() == name:
+            if feature.config_name == name:
                 feature.set_active(value)
                 return
             elif feature.display_name == name:
