@@ -43,6 +43,10 @@ class Monitoring(object):
         else:
             self._timer = timer
 
+    @property
+    def timeline_redraw_count(self):
+        return self._timeline_redraw_count
+
     def count_timeline_redraw(self):
         """Increment counter."""
         self._timeline_redraw_count += 1

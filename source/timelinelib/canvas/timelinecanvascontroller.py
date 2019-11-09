@@ -311,7 +311,7 @@ class TimelineCanvasController(object):
             index, is_in_transaction, history = self.timeline.transactions_status()
             dc.DrawText("Undo buffer size: %d" % len(history), width - 300, height - 100)
             dc.DrawText("Undo buffer pos: %d" % index, width - 300, height - 80)
-            dc.DrawText("Redraw count: %d" % self.monitoring._timeline_redraw_count, width - 300, height - 60)
+            dc.DrawText("Redraw count: %d" % self.monitoring.timeline_redraw_count, width - 300, height - 60)
             dc.DrawText("Last redraw time: %.3f ms" % redraw_time, width - 300, height - 40)
 
         def fn_draw(dc):
