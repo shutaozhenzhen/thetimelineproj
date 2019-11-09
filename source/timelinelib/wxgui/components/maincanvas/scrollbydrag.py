@@ -23,6 +23,9 @@ from timelinelib.wxgui.components.maincanvas.inputhandler import InputHandler
 
 class ScrollByDragInputHandler(InputHandler):
 
+    MAX_SPEED = 10000
+    MAX_FRAME_RATE = 26.0
+
     def __init__(self, state, timeline_canvas, start_time, y):
         InputHandler.__init__(self, timeline_canvas)
         self._state = state
@@ -56,16 +59,15 @@ class ScrollByDragInputHandler(InputHandler):
                 self._inertial_scrolling()
 
     def _calculate_sped(self, x):
-        MAX_SPEED = 10000
         self.last_x_distance = x - self.last_x
         self.last_x = x
         current_clock_time = time.clock()
         elapsed_clock_time = current_clock_time - self.last_clock_time
         if elapsed_clock_time == 0:
-            self.speed_px_per_sec = MAX_SPEED
+            self.speed_px_per_sec = self.MAX_SPEED
         else:
             self.speed_px_per_sec = min(
-                MAX_SPEED,
+                self.MAX_SPEED,
                 int(abs(self.last_x_distance / elapsed_clock_time))
             )
         self.last_clock_time = current_clock_time
@@ -90,9 +92,7 @@ class ScrollByDragInputHandler(InputHandler):
         self.timeline_canvas.UseFastDraw(False)
 
     def _calculate_frame_time(self):
-        MAX_FRAME_RATE = 26.0
-        frames_per_second = (MAX_FRAME_RATE * self.speed_px_per_sec /
-                             (100 + self.speed_px_per_sec))
+        frames_per_second = self.MAX_FRAME_RATE * self.speed_px_per_sec / (100 + self.speed_px_per_sec)
         frame_time = 1.0 / frames_per_second
         return frame_time
 
