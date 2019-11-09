@@ -134,4 +134,4 @@ def _category_from_path(db, file_path):
 def _color_from_range(color_range):
     (rstart, _, b) = color_range
     (r, g, b) = colorsys.hsv_to_rgb(rstart, b, 1)
-    return (r * 255, g * 255, b * 255)
+    return r * 255, g * 255, b * 255
