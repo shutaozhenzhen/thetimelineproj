@@ -36,4 +36,3 @@ class TextInput:
         
     def _event_handler(self, evt):
         self._controller.search()        
-        
