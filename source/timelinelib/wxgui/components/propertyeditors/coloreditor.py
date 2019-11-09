@@ -33,7 +33,7 @@ class ColorEditorGuiCreator(wx.Panel):
     def create_controls(self):
         description = wx.StaticText(self, label=_("Color used when the Event has no category associated with it."))
         self.data = self._create_color_chooser_control()
-        return (description, self.data)
+        return description, self.data
 
     def put_controls_in_sizer(self, sizer, controls):
         description, spin_ctrl = controls
