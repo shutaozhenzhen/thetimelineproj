@@ -243,6 +243,9 @@ class Event(ItemBase, TimelineItem):
 
     icon = property(get_icon, set_icon)
 
+    def has_edge_icons(self):
+        return self.get_fuzzy() or self.get_locked()
+
     def get_hyperlink(self):
         return self._immutable_value.hyperlink
 
