@@ -70,7 +70,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
     def test_non_centered_text_is_left_ajusted_when_fuzzy(self):
         WIDTH = 100
         HEIGHT = 20
-        self.event.get_fuzzy.return_value = True
+        self.event.has_edge_icons.return_value = True
         rect = wx.Rect(0, 0, WIDTH, HEIGHT)
         self.drawer.center_text = False
         self.drawer._draw_text(self.dc, rect, self.event)
@@ -80,7 +80,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
     def test_non_centered_text_is_left_ajusted_when_locked(self):
         WIDTH = 100
         HEIGHT = 20
-        self.event.get_locked.return_value = True
+        self.event.has_edge_icons.return_value = True
         rect = wx.Rect(0, 0, WIDTH, HEIGHT)
         self.drawer.center_text = False
         self.drawer._draw_text(self.dc, rect, self.event)
@@ -90,7 +90,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
     def test_if_checkmark_is_to_be_used_it_is_placed_as_first_char_in_text(self):
         WIDTH = 100
         HEIGHT = 20
-        self.event.get_locked.return_value = True
+        self.event.has_edge_icons.return_value = True
         self.event.get_progress.return_value = 100
         rect = wx.Rect(0, 0, WIDTH, HEIGHT)
         self.drawer.center_text = False
@@ -122,6 +122,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
         self.event.get_fuzzy.return_value = False
         self.event.get_locked.return_value = False
         self.event.get_text.return_value = DEFAULT_TEXT
+        self.event.has_edge_icons.return_value = False
         self.cat = Mock()
         self.cat.font_color = (0, 0, 0)
         self.event.get_category.return_value = self.cat

@@ -230,7 +230,7 @@ class DefaultEventBoxDrawer(object):
         return text_x
 
     def _adjust_x_for_edge_icons(self, event, rect, text_x):
-        if self._event_has_edge_icons(event):
+        if event.has_edge_icons():
             text_x += rect.Height // 2
         return text_x
 
@@ -238,9 +238,6 @@ class DefaultEventBoxDrawer(object):
         if self.center_text:
             text_x = self._center_text(dc, event, inner_rect, text_x)
         return text_x
-
-    def _event_has_edge_icons(self, event):
-        return event.get_fuzzy() or event.get_locked()
 
     def _calc_y_pos(self, rect):
         return self._get_inner_rect(rect).Y
