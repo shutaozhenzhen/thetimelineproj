@@ -35,12 +35,6 @@ class GregorianDateFormatter(object):
         self.default_year = '2000'
         self.default_month = '01'
         self.default_day = '01'
-        self._first_separator = None
-        self._second_separator = None
-        self._use_abbreviated_name_for_month = None
-        self._year_position = None
-        self._month_position = None
-        self._day_position = None
 
     def use_abbreviated_name_for_month(self, value):
         self._use_abbreviated_name_for_month = value
