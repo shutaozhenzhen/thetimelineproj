@@ -226,7 +226,7 @@ class SVGDrawingAlgorithm(object):
 
     def _now_line_is_visible(self):
         x = self._scene.x_pos_for_now()
-        return x > 0 and x < self._scene.width
+        return 0 < x < self._scene.width
 
     def _get_event_border_color(self, event):
         return self._map_svg_color(darken_color(self._get_event_color(event)))
