@@ -110,7 +110,7 @@ class GregorianTime(GenericTimeMixin):
         hours = self.seconds // 3600
         minutes = (self.seconds // 60) % 60
         seconds = self.seconds % 60
-        return (hours, minutes, seconds)
+        return hours, minutes, seconds
 
 
 class GregorianDelta(ComparableValue, GenericDeltaMixin):
