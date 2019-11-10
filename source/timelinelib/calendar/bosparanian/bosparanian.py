@@ -59,8 +59,10 @@ class BosparanianDateTime(object):
             pra_4 = BosparanianDateTime.from_ymd(year, 1, 4).to_time()
             pra_4_day_of_week = BosparanianTimeType().get_day_of_week(pra_4)
             return pra_4 - BosparanianDelta.from_days(pra_4_day_of_week)
+
         def days_between(end, start):
             return end.julian_day - start.julian_day
+
         def days_since_windsday_week_1(time):
             year = BosparanianDateTime.from_time(time).year
             diff = days_between(end=time, start=windsday_week_1(year + 1))
