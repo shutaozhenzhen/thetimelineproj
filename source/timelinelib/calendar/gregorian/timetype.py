@@ -135,21 +135,21 @@ class GregorianTimeType(TimeType):
         day_period = TimePeriod(GregorianTime(0, 0), GregorianTime(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         if one_day_width > 20000:
-            return (StripHour(), StripMinute())
+            return StripHour(), StripMinute()
         elif one_day_width > 600:
-            return (StripDay(), StripHour())
+            return StripDay(), StripHour()
         elif one_day_width > 45:
-            return (StripWeek(appearance), StripWeekday())
+            return StripWeek(appearance), StripWeekday()
         elif one_day_width > 25:
-            return (StripMonth(), StripDay())
+            return StripMonth(), StripDay()
         elif one_day_width > 1.5:
-            return (StripYear(), StripMonth())
+            return StripYear(), StripMonth()
         elif one_day_width > 0.12:
-            return (StripDecade(), StripYear())
+            return StripDecade(), StripYear()
         elif one_day_width > 0.012:
-            return (StripCentury(), StripDecade())
+            return StripCentury(), StripDecade()
         else:
-            return (StripCentury(), StripCentury())
+            return StripCentury(), StripCentury()
 
     def get_default_time_period(self):
         return time_period_center(self.now(), GregorianDelta.from_days(30))
