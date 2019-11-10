@@ -380,18 +380,19 @@ def parse_color(color_string):
                              % color_string)
 
 
-def parse_icon(string):
+def parse_icon(bitmap_string):
     """
     Expected format: base64 encoded png image.
 
     Return a wx.Bitmap.
     """
     try:
-        icon_string = io.StringIO(base64.b64decode(string))
-        image = wx.ImageFromStream(icon_string, wx.BITMAP_TYPE_PNG)
+        stream = io.BytesIO(base64.b64decode(bitmap_string.encode()))
+        stream.seek(0, 0)
+        image = wx.Image(stream)
         return image.ConvertToBitmap()
-    except:
-        raise ParseException("Could not parse icon from '%s'." % string)
+    except TypeError as e:
+        raise ParseException("Could not parse icon from '%s'." % bitmap_string)
 
 
 def parse_alert_string(time_type, alert_string):

@@ -16,10 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
+
 from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
-from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
+from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml, icon_string
+from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml, parse_icon
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import a_container
 from timelinelib.test.utils import an_event_with
 from timelinelib.test.utils import a_category_with
@@ -116,3 +119,18 @@ class describe_export_db_to_timeline_xml(TmpDirTestCase):
         TmpDirTestCase.setUp(self)
         self.export_path = self.get_tmp_path("export.timeline")
         self.empty_db = MemoryDB()
+
+
+class IconTestCase(WxAppTestCase):
+
+    IMAGE_PATH = '..\\icons\\16.png'
+
+    def test_bitmap_can_be_converted_to_string(self):
+        bitmap_str = icon_string(self.bitmap)
+        self.assertTrue(parse_icon(bitmap_str).IsOk())
+
+    def setUp(self):
+        WxAppTestCase.setUp(self)
+        image = wx.Image()
+        image.LoadFile(self.IMAGE_PATH)
+        self.bitmap = image.ConvertToBitmap()

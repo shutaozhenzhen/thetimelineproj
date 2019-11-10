@@ -16,8 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml
+import wx
+
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
+from timelinelib.test.cases.wxapp import WxAppTestCase
+from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml, parse_icon
+from timelinelib.dataexport.timelinexml import icon_string
 
 
 class describe_import_timeline_xml(TmpDirTestCase):
@@ -172,3 +176,18 @@ class describe_import_timeline_xml(TmpDirTestCase):
         with open(path, "w") as f:
             f.write(content)
         return import_db_from_timeline_xml(path)
+
+
+class IconTestCase(WxAppTestCase):
+
+    IMAGE_PATH = '..\\icons\\16.png'
+
+    def test_icon_string_can_be_converted_to_bitmap(self):
+        self.assertTrue(parse_icon(self.bitmap_str).IsOk())
+
+    def setUp(self):
+        WxAppTestCase.setUp(self)
+        image = wx.Image()
+        image.LoadFile(self.IMAGE_PATH)
+        bitmap = image.ConvertToBitmap()
+        self.bitmap_str = icon_string(bitmap)
