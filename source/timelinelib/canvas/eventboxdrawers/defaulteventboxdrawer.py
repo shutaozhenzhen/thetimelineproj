@@ -326,7 +326,7 @@ class DefaultEventBoxDrawer(object):
             x = rect.X - HALF_HANDLE_SIZE + 1
             return wx.Rect(x, y, HANDLE_SIZE, HANDLE_SIZE)
 
-        def draw_shape():
+        def draw_rectangle():
             dc.DestroyClippingRegion()
             dc.SetPen(black_solid_pen(1))
             if event.get_category() is None:
@@ -350,7 +350,7 @@ class DefaultEventBoxDrawer(object):
             handle_rect.Offset(rect.Width // 2, 0)
             dc.DrawRectangle(handle_rect)
 
-        draw_shape()
+        draw_rectangle()
         draw_label()
         if selected:
             draw_move_handle()
