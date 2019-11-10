@@ -25,16 +25,31 @@ import timelinelib.meta.overrides as mark
 
 
 class OtherGradientEventBoxDrawer(DefaultEventBoxDrawer):
-
+    """
+    This is a special event box drawer that overrides the background drawing and fuzzy
+    edges drawing of the DefaultEventBoxDrawer.
+    """
     def __init__(self, fuzzy_edges=False):
+        """
+        :param fuzzy_edges: If True, fuzzy edges are drawn instead of using an icon.
+        """
         self._fuzzy_edges = fuzzy_edges
         self._event = None
         self._rect = None
+        self._light_color = None
+        self._dark_color = None
 
     @mark.overrides
     def _draw_background(self, dc, rect, event):
+        """
+        :param dc: The device context to draw on
+        :param rect: The bounding rectangle where the event shall be drawn.
+        :param event: The event to draw
+        """
         self._event = event
         self._rect = rect
+        self._light_color = lighten_color(self._event.get_color())
+        self._dark_color = darken_color(self._event.get_color(), factor=0.8)
         dc.SetPen(self._get_pen(dc, event))
         if self._fuzzy_edges and event.get_fuzzy():
             self._draw_background_and_fuzzy_edges(dc)
@@ -43,44 +58,40 @@ class OtherGradientEventBoxDrawer(DefaultEventBoxDrawer):
 
     @mark.overrides
     def _draw_fuzzy_edges(self, dc, rect, event):
+        """
+        :param dc: The device context to draw on
+        :param rect: The bounding rectangle where the event shall be drawn.
+        :param event: The event to draw
+        The purpose of this function is to NOT draw the fuzzy edges icon, since this
+        drawer has no left and right edges if self._fuzzy_edges, otherwise we delagate
+        all drawing to the DefaultEventBoxDrawer.
+        """
         if not self._fuzzy_edges:
             super(OtherGradientEventBoxDrawer, self)._draw_fuzzy_edges(dc, rect, event)
 
     def _draw_background_no_fuzzy_edges(self, dc):
         dc.DrawRectangle(self._rect)
-        inner_rect = wx.Rect(*self._rect)
-        inner_rect.Deflate(1, 1)
-        dc.GradientFillLinear(inner_rect, self.light_color, self.dark_color, wx.WEST)
+        dc.GradientFillLinear(decrease_rect_size(self._rect, 1, 1), self._light_color, self._dark_color, wx.WEST)
 
     def _draw_background_and_fuzzy_edges(self, dc):
-        self._draw_fuzzy_rect_outer_lines(dc)
-        self._draw_fuzzy_rect_fill_first_half(dc)
-        self._draw_fuzzy_rect_fill_second_half(dc)
+        dc.DrawLine(self._rect.GetTopLeft(), self._rect.GetTopRight())
+        dc.DrawLine(self._rect.GetBottomLeft(), self._rect.GetBottomRight())
+        dc.GradientFillLinear(left_half_of_rect(self._rect), wx.WHITE, self._dark_color, wx.EAST)
+        dc.GradientFillLinear(right_half_of_rect(self._rect), wx.WHITE, self._dark_color, wx.WEST)
 
-    def _draw_fuzzy_rect_outer_lines(self, dc):
-        dc.DrawLine(self._rect.GetX(), self._rect.GetY(), self._rect.GetX() + self._rect.GetWidth(), self._rect.GetY())
-        dc.DrawLine(self._rect.GetX(), self._rect.GetY() + self._rect.GetHeight() - 1,
-                    self._rect.GetX() + self._rect.GetWidth(), self._rect.GetY() + self._rect.GetHeight() - 1)
 
-    def _draw_fuzzy_rect_fill_first_half(self, dc):
-        dc.GradientFillLinear(self.half_rect, wx.WHITE, self.dark_color, wx.EAST)
+def decrease_rect_size(rect, dx=1, dy=1):
+    return wx.Rect(*rect).Deflate(dx, dy)
 
-    def _draw_fuzzy_rect_fill_second_half(self, dc):
-        rect = self.half_rect
-        rect.SetPosition(wx.Point(rect.GetX() + rect.GetWidth(), rect.GetY()))
-        dc.GradientFillLinear(rect, wx.WHITE, self.dark_color, wx.WEST)
 
-    @property
-    def half_rect(self):
-        inner_rect = wx.Rect(*self._rect)
-        inner_rect.Deflate(1, 1)
-        inner_rect.SetWidth(inner_rect.GetWidth() // 2)
-        return inner_rect
+def left_half_of_rect(rect):
+    r = decrease_rect_size(rect, dx=1, dy=1)
+    r.SetWidth(r.GetWidth() // 2)
+    return r
 
-    @property
-    def light_color(self):
-        return lighten_color(self._event.get_color())
 
-    @property
-    def dark_color(self):
-        return darken_color(self._event.get_color(), factor=0.8)
+def right_half_of_rect(rect):
+    r = decrease_rect_size(rect, dx=1, dy=1)
+    r.SetWidth(r.GetWidth() // 2)
+    r.SetPosition(wx.Point(r.GetX() + r.GetWidth(), r.GetY()))
+    return r
