@@ -120,17 +120,13 @@ class IcsLoader(object):
             raise TimelineIOError(msg1 + msg2)
 
     def _read_file_content(self, path):
-        ics_file = None
         try:
-            ics_file = open(path, "rb")
-            return ics_file.read()
+            with open(path, "rb") as ics_file:
+                return ics_file.read()
         except IOError as e:
             msg = _("Unable to read from file '%s'.")
             whole_msg = (msg + "\n\n%s") % (abspath(path), e)
             raise TimelineIOError(whole_msg)
-        finally:
-            if ics_file is not None:
-                ics_file.close()
 
     def _save_data_in_db(self, db):
         for event in self.events:
