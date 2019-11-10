@@ -129,7 +129,8 @@ class Category(ItemBase):
 
     parent = property(_get_parent, set_parent)
 
-    def get_exportable_fields(self):
+    @staticmethod
+    def get_exportable_fields():
         return EXPORTABLE_FIELDS
 
     def __repr__(self):
