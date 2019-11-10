@@ -19,6 +19,7 @@
 from xml.sax.saxutils import escape as xmlescape
 import base64
 import io
+import platform
 
 import wx
 
@@ -217,10 +218,24 @@ def color_string(color):
 
 
 def icon_string(bitmap):
+    if platform.system() == "Windows":
+        return icon_string_windows(bitmap)
+    else:
+        return icon_string_linux(bitmap)
+
+
+def icon_string_windows(bitmap):
     stream = io.BytesIO()
     image = bitmap.ConvertToImage()
     image.SaveFile(stream, 'image/png')
     return base64.b64encode(stream.getvalue()).decode()
+
+
+def icon_string_linux(bitmap):
+    output = io.StringIO()
+    image = bitmap.ConvertToImage()
+    image.SaveStream(output, wx.BITMAP_TYPE_PNG)
+    return base64.b64encode(output.getvalue())
 
 
 def alert_string(time_type, alert):
