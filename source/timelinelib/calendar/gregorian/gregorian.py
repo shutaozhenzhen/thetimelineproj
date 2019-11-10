@@ -119,11 +119,11 @@ class GregorianDateTime(object):
 
     def to_date_tuple(self):
         """ """
-        return (self.year, self.month, self.day)
+        return self.year, self.month, self.day
 
     def to_time_tuple(self):
         """ """
-        return (self.hour, self.minute, self.second)
+        return self.hour, self.minute, self.second
 
     def to_time(self):
         """ """
@@ -274,7 +274,7 @@ def julian_day_to_gregorian_ymd(julian_day):
     day = e - (((153 * m) + 2) // 5) + 1
     month = m + 3 - (12 * (m // 10))
     year = (b * 100) + d - 4800 + (m // 10)
-    return (year, month, day)
+    return year, month, day
 
 
 def gregorian_ymd_to_julian_day(year, month, day):
