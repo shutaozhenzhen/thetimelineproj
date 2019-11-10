@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
 import wx
 
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
@@ -183,11 +185,14 @@ class IconTestCase(WxAppTestCase):
     IMAGE_PATH = '..\\icons\\16.png'
 
     def test_icon_string_can_be_converted_to_bitmap(self):
-        self.assertTrue(parse_icon(self.bitmap_str).IsOk())
+        if self.bitmap_str:
+            self.assertTrue(parse_icon(self.bitmap_str).IsOk())
 
     def setUp(self):
-        WxAppTestCase.setUp(self)
-        image = wx.Image()
-        image.LoadFile(self.IMAGE_PATH)
-        bitmap = image.ConvertToBitmap()
-        self.bitmap_str = icon_string(bitmap)
+        self.bitmap_str = None
+        if os.path.exists(self.IMAGE_PATH):
+            WxAppTestCase.setUp(self)
+            image = wx.Image(0, 0)
+            image.LoadFile(self.IMAGE_PATH)
+            bitmap = image.ConvertToBitmap()
+            self.bitmap_str = icon_string(bitmap)
