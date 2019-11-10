@@ -387,29 +387,12 @@ def parse_icon(bitmap_string):
 
     Return a wx.Bitmap.
     """
-    if platform.system() == "Windows":
-        return parse_icon_windows(bitmap_string)
-    else:
-        return parse_icon_windows(bitmap_string)
-        # return parse_icon_linux(bitmap_string)
-
-
-def parse_icon_windows(bitmap_string):
     try:
         stream = io.BytesIO(base64.b64decode(bitmap_string.encode()))
         stream.seek(0, 0)
         image = wx.Image(stream)
         return image.ConvertToBitmap()
     except TypeError as e:
-        raise ParseException("Could not parse icon from '%s'." % bitmap_string)
-
-
-def parse_icon_linux(bitmap_string):
-    try:
-        icon_string = io.StringIO(base64.b64decode(bitmap_string))
-        image = wx.ImageFromStream(icon_string, wx.BITMAP_TYPE_PNG)
-        return image.ConvertToBitmap()
-    except:
         raise ParseException("Could not parse icon from '%s'." % bitmap_string)
 
 
