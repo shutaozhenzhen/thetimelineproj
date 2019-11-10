@@ -124,8 +124,8 @@ class describe_export_db_to_timeline_xml(TmpDirTestCase):
 
 class IconTestCase(WxAppTestCase):
 
-    IMAGE_PATH1 = '..\\icons\\16.png'
-    IMAGE_PATH2 = 'icons\\16.png'
+    IMAGE_PATH1 = f'..{os.sep}icons{os.sep}16.png'
+    IMAGE_PATH2 = f'icons{os.sep}16.png'
 
     def test_bitmap_can_be_converted_to_string_and_back(self):
         if os.path.exists(self.IMAGE_PATH1):
