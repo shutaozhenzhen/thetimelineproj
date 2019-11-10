@@ -191,7 +191,7 @@ class DefaultEventBoxDrawer(object):
             self._draw_the_text(dc, rect, event)
 
     def _there_is_room_for_the_text(self, rect):
-        return self._get_inner_rect(rect).Width > 0
+        return deflate_rect(rect).Width > 0
 
     def _draw_the_text(self, dc, rect, event):
         self._set_text_foreground_color(dc, event)
@@ -211,19 +211,11 @@ class DefaultEventBoxDrawer(object):
         else:
             return event.get_text()
 
-    def _get_inner_rect(self, rect):
-        # Under windows with wx 3.0 the following lined doesn't work !!!
-        # return wx.Rect(*rect).Deflate(INNER_PADDING, INNER_PADDING)
-        # The x-coordinate is corrupted
-        r = wx.Rect(*rect)
-        r.Deflate(INNER_PADDING, INNER_PADDING)
-        return r
-
     def _set_clipping_rect(self, dc, rect):
-        dc.SetClippingRegion(self._get_inner_rect(rect))
+        dc.SetClippingRegion(deflate_rect(rect))
 
     def _calc_x_pos(self, dc, rect, event):
-        inner_rect = self._get_inner_rect(rect)
+        inner_rect = deflate_rect(rect)
         text_x = inner_rect.X
         text_x = self._adjust_x_for_edge_icons(event, rect, text_x)
         text_x = self._adjust_x_for_centered_text(dc, event, inner_rect, text_x)
@@ -240,7 +232,7 @@ class DefaultEventBoxDrawer(object):
         return text_x
 
     def _calc_y_pos(self, rect):
-        return self._get_inner_rect(rect).Y
+        return deflate_rect(rect).Y
 
     def _center_text(self, dc, event, inner_rect, text_x):
         width, _ = dc.GetTextExtent(self._get_text(event))
@@ -388,3 +380,7 @@ class DefaultEventBoxDrawer(object):
         draw_label()
         if selected:
             draw_move_handle()
+
+
+def deflate_rect(rect, dx=INNER_PADDING, dy=INNER_PADDING):
+    return wx.Rect(*rect).Deflate(dx, dy)

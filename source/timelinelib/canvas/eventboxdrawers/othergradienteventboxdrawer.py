@@ -71,7 +71,7 @@ class OtherGradientEventBoxDrawer(DefaultEventBoxDrawer):
 
     def _draw_background_no_fuzzy_edges(self, dc):
         dc.DrawRectangle(self._rect)
-        dc.GradientFillLinear(decrease_rect_size(self._rect, 1, 1), self._light_color, self._dark_color, wx.WEST)
+        dc.GradientFillLinear(deflate_rect(self._rect), self._light_color, self._dark_color, wx.WEST)
 
     def _draw_background_and_fuzzy_edges(self, dc):
         dc.DrawLine(self._rect.GetTopLeft(), self._rect.GetTopRight())
@@ -80,18 +80,18 @@ class OtherGradientEventBoxDrawer(DefaultEventBoxDrawer):
         dc.GradientFillLinear(right_half_of_rect(self._rect), wx.WHITE, self._dark_color, wx.WEST)
 
 
-def decrease_rect_size(rect, dx=1, dy=1):
+def deflate_rect(rect, dx=1, dy=1):
     return wx.Rect(*rect).Deflate(dx, dy)
 
 
 def left_half_of_rect(rect):
-    r = decrease_rect_size(rect, dx=1, dy=1)
+    r = deflate_rect(rect)
     r.SetWidth(r.GetWidth() // 2)
     return r
 
 
 def right_half_of_rect(rect):
-    r = decrease_rect_size(rect, dx=1, dy=1)
+    r = deflate_rect(rect)
     r.SetWidth(r.GetWidth() // 2)
     r.SetPosition(wx.Point(r.GetX() + r.GetWidth(), r.GetY()))
     return r

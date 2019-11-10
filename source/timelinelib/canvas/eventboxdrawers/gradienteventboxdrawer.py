@@ -21,19 +21,19 @@ import wx
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.drawing.utils import lighten_color
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
+import timelinelib.meta.overrides as mark
 
 
 class GradientEventBoxDrawer(DefaultEventBoxDrawer):
 
+    @mark.overrides
     def _draw_background(self, dc, rect, event):
         dc.SetPen(self._get_pen(dc, event))
         dc.DrawRectangle(rect)
-        inner_rect = wx.Rect(*rect)
-        inner_rect.Deflate(1, 1)
-        dc.GradientFillLinear(inner_rect, self._get_light_color(event), self._get_dark_color(event), wx.SOUTH)
+        light_color = lighten_color(event.get_color())
+        dark_color = darken_color(event.get_color(), factor=0.8)
+        dc.GradientFillLinear(deflate_rect(rect), light_color, dark_color, wx.SOUTH)
 
-    def _get_light_color(self, event):
-        return lighten_color(event.get_color())
 
-    def _get_dark_color(self, event):
-        return darken_color(event.get_color(), factor=0.8)
+def deflate_rect(rect, dx=1, dy=1):
+    return wx.Rect(*rect).Deflate(dx, dy)
