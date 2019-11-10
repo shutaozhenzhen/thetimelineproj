@@ -30,7 +30,7 @@ class FileToBitmapConverter(object):
 
     def convert(self, path):
         try:
-            image = wx.EmptyImage(0, 0)
+            image = wx.Image(0, 0)
             success = image.LoadFile(path)
             # LoadFile will show error popup if not successful
             if success:
