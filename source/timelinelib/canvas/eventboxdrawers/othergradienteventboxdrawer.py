@@ -21,58 +21,66 @@ import wx
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.drawing.utils import lighten_color
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
+import timelinelib.meta.overrides as mark
 
 
 class OtherGradientEventBoxDrawer(DefaultEventBoxDrawer):
 
     def __init__(self, fuzzy_edges=False):
         self._fuzzy_edges = fuzzy_edges
+        self._event = None
+        self._rect = None
 
+    @mark.overrides
     def _draw_background(self, dc, rect, event):
+        self._event = event
+        self._rect = rect
         dc.SetPen(self._get_pen(dc, event))
         if self._fuzzy_edges and event.get_fuzzy():
-            self._draw_background_and_fuzzy_edges(dc, rect, event)
+            self._draw_background_and_fuzzy_edges(dc)
         else:
-            self._draw_background_no_fuzzy_edges(dc, rect, event)
+            self._draw_background_no_fuzzy_edges(dc)
 
-    def _draw_background_no_fuzzy_edges(self, dc, rect, event):
-        dc.DrawRectangle(rect)
-        inner_rect = wx.Rect(*rect)
+    @mark.overrides
+    def _draw_fuzzy_edges(self, dc, rect, event):
+        if not self._fuzzy_edges:
+            super(OtherGradientEventBoxDrawer, self)._draw_fuzzy_edges(dc, rect, event)
+
+    def _draw_background_no_fuzzy_edges(self, dc):
+        dc.DrawRectangle(self._rect)
+        inner_rect = wx.Rect(*self._rect)
         inner_rect.Deflate(1, 1)
-        dc.GradientFillLinear(inner_rect, self._get_light_color(event), self._get_dark_color(event), wx.WEST)
+        dc.GradientFillLinear(inner_rect, self.light_color, self.dark_color, wx.WEST)
 
-    def _draw_background_and_fuzzy_edges(self, dc, rect, event):
-        self._draw_fuzzy_rect_outer_lines(dc, rect)
-        self._draw_fuzzy_rect_fill_first_half(dc, rect, event)
-        self._draw_fuzzy_rect_fill_second_half(dc, rect, event)
+    def _draw_background_and_fuzzy_edges(self, dc):
+        self._draw_fuzzy_rect_outer_lines(dc)
+        self._draw_fuzzy_rect_fill_first_half(dc)
+        self._draw_fuzzy_rect_fill_second_half(dc)
 
-    def _draw_fuzzy_rect_outer_lines(self, dc, rect):
-        dc.DrawLine(rect.GetX(), rect.GetY(), rect.GetX() + rect.GetWidth(), rect.GetY())
-        dc.DrawLine(rect.GetX(), rect.GetY() + rect.GetHeight() - 1,
-                    rect.GetX() + rect.GetWidth(), rect.GetY() + rect.GetHeight() - 1)
+    def _draw_fuzzy_rect_outer_lines(self, dc):
+        dc.DrawLine(self._rect.GetX(), self._rect.GetY(), self._rect.GetX() + self._rect.GetWidth(), self._rect.GetY())
+        dc.DrawLine(self._rect.GetX(), self._rect.GetY() + self._rect.GetHeight() - 1,
+                    self._rect.GetX() + self._rect.GetWidth(), self._rect.GetY() + self._rect.GetHeight() - 1)
 
-    def _draw_fuzzy_rect_fill_first_half(self, dc, rect, event):
-        inner_rect = self._get_half_rect(rect)
-        dc.GradientFillLinear(inner_rect, wx.WHITE, self._get_dark_color(event), wx.EAST)
+    def _draw_fuzzy_rect_fill_first_half(self, dc):
+        dc.GradientFillLinear(self.half_rect, wx.WHITE, self.dark_color, wx.EAST)
 
-    def _draw_fuzzy_rect_fill_second_half(self, dc, rect, event):
-        inner_rect = self._get_half_rect(rect)
-        inner_rect.SetPosition(wx.Point(inner_rect.GetX() + inner_rect.GetWidth(), inner_rect.GetY()))
-        dc.GradientFillLinear(inner_rect, wx.WHITE, self._get_dark_color(event), wx.WEST)
+    def _draw_fuzzy_rect_fill_second_half(self, dc):
+        rect = self.half_rect
+        rect.SetPosition(wx.Point(rect.GetX() + rect.GetWidth(), rect.GetY()))
+        dc.GradientFillLinear(rect, wx.WHITE, self.dark_color, wx.WEST)
 
-    def _get_half_rect(self, rect):
-        inner_rect = wx.Rect(*rect)
+    @property
+    def half_rect(self):
+        inner_rect = wx.Rect(*self._rect)
         inner_rect.Deflate(1, 1)
         inner_rect.SetWidth(inner_rect.GetWidth() // 2)
         return inner_rect
 
-    def _draw_fuzzy_edges(self, dc, rect, event):
-        """Overrides base class function."""
-        if not self._fuzzy_edges:
-            super(OtherGradientEventBoxDrawer, self)._draw_fuzzy_edges(dc, rect, event)
+    @property
+    def light_color(self):
+        return lighten_color(self._event.get_color())
 
-    def _get_light_color(self, event):
-        return lighten_color(event.get_color())
-
-    def _get_dark_color(self, event):
-        return darken_color(event.get_color(), factor=0.8)
+    @property
+    def dark_color(self):
+        return darken_color(self._event.get_color(), factor=0.8)
