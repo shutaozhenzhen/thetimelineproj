@@ -46,7 +46,7 @@ class GregorianDateFormatter(object):
         self._second_separator = second
 
     def set_region_order(self, year, month, day):
-        if set([year, month, day]) != set([0, 1, 2]):
+        if {year, month, day} != {0, 1, 2}:
             raise ValueError("Invalid region order. Must be a combination of 0, 1, and 2.")
         self._year_position = year
         self._month_position = month
