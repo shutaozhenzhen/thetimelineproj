@@ -178,21 +178,3 @@ class describe_import_timeline_xml(TmpDirTestCase):
         with open(path, "w") as f:
             f.write(content)
         return import_db_from_timeline_xml(path)
-
-
-class IconTestCase(WxAppTestCase):
-
-    IMAGE_PATH = '..\\icons\\16.png'
-
-    def test_icon_string_can_be_converted_to_bitmap(self):
-        if self.bitmap_str:
-            self.assertTrue(parse_icon(self.bitmap_str).IsOk())
-
-    def setUp(self):
-        self.bitmap_str = None
-        if os.path.exists(self.IMAGE_PATH):
-            WxAppTestCase.setUp(self)
-            image = wx.Image(0, 0)
-            image.LoadFile(self.IMAGE_PATH)
-            bitmap = image.ConvertToBitmap()
-            self.bitmap_str = icon_string(bitmap)
