@@ -300,56 +300,41 @@ class DefaultEventBoxDrawer(object):
         if event.get_hyperlink():
             dc.DrawBitmap(self._get_hyperlink_bitmap(), rect.x + rect.width - 14, rect.y + 4, True)
 
-    def _inflate_clipping_region(self, dc, rect):
+    @staticmethod
+    def _inflate_clipping_region(dc, rect):
         copy = wx.Rect(*rect)
         copy.Inflate(10, 0)
         dc.DestroyClippingRegion()
         dc.SetClippingRegion(copy)
 
     def _get_hyperlink_bitmap(self):
-        return self._get_bitmap(self.view_properties.get_hyperlink_icon())
+        return get_bitmap(self.view_properties.get_hyperlink_icon())
 
     def _get_lock_bitmap(self):
-        return self._get_bitmap(self.view_properties.get_locked_icon())
+        return get_bitmap(self.view_properties.get_locked_icon())
 
     def _get_fuzzy_bitmap(self):
-        return self._get_bitmap(self.view_properties.get_fuzzy_icon())
+        return get_bitmap(self.view_properties.get_fuzzy_icon())
 
-    def _get_bitmap(self, name):
-        return wx.Bitmap(os.path.join(EVENT_ICONS_DIR, name))
-
-    def _draw_milestone_event(self, dc, rect, event, selected):
-
-        def create_handle_rect():
-            HALF_EVENT_HEIGHT = rect.Height // 2
-            y = rect.Y + HALF_EVENT_HEIGHT - HALF_HANDLE_SIZE
-            x = rect.X - HALF_HANDLE_SIZE + 1
-            return wx.Rect(x, y, HANDLE_SIZE, HANDLE_SIZE)
+    @staticmethod
+    def _draw_milestone_event(dc, rect, event, selected):
 
         def draw_rectangle():
-            dc.DestroyClippingRegion()
             dc.SetPen(black_solid_pen(1))
-            if event.get_category() is None:
-                dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.BRUSHSTYLE_SOLID))
-            else:
-                dc.SetBrush(wx.Brush(wx.Colour(*event.get_category().get_color()), wx.BRUSHSTYLE_SOLID))
+            dc.SetBrush(wx.Brush(wx.Colour(*event.get_color()), wx.BRUSHSTYLE_SOLID))
             dc.DrawRectangle(rect)
 
         def draw_label():
-            x_offset = 6
-            y_offset = 2
-            try:
-                label = event.get_text()[0]
-            except IndexError:
-                label = " "
-            dc.DrawText(label, rect.x + x_offset, rect.y + y_offset)
+            label = event.text[0] if event.text else " "
+            draw_centered_text(dc, rect, label)
 
         def draw_move_handle():
             dc.SetBrush(black_solid_brush())
-            handle_rect = create_handle_rect()
-            handle_rect.Offset(rect.Width // 2, 0)
-            dc.DrawRectangle(handle_rect)
+            point = center_point_with_offset(rect, HALF_HANDLE_SIZE, HALF_HANDLE_SIZE)
+            size = wx.Size(HANDLE_SIZE, HANDLE_SIZE)
+            dc.DrawRectangle(wx.Rect(point, size))
 
+        dc.DestroyClippingRegion()
         draw_rectangle()
         draw_label()
         if selected:
@@ -358,3 +343,19 @@ class DefaultEventBoxDrawer(object):
 
 def deflate_rect(rect, dx=INNER_PADDING, dy=INNER_PADDING):
     return wx.Rect(*rect).Deflate(dx, dy)
+
+
+def center_point_with_offset(rect, dx=0, dy=0):
+    y = rect.Y + rect.Height // 2 - dy
+    x = rect.X + rect.Width // 2 - dx
+    return wx.Point(x, y)
+
+
+def draw_centered_text(dc, rect, label):
+    size = dc.GetTextExtent(label)
+    point = center_point_with_offset(rect, size.width // 2, size.height // 2)
+    dc.DrawText(label, point)
+
+
+def get_bitmap(name):
+    return wx.Bitmap(os.path.join(EVENT_ICONS_DIR, name))
