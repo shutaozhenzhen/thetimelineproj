@@ -221,7 +221,8 @@ def icon_string(bitmap):
     if platform.system() == "Windows":
         return icon_string_windows(bitmap)
     else:
-        return icon_string_linux(bitmap)
+        return icon_string_windows(bitmap)
+        #return icon_string_linux(bitmap)
 
 
 def icon_string_windows(bitmap):
