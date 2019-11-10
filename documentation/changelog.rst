@@ -12,6 +12,11 @@ Version 2.1.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/tools/winbuildtools/inno/out/>`_.
 
+Icons:
+
+* ``'Image' object has no attribute 'SaveStream'.``
+  Changed functions for coding/decoding icon images.
+
 Version 2.0.0
 --------------
 

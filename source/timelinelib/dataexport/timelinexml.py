@@ -217,10 +217,10 @@ def color_string(color):
 
 
 def icon_string(bitmap):
-    output = io.StringIO()
+    stream = io.BytesIO()
     image = bitmap.ConvertToImage()
-    image.SaveStream(output, wx.BITMAP_TYPE_PNG)
-    return base64.b64encode(output.getvalue())
+    image.SaveFile(stream, 'image/png')
+    return base64.b64encode(stream.getvalue()).decode()
 
 
 def alert_string(time_type, alert):
