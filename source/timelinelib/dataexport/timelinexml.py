@@ -218,7 +218,7 @@ def color_string(color):
 
 def icon_string(bitmap):
     output = io.StringIO()
-    image = wx.ImageFromBitmap(bitmap)
+    image = bitmap.ConvertToImage()
     image.SaveStream(output, wx.BITMAP_TYPE_PNG)
     return base64.b64encode(output.getvalue())
 
