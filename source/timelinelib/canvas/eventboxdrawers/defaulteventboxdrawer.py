@@ -40,7 +40,7 @@ class DefaultEventBoxDrawer(object):
         selected = view_properties.is_selected(event)
         self.center_text = scene.center_text()
         if event.is_milestone():
-            self._draw_milestone_event(dc, rect, scene, event, selected)
+            self._draw_milestone_event(dc, rect, event, selected)
         elif scene.never_show_period_events_as_point_events() and rect.y < scene.divider_y and event.is_period():
             self._draw_period_event_as_symbol_below_divider_line(dc, scene, event)
         else:
@@ -318,7 +318,7 @@ class DefaultEventBoxDrawer(object):
     def _get_bitmap(self, name):
         return wx.Bitmap(os.path.join(EVENT_ICONS_DIR, name))
 
-    def _draw_milestone_event(self, dc, rect, scene, event, selected):
+    def _draw_milestone_event(self, dc, rect, event, selected):
 
         def create_handle_rect():
             HALF_EVENT_HEIGHT = rect.Height // 2
@@ -327,11 +327,6 @@ class DefaultEventBoxDrawer(object):
             return wx.Rect(x, y, HANDLE_SIZE, HANDLE_SIZE)
 
         def draw_shape():
-            # draw_diamond_shape()
-            draw_rectangle_shape()
-            # draw_circle_shape()
-
-        def draw_rectangle_shape():
             dc.DestroyClippingRegion()
             dc.SetPen(black_solid_pen(1))
             if event.get_category() is None:

@@ -107,7 +107,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
             rect = wx.Rect(0, 0, 100, 20)
             scene = Mock()
             try:
-                self.drawer._draw_milestone_event(self.dc, rect, scene, self.event, False)
+                self.drawer._draw_milestone_event(self.dc, rect, self.event, False)
                 self.dc.DrawText.assert_called_with(" ", 6, 2)
             except IndexError:
                 self.fail("Exception was not expected")
