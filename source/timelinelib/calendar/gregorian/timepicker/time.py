@@ -28,7 +28,7 @@ class GregorianTimePicker(TextPatternControl):
 
     def __init__(self, parent, config):
         self.config = config
-        if (self.config.use_second):
+        if self.config.use_second:
             TextPatternControl.__init__(self, parent, fit_text="00:00:00")
             self.SetSeparators([":",":"])
         else:
@@ -40,7 +40,7 @@ class GregorianTimePicker(TextPatternControl):
         self.SetDownHandler(self.HOUR_GROUP, self._decrement_hour)
         self.SetDownHandler(self.MINUTE_GROUP, self._decrement_minute)
         
-        if (self.config.use_second):
+        if self.config.use_second:
             self.SetUpHandler(self.SECOND_GROUP, self._increment_second)
             self.SetDownHandler(self.SECOND_GROUP, self._decrement_second)
 
@@ -78,7 +78,7 @@ class GregorianTimePicker(TextPatternControl):
 
     def gregorian_time_to_parts(self, time):
         (hour, minute, second) = time
-        if (self.config.use_second):
+        if self.config.use_second:
             return [
                 "%02d" % hour,
                 "%02d" % minute,
@@ -89,7 +89,6 @@ class GregorianTimePicker(TextPatternControl):
                 "%02d" % hour,
                 "%02d" % minute
             ]
-
 
     def parts_to_gregorian_time(self, parts):
         hour = minute = second = 0        
@@ -106,7 +105,7 @@ class GregorianTimePicker(TextPatternControl):
 
         if not is_valid_time(hour, minute, second):
             raise ValueError()
-        return (hour, minute, second)
+        return hour, minute, second
 
 
 def increment_hour(time):
@@ -114,7 +113,7 @@ def increment_hour(time):
     new_hour = hour + 1
     if new_hour > 23:
         new_hour = 0
-    return (new_hour, minute, second)
+    return new_hour, minute, second
 
 
 def increment_minute(time):
@@ -126,7 +125,7 @@ def increment_minute(time):
         new_hour = hour + 1
         if new_hour > 23:
             new_hour = 0
-    return (new_hour, new_minute, second)
+    return new_hour, new_minute, second
 
 
 def increment_second(time):
@@ -142,14 +141,15 @@ def increment_second(time):
             new_hour = hour + 1
             if new_hour > 23:
                 new_hour = 0
-    return (new_hour, new_minute, new_second)
+    return new_hour, new_minute, new_second
+
 
 def decrement_hour(time):
     hour, minute, second = time
     new_hour = hour - 1
     if new_hour < 0:
         new_hour = 23
-    return (new_hour, minute, second)
+    return new_hour, minute, second
 
 
 def decrement_minute(time):
@@ -161,7 +161,8 @@ def decrement_minute(time):
         new_hour = hour - 1
         if new_hour < 0:
             new_hour = 23
-    return (new_hour, new_minute, second)
+    return new_hour, new_minute, second
+
 
 def decrement_second(time):
     hour, minute, second = time
@@ -176,4 +177,4 @@ def decrement_second(time):
             new_hour = hour - 1
             if new_hour < 0:
                 new_hour = 23
-    return (new_hour, new_minute, new_second)
+    return new_hour, new_minute, new_second
