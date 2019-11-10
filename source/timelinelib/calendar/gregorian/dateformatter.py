@@ -66,7 +66,7 @@ class GregorianDateFormatter(object):
         
     def format(self, ymd_tuple):
         (year, month, day) = ymd_tuple
-        return (self._format_date(year, month, day), self._is_bc(year))
+        return self._format_date(year, month, day), self._is_bc(year)
 
     def parse(self, date_bc_tuple):
         (date, is_bc) = date_bc_tuple
@@ -76,7 +76,7 @@ class GregorianDateFormatter(object):
         year = self._parse_year(regions[self._year_position], is_bc)
         month = self._parse_month(regions[self._month_position])
         day = self._parse_day(regions[self._day_position], year, month)
-        return (year, month, day)
+        return year, month, day
 
     def set_default_regions(self, regions, date):
         if regions == ['', '', '']:
