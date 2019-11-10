@@ -75,8 +75,7 @@ class CopticDateTime(object):
             if diff >= 0:
                 return diff
             raise ValueError("should not end up here")
-        # TODO: days_since_monday_week_1, unresolved!!!
-        return days_since_monday_week_1(self.to_time()) // 7 + 1
+        return days_since_tkyriaka_week_1(self.to_time()) // 7 + 1
     """
         if self.month == 13:
             return 0
