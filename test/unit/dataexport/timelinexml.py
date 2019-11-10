@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 
 import wx
 
@@ -126,11 +127,14 @@ class IconTestCase(WxAppTestCase):
     IMAGE_PATH = '..\\icons\\16.png'
 
     def test_bitmap_can_be_converted_to_string(self):
-        bitmap_str = icon_string(self.bitmap)
-        self.assertTrue(parse_icon(bitmap_str).IsOk())
+        if self.bitmap:
+            bitmap_str = icon_string(self.bitmap)
+            self.assertTrue(parse_icon(bitmap_str).IsOk())
 
     def setUp(self):
-        WxAppTestCase.setUp(self)
-        image = wx.Image()
-        image.LoadFile(self.IMAGE_PATH)
-        self.bitmap = image.ConvertToBitmap()
+        self.bitmap = None
+        if os.path.exists(self.IMAGE_PATH):
+            WxAppTestCase.setUp(self)
+            image = wx.Image(0, 0)
+            image.LoadFile(self.IMAGE_PATH)
+            self.bitmap = image.ConvertToBitmap()
