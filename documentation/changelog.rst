@@ -17,6 +17,13 @@ Icons:
 * ``'Image' object has no attribute 'SaveStream'.``
   Changed functions for coding/decoding icon images.
 
+* ``AttributeError: 'MainCanvas' object has no attribute 'controller'.``
+  Added controller property to MainCanvas.
+
+* ``TypeError: invalid result from FileDropTarget.OnDropFiles(), an integer is required (got type NoneType).``
+  Changed logic in OnDropFiles to fullfill he api.
+
+
 Version 2.0.0
 --------------
 

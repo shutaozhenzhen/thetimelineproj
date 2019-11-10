@@ -60,6 +60,10 @@ class TimelineCanvas(wx.Panel):
         self._last_balloon_event = None
         self._waiting = False
 
+    @property
+    def controller(self):
+        return self._controller
+
     def GetAppearance(self):
         return self._controller.get_appearance()
 

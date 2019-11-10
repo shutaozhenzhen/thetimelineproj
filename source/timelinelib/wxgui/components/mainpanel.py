@@ -27,19 +27,22 @@ from timelinelib.wxgui.components.propertyeditors.iconeditor import FileToBitmap
 
 class FileDropTarget(wx.FileDropTarget):
 
-    def __init__(self, obj):
+    def __init__(self, canvas):
         wx.FileDropTarget.__init__(self)
-        self.obj = obj
+        self._canvas = canvas
 
     def OnDropFiles(self, x, y, filenames):
-        try:
-            bitmap = FileToBitmapConverter().convert(filenames[0])
-            self.obj.controller.event_at(x, y).set_icon(bitmap)
-        except:
-            pass
+        bitmap = FileToBitmapConverter().convert(filenames[0])
+        event = self._canvas.controller.event_at(x, y)
+        if event:
+            event.set_icon(bitmap)
+            event.save()
+            return True
+        else:
+            return False
 
     def OnDragOver(self, x, y, defResult):
-        if self.obj.controller.event_at(x, y):
+        if self._canvas.controller.event_at(x, y):
             return defResult
         else:
             return wx.DragNone
