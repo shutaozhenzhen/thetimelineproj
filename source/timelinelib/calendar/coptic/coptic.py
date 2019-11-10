@@ -164,15 +164,11 @@ def num_leap_years(year):
 
 
 def is_valid_time(hour, minute, second):
-    return (
-        hour >= 0 and hour < 24 and
-        minute >= 0 and minute < 60 and
-        second >= 0 and second < 60
-    )
+    return 0 <= hour < 24 and 0 <= minute < 60 and 0 <= second < 60
 
 
 def is_valid(year, month, day):
-    return month >= 1 and month <= 13 and day >= 1 and day <= days_in_month(year, month)
+    return 1 <= month <= 13 and 1 <= day <= days_in_month(year, month)
 
 
 def julian_day_to_coptic_ymd(julian_day):
