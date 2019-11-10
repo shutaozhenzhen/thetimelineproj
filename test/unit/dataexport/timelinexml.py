@@ -132,9 +132,11 @@ class IconTestCase(WxAppTestCase):
             self.assertTrue(parse_icon(bitmap_str).IsOk())
 
     def setUp(self):
-        self.bitmap = None
+        WxAppTestCase.setUp(self)
         if os.path.exists(self.IMAGE_PATH):
-            WxAppTestCase.setUp(self)
             image = wx.Image(0, 0)
             image.LoadFile(self.IMAGE_PATH)
             self.bitmap = image.ConvertToBitmap()
+        else:
+            print(f'Image not found: {self.IMAGE_PATH}')
+            self.bitmap = None
