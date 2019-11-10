@@ -124,16 +124,19 @@ class describe_export_db_to_timeline_xml(TmpDirTestCase):
 
 class IconTestCase(WxAppTestCase):
 
-    IMAGE_PATH = '..\\icons\\16.png'
+    IMAGE_PATH1 = '..\\icons\\16.png'
+    IMAGE_PATH2 = 'icons\\16.png'
 
     def test_bitmap_can_be_converted_to_string_and_back(self):
-        if os.path.exists(self.IMAGE_PATH):
-            self.assertTrue(parse_icon(self.create_a_bitmap_string()).IsOk())
+        if os.path.exists(self.IMAGE_PATH1):
+            self.assertTrue(parse_icon(self.create_a_bitmap_string(self.IMAGE_PATH1)).IsOk())
+        elif os.path.exists(self.IMAGE_PATH2):
+            self.assertTrue(parse_icon(self.create_a_bitmap_string(self.IMAGE_PATH2)).IsOk())
         else:
-            print(f'Image not found: {self.IMAGE_PATH}')
+            print(f'Image not found: {self.IMAGE_PATH1} or: {self.IMAGE_PATH2}')
 
-    def create_a_bitmap_string(self):
+    def create_a_bitmap_string(self, path):
         image = wx.Image(0, 0)
-        image.LoadFile(self.IMAGE_PATH)
+        image.LoadFile(path)
         self.bitmap = image.ConvertToBitmap()
         return icon_string(self.bitmap)
