@@ -87,15 +87,9 @@ class Config(Observable):
             self.config_parser.read(self.path)
 
     def write(self):
-        """
-        Write settings to file specified in constructor and raise IOError if
-        failed.
-        """
-        f = open(self.path, "w")
-        try:
+        """Write settings to file specified in constructor and raise IOError if failed."""
+        with open(self.path, "w") as f:
             self.config_parser.write(f)
-        finally:
-            f.close()
 
     def get_selected_event_box_drawer(self):
         return self.config_parser.get(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER)
