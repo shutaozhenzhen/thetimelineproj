@@ -390,7 +390,8 @@ def parse_icon(bitmap_string):
     if platform.system() == "Windows":
         return parse_icon_windows(bitmap_string)
     else:
-        return parse_icon_linux(bitmap_string)
+        return parse_icon_windows(bitmap_string)
+        # return parse_icon_linux(bitmap_string)
 
 
 def parse_icon_windows(bitmap_string):
