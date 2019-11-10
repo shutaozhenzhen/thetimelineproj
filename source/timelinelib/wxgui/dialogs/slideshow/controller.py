@@ -105,9 +105,8 @@ class SlideshowDialogController(Controller):
                 self._image_source.append("")
 
     def _create_css(self):
-        f = open(os.path.join(self.view.GetTargetDir(), "slideshow.css"), "w")
-        f.write(CSS.encode('utf8', 'ignore').decode('utf-8'))
-        f.close()
+        with open(os.path.join(self.view.GetTargetDir(), "slideshow.css"), "w") as f:
+            f.write(CSS.encode('utf8', 'ignore').decode('utf-8'))
 
     def _create_pages(self, events):
         nbr_of_pages = len(events)
