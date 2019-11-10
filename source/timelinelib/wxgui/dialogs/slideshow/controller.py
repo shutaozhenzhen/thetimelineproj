@@ -142,22 +142,21 @@ class SlideshowDialogController(Controller):
             return page_nbr - 1
 
     def _create_page(self, pos_style, p, event, page_nbr, next_page_nbr, prev_page_nbr, pos_history):
-        f = open(os.path.join(self.view.GetTargetDir(), "page_%d.html" % page_nbr), "w")
-        if self._image_source[page_nbr] == "":
-            x = ONLY_DESCRIPTION % self._text_transformer.transform(event.get_description())
-        else:
-            x = IMAGE_AND_DESCRIPTION % (self._image_source[page_nbr],
-                                         self._text_transformer.transform(event.get_description()))
-        pg = PAGE_TEMPLATE % (pos_style,
-                              p,
-                              self._db.get_time_type().format_period(event.get_time_period()),
-                              event.get_text(),
-                              x,
-                              prev_page_nbr,
-                              next_page_nbr,
-                              pos_history)
-        f.write(pg.encode('utf8', 'ignore').decode('utf-8'))
-        f.close()
+        with open(os.path.join(self.view.GetTargetDir(), "page_%d.html" % page_nbr), "w") as f:
+            if self._image_source[page_nbr] == "":
+                x = ONLY_DESCRIPTION % self._text_transformer.transform(event.get_description())
+            else:
+                x = IMAGE_AND_DESCRIPTION % (self._image_source[page_nbr],
+                                             self._text_transformer.transform(event.get_description()))
+            pg = PAGE_TEMPLATE % (pos_style,
+                                  p,
+                                  self._db.get_time_type().format_period(event.get_time_period()),
+                                  event.get_text(),
+                                  x,
+                                  prev_page_nbr,
+                                  next_page_nbr,
+                                  pos_history)
+            f.write(pg.encode('utf8', 'ignore').decode('utf-8'))
 
     def _install_text_transformer_plugin(self):
         from timelinelib.plugin import factory
