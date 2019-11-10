@@ -245,10 +245,10 @@ class ViewProperties(Observable):
 
     def _is_category_recursively_visible(self, category):
         if self.is_category_visible(category):
-            if category._get_parent() is None:
+            if category.parent is None:
                 return True
             else:
-                return self._is_category_recursively_visible(category._get_parent())
+                return self._is_category_recursively_visible(category.parent)
         else:
             return False
 
