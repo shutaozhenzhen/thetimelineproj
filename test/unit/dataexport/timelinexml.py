@@ -126,17 +126,14 @@ class IconTestCase(WxAppTestCase):
 
     IMAGE_PATH = '..\\icons\\16.png'
 
-    def test_bitmap_can_be_converted_to_string(self):
-        if self.bitmap:
-            bitmap_str = icon_string(self.bitmap)
-            self.assertTrue(parse_icon(bitmap_str).IsOk())
-
-    def setUp(self):
-        WxAppTestCase.setUp(self)
+    def test_bitmap_can_be_converted_to_string_and_back(self):
         if os.path.exists(self.IMAGE_PATH):
-            image = wx.Image(0, 0)
-            image.LoadFile(self.IMAGE_PATH)
-            self.bitmap = image.ConvertToBitmap()
+            self.assertTrue(parse_icon(self.create_a_bitmap_string()).IsOk())
         else:
             print(f'Image not found: {self.IMAGE_PATH}')
-            self.bitmap = None
+
+    def create_a_bitmap_string(self):
+        image = wx.Image(0, 0)
+        image.LoadFile(self.IMAGE_PATH)
+        self.bitmap = image.ConvertToBitmap()
+        return icon_string(self.bitmap)
