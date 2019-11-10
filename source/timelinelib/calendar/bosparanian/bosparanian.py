@@ -104,10 +104,10 @@ class BosparanianDateTime(object):
                 self.second)
 
     def to_date_tuple(self):
-        return (self.year, self.month, self.day)
+        return self.year, self.month, self.day
 
     def to_time_tuple(self):
-        return (self.hour, self.minute, self.second)
+        return self.hour, self.minute, self.second
 
     def is_first_day_in_year(self):
         return (self.month == 1 and
@@ -149,10 +149,10 @@ def bosparanian_day_to_ymd(bosparanian_day):
     if d >= 360:
         month = 13
         day = d-359
-        return (year, month, day)
+        return year, month, day
     month = d // 30 + 1
     day = d % 30 + 1
-    return (year, month, day)
+    return year, month, day
 
 
 def is_valid(year, month, day):
