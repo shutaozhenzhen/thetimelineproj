@@ -101,14 +101,14 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
 
     def test_milestone_with_no_text_can_be_drawn(self):
         with self.wxapp():
-            self.event.get_text.return_value = ""
-            self.event.get_default_color.return_value = (127, 127, 127)
-            self.event.get_category.return_value = None
+            self.event.text = ""
+            self.event.get_color.return_value = (127, 127, 127)
+            self.dc.GetTextExtent.return_value = wx.Size(10, 10)
             rect = wx.Rect(0, 0, 100, 20)
             scene = Mock()
             try:
                 self.drawer._draw_milestone_event(self.dc, rect, self.event, False)
-                self.dc.DrawText.assert_called_with(" ", 6, 2)
+                self.dc.DrawText.assert_called_with(" ", wx.Point(45, 5))
             except IndexError:
                 self.fail("Exception was not expected")
 
