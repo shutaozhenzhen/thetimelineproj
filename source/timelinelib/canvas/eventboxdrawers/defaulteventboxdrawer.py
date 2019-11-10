@@ -340,27 +340,6 @@ class DefaultEventBoxDrawer(object):
                 dc.SetBrush(wx.Brush(wx.Colour(*event.get_category().get_color()), wx.BRUSHSTYLE_SOLID))
             dc.DrawRectangle(rect)
 
-        def draw_circle_shape():
-            half_size = rect.width // 2
-            dc.DestroyClippingRegion()
-            dc.SetPen(black_solid_pen(1))
-            dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.BRUSHSTYLE_SOLID))
-            dc.DrawCircle(rect.x + half_size, rect.y + half_size, 2 * rect.width // 3)
-
-        def draw_diamond_shape():
-            SIZE = 2
-            x = rect.x
-            y = rect.y
-            half_size = rect.width // 2
-            points = (wx.Point(x - SIZE, y + half_size),
-                      wx.Point(x + half_size, y - SIZE),
-                      wx.Point(x + rect.width + SIZE, y + half_size),
-                      wx.Point(x + half_size, y + rect.width + SIZE))
-            dc.DestroyClippingRegion()
-            dc.SetPen(black_solid_pen(1))
-            dc.SetBrush(wx.Brush(wx.Colour(*event.get_default_color()), wx.BUSHSTYLE_SOLID))
-            dc.DrawPolygon(points)
-
         def draw_label():
             x_offset = 6
             y_offset = 2
