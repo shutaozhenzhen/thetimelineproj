@@ -23,7 +23,7 @@ from timelinelib.calendar.bosparanian.time import BosparanianTime
 class BosparanianDateTime(object):
 
     def __init__(self, year, month, day, hour, minute, second):
-        if not is_valid(year, month, day):
+        if not is_valid(month, day):
             raise ValueError("Invalid bosparanian date %s-%s-%s" % (year, month, day))
         self.year = year
         self.month = month
@@ -155,7 +155,7 @@ def bosparanian_day_to_ymd(bosparanian_day):
     return year, month, day
 
 
-def is_valid(year, month, day):
+def is_valid(month, day):
     return 1 <= month <= 13 and 1 <= day <= days_in_month(month)
 
 
