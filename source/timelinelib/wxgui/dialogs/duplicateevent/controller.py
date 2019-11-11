@@ -81,7 +81,7 @@ class DuplicateEventDialogController(Controller):
             raise Exception("Invalid direction.")
 
 
-class EventDuplicator(object):
+class EventDuplicator:
 
     def duplicate(self, event, periods):
         with event.db.transaction("Duplicate event"):

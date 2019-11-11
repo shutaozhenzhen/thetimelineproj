@@ -25,7 +25,7 @@ import sys
 import time
 
 
-class Timer(object):
+class Timer:
     """
     A general timer that can measure the elapsed time between
     a start and end time.

@@ -461,7 +461,7 @@ class TimelinePanel(TimelinePanelGuiCreator):
             self.message_bar.ShowNoMessage()
 
 
-class InputHandlerState(object):
+class InputHandlerState:
 
     def __init__(self, canvas, status_bar, edit_controller, config):
         self._timeline_canvas = canvas

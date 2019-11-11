@@ -58,7 +58,7 @@ class PluginException(Exception):
     pass
 
 
-class PluginFactory(object):
+class PluginFactory:
 
     def get_plugins(self, service):
         try:

@@ -19,7 +19,7 @@
 import wx
 
 
-class Metrics(object):
+class Metrics:
     """
     Convert between pixel coordinates and time coordinates.
     """

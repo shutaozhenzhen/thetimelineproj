@@ -33,7 +33,7 @@ cfgid is the ID used in the configuration file associated with a shortcut.
 import timelinelib.wxgui.frames.mainframe.guicreator as mf
 
 
-class Metadata(object):
+class Metadata:
     def __init__(self, wxid, cfgid, function, modifier, key):
         self.wxid = wxid
         self.cfgid = cfgid
@@ -110,7 +110,7 @@ NON_EMPTY_MODIFIERS = ["Ctrl", "Alt", "Shift+Ctrl", "Shift+Alt", "Alt+Ctrl", "Sh
 MODIFIERS = ["", ] + NON_EMPTY_MODIFIERS
 
 
-class ShortcutController(object):
+class ShortcutController:
 
     def __init__(self, shortcut_config, wxItems):
         self.shortcut_config = shortcut_config

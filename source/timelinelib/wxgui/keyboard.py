@@ -21,7 +21,7 @@ A representation of the keyboard and it's control key states.
 """
 
 
-class Keyboard(object):
+class Keyboard:
 
     CTRL = 4
     SHIFT = 2

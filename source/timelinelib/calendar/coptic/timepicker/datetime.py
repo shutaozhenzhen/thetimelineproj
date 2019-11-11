@@ -120,7 +120,7 @@ class CopticDateTimePicker(wx.Panel):
         self.calendar_popup.Dismiss()
 
 
-class CopticDateTimePickerController(object):
+class CopticDateTimePickerController:
 
     def __init__(self, view, date_picker, time_picker, now_fn, on_change):
         self._view = view

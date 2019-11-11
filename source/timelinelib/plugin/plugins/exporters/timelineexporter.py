@@ -54,7 +54,7 @@ class TimelineExporter(PluginBase):
                 CsvExporter(self.timeline, path, dlg).export()
 
 
-class CsvExporter(object):
+class CsvExporter:
 
     def __init__(self, timeline, path, dlg):
         self.path = path

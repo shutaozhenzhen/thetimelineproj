@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class PluginBase(object):
+class PluginBase:
 
     def isplugin(self):
         return True

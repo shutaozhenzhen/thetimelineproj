@@ -21,7 +21,7 @@ import wx
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 
 
-class AlertController(object):
+class AlertController:
 
     def __init__(self, main_frame):
         self._main_frame = main_frame

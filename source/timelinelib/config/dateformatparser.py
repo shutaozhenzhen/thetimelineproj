@@ -44,7 +44,7 @@ Example of valid formats:
         """)
 
 
-class DateFormatParser(object):
+class DateFormatParser:
 
     def get_error_text(self):
         return ERROR_TEXT
