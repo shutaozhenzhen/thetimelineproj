@@ -19,7 +19,7 @@
 import wx
 
 from timelinelib.canvas.drawing.utils import black_solid_pen
-from timelinelib.canvas.drawing.utils import black_solid_brush
+from timelinelib.canvas.eventboxdrawers.handlerect import HandleRect, MIDDLE_HANDLE, LEFT_HANDLE, RIGHT_HANDLE
 
 
 class DefaultMilestoneDrawer:
@@ -49,10 +49,7 @@ class DefaultMilestoneDrawer:
         draw_centered_text(dc, self._rect, label)
 
     def draw_move_handle(self, dc):
-        dc.SetBrush(black_solid_brush())
-        point = center_point_with_offset(self._rect, self.HALF_HANDLE_SIZE, self.HALF_HANDLE_SIZE)
-        size = wx.Size(self.HANDLE_SIZE, self.HANDLE_SIZE)
-        dc.DrawRectangle(wx.Rect(point, size))
+        HandleRect(self._rect, MIDDLE_HANDLE).draw(dc)
 
 
 def draw_centered_text(dc, rect, label):

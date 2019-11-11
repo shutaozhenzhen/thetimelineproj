@@ -24,6 +24,7 @@ from timelinelib.canvas.drawing.utils import black_solid_pen, black_solid_brush,
 from timelinelib.config.paths import EVENT_ICONS_DIR
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
 from timelinelib.canvas.eventboxdrawers.defaultmilestonedrawer import DefaultMilestoneDrawer
+from timelinelib.canvas.eventboxdrawers.handlerect import HandleRect, MIDDLE_HANDLE, LEFT_HANDLE, RIGHT_HANDLE
 
 
 HANDLE_SIZE = 4
@@ -259,43 +260,15 @@ class DefaultEventBoxDrawer(object):
 
         dc.SetClippingRegion(rect)
         draw_frame_around_event()
-        self._draw_all_handles(dc, rect, event)
+        self._draw_all_handles(dc, rect)
         dc.DestroyClippingRegion()
 
-    def _draw_all_handles(self, dc, rect, event):
-
-        def inflate_clipping_region():
-            big_rect = wx.Rect(*rect)
-            big_rect.Inflate(HANDLE_SIZE, HANDLE_SIZE)
-            dc.DestroyClippingRegion()
-            dc.SetClippingRegion(big_rect)
-
-        def set_pen_and_brush():
-            dc.SetBrush(wx.BLACK_BRUSH)
-            dc.SetPen(wx.BLACK_PEN)
-
-        def create_handle_rect():
-            HALF_EVENT_HEIGHT = rect.Height // 2
-            y = rect.Y + HALF_EVENT_HEIGHT - HALF_HANDLE_SIZE
-            x = rect.X - HALF_HANDLE_SIZE + 1
-            return wx.Rect(x, y, HANDLE_SIZE, HANDLE_SIZE)
-
-        def draw_rect(handle_rect, offset):
-            handle_rect.Offset(offset, 0)
-            dc.DrawRectangle(handle_rect)
-
-        def draw_handle_rects(handle_rect):
-            HALF_EVENT_WIDTH = rect.Width // 2
-            EVENT_WIDTH = rect.Width
-            draw_rect(handle_rect, 0)
-            draw_rect(handle_rect, EVENT_WIDTH - 2)
-            if not event.ends_today:
-                draw_rect(handle_rect, -HALF_EVENT_WIDTH)
-
-        inflate_clipping_region()
-        set_pen_and_brush()
-        handle_rect = create_handle_rect()
-        draw_handle_rects(handle_rect)
+    @staticmethod
+    def _draw_all_handles(dc, rect):
+        dc.DestroyClippingRegion()
+        HandleRect(rect, LEFT_HANDLE).draw(dc)
+        HandleRect(rect, MIDDLE_HANDLE).draw(dc)
+        HandleRect(rect, RIGHT_HANDLE).draw(dc)
 
     def _draw_hyperlink(self, dc, rect, event):
         if event.get_hyperlink():
