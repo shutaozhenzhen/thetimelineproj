@@ -115,7 +115,7 @@ class ImmutableRecordMeta(type):
         return super(ImmutableRecordMeta, cls).__new__(cls, name, bases, attrs)
 
 
-class Field(object):
+class Field:
 
     def __init__(self, default=None):
         self.default = default
@@ -139,7 +139,7 @@ class ImmutableRecord(ImmutableDict, metaclass=ImmutableRecordMeta):
         return d
 
 
-class _AlreadyCopiedDict(object):
+class _AlreadyCopiedDict:
 
     """
     A special value that can be passed as the single value to the constructor

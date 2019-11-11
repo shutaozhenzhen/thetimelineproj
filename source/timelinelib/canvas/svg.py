@@ -67,7 +67,7 @@ def export(path, timeline, scene, view_properties, appearence):
     svgDrawer.write(path)
 
 
-class SVGDrawingAlgorithm(object):
+class SVGDrawingAlgorithm:
 
     # options:  shadow=True|False
 

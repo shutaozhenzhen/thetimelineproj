@@ -21,7 +21,7 @@ Defines the interface that drawers should adhere to.
 """
 
 
-class Drawer(object):
+class Drawer:
     """
     Draw timeline onto a device context and provide information about drawing.
     """
@@ -88,7 +88,7 @@ class Drawer(object):
         raise NotImplementedError()
 
 
-class Strip(object):
+class Strip:
     """
     An interface for strips.
 

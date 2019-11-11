@@ -34,7 +34,7 @@ CHOICE_VISIBLE_PERIOD = _("Visible Period")
 CHOICES = (CHOICE_WHOLE_PERIOD, CHOICE_VISIBLE_PERIOD)
 
 
-class TimelineCanvasController(object):
+class TimelineCanvasController:
 
     def __init__(self, view, drawer=None):
         """

@@ -243,7 +243,7 @@ class CustomCategoryTree(wx.ScrolledWindow):
             lambda hit_info: hit_info.has_category())
 
 
-class CustomCategoryTreeRenderer(object):
+class CustomCategoryTreeRenderer:
 
     INNER_PADDING = 2
     TRIANGLE_SIZE = 8
@@ -433,7 +433,7 @@ class CustomCategoryTreeModel(Observable):
         return self.categories.is_event_with_category_visible(category)
 
 
-class HitInfo(object):
+class HitInfo:
 
     def __init__(self, categories, category, is_on_arrow, is_on_checkbox):
         self._categories = categories

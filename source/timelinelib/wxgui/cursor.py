@@ -21,7 +21,7 @@ A representation of the cursor and it's position on in the Timeline window.
 """
 
 
-class Cursor(object):
+class Cursor:
 
     def __init__(self, x=0, y=0):
         self._start_pos = (x, y)

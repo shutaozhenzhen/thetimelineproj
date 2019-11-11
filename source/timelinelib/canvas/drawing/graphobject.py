@@ -23,7 +23,7 @@ Tests are defined :doc:`Here <unit_canvas_drawing_graphobject>`.
 import operator
 
 
-class GraphObject(object):
+class GraphObject:
     """
     Contains metric and color information and a list of child
     graphical objects.

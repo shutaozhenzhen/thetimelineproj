@@ -96,7 +96,7 @@ ID_HIDE_DONE = wx.NewId()
 ID_NAVIGATE = wx.NewId() + 100
 
 
-class GuiCreator(object):
+class GuiCreator:
 
     def _create_gui(self):
         self.shortcut_items = {}

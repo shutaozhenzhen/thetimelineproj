@@ -21,7 +21,7 @@ import wx
 from timelinelib.wxgui.dialogs.eventlist.view import EventListDialog
 
 
-class SearchBarController(object):
+class SearchBarController:
 
     def __init__(self, view):
         self._view = view

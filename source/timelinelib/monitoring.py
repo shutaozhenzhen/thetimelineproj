@@ -30,7 +30,7 @@ in the main panel.
 from timelinelib.timer import Timer
 
 
-class Monitoring(object):
+class Monitoring:
     """
     * Kepp track of the number of times the timeline has been redrawn.
     * Measure the time it takes to redraw.

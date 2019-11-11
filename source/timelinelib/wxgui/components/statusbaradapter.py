@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class StatusBarAdapter(object):
+class StatusBarAdapter:
 
     HIDDEN_EVENT_COUNT_COLUMN = 1
     READ_ONLY_COLUMN = 2

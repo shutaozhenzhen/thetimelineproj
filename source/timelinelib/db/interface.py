@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class ContainerStrategy(object):
+class ContainerStrategy:
 
     def __init__(self, container):
         self.container = container

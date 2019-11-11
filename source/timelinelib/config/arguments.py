@@ -37,7 +37,7 @@ from timelinelib.meta.version import get_full_version
 import wx
 
 
-class ApplicationArguments(object):
+class ApplicationArguments:
 
     def __init__(self):
         self._option_parser = self._create_option_parser()

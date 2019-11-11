@@ -19,7 +19,7 @@
 import wx
 
 
-class DefaultBackgroundDrawer(object):
+class DefaultBackgroundDrawer:
 
     OFFSET = 15
 
