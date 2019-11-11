@@ -23,6 +23,7 @@ import wx
 from timelinelib.canvas.drawing.utils import black_solid_pen, black_solid_brush, get_colour, darken_color
 from timelinelib.config.paths import EVENT_ICONS_DIR
 from timelinelib.features.experimental.experimentalfeatures import EXTENDED_CONTAINER_HEIGHT
+from timelinelib.canvas.eventboxdrawers.defaultmilestonedrawer import DefaultMilestoneDrawer
 
 
 HANDLE_SIZE = 4
@@ -40,7 +41,7 @@ class DefaultEventBoxDrawer(object):
         selected = view_properties.is_selected(event)
         self.center_text = scene.center_text()
         if event.is_milestone():
-            self._draw_milestone_event(dc, rect, event, selected)
+            DefaultMilestoneDrawer(rect, event, selected).draw(dc)
         elif scene.never_show_period_events_as_point_events() and rect.y < scene.divider_y and event.is_period():
             self._draw_period_event_as_symbol_below_divider_line(dc, scene, event)
         else:
@@ -315,30 +316,6 @@ class DefaultEventBoxDrawer(object):
 
     def _get_fuzzy_bitmap(self):
         return get_bitmap(self.view_properties.get_fuzzy_icon())
-
-    @staticmethod
-    def _draw_milestone_event(dc, rect, event, selected):
-
-        def draw_rectangle():
-            dc.SetPen(black_solid_pen(1))
-            dc.SetBrush(wx.Brush(wx.Colour(*event.get_color()), wx.BRUSHSTYLE_SOLID))
-            dc.DrawRectangle(rect)
-
-        def draw_label():
-            label = event.text[0] if event.text else " "
-            draw_centered_text(dc, rect, label)
-
-        def draw_move_handle():
-            dc.SetBrush(black_solid_brush())
-            point = center_point_with_offset(rect, HALF_HANDLE_SIZE, HALF_HANDLE_SIZE)
-            size = wx.Size(HANDLE_SIZE, HANDLE_SIZE)
-            dc.DrawRectangle(wx.Rect(point, size))
-
-        dc.DestroyClippingRegion()
-        draw_rectangle()
-        draw_label()
-        if selected:
-            draw_move_handle()
 
 
 def deflate_rect(rect, dx=INNER_PADDING, dy=INNER_PADDING):
