@@ -22,6 +22,7 @@ from unittest.mock import Mock
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
 from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import INNER_PADDING
+from timelinelib.canvas.eventboxdrawers.defaultmilestonedrawer import DefaultMilestoneDrawer
 
 
 DEFAULT_TEXT = "test"
@@ -107,7 +108,7 @@ class describe_default_exventbox_drawer_draw_text(UnitTestCase):
             rect = wx.Rect(0, 0, 100, 20)
             scene = Mock()
             try:
-                self.drawer._draw_milestone_event(self.dc, rect, self.event, False)
+                DefaultMilestoneDrawer(rect, self.event, False).draw(self.dc)
                 self.dc.DrawText.assert_called_with(" ", wx.Point(45, 5))
             except IndexError:
                 self.fail("Exception was not expected")
