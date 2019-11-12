@@ -59,7 +59,7 @@ class Config(Observable):
         setter(item.get_default())
 
 
-class Item(object):
+class Item:
 
     def __init__(self, item_dict):
         self._item_dict = item_dict

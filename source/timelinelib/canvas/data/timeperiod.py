@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class TimePeriod(object):
+class TimePeriod:
 
     """
     Represents a period in time using a start and end time.

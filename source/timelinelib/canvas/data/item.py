@@ -19,7 +19,7 @@
 from timelinelib.canvas.data.timeperiod import TimePeriod
 
 
-class TimelineItem(object):
+class TimelineItem:
     """
     I represent any item that should be displayed on a timeline.
 

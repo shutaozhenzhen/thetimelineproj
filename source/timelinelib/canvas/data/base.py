@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class ItemBase(object):
+class ItemBase:
 
     def __init__(self, db, id_, immutable_value):
         self._db = db

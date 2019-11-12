@@ -26,7 +26,7 @@ FORWARD = 1
 BACKWARD = -1
 
 
-class TimelineScene(object):
+class TimelineScene:
 
     def __init__(self, size, db, view_properties, get_text_size_fn, appearance):
         self._db = db

@@ -36,7 +36,7 @@ import re
 from markdown import markdown
 
 
-class HelpPageRepository(object):
+class HelpPageRepository:
 
     def __init__(self, home_page, help_resources_root_dir, page_prefix):
         self.help_pages = {}
@@ -82,7 +82,7 @@ class HelpPageRepository(object):
         return pages
 
 
-class HelpPage(object):
+class HelpPage:
 
     def __init__(self, help_page_repository, page_id, header, body, related_pages):
         self.help_page_repository = help_page_repository

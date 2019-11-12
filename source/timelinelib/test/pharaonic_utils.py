@@ -345,7 +345,7 @@ TIME_MODIFIERS = [
 ]
 
 
-class ObjectWithTruthValue(object):
+class ObjectWithTruthValue:
     """An object of this class can be treated as a boolean."""
     def __init__(self, truth_value):
         self.truth_value = truth_value
@@ -369,7 +369,7 @@ def select_language(language):
         gettext.install(APPLICATION_NAME.lower(), LOCALE_DIR, unicode=True)
 
 
-class _ANY(object):
+class _ANY:
     """An object of this class is always considered equal to any other object."""
 
     def __eq__(self, other):

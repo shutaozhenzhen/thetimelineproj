@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class DefaultTextTransformer(object):
+class DefaultTextTransformer:
 
     def transform(self, text):
         if text is None:

@@ -554,7 +554,7 @@ class MemoryDB(Observable):
                 self._current_query = None
 
 
-class Query(object):
+class Query:
 
     def __init__(self, db, immutable_db):
         self._db = db
@@ -676,7 +676,7 @@ class Query(object):
             return self.get_category(category_id)
 
 
-class EventSorter(object):
+class EventSorter:
 
     def __init__(self):
         self._sort_order = 0
