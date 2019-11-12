@@ -26,7 +26,7 @@ BORDER = 5
 unlock_function = None
 
 
-class WildcardHelper(object):
+class WildcardHelper:
 
     def __init__(self, name, extensions):
         self.name = name

@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class ComparableValue(object):
+class ComparableValue:
 
     def __init__(self, value):
         self._value = value

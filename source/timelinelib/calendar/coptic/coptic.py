@@ -23,7 +23,7 @@ from timelinelib.calendar.coptic.time import CopticTime
 FIRST_DAY = 1825030       
 
 
-class CopticDateTime(object):
+class CopticDateTime:
 
     def __init__(self, year, month, day, hour, minute, second):
         if not is_valid(year, month, day):

@@ -19,7 +19,7 @@
 import wx
 
 
-class ToolbarCreator(object):
+class ToolbarCreator:
 
     def __init__(self, parent, config):
         self._parent = parent

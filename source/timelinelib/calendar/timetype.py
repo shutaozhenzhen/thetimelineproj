@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class TimeType(object):
+class TimeType:
 
     def time_string(self, time):
         raise NotImplementedError("time_string not implemented.")

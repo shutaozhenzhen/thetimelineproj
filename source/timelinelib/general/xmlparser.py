@@ -112,7 +112,7 @@ class ValidationError(Exception):
     pass
 
 
-class Tag(object):
+class Tag:
     """
     Represents a tag in an xml document.
 
