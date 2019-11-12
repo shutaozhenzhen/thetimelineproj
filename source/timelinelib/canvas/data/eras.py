@@ -19,7 +19,7 @@
 from timelinelib.canvas.data.timeperiod import TimePeriod
 
 
-class Eras(object):
+class Eras:
     """
     The list of all eras defined for a timeline.
 

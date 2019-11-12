@@ -19,7 +19,7 @@
 from collections import defaultdict
 
 
-class MethodContainer(object):
+class MethodContainer:
 
     def __init__(self, methods_kvp, default_method=None):
         self._default_method = default_method
