@@ -203,10 +203,6 @@ class Config(Observable):
             display_information_message(_("Warning"), _("The selected value contains invalid characters and can't be saved"))
 
     def get(self, key):
-        """Public version of get function."""
-        return self._get(key)
-
-    def _get(self, key):
         if key in BOOLEANS:
             return self._get_boolean(key)
         elif key in INTS:
@@ -232,10 +228,6 @@ class Config(Observable):
         return self.config_parser.get(DEFAULTSECT, key)
 
     def set(self, key, value):
-        """Public version of set function."""
-        self._set(key, value)
-
-    def _set(self, key, value):
         if key in COLOURS:
             self._set_colour(key, value)
         elif key in FONTS:
@@ -318,8 +310,8 @@ FONTS = [d['name'] for d in FONT_CONFIGS]
 
 
 def setatt(name):
-    setattr(Config, name, property(lambda self: self._get(name),
-                                   lambda self, value: self._set(name, str(value))))
+    setattr(Config, name, property(lambda self: self.get(name),
+                                   lambda self, value: self.set(name, str(value))))
 
 
 # Create properties dynamically
