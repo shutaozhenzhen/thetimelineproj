@@ -23,6 +23,7 @@ Contains the Timer class.
 
 import sys
 import time
+import collections
 
 
 class Timer:
@@ -36,23 +37,28 @@ class Timer:
     * On most other platforms the best timer is time.time()
     """
     def __init__(self, timer=None):
-        if timer is not None:
-            self.default_timer = timer
-        else:
-            if sys.platform == "win32":
-                self.default_timer = time.clock
-            else:
-                self.default_timer = time.time
+        self._start = None
+        self._end = None
+        self._default_timer = self._set_default_timer(timer)
 
     def start(self):
         """Start the timer."""
-        self._start = self.default_timer()
+        self._start = self._default_timer()
 
     def end(self):
         """Stop the timer."""
-        self._end = self.default_timer()
+        self._end = self._default_timer()
 
     @property
     def elapsed_ms(self):
         """Return the elapsed time in milliseconds between start and end."""
         return (self._end - self._start) * 1000
+
+    @staticmethod
+    def _set_default_timer(timer):
+        if timer is not None:
+            return timer
+        elif sys.platform == "win32":
+            return time.clock
+        else:
+            return time.time
