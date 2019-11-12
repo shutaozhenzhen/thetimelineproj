@@ -24,7 +24,7 @@ from timelinelib.meta.about import APPLICATION_NAME
 import timelinelib.wxgui.frames.mainframe.guicreator as guic
 
 
-class MainFrameApiUsedByController(object):
+class MainFrameApiUsedByController:
 
     def set_timeline_readonly(self):
         self._set_readonly_text_in_status_bar()

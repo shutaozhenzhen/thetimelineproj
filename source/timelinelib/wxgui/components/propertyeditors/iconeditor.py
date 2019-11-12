@@ -23,7 +23,7 @@ import wx
 from timelinelib.wxgui.components.propertyeditors.baseeditor import BaseEditor
 
 
-class FileToBitmapConverter(object):
+class FileToBitmapConverter:
 
     def __init__(self):
         self.MAX_SIZE = (128, 128)

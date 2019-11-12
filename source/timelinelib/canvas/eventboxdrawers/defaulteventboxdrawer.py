@@ -34,7 +34,7 @@ INNER_PADDING = 3  # Space inside event box to text (pixels)
 GRAY = (200, 200, 200)
 
 
-class DefaultEventBoxDrawer(object):
+class DefaultEventBoxDrawer:
 
     def draw(self, dc, scene, rect, event, view_properties):
         self.scene = scene

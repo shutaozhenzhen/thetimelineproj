@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class MenuController(object):
+class MenuController:
 
     def __init__(self):
         self.current_timeline = None

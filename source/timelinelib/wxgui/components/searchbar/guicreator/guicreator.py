@@ -19,7 +19,7 @@
 import timelinelib.wxgui.components.searchbar.guicreator.components as components
 
 
-class GuiCreator(object):
+class GuiCreator:
 
     def _create_gui(self):
         self._icon_size = (16, 16)

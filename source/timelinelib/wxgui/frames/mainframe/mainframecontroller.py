@@ -29,7 +29,7 @@ class LockedException(Exception):
     pass
 
 
-class MainFrameController(object):
+class MainFrameController:
 
     def __init__(self, main_frame, db_open_fn, config):
         self._main_frame = main_frame

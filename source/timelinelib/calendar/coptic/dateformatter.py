@@ -21,7 +21,7 @@ from timelinelib.calendar.coptic.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.coptic.monthnames import month_of_abbreviated_name
 
 
-class CopticDateFormatter(object):
+class CopticDateFormatter:
 
     YEAR = "YEAR"
     MONTH = "MONTH"

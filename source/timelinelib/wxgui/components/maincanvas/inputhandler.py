@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class InputHandler(object):
+class InputHandler:
 
     def __init__(self, timeline_canvas):
         self.timeline_canvas = timeline_canvas

@@ -106,7 +106,7 @@ class TransactionError(Exception):
     pass
 
 
-class Transaction(object):
+class Transaction:
 
     def __init__(self, transactions, name, value, parent):
         self._transactions = transactions
@@ -157,7 +157,7 @@ class Transaction(object):
             self.rollback()
 
 
-class ValueUpdater(object):
+class ValueUpdater:
 
     def __init__(self, transaction):
         self._transaction = transaction

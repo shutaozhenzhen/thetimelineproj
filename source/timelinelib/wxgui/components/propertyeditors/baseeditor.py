@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class BaseEditor(object):
+class BaseEditor:
 
     def __init__(self, parent, editor):
         self.editor = editor
