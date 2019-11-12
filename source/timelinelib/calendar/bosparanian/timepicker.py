@@ -122,12 +122,14 @@ class BosparanianDatePicker(wx.TextCtrl):
             # text when a TextCtrl is given focus
             wx.CallAfter(self.controller.on_set_focus)
         self.Bind(wx.EVT_SET_FOCUS, on_set_focus)
+
         def on_kill_focus(evt):
             # Trick to not make selection text disappear when focus is lost (we
             # remove the selection instead)
             self.controller.on_kill_focus()
             self.SetSelection(0, 0)
         self.Bind(wx.EVT_KILL_FOCUS, on_kill_focus)
+
         def on_char(evt):
             if evt.GetKeyCode() == wx.WXK_TAB:
                 if evt.ShiftDown():
@@ -138,6 +140,7 @@ class BosparanianDatePicker(wx.TextCtrl):
                 skip = True
             evt.Skip(skip)
         self.Bind(wx.EVT_CHAR, on_char)
+
         def on_text(evt):
             self.controller.on_text_changed()
         self.Bind(wx.EVT_TEXT, on_text)
@@ -149,7 +152,7 @@ class BosparanianDatePicker(wx.TextCtrl):
             elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or
                   evt.GetKeyCode() == wx.WXK_RETURN):
                 self.parent.on_return()
-            elif (evt.GetKeyCode() == wx.WXK_ESCAPE):
+            elif evt.GetKeyCode() == wx.WXK_ESCAPE:
                 self.parent.on_escape()
             else:
                 evt.Skip()
@@ -237,11 +240,13 @@ class BosparanianDatePickerController(object):
 
     def on_up(self):
         max_year = BosparanianDateTime.from_time(BosparanianTimeType().get_max_time()).year
+
         def increment_year(date):
             year, month, day = date
             if year < max_year - 1:
                 return self._set_valid_day(year + 1, month, day)
             return date
+
         def increment_month(date):
             year, month, day = date
             if month < 13:
@@ -249,6 +254,7 @@ class BosparanianDatePickerController(object):
             elif year < max_year - 1:
                 return self._set_valid_day(year + 1, 1, day)
             return date
+
         def increment_day(date):
             year, month, day = date
             time = BosparanianDateTime.from_ymd(year, month, day).to_time()
@@ -276,6 +282,7 @@ class BosparanianDatePickerController(object):
             if year > BosparanianDateTime.from_time(BosparanianTimeType().get_min_time()).year:
                 return self._set_valid_day(year - 1, month, day)
             return date
+
         def decrement_month(date):
             year, month, day = date
             if month > 1:
@@ -283,6 +290,7 @@ class BosparanianDatePickerController(object):
             elif year > BosparanianDateTime.from_time(BosparanianTimeType().get_min_time()).year:
                 return self._set_valid_day(year - 1, 13, day)
             return date
+
         def decrement_day(date):
             year, month, day = date
             if day > 1:
@@ -378,10 +386,11 @@ class BosparanianDatePickerController(object):
         # Returns a range of valid cursor positions for a valid region year,
         # month or day.
         def region_is_not_valid(region):
-            return region not in (self.region_year, self.region_month,
-                                  self.region_day)
+            return region not in (self.region_year, self.region_month, self.region_day)
+
         def date_has_exactly_two_seperators(datestring):
             return len(datestring.split(self.separator)) == 3
+
         def calculate_pos_range(region, datestring):
             pos_of_separator1 = datestring.find(self.separator)
             pos_of_separator2 = datestring.find(self.separator,
@@ -428,12 +437,14 @@ class BosparanianTimePicker(wx.TextCtrl):
             # text when a TextCtrl is given focus
             wx.CallAfter(self.controller.on_set_focus)
         self.Bind(wx.EVT_SET_FOCUS, on_set_focus)
+
         def on_kill_focus(evt):
             # Trick to not make selection text disappear when focus is lost (we
             # remove the selection instead)
             self.controller.on_kill_focus()
             self.SetSelection(0, 0)
         self.Bind(wx.EVT_KILL_FOCUS, on_kill_focus)
+
         def on_char(evt):
             if evt.GetKeyCode() == wx.WXK_TAB:
                 if evt.ShiftDown():
@@ -444,9 +455,11 @@ class BosparanianTimePicker(wx.TextCtrl):
                 skip = True
             evt.Skip(skip)
         self.Bind(wx.EVT_CHAR, on_char)
+
         def on_text(evt):
             self.controller.on_text_changed()
         self.Bind(wx.EVT_TEXT, on_text)
+
         def on_key_down(evt):
             if evt.GetKeyCode() == wx.WXK_UP:
                 self.controller.on_up()
@@ -455,7 +468,7 @@ class BosparanianTimePicker(wx.TextCtrl):
             elif (evt.GetKeyCode() == wx.WXK_NUMPAD_ENTER or
                   evt.GetKeyCode() == wx.WXK_RETURN):
                 self.parent.on_return()
-            elif (evt.GetKeyCode() == wx.WXK_ESCAPE):
+            elif evt.GetKeyCode() == wx.WXK_ESCAPE:
                 self.parent.on_escape()
             else:
                 evt.Skip()
@@ -488,7 +501,7 @@ class BosparanianTimePickerController(object):
             minute = int(minute_string)
             if not is_valid_time(hour, minute, 0):
                 raise ValueError()
-            return (hour, minute, 0)
+            return hour, minute, 0
         except ValueError:
             raise ValueError("Invalid time.")
 
@@ -538,7 +551,8 @@ class BosparanianTimePickerController(object):
             new_hour = hour + 1
             if new_hour > 23:
                 new_hour = 0
-            return (new_hour, minute, second)
+            return new_hour, minute, second
+
         def increment_minutes(time):
             hour, minute, second = time
             new_hour = hour
@@ -548,7 +562,8 @@ class BosparanianTimePickerController(object):
                 new_hour = hour + 1
                 if new_hour > 23:
                     new_hour = 0
-            return (new_hour, new_minute, second)
+            return new_hour, new_minute, second
+
         if not self._time_is_valid():
             return
         selection = self.time_picker.GetSelection()
@@ -567,7 +582,8 @@ class BosparanianTimePickerController(object):
             new_hour = hour - 1
             if new_hour < 0:
                 new_hour = 23
-            return (new_hour, minute, second)
+            return new_hour, minute, second
+
         def decrement_minutes(time):
             hour, minute, second = time
             new_hour = hour
@@ -577,7 +593,8 @@ class BosparanianTimePickerController(object):
                 new_hour = hour - 1
                 if new_hour < 0:
                     new_hour = 23
-            return (new_hour, new_minute, second)
+            return new_hour, new_minute, second
+
         if not self._time_is_valid():
             return
         selection = self.time_picker.GetSelection()
