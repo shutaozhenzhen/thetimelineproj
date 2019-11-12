@@ -62,7 +62,7 @@ class ComparableValue:
             return NotImplemented
 
 
-class GenericTimeMixin(object):
+class GenericTimeMixin:
 
     def __radd__(self, other):
         return self + other
@@ -71,7 +71,7 @@ class GenericTimeMixin(object):
         return repr(self)
 
 
-class GenericDeltaMixin(object):
+class GenericDeltaMixin:
 
     def __rmul__(self, other):
         return self * other

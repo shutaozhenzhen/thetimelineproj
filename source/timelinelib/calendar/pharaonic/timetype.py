@@ -874,7 +874,7 @@ def has_nonzero_time(time_period):
             time_period.end_time.seconds != 0)
 
 
-class DurationType(object):
+class DurationType:
 
     def __init__(self, name, single_name, value_fn, remainder_fn):
         self._name = name
@@ -922,7 +922,7 @@ SECONDS = DurationType(_('seconds'), _('second'),
                        lambda ds: (0, 0))
 
 
-class DurationFormatter(object):
+class DurationFormatter:
 
     def __init__(self, duration):
         """Duration is a list containing days and seconds."""

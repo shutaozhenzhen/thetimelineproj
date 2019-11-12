@@ -228,7 +228,7 @@ class CalendarPopup(wx.PopupTransientWindow):
         self.controller.on_dismiss()
 
 
-class CalendarPopupController(object):
+class CalendarPopupController:
 
     def __init__(self, calendar_popup):
         self.calendar_popup = calendar_popup

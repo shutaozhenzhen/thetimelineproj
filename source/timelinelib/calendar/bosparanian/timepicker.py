@@ -72,7 +72,7 @@ class BosparanianDateTimePicker(wx.Panel):
         self.SetSizerAndFit(sizer)
 
 
-class BosparanianDateTimePickerController(object):
+class BosparanianDateTimePickerController:
 
     def __init__(self, date_picker, time_picker, now_fn):
         self.date_picker = date_picker
@@ -164,7 +164,7 @@ class BosparanianDatePicker(wx.TextCtrl):
         self.SetMinSize((width, -1))
 
 
-class BosparanianDatePickerController(object):
+class BosparanianDatePickerController:
 
     def __init__(self, date_picker, error_bg="pink", on_change=None):
         self.date_picker = date_picker
@@ -480,7 +480,7 @@ class BosparanianTimePicker(wx.TextCtrl):
         self.SetMinSize((width, -1))
 
 
-class BosparanianTimePickerController(object):
+class BosparanianTimePickerController:
 
     def __init__(self, time_picker, on_change):
         self.time_picker = time_picker

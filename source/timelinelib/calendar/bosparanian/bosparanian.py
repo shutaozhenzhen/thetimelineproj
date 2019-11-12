@@ -20,7 +20,7 @@ from timelinelib.calendar.bosparanian.time import BosparanianDelta
 from timelinelib.calendar.bosparanian.time import BosparanianTime
 
 
-class BosparanianDateTime(object):
+class BosparanianDateTime:
 
     def __init__(self, year, month, day, hour, minute, second):
         if not is_valid(month, day):

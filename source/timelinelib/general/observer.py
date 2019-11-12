@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Observable(object):
+class Observable:
 
     def __init__(self):
         self._observers = []
@@ -49,7 +49,7 @@ class Observable(object):
             fn(state_change)
 
 
-class Listener(object):
+class Listener:
 
     def __init__(self, callback):
         self._observable = None

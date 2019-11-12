@@ -51,7 +51,7 @@ class ExperimentalFeatureException(Exception):
     pass
 
 
-class ExperimentalFeatures(object):
+class ExperimentalFeatures:
 
     def __str__(self):
         """

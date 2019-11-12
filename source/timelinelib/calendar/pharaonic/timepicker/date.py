@@ -101,7 +101,7 @@ class PharaonicDatePicker(wx.Panel):
         self.date_text.Refresh()
 
 
-class DateModifier(object):
+class DateModifier:
 
     def increment_year(self, date):
         max_year = PharaonicDateTime.from_time(PharaonicTimeType().get_max_time()).year

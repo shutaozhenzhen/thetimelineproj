@@ -21,7 +21,7 @@ from timelinelib.calendar.pharaonic.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.pharaonic.monthnames import month_of_abbreviated_name
 
 
-class PharaonicDateFormatter(object):
+class PharaonicDateFormatter:
 
     YEAR = "YEAR"
     MONTH = "MONTH"

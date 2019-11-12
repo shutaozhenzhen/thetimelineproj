@@ -101,7 +101,7 @@ class CopticDatePicker(wx.Panel):
         self.date_text.Refresh()
 
 
-class DateModifier(object):
+class DateModifier:
 
     def increment_year(self, date):
         max_year = CopticDateTime.from_time(CopticTimeType().get_max_time()).year
