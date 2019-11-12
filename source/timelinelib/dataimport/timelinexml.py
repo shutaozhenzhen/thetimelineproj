@@ -63,7 +63,7 @@ class ParseException(Exception):
     pass
 
 
-class Parser(object):
+class Parser:
 
     def __init__(self, db, path):
         self.db = db

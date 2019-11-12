@@ -27,7 +27,7 @@ from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.time import GregorianTime
 
 
-class GregorianDateTime(object):
+class GregorianDateTime:
     """ """
 
     def __init__(self, year, month, day, hour, minute, second):

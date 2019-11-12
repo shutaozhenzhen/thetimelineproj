@@ -22,7 +22,7 @@ from timelinelib.features.installed.installedfeatureverticalscrolling import Ins
 from timelinelib.features.installed.installedfeatureverticalzooming import InstalledFeatureVerticalZooming
 
 
-class InstalledFeatures(object):
+class InstalledFeatures:
 
     def __init__(self):
         self.features = (InstalledFeatureExportImages(),

@@ -44,7 +44,7 @@ def create_in_memory_numeric_tutorial_db():
     return create_in_memory_tutorial_db(NumericTutorialTimelineCreator())
 
 
-class TutorialTimelineCreator(object):
+class TutorialTimelineCreator:
     """Base class for creation of a tutorial timeline."""
 
     def __init__(self):

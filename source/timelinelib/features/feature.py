@@ -23,7 +23,7 @@ All types of Timeline features must inherit from this bas class
 """
 
 
-class Feature(object):
+class Feature:
 
     def __init__(self, display_name, description, config_name=""):
         self._display_name = display_name

@@ -101,7 +101,7 @@ class GregorianDatePicker(wx.Panel):
         self.date_text.Refresh()
 
 
-class DateModifier(object):
+class DateModifier:
 
     def increment_year(self, date):
         max_year = GregorianDateTime.from_time(GregorianTimeType().get_max_time()).year

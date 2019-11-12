@@ -120,7 +120,7 @@ class PharaonicDateTimePicker(wx.Panel):
         self.calendar_popup.Dismiss()
 
 
-class PharaonicDateTimePickerController(object):
+class PharaonicDateTimePickerController:
 
     def __init__(self, view, date_picker, time_picker, now_fn, on_change):
         self._view = view
@@ -228,7 +228,7 @@ class CalendarPopup(wx.PopupTransientWindow):
         self.controller.on_dismiss()
 
 
-class CalendarPopupController(object):
+class CalendarPopupController:
 
     def __init__(self, calendar_popup):
         self.calendar_popup = calendar_popup

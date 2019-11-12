@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class CategoryRepository(object):
+class CategoryRepository:
 
     def get_all(self):
         raise NotImplementedError()
@@ -28,7 +28,7 @@ class CategoryRepository(object):
         raise NotImplementedError()
 
 
-class EventRepository(object):
+class EventRepository:
 
     def save(self, event):
         raise NotImplementedError()

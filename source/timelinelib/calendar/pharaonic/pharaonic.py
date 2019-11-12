@@ -22,7 +22,7 @@ from timelinelib.calendar.pharaonic.time import PharaonicTime
 FIRST_DAY = 1448638      
 
 
-class PharaonicDateTime(object):
+class PharaonicDateTime:
 
     def __init__(self, year, month, day, hour, minute, second):
         if not is_valid(year, month, day):

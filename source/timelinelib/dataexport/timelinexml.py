@@ -50,7 +50,7 @@ def wrap_in_tag(func, name, indent=""):
     return wrapper
 
 
-class Exporter(object):
+class Exporter:
 
     def __init__(self, db):
         self.db = db

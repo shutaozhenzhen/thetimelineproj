@@ -34,7 +34,7 @@ from timelinelib.utils import ex_msg
 from timelinelib.wxgui.utils import display_warning_message
 
 
-class IcsLoader(object):
+class IcsLoader:
 
     def load(self, db, path, options):
         self.vevents_not_loaded = []
