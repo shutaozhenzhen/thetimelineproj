@@ -140,26 +140,26 @@ class BosparanianTimeType(TimeType):
         one_day_width = metrics.calc_exact_width(day_period)
         self.major_strip_is_decade = False
         if one_day_width > 20000:
-            return (StripHour(), StripMinute())
+            return StripHour(), StripMinute()
         elif one_day_width > 600:
-            return (StripDay(), StripHour())
+            return StripDay(), StripHour()
         elif one_day_width > 60:
-            return (StripMonth(), StripWeekday())
+            return StripMonth(), StripWeekday()
         elif one_day_width > 25:
-            return (StripMonth(), StripDay())
+            return StripMonth(), StripDay()
         elif one_day_width > 10:
-            return (StripMonth(), StripWeek())
+            return StripMonth(), StripWeek()
         elif one_day_width > 1.75:
-            return (StripYear(), StripMonth())
+            return StripYear(), StripMonth()
         elif one_day_width > 0.5:
-            return (StripYear(), StripQuarter())
+            return StripYear(), StripQuarter()
         elif one_day_width > 0.12:
             self.major_strip_is_decade = True
-            return (StripDecade(), StripYear())
+            return StripDecade(), StripYear()
         elif one_day_width > 0.012:
-            return (StripCentury(), StripDecade())
+            return StripCentury(), StripDecade()
         else:
-            return (StripCentury(), StripCentury())
+            return StripCentury(), StripCentury()
 
     def get_default_time_period(self):
         return time_period_center(self.now(), BosparanianDelta.from_days(30))
@@ -176,7 +176,7 @@ class BosparanianTimeType(TimeType):
         return self.saved_now
 
     def get_min_zoom_delta(self):
-        return (BosparanianDelta.from_seconds(60), _("Can't zoom deeper than 1 minute"))
+        return BosparanianDelta.from_seconds(60), _("Can't zoom deeper than 1 minute")
 
     def get_name(self):
         return "bosparaniantime"
