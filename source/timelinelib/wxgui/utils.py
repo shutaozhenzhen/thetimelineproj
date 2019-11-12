@@ -19,7 +19,6 @@
 import wx
 
 
-
 # Border, in pixels, between controls in a window (should always be used when
 # border is needed)
 BORDER = 5
@@ -138,7 +137,3 @@ def set_focus(parent, name):
 def register_unlock_function(function):
     global unlock_function
     unlock_function = function
-
-
-
-
