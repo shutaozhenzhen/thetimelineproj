@@ -19,9 +19,6 @@
 from xml.sax.saxutils import escape as xmlescape
 import base64
 import io
-import platform
-
-import wx
 
 from timelinelib.db.utils import safe_write
 from timelinelib.meta.version import get_full_version
