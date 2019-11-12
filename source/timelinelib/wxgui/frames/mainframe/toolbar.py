@@ -70,13 +70,13 @@ class ToolbarCreator:
         second_tool = self._add_radio(spec['tool-2-name'], spec['tool-2-image'])
 
         def on_first_tool_click(event):
-            self._config._set(spec['config-name'], True)
+            self._config.set(spec['config-name'], True)
 
         def on_second_tool_click(event):
-            self._config._set(spec['config-name'], False)
+            self._config.set(spec['config-name'], False)
 
         def check_item_corresponding_to_config():
-            if self._config._get(spec['config-name']):
+            if self._config.get(spec['config-name']):
                 self.toolbar.ToggleTool(first_tool.GetId(), True)
             else:
                 self.toolbar.ToggleTool(second_tool.GetId(), True)

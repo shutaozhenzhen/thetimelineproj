@@ -202,6 +202,10 @@ class Config(Observable):
         except UnicodeEncodeError:
             display_information_message(_("Warning"), _("The selected value contains invalid characters and can't be saved"))
 
+    def get(self, key):
+        """Public version of get function."""
+        return self._get(key)
+
     def _get(self, key):
         if key in BOOLEANS:
             return self._get_boolean(key)
@@ -226,6 +230,10 @@ class Config(Observable):
 
     def _get_font(self, key):
         return self.config_parser.get(DEFAULTSECT, key)
+
+    def set(self, key, value):
+        """Public version of set function."""
+        self._set(key, value)
 
     def _set(self, key, value):
         if key in COLOURS:
