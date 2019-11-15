@@ -69,8 +69,7 @@ class GregorianDateTime:
         def monday_week_1(year):
             from timelinelib.calendar.gregorian.timetype import GregorianTimeType
             jan_4 = GregorianDateTime.from_ymd(year, 1, 4).to_time()
-            jan_4_day_of_week = GregorianTimeType().get_day_of_week(jan_4)
-            return jan_4 - GregorianDelta.from_days(jan_4_day_of_week)
+            return jan_4 - GregorianDelta.from_days(jan_4.day_of_week)
 
         def days_between(end, start):
             return end.julian_day - start.julian_day

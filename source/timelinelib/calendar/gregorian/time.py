@@ -112,6 +112,14 @@ class GregorianTime(GenericTimeMixin):
         seconds = self.seconds % 60
         return hours, minutes, seconds
 
+    @property
+    def day_of_week(self):
+        return self.julian_day % 7
+
+    @property
+    def is_weekend_day(self):
+        return self.day_of_week in (5, 6)
+
 
 class GregorianDelta(ComparableValue, GenericDeltaMixin):
 

@@ -98,7 +98,7 @@ class describe_gregoriantimetype(UnitTestCase):
 
     def test_get_weekday(self):
         dt = self.time_type.parse_time("2013-07-10 00:00:00")
-        self.assertEqual(2, self.time_type.get_day_of_week(dt))
+        self.assertEqual(2, dt.day_of_week)
 
     def test_get_min_zoom_delta(self):
         self.assertEqual(GregorianDelta(60), self.time_type.get_min_zoom_delta()[0])
@@ -114,6 +114,7 @@ class describe_gregoriantimetype(UnitTestCase):
             ("17 Jan 2016", True),
         ]
         for day, expected_is_weekend in DAYS:
+            t = human_time_to_gregorian(day)
             self.assertEqual(
                 self.time_type.is_weekend_day(human_time_to_gregorian(day)),
                 expected_is_weekend
