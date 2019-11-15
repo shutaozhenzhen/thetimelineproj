@@ -47,7 +47,8 @@ class DurationFormatter:
         durations = self._remov_zero_value_parts(duration_parts)
         return " ". join(self._format_durations_parts(durations))
 
-    def _remov_zero_value_parts(self, duration_parts):
+    @staticmethod
+    def _remov_zero_value_parts(duration_parts):
         return [duration for duration in duration_parts
                 if duration[0] > 0]
 
