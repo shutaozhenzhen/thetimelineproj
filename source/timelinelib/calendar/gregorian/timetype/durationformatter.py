@@ -62,4 +62,4 @@ class DurationFormatter:
             heading = duration_type.single_name
         else:
             heading = duration_type.name
-        return '%d %s' % (value, heading)
+        return f'{value} {heading}'
