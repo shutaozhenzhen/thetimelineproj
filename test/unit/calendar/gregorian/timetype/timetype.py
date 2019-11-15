@@ -36,8 +36,6 @@ from timelinelib.calendar.gregorian.timetype import move_period_num_days
 from timelinelib.calendar.gregorian.timetype import move_period_num_months
 from timelinelib.calendar.gregorian.timetype import move_period_num_weeks
 from timelinelib.calendar.gregorian.timetype import move_period_num_years
-from timelinelib.calendar.gregorian.timetype import StripDay
-from timelinelib.calendar.gregorian.timetype import StripHour
 from timelinelib.calendar.gregorian.timetype import TimeOutOfRangeLeftError
 from timelinelib.calendar.gregorian.timetype import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
