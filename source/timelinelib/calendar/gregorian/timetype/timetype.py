@@ -34,6 +34,7 @@ from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.gregorian.timetype import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.durationtype import YEARS, DAYS, HOURS, MINUTES, SECONDS
 from timelinelib.calendar.gregorian.timetype.strips.stripminute import StripMinute
+from timelinelib.calendar.gregorian.timetype.strips.striphour import StripHour
 from timelinelib.calendar.gregorian.timetype.yearformatter import format_year, BC
 
 
@@ -784,23 +785,6 @@ class StripWeekday(Strip):
 
     def is_day(self):
         return True
-
-
-class StripHour(Strip):
-
-    def label(self, time, major=False):
-        time = GregorianDateTime.from_time(time)
-        if major:
-            return "%s %s %s: %sh" % (time.day, abbreviated_name_of_month(time.month),
-                                      format_year(time.year), time.hour)
-        return str(time.hour)
-
-    def start(self, time):
-        (hours, _, _) = time.get_time_of_day()
-        return GregorianTime(time.julian_day, hours * 60 * 60)
-
-    def increment(self, time):
-        return time + GregorianDelta.from_seconds(60 * 60)
 
 
 def move_period_num_days(period, num):
