@@ -108,6 +108,7 @@ class GregorianTimeType(TimeType):
 
         def time_label(time):
             return "%02d:%02d" % time.get_time_of_day()[:-1]
+
         if time_period.is_period():
             if time_period.has_nonzero_time():
                 label = "%s to %s" % (label_with_time(time_period.start_time),
