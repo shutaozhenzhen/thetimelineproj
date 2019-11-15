@@ -37,6 +37,7 @@ from timelinelib.calendar.gregorian.timetype.strips.striphour import StripHour
 from timelinelib.calendar.gregorian.timetype.strips.stripweekday import StripWeekday
 from timelinelib.calendar.gregorian.timetype.strips.stripweek import StripWeek
 from timelinelib.calendar.gregorian.timetype.strips.stripday import StripDay
+from timelinelib.calendar.gregorian.timetype.strips.stripmonth import StripMonth
 from timelinelib.calendar.gregorian.timetype.yearformatter import format_year, BC
 
 
@@ -656,29 +657,6 @@ class StripYear(Strip):
     def increment(self, time):
         gregorian_time = GregorianDateTime.from_time(time)
         return gregorian_time.replace(year=gregorian_time.year + 1).to_time()
-
-
-class StripMonth(Strip):
-
-    def label(self, time, major=False):
-        time = GregorianDateTime.from_time(time)
-        if major:
-            return "%s %s" % (abbreviated_name_of_month(time.month),
-                              format_year(time.year))
-        return abbreviated_name_of_month(time.month)
-
-    def start(self, time):
-        gregorian_time = GregorianDateTime.from_time(time)
-        return GregorianDateTime.from_ymd(
-            gregorian_time.year,
-            gregorian_time.month,
-            1
-        ).to_time()
-
-    def increment(self, time):
-        return time + GregorianDelta.from_days(
-            GregorianDateTime.from_time(time).days_in_month()
-        )
 
 
 def move_period_num_days(period, num):
