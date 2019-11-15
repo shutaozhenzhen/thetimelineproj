@@ -24,7 +24,6 @@ from timelinelib.calendar.gregorian.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.gregorian.time import SECONDS_IN_DAY
-from timelinelib.calendar.gregorian.weekdaynames import abbreviated_name_of_weekday
 from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
@@ -35,6 +34,7 @@ from timelinelib.calendar.gregorian.timetype import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.durationtype import YEARS, DAYS, HOURS, MINUTES, SECONDS
 from timelinelib.calendar.gregorian.timetype.strips.stripminute import StripMinute
 from timelinelib.calendar.gregorian.timetype.strips.striphour import StripHour
+from timelinelib.calendar.gregorian.timetype.strips.stripweekday import StripWeekday
 from timelinelib.calendar.gregorian.timetype.yearformatter import format_year, BC
 
 
@@ -757,31 +757,6 @@ class StripWeek(Strip):
 
     def increment(self, time):
         return time + GregorianDelta.from_days(7)
-
-
-class StripWeekday(Strip):
-
-    def label(self, time, major=False):
-        day_of_week = time.day_of_week
-        if major:
-            time = GregorianDateTime.from_time(time)
-            return "%s %s %s %s" % (abbreviated_name_of_weekday(day_of_week),
-                                    time.day,
-                                    abbreviated_name_of_month(time.month),
-                                    format_year(time.year))
-        return (abbreviated_name_of_weekday(day_of_week) +
-                " %s" % GregorianDateTime.from_time(time).day)
-
-    def start(self, time):
-        gregorian_time = GregorianDateTime.from_time(time)
-        new_gregorian = GregorianDateTime.from_ymd(gregorian_time.year, gregorian_time.month, gregorian_time.day)
-        return new_gregorian.to_time()
-
-    def increment(self, time):
-        return time + GregorianDelta.from_days(1)
-
-    def is_day(self):
-        return True
 
 
 def move_period_num_days(period, num):
