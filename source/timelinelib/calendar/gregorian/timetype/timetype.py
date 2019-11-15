@@ -34,9 +34,7 @@ from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.gregorian.timetype import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.durationtype import YEARS, DAYS, HOURS, MINUTES, SECONDS
 from timelinelib.calendar.gregorian.timetype.strips.stripminute import StripMinute
-
-
-BC = _("BC")
+from timelinelib.calendar.gregorian.timetype.yearformatter import format_year, BC
 
 
 class GregorianTimeType(TimeType):
@@ -803,13 +801,6 @@ class StripHour(Strip):
 
     def increment(self, time):
         return time + GregorianDelta.from_seconds(60 * 60)
-
-
-def format_year(year):
-    if year <= 0:
-        return "%d %s" % ((1 - year), BC)
-    else:
-        return str(year)
 
 
 def move_period_num_days(period, num):
