@@ -19,7 +19,7 @@
 class DurationFormatter:
 
     def __init__(self, duration):
-        """Duration is a list containing days and seconds."""
+        """Duration is a list containing days and seconds like [days, seconds]."""
         self._duration = duration
 
     def format(self, duration_parts):
