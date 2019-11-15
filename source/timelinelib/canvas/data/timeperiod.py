@@ -187,6 +187,9 @@ class TimePeriod:
     def center(self, time):
         return self.move_delta(time - self.mean_time())
 
+    def has_nonzero_time(self):
+        return self.start_time.seconds != 0 or self.end_time.seconds != 0
+
     def _calc_new_time(self, time, delta):
         if delta is None:
             return time
