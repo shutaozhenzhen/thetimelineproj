@@ -20,7 +20,7 @@ import collections
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.calendar.gregorian.timetype import DurationFormatter
-from timelinelib.calendar.gregorian.timetype import YEARS, MONTHS, DAYS, HOURS, MINUTES, SECONDS
+from timelinelib.calendar.gregorian.timetype.durationtype import YEARS, MONTHS, DAYS, HOURS, MINUTES, SECONDS
 
 
 Test = collections.namedtuple('Test', 'duration, expected_result')
