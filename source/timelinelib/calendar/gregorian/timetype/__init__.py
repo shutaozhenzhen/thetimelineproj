@@ -19,7 +19,6 @@
 from timelinelib.calendar.gregorian.timetype.durationformatter import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.timetype import GregorianTimeType
 from timelinelib.calendar.gregorian.timetype.timetype import SECONDS_IN_DAY
-from timelinelib.calendar.gregorian.timetype.timetype import has_nonzero_time
 from timelinelib.calendar.gregorian.timetype.timetype import forward_fn
 from timelinelib.calendar.gregorian.timetype.timetype import format_year
 from timelinelib.calendar.gregorian.timetype.timetype import forward_one_year_fn
