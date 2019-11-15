@@ -192,10 +192,7 @@ class GregorianTimeType(TimeType):
         return False
 
     def is_weekend_day(self, time):
-        return self.get_day_of_week(time) in (5, 6)
-
-    def get_day_of_week(self, time):
-        return time.julian_day % 7
+        return time.is_weekend_day
 
     def create_time_picker(self, parent, *args, **kwargs):
         from timelinelib.calendar.gregorian.timepicker.datetime import GregorianDateTimePicker
@@ -420,7 +417,7 @@ def get_millenium_max_year():
 def fit_week_fn(main_frame, current_period, navigation_fn):
     mean = GregorianDateTime.from_time(current_period.mean_time())
     start = GregorianDateTime.from_ymd(mean.year, mean.month, mean.day).to_time()
-    weekday = GregorianTimeType().get_day_of_week(start)
+    weekday = start.day_of_week
     start = start - GregorianDelta.from_days(weekday)
     if not main_frame.week_starts_on_monday():
         start = start - GregorianDelta.from_days(1)
@@ -752,10 +749,10 @@ class StripWeek(Strip):
 
     def start(self, time):
         if self.appearance.get_week_start() == "monday":
-            days_to_subtract = GregorianTimeType().get_day_of_week(time)
+            days_to_subtract = time.day_of_week
         else:
             # It is sunday
-            days_to_subtract = (GregorianTimeType().get_day_of_week(time) + 1) % 7
+            days_to_subtract = (time.day_of_week + 1) % 7
         return GregorianTime(time.julian_day - days_to_subtract, 0)
 
     def increment(self, time):
@@ -765,7 +762,7 @@ class StripWeek(Strip):
 class StripWeekday(Strip):
 
     def label(self, time, major=False):
-        day_of_week = GregorianTimeType().get_day_of_week(time)
+        day_of_week = time.day_of_week
         if major:
             time = GregorianDateTime.from_time(time)
             return "%s %s %s %s" % (abbreviated_name_of_weekday(day_of_week),
