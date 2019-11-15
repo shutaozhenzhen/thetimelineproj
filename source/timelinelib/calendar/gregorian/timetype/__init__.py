@@ -19,6 +19,7 @@
 from timelinelib.calendar.gregorian.timetype.durationformatter import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.timetype import GregorianTimeType
 from timelinelib.calendar.gregorian.timetype.timetype import YEARS
+from timelinelib.calendar.gregorian.timetype.timetype import MONTHS
 from timelinelib.calendar.gregorian.timetype.timetype import DAYS
 from timelinelib.calendar.gregorian.timetype.timetype import HOURS
 from timelinelib.calendar.gregorian.timetype.timetype import MINUTES
