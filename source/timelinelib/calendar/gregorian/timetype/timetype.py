@@ -40,6 +40,7 @@ from timelinelib.calendar.gregorian.timetype.strips.stripday import StripDay
 from timelinelib.calendar.gregorian.timetype.strips.stripmonth import StripMonth
 from timelinelib.calendar.gregorian.timetype.strips.stripyear import StripYear
 from timelinelib.calendar.gregorian.timetype.strips.stripdecade import StripDecade
+from timelinelib.calendar.gregorian.timetype.strips.stripcentury import StripCentury
 from timelinelib.calendar.gregorian.timetype.yearformatter import format_year, BC
 
 
@@ -439,93 +440,6 @@ def create_strip_fitter(strip_cls):
             return time_period.update(start, end)
         navigation_fn(navigate)
     return fit
-
-
-class StripCentury(Strip):
-
-    """
-    Year Name | Year integer | Decade name
-    ----------+--------------+------------
-    ..        |  ..          |
-    200 BC    | -199         | 200s BC (100 years)
-    ----------+--------------+------------
-    199 BC    | -198         |
-    ...       | ...          | 100s BC (100 years)
-    100 BC    | -99          |
-    ----------+--------------+------------
-    99  BC    | -98          |
-    ...       |  ...         | 0s BC (only 99 years)
-    1   BC    |  0           |
-    ----------+--------------+------------
-    1         |  1           |
-    ...       |  ...         | 0s (only 99 years)
-    99        |  99          |
-    ----------+--------------+------------
-    100       |  100         |
-    ..        |  ..          | 100s (100 years)
-    199       |  199         |
-    ----------+--------------+------------
-    200       |  200         | 200s (100 years)
-    ..        |  ..          |
-    """
-
-    def label(self, time, major=False):
-        if major:
-            gregorian_time = GregorianDateTime.from_time(time)
-            return self._format_century(
-                self._century_number(
-                    self._century_start_year(gregorian_time.year)
-                ),
-                gregorian_time.is_bc()
-            )
-        else:
-            return ""
-
-    def start(self, time):
-        return GregorianDateTime.from_ymd(
-            self._century_start_year(GregorianDateTime.from_time(time).year),
-            1,
-            1
-        ).to_time()
-
-    def increment(self, time):
-        gregorian_time = GregorianDateTime.from_time(time)
-        return gregorian_time.replace(
-            year=self._next_century_start_year(gregorian_time.year)
-        ).to_time()
-
-    def _century_number(self, century_start_year):
-        if century_start_year > 99:
-            return century_start_year
-        elif century_start_year >= -98:
-            return 0
-        else:  # century_start_year < -98:
-            return self._century_number(-century_start_year - 98)
-
-    def _next_century_start_year(self, start_year):
-        return start_year + self._century_year_len(start_year)
-
-    def _century_year_len(self, start_year):
-        if start_year in [-98, 1]:
-            return 99
-        else:
-            return 100
-
-    def _format_century(self, century_number, is_bc):
-        if is_bc:
-            return "{century}s {bc}".format(century=century_number, bc=BC)
-        else:
-            return "{century}s".format(century=century_number)
-
-    def _century_start_year(self, year):
-        if year > 99:
-            return year - int(year) % 100
-        elif year >= 1:
-            return 1
-        elif year >= -98:
-            return -98
-        else:  # year < -98
-            return -self._century_start_year(-year + 1) - 98
 
 
 def move_period_num_days(period, num):
