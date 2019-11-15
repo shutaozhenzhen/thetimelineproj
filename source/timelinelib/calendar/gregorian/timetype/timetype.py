@@ -35,6 +35,7 @@ from timelinelib.calendar.gregorian.timetype.durationtype import YEARS, DAYS, HO
 from timelinelib.calendar.gregorian.timetype.strips.stripminute import StripMinute
 from timelinelib.calendar.gregorian.timetype.strips.striphour import StripHour
 from timelinelib.calendar.gregorian.timetype.strips.stripweekday import StripWeekday
+from timelinelib.calendar.gregorian.timetype.strips.stripweek import StripWeek
 from timelinelib.calendar.gregorian.timetype.yearformatter import format_year, BC
 
 
@@ -702,61 +703,6 @@ class StripDay(Strip):
 
     def is_day(self):
         return True
-
-
-class StripWeek(Strip):
-
-    def __init__(self, appearance):
-        Strip.__init__(self)
-        self.appearance = appearance
-
-    def label(self, time, major=False):
-        if major:
-            first_weekday = self.start(time)
-            next_first_weekday = self.increment(first_weekday)
-            last_weekday = next_first_weekday - GregorianDelta.from_days(1)
-            range_string = self._time_range_string(first_weekday, last_weekday)
-            if self.appearance.get_week_start() == "monday":
-                return (_("Week") + " %s (%s)") % (
-                    GregorianDateTime.from_time(time).week_number,
-                    range_string
-                )
-            else:
-                # It is sunday (don't know what to do about week numbers here)
-                return range_string
-        # This strip should never be used as minor
-        return ""
-
-    def _time_range_string(self, start, end):
-        start = GregorianDateTime.from_time(start)
-        end = GregorianDateTime.from_time(end)
-        if start.year == end.year:
-            if start.month == end.month:
-                return "%s-%s %s %s" % (start.day, end.day,
-                                        abbreviated_name_of_month(start.month),
-                                        format_year(start.year))
-            return "%s %s-%s %s %s" % (start.day,
-                                       abbreviated_name_of_month(start.month),
-                                       end.day,
-                                       abbreviated_name_of_month(end.month),
-                                       format_year(start.year))
-        return "%s %s %s-%s %s %s" % (start.day,
-                                      abbreviated_name_of_month(start.month),
-                                      format_year(start.year),
-                                      end.day,
-                                      abbreviated_name_of_month(end.month),
-                                      format_year(end.year))
-
-    def start(self, time):
-        if self.appearance.get_week_start() == "monday":
-            days_to_subtract = time.day_of_week
-        else:
-            # It is sunday
-            days_to_subtract = (time.day_of_week + 1) % 7
-        return GregorianTime(time.julian_day - days_to_subtract, 0)
-
-    def increment(self, time):
-        return time + GregorianDelta.from_days(7)
 
 
 def move_period_num_days(period, num):
