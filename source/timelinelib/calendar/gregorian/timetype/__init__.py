@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from timelinelib.calendar.gregorian.timetype.durationformatter import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.timetype import GregorianTimeType
-from timelinelib.calendar.gregorian.timetype.timetype import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.timetype import YEARS
 from timelinelib.calendar.gregorian.timetype.timetype import DAYS
 from timelinelib.calendar.gregorian.timetype.timetype import HOURS
