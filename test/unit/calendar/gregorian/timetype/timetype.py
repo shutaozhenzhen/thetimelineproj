@@ -17,7 +17,6 @@
 
 
 import unittest.mock
-import wx
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.time import GregorianDelta
@@ -39,14 +38,11 @@ from timelinelib.calendar.gregorian.timetype import move_period_num_weeks
 from timelinelib.calendar.gregorian.timetype import move_period_num_years
 from timelinelib.calendar.gregorian.timetype import StripDay
 from timelinelib.calendar.gregorian.timetype import StripHour
-from timelinelib.calendar.gregorian.timetype import StripWeek
 from timelinelib.calendar.gregorian.timetype import StripWeekday
 from timelinelib.calendar.gregorian.timetype import TimeOutOfRangeLeftError
 from timelinelib.calendar.gregorian.timetype import TimeOutOfRangeRightError
-from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
-from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
@@ -115,71 +111,6 @@ class describe_gregoriantimetype(UnitTestCase):
                 self.time_type.is_weekend_day(human_time_to_gregorian(day)),
                 expected_is_weekend
             )
-
-
-class describe_gregorian_strip_week(WxAppTestCase):
-
-    def test_start_when_week_starts_on_sunday(self):
-        self.appearance.set_week_start("sunday")
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("2013-07-10 11:00:00")),
-            self.time_type.parse_time("2013-07-07 00:00:00"))
-
-    def test_start_when_week_starts_on_monday(self):
-        self.appearance.set_week_start("monday")
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("2013-07-10 11:00:00")),
-            self.time_type.parse_time("2013-07-08 00:00:00"))
-
-    def test_increments_7_days(self):
-        self.assertEqual(
-            self.strip.increment(self.time_type.parse_time("2013-07-07 00:00:00")),
-            self.time_type.parse_time("2013-07-14 00:00:00"))
-
-    def test_label_minor(self):
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00")),
-            "")
-
-    def test_label_major_has_no_week_when_week_starts_on_sunday(self):
-        self.appearance.set_week_start("sunday")
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00"), True),
-            "7-13 ⟪Jul⟫ 2013"
-        )
-
-    def test_label_major_when_week_starts_on_monday(self):
-        self.appearance.set_week_start("monday")
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00"), True),
-            "⟪Week⟫ 27 (1-7 ⟪Jul⟫ 2013)"
-        )
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("-4-07-07 00:00:00"), True),
-            "⟪Week⟫ 27 (1-7 ⟪Jul⟫ 5 ⟪BC⟫)"
-        )
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-11-25 00:00:00"), True),
-            "⟪Week⟫ 48 (25 ⟪Nov⟫-1 ⟪Dec⟫ 2013)"
-        )
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("-4-11-25 00:00:00"), True),
-            "⟪Week⟫ 48 (25 ⟪Nov⟫-1 ⟪Dec⟫ 5 ⟪BC⟫)"
-        )
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-12-30 00:00:00"), True),
-            "⟪Week⟫ 1 (30 ⟪Dec⟫ 2013-5 ⟪Jan⟫ 2014)"
-        )
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("-4-12-30 00:00:00"), True),
-            "⟪Week⟫ 1 (30 ⟪Dec⟫ 5 ⟪BC⟫-5 ⟪Jan⟫ 4 ⟪BC⟫)"
-        )
-
-    def setUp(self):
-        WxAppTestCase.setUp(self)
-        self.time_type = GregorianTimeType()
-        self.appearance = Appearance()
-        self.strip = StripWeek(self.appearance)
 
 
 class describe_gregorian_strip_weekday(UnitTestCase):
