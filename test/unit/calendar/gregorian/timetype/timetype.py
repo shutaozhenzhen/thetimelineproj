@@ -38,7 +38,6 @@ from timelinelib.calendar.gregorian.timetype import move_period_num_weeks
 from timelinelib.calendar.gregorian.timetype import move_period_num_years
 from timelinelib.calendar.gregorian.timetype import StripDay
 from timelinelib.calendar.gregorian.timetype import StripHour
-from timelinelib.calendar.gregorian.timetype import StripWeekday
 from timelinelib.calendar.gregorian.timetype import TimeOutOfRangeLeftError
 from timelinelib.calendar.gregorian.timetype import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
@@ -111,40 +110,6 @@ class describe_gregoriantimetype(UnitTestCase):
                 self.time_type.is_weekend_day(human_time_to_gregorian(day)),
                 expected_is_weekend
             )
-
-
-class describe_gregorian_strip_weekday(UnitTestCase):
-
-    def test_start(self):
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("2013-07-10 12:13:14")),
-            self.time_type.parse_time("2013-07-10 00:00:00"))
-
-    def test_increment(self):
-        self.assertEqual(
-            self.strip.increment(self.time_type.parse_time("2013-07-07 00:00:00")),
-            self.time_type.parse_time("2013-07-08 00:00:00"))
-
-    def test_label_minor(self):
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00")),
-            "⟪Sun⟫ 7"
-        )
-
-    def test_label_major(self):
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-07-07 00:00:00"), True),
-            "⟪Sun⟫ 7 ⟪Jul⟫ 2013"
-        )
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("-5-07-07 00:00:00"), True),
-            "⟪Fri⟫ 7 ⟪Jul⟫ 6 ⟪BC⟫"
-        )
-
-    def setUp(self):
-        UnitTestCase.setUp(self)
-        self.time_type = GregorianTimeType()
-        self.strip = StripWeekday()
 
 
 class describe_gregorian_strip_hour(UnitTestCase):
