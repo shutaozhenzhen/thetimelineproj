@@ -33,6 +33,7 @@ from timelinelib.canvas.data import time_period_center
 from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.gregorian.timetype import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.durationtype import YEARS, DAYS, HOURS, MINUTES, SECONDS
+from timelinelib.calendar.gregorian.timetype.strips.stripminute import StripMinute
 
 
 BC = _("BC")
@@ -802,23 +803,6 @@ class StripHour(Strip):
 
     def increment(self, time):
         return time + GregorianDelta.from_seconds(60 * 60)
-
-
-class StripMinute(Strip):
-
-    def label(self, time, major=False):
-        time = GregorianDateTime.from_time(time)
-        if major:
-            return "%s %s %s: %s:%s" % (time.day, abbreviated_name_of_month(time.month),
-                                        format_year(time.year), time.hour, time.minute)
-        return str(time.minute)
-
-    def start(self, time):
-        (hours, minutes, _) = time.get_time_of_day()
-        return GregorianTime(time.julian_day, minutes * 60 + hours * 60 * 60)
-
-    def increment(self, time):
-        return time + GregorianDelta.from_seconds(60)
 
 
 def format_year(year):
