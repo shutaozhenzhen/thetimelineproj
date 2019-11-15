@@ -29,18 +29,17 @@ from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
-from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.gregorian.timetype import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.durationtype import YEARS, DAYS, HOURS, MINUTES, SECONDS
-from timelinelib.calendar.gregorian.timetype.strips.stripminute import StripMinute
-from timelinelib.calendar.gregorian.timetype.strips.striphour import StripHour
-from timelinelib.calendar.gregorian.timetype.strips.stripweekday import StripWeekday
-from timelinelib.calendar.gregorian.timetype.strips.stripweek import StripWeek
-from timelinelib.calendar.gregorian.timetype.strips.stripday import StripDay
-from timelinelib.calendar.gregorian.timetype.strips.stripmonth import StripMonth
-from timelinelib.calendar.gregorian.timetype.strips.stripyear import StripYear
-from timelinelib.calendar.gregorian.timetype.strips.stripdecade import StripDecade
-from timelinelib.calendar.gregorian.timetype.strips.stripcentury import StripCentury
+from timelinelib.calendar.gregorian.timetype.strips import StripMinute
+from timelinelib.calendar.gregorian.timetype.strips import StripHour
+from timelinelib.calendar.gregorian.timetype.strips import StripWeekday
+from timelinelib.calendar.gregorian.timetype.strips import StripWeek
+from timelinelib.calendar.gregorian.timetype.strips import StripDay
+from timelinelib.calendar.gregorian.timetype.strips import StripMonth
+from timelinelib.calendar.gregorian.timetype.strips import StripYear
+from timelinelib.calendar.gregorian.timetype.strips import StripDecade
+from timelinelib.calendar.gregorian.timetype.strips import StripCentury
 from timelinelib.calendar.gregorian.timetype.yearformatter import format_year, BC
 
 
