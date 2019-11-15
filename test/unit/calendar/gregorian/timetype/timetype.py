@@ -112,39 +112,6 @@ class describe_gregoriantimetype(UnitTestCase):
             )
 
 
-class describe_gregorian_strip_hour(UnitTestCase):
-
-    def test_start(self):
-        self.assertEqual(
-            self.strip.start(self.time_type.parse_time("2013-07-10 12:13:14")),
-            self.time_type.parse_time("2013-07-10 12:00:00"))
-
-    def test_increment(self):
-        self.assertEqual(
-            self.strip.increment(self.time_type.parse_time("2013-07-07 12:00:00")),
-            self.time_type.parse_time("2013-07-07 13:00:00"))
-
-    def test_label_minor(self):
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-07-07 12:00:00")),
-            "12")
-
-    def test_label_major(self):
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("2013-07-07 12:00:00"), True),
-            "7 ⟪Jul⟫ 2013: 12h"
-        )
-        self.assertEqual(
-            self.strip.label(self.time_type.parse_time("-5-07-07 12:00:00"), True),
-            "7 ⟪Jul⟫ 6 ⟪BC⟫: 12h"
-        )
-
-    def setUp(self):
-        UnitTestCase.setUp(self)
-        self.time_type = GregorianTimeType()
-        self.strip = StripHour()
-
-
 class describe_gregorian_strip_day(UnitTestCase):
 
     def test_start(self):
