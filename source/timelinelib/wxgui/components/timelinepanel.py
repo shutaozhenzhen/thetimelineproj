@@ -296,7 +296,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             if imp is not None:
                 for menu_item in imp.GetMenuItems():
                     self.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
-                menu.AppendMenu(wx.ID_ANY, text, imp)
+                menu.Append(wx.ID_ANY, text, imp)
             else:
                 self.Bind(wx.EVT_MENU, method, id=menu_item.GetId())
                 menu.Append(menu_item)
