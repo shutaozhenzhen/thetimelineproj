@@ -36,7 +36,7 @@ from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.gregorian.gregorian import gregorian_ymd_to_julian_day
 from timelinelib.calendar.pharaonic.pharaonic import julian_day_to_pharaonic_ymd
 from timelinelib.calendar.gregorian.timetype.durationformatter import DurationFormatter
-from timelinelib.calendar.gregorian.timetype.durationtype import DurationType
+from timelinelib.calendar.gregorian.timetype.durationtype import YEARS, DAYS, HOURS, MINUTES, SECONDS
 
 
 BC = _("BC")
@@ -874,26 +874,3 @@ def move_period_num_years(period, num):
 def has_nonzero_time(time_period):
     return (time_period.start_time.seconds != 0 or
             time_period.end_time.seconds != 0)
-
-
-YEARS = DurationType(_('years'), _('year'),
-                     lambda ds: ds[0] // 365,
-                     lambda ds: (ds[0] % 365, ds[1]))
-MONTHS = DurationType(_('months'), _('month'),
-                      lambda ds: ds[0] // 30,
-                      lambda ds: (ds[0] % 30, ds[1]))
-WEEKS = DurationType(_('weeks'), _('week'),
-                     lambda ds: ds[0] // 7,
-                     lambda ds: (ds[0] % 7, ds[1]))
-DAYS = DurationType(_('days'), _('day'),
-                    lambda ds: ds[0],
-                    lambda ds: (0, ds[1]))
-HOURS = DurationType(_('hours'), _('hour'),
-                     lambda ds: ds[0] * 24 + ds[1] // 3600,
-                     lambda ds: (0, ds[1] % 3600))
-MINUTES = DurationType(_('minutes'), _('minute'),
-                       lambda ds: ds[0] * 1440 + ds[1] // 60,
-                       lambda ds: (0, ds[1] % 60))
-SECONDS = DurationType(_('seconds'), _('second'),
-                       lambda ds: ds[0] * 86400 + ds[1],
-                       lambda ds: (0, 0))
