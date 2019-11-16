@@ -22,7 +22,7 @@ import humblewx
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
 from timelinelib.calendar.pharaonic.timepicker.period import PharaonicPeriodPicker
 from timelinelib.calendar.pharaonic.timepicker.period import PharaonicPeriodPickerController
-from timelinelib.calendar.pharaonic.timetype import PharaonicTimeType
+from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.pharaonic_utils import pharaonic_period

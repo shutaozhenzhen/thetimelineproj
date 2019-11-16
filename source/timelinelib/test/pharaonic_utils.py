@@ -29,7 +29,7 @@ import random
 from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
 from timelinelib.calendar.pharaonic.monthnames import ABBREVIATED_ENGLISH_MONTH_NAMES
 from timelinelib.calendar.pharaonic.time import PharaonicDelta
-from timelinelib.calendar.pharaonic.timetype import PharaonicTimeType
+from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Era

@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.pharaonic.timetype import PharaonicTimeType
-from timelinelib.calendar.pharaonic.timetype import has_nonzero_time
+from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
+from timelinelib.calendar.pharaonic.timetype.timetype import has_nonzero_time
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.wxgui.framework import Controller
 from timelinelib.wxgui.framework import Panel

@@ -21,7 +21,7 @@ import wx
 from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
 from timelinelib.calendar.pharaonic.time import PharaonicDelta
 from timelinelib.calendar.pharaonic.timepicker.datecontroller import PharaonicDatePickerController
-from timelinelib.calendar.pharaonic.timetype import PharaonicTimeType
+from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.wxgui.components.textctrl import TextCtrl
 
 

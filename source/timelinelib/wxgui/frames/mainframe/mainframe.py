@@ -47,7 +47,7 @@ from timelinelib.wxgui.frames.mainframe.controllerapi import MainFrameApiUsedByC
 from timelinelib.wxgui.frames.mainframe.alertcontroller import AlertController
 from timelinelib.wxgui.frames.mainframe.menucontroller import MenuController
 from timelinelib.calendar.coptic.timetype import CopticTimeType
-from timelinelib.calendar.pharaonic.timetype import PharaonicTimeType
+from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
 

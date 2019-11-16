@@ -28,7 +28,7 @@ from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.calendar.coptic.timetype import CopticTimeType
-from timelinelib.calendar.pharaonic.timetype import PharaonicTimeType
+from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.canvas.data.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
