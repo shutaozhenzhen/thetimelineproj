@@ -36,6 +36,7 @@ from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.gregorian.gregorian import gregorian_ymd_to_julian_day
 from timelinelib.calendar.pharaonic.pharaonic import julian_day_to_pharaonic_ymd
 from timelinelib.calendar.gregorian.timetype.durationformatter import DurationFormatter
+from timelinelib.calendar.gregorian.timetype.durationtype import DurationType
 
 
 BC = _("BC")
@@ -873,31 +874,6 @@ def move_period_num_years(period, num):
 def has_nonzero_time(time_period):
     return (time_period.start_time.seconds != 0 or
             time_period.end_time.seconds != 0)
-
-
-class DurationType:
-
-    def __init__(self, name, single_name, value_fn, remainder_fn):
-        self._name = name
-        self._single_name = single_name
-        self._value_fn = value_fn
-        self._remainder_fn = remainder_fn
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def single_name(self):
-        return self._single_name
-
-    @property
-    def value_fn(self):
-        return self._value_fn
-
-    @property
-    def remainder_fn(self):
-        return self._remainder_fn
 
 
 YEARS = DurationType(_('years'), _('year'),
