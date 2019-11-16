@@ -32,14 +32,14 @@ class DurationFormatter:
         The argument duration_parts is a tuple where each element
         describes a duration type like YEARS, WEEKS etc.
         """
-        values = self._calc_duration_values(self._duration, duration_parts)
+        values = self._calc_duration_values(duration_parts)
         return self._format_parts(zip(values, duration_parts))
 
-    def _calc_duration_values(self, duration, duration_parts):
+    def _calc_duration_values(self, duration_parts):
         values = []
         for duration_part in duration_parts:
-            value = duration_part.value_fn(duration)
-            duration[0], duration[1] = duration_part.remainder_fn(duration)
+            value = duration_part.value_fn(self._duration)
+            self._duration[0], self._duration[1] = duration_part.remainder_fn(self._duration)
             values.append(value)
         return values
 
@@ -47,7 +47,8 @@ class DurationFormatter:
         durations = self._remov_zero_value_parts(duration_parts)
         return " ". join(self._format_durations_parts(durations))
 
-    def _remov_zero_value_parts(self, duration_parts):
+    @staticmethod
+    def _remov_zero_value_parts(duration_parts):
         return [duration for duration in duration_parts
                 if duration[0] > 0]
 
@@ -55,6 +56,7 @@ class DurationFormatter:
         return [self._format_part(duration_value, duration_type) for
                 duration_value, duration_type in durations]
 
+    @staticmethod
     def _format_part(self, value, duration_type):
         if value == 1:
             heading = duration_type.single_name
