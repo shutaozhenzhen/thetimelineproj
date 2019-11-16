@@ -35,7 +35,7 @@ from timelinelib.canvas.data import time_period_center
 from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.gregorian.gregorian import gregorian_ymd_to_julian_day
 from timelinelib.calendar.pharaonic.pharaonic import julian_day_to_pharaonic_ymd
-from timelinelib.calendar.pharaonic.timetype.durationformatter import DurationFormatter
+from timelinelib.calendar.gregorian.timetype.durationformatter import DurationFormatter
 
 
 BC = _("BC")
