@@ -33,7 +33,6 @@ from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.transactions import Transactions
 from timelinelib.general.observer import Observable
 
-
 # A category was added, edited, or deleted
 STATE_CHANGE_CATEGORY = 1
 # Something happened that changed the state of the timeline
@@ -138,8 +137,8 @@ class MemoryDB(Observable):
 
     def get_events(self, time_period):
         return self._get_events(lambda immutable_event:
-            immutable_event.time_period.inside_period(time_period)
-        )
+                                immutable_event.time_period.inside_period(time_period)
+                                )
 
     def get_all_events(self):
         return self._get_events(lambda immutable_event: True)
@@ -159,13 +158,13 @@ class MemoryDB(Observable):
     def _get_events(self, criteria_fn):
         with self._query() as query:
             return (
-                self._get_milestones(criteria_fn) +
-                sort_events(self.get_containers() + [
-                    query.get_event(id_)
-                    for id_, immutable_event
-                    in self._transactions.value.events
-                    if criteria_fn(immutable_event)
-                ])
+                    self._get_milestones(criteria_fn) +
+                    sort_events(self.get_containers() + [
+                        query.get_event(id_)
+                        for id_, immutable_event
+                        in self._transactions.value.events
+                        if criteria_fn(immutable_event)
+                    ])
             )
 
     def _get_milestones(self, criteria_fn):
@@ -184,7 +183,7 @@ class MemoryDB(Observable):
             id_, immutable_event = min(
                 self._transactions.value.events,
                 key=lambda id__immutable_event:
-                    id__immutable_event[1].time_period.start_time
+                id__immutable_event[1].time_period.start_time
             )
             with self._query() as query:
                 return query.get_event(id_)
@@ -196,7 +195,7 @@ class MemoryDB(Observable):
             id_, immutable_event = max(
                 self._transactions.value.events,
                 key=lambda id__immutable_event1:
-                    id__immutable_event1[1].time_period.end_time
+                id__immutable_event1[1].time_period.end_time
             )
             with self._query() as query:
                 return query.get_event(id_)
@@ -705,8 +704,10 @@ def _generic_event_search(events, search_string):
         else:
             description = description.lower()
         return target in event.get_text().lower() or target in description
+
     def mean_time(event):
         return event.mean_time()
+
     matches = [event for event in events if match(event)]
     matches.sort(key=mean_time)
     return matches
