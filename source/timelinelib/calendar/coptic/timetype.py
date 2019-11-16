@@ -33,6 +33,8 @@ from timelinelib.canvas.data import time_period_center
 from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.gregorian.gregorian import gregorian_ymd_to_julian_day
 from timelinelib.calendar.coptic.coptic import julian_day_to_coptic_ymd
+from timelinelib.calendar.gregorian.timetype.durationformatter import DurationFormatter
+from timelinelib.calendar.gregorian.timetype.durationtype import YEARS, DAYS, HOURS, MINUTES, SECONDS
 
 
 BC = _("BC")
@@ -871,98 +873,3 @@ def move_period_num_years(period, num):
 def has_nonzero_time(time_period):
     return (time_period.start_time.seconds != 0 or
             time_period.end_time.seconds != 0)
-
-
-class DurationType:
-
-    def __init__(self, name, single_name, value_fn, remainder_fn):
-        self._name = name
-        self._single_name = single_name
-        self._value_fn = value_fn
-        self._remainder_fn = remainder_fn
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def single_name(self):
-        return self._single_name
-
-    @property
-    def value_fn(self):
-        return self._value_fn
-
-    @property
-    def remainder_fn(self):
-        return self._remainder_fn
-
-
-YEARS = DurationType(_('years'), _('year'),
-                     lambda ds: ds[0] // 365,
-                     lambda ds: (ds[0] % 365, ds[1]))
-MONTHS = DurationType(_('months'), _('month'),
-                      lambda ds: ds[0] // 30,
-                      lambda ds: (ds[0] % 30, ds[1]))
-WEEKS = DurationType(_('weeks'), _('week'),
-                     lambda ds: ds[0] // 7,
-                     lambda ds: (ds[0] % 7, ds[1]))
-DAYS = DurationType(_('days'), _('day'),
-                    lambda ds: ds[0],
-                    lambda ds: (0, ds[1]))
-HOURS = DurationType(_('hours'), _('hour'),
-                     lambda ds: ds[0] * 24 + ds[1] // 3600,
-                     lambda ds: (0, ds[1] % 3600))
-MINUTES = DurationType(_('minutes'), _('minute'),
-                       lambda ds: ds[0] * 1440 + ds[1] // 60,
-                       lambda ds: (0, ds[1] % 60))
-SECONDS = DurationType(_('seconds'), _('second'),
-                       lambda ds: ds[0] * 86400 + ds[1],
-                       lambda ds: (0, 0))
-
-
-class DurationFormatter:
-
-    def __init__(self, duration):
-        """Duration is a list containing days and seconds."""
-        self._duration = duration
-
-    def format(self, duration_parts):
-        """
-        Return a string describing a time duration. Such a string
-        can look like::
-
-            2 years 1 month 3 weeks
-
-        The argument duration_parts is a tuple where each element
-        describes a duration type like YEARS, WEEKS etc.
-        """
-        values = self._calc_duration_values(self._duration, duration_parts)
-        return self._format_parts(zip(values, duration_parts))
-
-    def _calc_duration_values(self, duration, duration_parts):
-        values = []
-        for duration_part in duration_parts:
-            value = duration_part.value_fn(duration)
-            duration[0], duration[1] = duration_part.remainder_fn(duration)
-            values.append(value)
-        return values
-
-    def _format_parts(self, duration_parts):
-        durations = self._remov_zero_value_parts(duration_parts)
-        return " ". join(self._format_durations_parts(durations))
-
-    def _remov_zero_value_parts(self, duration_parts):
-        return [duration for duration in duration_parts
-                if duration[0] > 0]
-
-    def _format_durations_parts(self, durations):
-        return [self._format_part(duration_value, duration_type) for
-                duration_value, duration_type in durations]
-
-    def _format_part(self, value, duration_type):
-        if value == 1:
-            heading = duration_type.single_name
-        else:
-            heading = duration_type.name
-        return '%d %s' % (value, heading)
