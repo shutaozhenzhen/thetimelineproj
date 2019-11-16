@@ -24,7 +24,7 @@ from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
 from timelinelib.calendar.pharaonic.time import PharaonicTime
 from timelinelib.calendar.pharaonic.timepicker.date import PharaonicDatePicker
 from timelinelib.calendar.pharaonic.timepicker.time import PharaonicTimePicker
-from timelinelib.calendar.pharaonic.timetype import PharaonicTimeType
+from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.wxgui.utils import display_information_message
 

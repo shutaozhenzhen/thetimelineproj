@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.pharaonic.time import PharaonicDelta
-from timelinelib.calendar.pharaonic.timetype import PharaonicTimeType
+from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.pharaonic_utils import human_time_to_pharaonic
 
