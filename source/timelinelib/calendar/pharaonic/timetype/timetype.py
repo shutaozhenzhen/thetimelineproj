@@ -35,6 +35,7 @@ from timelinelib.canvas.data import time_period_center
 from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.gregorian.gregorian import gregorian_ymd_to_julian_day
 from timelinelib.calendar.pharaonic.pharaonic import julian_day_to_pharaonic_ymd
+from timelinelib.calendar.pharaonic.timetype.durationformatter import DurationFormatter
 
 
 BC = _("BC")
@@ -920,50 +921,3 @@ MINUTES = DurationType(_('minutes'), _('minute'),
 SECONDS = DurationType(_('seconds'), _('second'),
                        lambda ds: ds[0] * 86400 + ds[1],
                        lambda ds: (0, 0))
-
-
-class DurationFormatter:
-
-    def __init__(self, duration):
-        """Duration is a list containing days and seconds."""
-        self._duration = duration
-
-    def format(self, duration_parts):
-        """
-        Return a string describing a time duration. Such a string
-        can look like::
-
-            2 years 1 month 3 weeks
-
-        The argument duration_parts is a tuple where each element
-        describes a duration type like YEARS, WEEKS etc.
-        """
-        values = self._calc_duration_values(self._duration, duration_parts)
-        return self._format_parts(zip(values, duration_parts))
-
-    def _calc_duration_values(self, duration, duration_parts):
-        values = []
-        for duration_part in duration_parts:
-            value = duration_part.value_fn(duration)
-            duration[0], duration[1] = duration_part.remainder_fn(duration)
-            values.append(value)
-        return values
-
-    def _format_parts(self, duration_parts):
-        durations = self._remov_zero_value_parts(duration_parts)
-        return " ". join(self._format_durations_parts(durations))
-
-    def _remov_zero_value_parts(self, duration_parts):
-        return [duration for duration in duration_parts
-                if duration[0] > 0]
-
-    def _format_durations_parts(self, durations):
-        return [self._format_part(duration_value, duration_type) for
-                duration_value, duration_type in durations]
-
-    def _format_part(self, value, duration_type):
-        if value == 1:
-            heading = duration_type.single_name
-        else:
-            heading = duration_type.name
-        return '%d %s' % (value, heading)
