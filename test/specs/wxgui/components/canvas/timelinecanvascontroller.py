@@ -19,7 +19,7 @@
 from unittest.mock import Mock
 import wx
 
-from timelinelib.canvas.data.db import MemoryDB
+from canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas import TimelineCanvas

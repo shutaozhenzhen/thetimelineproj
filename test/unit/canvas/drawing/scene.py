@@ -16,12 +16,10 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
 from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.drawing.scene import TimelineScene
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
-from timelinelib.canvas.data.db import MemoryDB
+from canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data import Event
 from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import a_category_with

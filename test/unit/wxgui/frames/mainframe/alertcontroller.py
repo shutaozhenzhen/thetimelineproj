@@ -22,7 +22,7 @@ from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.canvas.data.db import MemoryDB
+from canvas.data.memorydb.db import MemoryDB
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event
 from timelinelib.wxgui.frames.mainframe.mainframe import AlertController

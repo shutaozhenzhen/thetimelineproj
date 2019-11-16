@@ -20,10 +20,6 @@ import os.path
 import tempfile
 
 from timelinelib.canvas.data.exceptions import TimelineIOError
-from timelinelib.canvas.data import Category
-from timelinelib.canvas.data import Event
-from timelinelib.canvas.data import TimePeriod
-from timelinelib.canvas.drawing.viewproperties import ViewProperties
 
 
 def db_open(path, timetype=None):
@@ -95,7 +91,7 @@ def db_open_newtype_timeline(path, timetype=None):
             display_warning_message(_("Since the directory of the Timeline file is not writable,\nthe timeline is opened in read-only mode"))
             return db
     else:
-        from timelinelib.canvas.data.db import MemoryDB
+        from canvas.data.memorydb.db import MemoryDB
         from timelinelib.calendar.gregorian.timetype import GregorianTimeType
         db = MemoryDB()
         if timetype is None:
