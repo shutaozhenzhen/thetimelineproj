@@ -18,11 +18,7 @@
 
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.canvas.data.db import MemoryDB
-from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Event
-from timelinelib.canvas.data import Subevent
-from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import an_event

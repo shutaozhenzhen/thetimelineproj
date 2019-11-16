@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.canvas.data.db import MemoryDB
+from canvas.data.memorydb.db import MemoryDB
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.duplicateevent.view import DuplicateEventDialog
 

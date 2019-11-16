@@ -20,7 +20,7 @@ from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.time import GregorianDelta
-from timelinelib.canvas.data.db import MemoryDB
+from canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event_with

@@ -18,17 +18,15 @@
 
 from unittest.mock import Mock
 
-from timelinelib.canvas.data.db import MemoryDB
+from canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with
 from timelinelib.test.utils import a_container
-from timelinelib.test.utils import a_container_with
 from timelinelib.test.utils import a_gregorian_era
 from timelinelib.test.utils import a_gregorian_era_with
 from timelinelib.test.utils import an_event_with
-from timelinelib.test.utils import a_subevent_with
 from timelinelib.test.utils import gregorian_period
 from timelinelib.repositories.dbwrapper import category_tree
 

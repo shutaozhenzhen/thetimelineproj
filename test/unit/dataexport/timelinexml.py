@@ -19,7 +19,7 @@ import os
 
 import wx
 
-from timelinelib.canvas.data.db import MemoryDB
+from canvas.data.memorydb.db import MemoryDB
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml, icon_string
 from timelinelib.dataimport.timelinexml import import_db_from_timeline_xml, parse_icon
 from timelinelib.test.cases.tmpdir import TmpDirTestCase

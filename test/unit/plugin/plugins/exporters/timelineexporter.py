@@ -16,11 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os
-
 from unittest.mock import Mock
 
-from timelinelib.canvas.data.db import MemoryDB
+from canvas.data.memorydb.db import MemoryDB
 from timelinelib.plugin.plugins.exporters.timelineexporter import CsvExporter
 from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExporter
 from timelinelib.test.cases.tmpdir import TmpDirTestCase

@@ -21,7 +21,7 @@ from unittest.mock import Mock
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.calendar.timetype import TimeType
-from timelinelib.canvas.data.db import MemoryDB
+from canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas import TimelineCanvas
 from timelinelib.canvas.timelinecanvascontroller import TimelineCanvasController

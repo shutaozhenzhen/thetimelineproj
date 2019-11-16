@@ -19,7 +19,7 @@
 from unittest.mock import Mock
 import wx
 
-from timelinelib.canvas.data.db import MemoryDB
+from canvas.data.memorydb.db import MemoryDB
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import an_event
 from timelinelib.test.utils import an_event_with
