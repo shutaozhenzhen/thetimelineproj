@@ -32,6 +32,8 @@ from timelinelib.canvas.data import Subevent
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.transactions import Transactions
 from timelinelib.general.observer import Observable
+from timelinelib.canvas.data.memorydb.eventsorter import EventSorter
+
 
 # A category was added, edited, or deleted
 STATE_CHANGE_CATEGORY = 1
@@ -675,20 +677,6 @@ class Query:
             return self.get_category(category_id)
 
 
-class EventSorter:
-
-    def __init__(self):
-        self._sort_order = 0
-
-    def save_sort_order(self, events):
-        for event in events:
-            if event.is_container():
-                self.save_sort_order(event.subevents)
-            else:
-                if event.sort_order != self._sort_order:
-                    event.sort_order = self._sort_order
-                    event.save()
-                self._sort_order += 1
 
 
 def sort_events(events):
