@@ -57,9 +57,9 @@ class DurationFormatter:
                 duration_value, duration_type in durations]
 
     @staticmethod
-    def _format_part(self, value, duration_type):
+    def _format_part(value, duration_type):
         if value == 1:
             heading = duration_type.single_name
         else:
             heading = duration_type.name
-        return '%d %s' % (value, heading)
+        return f'{value} {heading}'
