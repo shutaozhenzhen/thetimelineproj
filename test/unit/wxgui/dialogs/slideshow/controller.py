@@ -21,7 +21,7 @@ import os
 from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data.event import Event
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
 from timelinelib.test.utils import human_time_to_gregorian

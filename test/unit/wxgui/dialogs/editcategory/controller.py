@@ -18,7 +18,7 @@
 
 from unittest.mock import Mock
 
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.editcategory.controller import EditCategoryDialogController
 from timelinelib.wxgui.dialogs.editcategory.view import EditCategoryDialog

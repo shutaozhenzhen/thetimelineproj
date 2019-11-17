@@ -19,7 +19,7 @@
 from unittest.mock import Mock
 
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.repositories.categories import CategoriesFacade
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_category_with

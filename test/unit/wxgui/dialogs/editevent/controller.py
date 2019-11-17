@@ -21,7 +21,7 @@ from unittest.mock import sentinel
 
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.canvas.data.container import Container
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data.subevent import Subevent
 from timelinelib.config.dotfile import Config

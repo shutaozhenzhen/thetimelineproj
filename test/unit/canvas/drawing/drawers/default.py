@@ -21,7 +21,7 @@ import wx
 
 from timelinelib.canvas.appearance import Appearance
 from timelinelib.canvas.backgrounddrawers.defaultbgdrawer import DefaultBackgroundDrawer
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data import Event
 from timelinelib.canvas.drawing.drawers.default import DefaultDrawingAlgorithm
 from timelinelib.canvas.drawing.drawers import get_progress_color

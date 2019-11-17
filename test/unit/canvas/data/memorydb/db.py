@@ -18,7 +18,7 @@
 
 from unittest.mock import Mock
 
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.drawing.viewproperties import ViewProperties
 from timelinelib.test.cases.unit import UnitTestCase

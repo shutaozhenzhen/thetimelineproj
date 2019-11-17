@@ -20,7 +20,7 @@ from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data.milestone import Milestone
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.wxapp import WxAppTestCase
