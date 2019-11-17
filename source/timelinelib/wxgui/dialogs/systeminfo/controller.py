@@ -27,23 +27,14 @@ from timelinelib.wxgui.framework import Controller
 class SystemInfoDialogController(Controller):
 
     def on_init(self, parent):
-        self.view.SetSystemVersion(self._get_system_version())
-        self.view.SetPythonVersion(self._get_python_version())
+        self.view.SetSystemVersion(", ".join(platform.uname()))
+        self.view.SetPythonVersion(python_version.replace("\n", ""))
         self.view.SetPythonEncoding(sys.getdefaultencoding())
-        self.view.SetWxPythonVersion(self._get_wxpython_version())
+        self.view.SetWxPythonVersion(wx.version())
         self.view.SetLocaleSetting(self._get_locale_setting())
         self.view.SetConfigFile(self._get_config_file(parent))
         self.view.SetDateFormat(self._get_date_format(parent))
         self.view.Fit()
-
-    def _get_system_version(self):
-        return ", ".join(platform.uname())
-
-    def _get_python_version(self):
-        return python_version.replace("\n", "")
-
-    def _get_wxpython_version(self):
-        return wx.version()
 
     def _get_locale_setting(self):
         try:
