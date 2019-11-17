@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import sys
 from sys import version as python_version
 import platform
 import wx
@@ -28,6 +29,7 @@ class SystemInfoDialogController(Controller):
     def on_init(self, parent):
         self.view.SetSystemVersion(self._get_system_version())
         self.view.SetPythonVersion(self._get_python_version())
+        self.view.SetPythonEncoding(sys.getdefaultencoding())
         self.view.SetWxPythonVersion(self._get_wxpython_version())
         self.view.SetLocaleSetting(self._get_locale_setting())
         self.view.SetConfigFile(self._get_config_file(parent))
