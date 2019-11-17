@@ -26,7 +26,7 @@ from icalendar import Calendar
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.time import GregorianDelta
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Event

@@ -91,7 +91,7 @@ def db_open_newtype_timeline(path, timetype=None):
             display_warning_message(_("Since the directory of the Timeline file is not writable,\nthe timeline is opened in read-only mode"))
             return db
     else:
-        from canvas.data.memorydb.db import MemoryDB
+        from timelinelib.canvas.data.memorydb.db import MemoryDB
         from timelinelib.calendar.gregorian.timetype import GregorianTimeType
         db = MemoryDB()
         if timetype is None:
