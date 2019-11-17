@@ -29,6 +29,8 @@ class SystemInfoDialog(Dialog):
             <StaticText align="ALIGN_CENTER_VERTICAL" name="system_version" />
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(python_version)" />
             <StaticText align="ALIGN_CENTER_VERTICAL" name="python_version" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(python_encoding)" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" name="python_encoding" />
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(wxpython_version)" />
             <StaticText align="ALIGN_CENTER_VERTICAL" name="wxpython_version" />
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(locale_setting)" />
@@ -49,6 +51,7 @@ class SystemInfoDialog(Dialog):
         Dialog.__init__(self, SystemInfoDialogController, parent, {
             "system_version": _("System version:"),
             "python_version": _("Python version:"),
+            "python_encoding": _("Python encoding:"),
             "wxpython_version": _("wxPython version:"),
             "locale_setting": _("Locale setting:"),
             "date_format": _("Locale date format:"),
@@ -61,6 +64,9 @@ class SystemInfoDialog(Dialog):
 
     def SetPythonVersion(self, value):
         self.python_version.SetLabel(value)
+
+    def SetPythonEncoding(self, value):
+        self.python_encoding.SetLabel(value)
 
     def SetWxPythonVersion(self, value):
         self.wxpython_version.SetLabel(value)
