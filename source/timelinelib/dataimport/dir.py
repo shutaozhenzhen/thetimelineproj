@@ -21,7 +21,7 @@ import colorsys
 import os.path
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Event
