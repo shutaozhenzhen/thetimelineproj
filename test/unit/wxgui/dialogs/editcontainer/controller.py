@@ -18,7 +18,7 @@
 
 from unittest.mock import Mock
 
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.dialogs.editcontainer.controller import EditContainerDialogController

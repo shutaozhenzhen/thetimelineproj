@@ -20,7 +20,7 @@ from unittest.mock import Mock
 from unittest.mock import sentinel
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data.milestone import Milestone
 from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase

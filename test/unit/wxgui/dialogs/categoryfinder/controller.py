@@ -18,7 +18,7 @@
 
 from unittest.mock import Mock
 
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.wxgui.dialogs.categoryfinder.controller import CategoryFinderDialogController
 from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
 from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame

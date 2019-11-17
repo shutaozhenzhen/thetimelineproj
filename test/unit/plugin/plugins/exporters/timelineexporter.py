@@ -18,7 +18,7 @@
 
 from unittest.mock import Mock
 
-from canvas.data.memorydb.db import MemoryDB
+from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.plugin.plugins.exporters.timelineexporter import CsvExporter
 from timelinelib.plugin.plugins.exporters.timelineexporter import TimelineExporter
 from timelinelib.test.cases.tmpdir import TmpDirTestCase
