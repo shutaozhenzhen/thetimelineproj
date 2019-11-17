@@ -12,7 +12,12 @@ Version 2.1.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/tools/winbuildtools/inno/out/>`_.
 
-Icons:
+System info:
+
+* ``Python encoding is missing in system info dialog.``
+  Python encoding name added to in system info dialog.
+
+Fixed crash reports and bugs:
 
 * ``'Image' object has no attribute 'SaveStream'.``
   Changed functions for coding/decoding icon images.
