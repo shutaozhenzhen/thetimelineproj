@@ -27,12 +27,12 @@ USAGE = """
 """
 
 
-def get_hash(revision):
+def get_hash_and_id(revision):
     try:
         return subprocess.check_output([
             "hg", "id",
             "-r", revision,
-        ]).decode("utf-8").strip().split(" ")[0]
+        ]).decode("utf-8").strip().split(" ", 1)
     except subprocess.CalledProcessError as e:
         print("ERROR:", str(e))
         raise
@@ -63,9 +63,9 @@ def get_version(versionfile):
     app_ver_name = "Timeline %s.%s.%s" % (major, minor, bug)
     revision = sys.argv[2]
     print("Revision:", revision)
-    hash_value = get_hash(sys.argv[2])
+    hash_value, rev_id = get_hash_and_id(sys.argv[2])
     revision_date = get_revision_date(sys.argv[2])
-    if revision == 'tip':
+    if rev_id == 'tip':
         output_base_filename = "timeline-%s.%s.%s-beta-%s-%s-Win32Setup" % (major, minor, bug, hash_value, revision_date)
     else:
         output_base_filename = "timeline-%s.%s.%s-Win32Setup" % (major, minor, bug)
