@@ -28,6 +28,8 @@ Fixed crash reports and bugs:
 * ``TypeError: invalid result from FileDropTarget.OnDropFiles(), an integer is required (got type NoneType).``
   Changed logic in OnDropFiles to fullfill he api.
 
+* ``error : a "calendar.bmp" file is missing.``
+  Using calendar.png instead.
 
 Version 2.0.0
 --------------
