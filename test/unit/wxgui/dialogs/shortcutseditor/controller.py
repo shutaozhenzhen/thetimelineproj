@@ -55,7 +55,7 @@ class ShortcutConfig(object):
         self.function = function
         self.shortcut = shortcut
 
-    def exists(self, shortcut):
+    def exists(self, shortcut, wxid=None, function=None):
         for key in self.shc_and_keys:
             if self.shc_and_keys[key][0] + "+" + self.shc_and_keys[key][1] == shortcut:
                 return True

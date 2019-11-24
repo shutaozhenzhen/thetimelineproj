@@ -12,6 +12,11 @@ Version 2.1.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/tools/winbuildtools/inno/out/>`_.
 
+Find Milestone:
+
+* ``Users has asked for a better way of finding a milestone.``
+  A new dialog has been built for navigating to a milestone.
+
 System info:
 
 * ``Python encoding is missing in system info dialog.``

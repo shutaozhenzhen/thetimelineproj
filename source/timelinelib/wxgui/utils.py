@@ -137,3 +137,9 @@ def set_focus(parent, name):
 def register_unlock_function(function):
     global unlock_function
     unlock_function = function
+
+
+def show_dialog(factory_function):
+    dialog = factory_function()
+    dialog.ShowModal()
+    dialog.Destroy()

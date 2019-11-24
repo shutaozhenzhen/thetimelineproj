@@ -71,7 +71,7 @@ class ShortcutsEditorDialogController(Controller):
 
     def _validate_shortcut(self):
         shortcut = self._get_shortcut()
-        if self.shortcut_config.exists(shortcut):
+        if self.shortcut_config.exists(shortcut, function=self.shortcut_config.get_function(shortcut)):
             raise DuplicateShortcut(_("The shortcut %s is already bound to function '%s'!") %
                                     (shortcut, self.shortcut_config.get_function(shortcut)))
 

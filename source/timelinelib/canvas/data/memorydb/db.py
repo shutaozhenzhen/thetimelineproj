@@ -146,6 +146,10 @@ class MemoryDB(Observable):
     def get_all_events(self):
         return self._get_events(lambda immutable_event: True)
 
+    @property
+    def all_milestones(self):
+        return self._get_milestones(lambda immutable_event: True)
+
     def get_max_sort_order(self):
         max = -1
         for id_, immutable_value in self._transactions.value.milestones:

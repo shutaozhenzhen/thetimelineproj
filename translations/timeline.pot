@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-17 14:09+0100\n"
+"POT-Creation-Date: 2019-11-24 22:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -704,7 +704,7 @@ msgstr ""
 msgid "Duration"
 msgstr ""
 
-#: source\timelinelib\canvas\data\memorydb\db.py:325
+#: source\timelinelib\canvas\data\memorydb\db.py:329
 msgid "Displayed period must be > 0."
 msgstr ""
 
@@ -771,190 +771,194 @@ msgstr ""
 msgid "The selected value contains invalid characters and can't be saved"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:49
+#: source\timelinelib\config\shortcut.py:50
 msgid "File"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:50
+#: source\timelinelib\config\shortcut.py:51
 #: source\timelinelib\wxgui\components\timelinepanel.py:276
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:394
 msgid "Edit"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:51
+#: source\timelinelib\config\shortcut.py:52
 msgid "View"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:52
+#: source\timelinelib\config\shortcut.py:53
 #: source\timelinelib\help\pages.py:127
 msgid "Timeline"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:53
-#: source\timelinelib\config\shortcut.py:56
+#: source\timelinelib\config\shortcut.py:54
 #: source\timelinelib\config\shortcut.py:57
+#: source\timelinelib\config\shortcut.py:58
 msgid "Navigate"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:54
+#: source\timelinelib\config\shortcut.py:55
 #: source\timelinelib\wxgui\frames\helpbrowserframe\helpbrowserframe.py:36
 msgid "Help"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:59
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:174
+#: source\timelinelib\config\shortcut.py:60
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:176
 msgid "New..."
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:60
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:190
+#: source\timelinelib\config\shortcut.py:61
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:192
 msgid "Save As..."
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:61
+#: source\timelinelib\config\shortcut.py:62
 msgid "Import..."
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:62
+#: source\timelinelib\config\shortcut.py:63
 #: source\timelinelib\plugin\plugins\exporters\exporttobitmap.py:33
 msgid "Export Current view to Image..."
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:63
+#: source\timelinelib\config\shortcut.py:64
 #: source\timelinelib\plugin\plugins\exporters\exporttobitmaps.py:33
 msgid "Export Whole Timeline to Images..."
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:64
+#: source\timelinelib\config\shortcut.py:65
 #: source\timelinelib\plugin\plugins\exporters\exporttosvg.py:36
 msgid "Export to SVG..."
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:65
+#: source\timelinelib\config\shortcut.py:66
 msgid "Exit"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:67
+#: source\timelinelib\config\shortcut.py:68
 msgid "Find"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:68
+#: source\timelinelib\config\shortcut.py:69
+msgid "Find Milestones"
+msgstr ""
+
+#: source\timelinelib\config\shortcut.py:70
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:416
 msgid "Preferences"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:69
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:241
+#: source\timelinelib\config\shortcut.py:71
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:250
 msgid "Select All Events"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:70
+#: source\timelinelib\config\shortcut.py:72
 msgid "Shortcuts"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:72
+#: source\timelinelib\config\shortcut.py:74
 msgid "Sidebar"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:73
+#: source\timelinelib\config\shortcut.py:75
 msgid "Legend"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:74
+#: source\timelinelib\config\shortcut.py:76
 msgid "Ballons on hover"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:75
+#: source\timelinelib\config\shortcut.py:77
 msgid "Zoom In"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:76
+#: source\timelinelib\config\shortcut.py:78
 msgid "Zoom Out"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:77
+#: source\timelinelib\config\shortcut.py:79
 msgid "Vertical Zoom In"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:78
+#: source\timelinelib\config\shortcut.py:80
 msgid "Vertical Zoom Out"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:79
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:304
+#: source\timelinelib\config\shortcut.py:81
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:313
 msgid "Start slide show"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:81
+#: source\timelinelib\config\shortcut.py:83
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:361
 msgid "Create Event"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:82
+#: source\timelinelib\config\shortcut.py:84
 msgid "Edit Selected Event"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:83
+#: source\timelinelib\config\shortcut.py:85
 msgid "Duplicate Selected Event"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:85
+#: source\timelinelib\config\shortcut.py:87
 msgid "Set Category on Selected Events"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:86
+#: source\timelinelib\config\shortcut.py:88
 msgid "Measure Distance between two Events"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:88
+#: source\timelinelib\config\shortcut.py:90
 #: source\timelinelib\wxgui\dialogs\setcategory\controller.py:40
 msgid "Set Category on events without category"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:89
+#: source\timelinelib\config\shortcut.py:91
 msgid "Read Only"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:90
+#: source\timelinelib\config\shortcut.py:92
 msgid "Undo"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:91
+#: source\timelinelib\config\shortcut.py:93
 msgid "Redo"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:93
+#: source\timelinelib\config\shortcut.py:95
 msgid "Contents"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:94
+#: source\timelinelib\config\shortcut.py:96
 #: source\timelinelib\wxgui\components\welcomepanel.py:42
 msgid "Getting started tutorial"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:95
+#: source\timelinelib\config\shortcut.py:97
 #: source\timelinelib\wxgui\dialogs\feature\view.py:48
 msgid "Give Feedback"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:96
+#: source\timelinelib\config\shortcut.py:98
 #: source\timelinelib\help\pages.py:519
 msgid "Contact"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:97
+#: source\timelinelib\config\shortcut.py:99
 msgid "About"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:99
+#: source\timelinelib\config\shortcut.py:101
 msgid "Find First Event"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:100
+#: source\timelinelib\config\shortcut.py:102
 msgid "Find Last Event"
 msgstr ""
 
-#: source\timelinelib\config\shortcut.py:101
+#: source\timelinelib\config\shortcut.py:103
 msgid "Find All Events"
 msgstr ""
 
@@ -1954,7 +1958,7 @@ msgid "export files"
 msgstr ""
 
 #: source\timelinelib\plugin\plugins\exporters\timelineexporter.py:207
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:160
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:162
 msgid "Export"
 msgstr ""
 
@@ -2163,7 +2167,7 @@ msgstr ""
 
 #: source\timelinelib\wxgui\components\timelinepanel.py:94
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:410
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:346
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:355
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:39
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:49
 msgid "Center"
@@ -2607,6 +2611,10 @@ msgstr ""
 msgid "Edit Milestone"
 msgstr ""
 
+#: source\timelinelib\wxgui\dialogs\milestonefinder\view.py:50
+msgid "Milestone Finder"
+msgstr ""
+
 #: source\timelinelib\wxgui\dialogs\preferences\controller.py:68
 #: source\timelinelib\wxgui\dialogs\preferences\controller.py:164
 msgid "Current"
@@ -2947,258 +2955,262 @@ msgstr ""
 msgid "read-only"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:117
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:119
 msgid "&File"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:118
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:120
 msgid "&Edit"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:119
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:121
 msgid "&View"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:120
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:122
 msgid "&Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:121
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:123
 msgid "&Navigate"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:122
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:124
 msgid "&Help"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:174
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:176
 msgid "Create a new timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:181
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:183
 msgid "Open an existing timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:186
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:188
 msgid "Open &Recent"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:196
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:198
 msgid "Import events..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:202
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:204
 msgid "Exit the program"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:239
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:247
 msgid "Find Categories..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:244
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:248
+msgid "Find Milestones..."
+msgstr ""
+
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:253
 msgid "Shortcuts..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:290
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:299
 msgid "&Sidebar"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:291
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:300
 msgid "&Legend"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:293
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:302
 msgid "&Balloons on hover"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:295
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:304
 msgid "Zoom &In"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:296
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:305
 msgid "Zoom &Out"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:297
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:306
 msgid "Vertical Zoom &In"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:298
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:307
 msgid "Vertical Zoom &Out"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:306
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:315
 msgid "&Hide Events done"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:314
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:323
 msgid "Toolbar"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:341
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:350
 msgid "Event appearance"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:345
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:354
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:40
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:48
 msgid "Left"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:347
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:356
 msgid "Point event alignment"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:459
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:468
 msgid "Create &Event..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:460
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:469
 msgid "&Edit Selected Event..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:461
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:470
 msgid "&Duplicate Selected Event..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:462
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:471
 msgid "Set Category on Selected Events..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:463
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:472
 msgid "Move event up"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:464
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:473
 msgid "Move event down"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:466
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:475
 msgid "Create &Milestone..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:468
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:477
 msgid "&Compress timeline Events"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:470
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:479
 msgid "&Measure Distance between two Events..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:473
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:482
 msgid "Set Category on events &without category..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:475
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:484
 msgid "Edit Era's..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:477
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:486
 msgid "&Read Only"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:479
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:488
 msgid "&Undo"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:480
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:489
 msgid "&Redo"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:533
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:542
 msgid "Find &First Event"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:534
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:543
 msgid "Find &Last Event"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:535
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:544
 msgid "Fit &All Events"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:537
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:546
 msgid "Go to previous time period"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:557
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:566
 msgid "Feedback"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:560
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:569
 msgid "&Contents"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:562
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:571
 msgid "Getting started &tutorial"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:563
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:572
 msgid "Getting started numeric &tutorial"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:565
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:574
 msgid "Give &Feedback..."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:566
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:575
 msgid "Co&ntact"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:568
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:577
 msgid "System information"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:609
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:618
 msgid "Gregorian"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:610
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:619
 msgid "This creates a timeline using the standard calendar."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:614
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:623
 msgid "Numeric"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:615
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:624
 msgid ""
 "This creates a timeline that has numbers on the x-axis instead of dates."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:619
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:628
 msgid "Directory"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:620
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:629
 msgid ""
 "This creates a timeline where the modification date of files in a directory "
 "are shown as events."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:624
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:633
 msgid "Bosparanian"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:625
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:634
 msgid ""
 "This creates a timeline using the fictuous Bosparanian calendar from the "
 "German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:629
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:638
 msgid "Pharaonic"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:630
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:639
 msgid "This creates a timeline using the ancient egypt pharaonic calendar"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:634
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:643
 msgid "Coptic"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:635
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:644
 msgid "This creates a timeline using the coptic calendar"
 msgstr ""
 
