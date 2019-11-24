@@ -42,6 +42,7 @@ class Metadata:
         self.key = key
 
 
+SHIFT_CTRL_MODIFIER = "Shift+Ctrl"
 CTRL_MODIFIER = "Ctrl"
 ALT_MODIFIER = "Alt"
 NO_MODIFIER = ""
@@ -65,6 +66,7 @@ METADATA = [  # File
               Metadata(mf.ID_EXIT, "shortcut_exit", LABEL_FILE % _("Exit"), NO_MODIFIER, ""),
               # Edit
               Metadata(mf.ID_FIND, "shortcut_find", LABEL_EDIT % _("Find"), CTRL_MODIFIER, "F"),
+              Metadata(mf.ID_FIND_MILESTONES, "shortcut_find_milestones", LABEL_EDIT % _("Find Milestones"), SHIFT_CTRL_MODIFIER, "M"),
               Metadata(mf.ID_PREFERENCES, "shortcut_preferences", LABEL_EDIT % _("Preferences"), NO_MODIFIER, ""),
               Metadata(mf.ID_SELECT_ALL, "shortcut_selectall", LABEL_EDIT % _("Select All Events"), NO_MODIFIER, ""),
               Metadata(mf.ID_EDIT_SHORTCUTS, "shortcut_shortcuts", LABEL_EDIT % _("Shortcuts"), NO_MODIFIER, ""),
@@ -145,9 +147,11 @@ class ShortcutController:
         else:
             return modifier in MODIFIERS and shortcut_key in SHORTCUT_KEYS[1:]
 
-    def exists(self, shortcut):
+    def exists(self, shortcut, wxid=None, function=None):
         return shortcut in [self._shortcut_from_metadata(metadata) for metadata in METADATA
-                            if self._shortcut_from_metadata(metadata) != ""]
+                            if self._shortcut_from_metadata(metadata) != "" and
+                            metadata.wxid != wxid and
+                            metadata.function != function]
 
     def wxid_exists(self, wxid):
         return wxid in [shortcut.wxid for shortcut in METADATA]
@@ -227,16 +231,16 @@ class ShortcutController:
     def _edit(self, wxid, new_shortcut, menu_item):
         if new_shortcut == "":
             new_shortcut = "+"
-        if self._valid(new_shortcut):
+        if self._valid(new_shortcut, wxid):
             for metadata in METADATA:
                 if metadata.wxid == wxid:
                     self._edit_shortcut(metadata, new_shortcut, menu_item)
                     break
 
-    def _valid(self, shortcut):
+    def _valid(self, shortcut, wxid):
         if shortcut == "+":
             return True
-        return not self.exists(shortcut)
+        return not self.exists(shortcut, wxid)
 
     def _edit_shortcut(self, metadata, new_shortcut, menu_item):
         try:

@@ -40,6 +40,7 @@ from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.systeminfo.view import show_system_info_dialog
+import timelinelib.wxgui.utils as guiutils
 
 
 NONE = 0
@@ -78,6 +79,7 @@ ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
 ID_FIND_CATEGORIES = wx.NewId()
+ID_FIND_MILESTONES = wx.NewId()
 ID_SELECT_ALL = wx.NewId()
 ID_RESTORE_TIME_PERIOD = wx.NewId()
 ID_NEW = wx.ID_NEW
@@ -205,17 +207,22 @@ class GuiCreator:
 
     def _create_edit_menu(self):
         from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
+        from timelinelib.wxgui.dialogs.milestonefinder.view import MilestoneFinderDialog
 
         def create_category_find_dialog():
             return CategoryFinderDialog(self, self.timeline)
+
+        def create_milestone_find_dialog():
+            return MilestoneFinderDialog(self, self.timeline)
 
         def find(evt):
             self.main_panel.show_searchbar(True)
 
         def find_categories(evt):
-            dialog = create_category_find_dialog()
-            dialog.ShowModal()
-            dialog.Destroy()
+            guiutils.show_dialog(create_category_find_dialog)
+
+        def find_milestones(evt):
+            guiutils.show_dialog(create_milestone_find_dialog)
 
         def select_all(evt):
             self.controller.select_all()
@@ -234,9 +241,11 @@ class GuiCreator:
                 dialog.ShowModal()
                 dialog.Destroy()
             safe_locking(self, edit_function)
+
         cbx = NONE
         items_spec = ((wx.ID_FIND, find, None, cbx),
                       (ID_FIND_CATEGORIES, find_categories, _("Find Categories..."), cbx),
+                      (ID_FIND_MILESTONES, find_milestones, _("Find Milestones..."), cbx),
                       None,
                       (ID_SELECT_ALL, select_all, _("Select All Events"), cbx),
                       None,
