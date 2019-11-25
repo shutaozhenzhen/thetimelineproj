@@ -26,7 +26,6 @@ import wx
 from timelinelib.db.utils import safe_locking
 from timelinelib.meta.about import display_about_dialog
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
-from timelinelib.plugin.factory import EXPORTER
 from timelinelib.plugin import factory
 from timelinelib.proxies.drawingarea import DrawingAreaProxy
 from timelinelib.wxgui.components.mainpanel import MainPanel
@@ -37,12 +36,12 @@ from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
 from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
 from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
 from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
-from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
-from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.systeminfo.view import show_system_info_dialog
-import timelinelib.wxgui.utils as guiutils
 from timelinelib.wxgui.frames.mainframe.menus.filemenu import FileMenu
-
+from timelinelib.wxgui.frames.mainframe.menus.editmenu import EditMenu
+# The following imports are used by the shortcut module
+from timelinelib.wxgui.frames.mainframe.menus.filemenu import ID_IMPORT
+from timelinelib.wxgui.frames.mainframe.menus.editmenu import ID_SELECT_ALL, ID_FIND_CATEGORIES, ID_FIND_MILESTONES, ID_EDIT_SHORTCUTS
 
 NONE = 0
 CHECKBOX = 1
@@ -69,19 +68,14 @@ ID_SET_READONLY = wx.NewId()
 ID_FIND_FIRST = wx.NewId()
 ID_FIND_LAST = wx.NewId()
 ID_FIT_ALL = wx.NewId()
-ID_EDIT_SHORTCUTS = wx.NewId()
 ID_TUTORIAL = wx.NewId()
 ID_NUMTUTORIAL = wx.NewId()
 ID_FEEDBACK = wx.NewId()
 ID_CONTACT = wx.NewId()
 ID_SYSTEM_INFO = wx.NewId()
-ID_IMPORT = wx.NewId()
 ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
-ID_FIND_CATEGORIES = wx.NewId()
-ID_FIND_MILESTONES = wx.NewId()
-ID_SELECT_ALL = wx.NewId()
 ID_RESTORE_TIME_PERIOD = wx.NewId()
 ID_NEW = wx.ID_NEW
 ID_FIND = wx.ID_FIND
@@ -118,7 +112,7 @@ class GuiCreator:
     def _create_main_menu_bar(self):
         main_menu_bar = wx.MenuBar()
         main_menu_bar.Append(FileMenu(self).create(), _("&File"))
-        main_menu_bar.Append(self._create_edit_menu(), _("&Edit"))
+        main_menu_bar.Append(EditMenu(self).create(), _("&Edit"))
         main_menu_bar.Append(self._create_view_menu(), _("&View"))
         main_menu_bar.Append(self._create_timeline_menu(), _("&Timeline"))
         main_menu_bar.Append(self._create_navigate_menu(), _("&Navigate"))
@@ -135,61 +129,6 @@ class GuiCreator:
 
     def _bind_frame_events(self):
         self.Bind(wx.EVT_CLOSE, self._window_on_close)
-
-    def _create_edit_menu(self):
-        from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
-        from timelinelib.wxgui.dialogs.milestonefinder.view import MilestoneFinderDialog
-
-        def create_category_find_dialog():
-            return CategoryFinderDialog(self, self.timeline)
-
-        def create_milestone_find_dialog():
-            return MilestoneFinderDialog(self, self.timeline)
-
-        def find(evt):
-            self.main_panel.show_searchbar(True)
-
-        def find_categories(evt):
-            guiutils.show_dialog(create_category_find_dialog)
-
-        def find_milestones(evt):
-            guiutils.show_dialog(create_milestone_find_dialog)
-
-        def select_all(evt):
-            self.controller.select_all()
-
-        def preferences(evt):
-            def edit_function():
-                dialog = PreferencesDialog(self, self.config)
-                dialog.ShowModal()
-                dialog.Destroy()
-            safe_locking(self, edit_function)
-
-        def edit_shortcuts(evt):
-
-            def edit_function():
-                dialog = ShortcutsEditorDialog(self, self.shortcut_controller)
-                dialog.ShowModal()
-                dialog.Destroy()
-            safe_locking(self, edit_function)
-
-        cbx = NONE
-        items_spec = ((wx.ID_FIND, find, None, cbx),
-                      (ID_FIND_CATEGORIES, find_categories, _("Find Categories..."), cbx),
-                      (ID_FIND_MILESTONES, find_milestones, _("Find Milestones..."), cbx),
-                      None,
-                      (ID_SELECT_ALL, select_all, _("Select All Events"), cbx),
-                      None,
-                      (wx.ID_PREFERENCES, preferences, None, cbx),
-                      (ID_EDIT_SHORTCUTS, edit_shortcuts, _("Shortcuts..."), cbx))
-        self._edit_menu = self._create_menu(items_spec)
-        self._add_edit_menu_items_to_controller(self._edit_menu)
-        return self._edit_menu
-
-    def _add_edit_menu_items_to_controller(self, edit_menu):
-        menu_ids = (ID_FIND, ID_FIND_CATEGORIES, ID_FIND_MILESTONES, ID_SELECT_ALL)
-        for menu_id in menu_ids:
-            self._add_to_controller_requiring_timeline(edit_menu, menu_id)
 
     def _create_view_menu(self):
 
