@@ -20,11 +20,12 @@ import wx
 
 class MenuBase:
 
-    def __init__(self, parent, event_handlers, shortcuts, requiring_timeline):
+    def __init__(self, parent, event_handlers, shortcuts, requiring_timeline, requiring_visible_timeline_view=[]):
         self._parent = parent
         self._event_handlers = event_handlers
         self._shortcuts = shortcuts
         self._requiring_timeline = requiring_timeline
+        self._requiring_visible_timeline_view = requiring_visible_timeline_view
 
     def _bind_event_handlers(self):
         for wxid in self._event_handlers:
@@ -37,3 +38,5 @@ class MenuBase:
     def _register_menus_requiring_timeline(self, menu):
         for wxid in self._requiring_timeline:
             self._parent.menu_controller.add_menu_requiring_timeline(menu.FindItemById(wxid))
+        for wxid in self._requiring_visible_timeline_view:
+            self._parent.menu_controller.add_menu_requiring_visible_timeline_view(menu.FindItemById(wxid))
