@@ -113,7 +113,6 @@ class GuiCreator:
         main_menu_bar.Append(self._create_timeline_menu(), _("&Timeline"))
         main_menu_bar.Append(self._create_navigate_menu(), _("&Navigate"))
         main_menu_bar.Append(HelpMenu(self).create(), _("&Help"))
-        # main_menu_bar.Append(self._create_help_menu(), _("&Help"))
         self._set_shortcuts()
         self.SetMenuBar(main_menu_bar)
         self.update_navigation_menu_items()
