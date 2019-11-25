@@ -24,7 +24,6 @@ import collections
 import wx
 
 from timelinelib.db.utils import safe_locking
-from timelinelib.meta.about import display_about_dialog
 from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin import factory
 from timelinelib.proxies.drawingarea import DrawingAreaProxy
@@ -32,16 +31,16 @@ from timelinelib.wxgui.components.mainpanel import MainPanel
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
-from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
 from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
 from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
 from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
-from timelinelib.wxgui.dialogs.systeminfo.view import show_system_info_dialog
 from timelinelib.wxgui.frames.mainframe.menus.filemenu import FileMenu
 from timelinelib.wxgui.frames.mainframe.menus.editmenu import EditMenu
+from timelinelib.wxgui.frames.mainframe.menus.helpmenu import HelpMenu
 # The following imports are used by the shortcut module
 from timelinelib.wxgui.frames.mainframe.menus.filemenu import ID_IMPORT
 from timelinelib.wxgui.frames.mainframe.menus.editmenu import ID_SELECT_ALL, ID_FIND_CATEGORIES, ID_FIND_MILESTONES, ID_EDIT_SHORTCUTS
+from timelinelib.wxgui.frames.mainframe.menus.helpmenu import ID_TUTORIAL, ID_NUMTUTORIAL, ID_FEEDBACK, ID_CONTACT, ID_SYSTEM_INFO
 
 NONE = 0
 CHECKBOX = 1
@@ -68,11 +67,6 @@ ID_SET_READONLY = wx.NewId()
 ID_FIND_FIRST = wx.NewId()
 ID_FIND_LAST = wx.NewId()
 ID_FIT_ALL = wx.NewId()
-ID_TUTORIAL = wx.NewId()
-ID_NUMTUTORIAL = wx.NewId()
-ID_FEEDBACK = wx.NewId()
-ID_CONTACT = wx.NewId()
-ID_SYSTEM_INFO = wx.NewId()
 ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
@@ -97,6 +91,8 @@ class GuiCreator:
 
     def _create_gui(self):
         self.shortcut_items = {}
+        from timelinelib.config.shortcut import ShortcutController
+        self.shortcut_controller = ShortcutController(self.config, self.shortcut_items)
         self._create_status_bar()
         self._create_main_panel()
         self._create_main_menu_bar()
@@ -116,15 +112,14 @@ class GuiCreator:
         main_menu_bar.Append(self._create_view_menu(), _("&View"))
         main_menu_bar.Append(self._create_timeline_menu(), _("&Timeline"))
         main_menu_bar.Append(self._create_navigate_menu(), _("&Navigate"))
-        main_menu_bar.Append(self._create_help_menu(), _("&Help"))
+        main_menu_bar.Append(HelpMenu(self).create(), _("&Help"))
+        # main_menu_bar.Append(self._create_help_menu(), _("&Help"))
         self._set_shortcuts()
         self.SetMenuBar(main_menu_bar)
         self.update_navigation_menu_items()
         self.enable_disable_menus()
 
     def _set_shortcuts(self):
-        from timelinelib.config.shortcut import ShortcutController
-        self.shortcut_controller = ShortcutController(self.config, self.shortcut_items)
         self.shortcut_controller.load_config_settings()
 
     def _bind_frame_events(self):
@@ -430,26 +425,6 @@ class GuiCreator:
     def _add_to_controller_requiring_timeline(self, menu, item_id):
         mnu_item = menu.FindItemById(item_id)
         self.menu_controller.add_menu_requiring_timeline(mnu_item)
-
-    def _create_help_menu(self):
-
-        def feedback(e):
-            show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body="")
-
-        cbx = NONE
-        items_spec = [(wx.ID_HELP, self.help_browser.show_contents_page, _("&Contents") + "\tF1", cbx),
-                      None,
-                      (ID_TUTORIAL, self.controller.open_gregorian_tutorial_timeline, _("Getting started &tutorial"), cbx),
-                      (ID_NUMTUTORIAL, self.controller.open_numeric_tutorial_timeline, _("Getting started numeric &tutorial"), cbx),
-                      None,
-                      (ID_FEEDBACK, feedback, _("Give &Feedback..."), cbx),
-                      (ID_CONTACT, self.help_browser.show_contact_page, _("Co&ntact"), cbx),
-                      None,
-                      (ID_SYSTEM_INFO, show_system_info_dialog, _("System information"), cbx),
-                      None,
-                      (wx.ID_ABOUT, display_about_dialog, None, cbx)]
-        self._help_menu = self._create_menu(items_spec)
-        return self._help_menu
 
     def _create_menu(self, items_spec):
         menu = wx.Menu()
