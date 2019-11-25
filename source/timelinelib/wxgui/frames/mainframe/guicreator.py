@@ -41,6 +41,7 @@ from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.systeminfo.view import show_system_info_dialog
 import timelinelib.wxgui.utils as guiutils
+from timelinelib.wxgui.frames.mainframe.menus.filemenu import FileMenu
 
 
 NONE = 0
@@ -116,7 +117,7 @@ class GuiCreator:
 
     def _create_main_menu_bar(self):
         main_menu_bar = wx.MenuBar()
-        main_menu_bar.Append(self._create_file_menu(), _("&File"))
+        main_menu_bar.Append(FileMenu(self).create(), _("&File"))
         main_menu_bar.Append(self._create_edit_menu(), _("&Edit"))
         main_menu_bar.Append(self._create_view_menu(), _("&View"))
         main_menu_bar.Append(self._create_timeline_menu(), _("&Timeline"))
@@ -134,77 +135,6 @@ class GuiCreator:
 
     def _bind_frame_events(self):
         self.Bind(wx.EVT_CLOSE, self._window_on_close)
-
-    def _create_file_menu(self):
-        file_menu = wx.Menu()
-        self._create_file_new_menu_item(file_menu)
-        self._create_file_open_menu_item(file_menu)
-        self._create_file_open_recent_menu(file_menu)
-        file_menu.AppendSeparator()
-        self._create_file_save_as_menu(file_menu)
-        file_menu.AppendSeparator()
-        self._create_import_menu_item(file_menu)
-        file_menu.AppendSeparator()
-        self._create_export_menues(file_menu)
-        file_menu.AppendSeparator()
-        self._create_file_exit_menu_item(file_menu)
-        self._file_menu = file_menu
-        return file_menu
-
-    def _create_export_menues(self, file_menu):
-
-        def create_click_handler(plugin, main_frame):
-            def event_handler(evt):
-                plugin.run(main_frame)
-            return event_handler
-
-        submenu = wx.Menu()
-        file_menu.Append(wx.ID_ANY, _("Export"), submenu)
-        for plugin in factory.get_plugins(EXPORTER):
-            mnu = submenu.Append(wx.ID_ANY, plugin.display_name(), plugin.display_name())
-            self.menu_controller.add_menu_requiring_timeline(mnu)
-            handler = create_click_handler(plugin, self)
-            self.Bind(wx.EVT_MENU, handler, mnu)
-            method = getattr(plugin, "wxid", None)
-            if callable(method):
-                self.shortcut_items[method()] = mnu
-
-    def _create_file_new_menu_item(self, file_menu):
-        accel = wx.GetStockLabel(wx.ID_NEW, wx.STOCK_WITH_ACCELERATOR | wx.STOCK_WITH_MNEMONIC)
-        accel = accel.split("\t", 1)[1]
-        file_menu.Append(
-            wx.ID_NEW, _("New...") + "\t" + accel, _("Create a new timeline"))
-        self.shortcut_items[wx.ID_NEW] = file_menu.FindItemById(wx.ID_NEW)
-        self.Bind(wx.EVT_MENU, self._mnu_file_new_on_click, id=wx.ID_NEW)
-
-    def _create_file_open_menu_item(self, file_menu):
-        file_menu.Append(
-            wx.ID_OPEN, self._add_ellipses_to_menuitem(wx.ID_OPEN),
-            _("Open an existing timeline"))
-        self.Bind(wx.EVT_MENU, self._mnu_file_open_on_click, id=wx.ID_OPEN)
-
-    def _create_file_open_recent_menu(self, file_menu):
-        self.mnu_file_open_recent_submenu = wx.Menu()
-        file_menu.Append(wx.ID_ANY, _("Open &Recent"), self.mnu_file_open_recent_submenu)
-        self.update_open_recent_submenu()
-
-    def _create_file_save_as_menu(self, file_menu):
-        menu = file_menu.Append(wx.ID_SAVEAS, "", _("Save As..."))
-        self.shortcut_items[wx.ID_SAVEAS] = menu
-        self.Bind(wx.EVT_MENU, self.mnu_file_save_as_on_click, id=wx.ID_SAVEAS)
-        self.menu_controller.add_menu_requiring_timeline(menu)
-
-    def _create_import_menu_item(self, file_menu):
-        mnu_file_import = file_menu.Append(
-            ID_IMPORT, _("Import events..."), _("Import events..."))
-        self.shortcut_items[ID_IMPORT] = mnu_file_import
-        self.Bind(wx.EVT_MENU, self._mnu_file_import_on_click, mnu_file_import)
-        self.menu_controller.add_menu_requiring_writable_timeline(mnu_file_import)
-
-    def _create_file_exit_menu_item(self, file_menu):
-        file_menu.Append(wx.ID_EXIT, "", _("Exit the program"))
-        self.shortcut_items[wx.ID_EXIT] = file_menu.FindItemById(wx.ID_EXIT)
-        self.Bind(wx.EVT_MENU, self._mnu_file_exit_on_click, id=wx.ID_EXIT)
 
     def _create_edit_menu(self):
         from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
