@@ -192,6 +192,7 @@ class GuiCreator:
         menu = file_menu.Append(wx.ID_SAVEAS, "", _("Save As..."))
         self.shortcut_items[wx.ID_SAVEAS] = menu
         self.Bind(wx.EVT_MENU, self.mnu_file_save_as_on_click, id=wx.ID_SAVEAS)
+        self.menu_controller.add_menu_requiring_timeline(menu)
 
     def _create_import_menu_item(self, file_menu):
         mnu_file_import = file_menu.Append(
@@ -256,10 +257,9 @@ class GuiCreator:
         return self._edit_menu
 
     def _add_edit_menu_items_to_controller(self, edit_menu):
-        find_item = edit_menu.FindItemById(ID_FIND)
-        find_categories_item = edit_menu.FindItemById(ID_FIND_CATEGORIES)
-        self.menu_controller.add_menu_requiring_timeline(find_item)
-        self.menu_controller.add_menu_requiring_timeline(find_categories_item)
+        menu_ids = (ID_FIND, ID_FIND_CATEGORIES, ID_FIND_MILESTONES, ID_SELECT_ALL)
+        for menu_id in menu_ids:
+            self._add_to_controller_requiring_timeline(edit_menu, menu_id)
 
     def _create_view_menu(self):
 
@@ -386,9 +386,11 @@ class GuiCreator:
         sidebar_item = view_menu.FindItemById(ID_SIDEBAR)
         legend_item = view_menu.FindItemById(ID_LEGEND)
         balloons_item = view_menu.FindItemById(ID_BALLOONS)
+        presentation_item = view_menu.FindItemById(ID_PRESENTATION)
         self.menu_controller.add_menu_requiring_visible_timeline_view(sidebar_item)
         self.menu_controller.add_menu_requiring_timeline(legend_item)
         self.menu_controller.add_menu_requiring_timeline(balloons_item)
+        self.menu_controller.add_menu_requiring_timeline(presentation_item)
         self.menu_controller.add_menu_requiring_timeline(view_menu.FindItemById(ID_ZOOMIN))
         self.menu_controller.add_menu_requiring_timeline(view_menu.FindItemById(ID_ZOOMOUT))
         self.menu_controller.add_menu_requiring_timeline(view_menu.FindItemById(ID_VERT_ZOOMIN))
@@ -552,9 +554,9 @@ class GuiCreator:
         return self._navigate_menu
 
     def _add_navigate_menu_items_to_controller(self, menu):
-        self._add_to_controller_requiring_timeline(menu, ID_FIND_FIRST)
-        self._add_to_controller_requiring_timeline(menu, ID_FIND_LAST)
-        self._add_to_controller_requiring_timeline(menu, ID_FIT_ALL)
+        menu_ids = (ID_FIND_FIRST, ID_FIND_LAST, ID_FIT_ALL, ID_RESTORE_TIME_PERIOD)
+        for menu_id in menu_ids:
+            self._add_to_controller_requiring_timeline(menu, menu_id)
 
     def _add_to_controller_requiring_timeline(self, menu, item_id):
         mnu_item = menu.FindItemById(item_id)
