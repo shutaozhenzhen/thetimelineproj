@@ -24,9 +24,6 @@ import collections
 import wx
 
 from timelinelib.db.utils import safe_locking
-from timelinelib.plugin.factory import EVENTBOX_DRAWER
-from timelinelib.plugin import factory
-from timelinelib.proxies.drawingarea import DrawingAreaProxy
 from timelinelib.wxgui.components.mainpanel import MainPanel
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
@@ -36,23 +33,18 @@ from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
 from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.frames.mainframe.menus.filemenu import FileMenu
 from timelinelib.wxgui.frames.mainframe.menus.editmenu import EditMenu
+from timelinelib.wxgui.frames.mainframe.menus.viewmenu import ViewMenu
 from timelinelib.wxgui.frames.mainframe.menus.helpmenu import HelpMenu
 # The following imports are used by the shortcut module
 from timelinelib.wxgui.frames.mainframe.menus.filemenu import ID_IMPORT
 from timelinelib.wxgui.frames.mainframe.menus.editmenu import ID_SELECT_ALL, ID_FIND_CATEGORIES, ID_FIND_MILESTONES, ID_EDIT_SHORTCUTS
+from timelinelib.wxgui.frames.mainframe.menus.viewmenu import ID_SIDEBAR, ID_LEGEND, ID_BALLOONS, ID_ZOOMIN, ID_ZOOMOUT, ID_VERT_ZOOMIN, ID_VERT_ZOOMOUT, ID_HIDE_DONE, ID_PRESENTATION
 from timelinelib.wxgui.frames.mainframe.menus.helpmenu import ID_TUTORIAL, ID_NUMTUTORIAL, ID_FEEDBACK, ID_CONTACT, ID_SYSTEM_INFO
 
 NONE = 0
 CHECKBOX = 1
 CHECKED_RB = 2
 UNCHECKED_RB = 3
-ID_SIDEBAR = wx.NewId()
-ID_LEGEND = wx.NewId()
-ID_BALLOONS = wx.NewId()
-ID_ZOOMIN = wx.NewId()
-ID_ZOOMOUT = wx.NewId()
-ID_VERT_ZOOMIN = wx.NewId()
-ID_VERT_ZOOMOUT = wx.NewId()
 ID_CREATE_EVENT = wx.NewId()
 ID_CREATE_MILESTONE = wx.NewId()
 ID_PT_EVENT_TO_RIGHT = wx.NewId()
@@ -82,8 +74,6 @@ ID_SAVEAS = wx.ID_SAVEAS
 ID_EXIT = wx.ID_EXIT
 ID_MOVE_EVENT_UP = wx.NewId()
 ID_MOVE_EVENT_DOWN = wx.NewId()
-ID_PRESENTATION = wx.NewId()
-ID_HIDE_DONE = wx.NewId()
 ID_NAVIGATE = wx.NewId() + 100
 
 
@@ -109,7 +99,7 @@ class GuiCreator:
         main_menu_bar = wx.MenuBar()
         main_menu_bar.Append(FileMenu(self).create(), _("&File"))
         main_menu_bar.Append(EditMenu(self).create(), _("&Edit"))
-        main_menu_bar.Append(self._create_view_menu(), _("&View"))
+        main_menu_bar.Append(ViewMenu(self).create(), _("&View"))
         main_menu_bar.Append(self._create_timeline_menu(), _("&Timeline"))
         main_menu_bar.Append(self._create_navigate_menu(), _("&Navigate"))
         main_menu_bar.Append(HelpMenu(self).create(), _("&Help"))
@@ -123,141 +113,6 @@ class GuiCreator:
 
     def _bind_frame_events(self):
         self.Bind(wx.EVT_CLOSE, self._window_on_close)
-
-    def _create_view_menu(self):
-
-        def sidebar(evt):
-            self.config.show_sidebar = evt.IsChecked()
-            if evt.IsChecked():
-                self.main_panel.show_sidebar()
-            else:
-                self.main_panel.hide_sidebar()
-
-        def legend(evt):
-            self.config.show_legend = evt.IsChecked()
-
-        def balloons(evt):
-            self.config.balloon_on_hover = evt.IsChecked()
-
-        def zoomin(evt):
-            DrawingAreaProxy(self).zoom_in()
-
-        def zoomout(evt):
-            DrawingAreaProxy(self).zoom_out()
-
-        def vert_zoomin(evt):
-            DrawingAreaProxy(self).vertical_zoom_in()
-
-        def vert_zoomout(evt):
-            DrawingAreaProxy(self).vertical_zoom_out()
-
-        def start_slide_show(evt):
-            canvas = self.main_panel.get_timeline_canvas()
-            self.controller.start_slide_show(canvas)
-
-        def hide_events_done(evt):
-            self.config.hide_events_done = evt.IsChecked()
-
-        items_spec = [self._create_view_toolbar_menu_item,
-                      (ID_SIDEBAR, sidebar, _("&Sidebar") + "\tCtrl+I", CHECKBOX),
-                      (ID_LEGEND, legend, _("&Legend"), CHECKBOX),
-                      None,
-                      (ID_BALLOONS, balloons, _("&Balloons on hover"), CHECKBOX),
-                      None,
-                      (ID_ZOOMIN, zoomin, _("Zoom &In") + "\tCtrl++", NONE),
-                      (ID_ZOOMOUT, zoomout, _("Zoom &Out") + "\tCtrl+-", NONE),
-                      (ID_VERT_ZOOMIN, vert_zoomin, _("Vertical Zoom &In") + "\tAlt++", NONE),
-                      (ID_VERT_ZOOMOUT, vert_zoomout, _("Vertical Zoom &Out") + "\tAlt+-", NONE),
-                      None,
-                      self._create_view_point_event_alignment_menu,
-                      None,
-                      self._create_event_box_drawers_menu,
-                      None,
-                      (ID_PRESENTATION, start_slide_show, _("Start slide show") + "...", NONE),
-                      None,
-                      (ID_HIDE_DONE, hide_events_done, _("&Hide Events done"), CHECKBOX),
-                      ]
-        self._view_menu = self._create_menu(items_spec)
-        self._check_view_menu_items(self._view_menu)
-        self._add_view_menu_items_to_controller(self._view_menu)
-        return self._view_menu
-
-    def _create_view_toolbar_menu_item(self, view_menu):
-        item = view_menu.Append(wx.ID_ANY, _("Toolbar"), kind=wx.ITEM_CHECK)
-
-        def on_click(event):
-            self.config.show_toolbar = event.IsChecked()
-
-        def check_item_corresponding_to_config():
-            item.Check(self.config.show_toolbar)
-
-        self.Bind(wx.EVT_MENU, on_click, item)
-        self.config.listen_for_any(check_item_corresponding_to_config)
-        check_item_corresponding_to_config()
-
-    def _create_event_box_drawers_menu(self, view_menu):
-
-        def create_click_handler(plugin):
-            def event_handler(evt):
-                self.main_panel.get_timeline_canvas().SetEventBoxDrawer(plugin.run())
-                self.config.set_selected_event_box_drawer(plugin.display_name())
-            return event_handler
-
-        items = []
-        for plugin in factory.get_plugins(EVENTBOX_DRAWER):
-            if plugin.display_name() == self.config.get_selected_event_box_drawer():
-                items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), CHECKED_RB))
-            else:
-                items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), UNCHECKED_RB))
-        sub_menu = self._create_menu(items)
-        view_menu.Append(wx.ID_ANY, _("Event appearance"), sub_menu)
-
-    def _create_view_point_event_alignment_menu(self, view_menu):
-        sub_menu = wx.Menu()
-        left_item = sub_menu.Append(wx.ID_ANY, _("Left"), kind=wx.ITEM_RADIO)
-        center_item = sub_menu.Append(wx.ID_ANY, _("Center"), kind=wx.ITEM_RADIO)
-        view_menu.Append(wx.ID_ANY, _("Point event alignment"), sub_menu)
-
-        def on_first_tool_click(event):
-            self.config.draw_point_events_to_right = True
-
-        def on_second_tool_click(event):
-            self.config.draw_point_events_to_right = False
-
-        def check_item_corresponding_to_config():
-            if self.config.draw_point_events_to_right:
-                left_item.Check()
-            else:
-                center_item.Check()
-
-        self.Bind(wx.EVT_MENU, on_first_tool_click, left_item)
-        self.Bind(wx.EVT_MENU, on_second_tool_click, center_item)
-        self.config.listen_for_any(check_item_corresponding_to_config)
-        check_item_corresponding_to_config()
-
-    def _check_view_menu_items(self, view_menu):
-
-        def item(item_id):
-            return view_menu.FindItemById(item_id)
-
-        item(ID_SIDEBAR).Check(self.config.show_sidebar)
-        item(ID_LEGEND).Check(self.config.show_legend)
-        item(ID_BALLOONS).Check(self.config.balloon_on_hover)
-        item(ID_HIDE_DONE).Check(self.config.hide_events_done)
-
-    def _add_view_menu_items_to_controller(self, view_menu):
-        sidebar_item = view_menu.FindItemById(ID_SIDEBAR)
-        legend_item = view_menu.FindItemById(ID_LEGEND)
-        balloons_item = view_menu.FindItemById(ID_BALLOONS)
-        presentation_item = view_menu.FindItemById(ID_PRESENTATION)
-        self.menu_controller.add_menu_requiring_visible_timeline_view(sidebar_item)
-        self.menu_controller.add_menu_requiring_timeline(legend_item)
-        self.menu_controller.add_menu_requiring_timeline(balloons_item)
-        self.menu_controller.add_menu_requiring_timeline(presentation_item)
-        self.menu_controller.add_menu_requiring_timeline(view_menu.FindItemById(ID_ZOOMIN))
-        self.menu_controller.add_menu_requiring_timeline(view_menu.FindItemById(ID_ZOOMOUT))
-        self.menu_controller.add_menu_requiring_timeline(view_menu.FindItemById(ID_VERT_ZOOMIN))
-        self.menu_controller.add_menu_requiring_timeline(view_menu.FindItemById(ID_VERT_ZOOMOUT))
 
     def set_category_on_selected(self):
 
