@@ -24,6 +24,7 @@ from timelinelib.proxies.drawingarea import DrawingAreaProxy
 CHECKED_RB = 2
 UNCHECKED_RB = 3
 
+ID_TOOLBAR = wx.NewId()
 ID_SIDEBAR = wx.NewId()
 ID_LEGEND = wx.NewId()
 ID_BALLOONS = wx.NewId()
@@ -43,6 +44,7 @@ class ViewMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
+            ID_TOOLBAR: self._on_toolbar_click,
             ID_SIDEBAR: self._sidebar,
             ID_LEGEND: self._legend,
             ID_BALLOONS: self._balloons,
@@ -65,7 +67,7 @@ class ViewMenu(MenuBase):
 
     def _create_menu(self):
         menu = wx.Menu()
-        self._create_view_toolbar_menu_item(menu)
+        menu.Append(ID_TOOLBAR, _("Toolbar"), kind=wx.ITEM_CHECK)
         menu.Append(ID_SIDEBAR, _("&Sidebar") + "\tCtrl+I", kind=wx.ITEM_CHECK)
         menu.Append(ID_LEGEND, _("&Legend"), kind=wx.ITEM_CHECK)
         menu.AppendSeparator()
@@ -86,23 +88,14 @@ class ViewMenu(MenuBase):
         return menu
 
     def _check_view_menu_items(self, menu):
+        menu.FindItemById(ID_TOOLBAR).Check(self._parent.config.show_toolbar)
         menu.FindItemById(ID_SIDEBAR).Check(self._parent.config.show_sidebar)
         menu.FindItemById(ID_LEGEND).Check(self._parent.config.show_legend)
         menu.FindItemById(ID_BALLOONS).Check(self._parent.config.balloon_on_hover)
         menu.FindItemById(ID_HIDE_DONE).Check(self._parent.config.hide_events_done)
 
-    def _create_view_toolbar_menu_item(self, menu):
-        item = menu.Append(wx.ID_ANY, _("Toolbar"), kind=wx.ITEM_CHECK)
-
-        def on_click(event):
-            self._parent.config.show_toolbar = event.IsChecked()
-
-        def check_item_corresponding_to_config():
-            item.Check(self._parent.config.show_toolbar)
-
-        self._parent.Bind(wx.EVT_MENU, on_click, item)
-        self._parent.config.listen_for_any(check_item_corresponding_to_config)
-        check_item_corresponding_to_config()
+    def _on_toolbar_click(self, event):
+        self._parent.config.show_toolbar = event.IsChecked()
 
     def _create_view_point_event_alignment_menu(self, menu):
         sub_menu = wx.Menu()
