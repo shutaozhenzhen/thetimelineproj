@@ -35,6 +35,18 @@ ID_SELECT_ALL = wx.NewId()
 ID_PREFERENCES = wx.ID_PREFERENCES
 ID_EDIT_SHORTCUTS = wx.NewId()
 
+# View menu
+ID_TOOLBAR = wx.NewId()
+ID_SIDEBAR = wx.NewId()
+ID_LEGEND = wx.NewId()
+ID_BALLOONS = wx.NewId()
+ID_ZOOMIN = wx.NewId()
+ID_ZOOMOUT = wx.NewId()
+ID_VERT_ZOOMIN = wx.NewId()
+ID_VERT_ZOOMOUT = wx.NewId()
+ID_HIDE_DONE = wx.NewId()
+ID_PRESENTATION = wx.NewId()
+
 # Help menu
 ID_HELP = wx.ID_HELP
 ID_TUTORIAL = wx.NewId()
