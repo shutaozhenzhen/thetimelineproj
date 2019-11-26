@@ -33,7 +33,7 @@ class MultiBitmapExporter(PluginBase):
         return _("Export Whole Timeline to Images...")
 
     def wxid(self):
-        from timelinelib.wxgui.frames.mainframe.guicreator import ID_EXPORT_ALL
+        from timelinelib.wxgui.frames.mainframe.menus import ID_EXPORT_ALL
         return ID_EXPORT_ALL
 
     def run(self, main_frame):

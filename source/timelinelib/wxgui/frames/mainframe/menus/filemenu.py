@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 import wx
+import timelinelib.wxgui.frames.mainframe.menus as mid
 from timelinelib.db.utils import safe_locking
 from timelinelib.wxgui.frames.mainframe.menus.menubase import MenuBase
 from timelinelib.plugin.factory import EXPORTER
@@ -23,21 +24,19 @@ from timelinelib.plugin import factory
 from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
 from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
 
-ID_IMPORT = wx.NewId()
-
-SHORTCUTS = (wx.ID_NEW, wx.ID_SAVEAS, ID_IMPORT, wx.ID_EXIT)
-REQUIRING_TIMELINE = (ID_IMPORT, wx.ID_SAVEAS)
+SHORTCUTS = (mid.ID_NEW, mid.ID_SAVEAS, mid.ID_IMPORT, mid.ID_EXIT)
+REQUIRING_TIMELINE = (mid.ID_IMPORT, mid.ID_SAVEAS)
 
 
 class FileMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
-            wx.ID_NEW: self._new,
-            wx.ID_OPEN: self._open,
-            wx.ID_SAVEAS: self._save_as,
-            ID_IMPORT: self._import,
-            wx.ID_EXIT: self._exit,
+            mid.ID_NEW: self._new,
+            mid.ID_OPEN: self._open,
+            mid.ID_SAVEAS: self._save_as,
+            mid.ID_IMPORT: self._import,
+            mid.ID_EXIT: self._exit,
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
 
@@ -51,23 +50,23 @@ class FileMenu(MenuBase):
     def _create_menu(self):
         menu = wx.Menu()
         self._create_new_menu_item(menu)
-        menu.Append(wx.ID_OPEN, self.add_ellipses_to_menuitem(wx.ID_OPEN), _("Open an existing timeline"))
+        menu.Append(mid.ID_OPEN, self.add_ellipses_to_menuitem(mid.ID_OPEN), _("Open an existing timeline"))
         self._create_open_recent_menu(menu)
         menu.AppendSeparator()
-        menu.Append(wx.ID_SAVEAS, "", _("Save As..."))
+        menu.Append(mid.ID_SAVEAS, "", _("Save As..."))
         menu.AppendSeparator()
-        menu.Append(ID_IMPORT, _("Import events..."), _("Import events..."))
+        menu.Append(mid.ID_IMPORT, _("Import events..."), _("Import events..."))
         menu.AppendSeparator()
         self._create_export_menues(menu)
         menu.AppendSeparator()
-        menu.Append(wx.ID_EXIT, "", _("Exit the program"))
+        menu.Append(mid.ID_EXIT, "", _("Exit the program"))
         return menu
 
     @staticmethod
     def _create_new_menu_item(file_menu):
-        accel = wx.GetStockLabel(wx.ID_NEW, wx.STOCK_WITH_ACCELERATOR | wx.STOCK_WITH_MNEMONIC)
+        accel = wx.GetStockLabel(mid.ID_NEW, wx.STOCK_WITH_ACCELERATOR | wx.STOCK_WITH_MNEMONIC)
         accel = accel.split("\t", 1)[1]
-        file_menu.Append(wx.ID_NEW, _("New...") + "\t" + accel, _("Create a new timeline"))
+        file_menu.Append(mid.ID_NEW, _("New...") + "\t" + accel, _("Create a new timeline"))
 
     def _create_open_recent_menu(self, file_menu):
         self._parent.mnu_file_open_recent_submenu = wx.Menu()
@@ -86,7 +85,7 @@ class FileMenu(MenuBase):
         for plugin in factory.get_plugins(EXPORTER):
             mnu = submenu.Append(wx.ID_ANY, plugin.display_name(), plugin.display_name())
             self._parent.menu_controller.add_menu_requiring_timeline(mnu)
-            handler = create_click_handler(plugin, self)
+            handler = create_click_handler(plugin, self._parent)
             self._parent.Bind(wx.EVT_MENU, handler, mnu)
             method = getattr(plugin, "wxid", None)
             if callable(method):
