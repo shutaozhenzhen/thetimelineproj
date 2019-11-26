@@ -35,12 +35,14 @@ from timelinelib.wxgui.frames.mainframe.menus.filemenu import FileMenu
 from timelinelib.wxgui.frames.mainframe.menus.editmenu import EditMenu
 from timelinelib.wxgui.frames.mainframe.menus.viewmenu import ViewMenu
 from timelinelib.wxgui.frames.mainframe.menus.timelinemenu import TimelineMenu
+from timelinelib.wxgui.frames.mainframe.menus.navigatemenu import NavigateMenu
 from timelinelib.wxgui.frames.mainframe.menus.helpmenu import HelpMenu
 # The following imports are used by the shortcut module
 from timelinelib.wxgui.frames.mainframe.menus.filemenu import ID_IMPORT
 from timelinelib.wxgui.frames.mainframe.menus.editmenu import ID_SELECT_ALL, ID_FIND_CATEGORIES, ID_FIND_MILESTONES, ID_EDIT_SHORTCUTS
 from timelinelib.wxgui.frames.mainframe.menus.viewmenu import ID_SIDEBAR, ID_LEGEND, ID_BALLOONS, ID_ZOOMIN, ID_ZOOMOUT, ID_VERT_ZOOMIN, ID_VERT_ZOOMOUT, ID_HIDE_DONE, ID_PRESENTATION
 from timelinelib.wxgui.frames.mainframe.menus.timelinemenu import ID_CREATE_EVENT, ID_EDIT_EVENT, ID_DUPLICATE_EVENT, ID_SET_CATEGORY_ON_SELECTED, ID_MOVE_EVENT_UP, ID_MOVE_EVENT_DOWN, ID_CREATE_MILESTONE, ID_COMPRESS, ID_MEASURE_DISTANCE, ID_SET_CATEGORY_ON_WITHOUT, ID_EDIT_ERAS, ID_SET_READONLY, ID_UNDO, ID_REDO
+from timelinelib.wxgui.frames.mainframe.menus.navigatemenu import ID_FIND_FIRST, ID_FIND_LAST, ID_FIT_ALL, ID_RESTORE_TIME_PERIOD
 from timelinelib.wxgui.frames.mainframe.menus.helpmenu import ID_TUTORIAL, ID_NUMTUTORIAL, ID_FEEDBACK, ID_CONTACT, ID_SYSTEM_INFO
 
 NONE = 0
@@ -48,13 +50,9 @@ CHECKBOX = 1
 CHECKED_RB = 2
 UNCHECKED_RB = 3
 ID_PT_EVENT_TO_RIGHT = wx.NewId()
-ID_FIND_FIRST = wx.NewId()
-ID_FIND_LAST = wx.NewId()
-ID_FIT_ALL = wx.NewId()
 ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
-ID_RESTORE_TIME_PERIOD = wx.NewId()
 ID_NEW = wx.ID_NEW
 ID_FIND = wx.ID_FIND
 ID_PREFERENCES = wx.ID_PREFERENCES
@@ -90,7 +88,10 @@ class GuiCreator:
         main_menu_bar.Append(ViewMenu(self).create(), _("&View"))
         self._timeline_menu = TimelineMenu(self).create()
         main_menu_bar.Append(self._timeline_menu, _("&Timeline"))
-        main_menu_bar.Append(self._create_navigate_menu(), _("&Navigate"))
+        self._navigation_menu_items = []
+        self._navigation_functions_by_menu_item_id = {}
+        self._navigate_menu = NavigateMenu(self).create()
+        main_menu_bar.Append(self._navigate_menu, _("&Navigate"))
         main_menu_bar.Append(HelpMenu(self).create(), _("&Help"))
         self.shortcut_controller.load_config_settings()
         self.SetMenuBar(main_menu_bar)
@@ -99,59 +100,6 @@ class GuiCreator:
 
     def _bind_frame_events(self):
         self.Bind(wx.EVT_CLOSE, self._window_on_close)
-
-    def _create_navigate_menu(self):
-
-        def find_first(evt):
-            event = self.timeline.get_first_event()
-            if event:
-                start = event.get_start_time()
-                delta = self.main_panel.get_displayed_period_delta()
-                end = start + delta
-                margin_delta = delta / 24
-                self.main_panel.Navigate(lambda tp: tp.update(start, end, -margin_delta))
-
-        def find_last(evt):
-            event = self.timeline.get_last_event()
-            if event:
-                end = event.get_end_time()
-                delta = self.main_panel.get_displayed_period_delta()
-                try:
-                    start = end - delta
-                except ValueError:
-                    start = self.timeline.get_time_type().get_min_time()
-                margin_delta = delta / 24
-                self.main_panel.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
-
-        def restore_time_period(evt):
-            if self.prev_time_period:
-                self.main_panel.Navigate(lambda tp: self.prev_time_period)
-
-        def fit_all(evt):
-            self._fit_all_events()
-
-        cbx = NONE
-        items_spec = (None,
-                      (ID_FIND_FIRST, find_first, _("Find &First Event"), cbx),
-                      (ID_FIND_LAST, find_last, _("Find &Last Event"), cbx),
-                      (ID_FIT_ALL, fit_all, _("Fit &All Events"), cbx),
-                      None,
-                      (ID_RESTORE_TIME_PERIOD, restore_time_period, _("Go to previous time period"), cbx),)
-        self._navigation_menu_items = []
-        self._navigation_functions_by_menu_item_id = {}
-        self.update_navigation_menu_items()
-        self._navigate_menu = self._create_menu(items_spec)
-        self._add_navigate_menu_items_to_controller(self._navigate_menu)
-        return self._navigate_menu
-
-    def _add_navigate_menu_items_to_controller(self, menu):
-        menu_ids = (ID_FIND_FIRST, ID_FIND_LAST, ID_FIT_ALL, ID_RESTORE_TIME_PERIOD)
-        for menu_id in menu_ids:
-            self._add_to_controller_requiring_timeline(menu, menu_id)
-
-    def _add_to_controller_requiring_timeline(self, menu, item_id):
-        mnu_item = menu.FindItemById(item_id)
-        self.menu_controller.add_menu_requiring_timeline(mnu_item)
 
     def _create_menu(self, items_spec):
         menu = wx.Menu()
