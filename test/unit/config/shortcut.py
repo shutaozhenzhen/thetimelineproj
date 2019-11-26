@@ -23,7 +23,7 @@ from timelinelib.config.dotfile import Config
 from timelinelib.config.shortcut import ShortcutController
 from timelinelib.test.cases.wxapp import WxAppTestCase
 import timelinelib.config.shortcut as sc
-import timelinelib.wxgui.frames.mainframe.guicreator as mf
+import timelinelib.wxgui.frames.mainframe.menus as mid
 
 
 NEW_FUNCTION = "⟪File⟫->⟪New...⟫"
@@ -65,7 +65,7 @@ class ShortcutControllerSpec(WxAppTestCase):
         self.assertFalse(self.controller.exists("Ctrl+F3"))
 
     def test_wxid_exists(self):
-        self.assertTrue(self.controller.wxid_exists(mf.ID_NEW))
+        self.assertTrue(self.controller.wxid_exists(mid.ID_NEW))
 
     def test_is_function_key(self):
         for key in sc.FUNCTION_KEYS:
@@ -83,4 +83,4 @@ class ShortcutControllerSpec(WxAppTestCase):
         WxAppTestCase.setUp(self)
         config = Mock(Config)
         menuitem = wx.MenuItem(wx.Menu("title"), -1, "label")
-        self.controller = ShortcutController(config, {mf.ID_SIDEBAR: menuitem, })
+        self.controller = ShortcutController(config, {mid.ID_SIDEBAR: menuitem, })
