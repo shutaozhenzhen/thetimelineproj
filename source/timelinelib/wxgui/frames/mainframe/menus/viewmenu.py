@@ -25,36 +25,28 @@ from timelinelib.proxies.drawingarea import DrawingAreaProxy
 CHECKED_RB = 2
 UNCHECKED_RB = 3
 
-ID_TOOLBAR = wx.NewId()
-ID_SIDEBAR = wx.NewId()
-ID_LEGEND = wx.NewId()
-ID_BALLOONS = wx.NewId()
-ID_ZOOMIN = wx.NewId()
-ID_ZOOMOUT = wx.NewId()
-ID_VERT_ZOOMIN = wx.NewId()
-ID_VERT_ZOOMOUT = wx.NewId()
-ID_HIDE_DONE = wx.NewId()
-ID_PRESENTATION = wx.NewId()
 
-SHORTCUTS = (ID_SIDEBAR, ID_LEGEND, ID_BALLOONS, ID_ZOOMIN, ID_ZOOMOUT, ID_VERT_ZOOMIN, ID_VERT_ZOOMOUT, ID_PRESENTATION)
-REQUIRING_TIMELINE = (ID_LEGEND, ID_BALLOONS, ID_ZOOMIN, ID_ZOOMOUT, ID_VERT_ZOOMIN, ID_VERT_ZOOMOUT, ID_PRESENTATION)
-REQUIRING_VISIBLE_TIMELINE_VIEW = (ID_SIDEBAR, )
+SHORTCUTS = (mid.ID_SIDEBAR, mid.ID_LEGEND, mid.ID_BALLOONS, mid.ID_ZOOMIN, mid.ID_ZOOMOUT, mid.ID_VERT_ZOOMIN,
+             mid.ID_VERT_ZOOMOUT, mid.ID_PRESENTATION)
+REQUIRING_TIMELINE = (mid.ID_LEGEND, mid.ID_BALLOONS, mid.ID_ZOOMIN, mid.ID_ZOOMOUT, mid.ID_VERT_ZOOMIN,
+                      mid.ID_VERT_ZOOMOUT, mid.ID_PRESENTATION)
+REQUIRING_VISIBLE_TIMELINE_VIEW = (mid.ID_SIDEBAR, )
 
 
 class ViewMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
-            ID_TOOLBAR: self._on_toolbar_click,
-            ID_SIDEBAR: self._sidebar,
-            ID_LEGEND: self._legend,
-            ID_BALLOONS: self._balloons,
-            ID_ZOOMIN: self._zoomoin,
-            ID_ZOOMOUT: self._zoomout,
-            ID_VERT_ZOOMIN: self._vert_zoomoin,
-            ID_VERT_ZOOMOUT: self._vert_zoomout,
-            ID_PRESENTATION: self.start_slide_show,
-            ID_HIDE_DONE: self._hide_events_done,
+            mid.ID_TOOLBAR: self._on_toolbar_click,
+            mid.ID_SIDEBAR: self._sidebar,
+            mid.ID_LEGEND: self._legend,
+            mid.ID_BALLOONS: self._balloons,
+            mid.ID_ZOOMIN: self._zoomoin,
+            mid.ID_ZOOMOUT: self._zoomout,
+            mid.ID_VERT_ZOOMIN: self._vert_zoomoin,
+            mid.ID_VERT_ZOOMOUT: self._vert_zoomout,
+            mid.ID_PRESENTATION: self.start_slide_show,
+            mid.ID_HIDE_DONE: self._hide_events_done,
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE, REQUIRING_VISIBLE_TIMELINE_VIEW)
 
@@ -68,32 +60,32 @@ class ViewMenu(MenuBase):
 
     def _create_menu(self):
         menu = wx.Menu()
-        menu.Append(ID_TOOLBAR, _("Toolbar"), kind=wx.ITEM_CHECK)
-        menu.Append(ID_SIDEBAR, _("&Sidebar") + "\tCtrl+I", kind=wx.ITEM_CHECK)
-        menu.Append(ID_LEGEND, _("&Legend"), kind=wx.ITEM_CHECK)
+        menu.Append(mid.ID_TOOLBAR, _("Toolbar"), kind=wx.ITEM_CHECK)
+        menu.Append(mid.ID_SIDEBAR, _("&Sidebar") + "\tCtrl+I", kind=wx.ITEM_CHECK)
+        menu.Append(mid.ID_LEGEND, _("&Legend"), kind=wx.ITEM_CHECK)
         menu.AppendSeparator()
-        menu.Append(ID_BALLOONS, _("&Balloons on hover"), kind=wx.ITEM_CHECK)
+        menu.Append(mid.ID_BALLOONS, _("&Balloons on hover"), kind=wx.ITEM_CHECK)
         menu.AppendSeparator()
-        menu.Append(ID_ZOOMIN, _("Zoom &In") + "\tCtrl++")
-        menu.Append(ID_ZOOMOUT, _("Zoom &Out") + "\tCtrl+-")
-        menu.Append(ID_VERT_ZOOMIN, _("Vertical Zoom &In") + "\tAlt++")
-        menu.Append(ID_VERT_ZOOMOUT, _("Vertical Zoom &Out") + "\tAlt+-")
+        menu.Append(mid.ID_ZOOMIN, _("Zoom &In") + "\tCtrl++")
+        menu.Append(mid.ID_ZOOMOUT, _("Zoom &Out") + "\tCtrl+-")
+        menu.Append(mid.ID_VERT_ZOOMIN, _("Vertical Zoom &In") + "\tAlt++")
+        menu.Append(mid.ID_VERT_ZOOMOUT, _("Vertical Zoom &Out") + "\tAlt+-")
         menu.AppendSeparator()
         self._create_view_point_event_alignment_menu(menu)
         menu.AppendSeparator()
         self._create_event_box_drawers_menu(menu)
         menu.AppendSeparator()
-        menu.Append(ID_PRESENTATION, _("Start slide show") + "...")
+        menu.Append(mid.ID_PRESENTATION, _("Start slide show") + "...")
         menu.AppendSeparator()
-        menu.Append(ID_HIDE_DONE, _("&Hide Events done"), kind=wx.ITEM_CHECK)
+        menu.Append(mid.ID_HIDE_DONE, _("&Hide Events done"), kind=wx.ITEM_CHECK)
         return menu
 
     def _check_view_menu_items(self, menu):
-        menu.FindItemById(ID_TOOLBAR).Check(self._parent.config.show_toolbar)
-        menu.FindItemById(ID_SIDEBAR).Check(self._parent.config.show_sidebar)
-        menu.FindItemById(ID_LEGEND).Check(self._parent.config.show_legend)
-        menu.FindItemById(ID_BALLOONS).Check(self._parent.config.balloon_on_hover)
-        menu.FindItemById(ID_HIDE_DONE).Check(self._parent.config.hide_events_done)
+        menu.FindItemById(mid.ID_TOOLBAR).Check(self._parent.config.show_toolbar)
+        menu.FindItemById(mid.ID_SIDEBAR).Check(self._parent.config.show_sidebar)
+        menu.FindItemById(mid.ID_LEGEND).Check(self._parent.config.show_legend)
+        menu.FindItemById(mid.ID_BALLOONS).Check(self._parent.config.balloon_on_hover)
+        menu.FindItemById(mid.ID_HIDE_DONE).Check(self._parent.config.hide_events_done)
 
     def _on_toolbar_click(self, event):
         self._parent.config.show_toolbar = event.IsChecked()
