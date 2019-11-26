@@ -34,28 +34,20 @@ from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.frames.mainframe.menus.filemenu import FileMenu
 from timelinelib.wxgui.frames.mainframe.menus.editmenu import EditMenu
 from timelinelib.wxgui.frames.mainframe.menus.viewmenu import ViewMenu
+from timelinelib.wxgui.frames.mainframe.menus.timelinemenu import TimelineMenu
 from timelinelib.wxgui.frames.mainframe.menus.helpmenu import HelpMenu
 # The following imports are used by the shortcut module
 from timelinelib.wxgui.frames.mainframe.menus.filemenu import ID_IMPORT
 from timelinelib.wxgui.frames.mainframe.menus.editmenu import ID_SELECT_ALL, ID_FIND_CATEGORIES, ID_FIND_MILESTONES, ID_EDIT_SHORTCUTS
 from timelinelib.wxgui.frames.mainframe.menus.viewmenu import ID_SIDEBAR, ID_LEGEND, ID_BALLOONS, ID_ZOOMIN, ID_ZOOMOUT, ID_VERT_ZOOMIN, ID_VERT_ZOOMOUT, ID_HIDE_DONE, ID_PRESENTATION
+from timelinelib.wxgui.frames.mainframe.menus.timelinemenu import ID_CREATE_EVENT, ID_EDIT_EVENT, ID_DUPLICATE_EVENT, ID_SET_CATEGORY_ON_SELECTED, ID_MOVE_EVENT_UP, ID_MOVE_EVENT_DOWN, ID_CREATE_MILESTONE, ID_COMPRESS, ID_MEASURE_DISTANCE, ID_SET_CATEGORY_ON_WITHOUT, ID_EDIT_ERAS, ID_SET_READONLY, ID_UNDO, ID_REDO
 from timelinelib.wxgui.frames.mainframe.menus.helpmenu import ID_TUTORIAL, ID_NUMTUTORIAL, ID_FEEDBACK, ID_CONTACT, ID_SYSTEM_INFO
 
 NONE = 0
 CHECKBOX = 1
 CHECKED_RB = 2
 UNCHECKED_RB = 3
-ID_CREATE_EVENT = wx.NewId()
-ID_CREATE_MILESTONE = wx.NewId()
 ID_PT_EVENT_TO_RIGHT = wx.NewId()
-ID_EDIT_EVENT = wx.NewId()
-ID_DUPLICATE_EVENT = wx.NewId()
-ID_SET_CATEGORY_ON_SELECTED = wx.NewId()
-ID_MEASURE_DISTANCE = wx.NewId()
-ID_COMPRESS = wx.NewId()
-ID_SET_CATEGORY_ON_WITHOUT = wx.NewId()
-ID_EDIT_ERAS = wx.NewId()
-ID_SET_READONLY = wx.NewId()
 ID_FIND_FIRST = wx.NewId()
 ID_FIND_LAST = wx.NewId()
 ID_FIT_ALL = wx.NewId()
@@ -65,15 +57,11 @@ ID_EXPORT_SVG = wx.NewId()
 ID_RESTORE_TIME_PERIOD = wx.NewId()
 ID_NEW = wx.ID_NEW
 ID_FIND = wx.ID_FIND
-ID_UNDO = wx.NewId()
-ID_REDO = wx.NewId()
 ID_PREFERENCES = wx.ID_PREFERENCES
 ID_HELP = wx.ID_HELP
 ID_ABOUT = wx.ID_ABOUT
 ID_SAVEAS = wx.ID_SAVEAS
 ID_EXIT = wx.ID_EXIT
-ID_MOVE_EVENT_UP = wx.NewId()
-ID_MOVE_EVENT_DOWN = wx.NewId()
 ID_NAVIGATE = wx.NewId() + 100
 
 
@@ -100,132 +88,17 @@ class GuiCreator:
         main_menu_bar.Append(FileMenu(self).create(), _("&File"))
         main_menu_bar.Append(EditMenu(self).create(), _("&Edit"))
         main_menu_bar.Append(ViewMenu(self).create(), _("&View"))
-        main_menu_bar.Append(self._create_timeline_menu(), _("&Timeline"))
+        self._timeline_menu = TimelineMenu(self).create()
+        main_menu_bar.Append(self._timeline_menu, _("&Timeline"))
         main_menu_bar.Append(self._create_navigate_menu(), _("&Navigate"))
         main_menu_bar.Append(HelpMenu(self).create(), _("&Help"))
-        self._set_shortcuts()
+        self.shortcut_controller.load_config_settings()
         self.SetMenuBar(main_menu_bar)
         self.update_navigation_menu_items()
         self.enable_disable_menus()
 
-    def _set_shortcuts(self):
-        self.shortcut_controller.load_config_settings()
-
     def _bind_frame_events(self):
         self.Bind(wx.EVT_CLOSE, self._window_on_close)
-
-    def set_category_on_selected(self):
-
-        def edit_function():
-            self._set_category_to_selected_events()
-
-        safe_locking(self, edit_function)
-
-    def _create_timeline_menu(self):
-
-        def create_event(evt):
-            open_create_event_editor(self, self, self.config, self.timeline)
-
-        def edit_event(evt):
-            try:
-                event_id = self.main_panel.get_id_of_first_selected_event()
-                event = self.timeline.find_event_with_id(event_id)
-            except IndexError:
-                # No event selected so do nothing!
-                return
-            self.main_panel.open_event_editor(event)
-
-        def duplicate_event(evt):
-            try:
-                event_id = self.main_panel.get_id_of_first_selected_event()
-                event = self.timeline.find_event_with_id(event_id)
-            except IndexError:
-                # No event selected so do nothing!
-                return
-            open_duplicate_event_dialog_for_event(self, self, self.timeline, event)
-
-        def create_milestone(evt):
-            open_milestone_editor_for(self, self, self.config, self.timeline)
-
-        def set_categoryon_selected(evt):
-
-            def edit_function():
-                self._set_category_to_selected_events()
-            safe_locking(self, edit_function)
-
-        def measure_distance(evt):
-            self._measure_distance_between_events()
-
-        def set_category_on_without(evt):
-            def edit_function():
-                self._set_category()
-            safe_locking(self, edit_function)
-
-        def edit_eras(evt):
-            def edit_function():
-                self._edit_eras()
-            safe_locking(self, edit_function)
-
-        def set_readonly(evt):
-            self.controller.set_timeline_in_readonly_mode()
-
-        def undo(evt):
-            safe_locking(self, self.timeline.undo)
-
-        def redo(evt):
-            safe_locking(self, self.timeline.redo)
-
-        def compress(evt):
-            safe_locking(self, self.timeline.compress)
-
-        def move_up_handler(event):
-            self.main_panel.timeline_panel.move_selected_event_up()
-
-        def move_down_handler(event):
-            self.main_panel.timeline_panel.move_selected_event_down()
-
-        cbx = NONE
-        items_spec = ((ID_CREATE_EVENT, create_event, _("Create &Event..."), cbx),
-                      (ID_EDIT_EVENT, edit_event, _("&Edit Selected Event..."), cbx),
-                      (ID_DUPLICATE_EVENT, duplicate_event, _("&Duplicate Selected Event..."), cbx),
-                      (ID_SET_CATEGORY_ON_SELECTED, set_categoryon_selected, _("Set Category on Selected Events..."), cbx),
-                      (ID_MOVE_EVENT_UP, move_up_handler, _("Move event up") + "\tAlt+Up", cbx),
-                      (ID_MOVE_EVENT_DOWN, move_down_handler, _("Move event down") + "\tAlt+Down", cbx),
-                      None,
-                      (ID_CREATE_MILESTONE, create_milestone, _("Create &Milestone..."), cbx),
-                      None,
-                      (ID_COMPRESS, compress, _("&Compress timeline Events"), cbx),
-                      None,
-                      (ID_MEASURE_DISTANCE, measure_distance, _("&Measure Distance between two Events..."), cbx),
-                      None,
-                      (ID_SET_CATEGORY_ON_WITHOUT, set_category_on_without,
-                       _("Set Category on events &without category..."), cbx),
-                      None,
-                      (ID_EDIT_ERAS, edit_eras, _("Edit Era's..."), cbx),
-                      None,
-                      (ID_SET_READONLY, set_readonly, _("&Read Only"), cbx),
-                      None,
-                      (ID_UNDO, undo, _("&Undo") + "\tCtrl+Z", cbx),
-                      (ID_REDO, redo, _("&Redo") + "\tAlt+Z", cbx))
-        self._timeline_menu = self._create_menu(items_spec)
-        self._add_timeline_menu_items_to_controller(self._timeline_menu)
-        return self._timeline_menu
-
-    def _add_timeline_menu_items_to_controller(self, menu):
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_CREATE_EVENT)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_EDIT_EVENT)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_CREATE_MILESTONE)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_DUPLICATE_EVENT)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_CATEGORY_ON_SELECTED)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_MEASURE_DISTANCE)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_CATEGORY_ON_WITHOUT)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_SET_READONLY)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_EDIT_ERAS)
-        self._add_to_controller_requiring_writeable_timeline(menu, ID_COMPRESS)
-
-    def _add_to_controller_requiring_writeable_timeline(self, menu, item_id):
-        mnu_item = menu.FindItemById(item_id)
-        self.menu_controller.add_menu_requiring_writable_timeline(mnu_item)
 
     def _create_navigate_menu(self):
 
