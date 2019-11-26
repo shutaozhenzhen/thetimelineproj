@@ -64,6 +64,10 @@ ID_UNDO = wx.NewId()
 ID_REDO = wx.NewId()
 
 # Navigate menu
+ID_FIND_FIRST = wx.NewId()
+ID_FIND_LAST = wx.NewId()
+ID_FIT_ALL = wx.NewId()
+ID_RESTORE_TIME_PERIOD = wx.NewId()
 ID_NAVIGATE = wx.NewId() + 100
 
 # Help menu

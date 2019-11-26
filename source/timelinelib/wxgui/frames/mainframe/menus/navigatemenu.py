@@ -19,23 +19,19 @@ import wx
 import timelinelib.wxgui.frames.mainframe.menus as mid
 from timelinelib.wxgui.frames.mainframe.menus.menubase import MenuBase
 
-ID_FIND_FIRST = wx.NewId()
-ID_FIND_LAST = wx.NewId()
-ID_FIT_ALL = wx.NewId()
-ID_RESTORE_TIME_PERIOD = wx.NewId()
 
 SHORTCUTS = list()
-REQUIRING_TIMELINE = (ID_FIND_FIRST, ID_FIND_LAST, ID_FIT_ALL, ID_RESTORE_TIME_PERIOD)
+REQUIRING_TIMELINE = (mid.ID_FIND_FIRST, mid.ID_FIND_LAST, mid.ID_FIT_ALL, mid.ID_RESTORE_TIME_PERIOD)
 
 
 class NavigateMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
-            ID_FIND_FIRST: self._find_first,
-            ID_FIND_LAST: self._find_last,
-            ID_FIT_ALL: self._fit_all,
-            ID_RESTORE_TIME_PERIOD: self._restore_time_period,
+            mid.ID_FIND_FIRST: self._find_first,
+            mid.ID_FIND_LAST: self._find_last,
+            mid.ID_FIT_ALL: self._fit_all,
+            mid.ID_RESTORE_TIME_PERIOD: self._restore_time_period,
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
 
@@ -49,11 +45,11 @@ class NavigateMenu(MenuBase):
     def _create_menu(self):
         menu = wx.Menu()
         menu.AppendSeparator()
-        menu.Append(ID_FIND_FIRST, _("Find &First Event"))
-        menu.Append(ID_FIND_LAST, _("Find &Last Event"))
-        menu.Append(ID_FIT_ALL, _("Fit &All Events"))
+        menu.Append(mid.ID_FIND_FIRST, _("Find &First Event"))
+        menu.Append(mid.ID_FIND_LAST, _("Find &Last Event"))
+        menu.Append(mid.ID_FIT_ALL, _("Fit &All Events"))
         menu.AppendSeparator()
-        menu.Append(ID_RESTORE_TIME_PERIOD, _("Go to previous time period"))
+        menu.Append(mid.ID_RESTORE_TIME_PERIOD, _("Go to previous time period"))
         return menu
 
     def _find_first(self, evt):
