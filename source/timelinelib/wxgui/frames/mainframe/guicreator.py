@@ -19,7 +19,6 @@
 A base class for the mainframe window, responsible for creating the GUI.
 """
 
-
 import collections
 import wx
 
@@ -31,8 +30,6 @@ from timelinelib.wxgui.frames.mainframe.menus.viewmenu import ViewMenu
 from timelinelib.wxgui.frames.mainframe.menus.timelinemenu import TimelineMenu
 from timelinelib.wxgui.frames.mainframe.menus.navigatemenu import NavigateMenu
 from timelinelib.wxgui.frames.mainframe.menus.helpmenu import HelpMenu
-# The following imports are used by the shortcut module
-from timelinelib.wxgui.frames.mainframe.menus.navigatemenu import ID_FIND_FIRST, ID_FIND_LAST, ID_FIT_ALL, ID_RESTORE_TIME_PERIOD
 
 NONE = 0
 CHECKBOX = 1

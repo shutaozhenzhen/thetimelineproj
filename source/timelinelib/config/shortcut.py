@@ -29,7 +29,6 @@ wxid is the ID associated with the menu item.
 cfgid is the ID used in the configuration file associated with a shortcut.
 """
 
-import timelinelib.wxgui.frames.mainframe.guicreator as mf
 import timelinelib.wxgui.frames.mainframe.menus as mid
 
 
@@ -98,9 +97,9 @@ METADATA = [  # File
               Metadata(mid.ID_CONTACT, "shortcut_contact", LABEL_HELP % _("Contact"), NO_MODIFIER, ""),
               Metadata(mid.ID_ABOUT, "shortcut_about", LABEL_HELP % _("About"), NO_MODIFIER, ""),
               # Navigate
-              Metadata(mf.ID_FIND_FIRST, "shortcut_find_first_event", LABEL_NAVIGATE % _("Find First Event"), NO_MODIFIER, ""),
-              Metadata(mf.ID_FIND_LAST, "shortcut_find_last_event", LABEL_NAVIGATE % _("Find Last Event"), NO_MODIFIER, ""),
-              Metadata(mf.ID_FIT_ALL, "shortcut_find_all_events", LABEL_NAVIGATE % _("Find All Events"), NO_MODIFIER, ""),
+              Metadata(mid.ID_FIND_FIRST, "shortcut_find_first_event", LABEL_NAVIGATE % _("Find First Event"), NO_MODIFIER, ""),
+              Metadata(mid.ID_FIND_LAST, "shortcut_find_last_event", LABEL_NAVIGATE % _("Find Last Event"), NO_MODIFIER, ""),
+              Metadata(mid.ID_FIT_ALL, "shortcut_find_all_events", LABEL_NAVIGATE % _("Find All Events"), NO_MODIFIER, ""),
     ]
 FUNCTION_KEYS = ["PgDn", "PgUp", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]
 SHORTCUT_KEYS = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
