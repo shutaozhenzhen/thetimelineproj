@@ -46,6 +46,8 @@ ID_VERT_ZOOMIN = wx.NewId()
 ID_VERT_ZOOMOUT = wx.NewId()
 ID_HIDE_DONE = wx.NewId()
 ID_PRESENTATION = wx.NewId()
+ID_LEFT_ALIGNMENT = wx.NewId()
+ID_CENTER_ALIGNMENT = wx.NewId()
 
 # Timeline menu
 ID_CREATE_EVENT = wx.NewId()

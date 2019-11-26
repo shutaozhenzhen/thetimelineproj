@@ -47,6 +47,8 @@ class ViewMenu(MenuBase):
             mid.ID_VERT_ZOOMOUT: self._vert_zoomout,
             mid.ID_PRESENTATION: self.start_slide_show,
             mid.ID_HIDE_DONE: self._hide_events_done,
+            mid.ID_LEFT_ALIGNMENT: self._left_alignment,
+            mid.ID_CENTER_ALIGNMENT: self._center_alignment,
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE, REQUIRING_VISIBLE_TIMELINE_VIEW)
 
@@ -86,32 +88,17 @@ class ViewMenu(MenuBase):
         menu.FindItemById(mid.ID_LEGEND).Check(self._parent.config.show_legend)
         menu.FindItemById(mid.ID_BALLOONS).Check(self._parent.config.balloon_on_hover)
         menu.FindItemById(mid.ID_HIDE_DONE).Check(self._parent.config.hide_events_done)
+        menu.FindItemById(mid.ID_LEFT_ALIGNMENT).Check(self._parent.config.draw_point_events_to_right)
+        menu.FindItemById(mid.ID_CENTER_ALIGNMENT).Check(not self._parent.config.draw_point_events_to_right)
 
     def _on_toolbar_click(self, event):
         self._parent.config.show_toolbar = event.IsChecked()
 
     def _create_view_point_event_alignment_menu(self, menu):
         sub_menu = wx.Menu()
-        left_item = sub_menu.Append(wx.ID_ANY, _("Left"), kind=wx.ITEM_RADIO)
-        center_item = sub_menu.Append(wx.ID_ANY, _("Center"), kind=wx.ITEM_RADIO)
+        sub_menu.Append(mid.ID_LEFT_ALIGNMENT, _("Left"), kind=wx.ITEM_RADIO)
+        sub_menu.Append(mid.ID_CENTER_ALIGNMENT, _("Center"), kind=wx.ITEM_RADIO)
         menu.Append(wx.ID_ANY, _("Point event alignment"), sub_menu)
-
-        def on_first_tool_click(event):
-            self._parent.config.draw_point_events_to_right = True
-
-        def on_second_tool_click(event):
-            self._parent.config.draw_point_events_to_right = False
-
-        def check_item_corresponding_to_config():
-            if self._parent.config.draw_point_events_to_right:
-                left_item.Check()
-            else:
-                center_item.Check()
-
-        self._parent.Bind(wx.EVT_MENU, on_first_tool_click, left_item)
-        self._parent.Bind(wx.EVT_MENU, on_second_tool_click, center_item)
-        self._parent.config.listen_for_any(check_item_corresponding_to_config)
-        check_item_corresponding_to_config()
 
     def _create_event_box_drawers_menu(self, menu):
 
@@ -162,5 +149,8 @@ class ViewMenu(MenuBase):
     def _hide_events_done(self, evt):
         self._parent.config.hide_events_done = evt.IsChecked()
 
+    def _left_alignment(self, evt):
+        self._parent.config.draw_point_events_to_right = True
 
-
+    def _center_alignment(self, evt):
+        self._parent.config.draw_point_events_to_right = False
