@@ -47,6 +47,25 @@ ID_VERT_ZOOMOUT = wx.NewId()
 ID_HIDE_DONE = wx.NewId()
 ID_PRESENTATION = wx.NewId()
 
+# Timeline menu
+ID_CREATE_EVENT = wx.NewId()
+ID_EDIT_EVENT = wx.NewId()
+ID_DUPLICATE_EVENT = wx.NewId()
+ID_SET_CATEGORY_ON_SELECTED = wx.NewId()
+ID_MOVE_EVENT_UP = wx.NewId()
+ID_MOVE_EVENT_DOWN = wx.NewId()
+ID_CREATE_MILESTONE = wx.NewId()
+ID_COMPRESS = wx.NewId()
+ID_MEASURE_DISTANCE = wx.NewId()
+ID_SET_CATEGORY_ON_WITHOUT = wx.NewId()
+ID_EDIT_ERAS = wx.NewId()
+ID_SET_READONLY = wx.NewId()
+ID_UNDO = wx.NewId()
+ID_REDO = wx.NewId()
+
+# Navigate menu
+ID_NAVIGATE = wx.NewId() + 100
+
 # Help menu
 ID_HELP = wx.ID_HELP
 ID_TUTORIAL = wx.NewId()

@@ -23,46 +23,33 @@ from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_d
 from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.db.utils import safe_locking
 
-ID_CREATE_EVENT = wx.NewId()
-ID_EDIT_EVENT = wx.NewId()
-ID_DUPLICATE_EVENT = wx.NewId()
-ID_SET_CATEGORY_ON_SELECTED = wx.NewId()
-ID_MOVE_EVENT_UP = wx.NewId()
-ID_MOVE_EVENT_DOWN = wx.NewId()
-ID_CREATE_MILESTONE = wx.NewId()
-ID_COMPRESS = wx.NewId()
-ID_MEASURE_DISTANCE = wx.NewId()
-ID_SET_CATEGORY_ON_WITHOUT = wx.NewId()
-ID_EDIT_ERAS = wx.NewId()
-ID_SET_READONLY = wx.NewId()
-ID_UNDO = wx.NewId()
-ID_REDO = wx.NewId()
 
 SHORTCUTS = list()
 REQUIRING_TIMELINE = list()
-REQUIRING_WRITEABLE_TIMELINE = (ID_CREATE_EVENT, ID_EDIT_EVENT, ID_CREATE_MILESTONE, ID_DUPLICATE_EVENT,
-                                ID_SET_CATEGORY_ON_SELECTED, ID_MOVE_EVENT_UP, ID_MOVE_EVENT_DOWN,
-                                ID_MEASURE_DISTANCE, ID_SET_CATEGORY_ON_WITHOUT,
-                                ID_SET_READONLY, ID_EDIT_ERAS, ID_COMPRESS, ID_UNDO, ID_REDO)
+REQUIRING_WRITEABLE_TIMELINE = (mid.ID_CREATE_EVENT, mid.ID_EDIT_EVENT, mid.ID_CREATE_MILESTONE, mid.ID_DUPLICATE_EVENT,
+                                mid.ID_SET_CATEGORY_ON_SELECTED, mid.ID_MOVE_EVENT_UP, mid.ID_MOVE_EVENT_DOWN,
+                                mid.ID_MEASURE_DISTANCE, mid.ID_SET_CATEGORY_ON_WITHOUT,
+                                mid.ID_SET_READONLY, mid.ID_EDIT_ERAS, mid.ID_COMPRESS, mid.ID_UNDO, mid.ID_REDO)
+
 
 class TimelineMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
-            ID_CREATE_EVENT: self._create_event,
-            ID_EDIT_EVENT: self._edit_event,
-            ID_DUPLICATE_EVENT: self._duplicate_event,
-            ID_SET_CATEGORY_ON_SELECTED: self._set_category_on_selected,
-            ID_MOVE_EVENT_UP: self._move_event_up,
-            ID_MOVE_EVENT_DOWN: self._move_event_down,
-            ID_CREATE_MILESTONE: self._create_milestone,
-            ID_COMPRESS: self._compress,
-            ID_MEASURE_DISTANCE: self._measure_distance,
-            ID_SET_CATEGORY_ON_WITHOUT: self._set_category_on_without,
-            ID_EDIT_ERAS: self._edit_eras,
-            ID_SET_READONLY: self._set_readonly,
-            ID_UNDO: self._undo,
-            ID_REDO: self._redo,
+            mid.ID_CREATE_EVENT: self._create_event,
+            mid.ID_EDIT_EVENT: self._edit_event,
+            mid.ID_DUPLICATE_EVENT: self._duplicate_event,
+            mid.ID_SET_CATEGORY_ON_SELECTED: self._set_category_on_selected,
+            mid.ID_MOVE_EVENT_UP: self._move_event_up,
+            mid.ID_MOVE_EVENT_DOWN: self._move_event_down,
+            mid.ID_CREATE_MILESTONE: self._create_milestone,
+            mid.ID_COMPRESS: self._compress,
+            mid.ID_MEASURE_DISTANCE: self._measure_distance,
+            mid.ID_SET_CATEGORY_ON_WITHOUT: self._set_category_on_without,
+            mid.ID_EDIT_ERAS: self._edit_eras,
+            mid.ID_SET_READONLY: self._set_readonly,
+            mid.ID_UNDO: self._undo,
+            mid.ID_REDO: self._redo,
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE,
                           requiring_writeable_timeline=REQUIRING_WRITEABLE_TIMELINE)
@@ -76,27 +63,27 @@ class TimelineMenu(MenuBase):
 
     def _create_menu(self):
         menu = wx.Menu()
-        menu.Append(ID_CREATE_EVENT, _("Create &Event..."))
-        menu.Append(ID_EDIT_EVENT, _("&Edit Selected Event..."))
-        menu.Append(ID_DUPLICATE_EVENT, _("&Duplicate Selected Event..."))
-        menu.Append(ID_SET_CATEGORY_ON_SELECTED, _("Set Category on Selected Events..."))
-        menu.Append(ID_MOVE_EVENT_UP, _("Move event up") + "\tAlt+Up")
-        menu.Append(ID_MOVE_EVENT_DOWN, _("Move event down") + "\tAlt+Down")
+        menu.Append(mid.ID_CREATE_EVENT, _("Create &Event..."))
+        menu.Append(mid.ID_EDIT_EVENT, _("&Edit Selected Event..."))
+        menu.Append(mid.ID_DUPLICATE_EVENT, _("&Duplicate Selected Event..."))
+        menu.Append(mid.ID_SET_CATEGORY_ON_SELECTED, _("Set Category on Selected Events..."))
+        menu.Append(mid.ID_MOVE_EVENT_UP, _("Move event up") + "\tAlt+Up")
+        menu.Append(mid.ID_MOVE_EVENT_DOWN, _("Move event down") + "\tAlt+Down")
         menu.AppendSeparator()
-        menu.Append(ID_CREATE_MILESTONE, _("Create &Milestone..."))
+        menu.Append(mid.ID_CREATE_MILESTONE, _("Create &Milestone..."))
         menu.AppendSeparator()
-        menu.Append(ID_COMPRESS, _("&Compress timeline Events"))
+        menu.Append(mid.ID_COMPRESS, _("&Compress timeline Events"))
         menu.AppendSeparator()
-        menu.Append(ID_MEASURE_DISTANCE, _("&Measure Distance between two Events..."))
+        menu.Append(mid.ID_MEASURE_DISTANCE, _("&Measure Distance between two Events..."))
         menu.AppendSeparator()
-        menu.Append(ID_SET_CATEGORY_ON_WITHOUT, _("Set Category on events &without category..."))
+        menu.Append(mid.ID_SET_CATEGORY_ON_WITHOUT, _("Set Category on events &without category..."))
         menu.AppendSeparator()
-        menu.Append(ID_EDIT_ERAS, _("Edit Era's..."))
+        menu.Append(mid.ID_EDIT_ERAS, _("Edit Era's..."))
         menu.AppendSeparator()
-        menu.Append(ID_SET_READONLY, _("&Read Only"))
+        menu.Append(mid.ID_SET_READONLY, _("&Read Only"))
         menu.AppendSeparator()
-        menu.Append(ID_UNDO, _("&Undo") + "\tCtrl+Z")
-        menu.Append(ID_REDO, _("&Redo") + "\tAlt+Z")
+        menu.Append(mid.ID_UNDO, _("&Undo") + "\tCtrl+Z")
+        menu.Append(mid.ID_REDO, _("&Redo") + "\tAlt+Z")
         return menu
 
     def _create_event(self, evt):
