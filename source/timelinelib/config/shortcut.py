@@ -92,11 +92,11 @@ METADATA = [  # File
               Metadata(mf.ID_UNDO, "shortcut_undo", LABEL_TIMELINE % _("Undo"), CTRL_MODIFIER, "Z"),
               Metadata(mf.ID_REDO, "shortcut_redo", LABEL_TIMELINE % _("Redo"), ALT_MODIFIER, "Z"),
               # Help
-              Metadata(mf.ID_HELP, "shortcut_help_content", LABEL_HELP % _("Contents"), NO_MODIFIER, "F1"),
-              Metadata(mf.ID_TUTORIAL, "shortcut_tutorial", LABEL_HELP % _("Getting started tutorial"), NO_MODIFIER, ""),
-              Metadata(mf.ID_FEEDBACK, "shortcut_feedback", LABEL_HELP % _("Give Feedback"), NO_MODIFIER, ""),
-              Metadata(mf.ID_CONTACT, "shortcut_contact", LABEL_HELP % _("Contact"), NO_MODIFIER, ""),
-              Metadata(mf.ID_ABOUT, "shortcut_about", LABEL_HELP % _("About"), NO_MODIFIER, ""),
+              Metadata(mid.ID_HELP, "shortcut_help_content", LABEL_HELP % _("Contents"), NO_MODIFIER, "F1"),
+              Metadata(mid.ID_TUTORIAL, "shortcut_tutorial", LABEL_HELP % _("Getting started tutorial"), NO_MODIFIER, ""),
+              Metadata(mid.ID_FEEDBACK, "shortcut_feedback", LABEL_HELP % _("Give Feedback"), NO_MODIFIER, ""),
+              Metadata(mid.ID_CONTACT, "shortcut_contact", LABEL_HELP % _("Contact"), NO_MODIFIER, ""),
+              Metadata(mid.ID_ABOUT, "shortcut_about", LABEL_HELP % _("About"), NO_MODIFIER, ""),
               # Navigate
               Metadata(mf.ID_FIND_FIRST, "shortcut_find_first_event", LABEL_NAVIGATE % _("Find First Event"), NO_MODIFIER, ""),
               Metadata(mf.ID_FIND_LAST, "shortcut_find_last_event", LABEL_NAVIGATE % _("Find Last Event"), NO_MODIFIER, ""),
