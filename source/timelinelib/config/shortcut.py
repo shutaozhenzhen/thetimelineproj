@@ -65,11 +65,11 @@ METADATA = [  # File
               Metadata(mid.ID_EXPORT_SVG, "shortcut_export_svg", LABEL_FILE % _("Export to SVG..."), NO_MODIFIER, ""),
               Metadata(mid.ID_EXIT, "shortcut_exit", LABEL_FILE % _("Exit"), NO_MODIFIER, ""),
               # Edit
-              Metadata(mf.ID_FIND, "shortcut_find", LABEL_EDIT % _("Find"), CTRL_MODIFIER, "F"),
-              Metadata(mf.ID_FIND_MILESTONES, "shortcut_find_milestones", LABEL_EDIT % _("Find Milestones"), SHIFT_CTRL_MODIFIER, "M"),
-              Metadata(mf.ID_PREFERENCES, "shortcut_preferences", LABEL_EDIT % _("Preferences"), NO_MODIFIER, ""),
-              Metadata(mf.ID_SELECT_ALL, "shortcut_selectall", LABEL_EDIT % _("Select All Events"), NO_MODIFIER, ""),
-              Metadata(mf.ID_EDIT_SHORTCUTS, "shortcut_shortcuts", LABEL_EDIT % _("Shortcuts"), NO_MODIFIER, ""),
+              Metadata(mid.ID_FIND, "shortcut_find", LABEL_EDIT % _("Find"), CTRL_MODIFIER, "F"),
+              Metadata(mid.ID_FIND_MILESTONES, "shortcut_find_milestones", LABEL_EDIT % _("Find Milestones"), SHIFT_CTRL_MODIFIER, "M"),
+              Metadata(mid.ID_SELECT_ALL, "shortcut_selectall", LABEL_EDIT % _("Select All Events"), NO_MODIFIER, ""),
+              Metadata(mid.ID_PREFERENCES, "shortcut_preferences", LABEL_EDIT % _("Preferences"), NO_MODIFIER, ""),
+              Metadata(mid.ID_EDIT_SHORTCUTS, "shortcut_shortcuts", LABEL_EDIT % _("Shortcuts"), NO_MODIFIER, ""),
               # View
               Metadata(mf.ID_SIDEBAR, "shortcut_sidebar", LABEL_VIEW % _("Sidebar"), CTRL_MODIFIER, "I"),
               Metadata(mf.ID_LEGEND, "shortcut_legend", LABEL_VIEW % _("Legend"), NO_MODIFIER, ""),
