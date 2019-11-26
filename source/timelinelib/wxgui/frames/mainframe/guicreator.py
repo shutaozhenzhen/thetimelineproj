@@ -23,14 +23,8 @@ A base class for the mainframe window, responsible for creating the GUI.
 import collections
 import wx
 
-from timelinelib.db.utils import safe_locking
 from timelinelib.wxgui.components.mainpanel import MainPanel
 from timelinelib.wxgui.components.statusbaradapter import StatusBarAdapter
-from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
-from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
-from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
-from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
-from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
 from timelinelib.wxgui.frames.mainframe.menus.filemenu import FileMenu
 from timelinelib.wxgui.frames.mainframe.menus.editmenu import EditMenu
 from timelinelib.wxgui.frames.mainframe.menus.viewmenu import ViewMenu
@@ -49,17 +43,16 @@ NONE = 0
 CHECKBOX = 1
 CHECKED_RB = 2
 UNCHECKED_RB = 3
-ID_PT_EVENT_TO_RIGHT = wx.NewId()
+ID_NEW = wx.ID_NEW
+ID_SAVEAS = wx.ID_SAVEAS
 ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
-ID_NEW = wx.ID_NEW
+ID_EXIT = wx.ID_EXIT
 ID_FIND = wx.ID_FIND
 ID_PREFERENCES = wx.ID_PREFERENCES
 ID_HELP = wx.ID_HELP
 ID_ABOUT = wx.ID_ABOUT
-ID_SAVEAS = wx.ID_SAVEAS
-ID_EXIT = wx.ID_EXIT
 ID_NAVIGATE = wx.NewId() + 100
 
 
@@ -132,66 +125,3 @@ class GuiCreator:
                 item = menu.Append(item_id)
             self.shortcut_items[item_id] = menu.FindItemById(item_id)
             self.Bind(wx.EVT_MENU, handler, item)
-
-    def _mnu_file_new_on_click(self, event):
-        items = [
-            {
-                "text": _("Gregorian"),
-                "description": _("This creates a timeline using the standard calendar."),
-                "create_fn": self._create_new_timeline,
-            },
-            {
-                "text": _("Numeric"),
-                "description": _("This creates a timeline that has numbers on the x-axis instead of dates."),
-                "create_fn": self._create_new_numeric_timeline,
-            },
-            {
-                "text": _("Directory"),
-                "description": _("This creates a timeline where the modification date of files in a directory are shown as events."),
-                "create_fn": self._create_new_dir_timeline,
-            },
-            {
-                "text": _("Bosparanian"),
-                "description": _("This creates a timeline using the fictuous Bosparanian calendar from the German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."),
-                "create_fn": self._create_new_bosparanian_timeline,
-            },
-            {
-                "text": _("Pharaonic"),
-                "description": _("This creates a timeline using the ancient egypt pharaonic calendar"),
-                "create_fn": self._create_new_pharaonic_timeline,
-            },
-            {
-                "text": _("Coptic"),
-                "description": _("This creates a timeline using the coptic calendar"),
-                "create_fn": self._create_new_coptic_timeline,
-            },
-        ]
-        dialog = FileNewDialog(self, items)
-        if dialog.ShowModal() == wx.ID_OK:
-            dialog.GetSelection()["create_fn"]()
-        dialog.Destroy()
-
-    def _mnu_file_open_on_click(self, event):
-        self._open_existing_timeline()
-
-    def mnu_file_save_as_on_click(self, event):
-        if self.timeline is not None:
-            self._save_as()
-
-    def _mnu_file_import_on_click(self, menu):
-        def open_import_dialog():
-            dialog = ImportEventsDialog(self.timeline, self)
-            dialog.ShowModal()
-            dialog.Destroy()
-        safe_locking(self, open_import_dialog)
-
-    def _mnu_file_exit_on_click(self, evt):
-        self.Close()
-
-    def _add_ellipses_to_menuitem(self, wx_id):
-        plain = wx.GetStockLabel(wx_id, wx.STOCK_WITH_ACCELERATOR | wx.STOCK_WITH_MNEMONIC)
-        # format of plain 'xxx[\tyyy]', example '&New\tCtrl+N'
-        tab_index = plain.find("\t")
-        if tab_index != -1:
-            return plain[:tab_index] + "..." + plain[tab_index:]
-        return plain + "..."
