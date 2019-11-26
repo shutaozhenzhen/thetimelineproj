@@ -33,7 +33,7 @@ class BitmapExporter(PluginBase):
         return _("Export Current view to Image...")
 
     def wxid(self):
-        from timelinelib.wxgui.frames.mainframe.guicreator import ID_EXPORT
+        from timelinelib.wxgui.frames.mainframe.menus import ID_EXPORT
         return ID_EXPORT
 
     def run(self, main_frame):
