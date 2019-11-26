@@ -32,14 +32,12 @@ from timelinelib.wxgui.frames.mainframe.menus.timelinemenu import TimelineMenu
 from timelinelib.wxgui.frames.mainframe.menus.navigatemenu import NavigateMenu
 from timelinelib.wxgui.frames.mainframe.menus.helpmenu import HelpMenu
 # The following imports are used by the shortcut module
-from timelinelib.wxgui.frames.mainframe.menus.timelinemenu import ID_CREATE_EVENT, ID_EDIT_EVENT, ID_DUPLICATE_EVENT, ID_SET_CATEGORY_ON_SELECTED, ID_MOVE_EVENT_UP, ID_MOVE_EVENT_DOWN, ID_CREATE_MILESTONE, ID_COMPRESS, ID_MEASURE_DISTANCE, ID_SET_CATEGORY_ON_WITHOUT, ID_EDIT_ERAS, ID_SET_READONLY, ID_UNDO, ID_REDO
 from timelinelib.wxgui.frames.mainframe.menus.navigatemenu import ID_FIND_FIRST, ID_FIND_LAST, ID_FIT_ALL, ID_RESTORE_TIME_PERIOD
 
 NONE = 0
 CHECKBOX = 1
 CHECKED_RB = 2
 UNCHECKED_RB = 3
-ID_NAVIGATE = wx.NewId() + 100
 
 
 class GuiCreator:

@@ -80,17 +80,17 @@ METADATA = [  # File
               Metadata(mid.ID_VERT_ZOOMOUT, "shortcut_vertical_zoomout", LABEL_VIEW % _("Vertical Zoom Out"), ALT_MODIFIER, "-"),
               Metadata(mid.ID_PRESENTATION, "shortcut_slideshow", LABEL_VIEW % _("Start slide show"), ALT_MODIFIER, "-"),
               # Timeline
-              Metadata(mf.ID_CREATE_EVENT, "shortcut_create_event", LABEL_TIMELINE % _("Create Event"), NO_MODIFIER, ""),
-              Metadata(mf.ID_EDIT_EVENT, "shortcut_edit_event", LABEL_TIMELINE % _("Edit Selected Event"), NO_MODIFIER, ""),
-              Metadata(mf.ID_DUPLICATE_EVENT, "shortcut_duplicate_event", LABEL_TIMELINE % _("Duplicate Selected Event"), NO_MODIFIER, ""),
-              Metadata(mf.ID_SET_CATEGORY_ON_SELECTED, "shortcut_set_category_on_selected",
+              Metadata(mid.ID_CREATE_EVENT, "shortcut_create_event", LABEL_TIMELINE % _("Create Event"), NO_MODIFIER, ""),
+              Metadata(mid.ID_EDIT_EVENT, "shortcut_edit_event", LABEL_TIMELINE % _("Edit Selected Event"), NO_MODIFIER, ""),
+              Metadata(mid.ID_DUPLICATE_EVENT, "shortcut_duplicate_event", LABEL_TIMELINE % _("Duplicate Selected Event"), NO_MODIFIER, ""),
+              Metadata(mid.ID_SET_CATEGORY_ON_SELECTED, "shortcut_set_category_on_selected",
                        LABEL_TIMELINE % _("Set Category on Selected Events"), NO_MODIFIER, ""),
-              Metadata(mf.ID_MEASURE_DISTANCE, "shortcut_measure_distance", LABEL_TIMELINE % _("Measure Distance between two Events"), NO_MODIFIER, ""),
-              Metadata(mf.ID_SET_CATEGORY_ON_WITHOUT, "shortcut_set_category_on_without",
+              Metadata(mid.ID_MEASURE_DISTANCE, "shortcut_measure_distance", LABEL_TIMELINE % _("Measure Distance between two Events"), NO_MODIFIER, ""),
+              Metadata(mid.ID_SET_CATEGORY_ON_WITHOUT, "shortcut_set_category_on_without",
                        LABEL_TIMELINE % _("Set Category on events without category"), NO_MODIFIER, ""),
-              Metadata(mf.ID_SET_READONLY, "shortcut_set_readonly", LABEL_TIMELINE % _("Read Only"), NO_MODIFIER, ""),
-              Metadata(mf.ID_UNDO, "shortcut_undo", LABEL_TIMELINE % _("Undo"), CTRL_MODIFIER, "Z"),
-              Metadata(mf.ID_REDO, "shortcut_redo", LABEL_TIMELINE % _("Redo"), ALT_MODIFIER, "Z"),
+              Metadata(mid.ID_SET_READONLY, "shortcut_set_readonly", LABEL_TIMELINE % _("Read Only"), NO_MODIFIER, ""),
+              Metadata(mid.ID_UNDO, "shortcut_undo", LABEL_TIMELINE % _("Undo"), CTRL_MODIFIER, "Z"),
+              Metadata(mid.ID_REDO, "shortcut_redo", LABEL_TIMELINE % _("Redo"), ALT_MODIFIER, "Z"),
               # Help
               Metadata(mid.ID_HELP, "shortcut_help_content", LABEL_HELP % _("Contents"), NO_MODIFIER, "F1"),
               Metadata(mid.ID_TUTORIAL, "shortcut_tutorial", LABEL_HELP % _("Getting started tutorial"), NO_MODIFIER, ""),
@@ -184,7 +184,7 @@ class ShortcutController:
         try:
             pos = id_offset
             while True:
-                wxid = mf.ID_NAVIGATE + pos
+                wxid = mid.ID_NAVIGATE + pos
                 if not self.wxid_exists(wxid):
                     self._add_navigation_function(wxid, function_format)
                 else:
