@@ -69,7 +69,10 @@ class EditMenu(MenuBase):
         guiutils.show_dialog(lambda: CategoryFinderDialog(self._parent, self._parent.timeline))
 
     def _find_milestones(self, evt):
-        guiutils.show_dialog(lambda: MilestoneFinderDialog(self._parent, self._parent.timeline))
+        if len([milestone.text for milestone in self._parent.timeline.all_milestones]) > 0:
+            guiutils.show_dialog(lambda: MilestoneFinderDialog(self._parent, self._parent.timeline))
+        else:
+            guiutils.display_information_message(_('Info'), _('No Milestones found'))
 
     def _select_all(self, evt):
         self._parent.controller.select_all()
