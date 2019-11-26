@@ -16,10 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 import wx
+from timelinelib.db.utils import safe_locking
 from timelinelib.wxgui.frames.mainframe.menus.menubase import MenuBase
 from timelinelib.plugin.factory import EXPORTER
 from timelinelib.plugin import factory
-
+from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
+from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
 
 ID_IMPORT = wx.NewId()
 
@@ -31,11 +33,11 @@ class FileMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
-            wx.ID_NEW: parent._mnu_file_new_on_click,
-            wx.ID_OPEN: parent._mnu_file_open_on_click,
-            wx.ID_SAVEAS: parent.mnu_file_save_as_on_click,
-            ID_IMPORT: parent._mnu_file_import_on_click,
-            wx.ID_EXIT: parent._mnu_file_exit_on_click,
+            wx.ID_NEW: self._new,
+            wx.ID_OPEN: self._open,
+            wx.ID_SAVEAS: self._save_as,
+            ID_IMPORT: self._import,
+            wx.ID_EXIT: self._exit,
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
 
@@ -49,7 +51,7 @@ class FileMenu(MenuBase):
     def _create_menu(self):
         menu = wx.Menu()
         self._create_new_menu_item(menu)
-        menu.Append(wx.ID_OPEN, self._parent._add_ellipses_to_menuitem(wx.ID_OPEN), _("Open an existing timeline"))
+        menu.Append(wx.ID_OPEN, self.add_ellipses_to_menuitem(wx.ID_OPEN), _("Open an existing timeline"))
         self._create_open_recent_menu(menu)
         menu.AppendSeparator()
         menu.Append(wx.ID_SAVEAS, "", _("Save As..."))
@@ -89,3 +91,58 @@ class FileMenu(MenuBase):
             method = getattr(plugin, "wxid", None)
             if callable(method):
                 self._parent.shortcut_items[method()] = mnu
+
+    def _new(self, evt):
+        items = [
+            {
+                "text": _("Gregorian"),
+                "description": _("This creates a timeline using the standard calendar."),
+                "create_fn": self._parent._create_new_timeline,
+            },
+            {
+                "text": _("Numeric"),
+                "description": _("This creates a timeline that has numbers on the x-axis instead of dates."),
+                "create_fn": self._parent._create_new_numeric_timeline,
+            },
+            {
+                "text": _("Directory"),
+                "description": _("This creates a timeline where the modification date of files in a directory are shown as events."),
+                "create_fn": self._parent._create_new_dir_timeline,
+            },
+            {
+                "text": _("Bosparanian"),
+                "description": _("This creates a timeline using the fictuous Bosparanian calendar from the German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."),
+                "create_fn": self._parent._create_new_bosparanian_timeline,
+            },
+            {
+                "text": _("Pharaonic"),
+                "description": _("This creates a timeline using the ancient egypt pharaonic calendar"),
+                "create_fn": self._parent._create_new_pharaonic_timeline,
+            },
+            {
+                "text": _("Coptic"),
+                "description": _("This creates a timeline using the coptic calendar"),
+                "create_fn": self._parent._create_new_coptic_timeline,
+            },
+        ]
+        dialog = FileNewDialog(self._parent, items)
+        if dialog.ShowModal() == wx.ID_OK:
+            dialog.GetSelection()["create_fn"]()
+        dialog.Destroy()
+
+    def _open(self, evt):
+        self._parent._open_existing_timeline()
+
+    def _save_as(self, evt):
+        if self._parent.timeline is not None:
+            self._parent._save_as()
+
+    def _import(self, evt):
+        def open_import_dialog():
+            dialog = ImportEventsDialog(self._parent.timeline, self._parent)
+            dialog.ShowModal()
+            dialog.Destroy()
+        safe_locking(self._parent, open_import_dialog)
+
+    def _exit(self, evt):
+        self._parent.Close()
