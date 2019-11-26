@@ -24,6 +24,9 @@ System info:
 
 Fixed crash reports and bugs:
 
+* ``invalid index in wxListBox::SetSelection.``
+  Showing Message Box when there are no milestones found
+
 * ``'Image' object has no attribute 'SaveStream'.``
   Changed functions for coding/decoding icon images.
 
