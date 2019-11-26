@@ -32,7 +32,6 @@ from timelinelib.wxgui.frames.mainframe.menus.timelinemenu import TimelineMenu
 from timelinelib.wxgui.frames.mainframe.menus.navigatemenu import NavigateMenu
 from timelinelib.wxgui.frames.mainframe.menus.helpmenu import HelpMenu
 # The following imports are used by the shortcut module
-from timelinelib.wxgui.frames.mainframe.menus.editmenu import ID_SELECT_ALL, ID_FIND_CATEGORIES, ID_FIND_MILESTONES, ID_EDIT_SHORTCUTS
 from timelinelib.wxgui.frames.mainframe.menus.viewmenu import ID_SIDEBAR, ID_LEGEND, ID_BALLOONS, ID_ZOOMIN, ID_ZOOMOUT, ID_VERT_ZOOMIN, ID_VERT_ZOOMOUT, ID_HIDE_DONE, ID_PRESENTATION
 from timelinelib.wxgui.frames.mainframe.menus.timelinemenu import ID_CREATE_EVENT, ID_EDIT_EVENT, ID_DUPLICATE_EVENT, ID_SET_CATEGORY_ON_SELECTED, ID_MOVE_EVENT_UP, ID_MOVE_EVENT_DOWN, ID_CREATE_MILESTONE, ID_COMPRESS, ID_MEASURE_DISTANCE, ID_SET_CATEGORY_ON_WITHOUT, ID_EDIT_ERAS, ID_SET_READONLY, ID_UNDO, ID_REDO
 from timelinelib.wxgui.frames.mainframe.menus.navigatemenu import ID_FIND_FIRST, ID_FIND_LAST, ID_FIT_ALL, ID_RESTORE_TIME_PERIOD
@@ -43,9 +42,6 @@ CHECKBOX = 1
 CHECKED_RB = 2
 UNCHECKED_RB = 3
 
-
-ID_FIND = wx.ID_FIND
-ID_PREFERENCES = wx.ID_PREFERENCES
 ID_HELP = wx.ID_HELP
 ID_ABOUT = wx.ID_ABOUT
 ID_NAVIGATE = wx.NewId() + 100
