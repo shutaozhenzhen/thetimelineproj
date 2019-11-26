@@ -81,35 +81,3 @@ class GuiCreator:
 
     def _bind_frame_events(self):
         self.Bind(wx.EVT_CLOSE, self._window_on_close)
-
-    def _create_menu(self, items_spec):
-        menu = wx.Menu()
-        for item in items_spec:
-            if item is not None:
-                self._create_menu_item(menu, item)
-            else:
-                menu.AppendSeparator()
-        return menu
-
-    def _create_menu_item(self, menu, item_spec):
-        if isinstance(item_spec, collections.Callable):
-            item_spec(menu)
-        else:
-            item_id, handler, label, checkbox = item_spec
-            if label is not None:
-                if checkbox == CHECKBOX:
-                    item = menu.Append(item_id, label, kind=wx.ITEM_CHECK)
-                elif checkbox == CHECKED_RB:
-                    item = menu.Append(item_id, label, kind=wx.ITEM_RADIO)
-                    item.Check(True)
-                elif checkbox == UNCHECKED_RB:
-                    item = menu.Append(item_id, label, kind=wx.ITEM_RADIO)
-                else:
-                    if label is not None:
-                        item = menu.Append(item_id, label)
-                    else:
-                        item = menu.Append(item_id)
-            else:
-                item = menu.Append(item_id)
-            self.shortcut_items[item_id] = menu.FindItemById(item_id)
-            self.Bind(wx.EVT_MENU, handler, item)
