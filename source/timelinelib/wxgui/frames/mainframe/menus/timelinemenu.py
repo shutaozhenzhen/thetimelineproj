@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 import wx
+import timelinelib.wxgui.frames.mainframe.menus as mid
 from timelinelib.wxgui.frames.mainframe.menus.menubase import MenuBase
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
