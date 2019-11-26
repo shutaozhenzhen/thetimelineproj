@@ -22,9 +22,6 @@ from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin import factory
 from timelinelib.proxies.drawingarea import DrawingAreaProxy
 
-CHECKED_RB = 2
-UNCHECKED_RB = 3
-
 
 SHORTCUTS = (mid.ID_SIDEBAR, mid.ID_LEGEND, mid.ID_BALLOONS, mid.ID_ZOOMIN, mid.ID_ZOOMOUT, mid.ID_VERT_ZOOMIN,
              mid.ID_VERT_ZOOMOUT, mid.ID_PRESENTATION)
@@ -101,31 +98,26 @@ class ViewMenu(MenuBase):
         menu.Append(wx.ID_ANY, _("Point event alignment"), sub_menu)
 
     def _create_event_box_drawers_menu(self, menu):
-
-        def create_click_handler(plugin):
-            def event_handler(evt):
-                self._parent.main_panel.get_timeline_canvas().SetEventBoxDrawer(plugin.run())
-                self._parent.config.set_selected_event_box_drawer(plugin.display_name())
-            return event_handler
-
-        items = []
+        sub_menu = wx.Menu()
         for plugin in factory.get_plugins(EVENTBOX_DRAWER):
+            item = sub_menu.Append(wx.ID_ANY, plugin.display_name(), kind=wx.ITEM_RADIO)
+            self._parent.Bind(wx.EVT_MENU, self._plugin_handler(plugin), item)
             if plugin.display_name() == self._parent.config.get_selected_event_box_drawer():
-                items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), CHECKED_RB))
-            else:
-                items.append((wx.ID_ANY, create_click_handler(plugin), plugin.display_name(), UNCHECKED_RB))
-        sub_menu = self._parent._create_menu(items)
+                item.Check()
         menu.Append(wx.ID_ANY, _("Event appearance"), sub_menu)
+
+    def _plugin_handler(self, plugin):
+        def event_handler(evt):
+            self._parent.main_panel.get_timeline_canvas().SetEventBoxDrawer(plugin.run())
+            self._parent.config.set_selected_event_box_drawer(plugin.display_name())
+        return event_handler
 
     def _legend(self, evt):
         self._parent.config.show_legend = evt.IsChecked()
 
     def _sidebar(self, evt):
-        self._parent.config.show_sidebar = evt.IsChecked()
-        if evt.IsChecked():
-            self._parent.main_panel.show_sidebar()
-        else:
-            self._parent.main_panel.hide_sidebar()
+        # TODO: Seems to work differently to legend and ballloons!
+        self._parent.sidebar_visible(evt.IsChecked())
 
     def _balloons(self, evt):
         self._parent.config.balloon_on_hover = evt.IsChecked()
