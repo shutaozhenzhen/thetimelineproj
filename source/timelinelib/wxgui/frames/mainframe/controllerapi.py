@@ -61,6 +61,9 @@ class MainFrameApiUsedByController:
     def set_readonly_mode(self):
         self.controller.set_timeline_in_readonly_mode()
 
+    def week_starts_on_monday(self):
+        return self.controller.week_starts_on_monday()
+
     def _set_title(self):
         if self.timeline is None:
             self.SetTitle(APPLICATION_NAME)
