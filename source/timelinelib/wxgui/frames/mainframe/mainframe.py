@@ -324,6 +324,10 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         else:
             self.main_panel.Navigate(lambda tp: tp.center(all_period.mean_time()))
 
+    def restore_time_period(self):
+        if self.prev_time_period:
+            self.main_panel.Navigate(lambda tp: self.prev_time_period)
+
     def _period_for_all_visible_events(self):
         try:
             visible_events = self._all_visible_events()
