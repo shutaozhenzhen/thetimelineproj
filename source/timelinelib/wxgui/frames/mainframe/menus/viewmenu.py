@@ -38,11 +38,11 @@ class ViewMenu(MenuBase):
             mid.ID_SIDEBAR: lambda evt: parent.config.set('show_sidebar', evt.IsChecked()),
             mid.ID_LEGEND: lambda evt: parent.config.set('show_legend', evt.IsChecked()),
             mid.ID_BALLOONS: lambda evt: parent.config.set('balloon_on_hover', evt.IsChecked()),
-            mid.ID_ZOOMIN: self._zoomoin,
-            mid.ID_ZOOMOUT: self._zoomout,
-            mid.ID_VERT_ZOOMIN: self._vert_zoomoin,
-            mid.ID_VERT_ZOOMOUT: self._vert_zoomout,
-            mid.ID_PRESENTATION: self.start_slide_show,
+            mid.ID_ZOOMIN: lambda evt: DrawingAreaProxy(parent).zoom_in(),
+            mid.ID_ZOOMOUT: lambda evt: DrawingAreaProxy(parent).zoom_out(),
+            mid.ID_VERT_ZOOMIN: lambda evt: DrawingAreaProxy(parent).vertical_zoom_in(),
+            mid.ID_VERT_ZOOMOUT: lambda evt: DrawingAreaProxy(parent).vertical_zoom_out(),
+            mid.ID_PRESENTATION: lambda evt: parent.start_slide_show(),
             mid.ID_HIDE_DONE: lambda evt: parent.config.set('hide_events_done', evt.IsChecked()),
             mid.ID_LEFT_ALIGNMENT: lambda evt: parent.config.set('draw_point_events_to_right', True),
             mid.ID_CENTER_ALIGNMENT: lambda evt: parent.config.set('draw_point_events_to_right', False),
@@ -108,18 +108,3 @@ class ViewMenu(MenuBase):
             self._parent.main_panel.get_timeline_canvas().SetEventBoxDrawer(plugin.run())
             self._parent.config.set_selected_event_box_drawer(plugin.display_name())
         return event_handler
-
-    def _zoomoin(self, evt):
-        DrawingAreaProxy(self._parent).zoom_in()
-
-    def _zoomout(self, evt):
-        DrawingAreaProxy(self._parent).zoom_out()
-
-    def _vert_zoomoin(self, evt):
-        DrawingAreaProxy(self._parent).vertical_zoom_in()
-
-    def _vert_zoomout(self, evt):
-        DrawingAreaProxy(self._parent).vertical_zoom_out()
-
-    def start_slide_show(self, evt):
-        self._parent.start_slide_show()
