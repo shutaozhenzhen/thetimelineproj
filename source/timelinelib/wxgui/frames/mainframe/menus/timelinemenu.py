@@ -19,8 +19,8 @@ import wx
 import timelinelib.wxgui.frames.mainframe.menus as mid
 from timelinelib.wxgui.frames.mainframe.menus.menubase import MenuBase
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
-from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
+from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.db.utils import safe_locking
 
 
@@ -37,9 +37,9 @@ class TimelineMenu(MenuBase):
     def __init__(self, parent):
         event_handlers = {
             mid.ID_CREATE_EVENT: lambda evt: open_create_event_editor(parent, parent, parent.config, parent.timeline),
-            mid.ID_EDIT_EVENT: self._edit_event,
-            mid.ID_DUPLICATE_EVENT: self._duplicate_event,
-            mid.ID_SET_CATEGORY_ON_SELECTED: self._set_category_on_selected,
+            mid.ID_EDIT_EVENT: lambda evt: parent.edit_event(),
+            mid.ID_DUPLICATE_EVENT: lambda evt: parent.duplicate_event(),
+            mid.ID_SET_CATEGORY_ON_SELECTED: lambda evt: parent.set_category_on_selected(),
             mid.ID_MOVE_EVENT_UP: lambda evt: parent.move_selected_event_up(),
             mid.ID_MOVE_EVENT_DOWN: lambda evt: parent.move_selected_event_down(),
             mid.ID_CREATE_MILESTONE: lambda evt: open_milestone_editor_for(parent, parent, parent.config, parent.timeline),
@@ -85,27 +85,3 @@ class TimelineMenu(MenuBase):
         menu.Append(mid.ID_UNDO, _("&Undo") + "\tCtrl+Z")
         menu.Append(mid.ID_REDO, _("&Redo") + "\tAlt+Z")
         return menu
-
-    def _edit_event(self, evt):
-        try:
-            event = self._parent.get_first_selected_event()
-            self._parent.main_panel.open_event_editor(event)
-        except IndexError:
-            # No event selected so do nothing!
-            pass
-
-    def _duplicate_event(self, evt):
-        try:
-            event = self._parent.get_first_selected_event()
-            open_duplicate_event_dialog_for_event(self._parent, self._parent, self._parent.timeline, event)
-        except IndexError:
-            # No event selected so do nothing!
-            pass
-
-    def _set_category_on_selected(self, evt):
-        try:
-            event = self._parent.get_first_selected_event() # Ensure that at least one event is selected
-            safe_locking(self._parent, lambda: self._parent._set_category_to_selected_events())
-        except IndexError:
-            # No event selected so do nothing!
-            pass
