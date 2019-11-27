@@ -20,6 +20,7 @@ import wx
 # File menu
 ID_NEW = wx.ID_NEW
 ID_OPEN = wx.ID_OPEN
+ID_RECENT = wx.NewId()
 ID_SAVEAS = wx.ID_SAVEAS
 ID_IMPORT = wx.NewId()
 ID_EXPORT = wx.NewId()
@@ -28,7 +29,6 @@ ID_EXPORT_SVG = wx.NewId()
 ID_EXPORT_LIST = wx.NewId()
 ID_EXPORT_FILE = wx.NewId()
 ID_EXIT = wx.ID_EXIT
-ID_RECENT = wx.ID_EXIT
 
 # Edit menu
 ID_FIND = wx.ID_FIND
