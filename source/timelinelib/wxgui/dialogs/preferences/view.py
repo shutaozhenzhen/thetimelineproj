@@ -26,6 +26,7 @@ from timelinelib.wxgui.dialogs.dateformat.view import DateFormatDialog
 from timelinelib.wxgui.dialogs.preferences.controller import PreferencesDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.config.paths import EVENT_ICONS_DIR
+from timelinelib.db.utils import safe_locking
 
 
 class PreferencesDialog(Dialog):
@@ -616,3 +617,11 @@ class PreferencesDialog(Dialog):
         control.SetFont(font)
         control.SetForegroundColour(font.WxColor)
         self.font_sizer.Layout()
+
+
+def open_preferences_dialog(parent, config):
+    def open_dialog():
+        dialog = PreferencesDialog(parent, config)
+        dialog.ShowModal()
+        dialog.Destroy()
+    safe_locking(parent, open_dialog)
