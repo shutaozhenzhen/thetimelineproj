@@ -39,6 +39,8 @@ class SystemInfoDialog(Dialog):
             <StaticText align="ALIGN_CENTER_VERTICAL" name="date_format" />
             <StaticText align="ALIGN_CENTER_VERTICAL" label="$(config_file)" />
             <StaticText align="ALIGN_CENTER_VERTICAL" name="config_file" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" label="$(locale_dir)" />
+            <StaticText align="ALIGN_CENTER_VERTICAL" name="locale_dir" />
         </FlexGridSizer>
         <BoxSizerHorizontal>
             <StretchSpacer/>
@@ -56,6 +58,7 @@ class SystemInfoDialog(Dialog):
             "locale_setting": _("Locale setting:"),
             "date_format": _("Locale date format:"),
             "config_file": _("Configuration file:"),
+            "locale_dir": _("Translations directory")
         }, title=_("System Information"))
         self.controller.on_init(parent)
 
@@ -80,6 +83,8 @@ class SystemInfoDialog(Dialog):
     def SetConfigFile(self, value):
         self.config_file.SetLabel(value)
 
+    def SetTranslationsDirectory(self, value):
+        self.locale_dir.SetLabel(value)
 
 def show_system_info_dialog(*args, **kwargs):
     dialog = SystemInfoDialog(get_frame_window(args[0]))

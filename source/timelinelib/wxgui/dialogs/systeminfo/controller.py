@@ -18,9 +18,11 @@
 
 import sys
 from sys import version as python_version
+import os
 import platform
 import wx
 
+from timelinelib.config.paths import LOCALE_DIR
 from timelinelib.wxgui.framework import Controller
 
 
@@ -34,6 +36,7 @@ class SystemInfoDialogController(Controller):
         self.view.SetLocaleSetting(self._get_locale_setting())
         self.view.SetConfigFile(self._get_config_file(parent))
         self.view.SetDateFormat(self._get_date_format(parent))
+        self.view.SetTranslationsDirectory(os.path.abspath(LOCALE_DIR))
         self.view.Fit()
 
     def _get_locale_setting(self):
