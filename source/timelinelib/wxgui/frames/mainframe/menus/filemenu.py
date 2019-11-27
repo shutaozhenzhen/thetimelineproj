@@ -35,7 +35,7 @@ class FileMenu(MenuBase):
         event_handlers = {
             mid.ID_NEW: lambda evt: open_file_new_dialog(parent),
             mid.ID_OPEN: lambda evt: parent.open_existing_timeline(),
-            mid.ID_SAVEAS: self._save_as,
+            mid.ID_SAVEAS: lambda evt: parent.save_as(),
             mid.ID_IMPORT: lambda evt: open_import_events_dialog(parent),
             mid.ID_EXIT: lambda evt: self._parent.Close(),
         }
@@ -91,7 +91,3 @@ class FileMenu(MenuBase):
             method = getattr(plugin, "wxid", None)
             if callable(method):
                 self._parent.shortcut_items[method()] = mnu
-
-    def _save_as(self, evt):
-        if self._parent.timeline is not None:
-            self._parent._save_as()
