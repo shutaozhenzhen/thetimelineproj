@@ -70,7 +70,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.controller = MainFrameController(self, db_open, self.config)
         self.menu_controller = MenuController()
         self._set_initial_values_to_member_variables()
-        self._create_print_data()
         self._set_experimental_features()
         self._create_gui()
         self.Maximize(self.config.window_maximized)
@@ -154,12 +153,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             _("Timeline files"), ["timeline", "ics"])
         self.images_svg_wildcard_helper = WildcardHelper(
             _("SVG files"), ["svg"])
-
-    def _create_print_data(self):
-        self.printData = wx.PrintData()
-        self.printData.SetPaperId(wx.PAPER_A4)
-        self.printData.SetPrintMode(wx.PRINT_MODE_PRINTER)
-        self.printData.SetOrientation(wx.LANDSCAPE)
 
     def _create_and_start_timer(self):
         self.alert_dialog_open = False
