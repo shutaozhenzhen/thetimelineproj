@@ -44,10 +44,10 @@ class TimelineMenu(MenuBase):
             mid.ID_MOVE_EVENT_DOWN: lambda evt: parent.move_selected_event_down(),
             mid.ID_CREATE_MILESTONE: lambda evt: open_milestone_editor_for(parent, parent, parent.config, parent.timeline),
             mid.ID_COMPRESS: lambda evt: safe_locking(parent, parent.timeline.compress),
-            mid.ID_MEASURE_DISTANCE: lambda: parent.measure_distance_between_events(),
+            mid.ID_MEASURE_DISTANCE: lambda evt: parent.measure_distance_between_events(),
             mid.ID_SET_CATEGORY_ON_WITHOUT: lambda evt: safe_locking(self._parent, lambda: parent.set_category()),
             mid.ID_EDIT_ERAS: lambda evt: safe_locking(parent, lambda: parent.edit_eras()),
-            mid.ID_SET_READONLY: lambda evt: parent.set_readonly_mode,
+            mid.ID_SET_READONLY: lambda evt: self._parent.set_readonly_mode(),
             mid.ID_UNDO: lambda evt: safe_locking(parent, parent.timeline.undo),
             mid.ID_REDO: lambda evt: safe_locking(parent, parent.timeline.redo),
         }
