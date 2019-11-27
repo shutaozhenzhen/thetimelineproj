@@ -48,7 +48,7 @@ class FileMenu(MenuBase):
 
     def _create_menu(self):
         menu = wx.Menu()
-        self._create_new_menu_item(menu)
+        menu.Append(mid.ID_NEW, _("New..."), _("Create a new timeline"))
         menu.Append(mid.ID_OPEN, self.add_ellipses_to_menuitem(mid.ID_OPEN), _("Open an existing timeline"))
         self._create_open_recent_menu(menu)
         menu.AppendSeparator()
@@ -60,12 +60,6 @@ class FileMenu(MenuBase):
         menu.AppendSeparator()
         menu.Append(mid.ID_EXIT, "", _("Exit the program"))
         return menu
-
-    @staticmethod
-    def _create_new_menu_item(file_menu):
-        accel = wx.GetStockLabel(mid.ID_NEW, wx.STOCK_WITH_ACCELERATOR | wx.STOCK_WITH_MNEMONIC)
-        accel = accel.split("\t", 1)[1]
-        file_menu.Append(mid.ID_NEW, _("New...") + "\t" + accel, _("Create a new timeline"))
 
     def _create_open_recent_menu(self, file_menu):
         self._parent.mnu_file_open_recent_submenu = wx.Menu()
