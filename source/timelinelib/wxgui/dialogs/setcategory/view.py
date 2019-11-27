@@ -55,3 +55,9 @@ class SetCategoryDialog(Dialog):
 
     def GetSelectedCategory(self):
         return self.category_choice.GetSelectedCategory()
+
+
+def open_set_category_dialog(parent, timeline, selected_event_ids=[]):
+    dialog = SetCategoryDialog(parent, timeline, selected_event_ids)
+    dialog.ShowModal()
+    dialog.Destroy()

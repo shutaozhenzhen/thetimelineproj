@@ -50,6 +50,7 @@ from timelinelib.calendar.coptic.timetype import CopticTimeType
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.db.utils import safe_locking
+from timelinelib.wxgui.dialogs.setcategory.view import open_set_category_dialog
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
 
@@ -284,16 +285,10 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         display_information_message(caption, distance_text)
 
     def set_category(self):
-        dialog = SetCategoryDialog(self, self.timeline)
-        dialog.ShowModal()
-        dialog.Destroy()
-        self.main_panel.redraw_timeline()
+        open_set_category_dialog(self, self.timeline)
 
     def _set_category_to_selected_events(self):
-        selected_event_ids = self.main_panel.get_selected_event_ids()
-        dialog = SetCategoryDialog(self, self.timeline, selected_event_ids)
-        dialog.ShowModal()
-        dialog.Destroy()
+        open_set_category_dialog(self, self.timeline, self.main_panel.get_selected_event_ids())
 
     def edit_eras(self):
         dialog = ErasEditorDialog(self, self.timeline, self.config)
