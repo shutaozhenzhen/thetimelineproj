@@ -55,6 +55,9 @@ class MainFrameApiUsedByController:
         self._enable_disable_searchbar()
         self._enable_disable_undo()
 
+    def start_slide_show(self):
+        self.controller.start_slide_show()
+
     def _set_title(self):
         if self.timeline is None:
             self.SetTitle(APPLICATION_NAME)
