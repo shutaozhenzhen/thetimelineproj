@@ -215,7 +215,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             self.controller.open_timeline(dialog.GetPath())
         dialog.Destroy()
 
-    def _open_existing_timeline(self):
+    def open_existing_timeline(self):
         directory = ""
         if self.timeline is not None:
             directory = os.path.dirname(self.timeline.path)

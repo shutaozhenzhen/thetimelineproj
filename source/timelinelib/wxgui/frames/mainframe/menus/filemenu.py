@@ -34,7 +34,7 @@ class FileMenu(MenuBase):
     def __init__(self, parent):
         event_handlers = {
             mid.ID_NEW: lambda evt: open_file_new_dialog(parent),
-            mid.ID_OPEN: lambda evt: parent._open_existing_timeline(),
+            mid.ID_OPEN: lambda evt: parent.open_existing_timeline(),
             mid.ID_SAVEAS: self._save_as,
             mid.ID_IMPORT: self._import,
             mid.ID_EXIT: lambda evt: self._parent.Close(),
