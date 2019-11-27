@@ -36,20 +36,20 @@ class TimelineMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
-            mid.ID_CREATE_EVENT: self._create_event,
+            mid.ID_CREATE_EVENT: lambda evt: open_create_event_editor(parent, parent, parent.config, parent.timeline),
             mid.ID_EDIT_EVENT: self._edit_event,
             mid.ID_DUPLICATE_EVENT: self._duplicate_event,
             mid.ID_SET_CATEGORY_ON_SELECTED: self._set_category_on_selected,
-            mid.ID_MOVE_EVENT_UP: self._move_event_up,
-            mid.ID_MOVE_EVENT_DOWN: self._move_event_down,
-            mid.ID_CREATE_MILESTONE: self._create_milestone,
-            mid.ID_COMPRESS: self._compress,
-            mid.ID_MEASURE_DISTANCE: self._measure_distance,
-            mid.ID_SET_CATEGORY_ON_WITHOUT: self._set_category_on_without,
-            mid.ID_EDIT_ERAS: self._edit_eras,
-            mid.ID_SET_READONLY: self._set_readonly,
-            mid.ID_UNDO: self._undo,
-            mid.ID_REDO: self._redo,
+            mid.ID_MOVE_EVENT_UP: lambda evt: parent.move_selected_event_up(),
+            mid.ID_MOVE_EVENT_DOWN: lambda evt: parent.move_selected_event_down(),
+            mid.ID_CREATE_MILESTONE: lambda evt: open_milestone_editor_for(parent, parent, parent.config, parent.timeline),
+            mid.ID_COMPRESS: lambda evt: safe_locking(parent, parent.timeline.compress),
+            mid.ID_MEASURE_DISTANCE: lambda: parent.measure_distance_between_events(),
+            mid.ID_SET_CATEGORY_ON_WITHOUT: lambda evt: safe_locking(self._parent, lambda: parent.set_category()),
+            mid.ID_EDIT_ERAS: lambda evt: safe_locking(parent, lambda: parent.edit_eras()),
+            mid.ID_SET_READONLY: lambda evt: parent.set_readonly_mode,
+            mid.ID_UNDO: lambda evt: safe_locking(parent, parent.timeline.undo),
+            mid.ID_REDO: lambda evt: safe_locking(parent, parent.timeline.redo),
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE,
                           requiring_writeable_timeline=REQUIRING_WRITEABLE_TIMELINE)
@@ -86,9 +86,6 @@ class TimelineMenu(MenuBase):
         menu.Append(mid.ID_REDO, _("&Redo") + "\tAlt+Z")
         return menu
 
-    def _create_event(self, evt):
-        open_create_event_editor(self._parent, self._parent, self._parent.config, self._parent.timeline)
-
     def _edit_event(self, evt):
         try:
             event = self._parent.get_first_selected_event()
@@ -112,33 +109,3 @@ class TimelineMenu(MenuBase):
         except IndexError:
             # No event selected so do nothing!
             pass
-
-    def _move_event_up(self, evt):
-        self._parent.main_panel.timeline_panel.move_selected_event_up()
-
-    def _move_event_down(self, evt):
-        self._parent.main_panel.timeline_panel.move_selected_event_down()
-
-    def _create_milestone(self, evt):
-        open_milestone_editor_for(self._parent, self._parent, self._parent.config, self._parent.timeline)
-
-    def _compress(self, evt):
-        safe_locking(self._parent, self._parent.timeline.compress)
-
-    def _measure_distance(self, evt):
-        self._parent._measure_distance_between_events()
-
-    def _set_category_on_without(self, evt):
-        safe_locking(self._parent, lambda: self._parent._set_category())
-
-    def _edit_eras(self, evt):
-        safe_locking(self._parent, lambda: self._parent._edit_eras())
-
-    def _set_readonly(self, evt):
-        self._parent.controller.set_timeline_in_readonly_mode()
-
-    def _undo(self, evt):
-        safe_locking(self._parent, self._parent.timeline.undo)
-
-    def _redo(self, evt):
-        safe_locking(self._parent, self._parent.timeline.redo)
