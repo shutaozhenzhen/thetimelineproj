@@ -33,7 +33,7 @@ class HelpMenu(MenuBase):
             mid.ID_HELP: parent.help_browser.show_contents_page,
             mid.ID_TUTORIAL: parent.controller.open_gregorian_tutorial_timeline,
             mid.ID_NUMTUTORIAL: parent.controller.open_numeric_tutorial_timeline,
-            mid.ID_FEEDBACK: self._feedback,
+            mid.ID_FEEDBACK: lambda evt: show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body=""),
             mid.ID_CONTACT: parent.help_browser.show_contact_page,
             mid.ID_SYSTEM_INFO: show_system_info_dialog,
             mid.ID_ABOUT: display_about_dialog,
@@ -61,6 +61,3 @@ class HelpMenu(MenuBase):
         menu.AppendSeparator()
         menu.Append(mid.ID_ABOUT)
         return menu
-
-    def _feedback(self, evt):
-        show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body="")
