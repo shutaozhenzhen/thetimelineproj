@@ -22,12 +22,11 @@ from timelinelib.plugin.factory import EVENTBOX_DRAWER
 from timelinelib.plugin import factory
 from timelinelib.proxies.drawingarea import DrawingAreaProxy
 
-
 SHORTCUTS = (mid.ID_SIDEBAR, mid.ID_LEGEND, mid.ID_BALLOONS, mid.ID_ZOOMIN, mid.ID_ZOOMOUT, mid.ID_VERT_ZOOMIN,
              mid.ID_VERT_ZOOMOUT, mid.ID_PRESENTATION)
 REQUIRING_TIMELINE = (mid.ID_LEGEND, mid.ID_BALLOONS, mid.ID_ZOOMIN, mid.ID_ZOOMOUT, mid.ID_VERT_ZOOMIN,
                       mid.ID_VERT_ZOOMOUT, mid.ID_PRESENTATION)
-REQUIRING_VISIBLE_TIMELINE_VIEW = (mid.ID_SIDEBAR, )
+REQUIRING_VISIBLE_TIMELINE_VIEW = (mid.ID_SIDEBAR,)
 
 
 class ViewMenu(MenuBase):
