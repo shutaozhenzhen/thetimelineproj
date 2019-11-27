@@ -37,7 +37,7 @@ class EditMenu(MenuBase):
     def __init__(self, parent):
         event_handlers = {
             mid.ID_FIND: lambda evt: parent.main_panel.show_searchbar(True),
-            mid.ID_FIND_CATEGORIES: self._find_categories,
+            mid.ID_FIND_CATEGORIES: lambda evt: open_category_finder_dialog(parent, parent.timeline),
             mid.ID_FIND_MILESTONES: self._find_milestones,
             mid.ID_SELECT_ALL: lambda evt: parent.controller.select_all(),
             mid.ID_PREFERENCES: lambda evt: open_preferences_dialog(parent, parent.config),
@@ -63,9 +63,6 @@ class EditMenu(MenuBase):
         menu.Append(mid.ID_PREFERENCES)
         menu.Append(mid.ID_EDIT_SHORTCUTS, _("Shortcuts..."))
         return menu
-
-    def _find_categories(self, evt):
-        open_category_finder_dialog(self._parent, self._parent.timeline)
 
     def _find_milestones(self, evt):
         if len([milestone.text for milestone in self._parent.timeline.all_milestones]) > 0:
