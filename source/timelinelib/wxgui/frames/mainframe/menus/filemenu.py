@@ -21,9 +21,9 @@ from timelinelib.db.utils import safe_locking
 from timelinelib.wxgui.frames.mainframe.menus.menubase import MenuBase
 from timelinelib.plugin.factory import EXPORTER
 from timelinelib.plugin import factory
-from timelinelib.wxgui.dialogs.filenew.view import FileNewDialog
 from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
 from timelinelib.wxgui.dialogs.filenew.view import open_file_new_dialog
+from timelinelib.wxgui.dialogs.importevents.view import open_import_events_dialog
 
 SHORTCUTS = (mid.ID_NEW, mid.ID_SAVEAS, mid.ID_IMPORT, mid.ID_EXIT)
 REQUIRING_TIMELINE = (mid.ID_IMPORT, mid.ID_SAVEAS)
@@ -97,8 +97,4 @@ class FileMenu(MenuBase):
             self._parent._save_as()
 
     def _import(self, evt):
-        def open_import_dialog():
-            dialog = ImportEventsDialog(self._parent.timeline, self._parent)
-            dialog.ShowModal()
-            dialog.Destroy()
-        safe_locking(self._parent, open_import_dialog)
+        open_import_events_dialog(self._parent)
