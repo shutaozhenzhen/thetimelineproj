@@ -75,7 +75,7 @@ class ViewMenu(MenuBase):
         point_even_alignmentsub_menu.Append(mid.ID_CENTER_ALIGNMENT, _("Center"), kind=wx.ITEM_RADIO)
         menu.Append(wx.ID_ANY, _("Point event alignment"), point_even_alignmentsub_menu)
         menu.AppendSeparator()
-        self._create_event_box_drawers_submenu(menu)
+        menu.Append(wx.ID_ANY, _("Event appearance"), self._create_event_box_drawers_submenu())
         menu.AppendSeparator()
         menu.Append(mid.ID_PRESENTATION, _("Start slide show") + "...")
         menu.AppendSeparator()
@@ -91,14 +91,20 @@ class ViewMenu(MenuBase):
         menu.FindItemById(mid.ID_LEFT_ALIGNMENT).Check(self._parent.config.draw_point_events_to_right)
         menu.FindItemById(mid.ID_CENTER_ALIGNMENT).Check(not self._parent.config.draw_point_events_to_right)
 
-    def _create_event_box_drawers_submenu(self, menu):
-        sub_menu = wx.Menu()
+    def _create_event_box_drawers_submenu(self):
+        submenu = wx.Menu()
         for plugin in factory.get_plugins(EVENTBOX_DRAWER):
-            item = sub_menu.Append(wx.ID_ANY, plugin.display_name(), kind=wx.ITEM_RADIO)
-            self._parent.Bind(wx.EVT_MENU, self._plugin_handler(plugin), item)
-            if plugin.display_name() == self._parent.config.get_selected_event_box_drawer():
-                item.Check()
-        menu.Append(wx.ID_ANY, _("Event appearance"), sub_menu)
+            self.create_submenu(plugin, submenu)
+        return submenu
+
+    def create_submenu(self, plugin, submenu):
+        wxid = plugin.wxid()
+        submenu.Append(wxid, plugin.display_name(), plugin.display_name(), kind=wx.ITEM_RADIO)
+        self._parent.Bind(wx.EVT_MENU, self._plugin_handler(plugin), id=wxid)
+        self._parent.menu_controller.add_menu_requiring_timeline(submenu.FindItemById(wxid))
+        self._parent.shortcut_items[wxid] = submenu.FindItemById(wxid)
+        if plugin.display_name() == self._parent.config.get_selected_event_box_drawer():
+            submenu.FindItemById(wxid).Check()
 
     def _plugin_handler(self, plugin):
         def event_handler(evt):

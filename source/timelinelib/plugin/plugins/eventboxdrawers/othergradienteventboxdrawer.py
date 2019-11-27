@@ -18,6 +18,7 @@
 
 from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.plugins.eventboxdrawers import EVENTBOX_DRAWER
+import timelinelib.wxgui.frames.mainframe.menus as mid
 
 
 class OtherGradientEventBoxDrawer(PluginBase):
@@ -27,6 +28,10 @@ class OtherGradientEventBoxDrawer(PluginBase):
 
     def display_name(self):
         return _("Other Gradient Event box drawer")
+
+    @staticmethod
+    def wxid():
+        return mid.ID_EVENTBOX_DRAWER_GRADIENT_HORIZONTAL
 
     def run(self):
         from timelinelib.canvas.eventboxdrawers.othergradienteventboxdrawer import OtherGradientEventBoxDrawer
