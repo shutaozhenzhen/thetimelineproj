@@ -20,6 +20,7 @@ import wx
 
 from timelinelib.wxgui.dialogs.milestonefinder.controller import MilestoneFinderDialogController
 from timelinelib.wxgui.framework import Dialog
+import timelinelib.wxgui.utils as guiutils
 
 
 class MilestoneFinderDialog(Dialog):
@@ -56,3 +57,10 @@ class MilestoneFinderDialog(Dialog):
 
     def GetMilestone(self):
         return self.lst_milestones.GetString(self.lst_milestones.GetSelection())
+
+
+def open_milestone_finder_dialog(parent, timeline):
+    if len([milestone.text for milestone in timeline.all_milestones]) > 0:
+        guiutils.show_dialog(lambda: MilestoneFinderDialog(parent, timeline))
+    else:
+        guiutils.display_information_message(_('Info'), _('No Milestones found'))

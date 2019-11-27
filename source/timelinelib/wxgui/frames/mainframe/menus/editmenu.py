@@ -17,16 +17,13 @@
 
 import wx
 import timelinelib.wxgui.frames.mainframe.menus as mid
-from timelinelib.db.utils import safe_locking
 import timelinelib.wxgui.utils as guiutils
 from timelinelib.wxgui.frames.mainframe.menus.menubase import MenuBase
-from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
 from timelinelib.wxgui.dialogs.milestonefinder.view import MilestoneFinderDialog
-from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
-from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
 from timelinelib.wxgui.dialogs.preferences.view import open_preferences_dialog
 from timelinelib.wxgui.dialogs.shortcutseditor.view import open_shortcuts_editor_dialog
 from timelinelib.wxgui.dialogs.categoryfinder.view import open_category_finder_dialog
+from timelinelib.wxgui.dialogs.milestonefinder.view import open_milestone_finder_dialog
 
 SHORTCUTS = (mid.ID_FIND, mid.ID_FIND_MILESTONES, mid.ID_SELECT_ALL, mid.ID_PREFERENCES, mid.ID_EDIT_SHORTCUTS)
 REQUIRING_TIMELINE = (mid.ID_FIND, mid.ID_FIND_CATEGORIES, mid.ID_FIND_MILESTONES, mid.ID_SELECT_ALL)
@@ -65,7 +62,4 @@ class EditMenu(MenuBase):
         return menu
 
     def _find_milestones(self, evt):
-        if len([milestone.text for milestone in self._parent.timeline.all_milestones]) > 0:
-            guiutils.show_dialog(lambda: MilestoneFinderDialog(self._parent, self._parent.timeline))
-        else:
-            guiutils.display_information_message(_('Info'), _('No Milestones found'))
+        open_milestone_finder_dialog(self._parent, self._parent.timeline)
