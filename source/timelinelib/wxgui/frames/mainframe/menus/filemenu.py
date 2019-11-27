@@ -23,7 +23,7 @@ from timelinelib.plugin import factory
 from timelinelib.wxgui.dialogs.filenew.view import open_file_new_dialog
 from timelinelib.wxgui.dialogs.importevents.view import open_import_events_dialog
 
-SHORTCUTS = (mid.ID_NEW, mid.ID_SAVEAS, mid.ID_IMPORT, mid.ID_EXIT)
+SHORTCUTS = (mid.ID_OPEN, mid.ID_NEW, mid.ID_SAVEAS, mid.ID_IMPORT, mid.ID_EXIT)
 REQUIRING_TIMELINE = (mid.ID_IMPORT, mid.ID_SAVEAS)
 
 
@@ -49,7 +49,7 @@ class FileMenu(MenuBase):
     def _create_menu(self):
         menu = wx.Menu()
         menu.Append(mid.ID_NEW, _("New..."), _("Create a new timeline"))
-        menu.Append(mid.ID_OPEN, self.add_ellipses_to_menuitem(mid.ID_OPEN), _("Open an existing timeline"))
+        menu.Append(mid.ID_OPEN, _("Open..."), _("Open an existing timeline"))
         menu.Append(mid.ID_RECENT, _("Open &Recent"), self._parent.file_open_recent_submenu)
         menu.AppendSeparator()
         menu.Append(mid.ID_SAVEAS, "", _("Save As..."))
@@ -69,7 +69,7 @@ class FileMenu(MenuBase):
         return submenu
 
     def create_submenu(self, plugin, submenu):
-        wxid =  plugin.wxid()
+        wxid = plugin.wxid()
         submenu.Append(wxid, plugin.display_name(), plugin.display_name())
         self._parent.Bind(wx.EVT_MENU, lambda evt: plugin.run(self._parent), id=wxid)
         self._parent.menu_controller.add_menu_requiring_timeline(submenu.FindItemById(wxid))
