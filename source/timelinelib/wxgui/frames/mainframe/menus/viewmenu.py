@@ -70,7 +70,10 @@ class ViewMenu(MenuBase):
         menu.Append(mid.ID_VERT_ZOOMIN, _("Vertical Zoom &In") + "\tAlt++")
         menu.Append(mid.ID_VERT_ZOOMOUT, _("Vertical Zoom &Out") + "\tAlt+-")
         menu.AppendSeparator()
-        self._create_point_event_alignment_submenu(menu)
+        point_even_alignmentsub_menu = wx.Menu()
+        point_even_alignmentsub_menu.Append(mid.ID_LEFT_ALIGNMENT, _("Left"), kind=wx.ITEM_RADIO)
+        point_even_alignmentsub_menu.Append(mid.ID_CENTER_ALIGNMENT, _("Center"), kind=wx.ITEM_RADIO)
+        menu.Append(wx.ID_ANY, _("Point event alignment"), point_even_alignmentsub_menu)
         menu.AppendSeparator()
         self._create_event_box_drawers_submenu(menu)
         menu.AppendSeparator()
@@ -87,12 +90,6 @@ class ViewMenu(MenuBase):
         menu.FindItemById(mid.ID_HIDE_DONE).Check(self._parent.config.hide_events_done)
         menu.FindItemById(mid.ID_LEFT_ALIGNMENT).Check(self._parent.config.draw_point_events_to_right)
         menu.FindItemById(mid.ID_CENTER_ALIGNMENT).Check(not self._parent.config.draw_point_events_to_right)
-
-    def _create_point_event_alignment_submenu(self, menu):
-        sub_menu = wx.Menu()
-        sub_menu.Append(mid.ID_LEFT_ALIGNMENT, _("Left"), kind=wx.ITEM_RADIO)
-        sub_menu.Append(mid.ID_CENTER_ALIGNMENT, _("Center"), kind=wx.ITEM_RADIO)
-        menu.Append(wx.ID_ANY, _("Point event alignment"), sub_menu)
 
     def _create_event_box_drawers_submenu(self, menu):
         sub_menu = wx.Menu()
