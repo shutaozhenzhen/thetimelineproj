@@ -78,3 +78,9 @@ class ErasEditorDialog(Dialog):
         else:
             self.btn_remove.Enable(True)
             self.btn_edit.Enable(True)
+
+
+def oped_edit_eras_dialog(parent, timeline, config):
+    dialog = ErasEditorDialog(parent, timeline, config)
+    dialog.ShowModal()
+    dialog.Destroy()
