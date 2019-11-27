@@ -20,6 +20,7 @@ from timelinelib.wxgui.dialogs.shortcutseditor.controller import ShortcutsEditor
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import display_warning_message
 from timelinelib.wxgui.utils import PopupTextWindow
+from timelinelib.db.utils import safe_locking
 
 
 class ShortcutsEditorDialog(Dialog):
@@ -84,3 +85,11 @@ class ShortcutsEditorDialog(Dialog):
 
     def DisplayWarningMessage(self, text):
         display_warning_message(text)
+
+
+def open_shortcuts_editor_dialog(parent, shortcut_controller):
+    def open_dialog():
+        dialog = ShortcutsEditorDialog(parent, shortcut_controller)
+        dialog.ShowModal()
+        dialog.Destroy()
+    safe_locking(parent, open_dialog)
