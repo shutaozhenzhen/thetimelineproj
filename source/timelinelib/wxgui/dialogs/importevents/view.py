@@ -19,6 +19,7 @@
 from timelinelib.wxgui.dialogs.importevents.controller import ImportEventsDialogController
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.wxgui.utils import WildcardHelper
+from timelinelib.db.utils import safe_locking
 
 
 class ImportEventsDialog(Dialog):
@@ -65,3 +66,11 @@ class ImportEventsDialog(Dialog):
     def SetError(self, text):
         self.feedback_text.SetError(text)
         self.GetSizer().Layout()
+
+
+def open_import_events_dialog(parent):
+    def open_dialog():
+        dialog = ImportEventsDialog(parent.timeline, parent)
+        dialog.ShowModal()
+        dialog.Destroy()
+    safe_locking(parent, open_dialog)
