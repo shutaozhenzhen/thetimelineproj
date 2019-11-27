@@ -33,6 +33,10 @@ class ListExporter(PluginBase):
     def display_name(self):
         return _("Export to Listbox...")
 
+    def wxid(self):
+        from timelinelib.wxgui.frames.mainframe.menus import ID_EXPORT_LIST
+        return ID_EXPORT_LIST
+
     def run(self, main_frame):
         self.db = main_frame.timeline
         dlg = ListboxDialog(self.display_name()[:-3])

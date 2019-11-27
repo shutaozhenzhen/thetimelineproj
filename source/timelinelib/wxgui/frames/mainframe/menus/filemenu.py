@@ -35,7 +35,7 @@ class FileMenu(MenuBase):
             mid.ID_OPEN: lambda evt: parent.open_existing_timeline(),
             mid.ID_SAVEAS: lambda evt: parent.save_as(),
             mid.ID_IMPORT: lambda evt: open_import_events_dialog(parent),
-            mid.ID_EXIT: lambda evt: self._parent.Close(),
+            mid.ID_EXIT: lambda evt: parent.Close(),
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
 
@@ -56,26 +56,20 @@ class FileMenu(MenuBase):
         menu.AppendSeparator()
         menu.Append(mid.ID_IMPORT, _("Import events..."), _("Import events..."))
         menu.AppendSeparator()
-        self._create_export_menues(menu)
+        menu.Append(wx.ID_ANY, _("Export"), self._create_export_menues(menu))
         menu.AppendSeparator()
         menu.Append(mid.ID_EXIT, "", _("Exit the program"))
         self._parent.update_open_recent_submenu()
         return menu
 
     def _create_export_menues(self, file_menu):
-
-        def create_click_handler(plugin, main_frame):
-            def event_handler(evt):
-                plugin.run(main_frame)
-            return event_handler
-
         submenu = wx.Menu()
-        file_menu.Append(wx.ID_ANY, _("Export"), submenu)
         for plugin in factory.get_plugins(EXPORTER):
-            mnu = submenu.Append(wx.ID_ANY, plugin.display_name(), plugin.display_name())
-            self._parent.menu_controller.add_menu_requiring_timeline(mnu)
-            handler = create_click_handler(plugin, self._parent)
-            self._parent.Bind(wx.EVT_MENU, handler, mnu)
-            method = getattr(plugin, "wxid", None)
-            if callable(method):
-                self._parent.shortcut_items[method()] = mnu
+            self.create_submenu(plugin, submenu, plugin.wxid())
+        return submenu
+
+    def create_submenu(self, plugin, submenu, wxid):
+        submenu.Append(wxid, plugin.display_name(), plugin.display_name())
+        self._parent.Bind(wx.EVT_MENU, lambda evt: plugin.run(self._parent), id=wxid)
+        self._parent.menu_controller.add_menu_requiring_timeline(submenu.FindItemById(wxid))
+        self._parent.shortcut_items[wxid] = submenu.FindItemById(wxid)
