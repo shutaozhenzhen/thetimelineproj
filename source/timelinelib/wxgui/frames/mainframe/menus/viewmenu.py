@@ -70,9 +70,9 @@ class ViewMenu(MenuBase):
         menu.Append(mid.ID_VERT_ZOOMIN, _("Vertical Zoom &In") + "\tAlt++")
         menu.Append(mid.ID_VERT_ZOOMOUT, _("Vertical Zoom &Out") + "\tAlt+-")
         menu.AppendSeparator()
-        self._create_view_point_event_alignment_menu(menu)
+        self._create_point_event_alignment_submenu(menu)
         menu.AppendSeparator()
-        self._create_event_box_drawers_menu(menu)
+        self._create_event_box_drawers_submenu(menu)
         menu.AppendSeparator()
         menu.Append(mid.ID_PRESENTATION, _("Start slide show") + "...")
         menu.AppendSeparator()
@@ -88,16 +88,13 @@ class ViewMenu(MenuBase):
         menu.FindItemById(mid.ID_LEFT_ALIGNMENT).Check(self._parent.config.draw_point_events_to_right)
         menu.FindItemById(mid.ID_CENTER_ALIGNMENT).Check(not self._parent.config.draw_point_events_to_right)
 
-    def _on_toolbar_click(self, event):
-        self._parent.config.show_toolbar = event.IsChecked()
-
-    def _create_view_point_event_alignment_menu(self, menu):
+    def _create_point_event_alignment_submenu(self, menu):
         sub_menu = wx.Menu()
         sub_menu.Append(mid.ID_LEFT_ALIGNMENT, _("Left"), kind=wx.ITEM_RADIO)
         sub_menu.Append(mid.ID_CENTER_ALIGNMENT, _("Center"), kind=wx.ITEM_RADIO)
         menu.Append(wx.ID_ANY, _("Point event alignment"), sub_menu)
 
-    def _create_event_box_drawers_menu(self, menu):
+    def _create_event_box_drawers_submenu(self, menu):
         sub_menu = wx.Menu()
         for plugin in factory.get_plugins(EVENTBOX_DRAWER):
             item = sub_menu.Append(wx.ID_ANY, plugin.display_name(), kind=wx.ITEM_RADIO)
@@ -111,6 +108,9 @@ class ViewMenu(MenuBase):
             self._parent.main_panel.get_timeline_canvas().SetEventBoxDrawer(plugin.run())
             self._parent.config.set_selected_event_box_drawer(plugin.display_name())
         return event_handler
+
+    def _on_toolbar_click(self, event):
+        self._parent.config.show_toolbar = event.IsChecked()
 
     def _legend(self, evt):
         self._parent.config.show_legend = evt.IsChecked()
