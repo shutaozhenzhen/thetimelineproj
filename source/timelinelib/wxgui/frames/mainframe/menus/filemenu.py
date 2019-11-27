@@ -56,19 +56,20 @@ class FileMenu(MenuBase):
         menu.AppendSeparator()
         menu.Append(mid.ID_IMPORT, _("Import events..."), _("Import events..."))
         menu.AppendSeparator()
-        menu.Append(wx.ID_ANY, _("Export"), self._create_export_menues(menu))
+        menu.Append(wx.ID_ANY, _("Export"), self._create_export_menues())
         menu.AppendSeparator()
         menu.Append(mid.ID_EXIT, "", _("Exit the program"))
         self._parent.update_open_recent_submenu()
         return menu
 
-    def _create_export_menues(self, file_menu):
+    def _create_export_menues(self):
         submenu = wx.Menu()
         for plugin in factory.get_plugins(EXPORTER):
-            self.create_submenu(plugin, submenu, plugin.wxid())
+            self.create_submenu(plugin, submenu)
         return submenu
 
-    def create_submenu(self, plugin, submenu, wxid):
+    def create_submenu(self, plugin, submenu):
+        wxid =  plugin.wxid()
         submenu.Append(wxid, plugin.display_name(), plugin.display_name())
         self._parent.Bind(wx.EVT_MENU, lambda evt: plugin.run(self._parent), id=wxid)
         self._parent.menu_controller.add_menu_requiring_timeline(submenu.FindItemById(wxid))
