@@ -56,6 +56,7 @@ NAVLABEL = "%s(%s)->%%s"
 LABEL_NAVIGATE_TIME = NAVLABEL % (_("Navigate"), "tm")
 LABEL_NAVIGATE_NUM = NAVLABEL % (_("Navigate"), "num")
 METADATA = [  # File
+              Metadata(mid.ID_OPEN, "shortcut_file_open", LABEL_FILE % _("Open..."), CTRL_MODIFIER, "O"),
               Metadata(mid.ID_NEW, "shortcut_file_new", LABEL_FILE % _("New..."), CTRL_MODIFIER, "N"),
               Metadata(mid.ID_SAVEAS, "shortcut_save_as", LABEL_FILE % _("Save As..."), NO_MODIFIER, ""),
               Metadata(mid.ID_IMPORT, "shortcut_import", LABEL_FILE % _("Import..."), NO_MODIFIER, ""),
