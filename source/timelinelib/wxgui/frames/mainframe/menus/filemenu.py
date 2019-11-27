@@ -50,7 +50,7 @@ class FileMenu(MenuBase):
         menu = wx.Menu()
         menu.Append(mid.ID_NEW, _("New..."), _("Create a new timeline"))
         menu.Append(mid.ID_OPEN, self.add_ellipses_to_menuitem(mid.ID_OPEN), _("Open an existing timeline"))
-        self._create_open_recent_menu(menu)
+        menu.Append(mid.ID_RECENT, _("Open &Recent"), self._parent.file_open_recent_submenu)
         menu.AppendSeparator()
         menu.Append(mid.ID_SAVEAS, "", _("Save As..."))
         menu.AppendSeparator()
@@ -59,12 +59,8 @@ class FileMenu(MenuBase):
         self._create_export_menues(menu)
         menu.AppendSeparator()
         menu.Append(mid.ID_EXIT, "", _("Exit the program"))
-        return menu
-
-    def _create_open_recent_menu(self, file_menu):
-        self._parent.mnu_file_open_recent_submenu = wx.Menu()
-        file_menu.Append(wx.ID_ANY, _("Open &Recent"), self._parent.mnu_file_open_recent_submenu)
         self._parent.update_open_recent_submenu()
+        return menu
 
     def _create_export_menues(self, file_menu):
 
