@@ -227,7 +227,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             self.controller.open_timeline(dialog.GetPath())
         dialog.Destroy()
 
-    def _save_as(self):
+    def save_as(self):
         new_timeline_path = self._get_new_timeline_path_from_user()
         self._save_timeline_to_new_path(new_timeline_path)
 
