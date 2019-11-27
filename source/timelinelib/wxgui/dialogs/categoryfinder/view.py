@@ -20,6 +20,7 @@ import wx
 
 from timelinelib.wxgui.dialogs.categoryfinder.controller import CategoryFinderDialogController
 from timelinelib.wxgui.framework import Dialog
+import timelinelib.wxgui.utils as guiutils
 
 
 class CategoryFinderDialog(Dialog):
@@ -54,3 +55,7 @@ class CategoryFinderDialog(Dialog):
 
     def SetCategories(self, categories):
         self.lst_categories.SetItems(categories)
+
+
+def open_category_finder_dialog(parent, timeline):
+    guiutils.show_dialog(lambda: CategoryFinderDialog(parent, timeline))
