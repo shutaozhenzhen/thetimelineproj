@@ -58,6 +58,9 @@ class MainFrameApiUsedByController:
     def start_slide_show(self):
         self.controller.start_slide_show()
 
+    def set_readonly_mode(self):
+        self.controller.set_timeline_in_readonly_mode()
+
     def _set_title(self):
         if self.timeline is None:
             self.SetTitle(APPLICATION_NAME)
