@@ -40,7 +40,7 @@ class EditMenu(MenuBase):
             mid.ID_FIND_MILESTONES: self._find_milestones,
             mid.ID_SELECT_ALL: lambda evt: parent.controller.select_all(),
             mid.ID_PREFERENCES: lambda evt: open_preferences_dialog(parent, parent.config),
-            mid.ID_EDIT_SHORTCUTS: self._edit_shortcuts,
+            mid.ID_EDIT_SHORTCUTS: lambda evt: open_shortcuts_editor_dialog(parent, parent.shortcut_controller),
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
 
@@ -71,6 +71,3 @@ class EditMenu(MenuBase):
             guiutils.show_dialog(lambda: MilestoneFinderDialog(self._parent, self._parent.timeline))
         else:
             guiutils.display_information_message(_('Info'), _('No Milestones found'))
-
-    def _edit_shortcuts(self, evt):
-        open_shortcuts_editor_dialog(self._parent, self._parent.shortcut_controller)
