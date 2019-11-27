@@ -97,8 +97,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def move_selected_event_down(self):
         self.main_panel.timeline_panel.move_selected_event_down(),
 
-    def set_readonly_mode(self):
-        self.controller.set_timeline_in_readonly_mode()
 
     @property
     def file_open_recent_submenu(self):
