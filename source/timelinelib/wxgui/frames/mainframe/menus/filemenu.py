@@ -36,7 +36,7 @@ class FileMenu(MenuBase):
             mid.ID_NEW: lambda evt: open_file_new_dialog(parent),
             mid.ID_OPEN: lambda evt: parent.open_existing_timeline(),
             mid.ID_SAVEAS: self._save_as,
-            mid.ID_IMPORT: self._import,
+            mid.ID_IMPORT: lambda evt: open_import_events_dialog(parent),
             mid.ID_EXIT: lambda evt: self._parent.Close(),
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
@@ -95,6 +95,3 @@ class FileMenu(MenuBase):
     def _save_as(self, evt):
         if self._parent.timeline is not None:
             self._parent._save_as()
-
-    def _import(self, evt):
-        open_import_events_dialog(self._parent)
