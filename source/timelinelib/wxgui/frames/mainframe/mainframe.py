@@ -97,14 +97,9 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def move_selected_event_down(self):
         self.main_panel.timeline_panel.move_selected_event_down(),
 
-
     @property
     def file_open_recent_submenu(self):
         return self.mnu_file_open_recent_submenu
-
-    # API:s used by time types
-    def week_starts_on_monday(self):
-        return self.controller.week_starts_on_monday()
 
     def display_time_editor_dialog(self, time_type, initial_time,
                                    handle_new_time_fn, title):
