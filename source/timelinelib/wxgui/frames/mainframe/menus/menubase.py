@@ -33,15 +33,6 @@ class MenuBase:
         for wxid in self._event_handlers:
             self._parent.Bind(wx.EVT_MENU, self._event_handlers[wxid], id=wxid)
 
-    @staticmethod
-    def add_ellipses_to_menuitem(wx_id):
-        plain = wx.GetStockLabel(wx_id, wx.STOCK_WITH_ACCELERATOR | wx.STOCK_WITH_MNEMONIC)
-        # format of plain 'xxx[\tyyy]', example '&New\tCtrl+N'
-        tab_index = plain.find("\t")
-        if tab_index != -1:
-            return plain[:tab_index] + "..." + plain[tab_index:]
-        return plain + "..."
-
     def _register_shortcuts(self, menu):
         for wxid in self._shortcuts:
             self._parent.shortcut_items[wxid] = menu.FindItemById(wxid)
