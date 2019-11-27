@@ -116,8 +116,7 @@ class ViewMenu(MenuBase):
         self._parent.config.show_legend = evt.IsChecked()
 
     def _sidebar(self, evt):
-        # TODO: Seems to work differently to legend and ballloons!
-        self._parent.sidebar_visible(evt.IsChecked())
+        self._parent.config.show_sidebar = evt.IsChecked()
 
     def _balloons(self, evt):
         self._parent.config.balloon_on_hover = evt.IsChecked()
