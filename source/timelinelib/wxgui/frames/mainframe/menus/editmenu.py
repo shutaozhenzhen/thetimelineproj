@@ -17,9 +17,7 @@
 
 import wx
 import timelinelib.wxgui.frames.mainframe.menus as mid
-import timelinelib.wxgui.utils as guiutils
 from timelinelib.wxgui.frames.mainframe.menus.menubase import MenuBase
-from timelinelib.wxgui.dialogs.milestonefinder.view import MilestoneFinderDialog
 from timelinelib.wxgui.dialogs.preferences.view import open_preferences_dialog
 from timelinelib.wxgui.dialogs.shortcutseditor.view import open_shortcuts_editor_dialog
 from timelinelib.wxgui.dialogs.categoryfinder.view import open_category_finder_dialog
@@ -35,7 +33,7 @@ class EditMenu(MenuBase):
         event_handlers = {
             mid.ID_FIND: lambda evt: parent.main_panel.show_searchbar(True),
             mid.ID_FIND_CATEGORIES: lambda evt: open_category_finder_dialog(parent, parent.timeline),
-            mid.ID_FIND_MILESTONES: self._find_milestones,
+            mid.ID_FIND_MILESTONES: lambda evt: open_milestone_finder_dialog(parent, parent.timeline),
             mid.ID_SELECT_ALL: lambda evt: parent.controller.select_all(),
             mid.ID_PREFERENCES: lambda evt: open_preferences_dialog(parent, parent.config),
             mid.ID_EDIT_SHORTCUTS: lambda evt: open_shortcuts_editor_dialog(parent, parent.shortcut_controller),
@@ -60,6 +58,3 @@ class EditMenu(MenuBase):
         menu.Append(mid.ID_PREFERENCES)
         menu.Append(mid.ID_EDIT_SHORTCUTS, _("Shortcuts..."))
         return menu
-
-    def _find_milestones(self, evt):
-        open_milestone_finder_dialog(self._parent, self._parent.timeline)
