@@ -122,4 +122,4 @@ class ViewMenu(MenuBase):
         DrawingAreaProxy(self._parent).vertical_zoom_out()
 
     def start_slide_show(self, evt):
-        self._parent.controller.start_slide_show()
+        self._parent.start_slide_show()

@@ -86,6 +86,9 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def DisplayStatus(self, message):
         self.status_bar_adapter.set_text(message)
 
+    def start_slide_show(self):
+        self.controller.start_slide_show()
+
     # API:s used by time types
     def week_starts_on_monday(self):
         return self.controller.week_starts_on_monday()
