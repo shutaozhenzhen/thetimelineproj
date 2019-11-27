@@ -17,11 +17,9 @@
 
 import wx
 import timelinelib.wxgui.frames.mainframe.menus as mid
-from timelinelib.db.utils import safe_locking
 from timelinelib.wxgui.frames.mainframe.menus.menubase import MenuBase
 from timelinelib.plugin.factory import EXPORTER
 from timelinelib.plugin import factory
-from timelinelib.wxgui.dialogs.importevents.view import ImportEventsDialog
 from timelinelib.wxgui.dialogs.filenew.view import open_file_new_dialog
 from timelinelib.wxgui.dialogs.importevents.view import open_import_events_dialog
 
