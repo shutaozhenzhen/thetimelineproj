@@ -35,7 +35,7 @@ class ShortcutControllerSpec(WxAppTestCase):
     def test_get_functions_returns_list(self):
         func_list = self.controller.get_functions()
         self.assertTrue(len(func_list) > 0)
-        self.assertEqual(NEW_FUNCTION, func_list[0])
+        self.assertEqual(NEW_FUNCTION, func_list[1])
 
     def test_get_function_returns_function(self):
         function = self.controller.get_function("Ctrl+N")
