@@ -34,18 +34,18 @@ class ViewMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
-            mid.ID_TOOLBAR: self._on_toolbar_click,
-            mid.ID_SIDEBAR: self._sidebar,
-            mid.ID_LEGEND: self._legend,
-            mid.ID_BALLOONS: self._balloons,
+            mid.ID_TOOLBAR: lambda evt: parent.config.set('show_toolbar', evt.IsChecked()),
+            mid.ID_SIDEBAR: lambda evt: parent.config.set('show_sidebar', evt.IsChecked()),
+            mid.ID_LEGEND: lambda evt: parent.config.set('show_legend', evt.IsChecked()),
+            mid.ID_BALLOONS: lambda evt: parent.config.set('balloon_on_hover', evt.IsChecked()),
             mid.ID_ZOOMIN: self._zoomoin,
             mid.ID_ZOOMOUT: self._zoomout,
             mid.ID_VERT_ZOOMIN: self._vert_zoomoin,
             mid.ID_VERT_ZOOMOUT: self._vert_zoomout,
             mid.ID_PRESENTATION: self.start_slide_show,
-            mid.ID_HIDE_DONE: self._hide_events_done,
-            mid.ID_LEFT_ALIGNMENT: self._left_alignment,
-            mid.ID_CENTER_ALIGNMENT: self._center_alignment,
+            mid.ID_HIDE_DONE: lambda evt: parent.config.set('hide_events_done', evt.IsChecked()),
+            mid.ID_LEFT_ALIGNMENT: lambda evt: parent.config.set('draw_point_events_to_right', True),
+            mid.ID_CENTER_ALIGNMENT: lambda evt: parent.config.set('draw_point_events_to_right', False),
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE, REQUIRING_VISIBLE_TIMELINE_VIEW)
 
@@ -109,18 +109,6 @@ class ViewMenu(MenuBase):
             self._parent.config.set_selected_event_box_drawer(plugin.display_name())
         return event_handler
 
-    def _on_toolbar_click(self, event):
-        self._parent.config.show_toolbar = event.IsChecked()
-
-    def _legend(self, evt):
-        self._parent.config.show_legend = evt.IsChecked()
-
-    def _sidebar(self, evt):
-        self._parent.config.show_sidebar = evt.IsChecked()
-
-    def _balloons(self, evt):
-        self._parent.config.balloon_on_hover = evt.IsChecked()
-
     def _zoomoin(self, evt):
         DrawingAreaProxy(self._parent).zoom_in()
 
@@ -136,12 +124,3 @@ class ViewMenu(MenuBase):
     def start_slide_show(self, evt):
         canvas = self._parent.main_panel.get_timeline_canvas()
         self._parent.controller.start_slide_show(canvas)
-
-    def _hide_events_done(self, evt):
-        self._parent.config.hide_events_done = evt.IsChecked()
-
-    def _left_alignment(self, evt):
-        self._parent.config.draw_point_events_to_right = True
-
-    def _center_alignment(self, evt):
-        self._parent.config.draw_point_events_to_right = False
