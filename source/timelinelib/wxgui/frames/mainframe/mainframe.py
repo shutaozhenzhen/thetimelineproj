@@ -48,6 +48,8 @@ from timelinelib.wxgui.frames.mainframe.alertcontroller import AlertController
 from timelinelib.wxgui.frames.mainframe.menucontroller import MenuController
 from timelinelib.calendar.coptic.timetype import CopticTimeType
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
+from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
+from timelinelib.db.utils import safe_locking
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
 
@@ -348,6 +350,30 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
                 start = self.timeline.get_time_type().get_min_time()
             margin_delta = delta / 24
             self.main_panel.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
+
+    def edit_event(self):
+        try:
+            event = self.get_first_selected_event()
+            self.main_panel.open_event_editor(event)
+        except IndexError:
+            # No event selected so do nothing!
+            pass
+
+    def duplicate_event(self):
+        try:
+            event = self.get_first_selected_event()
+            open_duplicate_event_dialog_for_event(self, self, self.timeline, event)
+        except IndexError:
+            # No event selected so do nothing!
+            pass
+
+    def set_category_on_selected(self):
+        try:
+            event = self.get_first_selected_event() # Ensure that at least one event is selected
+            safe_locking(self, lambda: self._set_category_to_selected_events())
+        except IndexError:
+            # No event selected so do nothing!
+            pass
 
     def _period_for_all_visible_events(self):
         try:
