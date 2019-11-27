@@ -34,10 +34,10 @@ class EditMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
-            mid.ID_FIND: self._find,
+            mid.ID_FIND: lambda evt: parent.main_panel.show_searchbar(True),
             mid.ID_FIND_CATEGORIES: self._find_categories,
             mid.ID_FIND_MILESTONES: self._find_milestones,
-            mid.ID_SELECT_ALL: self._select_all,
+            mid.ID_SELECT_ALL: lambda evt: parent.controller.select_all(),
             mid.ID_PREFERENCES: self._preferences,
             mid.ID_EDIT_SHORTCUTS: self._edit_shortcuts,
         }
@@ -62,9 +62,6 @@ class EditMenu(MenuBase):
         menu.Append(mid.ID_EDIT_SHORTCUTS, _("Shortcuts..."))
         return menu
 
-    def _find(self, evt):
-        self._parent.main_panel.show_searchbar(True)
-
     def _find_categories(self, evt):
         guiutils.show_dialog(lambda: CategoryFinderDialog(self._parent, self._parent.timeline))
 
@@ -73,9 +70,6 @@ class EditMenu(MenuBase):
             guiutils.show_dialog(lambda: MilestoneFinderDialog(self._parent, self._parent.timeline))
         else:
             guiutils.display_information_message(_('Info'), _('No Milestones found'))
-
-    def _select_all(self, evt):
-        self._parent.controller.select_all()
 
     def _preferences(self, evt):
         safe_locking(self._parent,
