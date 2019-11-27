@@ -26,6 +26,7 @@ ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
 ID_EXIT = wx.ID_EXIT
+ID_RECENT = wx.ID_EXIT
 
 # Edit menu
 ID_FIND = wx.ID_FIND

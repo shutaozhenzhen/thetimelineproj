@@ -104,6 +104,10 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def set_readonly_mode(self):
         self.controller.set_timeline_in_readonly_mode()
 
+    @property
+    def file_open_recent_submenu(self):
+        return self.mnu_file_open_recent_submenu
+
     # API:s used by time types
     def week_starts_on_monday(self):
         return self.controller.week_starts_on_monday()

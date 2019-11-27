@@ -56,6 +56,7 @@ class GuiCreator:
         self.main_panel = MainPanel(self, self.config, self)
 
     def _create_main_menu_bar(self):
+        self.mnu_file_open_recent_submenu = wx.Menu()
         main_menu_bar = wx.MenuBar()
         main_menu_bar.Append(FileMenu(self).create(), _("&File"))
         main_menu_bar.Append(EditMenu(self).create(), _("&Edit"))
