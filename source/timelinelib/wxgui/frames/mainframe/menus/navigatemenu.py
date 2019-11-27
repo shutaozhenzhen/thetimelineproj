@@ -28,8 +28,8 @@ class NavigateMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
-            mid.ID_FIND_FIRST: self._find_first,
-            mid.ID_FIND_LAST: self._find_last,
+            mid.ID_FIND_FIRST: lambda evt: parent.navigate_to_first_event(),
+            mid.ID_FIND_LAST: lambda evt: parent.navigate_to_last_event(),
             mid.ID_FIT_ALL: lambda evt: parent.fit_all_events(),
             mid.ID_RESTORE_TIME_PERIOD: lambda evt: parent.restore_time_period(),
         }
@@ -51,24 +51,3 @@ class NavigateMenu(MenuBase):
         menu.AppendSeparator()
         menu.Append(mid.ID_RESTORE_TIME_PERIOD, _("Go to previous time period"))
         return menu
-
-    def _find_first(self, evt):
-        event = self._parent.timeline.get_first_event()
-        if event:
-            start = event.get_start_time()
-            delta = self._parent.main_panel.get_displayed_period_delta()
-            end = start + delta
-            margin_delta = delta / 24
-            self._parent.main_panel.Navigate(lambda tp: tp.update(start, end, -margin_delta))
-
-    def _find_last(self, evt):
-        event = self._parent.timeline.get_last_event()
-        if event:
-            end = event.get_end_time()
-            delta = self._parent.main_panel.get_displayed_period_delta()
-            try:
-                start = end - delta
-            except ValueError:
-                start = self._parent.timeline.get_time_type().get_min_time()
-            margin_delta = delta / 24
-            self._parent.main_panel.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
