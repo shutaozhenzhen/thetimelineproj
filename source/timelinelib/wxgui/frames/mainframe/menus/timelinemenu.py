@@ -91,7 +91,7 @@ class TimelineMenu(MenuBase):
 
     def _edit_event(self, evt):
         try:
-            event = self._get_first_selected_event()
+            event = self._parent.get_first_selected_event()
             self._parent.main_panel.open_event_editor(event)
         except IndexError:
             # No event selected so do nothing!
@@ -99,7 +99,7 @@ class TimelineMenu(MenuBase):
 
     def _duplicate_event(self, evt):
         try:
-            event = self._get_first_selected_event()
+            event = self._parent.get_first_selected_event()
             open_duplicate_event_dialog_for_event(self._parent, self._parent, self._parent.timeline, event)
         except IndexError:
             # No event selected so do nothing!
@@ -107,7 +107,7 @@ class TimelineMenu(MenuBase):
 
     def _set_category_on_selected(self, evt):
         try:
-            event = self._get_first_selected_event() # Ensure that at least one event is selected
+            event = self._parent.get_first_selected_event() # Ensure that at least one event is selected
             safe_locking(self._parent, lambda: self._parent._set_category_to_selected_events())
         except IndexError:
             # No event selected so do nothing!
@@ -142,6 +142,3 @@ class TimelineMenu(MenuBase):
 
     def _redo(self, evt):
         safe_locking(self._parent, self._parent.timeline.redo)
-
-    def _get_first_selected_event(self):
-        return self._parent.get_first_selected_event()
