@@ -24,7 +24,7 @@ from timelinelib.wxgui.dialogs.categoryfinder.view import CategoryFinderDialog
 from timelinelib.wxgui.dialogs.milestonefinder.view import MilestoneFinderDialog
 from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 from timelinelib.wxgui.dialogs.shortcutseditor.view import ShortcutsEditorDialog
-
+from timelinelib.wxgui.dialogs.preferences.view import open_preferences_dialog
 
 SHORTCUTS = (mid.ID_FIND, mid.ID_FIND_MILESTONES, mid.ID_SELECT_ALL, mid.ID_PREFERENCES, mid.ID_EDIT_SHORTCUTS)
 REQUIRING_TIMELINE = (mid.ID_FIND, mid.ID_FIND_CATEGORIES, mid.ID_FIND_MILESTONES, mid.ID_SELECT_ALL)
@@ -72,8 +72,7 @@ class EditMenu(MenuBase):
             guiutils.display_information_message(_('Info'), _('No Milestones found'))
 
     def _preferences(self, evt):
-        safe_locking(self._parent,
-                     lambda: guiutils.show_dialog(lambda: PreferencesDialog(self._parent, self._parent.config)))
+        open_preferences_dialog(self._parent, self._parent.config)
 
     def _edit_shortcuts(self, evt):
         safe_locking(self._parent,
