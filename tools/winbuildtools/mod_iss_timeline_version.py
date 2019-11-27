@@ -67,15 +67,17 @@ def get_version(versionfile):
     revision_date = get_revision_date(sys.argv[2])
     if rev_id == 'tip':
         output_base_filename = "timeline-%s.%s.%s-beta-%s-%s-Win32Setup" % (major, minor, bug, hash_value, revision_date)
+        type = 'TYPE_BETA'
     else:
         output_base_filename = "timeline-%s.%s.%s-Win32Setup" % (major, minor, bug)
-        with open(versionfile, "r") as f:
-            text = f.read()
-        text = text.replace('TYPE = TYPE_DEV', 'TYPE = TYPE_FINAL')
-        text = text.replace('REVISION_HASH = ""', f'REVISION_HASH = "{hash_value}"')
-        text = text.replace('REVISION_DATE = ""', f'REVISION_DATE = "{revision_date}"')
-        with open(versionfile, "w") as f:
-            f.write(text)
+        type = 'TYPE_FINAL'
+    with open(versionfile, "r") as f:
+        text = f.read()
+    text = text.replace('TYPE = TYPE_DEV', f'TYPE = {type}')
+    text = text.replace('REVISION_HASH = ""', f'REVISION_HASH = "{hash_value}"')
+    text = text.replace('REVISION_DATE = ""', f'REVISION_DATE = "{revision_date}"')
+    with open(versionfile, "w") as f:
+        f.write(text)
     print("[INFO] Version found: %s" % app_ver_name)
     print("[INFO] Filename: %s" % output_base_filename)
     return app_ver_name, output_base_filename
