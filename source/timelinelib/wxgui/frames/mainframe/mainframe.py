@@ -89,6 +89,10 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def start_slide_show(self):
         self.controller.start_slide_show()
 
+    def get_first_selected_event(self):
+        event_id = self.main_panel.get_id_of_first_selected_event()
+        return self.timeline.find_event_with_id(event_id)
+
     # API:s used by time types
     def week_starts_on_monday(self):
         return self.controller.week_starts_on_monday()

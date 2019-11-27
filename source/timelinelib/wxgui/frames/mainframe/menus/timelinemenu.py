@@ -144,5 +144,4 @@ class TimelineMenu(MenuBase):
         safe_locking(self._parent, self._parent.timeline.redo)
 
     def _get_first_selected_event(self):
-        event_id = self._parent.main_panel.get_id_of_first_selected_event()
-        return self._parent.timeline.find_event_with_id(event_id)
+        return self._parent.get_first_selected_event()
