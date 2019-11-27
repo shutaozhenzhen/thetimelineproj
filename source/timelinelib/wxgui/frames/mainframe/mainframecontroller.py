@@ -113,7 +113,8 @@ class MainFrameController:
             self._lock()
         return True
 
-    def start_slide_show(self, canvas):
+    def start_slide_show(self):
+        canvas = self._main_frame.main_panel.get_timeline_canvas()
         open_slideshow_dialog(self._timeline, canvas)
 
     def _timeline_path_doesnt_exists_yet(self):
