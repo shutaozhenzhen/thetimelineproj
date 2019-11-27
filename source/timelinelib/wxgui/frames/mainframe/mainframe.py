@@ -127,9 +127,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def get_lockfile_path(self):
         return self.controller._get_lockpath()
 
-    def edit_ends(self):
-        self.controller.edit_ends()
-
     def get_view_properties(self, ):
         return self.main_panel.get_view_properties()
 

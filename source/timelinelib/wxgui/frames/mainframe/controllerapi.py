@@ -64,6 +64,9 @@ class MainFrameApiUsedByController:
     def week_starts_on_monday(self):
         return self.controller.week_starts_on_monday()
 
+    def edit_ends(self):
+        self.controller.edit_ends()
+
     def _set_title(self):
         if self.timeline is None:
             self.SetTitle(APPLICATION_NAME)
