@@ -315,7 +315,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         dialog.Destroy()
         self.main_panel.redraw_timeline()
 
-    def _fit_all_events(self):
+    def fit_all_events(self):
         all_period = self._period_for_all_visible_events()
         if all_period is None:
             return

@@ -77,7 +77,7 @@ class MainFrameController:
             self._main_frame.update_navigation_menu_items()
             self._main_frame.enable_disable_menus()
             if path == ":numtutorial:":
-                self._main_frame._fit_all_events()
+                self._main_frame.fit_all_events()
 
     def set_timeline_in_readonly_mode(self):
         try:
