@@ -30,7 +30,7 @@ class NavigateMenu(MenuBase):
         event_handlers = {
             mid.ID_FIND_FIRST: self._find_first,
             mid.ID_FIND_LAST: self._find_last,
-            mid.ID_FIT_ALL: self._fit_all,
+            mid.ID_FIT_ALL: lambda evt: parent.fit_all_events(),
             mid.ID_RESTORE_TIME_PERIOD: self._restore_time_period,
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
@@ -72,9 +72,6 @@ class NavigateMenu(MenuBase):
                 start = self._parent.timeline.get_time_type().get_min_time()
             margin_delta = delta / 24
             self._parent.main_panel.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
-
-    def _fit_all(self, evt):
-        self._parent._fit_all_events()
 
     def _restore_time_period(self, evt):
         if self._parent.prev_time_period:
