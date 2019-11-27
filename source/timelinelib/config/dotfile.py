@@ -236,6 +236,7 @@ class Config(Observable):
             if self._toStr(value) is not None:
                 self.config_parser.set(DEFAULTSECT, key, self._toStr(value))
                 self._notify()
+                self._notify(key)
 
     def _set_colour(self, key, value):
         self.config_parser.set(DEFAULTSECT, key, self._tuple_to_string(value))

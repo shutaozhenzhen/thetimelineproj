@@ -394,6 +394,13 @@ class TimelinePanel(TimelinePanelGuiCreator):
         self._edit_controller = main_frame
         TimelinePanelGuiCreator.__init__(self, parent)
         self._db_listener = Listener(self._on_db_changed)
+        self.config.listen_for('show_sidebar', self._on_show_sidebar_changed)
+
+    def _on_show_sidebar_changed(self):
+        if self.config.show_sidebar:
+            self.show_sidebar()
+        else:
+            self.hide_sidebar()
 
     def SetDb(self, db):
         self.timeline_canvas.SetDb(db)

@@ -48,13 +48,6 @@ class GuiCreator:
         self._create_main_menu_bar()
         self._bind_frame_events()
 
-    def sidebar_visible(self, value):
-        self.config.show_sidebar = value
-        if value:
-            self.main_panel.show_sidebar()
-        else:
-            self.main_panel.hide_sidebar()
-
     def _create_status_bar(self):
         self.CreateStatusBar()
         self.status_bar_adapter = StatusBarAdapter(self.GetStatusBar())
