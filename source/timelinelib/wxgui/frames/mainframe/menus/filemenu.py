@@ -33,11 +33,11 @@ class FileMenu(MenuBase):
 
     def __init__(self, parent):
         event_handlers = {
-            mid.ID_NEW: self._new,
-            mid.ID_OPEN: self._open,
+            mid.ID_NEW: lambda evt: open_file_new_dialog(parent),
+            mid.ID_OPEN: lambda evt: parent._open_existing_timeline(),
             mid.ID_SAVEAS: self._save_as,
             mid.ID_IMPORT: self._import,
-            mid.ID_EXIT: self._exit,
+            mid.ID_EXIT: lambda evt: self._parent.Close(),
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
 
@@ -92,12 +92,6 @@ class FileMenu(MenuBase):
             if callable(method):
                 self._parent.shortcut_items[method()] = mnu
 
-    def _new(self, evt):
-        open_file_new_dialog(self._parent)
-
-    def _open(self, evt):
-        self._parent._open_existing_timeline()
-
     def _save_as(self, evt):
         if self._parent.timeline is not None:
             self._parent._save_as()
@@ -108,6 +102,3 @@ class FileMenu(MenuBase):
             dialog.ShowModal()
             dialog.Destroy()
         safe_locking(self._parent, open_import_dialog)
-
-    def _exit(self, evt):
-        self._parent.Close()
