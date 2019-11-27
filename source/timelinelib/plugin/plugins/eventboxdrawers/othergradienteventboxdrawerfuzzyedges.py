@@ -18,6 +18,7 @@
 
 from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.plugins.eventboxdrawers import EVENTBOX_DRAWER
+import timelinelib.wxgui.frames.mainframe.menus as mid
 
 
 class OtherGradientEventBoxDrawerFuzzyEdges(PluginBase):
@@ -27,6 +28,10 @@ class OtherGradientEventBoxDrawerFuzzyEdges(PluginBase):
 
     def display_name(self):
         return _("Other Gradient Event box drawer with fuzzy edges")
+
+    @staticmethod
+    def wxid():
+        return mid.ID_EVENTBOX_DRAWER_GRADIENT_HORIZONTAL_ALT
 
     def run(self):
         from timelinelib.canvas.eventboxdrawers.othergradienteventboxdrawer import OtherGradientEventBoxDrawer

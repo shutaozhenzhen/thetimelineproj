@@ -18,6 +18,7 @@
 
 from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.plugins.eventboxdrawers import EVENTBOX_DRAWER
+import timelinelib.wxgui.frames.mainframe.menus as mid
 
 
 class DefaultEventBoxDrawer(PluginBase):
@@ -27,6 +28,10 @@ class DefaultEventBoxDrawer(PluginBase):
 
     def display_name(self):
         return _("Default Event box drawer")
+
+    @staticmethod
+    def wxid():
+        return mid.ID_EVENTBOX_DRAWER_PLAIN
 
     def run(self):
         from timelinelib.canvas.eventboxdrawers.defaulteventboxdrawer import DefaultEventBoxDrawer
