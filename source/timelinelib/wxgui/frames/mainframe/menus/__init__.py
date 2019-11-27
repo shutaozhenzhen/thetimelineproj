@@ -25,6 +25,8 @@ ID_IMPORT = wx.NewId()
 ID_EXPORT = wx.NewId()
 ID_EXPORT_ALL = wx.NewId()
 ID_EXPORT_SVG = wx.NewId()
+ID_EXPORT_LIST = wx.NewId()
+ID_EXPORT_FILE = wx.NewId()
 ID_EXIT = wx.ID_EXIT
 ID_RECENT = wx.ID_EXIT
 

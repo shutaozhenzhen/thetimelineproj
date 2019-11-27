@@ -37,8 +37,8 @@ class TimelineExporter(PluginBase):
         return _("Export Timeline to File...")
 
     def wxid(self):
-        from timelinelib.wxgui.frames.mainframe.menus import ID_EXPORT
-        return ID_EXPORT
+        from timelinelib.wxgui.frames.mainframe.menus import ID_EXPORT_FILE
+        return ID_EXPORT_FILE
 
     def run(self, main_frame):
         self.timeline = main_frame.timeline
