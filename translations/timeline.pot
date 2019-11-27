@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-26 13:57+0100\n"
+"POT-Creation-Date: 2019-11-27 10:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1941,7 +1941,7 @@ msgid "Could not find pysvg Python package. It is needed to export to SVG."
 msgstr ""
 
 #: source\timelinelib\plugin\plugins\exporters\exporttosvg.py:46
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:134
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:137
 msgid "SVG files"
 msgstr ""
 
@@ -2167,7 +2167,7 @@ msgstr ""
 
 #: source\timelinelib\wxgui\components\timelinepanel.py:94
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:410
-#: source\timelinelib\wxgui\frames\mainframe\menus\viewmenu.py:97
+#: source\timelinelib\wxgui\frames\mainframe\menus\viewmenu.py:94
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:39
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:49
 msgid "Center"
@@ -2207,19 +2207,19 @@ msgstr ""
 msgid "%s events hidden"
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:453
+#: source\timelinelib\wxgui\components\timelinepanel.py:460
 msgid "This timeline is read-only."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:454
+#: source\timelinelib\wxgui\components\timelinepanel.py:461
 msgid "To edit this timeline, save it to a new file: File -> Save As."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:457
+#: source\timelinelib\wxgui\components\timelinepanel.py:464
 msgid "This timeline is not being saved."
 msgstr ""
 
-#: source\timelinelib\wxgui\components\timelinepanel.py:458
+#: source\timelinelib\wxgui\components\timelinepanel.py:465
 msgid "To save this timeline, save it to a new file: File -> Save As."
 msgstr ""
 
@@ -2562,8 +2562,8 @@ msgid "Select timeline to import from:"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importevents\view.py:54
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:132
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:220
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:135
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:223
 msgid "Timeline files"
 msgstr ""
 
@@ -2889,35 +2889,39 @@ msgstr ""
 msgid "Select html pages directory"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:52
+#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:54
 msgid "System version:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:53
+#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:55
 msgid "Python version:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:54
+#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:56
 msgid "Python encoding:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:55
+#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:57
 msgid "wxPython version:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:56
+#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:58
 msgid "Locale setting:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:57
+#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:59
 msgid "Locale date format:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:58
+#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:60
 msgid "Configuration file:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:59
+#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:61
+msgid "Translations directory"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\systeminfo\view.py:62
 msgid "System Information"
 msgstr ""
 
@@ -2955,64 +2959,64 @@ msgstr ""
 msgid "read-only"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:67
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:60
 msgid "&File"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:68
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:61
 msgid "&Edit"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:69
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:62
 msgid "&View"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:71
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:64
 msgid "&Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:75
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:68
 msgid "&Navigate"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:76
+#: source\timelinelib\wxgui\frames\mainframe\guicreator.py:69
 msgid "&Help"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:183
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:197
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:186
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:200
 msgid "Create Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:188
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:191
 msgid "The specified timeline already exists."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:189
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:192
 msgid "Opening timeline instead of creating new."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:191
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:194
 msgid "Information"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:207
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:210
 msgid "Open Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:223
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:226
 msgid "Save Timeline As"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:257
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:260
 msgid "Unable to write configuration file."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:277
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:280
 msgid "Distance between selected events"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:279
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:282
 msgid "Events are overlapping or distance is 0"
 msgstr ""
 
@@ -3031,7 +3035,7 @@ msgid ""
 "Do you want to Synchronize?"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:159
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:160
 #, python-format
 msgid ""
 "Unable to take lock on %s\n"
@@ -3039,7 +3043,7 @@ msgid ""
 "Check if you have write access to this directory."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:189
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:190
 #, python-format
 msgid ""
 "The lockfile used to protect the timeline from concurrent updates is opened "
@@ -3278,17 +3282,17 @@ msgstr ""
 msgid "&Hide Events done"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\menus\viewmenu.py:96
+#: source\timelinelib\wxgui\frames\mainframe\menus\viewmenu.py:93
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:40
 #: source\timelinelib\wxgui\frames\mainframe\toolbar.py:48
 msgid "Left"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\menus\viewmenu.py:98
+#: source\timelinelib\wxgui\frames\mainframe\menus\viewmenu.py:95
 msgid "Point event alignment"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\menus\viewmenu.py:107
+#: source\timelinelib\wxgui\frames\mainframe\menus\viewmenu.py:104
 msgid "Event appearance"
 msgstr ""
 
