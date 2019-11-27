@@ -93,6 +93,15 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         event_id = self.main_panel.get_id_of_first_selected_event()
         return self.timeline.find_event_with_id(event_id)
 
+    def move_selected_event_up(self):
+        self.main_panel.timeline_panel.move_selected_event_up(),
+
+    def move_selected_event_down(self):
+        self.main_panel.timeline_panel.move_selected_event_down(),
+
+    def set_readonly_mode(self):
+        self.controller.set_timeline_in_readonly_mode()
+
     # API:s used by time types
     def week_starts_on_monday(self):
         return self.controller.week_starts_on_monday()
@@ -270,7 +279,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             self.main_panel.save_view_properties(self.timeline)
 
     # Timeline Menu action handlers
-    def _measure_distance_between_events(self):
+    def measure_distance_between_events(self):
         event1, event2 = self._get_selected_events()
         self._display_distance(event1.distance_to(event2))
 
@@ -288,7 +297,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             distance_text = self.timeline.get_time_type().format_delta(distance)
         display_information_message(caption, distance_text)
 
-    def _set_category(self):
+    def set_category(self):
         dialog = SetCategoryDialog(self, self.timeline)
         dialog.ShowModal()
         dialog.Destroy()
@@ -300,7 +309,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         dialog.ShowModal()
         dialog.Destroy()
 
-    def _edit_eras(self):
+    def edit_eras(self):
         dialog = ErasEditorDialog(self, self.timeline, self.config)
         dialog.ShowModal()
         dialog.Destroy()
