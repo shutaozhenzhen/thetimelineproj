@@ -50,6 +50,7 @@ from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_d
 from timelinelib.db.utils import safe_locking
 from timelinelib.wxgui.dialogs.setcategory.view import open_set_category_dialog
 from timelinelib.wxgui.dialogs.eraseditor.view import oped_edit_eras_dialog
+from timelinelib.wxgui.utils import load_icon_bundle
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
 
@@ -74,7 +75,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self._create_gui()
         self.Maximize(self.config.window_maximized)
         self.SetTitle(APPLICATION_NAME)
-        self.SetIcons(self._load_icon_bundle())
+        self.SetIcons(load_icon_bundle())
         self.main_panel.show_welcome_panel()
         self.enable_disable_menus()
         self.controller.on_started(application_arguments)
@@ -146,14 +147,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     def _set_experimental_features(self):
         ExperimentalFeatures().set_active_state_on_all_features_from_config_string(self.config.experimental_features)
-
-    def _load_icon_bundle(self):
-        bundle = wx.IconBundle()
-        for size in ["16", "32", "48"]:
-            iconpath = os.path.join(ICONS_DIR, "%s.png" % size)
-            icon = wx.Icon(wx.Bitmap(wx.Image(iconpath)))
-            bundle.AddIcon(icon)
-        return bundle
 
     # File Menu action handlers
     def _create_new_timeline(self, timetype=None):

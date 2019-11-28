@@ -15,8 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 
 import wx
+
+from timelinelib.config.paths import ICONS_DIR
 
 
 # Border, in pixels, between controls in a window (should always be used when
@@ -143,3 +146,12 @@ def show_dialog(factory_function):
     dialog = factory_function()
     dialog.ShowModal()
     dialog.Destroy()
+
+
+def load_icon_bundle():
+    bundle = wx.IconBundle()
+    for size in ["16", "32", "48"]:
+        iconpath = os.path.join(ICONS_DIR, "%s.png" % size)
+        icon = wx.Icon(wx.Bitmap(wx.Image(iconpath)))
+        bundle.AddIcon(icon)
+    return bundle
