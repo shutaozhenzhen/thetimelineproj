@@ -23,6 +23,8 @@ from timelinelib.plugin.pluginbase import PluginBase
 from timelinelib.plugin.plugins.exporters import EXPORTER
 from timelinelib.wxgui.components.dialogbuttonssizers.dialogbuttonsclosesizer import DialogButtonsCloseSizer
 import wx.lib.mixins.listctrl as listmix
+from timelinelib.wxgui.frames.mainframe.menus import ID_EXPORT_LIST
+from timelinelib.wxgui.utils import display_error_message
 
 
 class ListExporter(PluginBase):
@@ -33,8 +35,8 @@ class ListExporter(PluginBase):
     def display_name(self):
         return _("Export to Listbox...")
 
-    def wxid(self):
-        from timelinelib.wxgui.frames.mainframe.menus import ID_EXPORT_LIST
+    @staticmethod
+    def wxid():
         return ID_EXPORT_LIST
 
     def run(self, main_frame):
@@ -70,6 +72,7 @@ class ListExporter(PluginBase):
 class ListboxDialog(wx.Dialog):
 
     def __init__(self, title, parent=None, events=None):
+        self._parent = parent
         wx.Dialog.__init__(self, parent, title=title, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self._create_gui()
         if events is not None:
@@ -93,7 +96,7 @@ class ListboxDialog(wx.Dialog):
         if wx.TheClipboard.Open():
             self._copy_text_to_clipboard()
         else:
-            self.view.DisplayErrorMessage(_("Unable to copy to clipboard."))
+            display_error_message(_("Unable to copy to clipboard."), parent=self._parent)
 
     def _copy_text_to_clipboard(self):
         obj = wx.TextDataObject(self.GetText())
