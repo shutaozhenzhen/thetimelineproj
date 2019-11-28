@@ -33,14 +33,14 @@ REQUIRING_WRITEABLE_TIMELINE = (mid.ID_CREATE_EVENT, mid.ID_EDIT_EVENT, mid.ID_C
 
 class TimelineMenu(MenuBase):
 
-    def __init__(self, parent):
+    def __init__(self, parent, timeline_panel):
         event_handlers = {
             mid.ID_CREATE_EVENT: lambda evt: open_create_event_editor(parent, parent, parent.config, parent.timeline),
             mid.ID_EDIT_EVENT: lambda evt: parent.edit_event(),
             mid.ID_DUPLICATE_EVENT: lambda evt: parent.duplicate_event(),
             mid.ID_SET_CATEGORY_ON_SELECTED: lambda evt: parent.set_category_on_selected(),
-            mid.ID_MOVE_EVENT_UP: lambda evt: parent.move_selected_event_up(),
-            mid.ID_MOVE_EVENT_DOWN: lambda evt: parent.move_selected_event_down(),
+            mid.ID_MOVE_EVENT_UP: lambda evt: timeline_panel.move_selected_event_up(),
+            mid.ID_MOVE_EVENT_DOWN: lambda evt: timeline_panel.move_selected_event_down(),
             mid.ID_CREATE_MILESTONE: lambda evt: open_milestone_editor_for(parent, parent, parent.config, parent.timeline),
             mid.ID_COMPRESS: lambda evt: safe_locking(parent, parent.timeline.compress),
             mid.ID_MEASURE_DISTANCE: lambda evt: parent.measure_distance_between_events(),
