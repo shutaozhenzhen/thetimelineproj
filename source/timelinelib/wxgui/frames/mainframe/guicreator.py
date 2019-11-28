@@ -61,7 +61,7 @@ class GuiCreator:
         main_menu_bar.Append(FileMenu(self).create(), _("&File"))
         main_menu_bar.Append(EditMenu(self).create(), _("&Edit"))
         main_menu_bar.Append(ViewMenu(self).create(), _("&View"))
-        self._timeline_menu = TimelineMenu(self).create()
+        self._timeline_menu = TimelineMenu(self, self.main_panel.timeline_panel).create()
         main_menu_bar.Append(self._timeline_menu, _("&Timeline"))
         self._navigation_menu_items = []
         self._navigation_functions_by_menu_item_id = {}

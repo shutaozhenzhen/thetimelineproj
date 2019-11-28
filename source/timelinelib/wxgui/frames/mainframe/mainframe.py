@@ -91,12 +91,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         event_id = self.main_panel.get_id_of_first_selected_event()
         return self.timeline.find_event_with_id(event_id)
 
-    def move_selected_event_up(self):
-        self.main_panel.timeline_panel.move_selected_event_up(),
-
-    def move_selected_event_down(self):
-        self.main_panel.timeline_panel.move_selected_event_down(),
-
     @property
     def file_open_recent_submenu(self):
         return self.mnu_file_open_recent_submenu
