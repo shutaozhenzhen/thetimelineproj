@@ -51,6 +51,7 @@ from timelinelib.db.utils import safe_locking
 from timelinelib.wxgui.dialogs.setcategory.view import open_set_category_dialog
 from timelinelib.wxgui.dialogs.eraseditor.view import oped_edit_eras_dialog
 from timelinelib.wxgui.utils import load_icon_bundle
+from timelinelib.wxgui.dialogs.timeeditor.view import open_time_editor_dialog
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
 
@@ -96,12 +97,8 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def file_open_recent_submenu(self):
         return self.mnu_file_open_recent_submenu
 
-    def display_time_editor_dialog(self, time_type, initial_time,
-                                   handle_new_time_fn, title):
-        dialog = TimeEditorDialog(self, self.config, time_type, initial_time, title)
-        if dialog.ShowModal() == wx.ID_OK:
-            handle_new_time_fn(dialog.GetTime())
-        dialog.Destroy()
+    def display_time_editor_dialog(self, time_type, initial_time, handle_new_time_fn, title):
+        open_time_editor_dialog(self, self.config, time_type, initial_time, handle_new_time_fn, title)
 
     def display_now_date_editor_dialog(self, handle_new_time_fn, title):
         dialog = ChangeNowDateDialog(self, self.config, self.timeline, handle_new_time_fn, title)

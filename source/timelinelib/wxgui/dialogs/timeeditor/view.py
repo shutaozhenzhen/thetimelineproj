@@ -54,3 +54,10 @@ class TimeEditorDialog(Dialog):
 
     def Close(self):
         self.EndModal(wx.ID_OK)
+
+
+def open_time_editor_dialog(parent, config, time_type, initial_time, handle_new_time_fn, title):
+    dialog = TimeEditorDialog(parent, config, time_type, initial_time, title)
+    if dialog.ShowModal() == wx.ID_OK:
+        handle_new_time_fn(dialog.GetTime())
+    dialog.Destroy()
