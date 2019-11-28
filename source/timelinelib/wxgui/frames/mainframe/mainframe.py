@@ -32,8 +32,6 @@ from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
 from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.utils import ex_msg
 from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
-from timelinelib.wxgui.dialogs.eraseditor.view import ErasEditorDialog
-from timelinelib.wxgui.dialogs.setcategory.view import SetCategoryDialog
 from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
