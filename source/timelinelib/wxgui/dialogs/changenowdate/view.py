@@ -69,3 +69,9 @@ class ChangeNowDateDialog(Dialog):
 
     def _time_picker_on_change(self):
         self.controller.on_time_changed()
+
+
+def open_change_now_date_dialog(parent, config, db, handle_new_time_fn, title):
+    # TODO: This editor don't seems to work!
+    dialog = ChangeNowDateDialog(parent, config, db, handle_new_time_fn, title)
+    dialog.Show()
