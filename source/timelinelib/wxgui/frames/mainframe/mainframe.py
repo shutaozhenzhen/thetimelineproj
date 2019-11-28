@@ -99,9 +99,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def display_time_editor_dialog(self, time_type, initial_time,
                                    handle_new_time_fn, title):
         dialog = TimeEditorDialog(self, self.config, time_type, initial_time, title)
-        dialog.ShowModal()
-        result = dialog.GetReturnCode()
-        if result == wx.ID_OK:
+        if dialog.ShowModal() == wx.ID_OK:
             handle_new_time_fn(dialog.GetTime())
         dialog.Destroy()
 
