@@ -46,6 +46,7 @@ class describe_date_format_dialog_controller(UnitTestCase):
         self._simulate_ok_clicked()
         self.assertTrue(self.view.GetDateFormat.called)
         self.assertFalse(self.view.EndModalOk.called)
+        self.assertTrue(self.view.DisplayErrorMessage.called)
 
     def _simulate_user_entry(self, date_format):
         self.view.GetDateFormat.return_value = date_format
