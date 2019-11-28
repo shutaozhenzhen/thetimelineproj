@@ -20,7 +20,6 @@ import datetime
 
 from timelinelib.config.dateformatparser import DateFormatParser
 from timelinelib.wxgui.framework import Controller
-from timelinelib.wxgui.utils import display_error_message
 
 
 class DateFormatDialogController(Controller):
@@ -37,8 +36,7 @@ class DateFormatDialogController(Controller):
             self.config.set_date_format(date_format)
             self.view.EndModalOk()
         else:
-            if event: # To get test to work
-                display_error_message(self.dateformat_parser.get_error_text(), parent=self.view)
+            self.view.DisplayErrorMessage(self.dateformat_parser.get_error_text())
 
     def _is_valid_format(self, date_format):
         return self.dateformat_parser.is_valid(date_format)
