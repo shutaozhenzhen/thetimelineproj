@@ -52,6 +52,8 @@ from timelinelib.wxgui.dialogs.setcategory.view import open_set_category_dialog
 from timelinelib.wxgui.dialogs.eraseditor.view import oped_edit_eras_dialog
 from timelinelib.wxgui.utils import load_icon_bundle
 from timelinelib.wxgui.dialogs.timeeditor.view import open_time_editor_dialog
+from timelinelib.wxgui.dialogs.changenowdate.view import open_change_now_date_dialog
+
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
 
@@ -89,10 +91,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def DisplayStatus(self, message):
         self.status_bar_adapter.set_text(message)
 
-    def _get_first_selected_event(self):
-        event_id = self.main_panel.get_id_of_first_selected_event()
-        return self.timeline.find_event_with_id(event_id)
-
     @property
     def file_open_recent_submenu(self):
         return self.mnu_file_open_recent_submenu
@@ -101,9 +99,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         open_time_editor_dialog(self, self.config, time_type, initial_time, handle_new_time_fn, title)
 
     def display_now_date_editor_dialog(self, handle_new_time_fn, title):
-        # TODO: This editor don't seems to work!
-        dialog = ChangeNowDateDialog(self, self.config, self.timeline, handle_new_time_fn, title)
-        dialog.Show()
+        open_change_now_date_dialog(self, self.config, self.timeline, handle_new_time_fn, title)
 
     def save_time_period(self):
         self.prev_time_period = self.main_panel.get_time_period()
@@ -366,3 +362,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.alert_dialog_open = True
         all_events = self.timeline.get_all_events()
         AlertController(self).display_events_alerts(all_events, self.timeline.get_time_type())
+
+    def _get_first_selected_event(self):
+        event_id = self.main_panel.get_id_of_first_selected_event()
+        return self.timeline.find_event_with_id(event_id)
