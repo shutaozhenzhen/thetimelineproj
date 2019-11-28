@@ -142,22 +142,23 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         ExperimentalFeatures().set_active_state_on_all_features_from_config_string(self.config.experimental_features)
 
     # File Menu action handlers
-    def _create_new_timeline(self, timetype=None):
+
+    def create_new_bosparanian_timeline(self):
+        self.create_new_timeline(BosparanianTimeType())
+    
+    def create_new_coptic_timeline(self):
+        self.create_new_timeline(CopticTimeType())
+            
+    def create_new_pharaonic_timeline(self):
+        self.create_new_timeline(PharaonicTimeType())
+        
+    def create_new_numeric_timeline(self):
+        self.create_new_timeline(NumTimeType())
+
+    def create_new_timeline(self, timetype=None):
         path = self._get_file_path()
         if path is not None:
             self.controller.open_timeline(path, timetype)
-
-    def _create_new_bosparanian_timeline(self):
-        self._create_new_timeline(BosparanianTimeType())
-    
-    def _create_new_coptic_timeline(self):
-        self._create_new_timeline(CopticTimeType())
-            
-    def _create_new_pharaonic_timeline(self):
-        self._create_new_timeline(PharaonicTimeType())
-        
-    def _create_new_numeric_timeline(self):
-        self._create_new_timeline(NumTimeType())
 
     def _get_file_path(self):
         path = None
