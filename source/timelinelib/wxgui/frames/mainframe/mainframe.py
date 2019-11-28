@@ -101,6 +101,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         open_time_editor_dialog(self, self.config, time_type, initial_time, handle_new_time_fn, title)
 
     def display_now_date_editor_dialog(self, handle_new_time_fn, title):
+        # TODO: This editor don't seems to work!
         dialog = ChangeNowDateDialog(self, self.config, self.timeline, handle_new_time_fn, title)
         dialog.Show()
 
