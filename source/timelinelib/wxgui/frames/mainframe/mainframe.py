@@ -120,10 +120,8 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     # Creation process methods
     def _set_initial_values_to_member_variables(self):
         self.timeline = None
-        self.timeline_wildcard_helper = WildcardHelper(
-            _("Timeline files"), ["timeline", "ics"])
-        self.images_svg_wildcard_helper = WildcardHelper(
-            _("SVG files"), ["svg"])
+        self.timeline_wildcard_helper = WildcardHelper(_("Timeline files"), ["timeline", "ics"])
+        self.images_svg_wildcard_helper = WildcardHelper(_("SVG files"), ["svg"])
 
     def _create_and_start_timer(self):
         self.alert_dialog_open = False
