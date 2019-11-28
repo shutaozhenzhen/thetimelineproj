@@ -115,9 +115,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         except LockedException:
             return False
 
-    def get_lockfile_path(self):
-        return self.controller._get_lockpath()
-
     def get_view_properties(self, ):
         return self.main_panel.get_view_properties()
 
