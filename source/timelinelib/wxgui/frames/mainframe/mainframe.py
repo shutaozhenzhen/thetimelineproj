@@ -143,22 +143,19 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     # File Menu action handlers
 
-    def create_new_bosparanian_timeline(self):
-        self.create_new_timeline(BosparanianTimeType())
-    
-    def create_new_coptic_timeline(self):
-        self.create_new_timeline(CopticTimeType())
-            
-    def create_new_pharaonic_timeline(self):
-        self.create_new_timeline(PharaonicTimeType())
-        
-    def create_new_numeric_timeline(self):
-        self.create_new_timeline(NumTimeType())
-
     def create_new_timeline(self, timetype=None):
-        path = self._get_file_path()
-        if path is not None:
-            self.controller.open_timeline(path, timetype)
+        if timetype == "dir":
+            self._create_new_dir_timeline()
+        else:
+            path = self._get_file_path()
+            if path is not None:
+                self.controller.open_timeline(path, timetype)
+
+    def _create_new_dir_timeline(self):
+        dialog = wx.DirDialog(self, message=_("Create Timeline"))
+        if dialog.ShowModal() == wx.ID_OK:
+            self.controller.open_timeline(dialog.GetPath())
+        dialog.Destroy()
 
     def _get_file_path(self):
         path = None
@@ -175,12 +172,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
                               wx.OK | wx.ICON_INFORMATION, self)
         dialog.Destroy()
         return path
-
-    def _create_new_dir_timeline(self):
-        dialog = wx.DirDialog(self, message=_("Create Timeline"))
-        if dialog.ShowModal() == wx.ID_OK:
-            self.controller.open_timeline(dialog.GetPath())
-        dialog.Destroy()
 
     def open_existing_timeline(self):
         directory = ""

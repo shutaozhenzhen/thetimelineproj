@@ -20,6 +20,11 @@ import wx
 
 from timelinelib.wxgui.dialogs.filenew.controller import FileNewDialogController
 from timelinelib.wxgui.framework import Dialog
+from calendar.gregorian.timetype import GregorianTimeType
+from calendar.bosparanian.timetype import BosparanianTimeType
+from calendar.pharaonic.timetype.timetype import PharaonicTimeType
+from calendar.coptic.timetype import CopticTimeType
+from calendar.num.timetype import NumTimeType
 
 
 class FileNewDialog(Dialog):
@@ -89,35 +94,35 @@ def open_file_new_dialog(parent):
         {
             "text": _("Gregorian"),
             "description": _("This creates a timeline using the standard calendar."),
-            "create_fn": parent.create_new_timeline,
+            "timetype": GregorianTimeType,
         },
         {
             "text": _("Numeric"),
             "description": _("This creates a timeline that has numbers on the x-axis instead of dates."),
-            "create_fn": parent.create_new_numeric_timeline,
+            "timetype": NumTimeType,
         },
         {
             "text": _("Directory"),
             "description": _("This creates a timeline where the modification date of files in a directory are shown as events."),
-            "create_fn": parent._create_new_dir_timeline,
+            "timetype": lambda: "dir",
         },
         {
             "text": _("Bosparanian"),
             "description": _("This creates a timeline using the fictuous Bosparanian calendar from the German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."),
-            "create_fn": parent.create_new_bosparanian_timeline,
+            "timetype": BosparanianTimeType,
         },
         {
             "text": _("Pharaonic"),
             "description": _("This creates a timeline using the ancient egypt pharaonic calendar"),
-            "create_fn": parent.create_new_pharaonic_timeline,
+            "timetype": PharaonicTimeType,
         },
         {
             "text": _("Coptic"),
             "description": _("This creates a timeline using the coptic calendar"),
-            "create_fn": parent.create_new_coptic_timeline,
+            "timetype": CopticTimeType,
         },
     ]
     dialog = FileNewDialog(parent, items)
     if dialog.ShowModal() == wx.ID_OK:
-        dialog.GetSelection()["create_fn"]()
+        parent.create_new_timeline(timetype=dialog.GetSelection()["timetype"]())
     dialog.Destroy()
