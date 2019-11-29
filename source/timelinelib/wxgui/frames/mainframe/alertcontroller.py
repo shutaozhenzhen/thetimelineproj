@@ -40,7 +40,6 @@ class AlertController:
         self._timer.stop()
 
     def _timer_tick(self, evt):
-        print('tick')
         if self._timeline is None:
             return
         if self._alert_dialog_open:
