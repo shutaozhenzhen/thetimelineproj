@@ -172,23 +172,9 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     # Timeline Menu action handlers
     def measure_distance_between_events(self):
-        event1, event2 = self._get_selected_events()
-        self._display_distance(event1.distance_to(event2))
+        self.controller.measure_distance_between_events(self.main_panel.get_ids_of_two_first_selected_events())
 
-    def _get_selected_events(self):
-        event_id_1, event_id_2 = self.main_panel.get_ids_of_two_first_selected_events()
-        event1 = self.timeline.find_event_with_id(event_id_1)
-        event2 = self.timeline.find_event_with_id(event_id_2)
-        return event1, event2
-
-    def _display_distance(self, distance):
-        caption = _("Distance between selected events")
-        if distance is None:
-            distance_text = _("Events are overlapping or distance is 0")
-        else:
-            distance_text = self.timeline.get_time_type().format_delta(distance)
-        display_information_message(caption, distance_text)
-
+    # ---
     def set_category(self):
         open_set_category_dialog(self, self.timeline)
 
