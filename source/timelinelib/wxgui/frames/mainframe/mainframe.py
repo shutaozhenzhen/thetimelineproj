@@ -231,8 +231,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         return self.timeline.find_event_with_id(event_id)
 
     def _all_visible_events(self):
-        all_events = self.timeline.get_all_events()
-        return self.main_panel.get_visible_events(all_events)
+        return self.main_panel.get_visible_events(self.timeline.get_all_events())
 
     def _period_for_all_visible_events(self):
         try:
