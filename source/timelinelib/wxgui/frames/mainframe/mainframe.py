@@ -257,12 +257,10 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         return self.main_panel.get_visible_events(all_events)
 
     def _first_time(self, events):
-        start_time = lambda event: event.get_start_time()
-        return start_time(min(events, key=start_time))
+        return min(events, key=lambda event: event.get_start_time()).get_start_time()
 
     def _last_time(self, events):
-        end_time = lambda event: event.get_end_time()
-        return end_time(max(events, key=end_time))
+        return max(events, key=lambda event: event.get_end_time()).get_end_time()
 
     def _get_first_selected_event(self):
         event_id = self.main_panel.get_id_of_first_selected_event()
