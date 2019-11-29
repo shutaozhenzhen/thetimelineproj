@@ -92,6 +92,12 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def DisplayStatus(self, message):
         self.status_bar_adapter.set_text(message)
 
+    def get_export_periods(self):
+        events = self._all_visible_events()
+        first_time = self._first_time(events)
+        last_time = self._last_time(events)
+        return self.main_panel.get_export_periods(first_time, last_time)
+
     @property
     def file_open_recent_submenu(self):
         return self.mnu_file_open_recent_submenu
