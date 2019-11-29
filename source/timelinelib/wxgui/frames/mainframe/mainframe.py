@@ -66,7 +66,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.help_browser = HelpBrowserFrame(self)
         self.controller = MainFrameController(self, db_open, self.config)
         self.menu_controller = MenuController()
-        self._set_initial_values_to_member_variables()
+        self.timeline = None
         self._set_experimental_features()
         self._create_gui()
         self.Maximize(self.config.window_maximized)
@@ -111,9 +111,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.main_panel.get_view_properties().change_view_cats_individually(evt.is_checked)
 
     # Creation process methods
-    def _set_initial_values_to_member_variables(self):
-        self.timeline = None
-
     def _set_experimental_features(self):
         ExperimentalFeatures().set_active_state_on_all_features_from_config_string(self.config.experimental_features)
 
