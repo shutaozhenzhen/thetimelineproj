@@ -45,7 +45,7 @@ from timelinelib.wxgui.dialogs.eraseditor.view import oped_edit_eras_dialog
 from timelinelib.wxgui.utils import load_icon_bundle
 from timelinelib.wxgui.dialogs.timeeditor.view import open_time_editor_dialog
 from timelinelib.wxgui.dialogs.changenowdate.view import open_change_now_date_dialog
-from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog
+from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog, FUNC_SAVE_AS, FUNC_OPEN
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -152,19 +152,15 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         return path
 
     def open_existing_timeline(self):
-        directory = ""
+        path = ""
         if self.timeline is not None:
-            directory = os.path.dirname(self.timeline.path)
-        wildcard = self.timeline_wildcard_helper.wildcard_string()
-        dialog = wx.FileDialog(self, message=_("Open Timeline"),
-                               defaultDir=directory,
-                               wildcard=wildcard, style=wx.FD_OPEN)
-        if dialog.ShowModal() == wx.ID_OK:
-            self.controller.open_timeline(dialog.GetPath())
-        dialog.Destroy()
+            path = os.path.dirname(self.timeline.path)
+        new_timeline_path = open_get_file_path_dialog(self, FUNC_OPEN, path)
+        if new_timeline_path:
+            self.controller.open_timeline(new_timeline_path)
 
     def save_as(self):
-        new_timeline_path = open_get_file_path_dialog(self, self.timeline.path, _("Save Timeline As"))
+        new_timeline_path = open_get_file_path_dialog(self, FUNC_SAVE_AS, self.timeline.path)
         self._save_timeline_to_new_path(new_timeline_path)
 
     def _save_timeline_to_new_path(self, new_timeline_path):

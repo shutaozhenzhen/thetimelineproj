@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-27 22:23+0100\n"
+"POT-Creation-Date: 2019-11-29 09:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -634,7 +634,7 @@ msgstr ""
 #: source\timelinelib\canvas\data\event.py:27
 #: source\timelinelib\plugin\plugins\exporters\timelineexporter.py:107
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:182
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:66
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:71
 msgid "Description"
 msgstr ""
 
@@ -763,7 +763,7 @@ msgid ""
 msgstr ""
 
 #: source\timelinelib\config\dotfile.py:203
-#: source\timelinelib\wxgui\utils.py:100
+#: source\timelinelib\wxgui\utils.py:103
 msgid "Warning"
 msgstr ""
 
@@ -1924,20 +1924,20 @@ msgstr ""
 msgid "File '%s' exists. Overwrite?"
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:34
+#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:36
 msgid "Export to Listbox..."
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:96
+#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:99
 #: source\timelinelib\wxgui\dialogs\textdisplay\controller.py:33
 msgid "Unable to copy to clipboard."
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:124
+#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:127
 msgid "Time period"
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:125
+#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:128
 msgid "Event"
 msgstr ""
 
@@ -1946,7 +1946,7 @@ msgid "Could not find pysvg Python package. It is needed to export to SVG."
 msgstr ""
 
 #: source\timelinelib\plugin\plugins\exporters\exporttosvg.py:46
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:156
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:117
 msgid "SVG files"
 msgstr ""
 
@@ -2536,65 +2536,79 @@ msgstr ""
 msgid "Select Fields to Export"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:65
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:70
 msgid "Choose what type of timeline you want to create."
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:67
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:72
 msgid "Create new timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:90
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:95
 msgid "Gregorian"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:91
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:96
 msgid "This creates a timeline using the standard calendar."
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:95
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:100
 msgid "Numeric"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:96
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:101
 msgid ""
 "This creates a timeline that has numbers on the x-axis instead of dates."
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:100
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:105
 msgid "Directory"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:101
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:106
 msgid ""
 "This creates a timeline where the modification date of files in a directory "
 "are shown as events."
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:105
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:110
 msgid "Bosparanian"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:106
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:111
 msgid ""
 "This creates a timeline using the fictuous Bosparanian calendar from the "
 "German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:110
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:115
 msgid "Pharaonic"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:111
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:116
 msgid "This creates a timeline using the ancient egypt pharaonic calendar"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:115
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:120
 msgid "Coptic"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\filenew\view.py:116
+#: source\timelinelib\wxgui\dialogs\filenew\view.py:121
 msgid "This creates a timeline using the coptic calendar"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\getfilepath\controller.py:28
+#: source\timelinelib\wxgui\dialogs\importevents\view.py:55
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:116
+msgid "Timeline files"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:34
+msgid "Open Timeline"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:35
+msgid "Save Timeline As"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importevents\controller.py:54
@@ -2617,12 +2631,6 @@ msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importevents\view.py:54
 msgid "Select timeline to import from:"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\importevents\view.py:55
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:154
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:242
-msgid "Timeline files"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importevents\view.py:56
@@ -3021,7 +3029,7 @@ msgstr ""
 msgid "Could not find page '%s'."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\controllerapi.py:69
+#: source\timelinelib\wxgui\frames\mainframe\controllerapi.py:81
 msgid "read-only"
 msgstr ""
 
@@ -3049,40 +3057,32 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:205
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:219
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:133
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:141
 msgid "Create Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:210
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:146
 msgid "The specified timeline already exists."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:211
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:147
 msgid "Opening timeline instead of creating new."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:213
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:149
 msgid "Information"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:229
-msgid "Open Timeline"
-msgstr ""
-
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:245
-msgid "Save Timeline As"
-msgstr ""
-
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:279
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:190
 msgid "Unable to write configuration file."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:299
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:210
 msgid "Distance between selected events"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:301
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:212
 msgid "Events are overlapping or distance is 0"
 msgstr ""
 
@@ -3301,10 +3301,10 @@ msgstr ""
 msgid "&Hide Events done"
 msgstr ""
 
-#: source\timelinelib\wxgui\utils.py:95
+#: source\timelinelib\wxgui\utils.py:98
 msgid "Error"
 msgstr ""
 
-#: source\timelinelib\wxgui\utils.py:112 source\timelinelib\wxgui\utils.py:118
+#: source\timelinelib\wxgui\utils.py:115 source\timelinelib\wxgui\utils.py:121
 msgid "Question"
 msgstr ""
