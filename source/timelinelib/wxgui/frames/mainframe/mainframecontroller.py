@@ -24,6 +24,7 @@ from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_warning_message
 from timelinelib.wxgui.utils import get_user_ack
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
+from timelinelib.wxgui.utils import display_information_message
 
 
 class LockedException(Exception):
@@ -125,6 +126,18 @@ class MainFrameController:
     def start_slide_show(self):
         canvas = self._main_frame.main_panel.get_timeline_canvas()
         open_slideshow_dialog(self._timeline, canvas)
+
+    def measure_distance_between_events(self, event_ids):
+        id1, id2 = event_ids
+        event1 = self._timeline.find_event_with_id(id1)
+        event2 = self._timeline.find_event_with_id(id2)
+        distance = event1.distance_to(event2)
+        if distance is None:
+            distance_text = _("Events are overlapping or distance is 0")
+        else:
+            distance_text = self._timeline.get_time_type().format_delta(distance)
+        caption = _("Distance between selected events")
+        display_information_message(caption, distance_text)
 
     def _timeline_path_doesnt_exists_yet(self):
         return not os.path.exists(self._timelinepath)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-29 09:37+0100\n"
+"POT-Creation-Date: 2019-11-29 12:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1161,7 +1161,7 @@ msgid ""
 msgstr ""
 
 #: source\timelinelib\db\__init__.py:51
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:68
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:71
 #, python-format
 msgid "Unable to open timeline '%s'."
 msgstr ""
@@ -1946,7 +1946,6 @@ msgid "Could not find pysvg Python package. It is needed to export to SVG."
 msgstr ""
 
 #: source\timelinelib\plugin\plugins\exporters\exporttosvg.py:46
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:117
 msgid "SVG files"
 msgstr ""
 
@@ -2597,23 +2596,22 @@ msgstr ""
 msgid "This creates a timeline using the coptic calendar"
 msgstr ""
 
+#: source\timelinelib\wxgui\dialogs\getdirpath\view.py:23
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:44
+msgid "Create Timeline"
+msgstr ""
+
 #: source\timelinelib\wxgui\dialogs\getfilepath\controller.py:28
 #: source\timelinelib\wxgui\dialogs\importevents\view.py:55
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:116
 msgid "Timeline files"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:36
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:42
 msgid "Open Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:37
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:43
 msgid "Save Timeline As"
-msgstr ""
-
-#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:38
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:139
-msgid "Create Timeline"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importevents\controller.py:54
@@ -3062,11 +3060,11 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:131
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:132
 msgid "The specified timeline already exists."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:132
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:133
 msgid "Opening timeline instead of creating new."
 msgstr ""
 
@@ -3074,24 +3072,16 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:180
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:165
 msgid "Unable to write configuration file."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:200
-msgid "Distance between selected events"
-msgstr ""
-
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:202
-msgid "Events are overlapping or distance is 0"
-msgstr ""
-
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:53
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:55
 #, python-format
 msgid "File '%s' does not exist."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:106
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:116
 msgid ""
 "Someoneelse has changed the Timeline.\n"
 "You have two choices!\n"
@@ -3101,7 +3091,15 @@ msgid ""
 "Do you want to Synchronize?"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:160
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:136
+msgid "Events are overlapping or distance is 0"
+msgstr ""
+
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:139
+msgid "Distance between selected events"
+msgstr ""
+
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:182
 #, python-format
 msgid ""
 "Unable to take lock on %s\n"
@@ -3109,7 +3107,7 @@ msgid ""
 "Check if you have write access to this directory."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:190
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:212
 #, python-format
 msgid ""
 "The lockfile used to protect the timeline from concurrent updates is opened "
