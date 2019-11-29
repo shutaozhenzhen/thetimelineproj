@@ -129,12 +129,11 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             self.controller.open_timeline(open_get_dir_path_dialog(self))
         else:
             path = open_get_file_path_dialog(self, FUNC_NEW, self.timeline.path)
-            if path is not None:
-                if os.path.exists(path):
-                    msg1 = _("The specified timeline already exists.")
-                    msg2 = _("Opening timeline instead of creating new.")
-                    display_information_message(_("Information"), f"{msg1}\n\n{msg2}", self)
-                self.controller.open_timeline(path, timetype)
+            if path and os.path.exists(path):
+                msg1 = _("The specified timeline already exists.")
+                msg2 = _("Opening timeline instead of creating new.")
+                display_information_message(_("Information"), f"{msg1}\n\n{msg2}", self)
+            self.controller.open_timeline(path, timetype)
 
     def open_existing_timeline(self):
         path = ""
