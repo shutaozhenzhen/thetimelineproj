@@ -110,6 +110,25 @@ class MainPanel(wx.Panel):
             self.searchbar.Focus()
         self.GetSizer().Layout()
 
+    def navigate_to_first_event(self, first_event):
+        if first_event:
+            start = first_event.get_start_time()
+            delta = self.get_displayed_period_delta()
+            end = start + delta
+            margin_delta = delta / 24
+            self.Navigate(lambda tp: tp.update(start, end, -margin_delta))
+
+    def navigate_to_last_event(self, last_event, on_error_start):
+        if last_event:
+            end = last_event.get_end_time()
+            delta = self.get_displayed_period_delta()
+            try:
+                start = end - delta
+            except ValueError:
+                start = on_error_start
+            margin_delta = delta / 24
+            self.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
+
     def _remove_timeline_and_show_welcome_panel(self):
         self.category_tree.set_no_timeline_view()
         self.set_searchbar_timeline_canvas(None)
