@@ -26,6 +26,12 @@ FUNC_NEW = 3
 
 class GetFilePath(wx.FileDialog):
 
+    EXTENSIONS = {
+        FUNC_OPEN: ["timeline", "ics"],
+        FUNC_SAVE_AS: ["timeline"],
+        FUNC_NEW: ["timeline"],
+    }
+
     STYLES = {
         FUNC_OPEN: wx.FD_OPEN,
         FUNC_SAVE_AS: wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
@@ -39,7 +45,7 @@ class GetFilePath(wx.FileDialog):
     }
 
     def __init__(self, parent, func, current_path):
-        self._controller = GetFilePathContoller(self, current_path)
+        self._controller = GetFilePathContoller(self, func, current_path)
         wx.FileDialog.__init__(self,
                                parent,
                                message=self.TITLES[func],
