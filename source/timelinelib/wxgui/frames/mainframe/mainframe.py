@@ -123,7 +123,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         ExperimentalFeatures().set_active_state_on_all_features_from_config_string(self.config.experimental_features)
 
     # File Menu action handlers
-
     def create_new_timeline(self, timetype=None):
         if timetype == "dir":
             self._create_new_dir_timeline()
@@ -131,11 +130,9 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             path = open_get_file_path_dialog(self, FUNC_NEW, self.timeline.path)
             if path is not None:
                 if os.path.exists(path):
-                    msg_first_part = _("The specified timeline already exists.")
-                    msg_second_part = _("Opening timeline instead of creating new.")
-                    wx.MessageBox("%s\n\n%s" % (msg_first_part, msg_second_part),
-                                  _("Information"),
-                                  wx.OK | wx.ICON_INFORMATION, self)
+                    msg1 = _("The specified timeline already exists.")
+                    msg2 = _("Opening timeline instead of creating new.")
+                    display_information_message(_("Information"), f"{msg1}\n\n{msg2}", self)
                 self.controller.open_timeline(path, timetype)
 
     def _create_new_dir_timeline(self):
