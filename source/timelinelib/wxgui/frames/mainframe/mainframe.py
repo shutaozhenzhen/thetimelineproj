@@ -213,13 +213,11 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     @skip_when_no_event_selected
     def edit_event(self):
-        event = self._get_first_selected_event()
-        self.main_panel.open_event_editor(event)
+        self.main_panel.open_event_editor(self._get_first_selected_event())
 
     @skip_when_no_event_selected
     def duplicate_event(self):
-        event = self._get_first_selected_event()
-        open_duplicate_event_dialog_for_event(self, self, self.timeline, event)
+        open_duplicate_event_dialog_for_event(self, self, self.timeline, self._get_first_selected_event())
 
     @skip_when_no_event_selected
     def set_category_on_selected(self):
