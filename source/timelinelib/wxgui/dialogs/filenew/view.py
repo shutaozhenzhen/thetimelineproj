@@ -20,11 +20,11 @@ import wx
 
 from timelinelib.wxgui.dialogs.filenew.controller import FileNewDialogController
 from timelinelib.wxgui.framework import Dialog
-from calendar.gregorian.timetype import GregorianTimeType
-from calendar.bosparanian.timetype import BosparanianTimeType
-from calendar.pharaonic.timetype.timetype import PharaonicTimeType
-from calendar.coptic.timetype import CopticTimeType
-from calendar.num.timetype import NumTimeType
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
+from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
+from timelinelib.calendar.coptic.timetype import CopticTimeType
+from timelinelib.calendar.num.timetype import NumTimeType
 
 
 class FileNewDialog(Dialog):
