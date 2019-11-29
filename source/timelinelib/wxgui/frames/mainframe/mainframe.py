@@ -45,7 +45,7 @@ from timelinelib.wxgui.dialogs.eraseditor.view import oped_edit_eras_dialog
 from timelinelib.wxgui.utils import load_icon_bundle
 from timelinelib.wxgui.dialogs.timeeditor.view import open_time_editor_dialog
 from timelinelib.wxgui.dialogs.changenowdate.view import open_change_now_date_dialog
-from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog, FUNC_SAVE_AS, FUNC_OPEN
+from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog, FUNC_SAVE_AS, FUNC_OPEN, FUNC_NEW
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -125,8 +125,14 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         if timetype == "dir":
             self._create_new_dir_timeline()
         else:
-            path = self._get_file_path()
+            path = open_get_file_path_dialog(self, FUNC_NEW, self.timeline.path)
             if path is not None:
+                if os.path.exists(path):
+                    msg_first_part = _("The specified timeline already exists.")
+                    msg_second_part = _("Opening timeline instead of creating new.")
+                    wx.MessageBox("%s\n\n%s" % (msg_first_part, msg_second_part),
+                                  _("Information"),
+                                  wx.OK | wx.ICON_INFORMATION, self)
                 self.controller.open_timeline(path, timetype)
 
     def _create_new_dir_timeline(self):
@@ -134,22 +140,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         if dialog.ShowModal() == wx.ID_OK:
             self.controller.open_timeline(dialog.GetPath())
         dialog.Destroy()
-
-    def _get_file_path(self):
-        path = None
-        wildcard = self.timeline_wildcard_helper.wildcard_string()
-        dialog = wx.FileDialog(self, message=_("Create Timeline"),
-                               wildcard=wildcard, style=wx.FD_SAVE)
-        if dialog.ShowModal() == wx.ID_OK:
-            path = self.timeline_wildcard_helper.get_path(dialog)
-            if os.path.exists(path):
-                msg_first_part = _("The specified timeline already exists.")
-                msg_second_part = _("Opening timeline instead of creating new.")
-                wx.MessageBox("%s\n\n%s" % (msg_first_part, msg_second_part),
-                              _("Information"),
-                              wx.OK | wx.ICON_INFORMATION, self)
-        dialog.Destroy()
-        return path
 
     def open_existing_timeline(self):
         path = ""
