@@ -26,7 +26,6 @@ from timelinelib.config.paths import LOCALE_DIR
 from timelinelib.db import db_open
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 from timelinelib.meta.about import APPLICATION_NAME
-from timelinelib.utils import ex_msg
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
@@ -112,9 +111,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         except LockedException:
             return False
 
-    def get_view_properties(self):
-        return self.main_panel.get_view_properties()
-
     def _on_cats_view_changed(self, evt):
         self.main_panel.get_view_properties().change_view_cats_individually(evt.is_checked)
 
@@ -149,6 +145,13 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         first_time = self._first_time(events)
         last_time = self._last_time(events)
         return self.main_panel.get_export_periods(first_time, last_time)
+
+    def get_visible_categories(self):
+        if self.config.filtered_listbox_export:
+            vp = self.main_panel.get_view_properties()
+            return [cat for cat in self.timeline.get_categories() if vp.is_category_visible(cat)]
+        else:
+            return [cat for cat in self.timeline.get_categories()]
 
     # Timeline Menu action handlers
     @skip_when_no_event_selected
