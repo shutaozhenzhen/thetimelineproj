@@ -22,21 +22,15 @@ import wx.lib.newevent
 
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.config.dotfile import read_config
-from timelinelib.config.paths import ICONS_DIR
 from timelinelib.config.paths import LOCALE_DIR
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.db import db_open
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 from timelinelib.meta.about import APPLICATION_NAME
-from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
-from timelinelib.calendar.num.timetype import NumTimeType
 from timelinelib.utils import ex_msg
-from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
-from timelinelib.wxgui.dialogs.timeeditor.view import TimeEditorDialog
 from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
-from timelinelib.wxgui.timer import TimelineTimer
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.utils import WildcardHelper
@@ -44,8 +38,6 @@ import timelinelib.wxgui.frames.mainframe.guicreator as guic
 from timelinelib.wxgui.frames.mainframe.controllerapi import MainFrameApiUsedByController
 from timelinelib.wxgui.frames.mainframe.alertcontroller import AlertController
 from timelinelib.wxgui.frames.mainframe.menucontroller import MenuController
-from timelinelib.calendar.coptic.timetype import CopticTimeType
-from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
 from timelinelib.db.utils import safe_locking
 from timelinelib.wxgui.dialogs.setcategory.view import open_set_category_dialog
