@@ -264,12 +264,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         end_time = lambda event: event.get_end_time()
         return end_time(max(events, key=end_time))
 
-    def get_export_periods(self):
-        events = self._all_visible_events()
-        first_time = self._first_time(events)
-        last_time = self._last_time(events)
-        return self.main_panel.get_export_periods(first_time, last_time)
-
     def _get_first_selected_event(self):
         event_id = self.main_panel.get_id_of_first_selected_event()
         return self.timeline.find_event_with_id(event_id)
