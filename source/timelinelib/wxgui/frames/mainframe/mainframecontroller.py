@@ -23,6 +23,7 @@ from timelinelib.wxgui.dialogs.slideshow.view import open_slideshow_dialog
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_warning_message
 from timelinelib.wxgui.utils import get_user_ack
+from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 
 
 class LockedException(Exception):
@@ -79,6 +80,13 @@ class MainFrameController:
                 self._main_frame.enable_disable_menus()
                 if path == ":numtutorial:":
                     self._main_frame.fit_all_events()
+
+    def save_timeline_to_new_path(self, new_timeline_path):
+        self._main_frame.save_current_timeline_data()
+        if new_timeline_path is not None:
+            assert new_timeline_path.endswith(".timeline")
+            export_db_to_timeline_xml(self._timeline, new_timeline_path)
+            self.open_timeline(new_timeline_path)
 
     def set_timeline_in_readonly_mode(self):
         try:

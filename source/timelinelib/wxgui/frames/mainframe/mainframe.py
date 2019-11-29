@@ -143,13 +143,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     def save_as(self):
         new_timeline_path = open_get_file_path_dialog(self, FUNC_SAVE_AS, self.timeline.path)
-        self._save_timeline_to_new_path(new_timeline_path)
-
-    def _save_timeline_to_new_path(self, new_timeline_path):
-        if new_timeline_path is not None:
-            assert new_timeline_path.endswith(".timeline")
-            export_db_to_timeline_xml(self.timeline, new_timeline_path)
-            self.controller.open_timeline(new_timeline_path)
+        self.controller.save_timeline_to_new_path(new_timeline_path)
 
     def _window_on_close(self, event):
         self._alert_controller.stop_timer()
