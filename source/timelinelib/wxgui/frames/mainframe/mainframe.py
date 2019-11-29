@@ -204,25 +204,12 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             self.main_panel.Navigate(lambda tp: self.prev_time_period)
 
     def navigate_to_first_event(self):
-        event = self.timeline.get_first_event()
-        if event:
-            start = event.get_start_time()
-            delta = self.main_panel.get_displayed_period_delta()
-            end = start + delta
-            margin_delta = delta / 24
-            self.main_panel.Navigate(lambda tp: tp.update(start, end, -margin_delta))
+        self.main_panel.navigate_to_first_event(self.timeline.get_first_event())
 
     def navigate_to_last_event(self):
-        event = self.timeline.get_last_event()
-        if event:
-            end = event.get_end_time()
-            delta = self.main_panel.get_displayed_period_delta()
-            try:
-                start = end - delta
-            except ValueError:
-                start = self.timeline.get_time_type().get_min_time()
-            margin_delta = delta / 24
-            self.main_panel.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
+        self.main_panel.navigate_to_last_event(
+            self.timeline.get_last_event(),
+            self.timeline.get_time_type().get_min_time())
 
     @skip_when_no_event_selected
     def edit_event(self):
