@@ -16,8 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
 import wx
 from timelinelib.wxgui.dialogs.getfilepath.controller import GetFilePathContoller
+from timelinelib.wxgui.utils import display_information_message
+
 
 FUNC_OPEN = 1
 FUNC_SAVE_AS = 2
@@ -62,7 +66,12 @@ def open_get_file_path_dialog(parent, func, current_path):
     dialog = GetFilePath(parent, func, current_path)
     if dialog.ShowModal() == wx.ID_OK:
         new_timeline_path = dialog.new_path
+        if func == FUNC_NEW and os.path.exists(new_timeline_path):
+            msg1 = _("The specified timeline already exists.")
+            msg2 = _("Opening timeline instead of creating new.")
+            display_information_message(_("Information"), f"{msg1}\n\n{msg2}", dialog)
     else:
         new_timeline_path = None
     dialog.Destroy()
+
     return new_timeline_path
