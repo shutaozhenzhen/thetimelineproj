@@ -59,25 +59,26 @@ class MainFrameController:
         self.open_timeline(":numtutorial:")
 
     def open_timeline(self, path, timetype=None, save_current_data=True):
-        if save_current_data:
-            self._main_frame.save_current_timeline_data()
-        try:
-            self._timeline = self._db_open_fn(path, timetype=timetype)
-        except Exception as e:
-            self._main_frame.DisplayErrorMessage(
-                _("Unable to open timeline '%s'.") % path + "\n\n" + str(e)
-            )
-        else:
-            self._config.append_recently_opened(path)
-            self._main_frame.update_open_recent_submenu()
-            self._timeline.path = path
-            self._main_frame.display_timeline(self._timeline)
-            self._timelinepath = path
-            self._last_changed = self._get_modification_date()
-            self._main_frame.update_navigation_menu_items()
-            self._main_frame.enable_disable_menus()
-            if path == ":numtutorial:":
-                self._main_frame.fit_all_events()
+        if path is not None:
+            if save_current_data:
+                self._main_frame.save_current_timeline_data()
+            try:
+                self._timeline = self._db_open_fn(path, timetype=timetype)
+            except Exception as e:
+                self._main_frame.DisplayErrorMessage(
+                    _("Unable to open timeline '%s'.") % path + "\n\n" + str(e)
+                )
+            else:
+                self._config.append_recently_opened(path)
+                self._main_frame.update_open_recent_submenu()
+                self._timeline.path = path
+                self._main_frame.display_timeline(self._timeline)
+                self._timelinepath = path
+                self._last_changed = self._get_modification_date()
+                self._main_frame.update_navigation_menu_items()
+                self._main_frame.enable_disable_menus()
+                if path == ":numtutorial:":
+                    self._main_frame.fit_all_events()
 
     def set_timeline_in_readonly_mode(self):
         try:
