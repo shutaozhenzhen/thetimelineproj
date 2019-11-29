@@ -33,7 +33,6 @@ from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedExcepti
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_information_message
-from timelinelib.wxgui.utils import WildcardHelper
 import timelinelib.wxgui.frames.mainframe.guicreator as guic
 from timelinelib.wxgui.frames.mainframe.controllerapi import MainFrameApiUsedByController
 from timelinelib.wxgui.frames.mainframe.alertcontroller import AlertController
