@@ -45,6 +45,7 @@ from timelinelib.wxgui.dialogs.eraseditor.view import oped_edit_eras_dialog
 from timelinelib.wxgui.utils import load_icon_bundle
 from timelinelib.wxgui.dialogs.timeeditor.view import open_time_editor_dialog
 from timelinelib.wxgui.dialogs.changenowdate.view import open_change_now_date_dialog
+from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -163,23 +164,8 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         dialog.Destroy()
 
     def save_as(self):
-        new_timeline_path = self._get_new_timeline_path_from_user()
+        new_timeline_path = open_get_file_path_dialog(self, self.timeline.path, _("Save Timeline As"))
         self._save_timeline_to_new_path(new_timeline_path)
-
-    def _get_new_timeline_path_from_user(self):
-        defaultDir = os.path.dirname(self.timeline.path)
-        wildcard_helper = WildcardHelper(_("Timeline files"), ["timeline"])
-        wildcard = wildcard_helper.wildcard_string()
-        style = wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
-        message = _("Save Timeline As")
-        dialog = wx.FileDialog(self, message=message, defaultDir=defaultDir,
-                               wildcard=wildcard, style=style)
-        if dialog.ShowModal() == wx.ID_OK:
-            new_timeline_path = wildcard_helper.get_path(dialog)
-        else:
-            new_timeline_path = None
-        dialog.Destroy()
-        return new_timeline_path
 
     def _save_timeline_to_new_path(self, new_timeline_path):
         if new_timeline_path is not None:

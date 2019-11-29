@@ -59,7 +59,6 @@ class AlertController:
         for event in [event for event in all_events if event.get_data("alert") is not None]:
             alert = event.get_data("alert")
             if self._time_has_expired(alert[0]):
-                print("Expired")
                 self._display_and_delete_event_alert(event, alert)
 
     def _display_and_delete_event_alert(self, event, alert):
