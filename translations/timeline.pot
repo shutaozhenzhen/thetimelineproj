@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-29 09:28+0100\n"
+"POT-Creation-Date: 2019-11-29 09:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2603,12 +2603,17 @@ msgstr ""
 msgid "Timeline files"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:34
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:36
 msgid "Open Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:35
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:37
 msgid "Save Timeline As"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:38
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:139
+msgid "Create Timeline"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importevents\controller.py:54
@@ -3057,32 +3062,27 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:133
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:141
-msgid "Create Timeline"
-msgstr ""
-
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:146
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:131
 msgid "The specified timeline already exists."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:147
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:132
 msgid "Opening timeline instead of creating new."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:149
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:134
 msgid "Information"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:190
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:180
 msgid "Unable to write configuration file."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:210
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:200
 msgid "Distance between selected events"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:212
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:202
 msgid "Events are overlapping or distance is 0"
 msgstr ""
 

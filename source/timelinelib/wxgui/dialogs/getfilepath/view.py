@@ -21,6 +21,7 @@ from timelinelib.wxgui.dialogs.getfilepath.controller import GetFilePathContolle
 
 FUNC_OPEN = 1
 FUNC_SAVE_AS = 2
+FUNC_NEW = 3
 
 
 class GetFilePath(wx.FileDialog):
@@ -28,11 +29,13 @@ class GetFilePath(wx.FileDialog):
     STYLES = {
         FUNC_OPEN: wx.FD_OPEN,
         FUNC_SAVE_AS: wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+        FUNC_NEW: wx.FD_SAVE
     }
 
     TITLES = {
         FUNC_OPEN: _("Open Timeline"),
         FUNC_SAVE_AS:  _("Save Timeline As"),
+        FUNC_NEW: _("Create Timeline"),
     }
 
     def __init__(self, parent, func, current_path):
