@@ -47,7 +47,7 @@ class ListExporter(PluginBase):
         dlg.Destroy()
 
     def _get_events(self, main_frame):
-        visible_categories = self._get_visible_categories(main_frame)
+        visible_categories = main_frame.get_visible_categories()
         return [
             (
                 self.db.get_time_type().format_period(event.get_time_period()),
@@ -60,13 +60,6 @@ class ListExporter(PluginBase):
             )
             if (main_frame.config.filtered_listbox_export and event.get_category() in visible_categories) or not main_frame.config.filtered_listbox_export
         ]
-
-    def _get_visible_categories(self, main_frame):
-        if main_frame.config.filtered_listbox_export:
-            vp = main_frame.get_view_properties()
-            return [cat for cat in self.db.get_categories() if vp.is_category_visible(cat)]
-        else:
-            return [cat for cat in self.db.get_categories()]
 
 
 class ListboxDialog(wx.Dialog):
