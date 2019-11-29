@@ -239,6 +239,14 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         event = self._get_first_selected_event() # Ensure that at least one event is selected
         safe_locking(self, lambda: self._set_category_to_selected_events())
 
+    def _get_first_selected_event(self):
+        event_id = self.main_panel.get_id_of_first_selected_event()
+        return self.timeline.find_event_with_id(event_id)
+
+    def _all_visible_events(self):
+        all_events = self.timeline.get_all_events()
+        return self.main_panel.get_visible_events(all_events)
+
     def _period_for_all_visible_events(self):
         try:
             visible_events = self._all_visible_events()
@@ -252,16 +260,8 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             display_error_message(str(ex))
         return None
 
-    def _all_visible_events(self):
-        all_events = self.timeline.get_all_events()
-        return self.main_panel.get_visible_events(all_events)
-
     def _first_time(self, events):
         return min(events, key=lambda event: event.get_start_time()).get_start_time()
 
     def _last_time(self, events):
         return max(events, key=lambda event: event.get_end_time()).get_end_time()
-
-    def _get_first_selected_event(self):
-        event_id = self.main_panel.get_id_of_first_selected_event()
-        return self.timeline.find_event_with_id(event_id)
