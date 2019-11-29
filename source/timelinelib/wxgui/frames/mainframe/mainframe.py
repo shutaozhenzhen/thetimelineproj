@@ -50,6 +50,15 @@ from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
 
 
+def skip_when_no_event_selected(func):
+    def wrapper(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except IndexError:
+            pass
+    return wrapper
+
+
 class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     def __init__(self, application_arguments):
@@ -241,29 +250,20 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             margin_delta = delta / 24
             self.main_panel.Navigate(lambda tp: tp.update(start, end, end_delta=margin_delta))
 
+    @skip_when_no_event_selected
     def edit_event(self):
-        try:
-            event = self._get_first_selected_event()
-            self.main_panel.open_event_editor(event)
-        except IndexError:
-            # No event selected so do nothing!
-            pass
+        event = self._get_first_selected_event()
+        self.main_panel.open_event_editor(event)
 
+    @skip_when_no_event_selected
     def duplicate_event(self):
-        try:
-            event = self._get_first_selected_event()
-            open_duplicate_event_dialog_for_event(self, self, self.timeline, event)
-        except IndexError:
-            # No event selected so do nothing!
-            pass
+        event = self._get_first_selected_event()
+        open_duplicate_event_dialog_for_event(self, self, self.timeline, event)
 
+    @skip_when_no_event_selected
     def set_category_on_selected(self):
-        try:
-            event = self._get_first_selected_event() # Ensure that at least one event is selected
-            safe_locking(self, lambda: self._set_category_to_selected_events())
-        except IndexError:
-            # No event selected so do nothing!
-            pass
+        event = self._get_first_selected_event() # Ensure that at least one event is selected
+        safe_locking(self, lambda: self._set_category_to_selected_events())
 
     def _period_for_all_visible_events(self):
         try:
