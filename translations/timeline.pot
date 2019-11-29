@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-29 12:06+0100\n"
+"POT-Creation-Date: 2019-11-29 15:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -762,12 +762,17 @@ msgid ""
 "        "
 msgstr ""
 
-#: source\timelinelib\config\dotfile.py:203
+#: source\timelinelib\config\dotfile.py:97
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:171
+msgid "Unable to write configuration file."
+msgstr ""
+
+#: source\timelinelib\config\dotfile.py:210
 #: source\timelinelib\wxgui\utils.py:103
 msgid "Warning"
 msgstr ""
 
-#: source\timelinelib\config\dotfile.py:203
+#: source\timelinelib\config\dotfile.py:210
 msgid "The selected value contains invalid characters and can't be saved"
 msgstr ""
 
@@ -3060,20 +3065,16 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:132
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:138
 msgid "The specified timeline already exists."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:133
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:139
 msgid "Opening timeline instead of creating new."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:134
+#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:140
 msgid "Information"
-msgstr ""
-
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:165
-msgid "Unable to write configuration file."
 msgstr ""
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:55

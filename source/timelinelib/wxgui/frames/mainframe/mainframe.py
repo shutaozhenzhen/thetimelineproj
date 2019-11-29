@@ -165,12 +165,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.config.set_window_pos(self.GetPosition())
         self.config.window_maximized = self.IsMaximized()
         self.config.sidebar_width = self.main_panel.get_sidebar_width()
-        try:
-            self.config.write()
-        except IOError as ex:
-            friendly = _("Unable to write configuration file.")
-            msg = "%s\n\n%s" % (friendly, ex_msg(ex))
-            display_error_message(msg, self)
+        self.config.write()
 
     def save_current_timeline_data(self):
         if self.timeline:

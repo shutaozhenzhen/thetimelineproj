@@ -34,6 +34,8 @@ from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.config.dateformatparser import DateFormatParser
 from timelinelib.general.observer import Observable
 from timelinelib.wxgui.utils import display_information_message
+from timelinelib.utils import ex_msg
+from timelinelib.wxgui.utils import display_error_message
 
 
 # Name used in ConfigParser
@@ -88,8 +90,13 @@ class Config(Observable):
 
     def write(self):
         """Write settings to file specified in constructor and raise IOError if failed."""
-        with open(self.path, "w") as f:
-            self.config_parser.write(f)
+        try:
+            with open(self.path, "w") as f:
+                self.config_parser.write(f)
+        except IOError as ex:
+            friendly = _("Unable to write configuration file.")
+            msg = "%s\n\n%s" % (friendly, ex_msg(ex))
+            display_error_message(msg, self)
 
     def get_selected_event_box_drawer(self):
         return self.config_parser.get(DEFAULTSECT, SELECTED_EVENT_BOX_DRAWER)
