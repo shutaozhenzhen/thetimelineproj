@@ -139,9 +139,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         path = ""
         if self.timeline is not None:
             path = os.path.dirname(self.timeline.path)
-        new_timeline_path = open_get_file_path_dialog(self, FUNC_OPEN, path)
-        if new_timeline_path:
-            self.controller.open_timeline(new_timeline_path)
+        self.controller.open_timeline(open_get_file_path_dialog(self, FUNC_OPEN, path))
 
     def save_as(self):
         new_timeline_path = open_get_file_path_dialog(self, FUNC_SAVE_AS, self.timeline.path)
