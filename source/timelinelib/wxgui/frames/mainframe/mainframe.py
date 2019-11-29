@@ -132,6 +132,20 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def _timer_tick(self, evt):
         self._handle_event_alerts()
 
+    # Timer event handlers
+    def _handle_event_alerts(self):
+        if self.timeline is None:
+            return
+        if self.alert_dialog_open:
+            return
+        self._display_events_alerts()
+        self.alert_dialog_open = False
+
+    def _display_events_alerts(self):
+        self.alert_dialog_open = True
+        all_events = self.timeline.get_all_events()
+        AlertController(self).display_events_alerts(all_events, self.timeline.get_time_type())
+
     def _set_experimental_features(self):
         ExperimentalFeatures().set_active_state_on_all_features_from_config_string(self.config.experimental_features)
 
@@ -347,19 +361,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         last_time = self._last_time(events)
         return self.main_panel.get_export_periods(first_time, last_time)
 
-    # Timer event handlers
-    def _handle_event_alerts(self):
-        if self.timeline is None:
-            return
-        if self.alert_dialog_open:
-            return
-        self._display_events_alerts()
-        self.alert_dialog_open = False
-
-    def _display_events_alerts(self):
-        self.alert_dialog_open = True
-        all_events = self.timeline.get_all_events()
-        AlertController(self).display_events_alerts(all_events, self.timeline.get_time_type())
 
     def _get_first_selected_event(self):
         event_id = self.main_panel.get_id_of_first_selected_event()
