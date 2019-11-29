@@ -23,7 +23,6 @@ import wx.lib.newevent
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.config.dotfile import read_config
 from timelinelib.config.paths import LOCALE_DIR
-from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.db import db_open
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 from timelinelib.meta.about import APPLICATION_NAME
