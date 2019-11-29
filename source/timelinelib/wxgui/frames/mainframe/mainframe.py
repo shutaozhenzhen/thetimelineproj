@@ -92,12 +92,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def DisplayStatus(self, message):
         self.status_bar_adapter.set_text(message)
 
-    def get_export_periods(self):
-        events = self._all_visible_events()
-        first_time = self._first_time(events)
-        last_time = self._last_time(events)
-        return self.main_panel.get_export_periods(first_time, last_time)
-
     @property
     def file_open_recent_submenu(self):
         return self.mnu_file_open_recent_submenu
@@ -118,7 +112,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         except LockedException:
             return False
 
-    def get_view_properties(self, ):
+    def get_view_properties(self):
         return self.main_panel.get_view_properties()
 
     def _on_cats_view_changed(self, evt):
@@ -150,41 +144,39 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         new_timeline_path = open_get_file_path_dialog(self, FUNC_SAVE_AS, self.timeline.path)
         self.controller.save_timeline_to_new_path(new_timeline_path)
 
-    def _window_on_close(self, event):
-        self._alert_controller.stop_timer()
-        self._save_application_config()
-        try:
-            if self.ok_to_edit():
-                self.save_current_timeline_data()
-        finally:
-            self.edit_ends()
-        self.Destroy()
-
-    def _save_application_config(self):
-        self.config.set_window_size(self.GetSize())
-        self.config.set_window_pos(self.GetPosition())
-        self.config.window_maximized = self.IsMaximized()
-        self.config.sidebar_width = self.main_panel.get_sidebar_width()
-        self.config.write()
-
-    def save_current_timeline_data(self):
-        if self.timeline:
-            self.main_panel.save_view_properties(self.timeline)
+    def get_export_periods(self):
+        events = self._all_visible_events()
+        first_time = self._first_time(events)
+        last_time = self._last_time(events)
+        return self.main_panel.get_export_periods(first_time, last_time)
 
     # Timeline Menu action handlers
-    def measure_distance_between_events(self):
-        self.controller.measure_distance_between_events(self.main_panel.get_ids_of_two_first_selected_events())
+    @skip_when_no_event_selected
+    def edit_event(self):
+        self.main_panel.open_event_editor(self._get_first_selected_event())
 
-    # ---
-    def set_category(self):
-        open_set_category_dialog(self, self.timeline)
+    @skip_when_no_event_selected
+    def duplicate_event(self):
+        open_duplicate_event_dialog_for_event(self, self, self.timeline, self._get_first_selected_event())
+
+    @skip_when_no_event_selected
+    def set_category_on_selected(self):
+        event = self._get_first_selected_event() # Ensure that at least one event is selected
+        safe_locking(self, lambda: self._set_category_to_selected_events())
 
     def _set_category_to_selected_events(self):
         open_set_category_dialog(self, self.timeline, self.main_panel.get_selected_event_ids())
 
+    def measure_distance_between_events(self):
+        self.controller.measure_distance_between_events(self.main_panel.get_ids_of_two_first_selected_events())
+
+    def set_category(self):
+        open_set_category_dialog(self, self.timeline)
+
     def edit_eras(self):
         oped_edit_eras_dialog(self, self.timeline, self.config)
 
+    # Navigation menu event handlers
     def fit_all_events(self):
         all_period = self._period_for_all_visible_events()
         if all_period is None:
@@ -206,19 +198,29 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             self.timeline.get_last_event(),
             self.timeline.get_time_type().get_min_time())
 
-    @skip_when_no_event_selected
-    def edit_event(self):
-        self.main_panel.open_event_editor(self._get_first_selected_event())
+    # When closing app
+    def _window_on_close(self, event):
+        self._alert_controller.stop_timer()
+        self._save_application_config()
+        try:
+            if self.ok_to_edit():
+                self.save_current_timeline_data()
+        finally:
+            self.edit_ends()
+        self.Destroy()
 
-    @skip_when_no_event_selected
-    def duplicate_event(self):
-        open_duplicate_event_dialog_for_event(self, self, self.timeline, self._get_first_selected_event())
+    def _save_application_config(self):
+        self.config.set_window_size(self.GetSize())
+        self.config.set_window_pos(self.GetPosition())
+        self.config.window_maximized = self.IsMaximized()
+        self.config.sidebar_width = self.main_panel.get_sidebar_width()
+        self.config.write()
 
-    @skip_when_no_event_selected
-    def set_category_on_selected(self):
-        event = self._get_first_selected_event() # Ensure that at least one event is selected
-        safe_locking(self, lambda: self._set_category_to_selected_events())
+    def save_current_timeline_data(self):
+        if self.timeline:
+            self.main_panel.save_view_properties(self.timeline)
 
+    # Helper functions for finding events
     def _get_first_selected_event(self):
         return self.timeline.find_event_with_id(self.main_panel.get_id_of_first_selected_event())
 
