@@ -22,10 +22,10 @@ from timelinelib.wxgui.framework import Controller
 
 class GetFilePathContoller(Controller):
 
-    def __init__(self, view, current_path):
+    def __init__(self, view, func, current_path):
         self._view = view
         self._default_dir = os.path.dirname(current_path)
-        self._wildcard_helper = WildcardHelper(_("Timeline files"), ["timeline"])
+        self._wildcard_helper = WildcardHelper(_("Timeline files"), view.EXTENSIONS[func])
 
     @property
     def default_dir(self):
