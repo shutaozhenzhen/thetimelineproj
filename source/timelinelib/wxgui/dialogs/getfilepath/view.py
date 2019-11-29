@@ -19,26 +19,38 @@
 import wx
 from timelinelib.wxgui.dialogs.getfilepath.controller import GetFilePathContoller
 
+FUNC_OPEN = 1
+FUNC_SAVE_AS = 2
+
+
 class GetFilePath(wx.FileDialog):
 
-    STYLE = wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
+    STYLES = {
+        FUNC_OPEN: wx.FD_OPEN,
+        FUNC_SAVE_AS: wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
+    }
 
-    def __init__(self, parent, current_path, message):
+    TITLES = {
+        FUNC_OPEN: _("Open Timeline"),
+        FUNC_SAVE_AS:  _("Save Timeline As"),
+    }
+
+    def __init__(self, parent, func, current_path):
         self._controller = GetFilePathContoller(self, current_path)
         wx.FileDialog.__init__(self,
                                parent,
-                               message=message,
+                               message=self.TITLES[func],
                                defaultDir=self._controller.default_dir,
                                wildcard=self._controller.wildcards,
-                               style=self.STYLE)
+                               style=self.STYLES[func])
 
     @property
     def new_path(self):
         return self._controller.new_path()
 
 
-def open_get_file_path_dialog(parent, current_path, message):
-    dialog = GetFilePath(parent, current_path, message)
+def open_get_file_path_dialog(parent, func, current_path):
+    dialog = GetFilePath(parent, func, current_path)
     if dialog.ShowModal() == wx.ID_OK:
         new_timeline_path = dialog.new_path
     else:
