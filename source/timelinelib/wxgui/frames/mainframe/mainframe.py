@@ -113,8 +113,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     # Creation process methods
     def _set_initial_values_to_member_variables(self):
         self.timeline = None
-        self.timeline_wildcard_helper = WildcardHelper(_("Timeline files"), ["timeline", "ics"])
-        self.images_svg_wildcard_helper = WildcardHelper(_("SVG files"), ["svg"])
 
     def _set_experimental_features(self):
         ExperimentalFeatures().set_active_state_on_all_features_from_config_string(self.config.experimental_features)
