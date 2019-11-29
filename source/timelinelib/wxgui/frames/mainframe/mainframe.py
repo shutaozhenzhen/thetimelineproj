@@ -227,8 +227,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         safe_locking(self, lambda: self._set_category_to_selected_events())
 
     def _get_first_selected_event(self):
-        event_id = self.main_panel.get_id_of_first_selected_event()
-        return self.timeline.find_event_with_id(event_id)
+        return self.timeline.find_event_with_id(self.main_panel.get_id_of_first_selected_event())
 
     def _all_visible_events(self):
         return self.main_panel.get_visible_events(self.timeline.get_all_events())
