@@ -82,7 +82,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.main_panel.show_welcome_panel()
         self.enable_disable_menus()
         self.controller.on_started(application_arguments)
-        self._create_and_start_timer()
+        self._alert_controller = AlertController(self).start_timer()
         self.prev_time_period = None
 
     def DisplayErrorMessage(self, message):
@@ -122,29 +122,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.timeline = None
         self.timeline_wildcard_helper = WildcardHelper(_("Timeline files"), ["timeline", "ics"])
         self.images_svg_wildcard_helper = WildcardHelper(_("SVG files"), ["svg"])
-
-    def _create_and_start_timer(self):
-        self.alert_dialog_open = False
-        self.timer = TimelineTimer(self)
-        self.timer.register(self._timer_tick)
-        self.timer.start(10000)
-
-    def _timer_tick(self, evt):
-        self._handle_event_alerts()
-
-    # Timer event handlers
-    def _handle_event_alerts(self):
-        if self.timeline is None:
-            return
-        if self.alert_dialog_open:
-            return
-        self._display_events_alerts()
-        self.alert_dialog_open = False
-
-    def _display_events_alerts(self):
-        self.alert_dialog_open = True
-        all_events = self.timeline.get_all_events()
-        AlertController(self).display_events_alerts(all_events, self.timeline.get_time_type())
 
     def _set_experimental_features(self):
         ExperimentalFeatures().set_active_state_on_all_features_from_config_string(self.config.experimental_features)
@@ -219,7 +196,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             self.controller.open_timeline(new_timeline_path)
 
     def _window_on_close(self, event):
-        self.timer.stop()
+        self._alert_controller.stop_timer()
         self._save_application_config()
         try:
             if self.ok_to_edit():
@@ -360,7 +337,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         first_time = self._first_time(events)
         last_time = self._last_time(events)
         return self.main_panel.get_export_periods(first_time, last_time)
-
 
     def _get_first_selected_event(self):
         event_id = self.main_panel.get_id_of_first_selected_event()

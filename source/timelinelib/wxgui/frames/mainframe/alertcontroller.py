@@ -19,21 +19,48 @@
 import wx
 
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
+from timelinelib.wxgui.timer import TimelineTimer
 
 
 class AlertController:
 
     def __init__(self, main_frame):
         self._main_frame = main_frame
+        self._timeline = main_frame.timeline
+        self._timer = None
+        self._alert_dialog_open = False
+
+    def start_timer(self):
+        self._timer = TimelineTimer(self._main_frame)
+        self._timer.register(self._timer_tick)
+        self._timer.start(10000)
+        return self
+
+    def stop_timer(self):
+        self._timer.stop()
+
+    def _timer_tick(self, evt):
+        print('tick')
+        if self._timeline is None:
+            return
+        if self._alert_dialog_open:
+            return
+        self._display_events_alerts()
+        self._alert_dialog_open = False
+
+    def _display_events_alerts(self):
+        self._alert_dialog_open = True
+        all_events = self._timeline.get_all_events()
+        self.display_events_alerts(all_events, self._timeline.get_time_type())
 
     def display_events_alerts(self, all_events, time_type, dialog=None):
         self._active = True
         self._dialog = dialog
         self.time_type = time_type
-        for event in [event for event in all_events
-                      if event.get_data("alert") is not None]:
+        for event in [event for event in all_events if event.get_data("alert") is not None]:
             alert = event.get_data("alert")
             if self._time_has_expired(alert[0]):
+                print("Expired")
                 self._display_and_delete_event_alert(event, alert)
 
     def _display_and_delete_event_alert(self, event, alert):
