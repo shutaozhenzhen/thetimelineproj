@@ -216,12 +216,9 @@ The lockfile is found at: %s""") % lockpath
 
     def _the_lock_is_mine(self):
         try:
-            user = getpass.getuser()
-            pid = os.getpid()
-            lockpath = self._get_lockpath()
-            with open(lockpath, "r") as fp:
+            with open(self._get_lockpath(), "r") as fp:
                 lines = fp.readlines()
             lines = [line.strip() for line in lines]
-            return lines[0] == user and lines[2] == "%s" % pid
+            return lines[0] == getpass.getuser() and lines[2] == f"{os.getpid()}"
         except:
             return False
