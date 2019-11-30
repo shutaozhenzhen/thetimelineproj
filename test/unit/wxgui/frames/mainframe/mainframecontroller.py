@@ -28,38 +28,38 @@ from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
 class describe_mainframe_controller(UnitTestCase):
 
     def test_uses_db_open_function_to_create_timeline(self):
-        self.controller.open_timeline("foo.timeline")
+        self.controller.open_or_create_timeline("foo.timeline")
         self.db_open.assert_called_with("foo.timeline", timetype=None)
 
     def test_uses_db_open_function_to_create_numeric_timeline(self):
         timetype = NumTimeType()
-        self.controller.open_timeline("foo.timeline", timetype=timetype)
+        self.controller.open_or_create_timeline("foo.timeline", timetype=timetype)
         self.db_open.assert_called_with("foo.timeline", timetype=timetype)
 
     def test_displays_opened_timeline(self):
         timeline = Mock()
         self.db_open.return_value = timeline
-        self.controller.open_timeline("foo.timeline")
+        self.controller.open_or_create_timeline("foo.timeline")
         self.main_frame.display_timeline.assert_called_with(timeline)
 
     def test_saves_current_timeline_data_when_opening_new_timeline(self):
-        self.controller.open_timeline("foo.timeline")
+        self.controller.open_or_create_timeline("foo.timeline")
         self.main_frame.save_current_timeline_data.assert_called_with()
 
     def test_does_not_save_current_timeline_data_when_reloading_from_disk(self):
-        self.controller.open_timeline("foo.timeline")
+        self.controller.open_or_create_timeline("foo.timeline")
         self.main_frame.reset_mock()
         self.controller.reload_from_disk()
         self.assertFalse(self.main_frame.save_current_timeline_data.called)
 
     def test_adds_opened_timeline_to_recently_opened_list(self):
-        self.controller.open_timeline("foo.timeline")
+        self.controller.open_or_create_timeline("foo.timeline")
         self.config.append_recently_opened.assert_called_with("foo.timeline")
         self.main_frame.update_open_recent_submenu.assert_called_with()
 
     def test_handles_open_timeline_failure(self):
         self.db_open.side_effect = Exception("file corrupt")
-        self.controller.open_timeline("foo.timeline")
+        self.controller.open_or_create_timeline("foo.timeline")
         self.main_frame.DisplayErrorMessage.assert_called_with(
             "⟪Unable to open timeline 'foo.timeline'.⟫\n\nfile corrupt"
         )

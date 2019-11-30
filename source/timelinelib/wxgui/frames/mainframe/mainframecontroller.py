@@ -45,22 +45,19 @@ class MainFrameController:
         elif self._config.has_recently_opened_files():
             self.open_timeline_if_exists(self._config.get_latest_recently_opened_file())
 
-    def open_or_create_timeline(self, path):
-        self.open_timeline(path)
-
     def open_timeline_if_exists(self, path):
         if os.path.exists(path):
-            self.open_timeline(path)
+            self.open_or_create_timeline(path)
         else:
             display_error_message(_("File '%s' does not exist.") % path, self._main_frame)
 
     def open_gregorian_tutorial_timeline(self, *args, **kwargs):
-        self.open_timeline(":tutorial:")
+        self.open_or_create_timeline(":tutorial:")
 
     def open_numeric_tutorial_timeline(self, *args, **kwargs):
-        self.open_timeline(":numtutorial:")
+        self.open_or_create_timeline(":numtutorial:")
 
-    def open_timeline(self, path, timetype=None, save_current_data=True):
+    def open_or_create_timeline(self, path, timetype=None, save_current_data=True):
         if path is not None:
             if save_current_data:
                 self._main_frame.save_current_timeline_data()
@@ -87,7 +84,7 @@ class MainFrameController:
         if new_timeline_path is not None:
             assert new_timeline_path.endswith(".timeline")
             export_db_to_timeline_xml(self._timeline, new_timeline_path)
-            self.open_timeline(new_timeline_path)
+            self.open_or_create_timeline(new_timeline_path)
 
     def set_timeline_in_readonly_mode(self):
         try:
@@ -157,7 +154,7 @@ class MainFrameController:
 
     def reload_from_disk(self):
         vp = self._main_frame.view_properties
-        self.open_timeline(self._timelinepath, save_current_data=False)
+        self.open_or_create_timeline(self._timelinepath, save_current_data=False)
         vp.set_displayed_period(vp.get_displayed_period())
         self._main_frame.redraw()
 

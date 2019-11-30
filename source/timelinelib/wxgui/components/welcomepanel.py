@@ -48,7 +48,7 @@ class WelcomePanel(wx.Panel):
         self.SetSizer(hsizer)
 
     def _btn_tutorial_on_click(self, e):
-        self.main_frame.controller.open_timeline(":tutorial:")
+        self.main_frame.controller.open_or_create_timeline(":tutorial:")
 
     def activated(self):
         pass
