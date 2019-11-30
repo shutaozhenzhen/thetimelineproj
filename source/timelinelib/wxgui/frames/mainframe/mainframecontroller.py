@@ -157,12 +157,10 @@ class MainFrameController:
             return 0
 
     def reload_from_disk(self):
-        timeline_canvas = self._main_frame.main_panel.timeline_panel.timeline_canvas
-        vp = timeline_canvas.GetViewProperties()
-        displayed_period = vp.get_displayed_period()
+        vp = self._main_frame.view_properties
         self.open_timeline(self._timelinepath, save_current_data=False)
-        vp.set_displayed_period(displayed_period)
-        timeline_canvas.Redraw()
+        vp.set_displayed_period(vp.get_displayed_period())
+        self._main_frame.redraw()
 
     def select_all(self):
         self._main_frame.canvas.SelectAllEvents()

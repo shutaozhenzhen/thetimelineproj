@@ -99,6 +99,13 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def canvas(self):
         return self.main_panel.timeline_panel.timeline_canvas
 
+    @property
+    def view_properties(self):
+        return self.canvas.GetViewProperties()
+
+    def redraw(self):
+        self.canvas.Redraw()
+
     def display_time_editor_dialog(self, time_type, initial_time, handle_new_time_fn, title):
         open_time_editor_dialog(self, self.config, time_type, initial_time, handle_new_time_fn, title)
 
