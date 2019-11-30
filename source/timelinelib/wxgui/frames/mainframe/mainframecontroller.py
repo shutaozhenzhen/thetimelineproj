@@ -173,9 +173,8 @@ class MainFrameController:
             return
         try:
             ts = self._timeline.get_timestamp_string()
-            path = self._get_lockpath()
-            with open(path, "w") as fp:
-                fp.write("%s\n%s\n%s" % (getpass.getuser(), ts, os.getpid()))
+            with open(self._get_lockpath(), "w") as fp:
+                fp.write(f"{getpass.getuser()}\n{ts}\n{os.getpid()}")
         except Exception:
             msg = _(
                 "Unable to take lock on %s\nThis means you can't edit the timeline.\nCheck if you have write access to this directory.") % self._timelinepath
