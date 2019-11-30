@@ -169,23 +169,18 @@ class MainFrameController:
         timeline_canvas.SelectAllEvents()
 
     def _lock(self):
-        fp = None
         if not self._timeline.get_should_lock():
             return
         try:
             ts = self._timeline.get_timestamp_string()
-            print('------------->', ts)
             path = self._get_lockpath()
-            fp = open(path, "w")
-            fp.write("%s\n%s\n%s" % (getpass.getuser(), ts, os.getpid()))
+            with open(path, "w") as fp:
+                fp.write("%s\n%s\n%s" % (getpass.getuser(), ts, os.getpid()))
         except Exception:
             msg = _(
                 "Unable to take lock on %s\nThis means you can't edit the timeline.\nCheck if you have write access to this directory.") % self._timelinepath
             display_warning_message(msg, self._main_frame)
             raise LockedException()
-        finally:
-            if fp is not None:
-                fp.close()
 
     def _get_lockpath(self):
         return "%s.lock" % self._timelinepath
