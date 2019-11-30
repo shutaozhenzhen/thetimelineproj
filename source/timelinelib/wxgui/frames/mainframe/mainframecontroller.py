@@ -165,8 +165,7 @@ class MainFrameController:
         timeline_canvas.Redraw()
 
     def select_all(self):
-        timeline_canvas = self._main_frame.main_panel.timeline_panel.timeline_canvas
-        timeline_canvas.SelectAllEvents()
+        self._main_frame.canvas.SelectAllEvents()
 
     def _lock(self):
         if not self._timeline.get_should_lock():

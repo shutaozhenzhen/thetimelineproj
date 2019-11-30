@@ -95,6 +95,10 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def file_open_recent_submenu(self):
         return self.mnu_file_open_recent_submenu
 
+    @property
+    def canvas(self):
+        return self.main_panel.timeline_panel.timeline_canvas
+
     def display_time_editor_dialog(self, time_type, initial_time, handle_new_time_fn, title):
         open_time_editor_dialog(self, self.config, time_type, initial_time, handle_new_time_fn, title)
 
