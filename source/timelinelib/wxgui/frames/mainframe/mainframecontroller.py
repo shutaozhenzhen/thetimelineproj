@@ -182,7 +182,7 @@ class MainFrameController:
             raise LockedException()
 
     def _get_lockpath(self):
-        return "%s.lock" % self._timelinepath
+        return f"{self._timelinepath}.lock"
 
     def _locked(self):
         return os.path.exists(self._get_lockpath())
