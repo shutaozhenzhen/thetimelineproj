@@ -173,7 +173,8 @@ class MainFrameController:
         if not self._timeline.get_should_lock():
             return
         try:
-            ts = self._get_timestamp_string()
+            ts = self._timeline.get_timestamp_string()
+            print('------------->', ts)
             path = self._get_lockpath()
             fp = open(path, "w")
             fp.write("%s\n%s\n%s" % (getpass.getuser(), ts, os.getpid()))
@@ -188,10 +189,6 @@ class MainFrameController:
 
     def _get_lockpath(self):
         return "%s.lock" % self._timelinepath
-
-    def _get_timestamp_string(self):
-        now = self._timeline.time_type.now()
-        return self._timeline.time_type.time_string(now)
 
     def _locked(self):
         return os.path.exists(self._get_lockpath())

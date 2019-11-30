@@ -77,6 +77,9 @@ class MemoryDB(Observable):
     def new_subevent(self, **kwargs):
         return self._create_wrapper(Subevent, **kwargs)
 
+    def get_timestamp_string(self):
+        return self.time_type.time_string(self.time_type.now())
+
     def _create_wrapper(self, wrapper_class, **kwargs):
         wrapper = wrapper_class(db=self)
         if hasattr(wrapper, "time_period") and "time_period" not in kwargs:
