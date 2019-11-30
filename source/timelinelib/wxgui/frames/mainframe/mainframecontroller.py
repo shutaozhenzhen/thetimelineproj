@@ -124,8 +124,7 @@ class MainFrameController:
         return True
 
     def start_slide_show(self):
-        canvas = self._main_frame.main_panel.get_timeline_canvas()
-        open_slideshow_dialog(self._timeline, canvas)
+        open_slideshow_dialog(self._timeline, self._main_frame.canvas)
 
     def measure_distance_between_events(self, event_ids):
         id1, id2 = event_ids
