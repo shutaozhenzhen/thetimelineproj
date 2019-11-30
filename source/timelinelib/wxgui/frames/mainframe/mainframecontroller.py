@@ -194,8 +194,7 @@ class MainFrameController:
         return self._timeline.time_type.time_string(now)
 
     def _locked(self):
-        lockpath = self._get_lockpath()
-        return os.path.exists(lockpath)
+        return os.path.exists(self._get_lockpath())
 
     def _unlock(self):
         lockpath = self._get_lockpath()
