@@ -134,7 +134,10 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         if timetype == "dir":
             self.controller.open_timeline(open_get_dir_path_dialog(self))
         else:
-            path = open_get_file_path_dialog(self, FUNC_NEW, self.timeline.path)
+            if self.timeline:
+                path = open_get_file_path_dialog(self, FUNC_NEW, self.timeline.path)
+            else:
+                path = open_get_file_path_dialog(self, FUNC_NEW, "")
             self.controller.open_timeline(path, timetype)
 
     def open_existing_timeline(self):
