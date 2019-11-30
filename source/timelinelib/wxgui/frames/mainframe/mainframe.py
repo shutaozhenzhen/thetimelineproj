@@ -132,19 +132,19 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     # File Menu action handlers
     def create_new_timeline(self, timetype=None):
         if timetype == "dir":
-            self.controller.open_timeline(open_get_dir_path_dialog(self))
+            self.controller.open_or_create_timeline(open_get_dir_path_dialog(self))
         else:
             if self.timeline:
                 path = open_get_file_path_dialog(self, FUNC_NEW, self.timeline.path)
             else:
                 path = open_get_file_path_dialog(self, FUNC_NEW, "")
-            self.controller.open_timeline(path, timetype)
+            self.controller.open_or_create_timeline(path, timetype)
 
     def open_existing_timeline(self):
         path = ""
         if self.timeline is not None:
             path = os.path.dirname(self.timeline.path)
-        self.controller.open_timeline(open_get_file_path_dialog(self, FUNC_OPEN, path))
+        self.controller.open_or_create_timeline(open_get_file_path_dialog(self, FUNC_OPEN, path))
 
     def save_as(self):
         new_timeline_path = open_get_file_path_dialog(self, FUNC_SAVE_AS, self.timeline.path)
