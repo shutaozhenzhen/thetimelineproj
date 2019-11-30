@@ -215,17 +215,13 @@ The lockfile is found at: %s""") % lockpath
         display_warning_message(message)
 
     def _the_lock_is_mine(self):
-        fp = None
         try:
             user = getpass.getuser()
             pid = os.getpid()
             lockpath = self._get_lockpath()
-            fp = open(lockpath, "r")
-            lines = fp.readlines()
+            with open(lockpath, "r") as fp:
+                lines = fp.readlines()
             lines = [line.strip() for line in lines]
             return lines[0] == user and lines[2] == "%s" % pid
         except:
             return False
-        finally:
-            if fp is not None:
-                fp.close()
