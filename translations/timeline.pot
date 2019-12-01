@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-29 15:08+0100\n"
+"POT-Creation-Date: 2019-12-01 12:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -704,7 +704,7 @@ msgstr ""
 msgid "Duration"
 msgstr ""
 
-#: source\timelinelib\canvas\data\memorydb\db.py:329
+#: source\timelinelib\canvas\data\memorydb\db.py:332
 msgid "Displayed period must be > 0."
 msgstr ""
 
@@ -763,7 +763,6 @@ msgid ""
 msgstr ""
 
 #: source\timelinelib\config\dotfile.py:97
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:171
 msgid "Unable to write configuration file."
 msgstr ""
 
@@ -1166,7 +1165,7 @@ msgid ""
 msgstr ""
 
 #: source\timelinelib\db\__init__.py:51
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:71
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:65
 #, python-format
 msgid "Unable to open timeline '%s'."
 msgstr ""
@@ -1933,16 +1932,16 @@ msgstr ""
 msgid "Export to Listbox..."
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:99
+#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:92
 #: source\timelinelib\wxgui\dialogs\textdisplay\controller.py:33
 msgid "Unable to copy to clipboard."
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:127
+#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:120
 msgid "Time period"
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:128
+#: source\timelinelib\plugin\plugins\exporters\exporttolist.py:121
 msgid "Event"
 msgstr ""
 
@@ -2602,7 +2601,7 @@ msgid "This creates a timeline using the coptic calendar"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\getdirpath\view.py:23
-#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:44
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:48
 msgid "Create Timeline"
 msgstr ""
 
@@ -2611,12 +2610,24 @@ msgstr ""
 msgid "Timeline files"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:42
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:46
 msgid "Open Timeline"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:43
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:47
 msgid "Save Timeline As"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:70
+msgid "The specified timeline already exists."
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:71
+msgid "Opening timeline instead of creating new."
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\getfilepath\view.py:72
+msgid "Information"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\importevents\controller.py:54
@@ -3065,24 +3076,30 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:138
-msgid "The specified timeline already exists."
+#: source\timelinelib\wxgui\frames\mainframe\lockhandler.py:61
+#, python-format
+msgid ""
+"Unable to take lock on %s\n"
+"This means you can't edit the timeline.\n"
+"Check if you have write access to this directory."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:139
-msgid "Opening timeline instead of creating new."
+#: source\timelinelib\wxgui\frames\mainframe\lockhandler.py:82
+#, python-brace-format
+msgid ""
+"The lockfile used to protect the timeline from concurrent updates is opened "
+"by another program or process.\n"
+"    This lockfile must be removed in order be able to continue editing the "
+"timeline!\n"
+"    The lockfile is found at: {self._path}"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframe.py:140
-msgid "Information"
-msgstr ""
-
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:55
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:49
 #, python-format
 msgid "File '%s' does not exist."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:116
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:110
 msgid ""
 "Someoneelse has changed the Timeline.\n"
 "You have two choices!\n"
@@ -3092,30 +3109,12 @@ msgid ""
 "Do you want to Synchronize?"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:136
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:129
 msgid "Events are overlapping or distance is 0"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:139
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:132
 msgid "Distance between selected events"
-msgstr ""
-
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:182
-#, python-format
-msgid ""
-"Unable to take lock on %s\n"
-"This means you can't edit the timeline.\n"
-"Check if you have write access to this directory."
-msgstr ""
-
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:212
-#, python-format
-msgid ""
-"The lockfile used to protect the timeline from concurrent updates is opened "
-"by another program or process.\n"
-"This lockfile must be removed in order be able to continue editing the "
-"timeline!\n"
-"The lockfile is found at: %s"
 msgstr ""
 
 #: source\timelinelib\wxgui\frames\mainframe\menus\editmenu.py:53

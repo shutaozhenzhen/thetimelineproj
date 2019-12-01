@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import getpass
 import os
 
 from timelinelib.wxgui.dialogs.slideshow.view import open_slideshow_dialog
@@ -25,10 +24,7 @@ from timelinelib.wxgui.utils import display_warning_message
 from timelinelib.wxgui.utils import get_user_ack
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.wxgui.utils import display_information_message
-
-
-class LockedException(Exception):
-    pass
+from timelinelib.wxgui.frames.mainframe.lockhandler import LockHandler, LockedException
 
 
 class MainFrameController:
@@ -38,6 +34,7 @@ class MainFrameController:
         self._db_open_fn = db_open_fn
         self._config = config
         self._timeline = None
+        self._lock_handler = LockHandler(main_frame)
 
     def on_started(self, application_arguments):
         if application_arguments.has_files():
@@ -101,11 +98,11 @@ class MainFrameController:
             return True
         if self._timeline.is_read_only():
             return False
-        if self._locked():
+        if self._lock_handler.locked(self._timelinepath):
             display_warning_message("The Timeline is Locked by someone else.\nTry again later")
             return False
         if self._timeline_path_doesnt_exists_yet():
-            self._lock()
+            self._lock_handler.lock(self._timelinepath, self._timeline)
             return True
         last_changed = self._get_modification_date()
         if last_changed > self._last_changed:
@@ -117,7 +114,7 @@ class MainFrameController:
                 self.set_timeline_in_readonly_mode()
             return False
         if last_changed > 0:
-            self._lock()
+            self._lock_handler.lock(self._timelinepath, self._timeline)
         return True
 
     def start_slide_show(self):
@@ -139,9 +136,9 @@ class MainFrameController:
         return not os.path.exists(self._timelinepath)
 
     def edit_ends(self):
-        if self._the_lock_is_mine():
+        if self._lock_handler.the_lock_is_mine(self._timelinepath):
             self._last_changed = self._get_modification_date()
-            self._unlock()
+            self._lock_handler.unlock(self._timelinepath)
 
     def timeline_is_readonly(self):
         return self._timeline is not None and self._timeline.is_read_only()
@@ -160,48 +157,3 @@ class MainFrameController:
 
     def select_all(self):
         self._main_frame.canvas.SelectAllEvents()
-
-    def _lock(self):
-        if not self._timeline.get_should_lock():
-            return
-        try:
-            ts = self._timeline.get_timestamp_string()
-            with open(self._get_lockpath(), "w") as fp:
-                fp.write(f"{getpass.getuser()}\n{ts}\n{os.getpid()}")
-        except Exception:
-            msg = _(
-                "Unable to take lock on %s\nThis means you can't edit the timeline.\nCheck if you have write access to this directory.") % self._timelinepath
-            display_warning_message(msg, self._main_frame)
-            raise LockedException()
-
-    def _get_lockpath(self):
-        return f"{self._timelinepath}.lock"
-
-    def _locked(self):
-        return os.path.exists(self._get_lockpath())
-
-    def _unlock(self):
-        lockpath = self._get_lockpath()
-        if os.path.exists(lockpath):
-            try:
-                os.remove(lockpath)
-            except WindowsError as ex:
-                if ex.winerror == 32:
-                    self._report_other_process_uses_lockfile(lockpath)
-                else:
-                    raise ex
-
-    def _report_other_process_uses_lockfile(self, lockpath):
-        message = _("""The lockfile used to protect the timeline from concurrent updates is opened by another program or process.
-This lockfile must be removed in order be able to continue editing the timeline!
-The lockfile is found at: %s""") % lockpath
-        display_warning_message(message)
-
-    def _the_lock_is_mine(self):
-        try:
-            with open(self._get_lockpath(), "r") as fp:
-                lines = fp.readlines()
-            lines = [line.strip() for line in lines]
-            return lines[0] == getpass.getuser() and lines[2] == f"{os.getpid()}"
-        except:
-            return False
