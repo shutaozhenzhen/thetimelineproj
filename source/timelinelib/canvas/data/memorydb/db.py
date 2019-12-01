@@ -511,6 +511,11 @@ class MemoryDB(Observable):
         with self.transaction("Compress events"):
             self._set_events_order_from_rows(self._place_events_on_rows())
 
+    def measure_distance_between_events(self, event_ids):
+        event1 = self.find_event_with_id(event_ids[0])
+        event2 = self.find_event_with_id(event_ids[1])
+        return event1.distance_to(event2)
+
     def _set_events_order_from_rows(self, rows):
         event_sorter = EventSorter()
         for key in sorted(rows.keys()):
