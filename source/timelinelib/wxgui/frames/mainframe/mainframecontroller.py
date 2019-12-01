@@ -34,6 +34,7 @@ class MainFrameController:
         self._db_open_fn = db_open_fn
         self._config = config
         self._timeline = None
+        self._last_changed = None
         self._lock_handler = LockHandler(main_frame)
 
     def on_started(self, application_arguments):
@@ -84,11 +85,8 @@ class MainFrameController:
             self.open_or_create_timeline(new_timeline_path)
 
     def set_timeline_in_readonly_mode(self):
-        try:
-            self._timeline.set_readonly()
-            self._main_frame.set_timeline_readonly()
-        except:
-            pass
+        self._timeline.set_readonly()
+        self._main_frame.set_timeline_readonly()
 
     def week_starts_on_monday(self):
         return self._config.get_week_start() == "monday"
