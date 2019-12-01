@@ -119,10 +119,7 @@ class MainFrameController:
         open_slideshow_dialog(self._timeline, self._main_frame.canvas)
 
     def measure_distance_between_events(self, event_ids):
-        id1, id2 = event_ids
-        event1 = self._timeline.find_event_with_id(id1)
-        event2 = self._timeline.find_event_with_id(id2)
-        distance = event1.distance_to(event2)
+        distance = self._timeline.measure_distance_between_events(event_ids)
         if distance is None:
             distance_text = _("Events are overlapping or distance is 0")
         else:
