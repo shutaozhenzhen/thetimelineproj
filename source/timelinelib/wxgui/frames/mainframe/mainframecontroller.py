@@ -17,6 +17,8 @@
 
 
 import os
+from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog, FUNC_SAVE_AS, FUNC_OPEN, FUNC_NEW
+from timelinelib.wxgui.dialogs.getdirpath.view import open_get_dir_path_dialog
 
 from timelinelib.wxgui.dialogs.slideshow.view import open_slideshow_dialog
 from timelinelib.wxgui.utils import display_error_message
@@ -42,6 +44,22 @@ class MainFrameController:
             self.open_or_create_timeline(application_arguments.get_first_file())
         elif self._config.has_recently_opened_files():
             self.open_timeline_if_exists(self._config.get_latest_recently_opened_file())
+
+    def create_new_timeline(self, timetype):
+        if timetype == "dir":
+            self.open_or_create_timeline(open_get_dir_path_dialog(self._main_frame))
+        else:
+            if self._timeline:
+                path = open_get_file_path_dialog(self._main_frame, FUNC_NEW, self._timeline.path)
+            else:
+                path = open_get_file_path_dialog(self._main_frame, FUNC_NEW, "")
+            self.open_or_create_timeline(path, timetype)
+
+    def open_existing_timeline(self):
+        path = ""
+        if self._timeline is not None:
+            path = os.path.dirname(self._timeline.path)
+        self.open_or_create_timeline(open_get_file_path_dialog(self._main_frame, FUNC_OPEN, path))
 
     def open_timeline_if_exists(self, path):
         if os.path.exists(path):
