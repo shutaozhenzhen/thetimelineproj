@@ -61,6 +61,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
                           pos=self.config.get_window_pos(),
                           style=wx.DEFAULT_FRAME_STYLE, name="main_frame")
         self.Bind(EVT_CATS_VIEW_CHANGED, self._on_cats_view_changed)
+        self.Bind(wx.EVT_CLOSE, self._window_on_close)
         # To enable translations of wx stock items.
         self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
         self.locale.AddCatalogLookupPathPrefix(LOCALE_DIR)
@@ -80,7 +81,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.controller.on_started(application_arguments)
         self._alert_controller = AlertController(self).start_timer()
         self.prev_time_period = None
-        self.Bind(wx.EVT_CLOSE, self._window_on_close)
 
     def DisplayErrorMessage(self, message):
         display_error_message(message, parent=self)
