@@ -80,6 +80,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.controller.on_started(application_arguments)
         self._alert_controller = AlertController(self).start_timer()
         self.prev_time_period = None
+        self.Bind(wx.EVT_CLOSE, self._window_on_close)
 
     def DisplayErrorMessage(self, message):
         display_error_message(message, parent=self)
@@ -118,7 +119,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         except LockedException:
             return False
 
-    # File Menu action handlers
+    # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
     def create_new_timeline(self, timetype=None):
         self.controller.create_new_timeline(timetype)
 
@@ -137,6 +138,28 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     def get_export_periods(self):
         return self.main_panel.get_export_periods(*self._get_start_and_end_for_all_visible_events())
+
+    # When closing app
+    def _window_on_close(self, event):
+        self._alert_controller.stop_timer()
+        self._save_application_config()
+        try:
+            if self.ok_to_edit():
+                self.save_current_timeline_data()
+        finally:
+            self.edit_ends()
+        self.Destroy()
+
+    def _save_application_config(self):
+        self.config.set_window_size(self.GetSize())
+        self.config.set_window_pos(self.GetPosition())
+        self.config.window_maximized = self.IsMaximized()
+        self.config.sidebar_width = self.main_panel.get_sidebar_width()
+        self.config.write()
+
+    def save_current_timeline_data(self):
+        if self.timeline:
+            self.main_panel.save_view_properties(self.timeline)
 
     # Timeline Menu action handlers
     @skip_when_no_event_selected
@@ -179,28 +202,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.main_panel.navigate_to_last_event(
             self.timeline.get_last_event(),
             self.timeline.get_time_type().get_min_time())
-
-    # When closing app
-    def _window_on_close(self, event):
-        self._alert_controller.stop_timer()
-        self._save_application_config()
-        try:
-            if self.ok_to_edit():
-                self.save_current_timeline_data()
-        finally:
-            self.edit_ends()
-        self.Destroy()
-
-    def _save_application_config(self):
-        self.config.set_window_size(self.GetSize())
-        self.config.set_window_pos(self.GetPosition())
-        self.config.window_maximized = self.IsMaximized()
-        self.config.sidebar_width = self.main_panel.get_sidebar_width()
-        self.config.write()
-
-    def save_current_timeline_data(self):
-        if self.timeline:
-            self.main_panel.save_view_properties(self.timeline)
 
     # Helper functions for finding events
     def _get_first_selected_event(self):
