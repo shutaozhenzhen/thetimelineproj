@@ -19,8 +19,8 @@
 import wx
 
 
-def open_get_dir_path_dialog(parent):
-    dialog = wx.DirDialog(parent, message=_("Create Timeline"))
+def open_get_dir_path_dialog():
+    dialog = wx.DirDialog(None, message=_("Create Timeline"))
     if dialog.ShowModal() == wx.ID_OK:
         return dialog.GetPath()
     dialog.Destroy()
