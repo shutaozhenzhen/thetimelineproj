@@ -34,6 +34,7 @@ from timelinelib.canvas.data.transactions import Transactions
 from timelinelib.general.observer import Observable
 from timelinelib.canvas.data.memorydb.eventsorter import EventSorter
 from timelinelib.canvas.data.memorydb.query import Query
+from timelinelib.wxgui.utils import display_error_message
 
 
 # A category was added, edited, or deleted
@@ -566,6 +567,16 @@ class MemoryDB(Observable):
         finally:
             if need_to_create_query:
                 self._current_query = None
+
+    def get_start_and_end_for_all_visible_events(self, filter_function):
+        try:
+            events = filter_function(self.get_all_events())
+            if len(events) > 0:
+                return (self.get_first_event().get_start_time(),
+                        self.get_last_event().get_end_time())
+        except ValueError as ex:
+            display_error_message(str(ex))
+        return None
 
 
 def sort_events(events):
