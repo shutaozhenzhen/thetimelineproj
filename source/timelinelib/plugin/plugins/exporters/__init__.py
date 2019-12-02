@@ -44,7 +44,12 @@ def export_to_images(main_frame):
     path = _get_image_path(main_frame)
     if path is not None:
         try:
-            periods, current_period = main_frame.get_export_periods()
+            p = main_frame.get_export_periods()
+            if p:
+                periods, current_period = p
+            else:
+                display_warning_message(_("No events found!"))
+                return
         except ValueError:
             msg = _("The first image contains a Julian day < 0\n\nNavigate to first event or\nUse the feature 'Accept negative Julian days'")
             display_warning_message(msg)

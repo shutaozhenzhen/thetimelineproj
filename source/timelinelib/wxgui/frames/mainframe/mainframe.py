@@ -150,12 +150,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         new_timeline_path = open_get_file_path_dialog(self, FUNC_SAVE_AS, self.timeline.path)
         self.controller.save_timeline_to_new_path(new_timeline_path)
 
-    def get_export_periods(self):
-        events = self._all_visible_events()
-        first_time = self.timeline.get_first_event().get_start_time()
-        last_time = self.timeline.get_last_event().get_end_time()
-        return self.main_panel.get_export_periods(first_time, last_time)
-
     def get_visible_categories(self):
         if self.config.filtered_listbox_export:
             vp = self.main_panel.get_view_properties()
@@ -239,6 +233,14 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     def _all_visible_events(self):
         return self.main_panel.get_visible_events(self.timeline.get_all_events())
+
+    def get_export_periods(self):
+        print('Export periods')
+        visible_events = self._all_visible_events()
+        if len(visible_events) > 0:
+            first_time = self.timeline.get_first_event().get_start_time()
+            last_time = self.timeline.get_last_event().get_end_time()
+            return self.main_panel.get_export_periods(first_time, last_time)
 
     def _period_for_all_visible_events(self):
         try:
