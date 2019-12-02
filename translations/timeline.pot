@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-01 12:38+0100\n"
+"POT-Creation-Date: 2019-12-02 09:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1165,7 +1165,7 @@ msgid ""
 msgstr ""
 
 #: source\timelinelib\db\__init__.py:51
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:65
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:66
 #, python-format
 msgid "Unable to open timeline '%s'."
 msgstr ""
@@ -1905,7 +1905,11 @@ msgstr ""
 msgid "Other Gradient Event box drawer with fuzzy edges"
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\__init__.py:49
+#: source\timelinelib\plugin\plugins\exporters\__init__.py:51
+msgid "No events found!"
+msgstr ""
+
+#: source\timelinelib\plugin\plugins\exporters\__init__.py:54
 msgid ""
 "The first image contains a Julian day < 0\n"
 "\n"
@@ -1913,15 +1917,15 @@ msgid ""
 "Use the feature 'Accept negative Julian days'"
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\__init__.py:74
+#: source\timelinelib\plugin\plugins\exporters\__init__.py:79
 msgid "Image files"
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\__init__.py:78
+#: source\timelinelib\plugin\plugins\exporters\__init__.py:83
 msgid "Export to Image"
 msgstr ""
 
-#: source\timelinelib\plugin\plugins\exporters\__init__.py:87
+#: source\timelinelib\plugin\plugins\exporters\__init__.py:92
 #: source\timelinelib\plugin\plugins\exporters\exporttosvg.py:51
 #: source\timelinelib\plugin\plugins\exporters\timelineexporter.py:217
 #, python-format
@@ -3094,12 +3098,12 @@ msgid ""
 "    The lockfile is found at: {self._path}"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:49
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:50
 #, python-format
 msgid "File '%s' does not exist."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:110
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:108
 msgid ""
 "Someoneelse has changed the Timeline.\n"
 "You have two choices!\n"
@@ -3109,11 +3113,11 @@ msgid ""
 "Do you want to Synchronize?"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:129
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:124
 msgid "Events are overlapping or distance is 0"
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:132
+#: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:127
 msgid "Distance between selected events"
 msgstr ""
 

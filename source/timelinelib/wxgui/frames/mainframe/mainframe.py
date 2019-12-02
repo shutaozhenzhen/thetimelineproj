@@ -231,9 +231,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def _get_first_selected_event(self):
         return self.timeline.find_event_with_id(self.main_panel.get_id_of_first_selected_event())
 
-    def _all_visible_events(self):
-        return self.main_panel.get_visible_events(self.timeline.get_all_events())
-
     def get_export_periods(self):
         return self.main_panel.get_export_periods(*self._get_start_and_end_for_all_visible_events())
 
@@ -242,7 +239,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     def _get_start_and_end_for_all_visible_events(self):
         try:
-            visible_events = self._all_visible_events()
+            visible_events = self.main_panel.get_visible_events(self.timeline.get_all_events())
             if len(visible_events) > 0:
                 return (self.timeline.get_first_event().get_start_time(),
                         self.timeline.get_last_event().get_end_time())
