@@ -69,7 +69,8 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.controller = MainFrameController(self, db_open, self.config)
         self.menu_controller = MenuController()
         self.timeline = None
-        self._set_experimental_features()
+        ExperimentalFeatures().set_active_state_on_all_features_from_config_string(
+            self.config.experimental_features)
         self._create_gui()
         self.Maximize(self.config.window_maximized)
         self.SetTitle(APPLICATION_NAME)
@@ -116,10 +117,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             return self.controller.ok_to_edit()
         except LockedException:
             return False
-
-    # Creation process methods
-    def _set_experimental_features(self):
-        ExperimentalFeatures().set_active_state_on_all_features_from_config_string(self.config.experimental_features)
 
     # File Menu action handlers
     def create_new_timeline(self, timetype=None):
