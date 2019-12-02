@@ -46,7 +46,6 @@ class GuiCreator:
         self._create_status_bar()
         self._create_main_panel()
         self._create_main_menu_bar()
-        self._bind_frame_events()
 
     def _create_status_bar(self):
         self.CreateStatusBar()
@@ -72,6 +71,3 @@ class GuiCreator:
         self.SetMenuBar(main_menu_bar)
         self.update_navigation_menu_items()
         self.enable_disable_menus()
-
-    def _bind_frame_events(self):
-        self.Bind(wx.EVT_CLOSE, self._window_on_close)
