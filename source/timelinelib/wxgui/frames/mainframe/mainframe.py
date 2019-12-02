@@ -137,8 +137,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.controller.open_existing_timeline()
 
     def save_as(self):
-        new_timeline_path = open_get_file_path_dialog(self, FUNC_SAVE_AS, self.timeline.path)
-        self.controller.save_timeline_to_new_path(new_timeline_path)
+        self.controller.save_as()
 
     def get_visible_categories(self):
         if self.config.filtered_listbox_export:

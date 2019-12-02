@@ -61,6 +61,10 @@ class MainFrameController:
             path = os.path.dirname(self._timeline.path)
         self.open_or_create_timeline(open_get_file_path_dialog(self._main_frame, FUNC_OPEN, path))
 
+    def save_as(self):
+        new_timeline_path = open_get_file_path_dialog(self._main_frame, FUNC_SAVE_AS, self._timeline.path)
+        self.save_timeline_to_new_path(new_timeline_path)
+
     def open_timeline_if_exists(self, path):
         if os.path.exists(path):
             self.open_or_create_timeline(path)
