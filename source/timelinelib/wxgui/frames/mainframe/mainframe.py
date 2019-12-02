@@ -16,8 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
-
 import wx.lib.newevent
 
 from timelinelib.canvas.data import TimePeriod
@@ -30,7 +28,6 @@ from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrows
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.utils import display_error_message
-from timelinelib.wxgui.utils import display_information_message
 import timelinelib.wxgui.frames.mainframe.guicreator as guic
 from timelinelib.wxgui.frames.mainframe.controllerapi import MainFrameApiUsedByController
 from timelinelib.wxgui.frames.mainframe.alertcontroller import AlertController
@@ -42,8 +39,6 @@ from timelinelib.wxgui.dialogs.eraseditor.view import oped_edit_eras_dialog
 from timelinelib.wxgui.utils import load_icon_bundle
 from timelinelib.wxgui.dialogs.timeeditor.view import open_time_editor_dialog
 from timelinelib.wxgui.dialogs.changenowdate.view import open_change_now_date_dialog
-from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog, FUNC_SAVE_AS, FUNC_OPEN, FUNC_NEW
-from timelinelib.wxgui.dialogs.getdirpath.view import open_get_dir_path_dialog
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -121,9 +116,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             return self.controller.ok_to_edit()
         except LockedException:
             return False
-
-    def _on_cats_view_changed(self, evt):
-        self.main_panel.get_view_properties().change_view_cats_individually(evt.is_checked)
 
     # Creation process methods
     def _set_experimental_features(self):
@@ -222,3 +214,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     def _get_start_and_end_for_all_visible_events(self):
         return self.timeline.get_start_and_end_for_all_visible_events(self.view_properties.filter_events)
+
+    def _on_cats_view_changed(self, evt):
+        self.main_panel.get_view_properties().change_view_cats_individually(evt.is_checked)
