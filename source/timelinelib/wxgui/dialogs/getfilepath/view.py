@@ -62,8 +62,8 @@ class GetFilePath(wx.FileDialog):
         return self._controller.new_path()
 
 
-def open_get_file_path_dialog(parent, func, current_path):
-    dialog = GetFilePath(parent, func, current_path)
+def open_get_file_path_dialog(func, current_path=""):
+    dialog = GetFilePath(None, func, current_path)
     if dialog.ShowModal() == wx.ID_OK:
         new_timeline_path = dialog.new_path
         if func == FUNC_NEW and os.path.exists(new_timeline_path):
