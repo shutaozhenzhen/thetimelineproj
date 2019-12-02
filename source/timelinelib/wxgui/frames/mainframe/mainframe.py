@@ -152,8 +152,8 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     def get_export_periods(self):
         events = self._all_visible_events()
-        first_time = self._first_time(events)
-        last_time = self._last_time(events)
+        first_time = self.timeline.get_first_event().get_start_time()
+        last_time = self.timeline.get_last_event().get_end_time()
         return self.main_panel.get_export_periods(first_time, last_time)
 
     def get_visible_categories(self):
@@ -244,17 +244,11 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         try:
             visible_events = self._all_visible_events()
             if len(visible_events) > 0:
-                start = self._first_time(visible_events)
-                end = self._last_time(visible_events)
+                start = self.timeline.get_first_event().get_start_time()
+                end = self.timeline.get_last_event().get_end_time()
                 return TimePeriod(start, end).zoom(-1)
             else:
                 return None
         except ValueError as ex:
             display_error_message(str(ex))
         return None
-
-    def _first_time(self, events):
-        return min(events, key=lambda event: event.get_start_time()).get_start_time()
-
-    def _last_time(self, events):
-        return max(events, key=lambda event: event.get_end_time()).get_end_time()
