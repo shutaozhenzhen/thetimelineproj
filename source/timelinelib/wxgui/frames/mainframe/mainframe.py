@@ -141,8 +141,8 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     def get_visible_categories(self):
         if self.config.filtered_listbox_export:
-            vp = self.main_panel.get_view_properties()
-            return [cat for cat in self.timeline.get_categories() if vp.is_category_visible(cat)]
+            return [cat for cat in self.timeline.get_categories()
+                    if self.view_properties.is_category_visible(cat)]
         else:
             return [cat for cat in self.timeline.get_categories()]
 
@@ -177,13 +177,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     # Navigation menu event handlers
     def fit_all_events(self):
-        all_period = self._period_for_all_visible_events()
-        if all_period is None:
-            return
-        if all_period.is_period():
-            self.main_panel.Navigate(lambda tp: tp.update(all_period.start_time, all_period.end_time))
-        else:
-            self.main_panel.Navigate(lambda tp: tp.center(all_period.mean_time()))
+        self.main_panel.FitAllEvents(self._period_for_all_visible_events())
 
     def restore_time_period(self):
         if self.prev_time_period:
