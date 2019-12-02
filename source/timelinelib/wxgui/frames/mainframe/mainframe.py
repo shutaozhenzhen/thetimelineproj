@@ -157,6 +157,9 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         else:
             return [cat for cat in self.timeline.get_categories()]
 
+    def get_export_periods(self):
+        return self.main_panel.get_export_periods(*self._get_start_and_end_for_all_visible_events())
+
     # Timeline Menu action handlers
     @skip_when_no_event_selected
     def edit_event(self):
@@ -230,9 +233,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     # Helper functions for finding events
     def _get_first_selected_event(self):
         return self.timeline.find_event_with_id(self.main_panel.get_id_of_first_selected_event())
-
-    def get_export_periods(self):
-        return self.main_panel.get_export_periods(*self._get_start_and_end_for_all_visible_events())
 
     def _period_for_all_visible_events(self):
         return TimePeriod(*self._get_start_and_end_for_all_visible_events()).zoom(-1)
