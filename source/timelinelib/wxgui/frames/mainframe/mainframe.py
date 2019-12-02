@@ -89,10 +89,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.status_bar_adapter.set_text(message)
 
     @property
-    def file_open_recent_submenu(self):
-        return self.mnu_file_open_recent_submenu
-
-    @property
     def canvas(self):
         return self.main_panel.timeline_panel.timeline_canvas
 
@@ -103,15 +99,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def redraw(self):
         self.canvas.Redraw()
 
-    def display_time_editor_dialog(self, time_type, initial_time, handle_new_time_fn, title):
-        open_time_editor_dialog(self, self.config, time_type, initial_time, handle_new_time_fn, title)
-
-    def display_now_date_editor_dialog(self, handle_new_time_fn, title):
-        open_change_now_date_dialog(self, self.config, self.timeline, handle_new_time_fn, title)
-
-    def save_time_period(self):
-        self.prev_time_period = self.main_panel.get_time_period()
-
     # Concurrent editing
     def ok_to_edit(self):
         try:
@@ -120,6 +107,10 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             return False
 
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
+    @property
+    def file_open_recent_submenu(self):
+        return self.mnu_file_open_recent_submenu
+
     def create_new_timeline(self, timetype=None):
         self.controller.create_new_timeline(timetype)
 
@@ -139,7 +130,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def get_export_periods(self):
         return self.main_panel.get_export_periods(*self._get_start_and_end_for_all_visible_events())
 
-    # When closing app
     def _window_on_close(self, event):
         self._alert_controller.stop_timer()
         self._save_application_config()
@@ -203,6 +193,15 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
             self.timeline.get_last_event(),
             self.timeline.get_time_type().get_min_time())
 
+    def display_time_editor_dialog(self, time_type, initial_time, handle_new_time_fn, title):
+        open_time_editor_dialog(self, self.config, time_type, initial_time, handle_new_time_fn, title)
+
+    def display_now_date_editor_dialog(self, handle_new_time_fn, title):
+        open_change_now_date_dialog(self, self.config, self.timeline, handle_new_time_fn, title)
+
+    def save_time_period(self):
+        self.prev_time_period = self.main_panel.get_time_period()
+
     # Helper functions for finding events
     def _get_first_selected_event(self):
         return self.timeline.find_event_with_id(self.main_panel.get_id_of_first_selected_event())
@@ -213,5 +212,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def _get_start_and_end_for_all_visible_events(self):
         return self.timeline.get_start_and_end_for_all_visible_events(self.view_properties.filter_events)
 
+    # Event handlers
     def _on_cats_view_changed(self, evt):
         self.main_panel.get_view_properties().change_view_cats_individually(evt.is_checked)
