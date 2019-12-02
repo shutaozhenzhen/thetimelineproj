@@ -185,6 +185,14 @@ class MainPanel(wx.Panel):
     def Navigate(self, navigation_fn):
         return self.timeline_panel.Navigate(navigation_fn)
 
+    def FitAllEvents(self, all_period):
+        if all_period is None:
+            return
+        if all_period.is_period():
+            self.Navigate(lambda tp: tp.update(all_period.start_time, all_period.end_time))
+        else:
+            self.Navigate(lambda tp: tp.center(all_period.mean_time()))
+
     def get_visible_events(self, all_events):
         view_properties = self.get_view_properties()
         visible_events = view_properties.filter_events(all_events)
