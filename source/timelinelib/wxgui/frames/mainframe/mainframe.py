@@ -249,8 +249,6 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
                 start = self.timeline.get_first_event().get_start_time()
                 end = self.timeline.get_last_event().get_end_time()
                 return TimePeriod(start, end).zoom(-1)
-            else:
-                return None
         except ValueError as ex:
             display_error_message(str(ex))
         return None
