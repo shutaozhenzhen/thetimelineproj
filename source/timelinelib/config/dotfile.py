@@ -142,7 +142,10 @@ class Config(Observable):
             return len(self.get_recently_opened()) > 0
 
     def get_latest_recently_opened_file(self):
-        return self.get_recently_opened()[0]
+        try:
+            return self.get_recently_opened()[0]
+        except IndexError:
+            return None
 
     def append_recently_opened(self, path):
         if path in [":tutorial:", ":numtutorial:"]:
