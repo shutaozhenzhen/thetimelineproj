@@ -235,20 +235,17 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         return self.main_panel.get_visible_events(self.timeline.get_all_events())
 
     def get_export_periods(self):
-        print('Export periods')
-        visible_events = self._all_visible_events()
-        if len(visible_events) > 0:
-            first_time = self.timeline.get_first_event().get_start_time()
-            last_time = self.timeline.get_last_event().get_end_time()
-            return self.main_panel.get_export_periods(first_time, last_time)
+        return self.main_panel.get_export_periods(*self._get_start_and_end_for_all_visible_events())
 
     def _period_for_all_visible_events(self):
+        return TimePeriod(*self._get_start_and_end_for_all_visible_events()).zoom(-1)
+
+    def _get_start_and_end_for_all_visible_events(self):
         try:
             visible_events = self._all_visible_events()
             if len(visible_events) > 0:
-                start = self.timeline.get_first_event().get_start_time()
-                end = self.timeline.get_last_event().get_end_time()
-                return TimePeriod(start, end).zoom(-1)
+                return (self.timeline.get_first_event().get_start_time(),
+                        self.timeline.get_last_event().get_end_time())
         except ValueError as ex:
             display_error_message(str(ex))
         return None
