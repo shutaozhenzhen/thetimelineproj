@@ -106,6 +106,9 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         except LockedException:
             return False
 
+    def edit_ends(self):
+        self.controller.edit_ends()
+
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
     @property
     def file_open_recent_submenu(self):
