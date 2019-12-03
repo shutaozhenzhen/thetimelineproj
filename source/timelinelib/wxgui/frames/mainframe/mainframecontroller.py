@@ -36,6 +36,7 @@ class MainFrameController:
         self._db_open_fn = db_open_fn
         self._config = config
         self._timeline = None
+        self._timelinepath = None
         self._last_changed = None
         self._lock_handler = LockHandler(main_frame)
 
@@ -78,8 +79,8 @@ class MainFrameController:
 
     def edit_ends(self):
         if self._lock_handler.the_lock_is_mine(self._timelinepath):
-            self._last_changed = self._get_modification_date()
-            self._lock_handler.unlock(self._timelinepath)
+                self._last_changed = self._get_modification_date()
+                self._lock_handler.unlock(self._timelinepath)
 
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
     def create_new_timeline(self, timetype):
