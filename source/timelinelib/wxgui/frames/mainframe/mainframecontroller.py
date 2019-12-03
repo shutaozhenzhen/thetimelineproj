@@ -75,7 +75,12 @@ class MainFrameController:
             export_db_to_timeline_xml(self._timeline, path)
             self._open_or_create_timeline(path)
 
-    # Help Menu action handlers
+    # Timeline menu action handlers
+    def set_timeline_in_readonly_mode(self):
+        self._timeline.set_readonly()
+        self._main_frame.set_timeline_readonly()
+
+    # Help menu action handlers
     def open_gregorian_tutorial_timeline(self, *args, **kwargs):
         self._open_or_create_timeline(":tutorial:")
 
@@ -104,10 +109,6 @@ class MainFrameController:
                 self._main_frame.enable_disable_menus()
                 if path == ":numtutorial:":
                     self._main_frame.fit_all_events()
-
-    def set_timeline_in_readonly_mode(self):
-        self._timeline.set_readonly()
-        self._main_frame.set_timeline_readonly()
 
     def week_starts_on_monday(self):
         return self._config.get_week_start() == "monday"
