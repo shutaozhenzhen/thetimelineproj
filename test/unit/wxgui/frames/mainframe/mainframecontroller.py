@@ -49,7 +49,7 @@ class describe_mainframe_controller(UnitTestCase):
     def test_does_not_save_current_timeline_data_when_reloading_from_disk(self):
         self.controller._open_or_create_timeline("foo.timeline")
         self.main_frame.reset_mock()
-        self.controller.reload_from_disk()
+        self.controller._reload_from_disk()
         self.assertFalse(self.main_frame.save_current_timeline_data.called)
 
     def test_adds_opened_timeline_to_recently_opened_list(self):

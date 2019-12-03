@@ -68,7 +68,7 @@ class MainFrameController:
             ack = get_user_ack(
                 _("Someoneelse has changed the Timeline.\nYou have two choices!\n  1. Set Timeline in Read-Only mode.\n  2. Synchronize Timeline.\n\nDo you want to Synchronize?"))
             if ack:
-                self.reload_from_disk()
+                self._reload_from_disk()
             else:
                 self.set_timeline_in_readonly_mode()
             return False
@@ -167,7 +167,7 @@ class MainFrameController:
         except:
             return 0
 
-    def reload_from_disk(self):
+    def _reload_from_disk(self):
         vp = self._main_frame.view_properties
         self._open_or_create_timeline(self._timelinepath, save_current_data=False)
         vp.set_displayed_period(vp.get_displayed_period())
