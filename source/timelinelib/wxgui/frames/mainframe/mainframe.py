@@ -16,7 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import os.path
 import wx
 import wx.lib.newevent
 
@@ -117,19 +116,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     # General menu functions
     # Also used by TinmelineView
     def enable_disable_menus(self):
-        nbr_of_selected_events = self.main_panel.get_nbr_of_selected_events()
-        some_event_selected = nbr_of_selected_events > 0
-        one_event_selected = nbr_of_selected_events == 1
-        two_events_selected = nbr_of_selected_events == 2
-        self.menu_controller.enable_disable_menus(self.main_panel.timeline_panel_visible())
-        self.menu_controller.enable(mid.ID_MOVE_EVENT_UP, one_event_selected)
-        self.menu_controller.enable(mid.ID_MOVE_EVENT_DOWN, one_event_selected)
-        self.menu_controller.enable(mid.ID_SET_CATEGORY_ON_SELECTED, some_event_selected)
-        self.menu_controller.enable(mid.ID_DUPLICATE_EVENT, one_event_selected)
-        self.menu_controller.enable(mid.ID_EDIT_EVENT, one_event_selected)
-        self.menu_controller.enable(mid.ID_MEASURE_DISTANCE, two_events_selected)
-        self.menu_controller.enable(mid.ID_UNDO, self.timeline.undo_enabled() if self.timeline else False)
-        self.menu_controller.enable(mid.ID_REDO, self.timeline.redo_enabled() if self.timeline else False)
+        self.menu_controller.update_menus_enabled_state(self.timeline, self.main_panel)
         if self.timeline is None:
             self.main_panel.show_searchbar(False)
 
