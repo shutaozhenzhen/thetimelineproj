@@ -46,7 +46,7 @@ class TimelineMenu(MenuBase):
             mid.ID_MEASURE_DISTANCE: lambda evt: parent.measure_distance_between_events(),
             mid.ID_SET_CATEGORY_ON_WITHOUT: lambda evt: safe_locking(self._parent, lambda: parent.set_category()),
             mid.ID_EDIT_ERAS: lambda evt: safe_locking(parent, lambda: parent.edit_eras()),
-            mid.ID_SET_READONLY: lambda evt: self._parent.set_readonly_mode(),
+            mid.ID_SET_READONLY: lambda evt: self._parent.set_timeline_in_readonly_mode(),
             mid.ID_UNDO: lambda evt: safe_locking(parent, parent.timeline.undo),
             mid.ID_REDO: lambda evt: safe_locking(parent, parent.timeline.redo),
         }

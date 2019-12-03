@@ -219,3 +219,9 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     # Config functions
     def week_starts_on_monday(self):
         return self.config.get_week_start() == "monday"
+
+    # Status bar actions
+    def set_timeline_in_readonly_mode(self):
+        self.timeline.set_readonly()
+        self._set_readonly_text_in_status_bar()
+        self.enable_disable_menus()
