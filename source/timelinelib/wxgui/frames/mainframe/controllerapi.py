@@ -30,13 +30,6 @@ class MainFrameApiUsedByController:
         self._clear_recent_menu_items()
         self._create_recent_menu_items()
 
-    def display_timeline(self, timeline):
-        self.timeline = timeline
-        self.menu_controller.on_timeline_change(timeline)
-        self.main_panel.display_timeline(timeline)
-        self._set_title()
-        self._set_readonly_text_in_status_bar()
-
     def update_navigation_menu_items(self):
         self._clear_navigation_menu_items()
         if self.timeline:

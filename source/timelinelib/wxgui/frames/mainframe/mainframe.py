@@ -120,6 +120,13 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def open_existing_timeline(self):
         self.controller.open_existing_timeline()
 
+    def display_timeline(self, timeline):
+        self.timeline = timeline
+        self.menu_controller.on_timeline_change(timeline)
+        self.main_panel.display_timeline(timeline)
+        self._set_title()
+        self._set_readonly_text_in_status_bar()
+
     def save_as(self):
         self.controller.save_as()
 
