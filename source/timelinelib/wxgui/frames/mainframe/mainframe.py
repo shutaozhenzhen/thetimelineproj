@@ -215,3 +215,7 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     # Event handlers
     def _on_cats_view_changed(self, evt):
         self.main_panel.get_view_properties().change_view_cats_individually(evt.is_checked)
+
+    # Config functions
+    def week_starts_on_monday(self):
+        return self.config.get_week_start() == "monday"
