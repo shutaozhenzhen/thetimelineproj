@@ -280,8 +280,3 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     # Config functions
     def week_starts_on_monday(self):
         return self.config.get_week_start() == "monday"
-
-    def _create_recent_menu_items(self):
-        self.open_recent_map = {}
-        for path in self.config.get_recently_opened():
-            self._map_path_to_recent_menu_item(path)

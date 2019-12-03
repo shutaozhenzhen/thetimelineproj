@@ -113,6 +113,11 @@ class GuiCreator:
         time_period = self.main_panel.get_time_period()
         fn(self, time_period, self.main_panel.Navigate)
 
+    def _create_recent_menu_items(self):
+        self.open_recent_map = {}
+        for path in self.config.get_recently_opened():
+            self._map_path_to_recent_menu_item(path)
+
     def _map_path_to_recent_menu_item(self, path):
         name = "%s (%s)" % (
             os.path.basename(path),
