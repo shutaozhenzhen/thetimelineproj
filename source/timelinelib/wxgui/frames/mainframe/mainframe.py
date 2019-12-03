@@ -120,6 +120,19 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
     def open_existing_timeline(self):
         self.controller.open_existing_timeline()
 
+    def update_open_recent_submenu(self):
+        self._clear_recent_menu_items()
+        self._create_recent_menu_items()
+
+    def _clear_recent_menu_items(self):
+        for item in self.mnu_file_open_recent_submenu.GetMenuItems():
+            self.mnu_file_open_recent_submenu.Delete(item)
+
+    def _create_recent_menu_items(self):
+        self.open_recent_map = {}
+        for path in self.config.get_recently_opened():
+            self._map_path_to_recent_menu_item(path)
+
     def display_timeline(self, timeline):
         self.timeline = timeline
         self.menu_controller.on_timeline_change(timeline)
