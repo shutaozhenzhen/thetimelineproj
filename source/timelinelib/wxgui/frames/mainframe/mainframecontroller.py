@@ -105,6 +105,15 @@ class MainFrameController:
         open_slideshow_dialog(self._timeline, self._main_frame.canvas)
 
     # Timeline menu action handlers
+    def measure_distance_between_events(self, event_ids):
+        distance = self._timeline.measure_distance_between_events(event_ids)
+        if distance is None:
+            distance_text = _("Events are overlapping or distance is 0")
+        else:
+            distance_text = self._timeline.get_time_type().format_delta(distance)
+        caption = _("Distance between selected events")
+        display_information_message(caption, distance_text)
+
     def set_timeline_in_readonly_mode(self):
         self._timeline.set_readonly()
         self._main_frame.set_timeline_readonly()
@@ -138,15 +147,6 @@ class MainFrameController:
                 self._main_frame.enable_disable_menus()
                 if path == ":numtutorial:":
                     self._main_frame.fit_all_events()
-
-    def measure_distance_between_events(self, event_ids):
-        distance = self._timeline.measure_distance_between_events(event_ids)
-        if distance is None:
-            distance_text = _("Events are overlapping or distance is 0")
-        else:
-            distance_text = self._timeline.get_time_type().format_delta(distance)
-        caption = _("Distance between selected events")
-        display_information_message(caption, distance_text)
 
     def _timeline_path_doesnt_exists_yet(self):
         return not os.path.exists(self._timelinepath)
