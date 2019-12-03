@@ -148,7 +148,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.timeline = timeline
         self.menu_controller.on_timeline_change(timeline)
         self.main_panel.display_timeline(timeline)
-        self._set_title()
+        self.controller.set_title()
         self._set_readonly_text_in_status_bar()
 
     def save_as(self):
@@ -271,16 +271,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.enable_disable_menus()
 
     # Functions moved from controllerapi
-
-    def _set_title(self):
-        if self.timeline is None:
-            self.SetTitle(APPLICATION_NAME)
-        else:
-            self.SetTitle("%s (%s) - %s" % (
-                os.path.basename(self.timeline.path),
-                os.path.dirname(os.path.abspath(self.timeline.path)),
-                APPLICATION_NAME))
-
     def _set_readonly_text_in_status_bar(self):
         if self.timeline is not None and self.timeline.is_read_only():
             text = _("read-only")

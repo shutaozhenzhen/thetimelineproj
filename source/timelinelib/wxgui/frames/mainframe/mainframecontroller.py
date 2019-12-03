@@ -17,9 +17,9 @@
 
 
 import os
+
 from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog, FUNC_SAVE_AS, FUNC_OPEN, FUNC_NEW
 from timelinelib.wxgui.dialogs.getdirpath.view import open_get_dir_path_dialog
-
 from timelinelib.wxgui.dialogs.slideshow.view import open_slideshow_dialog
 from timelinelib.wxgui.utils import display_error_message
 from timelinelib.wxgui.utils import display_warning_message
@@ -27,6 +27,7 @@ from timelinelib.wxgui.utils import get_user_ack
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.frames.mainframe.lockhandler import LockHandler, LockedException
+from timelinelib.meta.about import APPLICATION_NAME
 
 
 class MainFrameController:
@@ -51,6 +52,16 @@ class MainFrameController:
             self._open_or_create_timeline(path)
         else:
             display_error_message(_("File '%s' does not exist.") % path, self._main_frame)
+
+    # GUI updates
+    def set_title(self):
+        if self._timeline is None:
+            self._main_frame.SetTitle(APPLICATION_NAME)
+        else:
+            self._main_frame.SetTitle("%s (%s) - %s" % (
+                os.path.basename(self._timelinepath),
+                os.path.dirname(os.path.abspath(self._timelinepath)),
+                APPLICATION_NAME))
 
     # Concurrent editing
     def ok_to_edit(self):
@@ -145,9 +156,8 @@ class MainFrameController:
             else:
                 self._config.append_recently_opened(path)
                 self._main_frame.update_open_recent_submenu()
-                self._timeline.path = path
+                self._timelinepath = self._timeline.path = path
                 self._main_frame.display_timeline(self._timeline)
-                self._timelinepath = path
                 self._last_changed = self._get_modification_date()
                 self._main_frame.update_navigation_menu_items()
                 self._main_frame.enable_disable_menus()
