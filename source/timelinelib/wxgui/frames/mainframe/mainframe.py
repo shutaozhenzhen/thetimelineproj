@@ -39,7 +39,6 @@ from timelinelib.wxgui.dialogs.eraseditor.view import oped_edit_eras_dialog
 from timelinelib.wxgui.utils import load_icon_bundle
 from timelinelib.wxgui.dialogs.timeeditor.view import open_time_editor_dialog
 from timelinelib.wxgui.dialogs.changenowdate.view import open_change_now_date_dialog
-import timelinelib.wxgui.frames.mainframe.menus as mid
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
