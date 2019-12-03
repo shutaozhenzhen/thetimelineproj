@@ -60,7 +60,7 @@ class MainFrameController:
         if self._lock_handler.locked(self._timelinepath):
             display_warning_message("The Timeline is Locked by someone else.\nTry again later")
             return False
-        if self._timeline_path_doesnt_exists_yet():
+        if not os.path.exists(self._timelinepath):
             self._lock_handler.lock(self._timelinepath, self._timeline)
             return True
         last_changed = self._get_modification_date()
@@ -147,9 +147,6 @@ class MainFrameController:
                 self._main_frame.enable_disable_menus()
                 if path == ":numtutorial:":
                     self._main_frame.fit_all_events()
-
-    def _timeline_path_doesnt_exists_yet(self):
-        return not os.path.exists(self._timelinepath)
 
     def edit_ends(self):
         if self._lock_handler.the_lock_is_mine(self._timelinepath):
