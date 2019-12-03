@@ -117,12 +117,21 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     # General menu functions
     # Also used by TinmelineView
     def enable_disable_menus(self):
+        nbr_of_selected_events = self.main_panel.get_nbr_of_selected_events()
+        some_event_selected = nbr_of_selected_events > 0
+        one_event_selected = nbr_of_selected_events == 1
+        two_events_selected = nbr_of_selected_events == 2
         self.menu_controller.enable_disable_menus(self.main_panel.timeline_panel_visible())
-        self._enable_disable_one_selected_event_menus()
-        self._enable_disable_measure_distance_between_two_events_menu()
+        self.menu_controller.enable(mid.ID_MOVE_EVENT_UP, one_event_selected)
+        self.menu_controller.enable(mid.ID_MOVE_EVENT_DOWN, one_event_selected)
+        self.menu_controller.enable(mid.ID_SET_CATEGORY_ON_SELECTED, some_event_selected)
+        self.menu_controller.enable(mid.ID_DUPLICATE_EVENT, one_event_selected)
+        self.menu_controller.enable(mid.ID_EDIT_EVENT, one_event_selected)
+        self.menu_controller.enable(mid.ID_MEASURE_DISTANCE, two_events_selected)
+        self.menu_controller.enable(mid.ID_UNDO, self.timeline.undo_enabled() if self.timeline else False)
+        self.menu_controller.enable(mid.ID_REDO, self.timeline.redo_enabled() if self.timeline else False)
         if self.timeline is None:
             self.main_panel.show_searchbar(False)
-        self._enable_disable_undo()
 
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
     @property
@@ -322,31 +331,3 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def _mnu_file_open_recent_item_on_click(self, event):
         path = self.open_recent_map[event.GetId()]
         self.controller.open_timeline_if_exists(path)
-
-    def _enable_disable_one_selected_event_menus(self):
-        nbr_of_selected_events = self.main_panel.get_nbr_of_selected_events()
-        one_event_selected = nbr_of_selected_events == 1
-        some_event_selected = nbr_of_selected_events > 0
-        mnu_edit_event = self. _timeline_menu.FindItemById(mid.ID_EDIT_EVENT)
-        mnu_duplicate_event = self. _timeline_menu.FindItemById(mid.ID_DUPLICATE_EVENT)
-        mnu_set_category = self. _timeline_menu.FindItemById(mid.ID_SET_CATEGORY_ON_SELECTED)
-        mnu_edit_event.Enable(one_event_selected)
-        mnu_duplicate_event.Enable(one_event_selected)
-        mnu_set_category.Enable(some_event_selected)
-        self._timeline_menu.FindItemById(mid.ID_MOVE_EVENT_UP).Enable(one_event_selected)
-        self._timeline_menu.FindItemById(mid.ID_MOVE_EVENT_DOWN).Enable(one_event_selected)
-
-    def _enable_disable_measure_distance_between_two_events_menu(self):
-        two_events_selected = self.main_panel.get_nbr_of_selected_events() == 2
-        mnu_measure_distance = self._timeline_menu.FindItemById(mid.ID_MEASURE_DISTANCE)
-        mnu_measure_distance.Enable(two_events_selected)
-
-    def _enable_disable_undo(self):
-        mnu_undo = self._timeline_menu.FindItemById(mid.ID_UNDO)
-        mnu_redo = self._timeline_menu.FindItemById(mid.ID_REDO)
-        if self.timeline is not None:
-            mnu_undo.Enable(self.timeline.undo_enabled())
-            mnu_redo.Enable(self.timeline.redo_enabled())
-        else:
-            mnu_undo.Enable(False)
-            mnu_redo.Enable(False)

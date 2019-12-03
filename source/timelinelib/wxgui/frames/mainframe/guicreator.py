@@ -56,11 +56,12 @@ class GuiCreator:
 
     def _create_main_menu_bar(self):
         self.mnu_file_open_recent_submenu = wx.Menu()
+        self.menu_controller.timeline_menu = TimelineMenu(self, self.main_panel.timeline_panel)
         main_menu_bar = wx.MenuBar()
         main_menu_bar.Append(FileMenu(self).create(), _("&File"))
         main_menu_bar.Append(EditMenu(self).create(), _("&Edit"))
         main_menu_bar.Append(ViewMenu(self).create(), _("&View"))
-        self._timeline_menu = TimelineMenu(self, self.main_panel.timeline_panel).create()
+        self._timeline_menu = self.menu_controller.timeline_menu.create()
         main_menu_bar.Append(self._timeline_menu, _("&Timeline"))
         self._navigation_menu_items = []
         self._navigation_functions_by_menu_item_id = {}
@@ -69,5 +70,6 @@ class GuiCreator:
         main_menu_bar.Append(HelpMenu(self).create(), _("&Help"))
         self.shortcut_controller.load_config_settings()
         self.SetMenuBar(main_menu_bar)
+        self.menu_controller.set_menu_bar(main_menu_bar)
         self.update_navigation_menu_items()
         self.enable_disable_menus()
