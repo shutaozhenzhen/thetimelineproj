@@ -51,6 +51,31 @@ class MainFrameController:
         else:
             display_error_message(_("File '%s' does not exist.") % path, self._main_frame)
 
+    # Concurrent editing
+    def ok_to_edit(self):
+        if self._timeline is None:
+            return True
+        if self._timeline.is_read_only():
+            return False
+        if self._lock_handler.locked(self._timelinepath):
+            display_warning_message("The Timeline is Locked by someone else.\nTry again later")
+            return False
+        if self._timeline_path_doesnt_exists_yet():
+            self._lock_handler.lock(self._timelinepath, self._timeline)
+            return True
+        last_changed = self._get_modification_date()
+        if last_changed > self._last_changed:
+            ack = get_user_ack(
+                _("Someoneelse has changed the Timeline.\nYou have two choices!\n  1. Set Timeline in Read-Only mode.\n  2. Synchronize Timeline.\n\nDo you want to Synchronize?"))
+            if ack:
+                self.reload_from_disk()
+            else:
+                self.set_timeline_in_readonly_mode()
+            return False
+        if last_changed > 0:
+            self._lock_handler.lock(self._timelinepath, self._timeline)
+        return True
+
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
     def create_new_timeline(self, timetype):
         if timetype == "dir":
@@ -109,30 +134,6 @@ class MainFrameController:
                 self._main_frame.enable_disable_menus()
                 if path == ":numtutorial:":
                     self._main_frame.fit_all_events()
-
-    def ok_to_edit(self):
-        if self._timeline is None:
-            return True
-        if self._timeline.is_read_only():
-            return False
-        if self._lock_handler.locked(self._timelinepath):
-            display_warning_message("The Timeline is Locked by someone else.\nTry again later")
-            return False
-        if self._timeline_path_doesnt_exists_yet():
-            self._lock_handler.lock(self._timelinepath, self._timeline)
-            return True
-        last_changed = self._get_modification_date()
-        if last_changed > self._last_changed:
-            ack = get_user_ack(
-                _("Someoneelse has changed the Timeline.\nYou have two choices!\n  1. Set Timeline in Read-Only mode.\n  2. Synchronize Timeline.\n\nDo you want to Synchronize?"))
-            if ack:
-                self.reload_from_disk()
-            else:
-                self.set_timeline_in_readonly_mode()
-            return False
-        if last_changed > 0:
-            self._lock_handler.lock(self._timelinepath, self._timeline)
-        return True
 
     def start_slide_show(self):
         open_slideshow_dialog(self._timeline, self._main_frame.canvas)
