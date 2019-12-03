@@ -70,7 +70,7 @@ class MainFrameController:
             if ack:
                 self._reload_from_disk()
             else:
-                self.set_timeline_in_readonly_mode()
+                self._main_frame.set_timeline_in_readonly_mode()
             return False
         if last_changed > 0:
             self._lock_handler.lock(self._timelinepath, self._timeline)
@@ -122,14 +122,6 @@ class MainFrameController:
             distance_text = self._timeline.get_time_type().format_delta(distance)
         caption = _("Distance between selected events")
         display_information_message(caption, distance_text)
-
-    def set_timeline_in_readonly_mode(self):
-        # TODO: This whole read-only-logic must be simplified
-        self._timeline.set_readonly()
-        self._main_frame.set_timeline_readonly()
-
-    def timeline_is_readonly(self):
-        return self._timeline is not None and self._timeline.is_read_only()
 
     # Help menu action handlers
     def open_gregorian_tutorial_timeline(self, *args, **kwargs):

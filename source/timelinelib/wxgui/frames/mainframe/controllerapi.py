@@ -26,10 +26,6 @@ import timelinelib.wxgui.frames.mainframe.menus as mid
 
 class MainFrameApiUsedByController:
 
-    def set_timeline_readonly(self):
-        self._set_readonly_text_in_status_bar()
-        self.enable_disable_menus()
-
     def update_open_recent_submenu(self):
         self._clear_recent_menu_items()
         self._create_recent_menu_items()
@@ -58,9 +54,6 @@ class MainFrameApiUsedByController:
     def start_slide_show(self):
         self.controller.start_slide_show()
 
-    def set_readonly_mode(self):
-        self.controller.set_timeline_in_readonly_mode()
-
     def edit_ends(self):
         self.controller.edit_ends()
 
@@ -74,7 +67,7 @@ class MainFrameApiUsedByController:
                 APPLICATION_NAME))
 
     def _set_readonly_text_in_status_bar(self):
-        if self.controller.timeline_is_readonly():
+        if self.timeline is not None and self.timeline.is_read_only():
             text = _("read-only")
         else:
             text = ""
