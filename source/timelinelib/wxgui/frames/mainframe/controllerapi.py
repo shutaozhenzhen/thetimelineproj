@@ -26,12 +26,6 @@ import timelinelib.wxgui.frames.mainframe.menus as mid
 
 class MainFrameApiUsedByController:
 
-    def update_navigation_menu_items(self):
-        self._clear_navigation_menu_items()
-        if self.timeline:
-            self._create_navigation_menu_items()
-            self.shortcut_controller.add_navigation_functions()
-
     # Also used by TinmelineView
     def enable_disable_menus(self):
         self.menu_controller.enable_disable_menus(self.main_panel.timeline_panel_visible())

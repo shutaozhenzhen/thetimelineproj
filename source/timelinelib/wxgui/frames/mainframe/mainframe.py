@@ -205,6 +205,12 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         oped_edit_eras_dialog(self, self.timeline, self.config)
 
     # Navigation menu event handlers
+    def update_navigation_menu_items(self):
+        self._clear_navigation_menu_items()
+        if self.timeline:
+            self._create_navigation_menu_items()
+            self.shortcut_controller.add_navigation_functions()
+
     def fit_all_events(self):
         self.main_panel.FitAllEvents(self._period_for_all_visible_events())
 
