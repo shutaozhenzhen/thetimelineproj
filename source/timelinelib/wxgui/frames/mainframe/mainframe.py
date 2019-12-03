@@ -240,6 +240,11 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def edit_eras(self):
         oped_edit_eras_dialog(self, self.timeline, self.config)
 
+    def set_timeline_in_readonly_mode(self):
+        self.timeline.set_readonly()
+        self.SetReadonlyText(self.controller.get_readonly_text_in_status_bar())
+        self.enable_disable_menus()
+
     # Navigation menu event handlers
     def update_navigation_menu_items(self):
         self._clear_navigation_menu_items()
@@ -288,9 +293,3 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     # Config functions
     def week_starts_on_monday(self):
         return self.config.get_week_start() == "monday"
-
-    # Status bar actions
-    def set_timeline_in_readonly_mode(self):
-        self.timeline.set_readonly()
-        self.SetReadonlyText(self.controller.get_readonly_text_in_status_bar())
-        self.enable_disable_menus()
