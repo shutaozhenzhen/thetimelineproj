@@ -160,7 +160,5 @@ class MainFrameController:
             return 0
 
     def _reload_from_disk(self):
-        vp = self._main_frame.view_properties
         self._open_or_create_timeline(self._timelinepath, save_current_data=False)
-        vp.set_displayed_period(vp.get_displayed_period())
         self._main_frame.redraw()
