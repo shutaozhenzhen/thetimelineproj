@@ -54,9 +54,6 @@ class MainFrameApiUsedByController:
     def start_slide_show(self):
         self.controller.start_slide_show()
 
-    def edit_ends(self):
-        self.controller.edit_ends()
-
     def _set_title(self):
         if self.timeline is None:
             self.SetTitle(APPLICATION_NAME)
