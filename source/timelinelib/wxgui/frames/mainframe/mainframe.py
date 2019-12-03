@@ -144,6 +144,10 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def open_existing_timeline(self):
         self.controller.open_existing_timeline()
 
+    def _mnu_file_open_recent_item_on_click(self, event):
+        path = self.open_recent_map[event.GetId()]
+        self.controller.open_timeline_if_exists(path)
+
     def update_open_recent_submenu(self):
         self._clear_recent_menu_items()
         self._create_recent_menu_items()
@@ -156,6 +160,14 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.open_recent_map = {}
         for path in self.config.get_recently_opened():
             self._map_path_to_recent_menu_item(path)
+
+    def _map_path_to_recent_menu_item(self, path):
+        name = "%s (%s)" % (
+            os.path.basename(path),
+            os.path.dirname(os.path.abspath(path)))
+        item = self.mnu_file_open_recent_submenu.Append(wx.ID_ANY, name)
+        self.open_recent_map[item.GetId()] = path
+        self.Bind(wx.EVT_MENU, self._mnu_file_open_recent_item_on_click, item)
 
     def display_timeline(self, timeline):
         self.timeline = timeline
@@ -319,15 +331,3 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         fn = self._navigation_functions_by_menu_item_id[evt.GetId()]
         time_period = self.main_panel.get_time_period()
         fn(self, time_period, self.main_panel.Navigate)
-
-    def _map_path_to_recent_menu_item(self, path):
-        name = "%s (%s)" % (
-            os.path.basename(path),
-            os.path.dirname(os.path.abspath(path)))
-        item = self.mnu_file_open_recent_submenu.Append(wx.ID_ANY, name)
-        self.open_recent_map[item.GetId()] = path
-        self.Bind(wx.EVT_MENU, self._mnu_file_open_recent_item_on_click, item)
-
-    def _mnu_file_open_recent_item_on_click(self, event):
-        path = self.open_recent_map[event.GetId()]
-        self.controller.open_timeline_if_exists(path)
