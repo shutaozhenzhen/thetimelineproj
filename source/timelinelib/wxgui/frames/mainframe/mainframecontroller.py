@@ -41,9 +41,15 @@ class MainFrameController:
 
     def on_started(self, application_arguments):
         if application_arguments.has_files():
-            self.open_or_create_timeline(application_arguments.get_first_file())
+            self._open_or_create_timeline(application_arguments.get_first_file())
         elif self._config.has_recently_opened_files():
             self.open_timeline_if_exists(self._config.get_latest_recently_opened_file())
+
+    def open_timeline_if_exists(self, path):
+        if os.path.exists(path):
+            self._open_or_create_timeline(path)
+        else:
+            display_error_message(_("File '%s' does not exist.") % path, self._main_frame)
 
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
     def create_new_timeline(self, timetype):
@@ -53,31 +59,27 @@ class MainFrameController:
             path = open_get_file_path_dialog(FUNC_NEW, self._timeline.path)
         else:
             path = open_get_file_path_dialog(FUNC_NEW)
-        self.open_or_create_timeline(path, timetype)
+        self._open_or_create_timeline(path, timetype)
 
     def open_existing_timeline(self):
         path = ""
         if self._timeline is not None:
             path = os.path.dirname(self._timeline.path)
-        self.open_or_create_timeline(open_get_file_path_dialog(FUNC_OPEN, path))
+        self._open_or_create_timeline(open_get_file_path_dialog(FUNC_OPEN, path))
 
     def save_as(self):
-        new_timeline_path = open_get_file_path_dialog(FUNC_SAVE_AS, self._timeline.path)
-        self.save_timeline_to_new_path(new_timeline_path)
+        path = open_get_file_path_dialog(FUNC_SAVE_AS, self._timeline.path)
+        self.save_timeline_to_new_path(path)
 
-    def open_timeline_if_exists(self, path):
-        if os.path.exists(path):
-            self.open_or_create_timeline(path)
-        else:
-            display_error_message(_("File '%s' does not exist.") % path, self._main_frame)
-
+    # Help Menu action handlers
     def open_gregorian_tutorial_timeline(self, *args, **kwargs):
-        self.open_or_create_timeline(":tutorial:")
+        self._open_or_create_timeline(":tutorial:")
 
     def open_numeric_tutorial_timeline(self, *args, **kwargs):
-        self.open_or_create_timeline(":numtutorial:")
+        self._open_or_create_timeline(":numtutorial:")
 
-    def open_or_create_timeline(self, path, timetype=None, save_current_data=True):
+    # Internal functions
+    def _open_or_create_timeline(self, path, timetype=None, save_current_data=True):
         if path is not None:
             if save_current_data:
                 self._main_frame.save_current_timeline_data()
@@ -104,7 +106,7 @@ class MainFrameController:
         if new_timeline_path is not None:
             assert new_timeline_path.endswith(".timeline")
             export_db_to_timeline_xml(self._timeline, new_timeline_path)
-            self.open_or_create_timeline(new_timeline_path)
+            self._open_or_create_timeline(new_timeline_path)
 
     def set_timeline_in_readonly_mode(self):
         self._timeline.set_readonly()
@@ -168,7 +170,7 @@ class MainFrameController:
 
     def reload_from_disk(self):
         vp = self._main_frame.view_properties
-        self.open_or_create_timeline(self._timelinepath, save_current_data=False)
+        self._open_or_create_timeline(self._timelinepath, save_current_data=False)
         vp.set_displayed_period(vp.get_displayed_period())
         self._main_frame.redraw()
 
