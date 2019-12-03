@@ -16,6 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import timelinelib.wxgui.frames.mainframe.menus as mid
+
+
 class MenuController:
 
     def __init__(self):
@@ -42,6 +45,22 @@ class MenuController:
 
     def add_menu_requiring_visible_timeline_view(self, menu):
         self.menus_requiring_visible_timeline_view.append(menu)
+
+    def update_menus_enabled_state(self, timeline, main_panel):
+        timeline_view_visible = main_panel.timeline_panel_visible()
+        nbr_of_selected_events = main_panel.get_nbr_of_selected_events()
+        some_event_selected = nbr_of_selected_events > 0
+        one_event_selected = nbr_of_selected_events == 1
+        two_events_selected = nbr_of_selected_events == 2
+        self.enable_disable_menus(timeline_view_visible)
+        self.enable(mid.ID_MOVE_EVENT_UP, one_event_selected)
+        self.enable(mid.ID_MOVE_EVENT_DOWN, one_event_selected)
+        self.enable(mid.ID_SET_CATEGORY_ON_SELECTED, some_event_selected)
+        self.enable(mid.ID_DUPLICATE_EVENT, one_event_selected)
+        self.enable(mid.ID_EDIT_EVENT, one_event_selected)
+        self.enable(mid.ID_MEASURE_DISTANCE, two_events_selected)
+        self.enable(mid.ID_UNDO, timeline.undo_enabled() if timeline else False)
+        self.enable(mid.ID_REDO, timeline.redo_enabled() if timeline else False)
 
     def enable_disable_menus(self, timeline_view_visible):
         for menu in self.menus_requiring_writable_timeline:
