@@ -156,19 +156,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         for item in self.mnu_file_open_recent_submenu.GetMenuItems():
             self.mnu_file_open_recent_submenu.Delete(item)
 
-    def _create_recent_menu_items(self):
-        self.open_recent_map = {}
-        for path in self.config.get_recently_opened():
-            self._map_path_to_recent_menu_item(path)
-
-    def _map_path_to_recent_menu_item(self, path):
-        name = "%s (%s)" % (
-            os.path.basename(path),
-            os.path.dirname(os.path.abspath(path)))
-        item = self.mnu_file_open_recent_submenu.Append(wx.ID_ANY, name)
-        self.open_recent_map[item.GetId()] = path
-        self.Bind(wx.EVT_MENU, self._mnu_file_open_recent_item_on_click, item)
-
     def display_timeline(self, timeline):
         self.timeline = timeline
         self.menu_controller.on_timeline_change(timeline)
@@ -293,3 +280,8 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     # Config functions
     def week_starts_on_monday(self):
         return self.config.get_week_start() == "monday"
+
+    def _create_recent_menu_items(self):
+        self.open_recent_map = {}
+        for path in self.config.get_recently_opened():
+            self._map_path_to_recent_menu_item(path)
