@@ -120,7 +120,8 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.menu_controller.enable_disable_menus(self.main_panel.timeline_panel_visible())
         self._enable_disable_one_selected_event_menus()
         self._enable_disable_measure_distance_between_two_events_menu()
-        self._enable_disable_searchbar()
+        if self.timeline is None:
+            self.main_panel.show_searchbar(False)
         self._enable_disable_undo()
 
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
@@ -339,10 +340,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         two_events_selected = self.main_panel.get_nbr_of_selected_events() == 2
         mnu_measure_distance = self._timeline_menu.FindItemById(mid.ID_MEASURE_DISTANCE)
         mnu_measure_distance.Enable(two_events_selected)
-
-    def _enable_disable_searchbar(self):
-        if self.timeline is None:
-            self.main_panel.show_searchbar(False)
 
     def _enable_disable_undo(self):
         mnu_undo = self._timeline_menu.FindItemById(mid.ID_UNDO)
