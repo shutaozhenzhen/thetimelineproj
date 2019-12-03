@@ -90,6 +90,9 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def DisplayStatus(self, message):
         self.status_bar_adapter.set_text(message)
 
+    def SetReadonlyText(self, text):
+        self.status_bar_adapter.set_read_only_text(text)
+
     @property
     def canvas(self):
         return self.main_panel.timeline_panel.timeline_canvas
@@ -271,9 +274,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.enable_disable_menus()
 
     # Functions moved from controller api
-    def SetReadonlyText(self, text):
-        self.status_bar_adapter.set_read_only_text(text)
-
     def _clear_navigation_menu_items(self):
         while self._navigation_menu_items:
             item = self._navigation_menu_items.pop()
