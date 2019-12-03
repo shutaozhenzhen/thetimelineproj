@@ -61,9 +61,6 @@ class MainFrameApiUsedByController:
     def set_readonly_mode(self):
         self.controller.set_timeline_in_readonly_mode()
 
-    def week_starts_on_monday(self):
-        return self.controller.week_starts_on_monday()
-
     def edit_ends(self):
         self.controller.edit_ends()
 

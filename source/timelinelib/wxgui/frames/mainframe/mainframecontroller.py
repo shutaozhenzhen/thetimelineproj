@@ -110,9 +110,6 @@ class MainFrameController:
                 if path == ":numtutorial:":
                     self._main_frame.fit_all_events()
 
-    def week_starts_on_monday(self):
-        return self._config.get_week_start() == "monday"
-
     def ok_to_edit(self):
         if self._timeline is None:
             return True
