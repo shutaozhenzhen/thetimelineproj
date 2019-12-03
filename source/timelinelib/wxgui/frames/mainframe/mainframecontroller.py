@@ -120,8 +120,12 @@ class MainFrameController:
         display_information_message(caption, distance_text)
 
     def set_timeline_in_readonly_mode(self):
+        # TODO: This whole read-only-logic must be simplified
         self._timeline.set_readonly()
         self._main_frame.set_timeline_readonly()
+
+    def timeline_is_readonly(self):
+        return self._timeline is not None and self._timeline.is_read_only()
 
     # Help menu action handlers
     def open_gregorian_tutorial_timeline(self, *args, **kwargs):
@@ -152,9 +156,6 @@ class MainFrameController:
                 self._main_frame.enable_disable_menus()
                 if path == ":numtutorial:":
                     self._main_frame.fit_all_events()
-
-    def timeline_is_readonly(self):
-        return self._timeline is not None and self._timeline.is_read_only()
 
     def _get_modification_date(self):
         try:
