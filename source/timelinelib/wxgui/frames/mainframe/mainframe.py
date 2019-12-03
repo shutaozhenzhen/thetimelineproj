@@ -174,7 +174,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.menu_controller.on_timeline_change(timeline)
         self.main_panel.display_timeline(timeline)
         self.controller.set_title()
-        self.controller.set_readonly_text_in_status_bar()
+        self.SetReadonlyText(self.controller.get_readonly_text_in_status_bar())
 
     def save_as(self):
         self.controller.save_as()
@@ -292,5 +292,5 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     # Status bar actions
     def set_timeline_in_readonly_mode(self):
         self.timeline.set_readonly()
-        self.controller.set_readonly_text_in_status_bar()
+        self.SetReadonlyText(self.controller.get_readonly_text_in_status_bar())
         self.enable_disable_menus()

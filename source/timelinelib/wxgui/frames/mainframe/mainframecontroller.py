@@ -63,12 +63,10 @@ class MainFrameController:
                 os.path.dirname(os.path.abspath(self._timelinepath)),
                 APPLICATION_NAME))
 
-    def set_readonly_text_in_status_bar(self):
+    def get_readonly_text_in_status_bar(self):
         if self._timeline is not None and self._timeline.is_read_only():
-            text = _("read-only")
-        else:
-            text = ""
-        self._main_frame.SetReadonlyText(text)
+            return _("read-only")
+        return ""
 
     # Concurrent editing
     def ok_to_edit(self):
