@@ -19,7 +19,8 @@
 A base class for the mainframe window, responsible for creating the GUI.
 """
 
-import collections
+import os
+
 import wx
 
 from timelinelib.wxgui.components.mainpanel import MainPanel
@@ -111,3 +112,11 @@ class GuiCreator:
         fn = self._navigation_functions_by_menu_item_id[evt.GetId()]
         time_period = self.main_panel.get_time_period()
         fn(self, time_period, self.main_panel.Navigate)
+
+    def _map_path_to_recent_menu_item(self, path):
+        name = "%s (%s)" % (
+            os.path.basename(path),
+            os.path.dirname(os.path.abspath(path)))
+        item = self.mnu_file_open_recent_submenu.Append(wx.ID_ANY, name)
+        self.open_recent_map[item.GetId()] = path
+        self.Bind(wx.EVT_MENU, self._mnu_file_open_recent_item_on_click, item)
