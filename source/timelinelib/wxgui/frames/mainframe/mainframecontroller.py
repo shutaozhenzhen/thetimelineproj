@@ -76,6 +76,11 @@ class MainFrameController:
             self._lock_handler.lock(self._timelinepath, self._timeline)
         return True
 
+    def edit_ends(self):
+        if self._lock_handler.the_lock_is_mine(self._timelinepath):
+            self._last_changed = self._get_modification_date()
+            self._lock_handler.unlock(self._timelinepath)
+
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
     def create_new_timeline(self, timetype):
         if timetype == "dir":
@@ -147,11 +152,6 @@ class MainFrameController:
                 self._main_frame.enable_disable_menus()
                 if path == ":numtutorial:":
                     self._main_frame.fit_all_events()
-
-    def edit_ends(self):
-        if self._lock_handler.the_lock_is_mine(self._timelinepath):
-            self._last_changed = self._get_modification_date()
-            self._lock_handler.unlock(self._timelinepath)
 
     def timeline_is_readonly(self):
         return self._timeline is not None and self._timeline.is_read_only()
