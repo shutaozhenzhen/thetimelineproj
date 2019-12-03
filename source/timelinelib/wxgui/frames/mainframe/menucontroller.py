@@ -24,6 +24,11 @@ class MenuController:
         self.menus_requiring_timeline = []
         self.menus_requiring_writable_timeline = []
         self.menus_requiring_visible_timeline_view = []
+        self._timeline_menu = None
+        self._menu_bar = None
+
+    def set_menu_bar(self, menu_bar):
+        self._menu_bar = menu_bar
 
     def on_timeline_change(self, timeline):
         self.current_timeline = timeline
@@ -59,3 +64,15 @@ class MenuController:
 
     def _enable_disable_menu_requiring_visible_timeline_view(self, menu, timeline_view_visible):
         menu.Enable(self._has_timeline and timeline_view_visible)
+
+    @property
+    def timeline_menu(self):
+        return self._timeline_menu
+
+    @timeline_menu.setter
+    def timeline_menu(self, value):
+        self._timeline_menu = value
+
+    def enable(self, menu_id, value):
+        mnu = self._menu_bar.FindItemById(menu_id)
+        mnu.Enable(value)
