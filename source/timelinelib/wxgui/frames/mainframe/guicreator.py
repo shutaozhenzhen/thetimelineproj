@@ -30,6 +30,7 @@ from timelinelib.wxgui.frames.mainframe.menus.viewmenu import ViewMenu
 from timelinelib.wxgui.frames.mainframe.menus.timelinemenu import TimelineMenu
 from timelinelib.wxgui.frames.mainframe.menus.navigatemenu import NavigateMenu
 from timelinelib.wxgui.frames.mainframe.menus.helpmenu import HelpMenu
+import timelinelib.wxgui.frames.mainframe.menus as mid
 
 NONE = 0
 CHECKBOX = 1
@@ -73,3 +74,40 @@ class GuiCreator:
         self.menu_controller.set_menu_bar(main_menu_bar)
         self.update_navigation_menu_items()
         self.enable_disable_menus()
+
+    # Menu creation/destruction
+    def _clear_navigation_menu_items(self):
+        while self._navigation_menu_items:
+            item = self._navigation_menu_items.pop()
+            if item in self._navigate_menu.MenuItems:
+                self._navigate_menu.Remove(item)
+        self._navigation_functions_by_menu_item_id.clear()
+
+    def _create_navigation_menu_items(self):
+        item_data = self.timeline.get_time_type().get_navigation_functions()
+        pos = 0
+        id_offset = self.get_navigation_id_offset()
+        for (itemstr, fn) in item_data:
+            if itemstr == "SEP":
+                item = self._navigate_menu.InsertSeparator(pos)
+            else:
+                wxid = mid.ID_NAVIGATE + id_offset
+                item = self._navigate_menu.Insert(pos, wxid, itemstr)
+                self._navigation_functions_by_menu_item_id[item.GetId()] = fn
+                self.Bind(wx.EVT_MENU, self._navigation_menu_item_on_click, item)
+                self.shortcut_items[wxid] = item
+                id_offset += 1
+            self._navigation_menu_items.append(item)
+            pos += 1
+
+    def get_navigation_id_offset(self):
+        id_offset = 0
+        if self.timeline.get_time_type().get_name() == "numtime":
+            id_offset = 100
+        return id_offset
+
+    def _navigation_menu_item_on_click(self, evt):
+        self.save_time_period()
+        fn = self._navigation_functions_by_menu_item_id[evt.GetId()]
+        time_period = self.main_panel.get_time_period()
+        fn(self, time_period, self.main_panel.Navigate)
