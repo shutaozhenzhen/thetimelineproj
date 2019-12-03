@@ -45,6 +45,7 @@ class MainFrameController:
         elif self._config.has_recently_opened_files():
             self.open_timeline_if_exists(self._config.get_latest_recently_opened_file())
 
+    # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
     def create_new_timeline(self, timetype):
         if timetype == "dir":
             path = open_get_dir_path_dialog()
@@ -58,10 +59,10 @@ class MainFrameController:
         path = ""
         if self._timeline is not None:
             path = os.path.dirname(self._timeline.path)
-        self.open_or_create_timeline(open_get_file_path_dialog(self._main_frame, FUNC_OPEN, path))
+        self.open_or_create_timeline(open_get_file_path_dialog(FUNC_OPEN, path))
 
     def save_as(self):
-        new_timeline_path = open_get_file_path_dialog(self._main_frame, FUNC_SAVE_AS, self._timeline.path)
+        new_timeline_path = open_get_file_path_dialog(FUNC_SAVE_AS, self._timeline.path)
         self.save_timeline_to_new_path(new_timeline_path)
 
     def open_timeline_if_exists(self, path):
