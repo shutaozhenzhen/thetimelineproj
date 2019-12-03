@@ -100,6 +100,10 @@ class MainFrameController:
             export_db_to_timeline_xml(self._timeline, path)
             self._open_or_create_timeline(path)
 
+    # View menu action handlers
+    def start_slide_show(self):
+        open_slideshow_dialog(self._timeline, self._main_frame.canvas)
+
     # Timeline menu action handlers
     def set_timeline_in_readonly_mode(self):
         self._timeline.set_readonly()
@@ -134,9 +138,6 @@ class MainFrameController:
                 self._main_frame.enable_disable_menus()
                 if path == ":numtutorial:":
                     self._main_frame.fit_all_events()
-
-    def start_slide_show(self):
-        open_slideshow_dialog(self._timeline, self._main_frame.canvas)
 
     def measure_distance_between_events(self, event_ids):
         distance = self._timeline.measure_distance_between_events(event_ids)
