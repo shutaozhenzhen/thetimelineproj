@@ -16,6 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os.path
+import wx
 import wx.lib.newevent
 
 from timelinelib.canvas.data import TimePeriod
@@ -29,7 +31,6 @@ from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedExcepti
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.utils import display_error_message
 import timelinelib.wxgui.frames.mainframe.guicreator as guic
-from timelinelib.wxgui.frames.mainframe.controllerapi import MainFrameApiUsedByController
 from timelinelib.wxgui.frames.mainframe.alertcontroller import AlertController
 from timelinelib.wxgui.frames.mainframe.menucontroller import MenuController
 from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_dialog_for_event
@@ -39,6 +40,7 @@ from timelinelib.wxgui.dialogs.eraseditor.view import oped_edit_eras_dialog
 from timelinelib.wxgui.utils import load_icon_bundle
 from timelinelib.wxgui.dialogs.timeeditor.view import open_time_editor_dialog
 from timelinelib.wxgui.dialogs.changenowdate.view import open_change_now_date_dialog
+import timelinelib.wxgui.frames.mainframe.menus as mid
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
@@ -53,7 +55,7 @@ def skip_when_no_event_selected(func):
     return wrapper
 
 
-class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
+class MainFrame(wx.Frame, guic.GuiCreator):
 
     def __init__(self, application_arguments):
         self.config = read_config(application_arguments.get_config_file_path())
@@ -108,6 +110,15 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
 
     def edit_ends(self):
         self.controller.edit_ends()
+
+    # General menu functions
+    # Also used by TinmelineView
+    def enable_disable_menus(self):
+        self.menu_controller.enable_disable_menus(self.main_panel.timeline_panel_visible())
+        self._enable_disable_one_selected_event_menus()
+        self._enable_disable_measure_distance_between_two_events_menu()
+        self._enable_disable_searchbar()
+        self._enable_disable_undo()
 
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
     @property
@@ -258,3 +269,101 @@ class MainFrame(wx.Frame, guic.GuiCreator, MainFrameApiUsedByController):
         self.timeline.set_readonly()
         self._set_readonly_text_in_status_bar()
         self.enable_disable_menus()
+
+    # Functions moved from controllerapi
+
+    def _set_title(self):
+        if self.timeline is None:
+            self.SetTitle(APPLICATION_NAME)
+        else:
+            self.SetTitle("%s (%s) - %s" % (
+                os.path.basename(self.timeline.path),
+                os.path.dirname(os.path.abspath(self.timeline.path)),
+                APPLICATION_NAME))
+
+    def _set_readonly_text_in_status_bar(self):
+        if self.timeline is not None and self.timeline.is_read_only():
+            text = _("read-only")
+        else:
+            text = ""
+        self.status_bar_adapter.set_read_only_text(text)
+
+    def _clear_navigation_menu_items(self):
+        while self._navigation_menu_items:
+            item = self._navigation_menu_items.pop()
+            if item in self._navigate_menu.MenuItems:
+                self._navigate_menu.Remove(item)
+        self._navigation_functions_by_menu_item_id.clear()
+
+    def _create_navigation_menu_items(self):
+        item_data = self.timeline.get_time_type().get_navigation_functions()
+        pos = 0
+        id_offset = self.get_navigation_id_offset()
+        for (itemstr, fn) in item_data:
+            if itemstr == "SEP":
+                item = self._navigate_menu.InsertSeparator(pos)
+            else:
+                wxid = mid.ID_NAVIGATE + id_offset
+                item = self._navigate_menu.Insert(pos, wxid, itemstr)
+                self._navigation_functions_by_menu_item_id[item.GetId()] = fn
+                self.Bind(wx.EVT_MENU, self._navigation_menu_item_on_click, item)
+                self.shortcut_items[wxid] = item
+                id_offset += 1
+            self._navigation_menu_items.append(item)
+            pos += 1
+
+    def get_navigation_id_offset(self):
+        id_offset = 0
+        if self.timeline.get_time_type().get_name() == "numtime":
+            id_offset = 100
+        return id_offset
+
+    def _navigation_menu_item_on_click(self, evt):
+        self.save_time_period()
+        fn = self._navigation_functions_by_menu_item_id[evt.GetId()]
+        time_period = self.main_panel.get_time_period()
+        fn(self, time_period, self.main_panel.Navigate)
+
+    def _map_path_to_recent_menu_item(self, path):
+        name = "%s (%s)" % (
+            os.path.basename(path),
+            os.path.dirname(os.path.abspath(path)))
+        item = self.mnu_file_open_recent_submenu.Append(wx.ID_ANY, name)
+        self.open_recent_map[item.GetId()] = path
+        self.Bind(wx.EVT_MENU, self._mnu_file_open_recent_item_on_click, item)
+
+    def _mnu_file_open_recent_item_on_click(self, event):
+        path = self.open_recent_map[event.GetId()]
+        self.controller.open_timeline_if_exists(path)
+
+    def _enable_disable_one_selected_event_menus(self):
+        nbr_of_selected_events = self.main_panel.get_nbr_of_selected_events()
+        one_event_selected = nbr_of_selected_events == 1
+        some_event_selected = nbr_of_selected_events > 0
+        mnu_edit_event = self. _timeline_menu.FindItemById(mid.ID_EDIT_EVENT)
+        mnu_duplicate_event = self. _timeline_menu.FindItemById(mid.ID_DUPLICATE_EVENT)
+        mnu_set_category = self. _timeline_menu.FindItemById(mid.ID_SET_CATEGORY_ON_SELECTED)
+        mnu_edit_event.Enable(one_event_selected)
+        mnu_duplicate_event.Enable(one_event_selected)
+        mnu_set_category.Enable(some_event_selected)
+        self._timeline_menu.FindItemById(mid.ID_MOVE_EVENT_UP).Enable(one_event_selected)
+        self._timeline_menu.FindItemById(mid.ID_MOVE_EVENT_DOWN).Enable(one_event_selected)
+
+    def _enable_disable_measure_distance_between_two_events_menu(self):
+        two_events_selected = self.main_panel.get_nbr_of_selected_events() == 2
+        mnu_measure_distance = self._timeline_menu.FindItemById(mid.ID_MEASURE_DISTANCE)
+        mnu_measure_distance.Enable(two_events_selected)
+
+    def _enable_disable_searchbar(self):
+        if self.timeline is None:
+            self.main_panel.show_searchbar(False)
+
+    def _enable_disable_undo(self):
+        mnu_undo = self._timeline_menu.FindItemById(mid.ID_UNDO)
+        mnu_redo = self._timeline_menu.FindItemById(mid.ID_REDO)
+        if self.timeline is not None:
+            mnu_undo.Enable(self.timeline.undo_enabled())
+            mnu_redo.Enable(self.timeline.redo_enabled())
+        else:
+            mnu_undo.Enable(False)
+            mnu_redo.Enable(False)
