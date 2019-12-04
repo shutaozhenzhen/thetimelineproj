@@ -123,7 +123,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def open_existing_timeline(self):
         self.controller.open_existing_timeline()
 
-    def _mnu_file_open_recent_item_on_click(self, event):
+    def open_recent_timeline(self, event):
         path = self.open_recent_map[event.GetId()]
         self.controller.open_timeline_if_exists(path)
 
