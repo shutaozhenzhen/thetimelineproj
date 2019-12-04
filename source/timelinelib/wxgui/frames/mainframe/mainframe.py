@@ -63,7 +63,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.Bind(EVT_CATS_VIEW_CHANGED, self._on_cats_view_changed)
         self.Bind(wx.EVT_CLOSE, self.exit)
         self.locale = set_wx_locale()
-        self.help_browser = HelpBrowserFrame(self)
+        # self.help_browser = HelpBrowserFrame(self)
         self.controller = MainFrameController(self, db_open, self.config)
         self.menu_controller = MenuController()
         self.timeline = None

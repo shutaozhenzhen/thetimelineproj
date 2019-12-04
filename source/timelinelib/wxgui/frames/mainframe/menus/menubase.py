@@ -18,10 +18,11 @@
 import wx
 
 
-class MenuBase:
+class MenuBase(wx.Menu):
 
     def __init__(self, parent, event_handlers, shortcuts, requiring_timeline, requiring_visible_timeline_view=[],
                  requiring_writeable_timeline=[]):
+        wx.Menu.__init__(self)
         self._parent = parent
         self._event_handlers = event_handlers
         self._shortcuts = shortcuts

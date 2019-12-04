@@ -34,20 +34,15 @@ class NavigateMenu(MenuBase):
             mid.ID_RESTORE_TIME_PERIOD: lambda evt: parent.restore_time_period(),
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
-
-    def create(self):
-        menu = self._create_menu()
+        self._create_menu()
         self._bind_event_handlers()
-        self._register_shortcuts(menu)
-        self._register_menus_requiring_timeline(menu)
-        return menu
+        self._register_shortcuts(self)
+        self._register_menus_requiring_timeline(self)
 
     def _create_menu(self):
-        menu = wx.Menu()
-        menu.AppendSeparator()
-        menu.Append(mid.ID_FIND_FIRST, _("Find &First Event"))
-        menu.Append(mid.ID_FIND_LAST, _("Find &Last Event"))
-        menu.Append(mid.ID_FIT_ALL, _("Fit &All Events"))
-        menu.AppendSeparator()
-        menu.Append(mid.ID_RESTORE_TIME_PERIOD, _("Go to previous time period"))
-        return menu
+        self.AppendSeparator()
+        self.Append(mid.ID_FIND_FIRST, _("Find &First Event"))
+        self.Append(mid.ID_FIND_LAST, _("Find &Last Event"))
+        self.Append(mid.ID_FIT_ALL, _("Fit &All Events"))
+        self.AppendSeparator()
+        self.Append(mid.ID_RESTORE_TIME_PERIOD, _("Go to previous time period"))

@@ -38,29 +38,24 @@ class FileMenu(MenuBase):
             mid.ID_EXIT: lambda evt: parent.Close(),
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
-
-    def create(self):
-        menu = self._create_menu()
+        self._create_menu()
         self._bind_event_handlers()
-        self._register_shortcuts(menu)
-        self._register_menus_requiring_timeline(menu)
-        return menu
+        self._register_shortcuts(self)
+        self._register_menus_requiring_timeline(self)
 
     def _create_menu(self):
-        menu = wx.Menu()
-        menu.Append(mid.ID_NEW, _("New..."), _("Create a new timeline"))
-        menu.Append(mid.ID_OPEN, _("Open..."), _("Open an existing timeline"))
-        menu.Append(mid.ID_RECENT, _("Open &Recent"), self._parent.file_open_recent_submenu)
-        menu.AppendSeparator()
-        menu.Append(mid.ID_SAVEAS, "", _("Save As..."))
-        menu.AppendSeparator()
-        menu.Append(mid.ID_IMPORT, _("Import events..."), _("Import events..."))
-        menu.AppendSeparator()
-        menu.Append(wx.ID_ANY, _("Export"), self._create_export_menues())
-        menu.AppendSeparator()
-        menu.Append(mid.ID_EXIT, "", _("Exit the program"))
+        self.Append(mid.ID_NEW, _("New..."), _("Create a new timeline"))
+        self.Append(mid.ID_OPEN, _("Open..."), _("Open an existing timeline"))
+        self.Append(mid.ID_RECENT, _("Open &Recent"), self._parent.file_open_recent_submenu)
+        self.AppendSeparator()
+        self.Append(mid.ID_SAVEAS, "", _("Save As..."))
+        self.AppendSeparator()
+        self.Append(mid.ID_IMPORT, _("Import events..."), _("Import events..."))
+        self.AppendSeparator()
+        self.Append(wx.ID_ANY, _("Export"), self._create_export_menues())
+        self.AppendSeparator()
+        self.Append(mid.ID_EXIT, "", _("Exit the program"))
         self._parent.update_open_recent_submenu()
-        return menu
 
     def _create_export_menues(self):
         submenu = wx.Menu()
