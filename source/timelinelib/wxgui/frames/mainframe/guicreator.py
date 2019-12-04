@@ -74,7 +74,7 @@ class GuiCreator:
         self.SetMenuBar(main_menu_bar)
         self.menu_controller.set_menu_bar(main_menu_bar)
         self.update_navigation_menu_items()
-        self.enable_disable_menus()
+        self.EnableDisableMenus()
 
     # Menu creation/destruction
     def _clear_navigation_menu_items(self):
