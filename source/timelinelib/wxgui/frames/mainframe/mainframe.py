@@ -86,7 +86,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def DisplayStatus(self, message):
         self.status_bar_adapter.set_text(message)
 
-    def SetReadonlyText(self, text):
+    def DisplayReadonly(self, text):
         self.status_bar_adapter.set_read_only_text(text)
 
     @property
@@ -145,7 +145,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.menu_controller.on_timeline_change(timeline)
         self.main_panel.display_timeline(timeline)
         self.controller.set_title()
-        self.SetReadonlyText(self.controller.get_readonly_text_in_status_bar())
+        self.DisplayReadonly(self.controller.get_readonly_text_in_status_bar())
 
     def save_as(self):
         self.controller.save_as()
@@ -213,7 +213,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
 
     def set_timeline_in_readonly_mode(self):
         self.timeline.set_readonly()
-        self.SetReadonlyText(self.controller.get_readonly_text_in_status_bar())
+        self.DisplayReadonly(self.controller.get_readonly_text_in_status_bar())
         self.enable_disable_menus()
 
     # Navigation menu event handlers
