@@ -80,6 +80,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.prev_time_period = None
 
     def DisplayErrorMessage(self, message):
+        """This function is hard to remove due to tests using it."""
         display_error_message(message, parent=self)
 
     def DisplayStatus(self, message):
@@ -90,7 +91,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
 
     @property
     def canvas(self):
-        return self.main_panel.timeline_panel.timeline_canvas
+        return self.main_panel.canvas
 
     @property
     def view_properties(self):
