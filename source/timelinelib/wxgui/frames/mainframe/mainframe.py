@@ -61,7 +61,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
                           pos=self.config.get_window_pos(),
                           style=wx.DEFAULT_FRAME_STYLE, name="main_frame")
         self.Bind(EVT_CATS_VIEW_CHANGED, self._on_cats_view_changed)
-        self.Bind(wx.EVT_CLOSE, self._window_on_close)
+        self.Bind(wx.EVT_CLOSE, self.exit)
         self.locale = set_wx_locale()
         self.help_browser = HelpBrowserFrame(self)
         self.controller = MainFrameController(self, db_open, self.config)
@@ -113,10 +113,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.menu_controller.update_menus_enabled_state(self.timeline, self.main_panel)
 
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
-    @property
-    def file_open_recent_submenu(self):
-        return self.mnu_file_open_recent_submenu
-
     def create_new_timeline(self, timetype=None):
         self.controller.create_new_timeline(timetype)
 
@@ -126,6 +122,19 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def open_recent_timeline(self, event):
         path = self.open_recent_map[event.GetId()]
         self.controller.open_timeline_if_exists(path)
+
+    def save_as(self):
+        self.controller.save_as()
+
+    def exit(self, event):
+        self._alert_controller.stop_timer()
+        self._save_application_config()
+        try:
+            if self.ok_to_edit():
+                self.save_current_timeline_data()
+        finally:
+            self.edit_ends()
+        self.Destroy()
 
     def update_open_recent_submenu(self):
         self._clear_recent_menu_items()
@@ -142,9 +151,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.controller.set_title()
         self.DisplayReadonly(self.controller.get_readonly_text_in_status_bar())
 
-    def save_as(self):
-        self.controller.save_as()
-
     def get_visible_categories(self):
         if self.config.filtered_listbox_export:
             return [cat for cat in self.timeline.get_categories()
@@ -155,15 +161,9 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def get_export_periods(self):
         return self.main_panel.get_export_periods(*self._get_start_and_end_for_all_visible_events())
 
-    def _window_on_close(self, event):
-        self._alert_controller.stop_timer()
-        self._save_application_config()
-        try:
-            if self.ok_to_edit():
-                self.save_current_timeline_data()
-        finally:
-            self.edit_ends()
-        self.Destroy()
+    @property
+    def file_open_recent_submenu(self):
+        return self.mnu_file_open_recent_submenu
 
     def _save_application_config(self):
         self.config.set_window_size(self.GetSize())
