@@ -71,6 +71,10 @@ class MainPanel(wx.Panel):
         self.hide_sidebar = self.timeline_panel.hide_sidebar
         self.get_sidebar_width = self.timeline_panel.get_sidebar_width
 
+    @property
+    def canvas(self):
+        return self.timeline_panel.timeline_canvas
+
     def get_export_periods(self, first_time, last_time):
         periods = []
         current_period = None
