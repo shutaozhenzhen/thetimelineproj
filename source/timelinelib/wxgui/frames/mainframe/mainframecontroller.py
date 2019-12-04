@@ -27,7 +27,7 @@ from timelinelib.wxgui.utils import get_user_ack
 from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.frames.mainframe.lockhandler import LockHandler, LockedException
-from timelinelib.meta.about import APPLICATION_NAME
+from timelinelib.meta.about import get_title
 
 
 class MainFrameController:
@@ -55,13 +55,7 @@ class MainFrameController:
 
     # GUI updates
     def set_title(self):
-        if self._timelinepath is None:
-            self._main_frame.SetTitle(APPLICATION_NAME)
-        else:
-            self._main_frame.SetTitle("%s (%s) - %s" % (
-                os.path.basename(self._timelinepath),
-                os.path.dirname(os.path.abspath(self._timelinepath)),
-                APPLICATION_NAME))
+        self._main_frame.SetTitle(get_title(self._timelinepath))
 
     def get_readonly_text_in_status_bar(self):
         if self._timeline is not None and self._timeline.is_read_only():
