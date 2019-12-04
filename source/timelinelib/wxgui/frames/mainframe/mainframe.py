@@ -111,8 +111,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     # Also used by TinmelineView
     def enable_disable_menus(self):
         self.menu_controller.update_menus_enabled_state(self.timeline, self.main_panel)
-        if self.timeline is None:
-            self.main_panel.show_searchbar(False)
 
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
     @property
