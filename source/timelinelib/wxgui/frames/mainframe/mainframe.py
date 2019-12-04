@@ -115,9 +115,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def create_new_timeline(self, timetype=None):
         self.controller.create_new_timeline(timetype)
 
-    def open_existing_timeline(self):
-        self.controller.open_existing_timeline()
-
     def open_recent_timeline(self, event):
         path = self.open_recent_map[event.GetId()]
         self.controller.open_timeline_if_exists(path)
