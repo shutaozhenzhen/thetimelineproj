@@ -119,9 +119,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         path = self.open_recent_map[event.GetId()]
         self.controller.open_timeline_if_exists(path)
 
-    def save_as(self):
-        self.controller.save_as()
-
     def exit(self, event):
         self._alert_controller.stop_timer()
         self._save_application_config()
