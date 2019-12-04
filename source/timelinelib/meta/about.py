@@ -17,6 +17,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
 import wx.adv
 
 from timelinelib.meta.version import get_full_version
@@ -112,3 +114,13 @@ def display_about_dialog(args, *kwargs):
     info.Artists = ARTISTS
     info.License = LICENSE
     wx.adv.AboutBox(info)
+
+
+def get_title(path):
+    if path is None:
+        return APPLICATION_NAME
+    else:
+        return "%s (%s) - %s" % (
+            os.path.basename(path),
+            os.path.dirname(os.path.abspath(path)),
+            APPLICATION_NAME)
