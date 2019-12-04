@@ -40,8 +40,8 @@ class FileMenu(MenuBase):
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
         self._create_menu()
         self._bind_event_handlers()
-        self._register_shortcuts(self)
-        self._register_menus_requiring_timeline(self)
+        self._register_shortcuts()
+        self._register_menus_requiring_timeline()
 
     def _create_menu(self):
         self.Append(mid.ID_NEW, _("New..."), _("Create a new timeline"))
