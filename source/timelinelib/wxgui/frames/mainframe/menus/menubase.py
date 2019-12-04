@@ -34,14 +34,14 @@ class MenuBase(wx.Menu):
         for wxid in self._event_handlers:
             self._parent.Bind(wx.EVT_MENU, self._event_handlers[wxid], id=wxid)
 
-    def _register_shortcuts(self, menu):
+    def _register_shortcuts(self):
         for wxid in self._shortcuts:
-            self._parent.shortcut_items[wxid] = menu.FindItemById(wxid)
+            self._parent.shortcut_items[wxid] = self.FindItemById(wxid)
 
-    def _register_menus_requiring_timeline(self, menu):
+    def _register_menus_requiring_timeline(self):
         for wxid in self._requiring_timeline:
-            self._parent.menu_controller.add_menu_requiring_timeline(menu.FindItemById(wxid))
+            self._parent.menu_controller.add_menu_requiring_timeline(self.FindItemById(wxid))
         for wxid in self._requiring_visible_timeline_view:
-            self._parent.menu_controller.add_menu_requiring_visible_timeline_view(menu.FindItemById(wxid))
+            self._parent.menu_controller.add_menu_requiring_visible_timeline_view(self.FindItemById(wxid))
         for wxid in self._requiring_writeable_timeline:
-            self._parent.menu_controller.add_menu_requiring_writable_timeline(menu.FindItemById(wxid))
+            self._parent.menu_controller.add_menu_requiring_writable_timeline(self.FindItemById(wxid))

@@ -49,9 +49,9 @@ class ViewMenu(MenuBase):
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE, REQUIRING_VISIBLE_TIMELINE_VIEW)
         self._create_menu()
         self._bind_event_handlers()
-        self._register_shortcuts(self)
-        self._register_menus_requiring_timeline(self)
-        self._check_view_menu_items(self)
+        self._register_shortcuts()
+        self._register_menus_requiring_timeline()
+        self._check_view_menu_items()
 
     def _create_menu(self):
         self.Append(mid.ID_TOOLBAR, _("Toolbar"), kind=wx.ITEM_CHECK)
@@ -76,14 +76,14 @@ class ViewMenu(MenuBase):
         self.AppendSeparator()
         self.Append(mid.ID_HIDE_DONE, _("&Hide Events done"), kind=wx.ITEM_CHECK)
 
-    def _check_view_menu_items(self, menu):
-        menu.FindItemById(mid.ID_TOOLBAR).Check(self._parent.config.show_toolbar)
-        menu.FindItemById(mid.ID_SIDEBAR).Check(self._parent.config.show_sidebar)
-        menu.FindItemById(mid.ID_LEGEND).Check(self._parent.config.show_legend)
-        menu.FindItemById(mid.ID_BALLOONS).Check(self._parent.config.balloon_on_hover)
-        menu.FindItemById(mid.ID_HIDE_DONE).Check(self._parent.config.hide_events_done)
-        menu.FindItemById(mid.ID_LEFT_ALIGNMENT).Check(self._parent.config.draw_point_events_to_right)
-        menu.FindItemById(mid.ID_CENTER_ALIGNMENT).Check(not self._parent.config.draw_point_events_to_right)
+    def _check_view_menu_items(self):
+        self.FindItemById(mid.ID_TOOLBAR).Check(self._parent.config.show_toolbar)
+        self.FindItemById(mid.ID_SIDEBAR).Check(self._parent.config.show_sidebar)
+        self.FindItemById(mid.ID_LEGEND).Check(self._parent.config.show_legend)
+        self.FindItemById(mid.ID_BALLOONS).Check(self._parent.config.balloon_on_hover)
+        self.FindItemById(mid.ID_HIDE_DONE).Check(self._parent.config.hide_events_done)
+        self.FindItemById(mid.ID_LEFT_ALIGNMENT).Check(self._parent.config.draw_point_events_to_right)
+        self.FindItemById(mid.ID_CENTER_ALIGNMENT).Check(not self._parent.config.draw_point_events_to_right)
 
     def _create_event_box_drawers_submenu(self):
         submenu = wx.Menu()
