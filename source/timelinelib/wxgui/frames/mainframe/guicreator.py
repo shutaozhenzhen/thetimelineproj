@@ -124,4 +124,4 @@ class GuiCreator:
             os.path.dirname(os.path.abspath(path)))
         item = self.mnu_file_open_recent_submenu.Append(wx.ID_ANY, name)
         self.open_recent_map[item.GetId()] = path
-        self.Bind(wx.EVT_MENU, self._mnu_file_open_recent_item_on_click, item)
+        self.Bind(wx.EVT_MENU, self.open_recent_timeline, item)
