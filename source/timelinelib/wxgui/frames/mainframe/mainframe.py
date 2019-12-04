@@ -97,9 +97,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def view_properties(self):
         return self.canvas.GetViewProperties()
 
-    def redraw(self):
-        self.canvas.Redraw()
-
     # Concurrent editing
     def ok_to_edit(self):
         try:
