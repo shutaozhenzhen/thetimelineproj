@@ -55,7 +55,7 @@ class MainFrameController:
 
     # GUI updates
     def set_title(self):
-        if self._timeline is None:
+        if self._timelinepath is None:
             self._main_frame.SetTitle(APPLICATION_NAME)
         else:
             self._main_frame.SetTitle("%s (%s) - %s" % (
