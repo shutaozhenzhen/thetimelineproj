@@ -122,10 +122,6 @@ class MainFrameController:
             export_db_to_timeline_xml(self._timeline, path)
             self._open_or_create_timeline(path)
 
-    # Edit menu action handlers
-    def select_all(self):
-        self._main_frame.canvas.SelectAllEvents()
-
     # View menu action handlers
     def start_slide_show(self):
         open_slideshow_dialog(self._timeline, self._main_frame.canvas)
