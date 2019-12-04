@@ -39,22 +39,17 @@ class EditMenu(MenuBase):
             mid.ID_EDIT_SHORTCUTS: lambda evt: open_shortcuts_editor_dialog(parent, parent.shortcut_controller),
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
-
-    def create(self):
-        menu = self._create_menu()
+        self._create_menu()
         self._bind_event_handlers()
-        self._register_shortcuts(menu)
-        self._register_menus_requiring_timeline(menu)
-        return menu
+        self._register_shortcuts(self)
+        self._register_menus_requiring_timeline(self)
 
     def _create_menu(self):
-        menu = wx.Menu()
-        menu.Append(mid.ID_FIND)
-        menu.Append(mid.ID_FIND_CATEGORIES, _("Find Categories..."))
-        menu.Append(mid.ID_FIND_MILESTONES, _("Find Milestones..."))
-        menu.AppendSeparator()
-        menu.Append(mid.ID_SELECT_ALL, _("Select All Events"))
-        menu.AppendSeparator()
-        menu.Append(mid.ID_PREFERENCES)
-        menu.Append(mid.ID_EDIT_SHORTCUTS, _("Shortcuts..."))
-        return menu
+        self.Append(mid.ID_FIND)
+        self.Append(mid.ID_FIND_CATEGORIES, _("Find Categories..."))
+        self.Append(mid.ID_FIND_MILESTONES, _("Find Milestones..."))
+        self.AppendSeparator()
+        self.Append(mid.ID_SELECT_ALL, _("Select All Events"))
+        self.AppendSeparator()
+        self.Append(mid.ID_PREFERENCES)
+        self.Append(mid.ID_EDIT_SHORTCUTS, _("Shortcuts..."))

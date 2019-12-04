@@ -21,6 +21,7 @@ from timelinelib.wxgui.frames.mainframe.menus.menubase import MenuBase
 from timelinelib.wxgui.dialogs.feedback.view import show_feedback_dialog
 from timelinelib.wxgui.dialogs.systeminfo.view import show_system_info_dialog
 from timelinelib.meta.about import display_about_dialog
+from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 
 SHORTCUTS = (mid.ID_HELP, mid.ID_TUTORIAL, mid.ID_FEEDBACK, mid.ID_CONTACT, mid.ID_SYSTEM_INFO)
 REQUIRING_TIMELINE = list()
@@ -29,35 +30,31 @@ REQUIRING_TIMELINE = list()
 class HelpMenu(MenuBase):
 
     def __init__(self, parent):
+        help_browser = HelpBrowserFrame(parent)
         event_handlers = {
-            mid.ID_HELP: parent.help_browser.show_contents_page,
+            mid.ID_HELP: help_browser.show_contents_page,
             mid.ID_TUTORIAL: parent.controller.open_gregorian_tutorial_timeline,
             mid.ID_NUMTUTORIAL: parent.controller.open_numeric_tutorial_timeline,
             mid.ID_FEEDBACK: lambda evt: show_feedback_dialog(parent=None, info="", subject=_("Feedback"), body=""),
-            mid.ID_CONTACT: parent.help_browser.show_contact_page,
+            mid.ID_CONTACT: help_browser.show_contact_page,
             mid.ID_SYSTEM_INFO: show_system_info_dialog,
             mid.ID_ABOUT: display_about_dialog,
         }
         MenuBase.__init__(self, parent, event_handlers, SHORTCUTS, REQUIRING_TIMELINE)
-
-    def create(self):
-        menu = self._create_menu()
+        self._create_menu()
         self._bind_event_handlers()
-        self._register_shortcuts(menu)
-        self._register_menus_requiring_timeline(menu)
-        return menu
+        self._register_shortcuts(self)
+        self._register_menus_requiring_timeline(self)
 
     def _create_menu(self):
-        menu = wx.Menu()
-        menu.Append(mid.ID_HELP, _("&Contents") + "\tF1")
-        menu.AppendSeparator()
-        menu.Append(mid.ID_TUTORIAL, _("Getting started &tutorial"))
-        menu.Append(mid.ID_NUMTUTORIAL, _("Getting started numeric &tutorial"))
-        menu.AppendSeparator()
-        menu.Append(mid.ID_FEEDBACK, _("Give &Feedback..."))
-        menu.Append(mid.ID_CONTACT, _("Co&ntact"))
-        menu.AppendSeparator()
-        menu.Append(mid.ID_SYSTEM_INFO, _("System information"))
-        menu.AppendSeparator()
-        menu.Append(mid.ID_ABOUT)
-        return menu
+        self.Append(mid.ID_HELP, _("&Contents") + "\tF1")
+        self.AppendSeparator()
+        self.Append(mid.ID_TUTORIAL, _("Getting started &tutorial"))
+        self.Append(mid.ID_NUMTUTORIAL, _("Getting started numeric &tutorial"))
+        self.AppendSeparator()
+        self.Append(mid.ID_FEEDBACK, _("Give &Feedback..."))
+        self.Append(mid.ID_CONTACT, _("Co&ntact"))
+        self.AppendSeparator()
+        self.Append(mid.ID_SYSTEM_INFO, _("System information"))
+        self.AppendSeparator()
+        self.Append(mid.ID_ABOUT)
