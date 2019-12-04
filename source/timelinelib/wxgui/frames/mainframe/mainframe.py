@@ -175,10 +175,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         if self.timeline:
             self.main_panel.save_view_properties(self.timeline)
 
-    # View menu action handlers
-    def start_slide_show(self):
-        self.controller.start_slide_show()
-
     # Timeline menu action handlers
     @skip_when_no_event_selected
     def edit_event(self):

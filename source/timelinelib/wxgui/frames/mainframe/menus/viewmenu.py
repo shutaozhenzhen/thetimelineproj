@@ -41,7 +41,7 @@ class ViewMenu(MenuBase):
             mid.ID_ZOOMOUT: lambda evt: DrawingAreaProxy(parent).zoom_out(),
             mid.ID_VERT_ZOOMIN: lambda evt: DrawingAreaProxy(parent).vertical_zoom_in(),
             mid.ID_VERT_ZOOMOUT: lambda evt: DrawingAreaProxy(parent).vertical_zoom_out(),
-            mid.ID_PRESENTATION: lambda evt: parent.start_slide_show(),
+            mid.ID_PRESENTATION: lambda evt: parent.controller.start_slide_show(),
             mid.ID_HIDE_DONE: lambda evt: parent.config.set('hide_events_done', evt.IsChecked()),
             mid.ID_LEFT_ALIGNMENT: lambda evt: parent.config.set('draw_point_events_to_right', True),
             mid.ID_CENTER_ALIGNMENT: lambda evt: parent.config.set('draw_point_events_to_right', False),
