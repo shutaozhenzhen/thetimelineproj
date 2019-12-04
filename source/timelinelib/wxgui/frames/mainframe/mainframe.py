@@ -25,7 +25,6 @@ from timelinelib.config.wxlocale import set_wx_locale
 from timelinelib.db import db_open
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 from timelinelib.meta.about import APPLICATION_NAME
-from timelinelib.wxgui.frames.helpbrowserframe.helpbrowserframe import HelpBrowserFrame
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import LockedException
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController
 from timelinelib.wxgui.utils import display_error_message
