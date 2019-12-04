@@ -74,7 +74,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.SetTitle(APPLICATION_NAME)
         self.SetIcons(load_icon_bundle())
         self.main_panel.show_welcome_panel()
-        self.enable_disable_menus()
+        self.EnableDisableMenus()
         self.controller.on_started(application_arguments)
         self._alert_controller = AlertController(self).start_timer()
         self.prev_time_period = None
@@ -108,8 +108,8 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self.controller.edit_ends()
 
     # General menu functions
-    # Also used by TinmelineView
-    def enable_disable_menus(self):
+    def EnableDisableMenus(self):
+        """Also used by TimelinePanel."""
         self.menu_controller.update_menus_enabled_state(self.timeline, self.main_panel)
 
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
@@ -209,7 +209,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     def set_timeline_in_readonly_mode(self):
         self.timeline.set_readonly()
         self.DisplayReadonly(self.controller.get_readonly_text_in_status_bar())
-        self.enable_disable_menus()
+        self.EnableDisableMenus()
 
     # Navigation menu event handlers
     def update_navigation_menu_items(self):
