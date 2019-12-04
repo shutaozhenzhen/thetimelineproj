@@ -21,7 +21,7 @@ import wx.lib.newevent
 
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.config.dotfile import read_config
-from timelinelib.config.paths import LOCALE_DIR
+from timelinelib.config.wxlocale import set_wx_locale
 from timelinelib.db import db_open
 from timelinelib.features.experimental.experimentalfeatures import ExperimentalFeatures
 from timelinelib.meta.about import APPLICATION_NAME
@@ -62,10 +62,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
                           style=wx.DEFAULT_FRAME_STYLE, name="main_frame")
         self.Bind(EVT_CATS_VIEW_CHANGED, self._on_cats_view_changed)
         self.Bind(wx.EVT_CLOSE, self._window_on_close)
-        # To enable translations of wx stock items.
-        self.locale = wx.Locale(wx.LANGUAGE_DEFAULT)
-        self.locale.AddCatalogLookupPathPrefix(LOCALE_DIR)
-        self.locale.AddCatalog("wxstd")
+        self.locale = set_wx_locale()
         self.help_browser = HelpBrowserFrame(self)
         self.controller = MainFrameController(self, db_open, self.config)
         self.menu_controller = MenuController()
