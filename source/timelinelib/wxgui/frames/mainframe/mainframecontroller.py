@@ -177,4 +177,4 @@ class MainFrameController:
 
     def _reload_from_disk(self):
         self._open_or_create_timeline(self._timelinepath, save_current_data=False)
-        self._main_frame.redraw()
+        self._main_frame.canvas.Redraw()
