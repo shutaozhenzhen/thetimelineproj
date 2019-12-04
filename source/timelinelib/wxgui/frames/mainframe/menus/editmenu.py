@@ -34,7 +34,7 @@ class EditMenu(MenuBase):
             mid.ID_FIND: lambda evt: parent.main_panel.show_searchbar(True),
             mid.ID_FIND_CATEGORIES: lambda evt: open_category_finder_dialog(parent, parent.timeline),
             mid.ID_FIND_MILESTONES: lambda evt: open_milestone_finder_dialog(parent, parent.timeline),
-            mid.ID_SELECT_ALL: lambda evt: parent.controller.select_all(),
+            mid.ID_SELECT_ALL: lambda evt: parent.select_all(),
             mid.ID_PREFERENCES: lambda evt: open_preferences_dialog(parent, parent.config),
             mid.ID_EDIT_SHORTCUTS: lambda evt: open_shortcuts_editor_dialog(parent, parent.shortcut_controller),
         }

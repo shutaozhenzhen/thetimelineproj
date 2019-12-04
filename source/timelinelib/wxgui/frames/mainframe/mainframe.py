@@ -169,6 +169,10 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         if self.timeline:
             self.main_panel.save_view_properties(self.timeline)
 
+    # Edit menu action handlers
+    def select_all(self):
+        self.canvas.SelectAllEvents()
+
     # Timeline menu action handlers
     @skip_when_no_event_selected
     def edit_event(self):
