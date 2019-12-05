@@ -93,10 +93,14 @@ def _set_focus_and_select(ctrl):
         ctrl.SelectAll()
 
 
-def display_error_message(message, parent=None):
+def display_error_message(message, parent=None, yesno=False):
     """Display an error message in a modal dialog box"""
-    dial = wx.MessageDialog(parent, message, _("Error"), wx.OK | wx.ICON_ERROR)
-    dial.ShowModal()
+    if yesno:
+        style = wx.YES_NO | wx.ICON_ERROR
+    else:
+        style = wx.OK | wx.ICON_ERROR
+    dial = wx.MessageDialog(parent, message, _("Error"), style)
+    return dial.ShowModal()
 
 
 def display_warning_message(message, parent=None):
