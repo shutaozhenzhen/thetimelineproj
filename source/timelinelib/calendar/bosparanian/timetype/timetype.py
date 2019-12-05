@@ -34,16 +34,16 @@ from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
-from calendar.bosparanian.timetype.strips.stripcentury import StripCentury
-from calendar.bosparanian.timetype.strips.stripdecade import StripDecade
-from calendar.bosparanian.timetype.strips.stripquarter import StripQuarter
-from calendar.bosparanian.timetype.strips.stripyear import StripYear
-from calendar.bosparanian.timetype.strips.stripmonth import StripMonth
-from calendar.bosparanian.timetype.strips.stripweek import StripWeek
-from calendar.bosparanian.timetype.strips.stripweekday import StripWeekday
-from calendar.bosparanian.timetype.strips.stripday import StripDay
-from calendar.bosparanian.timetype.strips.striphour import StripHour
-from calendar.bosparanian.timetype.strips.stripminute import StripMinute
+from timelinelib.calendar.bosparanian.timetype.strips.stripcentury import StripCentury
+from timelinelib.calendar.bosparanian.timetype.strips.stripdecade import StripDecade
+from timelinelib.calendar.bosparanian.timetype.strips.stripquarter import StripQuarter
+from timelinelib.calendar.bosparanian.timetype.strips.stripyear import StripYear
+from timelinelib.calendar.bosparanian.timetype.strips.stripmonth import StripMonth
+from timelinelib.calendar.bosparanian.timetype.strips.stripweek import StripWeek
+from timelinelib.calendar.bosparanian.timetype.strips.stripweekday import StripWeekday
+from timelinelib.calendar.bosparanian.timetype.strips.stripday import StripDay
+from timelinelib.calendar.bosparanian.timetype.strips.striphour import StripHour
+from timelinelib.calendar.bosparanian.timetype.strips.stripminute import StripMinute
 
 
 class BosparanianTimeType(TimeType):
