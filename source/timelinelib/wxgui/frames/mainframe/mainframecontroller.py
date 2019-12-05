@@ -19,7 +19,6 @@
 import os
 
 from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog, FUNC_SAVE_AS, FUNC_OPEN, FUNC_NEW
-from timelinelib.wxgui.dialogs.getdirpath.view import open_get_dir_path_dialog
 from timelinelib.db.utils import get_new_path_from_user
 from timelinelib.wxgui.dialogs.slideshow.view import open_slideshow_dialog
 from timelinelib.wxgui.utils import display_error_message
