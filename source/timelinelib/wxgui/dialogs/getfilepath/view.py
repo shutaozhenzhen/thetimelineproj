@@ -49,7 +49,8 @@ class GetFilePath(wx.FileDialog):
     }
 
     def __init__(self, parent, func, current_path):
-        self._controller = GetFilePathContoller(self, func, current_path)
+        path = current_path or ""
+        self._controller = GetFilePathContoller(self, func, path)
         wx.FileDialog.__init__(self,
                                parent,
                                message=self.TITLES[func],
