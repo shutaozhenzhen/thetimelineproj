@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.bosparanian.time import BosparanianDelta
-from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
+from timelinelib.calendar.bosparanian.timetype.timetype import BosparanianTimeType
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import human_time_to_gregorian
 
