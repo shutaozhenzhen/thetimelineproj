@@ -20,10 +20,8 @@ import re
 
 from timelinelib.calendar.bosparanian.bosparanian import BosparanianDateTime
 from timelinelib.calendar.bosparanian.monthnames import bosp_abbreviated_name_of_month
-from timelinelib.calendar.bosparanian.monthnames import bosp_name_of_month
 from timelinelib.calendar.bosparanian.time import BosparanianDelta
 from timelinelib.calendar.bosparanian.time import BosparanianTime
-from timelinelib.calendar.bosparanian.weekdaynames import bosp_abbreviated_name_of_weekday
 from timelinelib.calendar.gregorian.timetype.durationtype import DAYS
 from timelinelib.calendar.gregorian.timetype import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.durationtype import HOURS
@@ -36,7 +34,16 @@ from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
-from timelinelib.canvas.drawing.interface import Strip
+from calendar.bosparanian.timetype.strips.stripcentury import StripCentury
+from calendar.bosparanian.timetype.strips.stripdecade import StripDecade
+from calendar.bosparanian.timetype.strips.stripquarter import StripQuarter
+from calendar.bosparanian.timetype.strips.stripyear import StripYear
+from calendar.bosparanian.timetype.strips.stripmonth import StripMonth
+from calendar.bosparanian.timetype.strips.stripweek import StripWeek
+from calendar.bosparanian.timetype.strips.stripweekday import StripWeekday
+from calendar.bosparanian.timetype.strips.stripday import StripDay
+from calendar.bosparanian.timetype.strips.striphour import StripHour
+from calendar.bosparanian.timetype.strips.stripminute import StripMinute
 
 
 class BosparanianTimeType(TimeType):
@@ -427,252 +434,6 @@ def fit_week_fn(main_frame, current_period, navigation_fn):
         start = start - BosparanianDelta.from_days(1)
     end = start + BosparanianDelta.from_days(7)
     navigation_fn(lambda tp: tp.update(start, end))
-
-
-class StripCentury(Strip):
-
-    def label(self, time, major=False):
-        if major:
-            # TODO: This only works for English. Possible to localize?
-            time = BosparanianDateTime.from_time(time)
-            start_year = self._century_start_year(time.year)
-            century = int((start_year + 100) // 100)
-            if century <= 0:
-                century -= 1
-            return str(century) + " century BF"
-        return ""
-
-    def start(self, time):
-        time = BosparanianDateTime.from_time(time)
-        return BosparanianDateTime.from_ymd(self._century_start_year(time.year), 1, 1).to_time()
-
-    def increment(self, time):
-        time = BosparanianDateTime.from_time(time)
-        return time.replace(year=time.year + 100).to_time()
-
-    def _century_start_year(self, year):
-        year = int(year // 100) * 100
-        return year
-
-
-class StripDecade(Strip):
-
-    def label(self, time, major=False):
-        time = BosparanianDateTime.from_time(time)
-        return format_decade(self._decade_start_year(time.year))
-
-    def start(self, time):
-        bosparanian_time = BosparanianDateTime.from_time(time)
-        new_bosparanian = BosparanianDateTime.from_ymd(self._decade_start_year(bosparanian_time.year), 1, 1)
-        return new_bosparanian.to_time()
-
-    def increment(self, time):
-        bosparanian_time = BosparanianDateTime.from_time(time)
-        return bosparanian_time.replace(year=bosparanian_time.year + 10).to_time()
-
-    def _decade_start_year(self, year):
-        # The first start year must be to the left of the first visible
-        # year on the timeline in order to draw the first vertical decade
-        # line correctly. Therefore -10 in the calculation below
-        return int(year // 10) * 10 - 10
-
-
-class StripYear(Strip):
-
-    def label(self, time, major=False):
-        return format_year(BosparanianDateTime.from_time(time).year)
-
-    def start(self, time):
-        bosparanian_time = BosparanianDateTime.from_time(time)
-        new_bosparanian = BosparanianDateTime.from_ymd(bosparanian_time.year, 1, 1)
-        return new_bosparanian.to_time()
-
-    def increment(self, time):
-        bosparanian_time = BosparanianDateTime.from_time(time)
-        return bosparanian_time.replace(year=bosparanian_time.year + 1).to_time()
-
-
-class StripMonth(Strip):
-
-    def label(self, time, major=False):
-        time = BosparanianDateTime.from_time(time)
-        if major:
-            return "%s %s" % (bosp_name_of_month(time.month),
-                              format_year(time.year))
-        if time.month == 13:
-            return bosp_abbreviated_name_of_month(time.month)
-        return bosp_name_of_month(time.month)
-
-    def start(self, time):
-        bosparanian_time = BosparanianDateTime.from_time(time)
-        new_bosparanian = BosparanianDateTime.from_ymd(bosparanian_time.year, bosparanian_time.month, 1)
-        return new_bosparanian.to_time()
-
-    def increment(self, time):
-        days_in_month = BosparanianDateTime.from_time(time).days_in_month()
-        return time + BosparanianDelta.from_days(days_in_month)
-
-
-class StripQuarter(Strip):
-
-    def get_quarter(self, time):
-        m = BosparanianDateTime.from_time(time).month
-        if m == 13:
-            return 0
-        return (m - 1) // 3 + 1
-
-    def label(self, time, major=False):
-        q = self.get_quarter(time)
-        if q == 0:
-            return "NLD"
-        return "Q%d" % q
-
-    def start(self, time):
-        q = self.get_quarter(time)
-        if q == 0:
-            m = 13
-        else:
-            m = (q - 1) * 3 + 1
-        return BosparanianDateTime.from_ymd(BosparanianDateTime.from_time(time).year, m, 1).to_time()
-
-    def increment(self, time):
-        q = self.get_quarter(time)
-        if q == 0:
-            days_in_quarter = 5
-        else:
-            days_in_quarter = 30 * 3
-        return time + BosparanianDelta.from_days(days_in_quarter)
-
-
-class StripDay(Strip):
-
-    def label(self, time, major=False):
-        time = BosparanianDateTime.from_time(time)
-        if major:
-            return "%s %s %s" % (time.day,
-                                 bosp_abbreviated_name_of_month(time.month),
-                                 format_year(time.year))
-        return str(time.day)
-
-    def start(self, time):
-        bosparanian_time = BosparanianDateTime.from_time(time)
-        new_bosparanian = BosparanianDateTime.from_ymd(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
-        return new_bosparanian.to_time()
-
-    def increment(self, time):
-        return time + BosparanianDelta.from_days(1)
-
-    def is_day(self):
-        return True
-
-
-class StripWeek(Strip):
-
-    def __init__(self):
-        Strip.__init__(self)
-
-    def label(self, time, major=False):
-        if major:
-            first_weekday = self.start(time)
-            next_first_weekday = self.increment(first_weekday)
-            last_weekday = next_first_weekday - BosparanianDelta.from_days(1)
-            range_string = self._time_range_string(first_weekday, last_weekday)
-            return (_("Week") + " %s (%s)") % (BosparanianDateTime.from_time(time).week_number, range_string)
-        return _("Week") + " %s" % BosparanianDateTime.from_time(time).week_number
-
-    def _time_range_string(self, start, end):
-        start = BosparanianDateTime.from_time(start)
-        end = BosparanianDateTime.from_time(end)
-        if start.year == end.year:
-            if start.month == end.month:
-                return "%s-%s %s %s" % (start.day, end.day,
-                                        bosp_abbreviated_name_of_month(start.month),
-                                        format_year(start.year))
-            return "%s %s-%s %s %s" % (start.day,
-                                       bosp_abbreviated_name_of_month(start.month),
-                                       end.day,
-                                       bosp_abbreviated_name_of_month(end.month),
-                                       format_year(start.year))
-        return "%s %s %s-%s %s %s" % (start.day,
-                                      bosp_abbreviated_name_of_month(start.month),
-                                      format_year(start.year),
-                                      end.day,
-                                      bosp_abbreviated_name_of_month(end.month),
-                                      format_year(end.year))
-
-    def start(self, time):
-        days_to_subtract = BosparanianTimeType().get_day_of_week(time)
-        return BosparanianTime(time.julian_day - days_to_subtract, 0)
-
-    def increment(self, time):
-        return time + BosparanianDelta.from_days(7)
-
-
-class StripWeekday(Strip):
-
-    def label(self, time, major=False):
-        day_of_week = BosparanianTimeType().get_day_of_week(time)
-        if major:
-            time = BosparanianDateTime.from_time(time)
-            return "%s %s %s %s" % (bosp_abbreviated_name_of_weekday(day_of_week),
-                                    time.day,
-                                    bosp_abbreviated_name_of_month(time.month),
-                                    format_year(time.year))
-        return (bosp_abbreviated_name_of_weekday(day_of_week) +
-                " %s" % BosparanianDateTime.from_time(time).day)
-
-    def start(self, time):
-        bosparanian_time = BosparanianDateTime.from_time(time)
-        new_bosparanian = BosparanianDateTime.from_ymd(bosparanian_time.year, bosparanian_time.month, bosparanian_time.day)
-        return new_bosparanian.to_time()
-
-    def increment(self, time):
-        return time + BosparanianDelta.from_days(1)
-
-    def is_day(self):
-        return True
-
-
-class StripHour(Strip):
-
-    def label(self, time, major=False):
-        time = BosparanianDateTime.from_time(time)
-        if major:
-            return "%s %s %s: %sh" % (time.day, bosp_abbreviated_name_of_month(time.month),
-                                      format_year(time.year), time.hour)
-        return str(time.hour)
-
-    def start(self, time):
-        (hours, _, _) = time.get_time_of_day()
-        return BosparanianTime(time.julian_day, hours * 60 * 60)
-
-    def increment(self, time):
-        return time + BosparanianDelta.from_seconds(60 * 60)
-
-
-class StripMinute(Strip):
-
-    def label(self, time, major=False):
-        time = BosparanianDateTime.from_time(time)
-        if major:
-            return "%s %s %s: %s:%s" % (time.day, bosp_abbreviated_name_of_month(time.month),
-                                        format_year(time.year), time.hour, time.minute)
-        return str(time.minute)
-
-    def start(self, time):
-        (hours, minutes, _) = time.get_time_of_day()
-        return BosparanianTime(time.julian_day, minutes * 60 + hours * 60 * 60)
-
-    def increment(self, time):
-        return time + BosparanianDelta.from_seconds(60)
-
-
-def format_year(year):
-    return "%dBF" % year
-
-
-def format_decade(start_year):
-    return str(start_year + 10) + "s"
 
 
 def move_period_num_days(period, num):

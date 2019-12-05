@@ -21,7 +21,7 @@ import wx
 from timelinelib.calendar.bosparanian.bosparanian import BosparanianDateTime, is_valid_time
 from timelinelib.calendar.bosparanian.dateformatter import BosparanianDateFormatter
 from timelinelib.calendar.bosparanian.time import BosparanianDelta
-from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
+from timelinelib.calendar.bosparanian.timetype.timetype import BosparanianTimeType
 
 
 class BosparanianDateTimePicker(wx.Panel):

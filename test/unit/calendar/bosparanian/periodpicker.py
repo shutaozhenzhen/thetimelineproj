@@ -19,7 +19,7 @@
 from unittest.mock import Mock
 import humblewx
 
-from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
+from timelinelib.calendar.bosparanian.timetype.timetype import BosparanianTimeType
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase

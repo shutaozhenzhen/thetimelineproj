@@ -55,7 +55,7 @@ class BosparanianDateTime:
         returns number of week in year
         """
         def windsday_week_1(year):
-            from timelinelib.calendar.bosparanian.timetype import BosparanianTimeType
+            from timelinelib.calendar.bosparanian.timetype.timetype import BosparanianTimeType
             pra_4 = BosparanianDateTime.from_ymd(year, 1, 4).to_time()
             pra_4_day_of_week = BosparanianTimeType().get_day_of_week(pra_4)
             return pra_4 - BosparanianDelta.from_days(pra_4_day_of_week)
