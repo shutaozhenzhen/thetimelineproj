@@ -21,6 +21,8 @@ import os.path
 
 from timelinelib.canvas.data.exceptions import TimelineIOError
 from timelinelib.wxgui.utils import register_unlock_function
+from timelinelib.wxgui.dialogs.getfilepath.view import open_get_file_path_dialog, FUNC_NEW
+from timelinelib.wxgui.dialogs.getdirpath.view import open_get_dir_path_dialog
 
 
 def safe_write(path, encoding, write_fn):
@@ -94,3 +96,17 @@ def safe_locking(controller, edit_function, exception_handler=None):
                 raise
         finally:
             controller.edit_ends()
+
+
+def get_modification_date(path):
+    try:
+        return os.path.getmtime(path)
+    except:
+        return 0
+
+
+def get_new_path_from_user(timetype, path):
+    if timetype == "dir":
+        return open_get_dir_path_dialog()
+    else:
+        return open_get_file_path_dialog(FUNC_NEW, path)
