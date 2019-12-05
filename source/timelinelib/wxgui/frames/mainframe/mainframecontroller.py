@@ -96,10 +96,8 @@ class MainFrameController:
     def create_new_timeline(self, timetype):
         if timetype == "dir":
             path = open_get_dir_path_dialog()
-        elif self._timeline:
-            path = open_get_file_path_dialog(FUNC_NEW, self._timeline.path)
         else:
-            path = open_get_file_path_dialog(FUNC_NEW)
+            path = open_get_file_path_dialog(FUNC_NEW, self._timelinepath)
         self._open_or_create_timeline(path, timetype)
 
     def open_existing_timeline(self):
