@@ -28,6 +28,7 @@ from timelinelib.dataexport.timelinexml import export_db_to_timeline_xml
 from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.frames.mainframe.lockhandler import LockHandler, LockedException
 from timelinelib.meta.about import get_title
+from timelinelib.wxgui.dialogs.exceptionreport.exceptionreport import exception_report
 
 
 class MainFrameController:
@@ -143,9 +144,8 @@ class MainFrameController:
             try:
                 self._timeline = self._db_open_fn(path, timetype=timetype)
             except Exception as e:
-                self._main_frame.DisplayErrorMessage(
-                    _("Unable to open timeline '%s'.") % path + "\n\n" + str(e)
-                )
+                message = _("Unable to open timeline '%s'.") % path + "\n\n" + str(e)
+                exception_report(self._main_frame, message)
             else:
                 self._config.append_recently_opened(path)
                 self._main_frame.update_open_recent_submenu()
