@@ -112,7 +112,7 @@ class MainFrameController:
         if path is not None:
             assert path.endswith(".timeline")
             export_db_to_timeline_xml(self._timeline, path)
-            self._open_or_create_timeline(path)
+            self._open_or_create_timeline(path, save_current_data=False)
 
     # View menu action handlers
     def start_slide_show(self):
