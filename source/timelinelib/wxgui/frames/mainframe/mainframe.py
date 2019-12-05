@@ -78,10 +78,6 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         self._alert_controller = AlertController(self).start_timer()
         self.prev_time_period = None
 
-    def DisplayErrorMessage(self, message, yesno=False):
-        """This function is hard to remove due to tests using it."""
-        return display_error_message(message, parent=self, yesno=yesno)
-
     def DisplayStatus(self, message):
         self.status_bar_adapter.set_text(message)
 

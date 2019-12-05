@@ -23,9 +23,9 @@ import wx
 from timelinelib.wxgui.dialogs.textdisplay.view import TextDisplayDialog
 
 
-def exception_report(main_frame, message):
+def exception_report(error_dialog, message):
     query = _("Show more details?")
-    res = main_frame.DisplayErrorMessage(message + "\n\n" + query, yesno=True)
+    res = error_dialog(message + "\n\n" + query, yesno=True)
     if res == wx.ID_YES:
         dlg = TextDisplayDialog(_('Error information'))
         type_, value_, traceback_ = sys.exc_info()

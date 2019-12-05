@@ -41,12 +41,17 @@ class MainFrameController:
         self._timelinepath = None
         self._last_changed = None
         self._lock_handler = LockHandler(main_frame)
+        self._error_dialog = display_error_message
 
     def on_started(self, application_arguments):
         if application_arguments.has_files():
             self._open_or_create_timeline(application_arguments.get_first_file())
         elif self._config.has_recently_opened_files():
             self.open_timeline_if_exists(self._config.get_latest_recently_opened_file())
+
+    def set_error_dialog(self, error_dialog):
+        """For test purposes."""
+        self._error_dialog = error_dialog
 
     def open_timeline_if_exists(self, path):
         if os.path.exists(path):
@@ -145,7 +150,7 @@ class MainFrameController:
                 self._timeline = self._db_open_fn(path, timetype=timetype)
             except Exception as e:
                 message = _("Unable to open timeline '%s'.") % path + "\n\n" + str(e)
-                exception_report(self._main_frame, message)
+                exception_report(self._error_dialog, message)
             else:
                 self._config.append_recently_opened(path)
                 self._main_frame.update_open_recent_submenu()
