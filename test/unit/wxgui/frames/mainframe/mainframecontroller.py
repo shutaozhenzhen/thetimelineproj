@@ -58,11 +58,14 @@ class describe_mainframe_controller(UnitTestCase):
         self.main_frame.update_open_recent_submenu.assert_called_with()
 
     def test_handles_open_timeline_failure(self):
+        self.error_message = None
+        def err(message, yesno=False):
+            self.error_message = message
+        self.controller.set_error_dialog(err)
         self.db_open.side_effect = Exception("file corrupt")
         self.controller._open_or_create_timeline("foo.timeline")
-        self.main_frame.DisplayErrorMessage.assert_called_with(
-            "⟪Unable to open timeline 'foo.timeline'.⟫\n\nfile corrupt\n\n⟪Show more details?⟫", yesno=True
-        )
+        self.assertEqual(self.error_message,
+                         "⟪Unable to open timeline 'foo.timeline'.⟫\n\nfile corrupt\n\n⟪Show more details?⟫")
 
     def setUp(self):
         self.main_frame = Mock(MainFrame)
