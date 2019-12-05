@@ -124,13 +124,8 @@ class MainFrameController:
 
     # Timeline menu action handlers
     def measure_distance_between_events(self, event_ids):
-        distance = self._timeline.measure_distance_between_events(event_ids)
-        if distance is None:
-            distance_text = _("Events are overlapping or distance is 0")
-        else:
-            distance_text = self._timeline.get_time_type().format_delta(distance)
         caption = _("Distance between selected events")
-        display_information_message(caption, distance_text)
+        display_information_message(caption, self._timeline.get_distance_info(event_ids))
 
     # Help menu action handlers
     def open_gregorian_tutorial_timeline(self, *args, **kwargs):

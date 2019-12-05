@@ -578,6 +578,13 @@ class MemoryDB(Observable):
             display_error_message(str(ex))
         return None
 
+    def get_distance_info(self, event_ids):
+        distance = self.measure_distance_between_events(event_ids)
+        if distance is None:
+            return _("Events are overlapping or distance is 0")
+        else:
+            return self.get_time_type().format_delta(distance)
+
 
 def sort_events(events):
     return sorted(events, key=lambda event: event.sort_order)
