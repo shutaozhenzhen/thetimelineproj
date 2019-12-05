@@ -29,6 +29,7 @@ from timelinelib.wxgui.utils import display_information_message
 from timelinelib.wxgui.frames.mainframe.lockhandler import LockHandler, LockedException
 from timelinelib.meta.about import get_title
 from timelinelib.wxgui.dialogs.exceptionreport.exceptionreport import exception_report
+from timelinelib.db.utils import get_modification_date
 
 
 class MainFrameController:
@@ -80,7 +81,7 @@ class MainFrameController:
         if not os.path.exists(self._timelinepath):
             self._lock_handler.lock(self._timelinepath, self._timeline)
             return True
-        last_changed = self._get_modification_date()
+        last_changed = get_modification_date(self._timelinepath)
         if last_changed > self._last_changed:
             ack = get_user_ack(
                 _("Someoneelse has changed the Timeline.\nYou have two choices!\n  1. Set Timeline in Read-Only mode.\n  2. Synchronize Timeline.\n\nDo you want to Synchronize?"))
@@ -95,7 +96,7 @@ class MainFrameController:
 
     def edit_ends(self):
         if self._lock_handler.the_lock_is_mine(self._timelinepath):
-            self._last_changed = self._get_modification_date()
+            self._last_changed = get_modification_date(self._timelinepath)
             self._lock_handler.unlock(self._timelinepath)
 
     # File Menu action handlers (New, Open, Open recent, Save as, Import, Export, Exit
@@ -156,15 +157,9 @@ class MainFrameController:
                 self._main_frame.update_open_recent_submenu()
                 self._timelinepath = self._timeline.path = path
                 self._main_frame.display_timeline(self._timeline)
-                self._last_changed = self._get_modification_date()
+                self._last_changed = get_modification_date(self._timelinepath)
                 self._main_frame.update_navigation_menu_items()
                 self._main_frame.EnableDisableMenus()
-
-    def _get_modification_date(self):
-        try:
-            return os.path.getmtime(self._timelinepath)
-        except:
-            return 0
 
     def _reload_from_disk(self):
         self._open_or_create_timeline(self._timelinepath, save_current_data=False)
