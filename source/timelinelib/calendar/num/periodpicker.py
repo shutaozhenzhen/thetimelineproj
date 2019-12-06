@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.num.timetype import NumTimeType
+from timelinelib.calendar.num.timetype.timetype import NumTimeType
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.wxgui.framework import Controller
 from timelinelib.wxgui.framework import Panel

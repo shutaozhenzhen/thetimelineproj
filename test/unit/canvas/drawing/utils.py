@@ -19,7 +19,7 @@
 from random import random
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.calendar.num.timetype import NumTimeType
+from timelinelib.calendar.num.timetype.timetype import NumTimeType
 from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.canvas.drawing.utils import darken_color
 from timelinelib.canvas.drawing.utils import lighten_color

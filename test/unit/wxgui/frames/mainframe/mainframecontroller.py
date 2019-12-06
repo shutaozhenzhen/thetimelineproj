@@ -18,7 +18,7 @@
 
 from unittest.mock import Mock
 
-from timelinelib.calendar.num.timetype import NumTimeType
+from timelinelib.calendar.num.timetype.timetype import NumTimeType
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.frames.mainframe.mainframecontroller import MainFrameController

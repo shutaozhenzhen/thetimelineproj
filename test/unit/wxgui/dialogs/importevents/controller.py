@@ -20,7 +20,7 @@ import os
 
 from unittest.mock import Mock
 
-from timelinelib.calendar.num.timetype import NumTimeType
+from timelinelib.calendar.num.timetype.timetype import NumTimeType
 from timelinelib.canvas.data.event import Event
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.dialogs.importevents.controller import ImportEventsDialogController
