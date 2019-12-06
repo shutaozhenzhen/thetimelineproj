@@ -51,32 +51,34 @@ BLACK = (0, 0, 0)
 class DefaultDrawingAlgorithm(Drawer):
 
     def __init__(self):
-        self.event_text_font = Font(8)
+        self._event_text_font = Font(8)
         self._create_pens()
         self._create_brushes()
         self._fixed_ys = {}
         self._do_draw_top_scale = False
         self._do_draw_bottom_scale = True
         self._do_draw_divider_line = False
+        self._event_box_drawer = None
+        self._background_drawer = None
 
     def set_event_box_drawer(self, event_box_drawer):
-        self.event_box_drawer = event_box_drawer
+        self._event_box_drawer = event_box_drawer
 
     def set_background_drawer(self, background_drawer):
-        self.background_drawer = background_drawer
+        self._background_drawer = background_drawer
 
     def increment_font_size(self, step=2):
-        self.event_text_font.increment(step)
+        self._event_text_font.increment(step)
         self._adjust_outer_padding_to_font_size()
 
     def decrement_font_size(self, step=2):
-        if self.event_text_font.PointSize > step:
-            self.event_text_font.decrement(step)
+        if self._event_text_font.PointSize > step:
+            self._event_text_font.decrement(step)
             self._adjust_outer_padding_to_font_size()
 
     def _adjust_outer_padding_to_font_size(self):
-        if self.event_text_font.PointSize < 8:
-            self.outer_padding = OUTER_PADDING * self.event_text_font.PointSize // 8
+        if self._event_text_font.PointSize < 8:
+            self.outer_padding = OUTER_PADDING * self._event_text_font.PointSize // 8
         else:
             self.outer_padding = OUTER_PADDING
 
@@ -102,7 +104,7 @@ class DefaultDrawingAlgorithm(Drawer):
         return period_width_in_pixels > PERIOD_THRESHOLD
 
     def _get_text_extent(self, text):
-        self.dc.SetFont(self.event_text_font)
+        self.dc.SetFont(self._event_text_font)
         tw, th = self.dc.GetTextExtent(text)
         return (tw, th)
 
@@ -158,7 +160,7 @@ class DefaultDrawingAlgorithm(Drawer):
             self._fixed_ys[evt.id] = rect.GetY()
 
     def _perform_drawing(self, timeline, view_properties):
-        self.background_drawer.draw(
+        self._background_drawer.draw(
             self, self.dc, self.scene, timeline, self.colorize_weekends, self.weekend_color, self.bg_color)
         if self.fast_draw:
             self._perform_fast_drawing(view_properties)
@@ -510,7 +512,7 @@ class DefaultDrawingAlgorithm(Drawer):
         self.dc.DestroyClippingRegion()
         self._draw_lines_to_non_period_events(view_properties)
         for (event, rect) in self.scene.event_data:
-            self.dc.SetFont(self.event_text_font)
+            self.dc.SetFont(self._event_text_font)
             if view_properties.use_fixed_event_vertical_pos():
                 rect.SetY(self._fixed_ys[event.id])
             if event.is_container():
@@ -526,7 +528,7 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_box(self, rect, event, view_properties):
         self.dc.SetClippingRegion(rect)
-        self.event_box_drawer.draw(self.dc, self.scene, rect, event, view_properties)
+        self._event_box_drawer.draw(self.dc, self.scene, rect, event, view_properties)
         self.dc.DestroyClippingRegion()
 
     def _draw_ballons(self, view_properties):
