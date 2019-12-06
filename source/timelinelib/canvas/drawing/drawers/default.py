@@ -591,7 +591,8 @@ class DefaultDrawingAlgorithm(Drawer):
                 h = ih + th
             return w, h
 
-        (inner_rect_w, inner_rect_h) = (iw, _) = get_icon_size()
+        ballon_drawer = BallonDrawer(self.dc)
+        (inner_rect_w, inner_rect_h) = (iw, _) = ballon_drawer.get_icon_size(event)
         font.set_balloon_text_font(self.appearance.get_balloon_font(), self.dc)
         max_text_width = max_text_width(iw)
         lines = get_description_lines(max_text_width, iw)
@@ -599,8 +600,10 @@ class DefaultDrawingAlgorithm(Drawer):
             inner_rect_w, inner_rect_h = calc_inner_rect(inner_rect_w, inner_rect_h, max_text_width)
         MIN_WIDTH = 100
         inner_rect_w = max(MIN_WIDTH, inner_rect_w)
-        bounding_rect, x, y = self._draw_balloon_bg((inner_rect_w, inner_rect_h),
-                                                    (event_rect.X + event_rect.Width // 2, event_rect.Y), True, sticky)
+        bounding_rect, x, y = ballon_drawer.draw_balloon_bg((inner_rect_w, inner_rect_h),
+                                                            (event_rect.X + event_rect.Width // 2, event_rect.Y),
+                                                            True,
+                                                            sticky)
         draw_icon(x, y)
         draw_description(lines, x, y)
         # Write data so we know where the balloon was drawn
@@ -608,9 +611,6 @@ class DefaultDrawingAlgorithm(Drawer):
         # self.dc.SetBrush(wx.TRANSPARENT_BRUSH)
         # self.dc.DrawRectangle(bounding_rect)
         self.balloon_data.append((event, bounding_rect))
-
-    def _draw_balloon_bg(self, inner_size, tip_pos, above, sticky):
-        return BallonDrawer(self.dc).draw_balloon_bg(inner_size, tip_pos, above, sticky)
 
     def get_period_xpos(self, time_period):
         w, _ = self.dc.GetSize()
