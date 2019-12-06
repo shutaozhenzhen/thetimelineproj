@@ -556,29 +556,13 @@ class DefaultDrawingAlgorithm(Drawer):
                 x = adjust_text_x_pos_when_icon_is_present(x)
                 draw_lines(lines, x, y)
 
-        def calc_inner_rect(w, h, max_text_width):
-            th = len(lines) * self.dc.GetCharHeight()
-            tw = 0
-            for line in lines:
-                (lw, _) = self.dc.GetTextExtent(line)
-                tw = max(lw, tw)
-            if event.get_data("icon") is not None:
-                w += BALLOON_RADIUS
-            w += min(tw, max_text_width)
-            h = max(h, th)
-            if self.appearance.get_text_below_icon():
-                iw, ih = get_icon_size()
-                w -= iw
-                h = ih + th
-            return w, h
-
-        ballon_drawer = BallonDrawer(self.dc)
+        ballon_drawer = BallonDrawer(self.dc, self.appearance)
         (inner_rect_w, inner_rect_h) = (iw, _) = ballon_drawer.get_icon_size(event)
         font.set_balloon_text_font(self.appearance.get_balloon_font(), self.dc)
         max_text_width = ballon_drawer.max_text_width(self.scene, event_rect, iw)
         lines = ballon_drawer.get_description_lines(event, max_text_width, iw)
         if lines is not None:
-            inner_rect_w, inner_rect_h = calc_inner_rect(inner_rect_w, inner_rect_h, max_text_width)
+            inner_rect_w, inner_rect_h = ballon_drawer.calc_inner_rect(event, lines, inner_rect_w, inner_rect_h, max_text_width)
         MIN_WIDTH = 100
         inner_rect_w = max(MIN_WIDTH, inner_rect_w)
         bounding_rect, x, y = ballon_drawer.draw_balloon_bg((inner_rect_w, inner_rect_h),

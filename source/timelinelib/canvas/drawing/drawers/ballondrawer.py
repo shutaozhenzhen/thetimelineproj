@@ -32,8 +32,9 @@ SLIDER_WIDTH = 20
 
 class BallonDrawer:
 
-    def __init__(self, dc):
+    def __init__(self, dc, appearance):
         self._dc = dc
+        self._appearance = appearance
 
     @staticmethod
     def get_icon_size(event):
@@ -60,6 +61,22 @@ class BallonDrawer:
         description = event.get_data("description")
         if description is not None:
             return break_text(description, self._dc, max_text_width)
+
+    def calc_inner_rect(self, event, lines, w, h, max_text_width):
+        th = len(lines) * self._dc.GetCharHeight()
+        tw = 0
+        for line in lines:
+            (lw, _) = self._dc.GetTextExtent(line)
+            tw = max(lw, tw)
+        if event.get_data("icon") is not None:
+            w += BALLOON_RADIUS
+        w += min(tw, max_text_width)
+        h = max(h, th)
+        if self._appearance.get_text_below_icon():
+            iw, ih = self.get_icon_size(event)
+            w -= iw
+            h = ih + th
+        return w, h
 
     def draw_balloon_bg(self, inner_size, tip_pos, above, sticky):
         """
