@@ -35,6 +35,7 @@ from timelinelib.utils import unique_based_on_eq
 from timelinelib.wxgui.components.font import Font
 from wx import BRUSHSTYLE_TRANSPARENT
 import timelinelib.wxgui.components.font as font
+from timelinelib.canvas.drawing.drawers.ballondrawer import BallonDrawer
 
 
 OUTER_PADDING = 5  # Space between event boxes (pixels)
@@ -598,7 +599,7 @@ class DefaultDrawingAlgorithm(Drawer):
             inner_rect_w, inner_rect_h = calc_inner_rect(inner_rect_w, inner_rect_h, max_text_width)
         MIN_WIDTH = 100
         inner_rect_w = max(MIN_WIDTH, inner_rect_w)
-        bounding_rect, x, y = self._draw_balloon_bg(self.dc, (inner_rect_w, inner_rect_h),
+        bounding_rect, x, y = self._draw_balloon_bg((inner_rect_w, inner_rect_h),
                                                     (event_rect.X + event_rect.Width // 2, event_rect.Y), True, sticky)
         draw_icon(x, y)
         draw_description(lines, x, y)
@@ -608,107 +609,8 @@ class DefaultDrawingAlgorithm(Drawer):
         # self.dc.DrawRectangle(bounding_rect)
         self.balloon_data.append((event, bounding_rect))
 
-    def _draw_balloon_bg(self, dc, inner_size, tip_pos, above, sticky):
-        """
-        Draw the balloon background leaving inner_size for content.
-
-        tip_pos determines where the tip of the ballon should be.
-
-        above determines if the balloon should be above the tip (True) or below
-        (False). This is not currently implemented.
-
-                    W
-           |----------------|
-             ______________           _
-            /              \          |             R = Corner Radius
-           |                |         |            AA = Left Arrow-leg angle
-           |  W_ARROW       |         |  H     MARGIN = Text margin
-           |     |--|       |         |             * = Starting point
-            \____    ______/          _
-                /  /                  |
-               /_/                    |  H_ARROW
-              *                       -
-           |----|
-           ARROW_OFFSET
-
-        Calculation of points starts at the tip of the arrow and continues
-        clockwise around the ballon.
-
-        Return (bounding_rect, x, y) where x and y is at top of inner region.
-        """
-        # Prepare path object
-        gc = wx.GraphicsContext.Create(self.dc)
-        path = gc.CreatePath()
-        # Calculate path
-        R = BALLOON_RADIUS
-        W = 1 * R + inner_size[0]
-        H = 1 * R + inner_size[1]
-        H_ARROW = 14
-        W_ARROW = 15
-        AA = 20
-        # Starting point at the tip of the arrow
-        (tipx, tipy) = tip_pos
-        p0 = wx.Point(tipx, tipy)
-        path.MoveToPoint(p0.x, p0.y)
-        # Next point is the left base of the arrow
-        p1 = wx.Point(p0.x + H_ARROW * math.tan(math.radians(AA)),
-                      p0.y - H_ARROW)
-        path.AddLineToPoint(p1.x, p1.y)
-        # Start of lower left rounded corner
-        p2 = wx.Point(p1.x - ARROW_OFFSET + R, p1.y)
-        path.AddLineToPoint(p2.x, p2.y)
-        # The lower left rounded corner. p3 is the center of the arc
-        p3 = wx.Point(p2.x, p2.y - R)
-        path.AddArc(p3.x, p3.y, R, math.radians(90), math.radians(180), True)
-        # The left side
-        p4 = wx.Point(p3.x - R, p3.y - H + R)
-        left_x = p4.x
-        path.AddLineToPoint(p4.x, p4.y)
-        # The upper left rounded corner. p5 is the center of the arc
-        p5 = wx.Point(p4.x + R, p4.y)
-        path.AddArc(p5.x, p5.y, R, math.radians(180), math.radians(-90), True)
-        # The upper side
-        p6 = wx.Point(p5.x + W - R, p5.y - R)
-        top_y = p6.y
-        path.AddLineToPoint(p6.x, p6.y)
-        # The upper right rounded corner. p7 is the center of the arc
-        p7 = wx.Point(p6.x, p6.y + R)
-        path.AddArc(p7.x, p7.y, R, math.radians(-90), math.radians(0), True)
-        # The right side
-        p8 = wx.Point(p7.x + R, p7.y + H - R)
-        path.AddLineToPoint(p8.x, p8.y)
-        # The lower right rounded corner. p9 is the center of the arc
-        p9 = wx.Point(p8.x - R, p8.y)
-        path.AddArc(p9.x, p9.y, R, math.radians(0), math.radians(90), True)
-        # The lower side
-        p10 = wx.Point(p9.x - W + W_ARROW + ARROW_OFFSET, p9.y + R)
-        path.AddLineToPoint(p10.x, p10.y)
-        path.CloseSubpath()
-        # Draw sharp lines on GTK which uses Cairo
-        # See: http://www.cairographics.org/FAQ/#sharp_lines
-        gc.Translate(0.5, 0.5)
-        # Draw the ballon
-        BORDER_COLOR = wx.Colour(127, 127, 127)
-        BG_COLOR = wx.Colour(255, 255, 231)
-        PEN = wx.Pen(BORDER_COLOR, 1, wx.PENSTYLE_SOLID)
-        BRUSH = wx.Brush(BG_COLOR, wx.BRUSHSTYLE_SOLID)
-        gc.SetPen(PEN)
-        gc.SetBrush(BRUSH)
-        gc.DrawPath(path)
-        # Draw the pin
-        if sticky:
-            pin = wx.Bitmap(os.path.join(ICONS_DIR, "stickypin.png"))
-        else:
-            pin = wx.Bitmap(os.path.join(ICONS_DIR, "unstickypin.png"))
-        self.dc.DrawBitmap(pin, p7.x - 5, p6.y + 5, True)
-
-        # Return
-        bx = left_x
-        by = top_y
-        bw = W + R + 1
-        bh = H + R + H_ARROW + 1
-        bounding_rect = wx.Rect(bx, by, bw, bh)
-        return bounding_rect, left_x + BALLOON_RADIUS, top_y + BALLOON_RADIUS
+    def _draw_balloon_bg(self, inner_size, tip_pos, above, sticky):
+        return BallonDrawer(self.dc).draw_balloon_bg(inner_size, tip_pos, above, sticky)
 
     def get_period_xpos(self, time_period):
         w, _ = self.dc.GetSize()
