@@ -311,40 +311,6 @@ class DefaultDrawingAlgorithm(Drawer):
         for strip_period in self.scene.minor_strip_data:
             label = self.scene.minor_strip.label(strip_period.start_time)
             drawer.draw(label, strip_period.start_time, strip_period.end_time)
-            #self._draw_minor_strip_divider_line_at(strip_period.end_time)
-            #self._draw_minor_strip_label(strip_period)
-
-#     def _draw_minor_strip_divider_line_at(self, time):
-#         x = self.scene.x_pos_for_time(time)
-#         self.dc.SetPen(self.minor_strip_pen)
-#         self.dc.DrawLine(x, 0, x, self.scene.height)
-# 
-#     def _draw_minor_strip_label(self, strip_period):
-#         label = self.scene.minor_strip.label(strip_period.start_time)
-#         self._set_minor_strip_font(strip_period)
-#         (tw, th) = self.dc.GetTextExtent(label)
-#         start_x = self.scene.x_pos_for_time(strip_period.get_start_time())
-#         end_x = self.scene.x_pos_for_time(strip_period.get_end_time())
-#         middle = (start_x + end_x) / 2
-#         if self._do_draw_divider_line:
-#             middley = self.scene.divider_y
-#             self.dc.DrawText(label, middle - tw / 2, middley - th)
-#         if self._do_draw_bottom_scale:
-#             middley = self.scene.height
-#             self.dc.DrawText(label, middle - tw / 2, middley - th)
-#             
-#     def _set_minor_strip_font(self, strip_period):
-#         if self.scene.minor_strip_is_day():
-#             bold = False
-#             italic = False
-#             if self.time_type.is_weekend_day(strip_period.start_time):
-#                 bold = True
-#             if self.time_type.is_special_day(strip_period.start_time):
-#                 italic = True
-#             font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc,
-#                                            force_bold=bold, force_normal=not bold, force_italic=italic, force_upright=not italic)
-#         else:
-#             font.set_minor_strip_text_font(self.appearance.get_minor_strip_font(), self.dc)
 
     def _draw_major_strips(self):
         font.set_major_strip_text_font(self.appearance.get_major_strip_font(), self.dc)
