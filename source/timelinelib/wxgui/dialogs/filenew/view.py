@@ -23,7 +23,7 @@ from timelinelib.wxgui.framework import Dialog
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar.bosparanian.timetype.timetype import BosparanianTimeType
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
-from timelinelib.calendar.coptic.timetype import CopticTimeType
+from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.calendar.num.timetype import NumTimeType
 
 

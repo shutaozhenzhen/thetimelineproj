@@ -30,14 +30,20 @@ from timelinelib.canvas.data import TimeOutOfRangeLeftError
 from timelinelib.canvas.data import TimeOutOfRangeRightError
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
-from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.gregorian.gregorian import gregorian_ymd_to_julian_day
 from timelinelib.calendar.coptic.coptic import julian_day_to_coptic_ymd
 from timelinelib.calendar.gregorian.timetype.durationformatter import DurationFormatter
 from timelinelib.calendar.gregorian.timetype.durationtype import YEARS, DAYS, HOURS, MINUTES, SECONDS
-
-
-BC = _("BC")
+from timelinelib.calendar.coptic.timetype.formatters import format_year, get_day_of_week
+from timelinelib.calendar.coptic.timetype.strips.stripcentury import StripCentury
+from timelinelib.calendar.coptic.timetype.strips.stripweek import StripWeek
+from timelinelib.calendar.coptic.timetype.strips.stripweekday import StripWeekday
+from timelinelib.calendar.coptic.timetype.strips.stripminute import StripMinute
+from timelinelib.calendar.coptic.timetype.strips.stripday import StripDay
+from timelinelib.calendar.coptic.timetype.strips.stripdecade import StripDecade
+from timelinelib.calendar.coptic.timetype.strips.striphour import StripHour
+from timelinelib.calendar.coptic.timetype.strips.stripmonth import StripMonth
+from timelinelib.calendar.coptic.timetype.strips.stripyear import StripYear
 
 
 class CopticTimeType(GregorianTimeType):
@@ -136,21 +142,21 @@ class CopticTimeType(GregorianTimeType):
         day_period = TimePeriod(CopticTime(0, 0),CopticTime(1, 0))
         one_day_width = metrics.calc_exact_width(day_period)
         if one_day_width > 20000:
-            return (StripHour(), StripMinute())
+            return StripHour(), StripMinute()
         elif one_day_width > 600:
-            return (StripDay(), StripHour())
+            return StripDay(), StripHour()
         elif one_day_width > 45:
-            return (StripWeek(appearance), StripWeekday())
+            return StripWeek(appearance), StripWeekday()
         elif one_day_width > 25:
-            return (StripMonth(), StripDay())
+            return StripMonth(), StripDay()
         elif one_day_width > 1.5:
-            return (StripYear(), StripMonth())
+            return StripYear(), StripMonth()
         elif one_day_width > 0.12:
-            return (StripDecade(), StripYear())
+            return StripDecade(), StripYear()
         elif one_day_width > 0.012:
-            return (StripCentury(), StripDecade())
+            return StripCentury(), StripDecade()
         else:
-            return (StripCentury(), StripCentury())
+            return StripCentury(), StripCentury()
 
     def get_default_time_period(self):
         return time_period_center(self.now(), CopticDelta.from_days(30))
@@ -176,7 +182,7 @@ class CopticTimeType(GregorianTimeType):
         return coptic.to_time()
 
     def get_min_zoom_delta(self):
-        return (CopticDelta.from_seconds(60), _("Can't zoom deeper than 1 minute"))
+        return CopticDelta.from_seconds(60), _("Can't zoom deeper than 1 minute")
 
     def get_name(self):
         return "coptic"
@@ -193,11 +199,7 @@ class CopticTimeType(GregorianTimeType):
         return False
 
     def is_weekend_day(self, time):
-        return self.get_day_of_week(time) in (5, 6)
-        #return self.get_day_of_week(time)
-
-    def get_day_of_week(self, time):
-        return time.julian_day % 7
+        return get_day_of_week(time) in (5, 6)
 
     def create_time_picker(self, parent, *args, **kwargs):
         from timelinelib.calendar.coptic.timepicker.datetime import CopticDateTimePicker
@@ -415,7 +417,7 @@ def get_millenium_max_year():
 def fit_week_fn(main_frame, current_period, navigation_fn):
     mean = CopticDateTime.from_time(current_period.mean_time())
     start = CopticDateTime.from_ymd(mean.year, mean.month, mean.day).to_time()
-    weekday = CopticTimeType().get_day_of_week(start)
+    weekday = get_day_of_week(start)
     start = start - CopticDelta.from_days(weekday)
     if not main_frame.week_starts_on_monday():
         start = start - CopticDelta.from_days(1)
@@ -432,395 +434,6 @@ def create_strip_fitter(strip_cls):
             return time_period.update(start, end)
         navigation_fn(navigate)
     return fit
-
-
-class StripCentury(Strip):
-
-    """
-    Year Name | Year integer | Decade name
-    ----------+--------------+------------
-    ..        |  ..          |
-    200 BC    | -199         | 200s BC (100 years)
-    ----------+--------------+------------
-    199 BC    | -198         |
-    ...       | ...          | 100s BC (100 years)
-    100 BC    | -99          |
-    ----------+--------------+------------
-    99  BC    | -98          |
-    ...       |  ...         | 0s BC (only 99 years)
-    1   BC    |  0           |
-    ----------+--------------+------------
-    1         |  1           |
-    ...       |  ...         | 0s (only 99 years)
-    99        |  99          |
-    ----------+--------------+------------
-    100       |  100         |
-    ..        |  ..          | 100s (100 years)
-    199       |  199         |
-    ----------+--------------+------------
-    200       |  200         | 200s (100 years)
-    ..        |  ..          |
-    """
-
-    def label(self, time, major=False):
-        if major:
-            coptic_time = CopticDateTime.from_time(time)
-            return self._format_century(
-                self._century_number(
-                    self._century_start_year(coptic_time.year)
-                ),
-                coptic_time.is_bc()
-            )
-        else:
-            return ""
-
-    def start(self, time):
-        return CopticDateTime.from_ymd(
-            self._century_start_year(CopticDateTime.from_time(time).year),
-            1,
-            1
-        ).to_time()
-
-    def increment(self, time):
-        coptic_time = CopticDateTime.from_time(time)
-        return coptic_time.replace(
-            year=self._next_century_start_year(coptic_time.year)
-        ).to_time()
-
-    def _century_number(self, century_start_year):
-        if century_start_year > 99:
-            return century_start_year
-        elif century_start_year >= -98:
-            return 0
-        else:  # century_start_year < -98:
-            return self._century_number(-century_start_year - 98)
-
-    def _next_century_start_year(self, start_year):
-        return start_year + self._century_year_len(start_year)
-
-    def _century_year_len(self, start_year):
-        if start_year in [-98, 1]:
-            return 99
-        else:
-            return 100
-
-    def _format_century(self, century_number, is_bc):
-        if is_bc:
-            return "{century}s {bc}".format(century=century_number, bc=BC)
-        else:
-            return "{century}s".format(century=century_number)
-
-    def _century_start_year(self, year):
-        if year > 99:
-            return year - int(year) % 100
-        elif year >= 1:
-            return 1
-        elif year >= -98:
-            return -98
-        else:  # year < -98
-            return -self._century_start_year(-year + 1) - 98
-
-
-class StripDecade(Strip):
-
-    """
-    Year Name | Year integer | Decade name
-    ----------+--------------+------------
-    ..        |  ..          |
-    20 BC     | -19          | 20s BC (10 years)
-    ----------+--------------+------------
-    19 BC     | -18          |
-    18 BC     | -17          |
-    17 BC     | -16          |
-    16 BC     | -15          |
-    15 BC     | -14          | 10s BC (10 years)
-    14 BC     | -13          |
-    13 BC     | -12          |
-    12 BC     | -11          |
-    11 BC     | -10          |
-    10 BC     | -9           |
-    ----------+--------------+------------
-    9  BC     | -8           |
-    8  BC     | -7           |
-    7  BC     | -6           |
-    6  BC     | -5           |
-    5  BC     | -4           | 0s BC (only 9 years)
-    4  BC     | -3           |
-    3  BC     | -2           |
-    2  BC     | -1           |
-    1  BC     |  0           |
-    ----------+--------------+------------
-    1         |  1           |
-    2         |  2           |
-    3         |  3           |
-    4         |  4           |
-    5         |  5           |  0s (only 9 years)
-    6         |  6           |
-    7         |  7           |
-    8         |  8           |
-    9         |  9           |
-    ----------+--------------+------------
-    10        |  10          |
-    11        |  11          |
-    12        |  12          |
-    13        |  13          |
-    14        |  14          |
-    15        |  15          |  10s (10 years)
-    16        |  16          |
-    17        |  17          |
-    18        |  18          |
-    19        |  19          |
-    ----------+--------------+------------
-    20        |  20          |  20s (10 years)
-    ..        |  ..          |
-    """
-
-    def __init__(self):
-        self.skip_s_in_decade_text = False
-
-    def label(self, time, major=False):
-        coptic_time = CopticDateTime.from_time(time)
-        return self._format_decade(
-            self._decade_number(self._decade_start_year(coptic_time.year)),
-            coptic_time.is_bc()
-        )
-
-    def start(self, time):
-        return CopticDateTime.from_ymd(
-            self._decade_start_year(CopticDateTime.from_time(time).year),
-            1,
-            1
-        ).to_time()
-
-    def increment(self, time):
-        coptic_time = CopticDateTime.from_time(time)
-        return coptic_time.replace(
-            year=self._next_decacde_start_year(coptic_time.year)
-        ).to_time()
-
-    def set_skip_s_in_decade_text(self, value):
-        self.skip_s_in_decade_text = value
-
-    def _format_decade(self, decade_number, is_bc):
-        parts = []
-        parts.append("{0}".format(decade_number))
-        if not self.skip_s_in_decade_text:
-            parts.append("s")
-        if is_bc:
-            parts.append(" ")
-            parts.append(BC)
-        return "".join(parts)
-
-    def _decade_start_year(self, year):
-        if year > 9:
-            return int(year) - (int(year) % 10)
-        elif year >= 1:
-            return 1
-        elif year >= -8:
-            return -8
-        else:  # year < -8
-            return -self._decade_start_year(-year + 1) - 8
-
-    def _next_decacde_start_year(self, start_year):
-        return start_year + self._decade_year_len(start_year)
-
-    def _decade_year_len(self, start_year):
-        if self._decade_number(start_year) == 0:
-            return 9
-        else:
-            return 10
-
-    def _decade_number(self, start_year):
-        if start_year > 9:
-            return start_year
-        elif start_year >= -8:
-            return 0
-        else:  # start_year < -8
-            return self._decade_number(-start_year - 8)
-
-
-class StripYear(Strip):
-
-    def label(self, time, major=False):
-        return format_year(CopticDateTime.from_time(time).year)
-
-    def start(self, time):
-        coptic_time = CopticDateTime.from_time(time)
-        new_coptic = CopticDateTime.from_ymd(coptic_time.year, 1, 1)
-        return new_coptic.to_time()
-
-    def increment(self, time):
-        coptic_time = CopticDateTime.from_time(time)
-        return coptic_time.replace(year=coptic_time.year + 1).to_time()
-
-
-class StripMonth(Strip):
-
-    def label(self, time, major=False):
-        time = CopticDateTime.from_time(time)
-        if major:
-            return "%s %s" % (abbreviated_name_of_month(time.month),
-                              format_year(time.year))
-        return abbreviated_name_of_month(time.month)
-
-    def start(self, time):
-        coptic_time = CopticDateTime.from_time(time)
-        return CopticDateTime.from_ymd(
-            coptic_time.year,
-            coptic_time.month,
-            1
-        ).to_time()
-
-    def increment(self, time):
-        return time + CopticDelta.from_days(
-            CopticDateTime.from_time(time).days_in_month()
-        )
-
-
-class StripDay(Strip):
-
-    def label(self, time, major=False):
-        time = CopticDateTime.from_time(time)
-        if major:
-            return "%s %s %s" % (time.day,
-                                 abbreviated_name_of_month(time.month),
-                                 format_year(time.year))
-        return str(time.day)
-
-    def start(self, time):
-        coptic_time = CopticDateTime.from_time(time)
-        return CopticDateTime.from_ymd(
-            coptic_time.year,
-            coptic_time.month,
-            coptic_time.day
-        ).to_time()
-
-    def increment(self, time):
-        return time + CopticDelta.from_days(1)
-
-    def is_day(self):
-        return True
-
-
-class StripWeek(Strip):
-
-    def __init__(self, appearance):
-        Strip.__init__(self)
-        self.appearance = appearance
-
-    def label(self, time, major=False):
-        if major:
-            first_weekday = self.start(time)
-            next_first_weekday = self.increment(first_weekday)
-            last_weekday = next_first_weekday - CopticDelta.from_days(1)
-            range_string = self._time_range_string(first_weekday, last_weekday)
-            if self.appearance.get_week_start() == "tkyriaka":
-                return (_("Week") + " %s (%s)") % (
-                    CopticDateTime.from_time(time).week_number,
-                    range_string
-                )
-            else:
-                # It is Psabbaton (don't know what to do about week numbers here)
-                return range_string
-        # This strip should never be used as minor
-        return ""
-
-    def _time_range_string(self, start, end):
-        start = CopticDateTime.from_time(start)
-        end = CopticDateTime.from_time(end)
-        if start.year == end.year:
-            if start.month == end.month:
-                return "%s-%s %s %s" % (start.day, end.day,
-                                        abbreviated_name_of_month(start.month),
-                                        format_year(start.year))
-            return "%s %s-%s %s %s" % (start.day,
-                                       abbreviated_name_of_month(start.month),
-                                       end.day,
-                                       abbreviated_name_of_month(end.month),
-                                       format_year(start.year))
-        return "%s %s %s-%s %s %s" % (start.day,
-                                      abbreviated_name_of_month(start.month),
-                                      format_year(start.year),
-                                      end.day,
-                                      abbreviated_name_of_month(end.month),
-                                      format_year(end.year))
-
-    def start(self, time):
-        if self.appearance.get_week_start() == "tkyriaka":
-            days_to_subtract = CopticTimeType().get_day_of_week(time)
-        else:
-            # It is Psabbaton.
-            days_to_subtract = (CopticTimeType().get_day_of_week(time) + 1) % 7
-        return CopticTime(time.julian_day - days_to_subtract, 0)
-
-    def increment(self, time):
-        return time + CopticDelta.from_days(7)
-
-
-class StripWeekday(Strip):
-
-    def label(self, time, major=False):
-        day_of_week = CopticTimeType().get_day_of_week(time)
-        if major:
-            time = CopticDateTime.from_time(time)
-            return "%s %s %s %s" % (abbreviated_name_of_weekday(day_of_week),
-                                    time.day,
-                                    abbreviated_name_of_month(time.month),
-                                    format_year(time.year))
-        return (abbreviated_name_of_weekday(day_of_week) +
-                " %s" % CopticDateTime.from_time(time).day)
-
-    def start(self, time):
-        coptic_time = CopticDateTime.from_time(time)
-        new_coptic = CopticDateTime.from_ymd(coptic_time.year, coptic_time.month, coptic_time.day)
-        return new_coptic.to_time()
-
-    def increment(self, time):
-        return time + CopticDelta.from_days(1)
-
-    def is_day(self):
-        return True
-
-
-class StripHour(Strip):
-
-    def label(self, time, major=False):
-        time = CopticDateTime.from_time(time)
-        if major:
-            return "%s %s %s: %sh" % (time.day, abbreviated_name_of_month(time.month),
-                                      format_year(time.year), time.hour)
-        return str(time.hour)
-
-    def start(self, time):
-        (hours, _, _) = time.get_time_of_day()
-        return CopticTime(time.julian_day, hours * 60 * 60)
-
-    def increment(self, time):
-        return time + CopticDelta.from_seconds(60 * 60)
-
-
-class StripMinute(Strip):
-
-    def label(self, time, major=False):
-        time = CopticDateTime.from_time(time)
-        if major:
-            return "%s %s %s: %s:%s" % (time.day, abbreviated_name_of_month(time.month),
-                                        format_year(time.year), time.hour, time.minute)
-        return str(time.minute)
-
-    def start(self, time):
-        (hours, minutes, _) = time.get_time_of_day()
-        return CopticTime(time.julian_day, minutes * 60 + hours * 60 * 60)
-
-    def increment(self, time):
-        return time + CopticDelta.from_seconds(60)
-
-
-def format_year(year):
-    if year <= 0:
-        return "%d %s" % ((1 - year), BC)
-    else:
-        return str(year)
 
 
 def move_period_num_days(period, num):

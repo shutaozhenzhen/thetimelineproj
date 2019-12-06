@@ -22,7 +22,7 @@ import humblewx
 from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
 from timelinelib.calendar.coptic.timepicker.period import CopticPeriodPicker
 from timelinelib.calendar.coptic.timepicker.period import CopticPeriodPickerController
-from timelinelib.calendar.coptic.timetype import CopticTimeType
+from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.pharaonic_utils import pharaonic_period

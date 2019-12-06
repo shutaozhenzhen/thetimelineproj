@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.coptic.time import CopticDelta
-from timelinelib.calendar.coptic.timetype import CopticTimeType
+from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.coptic_utils import human_time_to_coptic
 

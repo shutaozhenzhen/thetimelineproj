@@ -21,7 +21,7 @@ import wx
 from timelinelib.calendar.coptic.coptic import CopticDateTime
 from timelinelib.calendar.coptic.time import CopticDelta
 from timelinelib.calendar.coptic.timepicker.datecontroller import CopticDatePickerController
-from timelinelib.calendar.coptic.timetype import CopticTimeType
+from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.wxgui.components.textctrl import TextCtrl
 
 
