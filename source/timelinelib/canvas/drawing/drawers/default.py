@@ -517,65 +517,8 @@ class DefaultDrawingAlgorithm(Drawer):
 
     def _draw_ballon(self, event, event_rect, sticky):
         """Draw one ballon on a selected event that has 'description' data."""
-
-        def get_icon_size():
-            (iw, ih) = (0, 0)
-            icon = event.get_data("icon")
-            if icon is not None:
-                (iw, ih) = icon.Size
-            return iw, ih
-
-        def draw_lines(lines, x, y):
-            font_h = self.dc.GetCharHeight()
-            ty = y
-            for line in lines:
-                self.dc.DrawText(line, x, ty)
-                ty += font_h
-
-        def adjust_text_x_pos_when_icon_is_present(x):
-            icon = event.get_data("icon")
-            (iw, _) = get_icon_size()
-            if icon is not None:
-                return x + iw + BALLOON_RADIUS
-            else:
-                return x
-
-        def draw_icon(x, y):
-            icon = event.get_data("icon")
-            if icon is not None:
-                self.dc.DrawBitmap(icon, x, y, False)
-
-        def draw_description(lines, x, y):
-            if self.appearance.get_text_below_icon():
-                iw, ih = get_icon_size()
-                if ih > 0:
-                    ih += BALLOON_RADIUS // 2
-                x -= iw
-                y += ih
-            if lines is not None:
-                x = adjust_text_x_pos_when_icon_is_present(x)
-                draw_lines(lines, x, y)
-
-        ballon_drawer = BallonDrawer(self.dc, self.appearance)
-        (inner_rect_w, inner_rect_h) = (iw, _) = ballon_drawer.get_icon_size(event)
-        font.set_balloon_text_font(self.appearance.get_balloon_font(), self.dc)
-        max_text_width = ballon_drawer.max_text_width(self.scene, event_rect, iw)
-        lines = ballon_drawer.get_description_lines(event, max_text_width, iw)
-        if lines is not None:
-            inner_rect_w, inner_rect_h = ballon_drawer.calc_inner_rect(event, lines, inner_rect_w, inner_rect_h, max_text_width)
-        MIN_WIDTH = 100
-        inner_rect_w = max(MIN_WIDTH, inner_rect_w)
-        bounding_rect, x, y = ballon_drawer.draw_balloon_bg((inner_rect_w, inner_rect_h),
-                                                            (event_rect.X + event_rect.Width // 2, event_rect.Y),
-                                                            True,
-                                                            sticky)
-        draw_icon(x, y)
-        draw_description(lines, x, y)
-        # Write data so we know where the balloon was drawn
-        # Following two lines can be used when debugging the rectangle
-        # self.dc.SetBrush(wx.TRANSPARENT_BRUSH)
-        # self.dc.DrawRectangle(bounding_rect)
-        self.balloon_data.append((event, bounding_rect))
+        ballon_drawer = BallonDrawer(self.dc, self.scene, self.appearance, event)
+        self.balloon_data.append(ballon_drawer.draw(event_rect, sticky))
 
     def get_period_xpos(self, time_period):
         w, _ = self.dc.GetSize()

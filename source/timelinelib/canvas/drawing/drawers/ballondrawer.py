@@ -22,7 +22,7 @@ import os
 import wx
 
 from timelinelib.config.paths import ICONS_DIR
-
+import timelinelib.wxgui.components.font as font
 
 BALLOON_RADIUS = 12
 ARROW_OFFSET = BALLOON_RADIUS + 25
@@ -32,48 +32,70 @@ SLIDER_WIDTH = 20
 
 class BallonDrawer:
 
-    def __init__(self, dc, appearance):
+    def __init__(self, dc, scene, appearance, event):
         self._dc = dc
+        self._scene = scene
         self._appearance = appearance
+        self._event = event
 
-    @staticmethod
-    def get_icon_size(event):
+    def draw(self, event_rect, sticky):
+        """Draw one ballon on a selected event that has 'description' data."""
+        (inner_rect_w, inner_rect_h) = (iw, _) = self.get_icon_size()
+        font.set_balloon_text_font(self._appearance.get_balloon_font(), self._dc)
+        max_text_width = self.max_text_width(event_rect, iw)
+        lines = self.get_description_lines(max_text_width, iw)
+        if lines is not None:
+            inner_rect_w, inner_rect_h = self.calc_inner_rect(lines, inner_rect_w, inner_rect_h, max_text_width)
+        MIN_WIDTH = 100
+        inner_rect_w = max(MIN_WIDTH, inner_rect_w)
+        bounding_rect, x, y = self.draw_balloon_bg((inner_rect_w, inner_rect_h),
+                                                   (event_rect.X + event_rect.Width // 2, event_rect.Y),
+                                                   True,
+                                                   sticky)
+        self.draw_icon(x, y)
+        self.draw_description(lines, x, y)
+        # Write data so we know where the balloon was drawn
+        # Following two lines can be used when debugging the rectangle
+        # self.dc.SetBrush(wx.TRANSPARENT_BRUSH)
+        # self.dc.DrawRectangle(bounding_rect)
+        return self._event, bounding_rect
+
+    def get_icon_size(self):
         (iw, ih) = (0, 0)
-        icon = event.get_data("icon")
+        icon = self._event.get_data("icon")
         if icon is not None:
             (iw, ih) = icon.Size
         return iw, ih
 
-    @staticmethod
-    def max_text_width(scene, event_rect, icon_width):
+    def max_text_width(self, event_rect, icon_width):
         padding = 2 * BALLOON_RADIUS
         if icon_width > 0:
             padding += BALLOON_RADIUS
         else:
             icon_width = 0
         padding += icon_width
-        visble_background = scene.width - SLIDER_WIDTH
+        visble_background = self._scene.width - SLIDER_WIDTH
         balloon_width = visble_background - event_rect.X - event_rect.width // 2 + ARROW_OFFSET
         max_text_width = balloon_width - padding
         return max(MIN_TEXT_WIDTH, max_text_width)
 
-    def get_description_lines(self, event, max_text_width, iw):
-        description = event.get_data("description")
+    def get_description_lines(self, max_text_width, iw):
+        description = self._event.get_data("description")
         if description is not None:
             return break_text(description, self._dc, max_text_width)
 
-    def calc_inner_rect(self, event, lines, w, h, max_text_width):
+    def calc_inner_rect(self, lines, w, h, max_text_width):
         th = len(lines) * self._dc.GetCharHeight()
         tw = 0
         for line in lines:
             (lw, _) = self._dc.GetTextExtent(line)
             tw = max(lw, tw)
-        if event.get_data("icon") is not None:
+        if self._event.get_data("icon") is not None:
             w += BALLOON_RADIUS
         w += min(tw, max_text_width)
         h = max(h, th)
         if self._appearance.get_text_below_icon():
-            iw, ih = self.get_icon_size(event)
+            iw, ih = self.get_icon_size()
             w -= iw
             h = ih + th
         return w, h
@@ -179,6 +201,37 @@ class BallonDrawer:
         bh = H + R + H_ARROW + 1
         bounding_rect = wx.Rect(bx, by, bw, bh)
         return bounding_rect, left_x + BALLOON_RADIUS, top_y + BALLOON_RADIUS
+
+    def draw_icon(self, x, y):
+        icon = self._event.get_data("icon")
+        if icon is not None:
+            self._dc.DrawBitmap(icon, x, y, False)
+
+    def draw_description(self, lines, x, y):
+        if self._appearance.get_text_below_icon():
+            iw, ih = self.get_icon_size()
+            if ih > 0:
+                ih += BALLOON_RADIUS // 2
+            x -= iw
+            y += ih
+        if lines is not None:
+            x = self.adjust_text_x_pos_when_icon_is_present(x)
+            self.draw_lines(lines, x, y)
+
+    def adjust_text_x_pos_when_icon_is_present(self, x):
+        icon = self._event.get_data("icon")
+        (iw, _) = self.get_icon_size()
+        if icon is not None:
+            return x + iw + BALLOON_RADIUS
+        else:
+            return x
+
+    def draw_lines(self, lines, x, y):
+        font_h = self._dc.GetCharHeight()
+        ty = y
+        for line in lines:
+            self._dc.DrawText(line, x, ty)
+            ty += font_h
 
 
 def break_text(text, dc, max_width_in_px):
