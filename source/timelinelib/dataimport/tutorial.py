@@ -145,7 +145,7 @@ class NumericTutorialTimelineCreator(TutorialTimelineCreator):
     """A numeric tutorial timeline."""
     
     def get_time_type(self):
-        from timelinelib.calendar.num.timetype import NumTimeType
+        from timelinelib.calendar.num.timetype.timetype import NumTimeType
         return NumTimeType()
 
     def get_start_end(self):

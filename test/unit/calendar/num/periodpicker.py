@@ -20,7 +20,7 @@ from unittest.mock import Mock
 import humblewx
 
 from timelinelib.calendar.num.time import NumTime
-from timelinelib.calendar.num.timetype import NumTimeType
+from timelinelib.calendar.num.timetype.timetype import NumTimeType
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase

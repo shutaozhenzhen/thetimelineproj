@@ -27,7 +27,7 @@ from timelinelib.calendar.num.time import NumTime
 from timelinelib.calendar.timetype import TimeType
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.canvas.data import time_period_center
-from timelinelib.canvas.drawing.interface import Strip
+from timelinelib.calendar.num.timetype.strips.numstrip import NumStrip
 
 
 class NumTimeType(TimeType):
@@ -41,7 +41,7 @@ class NumTimeType(TimeType):
         return not (self == other)
 
     def time_string(self, time):
-        return "%s" % (time.value)
+        return "%s" % time.value
 
     def parse_time(self, time_string):
         match = re.search(r"^([-]?\d+(.\d+)?(e[+]\d+)?)$", time_string)
@@ -107,7 +107,7 @@ class NumTimeType(TimeType):
                 exponent -= 1
             else:
                 break
-        return (NumStrip(10 ** (exponent + 1)), NumStrip(10 ** exponent))
+        return NumStrip(10 ** (exponent + 1)), NumStrip(10 ** exponent)
 
     def get_default_time_period(self):
         return time_period_center(NumTime(0), NumDelta(100))
@@ -116,7 +116,7 @@ class NumTimeType(TimeType):
         return NumTime(0)
 
     def get_min_zoom_delta(self):
-        return (NumDelta(5), _("Can't zoom deeper than 5"))
+        return NumDelta(5), _("Can't zoom deeper than 5")
 
     def get_name(self):
         return "numtime"
@@ -132,31 +132,15 @@ class NumTimeType(TimeType):
     def supports_saved_now(self):
         return False
 
-    def create_time_picker(self, parent, *args, **kwargs):
+    @staticmethod
+    def create_time_picker(parent, *args, **kwargs):
         from timelinelib.calendar.num.timepicker import NumTimePicker
         return NumTimePicker(parent, *args, **kwargs)
 
-    def create_period_picker(self, parent, *args, **kwargs):
+    @staticmethod
+    def create_period_picker(parent, *args, **kwargs):
         from timelinelib.calendar.num.periodpicker import NumPeriodPicker
         return NumPeriodPicker(parent, *args, **kwargs)
-
-
-class NumStrip(Strip):
-
-    def __init__(self, size):
-        self.size = size
-
-    def label(self, time, major=False):
-        return "%s" % time.value
-
-    def start(self, time):
-        start = int(time.value / self.size) * self.size
-        if time < NumTime(0):
-            start -= self.size
-        return NumTime(start)
-
-    def increment(self, time):
-        return time + NumDelta(self.size)
 
 
 def go_to_zero_fn(main_frame, current_period, navigation_fn):

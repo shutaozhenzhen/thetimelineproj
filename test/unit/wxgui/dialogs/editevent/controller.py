@@ -19,7 +19,7 @@
 from unittest.mock import Mock
 from unittest.mock import sentinel
 
-from timelinelib.calendar.num.timetype import NumTimeType
+from timelinelib.calendar.num.timetype.timetype import NumTimeType
 from timelinelib.canvas.data.container import Container
 from timelinelib.canvas.data.memorydb.db import MemoryDB
 from timelinelib.canvas.data import TimePeriod

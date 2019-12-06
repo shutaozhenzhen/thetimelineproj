@@ -19,8 +19,8 @@
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar.num.time import NumDelta
 from timelinelib.calendar.num.time import NumTime
-from timelinelib.calendar.num.timetype import move_period
-from timelinelib.calendar.num.timetype import NumTimeType
+from timelinelib.calendar.num.timetype.timetype import move_period
+from timelinelib.calendar.num.timetype.timetype import NumTimeType
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 

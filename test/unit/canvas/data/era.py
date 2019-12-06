@@ -18,7 +18,7 @@
 """Unittest of class :doc:`Era <timelinelib_canvas_data_era>`."""
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.calendar.num.timetype import NumTimeType
+from timelinelib.calendar.num.timetype.timetype import NumTimeType
 from timelinelib.canvas.data.timeperiod import TimePeriod
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import a_gregorian_era_with
