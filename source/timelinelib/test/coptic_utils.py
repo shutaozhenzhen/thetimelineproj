@@ -29,7 +29,7 @@ import random
 from timelinelib.calendar.coptic.coptic import CopticDateTime
 from timelinelib.calendar.coptic.monthnames import ABBREVIATED_ENGLISH_MONTH_NAMES
 from timelinelib.calendar.coptic.time import CopticDelta
-from timelinelib.calendar.coptic.timetype import CopticTimeType
+from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.canvas.data import Category
 from timelinelib.canvas.data import Container
 from timelinelib.canvas.data import Era

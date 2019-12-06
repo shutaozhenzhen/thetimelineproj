@@ -24,7 +24,7 @@ from timelinelib.calendar.coptic.coptic import CopticDateTime
 from timelinelib.calendar.coptic.time import CopticTime
 from timelinelib.calendar.coptic.timepicker.date import CopticDatePicker
 from timelinelib.calendar.coptic.timepicker.time import CopticTimePicker
-from timelinelib.calendar.coptic.timetype import CopticTimeType
+from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.config.paths import ICONS_DIR
 from timelinelib.wxgui.utils import display_information_message
 

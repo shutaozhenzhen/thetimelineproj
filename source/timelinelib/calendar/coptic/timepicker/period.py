@@ -16,8 +16,8 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.coptic.timetype import CopticTimeType
-from timelinelib.calendar.coptic.timetype import has_nonzero_time
+from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
+from timelinelib.calendar.coptic.timetype.timetype import has_nonzero_time
 from timelinelib.canvas.data import TimePeriod
 from timelinelib.wxgui.framework import Controller
 from timelinelib.wxgui.framework import Panel
