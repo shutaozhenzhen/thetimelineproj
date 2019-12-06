@@ -26,12 +26,40 @@ from timelinelib.config.paths import ICONS_DIR
 
 BALLOON_RADIUS = 12
 ARROW_OFFSET = BALLOON_RADIUS + 25
+MIN_TEXT_WIDTH = 200
+SLIDER_WIDTH = 20
 
 
 class BallonDrawer:
 
     def __init__(self, dc):
         self._dc = dc
+
+    @staticmethod
+    def get_icon_size(event):
+        (iw, ih) = (0, 0)
+        icon = event.get_data("icon")
+        if icon is not None:
+            (iw, ih) = icon.Size
+        return iw, ih
+
+    @staticmethod
+    def max_text_width(scene, event_rect, icon_width):
+        padding = 2 * BALLOON_RADIUS
+        if icon_width > 0:
+            padding += BALLOON_RADIUS
+        else:
+            icon_width = 0
+        padding += icon_width
+        visble_background = scene.width - SLIDER_WIDTH
+        balloon_width = visble_background - event_rect.X - event_rect.width // 2 + ARROW_OFFSET
+        max_text_width = balloon_width - padding
+        return max(MIN_TEXT_WIDTH, max_text_width)
+
+    def get_description_lines(self, event, max_text_width, iw):
+        description = event.get_data("description")
+        if description is not None:
+            return break_text(description, self._dc, max_text_width)
 
     def draw_balloon_bg(self, inner_size, tip_pos, above, sticky):
         """
@@ -134,3 +162,74 @@ class BallonDrawer:
         bh = H + R + H_ARROW + 1
         bounding_rect = wx.Rect(bx, by, bw, bh)
         return bounding_rect, left_x + BALLOON_RADIUS, top_y + BALLOON_RADIUS
+
+
+def break_text(text, dc, max_width_in_px):
+    """ Break the text into lines so that they fits within the given width."""
+    sentences = text.split("\n")
+    lines = []
+    for sentence in sentences:
+        w, _ = dc.GetTextExtent(sentence)
+        if w <= max_width_in_px:
+            lines.append(sentence)
+        # The sentence is too long. Break it.
+        else:
+            break_sentence(dc, lines, sentence, max_width_in_px)
+    return lines
+
+
+def break_sentence(dc, lines, sentence, max_width_in_px):
+    """Break a sentence into lines."""
+    line = []
+    max_word_len_in_ch = get_max_word_length(dc, max_width_in_px)
+    words = break_line(dc, sentence, max_word_len_in_ch)
+    for word in words:
+        w, _ = dc.GetTextExtent("".join(line) + word + " ")
+        # Max line length reached. Start a new line
+        if w > max_width_in_px:
+            lines.append("".join(line))
+            line = []
+        line.append(word + " ")
+        # Word edning with '-' is a broken word. Start a new line
+        if word.endswith('-'):
+            lines.append("".join(line))
+            line = []
+    if len(line) > 0:
+        lines.append("".join(line))
+
+
+def break_line(dc, sentence, max_word_len_in_ch):
+    """Break a sentence into words."""
+    words = sentence.split(" ")
+    new_words = []
+    for word in words:
+        broken_words = break_word(dc, word, max_word_len_in_ch)
+        for broken_word in broken_words:
+            new_words.append(broken_word)
+    return new_words
+
+
+def break_word(dc, word, max_word_len_in_ch):
+    """
+    Break words if they are too long.
+
+    If a single word is too long to fit we have to break it.
+    If not we just return the word given.
+    """
+    words = []
+    while len(word) > max_word_len_in_ch:
+        word1 = word[0:max_word_len_in_ch] + "-"
+        word = word[max_word_len_in_ch:]
+        words.append(word1)
+    words.append(word)
+    return words
+
+
+def get_max_word_length(dc, max_width_in_px):
+    TEMPLATE_CHAR = 'K'
+    word = [TEMPLATE_CHAR]
+    w, _ = dc.GetTextExtent("".join(word))
+    while w < max_width_in_px:
+        word.append(TEMPLATE_CHAR)
+        w, _ = dc.GetTextExtent("".join(word))
+    return len(word) - 1

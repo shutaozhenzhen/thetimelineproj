@@ -518,20 +518,6 @@ class DefaultDrawingAlgorithm(Drawer):
     def _draw_ballon(self, event, event_rect, sticky):
         """Draw one ballon on a selected event that has 'description' data."""
 
-        def max_text_width(icon_width):
-            MIN_TEXT_WIDTH = 200
-            SLIDER_WIDTH = 20
-            padding = 2 * BALLOON_RADIUS
-            if icon_width > 0:
-                padding += BALLOON_RADIUS
-            else:
-                icon_width = 0
-            padding += icon_width
-            visble_background = self.scene.width - SLIDER_WIDTH
-            balloon_width = visble_background - event_rect.X - event_rect.width // 2 + ARROW_OFFSET
-            max_text_width = balloon_width - padding
-            return max(MIN_TEXT_WIDTH, max_text_width)
-
         def get_icon_size():
             (iw, ih) = (0, 0)
             icon = event.get_data("icon")
@@ -570,11 +556,6 @@ class DefaultDrawingAlgorithm(Drawer):
                 x = adjust_text_x_pos_when_icon_is_present(x)
                 draw_lines(lines, x, y)
 
-        def get_description_lines(max_text_width, iw):
-            description = event.get_data("description")
-            if description is not None:
-                return break_text(description, self.dc, max_text_width)
-
         def calc_inner_rect(w, h, max_text_width):
             th = len(lines) * self.dc.GetCharHeight()
             tw = 0
@@ -594,8 +575,8 @@ class DefaultDrawingAlgorithm(Drawer):
         ballon_drawer = BallonDrawer(self.dc)
         (inner_rect_w, inner_rect_h) = (iw, _) = ballon_drawer.get_icon_size(event)
         font.set_balloon_text_font(self.appearance.get_balloon_font(), self.dc)
-        max_text_width = max_text_width(iw)
-        lines = get_description_lines(max_text_width, iw)
+        max_text_width = ballon_drawer.max_text_width(self.scene, event_rect, iw)
+        lines = ballon_drawer.get_description_lines(event, max_text_width, iw)
         if lines is not None:
             inner_rect_w, inner_rect_h = calc_inner_rect(inner_rect_w, inner_rect_h, max_text_width)
         MIN_WIDTH = 100
@@ -621,74 +602,3 @@ class DefaultDrawingAlgorithm(Drawer):
         w, _ = self.dc.GetSize()
         return (self.scene.x_pos_for_time(time_period.start_time) < w and
                 self.scene.x_pos_for_time(time_period.end_time) > 0)
-
-
-def break_text(text, dc, max_width_in_px):
-    """ Break the text into lines so that they fits within the given width."""
-    sentences = text.split("\n")
-    lines = []
-    for sentence in sentences:
-        w, _ = dc.GetTextExtent(sentence)
-        if w <= max_width_in_px:
-            lines.append(sentence)
-        # The sentence is too long. Break it.
-        else:
-            break_sentence(dc, lines, sentence, max_width_in_px)
-    return lines
-
-
-def break_sentence(dc, lines, sentence, max_width_in_px):
-    """Break a sentence into lines."""
-    line = []
-    max_word_len_in_ch = get_max_word_length(dc, max_width_in_px)
-    words = break_line(dc, sentence, max_word_len_in_ch)
-    for word in words:
-        w, _ = dc.GetTextExtent("".join(line) + word + " ")
-        # Max line length reached. Start a new line
-        if w > max_width_in_px:
-            lines.append("".join(line))
-            line = []
-        line.append(word + " ")
-        # Word edning with '-' is a broken word. Start a new line
-        if word.endswith('-'):
-            lines.append("".join(line))
-            line = []
-    if len(line) > 0:
-        lines.append("".join(line))
-
-
-def break_line(dc, sentence, max_word_len_in_ch):
-    """Break a sentence into words."""
-    words = sentence.split(" ")
-    new_words = []
-    for word in words:
-        broken_words = break_word(dc, word, max_word_len_in_ch)
-        for broken_word in broken_words:
-            new_words.append(broken_word)
-    return new_words
-
-
-def break_word(dc, word, max_word_len_in_ch):
-    """
-    Break words if they are too long.
-
-    If a single word is too long to fit we have to break it.
-    If not we just return the word given.
-    """
-    words = []
-    while len(word) > max_word_len_in_ch:
-        word1 = word[0:max_word_len_in_ch] + "-"
-        word = word[max_word_len_in_ch:]
-        words.append(word1)
-    words.append(word)
-    return words
-
-
-def get_max_word_length(dc, max_width_in_px):
-    TEMPLATE_CHAR = 'K'
-    word = [TEMPLATE_CHAR]
-    w, _ = dc.GetTextExtent("".join(word))
-    while w < max_width_in_px:
-        word.append(TEMPLATE_CHAR)
-        w, _ = dc.GetTextExtent("".join(word))
-    return len(word) - 1
