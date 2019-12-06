@@ -106,7 +106,7 @@ class DefaultDrawingAlgorithm(Drawer):
     def _get_text_extent(self, text):
         self.dc.SetFont(self._event_text_font)
         tw, th = self.dc.GetTextExtent(text)
-        return (tw, th)
+        return tw, th
 
     def get_closest_overlapping_event(self, event_to_move, up=True):
         return self.scene.get_closest_overlapping_event(event_to_move, up=up)
@@ -212,11 +212,11 @@ class DefaultDrawingAlgorithm(Drawer):
     def _snap_region(self, time):
         left_strip_time = self.scene.minor_strip.start(time)
         right_strip_time = self.scene.minor_strip.increment(left_strip_time)
-        return (left_strip_time, right_strip_time)
+        return left_strip_time, right_strip_time
 
     def snap_selection(self, period_selection):
         start, end = period_selection
-        return (self.snap(start), self.snap(end))
+        return self.snap(start), self.snap(end)
 
     def event_at(self, x, y, alt_down=False):
         container_event = None
@@ -538,9 +538,9 @@ class DefaultDrawingAlgorithm(Drawer):
         top_rect = None
         self.dc.SetTextForeground(BLACK)
         for (event, rect) in self.scene.event_data:
-            if (event.get_data("description") is not None or event.get_data("icon") is not None):
+            if event.get_data("description") is not None or event.get_data("icon") is not None:
                 sticky = view_properties.event_has_sticky_balloon(event)
-                if (view_properties.event_is_hovered(event) or sticky):
+                if view_properties.event_is_hovered(event) or sticky:
                     if not sticky:
                         top_event, top_rect = event, rect
                     self._draw_ballon(event, rect, sticky)
@@ -570,7 +570,7 @@ class DefaultDrawingAlgorithm(Drawer):
             icon = event.get_data("icon")
             if icon is not None:
                 (iw, ih) = icon.Size
-            return (iw, ih)
+            return iw, ih
 
         def draw_lines(lines, x, y):
             font_h = self.dc.GetCharHeight()
@@ -742,7 +742,7 @@ class DefaultDrawingAlgorithm(Drawer):
         bw = W + R + 1
         bh = H + R + H_ARROW + 1
         bounding_rect = wx.Rect(bx, by, bw, bh)
-        return (bounding_rect, left_x + BALLOON_RADIUS, top_y + BALLOON_RADIUS)
+        return bounding_rect, left_x + BALLOON_RADIUS, top_y + BALLOON_RADIUS
 
     def get_period_xpos(self, time_period):
         w, _ = self.dc.GetSize()
