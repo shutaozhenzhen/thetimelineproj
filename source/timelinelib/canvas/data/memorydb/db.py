@@ -513,7 +513,8 @@ class MemoryDB(Observable):
 
     def _place_events_on_rows(self):
         rows = collections.defaultdict(lambda: [])
-        for event in self._length_sort():
+        sorted_events = EventSorter.length_sort(self.get_all_events())
+        for event in sorted_events:
             inx = 0
             while True:
                 if self._fits_on_row(rows[inx], event):
@@ -522,9 +523,6 @@ class MemoryDB(Observable):
                     break
                 inx += 1
         return rows
-
-    def _length_sort(self):
-        return EventSorter.length_sort(self.get_all_events())
 
     def _fits_on_row(self, row_events, event):
         for ev in row_events:
