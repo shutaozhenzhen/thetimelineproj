@@ -36,7 +36,6 @@ from timelinelib.canvas.data.memorydb.eventsorter import EventSorter
 from timelinelib.canvas.data.memorydb.query import Query
 from timelinelib.wxgui.utils import display_error_message
 
-
 # A category was added, edited, or deleted
 STATE_CHANGE_CATEGORY = 1
 # Something happened that changed the state of the timeline
@@ -176,15 +175,11 @@ class MemoryDB(Observable):
 
     def _get_events(self, criteria_fn):
         with self._query() as query:
-            return (
-                    self._get_milestones(criteria_fn) +
-                    sort_events(self.get_containers() + [
-                        query.get_event(id_)
-                        for id_, immutable_event
-                        in self._transactions.value.events
-                        if criteria_fn(immutable_event)
-                    ])
-            )
+            milestones = self._get_milestones(criteria_fn)
+            containers = self.get_containers()
+            events = [query.get_event(id_) for id_, immutable_event in self._transactions.value.events
+                      if criteria_fn(immutable_event)]
+            return milestones + sorted(containers + events, key=lambda event: event.sort_order)
 
     def _get_milestones(self, criteria_fn):
         with self._query() as query:
@@ -592,7 +587,3 @@ class MemoryDB(Observable):
             return _("Events are overlapping or distance is 0")
         else:
             return self.get_time_type().format_delta(distance)
-
-
-def sort_events(events):
-    return sorted(events, key=lambda event: event.sort_order)
