@@ -593,12 +593,9 @@ def sort_events(events):
 def _generic_event_search(events, search_string):
     def match(event):
         target = search_string.lower()
-        description = event.get_data("description")
-        if description is None:
-            description = ""
-        else:
-            description = description.lower()
-        return target in event.get_text().lower() or target in description
+        text = event.get_text().lower()
+        description = event.get_data("description", default="").lower()
+        return target in text + description
 
     def mean_time(event):
         return event.mean_time()

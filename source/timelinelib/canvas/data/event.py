@@ -334,14 +334,14 @@ class Event(ItemBase, TimelineItem):
             self.locked = locked
         return self
 
-    def get_data(self, event_id):
+    def get_data(self, event_id, default=None):
         """
         Return data with the given id or None if no data with that id exists.
 
         See set_data for information how ids map to data.
         """
         if event_id == "description":
-            return self.description
+            return self.description or default
         elif event_id == "icon":
             return self.icon
         elif event_id == "hyperlink":
