@@ -30,3 +30,14 @@ class EventSorter:
                     event.sort_order = self._sort_order
                     event.save()
                 self._sort_order += 1
+
+    @staticmethod
+    def length_sort(events):
+        reordered_events = [
+            event
+            for event
+            in events
+            if not event.is_subevent() and not event.is_milestone()
+        ]
+        return sorted(reordered_events, key=lambda e: e.length, reverse=True)
+
