@@ -31,6 +31,10 @@ class TimelineItem:
     def get_time_period(self):
         return self._immutable_value.time_period
 
+    @property
+    def length(self):
+        return self.get_time_period().delta()
+
     def get_start_time(self):
         return self.time_period.get_start_time()
 

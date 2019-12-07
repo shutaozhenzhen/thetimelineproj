@@ -535,10 +535,7 @@ class MemoryDB(Observable):
         return reordered_events
 
     def _sort_by_length(self, events):
-        return sorted(events, key=self._event_length, reverse=True)
-
-    def _event_length(self, evt):
-        return evt.get_time_period().delta()
+        return sorted(events, key=lambda e: e.length, reverse=True)
 
     def _fits_on_row(self, row_events, event):
         for ev in row_events:
