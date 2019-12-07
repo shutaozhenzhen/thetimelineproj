@@ -232,10 +232,9 @@ class MemoryDB(Observable):
                 event = event_or_id
             else:
                 event = self.find_event_with_id(event_or_id)
-            event.db = self
-            event.delete()
         except Exception as e:
             raise TimelineIOError("Deleting event failed: %s" % e)
+        self._delete_item(event)
 
     def get_all_eras(self):
         return self._get_eras().get_all()
@@ -258,11 +257,7 @@ class MemoryDB(Observable):
         self._save_item(era)
 
     def delete_era(self, era):
-        try:
-            era.db = self
-            era.delete()
-        except Exception as e:
-            raise TimelineIOError("Deleting Era failed: %s" % e)
+        self._delete_item(era)
 
     def get_categories(self):
         with self._query() as query:
@@ -304,10 +299,9 @@ class MemoryDB(Observable):
                     category = query.get_category(category_or_id)
             if category.id in self._hidden_category_ids:
                 self._hidden_category_ids.remove(category.id)
-            category.db = self
-            category.delete()
         except Exception as e:
             raise TimelineIOError("Deleting category failed: %s" % e)
+        self._delete_item(category)
 
     def get_saved_now(self):
         return self.saved_now
@@ -586,3 +580,11 @@ class MemoryDB(Observable):
             item.save()
         except Exception as e:
             raise TimelineIOError(f"Saving {type(item).__name__} failed: {e}")
+
+    def _delete_item(self, item):
+        try:
+            item.db = self
+            item.delete()
+        except Exception as e:
+            raise TimelineIOError(f"Deleting {type(item).__name__} failed: {e}")
+
