@@ -162,16 +162,9 @@ class MemoryDB(Observable):
         return self._get_milestones(lambda immutable_event: True)
 
     def get_max_sort_order(self):
-        max = -1
-        for id_, immutable_value in self._transactions.value.milestones:
-            sort_order = immutable_value["sort_order"]
-            if sort_order > max:
-                max = sort_order
-        for id_, immutable_value in self._transactions.value.events:
-            sort_order = immutable_value["sort_order"]
-            if sort_order > max:
-                max = sort_order
-        return max
+        return max([-1] +
+                   [immutable_value["sort_order"] for id_, immutable_value in self._transactions.value.milestones] +
+                   [immutable_value["sort_order"] for id_, immutable_value in self._transactions.value.events])
 
     def _get_events(self, criteria_fn):
         with self._query() as query:
