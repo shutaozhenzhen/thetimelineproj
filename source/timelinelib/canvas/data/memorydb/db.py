@@ -140,7 +140,15 @@ class MemoryDB(Observable):
         self._notify(STATE_CHANGE_ANY)
 
     def search(self, search_string):
-        return _generic_event_search(self.get_all_events(), search_string)
+        def match(event):
+            target = search_string.lower()
+            text = event.get_text().lower()
+            description = event.get_data("description", default="").lower()
+            return target in text + description
+
+        matches = [event for event in self.get_all_events() if match(event)]
+        matches.sort(key=lambda e: e.mean_time())
+        return matches
 
     def get_events(self, time_period):
         return self._get_events(lambda immutable_event:
@@ -588,18 +596,3 @@ class MemoryDB(Observable):
 
 def sort_events(events):
     return sorted(events, key=lambda event: event.sort_order)
-
-
-def _generic_event_search(events, search_string):
-    def match(event):
-        target = search_string.lower()
-        text = event.get_text().lower()
-        description = event.get_data("description", default="").lower()
-        return target in text + description
-
-    def mean_time(event):
-        return event.mean_time()
-
-    matches = [event for event in events if match(event)]
-    matches.sort(key=mean_time)
-    return matches
