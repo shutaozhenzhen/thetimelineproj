@@ -524,11 +524,10 @@ class MemoryDB(Observable):
         return rows
 
     def _length_sort(self):
-        all_events = self.get_all_events()
         reordered_events = [
             event
             for event
-            in all_events
+            in self.get_all_events()
             if not event.is_subevent() and not event.is_milestone()
         ]
         return sorted(reordered_events, key=lambda e: e.length, reverse=True)
