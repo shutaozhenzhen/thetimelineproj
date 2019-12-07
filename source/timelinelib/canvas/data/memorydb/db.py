@@ -524,11 +524,8 @@ class MemoryDB(Observable):
                 inx += 1
         return rows
 
-    def _fits_on_row(self, row_events, event):
-        for ev in row_events:
-            if ev.overlaps(event):
-                return False
-        return True
+    def _fits_on_row(self, events_on_row, event):
+        return not [e for e in events_on_row if e.overlaps(event)]
 
     @contextlib.contextmanager
     def _query(self):
