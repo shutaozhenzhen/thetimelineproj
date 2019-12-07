@@ -531,11 +531,7 @@ class MemoryDB(Observable):
             in all_events
             if not event.is_subevent() and not event.is_milestone()
         ]
-        reordered_events = self._sort_by_length(reordered_events)
-        return reordered_events
-
-    def _sort_by_length(self, events):
-        return sorted(events, key=lambda e: e.length, reverse=True)
+        return sorted(reordered_events, key=lambda e: e.length, reverse=True)
 
     def _fits_on_row(self, row_events, event):
         for ev in row_events:
