@@ -224,7 +224,7 @@ class MemoryDB(Observable):
             raise TimelineIOError("Saving event failed: %s" % e)
 
     def save_event(self, event):
-        self.save_events([event])
+        self._save_item(event)
 
     def delete_event(self, event_or_id):
         try:
