@@ -506,7 +506,8 @@ class MemoryDB(Observable):
         event2 = self.find_event_with_id(event_ids[1])
         return event1.distance_to(event2)
 
-    def _set_events_order_from_rows(self, rows):
+    @staticmethod
+    def _set_events_order_from_rows(rows):
         event_sorter = EventSorter()
         for key in sorted(rows.keys()):
             event_sorter.save_sort_order(rows[key])
