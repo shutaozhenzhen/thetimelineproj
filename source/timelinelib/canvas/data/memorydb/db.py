@@ -255,11 +255,7 @@ class MemoryDB(Observable):
             )
 
     def save_era(self, era):
-        try:
-            era.db = self
-            era.save()
-        except Exception as e:
-            raise TimelineIOError(f"Saving {type(era).__name__} failed: {e}")
+        self._save_item(era)
 
     def delete_era(self, era):
         try:
@@ -285,11 +281,7 @@ class MemoryDB(Observable):
             ]
 
     def save_category(self, category):
-        try:
-            category.db = self
-            category.save()
-        except Exception as e:
-            raise TimelineIOError(f"Saving {type(category).__name__} failed: {e}")
+        self._save_item(category)
 
     def get_category_by_name(self, name):
         with self._query() as query:
@@ -587,3 +579,10 @@ class MemoryDB(Observable):
             return _("Events are overlapping or distance is 0")
         else:
             return self.get_time_type().format_delta(distance)
+
+    def _save_item(self, item):
+        try:
+            item.db = self
+            item.save()
+        except Exception as e:
+            raise TimelineIOError(f"Saving {type(item).__name__} failed: {e}")
