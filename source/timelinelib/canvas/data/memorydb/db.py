@@ -259,7 +259,7 @@ class MemoryDB(Observable):
             era.db = self
             era.save()
         except Exception as e:
-            raise TimelineIOError("Saving Era failed: %s" % e)
+            raise TimelineIOError(f"Saving {type(era).__name__} failed: {e}")
 
     def delete_era(self, era):
         try:
@@ -289,7 +289,7 @@ class MemoryDB(Observable):
             category.db = self
             category.save()
         except Exception as e:
-            raise TimelineIOError("Saving category failed: %s" % e)
+            raise TimelineIOError(f"Saving {type(category).__name__} failed: {e}")
 
     def get_category_by_name(self, name):
         with self._query() as query:
