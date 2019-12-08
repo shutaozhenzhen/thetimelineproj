@@ -133,7 +133,8 @@ class TimelineScene:
     def _event_rect_drawn_as_period(self, event_rect):
         return event_rect.Y >= self.divider_y
 
-    def _get_direction(self, period, up):
+    @staticmethod
+    def _get_direction(period, up):
         if up:
             if period:
                 direction = BACKWARD
@@ -164,7 +165,8 @@ class TimelineScene:
         else:
             return self._get_prev_overlapping_event(event_data, selected_event)
 
-    def _get_next_overlapping_event(self, event_data, selected_event):
+    @staticmethod
+    def _get_next_overlapping_event(event_data, selected_event):
         selected_event_found = False
         for (e, _) in event_data:
             if not selected_event.is_subevent() and e.is_subevent():
@@ -176,7 +178,8 @@ class TimelineScene:
                     selected_event_found = True
         return None
 
-    def _get_prev_overlapping_event(self, event_data, selected_event):
+    @staticmethod
+    def _get_prev_overlapping_event(event_data, selected_event):
         prev_event = None
         for (e, _) in event_data:
             if not selected_event.is_subevent() and e.is_subevent():
@@ -209,7 +212,7 @@ class TimelineScene:
         return result
 
     @staticmethod
-    def _get_container_subevents(self, container, events):
+    def _get_container_subevents(container, events):
         return [e for e in events if e.is_subevent() and e.container is container]
 
     def _calc_event_rects(self, events):
