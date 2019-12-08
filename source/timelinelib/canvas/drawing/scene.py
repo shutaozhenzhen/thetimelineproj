@@ -208,14 +208,11 @@ class TimelineScene:
         for event in events:
             if event.is_container():
                 result.append(event)
-                result.extend(self._get_container_subevents(event, events))
+                subevents = [e for e in events if e.is_subevent() and e.container is event]
+                result.extend(subevents)
             elif not event.is_subevent():
                 result.append(event)
         return result
-
-    @staticmethod
-    def _get_container_subevents(container, events):
-        return [e for e in events if e.is_subevent() and e.container is container]
 
     def _calc_event_rects(self, events):
         self.event_data = self._calc_non_overlapping_event_rects(events)
