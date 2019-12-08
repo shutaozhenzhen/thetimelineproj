@@ -375,11 +375,8 @@ class TimelineScene:
         return len(self.events_from_db) - self._count_visible_events()
 
     def _count_visible_events(self):
-        num_visible = 0
-        for (_, rect) in self.event_data:
-            if rect.Y < self.height and (rect.Y + rect.Height) > 0:
-                num_visible += 1
-        return num_visible
+        return len([rect for _, rect in self.event_data
+                    if rect.Y < self.height and (rect.Y + rect.Height) > 0])
 
     def _prevent_overlapping_by_adjusting_rect_y(self, event, event_rect):
         if event.is_milestone():
