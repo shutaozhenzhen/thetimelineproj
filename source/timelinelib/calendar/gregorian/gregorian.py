@@ -43,8 +43,7 @@ class GregorianDateTime:
 
     def __eq__(self, other):
         """ """
-        return (isinstance(other, self.__class__) and
-                self.to_tuple() == other.to_tuple())
+        return (isinstance(other, self.__class__) and self.to_tuple() == other.to_tuple())
 
     def __ne__(self, other):
         """ """
@@ -67,7 +66,6 @@ class GregorianDateTime:
         """ """
 
         def monday_week_1(year):
-            from timelinelib.calendar.gregorian.timetype import GregorianTimeType
             jan_4 = GregorianDateTime.from_ymd(year, 1, 4).to_time()
             return jan_4 - GregorianDelta.from_days(jan_4.day_of_week)
 
