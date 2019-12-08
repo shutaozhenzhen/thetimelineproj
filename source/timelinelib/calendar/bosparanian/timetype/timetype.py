@@ -202,14 +202,17 @@ class BosparanianTimeType(TimeType):
     def is_weekend_day(self, time):
         return self.get_day_of_week(time) in (0, 3)
 
-    def get_day_of_week(self, time):
+    @staticmethod
+    def get_day_of_week(time):
         return time.julian_day % 7
 
-    def create_time_picker(self, parent, *args, **kwargs):
+    @staticmethod
+    def create_time_picker(parent, *args, **kwargs):
         from timelinelib.calendar.bosparanian.timepicker.datetimepicker import BosparanianDateTimePicker
         return BosparanianDateTimePicker(parent, *args, **kwargs)
 
-    def create_period_picker(self, parent, *args, **kwargs):
+    @staticmethod
+    def create_period_picker(parent, *args, **kwargs):
         from timelinelib.calendar.bosparanian.periodpicker import BosparanianPeriodPicker
         return BosparanianPeriodPicker(parent, *args, **kwargs)
 
@@ -496,5 +499,4 @@ def move_period_num_years(period, num):
 
 
 def has_nonzero_time(time_period):
-    return (time_period.start_time.seconds != 0 or
-            time_period.end_time.seconds != 0)
+    return (time_period.start_time.seconds != 0 or time_period.end_time.seconds != 0)
