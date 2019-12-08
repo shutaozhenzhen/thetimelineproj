@@ -202,11 +202,11 @@ class CopticTimeType(GregorianTimeType):
         return get_day_of_week(time) in (5, 6)
 
     def create_time_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.coptic.timepicker.datetime import CopticDateTimePicker
+        from timelinelib.calendar.coptic.timepicker.datetimepicker import CopticDateTimePicker
         return CopticDateTimePicker(parent, *args, **kwargs)
 
     def create_period_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.coptic.timepicker.period import CopticPeriodPicker
+        from timelinelib.calendar.coptic.timepicker.periodpicker import CopticPeriodPicker
         return CopticPeriodPicker(parent, *args, **kwargs)
 
 

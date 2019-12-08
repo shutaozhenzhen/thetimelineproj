@@ -20,8 +20,8 @@ from unittest.mock import Mock
 import humblewx
 
 from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
-from timelinelib.calendar.coptic.timepicker.period import CopticPeriodPicker
-from timelinelib.calendar.coptic.timepicker.period import CopticPeriodPickerController
+from timelinelib.calendar.coptic.timepicker.periodpicker import CopticPeriodPicker
+from timelinelib.calendar.coptic.timepicker.periodpicker import CopticPeriodPickerController
 from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase

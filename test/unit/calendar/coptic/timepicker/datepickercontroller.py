@@ -21,7 +21,7 @@ import humblewx
 from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.framework import Dialog
-import timelinelib.calendar.coptic.timepicker.date as cdp
+import timelinelib.calendar.coptic.timepicker.datepicker as cdp
 
 
 class describe_new_coptic_date_picker_view(UnitTestCase):
