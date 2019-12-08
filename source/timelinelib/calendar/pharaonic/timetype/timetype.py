@@ -204,11 +204,11 @@ class PharaonicTimeType(GregorianTimeType):
         return pharaonic_time.day in (9, 10, 19, 20, 29, 30)
 
     def create_time_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.pharaonic.timepicker.datetime import PharaonicDateTimePicker
+        from timelinelib.calendar.pharaonic.timepicker.datetimepicker import PharaonicDateTimePicker
         return PharaonicDateTimePicker(parent, *args, **kwargs)
 
     def create_period_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.pharaonic.timepicker.period import PharaonicPeriodPicker
+        from timelinelib.calendar.pharaonic.timepicker.periodpicker import PharaonicPeriodPicker
         return PharaonicPeriodPicker(parent, *args, **kwargs)
 
 

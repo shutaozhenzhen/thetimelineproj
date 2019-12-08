@@ -21,8 +21,8 @@ from unittest.mock import sentinel
 import wx
 
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
-from timelinelib.calendar.pharaonic.timepicker.datecontroller import PharaonicDatePickerController
-from timelinelib.calendar.pharaonic.timepicker.date import PharaonicDatePicker
+from timelinelib.calendar.pharaonic.timepicker.datepickercontroller import PharaonicDatePickerController
+from timelinelib.calendar.pharaonic.timepicker.datepicker import PharaonicDatePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
 
