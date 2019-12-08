@@ -60,6 +60,9 @@ class TimelineScene:
     def center_text(self):
         return self._appearance.get_center_event_texts()
 
+    def never_show_period_events_as_point_events(self):
+        return self._appearance.get_never_show_period_events_as_point_events()
+
     def set_outer_padding(self, outer_padding):
         self._outer_padding = outer_padding
 
@@ -325,9 +328,6 @@ class TimelineScene:
             return self._get_text_size_fn(text)
         else:
             return self._get_text_size_fn(" ")
-
-    def never_show_period_events_as_point_events(self):
-        return self._appearance.get_never_show_period_events_as_point_events()
 
     def _calc_ideal_wx_rect(self, rx, ry, rw, rh):
         # Drawing stuff on huge x-coordinates causes drawing to fail.
