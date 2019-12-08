@@ -84,6 +84,7 @@ class GregorianDateTime:
             if diff >= 0:
                 return diff
             raise ValueError("should not end up here")
+
         return days_since_monday_week_1(self.to_time()) // 7 + 1
 
     def is_bc(self):
@@ -111,8 +112,7 @@ class GregorianDateTime:
 
     def to_tuple(self):
         """ """
-        return (self.year, self.month, self.day, self.hour, self.minute,
-                self.second)
+        return self.year, self.month, self.day, self.hour, self.minute, self.second
 
     def to_date_tuple(self):
         """ """
@@ -166,12 +166,12 @@ def is_leap_year(year):
 
 def is_valid_time(hour, minute, second):
     """ """
-    return (0 <= hour < 24 and 0 <= minute < 60 and 0 <= second < 60)
+    return 0 <= hour < 24 and 0 <= minute < 60 and 0 <= second < 60
 
 
 def is_valid(year, month, day):
     """ """
-    return (1 <= month <= 12 and 1 <= day <= days_in_month(year, month))
+    return 1 <= month <= 12 and 1 <= day <= days_in_month(year, month)
 
 
 def julian_day_to_gregorian_ymd(julian_day):
@@ -254,7 +254,8 @@ def julian_day_to_gregorian_ymd(julian_day):
     This proves 1).
     """
     if julian_day < GregorianTime.MIN_JULIAN_DAY:
-        raise ValueError("julian_day_to_gregorian_ymd only works for julian days >= %d, but was %d" % (GregorianTime.MIN_JULIAN_DAY, julian_day))
+        raise ValueError("julian_day_to_gregorian_ymd only works for julian days >= %d, but was %d" % (
+            GregorianTime.MIN_JULIAN_DAY, julian_day))
     a = julian_day + 32044
     b = ((4 * a) + 3) // 146097
     c = a - ((b * 146097) // 4)
@@ -335,7 +336,8 @@ def gregorian_ymd_to_julian_day(year, month, day):
                   + (y // 400)
                   - 32045)
     if julian_day < GregorianTime.MIN_JULIAN_DAY:
-        raise ValueError("gregorian_ymd_to_julian_day only works for julian days >= %d, but was %d" % (GregorianTime.MIN_JULIAN_DAY, julian_day))
+        raise ValueError("gregorian_ymd_to_julian_day only works for julian days >= %d, but was %d" % (
+            GregorianTime.MIN_JULIAN_DAY, julian_day))
     return julian_day
 
 
@@ -381,8 +383,8 @@ def gregorian_ymd_to_julian_day_alt(year, month, day):
     C = -38
     h = month - m
     g = year + y - (n - h) // n
-    f = (h -1 + n) % n
-    e = (p * g + q) // r + day -1 - j
+    f = (h - 1 + n) % n
+    e = (p * g + q) // r + day - 1 - j
     julian_day = e + (s * f + t) // u
     julian_day = julian_day - (3 * ((g + A) // 100)) // 4 - C
     return julian_day
