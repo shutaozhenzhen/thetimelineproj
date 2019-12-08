@@ -19,12 +19,12 @@
 from unittest.mock import Mock
 
 from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
-from timelinelib.calendar.pharaonic.timepicker.date import PharaonicDatePicker
-from timelinelib.calendar.pharaonic.timepicker.datetime import CalendarPopup
-from timelinelib.calendar.pharaonic.timepicker.datetime import CalendarPopupController
-from timelinelib.calendar.pharaonic.timepicker.datetime import PharaonicDateTimePicker
-from timelinelib.calendar.pharaonic.timepicker.datetime import PharaonicDateTimePickerController
-from timelinelib.calendar.pharaonic.timepicker.datetime import PharaonicTimePicker
+from timelinelib.calendar.pharaonic.timepicker.datepicker import PharaonicDatePicker
+from timelinelib.calendar.pharaonic.timepicker.datetimepicker import CalendarPopup
+from timelinelib.calendar.pharaonic.timepicker.calendarpopupcontroller import CalendarPopupController
+from timelinelib.calendar.pharaonic.timepicker.datetimepicker import PharaonicDateTimePicker
+from timelinelib.calendar.pharaonic.timepicker.datetimepicker import PharaonicDateTimePickerController
+from timelinelib.calendar.pharaonic.timepicker.datetimepicker import PharaonicTimePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
 

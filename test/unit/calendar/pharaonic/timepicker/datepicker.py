@@ -21,7 +21,7 @@ import humblewx
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.framework import Dialog
-import timelinelib.calendar.pharaonic.timepicker.date as pdp
+import timelinelib.calendar.pharaonic.timepicker.datepicker as pdp
 
 
 class describe_new_pharaonic_date_picker_view(UnitTestCase):

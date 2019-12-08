@@ -20,8 +20,8 @@ from unittest.mock import Mock
 import humblewx
 
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
-from timelinelib.calendar.pharaonic.timepicker.period import PharaonicPeriodPicker
-from timelinelib.calendar.pharaonic.timepicker.period import PharaonicPeriodPickerController
+from timelinelib.calendar.pharaonic.timepicker.periodpicker import PharaonicPeriodPicker
+from timelinelib.calendar.pharaonic.timepicker.periodpicker import PharaonicPeriodPickerController
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
