@@ -57,6 +57,9 @@ class TimelineScene:
     def appearance(self):
         return self._appearance
 
+    def center_text(self):
+        return self._appearance.get_center_event_texts()
+
     def set_outer_padding(self, outer_padding):
         self._outer_padding = outer_padding
 
@@ -115,9 +118,6 @@ class TimelineScene:
             direction = self._get_direction(period, up)
             evt = self._get_overlapping_event(period, direction, selected_event, rect)
             return evt, direction
-
-    def center_text(self):
-        return self._appearance.get_center_event_texts()
 
     def _inflate_event_rects_to_get_right_dimensions_for_overlap_calculations(self):
         for (_, rect) in self.event_data:
