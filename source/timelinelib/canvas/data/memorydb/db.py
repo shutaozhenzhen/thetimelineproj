@@ -95,6 +95,10 @@ class MemoryDB(Observable):
             wrapper.container = container
         return wrapper
 
+    @property
+    def now(self):
+        return self.time_type.now()
+
     def next_id(self):
         self._id_counter += 1
         return self._id_counter
