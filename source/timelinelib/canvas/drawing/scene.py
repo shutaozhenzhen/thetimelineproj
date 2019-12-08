@@ -372,11 +372,9 @@ class TimelineScene:
         return self._db.time_type.is_weekend_day(time)
 
     def get_hidden_event_count(self):
-        return len(self.events_from_db) - self._count_visible_events()
-
-    def _count_visible_events(self):
-        return len([rect for _, rect in self.event_data
-                    if rect.Y < self.height and (rect.Y + rect.Height) > 0])
+        visible_events_count = len([rect for _, rect in self.event_data
+                                    if rect.Y < self.height and (rect.Y + rect.Height) > 0])
+        return len(self.events_from_db) - visible_events_count
 
     def _prevent_overlapping_by_adjusting_rect_y(self, event, event_rect):
         if event.is_milestone():
