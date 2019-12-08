@@ -19,12 +19,12 @@
 from unittest.mock import Mock
 
 from timelinelib.calendar.coptic.coptic import CopticDateTime
-from timelinelib.calendar.coptic.timepicker.date import CopticDatePicker
-from timelinelib.calendar.coptic.timepicker.datetime import CalendarPopup
-from timelinelib.calendar.coptic.timepicker.datetime import CalendarPopupController
-from timelinelib.calendar.coptic.timepicker.datetime import CopticDateTimePicker
-from timelinelib.calendar.coptic.timepicker.datetime import CopticDateTimePickerController
-from timelinelib.calendar.coptic.timepicker.datetime import CopticTimePicker
+from timelinelib.calendar.coptic.timepicker.datepicker import CopticDatePicker
+from timelinelib.calendar.coptic.timepicker.datetimepicker import CalendarPopup
+from timelinelib.calendar.coptic.timepicker.calendarpopupcontroller import CalendarPopupController
+from timelinelib.calendar.coptic.timepicker.datetimepicker import CopticDateTimePicker
+from timelinelib.calendar.coptic.timepicker.datetimepicker import CopticDateTimePickerController
+from timelinelib.calendar.coptic.timepicker.datetimepicker import CopticTimePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
 

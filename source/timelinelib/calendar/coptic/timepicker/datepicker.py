@@ -19,10 +19,10 @@
 import wx
 
 from timelinelib.calendar.coptic.coptic import CopticDateTime
-from timelinelib.calendar.coptic.time import CopticDelta
-from timelinelib.calendar.coptic.timepicker.datecontroller import CopticDatePickerController
+from timelinelib.calendar.coptic.timepicker.datepickercontroller import CopticDatePickerController
 from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.wxgui.components.textctrl import TextCtrl
+from timelinelib.calendar.coptic.timepicker.datemodifier import DateModifier
 
 
 class CopticDatePicker(wx.Panel):
@@ -31,10 +31,7 @@ class CopticDatePicker(wx.Panel):
         wx.Panel.__init__(self, parent)
         self._controller = CopticDatePickerController(self)
         self._create_gui(date_formatter)
-        self._controller.on_init(
-            date_formatter,
-            DateModifier()
-        )
+        self._controller.on_init(date_formatter, DateModifier())
 
     def _create_gui(self, date_formatter):
         self._create_date_text(date_formatter)
@@ -62,7 +59,8 @@ class CopticDatePicker(wx.Panel):
         sizer.Add(self.bc_button, flag=wx.EXPAND)
         self.SetSizer(sizer)
 
-    def _format_sample_date(self, date_formatter):
+    @staticmethod
+    def _format_sample_date(date_formatter):
         return date_formatter.format(
             CopticDateTime.from_time(
                 CopticTimeType().now()
@@ -99,63 +97,3 @@ class CopticDatePicker(wx.Panel):
     def SetBackgroundColour(self, colour):
         self.date_text.SetBackgroundColour(colour)
         self.date_text.Refresh()
-
-
-class DateModifier:
-
-    def increment_year(self, date):
-        max_year = CopticDateTime.from_time(CopticTimeType().get_max_time()).year
-        year, month, day = date
-        if year < max_year - 1:
-            return self._set_valid_day(year + 1, month, day)
-        return date
-
-    def increment_month(self, date):
-        max_year = CopticDateTime.from_time(CopticTimeType().get_max_time()).year
-        year, month, day = date
-        if month < 13:
-            return self._set_valid_day(year, month + 1, day)
-        elif year < max_year - 1:
-            return self._set_valid_day(year + 1, 1, day)
-        return date
-
-    def increment_day(self, date):
-        year, month, day = date
-        time = CopticDateTime.from_ymd(year, month, day).to_time()
-        if time < CopticTimeType().get_max_time() - CopticDelta.from_days(1):
-            return CopticDateTime.from_time(time + CopticDelta.from_days(1)).to_date_tuple()
-        return date
-
-    def decrement_year(self, date):
-        year, month, day = date
-        if year > CopticDateTime.from_time(CopticTimeType().get_min_time()).year:
-            return self._set_valid_day(year - 1, month, day)
-        return date
-
-    def decrement_month(self, date):
-        year, month, day = date
-        if month > 1:
-            return self._set_valid_day(year, month - 1, day)
-        elif year > CopticDateTime.from_time(CopticTimeType().get_min_time()).year:
-            return self._set_valid_day(year - 1, 13, day)
-        return date
-
-    def decrement_day(self, date):
-        year, month, day = date
-        if day > 1:
-            return self._set_valid_day(year, month, day - 1)
-        elif month > 1:
-            return self._set_valid_day(year, month - 1, 30)
-        elif year > CopticDateTime.from_time(CopticTimeType().get_min_time()).year:
-            return self._set_valid_day(year - 1, 12, 30)
-        return date
-
-    def _set_valid_day(self, new_year, new_month, new_day):
-        done = False
-        while not done:
-            try:
-                date = CopticDateTime.from_ymd(new_year, new_month, new_day)
-                done = True
-            except Exception:
-                new_day -= 1
-        return date.to_date_tuple()

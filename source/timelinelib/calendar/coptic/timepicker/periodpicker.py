@@ -17,10 +17,8 @@
 
 
 from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
-from timelinelib.calendar.coptic.timetype.timetype import has_nonzero_time
-from timelinelib.canvas.data import TimePeriod
-from timelinelib.wxgui.framework import Controller
 from timelinelib.wxgui.framework import Panel
+from timelinelib.calendar.coptic.timepicker.periodpickercontroller import CopticPeriodPickerController
 
 
 class CopticPeriodPicker(Panel):
@@ -108,30 +106,3 @@ class CopticPeriodPicker(Panel):
     def DisableTime(self):
         self.SetShowTime(False)
         self.show_time_checkbox.Disable()
-
-
-class CopticPeriodPickerController(Controller):
-
-    def get_value(self):
-        return TimePeriod(self._get_start(), self._get_end())
-
-    def set_value(self, time_period):
-        self.view.SetStartValue(time_period.get_start_time())
-        self.view.SetEndValue(time_period.get_end_time())
-        self.view.SetShowPeriod(time_period.is_period())
-        self.view.SetShowTime(has_nonzero_time(time_period))
-
-    def on_period_checkbox_changed(self, event):
-        self.view.SetShowPeriod(event.IsChecked())
-
-    def on_show_time_checkbox_changed(self, event):
-        self.view.SetShowTime(event.IsChecked())
-
-    def _get_start(self):
-        return self.view.GetStartValue()
-
-    def _get_end(self):
-        if self.view.GetShowPeriod():
-            return self.view.GetEndValue()
-        else:
-            return self._get_start()

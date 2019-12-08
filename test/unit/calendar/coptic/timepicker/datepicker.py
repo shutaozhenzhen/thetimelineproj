@@ -21,8 +21,8 @@ from unittest.mock import sentinel
 import wx
 
 from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
-from timelinelib.calendar.coptic.timepicker.datecontroller import CopticDatePickerController
-from timelinelib.calendar.coptic.timepicker.date import CopticDatePicker
+from timelinelib.calendar.coptic.timepicker.datepickercontroller import CopticDatePickerController
+from timelinelib.calendar.coptic.timepicker.datepicker import CopticDatePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
 
