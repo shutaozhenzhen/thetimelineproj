@@ -130,7 +130,6 @@ class TimelineScene:
         for (evt, rect) in self.event_data:
             if evt == event:
                 return rect
-        return None
 
     def _event_rect_drawn_as_period(self, event_rect):
         return event_rect.Y >= self.divider_y
@@ -176,7 +175,6 @@ class TimelineScene:
             else:
                 if e == selected_event:
                     selected_event_found = True
-        return None
 
     @staticmethod
     def _get_prev_overlapping_event(event_data, selected_event):
