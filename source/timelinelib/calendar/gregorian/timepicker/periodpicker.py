@@ -17,8 +17,7 @@
 
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.canvas.data import TimePeriod
-from timelinelib.wxgui.framework import Controller
+from timelinelib.calendar.gregorian.timepicker.periodpickercontroller import GregorianPeriodPickerController
 from timelinelib.wxgui.framework import Panel
 
 
@@ -107,30 +106,3 @@ class GregorianPeriodPicker(Panel):
     def DisableTime(self):
         self.SetShowTime(False)
         self.show_time_checkbox.Disable()
-
-
-class GregorianPeriodPickerController(Controller):
-
-    def get_value(self):
-        return TimePeriod(self._get_start(), self._get_end())
-
-    def set_value(self, time_period):
-        self.view.SetStartValue(time_period.get_start_time())
-        self.view.SetEndValue(time_period.get_end_time())
-        self.view.SetShowPeriod(time_period.is_period())
-        self.view.SetShowTime(time_period.has_nonzero_time())
-
-    def on_period_checkbox_changed(self, event):
-        self.view.SetShowPeriod(event.IsChecked())
-
-    def on_show_time_checkbox_changed(self, event):
-        self.view.SetShowTime(event.IsChecked())
-
-    def _get_start(self):
-        return self.view.GetStartValue()
-
-    def _get_end(self):
-        if self.view.GetShowPeriod():
-            return self.view.GetEndValue()
-        else:
-            return self._get_start()

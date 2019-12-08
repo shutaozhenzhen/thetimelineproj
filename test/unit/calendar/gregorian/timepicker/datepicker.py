@@ -21,7 +21,7 @@ import humblewx
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.wxgui.framework import Dialog
-import timelinelib.calendar.gregorian.timepicker.date as gdp
+import timelinelib.calendar.gregorian.timepicker.datepicker as gdp
 
 
 class describe_new_gregorian_date_picker_view(UnitTestCase):
