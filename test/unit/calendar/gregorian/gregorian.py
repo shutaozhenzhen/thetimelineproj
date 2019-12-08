@@ -23,6 +23,8 @@ import wx
 from timelinelib.calendar.gregorian.time import GregorianTime
 from timelinelib.test.cases.unit import UnitTestCase
 import timelinelib.calendar.gregorian.gregorian as gregorian
+from timelinelib.calendar.gregorian.gregorian2julian import gregorian_ymd_to_julian_day
+from timelinelib.calendar.gregorian.gregorian2julian import gregorian_ymd_to_julian_day_alt
 
 
 class describe_gregorian(UnitTestCase):
@@ -106,8 +108,8 @@ class GregorianConversionsSpec(UnitTestCase):
 
     def test_new_to_julian_day(self):
         """ """
-        julian_day2 = gregorian.gregorian_ymd_to_julian_day_alt(2019, 6, 24)
-        julian_day1 = gregorian.gregorian_ymd_to_julian_day(2019, 6, 24)
+        julian_day2 = gregorian_ymd_to_julian_day_alt(2019, 6, 24)
+        julian_day1 = gregorian_ymd_to_julian_day(2019, 6, 24)
         self.assertEqual(julian_day1, julian_day2)
 
 
