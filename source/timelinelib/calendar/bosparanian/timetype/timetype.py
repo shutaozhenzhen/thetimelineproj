@@ -206,7 +206,7 @@ class BosparanianTimeType(TimeType):
         return time.julian_day % 7
 
     def create_time_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.bosparanian.timepicker import BosparanianDateTimePicker
+        from timelinelib.calendar.bosparanian.timepicker.datetimepicker import BosparanianDateTimePicker
         return BosparanianDateTimePicker(parent, *args, **kwargs)
 
     def create_period_picker(self, parent, *args, **kwargs):
