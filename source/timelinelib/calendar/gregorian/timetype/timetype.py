@@ -201,11 +201,11 @@ class GregorianTimeType(TimeType):
         return time.is_weekend_day
 
     def create_time_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.gregorian.timepicker.datetime import GregorianDateTimePicker
+        from timelinelib.calendar.gregorian.timepicker.datetimepicker import GregorianDateTimePicker
         return GregorianDateTimePicker(parent, *args, **kwargs)
 
     def create_period_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.gregorian.timepicker.period import GregorianPeriodPicker
+        from timelinelib.calendar.gregorian.timepicker.periodpicker import GregorianPeriodPicker
         return GregorianPeriodPicker(parent, *args, **kwargs)
 
 

@@ -19,12 +19,12 @@
 from unittest.mock import Mock
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
-from timelinelib.calendar.gregorian.timepicker.date import GregorianDatePicker
-from timelinelib.calendar.gregorian.timepicker.datetime import CalendarPopup
-from timelinelib.calendar.gregorian.timepicker.datetime import CalendarPopupController
-from timelinelib.calendar.gregorian.timepicker.datetime import GregorianDateTimePicker
-from timelinelib.calendar.gregorian.timepicker.datetime import GregorianDateTimePickerController
-from timelinelib.calendar.gregorian.timepicker.datetime import GregorianTimePicker
+from timelinelib.calendar.gregorian.timepicker.datepicker import GregorianDatePicker
+from timelinelib.calendar.gregorian.timepicker.datetimepicker import CalendarPopup
+from timelinelib.calendar.gregorian.timepicker.calendarpopupcontroller import CalendarPopupController
+from timelinelib.calendar.gregorian.timepicker.datetimepicker import GregorianDateTimePicker
+from timelinelib.calendar.gregorian.timepicker.datetimepicker import GregorianDateTimePickerController
+from timelinelib.calendar.gregorian.timepicker.datetimepicker import GregorianTimePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
 

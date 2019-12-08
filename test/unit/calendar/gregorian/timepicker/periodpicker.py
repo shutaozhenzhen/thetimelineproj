@@ -20,8 +20,8 @@ from unittest.mock import Mock
 import humblewx
 
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
-from timelinelib.calendar.gregorian.timepicker.period import GregorianPeriodPicker
-from timelinelib.calendar.gregorian.timepicker.period import GregorianPeriodPickerController
+from timelinelib.calendar.gregorian.timepicker.periodpicker import GregorianPeriodPicker
+from timelinelib.calendar.gregorian.timepicker.periodpicker import GregorianPeriodPickerController
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase

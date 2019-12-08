@@ -20,7 +20,7 @@ import wx
 
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.time import GregorianDelta
-from timelinelib.calendar.gregorian.timepicker.datecontroller import GregorianDatePickerController
+from timelinelib.calendar.gregorian.timepicker.datepickercontroller import GregorianDatePickerController
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.wxgui.components.textctrl import TextCtrl
 
