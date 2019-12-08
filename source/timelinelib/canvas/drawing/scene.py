@@ -110,12 +110,12 @@ class TimelineScene:
         # The result on the GUI is that the event won't be moved vertically. And 
         # that's better then an exception!
         if rect is None: 
-            return (None, 1)
+            return None, 1
         else:
             period = self._event_rect_drawn_as_period(rect)
             direction = self._get_direction(period, up)
             evt = self._get_overlapping_event(period, direction, selected_event, rect)
-            return (evt, direction)
+            return evt, direction
 
     def center_text(self):
         return self._appearance.get_center_event_texts()
@@ -367,7 +367,7 @@ class TimelineScene:
             self.minor_strip.set_skip_s_in_decade_text(self._view_properties.get_skip_s_in_decade_text())
         fill(major_strip_data, self.major_strip)
         fill(minor_strip_data, self.minor_strip)
-        return (minor_strip_data, major_strip_data)
+        return minor_strip_data, major_strip_data
 
     def minor_strip_is_day(self):
         return self.minor_strip.is_day()
