@@ -34,7 +34,7 @@ class ScrollByDragInputHandler(InputHandler):
         self.last_mouse_pos = y
         self.view_height = self.timeline_canvas.GetSize()[1]
         self.start_time = start_time
-        self.last_clock_time = time.clock()
+        self.last_clock_time = time.process_time()
         self.last_x = 0
         self.last_x_distance = 0
         self.last_y = 0
@@ -61,7 +61,7 @@ class ScrollByDragInputHandler(InputHandler):
     def _calculate_sped(self, x):
         self.last_x_distance = x - self.last_x
         self.last_x = x
-        current_clock_time = time.clock()
+        current_clock_time = time.process_time()
         elapsed_clock_time = current_clock_time - self.last_clock_time
         if elapsed_clock_time == 0:
             self.speed_px_per_sec = self.MAX_SPEED
@@ -82,11 +82,11 @@ class ScrollByDragInputHandler(InputHandler):
         value_factor = self._calculate_scroll_factor()
         inertial_func = (0.20, 0.15, 0.10, 0.10, 0.10, 0.08, 0.06, 0.06, 0.05)
         self.timeline_canvas.UseFastDraw(True)
-        next_frame_time = time.clock()
+        next_frame_time = time.process_time()
         for value in inertial_func:
             self.timeline_canvas.Scroll(value * value_factor * 0.1)
             next_frame_time += frame_time
-            sleep_time = next_frame_time - time.clock()
+            sleep_time = next_frame_time - time.process_time()
             if sleep_time >= 0:
                 time.sleep(sleep_time)
         self.timeline_canvas.UseFastDraw(False)
