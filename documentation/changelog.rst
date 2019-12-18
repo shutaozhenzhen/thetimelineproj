@@ -39,6 +39,9 @@ Fixed crash reports and bugs:
 * ``error : a "calendar.bmp" file is missing.``
   Using calendar.png instead.
 
+* ``UnicodeDecodeError: 'gbk' codec can't decode byte 0x93 in position 3750: Illegal multibyte sequence.``
+  Using utf-8 encoding when reading first line in timeline file.
+
 Version 2.0.0
 --------------
 
