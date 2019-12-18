@@ -134,7 +134,7 @@ def file_starts_with(path, start):
 
 def read_first_line(path):
     try:
-        f = open(path)
+        f = open(path, encoding="utf-8")
         try:
             line = f.readline()
             return line
