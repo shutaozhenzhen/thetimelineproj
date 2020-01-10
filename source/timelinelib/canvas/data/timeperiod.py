@@ -162,6 +162,9 @@ class TimePeriod:
         """
         return self.start_time + (self.delta() / 2)
 
+    def duration(self):
+        return self.end_time - self.start_time
+
     def zoom(self, times, ratio=0.5):
         start_delta = self.delta() * (times * ratio / 5.0)
         end_delta = self.delta() * (-times * (1.0 - ratio) / 5.0)
