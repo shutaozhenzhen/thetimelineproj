@@ -18,8 +18,6 @@
 
 from timelinelib.wxgui.dialogs.eventduration.controller import EventsDurationController
 from timelinelib.wxgui.framework import Dialog
-from timelinelib.wxgui.utils import display_error_message
-from timelinelib.wxgui.utils import _set_focus_and_select
 
 
 class EventDurationDialog(Dialog):
@@ -79,7 +77,7 @@ class EventDurationDialog(Dialog):
             "category_text": _("Category:"),
             "duration_text": _("Duration:"),
             "duration_type_text": _("Duration Type:"),
-            "duration_type_choices": ['hours', 'workdays', 'days', 'minutes', 'seconds'],
+            "duration_type_choices": [_('hours'), _('workdays'), _('days'), _('minutes'), _('seconds')],
         }, title=title)
         self.controller.on_init(db, category)
         self.duration_type_choice.Select(0)
@@ -103,6 +101,6 @@ class EventDurationDialog(Dialog):
 
 
 def open_measure_duration_dialog(parent, timeline, config):
-    dialog = EventDurationDialog(parent, 'Measure Duration', timeline, config)
+    dialog = EventDurationDialog(parent, _('Measure Duration'), timeline, config)
     dialog.ShowModal()
     dialog.Destroy()
