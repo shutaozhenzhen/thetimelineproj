@@ -35,6 +35,7 @@ from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_d
 from timelinelib.db.utils import safe_locking
 from timelinelib.wxgui.dialogs.setcategory.view import open_set_category_dialog
 from timelinelib.wxgui.dialogs.eraseditor.view import oped_edit_eras_dialog
+from timelinelib.wxgui.dialogs.eventduration.view import open_measure_duration_dialog
 from timelinelib.wxgui.utils import load_icon_bundle
 from timelinelib.wxgui.dialogs.timeeditor.view import open_time_editor_dialog
 from timelinelib.wxgui.dialogs.changenowdate.view import open_change_now_date_dialog
@@ -194,6 +195,9 @@ class MainFrame(wx.Frame, guic.GuiCreator):
 
     def edit_eras(self):
         oped_edit_eras_dialog(self, self.timeline, self.config)
+
+    def measure_duration(self):
+        open_measure_duration_dialog(self, self.timeline, self.config)
 
     def set_timeline_in_readonly_mode(self):
         self.timeline.set_readonly()

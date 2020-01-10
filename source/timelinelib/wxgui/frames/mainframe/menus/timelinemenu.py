@@ -44,6 +44,7 @@ class TimelineMenu(MenuBase):
             mid.ID_CREATE_MILESTONE: lambda evt: open_milestone_editor_for(parent, parent, parent.config, parent.timeline),
             mid.ID_COMPRESS: lambda evt: safe_locking(parent, parent.timeline.compress),
             mid.ID_MEASURE_DISTANCE: lambda evt: parent.measure_distance_between_events(),
+            mid.ID_MEASURE_DURATION: lambda evt: parent.measure_duration(),
             mid.ID_SET_CATEGORY_ON_WITHOUT: lambda evt: safe_locking(self._parent, lambda: parent.set_category()),
             mid.ID_EDIT_ERAS: lambda evt: safe_locking(parent, lambda: parent.edit_eras()),
             mid.ID_SET_READONLY: lambda evt: self._parent.set_timeline_in_readonly_mode(),
@@ -70,6 +71,7 @@ class TimelineMenu(MenuBase):
         self.Append(mid.ID_COMPRESS, _("&Compress timeline Events"))
         self.AppendSeparator()
         self.Append(mid.ID_MEASURE_DISTANCE, _("&Measure Distance between two Events..."))
+        self.Append(mid.ID_MEASURE_DURATION, _("Measure Duration of Events..."))
         self.AppendSeparator()
         self.Append(mid.ID_SET_CATEGORY_ON_WITHOUT, _("Set Category on events &without category..."))
         self.AppendSeparator()
