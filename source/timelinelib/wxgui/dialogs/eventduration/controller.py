@@ -53,11 +53,5 @@ class EventsDurationController(Controller):
             duration = duration // 3600 // 24
         return duration
 
-    def get_edited_category(self):
-        return self._category
-
     def _populate_view(self):
         self.view.PopulateCategories(exclude=None)
-
-    def _validate(self):
-        pass
