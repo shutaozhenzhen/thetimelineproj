@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
 from timelinelib.wxgui.framework import Controller
 
 
@@ -31,6 +32,7 @@ DURATION_TYPES_CHOICES = [
     DURATION_TYPE_DAYS,
     DURATION_TYPE_MINUTES,
     DURATION_TYPE_SECONDS]
+PRECISION_CHOICES = ['0', '1', '2', '3', '4', '5']
 
 
 class EventsDurationController(Controller):
@@ -44,6 +46,7 @@ class EventsDurationController(Controller):
         events = self._get_events()
         duration = self._calculate_duration(events)
         self.view.SetDuration(str(duration))
+        self._copy_to_clipboard()
 
     def _get_events(self):
         category = self.view.GetCategory()
@@ -63,7 +66,11 @@ class EventsDurationController(Controller):
 
     def _calculate_duration(self, events):
         duration = sum([e.get_time_period().duration().seconds for e in events])
-        return duration / self._get_divisor()
+        precision = self.view.GetPrecision()
+        if precision == 0:
+            return duration // self._get_divisor()
+        else:
+            return round(duration / self._get_divisor(), precision)
 
     def _get_divisor(self):
         return {
@@ -76,3 +83,10 @@ class EventsDurationController(Controller):
 
     def _populate_view(self):
         self.view.PopulateCategories(exclude=None)
+        self.view.SelectCategory(0)
+        self.view.SelectPrecision(1)
+
+    def _copy_to_clipboard(self):
+        if wx.TheClipboard.Open():
+            wx.TheClipboard.SetData(wx.TextDataObject(self.view.GetDurationResult()))
+            wx.TheClipboard.Close()
