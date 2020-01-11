@@ -41,7 +41,7 @@ class NumTimePicker(wx.Panel):
         self.time_picker.SetSelection(0, len(str(self.get_value())))
 
     def _create_gui(self):
-        time_picker = NumCtrl(self, size=(300, -1))
+        time_picker = NumCtrl(self, size=(50, -1))
         # Layout
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(time_picker, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
