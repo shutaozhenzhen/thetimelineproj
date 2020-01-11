@@ -29,7 +29,7 @@ class EventDurationDialog(Dialog):
     """
     <BoxSizerVertical>
         <FlexGridSizer
-            rows="10"
+            rows="12"
             columns="2"
             growableColumns="1"
             proportion="1"
@@ -205,6 +205,6 @@ class EventDurationDialog(Dialog):
 
 
 def open_measure_duration_dialog(parent, timeline, config, preferred_category=ALL_CATEGORIES):
-    dialog = EventDurationDialog(parent, _('Measure Duration'), timeline, config, preferred_category)
+    dialog = EventDurationDialog(parent, _('Measure Duration of Events'), timeline, config, preferred_category)
     dialog.ShowModal()
     dialog.Destroy()
