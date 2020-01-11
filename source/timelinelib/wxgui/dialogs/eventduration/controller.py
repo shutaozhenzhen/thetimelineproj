@@ -20,18 +20,6 @@ import wx
 from timelinelib.wxgui.framework import Controller
 
 
-DURATION_TYPE_HOURS = _('Hours')
-DURATION_TYPE_WORKDAYS = _('Workdays')
-DURATION_TYPE_DAYS = _('Days')
-DURATION_TYPE_MINUTES = _('Minutes')
-DURATION_TYPE_SECONDS = _('Seconds')
-
-DURATION_TYPES_CHOICES = [
-    DURATION_TYPE_HOURS,
-    DURATION_TYPE_WORKDAYS,
-    DURATION_TYPE_DAYS,
-    DURATION_TYPE_MINUTES,
-    DURATION_TYPE_SECONDS]
 PRECISION_CHOICES = ['0', '1', '2', '3', '4', '5']
 
 
@@ -52,7 +40,7 @@ class EventsDurationController(Controller):
         category = self.view.GetCategory()
         events = self._db.get_all_events()
         if category is not None:
-            events = [e for e in events if self._include(category.name, e.get_category())]
+            events = [e for e in events if e.get_category() and self._include(category.name, e.get_category())]
         return events
 
     def _include(self, category_name, event_category):
@@ -65,27 +53,20 @@ class EventsDurationController(Controller):
             return True
 
     def _calculate_duration(self, events):
-        duration = sum([e.get_time_period().duration().seconds for e in events])
+        duration = sum([e.get_time_period().duration().value for e in events])
         precision = self.view.GetPrecision()
+        divisor = self._db.get_time_type().get_duration_divisor(self.view.GetDurationType())
         if precision == 0:
-            return duration // self._get_divisor()
+            return duration // divisor
         else:
-            return round(duration / self._get_divisor(), precision)
-
-    def _get_divisor(self):
-        return {
-            DURATION_TYPE_SECONDS: 1,
-            DURATION_TYPE_MINUTES: 60,
-            DURATION_TYPE_HOURS: 3600,
-            DURATION_TYPE_DAYS: 86400,
-            DURATION_TYPE_WORKDAYS: 28800,
-        }[self.view.GetDurationType()]
+            return round(duration / divisor, precision)
 
     def _populate_view(self):
         self.view.PopulateCategories(exclude=None)
         self.view.SelectCategory(0)
         self.view.SelectPrecision(1)
         self.view.SetCopyToClipboard(True)
+        self.view.SetDurationTypeChoices(self._db.get_time_type().get_duration_types())
 
     def _copy_to_clipboard(self):
         if wx.TheClipboard.Open() and self.view.GetCopyToClipboard():

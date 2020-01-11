@@ -17,7 +17,6 @@
 
 
 from timelinelib.wxgui.dialogs.eventduration.controller import EventsDurationController
-from timelinelib.wxgui.dialogs.eventduration.controller import DURATION_TYPES_CHOICES
 from timelinelib.wxgui.dialogs.eventduration.controller import PRECISION_CHOICES
 from timelinelib.wxgui.framework import Dialog
 
@@ -47,7 +46,7 @@ class EventDurationDialog(Dialog):
                 label="$(duration_type_text)"
             />
             <Choice
-                name="duration_type_choice"
+                name="duration_type_choices"
                 choices="$(duration_type_choices)"
                 align="ALIGN_CENTER_VERTICAL"
             />
@@ -96,11 +95,10 @@ class EventDurationDialog(Dialog):
             "duration_type_text": _("Duration Type:"),
             "precision_text": _("Nbr of Decimals"),
             "copy_to_clibboard_text": _("Copy to Clipboard"),
-            "duration_type_choices": DURATION_TYPES_CHOICES,
+            "duration_type_choices": [],
             "precision_choices": PRECISION_CHOICES,
         }, title=title)
         self.controller.on_init(db, category)
-        self.duration_type_choice.Select(0)
 
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
@@ -124,6 +122,10 @@ class EventDurationDialog(Dialog):
     def SetDuration(self, duration):
         return self.duration_result.SetLabel(duration)
 
+    def SetDurationTypeChoices(self, choices):
+        self.duration_type_choices.SetItems(choices)
+        self.duration_type_choices.Select(0)
+
     def SetCopyToClipboard(self, value):
         self.cbx_copy.SetValue(value)
 
@@ -131,8 +133,8 @@ class EventDurationDialog(Dialog):
         return self.cbx_copy.GetValue()
 
     def GetDurationType(self):
-        inx = self.duration_type_choice.GetSelection()
-        return self.duration_type_choice.GetString(inx)
+        inx = self.duration_type_choices.GetSelection()
+        return self.duration_type_choices.GetString(inx)
 
     def GetDurationResult(self):
         return self.duration_result.GetLabel()
