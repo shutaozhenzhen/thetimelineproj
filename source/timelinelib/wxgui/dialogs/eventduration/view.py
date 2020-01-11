@@ -36,7 +36,7 @@ class EventDurationDialog(Dialog):
             />
             <CategoryChoice
                 name="category_choice"
-                allow_add="True"
+                allow_add="False"
                 timeline="$(db)"
                 align="ALIGN_CENTER_VERTICAL"
             />
@@ -84,6 +84,8 @@ class EventDurationDialog(Dialog):
 
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
+        self.category_choice.Insert(_('All'), 0)
+        self.category_choice.Select(0)
         self.Fit()
 
     def GetCategory(self):
