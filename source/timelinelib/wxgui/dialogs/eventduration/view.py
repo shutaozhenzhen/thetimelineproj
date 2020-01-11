@@ -21,6 +21,9 @@ from timelinelib.wxgui.dialogs.eventduration.controller import PRECISION_CHOICES
 from timelinelib.wxgui.framework import Dialog
 
 
+ALL_CATEGORIES = _('All Categories')
+
+
 class EventDurationDialog(Dialog):
 
     """
@@ -87,7 +90,7 @@ class EventDurationDialog(Dialog):
     </BoxSizerVertical>
     """
 
-    def __init__(self, parent, title, db, category):
+    def __init__(self, parent, title, db, config, preferred_category):
         Dialog.__init__(self, EventsDurationController, parent, {
             "db": db,
             "category_text": _("Category:"),
@@ -98,13 +101,12 @@ class EventDurationDialog(Dialog):
             "duration_type_choices": [],
             "precision_choices": PRECISION_CHOICES,
         }, title=title)
-        self.controller.on_init(db, category)
+        self.controller.on_init(db, config, preferred_category)
 
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
-        self.category_choice.Delete(0)
-        self.category_choice.Insert(_('All'), 0)
-        self.category_choice.Select(0)
+        self.category_choice.Delete(0)  # Remove blank line
+        self.category_choice.Insert(ALL_CATEGORIES, 0)
         self.Fit()
 
     def GetCategory(self):
@@ -115,6 +117,14 @@ class EventDurationDialog(Dialog):
 
     def SelectCategory(self, inx):
         return self.category_choice.Select(inx)
+
+    def SetPreferredCategory(self, preferred_category):
+        for inx in range(self.category_choice.GetCount()):
+            name = self.category_choice.GetString(inx)
+            if name.strip() == preferred_category:
+                self.category_choice.SetSelection(inx)
+                self.controller.on_ok_clicked(None)
+                break
 
     def SelectPrecision(self, inx):
         return self.precision_choices.Select(inx)
@@ -140,7 +150,7 @@ class EventDurationDialog(Dialog):
         return self.duration_result.GetLabel()
 
 
-def open_measure_duration_dialog(parent, timeline, config):
-    dialog = EventDurationDialog(parent, _('Measure Duration'), timeline, config)
+def open_measure_duration_dialog(parent, timeline, config, preferred_category=ALL_CATEGORIES):
+    dialog = EventDurationDialog(parent, _('Measure Duration'), timeline, config, preferred_category)
     dialog.ShowModal()
     dialog.Destroy()

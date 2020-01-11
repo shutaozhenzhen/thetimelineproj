@@ -25,10 +25,10 @@ PRECISION_CHOICES = ['0', '1', '2', '3', '4', '5']
 
 class EventsDurationController(Controller):
 
-    def on_init(self, db, category):
+    def on_init(self, db, config, preferred_category):
         self._db = db
-        self._category = category
-        self._populate_view()
+        self._config = config
+        self._populate_view(preferred_category)
 
     def on_ok_clicked(self, event):
         events = self._get_events()
@@ -61,12 +61,14 @@ class EventsDurationController(Controller):
         else:
             return round(duration / divisor, precision)
 
-    def _populate_view(self):
+    def _populate_view(self, preferred_category):
         self.view.PopulateCategories(exclude=None)
         self.view.SelectCategory(0)
         self.view.SelectPrecision(1)
         self.view.SetCopyToClipboard(True)
         self.view.SetDurationTypeChoices(self._db.get_time_type().get_duration_types())
+        if preferred_category:
+            self.view.SetPreferredCategory(preferred_category.strip())
 
     def _copy_to_clipboard(self):
         if wx.TheClipboard.Open() and self.view.GetCopyToClipboard():

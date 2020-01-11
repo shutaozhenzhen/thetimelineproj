@@ -39,6 +39,7 @@ from timelinelib.wxgui.dialogs.duplicateevent.view import open_duplicate_event_d
 from timelinelib.wxgui.dialogs.editevent.view import open_create_event_editor
 from timelinelib.wxgui.dialogs.editevent.view import open_event_editor_for
 from timelinelib.wxgui.dialogs.milestone.view import open_milestone_editor_for
+from timelinelib.wxgui.dialogs.eventduration.view import open_measure_duration_dialog
 from timelinelib.wxgui.frames.mainframe.toolbar import ToolbarCreator
 from timelinelib.wxgui.utils import _ask_question
 from timelinelib.config.paths import ICONS_DIR
@@ -275,6 +276,7 @@ class TimelinePanelGuiCreator(wx.Panel):
         if nbr_of_selected_events == 1:
             menu_definitions.insert(0, (_("Edit"), self._context_menu_on_edit_event, None))
             menu_definitions.insert(1, (_("Duplicate..."), self._context_menu_on_duplicate_event, None))
+            menu_definitions.insert(2, (_("Measure Duration of Events..."), self._context_menu_on_measure_duration, None))
         menu_definitions.append((_("Mark Event as Done"), self._context_menu_on_done_event, None))
         menu_definitions.append((_("Select Category..."), self._context_menu_on_select_category, None))
         if nbr_of_selected_events == 1 and self.timeline_canvas.GetSelectedEvent().has_data():
@@ -336,6 +338,14 @@ class TimelinePanelGuiCreator(wx.Panel):
             self,
             self.timeline_canvas.GetDb(),
             self.timeline_canvas.GetSelectedEvent())
+
+    def _context_menu_on_measure_duration(self, evt):
+        category_name = self.timeline_canvas.GetSelectedEvent().get_category_name()
+        open_measure_duration_dialog(
+            self,
+            self.timeline_canvas.GetDb(),
+            self.config,
+            preferred_category=category_name)
 
     # @experimental_feature(EVENT_DONE)
     def _context_menu_on_done_event(self, evt):
