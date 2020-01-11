@@ -85,8 +85,9 @@ class EventsDurationController(Controller):
         self.view.PopulateCategories(exclude=None)
         self.view.SelectCategory(0)
         self.view.SelectPrecision(1)
+        self.view.SetCopyToClipboard(True)
 
     def _copy_to_clipboard(self):
-        if wx.TheClipboard.Open():
+        if wx.TheClipboard.Open() and self.view.GetCopyToClipboard():
             wx.TheClipboard.SetData(wx.TextDataObject(self.view.GetDurationResult()))
             wx.TheClipboard.Close()
