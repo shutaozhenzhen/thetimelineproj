@@ -16,7 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.dialogs.eventduration.controller import EventsDurationController
+from timelinelib.wxgui.dialogs.eventduration.controller import EventsDurationController, DURATION_TYPES_CHOICES
 from timelinelib.wxgui.framework import Dialog
 
 
@@ -77,7 +77,7 @@ class EventDurationDialog(Dialog):
             "category_text": _("Category:"),
             "duration_text": _("Duration:"),
             "duration_type_text": _("Duration Type:"),
-            "duration_type_choices": [_('hours'), _('workdays'), _('days'), _('minutes'), _('seconds')],
+            "duration_type_choices": DURATION_TYPES_CHOICES,
         }, title=title)
         self.controller.on_init(db, category)
         self.duration_type_choice.Select(0)
