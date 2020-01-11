@@ -116,11 +116,14 @@ class EventDurationDialog(Dialog):
                 name="duration_result"
             />
             <StretchSpacer />
+            <StretchSpacer />
         </FlexGridSizer>
+
         <DialogButtonsMeasureCloseSizer
             border="LEFT|BOTTOM|RIGHT"
             event_EVT_BUTTON__ID_OK="on_ok_clicked"
         />
+
     </BoxSizerVertical>
     """
 
@@ -138,7 +141,7 @@ class EventDurationDialog(Dialog):
             "precision_choices": PRECISION_CHOICES,
             "time_type": db.get_time_type(),
             "config": config
-        }, title=title)
+        }, title=title, size=(100, -1))
         self.controller.on_init(db, config, preferred_category)
         self.start_time.set_value(None)
         self.end_time.set_value(None)
