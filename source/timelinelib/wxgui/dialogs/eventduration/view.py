@@ -16,7 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.wxgui.dialogs.eventduration.controller import EventsDurationController, DURATION_TYPES_CHOICES
+from timelinelib.wxgui.dialogs.eventduration.controller import EventsDurationController
+from timelinelib.wxgui.dialogs.eventduration.controller import DURATION_TYPES_CHOICES
+from timelinelib.wxgui.dialogs.eventduration.controller import PRECISION_CHOICES
 from timelinelib.wxgui.framework import Dialog
 
 
@@ -25,7 +27,7 @@ class EventDurationDialog(Dialog):
     """
     <BoxSizerVertical>
         <FlexGridSizer
-            rows="6"
+            rows="8"
             columns="2"
             growableColumns="1"
             proportion="1"
@@ -40,13 +42,22 @@ class EventDurationDialog(Dialog):
                 timeline="$(db)"
                 align="ALIGN_CENTER_VERTICAL"
             />
-             <StaticText
+            <StaticText
                 align="ALIGN_CENTER_VERTICAL"
                 label="$(duration_type_text)"
             />
             <Choice
                 name="duration_type_choice"
                 choices="$(duration_type_choices)"
+                align="ALIGN_CENTER_VERTICAL"
+            />
+            <StaticText
+                align="ALIGN_CENTER_VERTICAL"
+                label="$(precision_text)"
+            />
+            <Choice
+                name="precision_choices"
+                choices="$(precision_choices)"
                 align="ALIGN_CENTER_VERTICAL"
             />
             <StretchSpacer />
@@ -57,9 +68,8 @@ class EventDurationDialog(Dialog):
                 align="ALIGN_CENTER_VERTICAL"
                 label="$(duration_text)"
             />
-            <TextCtrl
-                name="txt_duration"
-                width="30"
+            <StaticText
+                name="duration_result"
             />
             <StretchSpacer />
             <StretchSpacer />
@@ -77,7 +87,9 @@ class EventDurationDialog(Dialog):
             "category_text": _("Category:"),
             "duration_text": _("Duration:"),
             "duration_type_text": _("Duration Type:"),
+            "precision_text": _("Nbr of Decimals"),
             "duration_type_choices": DURATION_TYPES_CHOICES,
+            "precision_choices": PRECISION_CHOICES,
         }, title=title)
         self.controller.on_init(db, category)
         self.duration_type_choice.Select(0)
@@ -92,15 +104,24 @@ class EventDurationDialog(Dialog):
     def GetCategory(self):
         return self.category_choice.GetSelectedCategory()
 
-    def SetCategory(self, category):
-        return self.category_choice.SetSelectedCategory(category)
+    def GetPrecision(self):
+        return int(self.precision_choices.GetSelection())
+
+    def SelectCategory(self, inx):
+        return self.category_choice.Select(inx)
+
+    def SelectPrecision(self, inx):
+        return self.precision_choices.Select(inx)
 
     def SetDuration(self, duration):
-        return self.txt_duration.SetValue(duration)
+        return self.duration_result.SetLabel(duration)
 
     def GetDurationType(self):
         inx = self.duration_type_choice.GetSelection()
         return self.duration_type_choice.GetString(inx)
+
+    def GetDurationResult(self):
+        return self.duration_result.GetLabel()
 
 
 def open_measure_duration_dialog(parent, timeline, config):
