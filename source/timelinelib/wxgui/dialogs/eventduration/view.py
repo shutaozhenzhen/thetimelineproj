@@ -60,6 +60,13 @@ class EventDurationDialog(Dialog):
                 choices="$(precision_choices)"
                 align="ALIGN_CENTER_VERTICAL"
             />
+            <StaticText
+                align="ALIGN_CENTER_VERTICAL"
+                label="$(copy_to_clibboard_text)"
+            />
+            <CheckBox
+                name="cbx_copy"
+            />
             <StretchSpacer />
             <StretchSpacer />
             <StretchSpacer />
@@ -88,6 +95,7 @@ class EventDurationDialog(Dialog):
             "duration_text": _("Duration:"),
             "duration_type_text": _("Duration Type:"),
             "precision_text": _("Nbr of Decimals"),
+            "copy_to_clibboard_text": _("Copy to Clipboard"),
             "duration_type_choices": DURATION_TYPES_CHOICES,
             "precision_choices": PRECISION_CHOICES,
         }, title=title)
@@ -115,6 +123,12 @@ class EventDurationDialog(Dialog):
 
     def SetDuration(self, duration):
         return self.duration_result.SetLabel(duration)
+
+    def SetCopyToClipboard(self, value):
+        self.cbx_copy.SetValue(value)
+
+    def GetCopyToClipboard(self):
+        return self.cbx_copy.GetValue()
 
     def GetDurationType(self):
         inx = self.duration_type_choice.GetSelection()
