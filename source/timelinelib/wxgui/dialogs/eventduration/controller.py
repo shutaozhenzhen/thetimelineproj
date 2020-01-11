@@ -49,12 +49,17 @@ class EventsDurationController(Controller):
         category = self.view.GetCategory()
         events = self._db.get_all_events()
         if category is not None:
-            events = [e for e in events if self._include(category, e)]
+            events = [e for e in events if self._include(category.name, e.get_category())]
         return events
 
-    @staticmethod
-    def _include(category, event):
-        return event.get_category_name() == category.name
+    def _include(self, category_name, event_category):
+        if event_category.name != category_name:
+            if event_category.parent:
+                return self._include(category_name, event_category.parent)
+            else:
+                return False
+        else:
+            return True
 
     def _calculate_duration(self, events):
         duration = sum([e.get_time_period().duration().seconds for e in events])
