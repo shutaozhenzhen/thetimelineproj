@@ -19,6 +19,20 @@
 from timelinelib.wxgui.framework import Controller
 
 
+DURATION_TYPE_HOURS = _('Hours')
+DURATION_TYPE_WORKDAYS = _('Workdays')
+DURATION_TYPE_DAYS = _('Days')
+DURATION_TYPE_MINUTES = _('Minutes')
+DURATION_TYPE_SECONDS = _('Seconds')
+
+DURATION_TYPES_CHOICES = [
+    DURATION_TYPE_HOURS,
+    DURATION_TYPE_WORKDAYS,
+    DURATION_TYPE_DAYS,
+    DURATION_TYPE_MINUTES,
+    DURATION_TYPE_SECONDS]
+
+
 class EventsDurationController(Controller):
 
     def on_init(self, db, category):
@@ -39,19 +53,17 @@ class EventsDurationController(Controller):
         return events
 
     def _calculate_duration(self, events):
-        duration = 0
-        for e in events:
-            duration += e.get_time_period().duration().seconds
-        duration_type = self.view.GetDurationType()
-        if duration_type == 'hours':
-            duration = duration // 3600
-        elif duration_type == 'minutes':
-            duration = duration // 60
-        elif duration_type == 'workdays':
-            duration = duration // 3600 // 8
-        elif duration_type == 'days':
-            duration = duration // 3600 // 24
-        return duration
+        duration = sum([e.get_time_period().duration().seconds for e in events])
+        return duration / self._get_divisor()
+
+    def _get_divisor(self):
+        return {
+            DURATION_TYPE_SECONDS: 1,
+            DURATION_TYPE_MINUTES: 60,
+            DURATION_TYPE_HOURS: 3600,
+            DURATION_TYPE_DAYS: 86400,
+            DURATION_TYPE_WORKDAYS: 28800,
+        }[self.view.GetDurationType()]
 
     def _populate_view(self):
         self.view.PopulateCategories(exclude=None)
