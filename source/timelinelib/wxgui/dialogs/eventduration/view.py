@@ -29,7 +29,7 @@ class EventDurationDialog(Dialog):
     """
     <BoxSizerVertical>
         <FlexGridSizer
-            rows="8"
+            rows="10"
             columns="2"
             growableColumns="1"
             proportion="1"
@@ -44,6 +44,41 @@ class EventDurationDialog(Dialog):
                 timeline="$(db)"
                 align="ALIGN_CENTER_VERTICAL"
             />
+            <StaticText
+                align="ALIGN_CENTER_VERTICAL"
+                label="$(period_start_text)"
+            />
+            <BoxSizerHorizontal>
+                <CheckBox
+                    name="cbx_use_start_period"
+                    event_EVT_CHECKBOX="on_use_start_period"
+                />
+                <Spacer />
+                <TimePicker
+                    name="start_time"
+                    show_time="False"
+                    time_type="$(time_type)"
+                    config="$(config)"
+                />
+                <StretchSpacer size="100"/>
+            </BoxSizerHorizontal>
+            <StaticText
+                align="ALIGN_CENTER_VERTICAL"
+                label="$(period_end_text)"
+            />
+            <BoxSizerHorizontal>
+                <CheckBox
+                    name="cbx_use_end_period"
+                    event_EVT_CHECKBOX="on_use_end_period"
+                />
+                <Spacer />
+                <TimePicker
+                    name="end_time"
+                    time_type="$(time_type)"
+                    config="$(config)"
+                    show_time="False"
+                />
+            </BoxSizerHorizontal>
             <StaticText
                 align="ALIGN_CENTER_VERTICAL"
                 label="$(duration_type_text)"
@@ -64,7 +99,7 @@ class EventDurationDialog(Dialog):
             />
             <StaticText
                 align="ALIGN_CENTER_VERTICAL"
-                label="$(copy_to_clibboard_text)"
+                label="$(copy_to_clippboard_text)"
             />
             <CheckBox
                 name="cbx_copy"
@@ -81,7 +116,6 @@ class EventDurationDialog(Dialog):
                 name="duration_result"
             />
             <StretchSpacer />
-            <StretchSpacer />
         </FlexGridSizer>
         <DialogButtonsMeasureCloseSizer
             border="LEFT|BOTTOM|RIGHT"
@@ -96,18 +130,38 @@ class EventDurationDialog(Dialog):
             "category_text": _("Category:"),
             "duration_text": _("Duration:"),
             "duration_type_text": _("Duration Type:"),
-            "precision_text": _("Nbr of Decimals"),
-            "copy_to_clibboard_text": _("Copy to Clipboard"),
+            "precision_text": _("Nbr of Decimals:"),
+            "copy_to_clippboard_text": _("Copy result to Clipboard:"),
+            "period_start_text": _("Start at:"),
+            "period_end_text": _("Stop at:"),
             "duration_type_choices": [],
             "precision_choices": PRECISION_CHOICES,
+            "time_type": db.get_time_type(),
+            "config": config
         }, title=title)
         self.controller.on_init(db, config, preferred_category)
+        self.start_time.set_value(None)
+        self.end_time.set_value(None)
 
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
         self.category_choice.Delete(0)  # Remove blank line
         self.category_choice.Insert(ALL_CATEGORIES, 0)
         self.Fit()
+
+    def EnableStartTime(self, value):
+        self.start_time.Enable(value)
+
+    def EnableEndTime(self, value):
+        self.end_time.Enable(value)
+
+    def GetStartTime(self):
+        if self.start_time.IsEnabled():
+            return self.start_time.get_value()
+
+    def GetEndTime(self):
+        if self.end_time.IsEnabled():
+            return self.end_time.get_value()
 
     def GetCategory(self):
         return self.category_choice.GetSelectedCategory()
