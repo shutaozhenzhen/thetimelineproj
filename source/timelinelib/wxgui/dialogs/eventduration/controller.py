@@ -30,6 +30,12 @@ class EventsDurationController(Controller):
         self._config = config
         self._populate_view(preferred_category)
 
+    def on_use_start_period(self, evt):
+        self.view.EnableStartTime(evt.EventObject.Value)
+
+    def on_use_end_period(self, evt):
+        self.view.EnableEndTime(evt.EventObject.Value)
+
     def on_ok_clicked(self, event):
         events = self._get_events()
         duration = self._calculate_duration(events)
@@ -40,7 +46,11 @@ class EventsDurationController(Controller):
         category = self.view.GetCategory()
         events = self._db.get_all_events()
         if category is not None:
-            events = [e for e in events if e.get_category() and self._include(category.name, e.get_category())]
+            events = [e for e in events
+                      if e.get_category()
+                      and self._after_or_at_start(e)
+                      and self._before_or_at_end(e)
+                      and self._include(category.name, e.get_category())]
         return events
 
     def _include(self, category_name, event_category):
@@ -51,6 +61,18 @@ class EventsDurationController(Controller):
                 return False
         else:
             return True
+
+    def _after_or_at_start(self, event):
+        start_time = self.view.GetStartTime()
+        if start_time:
+            return event.time_period.end_time >= start_time
+        return True
+
+    def _before_or_at_end(self, event):
+        end_time = self.view.GetEndTime()
+        if end_time:
+            return event.time_period.start_time <= end_time
+        return True
 
     def _calculate_duration(self, events):
         duration = sum([e.get_time_period().duration().value for e in events])
@@ -67,6 +89,8 @@ class EventsDurationController(Controller):
         self.view.SelectPrecision(1)
         self.view.SetCopyToClipboard(True)
         self.view.SetDurationTypeChoices(self._db.get_time_type().get_duration_types())
+        self.view.EnableStartTime(False)
+        self.view.EnableEndTime(False)
         if preferred_category:
             self.view.SetPreferredCategory(preferred_category.strip())
 

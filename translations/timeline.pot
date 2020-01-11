@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-11 13:46+0100\n"
+"POT-Creation-Date: 2020-01-11 15:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2389,7 +2389,7 @@ msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\editcontainer\view.py:60
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:180
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:96
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:130
 #: source\timelinelib\wxgui\dialogs\milestone\view.py:87
 msgid "Category:"
 msgstr ""
@@ -2468,23 +2468,31 @@ msgstr ""
 msgid "All Categories"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:97
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:131
 msgid "Duration:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:98
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:132
 msgid "Duration Type:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:99
-msgid "Nbr of Decimals"
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:133
+msgid "Nbr of Decimals:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:100
-msgid "Copy to Clipboard"
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:134
+msgid "Copy result to Clipboard:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:154
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:135
+msgid "Start at:"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:136
+msgid "Stop at:"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:208
 msgid "Measure Duration"
 msgstr ""
 
