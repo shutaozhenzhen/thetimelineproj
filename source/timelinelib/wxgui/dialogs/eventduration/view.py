@@ -84,6 +84,7 @@ class EventDurationDialog(Dialog):
 
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
+        self.category_choice.Delete(0)
         self.category_choice.Insert(_('All'), 0)
         self.category_choice.Select(0)
         self.Fit()
