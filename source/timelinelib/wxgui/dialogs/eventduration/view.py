@@ -64,7 +64,7 @@ class EventDurationDialog(Dialog):
             <StretchSpacer />
             <StretchSpacer />
         </FlexGridSizer>
-        <DialogButtonsOkCancelSizer
+        <DialogButtonsMeasureCloseSizer
             border="LEFT|BOTTOM|RIGHT"
             event_EVT_BUTTON__ID_OK="on_ok_clicked"
         />
