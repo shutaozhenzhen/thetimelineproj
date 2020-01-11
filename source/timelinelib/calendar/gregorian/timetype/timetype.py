@@ -45,6 +45,12 @@ from timelinelib.calendar.gregorian.timetype.yearformatter import format_year, B
 
 class GregorianTimeType(TimeType):
 
+    DURATION_TYPE_HOURS = _('Hours')
+    DURATION_TYPE_WORKDAYS = _('Workdays')
+    DURATION_TYPE_DAYS = _('Days')
+    DURATION_TYPE_MINUTES = _('Minutes')
+    DURATION_TYPE_SECONDS = _('Seconds')
+
     def __eq__(self, other):
         return isinstance(other, GregorianTimeType)
 
@@ -207,6 +213,23 @@ class GregorianTimeType(TimeType):
     def create_period_picker(self, parent, *args, **kwargs):
         from timelinelib.calendar.gregorian.timepicker.periodpicker import GregorianPeriodPicker
         return GregorianPeriodPicker(parent, *args, **kwargs)
+
+    def get_duration_types(self):
+        return [
+            self.DURATION_TYPE_HOURS,
+            self.DURATION_TYPE_WORKDAYS,
+            self.DURATION_TYPE_DAYS,
+            self.DURATION_TYPE_MINUTES,
+            self.DURATION_TYPE_SECONDS]
+
+    def get_duration_divisor(self, duration_type):
+        return {
+            self.DURATION_TYPE_SECONDS: 1,
+            self.DURATION_TYPE_MINUTES: 60,
+            self.DURATION_TYPE_HOURS: 3600,
+            self.DURATION_TYPE_DAYS: 86400,
+            self.DURATION_TYPE_WORKDAYS: 28800,
+        }[duration_type]
 
 
 def go_to_today_fn(main_frame, current_period, navigation_fn):

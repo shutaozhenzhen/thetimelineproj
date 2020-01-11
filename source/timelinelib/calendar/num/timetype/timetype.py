@@ -34,6 +34,12 @@ class NumTimeType(TimeType):
 
     """The class."""
 
+    DURATION_TYPE_1 = _('Divide by 1')
+    DURATION_TYPE_2 = _('Divide by 10')
+    DURATION_TYPE_3 = _('Divide by 100')
+    DURATION_TYPE_4 = _('Divide by 1000')
+    DURATION_TYPE_5 = _('Divide by 10000')
+
     def __eq__(self, other):
         return isinstance(other, NumTimeType)
 
@@ -128,6 +134,23 @@ class NumTimeType(TimeType):
             (_("100-period"), lambda p, d: move_period(p, d * 100)),
             (_("1000-period"), lambda p, d: move_period(p, d * 1000)),
         ]
+
+    def get_duration_types(self):
+        return [
+            self.DURATION_TYPE_1,
+            self.DURATION_TYPE_2,
+            self.DURATION_TYPE_3,
+            self.DURATION_TYPE_4,
+            self.DURATION_TYPE_5]
+
+    def get_duration_divisor(self, duration_type):
+        return {
+            self.DURATION_TYPE_1: 1,
+            self.DURATION_TYPE_2: 10,
+            self.DURATION_TYPE_3: 100,
+            self.DURATION_TYPE_4: 1000,
+            self.DURATION_TYPE_5: 10000,
+        }[duration_type]
 
     def supports_saved_now(self):
         return False
