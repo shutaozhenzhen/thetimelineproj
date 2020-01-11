@@ -27,8 +27,18 @@ class EventsDurationController(Controller):
         self._populate_view()
 
     def on_ok_clicked(self, event):
-        category_name = self.view.GetCategory().name
-        events = [e for e in self._db.get_all_events() if e.get_category_name() == category_name]
+        events = self._get_events()
+        duration = self._calculate_duration(events)
+        self.view.SetDuration(str(duration))
+
+    def _get_events(self):
+        category = self.view.GetCategory()
+        events = self._db.get_all_events()
+        if category is not None:
+            events = [e for e in events if e.get_category_name() == category.name]
+        return events
+
+    def _calculate_duration(self, events):
         duration = 0
         for e in events:
             duration += e.get_time_period().duration().seconds
@@ -41,7 +51,7 @@ class EventsDurationController(Controller):
             duration = duration // 3600 // 8
         elif duration_type == 'days':
             duration = duration // 3600 // 24
-        self.view.SetDuration(str(duration))
+        return duration
 
     def get_edited_category(self):
         return self._category
