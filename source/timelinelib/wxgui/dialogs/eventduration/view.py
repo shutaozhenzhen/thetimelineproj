@@ -152,10 +152,10 @@ class EventDurationDialog(Dialog):
     def SelectCategory(self, inx):
         return self.category_choice.Select(inx)
 
-    def SetPreferredCategory(self, preferred_category):
+    def SetPreferredCategory(self, preferred_category_name):
         for inx in range(self.category_choice.GetCount()):
-            name = self.category_choice.GetString(inx)
-            if name.strip() == preferred_category:
+            category_name = self.category_choice.GetString(inx).strip()
+            if category_name == preferred_category_name:
                 self.category_choice.SetSelection(inx)
                 break
 
