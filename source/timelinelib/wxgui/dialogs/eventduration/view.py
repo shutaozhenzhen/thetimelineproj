@@ -162,7 +162,6 @@ class EventDurationDialog(Dialog):
             name = self.category_choice.GetString(inx)
             if name.strip() == preferred_category:
                 self.category_choice.SetSelection(inx)
-                self.controller.on_ok_clicked(None)
                 break
 
     def GetCategory(self):
