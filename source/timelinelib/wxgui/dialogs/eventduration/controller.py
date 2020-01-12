@@ -88,7 +88,7 @@ class EventsDurationController(Controller):
         self.view.PopulateCategories(exclude=None)
         self.view.SelectCategory(0)
         self.view.SelectPrecision(1)
-        self.view.SetCopyToClipboard(True)
+        self.view.SetCopyToClipboard(False)
         self.view.SetDurationTypeChoices(self._db.get_time_type().get_duration_types())
         self.view.SetStartTime(None)
         self.view.SetEndTime(None)
