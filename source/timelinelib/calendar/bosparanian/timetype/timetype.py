@@ -48,6 +48,12 @@ from timelinelib.calendar.bosparanian.timetype.strips.stripminute import StripMi
 
 class BosparanianTimeType(TimeType):
 
+    DURATION_TYPE_HOURS = _('Hours')
+    DURATION_TYPE_WORKDAYS = _('Workdays')
+    DURATION_TYPE_DAYS = _('Days')
+    DURATION_TYPE_MINUTES = _('Minutes')
+    DURATION_TYPE_SECONDS = _('Seconds')
+
     def __init__(self):
         self.major_strip_is_decade = False
         self.saved_now = None
@@ -215,6 +221,23 @@ class BosparanianTimeType(TimeType):
     def create_period_picker(parent, *args, **kwargs):
         from timelinelib.calendar.bosparanian.periodpicker import BosparanianPeriodPicker
         return BosparanianPeriodPicker(parent, *args, **kwargs)
+
+    def get_duration_types(self):
+        return [
+            self.DURATION_TYPE_HOURS,
+            self.DURATION_TYPE_WORKDAYS,
+            self.DURATION_TYPE_DAYS,
+            self.DURATION_TYPE_MINUTES,
+            self.DURATION_TYPE_SECONDS]
+
+    def get_duration_divisor(self, duration_type):
+        return {
+            self.DURATION_TYPE_SECONDS: 1,
+            self.DURATION_TYPE_MINUTES: 60,
+            self.DURATION_TYPE_HOURS: 3600,
+            self.DURATION_TYPE_DAYS: 86400,
+            self.DURATION_TYPE_WORKDAYS: 28800,
+        }[duration_type]
 
 
 def open_now_date_editor(main_frame, current_period, navigation_fn):
