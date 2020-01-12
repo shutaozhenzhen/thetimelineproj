@@ -26,10 +26,14 @@ class NumTimePicker(wx.Panel):
 
     def __init__(self, parent, show_time=False, config=None, on_change=None):
         wx.Panel.__init__(self, parent)
+        self._on_change = on_change
         self.time_picker = self._create_gui()
 
     def get_value(self):
-        return NumTime(int(self.time_picker.GetValue()))
+        try:
+            return NumTime(int(self.time_picker.GetValue()))
+        except ValueError:
+            return NumTime(0)
 
     def set_value(self, num_time):
         if num_time is None:
@@ -46,4 +50,11 @@ class NumTimePicker(wx.Panel):
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(time_picker, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         self.SetSizerAndFit(sizer)
+        self.Bind(wx.EVT_TEXT, self._on_change)
+        self.Bind(wx.EVT_SPIN_UP, self._on_change)
+        self.Bind(wx.EVT_SPIN_DOWN, self._on_change)
         return time_picker
+
+    def _on_change(self, evt):
+        if self._on_change:
+            self._on_change()

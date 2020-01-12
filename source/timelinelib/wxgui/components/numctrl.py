@@ -31,6 +31,7 @@ class NumCtrl(wx.Panel):
         self.spin = wx.SpinButton(self, style=wx.SP_VERTICAL, size=(-1, self.text.GetSize()[1] + 5))
         sizer.Add(self.text, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
         sizer.Add(self.spin, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        self.Bind(wx.EVT_TEXT, self._OnText, self.text)
         self.Bind(wx.EVT_CHAR, self._OnKeyPress, self.text)
         self.Bind(wx.EVT_SPIN_UP, self._OnSpinUp, self.spin)
         self.Bind(wx.EVT_SPIN_DOWN, self._OnSpinDown, self.spin)
@@ -46,11 +47,16 @@ class NumCtrl(wx.Panel):
         if self.ValidKeyCode(event.GetKeyCode()):
             event.Skip()
 
+    def _OnText(self, event):
+        event.Skip()
+
     def _OnSpinUp(self, event):
         self._Spin(1)
+        event.Skip()
 
     def _OnSpinDown(self, event):
         self._Spin(-1)
+        event.Skip()
 
     def _Spin(self, value):
         self.SetValue(str(int(self.GetValue()) + value))
