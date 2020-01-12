@@ -50,6 +50,10 @@ class GregorianDateTimePickerController:
         if self.on_change is not None:
             self.on_change()
 
+    def changed(self):
+        if self.on_change is not None:
+            self.on_change()
+
     def date_tuple_to_wx_date(self, date):
         year, month, day = date
         return wx.DateTime.FromDMY(day, month - 1, year, 0, 0, 0)
