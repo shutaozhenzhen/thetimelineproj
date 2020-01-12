@@ -150,6 +150,20 @@ class EventDurationDialog(Dialog):
         self.category_choice.Insert(ALL_CATEGORIES, 0, None)
         self.Fit()
 
+    def SelectCategory(self, inx):
+        return self.category_choice.Select(inx)
+
+    def SetPreferredCategory(self, preferred_category):
+        for inx in range(self.category_choice.GetCount()):
+            name = self.category_choice.GetString(inx)
+            if name.strip() == preferred_category:
+                self.category_choice.SetSelection(inx)
+                self.controller.on_ok_clicked(None)
+                break
+
+    def GetCategory(self):
+        return self.category_choice.GetSelectedCategory()
+
     def EnableStartTime(self, value):
         self.start_time.Enable(value)
 
@@ -170,32 +184,19 @@ class EventDurationDialog(Dialog):
         if self.end_time.IsEnabled():
             return self.end_time.get_value()
 
-    def GetCategory(self):
-        return self.category_choice.GetSelectedCategory()
+    def SelectPrecision(self, inx):
+        return self.precision_choices.Select(inx)
 
     def GetPrecision(self):
         return int(self.precision_choices.GetSelection())
 
-    def SelectCategory(self, inx):
-        return self.category_choice.Select(inx)
-
-    def SetPreferredCategory(self, preferred_category):
-        for inx in range(self.category_choice.GetCount()):
-            name = self.category_choice.GetString(inx)
-            if name.strip() == preferred_category:
-                self.category_choice.SetSelection(inx)
-                self.controller.on_ok_clicked(None)
-                break
-
-    def SelectPrecision(self, inx):
-        return self.precision_choices.Select(inx)
-
-    def SetDuration(self, duration):
-        return self.duration_result.SetLabel(duration)
-
     def SetDurationTypeChoices(self, choices):
         self.duration_type_choices.SetItems(choices)
         self.duration_type_choices.Select(0)
+
+    def GetDurationType(self):
+        inx = self.duration_type_choices.GetSelection()
+        return self.duration_type_choices.GetString(inx)
 
     def SetCopyToClipboard(self, value):
         self.cbx_copy.SetValue(value)
@@ -203,9 +204,8 @@ class EventDurationDialog(Dialog):
     def GetCopyToClipboard(self):
         return self.cbx_copy.GetValue()
 
-    def GetDurationType(self):
-        inx = self.duration_type_choices.GetSelection()
-        return self.duration_type_choices.GetString(inx)
+    def SetDurationResult(self, duration):
+        return self.duration_result.SetLabel(duration)
 
     def GetDurationResult(self):
         return self.duration_result.GetLabel()
