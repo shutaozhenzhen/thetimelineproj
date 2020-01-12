@@ -39,7 +39,7 @@ class EventsDurationController(Controller):
     def on_ok_clicked(self, event):
         events = self._get_events()
         duration = self._calculate_duration(events)
-        self.view.SetDuration(str(duration))
+        self.view.SetDurationResult(str(duration))
         self._copy_to_clipboard()
 
     def _get_events(self):
