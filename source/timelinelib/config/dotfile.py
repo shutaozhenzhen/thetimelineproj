@@ -290,6 +290,7 @@ INT_CONFIGS = (
     {'name': 'vertical_space_between_events', 'default': '5'},
     {'name': 'legend_pos', 'default': '0'},
     {'name': 'time_scale_pos', 'default': '1'},
+    {'name': 'workday_length', 'default': '8'},
 )
 STR_CONFIGS = (
     {'name': 'experimental_features', 'default': ''},

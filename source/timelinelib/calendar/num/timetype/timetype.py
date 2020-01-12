@@ -143,7 +143,7 @@ class NumTimeType(TimeType):
             self.DURATION_TYPE_4,
             self.DURATION_TYPE_5]
 
-    def get_duration_divisor(self, duration_type):
+    def get_duration_divisor(self, duration_type, weekday_length):
         return {
             self.DURATION_TYPE_1: 1,
             self.DURATION_TYPE_2: 10,
