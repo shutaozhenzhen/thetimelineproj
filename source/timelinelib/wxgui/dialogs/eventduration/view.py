@@ -21,9 +21,6 @@ from timelinelib.wxgui.dialogs.eventduration.controller import PRECISION_CHOICES
 from timelinelib.wxgui.framework import Dialog
 
 
-ALL_CATEGORIES = _('All Categories')
-
-
 class EventDurationDialog(Dialog):
 
     """
@@ -127,6 +124,8 @@ class EventDurationDialog(Dialog):
     </BoxSizerVertical>
     """
 
+    ALL_CATEGORIES = _('All Categories')
+
     def __init__(self, parent, title, db, config, preferred_category):
         Dialog.__init__(self, EventsDurationController, parent, {
             "db": db,
@@ -147,17 +146,13 @@ class EventDurationDialog(Dialog):
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
         self.category_choice.Delete(0)  # Remove blank line
-        self.category_choice.Insert(ALL_CATEGORIES, 0, None)
+        self.category_choice.Insert(self.ALL_CATEGORIES, 0, None)
         self.Fit()
 
     def SelectCategory(self, inx):
         return self.category_choice.Select(inx)
 
     def SetPreferredCategory(self, preferred_category):
-        if not preferred_category:
-            preferred_category = ALL_CATEGORIES
-        else:
-            preferred_category = preferred_category.strip()
         for inx in range(self.category_choice.GetCount()):
             name = self.category_choice.GetString(inx)
             if name.strip() == preferred_category:
@@ -214,7 +209,7 @@ class EventDurationDialog(Dialog):
         return self.duration_result.GetLabel()
 
 
-def open_measure_duration_dialog(parent, timeline, config, preferred_category=ALL_CATEGORIES):
+def open_measure_duration_dialog(parent, timeline, config, preferred_category=EventDurationDialog.ALL_CATEGORIES):
     dialog = EventDurationDialog(parent, _('Measure Duration of Events'), timeline, config, preferred_category)
     dialog.ShowModal()
     dialog.Destroy()
