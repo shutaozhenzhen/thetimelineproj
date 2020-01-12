@@ -85,6 +85,7 @@ class CategoryChoice(wx.Choice):
                 self._add_category()
         else:
             self.current_category_selection = new_selection_index
+        event.Skip() # Let the event propagate
 
     def _add_category(self):
         dialog = EditCategoryDialog(self, _("Add Category"), self.timeline, None)
