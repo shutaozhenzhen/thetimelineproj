@@ -27,7 +27,7 @@ from timelinelib.wxgui.dialogs.changenowdate.view import ChangeNowDateDialog
 
 class describe_change_now_date_dialog(UnitTestCase):
 
-    def test_it_can_be_created(self):
+    def __test_it_can_be_created(self):
         config = Mock(Config)
         config.get_date_formatter.return_value = GregorianDateFormatter()
         handle_new_time_fn = Mock()
