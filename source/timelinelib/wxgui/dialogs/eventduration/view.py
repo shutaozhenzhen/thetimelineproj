@@ -233,7 +233,7 @@ class EventDurationDialog(Dialog):
         font = wx.Font(16, wx.DECORATIVE, wx.ITALIC, wx.NORMAL)
         self.duration_result.SetFont(font)
 
-    def _recalculate(self):
+    def _recalculate(self, evt):
         self.controller.recalculate()
 
 
