@@ -39,11 +39,14 @@ class EventsDurationController(Controller):
         self.view.EnableEndTime(evt.EventObject.Value)
         self.recalculate(None)
 
+    def on_copy(self, evt):
+        self._copy_to_clipboard()
+
     def on_ok_clicked(self, event):
         events = self._get_events()
         duration = self._calculate_duration(events)
         self.view.SetDurationResult(str(duration))
-        self._copy_to_clipboard()
+        self._autocopy_to_clipboard()
 
     def recalculate(self, evt=None):
         self.on_ok_clicked(None)
@@ -107,7 +110,11 @@ class EventsDurationController(Controller):
         else:
             self.view.SetPreferredCategory(self.view.ALL_CATEGORIES)
 
+    def _autocopy_to_clipboard(self):
+        if self.view.GetCopyToClipboard():
+            self._copy_to_clipboard()
+
     def _copy_to_clipboard(self):
-        if wx.TheClipboard.Open() and self.view.GetCopyToClipboard():
+        if wx.TheClipboard.Open():
             wx.TheClipboard.SetData(wx.TextDataObject(self.view.GetDurationResult()))
             wx.TheClipboard.Close()
