@@ -240,7 +240,11 @@ class MainFrame(wx.Frame, guic.GuiCreator):
         return self.timeline.find_event_with_id(self.main_panel.get_id_of_first_selected_event())
 
     def _period_for_all_visible_events(self):
-        return TimePeriod(*self._get_start_and_end_for_all_visible_events()).zoom(-1)
+        start_and_end = self._get_start_and_end_for_all_visible_events()
+        if start_and_end:
+            return TimePeriod(*start_and_end).zoom(-1)
+        else:
+            return self.timeline.displayed_period
 
     def _get_start_and_end_for_all_visible_events(self):
         return self.timeline.get_start_and_end_for_all_visible_events(self.view_properties.filter_events)
