@@ -29,6 +29,7 @@ class EventsDurationController(Controller):
         self._db = db
         self._config = config
         self._populate_view(preferred_category)
+        self.on_ok_clicked(None)
 
     def on_use_start_period(self, evt):
         self.view.EnableStartTime(evt.EventObject.Value)
