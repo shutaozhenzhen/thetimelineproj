@@ -149,7 +149,7 @@ class EventDurationDialog(Dialog):
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
         self.category_choice.Delete(0)  # Remove blank line
-        self.category_choice.Insert(ALL_CATEGORIES, 0)
+        self.category_choice.Insert(ALL_CATEGORIES, 0, None)
         self.Fit()
 
     def EnableStartTime(self, value):
