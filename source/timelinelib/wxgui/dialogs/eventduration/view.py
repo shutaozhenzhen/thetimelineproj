@@ -40,7 +40,7 @@ class EventDurationDialog(Dialog):
                 allow_add="False"
                 timeline="$(db)"
                 align="ALIGN_CENTER_VERTICAL"
-                event_EVT_CHOICE="on_category_changed"
+                event_EVT_CHOICE="recalculate"
             />
             <StaticText
                 align="ALIGN_CENTER_VERTICAL"
@@ -85,6 +85,7 @@ class EventDurationDialog(Dialog):
                 name="duration_type_choices"
                 choices="$(duration_type_choices)"
                 align="ALIGN_CENTER_VERTICAL"
+                event_EVT_CHOICE="recalculate"
             />
             <StaticText
                 align="ALIGN_CENTER_VERTICAL"
@@ -94,6 +95,7 @@ class EventDurationDialog(Dialog):
                 name="precision_choices"
                 choices="$(precision_choices)"
                 align="ALIGN_CENTER_VERTICAL"
+                event_EVT_CHOICE="recalculate"
             />
             <StaticText
                 align="ALIGN_CENTER_VERTICAL"
