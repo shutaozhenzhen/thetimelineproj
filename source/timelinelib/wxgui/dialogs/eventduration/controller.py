@@ -60,6 +60,10 @@ class EventsDurationController(Controller):
                       and self._after_or_at_start(e)
                       and self._before_or_at_end(e)
                       and self._include(category.name, e.get_category())]
+        else:
+            events = [e for e in events
+                      if self._after_or_at_start(e)
+                      and self._before_or_at_end(e)]
         return events
 
     def _include(self, category_name, event_category):
