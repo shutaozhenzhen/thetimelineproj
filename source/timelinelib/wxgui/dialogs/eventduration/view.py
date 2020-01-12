@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
 from timelinelib.wxgui.dialogs.eventduration.controller import EventsDurationController
 from timelinelib.wxgui.dialogs.eventduration.controller import PRECISION_CHOICES
 from timelinelib.wxgui.framework import Dialog
@@ -114,9 +115,19 @@ class EventDurationDialog(Dialog):
                 align="ALIGN_CENTER_VERTICAL"
                 label="$(duration_text)"
             />
-            <StaticText
-                name="duration_result"
-            />
+            <BoxSizerHorizontal>
+                <StaticText
+                    name="duration_result"
+                />
+                <Spacer />
+                <Spacer />
+                <Spacer />
+                <BitmapButton
+                    name="btn_copy"
+                    event_EVT_BUTTON="on_copy"
+                />
+                <Spacer />
+            </BoxSizerHorizontal>
             <StretchSpacer />
             <StretchSpacer />
         </FlexGridSizer>
@@ -138,7 +149,7 @@ class EventDurationDialog(Dialog):
             "duration_text": _("Duration:"),
             "duration_type_text": _("Duration Type:"),
             "precision_text": _("Nbr of Decimals:"),
-            "copy_to_clippboard_text": _("Copy result to Clipboard:"),
+            "copy_to_clippboard_text": _("Autocopy result to Clipboard:"),
             "period_start_text": _("Start at:"),
             "period_end_text": _("Stop at:"),
             "duration_type_choices": [],
@@ -146,11 +157,10 @@ class EventDurationDialog(Dialog):
             "time_type": db.get_time_type(),
             "config": config,
             "on_change_time": self._recalculate,
+            "result_size": (-1, 50),
         }, title=title, size=(100, -1))
+        self._init_controls()
         self.controller.on_init(db, config, preferred_category)
-
-    def _recalculate(self):
-        self.controller.recalculate()
 
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
@@ -216,6 +226,15 @@ class EventDurationDialog(Dialog):
 
     def GetDurationResult(self):
         return self.duration_result.GetLabel()
+
+    def _init_controls(self):
+        self.btn_copy.SetBitmapLabel(wx.ArtProvider.GetBitmap(wx.ART_COPY, wx.ART_MENU))
+        self.btn_copy.SetToolTip("Copy to clipboard")
+        font = wx.Font(16, wx.DECORATIVE, wx.ITALIC, wx.NORMAL)
+        self.duration_result.SetFont(font)
+
+    def _recalculate(self):
+        self.controller.recalculate()
 
 
 def open_measure_duration_dialog(parent, timeline, config, preferred_category=EventDurationDialog.ALL_CATEGORIES):
