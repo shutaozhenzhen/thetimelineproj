@@ -44,6 +44,7 @@ class PreferencesDialogController(Controller):
         self.config.default_year = self.view.GetDefaultYear()
         self.config.default_month = self.view.GetDefaultMonth()
         self.config.default_day = self.view.GetDefaultDay()
+        self.config.workday_length = self.view.GetWorkdayLength()
 
     def on_open_recent_change(self, event):
         self.config.open_recent_at_startup = event.IsChecked()
@@ -180,6 +181,7 @@ class PreferencesDialogController(Controller):
         self.view.SetBalloonFont(deserialize_font(self.config.balloon_font))
         self.view.SetLegendPos(self.config.legend_pos)
         self.view.SetTimeScalePos(self.config.time_scale_pos)
+        self.view.SetWorkdayLength(self.config.workday_length)
 
     def _week_index(self, week):
         for (i, w) in self.weeks_map:

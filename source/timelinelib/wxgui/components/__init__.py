@@ -39,6 +39,7 @@ from .textctrl import TextCtrl
 from .textctrlselect import TextCtrlSelect
 from .textpatterncontrol.view import TextPatternControl
 from .twostatebutton import TwoStateButton
+from .numctrl import NumCtrl
 
 
 def TimePicker(parent, time_type, name="", *args, **kwargs):
