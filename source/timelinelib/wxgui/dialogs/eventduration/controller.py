@@ -25,10 +25,10 @@ PRECISION_CHOICES = ['0', '1', '2', '3', '4', '5']
 
 class EventsDurationController(Controller):
 
-    def on_init(self, db, config, preferred_category):
+    def on_init(self, db, config, preferred_category_name):
         self._db = db
         self._config = config
-        self._populate_view(preferred_category)
+        self._populate_view(preferred_category_name)
         self.on_ok_clicked(None)
 
     def on_use_start_period(self, evt):
@@ -84,7 +84,7 @@ class EventsDurationController(Controller):
         else:
             return round(duration / divisor, precision)
 
-    def _populate_view(self, preferred_category):
+    def _populate_view(self, preferred_category_name):
         self.view.PopulateCategories(exclude=None)
         self.view.SelectCategory(0)
         self.view.SelectPrecision(1)
@@ -94,11 +94,11 @@ class EventsDurationController(Controller):
         self.view.SetEndTime(None)
         self.view.EnableStartTime(False)
         self.view.EnableEndTime(False)
-        self._set_preferred_category(preferred_category)
+        self._set_preferred_category(preferred_category_name)
 
-    def _set_preferred_category(self, preferred_category):
-        if preferred_category:
-            self.view.SetPreferredCategory(preferred_category.strip())
+    def _set_preferred_category(self, preferred_category_name):
+        if preferred_category_name:
+            self.view.SetPreferredCategory(preferred_category_name.strip())
         else:
             self.view.SetPreferredCategory(self.view.ALL_CATEGORIES)
 
