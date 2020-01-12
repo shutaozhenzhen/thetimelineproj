@@ -43,6 +43,9 @@ class EventsDurationController(Controller):
         self.view.SetDurationResult(str(duration))
         self._copy_to_clipboard()
 
+    def on_category_changed(self, evt):
+        self.on_ok_clicked(None)
+
     def _get_events(self):
         category = self.view.GetCategory()
         events = self._db.get_all_events()

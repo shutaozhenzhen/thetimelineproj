@@ -40,6 +40,7 @@ class EventDurationDialog(Dialog):
                 allow_add="False"
                 timeline="$(db)"
                 align="ALIGN_CENTER_VERTICAL"
+                event_EVT_CHOICE="on_category_changed"
             />
             <StaticText
                 align="ALIGN_CENTER_VERTICAL"
