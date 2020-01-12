@@ -154,6 +154,10 @@ class EventDurationDialog(Dialog):
         return self.category_choice.Select(inx)
 
     def SetPreferredCategory(self, preferred_category):
+        if not preferred_category:
+            preferred_category = ALL_CATEGORIES
+        else:
+            preferred_category = preferred_category.strip()
         for inx in range(self.category_choice.GetCount()):
             name = self.category_choice.GetString(inx)
             if name.strip() == preferred_category:

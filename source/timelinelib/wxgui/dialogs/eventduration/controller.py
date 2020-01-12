@@ -93,8 +93,7 @@ class EventsDurationController(Controller):
         self.view.SetEndTime(None)
         self.view.EnableStartTime(False)
         self.view.EnableEndTime(False)
-        if preferred_category:
-            self.view.SetPreferredCategory(preferred_category.strip())
+        self.view.SetPreferredCategory(preferred_category)
 
     def _copy_to_clipboard(self):
         if wx.TheClipboard.Open() and self.view.GetCopyToClipboard():
