@@ -57,6 +57,7 @@ class EventDurationDialog(Dialog):
                     show_time="False"
                     time_type="$(time_type)"
                     config="$(config)"
+                    on_change="$(on_change_time)"
                 />
                 <StretchSpacer size="100"/>
             </BoxSizerHorizontal>
@@ -75,6 +76,7 @@ class EventDurationDialog(Dialog):
                     time_type="$(time_type)"
                     config="$(config)"
                     show_time="False"
+                    on_change="$(on_change_time)"
                 />
             </BoxSizerHorizontal>
             <StaticText
@@ -142,9 +144,13 @@ class EventDurationDialog(Dialog):
             "duration_type_choices": [],
             "precision_choices": PRECISION_CHOICES,
             "time_type": db.get_time_type(),
-            "config": config
+            "config": config,
+            "on_change_time": self._recalculate,
         }, title=title, size=(100, -1))
         self.controller.on_init(db, config, preferred_category)
+
+    def _recalculate(self):
+        self.controller.recalculate()
 
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
