@@ -137,7 +137,7 @@ class PreferencesDialog(Dialog):
                             event_EVT_CHECKBOX="on_never_use_time_change"
                             label="$(never_use_time_text)"
                         />
-			<Spacer />
+             			<Spacer />
                         <CheckBox
                             name="use_second_checkbox"
                             event_EVT_CHECKBOX="on_use_second_change"
@@ -179,6 +179,17 @@ class PreferencesDialog(Dialog):
                             choices="$(time_scale_positions)"
                             label="$(time_scale_positions_text)"
                         />
+                        <Spacer />
+                        <StaticText
+                            label="$(weekday_length_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <Choice
+                            name="workday_length_choices"
+                            choices="$(workday_length_choices)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -382,6 +393,7 @@ class PreferencesDialog(Dialog):
             "date_time_text": _("Date && Time"),
             "week_start_text": _("Week start on:"),
             "week_start_choices": [_("Monday"), _("Sunday")],
+            "weekday_length_text": f'{_("Weekday Length")}:',
             "fonts_text": _("Fonts"),
             "colours_text": _("Colours"),
             "major_strip_text": _("Major Strips:"),
@@ -414,6 +426,7 @@ class PreferencesDialog(Dialog):
             "default_month": _("Default Month"),
             "default_day": _("Default Day"),
             "use_date_default_values": _("Use date default values"),
+            "workday_length_choices": list([str(n) for n in range(1, 25)])
         }, title=_("Preferences"))
         self.controller.on_init(config, ExperimentalFeatures())
         self.font_sizer.Layout()
@@ -511,7 +524,14 @@ class PreferencesDialog(Dialog):
 
     def GetUseDateDefaultValues(self):
         return self.use_date_default_values_checkbox.GetValue()
-        
+
+    def SetWorkdayLength(self, value):
+        self.workday_length_choices.Select(value - 1)
+
+    def GetWorkdayLength(self):
+        inx = self.workday_length_choices.GetSelection()
+        return int(self.workday_length_choices.GetString(inx))
+
     def AddExperimentalFeatures(self, features):
         for feature in features:
             name = feature.display_name
