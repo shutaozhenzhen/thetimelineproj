@@ -230,13 +230,13 @@ class BosparanianTimeType(TimeType):
             self.DURATION_TYPE_MINUTES,
             self.DURATION_TYPE_SECONDS]
 
-    def get_duration_divisor(self, duration_type):
+    def get_duration_divisor(self, duration_type, workday_length):
         return {
             self.DURATION_TYPE_SECONDS: 1,
             self.DURATION_TYPE_MINUTES: 60,
             self.DURATION_TYPE_HOURS: 3600,
             self.DURATION_TYPE_DAYS: 86400,
-            self.DURATION_TYPE_WORKDAYS: 28800,
+            self.DURATION_TYPE_WORKDAYS: 3600 * workday_length,
         }[duration_type]
 
 

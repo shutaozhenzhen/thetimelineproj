@@ -78,7 +78,7 @@ class EventsDurationController(Controller):
     def _calculate_duration(self, events):
         duration = sum([e.get_time_period().duration().value for e in events])
         precision = self.view.GetPrecision()
-        divisor = self._db.get_time_type().get_duration_divisor(self.view.GetDurationType())
+        divisor = self._db.get_time_type().get_duration_divisor(self.view.GetDurationType(), self._config.workday_length)
         if precision == 0:
             return duration // divisor
         else:
