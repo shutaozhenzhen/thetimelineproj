@@ -143,8 +143,6 @@ class EventDurationDialog(Dialog):
             "config": config
         }, title=title, size=(100, -1))
         self.controller.on_init(db, config, preferred_category)
-        self.start_time.set_value(None)
-        self.end_time.set_value(None)
 
     def PopulateCategories(self, exclude):
         self.category_choice.Populate(exclude=exclude)
@@ -155,12 +153,18 @@ class EventDurationDialog(Dialog):
     def EnableStartTime(self, value):
         self.start_time.Enable(value)
 
-    def EnableEndTime(self, value):
-        self.end_time.Enable(value)
+    def SetStartTime(self, value):
+        self.start_time.set_value(value)
 
     def GetStartTime(self):
         if self.start_time.IsEnabled():
             return self.start_time.get_value()
+
+    def EnableEndTime(self, value):
+        self.end_time.Enable(value)
+
+    def SetEndTime(self, value):
+        self.end_time.set_value(value)
 
     def GetEndTime(self):
         if self.end_time.IsEnabled():
