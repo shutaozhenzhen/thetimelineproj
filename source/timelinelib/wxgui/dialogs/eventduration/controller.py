@@ -59,7 +59,7 @@ class EventsDurationController(Controller):
         self.view.SetEndTime(None)
         self.view.EnableStartTime(False)
         self.view.EnableEndTime(False)
-        self._set_preferred_category(preferred_category_name)
+        self.view.SetPreferredCategory(preferred_category_name or self.view.ALL_CATEGORIES)
 
     def _calculate(self):
         events = self._get_events()
@@ -122,12 +122,6 @@ class EventsDurationController(Controller):
 
     def _get_event_duration_end_time(self, end_time):
         return min(self.view.GetEndTime() or end_time, end_time)
-
-    def _set_preferred_category(self, preferred_category_name):
-        if preferred_category_name:
-            self.view.SetPreferredCategory(preferred_category_name.strip())
-        else:
-            self.view.SetPreferredCategory(self.view.ALL_CATEGORIES)
 
     def _autocopy_to_clipboard(self):
         if self.view.GetCopyToClipboard():
