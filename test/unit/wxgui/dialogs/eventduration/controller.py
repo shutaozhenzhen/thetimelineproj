@@ -34,7 +34,6 @@ class EventDurationDialogTestCase(UnitTestCase):
     def test_can_initialixe(self):
         controller = self.a_controller()
         controller.on_init(self.a_db(), self.a_config(), None)
-        # self.view.SetDurationResult(str(duration))
         self.assertEqual(controller.view.SetDurationResult.call_count, 1)
         controller.view.SetDurationResult.assert_called_with("0.0")
 
