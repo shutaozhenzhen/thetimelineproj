@@ -47,8 +47,7 @@ class GregorianDateTimePickerController:
             time = self.now_fn()
         self.date_picker.SetGregorianDate(GregorianDateTime.from_time(time).to_date_tuple())
         self.time_picker.SetGregorianTime(GregorianDateTime.from_time(time).to_time_tuple())
-        if self.on_change is not None:
-            self.on_change()
+        self.changed()
 
     def changed(self):
         if self.on_change is not None:
