@@ -71,13 +71,13 @@ class EventsDurationController(Controller):
         return events
 
     def _include(self, category_name, event_category):
-        if event_category.name != category_name:
+        if event_category.name == category_name:
+            return True
+        else:
             if event_category.parent:
                 return self._include(category_name, event_category.parent)
             else:
                 return False
-        else:
-            return True
 
     def _after_or_at_start(self, event):
         start_time = self.view.GetStartTime()
