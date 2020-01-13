@@ -97,7 +97,7 @@ class GregorianTimePicker(TextPatternControl):
             hour = int(hour_str)
             minute = int(minute_str)
 
-        if self.config.use_second:
+        if self.config.use_second and parts:
             [hour_str, minute_str, second_str] = parts
             hour = int(hour_str)
             minute = int(minute_str)
