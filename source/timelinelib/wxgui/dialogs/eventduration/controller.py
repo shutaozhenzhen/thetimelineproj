@@ -49,6 +49,18 @@ class EventsDurationController(Controller):
     def recalculate(self, evt=None):
         self._calculate()
 
+    def _populate_view(self, preferred_category_name):
+        self.view.PopulateCategories(exclude=None)
+        self.view.SelectCategory(0)
+        self.view.SelectPrecision(1)
+        self.view.SetCopyToClipboard(False)
+        self.view.SetDurationTypeChoices(self._db.get_time_type().get_duration_types())
+        self.view.SetStartTime(None)
+        self.view.SetEndTime(None)
+        self.view.EnableStartTime(False)
+        self.view.EnableEndTime(False)
+        self._set_preferred_category(preferred_category_name)
+
     def _calculate(self):
         events = self._get_events()
         duration = self._calculate_duration(events)
@@ -112,18 +124,6 @@ class EventsDurationController(Controller):
 
     def _get_event_duration_end_time(self, end_time):
         return min(self.view.GetEndTime() or end_time, end_time)
-
-    def _populate_view(self, preferred_category_name):
-        self.view.PopulateCategories(exclude=None)
-        self.view.SelectCategory(0)
-        self.view.SelectPrecision(1)
-        self.view.SetCopyToClipboard(False)
-        self.view.SetDurationTypeChoices(self._db.get_time_type().get_duration_types())
-        self.view.SetStartTime(None)
-        self.view.SetEndTime(None)
-        self.view.EnableStartTime(False)
-        self.view.EnableEndTime(False)
-        self._set_preferred_category(preferred_category_name)
 
     def _set_preferred_category(self, preferred_category_name):
         if preferred_category_name:
