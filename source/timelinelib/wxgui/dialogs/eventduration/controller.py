@@ -98,15 +98,23 @@ class EventsDurationController(Controller):
             return round(duration / divisor, precision)
 
     def _get_event_duration(self, e):
-        filter_start_time = self.view.GetStartTime()
-        filter_end_time = self.view.GetEndTime()
-        start_time = e.get_time_period().start_time
-        if filter_start_time:
-            start_time = max(filter_start_time, e.get_time_period().start_time)
-        end_time = e.get_time_period().end_time
-        if filter_end_time:
-            end_time = min(filter_end_time, e.get_time_period().end_time)
+        start_time = self._get_event_duration_start_time(e)
+        end_time = self._get_event_duration_end_time(e)
+        if end_time < start_time:
+            return 0
         return TimePeriod(start_time, end_time).duration().value
+
+    def _get_event_duration_start_time(self, e):
+        if self.view.GetStartTime():
+            return max(self.view.GetStartTime(), e.get_time_period().start_time)
+        else:
+            return e.get_time_period().start_time
+
+    def _get_event_duration_end_time(self, e):
+        if self.view.GetEndTime():
+            return min(self.view.GetEndTime(), e.get_time_period().end_time)
+        else:
+            return e.get_time_period().end_time
 
     def _populate_view(self, preferred_category_name):
         self.view.PopulateCategories(exclude=None)
