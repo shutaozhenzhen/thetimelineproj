@@ -71,9 +71,11 @@ class GregorianDateTimePicker(wx.Panel):
             sizer.Add(self.date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
             sizer.Add(self.date_button, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
             sizer.Add(self.time_picker, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+            self.time_picker.Show()
         else:
             sizer.Add(self.date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
             sizer.Add(self.date_button, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+            self.time_picker.Hide()
         self.SetSizerAndFit(sizer)
 
     def get_value(self):
