@@ -92,15 +92,13 @@ class EventsDurationController(Controller):
                 return False
 
     def _after_or_at_start(self, event):
-        start_time = self.view.GetStartTime()
-        if start_time:
-            return event.get_end_time() >= start_time
+        if self.view.GetStartTime():
+            return event.get_end_time() >= self.view.GetStartTime()
         return True
 
     def _before_or_at_end(self, event):
-        end_time = self.view.GetEndTime()
-        if end_time:
-            return event.get_start_time() <= end_time
+        if self.view.GetEndTime():
+            return event.get_start_time() <= self.view.GetEndTime()
         return True
 
     def _calculate_duration(self, events):
