@@ -30,7 +30,7 @@ class EventsDurationController(Controller):
         self._db = db
         self._config = config
         self._populate_view(preferred_category_name)
-        self.on_ok_clicked(None)
+        self.on_ok_clicked()
 
     def on_use_start_period(self, evt):
         self.view.EnableStartTime(evt.EventObject.Value)
@@ -43,14 +43,14 @@ class EventsDurationController(Controller):
     def on_copy(self, evt):
         self._copy_to_clipboard()
 
-    def on_ok_clicked(self, event):
+    def on_ok_clicked(self, event=None):
         events = self._get_events()
         duration = self._calculate_duration(events)
         self.view.SetDurationResult(str(duration))
         self._autocopy_to_clipboard()
 
     def recalculate(self, evt=None):
-        self.on_ok_clicked(None)
+        self.on_ok_clicked()
 
     def _get_events(self):
         category = self.view.GetCategory()
