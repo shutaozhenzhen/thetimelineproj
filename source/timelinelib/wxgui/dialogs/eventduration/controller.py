@@ -18,6 +18,7 @@
 
 import wx
 from timelinelib.wxgui.framework import Controller
+from timelinelib.canvas.data.timeperiod import TimePeriod
 
 
 PRECISION_CHOICES = ['0', '1', '2', '3', '4', '5']
@@ -88,13 +89,24 @@ class EventsDurationController(Controller):
         return True
 
     def _calculate_duration(self, events):
-        duration = sum([e.get_time_period().duration().value for e in events])
+        duration = sum([self._get_event_duration(e) for e in events])
         precision = self.view.GetPrecision()
         divisor = self._db.get_time_type().get_duration_divisor(self.view.GetDurationType(), self._config.workday_length)
         if precision == 0:
             return duration // divisor
         else:
             return round(duration / divisor, precision)
+
+    def _get_event_duration(self, e):
+        filter_start_time = self.view.GetStartTime()
+        filter_end_time = self.view.GetEndTime()
+        start_time = e.get_time_period().start_time
+        if filter_start_time:
+            start_time = max(filter_start_time, e.get_time_period().start_time)
+        end_time = e.get_time_period().end_time
+        if filter_end_time:
+            end_time = min(filter_end_time, e.get_time_period().end_time)
+        return TimePeriod(start_time, end_time).duration().value
 
     def _populate_view(self, preferred_category_name):
         self.view.PopulateCategories(exclude=None)
