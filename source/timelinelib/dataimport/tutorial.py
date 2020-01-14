@@ -87,6 +87,7 @@ class TutorialTimelineCreator:
             event.set_hyperlink(hyperlink)
         event.set_default_color((200, 200, 200))
         event.save()
+        return event
 
     def add_container(self, text, description, start_add, end_add=None):
         start, end = self._calc_start_end(start_add, end_add)
