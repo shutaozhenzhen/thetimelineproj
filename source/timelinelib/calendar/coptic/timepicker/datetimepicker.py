@@ -31,7 +31,6 @@ from timelinelib.config.paths import ICONS_DIR
 class CopticDateTimePicker(wx.Panel):
 
     def __init__(self, parent, show_time=True, config=None, on_change=None):
-        print('CopticDateTimePicker', on_change)
         wx.Panel.__init__(self, parent)
         self.config = config
         self._on_change = on_change
