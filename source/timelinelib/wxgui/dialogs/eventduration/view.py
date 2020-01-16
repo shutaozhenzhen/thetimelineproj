@@ -149,7 +149,7 @@ class EventDurationDialog(Dialog):
             "category_text": _("Category:"),
             "duration_text": _("Duration:"),
             "duration_type_text": _("Duration Type:"),
-            "precision_text": _("Nbr of Decimals:"),
+            "precision_text": _("Number of Decimals:"),
             "copy_to_clippboard_text": _("Autocopy result to Clipboard:"),
             "period_start_text": _("Start at:"),
             "period_end_text": _("Stop at:"),
