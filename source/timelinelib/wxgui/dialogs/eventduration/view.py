@@ -118,6 +118,7 @@ class EventDurationDialog(Dialog):
             <BoxSizerHorizontal>
                 <StaticText
                     name="duration_result"
+                    width="150"
                 />
                 <Spacer />
                 <Spacer />
@@ -222,6 +223,10 @@ class EventDurationDialog(Dialog):
         return self.cbx_copy.GetValue()
 
     def SetDurationResult(self, duration):
+        dc = wx.ScreenDC()
+        w,h = dc.GetTextExtent(duration)
+        print(w, h)
+        self.duration_result.width = 2 * w
         return self.duration_result.SetLabel(duration)
 
     def GetDurationResult(self):
