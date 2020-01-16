@@ -41,14 +41,12 @@ class CalendarPopup(wx.PopupTransientWindow):
 
     def _create_calendar_control(self, wx_date, border):
         style = self._get_cal_style()
-        cal = wx.adv.CalendarCtrl(self, -1, wx_date,
-                                  pos=(border, border), style=style)
+        cal = wx.adv.CalendarCtrl(self, -1, wx_date, pos=(border, border), style=style)
         self._set_cal_range(cal)
         return cal
 
     def _get_cal_style(self):
-        style = (wx.adv.CAL_SHOW_HOLIDAYS |
-                 wx.adv.CAL_SEQUENTIAL_MONTH_SELECTION)
+        style = (wx.adv.CAL_SHOW_HOLIDAYS | wx.adv.CAL_SEQUENTIAL_MONTH_SELECTION)
         if self.config.get_week_start() == "monday":
             style |= wx.adv.CAL_MONDAY_FIRST
         else:
