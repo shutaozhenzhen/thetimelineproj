@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Timeline 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 15:03+0100\n"
-"PO-Revision-Date: 2020-01-13 18:29+0000\n"
+"POT-Creation-Date: 2020-01-16 20:30+0100\n"
+"PO-Revision-Date: 2020-01-16 21:30+0000\n"
 "Last-Translator: rogerlindberg <roger@rolidata.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-01-13 18:36+0000\n"
-"X-Generator: Launchpad (build bceb5ef013b87ef7aafe0755545ceb689ca7ac60)\n"
+"X-Launchpad-Export-Date: 2020-01-16 21:40+0000\n"
+"X-Generator: Launchpad (build f1052173880d8dae43faa7c2fc45da1b42227143)\n"
 
 #: source\timelinelib\calendar\bosparanian\monthnames.py:24
 #: source\timelinelib\calendar\bosparanian\weekdaynames.py:27
@@ -192,7 +192,7 @@ msgstr "Minuter"
 #: source\timelinelib\calendar\gregorian\timetype\timetype.py:52
 #: source\timelinelib\calendar\pharaonic\timetype\timetype.py:54
 msgid "Seconds"
-msgstr ""
+msgstr "Sekunder"
 
 #: source\timelinelib\calendar\bosparanian\timetype\timetype.py:88
 msgid "Open &Now Date Editor"
@@ -694,13 +694,13 @@ msgid "Description"
 msgstr "Beskrivning"
 
 #: source\timelinelib\canvas\data\event.py:27
-#: source\timelinelib\dataimport\tutorial.py:163
+#: source\timelinelib\dataimport\tutorial.py:164
 #: source\timelinelib\plugin\plugins\exporters\timelineexporter.py:109
 msgid "Start"
 msgstr "Början"
 
 #: source\timelinelib\canvas\data\event.py:27
-#: source\timelinelib\dataimport\tutorial.py:168
+#: source\timelinelib\dataimport\tutorial.py:169
 #: source\timelinelib\plugin\plugins\exporters\timelineexporter.py:111
 msgid "End"
 msgstr "Slut"
@@ -1054,49 +1054,49 @@ msgstr "Kan inte läsa från filen '%s'."
 msgid "Unable to read timeline data from '%s'."
 msgstr "Kunde inte läsa tidslinjedata från '%s'."
 
-#: source\timelinelib\dataimport\tutorial.py:173
+#: source\timelinelib\dataimport\tutorial.py:174
 msgid "Example era"
 msgstr "Exempel-era"
 
-#: source\timelinelib\dataimport\tutorial.py:176
+#: source\timelinelib\dataimport\tutorial.py:177
 msgid "Welcome"
 msgstr "Välkommen"
 
-#: source\timelinelib\dataimport\tutorial.py:179
+#: source\timelinelib\dataimport\tutorial.py:180
 msgid "Welcome to Timeline"
 msgstr "Välkommen till Timeline"
 
-#: source\timelinelib\dataimport\tutorial.py:182
+#: source\timelinelib\dataimport\tutorial.py:183
 msgid "Intro"
 msgstr "Intro"
 
-#: source\timelinelib\dataimport\tutorial.py:185
+#: source\timelinelib\dataimport\tutorial.py:186
 msgid "This event has hyperlinks"
 msgstr "Den här händelsen har en hyperlänk"
 
-#: source\timelinelib\dataimport\tutorial.py:186
+#: source\timelinelib\dataimport\tutorial.py:187
 msgid "Right-click for context menu where the hyperlinks can be accessed."
 msgstr "Höger-klicka för att öppna menyn där hyperlänk kan väljas."
 
-#: source\timelinelib\dataimport\tutorial.py:192
+#: source\timelinelib\dataimport\tutorial.py:193
 msgid "Hover me!"
 msgstr "Rör musen över mig!"
 
-#: source\timelinelib\dataimport\tutorial.py:193
+#: source\timelinelib\dataimport\tutorial.py:194
 msgid "Hovering events with a triangle shows the event description."
 msgstr ""
 "Om man rör musen över en händelse med triangel, så visas händelsens "
 "beskrivning"
 
-#: source\timelinelib\dataimport\tutorial.py:197
+#: source\timelinelib\dataimport\tutorial.py:198
 msgid "Features"
 msgstr "Funktioner"
 
-#: source\timelinelib\dataimport\tutorial.py:200
+#: source\timelinelib\dataimport\tutorial.py:201
 msgid "Scroll"
 msgstr "Scrolla"
 
-#: source\timelinelib\dataimport\tutorial.py:201
+#: source\timelinelib\dataimport\tutorial.py:202
 msgid ""
 "Left click somewhere on the timeline and start dragging.\n"
 "\n"
@@ -1112,19 +1112,19 @@ msgstr ""
 "Du kan även klicka med mittenknappen för att centrera vid den önskade "
 "punkten."
 
-#: source\timelinelib\dataimport\tutorial.py:210
+#: source\timelinelib\dataimport\tutorial.py:211
 msgid "Container"
 msgstr "Container"
 
-#: source\timelinelib\dataimport\tutorial.py:211
+#: source\timelinelib\dataimport\tutorial.py:212
 msgid "?"
 msgstr "?"
 
-#: source\timelinelib\dataimport\tutorial.py:217
+#: source\timelinelib\dataimport\tutorial.py:218
 msgid "Resize me"
 msgstr "Ändra min storlek"
 
-#: source\timelinelib\dataimport\tutorial.py:218
+#: source\timelinelib\dataimport\tutorial.py:219
 msgid ""
 "Container Subevent 1\n"
 "Click on the event to get the resize handles"
@@ -1132,11 +1132,11 @@ msgstr ""
 "Händels i container\n"
 "Klicka på händelsen för att få handtag för storleksändring"
 
-#: source\timelinelib\dataimport\tutorial.py:224
+#: source\timelinelib\dataimport\tutorial.py:225
 msgid "Drag me"
 msgstr "Dra mig"
 
-#: source\timelinelib\dataimport\tutorial.py:225
+#: source\timelinelib\dataimport\tutorial.py:226
 msgid ""
 "Container Subevent 2\n"
 "\n"
@@ -1147,11 +1147,11 @@ msgid ""
 "and drag it."
 msgstr ""
 
-#: source\timelinelib\dataimport\tutorial.py:234
+#: source\timelinelib\dataimport\tutorial.py:235
 msgid "View Container demo video"
 msgstr "Se video  med Container demo"
 
-#: source\timelinelib\dataimport\tutorial.py:235
+#: source\timelinelib\dataimport\tutorial.py:236
 msgid ""
 "Container Subevent 3\n"
 "\n"
@@ -1161,11 +1161,11 @@ msgid ""
 "the first (and only) link"
 msgstr ""
 
-#: source\timelinelib\dataimport\tutorial.py:243
+#: source\timelinelib\dataimport\tutorial.py:244
 msgid "Zoom"
 msgstr "Zooma"
 
-#: source\timelinelib\dataimport\tutorial.py:244
+#: source\timelinelib\dataimport\tutorial.py:245
 msgid ""
 "Hold down Ctrl while scrolling the mouse wheel.\n"
 "\n"
@@ -1175,12 +1175,12 @@ msgstr ""
 "\n"
 "Håll nere Shift-knappen medans du navigerar med musen."
 
-#: source\timelinelib\dataimport\tutorial.py:251
+#: source\timelinelib\dataimport\tutorial.py:252
 #: source\timelinelib\help\pages.py:289
 msgid "Create event"
 msgstr "Skapa händelse"
 
-#: source\timelinelib\dataimport\tutorial.py:252
+#: source\timelinelib\dataimport\tutorial.py:253
 msgid ""
 "Double click somewhere on the timeline.\n"
 "\n"
@@ -1190,20 +1190,20 @@ msgstr ""
 "\n"
 "Håll nere Ctrl-knappen då du navigerar och väljer en period med musen."
 
-#: source\timelinelib\dataimport\tutorial.py:259
+#: source\timelinelib\dataimport\tutorial.py:260
 #: source\timelinelib\help\pages.py:333
 msgid "Edit event"
 msgstr "Redigera händelse"
 
-#: source\timelinelib\dataimport\tutorial.py:260
+#: source\timelinelib\dataimport\tutorial.py:261
 msgid "Double click on an event."
 msgstr "Dubbelklicka på en händelse."
 
-#: source\timelinelib\dataimport\tutorial.py:265
+#: source\timelinelib\dataimport\tutorial.py:266
 msgid "Select event"
 msgstr "Välj händelse"
 
-#: source\timelinelib\dataimport\tutorial.py:266
+#: source\timelinelib\dataimport\tutorial.py:267
 msgid ""
 "Click on it.\n"
 "\n"
@@ -1213,29 +1213,29 @@ msgstr ""
 "\n"
 "Håll ner Ctrl-knappen då du klickar för att markera flera händelser."
 
-#: source\timelinelib\dataimport\tutorial.py:273
+#: source\timelinelib\dataimport\tutorial.py:274
 #: source\timelinelib\help\pages.py:456
 msgid "Delete event"
 msgstr "Ta bort händelse"
 
-#: source\timelinelib\dataimport\tutorial.py:274
+#: source\timelinelib\dataimport\tutorial.py:275
 msgid "Select events to be deleted and press the Del key."
 msgstr "Välj händelser som skall tas bort och tryck Del-knappen."
 
-#: source\timelinelib\dataimport\tutorial.py:279
+#: source\timelinelib\dataimport\tutorial.py:280
 msgid "Resize and move me!"
 msgstr "Ändra storlek och flytta mig!"
 
-#: source\timelinelib\dataimport\tutorial.py:280
+#: source\timelinelib\dataimport\tutorial.py:281
 msgid "First select me and then drag the handles."
 msgstr "Markera mig först och dra sedan i något handtag."
 
-#: source\timelinelib\dataimport\tutorial.py:285
-#: source\timelinelib\dataimport\tutorial.py:288
+#: source\timelinelib\dataimport\tutorial.py:286
+#: source\timelinelib\dataimport\tutorial.py:289
 msgid "Saving"
 msgstr "Sparar"
 
-#: source\timelinelib\dataimport\tutorial.py:289
+#: source\timelinelib\dataimport\tutorial.py:290
 msgid ""
 "This timeline is stored in memory and modifications to it will not be "
 "persisted between sessions.\n"
@@ -2487,7 +2487,7 @@ msgstr "Fältet '%s' får inte vara tomt."
 
 #: source\timelinelib\wxgui\dialogs\editcontainer\view.py:60
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:180
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:148
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:149
 #: source\timelinelib\wxgui\dialogs\milestone\view.py:87
 msgid "Category:"
 msgstr "Kategori:"
@@ -2562,35 +2562,35 @@ msgstr "Redigera en Era"
 msgid "Edit Era's"
 msgstr "Redigera Eror"
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:143
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:144
 msgid "All Categories"
 msgstr "Alla Kategorier"
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:149
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:150
 msgid "Duration:"
 msgstr "Summa tid:"
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:150
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:151
 msgid "Duration Type:"
 msgstr "Tid"
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:151
-msgid "Nbr of Decimals:"
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:152
+msgid "Number of Decimals:"
 msgstr "Antal Decimaler"
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:152
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:153
 msgid "Autocopy result to Clipboard:"
 msgstr "Kopiera automatiskt till Klippbordet"
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:153
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:154
 msgid "Start at:"
 msgstr "Börja på:"
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:154
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:155
 msgid "Stop at:"
 msgstr "Sluta på:"
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:241
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:246
 msgid "Measure Duration of Events"
 msgstr "Beräkna Summerad tid för Händelser"
 
@@ -3518,28 +3518,5 @@ msgstr "Fel"
 msgid "Question"
 msgstr "Fråga"
 
-#~ msgid "Edit &Categories"
-#~ msgstr "Redigera &Kategorier"
-
-#~ msgid "Edit Categories"
-#~ msgstr "Redigera Kategorier"
-
-#~ msgid "This dialog has been removed. Edit categories in the sidebar instead."
-#~ msgstr "Dialogen har tagits bort. Ändra kategorier i sidebaren i stället."
-
-#~ msgid "Dialog moved"
-#~ msgstr "Dialogen är flyttad"
-
-#, python-format
-#~ msgid ""
-#~ "The lockfile used to protect the timeline from concurrent updates is opened "
-#~ "by another program or process.\n"
-#~ "This lockfile must be removed in order be able to continue editing the "
-#~ "timeline!\n"
-#~ "The lockfile is found at: %s"
-#~ msgstr ""
-#~ "Låsfilen som används för att skydda timeline mot samtidiga uppdateringar "
-#~ "från två användare, är öppnad av ett annat program eller process.\n"
-#~ "Låsfilen måste tas bort för att du ska kunna fortsätta ändra i din "
-#~ "timeline.\n"
-#~ "Låsfilen hittar du här: %s"
+#~ msgid "Nbr of Decimals:"
+#~ msgstr "Antal Decimaler"

@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Timeline 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 15:03+0100\n"
+"POT-Creation-Date: 2020-01-16 20:30+0100\n"
 "PO-Revision-Date: 2016-07-07 00:04+0000\n"
 "Last-Translator: Tobias Bannert <tobannert@gmail.com>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-01-13 18:36+0000\n"
-"X-Generator: Launchpad (build bceb5ef013b87ef7aafe0755545ceb689ca7ac60)\n"
+"X-Launchpad-Export-Date: 2020-01-16 21:40+0000\n"
+"X-Generator: Launchpad (build f1052173880d8dae43faa7c2fc45da1b42227143)\n"
 "X-Poedit-Language: German\n"
 
 #: source\timelinelib\wxgui\dialogs\editcategory\view.py:103
@@ -700,13 +700,13 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: source\timelinelib\canvas\data\event.py:27
-#: source\timelinelib\dataimport\tutorial.py:163
+#: source\timelinelib\dataimport\tutorial.py:164
 #: source\timelinelib\plugin\plugins\exporters\timelineexporter.py:109
 msgid "Start"
 msgstr "Start"
 
 #: source\timelinelib\canvas\data\event.py:27
-#: source\timelinelib\dataimport\tutorial.py:168
+#: source\timelinelib\dataimport\tutorial.py:169
 #: source\timelinelib\plugin\plugins\exporters\timelineexporter.py:111
 msgid "End"
 msgstr "Ende"
@@ -1062,49 +1062,49 @@ msgstr "Datei »%s« kann nicht gelesen werden."
 msgid "Unable to read timeline data from '%s'."
 msgstr "Zeitstrahldaten aus »%s« können nicht gelesen werden."
 
-#: source\timelinelib\dataimport\tutorial.py:173
+#: source\timelinelib\dataimport\tutorial.py:174
 msgid "Example era"
 msgstr ""
 
-#: source\timelinelib\dataimport\tutorial.py:176
+#: source\timelinelib\dataimport\tutorial.py:177
 msgid "Welcome"
 msgstr "Willkommen"
 
-#: source\timelinelib\dataimport\tutorial.py:179
+#: source\timelinelib\dataimport\tutorial.py:180
 msgid "Welcome to Timeline"
 msgstr "Willkommen zu Timeline"
 
-#: source\timelinelib\dataimport\tutorial.py:182
+#: source\timelinelib\dataimport\tutorial.py:183
 msgid "Intro"
 msgstr "Einführung"
 
-#: source\timelinelib\dataimport\tutorial.py:185
+#: source\timelinelib\dataimport\tutorial.py:186
 msgid "This event has hyperlinks"
 msgstr "Dieses Ereignis enthält Hyperlinks"
 
-#: source\timelinelib\dataimport\tutorial.py:186
+#: source\timelinelib\dataimport\tutorial.py:187
 msgid "Right-click for context menu where the hyperlinks can be accessed."
 msgstr "Mit Rechtsklick zum Kontextmenü, um auf den Hyperlink zuzugreifen."
 
-#: source\timelinelib\dataimport\tutorial.py:192
+#: source\timelinelib\dataimport\tutorial.py:193
 msgid "Hover me!"
 msgstr "Berühr mich mit der Maus!"
 
-#: source\timelinelib\dataimport\tutorial.py:193
+#: source\timelinelib\dataimport\tutorial.py:194
 msgid "Hovering events with a triangle shows the event description."
 msgstr ""
 "Wenn man mit der Maus über ein Ereignis mit einem Dreieck fährt, kann man "
 "die Beschreibung des Ereignisses sehen."
 
-#: source\timelinelib\dataimport\tutorial.py:197
+#: source\timelinelib\dataimport\tutorial.py:198
 msgid "Features"
 msgstr "Eigenschaften"
 
-#: source\timelinelib\dataimport\tutorial.py:200
+#: source\timelinelib\dataimport\tutorial.py:201
 msgid "Scroll"
 msgstr "Rollen"
 
-#: source\timelinelib\dataimport\tutorial.py:201
+#: source\timelinelib\dataimport\tutorial.py:202
 msgid ""
 "Left click somewhere on the timeline and start dragging.\n"
 "\n"
@@ -1120,19 +1120,19 @@ msgstr ""
 "Sie können ebenfalls mit der mittleren Maustaste klicken, um den Zeitstrahl "
 "gegenüber diesem Punkt mittig einzustellen."
 
-#: source\timelinelib\dataimport\tutorial.py:210
+#: source\timelinelib\dataimport\tutorial.py:211
 msgid "Container"
 msgstr "Container"
 
-#: source\timelinelib\dataimport\tutorial.py:211
+#: source\timelinelib\dataimport\tutorial.py:212
 msgid "?"
 msgstr "?"
 
-#: source\timelinelib\dataimport\tutorial.py:217
+#: source\timelinelib\dataimport\tutorial.py:218
 msgid "Resize me"
 msgstr "Ändere meine Größe"
 
-#: source\timelinelib\dataimport\tutorial.py:218
+#: source\timelinelib\dataimport\tutorial.py:219
 msgid ""
 "Container Subevent 1\n"
 "Click on the event to get the resize handles"
@@ -1140,11 +1140,11 @@ msgstr ""
 "Container für das Unterereignis 1\n"
 "Klicke auf das Ereignis, um die Griffe zur Größenänderung zu sehen."
 
-#: source\timelinelib\dataimport\tutorial.py:224
+#: source\timelinelib\dataimport\tutorial.py:225
 msgid "Drag me"
 msgstr "Ziehen Sie mich"
 
-#: source\timelinelib\dataimport\tutorial.py:225
+#: source\timelinelib\dataimport\tutorial.py:226
 msgid ""
 "Container Subevent 2\n"
 "\n"
@@ -1163,11 +1163,11 @@ msgstr ""
 "während des Anklickens. Der Punkt zum Verschieben ist in der Mitte des "
 "Containers."
 
-#: source\timelinelib\dataimport\tutorial.py:234
+#: source\timelinelib\dataimport\tutorial.py:235
 msgid "View Container demo video"
 msgstr "Demo Video für Container ansehen"
 
-#: source\timelinelib\dataimport\tutorial.py:235
+#: source\timelinelib\dataimport\tutorial.py:236
 msgid ""
 "Container Subevent 3\n"
 "\n"
@@ -1177,11 +1177,11 @@ msgid ""
 "the first (and only) link"
 msgstr "Container für Unterelemente"
 
-#: source\timelinelib\dataimport\tutorial.py:243
+#: source\timelinelib\dataimport\tutorial.py:244
 msgid "Zoom"
 msgstr "Ansicht vergrößern"
 
-#: source\timelinelib\dataimport\tutorial.py:244
+#: source\timelinelib\dataimport\tutorial.py:245
 msgid ""
 "Hold down Ctrl while scrolling the mouse wheel.\n"
 "\n"
@@ -1191,12 +1191,12 @@ msgstr ""
 "\n"
 "Halten Sie die Umschalt-Taste gedrückt, während Sie es mit der Maus ziehen."
 
-#: source\timelinelib\dataimport\tutorial.py:251
+#: source\timelinelib\dataimport\tutorial.py:252
 #: source\timelinelib\help\pages.py:289
 msgid "Create event"
 msgstr "Ereignis erstellen"
 
-#: source\timelinelib\dataimport\tutorial.py:252
+#: source\timelinelib\dataimport\tutorial.py:253
 msgid ""
 "Double click somewhere on the timeline.\n"
 "\n"
@@ -1207,20 +1207,20 @@ msgstr ""
 "Halten Sie dann Strg gedrückt, während Sie mit der Maus ziehen, um einen "
 "Zeitabschnitt zu wählen."
 
-#: source\timelinelib\dataimport\tutorial.py:259
+#: source\timelinelib\dataimport\tutorial.py:260
 #: source\timelinelib\help\pages.py:333
 msgid "Edit event"
 msgstr "Ereignis bearbeiten"
 
-#: source\timelinelib\dataimport\tutorial.py:260
+#: source\timelinelib\dataimport\tutorial.py:261
 msgid "Double click on an event."
 msgstr "Doppelklick auf das Ereignis."
 
-#: source\timelinelib\dataimport\tutorial.py:265
+#: source\timelinelib\dataimport\tutorial.py:266
 msgid "Select event"
 msgstr "Ereignis auswählen"
 
-#: source\timelinelib\dataimport\tutorial.py:266
+#: source\timelinelib\dataimport\tutorial.py:267
 msgid ""
 "Click on it.\n"
 "\n"
@@ -1231,30 +1231,30 @@ msgstr ""
 "Halten Sie die Strg-Taste gedrückt, während sie auf Ereignisse klicken, um "
 "mehrere gleichzeitig auszuwählen."
 
-#: source\timelinelib\dataimport\tutorial.py:273
+#: source\timelinelib\dataimport\tutorial.py:274
 #: source\timelinelib\help\pages.py:456
 msgid "Delete event"
 msgstr "Ereignis löschen"
 
-#: source\timelinelib\dataimport\tutorial.py:274
+#: source\timelinelib\dataimport\tutorial.py:275
 msgid "Select events to be deleted and press the Del key."
 msgstr ""
 "Wählen Sie die zu löschenden Ereignisse und drücken die Entfernen-Taste."
 
-#: source\timelinelib\dataimport\tutorial.py:279
+#: source\timelinelib\dataimport\tutorial.py:280
 msgid "Resize and move me!"
 msgstr "Verändern Sie meine Größe und bewegen Sie mich!"
 
-#: source\timelinelib\dataimport\tutorial.py:280
+#: source\timelinelib\dataimport\tutorial.py:281
 msgid "First select me and then drag the handles."
 msgstr "Wählen Sie mich zunächst aus, ziehen Sie dann an den Griffen."
 
-#: source\timelinelib\dataimport\tutorial.py:285
-#: source\timelinelib\dataimport\tutorial.py:288
+#: source\timelinelib\dataimport\tutorial.py:286
+#: source\timelinelib\dataimport\tutorial.py:289
 msgid "Saving"
 msgstr "Speichern"
 
-#: source\timelinelib\dataimport\tutorial.py:289
+#: source\timelinelib\dataimport\tutorial.py:290
 msgid ""
 "This timeline is stored in memory and modifications to it will not be "
 "persisted between sessions.\n"
@@ -2592,7 +2592,7 @@ msgstr "Feld »%s« darf nicht leer sein."
 
 #: source\timelinelib\wxgui\dialogs\editcontainer\view.py:60
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:180
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:148
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:149
 #: source\timelinelib\wxgui\dialogs\milestone\view.py:87
 msgid "Category:"
 msgstr "Kategorie:"
@@ -2668,35 +2668,35 @@ msgstr "Epoche ändern"
 msgid "Edit Era's"
 msgstr "Epochen ändern"
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:143
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:144
 msgid "All Categories"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:149
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:150
 msgid "Duration:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:150
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:151
 msgid "Duration Type:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:151
-msgid "Nbr of Decimals:"
-msgstr ""
-
 #: source\timelinelib\wxgui\dialogs\eventduration\view.py:152
-msgid "Autocopy result to Clipboard:"
+msgid "Number of Decimals:"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\eventduration\view.py:153
-msgid "Start at:"
+msgid "Autocopy result to Clipboard:"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\eventduration\view.py:154
+msgid "Start at:"
+msgstr ""
+
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:155
 msgid "Stop at:"
 msgstr ""
 
-#: source\timelinelib\wxgui\dialogs\eventduration\view.py:241
+#: source\timelinelib\wxgui\dialogs\eventduration\view.py:246
 msgid "Measure Duration of Events"
 msgstr ""
 
@@ -3619,23 +3619,3 @@ msgstr "Fehler"
 #: source\timelinelib\wxgui\utils.py:119 source\timelinelib\wxgui\utils.py:125
 msgid "Question"
 msgstr "Frage"
-
-#~ msgid "Edit Categories"
-#~ msgstr "Kategorien bearbeiten"
-
-#~ msgid "Edit &Categories"
-#~ msgstr "&Kategorien bearbeiten"
-
-#, python-format
-#~ msgid ""
-#~ "The lockfile used to protect the timeline from concurrent updates is opened "
-#~ "by another program or process.\n"
-#~ "This lockfile must be removed in order be able to continue editing the "
-#~ "timeline!\n"
-#~ "The lockfile is found at: %s"
-#~ msgstr ""
-#~ "Die Sperrdatei zum Schutz der Zeitleiste gegen konkurrierende Änderungen ist "
-#~ "durch ein anderes Programm oder Prozess geöffnet.\n"
-#~ "Um die Zeitleiste weiter ändern zu können, muss die Sperrdatei gelöscht "
-#~ "werden!\n"
-#~ "Die Sperrdatei liegt unter: %s"
