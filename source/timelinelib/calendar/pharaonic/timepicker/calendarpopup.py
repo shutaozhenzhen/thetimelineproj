@@ -28,7 +28,7 @@ class CalendarPopup(wx.PopupTransientWindow):
 
     def __init__(self, parent, wx_date, config):
         self.config = config
-        wx.PopupTransientWindow.__init__(self, parent, style=wx.BORDER_NONE)
+        wx.PopupTransientWindow.__init__(self, parent, flags=wx.BORDER_NONE)
         self._create_gui(wx_date)
         self.controller = CalendarPopupController(self)
         self._bind_events()
