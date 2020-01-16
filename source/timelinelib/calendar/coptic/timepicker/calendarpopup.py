@@ -26,6 +26,8 @@ from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 
 class CalendarPopup(wx.PopupTransientWindow):
 
+    MIN_WX_YEAR = -4712
+
     def __init__(self, parent, wx_date, config):
         self.config = config
         wx.PopupTransientWindow.__init__(self, parent, flags=wx.BORDER_NONE)
@@ -46,8 +48,7 @@ class CalendarPopup(wx.PopupTransientWindow):
         return cal
 
     def _get_cal_style(self):
-        style = (wx.adv.CAL_SHOW_HOLIDAYS |
-                 wx.adv.CAL_SEQUENTIAL_MONTH_SELECTION)
+        style = (wx.adv.CAL_SHOW_HOLIDAYS | wx.adv.CAL_SEQUENTIAL_MONTH_SELECTION)
         if self.config.get_week_start() == "monday":
             style |= wx.adv.CAL_MONDAY_FIRST
         else:
@@ -61,9 +62,9 @@ class CalendarPopup(wx.PopupTransientWindow):
         max_date = self.time_to_wx_date(max_date) - wx.DateSpan.Day()
         cal.SetDateRange(min_date, max_date)
 
-    @staticmethod
-    def time_to_wx_date(time):
+    def time_to_wx_date(self, time):
         year, month, day = CopticDateTime.from_time(time).to_date_tuple()
+        year = max(self.MIN_WX_YEAR, year)
         try:
             return wx.DateTime.FromDMY(day, month - 1, year, 0, 0, 0)
         except OverflowError:
