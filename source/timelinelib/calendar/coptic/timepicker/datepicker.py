@@ -27,11 +27,11 @@ from timelinelib.calendar.coptic.timepicker.datemodifier import DateModifier
 
 class CopticDatePicker(wx.Panel):
 
-    def __init__(self, parent, date_formatter, name=None):
+    def __init__(self, parent, date_formatter, name=None, on_change=None):
         wx.Panel.__init__(self, parent)
         self._controller = CopticDatePickerController(self)
         self._create_gui(date_formatter)
-        self._controller.on_init(date_formatter, DateModifier())
+        self._controller.on_init(date_formatter, DateModifier(), on_change)
 
     def _create_gui(self, date_formatter):
         self._create_date_text(date_formatter)

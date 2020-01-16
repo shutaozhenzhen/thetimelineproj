@@ -47,6 +47,9 @@ class CopticDateTimePickerController:
             time = self.now_fn()
         self.date_picker.SetCopticDate(CopticDateTime.from_time(time).to_date_tuple())
         self.time_picker.SetCopticTime(CopticDateTime.from_time(time).to_time_tuple())
+        self.changed()
+
+    def changed(self):
         if self.on_change is not None:
             self.on_change()
 
