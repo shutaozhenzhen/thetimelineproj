@@ -102,6 +102,7 @@ class GregorianPeriodPicker(Panel):
         self.show_time_checkbox.SetValue(show)
         self.start_time.show_time(show)
         self.end_time.show_time(show)
+        self.Layout()
 
     def DisableTime(self):
         self.SetShowTime(False)
