@@ -39,13 +39,13 @@ class PharaonicDateTimePickerController:
             hour, minute, second = self.time_picker.GetPharaonicTime()
         else:
             hour, minute, second = (0, 0, 0)
-        year, month, day = self.date_picker.GetPharaonicDate()
+        year, month, day = self.date_picker.GetDate()
         return PharaonicDateTime(year, month, day, hour, minute, second).to_time()
 
     def set_value(self, time):
         if time is None:
             time = self.now_fn()
-        self.date_picker.SetPharaonicDate(PharaonicDateTime.from_time(time).to_date_tuple())
+        self.date_picker.SetDate(PharaonicDateTime.from_time(time).to_date_tuple())
         self.time_picker.SetPharaonicTime(PharaonicDateTime.from_time(time).to_time_tuple())
         self.changed()
         if self.on_change is not None:
@@ -64,7 +64,7 @@ class PharaonicDateTimePickerController:
 
     def date_button_on_click(self, evt):
         try:
-            dt = self.date_picker.GetPharaonicDate()
+            dt = self.date_picker.GetDate()
             wx_date = self.date_tuple_to_wx_date(dt)
         except ValueError:
             wx_date = wx.DateTime.Now()
