@@ -39,13 +39,13 @@ class CopticDateTimePickerController:
             hour, minute, second = self.time_picker.GetCopticTime()
         else:
             hour, minute, second = (0, 0, 0)
-        year, month, day = self.date_picker.GetCopticDate()
+        year, month, day = self.date_picker.GetDate()
         return CopticDateTime(year, month, day, hour, minute, second).to_time()
 
     def set_value(self, time):
         if time is None:
             time = self.now_fn()
-        self.date_picker.SetCopticDate(CopticDateTime.from_time(time).to_date_tuple())
+        self.date_picker.SetDate(CopticDateTime.from_time(time).to_date_tuple())
         self.time_picker.SetCopticTime(CopticDateTime.from_time(time).to_time_tuple())
         self.changed()
 
@@ -64,7 +64,7 @@ class CopticDateTimePickerController:
 
     def date_button_on_click(self, evt):
         try:
-            dt = self.date_picker.GetCopticDate()
+            dt = self.date_picker.GetDate()
             wx_date = self.date_tuple_to_wx_date(dt)
         except ValueError:
             wx_date = wx.DateTime.Now()

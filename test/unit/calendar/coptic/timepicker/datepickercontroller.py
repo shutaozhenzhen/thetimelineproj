@@ -53,7 +53,7 @@ class NewCopticDatePickerTestDialog(Dialog):
         Dialog.__init__(self, humblewx.Controller, None, {
             "date_formatter": self._create_date_formatter()
         })
-        self.date.SetCopticDate((2015, 11, 1))
+        self.date.SetDate((2015, 11, 1))
 
     def _create_date_formatter(self):
         formatter = CopticDateFormatter()
