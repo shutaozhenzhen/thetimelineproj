@@ -16,18 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
-from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
-from timelinelib.calendar.gregorian.timepicker.datepickercontroller import GregorianDatePickerController
 from timelinelib.calendar.gregorian.timepicker.datemodifier import DateModifier
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.wxgui.components.textctrl import TextCtrl
-from timelinelib.calendar.datepicker import DatePicker
+from calendar.generic.timepicker.datepicker import DatePicker
+from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePickerController
 
 
 class GregorianDatePicker(DatePicker):
 
     def __init__(self, parent, date_formatter, name=None, on_change=None):
-        DatePicker.__init__(self, parent, GregorianDatePickerController(self),
+        DatePicker.__init__(self, parent, DatePickerController(self),
                             DateModifier(), date_formatter, on_change)

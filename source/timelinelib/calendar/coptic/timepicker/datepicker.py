@@ -16,18 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
-from timelinelib.calendar.coptic.coptic import CopticDateTime
-from timelinelib.calendar.coptic.timepicker.datepickercontroller import CopticDatePickerController
-from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
-from timelinelib.wxgui.components.textctrl import TextCtrl
 from timelinelib.calendar.coptic.timepicker.datemodifier import DateModifier
-from timelinelib.calendar.datepicker import DatePicker
+from calendar.generic.timepicker.datepicker import DatePicker
+from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePickerController
 
 
 class CopticDatePicker(DatePicker):
 
     def __init__(self, parent, date_formatter, name=None, on_change=None):
-        DatePicker.__init__(self, parent, CopticDatePickerController(self),
+        DatePicker.__init__(self, parent, DatePickerController(self),
                             DateModifier(), date_formatter, on_change)

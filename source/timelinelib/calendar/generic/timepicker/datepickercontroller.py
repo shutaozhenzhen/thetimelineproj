@@ -20,7 +20,7 @@ import humblewx
 import wx
 
 
-class PharaonicDatePickerController(humblewx.Controller):
+class DatePickerController(humblewx.Controller):
 
     def on_init(self, date_formatter, date_modifier, on_change=None):
         self._date_formatter = date_formatter

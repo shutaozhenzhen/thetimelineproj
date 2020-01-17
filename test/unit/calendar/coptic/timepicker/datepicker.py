@@ -21,7 +21,7 @@ from unittest.mock import sentinel
 import wx
 
 from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
-from timelinelib.calendar.coptic.timepicker.datepickercontroller import CopticDatePickerController
+from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePickerController
 from timelinelib.calendar.coptic.timepicker.datepicker import CopticDatePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
@@ -162,7 +162,7 @@ class describe_new_coptic_date_picker(UnitTestCase):
         self.view.GetText.return_value = sentinel.TEXT
         self.view.GetIsBc.return_value = sentinel.IS_BC
         self.view.GetCursorPosition.return_value = sentinel.CURSOR_POSITION
-        self.controller = CopticDatePickerController(self.view)
+        self.controller = DatePickerController(self.view)
         self.controller.on_init(self.date_formatter, self.date_modifier)
 
     def assert_modifier_called(self, modifier):
