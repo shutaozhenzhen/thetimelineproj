@@ -31,11 +31,7 @@ class GregorianDatePicker(wx.Panel):
         wx.Panel.__init__(self, parent)
         self._controller = GregorianDatePickerController(self)
         self._create_gui(date_formatter)
-        self._controller.on_init(
-            date_formatter,
-            DateModifier(),
-            on_change
-        )
+        self._controller.on_init(date_formatter, DateModifier(), on_change)
 
     def _create_gui(self, date_formatter):
         self._create_date_text(date_formatter)
@@ -46,7 +42,7 @@ class GregorianDatePicker(wx.Panel):
         self.date_text = TextCtrl(
             self,
             style=wx.TE_PROCESS_ENTER,
-            fit_text=self._format_sample_date(date_formatter)
+            fit_text = date_formatter.format_sample_date()
         )
         self.date_text.Bind(wx.EVT_CHAR, self._controller.on_char)
         self.date_text.Bind(wx.EVT_TEXT, self._controller.on_text)
@@ -63,18 +59,11 @@ class GregorianDatePicker(wx.Panel):
         sizer.Add(self.bc_button, flag=wx.EXPAND)
         self.SetSizer(sizer)
 
-    def _format_sample_date(self, date_formatter):
-        return date_formatter.format(
-            GregorianDateTime.from_time(
-                GregorianTimeType().now()
-            ).to_date_tuple()
-        )[0]
+    def GetDate(self):
+        return self._controller.get_date()
 
-    def GetGregorianDate(self):
-        return self._controller.get_gregorian_date()
-
-    def SetGregorianDate(self, date):
-        self._controller.set_gregorian_date(date)
+    def SetDate(self, date):
+        self._controller.set_date(date)
 
     def GetText(self):
         return self.date_text.GetValue()

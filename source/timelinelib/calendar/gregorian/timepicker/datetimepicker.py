@@ -114,7 +114,7 @@ class GregorianDateTimePicker(wx.Panel):
     def _calendar_on_date_changed(self, evt):
         wx_date = evt.GetEventObject().GetDate()
         date = self.controller.wx_date_to_date_tuple(wx_date)
-        self.date_picker.SetGregorianDate(date)
+        self.date_picker.SetDate(date)
         self.controller.changed()
 
     def _calendar_on_date_changed_dclick(self, evt):
