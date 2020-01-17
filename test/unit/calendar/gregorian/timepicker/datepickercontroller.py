@@ -36,14 +36,14 @@ class describe_new_gregorian_date_picker(UnitTestCase):
             sentinel.TEXT,
             sentinel.IS_BC,
         )
-        self.controller.set_gregorian_date(sentinel.DATE)
+        self.controller.set_date(sentinel.DATE)
         self.date_formatter.format.assert_called_with(sentinel.DATE)
         self.view.SetText.assert_called_with(sentinel.TEXT)
         self.view.SetIsBc.assert_called_with(sentinel.IS_BC)
 
     def test_can_get_gregorian_date(self):
         self.assertEqual(
-            self.controller.get_gregorian_date(),
+            self.controller.get_date(),
             sentinel.PARSED_DATE
         )
         self.date_formatter.parse.assert_called_with((

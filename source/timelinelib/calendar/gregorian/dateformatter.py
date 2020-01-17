@@ -62,6 +62,9 @@ class GregorianDateFormatter:
         (year, month, day) = ymd_tuple
         return self._format_date(year, month, day), self._is_bc(year)
 
+    def format_sample_date(self):
+        return self.format((int(self.default_year), int(self.default_month), int(self.default_day)))[0]
+
     def parse(self, date_bc_tuple):
         (date, is_bc) = date_bc_tuple
         regions = self._split(date)
