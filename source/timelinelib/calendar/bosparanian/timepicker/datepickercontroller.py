@@ -53,7 +53,7 @@ class BosparanianDatePickerController:
         self._on_change()
 
     def _on_change(self):
-        if self._current_date_is_valid() and not self.on_change is None:
+        if self._current_date_is_valid() and self.on_change is not None:
             self.on_change()
 
     def on_set_focus(self):

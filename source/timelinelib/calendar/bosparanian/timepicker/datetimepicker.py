@@ -31,7 +31,7 @@ class BosparanianDateTimePicker(wx.Panel):
         self.config = config
         self._create_gui(on_change)
         self.controller = BosparanianDateTimePickerController(
-            self.date_picker, self.time_picker, BosparanianTimeType().now)
+            self.date_picker, self.time_picker, BosparanianTimeType().now, on_change=on_change)
         self.show_time(show_time)
         self.parent = parent
 
@@ -65,8 +65,6 @@ class BosparanianDateTimePicker(wx.Panel):
         self.time_picker = BosparanianTimePicker(self, on_change)
         # Layout
         sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(self.date_picker, proportion=1,
-                  flag=wx.ALIGN_CENTER_VERTICAL)
-        sizer.Add(self.time_picker, proportion=0,
-                  flag=wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(self.date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(self.time_picker, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         self.SetSizerAndFit(sizer)
