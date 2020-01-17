@@ -33,6 +33,7 @@ class PharaonicDateTimePicker(wx.Panel):
     def __init__(self, parent, show_time=True, config=None, on_change=None):
         wx.Panel.__init__(self, parent)
         self.config = config
+        self._on_change = on_change
         self._create_gui()
         self.controller = PharaonicDateTimePickerController(self,
                                                             self.date_picker,
@@ -96,7 +97,7 @@ class PharaonicDateTimePicker(wx.Panel):
         self.SetSizerAndFit(sizer)
 
     def _create_date_picker(self):
-        return PharaonicDatePicker(self, self.config.get_date_formatter())
+        return PharaonicDatePicker(self, self.config.get_date_formatter(), on_change=self._on_change)
 
     def _date_button_on_click(self, evt):
         self.controller.date_button_on_click(evt)
@@ -110,7 +111,9 @@ class PharaonicDateTimePicker(wx.Panel):
         wx_date = evt.GetEventObject().GetDate()
         date = self.controller.wx_date_to_date_tuple(wx_date)
         self.date_picker.SetPharaonicDate(date)
+        self.controller.changed()
 
     def _calendar_on_date_changed_dclick(self, evt):
         self.time_picker.SetFocus()
         self.calendar_popup.Dismiss()
+        self.controller.changed()
