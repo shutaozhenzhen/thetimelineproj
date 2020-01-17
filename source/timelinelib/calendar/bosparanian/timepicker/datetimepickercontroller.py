@@ -21,7 +21,7 @@ from timelinelib.calendar.bosparanian.bosparanian import BosparanianDateTime
 
 class BosparanianDateTimePickerController:
 
-    def __init__(self, date_picker, time_picker, now_fn, on_change=on_change):
+    def __init__(self, date_picker, time_picker, now_fn, on_change=None):
         self.date_picker = date_picker
         self.time_picker = time_picker
         self.now_fn = now_fn
