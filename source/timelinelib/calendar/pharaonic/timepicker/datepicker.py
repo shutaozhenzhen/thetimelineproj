@@ -70,11 +70,11 @@ class PharaonicDatePicker(wx.Panel):
             ).to_date_tuple()
         )[0]
 
-    def GetPharaonicDate(self):
-        return self._controller.get_pharaonic_date()
+    def GetDate(self):
+        return self._controller.get_date()
 
-    def SetPharaonicDate(self, date):
-        self._controller.set_pharaonic_date(date)
+    def SetDate(self, date):
+        self._controller.set_date(date)
 
     def GetText(self):
         return self.date_text.GetValue()
