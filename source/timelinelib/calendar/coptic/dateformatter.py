@@ -60,7 +60,11 @@ class CopticDateFormatter:
         
     def format(self, ymd_tuple):
         (year, month, day) = ymd_tuple
-        return (self._format_date(year, month, day), self._is_bc(year))
+        return self._format_date(year, month, day), self._is_bc(year)
+
+    def format_sample_date(self):
+        date_tuple = int(self.default_year), int(self.default_month), int(self.default_day)
+        return self.format(date_tuple)[0]
 
     def parse(self, date_bc_tuple):
         (date, is_bc) = date_bc_tuple
