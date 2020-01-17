@@ -47,6 +47,11 @@ class PharaonicDateTimePickerController:
             time = self.now_fn()
         self.date_picker.SetPharaonicDate(PharaonicDateTime.from_time(time).to_date_tuple())
         self.time_picker.SetPharaonicTime(PharaonicDateTime.from_time(time).to_time_tuple())
+        self.changed()
+        if self.on_change is not None:
+            self.on_change()
+
+    def changed(self):
         if self.on_change is not None:
             self.on_change()
 
