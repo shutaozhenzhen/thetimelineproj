@@ -21,7 +21,6 @@ from .categorytree import CustomCategoryTree
 from .colourselect import ColourSelect
 from .containerchoice import ContainerChoice
 from .dialogbuttonssizers.dialogbuttonsapplyclosesizer import DialogButtonsApplyCloseSizer
-from .dialogbuttonssizers.dialogbuttonsmeasureclosesizer import DialogButtonsMeasureCloseSizer
 from .dialogbuttonssizers.dialogbuttonsclosesizer import DialogButtonsCloseSizer
 from .dialogbuttonssizers.dialogbuttonseditaddremoveclosesizer import DialogButtonsEditAddRemoveCloseSizer
 from .dialogbuttonssizers.dialogbuttonsokcancelsizer import DialogButtonsOkCancelSizer
