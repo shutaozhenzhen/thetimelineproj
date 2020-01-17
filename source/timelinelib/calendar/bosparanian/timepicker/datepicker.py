@@ -44,18 +44,6 @@ class BosparanianDatePicker(wx.TextCtrl):
         return self.SetValue(date_str)
 
     def _bind_events(self):
-        def on_set_focus(evt):
-            # CallAfter is a trick to prevent default behavior of selecting all
-            # text when a TextCtrl is given focus
-            wx.CallAfter(self.controller.on_set_focus)
-        self.Bind(wx.EVT_SET_FOCUS, on_set_focus)
-
-        def on_kill_focus(evt):
-            # Trick to not make selection text disappear when focus is lost (we
-            # remove the selection instead)
-            self.controller.on_kill_focus()
-            self.SetSelection(0, 0)
-        self.Bind(wx.EVT_KILL_FOCUS, on_kill_focus)
 
         def on_char(evt):
             if evt.GetKeyCode() == wx.WXK_TAB:
