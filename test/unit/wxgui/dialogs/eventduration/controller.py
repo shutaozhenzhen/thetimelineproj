@@ -39,22 +39,22 @@ class EventDurationDialogTestCase(UnitTestCase):
 
     def test_calculation_one_event(self):
         controller = self.a_num_view_controller(event_list=[(10, 22)])
-        controller.on_ok_clicked()
+        controller.recalculate()
         controller.view.SetDurationResult.assert_called_with("12")
 
     def test_calculation_two_events(self):
         controller = self.a_num_view_controller(event_list=[(10, 22), (25, 30)])
-        controller.on_ok_clicked()
+        controller.recalculate()
         controller.view.SetDurationResult.assert_called_with("17")
 
     def test_calculation_for_one_partial_event(self):
         controller = self.a_num_view_controller(event_list=[(10, 22)], start=11, end=14)
-        controller.on_ok_clicked()
+        controller.recalculate()
         controller.view.SetDurationResult.assert_called_with("3")
 
     def test_calculation_for_two_partial_events(self):
         controller = self.a_num_view_controller(event_list=[(10, 22), (25, 30)], start=20, end=27)
-        controller.on_ok_clicked()
+        controller.recalculate()
         controller.view.SetDurationResult.assert_called_with("4")
 
     @staticmethod
