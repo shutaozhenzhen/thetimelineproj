@@ -16,18 +16,13 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
-
-from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
 from timelinelib.calendar.pharaonic.timepicker.datemodifier import DateModifier
-from timelinelib.calendar.pharaonic.timepicker.datepickercontroller import PharaonicDatePickerController
-from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
-from timelinelib.wxgui.components.textctrl import TextCtrl
-from timelinelib.calendar.datepicker import DatePicker
+from calendar.generic.timepicker.datepicker import DatePicker
+from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePickerController
 
 
 class PharaonicDatePicker(DatePicker):
 
     def __init__(self, parent, date_formatter, name=None, on_change=None):
-        DatePicker.__init__(self, parent, PharaonicDatePickerController(self),
+        DatePicker.__init__(self, parent, DatePickerController(self),
                             DateModifier(), date_formatter, on_change)
