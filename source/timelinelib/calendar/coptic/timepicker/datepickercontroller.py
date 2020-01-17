@@ -50,7 +50,7 @@ class CopticDatePickerController(humblewx.Controller):
 
     def _validate(self):
         try:
-            self.get_coptic_date()
+            self.get_date()
         except ValueError:
             self.view.SetBackgroundColour("pink")
         else:
@@ -75,26 +75,26 @@ class CopticDatePickerController(humblewx.Controller):
 
     def on_key_up(self):
         try:
-            date = self.get_coptic_date()
+            date = self.get_date()
         except ValueError:
             pass
         else:
-            self.set_coptic_date(self._get_incrementer()(date))
+            self.set_date(self._get_incrementer()(date))
 
     def on_key_down(self):
         try:
-            date = self.get_coptic_date()
+            date = self.get_date()
         except ValueError:
             pass
         else:
-            self.set_coptic_date(self._get_decrementer()(date))
+            self.set_date(self._get_decrementer()(date))
 
-    def set_coptic_date(self, date):
+    def set_date(self, date):
         (formatted_date, is_bc) = self._date_formatter.format(date)
         self.view.SetText(formatted_date)
         self.view.SetIsBc(is_bc)
 
-    def get_coptic_date(self):
+    def get_date(self):
         return self._date_formatter.parse((
             self.view.GetText(),
             self.view.GetIsBc(),

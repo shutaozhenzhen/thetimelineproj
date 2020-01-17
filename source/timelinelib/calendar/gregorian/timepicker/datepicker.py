@@ -23,69 +23,11 @@ from timelinelib.calendar.gregorian.timepicker.datepickercontroller import Grego
 from timelinelib.calendar.gregorian.timepicker.datemodifier import DateModifier
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.wxgui.components.textctrl import TextCtrl
+from timelinelib.calendar.datepicker import DatePicker
 
 
-class GregorianDatePicker(wx.Panel):
+class GregorianDatePicker(DatePicker):
 
     def __init__(self, parent, date_formatter, name=None, on_change=None):
-        wx.Panel.__init__(self, parent)
-        self._controller = GregorianDatePickerController(self)
-        self._create_gui(date_formatter)
-        self._controller.on_init(date_formatter, DateModifier(), on_change)
-
-    def _create_gui(self, date_formatter):
-        self._create_date_text(date_formatter)
-        self._create_bc_button()
-        self._layout()
-
-    def _create_date_text(self, date_formatter):
-        self.date_text = TextCtrl(
-            self,
-            style=wx.TE_PROCESS_ENTER,
-            fit_text = date_formatter.format_sample_date()
-        )
-        self.date_text.Bind(wx.EVT_CHAR, self._controller.on_char)
-        self.date_text.Bind(wx.EVT_TEXT, self._controller.on_text)
-
-    def _create_bc_button(self):
-        label = _("BC")
-        self.bc_button = wx.ToggleButton(self, label=label)
-        label_width = self.bc_button.GetTextExtent(label)[0]
-        self.bc_button.SetMinSize((label_width + 20, -1))
-
-    def _layout(self):
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(self.date_text, flag=wx.EXPAND, proportion=1)
-        sizer.Add(self.bc_button, flag=wx.EXPAND)
-        self.SetSizer(sizer)
-
-    def GetDate(self):
-        return self._controller.get_date()
-
-    def SetDate(self, date):
-        self._controller.set_date(date)
-
-    def GetText(self):
-        return self.date_text.GetValue()
-
-    def SetText(self, text):
-        x = self.date_text.GetInsertionPoint()
-        self.date_text.SetValue(text)
-        self.date_text.SetInsertionPoint(x)
-
-    def SetSelection(self, pos_lenght_tuple):
-        (pos, lenght) = pos_lenght_tuple
-        self.date_text.SetSelection(pos, pos + lenght)
-
-    def GetCursorPosition(self):
-        return self.date_text.GetInsertionPoint()
-
-    def GetIsBc(self):
-        return self.bc_button.GetValue()
-
-    def SetIsBc(self, is_bc):
-        self.bc_button.SetValue(is_bc)
-
-    def SetBackgroundColour(self, colour):
-        self.date_text.SetBackgroundColour(colour)
-        self.date_text.Refresh()
+        DatePicker.__init__(self, parent, GregorianDatePickerController(self),
+                            DateModifier(), date_formatter, on_change)
