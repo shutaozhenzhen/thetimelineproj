@@ -21,7 +21,7 @@ import os.path
 import wx.adv
 
 from timelinelib.calendar.coptic.timepicker.datepicker import CopticDatePicker
-from timelinelib.calendar.coptic.timepicker.timepciker import CopticTimePicker
+from timelinelib.calendar.coptic.timepicker.timepicker import CopticTimePicker
 from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.calendar.coptic.timepicker.calendarpopup import CalendarPopup
 from timelinelib.calendar.coptic.timepicker.datetimepickercontoller import CopticDateTimePickerController
