@@ -21,10 +21,11 @@ from timelinelib.calendar.bosparanian.bosparanian import BosparanianDateTime
 
 class BosparanianDateTimePickerController:
 
-    def __init__(self, date_picker, time_picker, now_fn):
+    def __init__(self, date_picker, time_picker, now_fn, on_change=on_change):
         self.date_picker = date_picker
         self.time_picker = time_picker
         self.now_fn = now_fn
+        self._on_change = on_change
 
     def get_value(self):
         if self.time_picker.IsShown():
@@ -39,3 +40,8 @@ class BosparanianDateTimePickerController:
             time = self.now_fn()
         self.date_picker.set_value(BosparanianDateTime.from_time(time).to_date_tuple())
         self.time_picker.set_value(BosparanianDateTime.from_time(time).to_time_tuple())
+        self.changed()
+
+    def changed(self):
+        if self._on_change is not None:
+            self._on_change()
