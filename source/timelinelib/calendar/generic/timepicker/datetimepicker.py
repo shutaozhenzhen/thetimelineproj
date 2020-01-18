@@ -20,11 +20,7 @@ import os.path
 
 import wx.adv
 
-from timelinelib.calendar.gregorian.timepicker.datepicker import GregorianDatePicker
-from timelinelib.calendar.gregorian.timepicker.timepicker import GregorianTimePicker
 from timelinelib.calendar.generic.timepicker.calendarpopup import CalendarPopup
-from timelinelib.calendar.gregorian.timepicker.datetimepickercontroller import GregorianDateTimePickerController
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.config.paths import ICONS_DIR
 
 
