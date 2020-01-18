@@ -16,33 +16,24 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import wx
+import sys
 
 
 class CalendarPopupController:
-
-    def __init__(self, calendar_popup):
-        self.calendar_popup = calendar_popup
-        self.repop = False
-        self.repoped = False
-
-    def on_month(self):
-        self.repop = True
-
-    def on_day(self):
-        self.repop = True
+    """
+    All this code is to avoid system error popups, because the wx.CalendarCtrl
+    object is not working correctly.
+    """
+    def __init__(self, view):
+        self._view = view
+        self._original_excepthook = sys.excepthook
+        sys.excepthook = self.unhandled_exception_hook
 
     def on_dismiss(self):
-        # This funny code makes the calender control stay open when you change
-        # month or day. The control is closed on a double-click on a day or
-        # a single click outside of the control
-        if self.repop and not self.repoped:
-            try:
-                self.calendar_popup.Popup()
-            except wx.PyAssertionError:
-                # This happens if you open the calendar popup, clik and hold
-                # down the mouse on a day and thereafter drag the mouse outside
-                # of the calendar control, release the mouse, and click outside
-                # the clandar control.
-                pass
-            self.repoped = True
+        sys.excepthook = self._original_excepthook
+
+    def unhandled_exception_hook(self, exception_type, value, tb):
+        if exception_type != SystemError:
+            self._original_excepthook(exception_type, value, tb)
+        else:
+            self._view.SelectionChanged()
