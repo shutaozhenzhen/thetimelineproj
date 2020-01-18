@@ -21,7 +21,7 @@ import humblewx
 
 from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
 from timelinelib.calendar.coptic.timepicker.periodpicker import CopticPeriodPicker
-from timelinelib.calendar.coptic.timepicker.periodpicker import CopticPeriodPickerController
+from timelinelib.calendar.generic.timepicker.periodpickercontroller import PeriodPickerController
 from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
@@ -39,7 +39,7 @@ class TestCopticPeriodPicker(UnitTestCase):
         view = Mock(CopticPeriodPicker)
         view.GetStartValue.return_value = human_time_to_pharaonic("1 I Akhet 2016")
         view.GetEndValue.return_value = human_time_to_pharaonic("2 I Akhet 2016")
-        controller = CopticPeriodPickerController(view)
+        controller = PeriodPickerController(view)
         self.assertEqual(
             controller.get_value(),
             pharaonic_period("1 I Akhet 2016", "2 I Akhet 2016")

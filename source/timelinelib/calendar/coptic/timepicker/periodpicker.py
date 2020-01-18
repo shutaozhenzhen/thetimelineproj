@@ -18,7 +18,7 @@
 
 from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.wxgui.framework import Panel
-from timelinelib.calendar.coptic.timepicker.periodpickercontroller import CopticPeriodPickerController
+from timelinelib.calendar.generic.timepicker.periodpickercontroller import PeriodPickerController
 
 
 class CopticPeriodPicker(Panel):
@@ -60,7 +60,7 @@ class CopticPeriodPicker(Panel):
     """
 
     def __init__(self, parent, config, name=None):
-        Panel.__init__(self, CopticPeriodPickerController, parent, {
+        Panel.__init__(self, PeriodPickerController, parent, {
             "time_type": CopticTimeType(),
             "config": config,
             "to_label": _("to"),
