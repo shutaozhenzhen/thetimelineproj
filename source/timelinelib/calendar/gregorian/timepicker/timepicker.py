@@ -17,164 +17,17 @@
 
 
 from timelinelib.calendar.gregorian.gregorian import is_valid_time
-from timelinelib.wxgui.components import TextPatternControl
+from timelinelib.calendar.generic.timepicker.timepicker import TimePicker
 
 
-class GregorianTimePicker(TextPatternControl):
-
-    HOUR_GROUP = 0
-    MINUTE_GROUP = 1
-    SECOND_GROUP = 2
+class GregorianTimePicker(TimePicker):
 
     def __init__(self, parent, config):
-        self.config = config
-        if self.config.use_second:
-            TextPatternControl.__init__(self, parent, fit_text="00:00:00")
-            self.SetSeparators([":",":"])
+        if config.use_second:
+            separators = [":", ":"]
         else:
-            TextPatternControl.__init__(self, parent, fit_text="00:00")
-            self.SetSeparators([":"])
-        self.SetValidator(self._is_time_valid)
-        self.SetUpHandler(self.HOUR_GROUP, self._increment_hour)
-        self.SetUpHandler(self.MINUTE_GROUP, self._increment_minute)
-        self.SetDownHandler(self.HOUR_GROUP, self._decrement_hour)
-        self.SetDownHandler(self.MINUTE_GROUP, self._decrement_minute)
-        
-        if self.config.use_second:
-            self.SetUpHandler(self.SECOND_GROUP, self._increment_second)
-            self.SetDownHandler(self.SECOND_GROUP, self._decrement_second)
+            separators = [":"]
+        TimePicker.__init__(self, parent, config.use_second, separators=separators)
 
-    def GetGregorianTime(self):
-        return self.parts_to_gregorian_time(self.GetParts())
-
-    def SetGregorianTime(self, time):
-        self.SetParts(self.gregorian_time_to_parts(time))
-
-    def _is_time_valid(self):
-        try:
-            self.GetGregorianTime()
-        except ValueError:
-            return False
-        else:
-            return True
-
-    def _increment_hour(self):
-        self.SetGregorianTime(increment_hour(self.GetGregorianTime()))
-
-    def _increment_minute(self):
-        self.SetGregorianTime(increment_minute(self.GetGregorianTime()))
-
-    def _increment_second(self):
-        self.SetGregorianTime(increment_second(self.GetGregorianTime()))
-
-    def _decrement_hour(self):
-        self.SetGregorianTime(decrement_hour(self.GetGregorianTime()))
-
-    def _decrement_minute(self):
-        self.SetGregorianTime(decrement_minute(self.GetGregorianTime()))
-
-    def _decrement_second(self):
-        self.SetGregorianTime(decrement_second(self.GetGregorianTime()))
-
-    def gregorian_time_to_parts(self, time):
-        (hour, minute, second) = time
-        if self.config.use_second:
-            return [
-                "%02d" % hour,
-                "%02d" % minute,
-                "%02d" % second,
-            ]
-        else:
-            return [
-                "%02d" % hour,
-                "%02d" % minute
-            ]
-
-    def parts_to_gregorian_time(self, parts):
-        hour = minute = second = 0        
-        if not self.config.use_second:
-            [hour_str, minute_str] = parts
-            hour = int(hour_str)
-            minute = int(minute_str)
-
-        if self.config.use_second and parts:
-            [hour_str, minute_str, second_str] = parts
-            hour = int(hour_str)
-            minute = int(minute_str)
-            second = int(second_str)
-
-        if not is_valid_time(hour, minute, second):
-            raise ValueError()
-        return hour, minute, second
-
-
-def increment_hour(time):
-    hour, minute, second = time
-    new_hour = hour + 1
-    if new_hour > 23:
-        new_hour = 0
-    return new_hour, minute, second
-
-
-def increment_minute(time):
-    hour, minute, second = time
-    new_hour = hour
-    new_minute = minute + 1
-    if new_minute > 59:
-        new_minute = 0
-        new_hour = hour + 1
-        if new_hour > 23:
-            new_hour = 0
-    return new_hour, new_minute, second
-
-
-def increment_second(time):
-    hour, minute, second = time
-    new_hour = hour
-    new_minute = minute
-    new_second = second
-    if new_second > 59:
-        new_second = 0
-        new_minute = minute + 1
-        if new_minute > 59:
-            new_minute = 0
-            new_hour = hour + 1
-            if new_hour > 23:
-                new_hour = 0
-    return new_hour, new_minute, new_second
-
-
-def decrement_hour(time):
-    hour, minute, second = time
-    new_hour = hour - 1
-    if new_hour < 0:
-        new_hour = 23
-    return new_hour, minute, second
-
-
-def decrement_minute(time):
-    hour, minute, second = time
-    new_hour = hour
-    new_minute = minute - 1
-    if new_minute < 0:
-        new_minute = 59
-        new_hour = hour - 1
-        if new_hour < 0:
-            new_hour = 23
-    return new_hour, new_minute, second
-
-
-def decrement_second(time):
-    hour, minute, second = time
-    new_hour = hour
-    new_minute = minute
-    new_second = second
-    if new_second < 0:
-        new_second = 59
-        new_minute = minute - 1
-        if new_minute < 0:
-            new_minute = 59
-            new_hour = hour - 1
-            if new_hour < 0:
-                new_hour = 23
-    return new_hour, new_minute, new_second
+    def time_is_invalid(self, hour, minute, second):
+        return not is_valid_time(hour, minute, second)
