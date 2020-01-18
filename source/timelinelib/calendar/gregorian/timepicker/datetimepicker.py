@@ -34,12 +34,11 @@ class GregorianDateTimePicker(wx.Panel):
         wx.Panel.__init__(self, parent)
         self._parent = parent
         self._config = config
-        self._on_change = on_change
+        self._date_picker = GregorianDatePicker(self, self._config.get_date_formatter(), on_change=on_change)
+        self._time_picker = GregorianTimePicker(self, self._config)
         self._create_gui()
-        self.controller = GregorianDateTimePickerController(self,
-                                                            self.date_picker,
-                                                            self.time_picker,
-                                                            GregorianTimeType().now, on_change)
+        self._controller = GregorianDateTimePickerController(self, self._date_picker, self._time_picker,
+                                                             GregorianTimeType().now, on_change)
         self.show_time(show_time)
 
     def PopupCalendar(self, evt, wx_date):
@@ -68,43 +67,38 @@ class GregorianDateTimePicker(wx.Panel):
     def show_time(self, show=True):
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         if show:
-            sizer.Add(self.date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
+            sizer.Add(self._date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
             sizer.Add(self.date_button, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-            sizer.Add(self.time_picker, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-            self.time_picker.Show()
+            sizer.Add(self._time_picker, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+            self._time_picker.Show()
         else:
-            sizer.Add(self.date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
+            sizer.Add(self._date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
             sizer.Add(self.date_button, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-            self.time_picker.Hide()
+            self._time_picker.Hide()
         self.SetSizerAndFit(sizer)
 
     def get_value(self):
         try:
-            return self.controller.get_value()
+            return self._controller.get_value()
         except ValueError:
             pass
 
     def set_value(self, value):
-        self.controller.set_value(value)
+        self._controller.set_value(value)
 
     def _create_gui(self):
-        self.date_picker = self._create_date_picker()
         image = wx.Bitmap(os.path.join(ICONS_DIR, "calendar.png"))
         self.date_button = wx.BitmapButton(self, bitmap=image)
         self.Bind(wx.EVT_BUTTON, self._date_button_on_click, self.date_button)
-        self.time_picker = GregorianTimePicker(self, self._config)
         # Layout
         sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(self.date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(self._date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
         sizer.Add(self.date_button, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        sizer.Add(self.time_picker, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(self._time_picker, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         self.SetSizerAndFit(sizer)
 
-    def _create_date_picker(self):
-        return GregorianDatePicker(self, self._config.get_date_formatter(), on_change=self._on_change)
-
     def _date_button_on_click(self, evt):
-        self.controller.date_button_on_click(evt)
+        self._controller.date_button_on_click(evt)
 
     def _out_of_date_range(self, wx_date):
         """It's is a limitation in the wx.adv.CalendarCtrl class
@@ -113,11 +107,11 @@ class GregorianDateTimePicker(wx.Panel):
 
     def _calendar_on_date_changed(self, evt):
         wx_date = evt.GetEventObject().GetDate()
-        date = self.controller.wx_date_to_date_tuple(wx_date)
-        self.date_picker.SetDate(date)
-        self.controller.changed()
+        date = self._controller.wx_date_to_date_tuple(wx_date)
+        self._date_picker.SetDate(date)
+        self._controller.changed()
 
     def _calendar_on_date_changed_dclick(self, evt):
-        self.time_picker.SetFocus()
+        self._time_picker.SetFocus()
         self.calendar_popup.Dismiss()
-        self.controller.changed()
+        self._controller.changed()
