@@ -17,93 +17,10 @@
 
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.calendar.generic.timepicker.periodpickercontroller import PeriodPickerController
-from timelinelib.wxgui.framework import Panel
+from timelinelib.calendar.generic.timepicker.periodpicker import PeriodPicker
 
 
-class GregorianPeriodPicker(Panel):
-
-    """
-    <BoxSizerVertical>
-        <BoxSizerHorizontal>
-            <TimePicker
-                name="start_time"
-                time_type="$(time_type)"
-                config="$(config)"
-            />
-            <Spacer />
-            <StaticText
-                label="$(to_label)"
-                name="to_label"
-                align="ALIGN_CENTER_VERTICAL"
-            />
-            <Spacer />
-            <TimePicker
-                name="end_time"
-                time_type="$(time_type)"
-                config="$(config)"
-            />
-        </BoxSizerHorizontal>
-        <Spacer />
-        <BoxSizerHorizontal>
-            <CheckBox
-                name="period_checkbox"
-                event_EVT_CHECKBOX="on_period_checkbox_changed"
-                label="$(period_checkbox_text)" />
-            <CheckBox
-                name="show_time_checkbox"
-                event_EVT_CHECKBOX="on_show_time_checkbox_changed"
-                label="$(show_time_checkbox_text)"
-            />
-        </BoxSizerHorizontal>
-    </BoxSizerVertical>
-    """
+class GregorianPeriodPicker(PeriodPicker):
 
     def __init__(self, parent, config, name=None):
-        Panel.__init__(self, PeriodPickerController, parent, {
-            "time_type": GregorianTimeType(),
-            "config": config,
-            "to_label": _("to"),
-            "period_checkbox_text": _("Period"),
-            "show_time_checkbox_text": _("Show time"),
-        })
-
-    def GetValue(self):
-        return self.controller.get_value()
-
-    def SetValue(self, time_period):
-        self.controller.set_value(time_period)
-
-    def GetStartValue(self):
-        return self.start_time.get_value()
-
-    def SetStartValue(self, time):
-        self.start_time.set_value(time)
-
-    def GetEndValue(self):
-        return self.end_time.get_value()
-
-    def SetEndValue(self, time):
-        self.end_time.set_value(time)
-
-    def GetShowPeriod(self):
-        return self.period_checkbox.GetValue()
-
-    def SetShowPeriod(self, show):
-        self.period_checkbox.SetValue(show)
-        self.to_label.Show(show)
-        self.end_time.Show(show)
-        self.Layout()
-
-    def GetShowTime(self):
-        return self.show_time_checkbox.GetValue()
-
-    def SetShowTime(self, show):
-        self.show_time_checkbox.SetValue(show)
-        self.start_time.show_time(show)
-        self.end_time.show_time(show)
-        self.Layout()
-
-    def DisableTime(self):
-        self.SetShowTime(False)
-        self.show_time_checkbox.Disable()
+        PeriodPicker.__init__(self, parent, GregorianTimeType(), config, name)
