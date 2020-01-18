@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.pharaonic.timepicker.datemodifier import DateModifier
-from calendar.generic.timepicker.datepicker import DatePicker
+from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
 from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePickerController
 
 
