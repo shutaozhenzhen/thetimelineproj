@@ -35,7 +35,13 @@ class Timer:
 
     * On Windows, the best timer is time.clock()
     * On most other platforms the best timer is time.time()
+
+    From the Python 3.8 doc:
+    The function time.clock() has been removed, after having been deprecated since Python 3.3:
+    use time.perf_counter() or time.process_time() instead, depending on your requirements, to
+    have well-defined behavior. (Contributed by Matthias Bussonnier in bpo-36895.)
     """
+
     def __init__(self, timer=None):
         self._start = None
         self._end = None
@@ -59,6 +65,6 @@ class Timer:
         if timer is not None:
             return timer
         elif sys.platform == "win32":
-            return time.clock
+            return time.perf_counter
         else:
             return time.time
