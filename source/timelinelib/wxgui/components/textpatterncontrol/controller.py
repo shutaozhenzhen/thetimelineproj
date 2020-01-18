@@ -30,9 +30,7 @@ class TextPatternControlController(humblewx.Controller):
         self.down_handlers = {}
 
     def on_after_set_focus(self):
-        if self.view.GetSelection() != (0, len(self.view.GetValue())):
-            return
-        elif self.last_selected_group is None:
+        if self.last_selected_group is None:
             self._select_group(self.get_selected_group())
         else:
             self._select_group(self.last_selected_group)
