@@ -21,7 +21,7 @@ from unittest.mock import Mock
 from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
 from timelinelib.calendar.pharaonic.timepicker.datepicker import PharaonicDatePicker
 from timelinelib.calendar.pharaonic.timepicker.datetimepicker import PharaonicDateTimePicker
-from timelinelib.calendar.pharaonic.timepicker.datetimepicker import PharaonicDateTimePickerController
+from timelinelib.calendar.generic.timepicker.datetimepickercontroller import DateTimePickerController
 from timelinelib.calendar.pharaonic.timepicker.datetimepicker import PharaonicTimePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
@@ -33,8 +33,8 @@ class APharaonicDateTimePicker(UnitTestCase):
         self.date_picker = Mock(PharaonicDatePicker)
         self.time_picker = Mock(PharaonicTimePicker)
         self.now_fn = Mock()
-        self.controller = PharaonicDateTimePickerController(
-            self.view, self.date_picker, self.time_picker, self.now_fn, None)
+        self.controller = DateTimePickerController(
+            self.view, PharaonicDateTime, self.date_picker, self.time_picker, self.now_fn, None)
 
     def testDateControlIsAssignedDatePartFromSetValue(self):
         self.controller.set_value(PharaonicDateTime(2010, 11, 20, 15, 33, 0).to_time())
