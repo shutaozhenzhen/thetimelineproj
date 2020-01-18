@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
-from timelinelib.calendar.pharaonic.timepicker.periodpickercontroller import PharaonicPeriodPickerController
+from timelinelib.calendar.generic.timepicker.periodpickercontroller import PeriodPickerController
 from timelinelib.wxgui.framework import Panel
 
 
@@ -60,7 +60,7 @@ class PharaonicPeriodPicker(Panel):
     """
 
     def __init__(self, parent, config, name=None):
-        Panel.__init__(self, PharaonicPeriodPickerController, parent, {
+        Panel.__init__(self, PeriodPickerController, parent, {
             "time_type": PharaonicTimeType(),
             "config": config,
             "to_label": _("to"),
