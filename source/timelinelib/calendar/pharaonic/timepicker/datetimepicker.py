@@ -26,94 +26,17 @@ from timelinelib.calendar.generic.timepicker.calendarpopup import CalendarPopup
 from timelinelib.calendar.pharaonic.timepicker.datetimepickercontroller import PharaonicDateTimePickerController
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.config.paths import ICONS_DIR
+from timelinelib.calendar.generic.timepicker.datetimepicker import DateTimePicker
 
 
-class PharaonicDateTimePicker(wx.Panel):
+class PharaonicDateTimePicker(DateTimePicker):
 
     def __init__(self, parent, show_time=True, config=None, on_change=None):
-        wx.Panel.__init__(self, parent)
-        self.config = config
-        self._on_change = on_change
-        self._create_gui()
-        self.controller = PharaonicDateTimePickerController(self,
-                                                            self.date_picker,
-                                                            self.time_picker,
-                                                            PharaonicTimeType().now, on_change)
+        DateTimePicker.__init__(self, parent, show_time, config, on_change)
+        self._time_type = PharaonicTimeType()
+        self._date_picker = PharaonicDatePicker(self, config.get_date_formatter(), on_change=on_change)
+        self._time_picker = PharaonicTimePicker(self)
+        self._controller = PharaonicDateTimePickerController(self, self._date_picker, self._time_picker,
+                                                             PharaonicTimeType().now, on_change)
+        self.create_gui()
         self.show_time(show_time)
-        self.parent = parent
-
-    def PopupCalendar(self, evt, wx_date):
-        calendar_popup = CalendarPopup(self, wx_date, self.config, PharaonicTimeType())
-        calendar_popup.Bind(wx.adv.EVT_CALENDAR_SEL_CHANGED,
-                            self._calendar_on_date_changed)
-        calendar_popup.Bind(wx.adv.EVT_CALENDAR,
-                            self._calendar_on_date_changed_dclick)
-        btn = evt.GetEventObject()
-        pos = btn.ClientToScreen((0, 0))
-        sz = btn.GetSize()
-        calendar_popup.Position(pos, (0, sz[1]))
-        calendar_popup.Popup()
-        self.calendar_popup = calendar_popup
-
-    def on_return(self):
-        try:
-            self.parent.on_return()
-        except AttributeError:
-            pass
-
-    def on_escape(self):
-        try:
-            self.parent.on_escape()
-        except AttributeError:
-            pass
-
-    def show_time(self, show=True):
-        self.time_picker.Show(show)
-        self.GetSizer().Layout()
-
-    def get_value(self):
-        try:
-            return self.controller.get_value()
-        except ValueError:
-            pass
-
-    def set_value(self, value):
-        self.controller.set_value(value)
-
-    def _create_gui(self):
-        self.date_picker = self._create_date_picker()
-        image = wx.Bitmap(os.path.join(ICONS_DIR, "calendar.png"))
-        self.date_button = wx.BitmapButton(self, bitmap=image)
-        self.Bind(wx.EVT_BUTTON, self._date_button_on_click, self.date_button)
-        self.time_picker = PharaonicTimePicker(self)
-        # Layout
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(self.date_picker, proportion=1,
-                  flag=wx.ALIGN_CENTER_VERTICAL)
-        sizer.Add(self.date_button, proportion=0,
-                  flag=wx.ALIGN_CENTER_VERTICAL)
-        sizer.Add(self.time_picker, proportion=0,
-                  flag=wx.ALIGN_CENTER_VERTICAL)
-        self.SetSizerAndFit(sizer)
-
-    def _create_date_picker(self):
-        return PharaonicDatePicker(self, self.config.get_date_formatter(), on_change=self._on_change)
-
-    def _date_button_on_click(self, evt):
-        self.controller.date_button_on_click(evt)
-
-    def _out_of_date_range(self, wx_date):
-        """It's is a limitation in the wx.adv.CalendarCtrl class
-        that has this date limit."""
-        return str(wx_date) < '1601-01-01 00:00:00'
-
-    def _calendar_on_date_changed(self, evt):
-        wx_date = evt.GetEventObject().GetDate()
-        date = self.controller.wx_date_to_date_tuple(wx_date)
-        self.date_picker.SetDate(date)
-        self.controller.changed()
-
-    def _calendar_on_date_changed_dclick(self, evt):
-        self.time_picker.SetFocus()
-        self.calendar_popup.Dismiss()
-        self.controller.changed()
