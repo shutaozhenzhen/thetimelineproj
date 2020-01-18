@@ -27,11 +27,14 @@ from timelinelib.calendar.gregorian.timepicker.calendarpopupcontroller import Ca
 class CalendarPopup(wx.PopupTransientWindow):
 
     def __init__(self, parent, wx_date, config):
+        self._parent = parent
         self.config = config
         wx.PopupTransientWindow.__init__(self, parent, flags=wx.BORDER_NONE)
         self._create_gui(wx_date)
         self.controller = CalendarPopupController(self)
-        self._bind_events()
+
+    def SelectionChanged(self):
+        wx.PostEvent(self, wx.adv.CalendarEvent(self.cal, self.cal.GetDate(), wx.adv.EVT_CALENDAR_SEL_CHANGED.typeId))
 
     def _create_gui(self, wx_date):
         BORDER = 2
@@ -68,16 +71,6 @@ class CalendarPopup(wx.PopupTransientWindow):
             if year < 0:
                 year, month, day = GregorianDateTime.from_time(GregorianTime(0, 0)).to_date_tuple()
                 return wx.DateTime.FromDMY(day, month - 1, year, 0, 0, 0)
-
-    def _bind_events(self):
-        def on_month(evt):
-            self.controller.on_month()
-
-        def on_day(evt):
-            self.controller.on_day()
-
-        self.cal.Bind(wx.adv.EVT_CALENDAR_MONTH, on_month)
-        self.cal.Bind(wx.adv.EVT_CALENDAR_DAY, on_day)
 
     def OnDismiss(self):
         self.controller.on_dismiss()
