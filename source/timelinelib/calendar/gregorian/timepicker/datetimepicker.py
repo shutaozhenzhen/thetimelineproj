@@ -34,6 +34,8 @@ class GregorianDateTimePicker(wx.Panel):
         wx.Panel.__init__(self, parent)
         self._parent = parent
         self._config = config
+        self._calendar_popup = None
+        self._time_type = GregorianTimeType()
         self._date_picker = GregorianDatePicker(self, self._config.get_date_formatter(), on_change=on_change)
         self._time_picker = GregorianTimePicker(self, self._config)
         self._create_gui()
@@ -42,7 +44,7 @@ class GregorianDateTimePicker(wx.Panel):
         self.show_time(show_time)
 
     def PopupCalendar(self, evt, wx_date):
-        calendar_popup = CalendarPopup(self, wx_date, self._config, GregorianTimeType())
+        calendar_popup = CalendarPopup(self, wx_date, self._config, self._time_type)
         calendar_popup.Bind(wx.adv.EVT_CALENDAR_SEL_CHANGED, self._calendar_on_date_changed)
         calendar_popup.Bind(wx.adv.EVT_CALENDAR, self._calendar_on_date_changed_dclick)
         btn = evt.GetEventObject()
@@ -50,7 +52,7 @@ class GregorianDateTimePicker(wx.Panel):
         sz = btn.GetSize()
         calendar_popup.Position(pos, (0, sz[1]))
         calendar_popup.Popup()
-        self.calendar_popup = calendar_popup
+        self._calendar_popup = calendar_popup
 
     def on_return(self):
         try:
@@ -100,7 +102,8 @@ class GregorianDateTimePicker(wx.Panel):
     def _date_button_on_click(self, evt):
         self._controller.date_button_on_click(evt)
 
-    def _out_of_date_range(self, wx_date):
+    @staticmethod
+    def _out_of_date_range(wx_date):
         """It's is a limitation in the wx.adv.CalendarCtrl class
         that has this date limit."""
         return str(wx_date) < '1601-01-01 00:00:00'
@@ -113,5 +116,5 @@ class GregorianDateTimePicker(wx.Panel):
 
     def _calendar_on_date_changed_dclick(self, evt):
         self._time_picker.SetFocus()
-        self.calendar_popup.Dismiss()
+        self._calendar_popup.Dismiss()
         self._controller.changed()
