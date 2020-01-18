@@ -20,8 +20,6 @@ from unittest.mock import Mock
 
 from timelinelib.calendar.coptic.coptic import CopticDateTime
 from timelinelib.calendar.coptic.timepicker.datepicker import CopticDatePicker
-from timelinelib.calendar.coptic.timepicker.datetimepicker import CalendarPopup
-from timelinelib.calendar.coptic.timepicker.calendarpopupcontroller import CalendarPopupController
 from timelinelib.calendar.coptic.timepicker.datetimepicker import CopticDateTimePicker
 from timelinelib.calendar.coptic.timepicker.datetimepicker import CopticDateTimePickerController
 from timelinelib.calendar.coptic.timepicker.datetimepicker import CopticTimePicker
@@ -78,33 +76,3 @@ class ACopticDateTimePicker(UnitTestCase):
         wx_date = self.controller.date_tuple_to_wx_date((2010, 8, 30))
         year, month, day = self.controller.wx_date_to_date_tuple(wx_date)
         self.assertEqual((2010, 8, 30), (year, month, day))
-
-
-class ACalendarPopup(UnitTestCase):
-
-    def setUp(self):
-        self.calendar_popup = Mock(CalendarPopup)
-        self.controller = CalendarPopupController(self.calendar_popup)
-
-    def testStaysOpenOnMonthChange(self):
-        self._simulateMonthChange()
-        self.assertTrue(self.calendar_popup.Popup.called)
-
-    def testStaysOpenOnDayChange(self):
-        self._simulateDateChange()
-        self.assertTrue(self.calendar_popup.Popup.called)
-
-    def testPopupCallAllowedJustOnce(self):
-        self._simulateMonthChange()
-        self.assertTrue(self.calendar_popup.Popup.called)
-        self.calendar_popup.reset_mock()
-        self._simulateMonthChange()
-        self.assertFalse(self.calendar_popup.Popup.called)
-
-    def _simulateMonthChange(self):
-        self.controller.on_month()
-        self.controller.on_dismiss()
-
-    def _simulateDateChange(self):
-        self.controller.on_day()
-        self.controller.on_dismiss()
