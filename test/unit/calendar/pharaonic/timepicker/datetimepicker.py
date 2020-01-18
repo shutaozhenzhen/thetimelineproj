@@ -48,23 +48,23 @@ class APharaonicDateTimePicker(UnitTestCase):
 
     def testTimeControlIsAssignedTimePartFromSetValue(self):
         self.controller.set_value(PharaonicDateTime(2010, 11, 20, 15, 33, 0).to_time())
-        self.time_picker.SetPharaonicTime.assert_called_with((15, 33, 0))
+        self.time_picker.SetTime.assert_called_with((15, 33, 0))
 
     # TODO: Is this really PharaonicDateTimePicker's responsibility?
     def testTimeControlIsAssignedCurrentTimeIfSetWithValueNone(self):
         self.now_fn.return_value = PharaonicDateTime(2010, 8, 30, 12, 15, 0).to_time()
         self.controller.set_value(None)
-        self.time_picker.SetPharaonicTime.assert_called_with((12, 15, 0))
+        self.time_picker.SetTime.assert_called_with((12, 15, 0))
 
     def testGetValueWhenTimeIsShownShouldReturnDateWithTime(self):
         self.time_picker.IsShown.return_value = True
-        self.time_picker.GetPharaonicTime.return_value = (14, 30, 0)
+        self.time_picker.GetTime.return_value = (14, 30, 0)
         self.date_picker.GetDate.return_value = (2010, 8, 30)
         self.assertEqual(PharaonicDateTime(2010, 8, 30, 14, 30, 0).to_time(), self.controller.get_value())
 
     def testGetValueWhenTimeIsHiddenShouldReturnDateWithoutTime(self):
         self.time_picker.IsShown.return_value = False
-        self.time_picker.GetPharaonicTime.return_value = (14, 30, 0)
+        self.time_picker.GetTime.return_value = (14, 30, 0)
         self.date_picker.GetDate.return_value = (2010, 8, 30)
         self.assertEqual(PharaonicDateTime(2010, 8, 30, 0, 0, 0).to_time(), self.controller.get_value())
 
