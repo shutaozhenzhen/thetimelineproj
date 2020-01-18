@@ -40,6 +40,7 @@ class TextPatternControlController(humblewx.Controller):
     def on_kill_focus(self, event):
         self.last_selected_group = self.get_selected_group()
         self.view.SetSelection(0, 0)
+        event.Skip()
 
     def on_text(self, event):
         self.validate()
