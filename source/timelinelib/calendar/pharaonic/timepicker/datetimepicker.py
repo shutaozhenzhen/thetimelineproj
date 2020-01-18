@@ -22,7 +22,7 @@ import wx.adv
 
 from timelinelib.calendar.pharaonic.timepicker.datepicker import PharaonicDatePicker
 from timelinelib.calendar.pharaonic.timepicker.timepicker import PharaonicTimePicker
-from timelinelib.calendar.pharaonic.timepicker.calendarpopup import CalendarPopup
+from timelinelib.calendar.generic.timepicker.calendarpopup import CalendarPopup
 from timelinelib.calendar.pharaonic.timepicker.datetimepickercontroller import PharaonicDateTimePickerController
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.config.paths import ICONS_DIR
@@ -43,7 +43,7 @@ class PharaonicDateTimePicker(wx.Panel):
         self.parent = parent
 
     def PopupCalendar(self, evt, wx_date):
-        calendar_popup = CalendarPopup(self, wx_date, self.config)
+        calendar_popup = CalendarPopup(self, wx_date, self.config, PharaonicTimeType())
         calendar_popup.Bind(wx.adv.EVT_CALENDAR_SEL_CHANGED,
                             self._calendar_on_date_changed)
         calendar_popup.Bind(wx.adv.EVT_CALENDAR,
