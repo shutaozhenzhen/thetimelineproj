@@ -16,6 +16,7 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import wx
 from datetime import datetime
 import re
 
@@ -138,8 +139,24 @@ class GregorianTimeType(TimeType):
     def get_min_time(self):
         return GregorianTime.min()
 
+    def get_min_wx_time(self):
+        return self._to_wx_time(self.get_min_time())
+
     def get_max_time(self):
         return GregorianTime(5369833, 0)
+
+    def get_max_wx_time(self):
+        return self._to_wx_time(self.get_max_time())
+
+    def _to_wx_time(self, time):
+        year, month, day = GregorianDateTime.from_time(time).to_date_tuple()
+        try:
+            return wx.DateTime.FromDMY(day, month - 1, year, 0, 0, 0)
+        except OverflowError:
+            if year < 0:
+                year, month, day = GregorianDateTime.from_time(GregorianTime(0, 0)).to_date_tuple()
+                return wx.DateTime.FromDMY(day, month - 1, year, 0, 0, 0)
+
 
     def choose_strip(self, metrics, appearance):
         """
