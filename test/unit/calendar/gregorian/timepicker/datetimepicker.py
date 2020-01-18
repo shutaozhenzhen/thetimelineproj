@@ -48,23 +48,23 @@ class AGregorianDateTimePicker(UnitTestCase):
 
     def testTimeControlIsAssignedTimePartFromSetValue(self):
         self.controller.set_value(GregorianDateTime(2010, 11, 20, 15, 33, 0).to_time())
-        self.time_picker.SetGregorianTime.assert_called_with((15, 33, 0))
+        self.time_picker.SetTime.assert_called_with((15, 33, 0))
 
     # TODO: Is this really GregorianDateTimePicker's responsibility?
     def testTimeControlIsAssignedCurrentTimeIfSetWithValueNone(self):
         self.now_fn.return_value = GregorianDateTime(2010, 8, 31, 12, 15, 0).to_time()
         self.controller.set_value(None)
-        self.time_picker.SetGregorianTime.assert_called_with((12, 15, 0))
+        self.time_picker.SetTime.assert_called_with((12, 15, 0))
 
     def testGetValueWhenTimeIsShownShouldReturnDateWithTime(self):
         self.time_picker.IsShown.return_value = True
-        self.time_picker.GetGregorianTime.return_value = (14, 30, 0)
+        self.time_picker.GetTime.return_value = (14, 30, 0)
         self.date_picker.GetDate.return_value = (2010, 8, 31)
         self.assertEqual(GregorianDateTime(2010, 8, 31, 14, 30, 0).to_time(), self.controller.get_value())
 
     def testGetValueWhenTimeIsHiddenShouldReturnDateWithoutTime(self):
         self.time_picker.IsShown.return_value = False
-        self.time_picker.GetGregorianTime.return_value = (14, 30, 0)
+        self.time_picker.GetTime.return_value = (14, 30, 0)
         self.date_picker.GetDate.return_value = (2010, 8, 31)
         self.assertEqual(GregorianDateTime(2010, 8, 31, 0, 0, 0).to_time(), self.controller.get_value())
 
