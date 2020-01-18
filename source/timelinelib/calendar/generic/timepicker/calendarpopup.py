@@ -18,7 +18,7 @@
 
 import wx.adv
 
-from timelinelib.calendar.gregorian.timepicker.calendarpopupcontroller import CalendarPopupController
+from timelinelib.calendar.generic.timepicker.calendarpopupcontroller import CalendarPopupController
 
 
 class CalendarPopup(wx.PopupTransientWindow):
