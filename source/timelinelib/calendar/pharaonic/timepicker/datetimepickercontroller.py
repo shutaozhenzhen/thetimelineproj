@@ -36,7 +36,7 @@ class PharaonicDateTimePickerController:
 
     def get_value(self):
         if self.time_picker.IsShown():
-            hour, minute, second = self.time_picker.GetPharaonicTime()
+            hour, minute, second = self.time_picker.GetTime()
         else:
             hour, minute, second = (0, 0, 0)
         year, month, day = self.date_picker.GetDate()
@@ -46,7 +46,7 @@ class PharaonicDateTimePickerController:
         if time is None:
             time = self.now_fn()
         self.date_picker.SetDate(PharaonicDateTime.from_time(time).to_date_tuple())
-        self.time_picker.SetPharaonicTime(PharaonicDateTime.from_time(time).to_time_tuple())
+        self.time_picker.SetTime(PharaonicDateTime.from_time(time).to_time_tuple())
         self.changed()
         if self.on_change is not None:
             self.on_change()

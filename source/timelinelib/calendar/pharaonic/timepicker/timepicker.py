@@ -17,102 +17,13 @@
 
 
 from timelinelib.calendar.pharaonic.pharaonic import is_valid_time
-from timelinelib.wxgui.components import TextPatternControl
+from timelinelib.calendar.generic.timepicker.timepicker import TimePicker
 
 
-class PharaonicTimePicker(TextPatternControl):
-
-    HOUR_GROUP = 0
-    MINUTE_GROUP = 1
+class PharaonicTimePicker(TimePicker):
 
     def __init__(self, parent):
-        TextPatternControl.__init__(self, parent, fit_text="00:00")
-        self.SetSeparators([":"])
-        self.SetValidator(self._is_time_valid)
-        self.SetUpHandler(self.HOUR_GROUP, self._increment_hour)
-        self.SetUpHandler(self.MINUTE_GROUP, self._increment_minute)
-        self.SetDownHandler(self.HOUR_GROUP, self._decrement_hour)
-        self.SetDownHandler(self.MINUTE_GROUP, self._decrement_minute)
+        TimePicker.__init__(self, parent, False, separators=[":"])
 
-    def GetPharaonicTime(self):
-        return parts_to_pharaonic_time(self.GetParts())
-
-    def SetPharaonicTime(self, time):
-        self.SetParts(pharaonic_time_to_parts(time))
-
-    def _is_time_valid(self):
-        try:
-            self.GetPharaonicTime()
-        except ValueError:
-            return False
-        else:
-            return True
-
-    def _increment_hour(self):
-        self.SetPharaonicTime(increment_hour(self.GetPharaonicTime()))
-
-    def _increment_minute(self):
-        self.SetPharaonicTime(increment_minute(self.GetPharaonicTime()))
-
-    def _decrement_hour(self):
-        self.SetPharaonicTime(decrement_hour(self.GetPharaonicTime()))
-
-    def _decrement_minute(self):
-        self.SetPharaonicTime(decrement_minute(self.GetPharaonicTime()))
-
-
-def pharaonic_time_to_parts(time):
-    (hour, minute, second) = time
-    return [
-        "%02d" % hour,
-        "%02d" % minute,
-    ]
-
-
-def parts_to_pharaonic_time(parts):
-    [hour_str, minute_str] = parts
-    hour = int(hour_str)
-    minute = int(minute_str)
-    if not is_valid_time(hour, minute, 0):
-        raise ValueError()
-    return (hour, minute, 0)
-
-
-def increment_hour(time):
-    hour, minute, second = time
-    new_hour = hour + 1
-    if new_hour > 23:
-        new_hour = 0
-    return (new_hour, minute, second)
-
-
-def increment_minute(time):
-    hour, minute, second = time
-    new_hour = hour
-    new_minute = minute + 1
-    if new_minute > 59:
-        new_minute = 0
-        new_hour = hour + 1
-        if new_hour > 23:
-            new_hour = 0
-    return (new_hour, new_minute, second)
-
-
-def decrement_hour(time):
-    hour, minute, second = time
-    new_hour = hour - 1
-    if new_hour < 0:
-        new_hour = 23
-    return (new_hour, minute, second)
-
-
-def decrement_minute(time):
-    hour, minute, second = time
-    new_hour = hour
-    new_minute = minute - 1
-    if new_minute < 0:
-        new_minute = 59
-        new_hour = hour - 1
-        if new_hour < 0:
-            new_hour = 23
-    return (new_hour, new_minute, second)
+    def time_is_invalid(self, hour, minute, second):
+        return not is_valid_time(hour, minute, second)
