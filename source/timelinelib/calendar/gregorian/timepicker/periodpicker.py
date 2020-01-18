@@ -17,7 +17,7 @@
 
 
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-from timelinelib.calendar.gregorian.timepicker.periodpickercontroller import GregorianPeriodPickerController
+from timelinelib.calendar.generic.timepicker.periodpickercontroller import PeriodPickerController
 from timelinelib.wxgui.framework import Panel
 
 
@@ -60,7 +60,7 @@ class GregorianPeriodPicker(Panel):
     """
 
     def __init__(self, parent, config, name=None):
-        Panel.__init__(self, GregorianPeriodPickerController, parent, {
+        Panel.__init__(self, PeriodPickerController, parent, {
             "time_type": GregorianTimeType(),
             "config": config,
             "to_label": _("to"),

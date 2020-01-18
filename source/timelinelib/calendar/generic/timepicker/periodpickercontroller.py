@@ -20,7 +20,7 @@ from timelinelib.canvas.data import TimePeriod
 from timelinelib.wxgui.framework import Controller
 
 
-class GregorianPeriodPickerController(Controller):
+class PeriodPickerController(Controller):
 
     def get_value(self):
         return TimePeriod(self._get_start(), self._get_end())
