@@ -32,7 +32,8 @@ class GregorianDateTimePicker(wx.Panel):
 
     def __init__(self, parent, show_time=True, config=None, on_change=None):
         wx.Panel.__init__(self, parent)
-        self.config = config
+        self._parent = parent
+        self._config = config
         self._on_change = on_change
         self._create_gui()
         self.controller = GregorianDateTimePickerController(self,
@@ -40,10 +41,9 @@ class GregorianDateTimePicker(wx.Panel):
                                                             self.time_picker,
                                                             GregorianTimeType().now, on_change)
         self.show_time(show_time)
-        self.parent = parent
 
     def PopupCalendar(self, evt, wx_date):
-        calendar_popup = CalendarPopup(self, wx_date, self.config, GregorianTimeType())
+        calendar_popup = CalendarPopup(self, wx_date, self._config, GregorianTimeType())
         calendar_popup.Bind(wx.adv.EVT_CALENDAR_SEL_CHANGED, self._calendar_on_date_changed)
         calendar_popup.Bind(wx.adv.EVT_CALENDAR, self._calendar_on_date_changed_dclick)
         btn = evt.GetEventObject()
@@ -55,13 +55,13 @@ class GregorianDateTimePicker(wx.Panel):
 
     def on_return(self):
         try:
-            self.parent.on_return()
+            self._parent.on_return()
         except AttributeError:
             pass
 
     def on_escape(self):
         try:
-            self.parent.on_escape()
+            self._parent.on_escape()
         except AttributeError:
             pass
 
@@ -92,7 +92,7 @@ class GregorianDateTimePicker(wx.Panel):
         image = wx.Bitmap(os.path.join(ICONS_DIR, "calendar.png"))
         self.date_button = wx.BitmapButton(self, bitmap=image)
         self.Bind(wx.EVT_BUTTON, self._date_button_on_click, self.date_button)
-        self.time_picker = GregorianTimePicker(self, self.config)
+        self.time_picker = GregorianTimePicker(self, self._config)
         # Layout
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(self.date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
@@ -101,7 +101,7 @@ class GregorianDateTimePicker(wx.Panel):
         self.SetSizerAndFit(sizer)
 
     def _create_date_picker(self):
-        return GregorianDatePicker(self, self.config.get_date_formatter(), on_change=self._on_change)
+        return GregorianDatePicker(self, self._config.get_date_formatter(), on_change=self._on_change)
 
     def _date_button_on_click(self, evt):
         self.controller.date_button_on_click(evt)
