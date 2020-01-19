@@ -24,34 +24,9 @@ import timelinelib.calendar.generic.timepicker.datemodifier as generic
 
 class DateModifier(generic.DateModifier):
 
+    MAX_MONTH = 13
+
     def __init__(self):
         self._time_type = PharaonicTimeType()
         self._delta = PharaonicDelta
         self._date_time = PharaonicDateTime
-
-    def increment_month(self, date):
-        max_year = self._date_time.from_time(self._time_type.get_max_time()).year
-        year, month, day = date
-        if month < 13:
-            return self._set_valid_day(year, month + 1, day)
-        elif year < max_year - 1:
-            return self._set_valid_day(year + 1, 1, day)
-        return date
-
-    def decrement_month(self, date):
-        year, month, day = date
-        if month > 1:
-            return self._set_valid_day(year, month - 1, day)
-        elif year > self._date_time.from_time(self._time_type.get_min_time()).year:
-            return self._set_valid_day(year - 1, 13, day)
-        return date
-
-    def decrement_day(self, date):
-        year, month, day = date
-        if day > 1:
-            return self._set_valid_day(year, month, day - 1)
-        elif month > 1:
-            return self._set_valid_day(year, month - 1, 30)
-        elif year > self._date_time.from_time(self._time_type.get_min_time()).year:
-            return self._set_valid_day(year - 1, 12, 30)
-        return date
