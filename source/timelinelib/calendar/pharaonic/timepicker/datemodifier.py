@@ -19,19 +19,18 @@
 from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
 from timelinelib.calendar.pharaonic.time import PharaonicDelta
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
+import timelinelib.calendar.generic.timepicker.datemodifier as generic
 
 
-class DateModifier:
+class DateModifier(generic.DateModifier):
 
-    def increment_year(self, date):
-        max_year = PharaonicDateTime.from_time(PharaonicTimeType().get_max_time()).year
-        year, month, day = date
-        if year < max_year - 1:
-            return self._set_valid_day(year + 1, month, day)
-        return date
+    def __init__(self):
+        self._time_type = PharaonicTimeType()
+        self._delta = PharaonicDelta
+        self._date_time = PharaonicDateTime
 
     def increment_month(self, date):
-        max_year = PharaonicDateTime.from_time(PharaonicTimeType().get_max_time()).year
+        max_year = self._date_time.from_time(self._time_type.get_max_time()).year
         year, month, day = date
         if month < 13:
             return self._set_valid_day(year, month + 1, day)
@@ -39,24 +38,11 @@ class DateModifier:
             return self._set_valid_day(year + 1, 1, day)
         return date
 
-    def increment_day(self, date):
-        year, month, day = date
-        time = PharaonicDateTime.from_ymd(year, month, day).to_time()
-        if time < PharaonicTimeType().get_max_time() - PharaonicDelta.from_days(1):
-            return PharaonicDateTime.from_time(time + PharaonicDelta.from_days(1)).to_date_tuple()
-        return date
-
-    def decrement_year(self, date):
-        year, month, day = date
-        if year > PharaonicDateTime.from_time(PharaonicTimeType().get_min_time()).year:
-            return self._set_valid_day(year - 1, month, day)
-        return date
-
     def decrement_month(self, date):
         year, month, day = date
         if month > 1:
             return self._set_valid_day(year, month - 1, day)
-        elif year > PharaonicDateTime.from_time(PharaonicTimeType().get_min_time()).year:
+        elif year > self._date_time.from_time(self._time_type.get_min_time()).year:
             return self._set_valid_day(year - 1, 13, day)
         return date
 
@@ -66,16 +52,6 @@ class DateModifier:
             return self._set_valid_day(year, month, day - 1)
         elif month > 1:
             return self._set_valid_day(year, month - 1, 30)
-        elif year > PharaonicDateTime.from_time(PharaonicTimeType().get_min_time()).year:
+        elif year > self._date_time.from_time(self._time_type.get_min_time()).year:
             return self._set_valid_day(year - 1, 12, 30)
         return date
-
-    def _set_valid_day(self, new_year, new_month, new_day):
-        done = False
-        while not done:
-            try:
-                date = PharaonicDateTime.from_ymd(new_year, new_month, new_day)
-                done = True
-            except Exception:
-                new_day -= 1
-        return date.to_date_tuple()
