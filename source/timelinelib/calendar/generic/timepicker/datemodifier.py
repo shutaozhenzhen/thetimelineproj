@@ -16,11 +16,6 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
-from timelinelib.calendar.gregorian.time import GregorianDelta
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
-
-
 class DateModifier:
 
     def __init__(self):
