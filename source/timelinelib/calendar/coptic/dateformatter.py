@@ -210,7 +210,7 @@ class CopticDateFormatter:
             return month_of_abbreviated_name(month_string)
         else:
             month = int(month_string)
-            if month - 1 in range(12):
+            if month - 1 in range(13):
                 return month
             else:
                 raise ValueError("Invalid month")
