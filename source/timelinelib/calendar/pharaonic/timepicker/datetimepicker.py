@@ -22,6 +22,7 @@ from timelinelib.calendar.generic.timepicker.datetimepickercontroller import Dat
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.calendar.generic.timepicker.datetimepicker import DateTimePicker
 from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
+from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
 
 
 class PharaonicDateTimePicker(DateTimePicker):
@@ -29,7 +30,7 @@ class PharaonicDateTimePicker(DateTimePicker):
     def __init__(self, parent, show_time=True, config=None, on_change=None):
         DateTimePicker.__init__(self, parent, show_time, config, on_change)
         self._time_type = PharaonicTimeType()
-        self._date_picker = PharaonicDatePicker(self, config.get_date_formatter(), on_change=on_change)
+        self._date_picker = PharaonicDatePicker(self, PharaonicDateFormatter(), on_change=on_change)
         self._time_picker = PharaonicTimePicker(self)
         self._controller = DateTimePickerController(self, PharaonicDateTime, self._date_picker, self._time_picker,
                                                     PharaonicTimeType().now, on_change)
