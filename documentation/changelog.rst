@@ -45,6 +45,9 @@ Fixed crash reports and bugs:
 * ``UnicodeDecodeError: 'gbk' codec can't decode byte 0x93 in position 3750: Illegal multibyte sequence.``
   Using utf-8 encoding when reading first line in timeline file.
 
+* ``AttributeError: module 'time' has no attribute 'clock'.``
+  The tim.clock() function is now replaced with the time.process_time() function.
+
 Version 2.0.0
 --------------
 
