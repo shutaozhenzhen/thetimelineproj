@@ -41,7 +41,7 @@ class SvgExporter(PluginBase):
 
     def run(self, main_frame):
         if not has_pysvg_module():
-            display_error_message(_("Could not find pysvg Python package. It is needed to export to SVG."), self)
+            display_error_message(_("Could not find pysvg Python package. It is needed to export to SVG."), main_frame)
             return
         helper = WildcardHelper(_("SVG files"), ["svg"])
         wildcard = helper.wildcard_string()
