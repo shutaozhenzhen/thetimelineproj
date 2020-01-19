@@ -19,19 +19,18 @@
 from timelinelib.calendar.coptic.coptic import CopticDateTime
 from timelinelib.calendar.coptic.time import CopticDelta
 from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
+import timelinelib.calendar.generic.timepicker.datemodifier as generic
 
 
-class DateModifier:
+class DateModifier(generic.DateModifier):
 
-    def increment_year(self, date):
-        max_year = CopticDateTime.from_time(CopticTimeType().get_max_time()).year
-        year, month, day = date
-        if year < max_year - 1:
-            return self._set_valid_day(year + 1, month, day)
-        return date
+    def __init__(self):
+        self._time_type = CopticTimeType()
+        self._delta = CopticDelta
+        self._date_time = CopticDateTime
 
     def increment_month(self, date):
-        max_year = CopticDateTime.from_time(CopticTimeType().get_max_time()).year
+        max_year = self._date_time.from_time(self._time_type.get_max_time()).year
         year, month, day = date
         if month < 13:
             return self._set_valid_day(year, month + 1, day)
@@ -39,25 +38,11 @@ class DateModifier:
             return self._set_valid_day(year + 1, 1, day)
         return date
 
-    @staticmethod
-    def increment_day(date):
-        year, month, day = date
-        time = CopticDateTime.from_ymd(year, month, day).to_time()
-        if time < CopticTimeType().get_max_time() - CopticDelta.from_days(1):
-            return CopticDateTime.from_time(time + CopticDelta.from_days(1)).to_date_tuple()
-        return date
-
-    def decrement_year(self, date):
-        year, month, day = date
-        if year > CopticDateTime.from_time(CopticTimeType().get_min_time()).year:
-            return self._set_valid_day(year - 1, month, day)
-        return date
-
     def decrement_month(self, date):
         year, month, day = date
         if month > 1:
             return self._set_valid_day(year, month - 1, day)
-        elif year > CopticDateTime.from_time(CopticTimeType().get_min_time()).year:
+        elif year > self._date_time.from_time(self._time_type.get_min_time()).year:
             return self._set_valid_day(year - 1, 13, day)
         return date
 
@@ -67,18 +52,6 @@ class DateModifier:
             return self._set_valid_day(year, month, day - 1)
         elif month > 1:
             return self._set_valid_day(year, month - 1, 30)
-        elif year > CopticDateTime.from_time(CopticTimeType().get_min_time()).year:
+        elif year > self._date_time.from_time(self._time_type.get_min_time()).year:
             return self._set_valid_day(year - 1, 12, 30)
         return date
-
-    @staticmethod
-    def _set_valid_day(new_year, new_month, new_day):
-        done = False
-        date = None
-        while not done:
-            try:
-                date = CopticDateTime.from_ymd(new_year, new_month, new_day)
-                done = True
-            except Exception:
-                new_day -= 1
-        return date.to_date_tuple()
