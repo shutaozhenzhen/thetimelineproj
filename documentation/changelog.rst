@@ -120,6 +120,9 @@ Fixed controller that had changed name crom _controller.
 * ``AttributeError: 'NoneType' object has no attribute 'delete'``
   Removed None objects from event list.
 
+* ``TypeError: MessageDialog(): argument 1 has unexpected type'SvgExporter'.``
+  Fixed window reference.
+
 Version 1.19.0
 --------------
 
