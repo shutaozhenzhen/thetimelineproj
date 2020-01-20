@@ -16,8 +16,9 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from unittest.mock import Mock
 import humblewx
+
+from unittest.mock import Mock
 
 from timelinelib.calendar.generic.timepicker.periodpickercontroller import PeriodPickerController
 from timelinelib.calendar.generic.timepicker.periodpicker import PeriodPicker
@@ -28,6 +29,14 @@ from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.framework import Dialog
+from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
+from timelinelib.calendar.pharaonic.timepicker.periodpicker import PharaonicPeriodPicker
+from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
+from timelinelib.test.pharaonic_utils import pharaonic_period
+from timelinelib.test.pharaonic_utils import human_time_to_pharaonic
+from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
+from timelinelib.calendar.coptic.timepicker.periodpicker import CopticPeriodPicker
+from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 
 
 class TestGregorianPeriodPicker(UnitTestCase):
@@ -74,4 +83,98 @@ class GregorianPeriodPickerTestDialog(Dialog):
     def _create_mock_config(self):
         config = Mock(Config)
         config.get_date_formatter.return_value = GregorianDateFormatter()
+        return config
+
+
+class TestPharaonicPeriodPicker(UnitTestCase):
+
+    def test_show_manual_test_dialog(self):
+        self.show_dialog(PharaonicPeriodPickerTestDialog)
+
+    def test_get_value(self):
+        view = Mock(PharaonicPeriodPicker)
+        view.GetStartValue.return_value = human_time_to_pharaonic("1 I Akhet 2016")
+        view.GetEndValue.return_value = human_time_to_pharaonic("2 I Akhet 2016")
+        controller = PeriodPickerController(view)
+        self.assertEqual(
+            controller.get_value(),
+            pharaonic_period("1 I Akhet 2016", "2 I Akhet 2016")
+        )
+
+
+class PharaonicPeriodPickerTestDialog(Dialog):
+
+    """
+    <BoxSizerVertical>
+        <FlexGridSizer columns="1" border="ALL">
+            <Button label="before" />
+            <PeriodPicker
+                time_type="$(time_type)"
+                name="period_picker"
+                config="$(config)"
+            />
+            <Button label="after" />
+        </FlexGridSizer>
+    </BoxSizerVertical>
+    """
+
+    def __init__(self):
+        Dialog.__init__(self, humblewx.Controller, None, {
+            "time_type": PharaonicTimeType(),
+            "config": self._create_mock_config(),
+        })
+        self.period_picker.SetValue(
+            pharaonic_period("1 I Akhet 2016", "4 I Akhet 2016")
+        )
+
+    def _create_mock_config(self):
+        config = Mock(Config)
+        config.get_date_formatter.return_value = PharaonicDateFormatter()
+        return config
+
+
+class TestCopticPeriodPicker(UnitTestCase):
+
+    def test_show_manual_test_dialog(self):
+        self.show_dialog(CopticPeriodPickerTestDialog)
+
+    def test_get_value(self):
+        view = Mock(CopticPeriodPicker)
+        view.GetStartValue.return_value = human_time_to_pharaonic("1 I Akhet 2016")
+        view.GetEndValue.return_value = human_time_to_pharaonic("2 I Akhet 2016")
+        controller = PeriodPickerController(view)
+        self.assertEqual(
+            controller.get_value(),
+            pharaonic_period("1 I Akhet 2016", "2 I Akhet 2016")
+        )
+
+
+class CopticPeriodPickerTestDialog(Dialog):
+
+    """
+    <BoxSizerVertical>
+        <FlexGridSizer columns="1" border="ALL">
+            <Button label="before" />
+            <PeriodPicker
+                time_type="$(time_type)"
+                name="period_picker"
+                config="$(config)"
+            />
+            <Button label="after" />
+        </FlexGridSizer>
+    </BoxSizerVertical>
+    """
+
+    def __init__(self):
+        Dialog.__init__(self, humblewx.Controller, None, {
+            "time_type": CopticTimeType(),
+            "config": self._create_mock_config(),
+        })
+        self.period_picker.SetValue(
+            pharaonic_period("1 I Akhet 2016", "4 I Akhet 2016")
+        )
+
+    def _create_mock_config(self):
+        config = Mock(Config)
+        config.get_date_formatter.return_value = CopticDateFormatter()
         return config
