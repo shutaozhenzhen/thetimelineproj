@@ -41,7 +41,6 @@ class NewPharaonicDatePickerTestDialog(Dialog):
         <FlexGridSizer columns="1" border="ALL">
             <Button label="before" />
             <PharaonicDatePicker
-                date_formatter="$(date_formatter)"
                 name="date"
             />
             <Button label="after" />
@@ -50,9 +49,7 @@ class NewPharaonicDatePickerTestDialog(Dialog):
     """
 
     def __init__(self):
-        Dialog.__init__(self, humblewx.Controller, None, {
-            "date_formatter": self._create_date_formatter()
-        })
+        Dialog.__init__(self, humblewx.Controller, None, {})
         self.date.SetDate((2015, 11, 1))
 
     def _create_date_formatter(self):

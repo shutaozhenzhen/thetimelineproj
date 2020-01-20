@@ -41,7 +41,6 @@ class NewGregorianDatePickerTestDialog(Dialog):
         <FlexGridSizer columns="1" border="ALL">
             <Button label="before" />
             <GregorianDatePicker
-                date_formatter="$(date_formatter)"
                 name="date"
             />
             <Button label="after" />
@@ -50,13 +49,5 @@ class NewGregorianDatePickerTestDialog(Dialog):
     """
 
     def __init__(self):
-        Dialog.__init__(self, humblewx.Controller, None, {
-            "date_formatter": self._create_date_formatter()
-        })
+        Dialog.__init__(self, humblewx.Controller, None, {})
         self.date.SetDate((2015, 11, 1))
-
-    def _create_date_formatter(self):
-        formatter = GregorianDateFormatter()
-        formatter.set_separators("/", " ")
-        formatter.set_region_order(year=2, month=1, day=0)
-        return formatter
