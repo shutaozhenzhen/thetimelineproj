@@ -23,7 +23,7 @@ from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePic
 
 class DatePicker(wx.Panel):
 
-    def __init__(self, parent, date_modifier, date_formatter, on_change=None):
+    def __init__(self, parent, date_modifier, date_formatter, on_change=None, name=None):
         wx.Panel.__init__(self, parent)
         self._controller = DatePickerController(self)
         self._create_gui(date_formatter)

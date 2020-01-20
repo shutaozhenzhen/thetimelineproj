@@ -24,13 +24,13 @@ import humblewx
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
+from timelinelib.calendar.coptic.timepicker.datemodifier import CopticDateModifier
 from timelinelib.wxgui.framework import Dialog
-import timelinelib.calendar.coptic.timepicker.datepicker as cdp
+import timelinelib.calendar.generic.timepicker.datepicker as cdp
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePickerController
-from timelinelib.calendar.gregorian.timepicker.datepicker import GregorianDatePicker
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
-from timelinelib.calendar.pharaonic.timepicker.datepicker import PharaonicDatePicker
+from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
 
 
 class describe_new_coptic_date_picker_view(UnitTestCase):
@@ -49,8 +49,10 @@ class NewCopticDatePickerTestDialog(Dialog):
     <BoxSizerVertical>
         <FlexGridSizer columns="1" border="ALL">
             <Button label="before" />
-            <CopticDatePicker
+            <DatePicker
                 name="date"
+                date_modifier="$(date_modifier)"
+                date_formatter="$(date_formatter)"
             />
             <Button label="after" />
         </FlexGridSizer>
@@ -58,7 +60,10 @@ class NewCopticDatePickerTestDialog(Dialog):
     """
 
     def __init__(self):
-        Dialog.__init__(self, humblewx.Controller, None, {})
+        Dialog.__init__(self, humblewx.Controller, None, {
+            "date_modifier": CopticDateModifier(),
+            "date_formatter": CopticDateFormatter(),
+        })
         self.date.SetDate((2015, 11, 1))
 
     def _create_date_formatter(self):
@@ -200,7 +205,7 @@ class describe_new_gregorian_date_picker(UnitTestCase):
         self.date_modifier.decrement_year.return_value = modifier_result
         self.date_modifier.decrement_month.return_value = modifier_result
         self.date_modifier.decrement_day.return_value = modifier_result
-        self.view = Mock(GregorianDatePicker)
+        self.view = Mock(DatePicker)
         self.view.GetText.return_value = sentinel.TEXT
         self.view.GetIsBc.return_value = sentinel.IS_BC
         self.view.GetCursorPosition.return_value = sentinel.CURSOR_POSITION
@@ -345,7 +350,7 @@ class describe_new_pharaonic_date_picker(UnitTestCase):
         self.date_modifier.decrement_year.return_value = modifier_result
         self.date_modifier.decrement_month.return_value = modifier_result
         self.date_modifier.decrement_day.return_value = modifier_result
-        self.view = Mock(PharaonicDatePicker)
+        self.view = Mock(DatePicker)
         self.view.GetText.return_value = sentinel.TEXT
         self.view.GetIsBc.return_value = sentinel.IS_BC
         self.view.GetCursorPosition.return_value = sentinel.CURSOR_POSITION

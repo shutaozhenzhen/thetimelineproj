@@ -20,10 +20,19 @@ from unittest.mock import Mock
 from unittest.mock import sentinel
 import wx
 
-from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
+import humblewx
+
+import timelinelib.calendar.generic.timepicker.datepicker as gdp
+import timelinelib.calendar.generic.timepicker.datepicker as pdp
 from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePickerController
-from timelinelib.calendar.coptic.timepicker.datepicker import CopticDatePicker
+from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
 from timelinelib.test.cases.unit import UnitTestCase
+from timelinelib.wxgui.framework import Dialog
+from timelinelib.calendar.gregorian.timepicker.datemodifier import GregorianDateModifier
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
+from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
+from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
+from timelinelib.calendar.pharaonic.timepicker.datemodifier import PharaonicDateModifier
 
 
 class describe_new_coptic_date_picker(UnitTestCase):
@@ -158,7 +167,7 @@ class describe_new_coptic_date_picker(UnitTestCase):
         self.date_modifier.decrement_year.return_value = modifier_result
         self.date_modifier.decrement_month.return_value = modifier_result
         self.date_modifier.decrement_day.return_value = modifier_result
-        self.view = Mock(CopticDatePicker)
+        self.view = Mock(DatePicker)
         self.view.GetText.return_value = sentinel.TEXT
         self.view.GetIsBc.return_value = sentinel.IS_BC
         self.view.GetCursorPosition.return_value = sentinel.CURSOR_POSITION
@@ -169,3 +178,77 @@ class describe_new_coptic_date_picker(UnitTestCase):
         self.view.SetText.assert_called_with(sentinel.NEW_TEXT)
         self.view.SetIsBc.assert_called_with(sentinel.NEW_IS_BC)
         modifier.assert_called_with(sentinel.PARSED_DATE)
+
+
+class describe_new_gregorian_date_picker_view(UnitTestCase):
+
+    def test_show_manual_test_dialog(self):
+        try:
+            humblewx.COMPONENT_MODULES.insert(0, gdp)
+            self.show_dialog(NewGregorianDatePickerTestDialog)
+        finally:
+            humblewx.COMPONENT_MODULES.remove(gdp)
+
+
+class NewGregorianDatePickerTestDialog(Dialog):
+
+    """
+    <BoxSizerVertical>
+        <FlexGridSizer columns="1" border="ALL">
+            <Button label="before" />
+            <DatePicker
+                name="date"
+                date_modifier="$(date_modifier)"
+                date_formatter="$(date_formatter)"
+            />
+            <Button label="after" />
+        </FlexGridSizer>
+    </BoxSizerVertical>
+    """
+
+    def __init__(self):
+        Dialog.__init__(self, humblewx.Controller, None, {
+            "date_modifier": GregorianDateModifier(),
+            "date_formatter": GregorianDateFormatter(),
+        })
+        self.date.SetDate((2015, 11, 1))
+
+
+class describe_new_pharaonic_date_picker_view(UnitTestCase):
+
+    def test_show_manual_test_dialog(self):
+        try:
+            humblewx.COMPONENT_MODULES.insert(0, pdp)
+            self.show_dialog(NewPharaonicDatePickerTestDialog)
+        finally:
+            humblewx.COMPONENT_MODULES.remove(pdp)
+
+
+class NewPharaonicDatePickerTestDialog(Dialog):
+
+    """
+    <BoxSizerVertical>
+        <FlexGridSizer columns="1" border="ALL">
+            <Button label="before" />
+            <DatePicker
+                name="date"
+                date_modifier="$(date_modifier)"
+                date_formatter="$(date_formatter)"
+            />
+            <Button label="after" />
+        </FlexGridSizer>
+    </BoxSizerVertical>
+    """
+
+    def __init__(self):
+        Dialog.__init__(self, humblewx.Controller, None, {
+            "date_modifier": PharaonicDateModifier(),
+            "date_formatter": PharaonicDateFormatter(),
+        })
+        self.date.SetDate((2015, 11, 1))
+
+    def _create_date_formatter(self):
+        formatter = PharaonicDateFormatter()
+        formatter.set_separators("/", " ")
+        formatter.set_region_order(year=2, month=1, day=0)
+        return formatter
