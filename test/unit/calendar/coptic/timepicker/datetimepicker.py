@@ -18,11 +18,11 @@
 
 from unittest.mock import Mock
 
-from timelinelib.calendar.coptic.coptic import CopticDateTime
 from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
-from timelinelib.calendar.coptic.timepicker.datetimepicker import CopticDateTimePicker
+from timelinelib.calendar.generic.timepicker.timepicker import TimePicker
 from timelinelib.calendar.generic.timepicker.datetimepickercontroller import DateTimePickerController
-from timelinelib.calendar.coptic.timepicker.datetimepicker import CopticTimePicker
+from timelinelib.calendar.coptic.coptic import CopticDateTime
+from timelinelib.calendar.coptic.timepicker.datetimepicker import CopticDateTimePicker
 from timelinelib.test.cases.unit import UnitTestCase
 
 
@@ -31,7 +31,7 @@ class ACopticDateTimePicker(UnitTestCase):
     def setUp(self):
         self.view = Mock(CopticDateTimePicker)
         self.date_picker = Mock(DatePicker)
-        self.time_picker = Mock(CopticTimePicker)
+        self.time_picker = Mock(TimePicker)
         self.now_fn = Mock()
         self.controller = DateTimePickerController(
             self.view, CopticDateTime, self.date_picker, self.time_picker, self.now_fn, None)
