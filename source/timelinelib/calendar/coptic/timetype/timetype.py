@@ -230,8 +230,8 @@ class CopticTimeType(GregorianTimeType):
         return CopticDateTimePicker(parent, *args, **kwargs)
 
     def create_period_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.coptic.timepicker.periodpicker import CopticPeriodPicker
-        return CopticPeriodPicker(parent, *args, **kwargs)
+        from timelinelib.calendar.generic.timepicker.periodpicker import PeriodPicker
+        return PeriodPicker(parent, self, *args, **kwargs)
 
     def get_duration_types(self):
         return [
