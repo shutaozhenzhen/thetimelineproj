@@ -24,13 +24,16 @@ import humblewx
 
 from timelinelib.test.cases.unit import UnitTestCase
 from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
-from timelinelib.calendar.coptic.timepicker.datemodifier import CopticDateModifier
+from timelinelib.calendar.generic.timepicker.datemodifier import DateModifier
 from timelinelib.wxgui.framework import Dialog
 import timelinelib.calendar.generic.timepicker.datepicker as cdp
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePickerController
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
 from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
+from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
+from timelinelib.calendar.coptic.coptic import CopticDateTime
+from timelinelib.calendar.coptic.time import CopticDelta
 
 
 class describe_new_coptic_date_picker_view(UnitTestCase):
@@ -61,7 +64,7 @@ class NewCopticDatePickerTestDialog(Dialog):
 
     def __init__(self):
         Dialog.__init__(self, humblewx.Controller, None, {
-            "date_modifier": CopticDateModifier(),
+            "date_modifier": DateModifier(CopticTimeType(), CopticDelta, CopticDateTime, max_month=13),
             "date_formatter": CopticDateFormatter(),
         })
         self.date.SetDate((2015, 11, 1))
