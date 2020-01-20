@@ -64,6 +64,7 @@ class TextPatternControl(TextCtrl):
         self.Bind(wx.EVT_TEXT, self.controller.on_text)
         self.Bind(wx.EVT_SET_FOCUS, self._on_set_focus)
         self.Bind(wx.EVT_KILL_FOCUS, self.controller.on_kill_focus)
+        self.Bind(wx.EVT_LEFT_DCLICK, self.controller.on_left_double_click)
 
     def _on_set_focus(self, event):
         wx.CallAfter(self.controller.on_after_set_focus)

@@ -19,13 +19,13 @@
 import wx
 
 from timelinelib.wxgui.components.textctrl import TextCtrl
-
+from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePickerController
 
 class DatePicker(wx.Panel):
 
-    def __init__(self, parent, controller, date_modifier, date_formatter, on_change=None):
+    def __init__(self, parent, date_modifier, date_formatter, on_change=None):
         wx.Panel.__init__(self, parent)
-        self._controller = controller
+        self._controller = DatePickerController(self)
         self._create_gui(date_formatter)
         self._controller.on_init(date_formatter, date_modifier, on_change)
 
