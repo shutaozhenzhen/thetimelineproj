@@ -18,11 +18,9 @@
 
 from timelinelib.calendar.pharaonic.timepicker.datemodifier import DateModifier
 from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
-from timelinelib.calendar.generic.timepicker.datepickercontroller import DatePickerController
 
 
 class PharaonicDatePicker(DatePicker):
 
     def __init__(self, parent, date_formatter, name=None, on_change=None):
-        DatePicker.__init__(self, parent, DatePickerController(self),
-                            DateModifier(), date_formatter, on_change)
+        DatePicker.__init__(self, parent, DateModifier(), date_formatter, on_change)
