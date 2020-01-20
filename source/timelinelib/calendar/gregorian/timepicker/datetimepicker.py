@@ -22,8 +22,9 @@ from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar.generic.timepicker.datetimepicker import DateTimePicker
 from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
-from timelinelib.calendar.gregorian.timepicker.datemodifier import GregorianDateModifier
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
+from timelinelib.calendar.generic.timepicker.datemodifier import DateModifier
+from timelinelib.calendar.gregorian.time import GregorianDelta
 
 
 class GregorianDateTimePicker(DateTimePicker):
@@ -31,7 +32,8 @@ class GregorianDateTimePicker(DateTimePicker):
     def __init__(self, parent, show_time=True, config=None, on_change=None):
         DateTimePicker.__init__(self, parent, show_time, config, on_change)
         self._time_type = GregorianTimeType()
-        self._date_picker = DatePicker(self, GregorianDateModifier(), GregorianDateFormatter(), on_change)
+        date_modifier = DateModifier(GregorianTimeType(), GregorianDelta, GregorianDateTime)
+        self._date_picker = DatePicker(self, date_modifier, GregorianDateFormatter(), on_change)
         self._time_picker = GregorianTimePicker(self, self._config)
         self._controller = DateTimePickerController(self, GregorianDateTime, self._date_picker, self._time_picker,
                                                     GregorianTimeType().now, on_change)
