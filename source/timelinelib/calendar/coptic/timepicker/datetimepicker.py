@@ -22,7 +22,6 @@ from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.calendar.generic.timepicker.datetimepickercontroller import DateTimePickerController
 from timelinelib.calendar.generic.timepicker.datetimepicker import DateTimePicker
 from timelinelib.calendar.coptic.coptic import CopticDateTime
-from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
 
 
 class CopticDateTimePicker(DateTimePicker):
@@ -30,7 +29,7 @@ class CopticDateTimePicker(DateTimePicker):
     def __init__(self, parent, show_time=True, config=None, on_change=None):
         DateTimePicker.__init__(self, parent, show_time, config, on_change)
         self._time_type = CopticTimeType()
-        self._date_picker = CopticDatePicker(self, CopticDateFormatter(), on_change=on_change)
+        self._date_picker = CopticDatePicker(self, on_change=on_change)
         self._time_picker = CopticTimePicker(self)
         self._controller = DateTimePickerController(self, CopticDateTime, self._date_picker, self._time_picker,
                                                     CopticTimeType().now, on_change)
