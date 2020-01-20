@@ -25,13 +25,14 @@ class TimePicker(TextPatternControl):
     MINUTE_GROUP = 1
     SECOND_GROUP = 2
 
-    def __init__(self, parent, use_second, separators):
+    def __init__(self, parent, use_second, separators, validator_function=None):
         self._parent = parent
         self._use_second = use_second
         if use_second:
             fit_text = f"00{separators[0]}00{separators[1]}00"
         else:
             fit_text = f"00{separators[0]}00"
+        self._validator_function = validator_function
         TextPatternControl.__init__(self, parent, fit_text=fit_text)
         self.SetSeparators(separators)
         self.SetValidator(self._is_time_valid)
@@ -49,6 +50,8 @@ class TimePicker(TextPatternControl):
         self.SetParts(self.time_to_parts(time))
 
     def time_is_invalid(self, hour, minute, second):
+        if self._validator_function != None:
+            return not self._validator_function(hour, minute, second)
         raise NotImplementedError()
 
     def _is_time_valid(self):
