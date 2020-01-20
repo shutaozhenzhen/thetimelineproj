@@ -17,11 +17,11 @@
 
 
 from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
-from timelinelib.calendar.gregorian.timepicker.datemodifier import DateModifier
+from timelinelib.calendar.gregorian.timepicker.datemodifier import GregorianDateModifier
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 
 
 class GregorianDatePicker(DatePicker):
 
     def __init__(self, parent, name=None, on_change=None):
-        DatePicker.__init__(self, parent, DateModifier(), GregorianDateFormatter(), on_change)
+        DatePicker.__init__(self, parent, GregorianDateModifier(), GregorianDateFormatter(), on_change)

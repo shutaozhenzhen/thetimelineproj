@@ -17,11 +17,11 @@
 
 
 from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
-from timelinelib.calendar.pharaonic.timepicker.datemodifier import DateModifier
+from timelinelib.calendar.pharaonic.timepicker.datemodifier import PharaonicDateModifier
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
 
 
 class PharaonicDatePicker(DatePicker):
 
     def __init__(self, parent, name=None, on_change=None):
-        DatePicker.__init__(self, parent, DateModifier(), PharaonicDateFormatter(), on_change)
+        DatePicker.__init__(self, parent, PharaonicDateModifier(), PharaonicDateFormatter(), on_change)
