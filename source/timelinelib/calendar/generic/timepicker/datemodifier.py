@@ -20,10 +20,10 @@ class DateModifier:
 
     MAX_MONTH = 12
 
-    def __init__(self):
-        self._time_type = None
-        self._delta = None
-        self._date_time = None
+    def __init__(self, time_type=None, delta=None, date_time=None):
+        self._time_type = time_type
+        self._delta = delta
+        self._date_time = date_time
 
     def increment_year(self, date):
         max_year = self._date_time.from_time(self._time_type.get_max_time()).year
