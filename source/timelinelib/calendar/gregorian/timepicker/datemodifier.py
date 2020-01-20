@@ -22,7 +22,7 @@ from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 import timelinelib.calendar.generic.timepicker.datemodifier as generic
 
 
-class DateModifier(generic.DateModifier):
+class GregorianDateModifier(generic.DateModifier):
 
     def __init__(self):
         self._time_type = GregorianTimeType()

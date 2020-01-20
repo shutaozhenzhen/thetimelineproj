@@ -22,7 +22,7 @@ from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 import timelinelib.calendar.generic.timepicker.datemodifier as generic
 
 
-class DateModifier(generic.DateModifier):
+class CopticDateModifier(generic.DateModifier):
 
     MAX_MONTH = 13
 

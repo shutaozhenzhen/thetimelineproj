@@ -17,11 +17,11 @@
 
 
 from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
-from timelinelib.calendar.coptic.timepicker.datemodifier import DateModifier
+from timelinelib.calendar.coptic.timepicker.datemodifier import CopticDateModifier
 from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
 
 
 class CopticDatePicker(DatePicker):
 
     def __init__(self, parent, name=None, on_change=None):
-        DatePicker.__init__(self, parent, DateModifier(), CopticDateFormatter(), on_change)
+        DatePicker.__init__(self, parent, CopticDateModifier(), CopticDateFormatter(), on_change)

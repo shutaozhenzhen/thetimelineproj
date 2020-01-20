@@ -22,7 +22,7 @@ from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 import timelinelib.calendar.generic.timepicker.datemodifier as generic
 
 
-class DateModifier(generic.DateModifier):
+class PharaonicDateModifier(generic.DateModifier):
 
     MAX_MONTH = 13
 
