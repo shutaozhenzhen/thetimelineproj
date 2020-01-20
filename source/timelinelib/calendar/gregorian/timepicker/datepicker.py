@@ -16,11 +16,12 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.timepicker.datemodifier import DateModifier
 from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
+from timelinelib.calendar.gregorian.timepicker.datemodifier import DateModifier
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 
 
 class GregorianDatePicker(DatePicker):
 
-    def __init__(self, parent, date_formatter, name=None, on_change=None):
-        DatePicker.__init__(self, parent, DateModifier(), date_formatter, on_change)
+    def __init__(self, parent, name=None, on_change=None):
+        DatePicker.__init__(self, parent, DateModifier(), GregorianDateFormatter(), on_change)
