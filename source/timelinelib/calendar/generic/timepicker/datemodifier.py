@@ -18,12 +18,11 @@
 
 class DateModifier:
 
-    MAX_MONTH = 12
-
-    def __init__(self, time_type=None, delta=None, date_time=None):
+    def __init__(self, time_type=None, delta=None, date_time=None, max_month=12):
         self._time_type = time_type
         self._delta = delta
         self._date_time = date_time
+        self._max_month = max_month
 
     def increment_year(self, date):
         max_year = self._date_time.from_time(self._time_type.get_max_time()).year
@@ -35,7 +34,7 @@ class DateModifier:
     def increment_month(self, date):
         max_year = self._date_time.from_time(self._time_type.get_max_time()).year
         year, month, day = date
-        if month < self.MAX_MONTH:
+        if month < self._max_month:
             return self._set_valid_day(year, month + 1, day)
         elif year < max_year - 1:
             return self._set_valid_day(year + 1, 1, day)
@@ -59,7 +58,7 @@ class DateModifier:
         if month > 1:
             return self._set_valid_day(year, month - 1, day)
         elif year > self._date_time.from_time(self._time_type.get_min_time()).year:
-            return self._set_valid_day(year - 1, self.MAX_MONTH, day)
+            return self._set_valid_day(year - 1, self._max_month, day)
         return date
 
     def decrement_day(self, date):
@@ -69,7 +68,7 @@ class DateModifier:
         elif month > 1:
             return self._set_valid_day(year, month - 1, 31)
         elif year > self._date_time.from_time(self._time_type.get_min_time()).year:
-            return self._set_valid_day(year - 1, self.MAX_MONTH, 31)
+            return self._set_valid_day(year - 1, self._max_month, 31)
         return date
 
     def _set_valid_day(self, new_year, new_month, new_day):
