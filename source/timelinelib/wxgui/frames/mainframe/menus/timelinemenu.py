@@ -24,7 +24,7 @@ from timelinelib.db.utils import safe_locking
 
 
 SHORTCUTS = list()
-REQUIRING_TIMELINE = list()
+REQUIRING_TIMELINE = (mid.ID_MEASURE_DURATION,)
 REQUIRING_WRITEABLE_TIMELINE = (mid.ID_CREATE_EVENT, mid.ID_EDIT_EVENT, mid.ID_CREATE_MILESTONE, mid.ID_DUPLICATE_EVENT,
                                 mid.ID_SET_CATEGORY_ON_SELECTED, mid.ID_MOVE_EVENT_UP, mid.ID_MOVE_EVENT_DOWN,
                                 mid.ID_MEASURE_DISTANCE, mid.ID_SET_CATEGORY_ON_WITHOUT,
