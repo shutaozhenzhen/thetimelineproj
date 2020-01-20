@@ -19,9 +19,9 @@
 from unittest.mock import Mock
 import humblewx
 
-from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
-from timelinelib.calendar.gregorian.timepicker.periodpicker import GregorianPeriodPicker
 from timelinelib.calendar.generic.timepicker.periodpickercontroller import PeriodPickerController
+from timelinelib.calendar.generic.timepicker.periodpicker import PeriodPicker
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.config.dotfile import Config
 from timelinelib.test.cases.unit import UnitTestCase
@@ -36,7 +36,7 @@ class TestGregorianPeriodPicker(UnitTestCase):
         self.show_dialog(GregorianPeriodPickerTestDialog)
 
     def test_get_value(self):
-        view = Mock(GregorianPeriodPicker)
+        view = Mock(PeriodPicker)
         view.GetStartValue.return_value = human_time_to_gregorian("1 Jan 2016")
         view.GetEndValue.return_value = human_time_to_gregorian("2 Jan 2016")
         controller = PeriodPickerController(view)

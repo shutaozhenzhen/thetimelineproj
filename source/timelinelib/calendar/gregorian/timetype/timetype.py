@@ -228,8 +228,8 @@ class GregorianTimeType(TimeType):
         return GregorianDateTimePicker(parent, *args, **kwargs)
 
     def create_period_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.gregorian.timepicker.periodpicker import GregorianPeriodPicker
-        return GregorianPeriodPicker(parent, *args, **kwargs)
+        from timelinelib.calendar.generic.timepicker.periodpicker import PeriodPicker
+        return PeriodPicker(parent, self, *args, **kwargs)
 
     def get_duration_types(self):
         return [
