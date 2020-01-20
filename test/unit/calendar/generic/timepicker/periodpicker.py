@@ -30,12 +30,10 @@ from timelinelib.test.utils import gregorian_period
 from timelinelib.test.utils import human_time_to_gregorian
 from timelinelib.wxgui.framework import Dialog
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
-from timelinelib.calendar.pharaonic.timepicker.periodpicker import PharaonicPeriodPicker
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.test.pharaonic_utils import pharaonic_period
 from timelinelib.test.pharaonic_utils import human_time_to_pharaonic
 from timelinelib.calendar.coptic.dateformatter import CopticDateFormatter
-from timelinelib.calendar.coptic.timepicker.periodpicker import CopticPeriodPicker
 from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 
 
@@ -92,7 +90,7 @@ class TestPharaonicPeriodPicker(UnitTestCase):
         self.show_dialog(PharaonicPeriodPickerTestDialog)
 
     def test_get_value(self):
-        view = Mock(PharaonicPeriodPicker)
+        view = Mock(PeriodPicker)
         view.GetStartValue.return_value = human_time_to_pharaonic("1 I Akhet 2016")
         view.GetEndValue.return_value = human_time_to_pharaonic("2 I Akhet 2016")
         controller = PeriodPickerController(view)
@@ -139,7 +137,7 @@ class TestCopticPeriodPicker(UnitTestCase):
         self.show_dialog(CopticPeriodPickerTestDialog)
 
     def test_get_value(self):
-        view = Mock(CopticPeriodPicker)
+        view = Mock(PeriodPicker)
         view.GetStartValue.return_value = human_time_to_pharaonic("1 I Akhet 2016")
         view.GetEndValue.return_value = human_time_to_pharaonic("2 I Akhet 2016")
         controller = PeriodPickerController(view)

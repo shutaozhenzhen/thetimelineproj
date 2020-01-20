@@ -230,8 +230,8 @@ class PharaonicTimeType(GregorianTimeType):
         return PharaonicDateTimePicker(parent, *args, **kwargs)
 
     def create_period_picker(self, parent, *args, **kwargs):
-        from timelinelib.calendar.pharaonic.timepicker.periodpicker import PharaonicPeriodPicker
-        return PharaonicPeriodPicker(parent, *args, **kwargs)
+        from timelinelib.calendar.generic.timepicker.periodpicker import PeriodPicker
+        return PeriodPicker(parent, self, *args, **kwargs)
 
     def get_duration_types(self):
         return [
