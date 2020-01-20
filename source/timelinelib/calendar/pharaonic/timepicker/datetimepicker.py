@@ -16,12 +16,14 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.pharaonic.timepicker.datepicker import PharaonicDatePicker
 from timelinelib.calendar.pharaonic.timepicker.timepicker import PharaonicTimePicker
 from timelinelib.calendar.generic.timepicker.datetimepickercontroller import DateTimePickerController
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.calendar.generic.timepicker.datetimepicker import DateTimePicker
 from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
+from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
+from timelinelib.calendar.pharaonic.timepicker.datemodifier import PharaonicDateModifier
+from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
 
 
 class PharaonicDateTimePicker(DateTimePicker):
@@ -29,7 +31,7 @@ class PharaonicDateTimePicker(DateTimePicker):
     def __init__(self, parent, show_time=True, config=None, on_change=None):
         DateTimePicker.__init__(self, parent, show_time, config, on_change)
         self._time_type = PharaonicTimeType()
-        self._date_picker = PharaonicDatePicker(self, on_change=on_change)
+        self._date_picker = DatePicker(self, PharaonicDateModifier(), PharaonicDateFormatter(), on_change)
         self._time_picker = PharaonicTimePicker(self)
         self._controller = DateTimePickerController(self, PharaonicDateTime, self._date_picker, self._time_picker,
                                                     PharaonicTimeType().now, on_change)
