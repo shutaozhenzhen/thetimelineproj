@@ -20,11 +20,12 @@ from timelinelib.calendar.generic.timepicker.datetimepickercontroller import Dat
 from timelinelib.calendar.generic.timepicker.datemodifier import DateModifier
 from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
 from timelinelib.calendar.generic.timepicker.datetimepicker import DateTimePicker
-from timelinelib.calendar.pharaonic.timepicker.timepicker import PharaonicTimePicker
+from timelinelib.calendar.generic.timepicker.timepicker import TimePicker
 from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
 from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
 from timelinelib.calendar.pharaonic.time import PharaonicDelta
+from timelinelib.calendar.pharaonic.pharaonic import is_valid_time
 
 
 class PharaonicDateTimePicker(DateTimePicker):
@@ -34,7 +35,7 @@ class PharaonicDateTimePicker(DateTimePicker):
         self._time_type = PharaonicTimeType()
         date_modifier = DateModifier(PharaonicTimeType(), PharaonicDelta, PharaonicDateTime, max_month=13)
         self._date_picker = DatePicker(self, date_modifier, PharaonicDateFormatter(), on_change)
-        self._time_picker = PharaonicTimePicker(self)
+        self._time_picker = TimePicker(self, False, separators=[":"], validator_function=is_valid_time)
         self._controller = DateTimePickerController(self, PharaonicDateTime, self._date_picker, self._time_picker,
                                                     PharaonicTimeType().now, on_change)
         self.create_gui()
