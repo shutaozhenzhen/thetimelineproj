@@ -16,15 +16,16 @@
 # along with Timeline.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from timelinelib.calendar.gregorian.timepicker.timepicker import GregorianTimePicker
 from timelinelib.calendar.generic.timepicker.datetimepickercontroller import DateTimePickerController
-from timelinelib.calendar.gregorian.timetype import GregorianTimeType
 from timelinelib.calendar.generic.timepicker.datetimepicker import DateTimePicker
-from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.generic.timepicker.datepicker import DatePicker
-from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.generic.timepicker.datemodifier import DateModifier
+from timelinelib.calendar.generic.timepicker.timepicker import TimePicker
+from timelinelib.calendar.gregorian.timetype import GregorianTimeType
+from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
+from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.time import GregorianDelta
+from timelinelib.calendar.gregorian.gregorian import is_valid_time
 
 
 class GregorianDateTimePicker(DateTimePicker):
@@ -34,8 +35,15 @@ class GregorianDateTimePicker(DateTimePicker):
         self._time_type = GregorianTimeType()
         date_modifier = DateModifier(GregorianTimeType(), GregorianDelta, GregorianDateTime)
         self._date_picker = DatePicker(self, date_modifier, GregorianDateFormatter(), on_change)
-        self._time_picker = GregorianTimePicker(self, self._config)
+        self._time_picker = self._create_time_picker(config)
         self._controller = DateTimePickerController(self, GregorianDateTime, self._date_picker, self._time_picker,
                                                     GregorianTimeType().now, on_change)
         self.create_gui()
         self.show_time(show_time)
+
+    def _create_time_picker(self, config):
+        if config.use_second:
+            separators = [":", ":"]
+        else:
+            separators = [":"]
+        return TimePicker(self, config.use_second, separators=separators, validator_function=is_valid_time)
