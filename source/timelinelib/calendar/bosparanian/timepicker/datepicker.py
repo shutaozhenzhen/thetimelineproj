@@ -30,11 +30,11 @@ class BosparanianDatePicker(wx.TextCtrl):
         self._resize_to_fit_text()
         self.parent = parent
 
-    def get_value(self):
-        return self.controller.get_value()
+    def GetDate(self):
+        return self.controller.GetDate()
 
-    def set_value(self, date):
-        self.controller.set_value(date)
+    def SetDate(self, date):
+        self.controller.SetDate(date)
 
     def get_date_string(self):
         return self.GetValue()
