@@ -29,7 +29,7 @@ class BosparanianDateTimePickerController:
 
     def get_value(self):
         if self.time_picker.IsShown():
-            hour, minute, second = self.time_picker.get_value()
+            hour, minute, second = self.time_picker.GetTime()
         else:
             hour, minute, second = (0, 0, 0)
         year, month, day = self.date_picker.get_value()
@@ -39,7 +39,7 @@ class BosparanianDateTimePickerController:
         if time is None:
             time = self.now_fn()
         self.date_picker.set_value(BosparanianDateTime.from_time(time).to_date_tuple())
-        self.time_picker.set_value(BosparanianDateTime.from_time(time).to_time_tuple())
+        self.time_picker.SetTime(BosparanianDateTime.from_time(time).to_time_tuple())
         self.changed()
 
     def changed(self):
