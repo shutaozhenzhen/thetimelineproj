@@ -38,7 +38,7 @@ class BosparanianDatePickerController:
         self.last_selection = None
         self.on_change = on_change
 
-    def get_value(self):
+    def GetDate(self):
         try:
             (year, month, day) = self._parse_year_month_day()
             self._ensure_within_allowed_period((year, month, day))
@@ -46,7 +46,7 @@ class BosparanianDatePickerController:
         except ValueError:
             raise ValueError("Invalid date.")
 
-    def set_value(self, value):
+    def SetDate(self, value):
         year, month, day = value
         date_string = self.date_formatter.format(year, month, day)
         self.date_picker.set_date_string(date_string)
@@ -85,7 +85,7 @@ class BosparanianDatePickerController:
     def on_text_changed(self):
         self._change_background_depending_on_date_validity()
         if self._current_date_is_valid():
-            current_date = self.get_value()
+            current_date = self.GetDate()
             # To prevent saving of preferred day when year or month is changed
             # in on_up() and on_down()...
             # Save preferred day only when text is entered in the date text
@@ -122,7 +122,7 @@ class BosparanianDatePickerController:
         if not self._current_date_is_valid():
             return
         selection = self.date_picker.GetSelection()
-        current_date = self.get_value()
+        current_date = self.GetDate()
         if self._insertion_point_in_region(self.region_year):
             new_date = increment_year(current_date)
         elif self._insertion_point_in_region(self.region_month):
@@ -161,7 +161,7 @@ class BosparanianDatePickerController:
         if not self._current_date_is_valid():
             return
         selection = self.date_picker.GetSelection()
-        current_date = self.get_value()
+        current_date = self.GetDate()
         if self._insertion_point_in_region(self.region_year):
             new_date = decrement_year(current_date)
         elif self._insertion_point_in_region(self.region_month):
@@ -202,7 +202,7 @@ class BosparanianDatePickerController:
         if self.preferred_day is not None:
             year, month, _ = new_date
             new_date = self._set_valid_day(year, month, self.preferred_day)
-        self.set_value(new_date)
+        self.SetDate(new_date)
         restore_selection(selection)
         self.save_preferred_day = True
 
@@ -225,7 +225,7 @@ class BosparanianDatePickerController:
 
     def _current_date_is_valid(self):
         try:
-            self.get_value()
+            self.GetDate()
         except ValueError:
             return False
         return True
