@@ -20,8 +20,9 @@ import wx
 
 from timelinelib.calendar.bosparanian.timetype.timetype import BosparanianTimeType
 from timelinelib.calendar.bosparanian.timepicker.datepicker import BosparanianDatePicker
-from timelinelib.calendar.bosparanian.timepicker.timepicker import BosparanianTimePicker
 from timelinelib.calendar.bosparanian.timepicker.datetimepickercontroller import BosparanianDateTimePickerController
+from timelinelib.calendar.generic.timepicker.timepicker import TimePicker
+from timelinelib.calendar.bosparanian.bosparanian import is_valid_time
 
 
 class BosparanianDateTimePicker(wx.Panel):
@@ -62,7 +63,7 @@ class BosparanianDateTimePicker(wx.Panel):
 
     def _create_gui(self, on_change):
         self.date_picker = BosparanianDatePicker(self, on_change)
-        self.time_picker = BosparanianTimePicker(self, on_change)
+        self.time_picker = TimePicker(self, False, [':'], is_valid_time)
         # Layout
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(self.date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
