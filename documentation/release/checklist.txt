@@ -50,7 +50,7 @@
     O  Commit
     
 2. Tag the release
-    O  hg tag 1.xx.0
+    O  hg tag 2.xx.0
     
 3. Update the repository
     O  hg push
