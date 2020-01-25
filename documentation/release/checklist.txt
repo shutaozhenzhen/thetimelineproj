@@ -2,7 +2,6 @@
     CHECKLIST
 ============================================================
 
-
 ------------------------------------------------------------
     Before build
     These tasks can be done continiously during the 'sprint' 
