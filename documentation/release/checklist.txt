@@ -59,7 +59,7 @@
     O  Build in Jenkins with parameter 1.xx.0
     O  Download and install artifacts to make basic checks  
     O  Make rudimentary tests that it works
-    O  Test openeing an ics file
+    O  Test opening an ics file
 
 ------------------------------------------------------------
 	Publish
