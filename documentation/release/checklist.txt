@@ -56,7 +56,7 @@
     O  hg push
     
 4. Build the final release in Jenkins
-    O  Build in Jenkins with parameter 1.xx.0
+    O  Build in Jenkins with parameter 2.xx.0
     O  Download and install artifacts to make basic checks  
     O  Make rudimentary tests that it works
     O  Test opening an ics file
