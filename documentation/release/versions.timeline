@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <timeline>
-  <version>2.1.0 development</version>
+  <version>2.2.0 development</version>
   <timetype>gregoriantime</timetype>
   <categories>
     <category>
@@ -1577,7 +1577,7 @@ Fixed controller that had changed name crom _controller.
     <event>
       <start>2019-11-03 17:08:56</start>
       <end>2019-11-03 17:08:56</end>
-      <text>2.0.0</text>
+      <text>Timeline 2.0.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
@@ -1599,24 +1599,65 @@ Eras:
       <default_color>192,192,192</default_color>
     </event>
     <event>
-      <start>2020-03-01 00:00:00</start>
-      <end>2020-03-01 00:00:00</end>
+      <start>2020-01-26 00:00:00</start>
+      <end>2020-01-26 00:00:00</end>
       <text>Timeline 2.1.0</text>
       <progress>0</progress>
       <fuzzy>False</fuzzy>
       <locked>False</locked>
       <ends_today>False</ends_today>
-      <category>Future Release</category>
+      <category>Planned Release</category>
       <description>Version 2.1.0
 --------------
 
-**Planned to be Released on 1 Mars 2020.**
+**Released on 25 January 2020.**
 
-*Don't want to wait for the final release? Try the beta version!*
+New Dialogs:
 
-* `Download source &lt;https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact&gt;`_.
+* ``Measure duration of events.``
+  A new dialog has been built for calculating duration of events.
 
-* `Download windows installer &lt;https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/tools/winbuildtools/inno/out/&gt;`_.</description>
+* ``Users has asked for a better way of finding a milestone.``
+  A new dialog has been built for navigating to a milestone.
+
+System info:
+
+* ``Python encoding is missing in system info dialog.``
+  Python encoding name added to in system info dialog.
+
+Fixed crash reports and bugs:
+
+* ``invalid index in wxListBox::SetSelection.``
+  Showing Message Box when there are no milestones found
+
+* ``'Image' object has no attribute 'SaveStream'.``
+  Changed functions for coding/decoding icon images.
+
+* ``AttributeError: 'MainCanvas' object has no attribute 'controller'.``
+  Added controller property to MainCanvas.
+
+* ``TypeError: invalid result from FileDropTarget.OnDropFiles(), an integer is required (got type NoneType).``
+  Changed logic in OnDropFiles to fullfill he api.
+
+* ``error : a "calendar.bmp" file is missing.``
+  Using calendar.png instead.
+
+* ``UnicodeDecodeError: 'gbk' codec can't decode byte 0x93 in position 3750: Illegal multibyte sequence.``
+  Using utf-8 encoding when reading first line in timeline file.
+
+* ``AttributeError: module 'time' has no attribute 'clock'.``
+  The tim.clock() function is now replaced with the time.process_time() function.</description>
+      <default_color>192,192,192</default_color>
+    </event>
+    <event>
+      <start>2020-05-03 00:00:00</start>
+      <end>2020-05-03 00:00:00</end>
+      <text>Timeline 2.2.0</text>
+      <progress>0</progress>
+      <fuzzy>False</fuzzy>
+      <locked>False</locked>
+      <ends_today>False</ends_today>
+      <category>Future Release</category>
       <default_color>192,192,192</default_color>
     </event>
   </events>
