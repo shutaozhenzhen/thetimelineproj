@@ -109,10 +109,17 @@ class EventsDurationController(Controller):
 
     def _get_event_duration(self, e):
         start_time = max(self.view.GetStartTime() or e.get_start_time(), e.get_start_time())
-        end_time = min(self.view.GetEndTime() or e.get_end_time(), e.get_end_time())
+        end_time = self._get_end_time(e)
         if end_time < start_time:
             return 0
         return TimePeriod(start_time, end_time).duration().value
+
+    def _get_end_time(self, e):
+        if e.ends_today:
+            end_time = self._db.get_time_type().now
+        else:
+            end_time = e.get_end_time()
+        return min(self.view.GetEndTime() or end_time, end_time)
 
     def _autocopy_to_clipboard(self):
         if self.view.GetCopyToClipboard():
