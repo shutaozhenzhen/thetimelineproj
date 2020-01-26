@@ -1,6 +1,17 @@
 Changelog
 =========
 
+Version 2.2.0
+--------------
+
+**Planned to be Released on 3 May 2020.**
+
+*Don't want to wait for the final release? Try the beta version!*
+
+* `Download source <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact>`_.
+
+* `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/tools/winbuildtools/inno/out/>`_.
+
 Version 2.1.0
 --------------
 
