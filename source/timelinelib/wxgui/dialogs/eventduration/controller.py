@@ -116,7 +116,7 @@ class EventsDurationController(Controller):
 
     def _get_end_time(self, e):
         if e.ends_today:
-            end_time = self._db.get_time_type().now
+            end_time = self._db.get_time_type().now()
         else:
             end_time = e.get_end_time()
         return min(self.view.GetEndTime() or end_time, end_time)
