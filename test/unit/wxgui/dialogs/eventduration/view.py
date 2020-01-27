@@ -33,11 +33,6 @@ class describe_event_duration_dialog(WxAppTestCase):
         config = Mock(Config)
         config.workday_length = 8
         config.get_date_formatter.return_value = GregorianDateFormatter()
-        config.get_date_format.return_value = "yyyy-mm-dd"
-        config.use_date_default_values = True
-        config.default_year = 2020
-        config.default_month = 1
-        config.default_day = 1
         self.show_dialog(
             EventDurationDialog,
             None,

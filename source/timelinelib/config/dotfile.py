@@ -189,9 +189,9 @@ class Config(Observable):
     def _tuple_to_string(self, tuple_data):
         return str(tuple_data)
 
-    def get_date_formatter(self):
+    def get_date_formatter(self, formatter_class=GregorianDateFormatter):
         parser = DateFormatParser().parse(self.get_date_format())
-        date_formatter = GregorianDateFormatter()
+        date_formatter = formatter_class()
         date_formatter.set_defaults(self.use_date_default_values, self.default_year, self.default_month, self.default_day)
         date_formatter.set_separators(*parser.get_separators())
         date_formatter.set_region_order(*parser.get_region_order())
