@@ -30,9 +30,14 @@ class describe_edit_event_dialog(UnitTestCase):
     def test_it_can_be_created(self):
         config = Mock(Config)
         config.get_date_formatter.return_value = GregorianDateFormatter()
+        config.get_date_format.return_value = "yyyy-mm-dd"
         config.event_editor_show_period = True
         config.event_editor_show_time = False
         config.event_editor_tab_order = ["0", "1", "2", "3", "4", ":"]
+        config.use_date_default_values = True
+        config.default_year = 2020
+        config.default_month = 1
+        config.default_day = 1
         db = db_open(":tutorial:")
         categories = db.get_categories()
         categories[0].parent = categories[1]
@@ -45,6 +50,10 @@ class describe_edit_event_dialog(UnitTestCase):
         config.event_editor_show_period = True
         config.event_editor_show_time = False
         config.event_editor_tab_order = ["0", "1", "2", "3", "4", ":"]
+        config.use_date_default_values = True
+        config.default_year = 2020
+        config.default_month = 1
+        config.default_day = 1
         db = db_open(":numtutorial:")
         categories = db.get_categories()
         categories[0].parent = categories[1]

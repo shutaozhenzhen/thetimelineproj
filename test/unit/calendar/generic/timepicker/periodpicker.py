@@ -81,6 +81,11 @@ class GregorianPeriodPickerTestDialog(Dialog):
     def _create_mock_config(self):
         config = Mock(Config)
         config.get_date_formatter.return_value = GregorianDateFormatter()
+        config.get_date_format.return_value = "yyyy-mm-dd"
+        config.use_date_default_values = True
+        config.default_year = 2020
+        config.default_month = 1
+        config.default_day = 1
         return config
 
 
@@ -128,6 +133,11 @@ class PharaonicPeriodPickerTestDialog(Dialog):
     def _create_mock_config(self):
         config = Mock(Config)
         config.get_date_formatter.return_value = PharaonicDateFormatter()
+        config.get_date_format.return_value = "yyyy-mm-dd"
+        config.use_date_default_values = True
+        config.default_year = 2020
+        config.default_month = 1
+        config.default_day = 1
         return config
 
 
@@ -175,4 +185,9 @@ class CopticPeriodPickerTestDialog(Dialog):
     def _create_mock_config(self):
         config = Mock(Config)
         config.get_date_formatter.return_value = CopticDateFormatter()
+        config.get_date_format.return_value = "yyyy-mm-dd"
+        config.use_date_default_values = True
+        config.default_year = 2020
+        config.default_month = 1
+        config.default_day = 1
         return config
