@@ -12,6 +12,17 @@ Version 2.2.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/tools/winbuildtools/inno/out/>`_.
 
+Fixed crash reports and bugs:
+
+* ``User date format has dissapeared.``
+  Made the user date format come into play again.
+
+* ``AttributeError: 'StripDay' object has no attribute 'appearance'.``
+  Added appearance to StripDay in In Pharanic time type.
+
+* ``AttributeError: 'PharaonicTimeType' object has no attribute 'get_day_of_week'.``
+  Removed 'week'-logic from StripDay().
+
 Version 2.1.0
 --------------
 

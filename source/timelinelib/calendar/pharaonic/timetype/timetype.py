@@ -165,11 +165,11 @@ class PharaonicTimeType(GregorianTimeType):
         if one_day_width > 20000:
             return StripHour(), StripMinute()
         elif one_day_width > 600:
-            return StripDay(), StripHour()
+            return StripDay(appearance), StripHour()
         elif one_day_width > 45:
             return StripWeek(appearance), StripWeekday()
         elif one_day_width > 25:
-            return StripMonth(), StripDay()
+            return StripMonth(), StripDay(appearance)
         elif one_day_width > 1.5:
             return StripYear(), StripMonth()
         elif one_day_width > 0.12:
