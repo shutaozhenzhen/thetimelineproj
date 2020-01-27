@@ -26,6 +26,7 @@ from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
 from timelinelib.calendar.pharaonic.dateformatter import PharaonicDateFormatter
 from timelinelib.calendar.pharaonic.time import PharaonicDelta
 from timelinelib.calendar.pharaonic.pharaonic import is_valid_time
+from timelinelib.config.dateformatparser import DateFormatParser
 
 
 class PharaonicDateTimePicker(DateTimePicker):
@@ -34,9 +35,21 @@ class PharaonicDateTimePicker(DateTimePicker):
         DateTimePicker.__init__(self, parent, show_time, config, on_change)
         self._time_type = PharaonicTimeType()
         date_modifier = DateModifier(PharaonicTimeType(), PharaonicDelta, PharaonicDateTime, max_month=13)
-        self._date_picker = DatePicker(self, date_modifier, PharaonicDateFormatter(), on_change)
+        self._date_picker = DatePicker(self, date_modifier, self._get_date_formatter(), on_change)
         self._time_picker = TimePicker(self, False, separators=[":"], validator_function=is_valid_time)
         self._controller = DateTimePickerController(self, PharaonicDateTime, self._date_picker, self._time_picker,
                                                     PharaonicTimeType().now, on_change)
         self.create_gui()
         self.show_time(show_time)
+
+    def _get_date_formatter(self):
+        parser = DateFormatParser().parse(self._config.get_date_format())
+        date_formatter = PharaonicDateFormatter()
+        date_formatter.set_defaults(self._config.use_date_default_values,
+                                    self._config.default_year,
+                                    self._config.default_month,
+                                    self._config.default_day)
+        date_formatter.set_separators(*parser.get_separators())
+        date_formatter.set_region_order(*parser.get_region_order())
+        date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())
+        return date_formatter

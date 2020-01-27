@@ -25,6 +25,7 @@ from timelinelib.calendar.coptic.timetype.timetype import CopticTimeType
 from timelinelib.calendar.coptic.coptic import CopticDateTime
 from timelinelib.calendar.coptic.time import CopticDelta
 from timelinelib.calendar.coptic.coptic import is_valid_time
+from timelinelib.config.dateformatparser import DateFormatParser
 
 
 class CopticDateTimePicker(DateTimePicker):
@@ -33,9 +34,21 @@ class CopticDateTimePicker(DateTimePicker):
         DateTimePicker.__init__(self, parent, show_time, config, on_change)
         self._time_type = CopticTimeType()
         date_modifier = DateModifier(CopticTimeType(), CopticDelta, CopticDateTime, max_month=13)
-        self._date_picker = DatePicker(self, date_modifier, CopticDateFormatter(), on_change)
+        self._date_picker = DatePicker(self, date_modifier, self._get_date_formatter(), on_change)
         self._time_picker = TimePicker(self, False, separators=[":"], validator_function=is_valid_time)
         self._controller = DateTimePickerController(self, CopticDateTime, self._date_picker, self._time_picker,
                                                     CopticTimeType().now, on_change)
         self.create_gui()
         self.show_time(show_time)
+
+    def _get_date_formatter(self):
+        parser = DateFormatParser().parse(self._config.get_date_format())
+        date_formatter = CopticDateFormatter()
+        date_formatter.set_defaults(self._config.use_date_default_values,
+                                    self._config.default_year,
+                                    self._config.default_month,
+                                    self._config.default_day)
+        date_formatter.set_separators(*parser.get_separators())
+        date_formatter.set_region_order(*parser.get_region_order())
+        date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())
+        return date_formatter
