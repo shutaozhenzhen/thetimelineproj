@@ -26,15 +26,17 @@ from timelinelib.calendar.gregorian.gregorian import GregorianDateTime
 from timelinelib.calendar.gregorian.dateformatter import GregorianDateFormatter
 from timelinelib.calendar.gregorian.time import GregorianDelta
 from timelinelib.calendar.gregorian.gregorian import is_valid_time
+from timelinelib.config.dateformatparser import DateFormatParser
 
 
 class GregorianDateTimePicker(DateTimePicker):
 
     def __init__(self, parent, show_time=True, config=None, on_change=None):
+        self._config = config
         DateTimePicker.__init__(self, parent, show_time, config, on_change)
         self._time_type = GregorianTimeType()
         date_modifier = DateModifier(GregorianTimeType(), GregorianDelta, GregorianDateTime)
-        self._date_picker = DatePicker(self, date_modifier, GregorianDateFormatter(), on_change)
+        self._date_picker = DatePicker(self, date_modifier, self._get_date_formatter(), on_change)
         self._time_picker = self._create_time_picker(config)
         self._controller = DateTimePickerController(self, GregorianDateTime, self._date_picker, self._time_picker,
                                                     GregorianTimeType().now, on_change)
@@ -47,3 +49,15 @@ class GregorianDateTimePicker(DateTimePicker):
         else:
             separators = [":"]
         return TimePicker(self, config.use_second, separators=separators, validator_function=is_valid_time)
+
+    def _get_date_formatter(self):
+        parser = DateFormatParser().parse(self._config.get_date_format())
+        date_formatter = GregorianDateFormatter()
+        date_formatter.set_defaults(self._config.use_date_default_values,
+                                    self._config.default_year,
+                                    self._config.default_month,
+                                    self._config.default_day)
+        date_formatter.set_separators(*parser.get_separators())
+        date_formatter.set_region_order(*parser.get_region_order())
+        date_formatter.use_abbreviated_name_for_month(parser.use_abbreviated_month_names())
+        return date_formatter
