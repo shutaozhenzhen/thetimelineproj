@@ -19,12 +19,15 @@
 from timelinelib.calendar.pharaonic.pharaonic import PharaonicDateTime
 from timelinelib.calendar.pharaonic.monthnames import abbreviated_name_of_month
 from timelinelib.calendar.pharaonic.time import PharaonicDelta
-from timelinelib.calendar.pharaonic.time import PharaonicTime
 from timelinelib.canvas.drawing.interface import Strip
 from timelinelib.calendar.pharaonic.timetype.formatters import format_year
 
 
 class StripDay(Strip):
+
+    def __init__(self, appearance):
+        Strip.__init__(self)
+        self.appearance = appearance
 
     def label(self, time, major=False):
         time = PharaonicDateTime.from_time(time)
@@ -47,15 +50,3 @@ class StripDay(Strip):
 
     def is_day(self):
         return True
-
-    def start(self, time):
-        from timelinelib.calendar.pharaonic.timetype.timetype import PharaonicTimeType
-        if self.appearance.get_week_start() == "tkyriaka":
-            days_to_subtract = PharaonicTimeType().get_day_of_week(time)
-        else:
-            # It is Psabbaton.
-            days_to_subtract = (PharaonicTimeType().get_day_of_week(time) + 1) % 7
-        return PharaonicTime(time.julian_day - days_to_subtract, 0)
-
-    def increment(self, time):
-        return time + PharaonicDelta.from_days(7)
