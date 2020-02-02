@@ -14,6 +14,9 @@ Version 2.2.0
 
 Fixed crash reports and bugs:
 
+* ``ValueError: julian_day must be >= 0.``
+  Added an exception check when zooming to avoid exception.
+
 * ``User date format has dissapeared.``
   Made the user date format come into play again.
 
