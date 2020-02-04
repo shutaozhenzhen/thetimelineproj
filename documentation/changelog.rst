@@ -14,6 +14,9 @@ Version 2.2.0
 
 Fixed crash reports and bugs:
 
+* ``A MenuItem ID of Zero does not work under Mac.``
+  Starting with MenuItem ID = 1
+
 * ``ValueError: julian_day must be >= 0.``
   Added an exception check when zooming to avoid exception.
 
