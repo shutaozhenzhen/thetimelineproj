@@ -126,6 +126,12 @@ class EditEventDialog(Dialog):
                 editor="$(self)"
                 proportion="1"
             />
+            <DescriptionEditor
+                name="labels"
+                notebookLabel="$(page_labels)"
+                editor="$(self)"
+                proportion="1"
+            />
             <IconEditor
                 name="icon"
                 notebookLabel="$(page_icon)"
@@ -180,6 +186,7 @@ class EditEventDialog(Dialog):
             "category_label": _("Category:"),
             "container_label": _("Container:"),
             "page_description": _("Description"),
+            "page_labels": _("Labels"),
             "page_icon": _("Icon"),
             "page_alert": _("Alert"),
             "page_hyperlink": _("Hyperlink"),
@@ -317,6 +324,7 @@ class EditEventDialog(Dialog):
     def _get_event_data(self):
         return [
             ("description", self.description),
+            ("labels", self.labels),
             ("alert", self.alert),
             ("icon", self.icon),
             ("hyperlink", self.hyperlink),
