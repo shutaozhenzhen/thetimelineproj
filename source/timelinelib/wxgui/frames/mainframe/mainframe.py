@@ -42,6 +42,7 @@ from timelinelib.wxgui.dialogs.changenowdate.view import open_change_now_date_di
 
 
 CatsViewChangedEvent, EVT_CATS_VIEW_CHANGED = wx.lib.newevent.NewCommandEvent()
+LabelsChangedEvent, EVT_LABELS_CHANGED = wx.lib.newevent.NewCommandEvent()
 
 
 def skip_when_no_event_selected(func):
@@ -61,6 +62,7 @@ class MainFrame(wx.Frame, guic.GuiCreator):
                           pos=self.config.get_window_pos(),
                           style=wx.DEFAULT_FRAME_STYLE, name="main_frame")
         self.Bind(EVT_CATS_VIEW_CHANGED, self._on_cats_view_changed)
+        self.Bind(EVT_LABELS_CHANGED, self._on_labels_changed)
         self.Bind(wx.EVT_CLOSE, self.exit)
         self.locale = set_wx_locale()
         # self.help_browser = HelpBrowserFrame(self)
@@ -252,6 +254,9 @@ class MainFrame(wx.Frame, guic.GuiCreator):
     # Event handlers
     def _on_cats_view_changed(self, evt):
         self.main_panel.get_view_properties().change_view_cats_individually(evt.is_checked)
+
+    def _on_labels_changed(self, evt):
+        self.main_panel.get_view_properties().change_labels(evt.filter_labels_controller)
 
     # Config functions
     def week_starts_on_monday(self):

@@ -116,7 +116,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             self.sidebar_width = self.splitter.GetSashPosition()
 
     def _create_sidebar(self):
-        self.sidebar = Sidebar(self._edit_controller, self.splitter)
+        self.sidebar = Sidebar(self._edit_controller, self.splitter, self.config)
 
     def _create_timeline_canvas(self):
         self.timeline_canvas = MainCanvas(
@@ -403,12 +403,19 @@ class TimelinePanel(TimelinePanelGuiCreator):
         TimelinePanelGuiCreator.__init__(self, parent)
         self._db_listener = Listener(self._on_db_changed)
         self.config.listen_for('show_sidebar', self._on_show_sidebar_changed)
+        self.config.listen_for('show_label_filtering', self._on_show_label_filtering)
 
     def _on_show_sidebar_changed(self):
         if self.config.show_sidebar:
             self.show_sidebar()
         else:
             self.hide_sidebar()
+
+    def _on_show_label_filtering(self):
+        if self.config.show_label_filtering:
+            self.show_label_filtering()
+        else:
+            self.hide_label_filtering()
 
     def SetDb(self, db):
         self.timeline_canvas.SetDb(db)
@@ -458,6 +465,12 @@ class TimelinePanel(TimelinePanelGuiCreator):
 
     def hide_sidebar(self):
         self.splitter.Unsplit(self.sidebar)
+
+    def show_label_filtering(self):
+        self.sidebar.show_label_filtering()
+
+    def hide_label_filtering(self):
+        self.sidebar.hide_label_filtering()
 
     def activated(self):
         if self.config.show_sidebar:

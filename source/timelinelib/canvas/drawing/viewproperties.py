@@ -50,6 +50,9 @@ class ViewProperties(Observable):
         self._all_events = []
         self._event_highlight_counters = {}
         self._selection_rect = None
+        self._labels = []
+        self._match_all = False
+        self._labels_filter_controller = None
 
     def is_highlighted(self, event):
         return event.get_id() in self._event_highlight_counters
@@ -155,6 +158,10 @@ class ViewProperties(Observable):
             self.view_cats_individually = view_cats_individually
             self._notify()
 
+    def change_labels(self, filter_labels_controller):
+        self._labels_filter_controller = filter_labels_controller
+        self._notify()
+
     def get_displayed_period(self):
         return self.displayed_period
 
@@ -163,6 +170,9 @@ class ViewProperties(Observable):
         return [event for event in events if self._is_event_visible(event)]
 
     def _is_event_visible(self, event):
+        if self._labels_filter_controller:
+            if not self._labels_filter_controller.visible(event):
+                return False
         if self._hide_events_done and event.get_progress() == 100:
             return False
         if event.is_subevent():
