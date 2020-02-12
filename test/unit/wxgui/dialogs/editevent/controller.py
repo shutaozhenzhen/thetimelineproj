@@ -323,6 +323,7 @@ class describe_additional_data(EditEventDialogControllerTestCase):
             "alert": None,
             "progress": None,
             "default_color": None,
+            "labels": None,
         })
 
     def test_is_not_set_for_new_events(self):
@@ -398,6 +399,7 @@ class describe_saving(object):
             "alert": None,
             "progress": None,
             "default_color": None,
+            "labels": None,
         })
 
 
