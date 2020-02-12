@@ -12,6 +12,12 @@ Version 2.2.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/tools/winbuildtools/inno/out/>`_.
 
+Event filtering:
+
+* ``Now Events can have labels on which visibility filtering is possible.``
+  The sidebar can show label filter component and labels can be defined for an Event.
+
+
 Fixed crash reports and bugs:
 
 * ``A MenuItem ID of Zero does not work under Mac.``
