@@ -19,27 +19,41 @@
 import wx
 
 from timelinelib.wxgui.components.categorytree import CustomCategoryTree
+from timelinelib.wxgui.components.labelfilter.view import LabelFilter
 
 
 class Sidebar(wx.Panel):
 
-    def __init__(self, edit_controller, parent):
+    def __init__(self, edit_controller, parent, config):
         self._edit_controller = edit_controller
+        self._config = config
         wx.Panel.__init__(self, parent, style=wx.BORDER_NONE)
         self.Hide()
         self._create_gui()
+
+    def show_label_filtering(self):
+        self._label_include_filter.Show()
+        self._sizer.Layout()
+
+    def hide_label_filtering(self):
+        self._label_include_filter.hide()
+        self._sizer.Layout()
 
     def _create_gui(self):
         self.category_tree = CustomCategoryTree(self)
         label = _("View Categories Individually")
         self.cbx_toggle_cat_view = wx.CheckBox(self, -1, label)
+        self._label_include_filter = LabelFilter(self, _('Include events with labels:'))
+        if not self._config.show_label_filtering:
+            self._label_include_filter.hide(clear=False)
         # Layout
-        sizer = wx.GridBagSizer(vgap=0, hgap=0)
-        sizer.AddGrowableCol(0, proportion=0)
-        sizer.AddGrowableRow(0, proportion=0)
-        sizer.Add(self.category_tree, (0, 0), flag=wx.GROW)
-        sizer.Add(self.cbx_toggle_cat_view, (1, 0), flag=wx.ALL, border=5)
-        self.SetSizer(sizer)
+        self._sizer = wx.GridBagSizer(vgap=0, hgap=0)
+        self._sizer.AddGrowableCol(0, proportion=0)
+        self._sizer.AddGrowableRow(0, proportion=0)
+        self._sizer.Add(self.category_tree, (0, 0), flag=wx.GROW)
+        self._sizer.Add(self.cbx_toggle_cat_view, (1, 0), flag=wx.ALL, border=5)
+        self._sizer.Add(self._label_include_filter, (2, 0), flag=wx.GROW | wx.LEFT, border=5)
+        self.SetSizer(self._sizer)
         self.Bind(wx.EVT_CHECKBOX, self._cbx_on_click, self.cbx_toggle_cat_view)
 
     def ok_to_edit(self):
