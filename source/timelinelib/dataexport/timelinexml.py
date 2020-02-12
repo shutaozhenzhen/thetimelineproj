@@ -128,6 +128,8 @@ class Exporter:
             self._write_event_categories(xmlfile, evt)
         if evt.get_data("description") is not None:
             write_simple_tag(xmlfile, "description", evt.get_data("description"), INDENT3)
+        if evt.get_data("labels") is not None:
+            write_simple_tag(xmlfile, "labels", evt.get_data("labels"), INDENT3)
         alert = evt.get_data("alert")
         if alert is not None:
             write_simple_tag(xmlfile, "alert", alert_string(self.db.get_time_type(), alert),
