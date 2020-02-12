@@ -263,6 +263,7 @@ BOOLEAN_CONFIGS = (
     {'name': 'show_toolbar', 'default': 'True'},
     {'name': 'show_sidebar', 'default': 'True'},
     {'name': 'show_legend', 'default': 'True'},
+    {'name': 'show_label_filtering', 'default': 'False'},
     {'name': 'window_maximized', 'default': 'False'},
     {'name': 'open_recent_at_startup', 'default': 'True'},
     {'name': 'balloon_on_hover', 'default': 'True'},
