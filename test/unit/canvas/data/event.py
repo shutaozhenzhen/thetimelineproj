@@ -169,6 +169,7 @@ class describe_event(UnitTestCase):
             "alert": "a",
             "progress": "p",
             "default_color": "dc",
+            "labels": "foo bar",
         }
         event = an_event()
         event.data = data
