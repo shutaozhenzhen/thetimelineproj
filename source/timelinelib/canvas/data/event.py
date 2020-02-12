@@ -115,6 +115,7 @@ class Event(ItemBase, TimelineItem):
                 self.get_text() == other.get_text() and
                 self.get_category() == other.get_category() and
                 self.get_description() == other.get_description() and
+                self.get_labels() == other.get_labels() and
                 self.get_hyperlink() == other.get_hyperlink() and
                 self.get_progress() == other.get_progress() and
                 self.get_alert() == other.get_alert() and
@@ -234,6 +235,15 @@ class Event(ItemBase, TimelineItem):
 
     description = property(get_description, set_description)
 
+    def get_labels(self):
+        return self._immutable_value.labels
+
+    def set_labels(self, value):
+        self._immutable_value = self._immutable_value.update(labels=value)
+        return self
+
+    labels = property(get_labels, set_labels)
+
     def get_icon(self):
         return self._immutable_value.icon
 
@@ -342,6 +352,8 @@ class Event(ItemBase, TimelineItem):
         """
         if event_id == "description":
             return self.description or default
+        elif event_id == "labels":
+            return self.labels or default
         elif event_id == "icon":
             return self.icon
         elif event_id == "hyperlink":
@@ -356,7 +368,7 @@ class Event(ItemBase, TimelineItem):
             else:
                 return None
         else:
-            raise Exception("should not happen")
+            raise Exception(f"should not happen: {event_id}")
 
     def set_data(self, event_id, data):
         """
@@ -369,6 +381,8 @@ class Event(ItemBase, TimelineItem):
         """
         if event_id == "description":
             self.description = data
+        elif event_id == "labels":
+            self.labels = data
         elif event_id == "icon":
             self.icon = data
         elif event_id == "hyperlink":
@@ -445,6 +459,7 @@ class Event(ItemBase, TimelineItem):
 
 DATA_FIELDS = [
     "description",
+    "labels",
     "icon",
     "hyperlink",
     "alert",

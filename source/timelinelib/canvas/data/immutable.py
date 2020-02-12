@@ -32,6 +32,7 @@ class ImmutableEvent(ImmutableRecord):
     locked = Field(False)
     ends_today = Field(False)
     description = Field(None)
+    labels = Field(None)
     icon = Field(None)
     hyperlink = Field(None)
     alert = Field(None)

@@ -150,6 +150,7 @@ class Parser:
                         Tag("category", ANY, parse_fn_store_to_list("tmp_categories"))
                     ]),
                     Tag("description", OPTIONAL, parse_fn_store("tmp_description")),
+                    Tag("labels", OPTIONAL, parse_fn_store("tmp_labels")),
                     Tag("alert", OPTIONAL, parse_fn_store("tmp_alert")),
                     Tag("hyperlink", OPTIONAL, parse_fn_store("tmp_hyperlink")),
                     Tag("icon", OPTIONAL, parse_fn_store("tmp_icon")),
@@ -231,6 +232,7 @@ class Parser:
                     else:
                         categories.append(cat)
         description = tmp_dict.pop("tmp_description", None)
+        labels =  tmp_dict.pop("tmp_labels", None)
         alert_string = tmp_dict.pop("tmp_alert", None)
         alert = parse_alert_string(self.db.get_time_type(), alert_string)
         icon_text = tmp_dict.pop("tmp_icon", None)
@@ -266,6 +268,7 @@ class Parser:
             event.set_categories(categories)
         default_color = tmp_dict.pop("tmp_default_color", "200,200,200")
         event.set_data("description", description)
+        event.set_data("labels", labels)
         event.set_data("icon", icon)
         event.set_data("alert", alert)
         event.set_data("hyperlink", hyperlink)
