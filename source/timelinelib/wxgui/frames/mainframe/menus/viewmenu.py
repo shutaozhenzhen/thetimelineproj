@@ -36,6 +36,7 @@ class ViewMenu(MenuBase):
             mid.ID_TOOLBAR: lambda evt: parent.config.set('show_toolbar', evt.IsChecked()),
             mid.ID_SIDEBAR: lambda evt: parent.config.set('show_sidebar', evt.IsChecked()),
             mid.ID_LEGEND: lambda evt: parent.config.set('show_legend', evt.IsChecked()),
+            mid.ID_LABEL_FILTERING: lambda evt: parent.config.set('show_label_filtering', evt.IsChecked()),
             mid.ID_BALLOONS: lambda evt: parent.config.set('balloon_on_hover', evt.IsChecked()),
             mid.ID_ZOOMIN: lambda evt: DrawingAreaProxy(parent).zoom_in(),
             mid.ID_ZOOMOUT: lambda evt: DrawingAreaProxy(parent).zoom_out(),
@@ -57,6 +58,7 @@ class ViewMenu(MenuBase):
         self.Append(mid.ID_TOOLBAR, _("Toolbar"), kind=wx.ITEM_CHECK)
         self.Append(mid.ID_SIDEBAR, _("&Sidebar") + "\tCtrl+I", kind=wx.ITEM_CHECK)
         self.Append(mid.ID_LEGEND, _("&Legend"), kind=wx.ITEM_CHECK)
+        self.Append(mid.ID_LABEL_FILTERING, _("La&bel Filtering"), kind=wx.ITEM_CHECK)
         self.AppendSeparator()
         self.Append(mid.ID_BALLOONS, _("&Balloons on hover"), kind=wx.ITEM_CHECK)
         self.AppendSeparator()
@@ -80,6 +82,7 @@ class ViewMenu(MenuBase):
         self.FindItemById(mid.ID_TOOLBAR).Check(self._parent.config.show_toolbar)
         self.FindItemById(mid.ID_SIDEBAR).Check(self._parent.config.show_sidebar)
         self.FindItemById(mid.ID_LEGEND).Check(self._parent.config.show_legend)
+        self.FindItemById(mid.ID_LABEL_FILTERING).Check(self._parent.config.show_label_filtering)
         self.FindItemById(mid.ID_BALLOONS).Check(self._parent.config.balloon_on_hover)
         self.FindItemById(mid.ID_HIDE_DONE).Check(self._parent.config.hide_events_done)
         self.FindItemById(mid.ID_LEFT_ALIGNMENT).Check(self._parent.config.draw_point_events_to_right)
