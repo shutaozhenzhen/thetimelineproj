@@ -368,7 +368,7 @@ class TimelinePanelGuiCreator(wx.Panel):
 
     def _context_menu_on_goto_hyperlink_event(self, evt):
         hyperlinks = self.timeline_canvas.GetSelectedEvent().get_data("hyperlink")
-        hyperlink = hyperlinks.split(";")[evt.Id]
+        hyperlink = hyperlinks.split(";")[evt.Id - 1]
         webbrowser.open(hyperlink)
 
     def _timeline_canvas_on_divider_position_changed(self, event):
