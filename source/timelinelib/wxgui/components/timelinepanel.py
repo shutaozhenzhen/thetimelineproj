@@ -285,7 +285,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             hyperlinks = self.timeline_canvas.GetSelectedEvent().get_data("hyperlink")
             if hyperlinks is not None:
                 imp = wx.Menu()
-                menuid = 0
+                menuid = 1
                 for hyperlink in hyperlinks.split(";"):
                     imp.Append(menuid, hyperlink)
                     menuid += 1
