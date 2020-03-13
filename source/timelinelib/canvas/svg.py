@@ -54,7 +54,7 @@ from timelinelib.utils import unique_based_on_eq
 OUTER_PADDING = 5  # Space between event boxes (pixels)
 INNER_PADDING = 3  # Space inside event box to text (pixels)
 DATA_INDICATOR_SIZE = 10
-SMALL_FONT_SIZE_PX = 11
+SMALL_FONT_SIZE_PX = 9
 LARGER_FONT_SIZE_PX = 14
 Y_RECT_OFFSET = 12
 Y_TEXT_OFFSET = 18
