@@ -4,13 +4,7 @@ Changelog
 Version 2.2.0
 --------------
 
-**Planned to be Released on 3 May 2020.**
-
-*Don't want to wait for the final release? Try the beta version!*
-
-* `Download source <https://jenkins.rickardlindberg.me/job/timeline-linux-source/lastSuccessfulBuild/artifact>`_.
-
-* `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/tools/winbuildtools/inno/out/>`_.
+**Released on 14 May 2020.**
 
 Event filtering:
 
@@ -34,6 +28,9 @@ Fixed crash reports and bugs:
 
 * ``AttributeError: 'PharaonicTimeType' object has no attribute 'get_day_of_week'.``
   Removed 'week'-logic from StripDay().
+
+* ``The Numeric timeline get's stuck when fully zoomed in.``
+  Changed logic to release the stuck situation.
 
 Version 2.1.0
 --------------
