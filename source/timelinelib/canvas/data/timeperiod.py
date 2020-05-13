@@ -169,6 +169,13 @@ class TimePeriod:
         try:
             start_delta = self.delta() * (times * ratio / 5.0)
             end_delta = self.delta() * (-times * (1.0 - ratio) / 5.0)
+            # The Numeric timeline get's stuck when fully zoomed in
+            # start- and end.delta becoms both Delta<0>
+            # The while statement below is made to get out of this stuck situation.
+            while start_delta == end_delta:
+                ratio += 0.1
+                start_delta = self.delta() * (times * ratio / 5.0)
+                end_delta = self.delta() * (-times * (1.0 - ratio) / 5.0)
             return self.update(self.start_time, self.end_time, start_delta, end_delta)
         except ValueError:
             return self.update(self.start_time, self.end_time)
