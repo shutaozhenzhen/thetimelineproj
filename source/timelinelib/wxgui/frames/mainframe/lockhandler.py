@@ -78,8 +78,8 @@ class LockHandler:
     def _get_lockpath(self):
         return f"{self._path}.lock"
 
-    def _report_other_process_uses_lockfile(self):
+    def _report_other_process_uses_lockfile(self, lockpath):
         message = _(f"""The lockfile used to protect the timeline from concurrent updates is opened by another program or process.
     This lockfile must be removed in order be able to continue editing the timeline!
-    The lockfile is found at: {self._path}""")
+    The lockfile is found at: {lockpath}""")
         display_warning_message(message, self._main_frame)

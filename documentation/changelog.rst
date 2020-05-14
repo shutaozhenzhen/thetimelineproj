@@ -12,6 +12,11 @@ Version 2.3.0
 
 * `Download windows installer <https://jenkins.rickardlindberg.me/job/timeline-windows-exe/lastSuccessfulBuild/artifact/tools/winbuildtools/inno/out/>`_.
 
+Fixed crash reports and bugs:
+
+* ``TypeError: _report_other_process_uses_lockfile() takes 1 positional argument but 2 were given.``
+Added argument to the function
+
 Version 2.2.0
 --------------
 
