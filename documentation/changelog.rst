@@ -15,7 +15,10 @@ Version 2.3.0
 Fixed crash reports and bugs:
 
 * ``TypeError: _report_other_process_uses_lockfile() takes 1 positional argument but 2 were given.``
-Added argument to the function
+  Added argument to the function
+
+* ``AttributeError: 'LockHandler' object has no attribute '_timelinepath'``
+  The attribute name is '_path'
 
 Version 2.2.0
 --------------
