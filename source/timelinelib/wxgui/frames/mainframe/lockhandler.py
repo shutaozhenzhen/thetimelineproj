@@ -56,9 +56,10 @@ class LockHandler:
             self._pid = os.getpid()
             with open(self._get_lockpath(), "w") as fp:
                 fp.write(f"{getpass.getuser()}\n{ts}\n{self._pid}")
-        except Exception:
+        except Exception as ex:
+            print(ex)
             msg = _(
-                "Unable to take lock on %s\nThis means you can't edit the timeline.\nCheck if you have write access to this directory.") % self._timelinepath
+                "Unable to take lock on %s\nThis means you can't edit the timeline.\nCheck if you have write access to this directory.") % self._path
             display_warning_message(msg, self._main_frame)
             raise LockedException()
 
