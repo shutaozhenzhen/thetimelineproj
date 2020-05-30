@@ -20,6 +20,9 @@ Fixed crash reports and bugs:
 * ``AttributeError: 'LockHandler' object has no attribute '_timelinepath'``
   The attribute name is '_path'
 
+* ``TypeError: MessageDialog(): argument 1 has unexpected type 'Config'``
+  Removed argument 1 from caller, since it has a None default value.
+
 Version 2.2.0
 --------------
 
