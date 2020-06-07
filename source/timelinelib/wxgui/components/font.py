@@ -50,16 +50,17 @@ class Font(wx.Font):
     WxFont = property(_get_wxfont, _set_wxfont)
 
     def serialize(self):
-        return "%s:%s:%s:%s:%s:%s:%s:%s" % (
-            self.PointSize,
-            self.Family,
-            self.Style,
-            self.Weight,
-            self.GetUnderlined(),
-            self.FaceName,
-            self.Encoding,
-            self.WxColor,
-        )
+        return f'nfi|{self.GetNativeFontInfoDesc()}|{self.WxColor}'
+        # return "%s:%s:%s:%s:%s:%s:%s:%s" % (
+        #     self.PointSize,
+        #     self.Family,
+        #     self.Style,
+        #     self.Weight,
+        #     self.GetUnderlined(),
+        #     self.FaceName,
+        #     self.Encoding,
+        #     self.WxColor,
+        # )
 
     def increment(self, step=2):
         self.PointSize += step
@@ -92,36 +93,56 @@ font_cache = {}
 
 def deserialize_font(serialized_font):
     if serialized_font not in font_cache:
-        bool_map = {"True": True, "False": False}
-        (
-            point_size,
-            family,
-            style,
-            weight,
-            underlined,
-            facename,
-            encoding,
-            color,
-        ) = serialized_font.split(":")
-        color_args = color[1:-1].split(",")
-        wxcolor = wx.Colour(
-            int(color_args[0]),
-            int(color_args[1]),
-            int(color_args[2]),
-            int(color_args[3])
-        )
-        font = Font(
-            int(point_size),
-            int(family),
-            int(style),
-            int(weight),
-            bool_map[underlined],
-            facename,
-            int(encoding),
-            wxcolor
-        )
+        font = None
+        if serialized_font.startswith('nfi|'):
+            font = _create_font_from_native_font_info(serialized_font)
+        else:
+            font = _create_font_from_old_info(serialized_font)
         font_cache[serialized_font] = font
     return font_cache[serialized_font]
+
+
+def _create_font_from_native_font_info(serialized_font):
+    prefix, nfi, color = serialized_font.split('|')
+    font = Font()
+    font.SetNativeFontInfo(nfi)
+    font.WxColor = _create_color_from_serialized_data(color)
+    return font
+
+
+def _create_font_from_old_info(serialized_font):
+    bool_map = {"True": True, "False": False}
+    (
+        point_size,
+        family,
+        style,
+        weight,
+        underlined,
+        facename,
+        encoding,
+        color,
+    ) = serialized_font.split(":")
+    font = Font(
+        int(point_size),
+        int(family),
+        int(style),
+        int(weight),
+        bool_map[underlined],
+        facename,
+        int(encoding),
+        _create_color_from_serialized_data(color)
+    )
+    return font
+
+
+def _create_color_from_serialized_data(serialized_color_info):
+    color_args = serialized_color_info[1:-1].split(",")
+    return wx.Colour(
+        int(color_args[0]),
+        int(color_args[1]),
+        int(color_args[2]),
+        int(color_args[3])
+    )
 
 
 def set_minor_strip_text_font(font, dc, force_bold=False, force_normal=False, force_italic=False, force_upright=False):
