@@ -32,9 +32,9 @@ from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
 
 
 if sys.platform == "win32":
-    FONT = "12:74:90:92:False:MS Shell Dlg 2:-1:(0, 0, 0, 255)"
+    FONT = "12:74:90:700:False:MS Shell Dlg 2:-1:(0, 0, 0, 255)"
 else:
-    FONT = "12:70:90:92:False:MS Shell Dlg 2:43:(0, 0, 0, 255)"
+    FONT = "12:70:90:700:False:MS Shell Dlg 2:43:(0, 0, 0, 255)"
 
 
 class describe_preferences_dialog_controller(WxAppTestCase):

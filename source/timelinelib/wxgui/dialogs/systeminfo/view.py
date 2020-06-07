@@ -44,7 +44,7 @@ class SystemInfoDialog(Dialog):
         </FlexGridSizer>
         <BoxSizerHorizontal>
             <StretchSpacer/>
-            <DialogButtonsCloseSizer  border="LEFT|RIGHT|BOTTOM" align="ALIGN_RIGHT"/>
+            <DialogButtonsCloseSizer  border="LEFT|RIGHT|BOTTOM" />
         </BoxSizerHorizontal>
     </BoxSizerVertical>
     """
