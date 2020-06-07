@@ -23,6 +23,9 @@ Fixed crash reports and bugs:
 * ``TypeError: MessageDialog(): argument 1 has unexpected type 'Config'``
   Removed argument 1 from caller, since it has a None default value.
 
+* ``Problems when running Timeline with wxPython version 4.1.0.``
+  Fixed issues with wxPython version 4.1.0
+
 Version 2.2.0
 --------------
 

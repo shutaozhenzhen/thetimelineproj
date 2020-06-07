@@ -61,7 +61,8 @@ class DateTimePicker(wx.Panel):
             pass
 
     def show_time(self, show=True):
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
+        sizer = self.GetSizer()
+        sizer.Clear()
         if show:
             sizer.Add(self._date_picker, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
             sizer.Add(self._date_button, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
