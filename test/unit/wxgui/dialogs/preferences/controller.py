@@ -29,12 +29,7 @@ from timelinelib.test.cases.wxapp import WxAppTestCase
 from timelinelib.test.utils import ANY
 from timelinelib.wxgui.dialogs.preferences.controller import PreferencesDialogController
 from timelinelib.wxgui.dialogs.preferences.view import PreferencesDialog
-
-
-if sys.platform == "win32":
-    FONT = "12:74:90:700:False:MS Shell Dlg 2:-1:(0, 0, 0, 255)"
-else:
-    FONT = "12:70:90:700:False:MS Shell Dlg 2:43:(0, 0, 0, 255)"
+from timelinelib.wxgui.components.font import Font
 
 
 class describe_preferences_dialog_controller(WxAppTestCase):
@@ -63,10 +58,11 @@ class describe_preferences_dialog_controller(WxAppTestCase):
         self.config.vertical_space_between_events = 5
         self.config.colorize_weekends = False
         self.config.skip_s_in_decade_text = False
-        self.config.major_strip_font = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
-        self.config.minor_strip_font = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
-        self.config.legend_font = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
-        self.config.balloon_font = "10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)"
+        font = Font()
+        self.config.major_strip_font = font.serialize()
+        self.config.minor_strip_font = font.serialize()
+        self.config.legend_font = font.serialize()
+        self.config.balloon_font = font.serialize()
         self.config.legend_pos = 0
         self.config.date_format = "yyyy-mm-dd"
         self.config.never_use_time = False
@@ -177,21 +173,21 @@ class describe_preferences_dialog_controller(WxAppTestCase):
 
     def test_on_major_strip_click(self):
         font = Mock()
-        font.serialize.return_value = FONT
-        self.config.major_strip_font = FONT
+        font.serialize.return_value = Font().serialize()
+        self.config.major_strip_font = Font().serialize()
         self.controller.config = self.config
         self.view.ShowEditFontDialog.return_value = True
         self.controller.on_major_strip_click(None)
-        self.assertEqual(FONT, self.config.major_strip_font)
+        self.assertEqual(Font().serialize(), self.config.major_strip_font)
 
     def test_on_major_minor_click(self):
         font = Mock()
-        font.serialize.return_value = FONT
-        self.config.minor_strip_font = FONT
+        font.serialize.return_value = Font().serialize()
+        self.config.minor_strip_font = Font().serialize()
         self.controller.config = self.config
         self.view.ShowEditFontDialog.return_value = True
         self.controller.on_minor_strip_click(None)
-        self.assertEqual(FONT, self.config.minor_strip_font)
+        self.assertEqual(Font().serialize(), self.config.minor_strip_font)
 
     def test_on_fuzzy_icon_changed(self):
         self.evt.GetString.return_value = sentinel.STRING
@@ -234,18 +230,18 @@ class describe_preferences_dialog_controller(WxAppTestCase):
 
     def test_on_legend_click_ok(self):
         self.controller.config = self.config
-        self.config.legend_font = FONT
+        self.config.legend_font = Font().serialize()
         self.view.ShowEditFontDialog.return_value = True
         self.controller.on_legend_click(self.evt)
-        self.assertEqual(FONT, self.config.legend_font)
+        self.assertEqual(Font().serialize(), self.config.legend_font)
 
     def test_on_legend_click_cancel(self):
         evt = Mock()
         self.controller.config = self.config
-        self.config.legend_font = FONT
+        self.config.legend_font = Font().serialize()
         self.view.ShowEditFontDialog.return_value = False
         self.controller.on_legend_click(evt)
-        self.assertEqual(FONT, self.config.legend_font)
+        self.assertEqual(Font().serialize(), self.config.legend_font)
 
     def test_sets_never_use_time(self):
         self.config.never_use_time = sentinel.NEVER_USE_TIME
