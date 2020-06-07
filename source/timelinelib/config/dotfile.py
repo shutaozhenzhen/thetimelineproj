@@ -91,7 +91,7 @@ class Config(Observable):
     def write(self):
         """Write settings to file specified in constructor and raise IOError if failed."""
         try:
-            with open(self.path + '?', "w") as f:
+            with open(self.path, "w") as f:
                 self.config_parser.write(f)
         except IOError as ex:
             friendly = _("Unable to write configuration file.")
