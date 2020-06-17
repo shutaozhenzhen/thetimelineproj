@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Timeline 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-14 17:44+0200\n"
+"POT-Creation-Date: 2020-06-11 19:15+0200\n"
 "PO-Revision-Date: 2016-02-03 17:55+0000\n"
 "Last-Translator: David Gesrob <Unknown>\n"
 "Language-Team: Brazilian Portuguese <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-06-11 17:20+0000\n"
-"X-Generator: Launchpad (build b190cebbf563f89e480a8b57f641753c8196bda0)\n"
+"X-Launchpad-Export-Date: 2020-06-17 15:16+0000\n"
+"X-Generator: Launchpad (build 1cbd0aa39df153c901321817f9b57cf3f232b507)\n"
 
 #: source\timelinelib\calendar\bosparanian\monthnames.py:24
 #: source\timelinelib\calendar\bosparanian\weekdaynames.py:27
@@ -3225,7 +3225,7 @@ msgstr "&Navegar"
 msgid "&Help"
 msgstr "&Ajuda"
 
-#: source\timelinelib\wxgui\frames\mainframe\lockhandler.py:61
+#: source\timelinelib\wxgui\frames\mainframe\lockhandler.py:62
 #, python-format
 msgid ""
 "Unable to take lock on %s\n"
@@ -3233,7 +3233,7 @@ msgid ""
 "Check if you have write access to this directory."
 msgstr ""
 
-#: source\timelinelib\wxgui\frames\mainframe\lockhandler.py:82
+#: source\timelinelib\wxgui\frames\mainframe\lockhandler.py:83
 #, python-brace-format
 msgid ""
 "The lockfile used to protect the timeline from concurrent updates is opened "
