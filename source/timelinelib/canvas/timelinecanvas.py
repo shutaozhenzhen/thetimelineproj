@@ -231,6 +231,9 @@ class TimelineCanvas(wx.Panel):
 
     def RedrawSurface(self, fn_draw):
         width, height = self.GetSize()
+        if width == 0 or height == 0:
+            # Since the panel is not visible it's no point in drawing it.
+            return
         self._surface_bitmap = wx.Bitmap(width, height)
         memdc = wx.MemoryDC()
         memdc.SelectObject(self._surface_bitmap)

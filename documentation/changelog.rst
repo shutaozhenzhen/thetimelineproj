@@ -26,6 +26,9 @@ Fixed crash reports and bugs:
 * ``Problems when running Timeline with wxPython version 4.1.0.``
   Fixed issues with wxPython version 4.1.0
 
+* ``wx._core.wxAssertionError: C++ assertion ""w > 0 && h > 0"" failed``
+  If the timeline panel has no width or height -> don't draw it.
+
 Version 2.2.0
 --------------
 
