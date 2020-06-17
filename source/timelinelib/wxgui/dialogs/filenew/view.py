@@ -108,7 +108,7 @@ def open_file_new_dialog(parent):
         },
         {
             "text": _("Bosparanian"),
-            "description": _("This creates a timeline using the fictuous Bosparanian calendar from the German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."),
+            "description": _("This creates a timeline using the fictional Bosparanian calendar from the German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."),
             "timetype": BosparanianTimeType,
         },
         {

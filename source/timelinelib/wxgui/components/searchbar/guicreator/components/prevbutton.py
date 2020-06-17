@@ -19,7 +19,7 @@
 import wx
 
 
-HELP_TEXT = _("Prevoius match")
+HELP_TEXT = _("Previous match")
 LABEL = ""
 
 
