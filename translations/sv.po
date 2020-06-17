@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Timeline 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-11 19:15+0200\n"
-"PO-Revision-Date: 2020-01-16 21:30+0000\n"
+"POT-Creation-Date: 2020-06-17 18:59+0200\n"
+"PO-Revision-Date: 2020-06-17 18:49+0000\n"
 "Last-Translator: rogerlindberg <roger@rolidata.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-06-17 15:16+0000\n"
+"X-Launchpad-Export-Date: 2020-06-17 18:52+0000\n"
 "X-Generator: Launchpad (build 1cbd0aa39df153c901321817f9b57cf3f232b507)\n"
 
 #: source\timelinelib\calendar\bosparanian\monthnames.py:24
@@ -923,8 +923,8 @@ msgid "Legend"
 msgstr "Teckenförklaring"
 
 #: source\timelinelib\config\shortcut.py:76
-msgid "Ballons on hover"
-msgstr "Visa ballonger vid hovring"
+msgid "Balloons on hover"
+msgstr ""
 
 #: source\timelinelib\config\shortcut.py:77
 msgid "Zoom In"
@@ -1574,7 +1574,7 @@ msgid ""
 "length.\n"
 "\n"
 "An Era is displayed as a background with the color defined for the Era. The "
-"Era name is written att the bottom of the timeline.\n"
+"Era name is written at the bottom of the timeline.\n"
 msgstr ""
 
 #: source\timelinelib\help\pages.py:208
@@ -1621,7 +1621,7 @@ msgstr "Milstolpe"
 msgid ""
 "\n"
 "A milestone is a special case of a point event. It is rendered on the "
-"timescale of a timeline and it can have a desciption shown when hooverd "
+"timescale of a timeline and it can have a description shown when hovered "
 "over. It can also have a one character label that is displayed in the "
 "milestone box.\n"
 "\n"
@@ -1798,7 +1798,7 @@ msgid ""
 "between them.\n"
 "\n"
 " You can also get to the duplication dialog from the event context menu, "
-"wich appears if you right-click an event with the mouse.\n"
+"which appears if you right-click an event with the mouse.\n"
 msgstr ""
 
 #: source\timelinelib\help\pages.py:384
@@ -2028,7 +2028,7 @@ msgstr "Annan gradientritare för Händelsers rektangel"
 
 #: source\timelinelib\plugin\plugins\eventboxdrawers\othergradienteventboxdrawerfuzzyedges.py:30
 msgid "Other Gradient Event box drawer with fuzzy edges"
-msgstr ""
+msgstr "Annan gradientritare för Händelsers rektangel med luddig tid"
 
 #: source\timelinelib\plugin\plugins\exporters\__init__.py:51
 msgid "No events found!"
@@ -2203,11 +2203,11 @@ msgstr "Välj fil"
 
 #: source\timelinelib\wxgui\components\labelfilter\view.py:59
 msgid "Match any label"
-msgstr ""
+msgstr "Matcha någon etikett"
 
 #: source\timelinelib\wxgui\components\labelfilter\view.py:60
 msgid "Match all labels"
-msgstr ""
+msgstr "Matcha alla etiketter"
 
 #: source\timelinelib\wxgui\components\maincanvas\createperiodeventbydrag.py:29
 msgid "Select region for event"
@@ -2304,8 +2304,8 @@ msgid "Select period"
 msgstr "Välj period"
 
 #: source\timelinelib\wxgui\components\searchbar\guicreator\components\prevbutton.py:22
-msgid "Prevoius match"
-msgstr "Föregående träff"
+msgid "Previous match"
+msgstr ""
 
 #: source\timelinelib\wxgui\components\searchbar\guicreator\components\showlistbutton.py:22
 msgid "List matches"
@@ -2317,7 +2317,7 @@ msgstr "Visa enbart markerade Kategorier"
 
 #: source\timelinelib\wxgui\components\sidebar.py:46
 msgid "Include events with labels:"
-msgstr ""
+msgstr "Inkludera händelser med etiketter"
 
 #: source\timelinelib\wxgui\components\timelinepanel.py:95
 #: source\timelinelib\wxgui\dialogs\preferences\view.py:423
@@ -2509,7 +2509,7 @@ msgstr "Behållare:"
 
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:189
 msgid "Labels"
-msgstr ""
+msgstr "Etiketter"
 
 #: source\timelinelib\wxgui\dialogs\editevent\view.py:190
 msgid "Icon"
@@ -2784,11 +2784,9 @@ msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\filenew\view.py:111
 msgid ""
-"This creates a timeline using the fictuous Bosparanian calendar from the "
+"This creates a timeline using the fictional Bosparanian calendar from the "
 "German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."
 msgstr ""
-"Detta alternativ skapar en timeline med den påhittade Bosoporiska kalendern "
-"från den Tyska pen-and-paper RPG \"The Dark Eye\" (Das schwarze Auge\", DSA)"
 
 #: source\timelinelib\wxgui\dialogs\filenew\view.py:115
 msgid "Pharaonic"
@@ -2892,7 +2890,7 @@ msgstr "Beskrivning:"
 
 #: source\timelinelib\wxgui\dialogs\milestone\view.py:86
 msgid "Label:"
-msgstr "Rubrik:"
+msgstr "Etikett:"
 
 #: source\timelinelib\wxgui\dialogs\milestone\view.py:138
 msgid "Create Milestone"
@@ -3165,8 +3163,8 @@ msgid "Do you want to create it?"
 msgstr "Vill du skapa den?"
 
 #: source\timelinelib\wxgui\dialogs\slideshow\controller.py:32
-msgid "The html pages director isn't empty!"
-msgstr "Den  valda  katalogen för html-sidor ät inte tom!"
+msgid "The html pages directory isn't empty!"
+msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\slideshow\controller.py:32
 msgid "Do you want overwrite it?"
@@ -3313,18 +3311,13 @@ msgstr "skrivskyddad"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:87
 msgid ""
-"Someoneelse has changed the Timeline.\n"
+"Someone else has changed the Timeline.\n"
 "You have two choices!\n"
 "  1. Set Timeline in Read-Only mode.\n"
 "  2. Synchronize Timeline.\n"
 "\n"
 "Do you want to Synchronize?"
 msgstr ""
-"Timeline har blivit ändrad av någon annan.\n"
-"Du har två val!\n"
-"1. Sätt din timeline i read-only läge\n"
-"2. Synkronisera din timeline\n"
-"Vill du synkronisera?"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:127
 msgid "Distance between selected events"
@@ -3523,3 +3516,33 @@ msgstr "Fel"
 #: source\timelinelib\wxgui\utils.py:119 source\timelinelib\wxgui\utils.py:125
 msgid "Question"
 msgstr "Fråga"
+
+#~ msgid "Ballons on hover"
+#~ msgstr "Visa ballonger vid hovring"
+
+#~ msgid ""
+#~ "Someoneelse has changed the Timeline.\n"
+#~ "You have two choices!\n"
+#~ "  1. Set Timeline in Read-Only mode.\n"
+#~ "  2. Synchronize Timeline.\n"
+#~ "\n"
+#~ "Do you want to Synchronize?"
+#~ msgstr ""
+#~ "Timeline har blivit ändrad av någon annan.\n"
+#~ "Du har två val!\n"
+#~ "1. Sätt din timeline i read-only läge\n"
+#~ "2. Synkronisera din timeline\n"
+#~ "Vill du synkronisera?"
+
+#~ msgid ""
+#~ "This creates a timeline using the fictuous Bosparanian calendar from the "
+#~ "German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."
+#~ msgstr ""
+#~ "Detta alternativ skapar en timeline med den påhittade Bosoporiska kalendern "
+#~ "från den Tyska pen-and-paper RPG \"The Dark Eye\" (Das schwarze Auge\", DSA)"
+
+#~ msgid "The html pages director isn't empty!"
+#~ msgstr "Den  valda  katalogen för html-sidor ät inte tom!"
+
+#~ msgid "Prevoius match"
+#~ msgstr "Föregående träff"
