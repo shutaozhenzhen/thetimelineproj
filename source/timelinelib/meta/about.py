@@ -121,7 +121,7 @@ def display_about_dialog(args, *kwargs):
     info.Version = get_full_version()
     info.Copyright = COPYRIGHT_TEXT
     info.Description = APPLICATION_DESCRIPTION
-    info.WebSite = (WEBSITE, "%s Website" % APPLICATION_NAME)
+    info.SetWebSite(WEBSITE)
     info.Developers = DEVELOPERS
     info.Translators = get_translators_text()
     info.Artists = ARTISTS
