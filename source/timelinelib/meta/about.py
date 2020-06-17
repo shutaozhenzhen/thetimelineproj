@@ -39,38 +39,66 @@ DEVELOPERS = [
     "Norbert Langermann",
     "Jean-Gilles Guyrandy",
 ]
-TRANSLATORS = [
-    "Basque: Urtzi Odriozola",
-    "\nBrazilian Portuguese: Leo Frigo",
-    "Marcelo Ribeiro de Almeida",
-    "Waldir Leôncio",
-    "\nCatalan: BennyBeat",
-    "\nChinese (Simplified): rockxie",
-    "\nFrench: Francois Tissandier",
-    "\nGerman: MixCool",
-    "Nils Steinger",
-    "Daniel Winzen",
-    "cmdrhenner",
-    "Norbert Langermann",
-    "\nGreek: Yannis Kaskamanidis",
-    "\nHebrew: Yaron Shahrabani",
-    "\nLithuanian: Mantas Kriauciunas",
-    "rpocius",
-    "\nPolish: Andrzej Korcala 'Greybrow'",
-    "\nPortuguese: Leo Frigo",
-    "\nRussian: Andrew Yakush",
-    "Sergey Sedov",
-    "Alexander 'FONTER' Zinin",
-    "DronAn[BY]",
-    "Olesya Gerasimenko",
-    "\nSpanish: Leandro Pavón Serrano",
-    "Leo Frigo",
-    "Roman Gelbort",
-    "Sebastián Ortega",
-    "\nSwedish: Rickard Lindberg",
-    "Roger Lindberg",
-    "Daniel Nylander",
-]
+_TRANSLATORS = {
+    "Basque": [
+        "Urtzi Odriozola",
+    ],
+    "Brazilian Portuguese": [
+        "Leo Frigo",
+        "Marcelo Ribeiro de Almeida",
+        "Waldir Leôncio",
+    ],
+    "Catalan": [
+        "BennyBeat",
+    ],
+    "Chinese (Simplified)": [
+        "rockxie",
+    ],
+    "French": [
+        "Francois Tissandier",
+    ],
+    "German": [
+        "MixCool",
+        "Nils Steinger",
+        "Daniel Winzen",
+        "cmdrhenner",
+        "Norbert Langermann",
+    ],
+    "Greek": [
+        "Yannis Kaskamanidis",
+    ],
+    "Hebrew": [
+        "Yaron Shahrabani",
+    ],
+    "Lithuanian": [
+        "Mantas Kriauciunas",
+        "rpocius",
+    ],
+    "Polish": [
+        "Andrzej Korcala 'Greybrow'",
+    ],
+    "Portuguese": [
+        "Leo Frigo"
+    ],
+    "Russian": [
+        "Andrew Yakush",
+        "Sergey Sedov",
+        "Alexander 'FONTER' Zinin",
+        "DronAn[BY]",
+        "Olesya Gerasimenko",
+    ],
+    "Spanish": [
+        "Leandro Pavón Serrano",
+        "Leo Frigo",
+        "Roman Gelbort",
+        "Sebastián Ortega",
+    ],
+    "Swedish": [
+        "Rickard Lindberg",
+        "Roger Lindberg",
+        "Daniel Nylander",
+    ],
+}
 ARTISTS = ["Sara Lindberg",
            "Tango Desktop Project (Icons on Windows)"]
 LICENSE = """Timeline is free software: you can redistribute it and/or modify
@@ -95,7 +123,7 @@ def display_about_dialog(args, *kwargs):
     info.Description = APPLICATION_DESCRIPTION
     info.WebSite = (WEBSITE, "%s Website" % APPLICATION_NAME)
     info.Developers = DEVELOPERS
-    info.Translators = TRANSLATORS
+    info.Translators = get_translators_text()
     info.Artists = ARTISTS
     info.License = LICENSE
     wx.adv.AboutBox(info)
@@ -109,3 +137,22 @@ def get_title(path):
             os.path.basename(path),
             os.path.dirname(os.path.abspath(path)),
             APPLICATION_NAME)
+
+
+def get_translators_text():
+    translators = []
+    prefix = ''
+    for language in _TRANSLATORS:
+        translators.append(f'{prefix}{language}: {_TRANSLATORS[language][0]}')
+        for translator in _TRANSLATORS[language][1:]:
+            translators.append(translator)
+        prefix = '\n'
+    return translators
+
+
+def get_translators():
+    translators = []
+    for language in _TRANSLATORS:
+        for translator in _TRANSLATORS[language]:
+            translators.append(translator)
+    return translators

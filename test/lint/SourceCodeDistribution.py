@@ -34,6 +34,9 @@ class SourceCodeDistributionSpec(UnitTestCase):
     def test_all_authors_mentioned_in_about_module_should_be_mentioned_in_AUTHORS(self):
         authors_content = self.read_utf8_encoded_text_from(self.AUTHORS)
         for author in self.get_authors_from_about_module():
+            if author not in authors_content:
+                print(f'Author not found: {author}')
+                print(f'Content: {authors_content}')
             self.assertTrue(author in authors_content)
 
     def test_py_files_should_have_copyright(self):
@@ -71,14 +74,14 @@ class SourceCodeDistributionSpec(UnitTestCase):
                         yield os.path.relpath(os.path.normpath(os.path.join(root, file)))
 
     def get_authors_from_about_module(self):
-        return [possible_author.strip()
+        return [possible_author
                 for possible_author
                 in self.get_possible_authors_from_about_module()
                 if self.is_author_from_about_module(possible_author)]
 
     def get_possible_authors_from_about_module(self):
         return (timelinelib.meta.about.DEVELOPERS +
-                timelinelib.meta.about.TRANSLATORS +
+                timelinelib.meta.about.get_translators() +
                 timelinelib.meta.about.ARTISTS)
 
     def is_author_from_about_module(self, possible_author):
