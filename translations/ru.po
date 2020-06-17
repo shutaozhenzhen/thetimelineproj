@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: thetimelineproj\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-14 17:44+0200\n"
+"POT-Creation-Date: 2020-06-11 19:15+0200\n"
 "PO-Revision-Date: 2020-06-11 12:39+0000\n"
 "Last-Translator: Olesya Gerasimenko <Unknown>\n"
 "Language-Team: Basealt Translation Team\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-06-11 17:20+0000\n"
-"X-Generator: Launchpad (build b190cebbf563f89e480a8b57f641753c8196bda0)\n"
+"X-Launchpad-Export-Date: 2020-06-17 15:16+0000\n"
+"X-Generator: Launchpad (build 1cbd0aa39df153c901321817f9b57cf3f232b507)\n"
 "Language: ru\n"
 
 #: source\timelinelib\calendar\bosparanian\monthnames.py:24
@@ -3553,7 +3553,7 @@ msgstr "&Навигация"
 msgid "&Help"
 msgstr "&Справка"
 
-#: source\timelinelib\wxgui\frames\mainframe\lockhandler.py:61
+#: source\timelinelib\wxgui\frames\mainframe\lockhandler.py:62
 #, python-format
 msgid ""
 "Unable to take lock on %s\n"
@@ -3564,7 +3564,7 @@ msgstr ""
 "Это означает, что изменить хронологию нельзя.\n"
 "Проверьте наличие доступа с правами записи в этот каталог."
 
-#: source\timelinelib\wxgui\frames\mainframe\lockhandler.py:82
+#: source\timelinelib\wxgui\frames\mainframe\lockhandler.py:83
 #, python-brace-format
 msgid ""
 "The lockfile used to protect the timeline from concurrent updates is opened "
@@ -3796,16 +3796,3 @@ msgstr "Ошибка"
 #: source\timelinelib\wxgui\utils.py:119 source\timelinelib\wxgui\utils.py:125
 msgid "Question"
 msgstr "Вопрос"
-
-#~ msgid ""
-#~ "The lockfile used to protect the timeline from concurrent updates is opened "
-#~ "by another program or process.\n"
-#~ "    This lockfile must be removed in order be able to continue editing the "
-#~ "timeline!\n"
-#~ "    The lockfile is found at: {self._path}"
-#~ msgstr ""
-#~ "Файл блокировки, который используется для защиты хронологии от параллельных "
-#~ "обновлений, открыт другой программой или процессом.\n"
-#~ "    Чтобы получить возможность продолжить редактирование хронологии, этот "
-#~ "файл необходимо удалить!\n"
-#~ "    Он находится здесь: {self._path}"
