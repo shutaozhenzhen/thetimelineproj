@@ -29,7 +29,7 @@ from timelinelib.config.paths import ICONS_DIR
 
 DIR_IS_MANDATORY = _("The html pages directory is mandatory")
 CANT_FIND_DIR = _("Can't find the html pages directory!") + "\n" + _("Do you want to create it?")
-OVERWRITE_DIR = _("The html pages director isn't empty!") + "\n" + _("Do you want overwrite it?")
+OVERWRITE_DIR = _("The html pages directory isn't empty!") + "\n" + _("Do you want overwrite it?")
 
 
 class SlideshowDialogController(Controller):

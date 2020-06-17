@@ -84,7 +84,7 @@ class MainFrameController:
         last_changed = get_modification_date(self._timelinepath)
         if last_changed > self._last_changed:
             ack = get_user_ack(
-                _("Someoneelse has changed the Timeline.\nYou have two choices!\n  1. Set Timeline in Read-Only mode.\n  2. Synchronize Timeline.\n\nDo you want to Synchronize?"))
+                _("Someone else has changed the Timeline.\nYou have two choices!\n  1. Set Timeline in Read-Only mode.\n  2. Synchronize Timeline.\n\nDo you want to Synchronize?"))
             if ack:
                 self._reload_from_disk()
             else:

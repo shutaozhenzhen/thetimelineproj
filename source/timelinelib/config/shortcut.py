@@ -73,7 +73,7 @@ METADATA = [  # File
               # View
               Metadata(mid.ID_SIDEBAR, "shortcut_sidebar", LABEL_VIEW % _("Sidebar"), CTRL_MODIFIER, "I"),
               Metadata(mid.ID_LEGEND, "shortcut_legend", LABEL_VIEW % _("Legend"), NO_MODIFIER, ""),
-              Metadata(mid.ID_BALLOONS, "shortcut_ballons", LABEL_VIEW % _("Ballons on hover"), NO_MODIFIER, ""),
+              Metadata(mid.ID_BALLOONS, "shortcut_ballons", LABEL_VIEW % _("Balloons on hover"), NO_MODIFIER, ""),
               Metadata(mid.ID_ZOOMIN, "shortcut_zoomin", LABEL_VIEW % _("Zoom In"), CTRL_MODIFIER, "+"),
               Metadata(mid.ID_ZOOMOUT, "shortcut_zoomout", LABEL_VIEW % _("Zoom Out"), CTRL_MODIFIER, "-"),
               Metadata(mid.ID_VERT_ZOOMIN, "shortcut_vertical_zoomin", LABEL_VIEW % _("Vertical Zoom In"), ALT_MODIFIER, "+"),
