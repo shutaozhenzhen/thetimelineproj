@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Timeline 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-11 19:15+0200\n"
+"POT-Creation-Date: 2020-06-17 18:59+0200\n"
 "PO-Revision-Date: 2017-04-24 18:09+0000\n"
 "Last-Translator: rogerlindberg <roger@rolidata.se>\n"
 "Language-Team: native-languaje <elproferoman@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2020-06-17 15:16+0000\n"
+"X-Launchpad-Export-Date: 2020-06-17 18:52+0000\n"
 "X-Generator: Launchpad (build 1cbd0aa39df153c901321817f9b57cf3f232b507)\n"
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Basepath: /home/roman/traducciones\n"
@@ -925,7 +925,7 @@ msgid "Legend"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:76
-msgid "Ballons on hover"
+msgid "Balloons on hover"
 msgstr ""
 
 #: source\timelinelib\config\shortcut.py:77
@@ -1545,7 +1545,7 @@ msgid ""
 "length.\n"
 "\n"
 "An Era is displayed as a background with the color defined for the Era. The "
-"Era name is written att the bottom of the timeline.\n"
+"Era name is written at the bottom of the timeline.\n"
 msgstr ""
 
 #: source\timelinelib\help\pages.py:208
@@ -1592,7 +1592,7 @@ msgstr ""
 msgid ""
 "\n"
 "A milestone is a special case of a point event. It is rendered on the "
-"timescale of a timeline and it can have a desciption shown when hooverd "
+"timescale of a timeline and it can have a description shown when hovered "
 "over. It can also have a one character label that is displayed in the "
 "milestone box.\n"
 "\n"
@@ -1769,7 +1769,7 @@ msgid ""
 "between them.\n"
 "\n"
 " You can also get to the duplication dialog from the event context menu, "
-"wich appears if you right-click an event with the mouse.\n"
+"which appears if you right-click an event with the mouse.\n"
 msgstr ""
 
 #: source\timelinelib\help\pages.py:384
@@ -2268,7 +2268,7 @@ msgid "Select period"
 msgstr ""
 
 #: source\timelinelib\wxgui\components\searchbar\guicreator\components\prevbutton.py:22
-msgid "Prevoius match"
+msgid "Previous match"
 msgstr ""
 
 #: source\timelinelib\wxgui\components\searchbar\guicreator\components\showlistbutton.py:22
@@ -2740,7 +2740,7 @@ msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\filenew\view.py:111
 msgid ""
-"This creates a timeline using the fictuous Bosparanian calendar from the "
+"This creates a timeline using the fictional Bosparanian calendar from the "
 "German pen-and-paper RPG \"The Dark Eye\" (\"Das schwarze Auge\", DSA)."
 msgstr ""
 
@@ -3119,7 +3119,7 @@ msgid "Do you want to create it?"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\slideshow\controller.py:32
-msgid "The html pages director isn't empty!"
+msgid "The html pages directory isn't empty!"
 msgstr ""
 
 #: source\timelinelib\wxgui\dialogs\slideshow\controller.py:32
@@ -3261,7 +3261,7 @@ msgstr "sólo lectura"
 
 #: source\timelinelib\wxgui\frames\mainframe\mainframecontroller.py:87
 msgid ""
-"Someoneelse has changed the Timeline.\n"
+"Someone else has changed the Timeline.\n"
 "You have two choices!\n"
 "  1. Set Timeline in Read-Only mode.\n"
 "  2. Synchronize Timeline.\n"
