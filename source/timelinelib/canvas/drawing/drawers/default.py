@@ -62,6 +62,10 @@ class DefaultDrawingAlgorithm(Drawer):
         self._event_box_drawer = None
         self._background_drawer = None
 
+    def set_event_font(self, new_font):
+        from timelinelib.wxgui.components.font import deserialize_font
+        self._event_text_font = deserialize_font(new_font)
+
     def set_event_box_drawer(self, event_box_drawer):
         self._event_box_drawer = event_box_drawer
 
