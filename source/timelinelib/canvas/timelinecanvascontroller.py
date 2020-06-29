@@ -316,6 +316,7 @@ class TimelineCanvasController:
 
         def fn_draw(dc):
             self.monitoring.timer_start()
+            self.drawing_algorithm.set_event_font(self.appearance.get_event_font())
             self.drawing_algorithm.draw(dc, self.timeline, self.view_properties, self.appearance, fast_draw=self._fast_draw)
             self.monitoring.timer_end()
             if DEBUG_ENABLED:
