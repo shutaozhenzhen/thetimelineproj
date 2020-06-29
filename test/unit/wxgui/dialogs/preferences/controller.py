@@ -63,6 +63,7 @@ class describe_preferences_dialog_controller(WxAppTestCase):
         self.config.minor_strip_font = font.serialize()
         self.config.legend_font = font.serialize()
         self.config.balloon_font = font.serialize()
+        self.config.event_font = font.serialize()
         self.config.legend_pos = 0
         self.config.date_format = "yyyy-mm-dd"
         self.config.never_use_time = False
