@@ -46,6 +46,7 @@ class TimelineViewSpec(WxAppTestCase):
     def setUp(self):
         WxAppTestCase.setUp(self)
         self.mock_drawer = MockDrawer()
+        self.mock_drawer.set_event_font = lambda f: True
         self.db = MemoryDB()
         self.timeline_canvas = Mock(TimelineCanvas)
         self.timeline_canvas.GetSize.return_value = (200, 100)
