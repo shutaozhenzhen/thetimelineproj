@@ -86,6 +86,12 @@ class PreferencesDialogController(Controller):
             self.config.balloon_font = font.serialize()
             self.view.SetBalloonFont(font)
 
+    def on_event_click(self, evt):
+        font = deserialize_font(self.config.event_font)
+        if self.view.ShowEditFontDialog(font):
+            self.config.event_font = font.serialize()
+            self.view.SetEventFont(font)
+
     def on_major_strip_click(self, event):
         font = deserialize_font(self.config.major_strip_font)
         if self.view.ShowEditFontDialog(font):
@@ -179,6 +185,7 @@ class PreferencesDialogController(Controller):
         self.view.SetMinorStripFont(deserialize_font(self.config.minor_strip_font))
         self.view.SetLegendFont(deserialize_font(self.config.legend_font))
         self.view.SetBalloonFont(deserialize_font(self.config.balloon_font))
+        self.view.SetEventFont(deserialize_font(self.config.event_font))
         self.view.SetLegendPos(self.config.legend_pos)
         self.view.SetTimeScalePos(self.config.time_scale_pos)
         self.view.SetWorkdayLength(self.config.workday_length)
