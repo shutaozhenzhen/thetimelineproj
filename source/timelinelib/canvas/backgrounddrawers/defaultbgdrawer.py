@@ -67,15 +67,12 @@ class DefaultBackgroundDrawer:
         self._drawer.dc.DrawRectangle(x, offset, width, h - 2 * offset)
 
     def _draw_era_name_in_center_of_visible_era(self, era, h):
-        event_font = deserialize_font(self._scene.appearance.get_event_font())
         era_font = deserialize_font(self._scene.appearance.get_era_font())
         self._drawer.dc.SetTextForeground(era_font.WxColor)
         self._drawer.dc.SetFont(era_font)
         x, width = self._get_timeperiod_measures(era.get_time_period())
         wt, ht = self._drawer.dc.GetTextExtent(era.get_name())
         self._drawer.dc.DrawText(era.get_name(), x + width // 2 - wt // 2, h - ht)
-        self._drawer.dc.SetFont(event_font)
-        self._drawer.dc.SetTextForeground(event_font.WxColor)
 
     def _get_timeperiod_measures(self, time_period):
         x1, x2 = self._drawer.get_period_xpos(time_period)
