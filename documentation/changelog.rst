@@ -17,6 +17,9 @@ GUI:
 * ``Fonts for Events can now be selected by User.``
   Preferences dialog updated with event font.
 
+* ``Fonts for Eras are separated frome Event font and can now be selected by User.``
+  Preferences dialog updated with era font.
+
 Fixed crash reports and bugs:
 
 * ``TypeError: _report_other_process_uses_lockfile() takes 1 positional argument but 2 were given.``

@@ -25,9 +25,11 @@ class DefaultBackgroundDrawer:
 
     def __init__(self):
         self._drawer = None
+        self._scene = None
 
     def draw(self, drawer, dc, scene, timeline, colorize_weekends, weekend_colour, bg_colour):
         self._drawer = drawer
+        self._scene = scene
         erase_dc_background(dc, bg_colour)
         self._draw_eras(dc, timeline)
         self._draw_weekend_days(dc, scene, colorize_weekends, weekend_colour)
@@ -64,9 +66,13 @@ class DefaultBackgroundDrawer:
         self._drawer.dc.DrawRectangle(x, offset, width, h - 2 * offset)
 
     def _draw_era_name_in_center_of_visible_era(self, era, h):
+        from timelinelib.wxgui.components.font import deserialize_font
+        original_font = self._drawer.dc.GetFont()
+        self._drawer.dc.SetFont(deserialize_font(self._scene.appearance.get_era_font()))
         x, width = self._get_timeperiod_measures(era.get_time_period())
         wt, ht = self._drawer.dc.GetTextExtent(era.get_name())
         self._drawer.dc.DrawText(era.get_name(), x + width // 2 - wt // 2, h - ht)
+        self._drawer.dc.SetFont(original_font)
 
     def _get_timeperiod_measures(self, time_period):
         x1, x2 = self._drawer.get_period_xpos(time_period)

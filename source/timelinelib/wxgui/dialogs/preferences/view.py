@@ -263,6 +263,19 @@ class PreferencesDialog(Dialog):
                             name="event_font_sample"
                             label="Timeline"
                         />
+                        <StaticText
+                            label="$(era_text)"
+                            align="ALIGN_CENTER_VERTICAL"
+                        />
+                        <Button
+                            name="select_era"
+                            event_EVT_BUTTON="on_era_click"
+                            label="$(edit_text)"
+                        />
+                        <StaticText
+                            name="era_font_sample"
+                            label="Timeline"
+                        />
                     </FlexGridSizer>
                 </BoxSizerVertical>
             </Panel>
@@ -413,6 +426,7 @@ class PreferencesDialog(Dialog):
             "minor_strip_text": _("Minor Strips:"),
             "balloon_text": _("Balloons:"),
             "event_text": _("Events") + ":",
+            "era_text": _("Eras") + ":",
             "icons_text": _("Icons"),
             "fuzzy_icon_text": _("Fuzzy icon"),
             "locked_icon_text": _("Locked icon"),
@@ -637,6 +651,9 @@ class PreferencesDialog(Dialog):
 
     def SetEventFont(self, font):
         self._SetFont(self.event_font_sample, font)
+
+    def SetEraFont(self, font):
+        self._SetFont(self.era_font_sample, font)
 
     def GetLegendPos(self):
         return self.legend_positions.GetSelection()
