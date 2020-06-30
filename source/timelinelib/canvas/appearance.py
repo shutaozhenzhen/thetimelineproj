@@ -42,6 +42,7 @@ class Appearance(Observable):
         self._build_property("legend_font", Font(8).serialize())
         self._build_property("balloon_font", Font(8).serialize())
         self._build_property("event_font", Font(8).serialize())
+        self._build_property("era_font", Font(8).serialize())
         self._build_property("center_event_texts", False)
         self._build_property("never_show_period_events_as_point_events", False)
         self._build_property("week_start", "monday")

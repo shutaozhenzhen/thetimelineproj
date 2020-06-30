@@ -166,6 +166,7 @@ class TimelinePanelGuiCreator(wx.Panel):
             appearance.set_major_strip_font(self.config.major_strip_font)
             appearance.set_balloon_font(self.config.balloon_font)
             appearance.set_event_font(self.config.event_font)
+            appearance.set_era_font(self.config.era_font)
             appearance.set_legend_font(self.config.legend_font)
             appearance.set_center_event_texts(self.config.center_event_texts)
             appearance.set_never_show_period_events_as_point_events(self.config.never_show_period_events_as_point_events)

@@ -316,6 +316,7 @@ FONT_CONFIGS = (
     {'name': 'legend_font', 'default': '10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)'},
     {'name': 'balloon_font', 'default': '10:74:90:90:False:Tahoma:33:(0, 0, 0, 255)'},
     {'name': 'event_font', 'default': 'nfi|1;8;-11;0;0;0;400;0;0;0;1;0;0;2;32;Arial|(0, 0, 0, 255)'},
+    {'name': 'era_font', 'default': 'nfi|1;8;-11;0;0;0;400;0;0;0;1;0;0;2;32;Arial|(0, 0, 0, 255)'},
 )
 BOOLEANS = [d['name'] for d in BOOLEAN_CONFIGS]
 INTS = [d['name'] for d in INT_CONFIGS]
