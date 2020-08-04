@@ -101,10 +101,10 @@ class TimelineCanvas(wx.Panel):
         self._controller.set_hscroll_amount(amount)
 
     def IncrementEventTextFont(self):
-        self._controller.increment_font_size()
+        return self._controller.increment_font_size()
 
     def DecrementEventTextFont(self):
-        self._controller.decrement_font_size()
+        return self._controller.decrement_font_size()
 
     def SetPeriodSelection(self, period):
         self._controller.set_period_selection(period)
@@ -266,16 +266,17 @@ class TimelineCanvas(wx.Panel):
         self.Navigate(lambda tp: tp.zoom(direction, x_percent_of_width))
 
     def vertical_zoom_in(self):
-        self.ZoomVertically(1)
+        return self.ZoomVertically(1)
 
     def vertical_zoom_out(self):
-        self.ZoomVertically(-1)
+        return self.ZoomVertically(-1)
 
     def ZoomVertically(self, direction):
         if direction > 0:
-            self.IncrementEventTextFont()
+            font = self.IncrementEventTextFont()
         else:
-            self.DecrementEventTextFont()
+            font = self.DecrementEventTextFont()
+        return font
 
     def Scrollvertically(self, direction):
         if direction > 0:

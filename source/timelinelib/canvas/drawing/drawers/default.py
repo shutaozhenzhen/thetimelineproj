@@ -75,11 +75,13 @@ class DefaultDrawingAlgorithm(Drawer):
     def increment_font_size(self, step=2):
         self._event_text_font.increment(step)
         self._adjust_outer_padding_to_font_size()
+        return self._event_text_font.serialize()
 
     def decrement_font_size(self, step=2):
         if self._event_text_font.GetPointSize() > step:
             self._event_text_font.decrement(step)
             self._adjust_outer_padding_to_font_size()
+            return self._event_text_font.serialize()
 
     def _adjust_outer_padding_to_font_size(self):
         if self._event_text_font.GetPointSize() < 8:

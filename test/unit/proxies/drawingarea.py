@@ -52,4 +52,5 @@ class describe_drawingarea_proxy(unittest.TestCase):
         mf.main_panel = Mock(MainPanel)
         mf.main_panel.timeline_panel = Mock(TimelinePanel)
         mf.main_panel.timeline_panel.timeline_canvas = self.canvas
+        mf.config = Mock()
         return mf
