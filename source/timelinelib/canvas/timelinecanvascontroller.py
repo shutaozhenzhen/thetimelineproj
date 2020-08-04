@@ -272,12 +272,14 @@ class TimelineCanvasController:
         return self.drawing_algorithm.get_hidden_event_count()
 
     def increment_font_size(self):
-        self.drawing_algorithm.increment_font_size()
+        font = self.drawing_algorithm.increment_font_size()
         self._redraw_timeline()
+        return font
 
     def decrement_font_size(self):
-        self.drawing_algorithm.decrement_font_size()
+        font = self.drawing_algorithm.decrement_font_size()
         self._redraw_timeline()
+        return font
 
     def get_closest_overlapping_event(self, event, up):
         return self.drawing_algorithm.get_closest_overlapping_event(event, up=up)

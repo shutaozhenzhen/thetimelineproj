@@ -34,6 +34,7 @@ class DrawingAreaProxy:
         from timelinelib.wxgui.frames.mainframe.mainframe import MainFrame
         if isinstance(creator, MainFrame):
             self.timeline_canvas = creator.main_panel.timeline_panel.timeline_canvas
+            self._creator = creator
 
     def zoom_in(self):
         self.timeline_canvas.zoom_in()
@@ -42,10 +43,14 @@ class DrawingAreaProxy:
         self.timeline_canvas.zoom_out()
 
     def vertical_zoom_in(self):
-        self.timeline_canvas.vertical_zoom_in()
+        self._set_font(self.timeline_canvas.vertical_zoom_in())
 
     def vertical_zoom_out(self):
-        self.timeline_canvas.vertical_zoom_out()
+        self._set_font(self.timeline_canvas.vertical_zoom_out())
+
+    def _set_font(self, font):
+        if font:
+            self._creator.config.event_font = font
 
     @property
     def view_properties(self):
