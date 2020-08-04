@@ -37,6 +37,9 @@ Fixed crash reports and bugs:
 * ``wx._core.wxAssertionError: C++ assertion ""w > 0 && h > 0"" failed``
   If the timeline panel has no width or height -> don't draw it.
 
+* ``When zooming vertically with keyboard, font is not saved.``
+  Save font changes in config object.
+
 Version 2.2.0
 --------------
 
